@@ -1,52 +1,83 @@
-From: Daniel Corbe <corbe@corbe.net>
-Subject: Location of git config on Windows
-Date: Sun, 17 Aug 2014 16:18:23 -0400
-Message-ID: <ygfvbpqooog.fsf@corbe.net>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Location of git config on Windows
+Date: Sun, 17 Aug 2014 17:40:56 -0400
+Organization: PD Inc
+Message-ID: <C9491BC51199409292463C10D606F256@black>
+References: <ygfvbpqooog.fsf@corbe.net>
+Reply-To: "Daniel Corbe" <corbe@corbe.net>, <git@vger.kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 17 22:26:25 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "'Daniel Corbe'" <corbe@corbe.net>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 17 23:41:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJ71z-0006wP-4Z
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Aug 2014 22:26:24 +0200
+	id 1XJ8CI-000222-JR
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Aug 2014 23:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751537AbaHQU0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2014 16:26:16 -0400
-Received: from a0i313.smtpcorp.com ([216.22.15.145]:56901 "EHLO
-	a0i313.smtpcorp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751474AbaHQU0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2014 16:26:15 -0400
-X-Greylist: delayed 471 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Aug 2014 16:26:15 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=smtpcorp.com; s=a0_1;
-	h=Content-Type:MIME-Version:Message-ID:Date:Subject:To:From; bh=jDNKI99Z2qHpDSud9KjbrnhdrJ2owINLzODa2sA6HA4=;
-	b=g7x9NfLgxgJLzdUp9ECYndJNXL5IKj8HHdQ+cD5exUR9sKEJwj1iLqkmjmnIIRUuGaOKTQUz7cz8qYbZH/Wil2EUf2UWYE+VZRWB4l/y1V8/RKEdzO5bAyaYEd+lrnq0dtnafdmstv5zGYJ3fxaRJ7VBzwS8P9VYj4yJB/aavIU=;
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (berkeley-unix)
-X-Smtpcorp-Track: 1bJ6IG4gfFQf3I.8Q4RbwUxg
+	id S1751482AbaHQVlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2014 17:41:01 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:53529 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751368AbaHQVlA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Aug 2014 17:41:00 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s7HLevLl005045;
+	Sun, 17 Aug 2014 17:40:57 -0400
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <ygfvbpqooog.fsf@corbe.net>
+Thread-Index: Ac+6WYcwicgoBRv5RmSL8LZ0mAOI7wACaUDw
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255376>
 
+> -----Original Message-----
+> From: Daniel Corbe
+> Sent: Sunday, August 17, 2014 16:18
+> 
+> 
+> I installed git on my Windows machine while it was connected to my
+> corporate network.  It picked up on that fact and used a 
+> mapped drive to
+> store its configuration file.  
+> 
+> As a result, I cannot currently use git when disconnected from my
+> network.  It throws the following error message: fatal: 
+> unable to access
+> 'Z:\/.config/git/config': Invalid argument
 
-I installed git on my Windows machine while it was connected to my
-corporate network.  It picked up on that fact and used a mapped drive to
-store its configuration file.  
+As a workaround, use subst command to map the Z: to another path on your system.
 
-As a result, I cannot currently use git when disconnected from my
-network.  It throws the following error message: fatal: unable to access
-'Z:\/.config/git/config': Invalid argument
+Depending on your OS and your git usage patterns you may have to perform the operation twice at both non-privilged and priviliged prompts.
 
-Obviously this value is stored in the registry somewhere because I made
-an attempt to uninstall and reinstall git with the same results.  
+Ex: 
 
-Can someone give me some guidance here?
+ subst z: c:\Users\corbed\cached-z-drive
 
-Best,
-Daniel
+> 
+> Obviously this value is stored in the registry somewhere 
+> because I made
+> an attempt to uninstall and reinstall git with the same results.  
+> 
+> Can someone give me some guidance here?
+> 
 
-P.S. A screenshot for reference: http://i.imgur.com/i9lm0Da.png
+-Jason 
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
