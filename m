@@ -1,85 +1,203 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Location of git config on Windows
-Date: Mon, 18 Aug 2014 20:17:26 +0200
-Message-ID: <CABPQNSbqT1CO3tXn7S3DA88BuEQpz__5D1e4gJLvYeZZy0Ztzg@mail.gmail.com>
-References: <ygfvbpqooog.fsf@corbe.net> <CABPQNSZDizccths0b_RZ5FXYYq=+4_2N35DMj9h4Rha_2voekw@mail.gmail.com>
- <53F135F8.60508@gmail.com> <ygflhqlvni7.fsf@corbe.net> <CABPQNSZ=BKqNPCWUmaCSz+gJtBRhjkWtpcDbirsV+KJX=c0kpg@mail.gmail.com>
- <ygf7g25vm9v.fsf@corbe.net> <CABPQNSZayAr0jf9C55wtEH_AJ_hSUkwFsGV4ZxVixizthojkRA@mail.gmail.com>
- <CABPQNSZGYDnSfyS7X+MdskhUrmFx5Kzoi+A5+pgoBiX5kPruyg@mail.gmail.com> <ygfsiktu3rl.fsf@corbe.net>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] make config --add behave correctly for empty and NULL values
+Date: Mon, 18 Aug 2014 11:18:52 -0700
+Message-ID: <xmqqvbppwtir.fsf@gitster.dls.corp.google.com>
+References: <1408357077-4745-1-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Daniel Corbe <corbe@corbe.net>
-X-From: git-owner@vger.kernel.org Mon Aug 18 20:18:14 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 18 20:19:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJRVV-0003iS-VU
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 20:18:14 +0200
+	id 1XJRWQ-0004EL-HR
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 20:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031AbaHRSSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2014 14:18:09 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:63303 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751839AbaHRSSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2014 14:18:08 -0400
-Received: by mail-ig0-f175.google.com with SMTP id uq10so8847165igb.2
-        for <git@vger.kernel.org>; Mon, 18 Aug 2014 11:18:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=JmSuhfbPuUpmuowypCgHU/LTYmYJffRU2ow0pcSTDFs=;
-        b=td2PYenLC+oZB/LKxYuik2wuIJ0BGv6KIanKYTiH9ztZQI/XPKQUe4Y8ez3lCN1CTO
-         uLsP+WGzHDlZh3PNppnvc1GMahMzqk/R3/DAGkR8Tl3Yy3fWEcJEqEgo6MrXR/pmr6py
-         KETlF3s3TvMBZTlpemE8TN2iBEe0h8DMlfNXL8Mlow4v46W/E2mtDN3Lur4sy6OHLaiZ
-         P4tNERxnmXBQNshB/winhRiHj5woa/ofIOQugCc3PihPCw8VnNXXQROswHmq1nfVEDXK
-         xtTgvAYo2qx/7Af4nTSSNjiJFG9jnyT/4+WIDL1WYYjZLU/2qPxzy+CmXKHQI8XwgerZ
-         Y5Mg==
-X-Received: by 10.50.50.229 with SMTP id f5mr630570igo.42.1408385886592; Mon,
- 18 Aug 2014 11:18:06 -0700 (PDT)
-Received: by 10.64.123.5 with HTTP; Mon, 18 Aug 2014 11:17:26 -0700 (PDT)
-In-Reply-To: <ygfsiktu3rl.fsf@corbe.net>
+	id S1752059AbaHRSTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 14:19:05 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60681 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751906AbaHRSTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2014 14:19:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0A04E31167;
+	Mon, 18 Aug 2014 14:19:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+ZIJ0uDzxT8duyDo365yQnYnhsQ=; b=q1odmr
+	UzAW5bNDgH6OnZWwy+BIq2wUqLiL/N83HKLWYpzOSElqbPr9U/5DNRM6IfHAu33u
+	veTUftbsXmkDKAIxjLl/1zV1E4qcQUu34GzdG2NdMIWNAdOE3ml2Fj47X7i/Kwd2
+	1Xh+NDlYgG280lfKu+nzArumtexjFZbKOQLNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Iw9FEuotVmJfDrw1lG0uZ/zWXMsoxl2b
+	ANO98xzc2l4B2C/9Xj5K7w6KdQWnFsHfeUllsuSP85ragjGpMODD92Foh6Be3oV+
+	+Z3a6KlZZdXfEcCM2NhjjrhFo9gmxnGt/upghEz6ZNLiNkJNV+TZGQZQ38pp20tL
+	KEq3XvO/oOA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0068E31166;
+	Mon, 18 Aug 2014 14:19:02 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 85B5A31155;
+	Mon, 18 Aug 2014 14:18:54 -0400 (EDT)
+In-Reply-To: <1408357077-4745-1-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Mon, 18 Aug 2014 03:17:57 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1CDDCADE-2704-11E4-9828-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255406>
 
-On Mon, Aug 18, 2014 at 7:05 PM, Daniel Corbe <corbe@corbe.net> wrote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> On Mon, Aug 18, 2014 at 5:47 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->>> On Mon, Aug 18, 2014 at 5:40 PM, Daniel Corbe <corbe@corbe.net> wrote:
->>>>
->>>> Erik Faye-Lund <kusmabite@gmail.com> writes:
->>>>
->>>>> Or you could just restart your shell when you disconnect...
->>>>
->>>> Well I'm not that daft.  I tried that and if it had resolved my problem
->>>> I wouldn't have posted.
->>>
->>> Hm, but isn't that what Karsten explains in his last paragraph? What
->>> shell are you running msys or cmd?
->>
->> Our /etc/profile does this:
->>
->> https://github.com/msysgit/msysgit/blob/master/etc/profile#L38
->>
->> ...however, our git-wrapper only does this:
->>
->> https://github.com/msysgit/msysgit/blob/master/src/git-wrapper/git-wrapper.c#L71
->>
->> So yeah, we don't seem to actually check if %HOMEDRIVE%%HOMEPATH%
->> exists. Perhaps fixing this is the right thing to do then? Since the
->> git-wrapper is run for *every* invokation of git, you wouldn't even
->> have to restart the shell in this case.
->
-> But again, restarting the shell doesn't fix the problem.
->
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Not for cmd, no. But for Git Bash, it should.
+> Currently if we have a config file like,
+> [foo]
+>         baz
+>         bar =
+>
+> and we try something like, "git config --add foo.baz roll", Git will
+> segfault.
+
+Thanks; this is a good find.
+
+This is a tangent, but people please stop starting their sentence
+with a somewhat irritating "Currently"; it does not help both
+current and future readers very much without some mention of version
+numbers.
+
+I suspect this bug dates back to pretty much day one of "git config"
+(dates at least back to 1.5.3).
+
+> The problem lies with the regexp used for simulating --add in
+> `git_config_set_multivar_in_file()`, "^$", which in ideal case should
+> not match with any string but is true for empty strings. Instead use a
+> regexp like "a^" which can not be true for any string, empty or not.
+
+Yuck, but we cannot pass NULL or some other special value that look
+more meaningful to signal the fact that we do not want to match
+anything, so this seems to be the easiest way out.  
+
+Are we sure that "a^", which cannot be true for any string, will not
+be caught by anybody's regcomp() as an error?  I know regcomp()
+accepts the expression and regexec() fails to match with GNU libc,
+but that is not the whole of the world.
+
+At least, please make it clear for those who read this code later
+what is going on with this magic "a^", perhaps with
+
+	#define REGEXP_THAT_NEVER_MATCHES "a^"
+	...
+        return git_config_set_multivar_in_file(given_config_source.file,
+                                              argv[0], value,
+                                              REGEXP_THAT_NEVER_MATCHES, 0);
+and/or with in-code comment.
+
+	/*
+         * set_multivar_in_file() removes existing values that match
+         * the value_regexp argument and then adds this new value;
+         * pass a pattern that never matches anything, as we do not
+         * want to remove any existing value.
+         */
+	return git_config_set_multivar_in_file(given_config_source.file,
+                                              argv[0], value,
+                                              REGEXP_THAT_NEVER_MATCHES, 0);
+
+To be honest, I'd rather see this done "right", by giving an option
+to the caller to tell the function not to call regcomp/regexec in
+matches().
+
+ * Define a global exported via cache.h and defined in config.c
+
+	extern const char CONFIG_SET_MULTIVAR_NO_REPLACE[];
+
+   and pass it from this calling site, instead of an arbitrary
+   literal string e.g. "a^"
+
+ * Add a bit to the "store" struct, e.g. "unsigned value_never_matches:1";
+
+ * In git_config_set_multivar_in_file() implementation, check for
+   this constant address and set store.value_never_matches to true;
+
+ * in matches(), check this bit and always return "No, this existing
+   value do not match" when it is set.
+
+or something like that.
+
+> For removing the segfault add a check for NULL values in `matches()` in
+> config.c.
+
+The fact that you do a check is important, but it equally if not
+more important what you do with the result.  "Check for a NULL and
+consider it as not matching" is probably what you meant, but I'd
+like to double check.
+
+> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+> ---
+>  builtin/config.c        |  2 +-
+>  config.c                |  2 +-
+>  t/t1303-wacky-config.sh | 20 ++++++++++++++++++++
+>  3 files changed, 22 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/config.c b/builtin/config.c
+> index fcd8474..b9e7dce 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -586,7 +586,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>  		check_argc(argc, 2, 2);
+>  		value = normalize_value(argv[0], argv[1]);
+>  		return git_config_set_multivar_in_file(given_config_source.file,
+> -						       argv[0], value, "^$", 0);
+> +						       argv[0], value, "a^", 0);
+>  	}
+>  	else if (actions == ACTION_REPLACE_ALL) {
+>  		check_write();
+> diff --git a/config.c b/config.c
+> index 058505c..67a7729 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1231,7 +1231,7 @@ static int matches(const char *key, const char *value)
+>  	return !strcmp(key, store.key) &&
+>  		(store.value_regex == NULL ||
+>  		 (store.do_not_match ^
+> -		  !regexec(store.value_regex, value, 0, NULL, 0)));
+> +		  (value && !regexec(store.value_regex, value, 0, NULL, 0))));
+>  }
+>  
+>  static int store_aux(const char *key, const char *value, void *cb)
+> diff --git a/t/t1303-wacky-config.sh b/t/t1303-wacky-config.sh
+> index 3a2c819..3b92083 100755
+> --- a/t/t1303-wacky-config.sh
+> +++ b/t/t1303-wacky-config.sh
+> @@ -111,4 +111,24 @@ test_expect_success 'unset many entries' '
+>  	test_must_fail git config section.key
+>  '
+>  
+> +test_expect_success '--add appends new value after existing empty value' '
+> +	cat >expect <<-\EOF &&
+> +
+> +
+> +	fool
+> +	roll
+> +	EOF
+> +	cp .git/config .git/config.old &&
+> +	test_when_finished "mv .git/config.old .git/config" &&
+> +	cat >.git/config <<-\EOF &&
+> +	[foo]
+> +		baz
+> +		baz =
+> +		baz = fool
+> +	EOF
+> +	git config --add foo.baz roll &&
+> +	git config --get-all foo.baz >output &&
+> +	test_cmp expect output
+> +'
+> +
+>  test_done
