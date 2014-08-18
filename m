@@ -1,80 +1,131 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH] Documentation/git-rebase.txt: fix -f description to match actual git behavior.
-Date: Mon, 18 Aug 2014 12:53:45 +0400
-Message-ID: <87ha1advqe.fsf@osv.gnss.ru>
-References: <87bnrq22uf.fsf@osv.gnss.ru>
-	<xmqq4mxh5w34.fsf@gitster.dls.corp.google.com>
-	<xmqqzjf94f5n.fsf@gitster.dls.corp.google.com>
-	<87d2c22cnx.fsf@osv.gnss.ru>
-	<xmqq38cx1w0e.fsf@gitster.dls.corp.google.com>
-	<87ioltik7g.fsf@osv.gnss.ru>
-	<xmqqioltza8z.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 10:54:09 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH] make config --add behave correctly for empty and NULL values
+Date: Mon, 18 Aug 2014 03:17:57 -0700
+Message-ID: <1408357077-4745-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 18 12:24:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJIhZ-0008Oh-R8
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 10:54:06 +0200
+	id 1XJK6i-0002yM-TG
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 12:24:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbaHRIxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2014 04:53:49 -0400
-Received: from mail.javad.com ([54.86.164.124]:39396 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751478AbaHRIxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2014 04:53:48 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 53BF660BF3;
-	Mon, 18 Aug 2014 08:53:47 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <sorganov@gmail.com>)
-	id 1XJIhF-0000Q0-LD; Mon, 18 Aug 2014 12:53:45 +0400
-In-Reply-To: <xmqqioltza8z.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 15 Aug 2014 14:57:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1752235AbaHRKTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 06:19:01 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:32855 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751640AbaHRKTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2014 06:19:00 -0400
+Received: by mail-pd0-f172.google.com with SMTP id y13so7211519pdi.31
+        for <git@vger.kernel.org>; Mon, 18 Aug 2014 03:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=XzZ/DeGjnYW90Qpzc9+rpJ8qtWHI5KqDt1IvDWQ2ziU=;
+        b=vWymEqLT3X8PwSr2tBe3l4smvDYAwb1BmmsoV8CLx3PQpI4oCeJAAKIziyI0VIU2iL
+         IWOgdM76Me/y3ERBjfL22cZ7AXE8EwDF1TAvHMXdNiqpsMA5Up/WjxLLHOfZV5Ji4UO2
+         JPTdpOiaYBtzKqQPc/ZxAUERgAdbB0OOgXWl2/lIPhWAITodqVntzHPrJ/Nwd/ofOgLv
+         ryb/HsqrCI2/LQIne3OtjOYczIWJ/y+BWRmI3LleUoLSBG08Mmsx+kca2sqXWbxSUAwv
+         YhXcN1xVDUDtgM7vg5/t8ePgeaXtVRn1w0WWD4q6t8q0F74ADU9js1Uom+SvUS9T9vDM
+         YXRg==
+X-Received: by 10.66.219.42 with SMTP id pl10mr34127713pac.22.1408357133534;
+        Mon, 18 Aug 2014 03:18:53 -0700 (PDT)
+Received: from localhost.localdomain ([117.254.223.75])
+        by mx.google.com with ESMTPSA id bu2sm15771995pbc.19.2014.08.18.03.18.48
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 18 Aug 2014 03:18:52 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255383>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Currently if we have a config file like,
+[foo]
+        baz
+        bar =
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->>> A sentence "--force has no effect under --preserve-merges mode" does
->>> not tell the readers very much, either and leaves them wondering if
->>> it means "--preserve-merges mode always rebases every time it is
->>> asked, never noticing 'ah, the history is already in a good shape
->>> and there is no need to do anything further'" or "--preserve-merges
->>> mode ignores --force and refuses to recreate the history if the
->>> history is in the shape the mode deems is already desirable."
->>
->> In fact there is no way to force rebase when --preserve-merges is given.
->> Neither --force nor --no-ff has any effect.
->>
->> Maybe some clarification could be given in --preserve-merges
->> description, provided it's not clear that "has no effect" for --force
->> means that one can't force the rebase in this case.
->
-> I am not sure if that is an intended behaviour or simply a bug
+and we try something like, "git config --add foo.baz roll", Git will
+segfault. Moreover, for "git config --add foo.bar roll", it will
+overwrite the original value instead of appending after the existing
+empty value.
 
-I think nobody actually ever needed to make it work, even though
-fundamentally it could have the same usage as in the case of flattening
-rebase. Once again, it seems that most uses of rebase handle already
-flat history and thus are served by vanilla invocation.
+The problem lies with the regexp used for simulating --add in
+`git_config_set_multivar_in_file()`, "^$", which in ideal case should
+not match with any string but is true for empty strings. Instead use a
+regexp like "a^" which can not be true for any string, empty or not.
 
-> (I rarely use preserve-merges myself, so I offhand do not know for
-> certain).
+For removing the segfault add a check for NULL values in `matches()` in
+config.c.
 
-I wonder, don't you yourself use preserve-merges because you don't care
-and just use the default, or because you actually use vanilla
-history-flattening feature?
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+---
+ builtin/config.c        |  2 +-
+ config.c                |  2 +-
+ t/t1303-wacky-config.sh | 20 ++++++++++++++++++++
+ 3 files changed, 22 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/config.c b/builtin/config.c
+index fcd8474..b9e7dce 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -586,7 +586,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		check_argc(argc, 2, 2);
+ 		value = normalize_value(argv[0], argv[1]);
+ 		return git_config_set_multivar_in_file(given_config_source.file,
+-						       argv[0], value, "^$", 0);
++						       argv[0], value, "a^", 0);
+ 	}
+ 	else if (actions == ACTION_REPLACE_ALL) {
+ 		check_write();
+diff --git a/config.c b/config.c
+index 058505c..67a7729 100644
+--- a/config.c
++++ b/config.c
+@@ -1231,7 +1231,7 @@ static int matches(const char *key, const char *value)
+ 	return !strcmp(key, store.key) &&
+ 		(store.value_regex == NULL ||
+ 		 (store.do_not_match ^
+-		  !regexec(store.value_regex, value, 0, NULL, 0)));
++		  (value && !regexec(store.value_regex, value, 0, NULL, 0))));
+ }
+ 
+ static int store_aux(const char *key, const char *value, void *cb)
+diff --git a/t/t1303-wacky-config.sh b/t/t1303-wacky-config.sh
+index 3a2c819..3b92083 100755
+--- a/t/t1303-wacky-config.sh
++++ b/t/t1303-wacky-config.sh
+@@ -111,4 +111,24 @@ test_expect_success 'unset many entries' '
+ 	test_must_fail git config section.key
+ '
+ 
++test_expect_success '--add appends new value after existing empty value' '
++	cat >expect <<-\EOF &&
++
++
++	fool
++	roll
++	EOF
++	cp .git/config .git/config.old &&
++	test_when_finished "mv .git/config.old .git/config" &&
++	cat >.git/config <<-\EOF &&
++	[foo]
++		baz
++		baz =
++		baz = fool
++	EOF
++	git config --add foo.baz roll &&
++	git config --get-all foo.baz >output &&
++	test_cmp expect output
++'
++
+ test_done
 -- 
-Sergey.
+1.9.0.GIT
