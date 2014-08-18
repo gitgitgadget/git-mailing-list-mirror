@@ -1,74 +1,80 @@
-From: Travis Carden <travis.carden@gmail.com>
-Subject: Re: Feature Request: `git remote prune --all`
-Date: Mon, 18 Aug 2014 00:56:28 -0500
-Message-ID: <CAByVDedhkUgXkey9dkPYxVQqvzRW4D9OOXt4uFa74+7PvX0mjA@mail.gmail.com>
-References: <CAByVDef1_7x8Q1SL5wMtrKJQE51gvEOiKJ4xkpexXN5omBDn-Q@mail.gmail.com>
-	<20140817071805.GC23808@peff.net>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH] Documentation/git-rebase.txt: fix -f description to match actual git behavior.
+Date: Mon, 18 Aug 2014 12:53:45 +0400
+Message-ID: <87ha1advqe.fsf@osv.gnss.ru>
+References: <87bnrq22uf.fsf@osv.gnss.ru>
+	<xmqq4mxh5w34.fsf@gitster.dls.corp.google.com>
+	<xmqqzjf94f5n.fsf@gitster.dls.corp.google.com>
+	<87d2c22cnx.fsf@osv.gnss.ru>
+	<xmqq38cx1w0e.fsf@gitster.dls.corp.google.com>
+	<87ioltik7g.fsf@osv.gnss.ru>
+	<xmqqioltza8z.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 07:56:54 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 18 10:54:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJFw4-0003tD-26
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 07:56:52 +0200
+	id 1XJIhZ-0008Oh-R8
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 10:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbaHRF43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2014 01:56:29 -0400
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:61639 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911AbaHRF43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2014 01:56:29 -0400
-Received: by mail-yh0-f51.google.com with SMTP id f73so4132371yha.38
-        for <git@vger.kernel.org>; Sun, 17 Aug 2014 22:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nkB9MHaMXw2QWkxQpl8wWacY1gUvKtTxh+6NM/EkIW8=;
-        b=uI8REVWJ60IJVh6HnUY5Nu+t8AKt8wnEPDAA8xIk7eYTWYK9p08Cyxxh9giBFpLFUh
-         nEkGYJDY6DP5LokK7KStcIN8lIb/22LfQbE/sGzDC2AkXVjQ/6B4N86It7Kwrcs7047f
-         JcvdlGRS0oXn2ZowAC4uZOTgjZmXIItQ41r7p/UW9GxISMiwz1iLAFQI/hYRY8KYiaYC
-         xbt5NI06Prf9/FNivFLi1SYLbmQqBqX3IwtxWvoaw4q/LfGrHlRSnx8/3LfEJkTj3X/z
-         /KzSTyCH07dt45KkOhSm0PSX7hptnZLr6Y3Ktb5M68JEEQPwCUgGiLc4iOM/ACW6L0wA
-         tyGQ==
-X-Received: by 10.236.41.49 with SMTP id g37mr145312yhb.120.1408341388412;
- Sun, 17 Aug 2014 22:56:28 -0700 (PDT)
-Received: by 10.170.159.130 with HTTP; Sun, 17 Aug 2014 22:56:28 -0700 (PDT)
-In-Reply-To: <20140817071805.GC23808@peff.net>
+	id S1751516AbaHRIxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 04:53:49 -0400
+Received: from mail.javad.com ([54.86.164.124]:39396 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751478AbaHRIxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2014 04:53:48 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id 53BF660BF3;
+	Mon, 18 Aug 2014 08:53:47 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1XJIhF-0000Q0-LD; Mon, 18 Aug 2014 12:53:45 +0400
+In-Reply-To: <xmqqioltza8z.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 15 Aug 2014 14:57:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255382>
 
-Thanks, guys! `git fetch --all --prune` satisfies my request. I
-appreciate the education!
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sun, Aug 17, 2014 at 2:18 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Aug 16, 2014 at 07:52:44PM -0500, Travis Carden wrote:
+> Sergey Organov <sorganov@gmail.com> writes:
 >
->> I would like to propose the addition of a `git remote prune --all`
->> command option or similar mechanism for pruning all remotes in a
->> repository. For lack of such a feature, I've been using the following
->> bash alias:
+>>> A sentence "--force has no effect under --preserve-merges mode" does
+>>> not tell the readers very much, either and leaves them wondering if
+>>> it means "--preserve-merges mode always rebases every time it is
+>>> asked, never noticing 'ah, the history is already in a good shape
+>>> and there is no need to do anything further'" or "--preserve-merges
+>>> mode ignores --force and refuses to recreate the history if the
+>>> history is in the shape the mode deems is already desirable."
 >>
->> alias git-remote-prune-all='for REMOTE in `git remote`; do echo
->> "Pruning $REMOTE"; git remote prune $REMOTE; done;'
+>> In fact there is no way to force rebase when --preserve-merges is given.
+>> Neither --force nor --no-ff has any effect.
+>>
+>> Maybe some clarification could be given in --preserve-merges
+>> description, provided it's not clear that "has no effect" for --force
+>> means that one can't force the rebase in this case.
 >
-> I think in general we've been moving "git remote" away from actually
-> interacting with the other side, and pushing those features into "git
-> fetch". These days you can use "git fetch --prune --all" to do what you
-> want.
->
-> Note that this isn't _exactly_ the same thing. Fetch's prune will do a
-> normal fetch and _also_ prune. There is no way to say "just prune, but
-> do not update existing refs". If that detail is important, I think I'd
-> rather see the feature go the other way from your request: teach
-> git-fetch a "--prune-only" mode.
->
-> -Peff
+> I am not sure if that is an intended behaviour or simply a bug
+
+I think nobody actually ever needed to make it work, even though
+fundamentally it could have the same usage as in the case of flattening
+rebase. Once again, it seems that most uses of rebase handle already
+flat history and thus are served by vanilla invocation.
+
+> (I rarely use preserve-merges myself, so I offhand do not know for
+> certain).
+
+I wonder, don't you yourself use preserve-merges because you don't care
+and just use the default, or because you actually use vanilla
+history-flattening feature?
+
+-- 
+Sergey.
