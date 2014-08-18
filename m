@@ -1,93 +1,99 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Cannot run cmd command lines from GIT bash
-Date: Mon, 18 Aug 2014 16:43:33 +0200 (CEST)
-Message-ID: <1193308472.195844.1408373013669.JavaMail.zimbra@dewire.com>
-References: <E41D1E6BD9F1DF48877C833FE120496FDDE1D2FD@EU-MBX-04.mgc.mentorg.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Location of git config on Windows
+Date: Mon, 18 Aug 2014 17:25:20 +0200
+Message-ID: <CABPQNSZ=BKqNPCWUmaCSz+gJtBRhjkWtpcDbirsV+KJX=c0kpg@mail.gmail.com>
+References: <ygfvbpqooog.fsf@corbe.net> <CABPQNSZDizccths0b_RZ5FXYYq=+4_2N35DMj9h4Rha_2voekw@mail.gmail.com>
+ <53F135F8.60508@gmail.com> <ygflhqlvni7.fsf@corbe.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alex Dickson <alex_dickson@mentor.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 16:53:37 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Daniel Corbe <corbe@corbe.net>
+X-From: git-owner@vger.kernel.org Mon Aug 18 17:26:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJOJL-0005hr-MT
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 16:53:28 +0200
+	id 1XJOow-00079V-R1
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 17:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbaHROxX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Aug 2014 10:53:23 -0400
-Received: from zimbra.dewire.com ([83.140.172.131]:34897 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbaHROxX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Aug 2014 10:53:23 -0400
-X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Aug 2014 10:53:22 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id B40D281565;
-	Mon, 18 Aug 2014 16:43:37 +0200 (CEST)
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 92-K1PO9qnDN; Mon, 18 Aug 2014 16:43:33 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id DDFE98158A;
-	Mon, 18 Aug 2014 16:43:33 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id KxJDLGh_9IKl; Mon, 18 Aug 2014 16:43:33 +0200 (CEST)
-Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
-	by zimbra.dewire.com (Postfix) with ESMTP id C4E4681565;
-	Mon, 18 Aug 2014 16:43:33 +0200 (CEST)
-In-Reply-To: <E41D1E6BD9F1DF48877C833FE120496FDDE1D2FD@EU-MBX-04.mgc.mentorg.com>
-X-Originating-IP: [80.252.171.62]
-X-Mailer: Zimbra 8.0.7_GA_6020 (ZimbraWebClient - FF31 (Mac)/8.0.7_GA_6020)
-Thread-Topic: Cannot run cmd command lines from GIT bash
-Thread-Index: Ac+61DagxPOXr1ytShaxC21qQgOaGgAAFjSgl4rXcCw=
+	id S1751592AbaHRP0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 11:26:03 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:39692 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751372AbaHRP0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2014 11:26:01 -0400
+Received: by mail-ig0-f172.google.com with SMTP id h15so8430569igd.5
+        for <git@vger.kernel.org>; Mon, 18 Aug 2014 08:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=GOB1mAbfBQc8ONO4ANFjagy5qxq2pAQxpuiUVRrDf9k=;
+        b=IQ/zV9kcuONYlBxyctqxeY0+74r4Dkxa7PW8C7palvMuGRXBH3xjo2BLGaak/ZfEbA
+         kib8CzSJ3eofjITo+NWAEEn06VYL9p6F1oQxmKR86qMWqHKL8KYfpyVGfKp7PwuJcLns
+         HXHQz5QNaDXRplvmPMs0cNj9WaZeWujDiox7LDV2TznYzVkgmCYqAq+tmIDdfPRTzcPq
+         nHwlItf1Omv7Jd3DOOZS7UgQlOWIDWlGJEhgIBBUmnXnxeZDHTlkXrG+uwRlxKwEFBrQ
+         SxMdVev/RP6yrfeDncFXOO/SYlE5mQ0+ctIgUG1yc+HOe8QmCiLXMYH9EI4LxhUUZudJ
+         sQNg==
+X-Received: by 10.50.33.73 with SMTP id p9mr83557483igi.24.1408375560660; Mon,
+ 18 Aug 2014 08:26:00 -0700 (PDT)
+Received: by 10.64.123.5 with HTTP; Mon, 18 Aug 2014 08:25:20 -0700 (PDT)
+In-Reply-To: <ygflhqlvni7.fsf@corbe.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255390>
 
+On Mon, Aug 18, 2014 at 5:14 PM, Daniel Corbe <corbe@corbe.net> wrote:
+>
+> Karsten Blees <karsten.blees@gmail.com> writes:
+>
+>> Am 18.08.2014 00:01, schrieb Erik Faye-Lund:
+>>> On Sun, Aug 17, 2014 at 10:18 PM, Daniel Corbe <corbe@corbe.net> wrote:
+>>>>
+>>>> I installed git on my Windows machine while it was connected to my
+>>>> corporate network.  It picked up on that fact and used a mapped drive to
+>>>> store its configuration file.
+>>>>
+>>>> As a result, I cannot currently use git when disconnected from my
+>>>> network.  It throws the following error message: fatal: unable to access
+>>>> 'Z:\/.config/git/config': Invalid argument
+>>>>
+>>>> Obviously this value is stored in the registry somewhere because I made
+>>>> an attempt to uninstall and reinstall git with the same results.
+>>>>
+>>>> Can someone give me some guidance here?
+>>>
+>>> Git looks for the per-user configuration in $HOME/.gitconfig, and if
+>>> $HOME is not set, it falls back to $HOMEDIR/$HOMEPATH/.gitconfig. My
+>>> guess would be some of these environment variables are incorrectly set
+>>> on your system.
+>>
+>> To be precise, git checks if %HOME% is set _and_ the directory exists before
+>> falling back to %HOMEDRIVE%%HOMEPATH%.
+>>
+>> If %HOMEDRIVE%%HOMEPATH% isn't set or the directory doesn't exist either, it
+>> falls back to %USERPROFILE%, which is always local (C:/Users/<yourname>), even
+>> if disconnected from the network (at least that's how its supposed to be).
+>>
+>>
+>
+> Awesome!  Thanks for the advice.
+>
+> %HOMEDRIVE% and %HOMEPATH% are indeed set by my system and point to an
+>  (often disconnected) network drive.  I manually forced %HOME% to
+>  %USERPROFILE% and it works like a charm now.
+>
+> I would argue that on Windows %USERPROFILE% should be checked first (or
+> at least after %HOME%).
 
+Why? Then people won't be able to have their config files on network-shares, no?
 
------ Ursprungligt meddelande -----
-> Fr=C3=A5n: "Alex Dickson" <alex_dickson@mentor.com>
-> Till: git@vger.kernel.org
-> Skickat: m=C3=A5ndag, 18 aug 2014 13:07:46
-> =C3=84mne: Cannot run cmd command lines from GIT bash
->=20
-> HI,
-> I have just installed GIT from Git-1.9.4-preview20140815.exe having
-> previously been using Git-1.9.2-preview20140411.exe I now
-> find that some scripts I have been using for some time are no longer =
-working
-> correctly.
->=20
-> It seems that now I cannot pass parameters through to a DOS =C2=A0com=
-mand e.g.
-> =C2=A0=C2=A0=C2=A0=C2=A0net user <username> /DOMAIN
->=20
-> used to return full information about the user, now it just returns u=
-sername
-> not found, which is the behaviour
-> if it is invoked without the /DOMAIN switch. I have seen similar with=
- other
-> commands, an even simpler example would be
-> =C2=A0=C2=A0 cmd /c dir
->=20
-> This should run the DOS dir command, but all it does is invoke cmd.ex=
-e
-> =C2=A0interactively
-
-msys translates anything that looks like a unix path. try doubling all =
-initial
-slashes, i.e. cmd //c dir
-
-You might have better luck with Windows specifie questions in one of th=
-e
-msysgit forums than here.
-
--- robin
+I think a somewhat better approach would be to resolve the home
+directory lazily, unless %HOME% is set. That way we can check that
+%HOMEDRIVE%%HOMEPATH% actually exists as it's being accessed. Or you
+could just restart your shell when you disconnect...
