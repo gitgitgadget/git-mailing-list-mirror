@@ -1,132 +1,140 @@
 From: Fabian Ruch <bafain@gmail.com>
-Subject: [PATCH v3 17/27] rebase -i: teach do_pick the option --file
-Date: Mon, 18 Aug 2014 23:23:00 +0200
-Message-ID: <7fde59a391dea9474eb9b2ad07667fe528086922.1408396036.git.bafain@gmail.com>
+Subject: [PATCH v3 21/27] rebase -i: explicitly distinguish replay commands and exec tasks
+Date: Mon, 18 Aug 2014 23:23:04 +0200
+Message-ID: <f2bd4b597ddabc0fb79d40b494041a43b0ffbddf.1408396036.git.bafain@gmail.com>
 References: <53A258D2.7080806@gmail.com> <cover.1408396036.git.bafain@gmail.com>
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 18 23:24:30 2014
+X-From: git-owner@vger.kernel.org Mon Aug 18 23:24:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJUPe-0000aA-Qz
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 23:24:23 +0200
+	id 1XJUPs-0000iP-0g
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 23:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752400AbaHRVYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752416AbaHRVYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 17:24:23 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:58087 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332AbaHRVYT (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 18 Aug 2014 17:24:19 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:36239 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752332AbaHRVYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2014 17:24:12 -0400
-Received: by mail-la0-f43.google.com with SMTP id gi9so2616164lab.16
-        for <git@vger.kernel.org>; Mon, 18 Aug 2014 14:24:11 -0700 (PDT)
+Received: by mail-lb0-f182.google.com with SMTP id z11so4742827lbi.13
+        for <git@vger.kernel.org>; Mon, 18 Aug 2014 14:24:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+gu7COCrevXHBsE3LqtjnAvWl0lpI7uTf1vsmkRcQeU=;
-        b=VI6FJX3UTnTctybJhulkFbEM4ZGDqQzooNG8l1nz/iyT9TvLB1bsS6fqJG4OvD3V/X
-         EZAjfmtWZVH/X7T8ghT80sl0PvI1jvEnm1SpVoBdrvvfYq1lfEdHqHRh2jj4WjrVgtZb
-         eUGxW9rKufg22asqennaHmMTmj/A3JZd3a5nr+p6y+iubp4xuOjqwynrX/b6JsQ04Ta5
-         fC8E+ZnWiYn07Gnf8jMOWJbDhmzFazUBn+EvxdLBsO1+TbJhPvL4t8pEnn7FlHBC90FT
-         HuatmLO/YCYTDiGWeaqs5d26VmvZN+iBj9e6tHs8jOc6L7+8nr1uRB+UX7ewInAadbTu
-         3zzw==
-X-Received: by 10.153.6.7 with SMTP id cq7mr32348650lad.9.1408397051102;
-        Mon, 18 Aug 2014 14:24:11 -0700 (PDT)
+        bh=xxo4GI3kvJeDl5wBCOdKdXZPIaBnPDQB/OWQIinDelg=;
+        b=Lyxn4WrpQPyRJJI0mjZljSqumueQXLNEAgDlqX+yacfRoxCKzJa2RmmqWpR/bR4YKa
+         71k8Yr61NVec4bEvR3/Ag1vbIbdOLdo1cqLeVGqF2Bj7/fXScTDi5/8N1WCt7ZaWiatd
+         J4UMsWnZG29FrNuurkEjMW9wvEP8IR53UN+/OodHbo8SlwPUoikmU7nbYkWAC1keQgOo
+         4uRyS+xYXTQf/dnmFsRBpTWaoG7mxpUvixLPnZYbfv5DBwlmtPm/2Z8co5Y5M2ixfUH1
+         iCHcVhyMYbQYeYo6LikP5Mv/RjH1txIQqHrm8fvBZnlUpyfYiCWN4FEqXbGI5iTAlDao
+         pigg==
+X-Received: by 10.112.209.36 with SMTP id mj4mr30696605lbc.26.1408397058656;
+        Mon, 18 Aug 2014 14:24:18 -0700 (PDT)
 Received: from puffy.de (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id m9sm28852273lbd.28.2014.08.18.14.24.09
+        by mx.google.com with ESMTPSA id m9sm28852273lbd.28.2014.08.18.14.24.16
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 Aug 2014 14:24:10 -0700 (PDT)
+        Mon, 18 Aug 2014 14:24:17 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1
 In-Reply-To: <cover.1408396036.git.bafain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255423>
 
-`do_pick` is the git-cherry-pick wrapper in git-rebase--interactive
-that is used to implement the to-do list command `pick`, `reword` and
-`edit`. To cater for the different pick behaviours (like `squash`),
-`do_pick` accepts several options not only from the git-cherry-pick
-but also the git-commit interface.
+There are two kinds of to-do list commands available. One kind
+replays a commit (`pick`, `reword`, `edit`, `squash` and `fixup` that
+is) and the other executes a shell command (`exec`). We will call the
+first kind replay commands.
 
-Add the option `--file` from the git-commit interface to the options
-pool of `do_pick`. It expects an argument itself which is interpreted
-as a file path and takes the commit message from the given file. If
-`--file` is passed to `do_pick`, assign the given file path to the
-local variable `rewrite_message` and relay the option
+The two kinds of tasks are scheduled using different line formats.
+Replay commands expect a commit hash argument following the command
+name and exec concatenates all arguments to assemble a command line.
 
-    --file "$rewrite_message"
-
-to the git-commit command line which creates the commit.
+Adhere to the distinction of formats by not trying to parse the
+`sha1` field unless we are dealing with a replay command. Move the
+replay command handling code to a new function `do_replay` which
+assumes the first argument to be a commit hash and make no more such
+assumptions in `do_next`.
 
 Signed-off-by: Fabian Ruch <bafain@gmail.com>
 ---
- git-rebase--interactive.sh | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ git-rebase--interactive.sh | 42 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 20a637a..f8be238 100644
+index 6a123f0..e140bf0 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -464,7 +464,7 @@ record_in_rewritten() {
- 
- # Apply the changes introduced by the given commit to the current head.
- #
--# do_pick [--amend] [--edit] <commit>
-+# do_pick [--amend] [--file <file>] [--edit] <commit>
- #
- # Wrapper around git-cherry-pick.
- #
-@@ -474,6 +474,12 @@ record_in_rewritten() {
- #
- #     _This is not a git-cherry-pick option._
- #
-+# -F <file>, --file <file>
-+#     Take the commit message from the given file. This creates a fresh
-+#     commit.
-+#
-+#     _This is not a git-cherry-pick option._
-+#
- # -e, --edit
- #     After picking <commit>, open an editor and let the user edit the
- #     commit message. The editor contents becomes the commit message of
-@@ -492,6 +498,7 @@ do_pick () {
- 	rewrite=
- 	rewrite_amend=
- 	rewrite_edit=
-+	rewrite_message=
- 	while test $# -gt 0
- 	do
- 		case "$1" in
-@@ -505,6 +512,16 @@ do_pick () {
- 			rewrite_amend=y
- 			git rev-parse --verify HEAD >"$amend"
- 			;;
-+		-F|--file)
-+			if test $# -eq 0
-+			then
-+				warn "do_pick: option --file specified but no <file> given"
-+				return 2
-+			fi
-+			rewrite=y
-+			rewrite_message=$2
-+			shift
-+			;;
- 		-e|--edit)
- 			rewrite=y
- 			rewrite_edit=y
-@@ -555,6 +572,7 @@ do_pick () {
- 			   ${allow_empty_message:+--allow-empty-message} \
- 			   ${rewrite_amend:+--amend} \
- 			   ${rewrite_edit:+--edit --commit-msg} \
-+			   ${rewrite_message:+--file "$rewrite_message"} \
- 			   ${gpg_sign_opt:+"$gpg_sign_opt"} || return 3
+@@ -577,13 +577,12 @@ do_pick () {
  	fi
  }
+ 
+-do_next () {
+-	rm -f "$msg" "$author_script" "$amend" || exit
+-	read -r command sha1 rest < "$todo"
++do_replay () {
++	command=$1
++	sha1=$2
++	rest=$3
++
+ 	case "$command" in
+-	"$comment_char"*|''|noop)
+-		mark_action_done
+-		;;
+ 	pick|p)
+ 		comment_for_reflog pick
+ 
+@@ -659,6 +658,28 @@ do_next () {
+ 		esac
+ 		record_in_rewritten $sha1
+ 		;;
++	*)
++		read -r command <"$todo"
++		warn "Unknown command: $command"
++		fixtodo="Please fix this using 'git rebase --edit-todo'."
++		if git rev-parse --verify -q "$sha1" >/dev/null
++		then
++			die_with_patch $sha1 "$fixtodo"
++		else
++			die "$fixtodo"
++		fi
++		;;
++	esac
++}
++
++do_next () {
++	rm -f "$msg" "$author_script" "$amend" || exit
++	read -r command sha1 rest <"$todo"
++
++	case "$command" in
++	"$comment_char"*|''|noop)
++		mark_action_done
++		;;
+ 	x|"exec")
+ 		read -r command rest < "$todo"
+ 		mark_action_done
+@@ -698,14 +719,7 @@ do_next () {
+ 		fi
+ 		;;
+ 	*)
+-		warn "Unknown command: $command $sha1 $rest"
+-		fixtodo="Please fix this using 'git rebase --edit-todo'."
+-		if git rev-parse --verify -q "$sha1" >/dev/null
+-		then
+-			die_with_patch $sha1 "$fixtodo"
+-		else
+-			die "$fixtodo"
+-		fi
++		do_replay $command $sha1 "$rest"
+ 		;;
+ 	esac
+ 	test -s "$todo" && return
 -- 
 2.0.1
