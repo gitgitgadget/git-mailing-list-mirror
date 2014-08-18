@@ -1,120 +1,168 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Relative submodule URLs
-Date: Mon, 18 Aug 2014 13:55:05 -0700
-Message-ID: <20140818205505.GA20185@google.com>
-References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 22:55:28 2014
+From: Fabian Ruch <bafain@gmail.com>
+Subject: [PATCH v3 00/27] Enable options --signoff, --reset-author for pick, reword, edit
+Date: Mon, 18 Aug 2014 23:22:43 +0200
+Message-ID: <cover.1408396036.git.bafain@gmail.com>
+References: <53A258D2.7080806@gmail.com>
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 18 23:23:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJTxe-0003hT-2o
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 22:55:26 +0200
+	id 1XJUOw-0000DK-BS
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 23:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751979AbaHRUzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2014 16:55:13 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:58154 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751941AbaHRUzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2014 16:55:12 -0400
-Received: by mail-pa0-f53.google.com with SMTP id rd3so8547231pab.12
-        for <git@vger.kernel.org>; Mon, 18 Aug 2014 13:55:12 -0700 (PDT)
+	id S1752188AbaHRVXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 17:23:34 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:35085 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751066AbaHRVXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2014 17:23:33 -0400
+Received: by mail-la0-f46.google.com with SMTP id b8so5039433lan.5
+        for <git@vger.kernel.org>; Mon, 18 Aug 2014 14:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=NBOKBcphBu3Sz49etSMrZOL5b1btREHDhB8ptj96zLI=;
-        b=eiG07P/jXySnU92QyYzu5A5fG4NjaXu2b86V4NxxmrXc5WdSmVDayDBishnZs/jzX7
-         V31ikCHiJqm8siomCqlAtcJWkWEc1rT3b36GsXhPXlnfPPELHOD1wBhVt30I0+vEmCAL
-         nk19ol63SfSmO37kZexdyw3iaFOwsyH2b2KR0+bSm4dvpD2ne8eFwxcaSAjOU9Gywilz
-         vduPP2SLi2MD797IabiUK7FVp3OKLV/er3/XJu30fDBDFu5slqxpYFcCXopwnEVFZGWO
-         fPXTrYi2P8xBBKRzj77k7V7JJBTwANGg6wTNCV/o3wZm5h8NkuyAP/iAtRvq1cm+DXeS
-         0ubg==
-X-Received: by 10.66.102.40 with SMTP id fl8mr13454346pab.147.1408395311980;
-        Mon, 18 Aug 2014 13:55:11 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:a15c:f8:8036:3f5e])
-        by mx.google.com with ESMTPSA id fw9sm8174689pdb.45.2014.08.18.13.55.10
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=SRnceaiCW/Uv5GlsFVegT6NFPkiyd2m+z+4PU6AqvMs=;
+        b=tChbadkhm7MrxRn2RJ9i9A+7bRawNYOl3i3i+T5vlXAzebvgs2cW+8D3hMbBfMcaxS
+         Lvg7c92j++AE8XXnVGCUVjwhgMKXM0Tj+FOKPXAEJkTxr5aJdSqWuc71khJaw17tZb3Y
+         q7EQiWGVq9I6sJm3SU6ZCaWCg3OYDLfijwWmznbgQ4rR+by5A/U5UQelG2/hracdTcU2
+         TNBNIPwZbBfw15/fdGTr5k+TPwPyGwxkkya9nd+QjLBsrJ5EKUFPR08nSMfvAUCwDA9j
+         u02JNocg2Ms/T8zUjH5TktNd9rEGHcvUNmBpYwBtg8W9XMgHJBK1BS2eZr1iNI6OAsNY
+         FBwg==
+X-Received: by 10.112.93.75 with SMTP id cs11mr29576125lbb.82.1408397012038;
+        Mon, 18 Aug 2014 14:23:32 -0700 (PDT)
+Received: from puffy.de (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id m9sm28852273lbd.28.2014.08.18.14.23.29
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 18 Aug 2014 13:55:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 18 Aug 2014 14:23:30 -0700 (PDT)
+X-Mailer: git-send-email 2.0.1
+In-Reply-To: <53A258D2.7080806@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255410>
 
 Hi,
 
-Robert Dailey wrote:
+this is the third reroll of the patch series that makes the
+well-known commit options `--signoff` and `--reset-author` available
+to be used with the to-do list commands `pick`, `reword` and `edit`.
 
-> The documentation wasn't 100% clear on this, but I'm assuming by
-> "remote origin", it says that the relative URL is relative to the
-> actual remote *named* origin (and it is not using origin as just a
-> general terminology).
+What follows is a short changelog since the second reroll from almost
+two weeks ago. The changes were mostly made in response to Thomas'
+review.
 
-Thanks for reporting.  The remote used is the default remote that "git
-fetch" without further arguments would use:
+- Merely a commit message comment: The `editor.sh` wrapper script is
+  still necessary to use `output` with interactive to-do list
+  commands because the `--quiet` option does not force all commands
+  to be totally silent.
 
-	get_default_remote () {
-		curr_branch=$(git symbolic-ref -q HEAD)
-		curr_branch="${curr_branch#refs/heads/}"
-		origin=$(git config --get "branch.$curr_branch.remote")
-		echo ${origin:-origin}
-	}
+- `git-rebase--interactive.sh` now uses the quoting functionality of
+  git-rev-parse when assigning the `editor.sh` path to the
+  `GIT_EDITOR` environment variable, in case the path includes double
+  quotes itself.
 
-The documentation is wrong.  git-fetch(1) doesn't provide a name for
-this thing.  Any ideas for wording?
+- The tests dealing with squash commits that violate either
+  commit-msg or pre-commit now test `squash` and `fixup` sequences
+  with more than two commits. This is important since the final
+  commit is created on a different code path than the others.
 
-> Is there a way to specify (on a per-clone basis) which named remote
-> will be used to calculate the URL for submodules?
+- The `fake_editor.sh` change that prints the debug output on stderr
+  instead of stdout is now a separate patch so that it can be
+  referred to directly. The change might be considered a hack and
+  needs revision.
 
-Currently there isn't, short of reconfiguring the remote used by
-default by "git fetch".
+- Since whitespace and shell quoting are not supported by line
+  options, the `opts` variable does not need to be evaluated using
+  `eval` anymore.
 
-> Various co-workers use the remote named "central" instead of
-> "upstream" and "fork" instead of "origin" (because that just makes
-> more sense to them and it's perfectly valid).
->
-> However if relative submodules require 'origin' to exist AND also
-> represent the upstream repository (in triangle workflow), then this
-> breaks on several levels.
+- Malformed to-do command lines either trigger an "unknown command"
+  or an "unknown option" error message but not both.
 
-Can you explain further?  In a triangle workflow, "git fetch" will
-pull from the 'origin' remote by default and will push to the remote
-named in the '[remote] pushdefault' setting (see "remote.pushdefault"
-in git-config(1)).  So you can do
+- A test case that specifies that `git rebase --continue` only
+  commits staged changes if the user has not committed on top of the
+  last successfully replayed commit in the meantime. The rationale
+  behind this is that `git rebase --continue` commits using the
+  author information of the commit it tried to replay last. While it
+  perfectly makes sense to assume that this information is correct
+  when HEAD has not changed, it is probable that it is incorrect when
+  the user has created commits herself because the rebase process was
+  interrupted for conflict resolution only and one must know
+  internals to intentionally make `git rebase --continue` commit
+  changes on top of user-created commits using original author
+  information.
 
-	[remote]
-		pushDefault = whereishouldpush
+- `do_pick` did not preserve the authorship of the original commit
+  when it was asked to rewrite the commit, for instance using
+  `reword`. This was fixed by applying the authorship of the named
+  commit using `do_with_author`. That doesn't interfere with squash
+  commits because `do_with_author` is a no-op when used with `git
+  commit --amend`.
 
-and then 'git fetch' and 'git fetch --recurse-submodules' will fetch
-from "origin" and 'git push' will push to the whereishouldpush remote.
+- `git rebase --continue` did not apply the line options after
+  conflict resolution. This was added by remembering line options the
+  way `git-rebase--interactive.sh` reminds itself of amending
+  commits.
 
-It might make sense to introduce a new
+- The test suite `t3427-rebase-line-options.sh` is responsible for
+  the specification of to-do lists that use line options.
 
-	[remote]
-		default = whereishouldfetch
+- The two line options available are now documented both in the
+  git-rebase man page and the to-do list help text.
 
-setting to allow the name "origin" above to be replaced, too.  Is that
-what you mean?
+Thanks for your time,
+   Fabian
 
-Meanwhile it is hard to fork a project that uses relative submodule
-URLs without also forking the submodules (or, conversely, to fork some
-of the submodules of a project that uses absolute submodule URLs).
-That's a real and serious problem but I'm not sure how it relates to
-the names of remotes.  My preferred fix involves teaching git to read
-a refs/meta/git (or similarly named) ref when cloning a project with
-submodules and let settings from .gitmodules in that ref override
-.gitmodules in other branches.  Is that what you were referring to?
+Fabian Ruch (27):
+  rebase -i: allow replaying commits with empty log messages
+  rebase -i: allow squashing empty commits without complaints
+  rebase -i: allow rewording empty commits without complaints
+  fake_editor: leave standard output unchanged
+  rebase -i: hide interactive command messages in verbose mode
+  rebase -i: discard redundant message when rewording fails
+  commit: allow disabling pre-commit and commit-msg separately
+  rebase -i: verify squash messages using commit-msg
+  rebase -i: do not verify reworded patches using pre-commit
+  rebase -i: teach do_pick the option --edit
+  rebase -i: implement reword in terms of do_pick
+  rebase -i: log the replay of root commits
+  rebase -i: do not use -C when --no-edit is sufficient
+  rebase -i: commit only once when rewriting picks
+  rebase -i: do not die in do_pick
+  rebase -i: teach do_pick the option --amend
+  rebase -i: teach do_pick the option --file
+  rebase -i: remove no-op do_with_author git commit --amend
+  rebase -i: prepare for squash in terms of do_pick --amend
+  rebase -i: implement squash in terms of do_pick
+  rebase -i: explicitly distinguish replay commands and exec tasks
+  rebase -i: parse to-do list command line options
+  rebase -i: teach do_pick the option --reset-author
+  rebase -i: teach do_pick the option --signoff
+  rebase -i: do not overwrite user author information
+  rebase -i: refuse to commit when resuming with updated head
+  rebase -i: enable --signoff, --reset-author for pick, reword, edit
 
-Curious,
-Jonathan
+ Documentation/git-commit.txt   |   8 +-
+ Documentation/git-rebase.txt   |  13 ++
+ builtin/commit.c               |  32 +++-
+ git-rebase--interactive.sh     | 370 ++++++++++++++++++++++++++++++++---------
+ git-rebase.sh                  |  13 +-
+ t/lib-rebase.sh                |  28 +++-
+ t/t3404-rebase-interactive.sh  | 290 ++++++++++++++++++++++++++++++--
+ t/t3406-rebase-message.sh      |  18 ++
+ t/t3412-rebase-root.sh         |  16 ++
+ t/t3427-rebase-line-options.sh | 216 ++++++++++++++++++++++++
+ t/t7503-pre-commit-hook.sh     |  65 +++++++-
+ t/t7504-commit-msg-hook.sh     |  85 ++++++++--
+ t/test-lib-functions.sh        |  23 ++-
+ 13 files changed, 1044 insertions(+), 133 deletions(-)
+ create mode 100755 t/t3427-rebase-line-options.sh
+
+-- 
+2.0.1
