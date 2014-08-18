@@ -1,86 +1,69 @@
-From: Bernhard Reiter <ockham@raz.or.at>
-Subject: Re: [PATCH] git-imap-send: simplify tunnel construction
-Date: Mon, 18 Aug 2014 19:15:17 +0200
-Message-ID: <53F234A5.7010704@raz.or.at>
-References: <53EBA0C3.2040805@raz.or.at> <xmqq1tsdybq8.fsf@gitster.dls.corp.google.com>
+From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+Subject: Re: [PATCH] read-cache.c: Ensure unmerged entries are removed
+Date: Mon, 18 Aug 2014 19:23:29 +0200
+Message-ID: <CAPuZ2NFqR67LA=eeDQVJsm_vGAHHGBy2hVNugrovzCS_kzXtMg@mail.gmail.com>
+References: <1407857491-16633-1-git-send-email-jsorianopastor@gmail.com>
+	<1407857491-16633-2-git-send-email-jsorianopastor@gmail.com>
+	<xmqq8umt5z8i.fsf@gitster.dls.corp.google.com>
+	<CAPuZ2NFcJ5FFeJP=0-oG59fs=3ztenoPOGWOZKfZDdHpLGOYeA@mail.gmail.com>
+	<xmqqiolw2dqc.fsf@gitster.dls.corp.google.com>
+	<CAPuZ2NFJiUt1p_OfefswS8O8_BA6mQy=PStmYyNw=ABZCOQprQ@mail.gmail.com>
+	<xmqqmwb5zatx.fsf@gitster.dls.corp.google.com>
+	<CAPuZ2NEE0d_5Vj3MSGEJCtFBFOe75Rb+q9fk7q1YC-WcvAMb4A@mail.gmail.com>
+	<xmqqppfxycxj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 18 19:15:33 2014
+X-From: git-owner@vger.kernel.org Mon Aug 18 19:23:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJQWn-0005GG-2d
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 19:15:29 +0200
+	id 1XJQeh-00017m-Gk
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 19:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751967AbaHRRPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2014 13:15:24 -0400
-Received: from mhub.domainplanet.at ([92.43.99.119]:50515 "EHLO
-	mhub.domainplanet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751706AbaHRRPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2014 13:15:23 -0400
-Received: from smtp.domainplanet.at (smtp.domainplanet.at [92.43.99.22])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mhub.domainplanet.at (Postfix) with ESMTPS id 09B019D35AE;
-	Mon, 18 Aug 2014 19:15:19 +0200 (CEST)
-Received: from [90.0.0.2] (91-114-138-253.adsl.highway.telekom.at [91.114.138.253])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.domainplanet.at (Postfix) with ESMTPSA id 0A4A9BFB8D;
-	Mon, 18 Aug 2014 19:15:27 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <xmqq1tsdybq8.fsf@gitster.dls.corp.google.com>
+	id S1751722AbaHRRXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 13:23:35 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:45230 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597AbaHRRXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2014 13:23:34 -0400
+Received: by mail-pd0-f180.google.com with SMTP id v10so7942141pde.11
+        for <git@vger.kernel.org>; Mon, 18 Aug 2014 10:23:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=O/EuVwrbmhoLASm0vVuKpQrxd32ifXXvmgeaxQD2cl4=;
+        b=meQBMLzxOFaN9pphw+QFiXC7Zzh9mr/iwJN4BMHunY+CImobNn/ondQK07lCZBDNpu
+         er9BEcq4QcZUUa+L9ZLmxIERTWu6i4r+hG1Od5F2CCgbW02Y1gjMtg7k23ugqaxwFeQi
+         puJ7UpjtdUcPELOBulYirYdyuSYLJSJfr0Ak2sm5GRe2FWpRq3l05oSodu865WGdXXuG
+         QDMoOPYYp72flokYQyRW90WlH1m12DRyLRb1pMx4Cf9Axi5JuajJLDiPdITjgqVFIIBa
+         bzfiI0o3VrJLUYJCpXc5i3Qc1DOJQBsTLbwnWNasiJtmbZK72gcJvwNuX3oN1P67MU4Z
+         oRjg==
+X-Received: by 10.68.172.162 with SMTP id bd2mr30473137pbc.47.1408382609403;
+ Mon, 18 Aug 2014 10:23:29 -0700 (PDT)
+Received: by 10.70.37.2 with HTTP; Mon, 18 Aug 2014 10:23:29 -0700 (PDT)
+In-Reply-To: <xmqqppfxycxj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255404>
 
-Am 2014-08-18 um 19:00 schrieb Junio C Hamano:
-> Bernhard Reiter <ockham@raz.or.at> writes:
-> 
->> Signed-off-by: Bernhard Reiter <ockham@raz.or.at>
->> ---
->>  imap-send.c | 5 ++---
->>  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> Oy.  Where is the patch?
-> 
-> Please avoid multipart/mixed on this list.
-> 
-> Thanks.
+Yes, --index-info worked for this purpouse, thanks!
 
-D'oh. Sorry about that. Strangely, that's what I'm getting from a
-message created with git-imap-send. Maybe Thunderbird is messing it up
-afterwards. Anyway:
+https://github.com/jsoriano/git/blob/remove-unmerged-index-entry/t/t9904-unmerged-file-with-merged-entry.sh#L25
 
-diff --git a/imap-send.c b/imap-send.c
-index 524fbab..fb01a9c 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -961,17 +961,16 @@ static struct imap_store *imap_open_store(struct
-imap_server_conf *srvc)
- 	/* open connection to IMAP server */
+I'll try to send the patches to the mailing lists later today or tomorrow.
 
- 	if (srvc->tunnel) {
--		const char *argv[] = { srvc->tunnel, NULL };
- 		struct child_process tunnel = {NULL};
-
- 		imap_info("Starting tunnel '%s'... ", srvc->tunnel);
-
--		tunnel.argv = argv;
-+		argv_array_push(&tunnel.args, srvc->tunnel);
- 		tunnel.use_shell = 1;
- 		tunnel.in = -1;
- 		tunnel.out = -1;
- 		if (start_command(&tunnel))
--			die("cannot start proxy %s", argv[0]);
-+			die("cannot start proxy %s", srvc->tunnel);
-
- 		imap->buf.sock.fd[0] = tunnel.out;
- 		imap->buf.sock.fd[1] = tunnel.in;
+On Mon, Aug 18, 2014 at 6:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
+>
+>> I'd like to add some tests too for this, but I don't know how to
+>> reproduce this state with git commands only, is there any way to add
+>> entries to the index without checkings?
+>
+> Perhaps feeding "update-index --index-info" four input lines would work?
