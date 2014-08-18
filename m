@@ -1,76 +1,74 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Location of git config on Windows
-Date: Mon, 18 Aug 2014 17:51:56 +0200
-Message-ID: <CABPQNSZGYDnSfyS7X+MdskhUrmFx5Kzoi+A5+pgoBiX5kPruyg@mail.gmail.com>
-References: <ygfvbpqooog.fsf@corbe.net> <CABPQNSZDizccths0b_RZ5FXYYq=+4_2N35DMj9h4Rha_2voekw@mail.gmail.com>
- <53F135F8.60508@gmail.com> <ygflhqlvni7.fsf@corbe.net> <CABPQNSZ=BKqNPCWUmaCSz+gJtBRhjkWtpcDbirsV+KJX=c0kpg@mail.gmail.com>
- <ygf7g25vm9v.fsf@corbe.net> <CABPQNSZayAr0jf9C55wtEH_AJ_hSUkwFsGV4ZxVixizthojkRA@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-rebase.txt: fix -f description to match actual git behavior.
+Date: Mon, 18 Aug 2014 09:32:30 -0700
+Message-ID: <xmqqtx59yd0h.fsf@gitster.dls.corp.google.com>
+References: <87bnrq22uf.fsf@osv.gnss.ru>
+	<xmqq4mxh5w34.fsf@gitster.dls.corp.google.com>
+	<xmqqzjf94f5n.fsf@gitster.dls.corp.google.com>
+	<87d2c22cnx.fsf@osv.gnss.ru>
+	<xmqq38cx1w0e.fsf@gitster.dls.corp.google.com>
+	<87ioltik7g.fsf@osv.gnss.ru>
+	<xmqqioltza8z.fsf@gitster.dls.corp.google.com>
+	<87ha1advqe.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Daniel Corbe <corbe@corbe.net>
-X-From: git-owner@vger.kernel.org Mon Aug 18 17:52:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sergey Organov <sorganov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 18 18:33:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJPEf-0004sj-MN
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 17:52:42 +0200
+	id 1XJPrs-0000bg-Jo
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 18:33:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733AbaHRPwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Aug 2014 11:52:37 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:55183 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbaHRPwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Aug 2014 11:52:37 -0400
-Received: by mail-ig0-f174.google.com with SMTP id c1so8515057igq.13
-        for <git@vger.kernel.org>; Mon, 18 Aug 2014 08:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=ldOo0Avgo3gboKWPfJHBZWApnRgj9vGt1w5RhAZX3uQ=;
-        b=mnPXoSE5IeWY7UgrbBlBwVO0OHcqm1KLIvPR34QJnwVAD5atYLwm4r59/Q4ogJUTSz
-         dQGNafgkCqdkU8DE3bDfLtFfCrpVGHPhI3HEBkf8NQnITPbRg0ZHU3ePJGVC3pzzJhG/
-         jJaTFplKWL1uWj0B5o+D0HIFhwvlUQT/D8d1WDp4KEo3De9rpNy+q6gu339CcL1rUDrT
-         yb0X8xKDXRyhI01+BDwr/YI9TDAjnULNN/VraYgPrUFpk4P6kd8O1qW5mLuKhVZgyfQe
-         L0jDHouG/yIctPD/vmrx1WDBMAXc8OUmudk/FiPNeniGNgmpXCIBt84Oe+18/azr06fd
-         JHtA==
-X-Received: by 10.50.4.9 with SMTP id g9mr42474053igg.42.1408377156314; Mon,
- 18 Aug 2014 08:52:36 -0700 (PDT)
-Received: by 10.64.123.5 with HTTP; Mon, 18 Aug 2014 08:51:56 -0700 (PDT)
-In-Reply-To: <CABPQNSZayAr0jf9C55wtEH_AJ_hSUkwFsGV4ZxVixizthojkRA@mail.gmail.com>
+	id S1751850AbaHRQcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Aug 2014 12:32:42 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55429 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751835AbaHRQck (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Aug 2014 12:32:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D61F430B5B;
+	Mon, 18 Aug 2014 12:32:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3jnePi3GCNESMpYZJu3zAaiSRFs=; b=cdXEzL
+	KAnhy4s58WymgOEtWeA2yy0T0k4HDCMtrkB56uTNR0PDaYeR2Zr1rifbV2Ve7P7Q
+	wu0RiLRFgkr6MWiJBdcK5wCrTpwcwAzkMxSWyipbrvdjYs3pKBA2MP/8LH9Se/LB
+	5v7nHlIZi1h16iaUWTVsKzVOEs6Gmsreqs7vA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j+mf6O9KFkRRXfNCKdlPOFmElVm4DaG9
+	lcJlzo++AT0c1XAGr4pjol9FzJffgDdT1C21/mAsyRL6v0vGlwWXcqYv62jUO34J
+	67lcKM51czgyZqd4YlHr4nS4q6yEOhZ67N3b0j0ptQeXOhXHvczOuBed/Fy0xov5
+	QHhX652/ToQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CB6F130B5A;
+	Mon, 18 Aug 2014 12:32:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1E39A30B4E;
+	Mon, 18 Aug 2014 12:32:32 -0400 (EDT)
+In-Reply-To: <87ha1advqe.fsf@osv.gnss.ru> (Sergey Organov's message of "Mon,
+	18 Aug 2014 12:53:45 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 40A4DD18-26F5-11E4-A199-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255395>
 
-On Mon, Aug 18, 2014 at 5:47 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> On Mon, Aug 18, 2014 at 5:40 PM, Daniel Corbe <corbe@corbe.net> wrote:
->>
->> Erik Faye-Lund <kusmabite@gmail.com> writes:
->>
->>> Or you could just restart your shell when you disconnect...
->>
->> Well I'm not that daft.  I tried that and if it had resolved my problem
->> I wouldn't have posted.
+Sergey Organov <sorganov@gmail.com> writes:
+
+>> (I rarely use preserve-merges myself, so I offhand do not know for
+>> certain).
 >
-> Hm, but isn't that what Karsten explains in his last paragraph? What
-> shell are you running msys or cmd?
+> I wonder, don't you yourself use preserve-merges because you don't care
+> and just use the default, or because you actually use vanilla
+> history-flattening feature?
 
-Our /etc/profile does this:
-
-https://github.com/msysgit/msysgit/blob/master/etc/profile#L38
-
-...however, our git-wrapper only does this:
-
-https://github.com/msysgit/msysgit/blob/master/src/git-wrapper/git-wrapper.c#L71
-
-So yeah, we don't seem to actually check if %HOMEDRIVE%%HOMEPATH%
-exists. Perhaps fixing this is the right thing to do then? Since the
-git-wrapper is run for *every* invokation of git, you wouldn't even
-have to restart the shell in this case.
+The latter.
