@@ -1,96 +1,157 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Relative submodule URLs
-Date: Tue, 19 Aug 2014 11:15:24 -0500
-Message-ID: <CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
-References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
-	<20140818205505.GA20185@google.com>
-	<20140819102421.GA5012@book.hvoigt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Git <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Aug 19 18:15:41 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH 5/5] refs.c: add an err argument to pack_refs
+Date: Tue, 19 Aug 2014 09:17:04 -0700
+Message-ID: <1408465024-23162-6-git-send-email-sahlberg@google.com>
+References: <1408465024-23162-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 19 18:17:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJm4P-00024z-Tz
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:15:38 +0200
+	id 1XJm5z-0002yN-8S
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753076AbaHSQP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 12:15:26 -0400
-Received: from mail-vc0-f172.google.com ([209.85.220.172]:52592 "EHLO
-	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752367AbaHSQPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 12:15:25 -0400
-Received: by mail-vc0-f172.google.com with SMTP id im17so7686069vcb.31
-        for <git@vger.kernel.org>; Tue, 19 Aug 2014 09:15:24 -0700 (PDT)
+	id S1753173AbaHSQRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 12:17:11 -0400
+Received: from mail-ig0-f201.google.com ([209.85.213.201]:34448 "EHLO
+	mail-ig0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752988AbaHSQRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 12:17:08 -0400
+Received: by mail-ig0-f201.google.com with SMTP id h3so1086157igd.0
+        for <git@vger.kernel.org>; Tue, 19 Aug 2014 09:17:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=wMlKZC8IgLVzfpWW+5g750Webw96IwAA7C3/2N6Uymo=;
-        b=rULcBFBWKYKk1R1Jj/ABbLIomCcA09jeaMAnAnxDYS9ZFKj6f1x5lKjp4++XziibZo
-         Hz9NKvzfj+s0YRtPO2SqUzUDs8qw8OQQbzuDJRcMaeqqfG7YtHh+/BJL4vxWfiaZURwq
-         khgivhvZjGY+TtxR3KXbQK1k/KB+5yvFR5dtvjaFBBlNt+MKTKHERP002a1QHq2meIwi
-         afVByblI1NZY/fuyRfqG7RKq805rXzqUYXUYfiZwG7Vjh2r48dyPU/ZyNlNP997NhRz1
-         TgojZAB9fKLjVt52QOGhwyasn2Nw+yFD8ebvM23v7rgK9uMqaxWYn3DMV24c/93ZUvlZ
-         3iFA==
-X-Received: by 10.220.96.137 with SMTP id h9mr1447108vcn.46.1408464924304;
- Tue, 19 Aug 2014 09:15:24 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.220.102.201 with HTTP; Tue, 19 Aug 2014 09:15:24 -0700 (PDT)
-In-Reply-To: <20140819102421.GA5012@book.hvoigt.net>
-X-Google-Sender-Auth: _a6AcKW6Va1W9wiNJykyCIAzyE4
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=G5tv8pZZRpDm8NEGKzyPtYmV/CboZEpL1N9XLlkoz00=;
+        b=USuVZAis2FKImSLt42dwDMXNcS0eYR74Ug06JxhNfZ9lyHB1DEsl9ZDKck7t5RIHi8
+         chRXlnyVarYjVX3lNAMFrb+csAcN0dIrZdKvhrHrCI/0LGCpHgifSyv5VJeC4h10WnLX
+         TPVsV+ka0IY8IsHeywj+aYEPHeOLnFmM50+17IUmSRFiWqZORcWI8sRDtag5sM5aL7Ot
+         zdE1sYitgz1VjIhL1m9+AJrWTLBgcmAlxScWfFKX3R1E8rJKmoLO9BaFCffT3pATkC3G
+         tzbChoR2ejzktl5ttBNFsBnIjomv4IrwawBPIGylbBbOJnfpUeVWMEPnZo0vEGu6OE/3
+         7YYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=G5tv8pZZRpDm8NEGKzyPtYmV/CboZEpL1N9XLlkoz00=;
+        b=DhRVbYY5X7uXBZGDxGumxSeC8RbA6iXx8vK8VAITJg6RN97g9mlwMtx0g7ZJHmoROS
+         gP0ywicTs45ZyteHGIGk3bQGlBPlGkcVgRS8NN4OZ7ZiT1bpS6GAXK9zt+oVbyvDR9Ae
+         3GIZfP5ZkHJ6qRtXJ19+oP06qa/BKdOPswl/b9jyyXVU1d+zmoiWZsdWQnGm9e3CFTn5
+         mSIKb/NYiV5djXbuyUL59GZHQQIWgBFA9cGCdNw6CF1/ldOdydGheVuwIrbNajAk+czG
+         TZlAPcOOEOT/n3VX6txgmfq3pfuEeORP02NKD4fjTX3gGYHXV3o/teT9otb5KSXiw4Nx
+         DfrA==
+X-Gm-Message-State: ALoCoQniM4TQclc1f3l6REFatka2fy4maMC8NYjIBYyLboeGQq3h1MQGVOT8ahtHWXMrkHw8p7Os
+X-Received: by 10.182.125.68 with SMTP id mo4mr443559obb.49.1408465027311;
+        Tue, 19 Aug 2014 09:17:07 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id a66si326101yhg.7.2014.08.19.09.17.07
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 19 Aug 2014 09:17:07 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 2BD515A4412;
+	Tue, 19 Aug 2014 09:17:07 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id B7F44E0E84; Tue, 19 Aug 2014 09:17:06 -0700 (PDT)
+X-Mailer: git-send-email 2.0.1.556.ge8f7cba.dirty
+In-Reply-To: <1408465024-23162-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255464>
 
-On Tue, Aug 19, 2014 at 5:24 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> I think the OP problem stems from him having a branch that does not have a
-> remote configured. Since they do not have 'origin' as a remote and
->
->         git submodule update --init --recursive path/to/submodule
->
-> fails. Right?
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ builtin/pack-refs.c |  8 +++++++-
+ refs.c              | 13 ++++++-------
+ refs.h              |  3 ++-
+ 3 files changed, 15 insertions(+), 9 deletions(-)
 
-Not exactly. The issue is that there is a tug of war going on between
-three specific commands (all of which utilize the tracked remote):
-
-git fetch
-git pull
-git submodule update (for relative submodules)
-
-The way I set up my remote tracking branch will be different for each
-of these commands:
-
-- git pull :: If I want convenient pulls (with rebase), I will track
-my upstream branch. My pushes have to be more explicit as a tradeoff.
-- git push :: If I want convenient pushes, track my origin branch.
-Pulls become less convenient. My relative submodules will now need to
-be forked.
-- git submodule update :: I track upstream to avoid forking my
-submodules. But pushes become more inconvenient.
-
-As you can see, I feel like we're overusing the single remote setting.
-Sure, we've added some global settings to set default push/pull
-remotes and such, but I don't think that is a sustainable long term
-solution. I like the idea of possibly introducing multiple tracking
-remotes for various purposes. This adds some additional configuration
-overhead (slightly), but git is already very config heavy so it might
-be worth exploring. At least, this feels like a better thing for the
-long term as I won't be constantly switching my tracking remote for
-various purposes.
-
-Could also explore the possibility of creating "const remotes". If we
-specify a remote MUST exist for relative submodules, git can create it
-for us, and fail to operate without it. It's up to the user to map
-"fork" to "origin" if needed (perhaps add a `git remote clone <source>
-<new remote>` to assist with this)?
-
-Various approaches we can take, but I don't do development on Git so
-I'm not sure what makes the most sense.
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index b20b1ec..299768e 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -10,6 +10,7 @@ static char const * const pack_refs_usage[] = {
+ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ {
+ 	unsigned int flags = PACK_REFS_PRUNE;
++	struct strbuf err = STRBUF_INIT;
+ 	struct option opts[] = {
+ 		OPT_BIT(0, "all",   &flags, N_("pack everything"), PACK_REFS_ALL),
+ 		OPT_BIT(0, "prune", &flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
+@@ -17,5 +18,10 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ 	};
+ 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
+ 		usage_with_options(pack_refs_usage, opts);
+-	return pack_refs(flags);
++	if (pack_refs(flags, &err)) {
++		error("%s", err.buf);
++		strbuf_release(&err);
++		return -1;
++	}
++	return 0;
+ }
+diff --git a/refs.c b/refs.c
+index 19e73f3..5875c29 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2328,7 +2328,7 @@ static int commit_packed_refs(struct strbuf *err)
+ 		strbuf_addf(err, "error writing packed-refs. %s",
+ 			    strerror(errno));
+ 		return -1;
+-       }
++	}
+ 
+ 	data.fd = packed_ref_cache->lock->fd;
+ 	data.err = err;
+@@ -2482,24 +2482,23 @@ static void prune_refs(struct ref_to_prune *r)
+ 	}
+ }
+ 
+-int pack_refs(unsigned int flags)
++int pack_refs(unsigned int flags, struct strbuf *err)
+ {
+ 	struct pack_refs_cb_data cbdata;
+-	struct strbuf err = STRBUF_INIT;
+ 
+ 	memset(&cbdata, 0, sizeof(cbdata));
+ 	cbdata.flags = flags;
+ 
+-	if (lock_packed_refs(&err))
+-		die("%s", err.buf);
++	if (lock_packed_refs(err))
++		return -1;
+ 
+ 	cbdata.packed_refs = get_packed_refs(&ref_cache);
+ 
+ 	do_for_each_entry_in_dir(get_loose_refs(&ref_cache), 0,
+ 				 pack_if_possible_fn, &cbdata);
+ 
+-	if (commit_packed_refs(&err))
+-		die("%s", err.buf);
++	if (commit_packed_refs(err))
++		return -1;
+ 
+ 	prune_refs(cbdata.ref_to_prune);
+ 	return 0;
+diff --git a/refs.h b/refs.h
+index dee9a98..1a98e27 100644
+--- a/refs.h
++++ b/refs.h
+@@ -122,8 +122,9 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
+ /*
+  * Write a packed-refs file for the current repository.
+  * flags: Combination of the above PACK_REFS_* flags.
++ * Returns 0 on success and fills in err on failure.
+  */
+-int pack_refs(unsigned int flags);
++int pack_refs(unsigned int flags, struct strbuf *err);
+ 
+ extern int ref_exists(const char *);
+ 
+-- 
+2.0.1.556.ge8f7cba.dirty
