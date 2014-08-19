@@ -1,106 +1,141 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 0/5] ref-transactions-req-strbuf-err
-Date: Tue, 19 Aug 2014 09:16:59 -0700
-Message-ID: <1408465024-23162-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH 2/5] refs.c: make add_packed_ref return an error instead of calling die
+Date: Tue, 19 Aug 2014 09:17:01 -0700
+Message-ID: <1408465024-23162-3-git-send-email-sahlberg@google.com>
+References: <1408465024-23162-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 19 18:17:45 2014
+X-From: git-owner@vger.kernel.org Tue Aug 19 18:17:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJm6Q-0003Fk-Jn
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:17:42 +0200
+	id 1XJm6R-0003Fk-3e
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753095AbaHSQRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751976AbaHSQRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 12:17:18 -0400
+Received: from mail-pa0-f74.google.com ([209.85.220.74]:63075 "EHLO
+	mail-pa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752756AbaHSQRJ (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 19 Aug 2014 12:17:09 -0400
-Received: from mail-qa0-f73.google.com ([209.85.216.73]:52375 "EHLO
-	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752756AbaHSQRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 12:17:07 -0400
-Received: by mail-qa0-f73.google.com with SMTP id s7so796270qap.2
-        for <git@vger.kernel.org>; Tue, 19 Aug 2014 09:17:07 -0700 (PDT)
+Received: by mail-pa0-f74.google.com with SMTP id lj1so1806440pab.1
+        for <git@vger.kernel.org>; Tue, 19 Aug 2014 09:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Szq4Fmji09VPMAcv8rg9csTXyZfi0IuomQ2+9CDpZLc=;
-        b=Ttvc4lBJQ4kb+5U+IuH+VJSwDFC+AVUNA4Xmgj+FwATyDQs7Pu12q8/9zIIZXorv26
-         Xns37kipxCNrRe8R9TZ2NWDL+WSbySJo7TJt/XtFGjD5Q72Oz9kJv2kX0yTjeK++fgIo
-         McssUdj8cXnIsoSPNpYqGwNvt83jOiYFKKhphIUT/cyGdrq0x1EAkXR5tGqo8LxwfgM5
-         EYbw5F8bLq7F2C53cRSC1occ1jo6+ebRLusYWF91WB8Q+FDXYqCYJsLulitZeXilPJsZ
-         Gn9Mf6P0VBFea90Tvq4ztaqmO5NCeTcDMrHVDbWJ7iu04c3eAWp99ia6gK8+HFv+iC/Q
-         8uKA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=5P45S3Z6ypBQTfpaayD1Imp26woqHhOb9/i31MHWEeY=;
+        b=PDbQkjPKaoCL+gakg2qNsF1Val7ejmKw/bg10e9lTZYIHy/zW7Xmxwpb/rv5CTdfVn
+         aRxyIDcoYZIoVckiyONovEB7f7i9KoKYmzTsx3wcV+3XnVqopzXW24CQExRPwW3/gnM3
+         RhFxm06xMNg3pyYaILikQ5UlOib2SZt7oWVjCXV6dzEX+MWCKxOzFfDMUELDYJsfMSv6
+         WWBNsAoeRMpAqKsi3Hjwe7rJ9k4Swad28+X/sLv7pV7lfBD52V7ctTL7v4OOpsrDHszg
+         JhJNGYdvO3BVGPMCKi/7ZPjBYRyXACbcdm5V9lVBGmeCG6XjJ79qVFrugK6ek0QWRdoT
+         2DuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Szq4Fmji09VPMAcv8rg9csTXyZfi0IuomQ2+9CDpZLc=;
-        b=MOXNIhYIt8VaPr04dpkInN+dcwDnd6Zfv/sCYbJW50SaT/o1Kpo8aaiHq30Q2XV6dR
-         z2Oa6nfq1TNv6SAmxbjACBlE1rVyogti9u86FnocykFinJbPpl8c2iXJKRi9nSAUT0ZF
-         +VxTxVhlvB6pFQvJUGj1pExt/PgljucPQKCBJFvMSZZOxO3EYf6Pc0Pu0IfmM5hY9/x6
-         JDNqEpK0kDOqJNp0NOp+AxUczQTdnMyD0FOz8tJTrKdl7Bi8Yk5EovD7fJTpEu4OfRYv
-         s0VzAhehnrthpAOgACWGlucxVST0gK30I4EENIQIGPS3Qyp9j7x2+A8I2MGzMVnm4WUo
-         J2Vg==
-X-Gm-Message-State: ALoCoQkkLLqPCK1igibg71B1ob6UdtnN9W2CPDWmPXeIAcO43zgW2TRV32x5Bc/3rEsW15AA/5tt
-X-Received: by 10.236.14.99 with SMTP id c63mr18936482yhc.40.1408465027071;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=5P45S3Z6ypBQTfpaayD1Imp26woqHhOb9/i31MHWEeY=;
+        b=TQhyDTm3fkNb7YruYvZ43ynp9x1nT6beKoiXskcLRfr4MIKlPfStKmW/oDCy3A7Hfv
+         WKnr/bwcUUygjFiQt7fOol3tWsOQLvyGQ4zStrRviGFXEIXqMhKyHSW91Y1A/rip8qvq
+         tI7NWv5+vHrsLqrngCN3rAOwfm4KmIsEhsAsVeYqeOATAxOmaKYocsEpTuK6D5B/kU5N
+         F3QNjkaUHIvOv0aDDB7Q15sbd/LieCWzRULG4jo4IHyiQHBSVPxngt/WX+eqz+rzIcJx
+         ssS5dintkzVyeQbfXyfxuqqROWLwCvH9EYzqnX3H9spR2jlon9iqMOktHbjPqE6PzPBk
+         dCQA==
+X-Gm-Message-State: ALoCoQnyoEjSi2wMMb9tg2qiWfpwttoQWPVazlm8GpEQBb8kRRX5DOkvSamoAFTo2yb0KwW8cYsX
+X-Received: by 10.70.90.47 with SMTP id bt15mr22355289pdb.4.1408465027137;
         Tue, 19 Aug 2014 09:17:07 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id v20si326076yhe.2.2014.08.19.09.17.07
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id y50si326168yhk.4.2014.08.19.09.17.07
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 19 Aug 2014 09:17:07 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id DCAE931C528;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id EC92D5A441E;
 	Tue, 19 Aug 2014 09:17:06 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 7DC13E0F40; Tue, 19 Aug 2014 09:17:06 -0700 (PDT)
+	id 96B79E0547; Tue, 19 Aug 2014 09:17:06 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.556.ge8f7cba.dirty
+In-Reply-To: <1408465024-23162-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255469>
 
-List,
+Change add_packed_ref to return an error instead of calling die().
+Update all callers to check the return value of add_packed_ref.
 
-This is the next patch series in the ref transaction work.
-This patch series is called ref-transactions-req-strbuf-err and builds ontop
-of the series called ref-transactions-req-packed-refs which is origin/pu
+We can also skip checking the refname format since this function is now
+static and only called from the transaction code.
+If we are updating a ref and the refname is bad then we fail the transaction
+already in transaction_update_sha1().
+For the ref deletion case the only caveat is that we would not want
+to move the badly named ref into the packed refs file during transaction
+commit. This again is not a problem since if the name is bad, then
+resolve_ref_unsafe() will fail which protects us from calling add_packed_ref()
+with the bad name.
 
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-This patch series mainly adds some nice strbuf arguments to some functions to
-pass errors back to callers.
-The only thing noteworthy is that we finally get to remove
--enum action_on_err {
--       UPDATE_REFS_MSG_ON_ERR,
--       UPDATE_REFS_DIE_ON_ERR,
--       UPDATE_REFS_QUIET_ON_ERR
--};
-
-aside from that there is little/nothing much interesting in there.
-
-
-Ronnie Sahlberg (5):
-  refs.c: replace the onerr argument in update_ref with a strbuf err
-  refs.c: make add_packed_ref return an error instead of calling die
-  refs.c: make lock_packed_refs take an err argument
-  refs.c: add an err argument to commit_packed_refs
-  refs.c: add an err argument to pack_refs
-
- builtin/checkout.c   |   7 ++-
- builtin/clone.c      |  23 +++++---
- builtin/merge.c      |  20 ++++---
- builtin/notes.c      |  24 +++++----
- builtin/pack-refs.c  |   8 ++-
- builtin/reset.c      |  12 +++--
- builtin/update-ref.c |   7 ++-
- notes-cache.c        |   2 +-
- notes-utils.c        |   5 +-
- refs.c               | 148 +++++++++++++++++++++++++++++----------------------
- refs.h               |  13 ++---
- transport-helper.c   |   7 ++-
- transport.c          |   9 ++--
- 13 files changed, 170 insertions(+), 115 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 65eee72..0aad8c8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1135,17 +1135,16 @@ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
+ 	return get_packed_ref_dir(get_packed_ref_cache(refs));
+ }
+ 
+-static void add_packed_ref(const char *refname, const unsigned char *sha1)
++static int add_packed_ref(const char *refname, const unsigned char *sha1)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+ 
+ 	if (!packed_ref_cache->lock)
+-		die("internal error: packed refs not locked");
+-	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL|REFNAME_DOT_COMPONENT))
+-		die("Reference has invalid format: '%s'", refname);
++		return -1;
+ 	add_ref(get_packed_ref_dir(packed_ref_cache),
+ 		create_ref_entry(refname, sha1, REF_ISPACKED));
++	return 0;
+ }
+ 
+ /*
+@@ -3666,7 +3665,13 @@ int transaction_commit(struct ref_transaction *transaction,
+ 					RESOLVE_REF_READING, NULL))
+ 			continue;
+ 
+-		add_packed_ref(update->refname, sha1);
++		if (add_packed_ref(update->refname, sha1)) {
++			if (err)
++				strbuf_addf(err, "Failed to add %s to packed "
++					    "refs", update->refname);
++			ret = -1;
++			goto cleanup;
++		}
+ 		need_repack = 1;
+ 	}
+ 	if (need_repack) {
+@@ -3778,7 +3783,13 @@ int transaction_commit(struct ref_transaction *transaction,
+ 
+ 		packed = get_packed_refs(&ref_cache);
+ 		remove_entry(packed, update->refname);
+-		add_packed_ref(update->refname, update->new_sha1);
++		if (add_packed_ref(update->refname, update->new_sha1)) {
++			if (err)
++				strbuf_addf(err, "Failed to add %s to packed "
++					    "refs", update->refname);
++			ret = -1;
++			goto cleanup;
++		}
+ 		need_repack = 1;
+ 
+ 		try_remove_empty_parents((char *)update->refname);
 -- 
 2.0.1.556.ge8f7cba.dirty
