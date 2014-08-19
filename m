@@ -1,119 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Relative submodule URLs
-Date: Tue, 19 Aug 2014 12:19:13 -0700
-Message-ID: <xmqqoavguw26.fsf@gitster.dls.corp.google.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Relative submodule URLs
+Date: Tue, 19 Aug 2014 21:30:10 +0200
+Message-ID: <20140819193010.GA64203@book.hvoigt.net>
 References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
-	<20140818205505.GA20185@google.com>
-	<20140819102421.GA5012@book.hvoigt.net>
-	<CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
-	<xmqqiolowi1f.fsf@gitster.dls.corp.google.com>
-	<CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
+ <20140818205505.GA20185@google.com>
+ <20140819102421.GA5012@book.hvoigt.net>
+ <CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
+ <xmqqiolowi1f.fsf@gitster.dls.corp.google.com>
+ <CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
 To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 21:19:28 2014
+X-From: git-owner@vger.kernel.org Tue Aug 19 21:30:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJowK-0000pS-2Q
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 21:19:28 +0200
+	id 1XJp6y-0006Uo-NI
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 21:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753499AbaHSTTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 15:19:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54798 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752912AbaHSTTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 15:19:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C4CFE33C43;
-	Tue, 19 Aug 2014 15:19:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rx5/q4DD9xd+ogWRtoAAWC7x1vY=; b=JfnMKy
-	SrqsVFm/jB7c2eKCTsaSSnd0LMlE7bS/KNxXVfRufXTaFKOIG+JJOrozBu3lhn4o
-	vYfvku7OcawZojUle6Q/SW+1Q36z9ZgcPK+qixkMUxl/UBP2y+YYz202Z1MhGYl6
-	HUwFDfgrbZrV0ZsXA13G6xQPKcL8Yj70NgndM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mC5BTMtwEaZy/GuYrpDmgfKitM2ERexE
-	cTa74Ocg06B4rKQcQRuqoYAUvBNE4qTVQD4h5+HyZ6qVeow3JRmDiwF9AiBemuy3
-	qiuFExLuNthpbFLb/Gj3sJ12iQUjChk9FiQDr6ct52PXwRtXWXpZ+z9dSw51vLS1
-	mDMA+Kqs0+8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BBD9D33C42;
-	Tue, 19 Aug 2014 15:19:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D4DE133C39;
-	Tue, 19 Aug 2014 15:19:14 -0400 (EDT)
+	id S1753697AbaHSTaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 15:30:24 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.27]:33271 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752307AbaHSTaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 15:30:24 -0400
+Received: from [77.21.76.69] (helo=book.hvoigt.net)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1XJp6p-00077H-JA; Tue, 19 Aug 2014 21:30:19 +0200
+Content-Disposition: inline
 In-Reply-To: <CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
-	(Robert Dailey's message of "Tue, 19 Aug 2014 11:50:08 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B53370BE-27D5-11E4-BDA5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255513>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
-
+On Tue, Aug 19, 2014 at 11:50:08AM -0500, Robert Dailey wrote:
 > Maybe I'm misunderstanding something here and you can help me out.
->
+> 
 > All the reading I've done (mostly github) says that 'upstream' points
 > to the authoritative repository that you forked from but do not have
 > permissions to write to. 'origin' points to the place you push your
 > changes for pull requests (the fork).
+> 
+> Basically the workflow I use is:
+> 
+> - Use 'upstream' to PULL changes (latest code is obtained from the
+> authoritative repository)
+> - Use 'origin' to push your branches. Since I never modify the
+> branches that exist in 'upstream' on my 'origin' (I do everything
+> through separate personal branches).
+> 
+> That means if I have a branch off of 'master' named 'topic', I will
+> track 'upstream/master' and get latest with 'git pull'. When I'm ready
+> for a pull request, I do 'git push origin' (I use push.default =
+> simple).
+> 
+> According to my understanding, relative submodules work here. But not
+> everyone on my team uses this workflow. Sometimes they track
+> "origin/topic" (if we use my example again). Won't the submodule try
+> to find itself on the fork now?
 
-I do not know if that is how GitHub teaches people, but I would have
-to say that these are strange phrasing.  I suspect that part of
-their documentation was written long time ago, back when nobody on
-the GitHub side were involved in design (let alone implementation)
-of Git, and I would take it with a grain of salt.
+Well the remote for the submodule is currently only calculated once,
+when you do the initial
 
-Having said that, here is a summary of the current support for
-referring to different repositories in Git:
+	git submodule update --init
 
-   The word 'origin' refers to where things originate from; a place
-   you push to is where things go, so it makes no sense to use that
-   word to refer to the repository where you publish your work
-   result.  The 'origin' may or may not be where you can push (or
-   you would want to push) to.  It is where you 'pull' from to
-   synchronize with the 'upstream'.
+that clones the submodule. Afterwards the fixed url is configured under
+the name 'origin' in the submodule like in a normal git repository that
+you have freshly cloned. Which remote is used for cloning depends on the
+configured remote for the current branch or 'origin'.
 
-   The 'upstream' in SCM context refers to those who control a
-   logically more authoritative history than you, whose work you
-   derive your work from, i.e. synonymous to 'origin'.
+When you do a fetch or push with --recurse-submodules it only executes a
+'git fetch' or 'git push' without any specific remote. For fetch the
+same commandline options (but only the options) are passed on.
 
-   For people like Linus (i.e. he may pull from others but that is
-   to take in changes made as derived work; he does not pull to grab
-   more authoritative work), there is no need to say 'upstream'; or
-   you can consider he is his own 'upstream'.
+Here it might make sense to guess the remote in the submodule somehow
+and not do what fetch without remotes would do.
 
-   For those who use CVS-style central repository model (i.e. they
-   would pull from that single central shared repository, and push
-   their work back to the same repository), 'origin' are writable to
-   them and they push to them.  For people with CVS-style central
-   shared repository model, their central repository is their
-   'upstream' with respect to their local copy.
+For the triangular workflow not much work has been done in regards to
+submodule support.
 
-   Since these two classes of people need just one other repository
-   to refer to, we just used 'origin' when we did the very initial
-   version of "git clone", and these users can keep using that name
-   to refer to that single other repository they interact with.
+But since a submodule behaves like a normal git repository maybe there
+is not much work needed and we can just point to the workflow without
+submodules most times. We still have to figure that out properly.
 
-   The support for the triangular workflow in which you pull from
-   one place and push the result of work to another, which the
-   configuration variable 'remote.pushdefault' is a part of, is
-   relatively a more recent development in Git.  I am not sure we
-   have added an official term to our glossary to refer to the
-   repository you push your work result to, but in the discussions
-   we have seen phrases like 'publishing repository' used, I think.
-   It must be writable by you, of course, and it may or may not be
-   the same as the 'origin' repository.
+Cheers Heiko
