@@ -1,104 +1,126 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Allow the user to change the temporary file name for mergetool
-Date: Tue, 19 Aug 2014 14:22:48 +0200
-Message-ID: <1408450968-3465-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 14:23:01 2014
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [PATCH] Allow the user to change the temporary file name for
+ mergetool
+Date: Tue, 19 Aug 2014 14:52:46 +0200
+Message-ID: <53F3489E.9050302@atlas-elektronik.com>
+References: <1408450968-3465-1-git-send-email-robin.rosenberg@dewire.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 15:00:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJiRJ-0008Lz-Hl
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 14:23:01 +0200
+	id 1XJj1b-0005UX-8x
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 15:00:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbaHSMW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 08:22:57 -0400
-Received: from zimbra.dewire.com ([83.140.172.131]:50305 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751810AbaHSMW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 08:22:57 -0400
+	id S1752869AbaHSNAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 09:00:18 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:29943 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752524AbaHSNAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 09:00:17 -0400
+X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Aug 2014 09:00:16 EDT
 Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id 420DE8169E;
-	Tue, 19 Aug 2014 14:22:55 +0200 (CEST)
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 7ZO047UT4_sb; Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id D009881683;
-	Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 12EbwuJTcC1t; Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
-Received: from Robin-Rosenbergs-MacBook-Pro.local.com (unknown [10.1.2.67])
-	by zimbra.dewire.com (Postfix) with ESMTP id A8BA081667;
-	Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
-X-Mailer: git-send-email 2.1.0.rc2.6.g39c33ff.dirty
+	by mail96.atlas.de (Postfix) with ESMTP id 3F0B71093A;
+	Tue, 19 Aug 2014 14:52:58 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qvHxTeUOubqk; Tue, 19 Aug 2014 14:52:47 +0200 (CEST)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Tue, 19 Aug 2014 14:52:47 +0200 (CEST)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id F00732716A;
+	Tue, 19 Aug 2014 14:52:46 +0200 (CEST)
+Received: from [10.200.54.122] (10.200.54.122) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.327.1; Tue, 19 Aug
+ 2014 14:52:46 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <1408450968-3465-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255458>
 
-Using the original filename suffix for the temporary input files to
-the merge tool confuses IDEs like Eclipse. This patch introduces
-a configurtion option, mergetool.tmpsuffix, which get appended to
-the temporary file name. That way the user can choose to use a
-suffix like ".tmp", which does not cause confusion.
+Am 19.08.2014 um 14:22 schrieb Robin Rosenberg:
+> Using the original filename suffix for the temporary input files to
+> the merge tool confuses IDEs like Eclipse. This patch introduces
+> a configurtion option, mergetool.tmpsuffix, which get appended to
+> the temporary file name. That way the user can choose to use a
+> suffix like ".tmp", which does not cause confusion.
+> 
+> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+> ---
+>  Documentation/git-mergetool.txt |  7 +++++++
+>  git-mergetool.sh                | 10 ++++++----
+>  2 files changed, 13 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+> index e846c2e..a586766 100644
+> --- a/Documentation/git-mergetool.txt
+> +++ b/Documentation/git-mergetool.txt
+> @@ -89,6 +89,13 @@ Setting the `mergetool.keepBackup` configuration variable to `false`
+>  causes `git mergetool` to automatically remove the backup as files
+>  are successfully merged.
+>  
+> +`git mergetool` may also create other temporary files for the
+> +different versions involved in the merge. By default these files have
+> +the same filename suffix as the file being merged. This may confuse
+> +other tools in use during a long merge operation. The user can set
+> +`mergtool.tmpsuffix` to be used as an extra suffix, which will be
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- Documentation/git-mergetool.txt |  7 +++++++
- git-mergetool.sh                | 10 ++++++----
- 2 files changed, 13 insertions(+), 4 deletions(-)
+s/mergtool/mergetool/
 
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index e846c2e..a586766 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -89,6 +89,13 @@ Setting the `mergetool.keepBackup` configuration variable to `false`
- causes `git mergetool` to automatically remove the backup as files
- are successfully merged.
- 
-+`git mergetool` may also create other temporary files for the
-+different versions involved in the merge. By default these files have
-+the same filename suffix as the file being merged. This may confuse
-+other tools in use during a long merge operation. The user can set
-+`mergtool.tmpsuffix` to be used as an extra suffix, which will be
-+appened to the temporary filenamame to lessen that problem.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 9a046b7..d7cc76c 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -214,6 +214,8 @@ checkout_staged_file () {
- }
- 
- merge_file () {
-+	tmpsuffix=$(git config mergetool.tmpsuffix || true)
-+
- 	MERGED="$1"
- 
- 	f=$(git ls-files -u -- "$MERGED")
-@@ -229,10 +231,10 @@ merge_file () {
- 	fi
- 
- 	ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
--	BACKUP="./$MERGED.BACKUP.$ext"
--	LOCAL="./$MERGED.LOCAL.$ext"
--	REMOTE="./$MERGED.REMOTE.$ext"
--	BASE="./$MERGED.BASE.$ext"
-+	BACKUP="./$MERGED.BACKUP.$ext$tmpsuffix"
-+	LOCAL="./$MERGED.LOCAL.$ext$tmpsuffix"
-+	REMOTE="./$MERGED.REMOTE.$ext$tmpsuffix"
-+	BASE="./$MERGED.BASE.$ext$tmpsuffix"
- 
- 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
- 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
+> +appened to the temporary filenamame to lessen that problem.
+
+s/appened/appended/
+s/filenamame/filename/
+
+> +
+>  GIT
+>  ---
+>  Part of the linkgit:git[1] suite
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index 9a046b7..d7cc76c 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -214,6 +214,8 @@ checkout_staged_file () {
+>  }
+>  
+>  merge_file () {
+> +	tmpsuffix=$(git config mergetool.tmpsuffix || true)
+> +
+>  	MERGED="$1"
+>  
+>  	f=$(git ls-files -u -- "$MERGED")
+> @@ -229,10 +231,10 @@ merge_file () {
+>  	fi
+>  
+>  	ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
+> -	BACKUP="./$MERGED.BACKUP.$ext"
+> -	LOCAL="./$MERGED.LOCAL.$ext"
+> -	REMOTE="./$MERGED.REMOTE.$ext"
+> -	BASE="./$MERGED.BASE.$ext"
+> +	BACKUP="./$MERGED.BACKUP.$ext$tmpsuffix"
+> +	LOCAL="./$MERGED.LOCAL.$ext$tmpsuffix"
+> +	REMOTE="./$MERGED.REMOTE.$ext$tmpsuffix"
+> +	BASE="./$MERGED.BASE.$ext$tmpsuffix"
+>  
+>  	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+>  	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
+> 
+
+Stefan
 -- 
-2.1.0.rc2.6.g39c33ff.dirty
+----------------------------------------------------------------
+/dev/random says: Confusion not only reigns, it pours.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')" 
+GPG Key fingerprint = 2DF5 E01B 09C3 7501 BCA9  9666 829B 49C5 9221 27AF
