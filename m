@@ -1,95 +1,119 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH v2 4/4] run-command: inline prepare_run_command_v_opt()
-Date: Tue, 19 Aug 2014 21:11:43 +0200
-Message-ID: <53F3A16F.10303@web.de>
-References: <53EFE15B.7030805@web.de> <53F05DE2.5080806@kdbg.org>	<20140817084832.GL23808@peff.net> <xmqq61hpybs9.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Relative submodule URLs
+Date: Tue, 19 Aug 2014 12:19:13 -0700
+Message-ID: <xmqqoavguw26.fsf@gitster.dls.corp.google.com>
+References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
+	<20140818205505.GA20185@google.com>
+	<20140819102421.GA5012@book.hvoigt.net>
+	<CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
+	<xmqqiolowi1f.fsf@gitster.dls.corp.google.com>
+	<CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 19 21:12:21 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 21:19:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJopO-0005dP-Vn
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 21:12:19 +0200
+	id 1XJowK-0000pS-2Q
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 21:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753664AbaHSTMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 15:12:15 -0400
-Received: from mout.web.de ([212.227.15.3]:56993 "EHLO mout.web.de"
+	id S1753499AbaHSTTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 15:19:24 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54798 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753624AbaHSTMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 15:12:14 -0400
-Received: from [192.168.178.27] ([79.250.174.3]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MfqC4-1Wz0j13aaa-00NBEw; Tue, 19 Aug 2014 21:12:11
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <xmqq61hpybs9.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:MzY+NtDaZafoPG7z47s5yszCK/NYna5mCc6M9kakgxTlWqeZma9
- mw6lhlDefIRo9uR6fODiIx+61920cgbDYsT45GETSaAtRUNB/GWag3ZRxNQAuFK8yMY7oUE
- ldr8nj+gNNuzP+7b7Dxih7bVqSmTw4lGZ1HM8uNyrFpouBNUrxJhUCIQRZOgYeGeQGhyklE
- hMTNGtf1qM0j05KwUUIlA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752912AbaHSTTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 15:19:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C4CFE33C43;
+	Tue, 19 Aug 2014 15:19:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rx5/q4DD9xd+ogWRtoAAWC7x1vY=; b=JfnMKy
+	SrqsVFm/jB7c2eKCTsaSSnd0LMlE7bS/KNxXVfRufXTaFKOIG+JJOrozBu3lhn4o
+	vYfvku7OcawZojUle6Q/SW+1Q36z9ZgcPK+qixkMUxl/UBP2y+YYz202Z1MhGYl6
+	HUwFDfgrbZrV0ZsXA13G6xQPKcL8Yj70NgndM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mC5BTMtwEaZy/GuYrpDmgfKitM2ERexE
+	cTa74Ocg06B4rKQcQRuqoYAUvBNE4qTVQD4h5+HyZ6qVeow3JRmDiwF9AiBemuy3
+	qiuFExLuNthpbFLb/Gj3sJ12iQUjChk9FiQDr6ct52PXwRtXWXpZ+z9dSw51vLS1
+	mDMA+Kqs0+8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BBD9D33C42;
+	Tue, 19 Aug 2014 15:19:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D4DE133C39;
+	Tue, 19 Aug 2014 15:19:14 -0400 (EDT)
+In-Reply-To: <CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
+	(Robert Dailey's message of "Tue, 19 Aug 2014 11:50:08 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B53370BE-27D5-11E4-BDA5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255512>
 
-Merge prepare_run_command_v_opt() and its only caller.  This removes a
-pointer indirection and allows to initialize the struct child_process
-using CHILD_PROCESS_INIT.
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- run-command.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+> Maybe I'm misunderstanding something here and you can help me out.
+>
+> All the reading I've done (mostly github) says that 'upstream' points
+> to the authoritative repository that you forked from but do not have
+> permissions to write to. 'origin' points to the place you push your
+> changes for pull requests (the fork).
 
-diff --git a/run-command.c b/run-command.c
-index 9196ee0..761f0fd 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -561,20 +561,6 @@ int run_command(struct child_process *cmd)
- 	return finish_command(cmd);
- }
- 
--static void prepare_run_command_v_opt(struct child_process *cmd,
--				      const char **argv,
--				      int opt)
--{
--	memset(cmd, 0, sizeof(*cmd));
--	cmd->argv = argv;
--	cmd->no_stdin = opt & RUN_COMMAND_NO_STDIN ? 1 : 0;
--	cmd->git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
--	cmd->stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
--	cmd->silent_exec_failure = opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
--	cmd->use_shell = opt & RUN_USING_SHELL ? 1 : 0;
--	cmd->clean_on_exit = opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
--}
--
- int run_command_v_opt(const char **argv, int opt)
- {
- 	return run_command_v_opt_cd_env(argv, opt, NULL, NULL);
-@@ -582,8 +568,14 @@ int run_command_v_opt(const char **argv, int opt)
- 
- int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const char *const *env)
- {
--	struct child_process cmd;
--	prepare_run_command_v_opt(&cmd, argv, opt);
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	cmd.argv = argv;
-+	cmd.no_stdin = opt & RUN_COMMAND_NO_STDIN ? 1 : 0;
-+	cmd.git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
-+	cmd.stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
-+	cmd.silent_exec_failure = opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
-+	cmd.use_shell = opt & RUN_USING_SHELL ? 1 : 0;
-+	cmd.clean_on_exit = opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
- 	cmd.dir = dir;
- 	cmd.env = env;
- 	return run_command(&cmd);
--- 
-2.1.0
+I do not know if that is how GitHub teaches people, but I would have
+to say that these are strange phrasing.  I suspect that part of
+their documentation was written long time ago, back when nobody on
+the GitHub side were involved in design (let alone implementation)
+of Git, and I would take it with a grain of salt.
+
+Having said that, here is a summary of the current support for
+referring to different repositories in Git:
+
+   The word 'origin' refers to where things originate from; a place
+   you push to is where things go, so it makes no sense to use that
+   word to refer to the repository where you publish your work
+   result.  The 'origin' may or may not be where you can push (or
+   you would want to push) to.  It is where you 'pull' from to
+   synchronize with the 'upstream'.
+
+   The 'upstream' in SCM context refers to those who control a
+   logically more authoritative history than you, whose work you
+   derive your work from, i.e. synonymous to 'origin'.
+
+   For people like Linus (i.e. he may pull from others but that is
+   to take in changes made as derived work; he does not pull to grab
+   more authoritative work), there is no need to say 'upstream'; or
+   you can consider he is his own 'upstream'.
+
+   For those who use CVS-style central repository model (i.e. they
+   would pull from that single central shared repository, and push
+   their work back to the same repository), 'origin' are writable to
+   them and they push to them.  For people with CVS-style central
+   shared repository model, their central repository is their
+   'upstream' with respect to their local copy.
+
+   Since these two classes of people need just one other repository
+   to refer to, we just used 'origin' when we did the very initial
+   version of "git clone", and these users can keep using that name
+   to refer to that single other repository they interact with.
+
+   The support for the triangular workflow in which you pull from
+   one place and push the result of work to another, which the
+   configuration variable 'remote.pushdefault' is a part of, is
+   relatively a more recent development in Git.  I am not sure we
+   have added an official term to our glossary to refer to the
+   repository you push your work result to, but in the discussions
+   we have seen phrases like 'publishing repository' used, I think.
+   It must be writable by you, of course, and it may or may not be
+   the same as the 'origin' repository.
