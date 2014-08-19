@@ -1,324 +1,234 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 07/23] refs.c: move read_ref_at to the common refs file
-Date: Tue, 19 Aug 2014 09:30:31 -0700
-Message-ID: <1408465847-30384-8-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 21/23] refs-be-files.c: add methods for misc ref operations
+Date: Tue, 19 Aug 2014 09:30:45 -0700
+Message-ID: <1408465847-30384-22-git-send-email-sahlberg@google.com>
 References: <1408465847-30384-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 19 18:32:18 2014
+X-From: git-owner@vger.kernel.org Tue Aug 19 18:32:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJmKX-0002zZ-MR
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:32:18 +0200
+	id 1XJmKc-0002zZ-Py
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:32:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753008AbaHSQbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 12:31:05 -0400
-Received: from mail-ie0-f201.google.com ([209.85.223.201]:42717 "EHLO
-	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751710AbaHSQay (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753246AbaHSQbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 12:31:37 -0400
+Received: from mail-oa0-f74.google.com ([209.85.219.74]:56647 "EHLO
+	mail-oa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752055AbaHSQay (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 19 Aug 2014 12:30:54 -0400
-Received: by mail-ie0-f201.google.com with SMTP id tr6so216255ieb.2
+Received: by mail-oa0-f74.google.com with SMTP id eb12so1479199oac.1
         for <git@vger.kernel.org>; Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IBBFyaiFx4oCSMkPD/FLJCY6iaRJQSzx6kJeJfgKDqo=;
-        b=jlOBNLv0nk7/UyJ534E6i4+w6Abo7VqucMjs9Y3VvUPQ3dsXUzkn0C0hBvXUQQcTsk
-         xUfhyEWtV9D+JqWPW1Jb31V+7O/7uRFYR2yOgo1DVqefIaT8D+xHYW+mPrS51iG39IfJ
-         duZp/Y0wBZXbc5Gq+rfXEDe0EBBClnTrLbyyxuNfHLG3wEfKp2faQleSO6uekmXOqgEA
-         K9t3hLoON6x3ulxvXLDtMMfiOpXj7EtElvz50K46JGkHUeipftbqyot35xRaf8wYRive
-         4jrN9AXm/d3RLJj9ircG7p5paGcZYkfroxMhkzUGyupWopeHFnV+8s8YiTCJ6I3SSFQ0
-         +fTQ==
+        bh=ioQJbrVhyfS1v/dLVvHQhfigvPh1+duy3YMdR2NG4mk=;
+        b=LZiJej28HzFzuQwWF6kugKJ9wouER2dmaEYV8cnB/5LUP403Xy9LF6o1kQmMZ548gi
+         WhndLbHHEGfxj6823xQBqrpxhtgwFQCuoVhkAogOAJCikLHpFviR5A4mW5ZUZWti8yyJ
+         vkEpXGY9KRefo6bFmWjlGf3TfjUygWFqqOlLo6umXkMPzrAhjlpuizc0yX14xlbeOvy1
+         f4PyTPkO8RbMPNZB3W55QxnnSUfU9BMsx8CTVh4YYm701uBB5qe3NBCOblAdupzdS0Pl
+         x+HaR1yiqLiK5FSNRYDqGgIR4qO3Sh5T+rKzxbwqYtlq5sFZ68pF8nRhZSMHu7+2UFSD
+         K1ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=IBBFyaiFx4oCSMkPD/FLJCY6iaRJQSzx6kJeJfgKDqo=;
-        b=CskivltTO8YBBQKkjV+NZysVSvWrMCrdSKrYM2fEtwkVMc3hfvVm88sloZZrFI5Ms9
-         2Bov2uvx6Gt0wubJxSOEJ9r0NVI+iR4SoTUV2wksD26VkMGT3Te5wwBQ0GgBmzyidT92
-         YCkgelx+g9m7VX+gh+Rn26BaEhC794AwoXqOm79MRFFp5WzSWJ3KZAM/OhluoLKZjXQ8
-         lF8+La5vr5bmcUB4CiEw7r+c8wURLSWlzi86pMT3zXVp8WArOtpPT+Lsl7lWmAqRmJwe
-         x80jVP/g/+6rPA48TNsRB+LI4XcvxsE+4/btIKA8Zv9YJq6Cx/22wT3IWRjOhbDkWBvj
-         3Gow==
-X-Gm-Message-State: ALoCoQkgri92fQy4OLmTVNJpijIwVLV6GWqIoIJ7TF+BCJkGa9GlD0gZmuUKX8i2hdBaRc7/pKHI
-X-Received: by 10.42.225.77 with SMTP id ir13mr1729686icb.3.1408465853266;
+        bh=ioQJbrVhyfS1v/dLVvHQhfigvPh1+duy3YMdR2NG4mk=;
+        b=bPwqFgMUOuCU9ZgOIRRByXjFRUDWN06d8IOtCxVcqHgtTWOlxOqZT7qBvCnldtW8QV
+         LaRvZAhaG2SncgRrCzqqLgtVfvGyjNi9aBj8byV2DQKw1VR+9MqqnqUjJuXCDbf2HlHG
+         bzBjYJfgBk3rGtZFfJYBK8yIyIHhsoilTqs57cPmZfM10Zp/9VrQWdlWxop2m/Sx+bL9
+         6z7X/MlRJKLnALP+rTV87JdWeGQrQEQPMIsNpuKSAg5dOCDRdGixebC6QI42hRR5Cw+y
+         aFfTPmgnyqwk8MvRiVy5WWe/4F1YoWC9Hh7vr4A2voz/8aQzD5f0TF+hMwMPUx0n+Xt1
+         5iQQ==
+X-Gm-Message-State: ALoCoQkABL4/yGL2m4PWyxBXC758jKKI66jVeEt/eoIakwlOBRAMqCJd0e2LjYXM9Ltykv8mr+Tz
+X-Received: by 10.43.1.133 with SMTP id nq5mr23554890icb.21.1408465853834;
         Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id y50si329349yhk.4.2014.08.19.09.30.53
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id t75si329276yhe.5.2014.08.19.09.30.53
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id E8E435A4428;
-	Tue, 19 Aug 2014 09:30:52 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 9946831C536;
+	Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 96595E11B0; Tue, 19 Aug 2014 09:30:52 -0700 (PDT)
+	id 4E0C6E0E84; Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.552.g1af257a
 In-Reply-To: <1408465847-30384-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255486>
 
-This change moves read_ref_at() to the refs.c file since this function
-does not contain any backend specific code.
+Add ref backend methods for:
+resolve_ref_unsafe, is_refname_available, pack_refs, peel_ref,
+create_symref, resolve_gitlink_ref.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs-be-files.c | 114 --------------------------------------------------------
- refs.c          | 114 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 114 insertions(+), 114 deletions(-)
+ refs-be-files.c | 25 ++++++++++++++++++-------
+ refs.c          | 33 +++++++++++++++++++++++++++++++++
+ refs.h          | 18 ++++++++++++++++++
+ 3 files changed, 69 insertions(+), 7 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index 7d579be..52ca0bb 100644
+index 464d488..b09f0fc 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -2935,120 +2935,6 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
+@@ -1114,7 +1114,8 @@ static struct ref_dir *get_loose_refs(struct ref_cache *refs)
+ 	return get_ref_dir(refs->loose);
+ }
+ 
+-int is_refname_available(const char *refname, const char **skip, int skipnum)
++static int files_is_refname_available(const char *refname, const char **skip,
++				      int skipnum)
+ {
+ 	if (!is_refname_available_dir(refname, get_packed_refs(&ref_cache),
+ 				      skip, skipnum))
+@@ -1188,7 +1189,8 @@ static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
+ 	return resolve_gitlink_ref_recursive(refs, p, sha1, recursion+1);
+ }
+ 
+-int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
++static int files_resolve_gitlink_ref(const char *path, const char *refname,
++				     unsigned char *sha1)
+ {
+ 	int len = strlen(path), retval;
+ 	char *submodule;
+@@ -1247,7 +1249,9 @@ static const char *handle_missing_loose_ref(const char *refname,
+ }
+ 
+ /* This function needs to return a meaningful errno on failure */
+-const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int flags, int *ref_flag)
++static const char *files_resolve_ref_unsafe(const char *refname,
++					    unsigned char *sha1, int flags,
++					    int *ref_flag)
+ {
+ 	int depth = MAXDEPTH;
+ 	ssize_t len;
+@@ -1466,7 +1470,7 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
+ 	return status;
+ }
+ 
+-int peel_ref(const char *refname, unsigned char *sha1)
++static int files_peel_ref(const char *refname, unsigned char *sha1)
+ {
+ 	int flag;
+ 	unsigned char base[20];
+@@ -2080,7 +2084,7 @@ static void prune_refs(struct ref_to_prune *r)
+ 	}
+ }
+ 
+-int pack_refs(unsigned int flags, struct strbuf *err)
++static int files_pack_refs(unsigned int flags, struct strbuf *err)
+ {
+ 	struct pack_refs_cb_data cbdata;
+ 
+@@ -2453,8 +2457,9 @@ static int write_ref_sha1(struct ref_lock *lock,
  	return 0;
  }
  
--struct read_ref_at_cb {
--	const char *refname;
--	unsigned long at_time;
--	int cnt;
--	int reccnt;
--	unsigned char *sha1;
--	int found_it;
--
--	unsigned char osha1[20];
--	unsigned char nsha1[20];
--	int tz;
--	unsigned long date;
--	char **msg;
--	unsigned long *cutoff_time;
--	int *cutoff_tz;
--	int *cutoff_cnt;
--};
--
--static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
--		const char *id, unsigned long timestamp, int tz,
--		const char *message, void *cb_data)
--{
--	struct read_ref_at_cb *cb = cb_data;
--
--	cb->reccnt++;
--	cb->tz = tz;
--	cb->date = timestamp;
--
--	if (timestamp <= cb->at_time || cb->cnt == 0) {
--		if (cb->msg)
--			*cb->msg = xstrdup(message);
--		if (cb->cutoff_time)
--			*cb->cutoff_time = timestamp;
--		if (cb->cutoff_tz)
--			*cb->cutoff_tz = tz;
--		if (cb->cutoff_cnt)
--			*cb->cutoff_cnt = cb->reccnt - 1;
--		/*
--		 * we have not yet updated cb->[n|o]sha1 so they still
--		 * hold the values for the previous record.
--		 */
--		if (!is_null_sha1(cb->osha1)) {
--			hashcpy(cb->sha1, nsha1);
--			if (hashcmp(cb->osha1, nsha1))
--				warning("Log for ref %s has gap after %s.",
--					cb->refname, show_date(cb->date, cb->tz, DATE_RFC2822));
--		}
--		else if (cb->date == cb->at_time)
--			hashcpy(cb->sha1, nsha1);
--		else if (hashcmp(nsha1, cb->sha1))
--			warning("Log for ref %s unexpectedly ended on %s.",
--				cb->refname, show_date(cb->date, cb->tz,
--						   DATE_RFC2822));
--		hashcpy(cb->osha1, osha1);
--		hashcpy(cb->nsha1, nsha1);
--		cb->found_it = 1;
--		return 1;
--	}
--	hashcpy(cb->osha1, osha1);
--	hashcpy(cb->nsha1, nsha1);
--	if (cb->cnt > 0)
--		cb->cnt--;
--	return 0;
--}
--
--static int read_ref_at_ent_oldest(unsigned char *osha1, unsigned char *nsha1,
--				  const char *id, unsigned long timestamp,
--				  int tz, const char *message, void *cb_data)
--{
--	struct read_ref_at_cb *cb = cb_data;
--
--	if (cb->msg)
--		*cb->msg = xstrdup(message);
--	if (cb->cutoff_time)
--		*cb->cutoff_time = timestamp;
--	if (cb->cutoff_tz)
--		*cb->cutoff_tz = tz;
--	if (cb->cutoff_cnt)
--		*cb->cutoff_cnt = cb->reccnt;
--	hashcpy(cb->sha1, osha1);
--	if (is_null_sha1(cb->sha1))
--		hashcpy(cb->sha1, nsha1);
--	/* We just want the first entry */
--	return 1;
--}
--
--int read_ref_at(const char *refname, unsigned long at_time, int cnt,
--		unsigned char *sha1, char **msg,
--		unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt)
--{
--	struct read_ref_at_cb cb;
--
--	memset(&cb, 0, sizeof(cb));
--	cb.refname = refname;
--	cb.at_time = at_time;
--	cb.cnt = cnt;
--	cb.msg = msg;
--	cb.cutoff_time = cutoff_time;
--	cb.cutoff_tz = cutoff_tz;
--	cb.cutoff_cnt = cutoff_cnt;
--	cb.sha1 = sha1;
--
--	for_each_reflog_ent_reverse(refname, read_ref_at_ent, &cb);
--
--	if (!cb.reccnt)
--		die("Log for %s is empty.", refname);
--	if (cb.found_it)
--		return 0;
--
--	for_each_reflog_ent(refname, read_ref_at_ent_oldest, &cb);
--
--	return 1;
--}
--
- int reflog_exists(const char *refname)
+-int create_symref(const char *ref_target, const char *refs_heads_master,
+-		  const char *logmsg)
++static int files_create_symref(const char *ref_target,
++			       const char *refs_heads_master,
++			       const char *logmsg)
  {
- 	struct stat st;
+ 	const char *lockpath;
+ 	char ref[1000];
+@@ -3304,6 +3309,12 @@ struct ref_be refs_files = {
+ 	files_reflog_exists,
+ 	files_create_reflog,
+ 	files_delete_reflog,
++	files_resolve_ref_unsafe,
++	files_is_refname_available,
++	files_pack_refs,
++	files_peel_ref,
++	files_create_symref,
++	files_resolve_gitlink_ref,
+ };
+ 
+ struct ref_be *refs = &refs_files;
 diff --git a/refs.c b/refs.c
-index 319eafa..072cd39 100644
+index 2db1a74..60b6241 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -137,3 +137,117 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	transaction_free(transaction);
- 	return 1;
+@@ -888,3 +888,36 @@ int delete_reflog(const char *refname)
+ {
+ 	return refs->delete_reflog(refname);
  }
 +
-+struct read_ref_at_cb {
-+	const char *refname;
-+	unsigned long at_time;
-+	int cnt;
-+	int reccnt;
-+	unsigned char *sha1;
-+	int found_it;
-+
-+	unsigned char osha1[20];
-+	unsigned char nsha1[20];
-+	int tz;
-+	unsigned long date;
-+	char **msg;
-+	unsigned long *cutoff_time;
-+	int *cutoff_tz;
-+	int *cutoff_cnt;
-+};
-+
-+static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
-+		const char *id, unsigned long timestamp, int tz,
-+		const char *message, void *cb_data)
++const char *resolve_ref_unsafe(const char *ref, unsigned char *sha1,
++			       int reading, int *flag)
 +{
-+	struct read_ref_at_cb *cb = cb_data;
-+
-+	cb->reccnt++;
-+	cb->tz = tz;
-+	cb->date = timestamp;
-+
-+	if (timestamp <= cb->at_time || cb->cnt == 0) {
-+		if (cb->msg)
-+			*cb->msg = xstrdup(message);
-+		if (cb->cutoff_time)
-+			*cb->cutoff_time = timestamp;
-+		if (cb->cutoff_tz)
-+			*cb->cutoff_tz = tz;
-+		if (cb->cutoff_cnt)
-+			*cb->cutoff_cnt = cb->reccnt - 1;
-+		/*
-+		 * we have not yet updated cb->[n|o]sha1 so they still
-+		 * hold the values for the previous record.
-+		 */
-+		if (!is_null_sha1(cb->osha1)) {
-+			hashcpy(cb->sha1, nsha1);
-+			if (hashcmp(cb->osha1, nsha1))
-+				warning("Log for ref %s has gap after %s.",
-+					cb->refname, show_date(cb->date, cb->tz, DATE_RFC2822));
-+		}
-+		else if (cb->date == cb->at_time)
-+			hashcpy(cb->sha1, nsha1);
-+		else if (hashcmp(nsha1, cb->sha1))
-+			warning("Log for ref %s unexpectedly ended on %s.",
-+				cb->refname, show_date(cb->date, cb->tz,
-+						   DATE_RFC2822));
-+		hashcpy(cb->osha1, osha1);
-+		hashcpy(cb->nsha1, nsha1);
-+		cb->found_it = 1;
-+		return 1;
-+	}
-+	hashcpy(cb->osha1, osha1);
-+	hashcpy(cb->nsha1, nsha1);
-+	if (cb->cnt > 0)
-+		cb->cnt--;
-+	return 0;
++	return refs->resolve_ref_unsafe(ref, sha1, reading, flag);
 +}
 +
-+static int read_ref_at_ent_oldest(unsigned char *osha1, unsigned char *nsha1,
-+				  const char *id, unsigned long timestamp,
-+				  int tz, const char *message, void *cb_data)
++int is_refname_available(const char *refname, const char **skip, int skipnum)
 +{
-+	struct read_ref_at_cb *cb = cb_data;
-+
-+	if (cb->msg)
-+		*cb->msg = xstrdup(message);
-+	if (cb->cutoff_time)
-+		*cb->cutoff_time = timestamp;
-+	if (cb->cutoff_tz)
-+		*cb->cutoff_tz = tz;
-+	if (cb->cutoff_cnt)
-+		*cb->cutoff_cnt = cb->reccnt;
-+	hashcpy(cb->sha1, osha1);
-+	if (is_null_sha1(cb->sha1))
-+		hashcpy(cb->sha1, nsha1);
-+	/* We just want the first entry */
-+	return 1;
++	return refs->is_refname_available(refname, skip, skipnum);
 +}
 +
-+int read_ref_at(const char *refname, unsigned long at_time, int cnt,
-+		unsigned char *sha1, char **msg,
-+		unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt)
++int pack_refs(unsigned int flags, struct strbuf *err)
 +{
-+	struct read_ref_at_cb cb;
-+
-+	memset(&cb, 0, sizeof(cb));
-+	cb.refname = refname;
-+	cb.at_time = at_time;
-+	cb.cnt = cnt;
-+	cb.msg = msg;
-+	cb.cutoff_time = cutoff_time;
-+	cb.cutoff_tz = cutoff_tz;
-+	cb.cutoff_cnt = cutoff_cnt;
-+	cb.sha1 = sha1;
-+
-+	for_each_reflog_ent_reverse(refname, read_ref_at_ent, &cb);
-+
-+	if (!cb.reccnt)
-+		die("Log for %s is empty.", refname);
-+	if (cb.found_it)
-+		return 0;
-+
-+	for_each_reflog_ent(refname, read_ref_at_ent_oldest, &cb);
-+
-+	return 1;
++	return refs->pack_refs(flags, err);
 +}
++
++int peel_ref(const char *refname, unsigned char *sha1)
++{
++	return refs->peel_ref(refname, sha1);
++}
++
++int create_symref(const char *ref_target, const char *refs_heads_master,
++		  const char *logmsg)
++{
++	return refs->create_symref(ref_target, refs_heads_master, logmsg);
++}
++
++int resolve_gitlink_ref(const char *path, const char *refname,
++			unsigned char *sha1)
++{
++	return refs->resolve_gitlink_ref(path, refname, sha1);
++}
+diff --git a/refs.h b/refs.h
+index 0a68986..5257437 100644
+--- a/refs.h
++++ b/refs.h
+@@ -382,6 +382,18 @@ typedef int (*for_each_reflog_fn)(each_ref_fn fn, void *cb_data);
+ typedef int (*reflog_exists_fn)(const char *refname);
+ typedef int (*create_reflog_fn)(const char *refname);
+ typedef int (*delete_reflog_fn)(const char *refname);
++typedef const char *(*resolve_ref_unsafe_fn)(const char *ref,
++		unsigned char *sha1, int reading, int *flag);
++
++typedef int (*is_refname_available_fn)(const char *refname, const char **skip,
++				       int skipnum);
++typedef int (*pack_refs_fn)(unsigned int flags, struct strbuf *err);
++typedef int (*peel_ref_fn)(const char *refname, unsigned char *sha1);
++typedef int (*create_symref_fn)(const char *ref_target,
++				const char *refs_heads_master,
++				const char *logmsg);
++typedef int (*resolve_gitlink_ref_fn)(const char *path, const char *refname,
++				      unsigned char *sha1);
+ 
+ struct ref_be {
+ 	transaction_begin_fn transaction_begin;
+@@ -397,6 +409,12 @@ struct ref_be {
+ 	reflog_exists_fn reflog_exists;
+ 	create_reflog_fn create_reflog;
+ 	delete_reflog_fn delete_reflog;
++	resolve_ref_unsafe_fn resolve_ref_unsafe;
++	is_refname_available_fn is_refname_available;
++	pack_refs_fn pack_refs;
++	peel_ref_fn peel_ref;
++	create_symref_fn create_symref;
++	resolve_gitlink_ref_fn resolve_gitlink_ref;
+ };
+ 
+ extern struct ref_be *refs;
 -- 
 2.0.1.552.g1af257a
