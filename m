@@ -1,106 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] git-imap-send: use libcurl for implementation
-Date: Tue, 19 Aug 2014 10:13:35 -0700
-Message-ID: <xmqq61howgg0.fsf@gitster.dls.corp.google.com>
-References: <53EA8C3E.1080500@raz.or.at> <20140813015917.GA30756@google.com>
-	<20140817083022.GJ23808@peff.net> <53F0A66A.9000909@raz.or.at>
-	<20140817184252.GB2200@peff.net> <53F33183.80802@raz.or.at>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	git@vger.kernel.org, 434599@bugs.debian.org
-To: Bernhard Reiter <ockham@raz.or.at>
-X-From: git-owner@vger.kernel.org Tue Aug 19 19:13:51 2014
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH v3] Allow the user to change the temporary file name for mergetool
+Date: Tue, 19 Aug 2014 19:15:45 +0200
+Message-ID: <1408468545-6879-1-git-send-email-robin.rosenberg@dewire.com>
+References: <xmqqa970wgy0.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 19:16:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJmyk-0001zI-Od
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 19:13:51 +0200
+	id 1XJn0o-0003Cv-2G
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 19:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752505AbaHSRNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 13:13:46 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61215 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751653AbaHSRNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 13:13:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 355513257A;
-	Tue, 19 Aug 2014 13:13:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bev/zb7Jkcnltc0ieaV9IU9Uc24=; b=Rcg7XW
-	c6igMR80UEhkFqIABRAhqcfEW5Q5BDpgr6Q0oUKq2NOcIB0tkaYIur7iy+i8UZI5
-	rEZ/DSTKkcDJP67LEFXhheH397Xk35NIQdrl00ohBaLAspUOKZK9rPnDLUBnBW+B
-	MOD6nt30W4rYqcGAcyC90xovvSwRudyxSmnf0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yQ7nqE/zf/yW8wY/kePLW6B50U2nks7u
-	sz6Ma83DDs2KS/r4F4qFmBAjBQQQZ+hqy0/o6kUtWEUAHBsMmxDpMYVVlNxRIYFk
-	hYEkWsfNCNgu1wX2/HZe17ZXD+prhLOgUHWMY3rBnw9ezx4s3oqw7ONyAgfqEHGF
-	mVGMgDZgUW4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2BB8532579;
-	Tue, 19 Aug 2014 13:13:45 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0CA643256D;
-	Tue, 19 Aug 2014 13:13:36 -0400 (EDT)
-In-Reply-To: <53F33183.80802@raz.or.at> (Bernhard Reiter's message of "Tue, 19
-	Aug 2014 13:14:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 284522E4-27C4-11E4-B078-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753330AbaHSRPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 13:15:54 -0400
+Received: from zimbra.dewire.com ([83.140.172.131]:54771 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753148AbaHSRPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 13:15:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 1F71E81683;
+	Tue, 19 Aug 2014 19:15:52 +0200 (CEST)
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 24SdHEjBmdT3; Tue, 19 Aug 2014 19:15:47 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 9F83181656;
+	Tue, 19 Aug 2014 19:15:47 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id ERcpmAVwcMEf; Tue, 19 Aug 2014 19:15:47 +0200 (CEST)
+Received: from Robin-Rosenbergs-MacBook-Pro.local.com (unknown [10.1.2.67])
+	by zimbra.dewire.com (Postfix) with ESMTP id 3D381815E0;
+	Tue, 19 Aug 2014 19:15:47 +0200 (CEST)
+X-Mailer: git-send-email 2.1.0.rc2.6.g39c33ff.dirty
+In-Reply-To: <xmqqa970wgy0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255504>
 
-Bernhard Reiter <ockham@raz.or.at> writes:
+Using the original filename suffix for the temporary input files to
+the merge tool confuses IDEs like Eclipse. This patch introduces
+a configurtion option, mergetool.tmpsuffix, which get appended to
+the temporary file name. That way the user can choose to use a
+suffix like ".tmp", which does not cause confusion.
 
-> Am 2014-08-17 um 20:42 schrieb Jeff King:
->> [...]
->> 
->>>> I'm not sure I understand this comment. Even if SSL is not in use,
->>>> wouldn't we be passing a regular pipe to curl, which would break?
->>>
->>> Yeah, we can't do that, and thus would have to keep the handwritten IMAP
->>> implementation just for the tunnel case (allowing to drop only the
->>> OpenSSL specific stuff), see my other email:
->>> http://www.mail-archive.com/git@vger.kernel.org/msg56791.html (the
->>> relevant part is pretty far down at the bottom).
->> 
->> I'd really love it if we could make this work with tunnels and
->> eventually get rid of the hand-written imap code entirely. I agree with
->> Jonathan that we probably need to keep it around a bit for people on
->> older curl, but dropping it is a good goal in the long run. That code
->> was forked from the isync project, but mangled enough that we could not
->> take bug fixes from upstream. As not many people use imap-send, I
->> suspect it is largely unmaintained and the source of many lurking
->> bugs[1]. Replacing it with curl's maintained implementation is probably
->> a good step.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ Documentation/config.txt        |  5 +++++
+ Documentation/git-mergetool.txt |  7 +++++++
+ git-mergetool.sh                | 10 ++++++----
+ 3 files changed, 18 insertions(+), 4 deletions(-)
 
-I would agree with s/a good step/a good goal/ ;-)
-
-> I'll work on this as soon as I find some time, but as that will include
-> changes to run-command.c (and possibly other files?), I'd like to cover
-> that in a commit of its own. Do you guys think the current patch [1] is
-> good enough for "official" submission already?
-
-My impression from reading the discussion in this thread has been
-that the patch that started this thread would break the tunneling
-code, i.e. is not there yet.  Or did you mean some other patch?
-
-The other patch $gmane/255403 from you looked good and I think I
-already have a copy queued on 'pu' as f9dc5d65 (git-imap-send:
-simplify tunnel construction, 2014-08-13).
-
-Thanks.
-
-
-[References]
-
-*$gmane/255403*
-    http://thread.gmane.org/gmane.comp.version-control.git/255220/focus=255403
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c55c22a..0e15800 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1778,6 +1778,11 @@ notes.displayRef::
+ 	several times.  A warning will be issued for refs that do not
+ 	exist, but a glob that does not match any refs is silently
+ 	ignored.
++
++mergetool.tmpsuffix::
++	A string to append the names of the temporary files mergetool
++	creates in the worktree as input to a custom merge tool. The
++	primary use is to avoid confusion in IDEs during merge.
+ +
+ This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
+ environment variable, which must be a colon separated list of refs or
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index e846c2e..80a0526 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -89,6 +89,13 @@ Setting the `mergetool.keepBackup` configuration variable to `false`
+ causes `git mergetool` to automatically remove the backup as files
+ are successfully merged.
+ 
++`git mergetool` may also create other temporary files for the
++different versions involved in the merge. By default these files have
++the same filename suffix as the file being merged. This may confuse
++other tools in use during a long merge operation. The user can set
++`mergetool.tmpsuffix` to be used as an extra suffix, which will be
++appened to the temporary filename to lessen that problem.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 9a046b7..d7cc76c 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -214,6 +214,8 @@ checkout_staged_file () {
+ }
+ 
+ merge_file () {
++	tmpsuffix=$(git config mergetool.tmpsuffix || true)
++
+ 	MERGED="$1"
+ 
+ 	f=$(git ls-files -u -- "$MERGED")
+@@ -229,10 +231,10 @@ merge_file () {
+ 	fi
+ 
+ 	ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
+-	BACKUP="./$MERGED.BACKUP.$ext"
+-	LOCAL="./$MERGED.LOCAL.$ext"
+-	REMOTE="./$MERGED.REMOTE.$ext"
+-	BASE="./$MERGED.BASE.$ext"
++	BACKUP="./$MERGED.BACKUP.$ext$tmpsuffix"
++	LOCAL="./$MERGED.LOCAL.$ext$tmpsuffix"
++	REMOTE="./$MERGED.REMOTE.$ext$tmpsuffix"
++	BASE="./$MERGED.BASE.$ext$tmpsuffix"
+ 
+ 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+ 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
+-- 
+2.1.0.rc2.6.g39c33ff.dirty
