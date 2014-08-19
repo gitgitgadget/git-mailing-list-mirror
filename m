@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 13/23] refs.c: move check_refname_component to the common code
-Date: Tue, 19 Aug 2014 09:30:37 -0700
-Message-ID: <1408465847-30384-14-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 20/23] refs-be-files.c: add reflog backend methods
+Date: Tue, 19 Aug 2014 09:30:44 -0700
+Message-ID: <1408465847-30384-21-git-send-email-sahlberg@google.com>
 References: <1408465847-30384-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,313 +11,213 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJmKb-0002zZ-Pv
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:32:22 +0200
+	id 1XJmKe-0002zZ-Cs
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 18:32:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240AbaHSQbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 12:31:33 -0400
-Received: from mail-pd0-f201.google.com ([209.85.192.201]:40501 "EHLO
+	id S1753286AbaHSQbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 12:31:51 -0400
+Received: from mail-pd0-f201.google.com ([209.85.192.201]:37187 "EHLO
 	mail-pd0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752183AbaHSQaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 12:30:55 -0400
-Received: by mail-pd0-f201.google.com with SMTP id g10so1804620pdj.0
-        for <git@vger.kernel.org>; Tue, 19 Aug 2014 09:30:54 -0700 (PDT)
+	with ESMTP id S1751972AbaHSQay (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 12:30:54 -0400
+Received: by mail-pd0-f201.google.com with SMTP id g10so1804616pdj.0
+        for <git@vger.kernel.org>; Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Jh0/vBfp60AwIivYBwUuJRqE7/+ZhnSE3x8QIBFEk/E=;
-        b=cILqZlydJLhGbXqh2V5UnKdgTm70DqHd6z99uE/OzLXeXI1eR/qpjbxZT5iMVIDniv
-         /RkmWMg8eAyKoWrN35y9QLgJMybWSwOo8Yp2zD1x4K4WrQIqgr+aFxkI7kNyyENM/YXy
-         +5hK1ihVhM/EEYjPppz6o+76QgON0Q9jw4e+g6W0mUvkLJlbDAJW+toAnrPfAz/dsjSc
-         18XVtlLovhSVu5Hm7BTRGRRrxiUUeDOkncPFRVXUgErU9qRiMBXKYvINbtFtw5+wUGSM
-         8P0zpnaUg5XvKteVVvwVjgZT+gvZBEjRMs8Ba7u080CKg8GGVynsuL+qo1s7NY6p5HW5
-         NUWg==
+        bh=zbwhnmhWRnR1KBuw3wilIgc4zBkdGAx78dJ/tLZ0/VM=;
+        b=WbZ7MAgPX3a5eDhuMn5Vb+IgBamXJynzhRxiuufm3ulXRbyKWqyqxozcc71WotjxUe
+         4vJQ+gK4cKdpuEMfmWSfhYDIiJV2HCzbbw50io3lRs5p6fHDb1C51WbKiMC8d2zycP4R
+         5iRZA1fYkL7OM1FEqqFshoLYit8Rz0a/YVybXIDnSFEZo4ZlfUiSNs/qEBYHqp73CK57
+         BmpVorWB3DeiL7g51lniWoFN/x4izhTyqr4+yIn2WTCySYLFRGAvkpYLuV5CnoS4hJUA
+         sd7wq+fi9NQTitUccCpyb3yihnMnEfXZflHx19IexANcMaEJ6tbe3YEgb1oSS12y2I37
+         xHTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Jh0/vBfp60AwIivYBwUuJRqE7/+ZhnSE3x8QIBFEk/E=;
-        b=AhbfZORnq9mzDVBDg6Hm1KzI4wnwJ6wVMebGgHPImBoq6VVgNmIuQ/wwHm4CeN7u6K
-         c1ZdKheqAv0yrSgZJL0aatx6YF0x4IHw2ckQMmsgOa1TyNAAGxXb6ST7zoEUuSU3/x0/
-         eGTfGBtXeaRK2hFrpP0ua/Uf5LyfTuWmlYr7+zbrOBdfre2jUr7YXlFo3LqkrJyMbMKl
-         mrtml7mKdnqQxs3Fy7/uTFtmqYKBucyhzISaA6AaHGZPb7qOk9gbxo7/rXObe0/njMw0
-         5P8pdn+zsHXZZw/uE+svRCoDoIF0KzawOgsaabcM43diYBH4q9JO2qn4Abjzc+bZ4vKu
-         yY+w==
-X-Gm-Message-State: ALoCoQlc/obTf3+0pVmTXrLCD3xnubeFf8dSVMkAiTHETSkWQmyudSXJjrEbj0eHugE14lqKvVC6
-X-Received: by 10.70.89.97 with SMTP id bn1mr22364567pdb.5.1408465853623;
+        bh=zbwhnmhWRnR1KBuw3wilIgc4zBkdGAx78dJ/tLZ0/VM=;
+        b=VvWYl/Np9a05vMsV3MGXEgDuE2WuMWcuhZH6vzrursd+Pu7JdAyqYniuWZ31DtJR/r
+         NTJg/tf34XCtILsDD3wK24hbELBG+Mv0TQo8GV/enkWBBlmDbes3Xbo+miAc7zdWbwPJ
+         H0kid38/iA+ca3Aevouqyw1WDzT2uXefGYgsVgDZFNHgdU1n6lSPhIGJ0moAXoFpOQ2U
+         O5hvAo43kyF17BMn4z7VK4I0n6MkVk3NJdI9zadq04Rl9FqnAWQrPluBrvAUBEEB+WGF
+         0wsRgn0M+kor077hE0XNW5MpAbqKmuM5udPchGQjnWwoGiXdp9O4KF5/+kJrcE2GXMkE
+         ZpKg==
+X-Gm-Message-State: ALoCoQkJix/CYfZGNAbQgyx0l0veqxKbo8EK6ryIP2OpfWEjGL1dHyhDdsCZGBOd/pk8IvIwk1vh
+X-Received: by 10.66.144.102 with SMTP id sl6mr22458983pab.17.1408465853746;
         Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id v20si329148yhe.2.2014.08.19.09.30.53
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id v20si329150yhe.2.2014.08.19.09.30.53
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 5378B5A4441;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 7762031C538;
 	Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id DEDF4E1A0E; Tue, 19 Aug 2014 09:30:52 -0700 (PDT)
+	id 43BE1E11B0; Tue, 19 Aug 2014 09:30:53 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.552.g1af257a
 In-Reply-To: <1408465847-30384-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255488>
-
-This function does not contain any backend specific code so we
-can move it to the common code.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255489>
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs-be-files.c | 110 --------------------------------------------------------
- refs.c          | 110 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 110 insertions(+), 110 deletions(-)
+ refs-be-files.c | 21 +++++++++++++++------
+ refs.c          | 32 ++++++++++++++++++++++++++++++++
+ refs.h          | 16 ++++++++++++++++
+ 3 files changed, 63 insertions(+), 6 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index ed7bc61..55bced9 100644
+index 27eafd0..464d488 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -6,25 +6,6 @@
- #include "string-list.h"
+@@ -2251,7 +2251,7 @@ static int copy_msg(char *buf, const char *msg)
+ }
  
- /*
-- * How to handle various characters in refnames:
-- * 0: An acceptable character for refs
-- * 1: End-of-component
-- * 2: ., look for a preceding . to reject .. in refs
-- * 3: {, look for a preceding @ to reject @{ in refs
-- * 4: A bad character: ASCII control characters, "~", "^", ":" or SP
-- */
--static unsigned char refname_disposition[256] = {
--	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 1,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
--};
--
--/*
-  * Used as a flag to transaction_delete_sha1 when a loose ref is being
-  * pruned.
-  */
-@@ -35,97 +16,6 @@ static unsigned char refname_disposition[256] = {
-  */
- #define UPDATE_REFLOG_NOLOCK 0x0200
+ /* This function must set a meaningful errno on failure */
+-int create_reflog(const char *refname)
++static int files_create_reflog(const char *refname)
+ {
+ 	int logfd, oflags = O_APPEND | O_WRONLY;
+ 	char logfile[PATH_MAX];
+@@ -2516,7 +2516,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
+ 	return 0;
+ }
  
--/*
-- * Try to read one refname component from the front of refname.
-- * Return the length of the component found, or -1 if the component is
-- * not legal.  It is legal if it is something reasonable to have under
-- * ".git/refs/"; We do not like it if:
-- *
-- * - any path component of it begins with ".", or
-- * - it has double dots "..", or
-- * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
-- * - it ends with a "/".
-- * - it ends with ".lock"
-- * - it contains a "\" (backslash)
-- */
--static int check_refname_component(const char *refname, int flags)
--{
--	const char *cp;
--	char last = '\0';
--
--	for (cp = refname; ; cp++) {
--		int ch = *cp & 255;
--		unsigned char disp = refname_disposition[ch];
--		switch (disp) {
--		case 1:
--			goto out;
--		case 2:
--			if (last == '.')
--				return -1; /* Refname contains "..". */
--			break;
--		case 3:
--			if (last == '@')
--				return -1; /* Refname contains "@{". */
--			break;
--		case 4:
--			return -1;
--		}
--		last = ch;
--	}
--out:
--	if (cp == refname)
--		return 0; /* Component has zero length. */
--	if (refname[0] == '.') {
--		if (!(flags & REFNAME_DOT_COMPONENT))
--			return -1; /* Component starts with '.'. */
--		/*
--		 * Even if leading dots are allowed, don't allow "."
--		 * as a component (".." is prevented by a rule above).
--		 */
--		if (refname[1] == '\0')
--			return -1; /* Component equals ".". */
--	}
--	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
--		return -1; /* Refname ends with ".lock". */
--	return cp - refname;
--}
--
--int check_refname_format(const char *refname, int flags)
--{
--	int component_len, component_count = 0;
--
--	if (!strcmp(refname, "@"))
--		/* Refname is a single character '@'. */
--		return -1;
--
--	while (1) {
--		/* We are at the start of a path component. */
--		component_len = check_refname_component(refname, flags);
--		if (component_len <= 0) {
--			if ((flags & REFNAME_REFSPEC_PATTERN) &&
--					refname[0] == '*' &&
--					(refname[1] == '\0' || refname[1] == '/')) {
--				/* Accept one wildcard as a full refname component. */
--				flags &= ~REFNAME_REFSPEC_PATTERN;
--				component_len = 1;
--			} else {
--				return -1;
--			}
--		}
--		component_count++;
--		if (refname[component_len] == '\0')
--			break;
--		/* Skip to next component. */
--		refname += component_len + 1;
--	}
--
--	if (refname[component_len - 1] == '.')
--		return -1; /* Refname ends with '.'. */
--	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
--		return -1; /* Refname has only one component. */
--	return 0;
--}
--
- struct ref_entry;
+-int reflog_exists(const char *refname)
++static int files_reflog_exists(const char *refname)
+ {
+ 	struct stat st;
  
- /*
+@@ -2524,7 +2524,7 @@ int reflog_exists(const char *refname)
+ 		S_ISREG(st.st_mode);
+ }
+ 
+-int delete_reflog(const char *refname)
++static int files_delete_reflog(const char *refname)
+ {
+ 	return remove_path(git_path("logs/%s", refname));
+ }
+@@ -2568,7 +2568,9 @@ static char *find_beginning_of_line(char *bob, char *scan)
+ 	return scan;
+ }
+ 
+-int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data)
++static int files_for_each_reflog_ent_reverse(const char *refname,
++					     each_reflog_ent_fn fn,
++					     void *cb_data)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	FILE *logfp;
+@@ -2645,7 +2647,8 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
+ 	return ret;
+ }
+ 
+-int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data)
++static int files_for_each_reflog_ent(const char *refname,
++				     each_reflog_ent_fn fn, void *cb_data)
+ {
+ 	FILE *logfp;
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -2706,7 +2709,7 @@ static int do_for_each_reflog(struct strbuf *name, each_ref_fn fn, void *cb_data
+ 	return retval;
+ }
+ 
+-int for_each_reflog(each_ref_fn fn, void *cb_data)
++static int files_for_each_reflog(each_ref_fn fn, void *cb_data)
+ {
+ 	int retval;
+ 	struct strbuf name;
+@@ -3295,6 +3298,12 @@ struct ref_be refs_files = {
+ 	files_transaction_update_reflog,
+ 	files_transaction_commit,
+ 	files_transaction_free,
++	files_for_each_reflog_ent,
++	files_for_each_reflog_ent_reverse,
++	files_for_each_reflog,
++	files_reflog_exists,
++	files_create_reflog,
++	files_delete_reflog,
+ };
+ 
+ struct ref_be *refs = &refs_files;
 diff --git a/refs.c b/refs.c
-index b8582f8..ea5f276 100644
+index b8c942f..2db1a74 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -573,3 +573,113 @@ char *resolve_refdup(const char *ref, unsigned char *sha1, int flags, int *ref_f
- 	const char *ret = resolve_ref_unsafe(ref, sha1, flags, ref_flag);
- 	return ret ? xstrdup(ret) : NULL;
+@@ -856,3 +856,35 @@ void transaction_free(struct ref_transaction *transaction)
+ {
+ 	return refs->transaction_free(transaction);
  }
 +
-+/*
-+ * How to handle various characters in refnames:
-+ * 0: An acceptable character for refs
-+ * 1: End-of-component
-+ * 2: ., look for a preceding . to reject .. in refs
-+ * 3: {, look for a preceding @ to reject @{ in refs
-+ * 4: A bad character: ASCII control characters, "~", "^", ":" or SP
-+ */
-+static unsigned char refname_disposition[256] = {
-+	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-+	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 1,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
-+};
-+
-+/*
-+ * Try to read one refname component from the front of refname.
-+ * Return the length of the component found, or -1 if the component is
-+ * not legal.  It is legal if it is something reasonable to have under
-+ * ".git/refs/"; We do not like it if:
-+ *
-+ * - any path component of it begins with ".", or
-+ * - it has double dots "..", or
-+ * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
-+ * - it ends with a "/".
-+ * - it ends with ".lock"
-+ * - it contains a "\" (backslash)
-+ */
-+static int check_refname_component(const char *refname, int flags)
++int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
++				void *cb_data)
 +{
-+	const char *cp;
-+	char last = '\0';
-+
-+	for (cp = refname; ; cp++) {
-+		int ch = *cp & 255;
-+		unsigned char disp = refname_disposition[ch];
-+		switch (disp) {
-+		case 1:
-+			goto out;
-+		case 2:
-+			if (last == '.')
-+				return -1; /* Refname contains "..". */
-+			break;
-+		case 3:
-+			if (last == '@')
-+				return -1; /* Refname contains "@{". */
-+			break;
-+		case 4:
-+			return -1;
-+		}
-+		last = ch;
-+	}
-+out:
-+	if (cp == refname)
-+		return 0; /* Component has zero length. */
-+	if (refname[0] == '.') {
-+		if (!(flags & REFNAME_DOT_COMPONENT))
-+			return -1; /* Component starts with '.'. */
-+		/*
-+		 * Even if leading dots are allowed, don't allow "."
-+		 * as a component (".." is prevented by a rule above).
-+		 */
-+		if (refname[1] == '\0')
-+			return -1; /* Component equals ".". */
-+	}
-+	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
-+		return -1; /* Refname ends with ".lock". */
-+	return cp - refname;
++	return refs->for_each_reflog_ent_reverse(refname, fn, cb_data);
 +}
 +
-+int check_refname_format(const char *refname, int flags)
++int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
++			void *cb_data)
 +{
-+	int component_len, component_count = 0;
-+
-+	if (!strcmp(refname, "@"))
-+		/* Refname is a single character '@'. */
-+		return -1;
-+
-+	while (1) {
-+		/* We are at the start of a path component. */
-+		component_len = check_refname_component(refname, flags);
-+		if (component_len <= 0) {
-+			if ((flags & REFNAME_REFSPEC_PATTERN) &&
-+					refname[0] == '*' &&
-+					(refname[1] == '\0' || refname[1] == '/')) {
-+				/* Accept one wildcard as a full refname component. */
-+				flags &= ~REFNAME_REFSPEC_PATTERN;
-+				component_len = 1;
-+			} else {
-+				return -1;
-+			}
-+		}
-+		component_count++;
-+		if (refname[component_len] == '\0')
-+			break;
-+		/* Skip to next component. */
-+		refname += component_len + 1;
-+	}
-+
-+	if (refname[component_len - 1] == '.')
-+		return -1; /* Refname ends with '.'. */
-+	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
-+		return -1; /* Refname has only one component. */
-+	return 0;
++	return refs->for_each_reflog_ent(refname, fn, cb_data);
 +}
++
++int for_each_reflog(each_ref_fn fn, void *cb_data)
++{
++	return refs->for_each_reflog(fn, cb_data);
++}
++
++int reflog_exists(const char *refname)
++{
++	return refs->reflog_exists(refname);
++}
++
++int create_reflog(const char *refname)
++{
++	return refs->create_reflog(refname);
++}
++
++int delete_reflog(const char *refname)
++{
++	return refs->delete_reflog(refname);
++}
+diff --git a/refs.h b/refs.h
+index 4b669f5..0a68986 100644
+--- a/refs.h
++++ b/refs.h
+@@ -372,6 +372,16 @@ typedef int (*transaction_update_reflog_fn)(
+ typedef int (*transaction_commit_fn)(struct ref_transaction *transaction,
+ 				       struct strbuf *err);
+ typedef void (*transaction_free_fn)(struct ref_transaction *transaction);
++typedef int (*for_each_reflog_ent_fn)(const char *refname,
++				      each_reflog_ent_fn fn,
++				      void *cb_data);
++typedef int (*for_each_reflog_ent_reverse_fn)(const char *refname,
++					      each_reflog_ent_fn fn,
++					      void *cb_data);
++typedef int (*for_each_reflog_fn)(each_ref_fn fn, void *cb_data);
++typedef int (*reflog_exists_fn)(const char *refname);
++typedef int (*create_reflog_fn)(const char *refname);
++typedef int (*delete_reflog_fn)(const char *refname);
+ 
+ struct ref_be {
+ 	transaction_begin_fn transaction_begin;
+@@ -381,6 +391,12 @@ struct ref_be {
+ 	transaction_update_reflog_fn transaction_update_reflog;
+ 	transaction_commit_fn transaction_commit;
+ 	transaction_free_fn transaction_free;
++	for_each_reflog_ent_fn for_each_reflog_ent;
++	for_each_reflog_ent_reverse_fn for_each_reflog_ent_reverse;
++	for_each_reflog_fn for_each_reflog;
++	reflog_exists_fn reflog_exists;
++	create_reflog_fn create_reflog;
++	delete_reflog_fn delete_reflog;
+ };
+ 
+ extern struct ref_be *refs;
 -- 
 2.0.1.552.g1af257a
