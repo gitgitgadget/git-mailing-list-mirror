@@ -1,75 +1,62 @@
-From: Bernhard Reiter <ockham@raz.or.at>
-Subject: Re: [PATCH/RFC] git-imap-send: use libcurl for implementation
-Date: Tue, 19 Aug 2014 13:14:11 +0200
-Message-ID: <53F33183.80802@raz.or.at>
-References: <53EA8C3E.1080500@raz.or.at> <20140813015917.GA30756@google.com> <20140817083022.GJ23808@peff.net> <53F0A66A.9000909@raz.or.at> <20140817184252.GB2200@peff.net>
+From: Andi Kleen <ak@linux.intel.com>
+Subject: Re: make profile issue on Git 2.1.0
+Date: Tue, 19 Aug 2014 04:54:49 -0700
+Message-ID: <20140819115449.GV5803@tassilo.jf.intel.com>
+References: <CAOUWSGA+6gX8ZBv3Wo8FgUdyd99TYWOybTwGT6ADv_HtNFsFMQ@mail.gmail.com>
+ <20140819061203.GA14924@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	434599@bugs.debian.org
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?Andr=E9s_Sicard-Ram=EDrez?= <asr@eafit.edu.co>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 19 13:14:54 2014
+X-From: git-owner@vger.kernel.org Tue Aug 19 13:55:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJhNK-0004jg-4w
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 13:14:50 +0200
+	id 1XJi0F-0000o7-PZ
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 13:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbaHSLOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 07:14:20 -0400
-Received: from mhub.domainplanet.at ([92.43.99.119]:39803 "EHLO
-	mhub.domainplanet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752598AbaHSLOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 07:14:17 -0400
-Received: from smtp.domainplanet.at (smtp.domainplanet.at [92.43.99.22])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mhub.domainplanet.at (Postfix) with ESMTPS id E3DEA9D338B;
-	Tue, 19 Aug 2014 13:14:12 +0200 (CEST)
-Received: from [10.0.0.88] (62-46-147-229.adsl.highway.telekom.at [62.46.147.229])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.domainplanet.at (Postfix) with ESMTPSA id 9AE2EBFC1F;
-	Tue, 19 Aug 2014 13:14:22 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <20140817184252.GB2200@peff.net>
+	id S1751552AbaHSLyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 07:54:55 -0400
+Received: from mga11.intel.com ([192.55.52.93]:16439 "EHLO mga11.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750779AbaHSLyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 07:54:54 -0400
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga102.fm.intel.com with ESMTP; 19 Aug 2014 04:54:50 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.97,862,1389772800"; 
+   d="scan'208";a="374214112"
+Received: from tassilo.jf.intel.com (HELO tassilo.localdomain) ([10.7.201.157])
+  by FMSMGA003.fm.intel.com with ESMTP; 19 Aug 2014 04:51:07 -0700
+Received: by tassilo.localdomain (Postfix, from userid 1000)
+	id 3ABE1301E47; Tue, 19 Aug 2014 04:54:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20140819061203.GA14924@peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255455>
 
-Am 2014-08-17 um 20:42 schrieb Jeff King:
-> [...]
-> 
->>> I'm not sure I understand this comment. Even if SSL is not in use,
->>> wouldn't we be passing a regular pipe to curl, which would break?
->>
->> Yeah, we can't do that, and thus would have to keep the handwritten IMAP
->> implementation just for the tunnel case (allowing to drop only the
->> OpenSSL specific stuff), see my other email:
->> http://www.mail-archive.com/git@vger.kernel.org/msg56791.html (the
->> relevant part is pretty far down at the bottom).
-> 
-> I'd really love it if we could make this work with tunnels and
-> eventually get rid of the hand-written imap code entirely. I agree with
-> Jonathan that we probably need to keep it around a bit for people on
-> older curl, but dropping it is a good goal in the long run. That code
-> was forked from the isync project, but mangled enough that we could not
-> take bug fixes from upstream. As not many people use imap-send, I
-> suspect it is largely unmaintained and the source of many lurking
-> bugs[1]. Replacing it with curl's maintained implementation is probably
-> a good step.
+> Maybe we should do this:
 
-I'll work on this as soon as I find some time, but as that will include
-changes to run-command.c (and possibly other files?), I'd like to cover
-that in a commit of its own. Do you guys think the current patch [1] is
-good enough for "official" submission already? If so, do I need some
-sort of official review? Documentation/SubmittingPatches says I'm only
-supposed to direct it to Junio after the list "reaches consensus", so
-I'm wondering how to get there... :-)
+Looks good to me.
 
-Bernhard
+> As a side note, while testing this I noticed that the "make perf" run
+> goes a lot faster if you set GIT_PERF_REPEAT_COUNT=1. This is bad for
+> actually measuring things, but probably fine for profile feedback. I
+> don't use the profile builds myself, though, so I will leave it to
+> somebody who cares more to investigate whether such a change would be a
+> good idea.
+
+Yes should be fine too.
+
+Another way to speed it up would be also to run the tests (both 
+tests and benchmarks) in parallel on multiple cores. The gcc feedback mechanism
+won't mind, as it doesn't measure time.
+
+-Andi
