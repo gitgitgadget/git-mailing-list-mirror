@@ -1,66 +1,96 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH v2 2/2] convert: Stream from fd to required clean filter instead of mmap
-Date: Tue, 19 Aug 2014 10:26:36 +0200
-Message-ID: <7D3A2FB9-F1CA-470C-91CC-8FF28097F812@zib.de>
-References: <1407303134-16635-1-git-send-email-prohaska@zib.de> <1407303134-16635-3-git-send-email-prohaska@zib.de> <20140816102703.GD7857@serenity.lan> <FA3F1197-25C5-42E4-9418-1C821D430819@zib.de> <20140817072746.GD23808@peff.net> <C1695CEB-B278-422A-90D6-C3EAD8B6638C@zib.de> <CACsJy8BUBfQeny4iu6nZ+pCy84_=8EEfEHY3pWLpx_1PLCwC5w@mail.gmail.com> <20140819075345.GA7712@peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH] Documentation/git-rebase.txt: fix -f description to match actual git behavior.
+Date: Tue, 19 Aug 2014 13:57:56 +0400
+Message-ID: <87y4ukajiz.fsf@osv.gnss.ru>
+References: <87bnrq22uf.fsf@osv.gnss.ru>
+	<xmqq4mxh5w34.fsf@gitster.dls.corp.google.com>
+	<xmqqzjf94f5n.fsf@gitster.dls.corp.google.com>
+	<87d2c22cnx.fsf@osv.gnss.ru>
+	<xmqq38cx1w0e.fsf@gitster.dls.corp.google.com>
+	<87ioltik7g.fsf@osv.gnss.ru>
+	<xmqqioltza8z.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>, John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Scott Chacon <schacon@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 19 10:27:02 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 11:58:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJekv-0006Vd-61
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 10:27:01 +0200
+	id 1XJgB4-0004IC-7M
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 11:58:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbaHSI04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 04:26:56 -0400
-Received: from mailer.zib.de ([130.73.108.11]:53745 "EHLO mailer.zib.de"
+	id S1751899AbaHSJ6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 05:58:00 -0400
+Received: from mail.javad.com ([54.86.164.124]:55708 "EHLO mail.javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751492AbaHSI0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 04:26:55 -0400
-Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7J8Qhpb013232;
-	Tue, 19 Aug 2014 10:26:43 +0200 (CEST)
-Received: from kodkod.zib.de (kodkod.zib.de [130.73.68.88])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7J8QfvV013045
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 19 Aug 2014 10:26:42 +0200 (CEST)
-In-Reply-To: <20140819075345.GA7712@peff.net>
-X-Mailer: Apple Mail (2.1878.6)
-X-Miltered: at mailer.zib.de with ID 53F30A43.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 53F30A43.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 53F30A43.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
-X-j-chkmail-Status: Ham
+	id S1750779AbaHSJ57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 05:57:59 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id 8E29F6182D;
+	Tue, 19 Aug 2014 09:57:58 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1XJgAu-0001l7-Qr; Tue, 19 Aug 2014 13:57:56 +0400
+In-Reply-To: <xmqqioltza8z.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 15 Aug 2014 14:57:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255450>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Aug 19, 2014, at 9:53 AM, Jeff King <peff@peff.net> wrote:
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>>> A sentence "--force has no effect under --preserve-merges mode" does
+>>> not tell the readers very much, either and leaves them wondering if
+>>> it means "--preserve-merges mode always rebases every time it is
+>>> asked, never noticing 'ah, the history is already in a good shape
+>>> and there is no need to do anything further'" or "--preserve-merges
+>>> mode ignores --force and refuses to recreate the history if the
+>>> history is in the shape the mode deems is already desirable."
+>>
+>> In fact there is no way to force rebase when --preserve-merges is given.
+>> Neither --force nor --no-ff has any effect.
+>>
+>> Maybe some clarification could be given in --preserve-merges
+>> description, provided it's not clear that "has no effect" for --force
+>> means that one can't force the rebase in this case.
+>
+> I am not sure if that is an intended behaviour or simply a bug (I
+> rarely use preserve-merges myself, so I offhand do not know for
+> certain).
 
->>> For files >2GB on a 32-bit system (e.g. msysgit), filtering with the
->>> previous code always failed.  Now it works.  I created the patch to
->>> change git from 'fundamentally doesn't handle this' to 'works as
->>> expected'.
->> 
->> I deal with similar problem and added $GIT_ALLOC_LIMIT to test large
->> blob code. Maybe we could add $GIT_MMAP_LIMIT? I don't suppose we call
->> xmmap/xmalloc so often that the extra test would slow git down.
-> 
-> Yeah, I think I'd prefer that approach. We should mmap _way_ less than
-> we malloc, and I do not think the malloc check has caused any problems.
+It seems that there is some problem there anyway. Probably a slight
+misfeature rather than a bug, as --preserve-merges always pretends it
+does something, even when it does not:
 
-I am going to update the patch accordingly.
+$ git log --oneline --graph --decorate
+*   6f25bd5 (HEAD, topic) M
+|\  
+| * c5a4a43 C
+* | 3c6ab7a (master) N
+* | 99ff328 B
+|/  
+* 130ae2d A
+$ git rebase --preserve-merges master
+Successfully rebased and updated refs/heads/topic.
+$ git log --oneline --graph --decorate
+*   6f25bd5 (HEAD, topic) M
+|\  
+| * c5a4a43 C
+* | 3c6ab7a (master) N
+* | 99ff328 B
+|/  
+* 130ae2d A
+$
 
-	Steffen
+"git reflog topic" doesn't show any changes either.
+
+-- 
+Sergey.
