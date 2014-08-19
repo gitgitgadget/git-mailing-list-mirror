@@ -1,368 +1,81 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: Transaction patch series overview
-Date: Tue, 19 Aug 2014 12:54:20 -0700
-Message-ID: <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
-References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
-	<CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
-	<CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Relative submodule URLs
+Date: Tue, 19 Aug 2014 15:18:17 -0500
+Message-ID: <CAHd499Ad3T1sHQWwE9NNySTbfaL_UvcdX4qrWkhH2PYhet=hMg@mail.gmail.com>
+References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
+	<20140818205505.GA20185@google.com>
+	<20140819102421.GA5012@book.hvoigt.net>
+	<CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
+	<xmqqiolowi1f.fsf@gitster.dls.corp.google.com>
+	<CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
+	<xmqqoavguw26.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 19 21:54:30 2014
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 22:18:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJpUA-0003iC-JH
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 21:54:27 +0200
+	id 1XJprS-0008NP-Aj
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 22:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484AbaHSTyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 15:54:22 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:55463 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752575AbaHSTyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 15:54:21 -0400
-Received: by mail-vc0-f178.google.com with SMTP id la4so8154629vcb.9
-        for <git@vger.kernel.org>; Tue, 19 Aug 2014 12:54:20 -0700 (PDT)
+	id S1751945AbaHSUSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 16:18:20 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:65138 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751284AbaHSUSS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 16:18:18 -0400
+Received: by mail-vc0-f172.google.com with SMTP id im17so8062931vcb.17
+        for <git@vger.kernel.org>; Tue, 19 Aug 2014 13:18:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=mTTfAFUVPpuXf9DKCRlp8apzm+pzeMl5DAseAJxb4sI=;
-        b=n/rOCzGW94tb58U8Xdm+QRPdLiBvAksY7z8C8B1Yef4njUozXBPN7XqAD2xiML42HU
-         brH2047bqyLdBKtAKny8A42OJAyW0dbC2r9tcfI7TexVpVoe0VpH9JkWdLyX1ln1TR8j
-         ZZU405sFqug1mjxPw/2pubUzHXBRI+kcJJqNQc/XD1XO2Dimo7aQtUOz/Jsb8SwPBvHf
-         BVnRrzQm6TLWbtf90QkgLQXg1ma01JuuEOUyV1A/o3dbKHLkR7oZaLhjFtAXqJSt2mLa
-         i2TcMhuaGwPCDUZEuEEBKp0DHZDZOrydBJan3R9+yqlZHBpoRc/KHVOI3mskXxcHKLxI
-         1ZsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=mTTfAFUVPpuXf9DKCRlp8apzm+pzeMl5DAseAJxb4sI=;
-        b=KB4m/b81onVzmZpcXX2sn2soXFkdcbQI5UG8txFtr0B72Wz73YTUuZzzwZ/MjTKT6k
-         NddQVilqk+1/eUyC9WTX9MV/nW0YssvY4uHSFW2T1UHjSGtLKB0F+jl1l0o63OlQ/kTz
-         89EjD9Tvl0ZIUPUJR9aKrVlUca60ma88PZOuBuWLp+3w4EtfFWaSOB/hwJpr0X3gjfpP
-         DQa9FtdxHSEoIXBZcBEEya4KuFri7l1rrPZ2RU8fmuCut9uktjPkWHs6zuBgEpLJrXyU
-         l1R6h0P3LhO4YYhvGmerR/hcnB5NqKCvpO1x0dfQcZBQDe/H9JqWXyklKucxl9W+yIEu
-         N79w==
-X-Gm-Message-State: ALoCoQlc/J0z/Y+rDc68ZZv2bJJJPj0bBjboJ1x+w1zK/urT4PFehhIGv+EVfwH5nIIuJbIYV4ih
-X-Received: by 10.52.30.2 with SMTP id o2mr2773109vdh.12.1408478060209; Tue,
- 19 Aug 2014 12:54:20 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Tue, 19 Aug 2014 12:54:20 -0700 (PDT)
-In-Reply-To: <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=1Z5IGGM+idGxmZvIOea2M+gcFdoovH6OsONFfzDrrP8=;
+        b=Sy9a/ZeQZsgdGEytrPtZyRbYgzr8gSsTH2GTYDBpXV6+cqpLTftNaMmssTgpxrp2Wt
+         hYL9tWOOZtPDEZ20L0Ge9BIGpibbp4WTq2KxAitx891EhtRFCKSPSMPn+Eg1Smfoe0wr
+         InX4i3rSZrPO6TXQTMqYNH6qDl69nicXFDwUIrEmHwpgolJIZelrnlqZaGRyUxW7iPK5
+         jYiSYHgJKBD0m+LYaKudPsAccYWCIqqtaL824oR1YZG9qT7eHpx8ZT3ibPx1kRN3FZHn
+         M0Ag9WcAQCQx9NVBI8Q5P9UxCXk5rMJXAMgSFjwaLsFfPs+WrWpryYJlpgMbrKwnoquU
+         T+gg==
+X-Received: by 10.220.74.195 with SMTP id v3mr32222155vcj.23.1408479497283;
+ Tue, 19 Aug 2014 13:18:17 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.201 with HTTP; Tue, 19 Aug 2014 13:18:17 -0700 (PDT)
+In-Reply-To: <xmqqoavguw26.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: tvWFvkNSrOTlecMqXA6VwYHKfW4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255514>
-
-List, please see here an overview and ordering of the ref transaction
-patch series.
-These series build on each other and needs to be applied in the order
-listed below.
-
-This is an update.
-
-
-
-
-rs/ref-transaction-0
----------------------------
-    Early part of the "ref transaction" topic.
-
-    * rs/ref-transaction-0:
-      refs.c: change ref_transaction_update() to do error checking and
-return status
-      refs.c: remove the onerr argument to ref_transaction_commit
-      update-ref: use err argument to get error from ref_transaction_commit
-      refs.c: make update_ref_write update a strbuf on failure
-      refs.c: make ref_update_reject_duplicates take a strbuf argument
-for errors
-      refs.c: log_ref_write should try to return meaningful errno
-      refs.c: make resolve_ref_unsafe set errno to something meaningful on error
-      refs.c: commit_packed_refs to return a meaningful errno on failure
-      refs.c: make remove_empty_directories always set errno to something sane
-      refs.c: verify_lock should set errno to something meaningful
-      refs.c: make sure log_ref_setup returns a meaningful errno
-      refs.c: add an err argument to repack_without_refs
-      lockfile.c: make lock_file return a meaningful errno on failurei
-      lockfile.c: add a new public function unable_to_lock_message
-      refs.c: add a strbuf argument to ref_transaction_commit for error logging
-      refs.c: allow passing NULL to ref_transaction_free
-      refs.c: constify the sha arguments for
-ref_transaction_create|delete|update
-      refs.c: ref_transaction_commit should not free the transaction
-      refs.c: remove ref_transaction_rollback
-
-Has been merged into next.
-
-
-
-ref-transaction-1 (2014-07-16) 20 commits
--------------------------------------------------------------
-Second batch of ref transactions
-
- - refs.c: make delete_ref use a transaction
- - refs.c: make prune_ref use a transaction to delete the ref
- - refs.c: remove lock_ref_sha1
- - refs.c: remove the update_ref_write function
- - refs.c: remove the update_ref_lock function
- - refs.c: make lock_ref_sha1 static
- - walker.c: use ref transaction for ref updates
- - fast-import.c: use a ref transaction when dumping tags
- - receive-pack.c: use a reference transaction for updating the refs
- - refs.c: change update_ref to use a transaction
- - branch.c: use ref transaction for all ref updates
- - fast-import.c: change update_branch to use ref transactions
- - sequencer.c: use ref transactions for all ref updates
- - commit.c: use ref transactions for updates
- - replace.c: use the ref transaction functions for updates
- - tag.c: use ref transactions when doing updates
- - refs.c: add transaction.status and track OPEN/CLOSED/ERROR
- - refs.c: make ref_transaction_begin take an err argument
- - refs.c: update ref_transaction_delete to check for error and return status
- - refs.c: change ref_transaction_create to do error checking and return status
- (this branch is used by rs/ref-transaction, rs/ref-transaction-multi,
-rs/ref-transaction-reflog and rs/ref-transaction-rename.)
-
- The second batch of the transactional ref update series.
-
-Has been merged into pu
-
-
-
-rs/ref-transaction (2014-07-17) 12 commits
------------------------------------------------------------------
- - refs.c: fix handling of badly named refs
- - refs.c: make write_ref_sha1 static
- - fetch.c: change s_update_ref to use a ref transaction
- - refs.c: propagate any errno==ENOTDIR from _commit back to the callers
- - refs.c: pass a skip list to name_conflict_fn
- - refs.c: call lock_ref_sha1_basic directly from commit
- - refs.c: move the check for valid refname to lock_ref_sha1_basic
- - refs.c: pass NULL as *flags to read_ref_full
- - refs.c: pass the ref log message to _create/delete/update instead of _commit
- - refs.c: add an err argument to delete_ref_loose
- - wrapper.c: add a new function unlink_or_msg
- - wrapper.c: simplify warn_if_unremovable
- (this branch is used by rs/ref-transaction-multi,
-rs/ref-transaction-reflog and rs/ref-transaction-rename; uses
-rs/ref-transaction-1.)
-
-The third and final part of the basic ref-transaction work.
-
-Has been merged into pu.
-
-
-
-
-rs/ref-transaction-reflog (2014-07-23) 15 commits
------------------------------------------------------------------------
- - refs.c: allow deleting refs with a broken sha1
- - refs.c: remove lock_any_ref_for_update
- - refs.c: make unlock_ref/close_ref/commit_ref static
- - refs.c: rename log_ref_setup to create_reflog
- - reflog.c: use a reflog transaction when writing during expire
- - refs.c: allow multiple reflog updates during a single transaction
- - refs.c: only write reflog update if msg is non-NULL
- - refs.c: add a flag to allow reflog updates to truncate the log
- - refs.c: add a transaction function to append a reflog entry
- - lockfile.c: make hold_lock_file_for_append preserve meaningful errno
- - refs.c: add a function to append a reflog entry to a fd
- - refs.c: add a new update_type field to ref_update
- - refs.c: rename the transaction functions
- - refs.c: make ref_transaction_delete a wrapper for ref_transaction_update
- - refs.c: make ref_transaction_create a wrapper to ref_transaction_update
- (this branch is used by rs/ref-transaction-multi and
-rs/ref-transaction-rename; uses rs/ref-transaction and
-rs/ref-transaction-1.)
-
-This patch series adds support for reflog updates to the transaction subsystem.
-Once it has refactored the builtin/reflog.c to use a transaction
-instead of accessing the refs and
-reflogs directly it allows us to remove
-unlock_ref/close_ref/commit_ref/lock_any_ref_for_update
-from the public API.
-
-As part of the reflog work I also refactor how reflog creation works
-renaming log_ref_setup to create_reflog. These changes allow us then
-to reduce the number of places where
-we expose the global log_all_ref_updates to the callers.
-This leads to a much cleaner api for reflog creation and avoids completely the
-"manipulate the global log_all_ref_updates before calling
-log_ref_setup" thing that was done
-in checkout.c. Now checkout.c can just call create_reflog() and the
-right thing will happen.
-
-At the end of the patch series is an unrelated patch for repairing the
-"allow deletion of a broken ref" functionality that was lost a while
-back. This patch is independent of the reflog work but is placed here
-just to avoid creating additional conflicts with this series and
-series that follow.
-
-Has been merged to pu.
-
-
-ref-transactions-rename
------------------------------------
-refs.c: allow passing raw git_committer_info as email to _update_reflog
-refs.c: return error instead of dying when locking fails during transaction
-refs.c: use packed refs when deleting refs during a transaction
-refs.c: update rename_ref to use a transaction
-refs.c: rollback the lockfile before we die() in repack_without_refs
-
-This series focuses on reworking how rename_ref works and to make it
-use an atomic transaction for the rename.
-The first three patches lead up to a point where we can now perform
-the "delete the old ref and add the new ref" as a single atomic
-operation to the packed refs file followed by the fourth patch where
-we rework rename_ref() completely to perform the rename and the reflog
-updates as a single atomic transaction.
-
-As part of this the rename_ref logic is greatly simplified and we
-reach several nice goals:
-* no need to disallow rename_ref() if the reflog is a symlink
-* no need to rename the reflog via a third filename
-* make the rename become completely atomic both for the caller but
-also for any external observers.
-
-The fifth patch is independent to the rename work itself but was
-discovered during the work for this patch. It could be applied
-separately but I did not see any urgency to push it separetely and
-left it as a patch in this series.
-
-Has been merged into pu.
-
-
-
-ref-transactions-req-packed-refs
-----------------------------------------------
-refs.c: move reflog updates into its own function
-refs.c: write updates to packed refs when a transaction has more than one ref
-remote.c: use a transaction for deleting refs
-refs.c: make repack_without_refs static
-refs.c: make the *_packed_refs functions static
-
-These patches expands on the "perform ref operations as a packed refs
-file commit" and changes the transaction subsystem to always perform
-multi-ref updates as a packed ref commit instead of discreete
-operations on loose refs.
-
-The new logic is basically:
-IF the transaction only touches a single ref, then just do the normal
-loose ref operation as before.
-   This is to make sure that the very common "git commit" command will
-still always be fast.
-
-IF the transaction touches multiple refs, then
- * first copy/move all affected refs to the packed refs file and
-commit, then re-lock the packed
-   refs file until the transaction has completed.
- * then delete any affected loose refs files (they are already in the
-packed refs file)
- * perform the operation by adding/removing/updating packed refs entries
- * finally, commit the packed refs file
-
-This leads to several new nice properties.
-First, the transaction subsystem will now do the "right thing" and
-automatically convert any
-multi-ref updates to use the packed refs file. This then means that we
-no longer need to have
-special casing for clone.c to use a special packed_refs api. Clone.c
-can now just use a transaction for its "add all refs" and the right
-thing will happen.
-Similar optimizations can be done for remote.c which now also can just
-use a transaction
-and know that the right thing will happen.
-As we now no longer need to expose the special purpose packed-refs api
-to external callers we can now make all the packed refs functions
-private to refs.c and shrink the size of the public api.
-
-Note: we still do have packed refs and they still work the same way as
-before. It is just that the packed refs are now an internal
-optimization for the refs code and no longer part of the public api.
-
-Second, all transaction that affects multiple refs will now also
-become atomic for any external observer regardless of whether they
-used the packed refs api or not.
-
-
-The following functions are now static to refs.c and no longer part of
-the public api:
- add_packed_ref/lock_packed_refs/commit_packed_refs/rollback_packed_refs/repack_without_refs
-
-Has been merged into pu.
-
-
-
-Following are the patch series that has not yet made its way into pu.
-
-
-ref-transactions-req-strbuf-err
--------------------------------------------
-This series just contains various changes internally to refs.c to
-expand on the use of a strbuf *err as argument for passing error
-messages back to the caller.
-Only thing by note here is tgat by doing this to update_ref() we can
-finally get rid of the action_on_err enum:
-
--enum action_on_err {
--       UPDATE_REFS_MSG_ON_ERR,
--       UPDATE_REFS_DIE_ON_ERR,
--       UPDATE_REFS_QUIET_ON_ERR
--};
-
-wooohooo
-
-As part of this patch series I noticed that there were two places in
-transport*.c where we were calling update_ref() and passing '0' as
-argument instead of UPDATE_REFS_MSG_ON_ERR.
-Not a bug and not a change in functionality but it would be nice if
-the compiler could warn for this.
-
-Sent to the list.
-
-
-ref-transactions-send-pack
----------------------------------------
-Various changes to allow a new argument  --atomic-push, and protocol
-changes, to allow a client to request/negotiate that a multi-ref push
-should be atomic. I.e. apply all changes or none.
-
-Sent to the list.
-
-
-backend-struct-db
---------------------------
-Various changes that mainly moves functions between files to split the
-current refs.c file into functions that are backend agnostic and the
-functions that implement the files based ref backend.
-It finally adds a backend structure and the methods that define a
-backend datastore for refs.
-
-This series concludes the work to define pluggable backends for refs.
-At this stage it will now be possible to start building and adding new
-types of ref backends to git.
-
-Sent to the list
-
-
-
-
-
-In addition to these patches, there is one more patchseries with 4 patches at :
-https://github.com/rsahlberg/git/tree/backend-struct-db-2
-
-This series is for once the previous transaction changes are in and
-this series will add
-a new backend for refs: refs-be-db.c which offloads all refs access to
-an external database daemon.
-An example reference implementation for an external daemon is also
-provided and can be used as basis for
-creating a daemon to plug into, say, a SQL database or similar.
-
-
-regards
-ronnie sahlberg
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255515>
+
+On Tue, Aug 19, 2014 at 2:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I do not know if that is how GitHub teaches people, but I would have
+> to say that these are strange phrasing.  I suspect that part of
+> their documentation was written long time ago, back when nobody on
+> the GitHub side were involved in design (let alone implementation)
+> of Git, and I would take it with a grain of salt.
+>
+> Having said that, here is a summary of the current support for
+> referring to different repositories in Git:
+>
+> <snip>
+
+Wow, that was a very good read. Thank you for that. I definitely have
+been using the wrong terms. upstream & origin are interchangeable, yet
+I was using them to represent two distinct repositories.
+
+I think going forward my central repository will be named 'origin' and
+for the name of the second, nothing has really jumped out at me yet
+but it'll either be "fork" or "proxy"... "surrogate" would be nice too
+if it wasn't such a long word in comparison.
+
+I'm sure you guys will find a name for it in good time. I wonder what
+Linus would suggest.
