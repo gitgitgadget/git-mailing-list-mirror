@@ -1,73 +1,104 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Shallow clone
-Date: Tue, 19 Aug 2014 19:01:29 +0700
-Message-ID: <CACsJy8AhaiE0qjQhZfcd6pg5iYy129frvmQOkdR+zrVenuxhWg@mail.gmail.com>
-References: <CAEfjWpHhLKpghGRFtzstndk_vYMkLSLAGfXx8agoQmakC-6Otg@mail.gmail.com>
- <CAEfjWpHmLXx7Cpyn-Pd+G7VpaXZhFSS741BFKY0kANrh49xt9g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steven Evergreen <i.stevenevergreen@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 19 14:02:15 2014
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Allow the user to change the temporary file name for mergetool
+Date: Tue, 19 Aug 2014 14:22:48 +0200
+Message-ID: <1408450968-3465-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 19 14:23:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJi7A-0004iN-AP
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 14:02:12 +0200
+	id 1XJiRJ-0008Lz-Hl
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Aug 2014 14:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486AbaHSMCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 08:02:01 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:53052 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751741AbaHSMCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 08:02:00 -0400
-Received: by mail-ig0-f180.google.com with SMTP id l13so9474783iga.7
-        for <git@vger.kernel.org>; Tue, 19 Aug 2014 05:01:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=eQW4Sq5nQeREwu9vcE++4/arcZeHSDJBwClHaAIb3qI=;
-        b=VlzzD7gJKM9Z81lu49EwbNWaVenYgdC/QFuUT8uU1deJwIrww/Ahae1EoyR6UjUgKp
-         8cU2jn2PwFdgxF+WqnPokARqqsEbWp48A9HJ1lqpp291twSzpwxYW5Z0yVLt6PVY4NGJ
-         qm4RLLOIKjywECNaQjbh/yub1vApIWWMjZ8jFvE19EWJByZCgbI4CRtopQnmo/5go3Db
-         WYk8XdPiRt/QTcaO5tT4x1iHfb9o/BtlXXY+93KoXX19VtvP3gh3CGKuJcAF+Z0wGjud
-         kNsA50VWZVcPwsEznZKMbEHkRcsC3V69AYxzr08zi33N7lgc7FmPLnLPN7ZXiRzJcaTL
-         sE6g==
-X-Received: by 10.50.49.8 with SMTP id q8mr5273096ign.40.1408449719614; Tue,
- 19 Aug 2014 05:01:59 -0700 (PDT)
-Received: by 10.107.13.80 with HTTP; Tue, 19 Aug 2014 05:01:29 -0700 (PDT)
-In-Reply-To: <CAEfjWpHmLXx7Cpyn-Pd+G7VpaXZhFSS741BFKY0kANrh49xt9g@mail.gmail.com>
+	id S1752009AbaHSMW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 08:22:57 -0400
+Received: from zimbra.dewire.com ([83.140.172.131]:50305 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810AbaHSMW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Aug 2014 08:22:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 420DE8169E;
+	Tue, 19 Aug 2014 14:22:55 +0200 (CEST)
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 7ZO047UT4_sb; Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id D009881683;
+	Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 12EbwuJTcC1t; Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
+Received: from Robin-Rosenbergs-MacBook-Pro.local.com (unknown [10.1.2.67])
+	by zimbra.dewire.com (Postfix) with ESMTP id A8BA081667;
+	Tue, 19 Aug 2014 14:22:49 +0200 (CEST)
+X-Mailer: git-send-email 2.1.0.rc2.6.g39c33ff.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255457>
 
-On Tue, Aug 19, 2014 at 6:11 PM, Steven Evergreen
-<i.stevenevergreen@gmail.com> wrote:
-> Hi, everyone. I'm trying to perform a shallow clone with visibility of
-> all remote branches.
->
-> git clone REPO --depth 1 --no-single-branch
->
-> is consistently giving me
->
-> Cloning into 'REPONAME'...
-> fatal: (null) is unknown object
-> remote: Total 0 (delta 0), reused 0 (delta 0)
-> fatal: recursion detected in die handler
-> remote: aborting due to possible repository corruption on the remote side.
-> fatal: error in sideband demultiplexer
->
-> with 2.0.3 .
->
-> Is this command not supported? Have I hit a bug?
+Using the original filename suffix for the temporary input files to
+the merge tool confuses IDEs like Eclipse. This patch introduces
+a configurtion option, mergetool.tmpsuffix, which get appended to
+the temporary file name. That way the user can choose to use a
+suffix like ".tmp", which does not cause confusion.
 
-Yes it's supported and yes I think you hit a bug. Any chance you can
-share this repository? If not, perhaps just SHA-1 so we know what the
-commit DAG looks like?
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ Documentation/git-mergetool.txt |  7 +++++++
+ git-mergetool.sh                | 10 ++++++----
+ 2 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index e846c2e..a586766 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -89,6 +89,13 @@ Setting the `mergetool.keepBackup` configuration variable to `false`
+ causes `git mergetool` to automatically remove the backup as files
+ are successfully merged.
+ 
++`git mergetool` may also create other temporary files for the
++different versions involved in the merge. By default these files have
++the same filename suffix as the file being merged. This may confuse
++other tools in use during a long merge operation. The user can set
++`mergtool.tmpsuffix` to be used as an extra suffix, which will be
++appened to the temporary filenamame to lessen that problem.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 9a046b7..d7cc76c 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -214,6 +214,8 @@ checkout_staged_file () {
+ }
+ 
+ merge_file () {
++	tmpsuffix=$(git config mergetool.tmpsuffix || true)
++
+ 	MERGED="$1"
+ 
+ 	f=$(git ls-files -u -- "$MERGED")
+@@ -229,10 +231,10 @@ merge_file () {
+ 	fi
+ 
+ 	ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
+-	BACKUP="./$MERGED.BACKUP.$ext"
+-	LOCAL="./$MERGED.LOCAL.$ext"
+-	REMOTE="./$MERGED.REMOTE.$ext"
+-	BASE="./$MERGED.BASE.$ext"
++	BACKUP="./$MERGED.BACKUP.$ext$tmpsuffix"
++	LOCAL="./$MERGED.LOCAL.$ext$tmpsuffix"
++	REMOTE="./$MERGED.REMOTE.$ext$tmpsuffix"
++	BASE="./$MERGED.BASE.$ext$tmpsuffix"
+ 
+ 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+ 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
 -- 
-Duy
+2.1.0.rc2.6.g39c33ff.dirty
