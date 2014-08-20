@@ -1,68 +1,86 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: [PATCH 1/1] pretty: note that %cd respects the --date= option
-Date: Wed, 20 Aug 2014 14:27:10 +0200
-Message-ID: <53F4941E.2060201@virtuell-zuhause.de>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Re: Re: Relative submodule URLs
+Date: Wed, 20 Aug 2014 08:18:12 -0500
+Message-ID: <CAHd499C2F2s51qmfwS5VxLvP-O2Wjdb6-yfj+T9tMkZz7ohVXQ@mail.gmail.com>
+References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
+	<20140818205505.GA20185@google.com>
+	<20140819102421.GA5012@book.hvoigt.net>
+	<CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
+	<xmqqiolowi1f.fsf@gitster.dls.corp.google.com>
+	<CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
+	<20140819193010.GA64203@book.hvoigt.net>
+	<CAHd499BvBBymACfHVZyuSXuNSFbT+M8my4uATOsn30w90Zb0QQ@mail.gmail.com>
+	<20140819205747.GB64203@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 20 14:29:14 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 20 15:18:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XK50b-0008Ho-F8
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 14:28:57 +0200
+	id 1XK5mN-0004HC-5W
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 15:18:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767AbaHTM1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 08:27:17 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:44644 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752315AbaHTM1P (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2014 08:27:15 -0400
-Received: from p5ddc26b6.dip0.t-ipconnect.de ([93.220.38.182] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XK4yv-0001Rv-3P; Wed, 20 Aug 2014 14:27:13 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1408537635;656442f1;
+	id S1751189AbaHTNSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 09:18:14 -0400
+Received: from mail-vc0-f181.google.com ([209.85.220.181]:42968 "EHLO
+	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916AbaHTNSO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 09:18:14 -0400
+Received: by mail-vc0-f181.google.com with SMTP id lf12so8926417vcb.26
+        for <git@vger.kernel.org>; Wed, 20 Aug 2014 06:18:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=0qNDH4ekVXcvxLR+bGuWgaRzFWrhItA0J0aKYnpMDcs=;
+        b=atXkHecVdM0YNAYmuLu8lk2czIEctofguwy1gksS/mr75NH7YlkQYhEzRkTybe8zQh
+         QFFdx5FM6+AQlTDFjX8haQlKFnMpikdn20AojEPRumLI3QOkb3rdZhmfgUXxM7JVGn81
+         qGPMAC3RpRn7e9Dx5tKOSz4/dX2PxLcIk9pCJGkoePX0wXyFv6R4XQBeUyuzL7ddFEZQ
+         wSDIwyy8oNbkt/tEsg5CBBO/I6XTzAO83fxHt6aUctQgFY7OwdYAFhDyEXdXLfsGHSC9
+         zKx4rrkkq3HQIn+ey2sEturugnWK2JcVeCdfxSU6ki8aAU1NHfx4r0bfa2FrArbzq8L+
+         Qf6A==
+X-Received: by 10.52.175.130 with SMTP id ca2mr251031vdc.94.1408540693050;
+ Wed, 20 Aug 2014 06:18:13 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.201 with HTTP; Wed, 20 Aug 2014 06:18:12 -0700 (PDT)
+In-Reply-To: <20140819205747.GB64203@book.hvoigt.net>
+X-Google-Sender-Auth: nqpjFiphA9XYEv1YQvteYWdgtmg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255570>
 
-Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
----
+On Tue, Aug 19, 2014 at 3:57 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> I would actually error out when specified in already cloned state.
+> Because otherwise the user might expect the remote to be updated.
+>
+> Since we are currently busy implementing recursive fetch and checkout I have
+> added that to our ideas list[1] so we do not forget about it.
+>
+> In the meantime you can either use the branch.<name>.remote
+> configuration to define a remote to use or just use 'origin'.
+>
+> Cheers Heiko
+>
+> [1] https://github.com/jlehmann/git-submod-enhancements/wiki#add-with-remote--switch-to-submodule-update
 
-Today I found out that both %cd and %ad pretty print format
-specifications honour the --date option as shown in:
+Thanks Heiko.
 
-$ git log --abbrev=8 --date=short --pretty="%h (%s, %cd)" -n1
-5bdb1c4e (Merge pull request #245 from
-kblees/kb/master/fix-libsvn-address-conflict, 2014-08-16)
-$ git log --abbrev=8 --date=short --pretty="%h (%s, %ad)" -n1
-5bdb1c4e (Merge pull request #245 from
-kblees/kb/master/fix-libsvn-address-conflict, 2014-08-16)
+I would offer to help implement this for you, if you find it to be a
+good idea, but I've never done git development before and based on
+what I've seen it seems like you need to know at least 2-3 languages
+to contribute: bash, perl, C++. I know C++ & Python but I don't know
+perl or bash scripting language.
 
-But the documentation did not mention that.
+What would it take to help you guys out? It's easy to complain & file
+bugs but as a developer I feel like I should offer more, if it suits
+you.
 
- Documentation/pretty-formats.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/pretty-formats.txt
-b/Documentation/pretty-formats.txt
-index 85d6353..eac7909 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -122,7 +122,7 @@ The placeholders are:
- - '%ce': committer email
- - '%cE': committer email (respecting .mailmap, see
-   linkgit:git-shortlog[1] or linkgit:git-blame[1])
--- '%cd': committer date
-+- '%cd': committer date (format respects --date= option)
- - '%cD': committer date, RFC2822 style
- - '%cr': committer date, relative
- - '%ct': committer date, UNIX timestamp
--- 
-2.1.0.msysgit.0
+Let me know I'm happy to help with anything. Thanks again!!
