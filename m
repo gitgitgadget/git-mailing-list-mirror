@@ -1,114 +1,161 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH v3] Allow the user to change the temporary file name for
- mergetool
-Date: Wed, 20 Aug 2014 09:24:27 +0200 (CEST)
-Message-ID: <1933929003.2352.1408519467593.JavaMail.zimbra@dewire.com>
-References: <xmqqa970wgy0.fsf@gitster.dls.corp.google.com> <1408468545-6879-1-git-send-email-robin.rosenberg@dewire.com> <53F3B565.5080309@kdbg.org> <xmqqk364unya.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Davide Fiorentino <davide.fiorentino@gmail.com>
+Subject: [BUG] rewriting history with filter-branch --commit-filter
+Date: Wed, 20 Aug 2014 10:16:11 +0200
+Message-ID: <17DBA232-E993-4B3C-9952-90424976A28D@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 09:24:51 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 20 10:16:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XK0G5-0005AI-D4
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 09:24:37 +0200
+	id 1XK14C-0006co-Nf
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 10:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750870AbaHTHYd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2014 03:24:33 -0400
-Received: from zimbra.dewire.com ([83.140.172.131]:34631 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbaHTHYc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2014 03:24:32 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id AB180815E0;
-	Wed, 20 Aug 2014 09:24:31 +0200 (CEST)
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id QkheoI-rIqUt; Wed, 20 Aug 2014 09:24:28 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id 1E85E81683;
-	Wed, 20 Aug 2014 09:24:28 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id gHZVn7eYF_As; Wed, 20 Aug 2014 09:24:28 +0200 (CEST)
-Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
-	by zimbra.dewire.com (Postfix) with ESMTP id 09DFC815E0;
-	Wed, 20 Aug 2014 09:24:28 +0200 (CEST)
-In-Reply-To: <xmqqk364unya.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [188.121.67.51]
-X-Mailer: Zimbra 8.0.7_GA_6020 (ZimbraWebClient - FF31 (Mac)/8.0.7_GA_6020)
-Thread-Topic: Allow the user to change the temporary file name for mergetool
-Thread-Index: 7WwjrdD7RuoxMAvPenyzcGeyrTo87Q==
+	id S1751616AbaHTIQT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Aug 2014 04:16:19 -0400
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:37729 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789AbaHTIQR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2014 04:16:17 -0400
+Received: by mail-wg0-f48.google.com with SMTP id x13so7516255wgg.7
+        for <git@vger.kernel.org>; Wed, 20 Aug 2014 01:16:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version;
+        bh=oSFceRX9IPJ13pgeQo51d2pXskd03EEbNVmPjECdfzM=;
+        b=yKHuI2AkBVVWk/65FzDvXbqE2caBS+dWeAaZo2Y5y9z+kfHJHxYuFTCktigsRScmih
+         pVLjp8ajDT8BXmw15YCNVr62c/RE0NIduXacAqvVAtm4He8ICv2Mh6NENfmIZi02N9qu
+         FnXtd0/pgvxggqBuHbDHXJdrFW99vcTwVSCtSl24LJzHePaEOBzNmJviuRU+KwCX1+PT
+         +0xmdWTmQPMXv9wUgHfDVykH4fYPx1HWRpefys2NDFBhGawXQ/uzfmgMVG+U9YMP0Vi5
+         qdOf0GGkJbZ4BpkBNWA7T7WZh6Izhk+K6YaoS5eL+jsjcvXLGlgd4XZj/RIJoV7x3hJU
+         RISA==
+X-Received: by 10.194.103.41 with SMTP id ft9mr9190154wjb.93.1408522575822;
+        Wed, 20 Aug 2014 01:16:15 -0700 (PDT)
+Received: from [10.12.6.10] (ppp-136-37.98-62.inwind.it. [62.98.37.136])
+        by mx.google.com with ESMTPSA id kz6sm45362914wjb.47.2014.08.20.01.16.13
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 20 Aug 2014 01:16:14 -0700 (PDT)
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255557>
+
+Hi,
+
+I was in the need to rewrite author name and email and commit date for =
+a single commit and I guess I found a bug.
+I run this git-filter script
+
+$ git filter-branch --commit-filter =91
+    if [ "$GIT_COMMIT"=3D"9cfca27" ];=20
+        then GIT_AUTHOR_NAME=3D=93Michelle=94;=20
+            GIT_AUTHOR_EMAIL=3D=93michelle@email.com=94;=20
+            GIT_AUTHOR_DATE=3D"2009-12-31T23:59:59=94;=20
+            git commit-tree "$@=93;=20
+        else=20
+            git commit-tree "$@=93;
+    fi' HEAD
+
+and found that all history was rewritten as if =93Michelle=94 not only =
+commit 9cfca27.
+
+I also tried using full length commit id and a non-existing commit id: =
+nothing changes.
+In the following example to replicate the replicate the bug I=92m using=
+ a non-existing commit id to make the effect more evident.
 
 
+$ git --version
+git version 2.0.1
 
------ Ursprungligt meddelande -----
-> Fr=C3=A5n: "Junio C Hamano" <gitster@pobox.com>
-> Till: "Johannes Sixt" <j6t@kdbg.org>
-> Kopia: "Robin Rosenberg" <robin.rosenberg@dewire.com>, git@vger.kerne=
-l.org
-> Skickat: onsdag, 20 aug 2014 0:14:21
-> =C3=84mne: Re: [PATCH v3] Allow the user to change the temporary file=
- name for mergetool
->=20
-> Johannes Sixt <j6t@kdbg.org> writes:
->=20
-> > Am 19.08.2014 19:15, schrieb Robin Rosenberg:
-> >> Using the original filename suffix for the temporary input files t=
-o
-> >> the merge tool confuses IDEs like Eclipse. This patch introduces
-> >> a configurtion option, mergetool.tmpsuffix, which get appended to
-> >> the temporary file name. That way the user can choose to use a
-> >> suffix like ".tmp", which does not cause confusion.
-> >
-> > I have a merge tool that does syntax highlighting based on the file
-> > extension. Given this:
-> >
-> >> +	BACKUP=3D"./$MERGED.BACKUP.$ext$tmpsuffix"
-> >> +	LOCAL=3D"./$MERGED.LOCAL.$ext$tmpsuffix"
-> >> +	REMOTE=3D"./$MERGED.REMOTE.$ext$tmpsuffix"
-> >> +	BASE=3D"./$MERGED.BASE.$ext$tmpsuffix"
-> >
-> > I guess I lose syntax highlighting if I were to use mergetool.tmpsu=
-ffix;
-> > but then I don't use Eclipse. Could it be that this is really just =
-a
-> > band-aid for Eclipse users, not IDEs in general as you are hinting =
-in
-> > the Documentation of the new variable?
->=20
-> The phrase "IDEs like Eclipse" in the proposed log message did not
-> tell me (which I think is a good thing) if IDEs that need "band-aid"
-> are majority or minority, but I agree that we should not hint that
-> IDEs in general would benefit by setting this variable.  A warning
-> on the syntax-aware editors may be necessary.
+$ mkdir project
 
-I'm not sure it's necessary since it is not a default. If you use the
-setting you are probably well aware of why you use it, and the=20
-possible implications.
+$ cd project
 
-I have only had the problem with Eclipse, but I imagine any tool that
-"owns" a directory and scans it for changes will find these temporary
-files and do something unexpected based on the suffix. By setting the
-suffix to something insert, like txt, tmp, dat or whatever you prevent
-that tool from thinking too much.
+$ git init
 
-In concrete terms, what happens is that Eclipse, in my case, find
-temporary filenames with the suffix Foo.REMOTE.java and thinks that
-is the one source file for Foo since it contains the source for Foo.
+$ for i in 1 2 3; do echo "foo" >> foo$i.txt; git add foo$i.txt; git co=
+mmit -m "foo$i"; done
+[master (root-commit) 89dec6e] foo1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 foo1.txt
+[master 8a3c8e5] foo2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 foo2.txt
+[master a3ca061] foo3
+ 1 file changed, 1 insertion(+)
+ create mode 100644 foo3.txt
 
-Sure you lose syntax highlighting, that's a trade-off. An alternative
-solution would be to put these files somewhere else.
+$ git log --graph --all --pretty=3Dformat:'%C(yellow)%h%C(cyan)%d%Crese=
+t %s %C(white)- %an, %ar%Creset'
+* a3ca061 (HEAD, master) foo3 - David, 4 seconds ago
+* 8a3c8e5 foo2 - David, 4 seconds ago
+* 89dec6e foo1 - David, 4 seconds ago
 
--- robin
+$ git filter-branch --commit-filter '
+    if [ "$GIT_COMMIT"=3D"308add7" ];=20
+        then GIT_AUTHOR_NAME=3D"Michelle";=20
+            GIT_AUTHOR_EMAIL=3D"michelle@email.com";=20
+            GIT_AUTHOR_DATE=3D"2009-12-31T23:59:59";=20
+            git commit-tree "$@";=20
+        else=20
+            git commit-tree "$@";
+    fi' HEAD
+
+$ git log --graph --all --pretty=3Dformat:'%C(yellow)%h%C(cyan)%d%Crese=
+t %s %C(white)- %an, %ar%Creset'
+* 8937dff (HEAD, master) foo3 - Michelle, 4 years, 8 months ago
+* 30e494e foo2 - Michelle, 4 years, 8 months ago
+* 2a2ba4f foo1 - Michelle, 4 years, 8 months ago
+* a3ca061 (refs/original/refs/heads/master) foo3 - David, 8 seconds ago
+* 8a3c8e5 foo2 - David, 8 seconds ago
+* 89dec6e foo1 - David, 8 seconds ago
+
+$ git log
+commit 8937dff7e6a3f5545c2242e3fd5d33acbabe6df4
+Author: Michelle <michelle@email.com>
+Date:   Thu Dec 31 23:59:59 2009 +0100
+
+    foo3
+
+commit 30e494ef27f16c5456e66214ea46b780581dfb48
+Author: Michelle <michelle@email.com>
+Date:   Thu Dec 31 23:59:59 2009 +0100
+
+    foo2
+
+commit 2a2ba4fd6b9627e237a12b47570a3f020a202b55
+Author: Michelle <michelle@email.com>
+Date:   Thu Dec 31 23:59:59 2009 +0100
+
+    foo1
+
+
+using env-filter, I managed to rewrite the history with this:
+
+$ git filter-branch --env-filter '
+=20
+name=3D"$GIT_AUTHOR_NAME"
+email=3D"$GIT_AUTHOR_EMAIL"
+=20
+if [ "$GIT_COMMIT" =3D "89dec6e4bc1fb3cff694ea83f5ed900dad43449e" ]
+then
+    name=3D"Michelle"
+    email=3D"Michelle@email.com"
+fi
+
+export GIT_AUTHOR_NAME=3D=93$name"
+export GIT_AUTHOR_EMAIL=3D=93$email"
+'
+
+Hope this helped.
+
+Davide
