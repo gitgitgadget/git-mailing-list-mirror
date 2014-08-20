@@ -1,92 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] git update-index --cacheinfo can be used to select a stage when there are merged and unmerged entries
-Date: Wed, 20 Aug 2014 14:08:53 -0700
-Message-ID: <xmqq38cquavu.fsf@gitster.dls.corp.google.com>
-References: <CAPuZ2NFqR67LA=eeDQVJsm_vGAHHGBy2hVNugrovzCS_kzXtMg@mail.gmail.com>
-	<cover.1408533065.git.jsorianopastor@gmail.com>
-	<af54b2b3e80a6ff76b07ea129ead43079ef06a7a.1408533065.git.jsorianopastor@gmail.com>
+Subject: Re: [PATCH v20 43/48] refs.c: move the check for valid refname to lock_ref_sha1_basic
+Date: Wed, 20 Aug 2014 14:24:23 -0700
+Message-ID: <xmqqy4uisvlk.fsf@gitster.dls.corp.google.com>
+References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
+	<1403275409-28173-44-git-send-email-sahlberg@google.com>
+	<53BC07FC.8080601@alum.mit.edu> <20140715180424.GJ12427@google.com>
+	<CAL=YDWkYAg-0h3ZwiyZGtUHFEv1KEti_uURTwgbZE9xT_P_XSQ@mail.gmail.com>
+	<CAL=YDWmc2gkw=8YavWHyLUAD4du7saPrKzPKT+dsCfdZJz1EiA@mail.gmail.com>
+	<53F4B642.7020002@alum.mit.edu>
+	<xmqqk363t060.fsf@gitster.dls.corp.google.com>
+	<53F500E9.6060900@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 23:09:20 2014
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 20 23:24:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKD87-0004Eu-9U
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 23:09:15 +0200
+	id 1XKDN0-0003j8-Uz
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 23:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753656AbaHTVJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 17:09:09 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61082 "EHLO smtp.pobox.com"
+	id S1752877AbaHTVYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 17:24:35 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65213 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753649AbaHTVJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 17:09:07 -0400
+	id S1751968AbaHTVYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 17:24:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3063B32506;
-	Wed, 20 Aug 2014 17:09:05 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 897C8328BC;
+	Wed, 20 Aug 2014 17:24:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=sVOE3QenllHKQU/3Hj1+aM00mRY=; b=yVVtNJ
-	PZ67/1GPosDSwJrU2J3p5AxSikjgH3x/M4m0vQtNCVrOFxsPGLGU/BvZew1SD/Bt
-	ns/4rCO+6t4WwHcMgUSXLEwZE8QKovF4CDX0o2Epjaen2R9AruzekvrmngZL/bEH
-	IZqAttMi+PfEN5T5BXDBGh3bniPYykyTdYI70=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iGlSAclLM7jbSyrmd4AJY5mgvqo=; b=OI/JOH
+	s2JUITe4juiLUd8RX2z8qZv6FWbXm4ZGQLAEQ+HD+Tb7r3kVncEz4yUvsO7+BQyq
+	Z1TAkq7DPSWYv7TS+O42lM8+kT/yVh+LmR7my39cnoBIIEXHEmS6aEf4UkIITRxT
+	bCP0ALBIdEsJdGPHSSKKh9fO6cL7S6A5FrD2E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RmhyioUQ6TDvHMmNglaPRyjV4G+CHUsz
-	RplbSuhi8zZu5Xl4/QeueRAQktYtvZxi2AlHUCB8Kn2ysYVGDnfmj4pLJC+TE1yX
-	Z6Fy/JyKLY63t5CxEPOXBBk3H2t9hqZHAyJZHF43MHKcNr4ElqITh94gXWN5d2qm
-	y31gH+hUlII=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XuVvuOsIrsmIlWAPjPdRiNUr7VdkvRzw
+	UZAtM02Hdf4exyulEfSdu6+o6xkXicEiHBghjOoqOFiEx5eEiZHaBm39o+vEMUFP
+	+CK4u0Kk16Yy4+X91mUHOCn8r5e4T8Rk2scNoDQV3T7wG5q9vsK1o6puUwV02gjq
+	YYfaYDQxWmE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 25C7632504;
-	Wed, 20 Aug 2014 17:09:05 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7DEA0328BA;
+	Wed, 20 Aug 2014 17:24:33 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 45073324F7;
-	Wed, 20 Aug 2014 17:08:55 -0400 (EDT)
-In-Reply-To: <af54b2b3e80a6ff76b07ea129ead43079ef06a7a.1408533065.git.jsorianopastor@gmail.com>
-	(Jaime Soriano Pastor's message of "Wed, 20 Aug 2014 13:26:03 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 252E1328B6;
+	Wed, 20 Aug 2014 17:24:25 -0400 (EDT)
+In-Reply-To: <53F500E9.6060900@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 20 Aug 2014 22:11:21 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 31CD6FCA-28AE-11E4-8A4A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 5C0C9B56-28B0-11E4-9740-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255589>
 
-Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Subject: Re: [PATCH 4/4] git update-index --cacheinfo can be used to select
->  a stage when there are merged and unmerged entries
+> On 08/20/2014 09:45 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>>> I think we can get away with not including broken refnames when
+>>> iterating.  After all, the main goal of tolerating them is to let them
+>>> be deleted, right?
+>> 
+>> Or read from a ref whose name has retroactively made invalid, in
+>> order to create a similar but validly named ref to serve as its
+>> replacement?  So at least we need to give the users some way of
+>> reading from them, in addition to deleting them, no?
+>
+> The die() error message would presumably include the name of the invalid
+> reference.
+>
+> If we change the rules for reference names and a bunch of names become
+> invalid, then it would admittedly be cumbersome to run git N times to
+> find the N invalid names.  But if we change the rules, then *at that
+> time* we could always build in iteration over broken reference names.
+>
+> It's not that I have something against building it iteration over broken
+> reference names now, as long as it is clearly segregated from "normal"
+> iteration to prevent illegal names from getting loose in the code.
 
-Hmph, what does it even mean?  Shared with your [1/4] is that it is
-unclear if you are stating an existing problem to be fixed or
-describing the desired end result.
+Oh, I don't think it is that important for iterator to show broken
+ones.  If refs/heads/foo/$brokenname exists but is skipped from any
+and all iterations, nobody will get hurt until the end user wonders
+where foo/$brokenname went, at which time rev-parse can be used to
+grab the value from it before update-ref -d can be used to remove it.
 
-Also "update-index --cacheinfo" is not about "selecting" but is
-about stuffing an entry to the index, so "can be used to select"
-is doubly puzzling...
+If refs/heads/foo/$brokenname, which is skipped from iterations,
+prevents a valid ref refs/heads/foo from getting created, that would
+give a bit of surprise to the user who long forgot foo/$brokenname
+existed, but the recovery procedure is exactly the same as the case
+where he has a branch foo/$koshername and wants to create foo; first
+'branch -D' the D/F-conflicting one and then create foo.
 
->   ...
-> +test_expect_success 'git update-index --cacheinfo to select a stage to use' '
-> +	setup_stage_state &&
-> +	git cat-file blob :1:conflict > conflict &&
+So the primary things I care about are when the user has a string
+that is the name of an existing misnamed ref, the value of the ref
+can be obtained, and the ref can be removed.
 
-Style: no SP between redirection and its target.
-
-> +	git update-index --cacheinfo 100644,`git hash-object conflict`,conflict
-
-Style: we prefer $() over ``
-
-> +	git ls-files -s conflict > output &&
-> +	test_line_count = 1 output
-
-Is "we have only one line" the only thing we care about?  Don't we
-want to check which stage the entry is at?
-
-> +'
-> +
->  test_done
+Thanks.
