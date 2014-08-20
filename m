@@ -1,220 +1,155 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v13 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Wed, 20 Aug 2014 18:05:12 -0400
-Message-ID: <53F51B98.2060903@xiplink.com>
-References: <20140816153440.18221.29179.chriscool@tuxfamily.org> <20140816160622.18221.71416.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] Handling unmerged files with merged entries
+Date: Wed, 20 Aug 2014 15:19:03 -0700
+Message-ID: <xmqqr40ast2g.fsf@gitster.dls.corp.google.com>
+References: <CAPuZ2NFqR67LA=eeDQVJsm_vGAHHGBy2hVNugrovzCS_kzXtMg@mail.gmail.com>
+	<cover.1408533065.git.jsorianopastor@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 00:05:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 00:19:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKE0N-0006vn-E9
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 00:05:19 +0200
+	id 1XKEE7-0005ud-BP
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 00:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892AbaHTWFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 18:05:12 -0400
-Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:59312 "EHLO
-	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752817AbaHTWFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 18:05:11 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp16.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 051958033B;
-	Wed, 20 Aug 2014 18:05:09 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp16.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 93F2B80337;
-	Wed, 20 Aug 2014 18:05:08 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.2.10);
-	Wed, 20 Aug 2014 22:05:09 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <20140816160622.18221.71416.chriscool@tuxfamily.org>
+	id S1753495AbaHTWTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 18:19:16 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62826 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753352AbaHTWTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 18:19:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5DA2333635;
+	Wed, 20 Aug 2014 18:19:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GieV7agJ1mIsBiHvkPy2Sez2WWA=; b=AcWk3C
+	ZHARLmJTuVN9/LMdTiWxlALXZX7+B9Na9AJldEp3L4NdiwWsQPlchN5oadd+5lVD
+	xYrbF77rD4v7Ew5d7MMgq+fElRl6X7hmCIt0TitX03HwRbVHnUSuMFYRcTz6JOqx
+	ehTF/dDhN8xyxQ/irwnbWKjKMbwUGE7w9KMmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FmLD2sIpC8MBSNh4Z19V/dj2YGv+YR3o
+	J5Yq3oOm6r/eqW9lMhozpcLZuTDRZDcWL6Hb02EiSftDs+aPLSWJbeiEdVyHeEAP
+	wtJI2AOqtRYey8uSLdmeFBAk+aqcMXI6ypsaZQskGz7qXLHrl4WTgcD7Jyarwgut
+	RrLfyQy2y2Y=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 54C9733633;
+	Wed, 20 Aug 2014 18:19:14 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 05FA833626;
+	Wed, 20 Aug 2014 18:19:04 -0400 (EDT)
+In-Reply-To: <cover.1408533065.git.jsorianopastor@gmail.com> (Jaime Soriano
+	Pastor's message of "Wed, 20 Aug 2014 13:25:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FF01440E-28B7-11E4-B7BD-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255592>
 
-On 14-08-16 12:06 PM, Christian Couder wrote:
-> While at it add git-interpret-trailers to "command-list.txt".
-> 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-interpret-trailers.txt | 308 +++++++++++++++++++++++++++++++
->  command-list.txt                         |   1 +
->  2 files changed, 309 insertions(+)
->  create mode 100644 Documentation/git-interpret-trailers.txt
-> 
-> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> new file mode 100644
-> index 0000000..cf5b194
-> --- /dev/null
-> +++ b/Documentation/git-interpret-trailers.txt
-> @@ -0,0 +1,308 @@
-> +git-interpret-trailers(1)
-> +=========================
-> +
-> +NAME
-> +----
-> +git-interpret-trailers - help add stuctured information into commit messages
-> +
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git interpret-trailers' [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
-> +
-> +DESCRIPTION
-> +-----------
-> +Help adding 'trailers' lines, that look similar to RFC 822 e-mail
-> +headers, at the end of the otherwise free-form part of a commit
-> +message.
-> +
-> +This command reads some patches or commit messages from either the
-> +<file> arguments or the standard input if no <file> is specified. Then
-> +this command applies the arguments passed using the `--trailer`
-> +option, if any, to the commit message part of each input file. The
-> +result is emitted on the standard output.
-> +
-> +Some configuration variables control the way the `--trailer` arguments
-> +are applied to each commit message and the way any existing trailer in
-> +the commit message is changed. They also make it possible to
-> +automatically add some trailers.
-> +
-> +By default, a '<token>=<value>' or '<token>:<value>' argument given
-> +using `--trailer` will be appended after the existing trailers only if
-> +the last trailer has a different (<token>, <value>) pair (or if there
-> +is no existing trailer). The <token> and <value> parts will be trimmed
-> +to remove starting and trailing whitespace, and the resulting trimmed
-> +<token> and <value> will appear in the message like this:
-> +
-> +------------------------------------------------
-> +token: value
-> +------------------------------------------------
-> +
-> +This means that the trimmed <token> and <value> will be separated by
-> +`': '` (one colon followed by one space).
-> +
-> +By default the new trailer will appear at the end of all the existing
-> +trailers. If there is no existing trailer, the new trailer will appear
-> +after the commit message part of the ouput, and, if there is no line
-> +with only spaces at the end of the commit message part, one blank line
-> +will be added before the new trailer.
-> +
-> +The trailers are recognized in the input message using the following
-> +rules:
-> +
-> +* by default only lines that contains a ':' (colon) are considered
+Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
 
-s/contains/contain/
+> New approach for the case of finding unmerged files with merged entries
+> in the index.
+> After some discussion the solution tries to:
+> - Avoid the problems with infinite loops in this case.
+> - Provide better information to the user in the commands affected.
+> - Make sure there are ways to clean the index.
+> - Provide also a way to specifically recover each one of the files with
+>   this problem.
+>
+> With these patches the behaviour of these commands (for this case) change:
+> - git reset is able to finish, cleaning the index, but warning out the
+>   information about the removed stages.
+> - git merge is able to finish, reporting that there is a merge in progress as
+>   usual, it also warns about the unmerged files with merged entries.
+> - git add fails when this case happens, telling the user to check the state
+>   with 'git ls-files -s', before, it did nothing. The same with git commit -a.
+> - git update-index --cacheinfo can be used to select an specific staged
+>   version to resolve the conflict, without the need of reseting the working
+>   copy. It did nothing before.
+>
+> Tests added for these cases. Rest of the tests remain unchanged and pass too.
 
-> +  trailers,
-> +
-> +* the trailer lines must all be next to each other,
-> +
-> +* after them it's only possible to have some lines that contain only
-> +  spaces, and then a patch; the patch part is recognized using the
-> +  fact that its first line starts with '---' (three minus signs),
+Thanks.
 
-Is that "starts with" or "consists solely of"?
+After looking at what you did in 1/4, I started to wonder if we can
+solve this in add_index_entry_with_check() in a less intrusive way.
+When we call the function with a stage #0 entry, we are telling the
+index that any entry in higher stage for the same path must
+disappear.  Since the current implementation of the function assumes
+that the index is not corrupt in this particular way to have both
+merged and unmerged entries for the same path, it fails to remove
+the higher stage entries.  If we fix the function, wouldn't it make
+your 1/4 unnecessary?  Read-only operations such as "ls-files -s"
+would not call add_index_entry() so diagnostic tools would not be
+affected even with such a fix.
 
-> +
-> +* before them there must be at least one line with only spaces.
+... which may look something like the one attached at the end.
 
-I had little bit of trouble parsing those three points, and it seems like a
-lot of text to describe something simple.  How about a single paragraph:
+But then it made me wonder even more.
 
-Existing trailers are extracted from the input message by looking for a group
-of one or more lines that contain a colon (by default), where the group is
-preceded by one or more empty (or whitespace-only) lines.  The group must
-either be at the end of the message or be the last non-whitespace lines
-before a line that starts with '---' (three minus signs).
+There are other ways a piece of software can leave a corrupt index
+for us to read from.  Your fix, or the simpler one I suggested for
+that matter, would still assume that the index entries are in the
+sorted order, and a corrupt index that does not sort its entries
+correctly will cause us to behave in an undefined way.  At some
+point we should draw a line and say "Your index is hopelessly
+corrupt.", send it back to whatever broken software that originally
+wrote such a mess and have the user use that software to fix the
+corrupt index up before talking to us.
+
+For that, we need to catch an index whose entries are not sorted and
+error out, perhaps when read_index_from() iterates over the mmapped
+index entries.  We can even draw that "hopelessly corrupt" line
+above the breakage you are addressing and add a check to make sure
+no path has both merged and unmerged entries to the same check to
+make it error out.
+
+I suspect that such a "detect and error out" may be sufficient and
+also may be more robust than the approach that assumes that a
+breakage is only to have both merged and unmerged entries for the
+same path, the entries are still correctly sorted.
 
 
-Also, will a trailer be recognized if there is whitespace before and/or after
-the separator?  Can there be whitespace before the token?  In the token?  (I
-don't feel strongly about the answers to these questions, they just came to
-mind as I read the documentation.)
+ read-cache.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-> +
-> +Note that 'trailers' do not follow and are not intended to follow many
-> +rules for RFC 822 headers. For example they do not follow the line
-> +folding rules, the encoding rules and probably many other rules.
-> +
-> +OPTIONS
-> +-------
-> +--trim-empty::
-> +	If the <value> part of any trailer contains only whitespace,
-> +	the whole trailer will be removed from the resulting message.
-> +	This apply to existing trailers as well as new trailers.
-> +
-> +--trailer <token>[(=|:)<value>]::
-> +	Specify a (<token>, <value>) pair that should be applied as a
-> +	trailer to the input messages. See the description of this
-> +	command.
-> +
-> +CONFIGURATION VARIABLES
-> +-----------------------
-> +
-> +trailer.separators::
-> +	This option tells which characters are recognized as trailer
-> +	separators. By default only ':' is recognized as a trailer
-> +	separator, except that '=' is always accepted on the command
-> +	line for compatibility with other git commands.
-> ++
-> +The first character given by this option will be the default character
-> +used when another separator is not specified in the config for this
-> +trailer.
-> ++
-> +For example, if the value for this option is "%=$", then only lines
-> +using the format '<token><sep><value>' with <sep> containing '%', '='
-> +or '$' and then spaces will be considered trailers. And '%' will be
-> +the default separator used, so by default trailers will appear like:
-> +'<token>% <value>' (one percent sign and one space will appear between
-> +the token and the value).
-> +
-> +trailer.where::
-> +	This option tells where a new trailer will be added.
-> ++
-> +This can be `end`, which is the default, `start`, `after` or `before`.
-> ++
-> +If it is `end`, then each new trailer will appear at the end of the
-> +existing trailers.
-> ++
-> +If it is `start`, then each new trailer will appear at the start,
-> +instead of the end, of the existing trailers.
-> ++
-> +If it is `after`, then each new trailer will appear just after the
-> +last trailer with the same <token>.
-> ++
-> +If it is `before`, then each new trailer will appear just before the
-> +last trailer with the same <token>.
+diff --git a/read-cache.c b/read-cache.c
+index 7f5645e..56006a3 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -943,9 +943,16 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+ 	if (pos >= 0) {
+ 		if (!new_only)
+ 			replace_index_entry(istate, pos, ce);
+-		return 0;
++		/*
++		 * ... but protect ourselves from a corrupt index
++		 * that has an unmerged entry for the same path.
++		 */
++		if (istate->cache_nr <= pos + 1 ||
++		    !ce_same_name(ce, istate->cache[pos + 1]))
++			return 0;
++	} else {
++		pos = -pos-1;
+ 	}
+-	pos = -pos-1;
+ 
+ 	/*
+ 	 * Inserting a merged entry ("stage 0") into the index
 
-It seems to me that it would be more sensible to make the new trailer appear
-before the *first* trailer with the same token.  Otherwise you can end up
-with a somewhat unintuitive order, e.g. if we add values A B C D E (in that
-order) we get
-	foo: B
-	foo: C
-	foo: D
-	foo: E
-	foo: A
 
-		M.
+
+
+
+[Footnote]
