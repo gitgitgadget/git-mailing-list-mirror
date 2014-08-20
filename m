@@ -1,74 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/18] receive-pack: GPG-validate push certificates
-Date: Wed, 20 Aug 2014 10:29:04 -0700
-Message-ID: <CAPc5daXLBQdjPaWNxmwZqStiWu8qHRfDG6=JS=bhbzA+c5Ww5g@mail.gmail.com>
-References: <1408485987-3590-1-git-send-email-gitster@pobox.com>
- <1408485987-3590-17-git-send-email-gitster@pobox.com> <1408553797.26173.3.camel@leckie>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v20 43/48] refs.c: move the check for valid refname to
+ lock_ref_sha1_basic
+Date: Wed, 20 Aug 2014 10:49:14 -0700
+Message-ID: <20140820174914.GE20185@google.com>
+References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
+ <1403275409-28173-44-git-send-email-sahlberg@google.com>
+ <53BC07FC.8080601@alum.mit.edu>
+ <20140715180424.GJ12427@google.com>
+ <CAL=YDWkYAg-0h3ZwiyZGtUHFEv1KEti_uURTwgbZE9xT_P_XSQ@mail.gmail.com>
+ <CAL=YDWmc2gkw=8YavWHyLUAD4du7saPrKzPKT+dsCfdZJz1EiA@mail.gmail.com>
+ <53F4B642.7020002@alum.mit.edu>
+ <CAL=YDW=zmqwjLzjWYLGCjwb_aQTofTJ-CrmPgoq3KKJjfHR3XQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 19:29:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 19:49:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XK9hT-0001C8-3l
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 19:29:31 +0200
+	id 1XKA0k-00043M-0A
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 19:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391AbaHTR31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 13:29:27 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:55188 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbaHTR30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 13:29:26 -0400
-Received: by mail-la0-f53.google.com with SMTP id gl10so7422883lab.26
-        for <git@vger.kernel.org>; Wed, 20 Aug 2014 10:29:24 -0700 (PDT)
+	id S1751577AbaHTRtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 13:49:20 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:36228 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbaHTRtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 13:49:19 -0400
+Received: by mail-pd0-f179.google.com with SMTP id v10so12353427pde.24
+        for <git@vger.kernel.org>; Wed, 20 Aug 2014 10:49:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=4FPCoXlqTytPLph8PS3hgUTuESlscpWl8ADhHSpJ9dw=;
-        b=hKjFZWG9pUiNhNEM3sVPgHUZmtW2hRZezViR2Qo8eQvhtUzjtszwkVy2nZbT8DbuOS
-         C04Scv3UiAPKMUIl+qhyCZmMJEMVQShiUQU+np1/g+oH0SfBUT9itPD6uv7fQmWZgGRr
-         /V8LJ6SaPyaORNMZI87N+ahMbR3c94eMFCESr/saHabbXH0/dzus13JbmuBS8M5Y+7kR
-         M4gQdSlZvOJ8640SAP35fHa6mK0RkRgibw/ROQqU1w+MCHzrjuqwYStPuyiVzVg6HGJ2
-         LGAFHLs0cDN4xXk5XPDkqw/YaCIy9kwl0q0QlGTxYdA+8x4qI4Tr4wYgA82mXp0rzJOs
-         mhdQ==
-X-Received: by 10.112.160.38 with SMTP id xh6mr41856326lbb.21.1408555764393;
- Wed, 20 Aug 2014 10:29:24 -0700 (PDT)
-Received: by 10.112.97.177 with HTTP; Wed, 20 Aug 2014 10:29:04 -0700 (PDT)
-In-Reply-To: <1408553797.26173.3.camel@leckie>
-X-Google-Sender-Auth: angHU6Si_4w1Yssdsyj-oEEwpzM
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=nUsWvhNppUzkED1dVc78Ivp8yispNH57eIgf5T7I01Q=;
+        b=Wb1b7ox8ecOuGKMOBeDTinXe0DX4gI+e+8zVv0rD3DgaAucD/rjYtWYareuqrxBF2H
+         DnzoiH44RlOdVsNEimixIaKUnMVPSiPSTJN/zna7QLdg30otr/5j1D+1HaeF6U3bQufB
+         U+/OjvElvvpdowXmhoos0sGMHero8mCpmX0Hj/PruhSHZ9S8h6E5rQ+IhIDa39SRqmCa
+         +LqgB8lz0TcBwZ4MotYWfNhE8mqOX2iUvHnP7nCwSmKKHko4Vcwa03EaNsqxYu9NOjcb
+         QRHaoFb61L4e3uoW7F8dbIlGzdom/VY85G6jzUYKdOQPVGRoT1uGlLbKbTWJ/kirxqX1
+         NG4A==
+X-Received: by 10.70.137.37 with SMTP id qf5mr61628906pdb.56.1408556959170;
+        Wed, 20 Aug 2014 10:49:19 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:2490:21da:8eb0:dc73])
+        by mx.google.com with ESMTPSA id ct1sm34984369pdb.59.2014.08.20.10.49.16
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 20 Aug 2014 10:49:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAL=YDW=zmqwjLzjWYLGCjwb_aQTofTJ-CrmPgoq3KKJjfHR3XQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255576>
 
-On Wed, Aug 20, 2014 at 9:56 AM, David Turner <dturner@twopensource.com> wrote:
-> On Tue, 2014-08-19 at 15:06 -0700, Junio C Hamano wrote:
->> Reusing the GPG signature check helpers we already have, verify
->> the signature in receive-pack and give the results to the hooks
->> via GIT_PUSH_CERT_{SIGNER,KEY,STATUS} environment variables.
->>
->> Policy decisions, such as accepting or rejecting a good signature by
->> a key that is not fully trusted, is left to the hook and kept
->> outside of the core.
+Hi,
+
+Ronnie Sahlberg wrote:
+> On Wed, Aug 20, 2014 at 7:52 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+
+>> I'm a little worried that abandoning *all* refname checks could open us
+>> up to somehow trying to delete a "reference" with a name like
+>> "../../../../etc/passwd".  Either such names have to be prohibited
+>> somehow, or we have to be very sure that they can only come from trusted
+>> sources.
 >
-> If I understand correctly, the hook does not have enough information to
-> make this decision, because it is missing the date from the signature.
+> I only set this flag from builtin/branch.c so it should only be used
+> when a user runs 'git branch -D' from the command line.
+> All other places where we delete branches we should still be checking
+> the rename for badness.
 
-The full certificate is available to the hook so anything we can do the hook
-has enough information to do ;-)  But of course we should try to make it
-easier for the hook to validate the request.
+Right, this should be safe for 'git branch -D' and 'git update-ref -d'.
 
-I am not opposed to extract the timestamp from pushed-by header in the cert
-and export it in another environment before calling the hook, but I am not sure
-it is worth it, as that is already a single liner text information.
+But if we wanted to open it up in the future for 'git push --delete',
+too, then it would be a way to break out of the repository on hosts where
+people use git-shell instead of relying on filesystem permissions.  And
+that wouldn't be good.
 
-> This might allow an old signed push to be replayed, moving the head of a
-> branch to an older state (say, one lacking the latest security updates).
+I think elsewhere git has some checks for "does this pathname fall in
+this directory".  Could that be reused here, too, to make sure the
+resolved path is under the resolved $GIT_DIR/refs directory?
 
-... with old-sha1 recorded in the certificate?
+Alternatively, when a ref being deleted doesn't meet the
+'check-ref-format' checks, would it make sense to check that it is one
+of the refs you can get by iteration?
+
+Jonathan
