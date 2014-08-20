@@ -1,139 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] imap-send.c: imap_folder -> imap_server_conf.folder
-Date: Wed, 20 Aug 2014 12:16:34 -0700
-Message-ID: <xmqqvbpnt1il.fsf@gitster.dls.corp.google.com>
-References: <53F3C12F.3020606@raz.or.at>
+Subject: Re: [PATCH 16/18] receive-pack: GPG-validate push certificates
+Date: Wed, 20 Aug 2014 12:38:31 -0700
+Message-ID: <xmqqr40bt0i0.fsf@gitster.dls.corp.google.com>
+References: <1408485987-3590-1-git-send-email-gitster@pobox.com>
+	<1408485987-3590-17-git-send-email-gitster@pobox.com>
+	<1408553797.26173.3.camel@leckie>
+	<CAPc5daXLBQdjPaWNxmwZqStiWu8qHRfDG6=JS=bhbzA+c5Ww5g@mail.gmail.com>
+	<1408557408.1282.5.camel@leckie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bernhard Reiter <ockham@raz.or.at>
-X-From: git-owner@vger.kernel.org Wed Aug 20 21:16:50 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 21:38:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKBNJ-0001fB-Pi
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 21:16:50 +0200
+	id 1XKBia-000521-Ds
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 21:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbaHTTQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 15:16:45 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58301 "EHLO smtp.pobox.com"
+	id S1751994AbaHTTio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 15:38:44 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61678 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750734AbaHTTQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 15:16:44 -0400
+	id S1751468AbaHTTin (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 15:38:43 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C978931FA2;
-	Wed, 20 Aug 2014 15:16:43 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1FB6830D80;
+	Wed, 20 Aug 2014 15:38:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RBrfPoMCr4C+bdDnDfcaGvzwCP4=; b=sZEU4e
-	//vGdbwgbwcnylaRohMqynrlWkT0wLNiZjPhdpc1+oTjEErtl+ovvG8krfk9yfEh
-	P8QrRxD3YDTWFRIXBfDKHzWVh0e+4xx/Zfi7kLw+UE2R15iRkpzEgS6wfLAhwVSs
-	Rd0qLIaMMkzgpzhP/Qr9ESWb4UOZyj1zRlEwI=
+	:content-type; s=sasl; bh=p1mnnQfLS8Z8xt/RNPsL/j/rgHo=; b=H3xmE9
+	B+3gKm+V6q/7n1nHOE+rkII8j6Louj43GbDOAq+IQzvUFtw3wneeT0f3W/SDWImT
+	ws/KnpUollgsIdGyJoPVmFV22SPVthFEcvJbzc2NQfBEr7FeNBd/i9dsFcmS/EfE
+	BmSsNOlN0IutRPD2wIxp1aGwJkIVXF0O5enic=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mnnkgAo80kCK3+16ByHXOBLtznX5Uju5
-	PDVxS3FiehUJIGyOhg48OIDbyDBnlOllUs2da8G/onPrpc7RZU1pOvh70oDofZRL
-	wzg8vj5EFXIzGYU8jobNnyBGd+wKeUkAylDCp6ETyVDBQKmY3oacx1wN3U8t9ZOn
-	kxZuOtZN5Ts=
+	:content-type; q=dns; s=sasl; b=wiTOtYbfMZGZBkrO5F9trpDFxM18KL66
+	Cm5hcYXT8miKJwgO195am6J/2sIz/axsKfUH1sXvsuE1w36+LZKC4+1Z0sl3vQSh
+	uUMZ+j9xjaMoJnSn0T0Ff4aKNviK/l2vfr8Hor+rSXn5RtD2EXLp+hrVGGMCac76
+	JHkpwcjgGlE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFA7531FA0;
-	Wed, 20 Aug 2014 15:16:43 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1478030D7F;
+	Wed, 20 Aug 2014 15:38:43 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2E4C331F94;
-	Wed, 20 Aug 2014 15:16:36 -0400 (EDT)
-In-Reply-To: <53F3C12F.3020606@raz.or.at> (Bernhard Reiter's message of "Tue,
-	19 Aug 2014 23:27:11 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5029130D64;
+	Wed, 20 Aug 2014 15:38:33 -0400 (EDT)
+In-Reply-To: <1408557408.1282.5.camel@leckie> (David Turner's message of "Wed,
+	20 Aug 2014 13:56:48 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 80FD9EFE-289E-11E4-9A01-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9210E126-28A1-11E4-BED1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255582>
 
-Bernhard Reiter <ockham@raz.or.at> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> Rename the imap_folder variable to folder and make it a member
-> of struct imap_server_conf.
+> On Wed, 2014-08-20 at 10:29 -0700, Junio C Hamano wrote:
+>> On Wed, Aug 20, 2014 at 9:56 AM, David Turner <dturner@twopensource.com> wrote:
+>> > On Tue, 2014-08-19 at 15:06 -0700, Junio C Hamano wrote:
+>> >> Reusing the GPG signature check helpers we already have, verify
+>> >> the signature in receive-pack and give the results to the hooks
+>> >> via GIT_PUSH_CERT_{SIGNER,KEY,STATUS} environment variables.
+>> >>
+>> >> Policy decisions, such as accepting or rejecting a good signature by
+>> >> a key that is not fully trusted, is left to the hook and kept
+>> >> outside of the core.
+>> >
+>> > If I understand correctly, the hook does not have enough information to
+>> > make this decision, because it is missing the date from the signature.
+>> 
+>> The full certificate is available to the hook so anything we can do the hook
+>> has enough information to do ;-)  But of course we should try to make it
+>> easier for the hook to validate the request.
 >
-> Signed-off-by: Bernhard Reiter <ockham@raz.or.at>
-> ---
-> As discussed in
-> http://www.mail-archive.com/git@vger.kernel.org/msg57019.html
+> Excellent, then motivated hooks can do the right thing.
 >
-> Bernhard
+>> > This might allow an old signed push to be replayed, moving the head of a
+>> > branch to an older state (say, one lacking the latest security updates).
+>> 
+>> ... with old-sha1 recorded in the certificate?
 >
->  imap-send.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/imap-send.c b/imap-send.c
-> index fb01a9c..05a02b5 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -69,6 +69,7 @@ struct imap_server_conf {
->  	char *tunnel;
->  	char *host;
->  	int port;
-> +	char *folder;
->  	char *user;
->  	char *pass;
->  	int use_ssl;
-> @@ -82,6 +83,7 @@ static struct imap_server_conf server = {
->  	NULL,	/* tunnel */
->  	NULL,	/* host */
->  	0,	/* port */
-> +	NULL,	/* folder */
->  	NULL,	/* user */
->  	NULL,	/* pass */
->  	0,   	/* use_ssl */
-> @@ -1323,8 +1325,6 @@ static int split_msg(struct strbuf *all_msgs,
-> struct strbuf *msg, int *ofs)
->  	return 1;
->  }
->  -static char *imap_folder;
-> -
->  static int git_imap_config(const char *key, const char *val, void *cb)
->  {
->  	if (!skip_prefix(key, "imap.", &key))
+> That does prevent most replays, but it does not prevent resurrection of
+> a deleted branch by a replay of its initial creation (nor an undo of a
+> force-push to rollback).  So I think we still need timestamps, but
+> parsing them out of the cert is not terrible.
 
-The patch is corrupt; even though it claims to be text/plain, it
-smells like some sort of text/flawed, but it is even worse.  Even
-the line counts on @@ lines do not match what is in the patch text.
+As I aleady mentioned elsewhere, a more problematic thing about the
+push certificate as presented in 15/18 is that it does not say
+anything about where the push is going.  If you can capture a trial
+push to some random test repository I do with my signed push
+certificate, you could replay it to my public repository hosted at
+a more official site (say, k.org in the far distant future where it
+does not rely on ssh authentication to protect their services but
+uses the GPG signature on the push certificate to make sure it is I
+who is pushing).
 
-I wiggled it in so there is no need to resend, but please double
-check your outgoing mail toolchain (sending the patch first to
-yourself in exactly the same way as you would later send it to the
-list and checking what comes out would be one good way to check).
+We can add a new "pushed-to <repository URL>" header line to the
+certificate, next to "pushed-by <ident> <time>", and have the
+receiving end verify that it matches to prevent such a replay.  I
+wonder if we can further extend it to avoid replays to the same
+repository.
 
-Thanks.
+Instead of "pushed-to", we can tweak the capability advertisement
+sent from the server upon initial contact to advertise not just
+"push-cert", but "push-cert=<nonce>", add a new "push-nonce <nonce>"
+header to the certificate and then have the receiving end make sure
+they are the same.  That way, the receiver can make sure it is not
+being fed a certificate used when a different push was done to it or
+somebody else and by doing so we do not even need "pushed-to
+<repository URL>" header, perhaps?
 
-> @@ -1339,7 +1339,7 @@ static int git_imap_config(const char *key, const
-> char *val, void *cb)
->  		return config_error_nonbool(key);
->   	if (!strcmp("folder", key)) {
-> -		imap_folder = xstrdup(val);
-> +		server.folder = xstrdup(val);
->  	} else if (!strcmp("host", key)) {
->  		if (starts_with(val, "imap:"))
->  			val += 5;
-> @@ -1387,7 +1387,7 @@ int main(int argc, char **argv)
->  	if (!server.port)
->  		server.port = server.use_ssl ? 993 : 143;
->  -	if (!imap_folder) {
-> +	if (!server.folder) {
->  		fprintf(stderr, "no imap store specified\n");
->  		return 1;
->  	}
-> @@ -1424,7 +1424,7 @@ int main(int argc, char **argv)
->  	}
->   	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" :
-> "");
-> -	ctx->name = imap_folder;
-> +	ctx->name = server.folder;
->  	while (1) {
->  		unsigned percent = n * 100 / total;
->  -- 2.1.0.3.g63c96dd
+I am still fuzzy how robust such a scheme be against MITM, though.
+One way I can think of to attack the "nonce-only" scheme would be to
+create a "you can push anything here" service, convince me to push
+garbage there, and when I try to push to it, it can turn around and
+act as a client to some high-value site the attacker does not even
+control, grab the <nonce>, relay it back to me and advertise the
+same <nonce>, have me sign the certificate to push garbage, and
+relay that push session to the high-value target.
+
+I am not sure if that is a valid threat model we would care about,
+but with "pushed-to <repository URL>" the high-value target site can
+notice that I am pushing garbage to the joker site and reject the
+certificate.
