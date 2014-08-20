@@ -1,86 +1,135 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Re: Re: Relative submodule URLs
-Date: Wed, 20 Aug 2014 08:18:12 -0500
-Message-ID: <CAHd499C2F2s51qmfwS5VxLvP-O2Wjdb6-yfj+T9tMkZz7ohVXQ@mail.gmail.com>
-References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
-	<20140818205505.GA20185@google.com>
-	<20140819102421.GA5012@book.hvoigt.net>
-	<CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
-	<xmqqiolowi1f.fsf@gitster.dls.corp.google.com>
-	<CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
-	<20140819193010.GA64203@book.hvoigt.net>
-	<CAHd499BvBBymACfHVZyuSXuNSFbT+M8my4uATOsn30w90Zb0QQ@mail.gmail.com>
-	<20140819205747.GB64203@book.hvoigt.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v20 43/48] refs.c: move the check for valid refname to
+ lock_ref_sha1_basic
+Date: Wed, 20 Aug 2014 16:52:50 +0200
+Message-ID: <53F4B642.7020002@alum.mit.edu>
+References: <1403275409-28173-1-git-send-email-sahlberg@google.com>	<1403275409-28173-44-git-send-email-sahlberg@google.com>	<53BC07FC.8080601@alum.mit.edu>	<20140715180424.GJ12427@google.com>	<CAL=YDWkYAg-0h3ZwiyZGtUHFEv1KEti_uURTwgbZE9xT_P_XSQ@mail.gmail.com> <CAL=YDWmc2gkw=8YavWHyLUAD4du7saPrKzPKT+dsCfdZJz1EiA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Aug 20 15:18:21 2014
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 16:53:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XK5mN-0004HC-5W
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 15:18:19 +0200
+	id 1XK7GQ-0005Cs-Q0
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 16:53:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbaHTNSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 09:18:14 -0400
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:42968 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916AbaHTNSO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 09:18:14 -0400
-Received: by mail-vc0-f181.google.com with SMTP id lf12so8926417vcb.26
-        for <git@vger.kernel.org>; Wed, 20 Aug 2014 06:18:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=0qNDH4ekVXcvxLR+bGuWgaRzFWrhItA0J0aKYnpMDcs=;
-        b=atXkHecVdM0YNAYmuLu8lk2czIEctofguwy1gksS/mr75NH7YlkQYhEzRkTybe8zQh
-         QFFdx5FM6+AQlTDFjX8haQlKFnMpikdn20AojEPRumLI3QOkb3rdZhmfgUXxM7JVGn81
-         qGPMAC3RpRn7e9Dx5tKOSz4/dX2PxLcIk9pCJGkoePX0wXyFv6R4XQBeUyuzL7ddFEZQ
-         wSDIwyy8oNbkt/tEsg5CBBO/I6XTzAO83fxHt6aUctQgFY7OwdYAFhDyEXdXLfsGHSC9
-         zKx4rrkkq3HQIn+ey2sEturugnWK2JcVeCdfxSU6ki8aAU1NHfx4r0bfa2FrArbzq8L+
-         Qf6A==
-X-Received: by 10.52.175.130 with SMTP id ca2mr251031vdc.94.1408540693050;
- Wed, 20 Aug 2014 06:18:13 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.220.102.201 with HTTP; Wed, 20 Aug 2014 06:18:12 -0700 (PDT)
-In-Reply-To: <20140819205747.GB64203@book.hvoigt.net>
-X-Google-Sender-Auth: nqpjFiphA9XYEv1YQvteYWdgtmg
+	id S1751417AbaHTOwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 10:52:54 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:47550 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750861AbaHTOwx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2014 10:52:53 -0400
+X-AuditID: 12074414-f79446d000001f1d-48-53f4b6445efd
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 53.86.07965.446B4F35; Wed, 20 Aug 2014 10:52:52 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB2242.dip0.t-ipconnect.de [93.219.34.66])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s7KEqoxD028512
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 20 Aug 2014 10:52:51 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
+In-Reply-To: <CAL=YDWmc2gkw=8YavWHyLUAD4du7saPrKzPKT+dsCfdZJz1EiA@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1HXZ9iXYYNNjLouuK91MFm9vLmG0
+	+DehxoHZY+esu+weCzaVenzeJBfAHMVtk5RYUhacmZ6nb5fAnfHq80/GghXSFf3dSQ2MZ0S7
+	GDk5JARMJFoaXjBD2GISF+6tZ+ti5OIQErjMKLGnfw8ThHOOSWLtlCWsXYwcHLwC2hLbT4M1
+	swioSrz+MZUdxGYT0JVY1NPMBGKLCgRJzP48DyzOKyAocXLmExYQW0QgQmL2382MIDazgL7E
+	pz8HwOqFBRIkrnacZIXYdYpJ4uPNuWAXcQoESnzcu5cdZC+zgLrE+nlCEL3yEtvfzmGewCgw
+	C8mKWQhVs5BULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6GXm1mil5pSuokRErQiOxiP
+	nJQ7xCjAwajEw3tj0ZdgIdbEsuLK3EOMkhxMSqK8zVuAQnxJ+SmVGYnFGfFFpTmpxYcYJTiY
+	lUR4T2wAyvGmJFZWpRblw6SkOViUxHm/LVb3ExJITyxJzU5NLUgtgsnKcHAoSfDeBxkqWJSa
+	nlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4rS+GJgnIKkeID2sm8F2VtckJgLFIVoPcWo
+	KCXOqwIyVwAkkVGaBzcWlopeMYoDfSnMKwTSzgNMY3Ddr4AGMwEN3rr4I8jgkkSElFQDYw6j
+	R0Ds8vUrJC4ZHORwcrxhffDWRl3xGVHPHZ69XpaTzmt5rEK2QPthfucDEd0wb8XTl9Zlpmmq
+	cBrx9SeE/NVMmJLAU76r9k7YN/3DnhdCuR5/PTxhMifv05usD35vqZtR/1J3a7tV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255571>
 
-On Tue, Aug 19, 2014 at 3:57 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> I would actually error out when specified in already cloned state.
-> Because otherwise the user might expect the remote to be updated.
->
-> Since we are currently busy implementing recursive fetch and checkout I have
-> added that to our ideas list[1] so we do not forget about it.
->
-> In the meantime you can either use the branch.<name>.remote
-> configuration to define a remote to use or just use 'origin'.
->
-> Cheers Heiko
->
-> [1] https://github.com/jlehmann/git-submod-enhancements/wiki#add-with-remote--switch-to-submodule-update
+On 07/15/2014 10:58 PM, Ronnie Sahlberg wrote:
+> On Tue, Jul 15, 2014 at 12:34 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+>> On Tue, Jul 15, 2014 at 11:04 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>>> Michael Haggerty wrote:
+>>>
+>>>> So...I like the idea of enforcing refname checks at the lowest level
+>>>> possible, but I think that the change you propose is too abrupt.  I
+>>>> think it needs either more careful analysis showing that it won't hurt
+>>>> anybody, or some kind of tooling or non-strict mode that people can use
+>>>> to fix their repositories.
+>>>
+>>> The recovery code has been broken for a while, so I don't see harm
+>>> in this change.
+>>>
+>>> How to take care of the recovery use case is another question.  FWIW I
+>>> also would prefer if "git update-ref -d" or "git branch -D" could be
+>>> used to delete corrupt refs instead of having to use fsck (since a
+>>> fsck run can take a while), but that's a question for a later series.
+>>>
+>>> In an ideal world, the low-level functions would allow *reading* and
+>>> *deleting* poorly named refs (even without any special flag) but not
+>>> creating them.  Is that doable?
+>>
+>> That should be doable. Ill add these repairs as 3-4 new patches at the
+>> end of the current patch series.
+>>
+>>> The main complication I can see is
+>>> iteration: would iteration skip poorly named refs and warn, or would
+>>> something more complicated be needed?
 
-Thanks Heiko.
+I think we can get away with not including broken refnames when
+iterating.  After all, the main goal of tolerating them is to let them
+be deleted, right?  Then as long as iteration is not needed to implement
+the command "git update-ref -d", it seems to me that it is OK if
+iterating over a reference with a broken name causes a die().
 
-I would offer to help implement this for you, if you find it to be a
-good idea, but I've never done git development before and based on
-what I've seen it seems like you need to know at least 2-3 languages
-to contribute: bash, perl, C++. I know C++ & Python but I don't know
-perl or bash scripting language.
+>> Right now,  "git branch"  will error and abort right away when it
+>> finds the first bad ref. I haven't checked the exact spot it does this
+>> yet but I suspect it is when building the ref-cache.
+>> I will solve the cases for create and delete for now.
+>>
+>>
+>> What/how to handle iterables will require more thought.
+>> Right now, since these refs will be filtered out and never end up in
+>> ref-cache, either from loose refs or from packed refs
+>> it does mean that anyone that uses an iterator is guaranteed to only
+>> get refs with valid names passed back to them.
+>> We would need to audit all code that uses iterators and make sure it
+>> can handle the case where the callback is suddenly
+>> invoked with a bad refname.
+>>
+>>>
+>>> Thanks,
+>>> Jonathan
+> 
+> The following seems to do the trick to allow deleting a bad ref. We
+> would need something for the iterator too.
+> Since this touches the same areas that my ~100 other ref transaction
+> patches that are queued up do, I
+> would like to wait applying this patch until once the next few series
+> are finished and merged.
+> (to avoid having to do a lot of rebases and fix legio of merge
+> conflicts that this would introduce in my branches).
+> 
+> 
+> Treat this as an approximation on what the fix to repair git branch -D
+> will look like once the time comes.
 
-What would it take to help you guys out? It's easy to complain & file
-bugs but as a developer I feel like I should offer more, if it suits
-you.
+I'm a little worried that abandoning *all* refname checks could open us
+up to somehow trying to delete a "reference" with a name like
+"../../../../etc/passwd".  Either such names have to be prohibited
+somehow, or we have to be very sure that they can only come from trusted
+sources.
 
-Let me know I'm happy to help with anything. Thanks again!!
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
