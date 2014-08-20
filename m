@@ -1,71 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/18] Signed push
-Date: Tue, 19 Aug 2014 19:39:35 -0700
-Message-ID: <CAPc5daXKwW-T6PeYtFYdHYuBzvsDXWyYdNOYXXG867KGgHMKwA@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 15/18] the beginning of the signed push
+Date: Wed, 20 Aug 2014 02:48:01 +0000
+Message-ID: <20140820024801.GA198803@vauxhall.crustytoothpaste.net>
 References: <1408485987-3590-1-git-send-email-gitster@pobox.com>
+ <1408485987-3590-16-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 20 04:40:03 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 20 04:48:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJvof-0006HQ-Ub
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 04:40:02 +0200
+	id 1XJvwa-0001ro-R0
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 04:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075AbaHTCj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Aug 2014 22:39:58 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:53628 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752030AbaHTCj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Aug 2014 22:39:57 -0400
-Received: by mail-la0-f47.google.com with SMTP id mc6so6575196lab.6
-        for <git@vger.kernel.org>; Tue, 19 Aug 2014 19:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:content-type;
-        bh=1nRtjJdilvmh0SE9dI1fSqTe7CzVMtKJLTn9yR/GUL4=;
-        b=hO+rP5vn7rU0+G3WxSyewKGhPtxeYQtyyD0I1YDET7PZ5qjIKpUvxE4etZDIXwHQMl
-         oaQC8udJzeRqufzNy927H1ezv4VKa9k40KyKuhsXBV12sPXvXv0to6QAtHzWtTWAPG/c
-         V7/Rip+IoK2W4G/ks0nI3H4+dSelOT6R5Ab8QH1fGL78LXrtaSnCXf/rZAH6/CapSObY
-         egAqwjgUUCcYg9poxXI3p6Xom9/H7qHdhwW4dGU4kc9JmpNaVk9YmSGSREYc42IdHXP1
-         YAajZWqxGj2OXSEjA0RcLMsA8LEo3f45gg9vz0tdb33pXPGO9oWMgQhESsLwh7TdDPxZ
-         i4Rw==
-X-Received: by 10.112.1.136 with SMTP id 8mr38658135lbm.55.1408502396005; Tue,
- 19 Aug 2014 19:39:56 -0700 (PDT)
-Received: by 10.112.97.177 with HTTP; Tue, 19 Aug 2014 19:39:35 -0700 (PDT)
-In-Reply-To: <1408485987-3590-1-git-send-email-gitster@pobox.com>
-X-Google-Sender-Auth: 6Svo9YECoHmt2p5nMsZomfJsLz0
+	id S1752120AbaHTCsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Aug 2014 22:48:08 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49648 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751967AbaHTCsH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Aug 2014 22:48:07 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 936872808F;
+	Wed, 20 Aug 2014 02:48:05 +0000 (UTC)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1408485987-3590-16-git-send-email-gitster@pobox.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255548>
 
-On Tue, Aug 19, 2014 at 3:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> If the server's GPG keychain and pre-receive hook are properly set
-> up, a "git push --signed" over an unauthenticated and unencrypted
-> communication channel (aka "git daemon") can be made as secure as,
-> and even more secure than, the authenticated "git push ssh://".
->
-> With the signed push certificate, together with the connectivity
-> check done when the server accepts the packed data, we are assured
-> that the trusted user vouches for the history leading to the
-> proposed tips of refs (aka "new-sha1"s), and a man-in-the-middle
-> would not be able to make the server accept an update altered in
-> transit.
 
-The above was written long after the series was done, but rethinking
-about it within that frame of mind helped me find one nit in the push
-certificate design.
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We would need a PKT-LINE("pushed-to" SP URL LF) in the header
-part to prevent the certificate and the same set of refs from getting
-replayed. Otherwise, a different repository that happens to have the
-same set of refs with same set of old-sha1 values can be made to
-accept a push that the signer never intended to make to it by replaying
-an earlier push to a different site the signer did make.
+On Tue, Aug 19, 2014 at 03:06:24PM -0700, Junio C Hamano wrote:
+> While signed tags and commits assert that the objects thusly signed
+> came from you, who signed these objects, there is not a good way to
+> assert that you wanted to have a particular object at the tip of a
+> particular branch.  My signing v2.0.1 tag only means I want to call
+> the version v2.0.1, and it does not mean I want to push it out to my
+> 'master' branch---it is likely that I only want it in 'maint'.
+>=20
+> Introduce a mechanism that allows you to sign a "push certificate"
+> (for the lack of better name) every time you push, asserting that
+> what object you are pushing to update which ref that used to point
+> at what other object.  Think of it as a cryptographic protection for
+> ref updates, similar to signed tags/commits but working on an
+> orthogonal axis.
+>=20
+> The basic flow based on this mechanism goes like this:
+>=20
+>  1. You push out your work with "git push -s".
+
+You wrote "git push -s", but the command below only seems to understand
+--signed, not -s.  It should probably be consistent.
+
+> diff --git a/builtin/push.c b/builtin/push.c
+> index f50e3d5..ae56f73 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -506,6 +506,7 @@ int cmd_push(int argc, const char **argv, const char =
+*prefix)
+>  		OPT_BIT(0, "no-verify", &flags, N_("bypass pre-push hook"), TRANSPORT_=
+PUSH_NO_HOOK),
+>  		OPT_BIT(0, "follow-tags", &flags, N_("push missing but relevant tags"),
+>  			TRANSPORT_PUSH_FOLLOW_TAGS),
+> +		OPT_BIT(0, "signed", &flags, N_("GPG sign the push"), TRANSPORT_PUSH_C=
+ERT),
+>  		OPT_END()
+>  	};
+> =20
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJT9AxhAAoJEL9TXYEfUvaLLDYQAL+WwOd1ImyN4Fn5MkSBDqkv
+BsxtMQbnROnqKLEgkne63jAqOZvsrrNhmYKK6EylZUQwFIlWPQN8AkQhFkzrlBu3
+YmA3R9oHAGgvwD5MtEKBTMKb14aYxuiwYFO3IwbuoAgyy6/AhLHirOw1cQvbm10V
+qMoXpP/tn3TjwFJ96fNjIY0cxYBmGKSkHtNzc7/nWbMFyePmDNgvakrddHNZPmbj
+9cPbZWbluDwxQoWe70lH2mcnIb9NndhVhbb984QHo2xdf20c0+gbSVUvldXhMp7A
+8nenKHVw9cdDsiDAHvxA/fx0UxyR3oIHyDh6oTMjO93RY6tLNLhY12KB7rUKzXLX
+I4TDmFecXwNgcRGK9NDAP4+SSV/BzKlMixHFHE10hASPlFksKlF8qQeQtrUCXpwg
+5fVW9fHFfEtqL78JVEYGYcTudgmN6GxGlvVGacxqSDJPBjkP2/wtaP8WjnOgZrp1
+xaM0yGqxcQh1ky4Wy1bg5rX5drLv3UIXK40rCwWQh89mMNhazjgzBT6t/L386A+M
+nUkWuxbrMQoO20ITiOzD00kNharPjpclB5r4sT9w4U8SBEiGIhLzfbLXoCtevDap
+zej41ZOiaYrkKB5EXJJxN5/DF2zowjiG9yr/yO9TvfFpARZL88N/2PLLCT1QmdNP
+ksB+R343dzS/e8tTmkaj
+=T27u
+-----END PGP SIGNATURE-----
+
+--ZPt4rx8FFjLCG7dd--
