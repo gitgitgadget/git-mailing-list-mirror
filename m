@@ -1,123 +1,220 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v20 43/48] refs.c: move the check for valid refname to lock_ref_sha1_basic
-Date: Wed, 20 Aug 2014 14:47:08 -0700
-Message-ID: <CAL=YDWkfMMqYdOVWfBJkMncPnm8GwMdd1q4ipD_Y_r-nBet+2w@mail.gmail.com>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
-	<1403275409-28173-44-git-send-email-sahlberg@google.com>
-	<53BC07FC.8080601@alum.mit.edu>
-	<20140715180424.GJ12427@google.com>
-	<CAL=YDWkYAg-0h3ZwiyZGtUHFEv1KEti_uURTwgbZE9xT_P_XSQ@mail.gmail.com>
-	<CAL=YDWmc2gkw=8YavWHyLUAD4du7saPrKzPKT+dsCfdZJz1EiA@mail.gmail.com>
-	<53F4B642.7020002@alum.mit.edu>
-	<xmqqk363t060.fsf@gitster.dls.corp.google.com>
-	<53F500E9.6060900@alum.mit.edu>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v13 11/11] Documentation: add documentation for 'git interpret-trailers'
+Date: Wed, 20 Aug 2014 18:05:12 -0400
+Message-ID: <53F51B98.2060903@xiplink.com>
+References: <20140816153440.18221.29179.chriscool@tuxfamily.org> <20140816160622.18221.71416.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 20 23:47:18 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 00:05:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKDit-0006aJ-Sm
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 23:47:16 +0200
+	id 1XKE0N-0006vn-E9
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 00:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbaHTVrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 17:47:10 -0400
-Received: from mail-vc0-f170.google.com ([209.85.220.170]:45534 "EHLO
-	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752618AbaHTVrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 17:47:09 -0400
-Received: by mail-vc0-f170.google.com with SMTP id lf12so9922856vcb.29
-        for <git@vger.kernel.org>; Wed, 20 Aug 2014 14:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=fHDntcPtNEnl1NujguQosuzINL18zgkUP4cx0MkkGaY=;
-        b=CWUmi4+1L3t8vEQMmc9943uw+U8Z+yM3A8UdWC/pfEv+m9tpxe3fdWyzFVxxQ44chz
-         4kdr7bH5HwzkMSSalPZKw+5MsCQTG49chKpMwmhIpR+1s4tFNWf8L90qbCFFp5wRHWya
-         kHnN6y0ofnsg4KTs2nY0vFGDcSEc4i3xmI44Md43cCnuvpUOKSAtk+cv+/ew9aA37nCV
-         LyPt7Ll68z41rpetA+ma+j99sD1/zPxxY0jlncRCX16E5/ahj3P658SYDzHWF5bwpHud
-         Ih1N/puKy2yqo2SviRCIadCIMPg6+LsVSWS6lar8UB17Oarxt+10thfAufEBxCiTWjTc
-         vlrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=fHDntcPtNEnl1NujguQosuzINL18zgkUP4cx0MkkGaY=;
-        b=dKezgtcupYoncQmgpjbeqxxXYQ+5qKZO9Y8xaqQZjzsDLueoGI2dcqnWsnCe79Qah2
-         7Sl4FO7l8fZJMUXuNSXAVUTkNImW/ZrXr+x5nNicfYULqAAAaTWHZ+lgtV7oeJEG6oh+
-         umVdUMruQVd/OOa+CrQ7gw5mpoRNbHG20OjuN+yYHum0kiorjai9Nui3Pk7g1apcup3F
-         NaWACEOtEbEop0iUds8RJGSZ5tuWL9HihLuzAjn2IgGEsYKUSIiY+M46PI3BNcGa1irC
-         77I4S7x3EENB4XKo11wHaqQQQrCWKAYEj9iVnip/WkfK2SuY0dwQImBQbfTs9Sgqml+Z
-         6KEw==
-X-Gm-Message-State: ALoCoQmTFaDDY0qWrv/n+8TlhHq76mWI6ENPyzmBWew7eGbLIKvhStKhKPMrgtrHjzgNK7lYB5x5
-X-Received: by 10.220.200.71 with SMTP id ev7mr38506465vcb.24.1408571228241;
- Wed, 20 Aug 2014 14:47:08 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Wed, 20 Aug 2014 14:47:08 -0700 (PDT)
-In-Reply-To: <53F500E9.6060900@alum.mit.edu>
+	id S1752892AbaHTWFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 18:05:12 -0400
+Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:59312 "EHLO
+	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752817AbaHTWFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 18:05:11 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp16.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 051958033B;
+	Wed, 20 Aug 2014 18:05:09 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp16.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 93F2B80337;
+	Wed, 20 Aug 2014 18:05:08 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.2.10);
+	Wed, 20 Aug 2014 22:05:09 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <20140816160622.18221.71416.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255591>
 
-On Wed, Aug 20, 2014 at 1:11 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 08/20/2014 09:45 PM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> I think we can get away with not including broken refnames when
->>> iterating.  After all, the main goal of tolerating them is to let them
->>> be deleted, right?
->>
->> Or read from a ref whose name has retroactively made invalid, in
->> order to create a similar but validly named ref to serve as its
->> replacement?  So at least we need to give the users some way of
->> reading from them, in addition to deleting them, no?
->
-> The die() error message would presumably include the name of the invalid
-> reference.
->
-> If we change the rules for reference names and a bunch of names become
-> invalid, then it would admittedly be cumbersome to run git N times to
-> find the N invalid names.  But if we change the rules, then *at that
-> time* we could always build in iteration over broken reference names.
->
-> It's not that I have something against building it iteration over broken
-> reference names now, as long as it is clearly segregated from "normal"
-> iteration to prevent illegal names from getting loose in the code.
+On 14-08-16 12:06 PM, Christian Couder wrote:
+> While at it add git-interpret-trailers to "command-list.txt".
+> 
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-interpret-trailers.txt | 308 +++++++++++++++++++++++++++++++
+>  command-list.txt                         |   1 +
+>  2 files changed, 309 insertions(+)
+>  create mode 100644 Documentation/git-interpret-trailers.txt
+> 
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> new file mode 100644
+> index 0000000..cf5b194
+> --- /dev/null
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -0,0 +1,308 @@
+> +git-interpret-trailers(1)
+> +=========================
+> +
+> +NAME
+> +----
+> +git-interpret-trailers - help add stuctured information into commit messages
+> +
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git interpret-trailers' [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+> +
+> +DESCRIPTION
+> +-----------
+> +Help adding 'trailers' lines, that look similar to RFC 822 e-mail
+> +headers, at the end of the otherwise free-form part of a commit
+> +message.
+> +
+> +This command reads some patches or commit messages from either the
+> +<file> arguments or the standard input if no <file> is specified. Then
+> +this command applies the arguments passed using the `--trailer`
+> +option, if any, to the commit message part of each input file. The
+> +result is emitted on the standard output.
+> +
+> +Some configuration variables control the way the `--trailer` arguments
+> +are applied to each commit message and the way any existing trailer in
+> +the commit message is changed. They also make it possible to
+> +automatically add some trailers.
+> +
+> +By default, a '<token>=<value>' or '<token>:<value>' argument given
+> +using `--trailer` will be appended after the existing trailers only if
+> +the last trailer has a different (<token>, <value>) pair (or if there
+> +is no existing trailer). The <token> and <value> parts will be trimmed
+> +to remove starting and trailing whitespace, and the resulting trimmed
+> +<token> and <value> will appear in the message like this:
+> +
+> +------------------------------------------------
+> +token: value
+> +------------------------------------------------
+> +
+> +This means that the trimmed <token> and <value> will be separated by
+> +`': '` (one colon followed by one space).
+> +
+> +By default the new trailer will appear at the end of all the existing
+> +trailers. If there is no existing trailer, the new trailer will appear
+> +after the commit message part of the ouput, and, if there is no line
+> +with only spaces at the end of the commit message part, one blank line
+> +will be added before the new trailer.
+> +
+> +The trailers are recognized in the input message using the following
+> +rules:
+> +
+> +* by default only lines that contains a ':' (colon) are considered
 
-We already have iterators that show also bad refs.
-For example, git branch uses
-DO_FOR_EACH_INCLUDE_BROKEN
-which is a flag to include also broken refs that can not be resolved
-which allows them to be listed :
+s/contains/contain/
+
+> +  trailers,
+> +
+> +* the trailer lines must all be next to each other,
+> +
+> +* after them it's only possible to have some lines that contain only
+> +  spaces, and then a patch; the patch part is recognized using the
+> +  fact that its first line starts with '---' (three minus signs),
+
+Is that "starts with" or "consists solely of"?
+
+> +
+> +* before them there must be at least one line with only spaces.
+
+I had little bit of trouble parsing those three points, and it seems like a
+lot of text to describe something simple.  How about a single paragraph:
+
+Existing trailers are extracted from the input message by looking for a group
+of one or more lines that contain a colon (by default), where the group is
+preceded by one or more empty (or whitespace-only) lines.  The group must
+either be at the end of the message or be the last non-whitespace lines
+before a line that starts with '---' (three minus signs).
 
 
+Also, will a trailer be recognized if there is whitespace before and/or after
+the separator?  Can there be whitespace before the token?  In the token?  (I
+don't feel strongly about the answers to these questions, they just came to
+mind as I read the documentation.)
 
-$ echo "this is not a valid sha1" >.git/refs/heads/broken
-$ git branch
-  broken
-  foo
-* master
-$ git branch -D broken
-error: branch 'broken' not found.
+> +
+> +Note that 'trailers' do not follow and are not intended to follow many
+> +rules for RFC 822 headers. For example they do not follow the line
+> +folding rules, the encoding rules and probably many other rules.
+> +
+> +OPTIONS
+> +-------
+> +--trim-empty::
+> +	If the <value> part of any trailer contains only whitespace,
+> +	the whole trailer will be removed from the resulting message.
+> +	This apply to existing trailers as well as new trailers.
+> +
+> +--trailer <token>[(=|:)<value>]::
+> +	Specify a (<token>, <value>) pair that should be applied as a
+> +	trailer to the input messages. See the description of this
+> +	command.
+> +
+> +CONFIGURATION VARIABLES
+> +-----------------------
+> +
+> +trailer.separators::
+> +	This option tells which characters are recognized as trailer
+> +	separators. By default only ':' is recognized as a trailer
+> +	separator, except that '=' is always accepted on the command
+> +	line for compatibility with other git commands.
+> ++
+> +The first character given by this option will be the default character
+> +used when another separator is not specified in the config for this
+> +trailer.
+> ++
+> +For example, if the value for this option is "%=$", then only lines
+> +using the format '<token><sep><value>' with <sep> containing '%', '='
+> +or '$' and then spaces will be considered trailers. And '%' will be
+> +the default separator used, so by default trailers will appear like:
+> +'<token>% <value>' (one percent sign and one space will appear between
+> +the token and the value).
+> +
+> +trailer.where::
+> +	This option tells where a new trailer will be added.
+> ++
+> +This can be `end`, which is the default, `start`, `after` or `before`.
+> ++
+> +If it is `end`, then each new trailer will appear at the end of the
+> +existing trailers.
+> ++
+> +If it is `start`, then each new trailer will appear at the start,
+> +instead of the end, of the existing trailers.
+> ++
+> +If it is `after`, then each new trailer will appear just after the
+> +last trailer with the same <token>.
+> ++
+> +If it is `before`, then each new trailer will appear just before the
+> +last trailer with the same <token>.
 
-(allowing -D to remove it is in a different patch further down my series)
+It seems to me that it would be more sensible to make the new trailer appear
+before the *first* trailer with the same token.  Otherwise you can end up
+with a somewhat unintuitive order, e.g. if we add values A B C D E (in that
+order) we get
+	foo: B
+	foo: C
+	foo: D
+	foo: E
+	foo: A
 
-
-Since we already display broken/unresolvable refs, I think the most
-consistent path is to also allow showing the refs broken/illegal-names
-too in the list. (when DO_FOR_EACH_INCLUDE_BROKEN is specified)
-Of course, an end user could fix this by deleting the file but since
-it is easy to add the special casing to 'git branch -D' to handle this
-case I think this would be more userfriendly since then the user can
-use git branch -D regardless of the reason why the ref is broken.
-
-
-Ronnie
+		M.
