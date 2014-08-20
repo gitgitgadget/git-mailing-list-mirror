@@ -1,155 +1,192 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Handling unmerged files with merged entries
-Date: Wed, 20 Aug 2014 15:19:03 -0700
-Message-ID: <xmqqr40ast2g.fsf@gitster.dls.corp.google.com>
-References: <CAPuZ2NFqR67LA=eeDQVJsm_vGAHHGBy2hVNugrovzCS_kzXtMg@mail.gmail.com>
-	<cover.1408533065.git.jsorianopastor@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Transaction patch series overview
+Date: Wed, 20 Aug 2014 16:17:23 -0700
+Message-ID: <20140820231723.GF20185@google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+ <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 21 00:19:31 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 01:17:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKEE7-0005ud-BP
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 00:19:31 +0200
+	id 1XKF8I-0000My-Vr
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 01:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495AbaHTWTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 18:19:16 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62826 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753352AbaHTWTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 18:19:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5DA2333635;
-	Wed, 20 Aug 2014 18:19:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GieV7agJ1mIsBiHvkPy2Sez2WWA=; b=AcWk3C
-	ZHARLmJTuVN9/LMdTiWxlALXZX7+B9Na9AJldEp3L4NdiwWsQPlchN5oadd+5lVD
-	xYrbF77rD4v7Ew5d7MMgq+fElRl6X7hmCIt0TitX03HwRbVHnUSuMFYRcTz6JOqx
-	ehTF/dDhN8xyxQ/irwnbWKjKMbwUGE7w9KMmk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FmLD2sIpC8MBSNh4Z19V/dj2YGv+YR3o
-	J5Yq3oOm6r/eqW9lMhozpcLZuTDRZDcWL6Hb02EiSftDs+aPLSWJbeiEdVyHeEAP
-	wtJI2AOqtRYey8uSLdmeFBAk+aqcMXI6ypsaZQskGz7qXLHrl4WTgcD7Jyarwgut
-	RrLfyQy2y2Y=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 54C9733633;
-	Wed, 20 Aug 2014 18:19:14 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 05FA833626;
-	Wed, 20 Aug 2014 18:19:04 -0400 (EDT)
-In-Reply-To: <cover.1408533065.git.jsorianopastor@gmail.com> (Jaime Soriano
-	Pastor's message of "Wed, 20 Aug 2014 13:25:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FF01440E-28B7-11E4-B7BD-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753255AbaHTXRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 19:17:30 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:38387 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229AbaHTXR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 19:17:29 -0400
+Received: by mail-pa0-f50.google.com with SMTP id et14so12901942pad.37
+        for <git@vger.kernel.org>; Wed, 20 Aug 2014 16:17:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=4HNQAlYqvs4Gqwo9XnNznDqH/kMvusjE2/ijg/VHd5Q=;
+        b=pBjlROlf6zLuWQWxsk8jVZU9EjRawgbzYNZ9/3TTyovxD6cH7s4ZXzMyZdqSwiuQA3
+         Ndll/3bjhp/l9lcnjZnysBeZKM7a4UFrR32MWVnksFUvTJ9XHJ09v1BX5SQI66p5G592
+         kOv41/QUTatM0u37fAuroQA26rDkfbmKAoyy9nRNvfcsbkA0BCAFd8fZank/BeYoIDMG
+         lr63eOHSktg6hVhSrMgN3Zz5K2cI896pvoxGBs1Vhoga3L4n9m3YYimeOihOGpWxfDJV
+         qHYilaTAxLmF+ZQl7oUrBJHywBbK8DW6o8zq5TcubTpNW/EBKCtoDT2iFUDG6wbMsq38
+         r1LA==
+X-Received: by 10.66.139.232 with SMTP id rb8mr56980233pab.130.1408576645848;
+        Wed, 20 Aug 2014 16:17:25 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:2490:21da:8eb0:dc73])
+        by mx.google.com with ESMTPSA id zh7sm84492088pab.1.2014.08.20.16.17.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 20 Aug 2014 16:17:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255593>
 
-Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
+Hi,
 
-> New approach for the case of finding unmerged files with merged entries
-> in the index.
-> After some discussion the solution tries to:
-> - Avoid the problems with infinite loops in this case.
-> - Provide better information to the user in the commands affected.
-> - Make sure there are ways to clean the index.
-> - Provide also a way to specifically recover each one of the files with
->   this problem.
+Ronnie Sahlberg wrote:
+
+> List, please see here an overview and ordering of the ref transaction
+> patch series.
+
+Thanks much for this.
+
+[...]
+> rs/ref-transaction-0
+[...]
+> Has been merged into next.
+
+This is even part of "master" now, so if people have review comments
+then they can make them most easily by submitting new patches on top.
+
+> ref-transaction-1 (2014-07-16) 20 commits
+> -------------------------------------------------------------
+> Second batch of ref transactions
 >
-> With these patches the behaviour of these commands (for this case) change:
-> - git reset is able to finish, cleaning the index, but warning out the
->   information about the removed stages.
-> - git merge is able to finish, reporting that there is a merge in progress as
->   usual, it also warns about the unmerged files with merged entries.
-> - git add fails when this case happens, telling the user to check the state
->   with 'git ls-files -s', before, it did nothing. The same with git commit -a.
-> - git update-index --cacheinfo can be used to select an specific staged
->   version to resolve the conflict, without the need of reseting the working
->   copy. It did nothing before.
+>  - refs.c: make delete_ref use a transaction
+>  - refs.c: make prune_ref use a transaction to delete the ref
+>  - refs.c: remove lock_ref_sha1
+>  - refs.c: remove the update_ref_write function
+>  - refs.c: remove the update_ref_lock function
+>  - refs.c: make lock_ref_sha1 static
+>  - walker.c: use ref transaction for ref updates
+>  - fast-import.c: use a ref transaction when dumping tags
+>  - receive-pack.c: use a reference transaction for updating the refs
+>  - refs.c: change update_ref to use a transaction
+>  - branch.c: use ref transaction for all ref updates
+>  - fast-import.c: change update_branch to use ref transactions
+>  - sequencer.c: use ref transactions for all ref updates
+>  - commit.c: use ref transactions for updates
+>  - replace.c: use the ref transaction functions for updates
+>  - tag.c: use ref transactions when doing updates
+>  - refs.c: add transaction.status and track OPEN/CLOSED/ERROR
+>  - refs.c: make ref_transaction_begin take an err argument
+>  - refs.c: update ref_transaction_delete to check for error and return status
+>  - refs.c: change ref_transaction_create to do error checking and return status
+>  (this branch is used by rs/ref-transaction, rs/ref-transaction-multi,
+> rs/ref-transaction-reflog and rs/ref-transaction-rename.)
 >
-> Tests added for these cases. Rest of the tests remain unchanged and pass too.
+>  The second batch of the transactional ref update series.
+>
+> Has been merged into pu
 
-Thanks.
+Last reviewed at
+http://thread.gmane.org/gmane.comp.version-control.git/252226, if
+I am using gmane search correctly.
 
-After looking at what you did in 1/4, I started to wonder if we can
-solve this in add_index_entry_with_check() in a less intrusive way.
-When we call the function with a stage #0 entry, we are telling the
-index that any entry in higher stage for the same path must
-disappear.  Since the current implementation of the function assumes
-that the index is not corrupt in this particular way to have both
-merged and unmerged entries for the same path, it fails to remove
-the higher stage entries.  If we fix the function, wouldn't it make
-your 1/4 unnecessary?  Read-only operations such as "ls-files -s"
-would not call add_index_entry() so diagnostic tools would not be
-affected even with such a fix.
+Are there any pending questions for this part?
 
-... which may look something like the one attached at the end.
+I've having trouble keeping track of how patches change, which patches
+have been reviewed and which haven't, unaddressed comments, and so on,
+so as an experiment I've pushed this part of the series to the Gerrit
+server at
 
-But then it made me wonder even more.
+ https://code-review.googlesource.com/#/q/topic:ref-transaction-1
 
-There are other ways a piece of software can leave a corrupt index
-for us to read from.  Your fix, or the simpler one I suggested for
-that matter, would still assume that the index entries are in the
-sorted order, and a corrupt index that does not sort its entries
-correctly will cause us to behave in an undefined way.  At some
-point we should draw a line and say "Your index is hopelessly
-corrupt.", send it back to whatever broken software that originally
-wrote such a mess and have the user use that software to fix the
-corrupt index up before talking to us.
+It's running a copy of gerrit code review
+(https://code.google.com/p/gerrit).
 
-For that, we need to catch an index whose entries are not sorted and
-error out, perhaps when read_index_from() iterates over the mmapped
-index entries.  We can even draw that "hopelessly corrupt" line
-above the breakage you are addressing and add a check to make sure
-no path has both merged and unmerged entries to the same check to
-make it error out.
+Maybe this can be useful as a way of keeping track of the state of
+long and long-lived series like this one.  It works something like
+this:
 
-I suspect that such a "detect and error out" may be sufficient and
-also may be more robust than the approach that assumes that a
-breakage is only to have both merged and unmerged entries for the
-same path, the entries are still correctly sorted.
+Preparation
+-----------
+Get a password from https://code-review.googlesource.com/new-password
+and put it in netrc.
 
+Install the hook from
+https://code-review.googlesource.com/tools/hooks/commit-msg to
+.git/hooks/commit-msg.  This automatically populates a Change-Id
+line in the commit message if none is present so gerrit can
+tell when you are uploading a new version of an existing patch.
 
- read-cache.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+(The commit-msg hook can be annoying when not working with gerrit
+code review.  To turn it off, use 'git config gerrit.createChangeId false'.)
 
-diff --git a/read-cache.c b/read-cache.c
-index 7f5645e..56006a3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -943,9 +943,16 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 	if (pos >= 0) {
- 		if (!new_only)
- 			replace_index_entry(istate, pos, ce);
--		return 0;
-+		/*
-+		 * ... but protect ourselves from a corrupt index
-+		 * that has an unmerged entry for the same path.
-+		 */
-+		if (istate->cache_nr <= pos + 1 ||
-+		    !ce_same_name(ce, istate->cache[pos + 1]))
-+			return 0;
-+	} else {
-+		pos = -pos-1;
- 	}
--	pos = -pos-1;
- 
- 	/*
- 	 * Inserting a merged entry ("stage 0") into the index
+Uploading patches
+-----------------
+Write a patch series against 'maint' or 'master' as usual, then push:
 
+	git push https://code.googlesource.com/git \
+		HEAD:refs/for/master; # or refs/for/maint
 
+There can be a parameter '%topic=<name>' after the refs/for/<branch>
+(e.g., refs/for/master%topic=ref-transaction-1) if the series should
+be labelled with a topic name, or that can be set in the web UI or
+using the HTTP API after the fact.
 
+Commenting on patches
+---------------------
+Visit https://code-review.googlesource.com.  Patches can be found
+under "All" -> "Open".  Patches you're involved with somehow are
+at "My" -> "Changes".
 
+To prepare inline comments, choose a file, highlight the text to comment
+on or click a line number, and comment.
 
-[Footnote]
+To publish comments, go back up to the change overview screen (using
+the up arrow button or by pressing "u"), click "Reply", and say
+something.
+
+'?' brings up keyboard shortcuts.
+
+Downloading patches
+-------------------
+In the change overview screen, there's a 'Download' menu in the
+top-right corner with commands to download the patch.
+
+Revising patches
+----------------
+After modifying a patch locally using the usual tools such as rebase
+--interactive, push again:
+
+	git push https://code.googlesource.com/git \
+		HEAD:refs/for/master; # or refs/for/maint
+
+When a patch seems polished
+---------------------------
+Get rid of the Change-Id lines --- they shouldn't be needed any
+more.  Send the patches or a request to pull from a public git
+repository, as usual.  A link (in the top-left corner where it says
+'Change 1000', the "1000" is a link to the change) can be helpful
+for letting people on-list see how the patch got into the form it's
+in today.
+
+Maybe it can be useful.
+
+Thanks,
+Jonathan
