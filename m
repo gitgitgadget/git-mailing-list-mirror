@@ -1,94 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v20 43/48] refs.c: move the check for valid refname to
- lock_ref_sha1_basic
-Date: Wed, 20 Aug 2014 10:49:14 -0700
-Message-ID: <20140820174914.GE20185@google.com>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
- <1403275409-28173-44-git-send-email-sahlberg@google.com>
- <53BC07FC.8080601@alum.mit.edu>
- <20140715180424.GJ12427@google.com>
- <CAL=YDWkYAg-0h3ZwiyZGtUHFEv1KEti_uURTwgbZE9xT_P_XSQ@mail.gmail.com>
- <CAL=YDWmc2gkw=8YavWHyLUAD4du7saPrKzPKT+dsCfdZJz1EiA@mail.gmail.com>
- <53F4B642.7020002@alum.mit.edu>
- <CAL=YDW=zmqwjLzjWYLGCjwb_aQTofTJ-CrmPgoq3KKJjfHR3XQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Issuing warning when hook does not have execution permission
+Date: Wed, 20 Aug 2014 10:51:53 -0700
+Message-ID: <xmqqzjezt5fq.fsf@gitster.dls.corp.google.com>
+References: <CAPyMVO+a+R-+UDVuNSfhyB=PX-NUZbt6VGXfOv19-mDKTqfj6g@mail.gmail.com>
+	<20140819080002.GB7712@peff.net>
+	<xmqqegwcwhfc.fsf@gitster.dls.corp.google.com>
+	<CAFOYHZCGQj1vaZfOpFXHpuf-OjTB5RXRN_37O2EkQFRvow-RfA@mail.gmail.com>
+	<20140820101921.GA21527@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 19:49:34 2014
+Cc: Chris Packham <judge.packham@gmail.com>,
+	Babak M <babak@melon.com.au>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 20 19:52:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKA0k-00043M-0A
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 19:49:26 +0200
+	id 1XKA3P-0005bZ-SS
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 19:52:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbaHTRtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 13:49:20 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:36228 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbaHTRtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Aug 2014 13:49:19 -0400
-Received: by mail-pd0-f179.google.com with SMTP id v10so12353427pde.24
-        for <git@vger.kernel.org>; Wed, 20 Aug 2014 10:49:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=nUsWvhNppUzkED1dVc78Ivp8yispNH57eIgf5T7I01Q=;
-        b=Wb1b7ox8ecOuGKMOBeDTinXe0DX4gI+e+8zVv0rD3DgaAucD/rjYtWYareuqrxBF2H
-         DnzoiH44RlOdVsNEimixIaKUnMVPSiPSTJN/zna7QLdg30otr/5j1D+1HaeF6U3bQufB
-         U+/OjvElvvpdowXmhoos0sGMHero8mCpmX0Hj/PruhSHZ9S8h6E5rQ+IhIDa39SRqmCa
-         +LqgB8lz0TcBwZ4MotYWfNhE8mqOX2iUvHnP7nCwSmKKHko4Vcwa03EaNsqxYu9NOjcb
-         QRHaoFb61L4e3uoW7F8dbIlGzdom/VY85G6jzUYKdOQPVGRoT1uGlLbKbTWJ/kirxqX1
-         NG4A==
-X-Received: by 10.70.137.37 with SMTP id qf5mr61628906pdb.56.1408556959170;
-        Wed, 20 Aug 2014 10:49:19 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:2490:21da:8eb0:dc73])
-        by mx.google.com with ESMTPSA id ct1sm34984369pdb.59.2014.08.20.10.49.16
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 20 Aug 2014 10:49:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAL=YDW=zmqwjLzjWYLGCjwb_aQTofTJ-CrmPgoq3KKJjfHR3XQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752397AbaHTRwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 13:52:06 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56479 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752263AbaHTRwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 13:52:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 038A430C7F;
+	Wed, 20 Aug 2014 13:52:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=16/8UGMhLsdsEB/Fn26CHTIcyFo=; b=TOW6zO
+	hXsi8q5MIdheZWGx3tVrq7TkiD66t4fQFLNLnfLfA1zvjSQWURmcfeK4ROGBSipw
+	5fQgb+TW6d5eZe+JTgZEouchnhMorKIOs93ZRLke6Wxcyw9fMWDIl4IWh5Ny9WnT
+	xHhMF0t8OC2fBveYNYVp53+P9YKDllzmM96z8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FDdHRJJanY88/HC0sHqRrj7c1eDcKg5t
+	5rq0bqVCUq8+JIeJFKOLWPG2OdOZwP7wP/adrXQ2AycS2tqNG71uHVWOBSvB1UPV
+	Gb+KW3oER1SFZaqMxH2Hu8HBm/pEyWic2D7SA9DMhA/y4uCMmOcXuLQ5s6WoIl6S
+	IXVGM6BeRV4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EC57E30C7E;
+	Wed, 20 Aug 2014 13:52:03 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2F44630C60;
+	Wed, 20 Aug 2014 13:51:56 -0400 (EDT)
+In-Reply-To: <20140820101921.GA21527@peff.net> (Jeff King's message of "Wed,
+	20 Aug 2014 06:19:22 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: AD145BC4-2892-11E4-A4A7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255577>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Ronnie Sahlberg wrote:
-> On Wed, Aug 20, 2014 at 7:52 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-
->> I'm a little worried that abandoning *all* refname checks could open us
->> up to somehow trying to delete a "reference" with a name like
->> "../../../../etc/passwd".  Either such names have to be prohibited
->> somehow, or we have to be very sure that they can only come from trusted
->> sources.
+> On Wed, Aug 20, 2014 at 08:55:52PM +1200, Chris Packham wrote:
 >
-> I only set this flag from builtin/branch.c so it should only be used
-> when a user runs 'git branch -D' from the command line.
-> All other places where we delete branches we should still be checking
-> the rename for badness.
+>> I actually find the existing behaviour useful. If I want to disable a
+>> hook to I can just chmod -x .git/hook/... and I then chmod +x it when
+>> I want to re-enable it. I guess I could live with an extra warning as
+>> long as the command still succeeds.
+>
+> You could do the same thing "mv $hook $hook.disabled" but it involves
+> retraining your fingers. I kind of agree that the existing system of
+> respecting the executable bit is nice, though: it does what you told it
+> to do, and a misconfiguration is your problem, not the system's. It's
+> perhaps worth changing if people frequently get the executable-bit thing
+> wrong, but I don't know whether they do or not.
+>
+> I kind of feel like we had a similar discussion around items in PATH,
+> but I don't remember how it resolved.
 
-Right, this should be safe for 'git branch -D' and 'git update-ref -d'.
+I don't either, but IIRC the primary tricky point was what happens
+when a component of $PATH list is inaccessible, making us unable to
+even know if an executable we are looking for exists there or not,
+which is slightly a different issue.
 
-But if we wanted to open it up in the future for 'git push --delete',
-too, then it would be a way to break out of the repository on hosts where
-people use git-shell instead of relying on filesystem permissions.  And
-that wouldn't be good.
-
-I think elsewhere git has some checks for "does this pathname fall in
-this directory".  Could that be reused here, too, to make sure the
-resolved path is under the resolved $GIT_DIR/refs directory?
-
-Alternatively, when a ref being deleted doesn't meet the
-'check-ref-format' checks, would it make sense to check that it is one
-of the refs you can get by iteration?
-
-Jonathan
+And I also kind of agree that the existing system is nice.  It may
+sound like a good idea to warn when there is even a slight chance of
+misconfiguration on the user's side, but for this particular one, it
+has been a designed-in behaviour for a long time, and it may be
+unwise to change it.
