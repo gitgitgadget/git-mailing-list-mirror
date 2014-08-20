@@ -1,94 +1,139 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v20 43/48] refs.c: move the check for valid refname to
- lock_ref_sha1_basic
-Date: Wed, 20 Aug 2014 20:34:43 +0200
-Message-ID: <53F4EA43.4020802@alum.mit.edu>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com>	<1403275409-28173-44-git-send-email-sahlberg@google.com>	<53BC07FC.8080601@alum.mit.edu>	<20140715180424.GJ12427@google.com>	<CAL=YDWkYAg-0h3ZwiyZGtUHFEv1KEti_uURTwgbZE9xT_P_XSQ@mail.gmail.com>	<CAL=YDWmc2gkw=8YavWHyLUAD4du7saPrKzPKT+dsCfdZJz1EiA@mail.gmail.com>	<53F4B642.7020002@alum.mit.edu> <CAL=YDW=zmqwjLzjWYLGCjwb_aQTofTJ-CrmPgoq3KKJjfHR3XQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] imap-send.c: imap_folder -> imap_server_conf.folder
+Date: Wed, 20 Aug 2014 12:16:34 -0700
+Message-ID: <xmqqvbpnt1il.fsf@gitster.dls.corp.google.com>
+References: <53F3C12F.3020606@raz.or.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed Aug 20 20:34:54 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bernhard Reiter <ockham@raz.or.at>
+X-From: git-owner@vger.kernel.org Wed Aug 20 21:16:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKAii-0003xW-6H
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 20:34:52 +0200
+	id 1XKBNJ-0001fB-Pi
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Aug 2014 21:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752168AbaHTSer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Aug 2014 14:34:47 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:45911 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751867AbaHTSeq (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Aug 2014 14:34:46 -0400
-X-AuditID: 12074413-f79ed6d000002501-d6-53f4ea45a7c4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 95.80.09473.54AE4F35; Wed, 20 Aug 2014 14:34:45 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB2242.dip0.t-ipconnect.de [93.219.34.66])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s7KIYhrv006605
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 20 Aug 2014 14:34:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <CAL=YDW=zmqwjLzjWYLGCjwb_aQTofTJ-CrmPgoq3KKJjfHR3XQ@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1HV99SXYYO08DYuuK91MFm9vLmG0
-	+DehxoHZY+esu+weCzaVenzeJBfAHMVtk5RYUhacmZ6nb5fAnXFo/RrWgq+8FSdnLWdqYOzi
-	7mLk4JAQMJH4cU60i5ETyBSTuHBvPVsXIxeHkMBlRokbtyezgySEBM4xSfxdng9i8wpoSzw6
-	2ckI0ssioCox4QA/SJhNQFdiUU8zE4gtKhAkMfvzPHaIckGJkzOfsIDYIgKaEjf7T4PVMAvE
-	STzdMY0NxBYWSJC42nGSFWLvemaJdYdfMoMkOAUCJc7N3wy2i1lAXWL9PCGIXnmJ7W/nME9g
-	FJiFZMUshKpZSKoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI118vNLNFLTSndxAgJWeEd
-	jLtOyh1iFOBgVOLhvbHoS7AQa2JZcWXuIUZJDiYlUV6TF0AhvqT8lMqMxOKM+KLSnNTiQ4wS
-	HMxKIrz114ByvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJXvGXQI2C
-	RanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoBiNLwZGKUiKB2ivJEg7b3FBYi5QFKL1
-	FKOilDivJsixAiCJjNI8uLGwRPSKURzoS2FefZB2HmASg+t+BTSYCWjw1sUfQQaXJCKkpBoY
-	w799zfqx7WBMUK2/XvnjqO6Q04yaz+6fmjVBqr7E+/wGJquiA3fqP4S9y153ObiTVZ95inOY
-	1eeMuLa+SAZeUeubop/uPHWLnOBnztbcwvZ20vOM77y+3hqBP/dH3zT7/EThxcWm 
+	id S1751643AbaHTTQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Aug 2014 15:16:45 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58301 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750734AbaHTTQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Aug 2014 15:16:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C978931FA2;
+	Wed, 20 Aug 2014 15:16:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RBrfPoMCr4C+bdDnDfcaGvzwCP4=; b=sZEU4e
+	//vGdbwgbwcnylaRohMqynrlWkT0wLNiZjPhdpc1+oTjEErtl+ovvG8krfk9yfEh
+	P8QrRxD3YDTWFRIXBfDKHzWVh0e+4xx/Zfi7kLw+UE2R15iRkpzEgS6wfLAhwVSs
+	Rd0qLIaMMkzgpzhP/Qr9ESWb4UOZyj1zRlEwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mnnkgAo80kCK3+16ByHXOBLtznX5Uju5
+	PDVxS3FiehUJIGyOhg48OIDbyDBnlOllUs2da8G/onPrpc7RZU1pOvh70oDofZRL
+	wzg8vj5EFXIzGYU8jobNnyBGd+wKeUkAylDCp6ETyVDBQKmY3oacx1wN3U8t9ZOn
+	kxZuOtZN5Ts=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFA7531FA0;
+	Wed, 20 Aug 2014 15:16:43 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2E4C331F94;
+	Wed, 20 Aug 2014 15:16:36 -0400 (EDT)
+In-Reply-To: <53F3C12F.3020606@raz.or.at> (Bernhard Reiter's message of "Tue,
+	19 Aug 2014 23:27:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 80FD9EFE-289E-11E4-9A01-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255581>
 
-On 08/20/2014 06:28 PM, Ronnie Sahlberg wrote:
-> On Wed, Aug 20, 2014 at 7:52 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> I'm a little worried that abandoning *all* refname checks could open us
->> up to somehow trying to delete a "reference" with a name like
->> "../../../../etc/passwd".  Either such names have to be prohibited
->> somehow, or we have to be very sure that they can only come from trusted
->> sources.
-> 
-> I only set this flag from builtin/branch.c so it should only be used
-> when a user runs 'git branch -D' from the command line.
-> All other places where we delete branches we should still be checking
-> the rename for badness.
-> 
-> That said, unless the "rules for good refname" changes in the future,
-> which is unlikely, is should be exceptionally rare that a user ends up
-> with a bad refname in the first place.
-> Perhaps my example I gave was bad since if you manually create bad
-> refs using echo > .git/refs/heads/...  then you should probably know
-> how to fix it too and thus maybe we do not need this patch in the
-> first place.
-> 
-> Do you want me to delete this patch and resend this part of the series
-> ? Or is the 'only works for branch -D from the commandline' sufficient
-> ?
-> I have no strong feelings either way so I will just follow what you decide.
+Bernhard Reiter <ockham@raz.or.at> writes:
 
-I think that if you run the refname through normalize_path_copy_len()
-and that function returns (1) without an error, (2) without modifying
-its argument, and (3) the result does not begin with a
-has_dos_drive_prefix() or is_dir_sep(), then we should be safe against
-directory traversal attacks.  I suggest doing this kind of check even if
-not doing the full check_refname_format() check.
+> Rename the imap_folder variable to folder and make it a member
+> of struct imap_server_conf.
+>
+> Signed-off-by: Bernhard Reiter <ockham@raz.or.at>
+> ---
+> As discussed in
+> http://www.mail-archive.com/git@vger.kernel.org/msg57019.html
+>
+> Bernhard
+>
+>  imap-send.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/imap-send.c b/imap-send.c
+> index fb01a9c..05a02b5 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -69,6 +69,7 @@ struct imap_server_conf {
+>  	char *tunnel;
+>  	char *host;
+>  	int port;
+> +	char *folder;
+>  	char *user;
+>  	char *pass;
+>  	int use_ssl;
+> @@ -82,6 +83,7 @@ static struct imap_server_conf server = {
+>  	NULL,	/* tunnel */
+>  	NULL,	/* host */
+>  	0,	/* port */
+> +	NULL,	/* folder */
+>  	NULL,	/* user */
+>  	NULL,	/* pass */
+>  	0,   	/* use_ssl */
+> @@ -1323,8 +1325,6 @@ static int split_msg(struct strbuf *all_msgs,
+> struct strbuf *msg, int *ofs)
+>  	return 1;
+>  }
+>  -static char *imap_folder;
+> -
+>  static int git_imap_config(const char *key, const char *val, void *cb)
+>  {
+>  	if (!skip_prefix(key, "imap.", &key))
 
-Michael
+The patch is corrupt; even though it claims to be text/plain, it
+smells like some sort of text/flawed, but it is even worse.  Even
+the line counts on @@ lines do not match what is in the patch text.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+I wiggled it in so there is no need to resend, but please double
+check your outgoing mail toolchain (sending the patch first to
+yourself in exactly the same way as you would later send it to the
+list and checking what comes out would be one good way to check).
+
+Thanks.
+
+> @@ -1339,7 +1339,7 @@ static int git_imap_config(const char *key, const
+> char *val, void *cb)
+>  		return config_error_nonbool(key);
+>   	if (!strcmp("folder", key)) {
+> -		imap_folder = xstrdup(val);
+> +		server.folder = xstrdup(val);
+>  	} else if (!strcmp("host", key)) {
+>  		if (starts_with(val, "imap:"))
+>  			val += 5;
+> @@ -1387,7 +1387,7 @@ int main(int argc, char **argv)
+>  	if (!server.port)
+>  		server.port = server.use_ssl ? 993 : 143;
+>  -	if (!imap_folder) {
+> +	if (!server.folder) {
+>  		fprintf(stderr, "no imap store specified\n");
+>  		return 1;
+>  	}
+> @@ -1424,7 +1424,7 @@ int main(int argc, char **argv)
+>  	}
+>   	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" :
+> "");
+> -	ctx->name = imap_folder;
+> +	ctx->name = server.folder;
+>  	while (1) {
+>  		unsigned percent = n * 100 / total;
+>  -- 2.1.0.3.g63c96dd
