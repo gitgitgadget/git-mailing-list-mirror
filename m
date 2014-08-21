@@ -1,73 +1,73 @@
-From: Petr Stodulka <pstodulk@redhat.com>
-Subject: Re: [BUG] resolved deltas
-Date: Thu, 21 Aug 2014 20:25:39 +0200
-Message-ID: <53F639A3.80805@redhat.com>
-References: <53F5D98F.4040700@redhat.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] sha1_name: avoid quadratic list insertion in handle_one_ref
+Date: Thu, 21 Aug 2014 20:30:29 +0200
+Message-ID: <53F63AC5.80901@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 20:25:46 2014
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 21 20:31:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKX3R-0002ym-Gc
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 20:25:45 +0200
+	id 1XKX8Y-0005lf-Rf
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 20:31:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752851AbaHUSZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2014 14:25:41 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:53230 "EHLO mx1.redhat.com"
+	id S1753756AbaHUSa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2014 14:30:58 -0400
+Received: from mout.web.de ([212.227.17.12]:61896 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752065AbaHUSZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2014 14:25:41 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s7LIPblw000612
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <git@vger.kernel.org>; Thu, 21 Aug 2014 14:25:37 -0400
-Received: from [10.34.4.169] (unused-4-169.brq.redhat.com [10.34.4.169])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id s7LIPd0U022600
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 21 Aug 2014 14:25:40 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
-In-Reply-To: <53F5D98F.4040700@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1753304AbaHUSa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2014 14:30:58 -0400
+Received: from [192.168.178.27] ([79.250.165.107]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MddBI-1WzgKR3Trg-00PKL7; Thu, 21 Aug 2014 20:30:39
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+X-Provags-ID: V03:K0:PMSXTtFoO/ebDHCVpar0HXoBfMufh5G2WnrDxRN/bPAxFYoHz7Z
+ SR8NxQQafaUyoLkyAp3QF9ABDIOULjwhnIan5tnYb4Xnmz5R4uxc6gNb7MhzqclYA/3DZNU
+ yceUaM/rcZho27t3tSre7Ent18MwoON29/dWtgBcnrtHDPpJkAPaYywtYBELA10U0kKbThy
+ Nx/+V+Ev32wL5NKGer6Jw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255628>
 
+Similar to 16445242 (fetch-pack: avoid quadratic list insertion in
+mark_complete), sort only after all refs are collected instead of while
+inserting.  The result is the same, but it's more efficient that way.
+The difference will only be measurable in repositories with a large
+number of refs.
 
-> <snip>
-> Bug is reprodusible since git version 1.8.3.1 (may earlier 1.8.xx, but 
-> I don't test it) to actual upstream version.
-> This problem "doesn't exists" in version 1.7.xx - or more precisely is 
-> not reproducible. "May" this is reproducible
-> since commit "7218a215" - in this commit was added assert in file 
-> "builtin/index-pack.c" (actual line is 918), but I didn't test this.
-Ok so this is reproducible since this commit because of assert().
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ sha1_name.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> Here I am lost. I don't know really what I can do next here, because I 
-> don't understand some ideas in code. e.g. searching of child - 
-> functions find_delta(), find_delta_children(). Calculation on line 618:
-> ----
->     int next = (first+last) / 2;
-> ----
-> I still don't understand. I didn't find description of this searching 
-> algorithm in tech. documentation but I didn't read all yet. However I 
-> think that source of problems could be somewhere in these two 
-> functions. When child is found, its real_type is set to parent's type 
-> in function resolve_delta() on the line 865 and then lasts wait for 
-> failure. I don't think that problem is in repository itself [1], but 
-> it is possible.
-I read history of commits and my idea seems to be incorrect. It seems 
-more like some error in repository itself. But I'd rather get opinion 
-from someone who knows this code and ideas better.
-
-Regards,
-Petr
-
-> [0] https://bugzilla.redhat.com/show_bug.cgi?id=1099919
-> [1] git clone https://code.google.com/p/mapsforge/ mapsforge.git
+diff --git a/sha1_name.c b/sha1_name.c
+index 63ee66f..7098b10 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -839,7 +839,7 @@ static int handle_one_ref(const char *path,
+ 	}
+ 	if (object->type != OBJ_COMMIT)
+ 		return 0;
+-	commit_list_insert_by_date((struct commit *)object, list);
++	commit_list_insert((struct commit *)object, list);
+ 	return 0;
+ }
+ 
+@@ -1366,6 +1366,7 @@ static int get_sha1_with_context_1(const char *name,
+ 		if (!only_to_die && namelen > 2 && name[1] == '/') {
+ 			struct commit_list *list = NULL;
+ 			for_each_ref(handle_one_ref, &list);
++			commit_list_sort_by_date(&list);
+ 			return get_sha1_oneline(name + 2, sha1, list);
+ 		}
+ 		if (namelen < 3 ||
+-- 
+2.1.0
