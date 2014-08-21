@@ -1,36 +1,52 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] send-pack: take refspecs over stdin
-Date: Thu, 21 Aug 2014 08:17:10 -0400
-Message-ID: <20140821121709.GA15299@peff.net>
+Subject: [PATCH v2] send-pack: take refspecs over stdin
+Date: Thu, 21 Aug 2014 08:21:20 -0400
+Message-ID: <20140821122120.GA17600@peff.net>
+References: <20140821121709.GA15299@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 14:17:19 2014
+X-From: git-owner@vger.kernel.org Thu Aug 21 14:21:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKRIr-0007uC-Kq
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 14:17:18 +0200
+	id 1XKRMs-0001V5-PM
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 14:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754386AbaHUMRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2014 08:17:14 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56169 "HELO peff.net"
+	id S1754513AbaHUMVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2014 08:21:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56172 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754058AbaHUMRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2014 08:17:12 -0400
-Received: (qmail 18673 invoked by uid 102); 21 Aug 2014 12:17:12 -0000
+	id S1751006AbaHUMVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2014 08:21:22 -0400
+Received: (qmail 18924 invoked by uid 102); 21 Aug 2014 12:21:21 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Aug 2014 07:17:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Aug 2014 08:17:10 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Aug 2014 07:21:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Aug 2014 08:21:20 -0400
 Content-Disposition: inline
+In-Reply-To: <20140821121709.GA15299@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255608>
+
+On Thu, Aug 21, 2014 at 08:17:10AM -0400, Jeff King wrote:
+
+>  Documentation/git-send-pack.txt | 13 ++++++++++++-
+>  builtin/send-pack.c             | 27 +++++++++++++++++++++++++++
+>  remote-curl.c                   |  8 +++++++-
+>  t/t5541-http-push-smart.sh      | 15 +++++++++++++++
+>  4 files changed, 61 insertions(+), 2 deletions(-)
+
+Whoops. Forgot to actually add the battery of individual send-pack
+tests. Here's a re-send.
+
+-- >8 --
+Subject: send-pack: take refspecs over stdin
 
 Pushing a large number of refs works over most transports,
 because we implement send-pack as an internal function.
@@ -49,30 +65,13 @@ stateless-rpc input) is modeled after that solution.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I had to fiddle with the numbers in the http test. Linux gives up to 1/4
-of the configured stack ulimit as space for the cmdline, so I had to
-pick a number big enough so that we had stack to run the actual
-operation but small enough to limit the cmdline. The test as it is there
-fails for me without this patch and succeeds with it. I suspect the
-numbers are quite different on other systems, but I think it should at
-least succeed everywhere with this patch. I'd also be fine with cutting
-that test if it proves too flaky.
-
-I tried originally bumping it to 50,000 tags to match the fetch-pack
-test. But besides needing to protect it behind an EXPENSIVE prereq
-(which means basically nobody is ever going to run it), it also seems to
-trigger a nasty quadratic behavior in send-pack (6400 refs takes ~16s,
-with the time quadrupling for each doubling of refs; the same operation
-over a pipe takes 140ms).  Oddly, the behavior doesn't seem to trigger
-when pushing over a local pipe, so it's presumably related to
-stateless-rpc. It looked like were deep in match_refs, but I haven't
-figured it out beyond that.
-
- Documentation/git-send-pack.txt | 13 ++++++++++++-
- builtin/send-pack.c             | 27 +++++++++++++++++++++++++++
- remote-curl.c                   |  8 +++++++-
- t/t5541-http-push-smart.sh      | 15 +++++++++++++++
- 4 files changed, 61 insertions(+), 2 deletions(-)
+ Documentation/git-send-pack.txt | 13 +++++-
+ builtin/send-pack.c             | 27 ++++++++++++
+ remote-curl.c                   |  8 +++-
+ t/t5408-send-pack-stdin.sh      | 92 +++++++++++++++++++++++++++++++++++++++++
+ t/t5541-http-push-smart.sh      | 15 +++++++
+ 5 files changed, 153 insertions(+), 2 deletions(-)
+ create mode 100755 t/t5408-send-pack-stdin.sh
 
 diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
 index dc3a568..2a0de42 100644
@@ -193,6 +192,104 @@ index 0fcf2ce..558b9fe 100644
  	argv_array_clear(&args);
  	return err;
  }
+diff --git a/t/t5408-send-pack-stdin.sh b/t/t5408-send-pack-stdin.sh
+new file mode 100755
+index 0000000..e8737df
+--- /dev/null
++++ b/t/t5408-send-pack-stdin.sh
+@@ -0,0 +1,92 @@
++#!/bin/sh
++
++test_description='send-pack --stdin tests'
++. ./test-lib.sh
++
++create_ref () {
++	tree=$(git write-tree) &&
++	test_tick &&
++	commit=$(echo "$1" | git commit-tree $tree) &&
++	git update-ref "$1" $commit
++}
++
++clear_remote () {
++	rm -rf remote.git &&
++	git init --bare remote.git
++}
++
++verify_push () {
++	git rev-parse "$1" >expect &&
++	git --git-dir=remote.git rev-parse "${2:-$1}" >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success 'setup refs' '
++	cat >refs <<-\EOF &&
++	refs/heads/A
++	refs/heads/C
++	refs/tags/D
++	refs/heads/B
++	refs/tags/E
++	EOF
++	for i in $(cat refs); do
++		create_ref $i || return 1
++	done
++'
++
++# sanity check our setup
++test_expect_success 'refs on cmdline' '
++	clear_remote &&
++	git send-pack remote.git $(cat refs) &&
++	for i in $(cat refs); do
++		verify_push $i || return 1
++	done
++'
++
++test_expect_success 'refs over stdin' '
++	clear_remote &&
++	git send-pack remote.git --stdin <refs &&
++	for i in $(cat refs); do
++		verify_push $i || return 1
++	done
++'
++
++test_expect_success 'stdin lines are full refspecs' '
++	clear_remote &&
++	echo "A:other" >input &&
++	git send-pack remote.git --stdin <input &&
++	verify_push refs/heads/A refs/heads/other
++'
++
++test_expect_success 'stdin mixed with cmdline' '
++	clear_remote &&
++	echo A >input &&
++	git send-pack remote.git --stdin B <input &&
++	verify_push A &&
++	verify_push B
++'
++
++test_expect_success 'cmdline refs written in order' '
++	clear_remote &&
++	test_must_fail git send-pack remote.git A:foo B:foo &&
++	verify_push A foo
++'
++
++test_expect_success '--stdin refs come after cmdline' '
++	clear_remote &&
++	echo A:foo >input &&
++	test_must_fail git send-pack remote.git --stdin B:foo <input &&
++	verify_push B foo
++'
++
++test_expect_success 'refspecs and --mirror do not mix (cmdline)' '
++	clear_remote &&
++	test_must_fail git send-pack remote.git --mirror $(cat refs)
++'
++
++test_expect_success 'refspecs and --mirror do not mix (stdin)' '
++	clear_remote &&
++	test_must_fail git send-pack remote.git --mirror --stdin <refs
++'
++
++test_done
 diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
 index 73af16f..db19988 100755
 --- a/t/t5541-http-push-smart.sh
