@@ -1,319 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2] send-pack: take refspecs over stdin
-Date: Thu, 21 Aug 2014 08:21:20 -0400
-Message-ID: <20140821122120.GA17600@peff.net>
-References: <20140821121709.GA15299@peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: Relative submodule URLs
+Date: Thu, 21 Aug 2014 14:37:05 +0200
+Message-ID: <20140821123705.GA68456@book.hvoigt.net>
+References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
+ <20140818205505.GA20185@google.com>
+ <20140819102421.GA5012@book.hvoigt.net>
+ <CAHd499CJfX_n_KnQScTFueCSkj6i0x0ozwwD8Oe_2a-VH2oq1w@mail.gmail.com>
+ <xmqqiolowi1f.fsf@gitster.dls.corp.google.com>
+ <CAHd499B9Wa=Y6P+OD8Ea-6dA4yZSkGZZSR9CwZAM45evDL_Qiw@mail.gmail.com>
+ <20140819193010.GA64203@book.hvoigt.net>
+ <CAHd499BvBBymACfHVZyuSXuNSFbT+M8my4uATOsn30w90Zb0QQ@mail.gmail.com>
+ <20140819205747.GB64203@book.hvoigt.net>
+ <CAHd499C2F2s51qmfwS5VxLvP-O2Wjdb6-yfj+T9tMkZz7ohVXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 14:21:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 21 14:37:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKRMs-0001V5-PM
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 14:21:27 +0200
+	id 1XKRcV-0000UG-24
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 14:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754513AbaHUMVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2014 08:21:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56172 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751006AbaHUMVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2014 08:21:22 -0400
-Received: (qmail 18924 invoked by uid 102); 21 Aug 2014 12:21:21 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Aug 2014 07:21:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Aug 2014 08:21:20 -0400
+	id S1754639AbaHUMh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2014 08:37:29 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.100]:37756 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754580AbaHUMh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2014 08:37:27 -0400
+Received: from [77.21.76.69] (helo=book.hvoigt.net)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1XKRc5-0007rz-EU; Thu, 21 Aug 2014 14:37:09 +0200
 Content-Disposition: inline
-In-Reply-To: <20140821121709.GA15299@peff.net>
+In-Reply-To: <CAHd499C2F2s51qmfwS5VxLvP-O2Wjdb6-yfj+T9tMkZz7ohVXQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255609>
 
-On Thu, Aug 21, 2014 at 08:17:10AM -0400, Jeff King wrote:
+On Wed, Aug 20, 2014 at 08:18:12AM -0500, Robert Dailey wrote:
+> On Tue, Aug 19, 2014 at 3:57 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> > I would actually error out when specified in already cloned state.
+> > Because otherwise the user might expect the remote to be updated.
+> >
+> > Since we are currently busy implementing recursive fetch and checkout I have
+> > added that to our ideas list[1] so we do not forget about it.
+> >
+> > In the meantime you can either use the branch.<name>.remote
+> > configuration to define a remote to use or just use 'origin'.
+> >
+> > Cheers Heiko
+> >
+> > [1] https://github.com/jlehmann/git-submod-enhancements/wiki#add-with-remote--switch-to-submodule-update
+> 
+> Thanks Heiko.
+> 
+> I would offer to help implement this for you, if you find it to be a
+> good idea, but I've never done git development before and based on
+> what I've seen it seems like you need to know at least 2-3 languages
+> to contribute: bash, perl, C++. I know C++ & Python but I don't know
+> perl or bash scripting language.
+> 
+> What would it take to help you guys out? It's easy to complain & file
+> bugs but as a developer I feel like I should offer more, if it suits
+> you.
 
->  Documentation/git-send-pack.txt | 13 ++++++++++++-
->  builtin/send-pack.c             | 27 +++++++++++++++++++++++++++
->  remote-curl.c                   |  8 +++++++-
->  t/t5541-http-push-smart.sh      | 15 +++++++++++++++
->  4 files changed, 61 insertions(+), 2 deletions(-)
+For this particular case shell scripting should be sufficient. And it
+should not take too much time. Have a look at the git-submodule.sh
+script in the repository. That is the one implementing the git submodule
+command.
 
-Whoops. Forgot to actually add the battery of individual send-pack
-tests. Here's a re-send.
+Additionally you need to extend the documentation and write a test or
+two. Writing a test is also done in shell script. The documentation[1] is
+in asciidoc which is pretty self explanatory.
 
--- >8 --
-Subject: send-pack: take refspecs over stdin
+The test should probably go into t/t7406-submodule-update.sh and, as
+Phil pointed out, in t7403-submodule-sync.sh).
 
-Pushing a large number of refs works over most transports,
-because we implement send-pack as an internal function.
-However, it can sometimes fail when pushing over http,
-because we have to spawn "git send-pack --stateless-rpc" to
-do the heavy lifting, and we pass each refspec on the
-command line. This can cause us to overflow the OS limits on
-the size of the command line for a large push.
+Also make sure to read the shell scripting part in
+Documentation/CodingGuidelines and as a general rule: Keep close to the
+style you find in the file. And when you are ready to send a patch:
+Documentation/SubmittingPatches.
 
-We can solve this by giving send-pack a --stdin option and
-using it from remote-curl.  We already dealt with this on
-the fetch-pack side in 078b895 (fetch-pack: new --stdin
-option to read refs from stdin, 2012-04-02). The stdin
-option (and in particular, its use of packet-lines for
-stateless-rpc input) is modeled after that solution.
+If you are happy but unsure about anything just send a patch with your
+implementation (CC me and everyone involved) and we will discuss it here
+on the list.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-send-pack.txt | 13 +++++-
- builtin/send-pack.c             | 27 ++++++++++++
- remote-curl.c                   |  8 +++-
- t/t5408-send-pack-stdin.sh      | 92 +++++++++++++++++++++++++++++++++++++++++
- t/t5541-http-push-smart.sh      | 15 +++++++
- 5 files changed, 153 insertions(+), 2 deletions(-)
- create mode 100755 t/t5408-send-pack-stdin.sh
+Cheers Heiko
 
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index dc3a568..2a0de42 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -35,6 +35,16 @@ OPTIONS
- 	Instead of explicitly specifying which refs to update,
- 	update all heads that locally exist.
- 
-+--stdin::
-+	Take the list of refs from stdin, one per line. If there
-+	are refs specified on the command line in addition to this
-+	option, then the refs from stdin are processed after those
-+	on the command line.
-++
-+If '--stateless-rpc' is specified together with this option then
-+the list of refs must be in packet format (pkt-line). Each ref must
-+be in a separate packet, and the list must end with a flush packet.
-+
- --dry-run::
- 	Do everything except actually send the updates.
- 
-@@ -77,7 +87,8 @@ this flag.
- Without '--all' and without any '<ref>', the heads that exist
- both on the local side and on the remote side are updated.
- 
--When one or more '<ref>' are specified explicitly, it can be either a
-+When one or more '<ref>' are specified explicitly (whether on the
-+command line or via `--stdin`), it can be either a
- single pattern, or a pair of such pattern separated by a colon
- ":" (this means that a ref name cannot have a colon in it).  A
- single pattern '<name>' is just a shorthand for '<name>:<name>'.
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index f420b74..4b1bc0f 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -110,6 +110,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	int flags;
- 	unsigned int reject_reasons;
- 	int progress = -1;
-+	int from_stdin = 0;
- 	struct push_cas_option cas = {0};
- 
- 	argv++;
-@@ -169,6 +170,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 				args.stateless_rpc = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--stdin")) {
-+				from_stdin = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--helper-status")) {
- 				helper_status = 1;
- 				continue;
-@@ -201,6 +206,28 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	}
- 	if (!dest)
- 		usage(send_pack_usage);
-+
-+	if (from_stdin) {
-+		struct argv_array all_refspecs = ARGV_ARRAY_INIT;
-+
-+		for (i = 0; i < nr_refspecs; i++)
-+			argv_array_push(&all_refspecs, refspecs[i]);
-+
-+		if (args.stateless_rpc) {
-+			const char *buf;
-+			while ((buf = packet_read_line(0, NULL)))
-+				argv_array_push(&all_refspecs, buf);
-+		} else {
-+			struct strbuf line = STRBUF_INIT;
-+			while (strbuf_getline(&line, stdin, '\n') != EOF)
-+				argv_array_push(&all_refspecs, line.buf);
-+			strbuf_release(&line);
-+		}
-+
-+		refspecs = all_refspecs.argv;
-+		nr_refspecs = all_refspecs.argc;
-+	}
-+
- 	/*
- 	 * --all and --mirror are incompatible; neither makes sense
- 	 * with any refspecs.
-diff --git a/remote-curl.c b/remote-curl.c
-index 0fcf2ce..558b9fe 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -863,6 +863,7 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 	int i, err;
- 	struct argv_array args;
- 	struct string_list_item *cas_option;
-+	struct strbuf preamble = STRBUF_INIT;
- 
- 	argv_array_init(&args);
- 	argv_array_pushl(&args, "send-pack", "--stateless-rpc", "--helper-status",
-@@ -880,17 +881,22 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 	for_each_string_list_item(cas_option, &cas_options)
- 		argv_array_push(&args, cas_option->string);
- 	argv_array_push(&args, url.buf);
-+
-+	argv_array_push(&args, "--stdin");
- 	for (i = 0; i < nr_spec; i++)
--		argv_array_push(&args, specs[i]);
-+		packet_buf_write(&preamble, "%s\n", specs[i]);
-+	packet_buf_flush(&preamble);
- 
- 	memset(&rpc, 0, sizeof(rpc));
- 	rpc.service_name = "git-receive-pack",
- 	rpc.argv = args.argv;
-+	rpc.stdin_preamble = &preamble;
- 
- 	err = rpc_service(&rpc, heads);
- 	if (rpc.result.len)
- 		write_or_die(1, rpc.result.buf, rpc.result.len);
- 	strbuf_release(&rpc.result);
-+	strbuf_release(&preamble);
- 	argv_array_clear(&args);
- 	return err;
- }
-diff --git a/t/t5408-send-pack-stdin.sh b/t/t5408-send-pack-stdin.sh
-new file mode 100755
-index 0000000..e8737df
---- /dev/null
-+++ b/t/t5408-send-pack-stdin.sh
-@@ -0,0 +1,92 @@
-+#!/bin/sh
-+
-+test_description='send-pack --stdin tests'
-+. ./test-lib.sh
-+
-+create_ref () {
-+	tree=$(git write-tree) &&
-+	test_tick &&
-+	commit=$(echo "$1" | git commit-tree $tree) &&
-+	git update-ref "$1" $commit
-+}
-+
-+clear_remote () {
-+	rm -rf remote.git &&
-+	git init --bare remote.git
-+}
-+
-+verify_push () {
-+	git rev-parse "$1" >expect &&
-+	git --git-dir=remote.git rev-parse "${2:-$1}" >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'setup refs' '
-+	cat >refs <<-\EOF &&
-+	refs/heads/A
-+	refs/heads/C
-+	refs/tags/D
-+	refs/heads/B
-+	refs/tags/E
-+	EOF
-+	for i in $(cat refs); do
-+		create_ref $i || return 1
-+	done
-+'
-+
-+# sanity check our setup
-+test_expect_success 'refs on cmdline' '
-+	clear_remote &&
-+	git send-pack remote.git $(cat refs) &&
-+	for i in $(cat refs); do
-+		verify_push $i || return 1
-+	done
-+'
-+
-+test_expect_success 'refs over stdin' '
-+	clear_remote &&
-+	git send-pack remote.git --stdin <refs &&
-+	for i in $(cat refs); do
-+		verify_push $i || return 1
-+	done
-+'
-+
-+test_expect_success 'stdin lines are full refspecs' '
-+	clear_remote &&
-+	echo "A:other" >input &&
-+	git send-pack remote.git --stdin <input &&
-+	verify_push refs/heads/A refs/heads/other
-+'
-+
-+test_expect_success 'stdin mixed with cmdline' '
-+	clear_remote &&
-+	echo A >input &&
-+	git send-pack remote.git --stdin B <input &&
-+	verify_push A &&
-+	verify_push B
-+'
-+
-+test_expect_success 'cmdline refs written in order' '
-+	clear_remote &&
-+	test_must_fail git send-pack remote.git A:foo B:foo &&
-+	verify_push A foo
-+'
-+
-+test_expect_success '--stdin refs come after cmdline' '
-+	clear_remote &&
-+	echo A:foo >input &&
-+	test_must_fail git send-pack remote.git --stdin B:foo <input &&
-+	verify_push B foo
-+'
-+
-+test_expect_success 'refspecs and --mirror do not mix (cmdline)' '
-+	clear_remote &&
-+	test_must_fail git send-pack remote.git --mirror $(cat refs)
-+'
-+
-+test_expect_success 'refspecs and --mirror do not mix (stdin)' '
-+	clear_remote &&
-+	test_must_fail git send-pack remote.git --mirror --stdin <refs
-+'
-+
-+test_done
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index 73af16f..db19988 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -323,5 +323,20 @@ test_expect_success 'push into half-auth-complete requires password' '
- 	test_cmp expect actual
- '
- 
-+run_with_limited_cmdline () {
-+	(ulimit -s 128 && "$@")
-+}
-+
-+test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
-+
-+test_expect_success CMDLINE_LIMIT 'push 2000 tags over http' '
-+	sha1=$(git rev-parse HEAD) &&
-+	test_seq 2000 |
-+	  sort |
-+	  sed "s|.*|$sha1 refs/tags/really-long-tag-name-&|" \
-+	  >.git/packed-refs &&
-+	run_with_limited_cmdline git push --mirror
-+'
-+
- stop_httpd
- test_done
--- 
-2.1.0.346.ga0367b9
+[1] Documentation/git-submodule.txt
