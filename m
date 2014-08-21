@@ -1,105 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] Makefile: use "find" to determine static header
- dependencies
-Date: Thu, 21 Aug 2014 07:48:18 -0700
-Message-ID: <20140821144818.GG20185@google.com>
-References: <20140821082440.GA16402@peff.net>
- <20140821082935.GA25763@peff.net>
+From: Matthias Urlichs <matthias@urlichs.de>
+Subject: Shallow clones with explicit history cutoff?
+Date: Thu, 21 Aug 2014 15:39:13 +0000 (UTC)
+Message-ID: <loom.20140821T171416-31@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 21 16:48:28 2014
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 21 17:39:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKTf8-00049E-TN
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 16:48:27 +0200
+	id 1XKUSc-0000RE-E2
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 17:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750965AbaHUOsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2014 10:48:22 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:62431 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbaHUOsV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2014 10:48:21 -0400
-Received: by mail-pa0-f46.google.com with SMTP id lj1so14495875pab.5
-        for <git@vger.kernel.org>; Thu, 21 Aug 2014 07:48:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=t/EWpYBfXgjq5K91C8GorRiDhPk2wDaINHFD6a7Bcok=;
-        b=fAOXUgm4tMvl5kpqd8oDbVa62rVuEVcnmq/os4mcgQE1/aIzO+zLibZ6Ksx7IF4EWJ
-         B3L9eybPyIKxmx/DTc0ZSURX67sjrrUPEulbmDAZc1cs+cfyf39AeS16+ZDVfE1pWk2l
-         5plkA9mRlr0IiaiZQvrO3XnKwZZJ9HofWIir4x+imNLZCot/L8S0bk0rNl7reh/mYeMq
-         7Ir57DJxR2DmHOdKI4gBfoRFcDC0LCiwfk9+WR5r7lux/31Ih5e4TLx8qSI1ODhvfCBq
-         VNDH/y+OycML1PjWurrgrnPWVe1OedeUfRUDgt+p9RPxftfmijJSeuFcYom++cszOUP3
-         arvA==
-X-Received: by 10.70.35.207 with SMTP id k15mr67080157pdj.5.1408632501245;
-        Thu, 21 Aug 2014 07:48:21 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:3460:788e:6b19:7e67])
-        by mx.google.com with ESMTPSA id j1sm39116397pdh.31.2014.08.21.07.48.20
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 21 Aug 2014 07:48:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140821082935.GA25763@peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752469AbaHUPja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2014 11:39:30 -0400
+Received: from plane.gmane.org ([80.91.229.3]:58133 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752120AbaHUPj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2014 11:39:29 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1XKUST-0000Mi-PB
+	for git@vger.kernel.org; Thu, 21 Aug 2014 17:39:25 +0200
+Received: from netz.smurf.noris.de ([213.95.21.43])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Aug 2014 17:39:25 +0200
+Received: from matthias by netz.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Aug 2014 17:39:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 213.95.21.43 (Mozilla/5.0 (X11; Linux x86_64; rv:30.0) Gecko/20100101 Firefox/30.0 Iceweasel/30.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255619>
 
 Hi,
 
-Jeff King wrote:
+use case: I am packaging the FOO program for Debian. FOO is maintained in
+git but it has a bunch of problems (e.g. because somebody mistakenly checked
+in a huge blob which would give the ).
 
-> However, we do always define $(LIB_H) as a dependency of
-> po/git.pot. Even though we do not actually try to build that
-> target, make will still evaluate the dependencies when
-> reading the Makefile, and expand the variable. This is not
-> ideal
+The current workflow for this is to create a new branch, remove the
+offending bits if necessary, create a FOO-clean.tar.xz file, and ship that
+as "original source". I find that to be suboptimal.
 
-Would the following work?  The current dependencies for po/git.pot are
-not correct anyway --- they include LOCALIZED_C but not LOCALIZED_SH
-or LOCALIZED_PERL, so someone hacking on shell scripts and then trying
-'make po/git.pot' could end up with the pot file not being
-regenerated.
+What I would like to have, instead, is a version of shallow cloning which
+cuts off not at a pre-determined depth, but at a given branch (or set of
+branches). In other words, given
 
--- >8 --
-Subject: i18n: treat "make pot" as an explicitly-invoked target
+            +-J--K  (packaged)
+           /    /
+  +-F--G--H----I    (clean)
+ /       /
+A---B---C---D---E   (upstream)
 
-po/git.pot is normally used as-is and not regenerated by people
-building git, so it is okay if an explicit "make po/git.pot" always
-automatically regenerates it.  Depend on the magic FORCE target
-instead of explicitly keeping track of dependencies.
+a command "git clone --shallow-until upstream $REPO" (or however that would
+be named) would create a shallow git archive which contains branches
+packaged+clean, with commits FGHIJK. In contrast, with --single-branch and
+--depth 4 I would get CGHIJK, which isn't what I'd want.
 
-This simplifies the makefile, in particular preparing for a moment
-when $(LIB_H), which is part of $(LOCALIZED_C), can be computed on the
-fly.
+As I have not spent too much time with the git sources lately (as in "None
+at all"), some pointers where to start implementing this would be
+appreciated, assuming (a) this has a reasonable chance of landing in git and
+(b) nobody beats me to it. ;-)
 
-We still need a dependency on GENERATED_H, to force those files to be
-built when regenerating git.pot.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index 2320de5..cf0ccdf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2138,7 +2138,7 @@ LOCALIZED_SH += t/t0200/test.sh
- LOCALIZED_PERL += t/t0200/test.perl
- endif
- 
--po/git.pot: $(LOCALIZED_C)
-+po/git.pot: $(GENERATED_H) FORCE
- 	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ $(XGETTEXT_FLAGS_C) $(LOCALIZED_C)
- 	$(QUIET_XGETTEXT)$(XGETTEXT) -o$@+ --join-existing $(XGETTEXT_FLAGS_SH) \
- 		$(LOCALIZED_SH)
 -- 
+-- Matthias Urlichs
