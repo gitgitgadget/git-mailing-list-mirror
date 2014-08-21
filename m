@@ -1,77 +1,58 @@
-From: Matthias Urlichs <matthias@urlichs.de>
-Subject: Shallow clones with explicit history cutoff?
-Date: Thu, 21 Aug 2014 15:39:13 +0000 (UTC)
-Message-ID: <loom.20140821T171416-31@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH v3 0/3] Stream fd to clean filter, GIT_MMAP_LIMIT
+Date: Thu, 21 Aug 2014 18:05:07 +0200
+Message-ID: <1408637110-15669-1-git-send-email-prohaska@zib.de>
+Cc: Junio C Hamano <gitster@pobox.com>, peff@peff.net,
+	pclouds@gmail.com, john@keeping.me.uk, schacon@gmail.com,
+	Steffen Prohaska <prohaska@zib.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 17:39:35 2014
+X-From: git-owner@vger.kernel.org Thu Aug 21 18:06:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKUSc-0000RE-E2
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 17:39:34 +0200
+	id 1XKUsm-0007SA-W3
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 18:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbaHUPja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2014 11:39:30 -0400
-Received: from plane.gmane.org ([80.91.229.3]:58133 "EHLO plane.gmane.org"
+	id S1751960AbaHUQGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2014 12:06:32 -0400
+Received: from mailer.zib.de ([130.73.108.11]:55755 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752120AbaHUPj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2014 11:39:29 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1XKUST-0000Mi-PB
-	for git@vger.kernel.org; Thu, 21 Aug 2014 17:39:25 +0200
-Received: from netz.smurf.noris.de ([213.95.21.43])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Aug 2014 17:39:25 +0200
-Received: from matthias by netz.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Aug 2014 17:39:25 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 213.95.21.43 (Mozilla/5.0 (X11; Linux x86_64; rv:30.0) Gecko/20100101 Firefox/30.0 Iceweasel/30.0)
+	id S1751857AbaHUQGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2014 12:06:31 -0400
+Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7LG5ZPJ021629;
+	Thu, 21 Aug 2014 18:05:35 +0200 (CEST)
+Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7LG5Xg4021594;
+	Thu, 21 Aug 2014 18:05:34 +0200 (CEST)
+X-Mailer: git-send-email 2.0.1.448.g1eafa63
+X-Miltered: at mailer.zib.de with ID 53F618CF.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 53F618CF.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 53F618CF.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255620>
 
-Hi,
+I revised the testing approach as discussed.  Patch 2/3 adds GIT_MMAP_LIMIT,
+which allows testing of memory expectations together with GIT_ALLOC_LIMIT.
 
-use case: I am packaging the FOO program for Debian. FOO is maintained in
-git but it has a bunch of problems (e.g. because somebody mistakenly checked
-in a huge blob which would give the ).
+The rest is unchanged compared to v2.
 
-The current workflow for this is to create a new branch, remove the
-offending bits if necessary, create a FOO-clean.tar.xz file, and ship that
-as "original source". I find that to be suboptimal.
+Steffen Prohaska (3):
+  convert: Refactor would_convert_to_git() to single arg 'path'
+  Introduce GIT_MMAP_LIMIT to allow testing expected mmap size
+  convert: Stream from fd to required clean filter instead of mmap
 
-What I would like to have, instead, is a version of shallow cloning which
-cuts off not at a pre-determined depth, but at a given branch (or set of
-branches). In other words, given
-
-            +-J--K  (packaged)
-           /    /
-  +-F--G--H----I    (clean)
- /       /
-A---B---C---D---E   (upstream)
-
-a command "git clone --shallow-until upstream $REPO" (or however that would
-be named) would create a shallow git archive which contains branches
-packaged+clean, with commits FGHIJK. In contrast, with --single-branch and
---depth 4 I would get CGHIJK, which isn't what I'd want.
-
-As I have not spent too much time with the git sources lately (as in "None
-at all"), some pointers where to start implementing this would be
-appreciated, assuming (a) this has a reasonable chance of landing in git and
-(b) nobody beats me to it. ;-)
+ convert.c             | 60 +++++++++++++++++++++++++++++++++++++++++++++------
+ convert.h             | 10 ++++++---
+ sha1_file.c           | 46 ++++++++++++++++++++++++++++++++++++---
+ t/t0021-conversion.sh | 24 ++++++++++++++++-----
+ 4 files changed, 123 insertions(+), 17 deletions(-)
 
 -- 
--- Matthias Urlichs
+2.1.0.6.gb452461
