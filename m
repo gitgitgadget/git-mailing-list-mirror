@@ -1,65 +1,141 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: Bug in Git 1.9.4 (20140815) for Windows - cannot clone from SVN
-Date: Thu, 21 Aug 2014 12:00:42 +0200
-Message-ID: <53F5C34A.8080400@virtuell-zuhause.de>
-References: <592191693.140260.1408614788186.open-xchange@patina.store>
+From: Petr Stodulka <pstodulk@redhat.com>
+Subject: [BUG] resolved deltas
+Date: Thu, 21 Aug 2014 13:35:43 +0200
+Message-ID: <53F5D98F.4040700@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-2; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Reiner Nothdurft <reiner@jnc-business.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 21 12:00:53 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 21 13:35:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKPAq-0005id-MI
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 12:00:53 +0200
+	id 1XKQem-00068y-9y
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Aug 2014 13:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753634AbaHUKAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2014 06:00:49 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:59793 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750791AbaHUKAs (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Aug 2014 06:00:48 -0400
-Received: from p5ddc3a77.dip0.t-ipconnect.de ([93.220.58.119] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XKPAk-0006Uo-N4; Thu, 21 Aug 2014 12:00:46 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <592191693.140260.1408614788186.open-xchange@patina.store>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1408615248;0e9d494a;
+	id S1755076AbaHULfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2014 07:35:48 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:41233 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755070AbaHULfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2014 07:35:46 -0400
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s7LBZk9q030288
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <git@vger.kernel.org>; Thu, 21 Aug 2014 07:35:46 -0400
+Received: from [10.34.4.169] (unused-4-169.brq.redhat.com [10.34.4.169])
+	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id s7LBZiqK003368
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 21 Aug 2014 07:35:45 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255606>
 
-Am 21.08.2014 um 11:53 schrieb Reiner Nothdurft:
-> Hi all,
->  
-> I tried to move a repository from SVN to Git, but all my tries - on three
-> different machines running Windows 7 with the latest patches - failed with the
-> same reason. I am running the latest version of Git for Windows
-> 1.9.4-preview-20140815. One of my first steps was to clone the repository from
-> my server into my local file system, which led to the following reproducible
-> error:
->  
-> Command: git svn clone svn:////jnc
-> C:\Program Files (x86)\Git\bin\perl.exe: *** unable to remap C:\Program Files
-> (x86)\Git\bin\libneon-25.dll to same addre ss as parent -- 0x850000
->       0 [main] perl.exe" 1608 sync_with_child: child 10460(0x184) died before
-> initialization with status code 0x1
->     748 [main] perl.exe" 1608 sync_with_child: *** child state child loading
-> dlls C:\Program Files (x86)\Git\bin\perl.exe: *** unable to remap C:\Program
-> Files (x86)\Git\bin\libsvn_repos-1-0.dll to same  address as parent -- 0x850000
-> 5066339 [main] perl.exe" 1608 sync_with_child: child 13188(0x198) died before
-> initialization with status code 0x1
-> 5067125 [main] perl.exe" 1608 sync_with_child: *** child state child loading
-> dlls
->  
-> Same issue when I add parameters for the local path, trunk, branches, etc.
-> Moving back to Git 1.9.2 for Windows fixed this issue finally. Meanwhile I heard
-> from a collegue, that the issue also did not appear with 1.9.4 preview 20140611.
+Hi guys,
+I wanted post you patch here for this bug, but I can't find primary 
+source of this problem [0], because I don't understand some ideas in the 
+code. So what I investigate:
 
-This was mentioned in the release notes, a fix is outlined in
-https://github.com/msysgit/msysgit/pull/245.
+Bug is reprodusible since git version 1.8.3.1 (may earlier 1.8.xx, but I 
+don't test it) to actual upstream version.
+This problem "doesn't exists" in version 1.7.xx - or more precisely is 
+not reproducible. "May" this is reproducible
+since commit "7218a215" - in this commit was added assert in file 
+"builtin/index-pack.c" (actual line is 918), but I didn't test this.
+
+This assert tests if object's (child) real type == OBJ_REF_DELTA. This 
+will failure for object with real_type == OBJ_TREE (set as parent's 
+type) and type == OBJ_REF_DELTA. Here some prints of important variables 
+before failure assert() (from older version but I think that values are 
+still actual in this case):
+------------------------------
+(gdb) p base->ref_first
+$9 = 3223
+
+(gdb) p deltas[3223]
+$10 = {
+   base = {
+     sha1 = "\274\070k\343K\324x\037q\273h\327*n\n\356\061$ \036",
+     offset = 2267795834784135356
+   },
+   obj_no = 11152
+}
+
+(gdb) p *child
+$11 = {
+   idx = {
+     sha1 = "J\242i\251\261\273\305\067\236%CE\022\257\252\342[;\tD",
+     crc32 = 2811659028,
+     offset = 10392153
+   },
+   size = 30,
+   hdr_size = 22,
+   type = OBJ_REF_DELTA,
+   real_type = OBJ_TREE,
+   delta_depth = 0,
+   base_object_no = 5458
+}
+
+(gdb) p objects[5458]
+$13 = {
+   idx = {
+     sha1 = "\274\070k\343K\324x\037q\273h\327*n\n\356\061$ \036",
+     crc32 = 3724458534,
+     offset = 6879168
+   },
+   size = 236,
+   hdr_size = 2,
+   type = OBJ_TREE,
+   real_type = OBJ_TREE,
+   delta_depth = 0,
+   base_object_no = 0
+}
+---------------------------------------
+
+"base_object_no" is static 5458. "base->ref_first" child's object are 
+dynamic. If you want stop process in same position my recommendation for 
+gdb (if you use gdb) when you will be in file index-pack.c:
+br 1093
+cont
+set variable nr_threads = 1
+br 1111
+cond 2 i == 6300
+cont
+br 916
+cont
+-----------
+compilated without any optimisation, line numbers modified for commit 
+"6c4ab27f2378ce67940b4496365043119d7ffff2"
+Condition i == 6300 ---> last iteration before failure has dynamic rank 
+in range 6304 to 6309 in the most cases (that's weird for me, when count 
+of downloaded objects is statically 12806, may wrong search of children?)
+-----------------------------------
+
+Here I am lost. I don't know really what I can do next here, because I 
+don't understand some ideas in code. e.g. searching of child - functions 
+find_delta(), find_delta_children(). Calculation on line 618:
+----
+     int next = (first+last) / 2;
+----
+I still don't understand. I didn't find description of this searching 
+algorithm in tech. documentation but I didn't read all yet. However I 
+think that source of problems could be somewhere in these two functions. 
+When child is found, its real_type is set to parent's type in function 
+resolve_delta() on the line 865 and then lasts wait for failure. I don't 
+think that problem is in repository itself [1], but it is possible.
+
+Any next ideas/hints or explanation of these functions? I began study 
+source code and mechanisms of the git this week, so don't beat me yet 
+please :-)
+
+Regards,
+Petr
+
+[0] https://bugzilla.redhat.com/show_bug.cgi?id=1099919
+[1] git clone https://code.google.com/p/mapsforge/ mapsforge.git
