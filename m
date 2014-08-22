@@ -1,135 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/3] Push the NATIVE_CRLF Makefile variable to C and added a test for native.
-Date: Fri, 22 Aug 2014 15:54:03 -0700
-Message-ID: <xmqq61hknnjo.fsf@gitster.dls.corp.google.com>
-References: <53F797A1.1060804@web.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 18/18] signed push: final protocol update
+Date: Fri, 22 Aug 2014 16:54:08 -0700
+Message-ID: <CAJo=hJu_T7irRk=fBsJ+GQxbVQ9GgO2ytihxKm+bXSLsL+wQbg@mail.gmail.com>
+References: <1408485987-3590-1-git-send-email-gitster@pobox.com>
+ <1408485987-3590-19-git-send-email-gitster@pobox.com> <CAJo=hJuToRQDTkccV9BfVbs1YnjCrr2iPrG-HmTbJ=ds4r6MzA@mail.gmail.com>
+ <xmqqvbplpg2s.fsf@gitster.dls.corp.google.com> <xmqqa96wpfqb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Aug 23 00:54:22 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 23 01:55:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKxis-0005am-At
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Aug 2014 00:54:18 +0200
+	id 1XKyfk-0005In-Tz
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Aug 2014 01:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179AbaHVWyO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2014 18:54:14 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50816 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752158AbaHVWyN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Aug 2014 18:54:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A4CFD331B6;
-	Fri, 22 Aug 2014 18:54:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=7BpDnLevwEMs
-	MUSuQec3ssNzLeE=; b=CQXSFPIFN9+e+8XMEyRphymNgeM0haoqKGyeYzTKRInl
-	JWmfLrPriFKyOsUBlNlqmVg5ncbdMyNVONAqp1Pfi+1HYgY0fgoUQT8cGGMFuNgT
-	/v1aTaKD+tH/uhSLMiXZ5ud/szK3DAcxUOIlsvPEy0fjsT8mbzyc3i6//FTO+Cc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WnPtYH
-	5J2bP26TN21KlybmuP4GB4gbaIQRc1NWOjGnFebeP2r52iFFf8DHsxSgjKrUli38
-	NfSSS74Szc6kaUPFUJtobilxtxAHYVmvR3+tyC+GWhw//du0I3K76niPv0t7F7m+
-	rPyC9UF78cbWZL4MPdX4ECHALfy6RZawA1RcQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9BE33331B5;
-	Fri, 22 Aug 2014 18:54:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 17063331AF;
-	Fri, 22 Aug 2014 18:54:05 -0400 (EDT)
-In-Reply-To: <53F797A1.1060804@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Fri, 22 Aug 2014 21:18:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 379201C6-2A4F-11E4-B748-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752553AbaHVXyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2014 19:54:43 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:61895 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530AbaHVXye (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2014 19:54:34 -0400
+Received: by mail-ig0-f173.google.com with SMTP id h18so459979igc.12
+        for <git@vger.kernel.org>; Fri, 22 Aug 2014 16:54:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4PvPuh5vW+jDdYpefCQbsnNhIx6nPMuXVTzvwdL97vo=;
+        b=LS2Bx6pZFA0znNlsc4HiSdkYRT3kbZxdW7tsNwxZ9655fVsQv06KJSOS47UM3ovhQQ
+         ujSScp5t9NqrL94/61zCMxbxLkWXJUn4jInwG7oNipEXIsO8ubhqfEYg5gVsA1xI6Pv7
+         l8w3hLbfWo5IikcZA8nmn9fve1ZiI1G6pCL9A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=4PvPuh5vW+jDdYpefCQbsnNhIx6nPMuXVTzvwdL97vo=;
+        b=Nvu8UiBX/dEa1xa2WQ9H+pSEaVEufqlDKlgSTnEv7u3tTMxmPqOWUI0BGTrDUq7OJD
+         opxSugSlSwlP+JISZpmIPsj5oiw6O61EE+OceFxtSHyzqOhbLzjB6DRAavb+ymywlIMj
+         fOuYVHgOIkA7yjWKBNmYyyhRkV2gZ6pX7AIIFgy4InIPrPOzfhuTsLbVVex9TMxNzVvF
+         5/N1h4GetMUL6/v/RNGGjOAvrxS3FnmttOsy3rEdTvoW9U27cOkp/27lBTCcdW/YhUp1
+         ZvCtU4WXBbuNbn+q4QCvxNRh7UaoXAQZGKvbDEmugfvRV/Xqcfs/mb7UPXBVnIuUQT70
+         KXnw==
+X-Gm-Message-State: ALoCoQlG+iIAJSzRhBtdjrCnnWYSehNk3xdPs27/Oa1kzeItmRnmFO3RqzJdZOhQpM0cqKavdPRj
+X-Received: by 10.43.94.73 with SMTP id bx9mr11866739icc.19.1408751668477;
+ Fri, 22 Aug 2014 16:54:28 -0700 (PDT)
+Received: by 10.64.245.164 with HTTP; Fri, 22 Aug 2014 16:54:08 -0700 (PDT)
+In-Reply-To: <xmqqa96wpfqb.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255726>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Fri, Aug 22, 2014 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> There are a few gotchas I can certainly use help on, especially from
+>> a smart-http expert ;-).
+>>
+>>  * "pushed-to <URL>" will identify the site and the repository, so
+>>    you cannot MITM my push to an experimental server and replay it
+>>    against the authoritative server.
+>>
+>>    However, the receiving end may not even know what name its users
+>>    call the repository being pushed into.  Obviously gethostname()
+>>    may not be what the pusher called us, and getcwd() may not match
+>>    the repository name without leading "/var/repos/shard3/" path
+>>    components stripped, for example.
+>>
+>>    I am not sure if we even have the necessary information at
+>>    send-pack.c::send_pack() level, where it already has an
+>>    established connection to the server (hence it does not need to
+>>    know to whom it is talking to).
+>>
+>>
+>>  * The receiving end will issue "push-cert=<nonce>" in its initial
+>>    capability advertisement, and this <nonce> will be given on the
+>>    PUSH_CERT_NONCE environment to the pre/post-receive hooks, to
+>>    allow the "nonce <nonce>" header in the signed certificate to be
+>>    checked against it.  You cannot capture my an earlier push to the
+>>    authoritative server and replay it later.
+>>
+>>    That would all work well within a single receive-pack process,
+>>    but with "stateless" RPC, it is unclear to me how we should
+>>    arrange the <nonce> the initial instance of receive-pack placed
+>>    on its capability advertisement to be securely passed to the
+>>    instance of receive-pack that actually receives the push
+>>    certificate.
+>
+> A good <nonce> may be something like taking the SHA-1 hash of the
+> concatenation of the sitename, repo-path and the timestamp when the
+> receive-pack generated the <nonce>.  Replaying a push certificate
+> for a push to a repository at a site that gives such a <nonce> can
+> succeed at the same chance of finding a SHA-1 collision [*1*].  As
+> long as you exercise good hygiene and only push to repositories that
+> give such <nonce>, we can do without checking "pushed-to" that says
+> where the push went.
 
-> Commit 95f31e9a correctly points out that the NATIVE_CRLF setting is
-> incorrectly set on Mingw git. However, the Makefile variable is not
-> propagated to the C preprocessor and results in no change. This patch
-> pushes the definition to the C code and adds a test to validate that
-> when core.eol as native is crlf, we actually normalize text files to =
-this
-> line ending convention when core.autocrlf is false.
->
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
+Yes, this is an interesting solution.
 
-Who should I record as the author of this patch?
+As you know, the stateless HTTP thing doesn't allow the nonce on the
+server to be carried from the initial ref advertisement into the final
+receive-pack. We would either need to write the nonce to disk and load
+it back up later (ick), or use some sort of stateless nonce.
 
->
-> This mini series mainly updates git.git with patches from msysgit:
-> Patch 1 is taken "as is",
-> Patch 2 is taken "as is",
-> and Patch 3 is the outcome of the code-review=20
->
-> Thanks for careful reading
->
->
->  Makefile              |  3 +++
->  t/t0026-eol-config.sh | 18 ++++++++++++++++++
->  2 files changed, 21 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index 2320de5..517036e 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1479,6 +1479,9 @@ ifdef NO_REGEX
->  	COMPAT_CFLAGS +=3D -Icompat/regex
->  	COMPAT_OBJS +=3D compat/regex/regex.o
->  endif
-> +ifdef NATIVE_CRLF
-> +	BASIC_CFLAGS +=3D -DNATIVE_CRLF
-> +endif
-> =20
->  ifdef USE_NED_ALLOCATOR
->         COMPAT_CFLAGS +=3D -Icompat/nedmalloc
-> diff --git a/t/t0026-eol-config.sh b/t/t0026-eol-config.sh
-> index 4807b0f..43a580a 100755
-> --- a/t/t0026-eol-config.sh
-> +++ b/t/t0026-eol-config.sh
-> @@ -80,4 +80,22 @@ test_expect_success 'autocrlf=3Dtrue overrides uns=
-et eol' '
->  	test -z "$onediff" && test -z "$twodiff"
->  '
-> =20
-> +test_expect_success NATIVE_CRLF 'eol native is crlf' '
-> +
-> +	rm -rf native_eol && mkdir native_eol &&
-> +	( cd native_eol &&
-> +	printf "*.txt text\n" > .gitattributes
-> +	printf "one\r\ntwo\r\nthree\r\n" > filedos.txt
-> +	printf "one\ntwo\nthree\n" > fileunix.txt
+A stateless nonce could look like:
 
-I think I saw a few style fixes sent against the previous round of
-patches; have you missed them?
+  nonce = HMAC_SHA1( SHA1(site+path) + '.' + now, site_key )
 
-> +	git init &&
-> +	git config core.autocrlf false &&
-> +	git config core.eol native &&
-> +	git add filedos.txt fileunix.txt &&
-> +	git commit -m "first" &&
-> +	rm file*.txt &&
-> +	git reset --hard HEAD &&
-> +	has_cr filedos.txt && has_cr fileunix.txt
-> +	)
-> +'
-> +
->  test_done
+where site_key is a private key known to the server. It doesn't have
+to be per-repo.
+
+receive-pack would then be willing to accept any nonce whose timestamp
+is within a window, e.g. 10 minutes of the current time, and whose
+signature verifies in the HMAC. The 10 minute window is important to
+allow clients time to generate the object list, perform delta
+compression, and begin transmitting to the server.
+
+> So "nonce <nonce>" is the only thing that is necessary to make them
+> impossible to replay.  For auditing purposes, "pushed-to <URL>" that
+> records the repository the pusher intended to push to may help but
+> probably not necessary [*2*].
+
+So pushed-to is still useful as a documentation/historical artifact,
+but isn't important for verifying the certificate. That fixes a lot of
+problems with repositories having different paths under e.g. git://
+vs. ssh:// vs. https:// on the same host.
