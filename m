@@ -1,89 +1,80 @@
-From: Matthias Urlichs <matthias@urlichs.de>
-Subject: Re: Shallow clones with explicit history cutoff?
-Date: Fri, 22 Aug 2014 16:46:45 +0200
-Message-ID: <20140822144645.GS2049@smurf.noris.de>
-References: <loom.20140821T171416-31@post.gmane.org>
- <CACsJy8CSCcaFNxqqBLAnb5NXkwT+wVXCVmB8uF3RYwqRmz4tuw@mail.gmail.com>
+From: Edward Thomson <ethomson@edwardthomson.com>
+Subject: [PATCH] upload-pack: keep poll(2)'s timeout to -1
+Date: Fri, 22 Aug 2014 15:19:11 +0000
+Message-ID: <20140822151911.GA8531@debian>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 17:05:48 2014
+Cc: gitster@pobox.com, peff@peff.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 22 17:19:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKqPK-0000vM-Ju
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 17:05:38 +0200
+	id 1XKqcc-0001rz-1u
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 17:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756580AbaHVPFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2014 11:05:34 -0400
-Received: from netz.smurf.noris.de ([213.95.21.43]:39765 "EHLO
-	netz.smurf.noris.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756340AbaHVPFe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2014 11:05:34 -0400
-X-Greylist: delayed 1079 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Aug 2014 11:05:33 EDT
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6] (helo=smurf.noris.de)
-	by netz.smurf.noris.de with smtp (Exim 4.82_1-5b7a7c0-XX)
-	(envelope-from <matthias@urlichs.de>)
-	id 1XKq74-0004MR-57; Fri, 22 Aug 2014 14:46:48 +0000
-Received: (nullmailer pid 17017 invoked by uid 501);
-	Fri, 22 Aug 2014 14:46:45 -0000
+	id S1756542AbaHVPTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2014 11:19:18 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:37247 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756308AbaHVPTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2014 11:19:17 -0400
+Received: by mail-pd0-f180.google.com with SMTP id v10so16096424pde.11
+        for <git@vger.kernel.org>; Fri, 22 Aug 2014 08:19:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=YXpCQWglh3Tm6164rKqWumNfo8nLnJl80ecV1S+EX0I=;
+        b=H08DNI7nM9xudurn98DM7zSLSgxQGzxnyC2ArpnAfv54SxO4KSZbU36RlVWLPar4Qd
+         KOChwJvoqN7tdB8GiAEqpUo0NGSrZCLUVcLHiZBRYPL556KLJ4u/fnmlgTjdK5Bvj9CY
+         cRqJjvFFl72pAQhSBrhIkTEqcxAv4QwKVLbZ0FaJlom0uIV1Fm794oNtEoioZNdVWkBe
+         Ef+bjLVic4Rfls8eoe+nPFWzaQlEFOu7r/CJi1EGw2yUrbGoSSEvqSRxRGupMZ8HjZOb
+         +awgS33MYWxlqBjIOSCRNTafGu7q01/8YMfaGq6AvU1Y1PCW/jdh7mz3lDLBWqXbsVha
+         ksdQ==
+X-Gm-Message-State: ALoCoQldfPyJCxCPB3/olUTSPJrjjzYolKPsk29/5FloF10gxBAZIhQ7WsaA6j9EoljtkwzBXLeN
+X-Received: by 10.66.141.164 with SMTP id rp4mr7164276pab.65.1408720756970;
+        Fri, 22 Aug 2014 08:19:16 -0700 (PDT)
+Received: from debian ([2600:3c01::f03c:91ff:fe73:b980])
+        by mx.google.com with ESMTPSA id nw14sm55438583pab.15.2014.08.22.08.19.16
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 22 Aug 2014 08:19:16 -0700 (PDT)
+X-Google-Original-From: Edward Thomson <ethomson@microsoft.com>
 Content-Disposition: inline
-In-Reply-To: <CACsJy8CSCcaFNxqqBLAnb5NXkwT+wVXCVmB8uF3RYwqRmz4tuw@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Smurf-Spam-Score: -1.1 (-)
-X-Smurf-Whitelist: +relay_from_hosts
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255677>
 
-Hi,
+Keep poll's timeout at -1 when uploadpack.keepalive = 0, instead of
+setting it to -1000, since some pedantic old systems (eg HP-UX) and
+the gnulib compat/poll will treat only -1 as the valid value for
+an infinite timeout.
 
-Duy Nguyen:
-> On Thu, Aug 21, 2014 at 10:39 PM, Matthias Urlichs <matthias@urlichs.de> wrote:
-> > What I would like to have, instead, is a version of shallow cloning which
-> > cuts off not at a pre-determined depth, but at a given branch (or set of
-> > branches). In other words, given
-> >
-> >             +-J--K  (packaged)
-> >            /    /
-> >   +-F--G--H----I    (clean)
-> >  /       /
-> > A---B---C---D---E   (upstream)
-> >
-> > a command "git clone --shallow-until upstream $REPO" (or however that would
-> > be named) would create a shallow git archive which contains branches
-> > packaged+clean, with commits FGHIJK. In contrast, with --single-branch and
-> > --depth 4 I would get CGHIJK, which isn't what I'd want.
-> 
-> I would imagine a more generic mechanism "git clone
-> --shallow-rev=<rev> $REPO" where you could pass anything that "git
-> rev-list" can accept (maybe more restricted, and some verification
-> required). --shallow-rev could be repeated. So in your case it could
-> be "git clone --shallow-rev="^A" $REPO".
+Signed-off-by: Edward Thomson <ethomson@microsoft.com>
+---
+ upload-pack.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Umm, no. ^E (or ^upstream) would do what I want. Hopefully. ;-)
-
-But you're right, that would fit far better into the existing git
-paradigms.
-
-> > As I have not spent too much time with the git sources lately (as in "None
-> > at all"), some pointers where to start implementing this would be
-> > appreciated, assuming (a) this has a reasonable chance of landing in git and
-> > (b) nobody beats me to it. ;-)
-> 
-> I'd like to see this implemented. You are not the first one
-> complaining about the (lack of) flexibility of --depth. If you have
-> time, I may be able to support (I should not take on another topic
-> given my many ongoing/unfinished topics).
-
-Welcome to the club. :-/
-
-Thanks for the pointers. I'll see what I can do (and when).
-
+diff --git a/upload-pack.c b/upload-pack.c
+index 01de944..433211a 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -167,7 +167,9 @@ static void create_pack_file(void)
+ 		if (!pollsize)
+ 			break;
+ 
+-		ret = poll(pfd, pollsize, 1000 * keepalive);
++		ret = poll(pfd, pollsize,
++			keepalive < 0 ? -1 : 1000 * keepalive);
++
+ 		if (ret < 0) {
+ 			if (errno != EINTR) {
+ 				error("poll failed, resuming: %s",
 -- 
--- Matthias Urlichs
+1.7.10.4
