@@ -1,116 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/18] receive-pack: GPG-validate push certificates
-Date: Thu, 21 Aug 2014 17:11:18 -0700
-Message-ID: <CAPc5daWqYaPaO4QSc_28oySVX4hLondk5e7fpEjS_w3edrWLrw@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 18/18] signed push: final protocol update
+Date: Thu, 21 Aug 2014 20:22:54 -0400
+Organization: Twitter
+Message-ID: <1408666974.1282.16.camel@leckie>
 References: <1408485987-3590-1-git-send-email-gitster@pobox.com>
- <1408485987-3590-17-git-send-email-gitster@pobox.com> <1408553797.26173.3.camel@leckie>
- <CAPc5daXLBQdjPaWNxmwZqStiWu8qHRfDG6=JS=bhbzA+c5Ww5g@mail.gmail.com>
- <1408557408.1282.5.camel@leckie> <xmqqr40bt0i0.fsf@gitster.dls.corp.google.com>
- <1408665541.1282.12.camel@leckie>
+	 <1408485987-3590-19-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 02:11:45 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 02:23:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKcSG-000500-Vm
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 02:11:45 +0200
+	id 1XKcdK-00031e-Iq
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 02:23:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754587AbaHVALk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Aug 2014 20:11:40 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:63574 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754043AbaHVALj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Aug 2014 20:11:39 -0400
-Received: by mail-lb0-f173.google.com with SMTP id u10so8811736lbd.4
-        for <git@vger.kernel.org>; Thu, 21 Aug 2014 17:11:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=vOVe3546NBTB/BnEw+itCOhBwmr/ALOp5gZZz5P5MGk=;
-        b=zI15Bevy0x40nm1NIdvn71JWsfjqmzxJAaz0lPnm/rENGD7+wGQf7sp1o/JN9zBSFn
-         6Ihu7G3AEc9KV8MY6q0rtuz1h1irUu3+PTANG9zmPhN2e8+M6X7roWJEzWvKkUqIXr63
-         amEU+6aAp0DSab8pnlEIpGk84331VjeAXppHFb9+O5YBsHYMh+rQ1saH9LMzqR7ybr88
-         iTXFKqAECXEYkhkaFVOoCFMWJEoYKBOWPBkULiwdZo9V3+riCOZi74t6zJI5xZfjw982
-         jUxDOe6C+7TR9pWQeokQ7Nfh73ldTPrco64MVxcMWJe5oqcD3VAQJZPnrgxY0TC9AVSE
-         ABHQ==
-X-Received: by 10.152.22.199 with SMTP id g7mr1622184laf.6.1408666298155; Thu,
- 21 Aug 2014 17:11:38 -0700 (PDT)
-Received: by 10.112.97.177 with HTTP; Thu, 21 Aug 2014 17:11:18 -0700 (PDT)
-In-Reply-To: <1408665541.1282.12.camel@leckie>
-X-Google-Sender-Auth: KZnq7EIKk_XnFQNra6-pf1PvXkE
+	id S1752342AbaHVAXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Aug 2014 20:23:05 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:60252 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750861AbaHVAXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Aug 2014 20:23:04 -0400
+Received: by mail-qg0-f52.google.com with SMTP id f51so9332403qge.25
+        for <git@vger.kernel.org>; Thu, 21 Aug 2014 17:22:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=/iZsFzhQsXJreJSx2N87fi0+cuIp1zN/AcPztLHhjvo=;
+        b=fTcR4URLJiGDWZ/hAQoiNb0fqllu9FYI/NYfqAV3ErHg9tFFRmv01/N5aJR472K3pi
+         DdnWmPMT/tdhU+n2lezS64kjJ9q+/9B3cQ97nAviyYz0mLCRgq9Sj6tEpk/L7SYtaEYJ
+         bqFRjS8qHKxH2lnxOWVIz/ey5+CJ59RSSFUca+IWTwaigLwigQGaf9AzIJhGrzf6bQLD
+         D1HR1k6SuP7IMoKDErLb+ircHWaezKbFo8nUAzoXay17fXltT2PiAC289VXs2pQI2grv
+         Z8tfbgYh4hQJ2eegP04C3vr1KOpfmEf9KkhHflNUtK/lSyrlsnJGat65D4ezVSkXM1Ws
+         pDdw==
+X-Gm-Message-State: ALoCoQmqEe7mTJ4Teka2NvR6dHOADld36mU/rXXupGvwffWOAgnlq9W3R2TsKIeNUdBRVstzUJ37
+X-Received: by 10.224.79.13 with SMTP id n13mr2946207qak.79.1408666979329;
+        Thu, 21 Aug 2014 17:22:59 -0700 (PDT)
+Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
+        by mx.google.com with ESMTPSA id u36sm31457180qge.43.2014.08.21.17.22.57
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Thu, 21 Aug 2014 17:22:58 -0700 (PDT)
+In-Reply-To: <1408485987-3590-19-git-send-email-gitster@pobox.com>
+X-Mailer: Evolution 3.10.4-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255650>
 
-If you ignore the clock skew between the pusher and the receiver, then
-you are correct,
-but otherwise not quite.  Also by specifying that as <nonce>, not
-<server-timestamp>,
-the receiving end has a choice in how to generate and use the nonce
-value. The only
-requirement on the protocol is that the pusher must parrot it literally.
+On Tue, 2014-08-19 at 15:06 -0700, Junio C Hamano wrote:
+>  
+> +If the receiving end does not support push-cert, the sending end MUST
+> +NOT send a push-cert command.
+> +
+> +When a push-cert command is sent, command-list MUST NOT be sent; the
+> +commands recorded in the push certificate is used instead.  The GPG
+> +signature lines are detached signature for the contents recorded in
 
-On Thu, Aug 21, 2014 at 4:59 PM, David Turner <dturner@twopensource.com> wrote:
-> On Wed, 2014-08-20 at 12:38 -0700, Junio C Hamano wrote:
->> David Turner <dturner@twopensource.com> writes:
->>
->> > On Wed, 2014-08-20 at 10:29 -0700, Junio C Hamano wrote:
->> >> On Wed, Aug 20, 2014 at 9:56 AM, David Turner <dturner@twopensource.com> wrote:
->> >> > On Tue, 2014-08-19 at 15:06 -0700, Junio C Hamano wrote:
->> >> >> Reusing the GPG signature check helpers we already have, verify
->> >> >> the signature in receive-pack and give the results to the hooks
->> >> >> via GIT_PUSH_CERT_{SIGNER,KEY,STATUS} environment variables.
->> >> >>
->> >> >> Policy decisions, such as accepting or rejecting a good signature by
->> >> >> a key that is not fully trusted, is left to the hook and kept
->> >> >> outside of the core.
->> >> >
->> >> > If I understand correctly, the hook does not have enough information to
->> >> > make this decision, because it is missing the date from the signature.
->> >>
->> >> The full certificate is available to the hook so anything we can do the hook
->> >> has enough information to do ;-)  But of course we should try to make it
->> >> easier for the hook to validate the request.
->> >
->> > Excellent, then motivated hooks can do the right thing.
->> >
->> >> > This might allow an old signed push to be replayed, moving the head of a
->> >> > branch to an older state (say, one lacking the latest security updates).
->> >>
->> >> ... with old-sha1 recorded in the certificate?
->> >
->> > That does prevent most replays, but it does not prevent resurrection of
->> > a deleted branch by a replay of its initial creation (nor an undo of a
->> > force-push to rollback).  So I think we still need timestamps, but
->> > parsing them out of the cert is not terrible.
->>
->> As I aleady mentioned elsewhere, a more problematic thing about the
->> push certificate as presented in 15/18 is that it does not say
->> anything about where the push is going.  If you can capture a trial
->> push to some random test repository I do with my signed push
->> certificate, you could replay it to my public repository hosted at
->> a more official site (say, k.org in the far distant future where it
->> does not rely on ssh authentication to protect their services but
->> uses the GPG signature on the push certificate to make sure it is I
->> who is pushing).
->>
->> We can add a new "pushed-to <repository URL>" header line to the
->> certificate, next to "pushed-by <ident> <time>", and have the
->> receiving end verify that it matches to prevent such a replay.  I
->> wonder if we can further extend it to avoid replays to the same
->> repository.
->
-> I think but am not certain that pushed-to <repository URL>, along with
-> the pushed-by <ident> <time> means that the nonce is not needed. The
-> nonce might make replays harder, but pushed-to/pushed-by makes replays
-> useless since the receiving server can determine that the user intended
-> to take this action at this time on this server.
->
+"are a detached signature"
+
+> +the push certificate before the signature block begins and is used
+
+"which is used" (or "and are used")
+
+> +to certify that the commands were given by the pusher which must be
+
+", who must be"
+
+> +the signer.
+> +
+> +
+> +The receive-pack server that advertises this capability is willing
+> +to accept a signed push certificate.  A send-pack client MUST NOT
+> +send push-cert packet unless the receive-pack server advertises this
+
+"packets" (or "a push-cert packet")
+
+>  
+> +static void queue_commands_from_cert(struct command **p,
+
+Uninformative parameter name p.
