@@ -1,92 +1,100 @@
-From: Martin von Gagern <Martin.vGagern@gmx.net>
-Subject: Re: [BUG] resolved deltas
-Date: Fri, 22 Aug 2014 21:41:23 +0200
-Message-ID: <53F79CE3.60803@gmx.net>
-References: <53F5D98F.4040700@redhat.com>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH 00/18] Signed push
+Date: Fri, 22 Aug 2014 21:59:21 +0200
+Message-ID: <53F7A119.7070704@gmail.com>
+References: <1408485987-3590-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 21:50:18 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 22 21:59:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKuqm-0002PQ-9O
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 21:50:16 +0200
+	id 1XKuzf-0007F8-RU
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 21:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbaHVTuJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Aug 2014 15:50:09 -0400
-Received: from plane.gmane.org ([80.91.229.3]:45846 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751783AbaHVTuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2014 15:50:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1XKuqZ-0002K9-S1
-	for git@vger.kernel.org; Fri, 22 Aug 2014 21:50:03 +0200
-Received: from ipb21b23f8.dynamic.kabel-deutschland.de ([178.27.35.248])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Aug 2014 21:50:03 +0200
-Received: from Martin.vGagern by ipb21b23f8.dynamic.kabel-deutschland.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Aug 2014 21:50:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: ipb21b23f8.dynamic.kabel-deutschland.de
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
-In-Reply-To: <53F5D98F.4040700@redhat.com>
+	id S1751278AbaHVT7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2014 15:59:24 -0400
+Received: from mail-we0-f176.google.com ([74.125.82.176]:52033 "EHLO
+	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750921AbaHVT7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2014 15:59:23 -0400
+Received: by mail-we0-f176.google.com with SMTP id q58so10993723wes.7
+        for <git@vger.kernel.org>; Fri, 22 Aug 2014 12:59:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=3bgxDUyAibOj66JKS1b8Udk/lUpBV/wIVLQ/4uiZfFM=;
+        b=NJPKICKTBcKWVETVsWGmZbSWJ1HM5mrBg61eY662SIbHli9eRTZiSY+fHYJNM1HHNl
+         vYDQ8Wl411b6ePSuY0PWFO9pDKL/ktjJ0oXbpWdcL9IVmCwCZRac2FfvjFRiWWhp1HIZ
+         O25mQUvJCs0Iw/G0PZs0xaBLhrRcovNGiryAH3hhHYTGUqnTcIwXVrpMqg8SLPbCgdB8
+         ueLhHVJHjU0eU4c23ZK5xzjv0/BFasDyc1rOY73Em6Sno4EliVaSW2IZ9JDzBFY/tGzj
+         s7TLvcKIJWwuKgeg18CVHbT3daVTpIHITgCSQSrS5+kIYCGPgi+P+bV76Jez6Q6uYziu
+         t7Lg==
+X-Received: by 10.180.72.146 with SMTP id d18mr489116wiv.53.1408737562210;
+        Fri, 22 Aug 2014 12:59:22 -0700 (PDT)
+Received: from [192.168.1.7] (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id ch5sm77542389wjb.18.2014.08.22.12.59.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Aug 2014 12:59:21 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <1408485987-3590-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255698>
 
-On 21.08.2014 13:35, Petr Stodulka wrote:
-> Hi guys,
-> I wanted post you patch here for this bug, but I can't find primary
-> source of this problem [0], because I don't understand some ideas in =
-the
-> code.
->
-> [=E2=80=A6]
->=20
-> Any next ideas/hints or explanation of these functions? I began study
-> source code and mechanisms of the git this week, so don't beat me yet
-> please :-)
->=20
-> Regards,
-> Petr
->=20
-> [0] https://bugzilla.redhat.com/show_bug.cgi?id=3D1099919
+On 20.08.2014 00:06, Junio C Hamano wrote:
+> While signed tags and commits assert that the objects thusly signed
+> came from you, who signed these objects, there is not a good way to
+> assert that you wanted to have a particular object at the tip of a
+> particular branch.  My signing v2.0.1 tag only means I want to call
+> the version v2.0.1, and it does not mean I want to push it out to my
+> 'master' branch---it is likely that I only want it in 'maint', so
+> the signature on the object alone is insufficient.
+> 
+> The only assurance to you that 'maint' points at what I wanted to
+> place there comes from your trust on the hosting site and my
+> authentication with it, which cannot easily audited later.
+> 
+> This series introduces a cryptographic assurance for ref updates
+> done by "git push" by introducing a mechanism that allows you to
+> sign a "push certificate" (for the lack of better name) every time
+> you push.  Think of it as working on an axis orthogonal to the
+> traditional "signed tags".
 
-Some pointers to related reports and investigations:
+What kind of additional benefit do we gain? (i.e. why?)
+The described problem, the lacking auditability of what's pushed
+at which time, could be worked around like this:
 
-https://groups.google.com/forum/#!topic/mapsforge-dev/IF6mgmwvZmY
-https://groups.google.com/forum/#!topic/mapsforge-dev/f2KvFALlkvo
-https://code.google.com/p/support/issues/detail?id=3D31571
-https://groups.google.com/forum/#!topic/mapsforge-dev/nomzr5dkkqc
-http://thread.gmane.org/gmane.comp.version-control.git/254626
+Whenever you do a push, you just tag the latest commit in that branch.
+So there would be tags like:
+	master_2014_08_21
+	master_2014_08_22
+	...
+	maint_2014_08_13
+	maint_2014_08_21
+and so on. Whenever there is no tag at the tip of the branch, we'd
+know there is something wrong.
+	
+My guess would be usability as tagging so many branches is cumbersome
+for a maintainer?
 
-The last is my own bug report to this mailing list here, which
-unfortunately received no reaction yet. In that report, I can confirm
-that the commit introducing the assertion is the same commit which
-causes things to fail:
-https://github.com/git/git/commit/7218a215efc7ae46f7ca8d82442f354e
+Looking at my made-up workaround again:
+That would produce lots of tags. So I could imagine there would also be
+lots of push certs. The number of push certs would
+roughly scale linear to time passed. May this result in slowness over time?
 
-In this https://code.google.com/p/mapsforge/ repository, resolve_delta
-gets called twice for some delta. The first time, type and real_type ar=
-e
-identical, but by the second pass in find_unresolved_deltas the real
-type will have chaned to OBJ_TREE. This caused the old code to simply
-scip the object, but the new code aborts instead.
+Does this patch series mean, we'd get another object type (additional to
+blobs, commits, tags, trees)?
 
-So far my understanding. I'm not sure whether this kind of duplicate
-resolution is something normal or indicates some breakage in the
-repository in question. But aborting seems a bad solution in either cas=
-e.
+I did not read the code yet, it's just first thoughts,
+so this weigh this input lightly.
 
-Greetings,
- Martin von Gagern
+Stefan
