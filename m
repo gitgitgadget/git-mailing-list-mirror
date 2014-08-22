@@ -1,171 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 13/19] gpg-interface: move parse_signature() to where it should be
-Date: Fri, 22 Aug 2014 13:30:18 -0700
-Message-ID: <1408739424-31429-14-git-send-email-gitster@pobox.com>
-References: <1408739424-31429-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 22:34:25 2014
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH 00/18] Signed push
+Date: Fri, 22 Aug 2014 22:38:32 +0200
+Message-ID: <53F7AA48.3000601@gmail.com>
+References: <1408485987-3590-1-git-send-email-gitster@pobox.com>	<53F7A119.7070704@gmail.com>	<xmqqiolknvfz.fsf@gitster.dls.corp.google.com>	<53F7A68D.2000109@gmail.com> <xmqqegw8nu1g.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 22:38:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKvXT-0000pq-2z
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 22:34:23 +0200
+	id 1XKvbb-0003KN-Ir
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 22:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbaHVUcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2014 16:32:54 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56945 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751744AbaHVUcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2014 16:32:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC56D33226;
-	Fri, 22 Aug 2014 16:32:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=6YLO
-	rjI/CgAWgZ+S3jrpzv8EsAA=; b=fAGPniRjiesdSt486dkPx8rxMw966yidY4t0
-	kD4PCI1YPcZbzKMikrJFawUCk6mn9TunI+Vs0nEp/wzqIWtkeC61Rnb+4PAaI5BL
-	qi7eGGd1yUhJZF+XSxL8aBRcVAryNd25o3WDpTvELX9JDAxBvnt381VvtgR2OM7i
-	2ZeMIVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=BZyxHS
-	mzy5Rudrmqxj1gdlvKT+WkJUQH7bsq6bGGIhI27AOjshVOAX3cl8rSI3Ur9HImqz
-	0zMrxQnZF57Q17fZed0k7GAaa1dXTIKZkEgrL8UHVCclhvjGPD8kCq7UI315AT3y
-	O7h+W+bHDacrnVs3eGcSyIIXIEPpx83dKAAJI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BC34D33225;
-	Fri, 22 Aug 2014 16:32:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EA12C3320D;
-	Fri, 22 Aug 2014 16:32:42 -0400 (EDT)
-X-Mailer: git-send-email 2.1.0-304-g950f846
-In-Reply-To: <1408739424-31429-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 77D75B32-2A3B-11E4-A368-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751931AbaHVUie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2014 16:38:34 -0400
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:47683 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823AbaHVUid (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2014 16:38:33 -0400
+Received: by mail-wg0-f49.google.com with SMTP id k14so11106833wgh.32
+        for <git@vger.kernel.org>; Fri, 22 Aug 2014 13:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=4AH1b/BXUe1DxN+SnIuwF9Wzxe9BQkUwosQeB4/qOoE=;
+        b=I37/QhJvmr2BJxKOx0MCvUL4xFVsxXMFoCDRlKZvvT/8RHIzwVP9GMyki9KPkuzpMs
+         2QVcaphRsOTs+sD1jkX7wf0Mh67HExjdl2jihxBLf+XUOn4/B0S4QfZMxuckcL46JtRi
+         ZdtHLxkQoH5daFA+iMZWTtUP/0Tn4jQDvnXeJYTLJBhYvjcxJMMBNsvJcsnyGP+klF7i
+         ZYZWT1ISB8dpeM+UHbFW/xeBDgkE0LHl0Inzak0Ep0giWRBEl/xJn31iEHButqvJHcBK
+         RMC9dCj+BiB7IrKYnEZPv5G5kTNDofTKP4wn4vAn7I+VP5gl9BzBi2T3fJMHZlKtVuSO
+         aNbQ==
+X-Received: by 10.194.9.228 with SMTP id d4mr5459999wjb.99.1408739912273;
+        Fri, 22 Aug 2014 13:38:32 -0700 (PDT)
+Received: from [192.168.1.7] (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id oz9sm27019128wjb.20.2014.08.22.13.38.31
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Aug 2014 13:38:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <xmqqegw8nu1g.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255722>
 
-Our signed-tag objects set the standard format used by Git to store
-GPG-signed payload (i.e. the payload followed by its detached
-signature), and it made sense to have a helper to find the boundary
-between the payload and its signature in tag.c back then.
+On 22.08.2014 22:33, Junio C Hamano wrote:
+> Stefan Beller <stefanbeller@gmail.com> writes:
+> 
+>> On 22.08.2014 22:03, Junio C Hamano wrote:
+>>> Stefan Beller <stefanbeller@gmail.com> writes:
+>>>
+>>>> So there would be tags like:
+>>>> 	master_2014_08_21
+>>>> 	master_2014_08_22
+>>>> 	...
+>>>> 	maint_2014_08_13
+>>>> 	maint_2014_08_21
+>>>> and so on. Whenever there is no tag at the tip of the branch, we'd
+>>>> know there is something wrong.
+>>>
+>>> Who creates that tag?
+>>>
+>>
+>>> My guess would be usability as tagging so many branches is cumbersome
+>> for a maintainer?
+> 
+> Did you answer my question?  Who creates these tags?
+> 
 
-Newer code added later to parse other kinds of objects that learned
-to use the same format to store GPG-signed payload (e.g. signed
-commits), however, kept using the helper from the same location.
+It would be up to the one who pushes, the user, or in our case you!
 
-Move it to gpg-interface; the helper is no longer about signed tag,
-but it is how our code and data interact with GPG.
+This way of working would require the informal notion of
+'always tag the last commit before pushing.'
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- gpg-interface.c | 21 +++++++++++++++++++++
- gpg-interface.h |  1 +
- tag.c           | 20 --------------------
- tag.h           |  1 -
- 4 files changed, 22 insertions(+), 21 deletions(-)
+As I wrote in the first email, I made up this workaround and wanted to
+see, what's so bad about that workaround and how to overcome the
+problems. And all I could find was a burden on the maintainer/user.
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 3c9624c..0dd11ea 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -7,6 +7,9 @@
- static char *configured_signing_key;
- static const char *gpg_program = "gpg";
- 
-+#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-+#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
-+
- void signature_check_clear(struct signature_check *sigc)
- {
- 	free(sigc->payload);
-@@ -57,6 +60,24 @@ void parse_gpg_output(struct signature_check *sigc)
- 	}
- }
- 
-+/*
-+ * Look at GPG signed content (e.g. a signed tag object), whose
-+ * payload is followed by a detached signature on it.  Return the
-+ * offset where the embedded detached signature begins, or the end of
-+ * the data when there is no such signature.
-+ */
-+size_t parse_signature(const char *buf, unsigned long size)
-+{
-+	char *eol;
-+	size_t len = 0;
-+	while (len < size && !starts_with(buf + len, PGP_SIGNATURE) &&
-+			!starts_with(buf + len, PGP_MESSAGE)) {
-+		eol = memchr(buf + len, '\n', size - len);
-+		len += eol ? eol - (buf + len) + 1 : size - len;
-+	}
-+	return len;
-+}
-+
- void set_signing_key(const char *key)
- {
- 	free(configured_signing_key);
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 8d677cc..93c76c2 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -20,6 +20,7 @@ struct signature_check {
- };
- 
- extern void signature_check_clear(struct signature_check *sigc);
-+extern size_t parse_signature(const char *buf, unsigned long size);
- extern void parse_gpg_output(struct signature_check *);
- 
- extern int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key);
-diff --git a/tag.c b/tag.c
-index 82d841b..5b0ac62 100644
---- a/tag.c
-+++ b/tag.c
-@@ -4,9 +4,6 @@
- #include "tree.h"
- #include "blob.h"
- 
--#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
--#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
--
- const char *tag_type = "tag";
- 
- struct object *deref_tag(struct object *o, const char *warn, int warnlen)
-@@ -143,20 +140,3 @@ int parse_tag(struct tag *item)
- 	free(data);
- 	return ret;
- }
--
--/*
-- * Look at a signed tag object, and return the offset where
-- * the embedded detached signature begins, or the end of the
-- * data when there is no such signature.
-- */
--size_t parse_signature(const char *buf, unsigned long size)
--{
--	char *eol;
--	size_t len = 0;
--	while (len < size && !starts_with(buf + len, PGP_SIGNATURE) &&
--			!starts_with(buf + len, PGP_MESSAGE)) {
--		eol = memchr(buf + len, '\n', size - len);
--		len += eol ? eol - (buf + len) + 1 : size - len;
--	}
--	return len;
--}
-diff --git a/tag.h b/tag.h
-index bc8a1e4..f4580ae 100644
---- a/tag.h
-+++ b/tag.h
-@@ -17,6 +17,5 @@ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long si
- extern int parse_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
- extern struct object *deref_tag_noverify(struct object *);
--extern size_t parse_signature(const char *buf, unsigned long size);
- 
- #endif /* TAG_H */
--- 
-2.1.0-304-g950f846
+Sorry,
+Stefan
