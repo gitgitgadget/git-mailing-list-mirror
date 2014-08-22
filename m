@@ -1,137 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/19] send-pack: refactor inspecting and resetting status and sending commands
-Date: Fri, 22 Aug 2014 13:30:15 -0700
-Message-ID: <1408739424-31429-11-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 11/19] send-pack: clarify that cmds_sent is a boolean
+Date: Fri, 22 Aug 2014 13:30:16 -0700
+Message-ID: <1408739424-31429-12-git-send-email-gitster@pobox.com>
 References: <1408739424-31429-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 22 22:32:41 2014
+X-From: git-owner@vger.kernel.org Fri Aug 22 22:32:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKvVV-00081g-Su
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 22:32:22 +0200
+	id 1XKvVi-00087e-Os
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 22:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751679AbaHVUcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2014 16:32:18 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60248 "EHLO smtp.pobox.com"
+	id S1751705AbaHVUcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2014 16:32:31 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61113 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751660AbaHVUcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2014 16:32:17 -0400
+	id S1751683AbaHVUca (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2014 16:32:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43255331BF;
-	Fri, 22 Aug 2014 16:32:17 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B4ECB331D5;
+	Fri, 22 Aug 2014 16:32:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=GPBs
-	hHxPttYPae2C4UZumvDMPRI=; b=OjIQnfw4361WARd6K+JfBLwaXVySZe7Z6utt
-	DQ6IZd4lZG/G5vEUkmF99JBrs26LTqqAUd0ByN2y1OuWsn2+lokxZ9VCg076PLvl
-	P+uKFLkrSP2pmnE9bkuDsP0YZRtCBsPGlPze1LZEVTZHWcOIcyfhbr29LqU+pXoY
-	nuDvyVI=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=pfhb
+	nShMBLKm2bWtuSQDKWyliR0=; b=VFM1v3OHTkYifD4sEj59KZBWtioWfRU8cRsN
+	HXum3UM6eiOcTOF6z2p382go0Gc1yAV7E9KGu1M8uUSayx49yqxfyp/RTEeRPvXu
+	x9R95obFQmGhWzqQgB/dCkf+7vLAdt2s7bCNW+qoDFRBzaMDXJGA/Ow6SnmMOueu
+	UEI785s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=pi7DNZ
-	hiUgW+vI2dtIJ6vjcuCVfvp2GNTIeElP5JSt6EjE7+KXpxL+hByMjXEOsVfNXgri
-	db9oz8JibVBUq4bA9WoIAmspK7OXCP7+PPt6/z4mf+N2HXBR+s8LO4Aos6488fYL
-	0hMrfT4V259nFIIbBkAM4k736R8FncoAD0PKA=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=sjJ00Q
+	U44OtlVWX7/klE0Zmz5yIePU1pTS0SmzxoIxT0/2Hn+W+Xk5UPQR1612VZfblIUm
+	rblv4m5Cyg2vGQUCkylE0Q+JFl/+Is/+GNeA42bJBWot9nPnyKvAO78CsKoWLDem
+	mFykpb3jU1oOMDnFsUmtO68G/d/VZ5pAfFjww=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3AFD6331BE;
-	Fri, 22 Aug 2014 16:32:17 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 99E66331D4;
+	Fri, 22 Aug 2014 16:32:29 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 42BA9331B2;
-	Fri, 22 Aug 2014 16:32:09 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 91230331C8;
+	Fri, 22 Aug 2014 16:32:19 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-304-g950f846
 In-Reply-To: <1408739424-31429-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 63BEEF20-2A3B-11E4-8E08-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 69EC2412-2A3B-11E4-90C1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255712>
 
-The main loop over remote_refs list inspects the ref status
-to see if we need to generate pack data (i.e. a delete-only push
-does not need to send any additional data), resets it to "expecting
-the status report" state, and formats the actual update commands
-to be sent.
+We use it to make sure that the feature request is sent only once on
+the very first request packet (ignoring the "shallow " line, which
+was an unfortunate mistake we cannot retroactively fix with existing
+receive-pack already deployed in the field) and we set it to "true"
+with cmds_sent++, not because we care about the actual number of
+updates sent but because it is merely an old idiomatic way.
 
-Split the former two out of the main loop, as it will become
-conditional in later steps.
-
-Besides, we should have code that does real thing here, before the
-"Finally, tell the other end!" part ;-)
+Set it explicitly to one to clarify that the code that uses this
+variable only cares about its zero-ness.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- send-pack.c | 49 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 30 insertions(+), 19 deletions(-)
+ send-pack.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/send-pack.c b/send-pack.c
-index 590eb0a..f3262f2 100644
+index f3262f2..05926d2 100644
 --- a/send-pack.c
 +++ b/send-pack.c
-@@ -274,7 +274,8 @@ int send_pack(struct send_pack_args *args,
- 		advertise_shallow_grafts_buf(&req_buf);
+@@ -304,15 +304,16 @@ int send_pack(struct send_pack_args *args,
  
- 	/*
--	 * Finally, tell the other end!
-+	 * Clear the status for each ref and see if we need to send
-+	 * the pack data.
- 	 */
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		if (!ref_update_to_be_sent(ref, args))
-@@ -283,25 +284,35 @@ int send_pack(struct send_pack_args *args,
- 		if (!ref->deletion)
- 			need_pack_data = 1;
- 
--		if (args->dry_run) {
-+		if (args->dry_run || !status_report)
- 			ref->status = REF_STATUS_OK;
--		} else {
--			char *old_hex = sha1_to_hex(ref->old_sha1);
--			char *new_hex = sha1_to_hex(ref->new_sha1);
--
--			if (!cmds_sent)
--				packet_buf_write(&req_buf,
--						 "%s %s %s%c%s",
--						 old_hex, new_hex, ref->name, 0,
--						 cap_buf.buf);
--			else
--				packet_buf_write(&req_buf, "%s %s %s",
--						 old_hex, new_hex, ref->name);
--			ref->status = status_report ?
--				REF_STATUS_EXPECTING_REPORT :
--				REF_STATUS_OK;
--			cmds_sent++;
--		}
-+		else
-+			ref->status = REF_STATUS_EXPECTING_REPORT;
-+	}
-+
-+	/*
-+	 * Finally, tell the other end!
-+	 */
-+	for (ref = remote_refs; ref; ref = ref->next) {
-+		char *old_hex, *new_hex;
-+
-+		if (args->dry_run)
-+			continue;
-+
-+		if (!ref_update_to_be_sent(ref, args))
-+			continue;
-+
-+		old_hex = sha1_to_hex(ref->old_sha1);
-+		new_hex = sha1_to_hex(ref->new_sha1);
-+		if (!cmds_sent)
-+			packet_buf_write(&req_buf,
-+					 "%s %s %s%c%s",
-+					 old_hex, new_hex, ref->name, 0,
-+					 cap_buf.buf);
-+		else
-+			packet_buf_write(&req_buf, "%s %s %s",
-+					 old_hex, new_hex, ref->name);
-+		cmds_sent++;
+ 		old_hex = sha1_to_hex(ref->old_sha1);
+ 		new_hex = sha1_to_hex(ref->new_sha1);
+-		if (!cmds_sent)
++		if (!cmds_sent) {
+ 			packet_buf_write(&req_buf,
+ 					 "%s %s %s%c%s",
+ 					 old_hex, new_hex, ref->name, 0,
+ 					 cap_buf.buf);
+-		else
++			cmds_sent = 1;
++		} else {
+ 			packet_buf_write(&req_buf, "%s %s %s",
+ 					 old_hex, new_hex, ref->name);
+-		cmds_sent++;
++		}
  	}
  
  	if (args->stateless_rpc) {
