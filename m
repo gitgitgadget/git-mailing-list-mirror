@@ -1,94 +1,89 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH v4 2/4] Introduce GIT_MMAP_LIMIT to allow testing expected mmap size
-Date: Fri, 22 Aug 2014 16:01:21 +0200
-Message-ID: <1408716083-9093-3-git-send-email-prohaska@zib.de>
-References: <1408716083-9093-1-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
-	john@keeping.me.uk, schacon@gmail.com,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 16:03:39 2014
+From: Matthias Urlichs <matthias@urlichs.de>
+Subject: Re: Shallow clones with explicit history cutoff?
+Date: Fri, 22 Aug 2014 16:46:45 +0200
+Message-ID: <20140822144645.GS2049@smurf.noris.de>
+References: <loom.20140821T171416-31@post.gmane.org>
+ <CACsJy8CSCcaFNxqqBLAnb5NXkwT+wVXCVmB8uF3RYwqRmz4tuw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 17:05:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKpRD-0002Js-G0
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 16:03:31 +0200
+	id 1XKqPK-0000vM-Ju
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 17:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932499AbaHVODZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2014 10:03:25 -0400
-Received: from mailer.zib.de ([130.73.108.11]:33655 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932158AbaHVODX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2014 10:03:23 -0400
-Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7ME1wEX009786;
-	Fri, 22 Aug 2014 16:01:58 +0200 (CEST)
-Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7ME1vrT009676;
-	Fri, 22 Aug 2014 16:01:58 +0200 (CEST)
-X-Mailer: git-send-email 2.0.1.448.g1eafa63
-In-Reply-To: <1408716083-9093-1-git-send-email-prohaska@zib.de>
-X-Miltered: at mailer.zib.de with ID 53F74D56.002 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 53F74D56.002 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 53F74D56.002 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
-X-j-chkmail-Status: Ham
+	id S1756580AbaHVPFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2014 11:05:34 -0400
+Received: from netz.smurf.noris.de ([213.95.21.43]:39765 "EHLO
+	netz.smurf.noris.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756340AbaHVPFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2014 11:05:34 -0400
+X-Greylist: delayed 1079 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Aug 2014 11:05:33 EDT
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6] (helo=smurf.noris.de)
+	by netz.smurf.noris.de with smtp (Exim 4.82_1-5b7a7c0-XX)
+	(envelope-from <matthias@urlichs.de>)
+	id 1XKq74-0004MR-57; Fri, 22 Aug 2014 14:46:48 +0000
+Received: (nullmailer pid 17017 invoked by uid 501);
+	Fri, 22 Aug 2014 14:46:45 -0000
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CSCcaFNxqqBLAnb5NXkwT+wVXCVmB8uF3RYwqRmz4tuw@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Smurf-Spam-Score: -1.1 (-)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255676>
 
-Similar to testing expectations about malloc with GIT_ALLOC_LIMIT (see
-commit d41489), it can be useful to test expectations about mmap.
+Hi,
 
-This introduces a new environment variable GIT_MMAP_LIMIT to limit the
-largest allowed mmap length (in KB).  xmmap() is modified to check the
-limit.  Together with GIT_ALLOC_LIMIT tests can now easily confirm
-expectations about memory consumption.
+Duy Nguyen:
+> On Thu, Aug 21, 2014 at 10:39 PM, Matthias Urlichs <matthias@urlichs.de> wrote:
+> > What I would like to have, instead, is a version of shallow cloning which
+> > cuts off not at a pre-determined depth, but at a given branch (or set of
+> > branches). In other words, given
+> >
+> >             +-J--K  (packaged)
+> >            /    /
+> >   +-F--G--H----I    (clean)
+> >  /       /
+> > A---B---C---D---E   (upstream)
+> >
+> > a command "git clone --shallow-until upstream $REPO" (or however that would
+> > be named) would create a shallow git archive which contains branches
+> > packaged+clean, with commits FGHIJK. In contrast, with --single-branch and
+> > --depth 4 I would get CGHIJK, which isn't what I'd want.
+> 
+> I would imagine a more generic mechanism "git clone
+> --shallow-rev=<rev> $REPO" where you could pass anything that "git
+> rev-list" can accept (maybe more restricted, and some verification
+> required). --shallow-rev could be repeated. So in your case it could
+> be "git clone --shallow-rev="^A" $REPO".
 
-GIT_MMAP_LIMIT will be used in the next commit to test that data will be
-streamed to an external filter without mmaping the entire file.
+Umm, no. ^E (or ^upstream) would do what I want. Hopefully. ;-)
 
-[commit d41489]: d41489a6424308dc9a0409bc2f6845aa08bd4f7d Add more large
-    blob test cases
+But you're right, that would fit far better into the existing git
+paradigms.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- sha1_file.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+> > As I have not spent too much time with the git sources lately (as in "None
+> > at all"), some pointers where to start implementing this would be
+> > appreciated, assuming (a) this has a reasonable chance of landing in git and
+> > (b) nobody beats me to it. ;-)
+> 
+> I'd like to see this implemented. You are not the first one
+> complaining about the (lack of) flexibility of --depth. If you have
+> time, I may be able to support (I should not take on another topic
+> given my many ongoing/unfinished topics).
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 00c07f2..603673b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -663,10 +663,25 @@ void release_pack_memory(size_t need)
- 		; /* nothing */
- }
- 
-+static void mmap_limit_check(size_t length)
-+{
-+	static ssize_t limit = -1;
-+	if (limit == -1) {
-+		const char *env = getenv("GIT_MMAP_LIMIT");
-+		limit = env ? atol(env) * 1024 : 0;
-+	}
-+	if (limit && length > limit)
-+		die("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX,
-+		    (uintmax_t)length, (uintmax_t)limit);
-+}
-+
- void *xmmap(void *start, size_t length,
- 	int prot, int flags, int fd, off_t offset)
- {
--	void *ret = mmap(start, length, prot, flags, fd, offset);
-+	void *ret;
-+
-+	mmap_limit_check(length);
-+	ret = mmap(start, length, prot, flags, fd, offset);
- 	if (ret == MAP_FAILED) {
- 		if (!length)
- 			return NULL;
+Welcome to the club. :-/
+
+Thanks for the pointers. I'll see what I can do (and when).
+
 -- 
-2.1.0.6.gb452461
+-- Matthias Urlichs
