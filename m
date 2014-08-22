@@ -1,151 +1,80 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2] teach fast-export an --anonymize option
-Date: Fri, 22 Aug 2014 19:39:59 +0100
-Organization: OPDS
-Message-ID: <9E69746EFF0048FF84631A9794206566@PhilipOakley>
-References: <20140821070130.GA15930@peff.net> <xmqqiollqzel.fsf@gitster.dls.corp.google.com> <20140821224910.GB21105@peff.net> <20140821232100.GA27849@peff.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: check-ref-format: include refs/ in the argument or to strip it?
+Date: Fri, 22 Aug 2014 11:45:15 -0700
+Message-ID: <20140822184515.GL20185@google.com>
+References: <gerrit.1408574889668.Iac983fc86f7edd2a0543779d85973c57bf068ca4@code-review.googlesource.com>
+ <047d7b624d36142d46050131f336@google.com>
+ <20140822154151.GK20185@google.com>
+ <xmqqmwawnzfk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "Duy Nguyen" <pclouds@gmail.com>
-To: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 22 20:40:04 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 22 20:45:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XKtkp-00048A-NP
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 20:40:04 +0200
+	id 1XKtpz-00079K-U8
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Aug 2014 20:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750769AbaHVSj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2014 14:39:59 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:8713 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750726AbaHVSj6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Aug 2014 14:39:58 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgczACSN91NOl3jIPGdsb2JhbABZgw1TV4J8hTvAWoNNh0IGAgKBEBcFAQEBATg2g34FAQEFCAEBGRUeAQEhCwIDBQIBAw4HAgECAgUhAgIUAQQaBgcDDAgGARIIAgECAwGINQmvYYZ/jgwTBIEsjiCDADaBHQWFBAKMIFeDUoFvS50rPC+CTwEBAQ
-X-IPAS-Result: AgczACSN91NOl3jIPGdsb2JhbABZgw1TV4J8hTvAWoNNh0IGAgKBEBcFAQEBATg2g34FAQEFCAEBGRUeAQEhCwIDBQIBAw4HAgECAgUhAgIUAQQaBgcDDAgGARIIAgECAwGINQmvYYZ/jgwTBIEsjiCDADaBHQWFBAKMIFeDUoFvS50rPC+CTwEBAQ
-X-IronPort-AV: E=Sophos;i="5.04,382,1406588400"; 
-   d="scan'208";a="567882258"
-Received: from host-78-151-120-200.as13285.net (HELO PhilipOakley) ([78.151.120.200])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 22 Aug 2014 19:39:56 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1750834AbaHVSpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Aug 2014 14:45:20 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:53266 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766AbaHVSpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Aug 2014 14:45:19 -0400
+Received: by mail-pa0-f42.google.com with SMTP id lf10so17165930pab.1
+        for <git@vger.kernel.org>; Fri, 22 Aug 2014 11:45:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8zan9Q+EnjM64CQzeKWs/B4PJ3gIoQHN4t2Y/ACGdxs=;
+        b=QBjmIK5JSxLMJ7VoPIi8Wqbnn0G9Qzh9ni2k5g+f/aPol1P9avjAI73md6sC+eeJzD
+         CSlqexv5YBTiMEyBd3GlgEkijteTNM/huoWg141t9AE3UGVhCwypO6qdWRWtR6RDBgtA
+         9mm6LWareNs5MrV7RGbFh+u24EyJlpe3SaMJlxL7+d1g4KdHDHMF4USooDFyzWcPW4Pb
+         4UERoqVkmKuZOyMJYcB29/9iQz+YcIM2g1epXLJl1MiDHY1ftH7munJ4Xa/ldaVAWFWf
+         ryaQrohDEnNnTtpiF85SNfTgwpbVIk5xHVTzYCutlNCoM/uEHJ1shv73iwBc9eXvScB9
+         efOg==
+X-Received: by 10.68.253.34 with SMTP id zx2mr8472952pbc.152.1408733118444;
+        Fri, 22 Aug 2014 11:45:18 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:c57b:d378:4566:1b8f])
+        by mx.google.com with ESMTPSA id ex1sm44758432pdb.26.2014.08.22.11.45.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 22 Aug 2014 11:45:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqmwawnzfk.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255693>
 
-From: "Jeff King" <peff@peff.net>: Friday, August 22, 2014 12:21 AM
-> On Thu, Aug 21, 2014 at 06:49:10PM -0400, Jeff King wrote:
->
->> The few things I don't anonymize are:
->>
->>   1. ref prefixes. We see the same distribution of refs/heads vs
->>      refs/tags, etc.
->>
->>   2. refs/heads/master is left untouched, for convenience (and 
->> because
->>      it's not really a secret). The implementation is lazy, though, 
->> and
->>      would leave "refs/heads/master-supersecret", as well. I can 
->> tighten
->>      that if we really want to be careful.
->>
->>   3. gitlinks are left untouched, since sha1s cannot be reversed. 
->> This
->>      could leak some information (if your private repo points to a
->>      public, I can find out you have it as submodule). I doubt it
->>      matters, but we can also scramble the sha1s.
->
-> Here's a re-roll that addresses the latter two. I don't think any are 
-> a
-> big deal, but it's much easier to say "it's handled" than try to 
-> figure
-> out whether and when it's important.
->
-> This also includes the documentation update I sent earlier. The
-> interdiff is a bit noisy, as I also converted the anonymize_mem 
-> function
-> to take void pointers (since it doesn't know or care what it's 
-> storing,
-> and this makes storing unsigned chars for sha1s easier).
->
+Junio C Hamano wrote:
 
-Just a bit of bikeshedding for future improvements..
+>                implication of which is that the 'at least one slash'
+> rule was to expect things are 'refs/<anything>' so there will be at
+> least one.  Even back then, that <anything> alone had at least one
+> slash (e.g. heads/master), but the intention was *never* that we
+> would forbid <anything> that does not have a slash by feeding
+> <anything> part alone to check-ref-format, i.e. things like
+> "refs/stash" were designed to be allowed.
 
-The .gitignore is another potential user problem area that may benefit 
-form not being anonymised when problems strike. For example, there's a 
-current problem on the git-users list 
-https://groups.google.com/forum/#!topic/git-users/JJFIEsI5HRQ about "git 
-clean vs git status re .gitignore", which would then also beg questions 
-about retaining file extensions/suffixes (.txt, .o, .c, etc).
+Now I'm more confused.  Until 5f7b202a (2008-01-01), there was a
+comment
 
-I've had a similar problem with an over zealous file compare routine 
-where the same too much vs too little was an issue.
+		if (level < 2)
+			return -2; /* at least of form "heads/blah" */
 
-One thought is that the user should be able to, as an option, select the 
-number of initial characters retained from filenames, and similarly, the 
-option to retain the file extension, and possibly directory names, such 
-that the full .gitignore still works in most cases, and the sort order 
-works (as far as it goes on number of characters).
+and that behavior has been preserved since the beginning.
 
-All things for future improvers to consider.
+Why do most old callers pass a string that doesn't start with refs/
+(e.g., see the callers in 03feddd6, 2005-10-13)?  Has the intent been
+to relax the requirement since then?
 
-Philip
-
-> -- >8 --
-> Subject: teach fast-export an --anonymize option
->
-> Sometimes users want to report a bug they experience on
-> their repository, but they are not at liberty to share the
-> contents of the repository. It would be useful if they could
-> produce a repository that has a similar shape to its history
-> and tree, but without leaking any information. This
-> "anonymized" repository could then be shared with developers
-> (assuming it still replicates the original problem).
->
-> This patch implements an "--anonymize" option to
-> fast-export, which generates a stream that can recreate such
-> a repository. Producing a single stream makes it easy for
-> the caller to verify that they are not leaking any useful
-> information. You can get an overview of what will be shared
-> by running a command like:
->
->  git fast-export --anonymize --all |
->  perl -pe 's/\d+/X/g' |
->  sort -u |
->  less
->
-> which will show every unique line we generate, modulo any
-> numbers (each anonymized token is assigned a number, like
-> "User 0", and we replace it consistently in the output).
->
-> In addition to anonymizing, this produces test cases that
-> are relatively small (compared to the original repository)
-> and fast to generate (compared to using filter-branch, or
-> modifying the output of fast-export yourself). Here are
-> numbers for git.git:
->
->  $ time git fast-export --anonymize --all \
->         --tag-of-filtered-object=drop >output
->  real    0m2.883s
->  user    0m2.828s
->  sys     0m0.052s
->
->  $ gzip output
->  $ ls -lh output.gz | awk '{print $5}'
->  2.9M
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-[...] 
+Jonathan
