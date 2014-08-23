@@ -1,241 +1,173 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [BUG] resolved deltas
-Date: Sat, 23 Aug 2014 12:12:08 +0200
-Message-ID: <53F868F8.9080000@web.de>
-References: <53F5D98F.4040700@redhat.com> <53F79CE3.60803@gmx.net>
+Date: Sat, 23 Aug 2014 06:56:40 -0400
+Message-ID: <20140823105640.GA6881@peff.net>
+References: <53F5D98F.4040700@redhat.com>
+ <53F79CE3.60803@gmx.net>
+ <53F868F8.9080000@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Martin von Gagern <Martin.vGagern@gmx.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 23 12:12:36 2014
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Martin von Gagern <Martin.vGagern@gmx.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sat Aug 23 12:56:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XL8JH-00022Y-5Z
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Aug 2014 12:12:35 +0200
+	id 1XL907-0007PG-Ml
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Aug 2014 12:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752396AbaHWKMb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Aug 2014 06:12:31 -0400
-Received: from mout.web.de ([212.227.15.14]:50174 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752190AbaHWKM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Aug 2014 06:12:29 -0400
-Received: from [192.168.178.27] ([79.253.170.74]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0LdEif-1WdVtp1TDF-00iWiS; Sat, 23 Aug 2014 12:12:24
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <53F79CE3.60803@gmx.net>
-X-Provags-ID: V03:K0:Fq5/cRdBWil0eLmCBynyy29+YTht1NbzpCL7ah4gBuNpZPBUKju
- mlBT39igqluhdcPMkwSwUihIhX/t50WnTSTjdsaEd6KfgEkVORZrPsSVNNjT/yeqmUviRn+
- m1YFNLu3mr/JkDqCGz0LnlnDp61sZJUsOjoY51MQSKLLzpmbj7b/NB3XaItUT2nP4naySps
- JPlHwdVX9jM9BbsS8yfZQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752537AbaHWK4p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Aug 2014 06:56:45 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57392 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752479AbaHWK4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2014 06:56:44 -0400
+Received: (qmail 30350 invoked by uid 102); 23 Aug 2014 10:56:44 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 23 Aug 2014 05:56:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Aug 2014 06:56:40 -0400
+Content-Disposition: inline
+In-Reply-To: <53F868F8.9080000@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255744>
 
-Am 22.08.2014 um 21:41 schrieb Martin von Gagern:
-> On 21.08.2014 13:35, Petr Stodulka wrote:
->> Hi guys,
->> I wanted post you patch here for this bug, but I can't find primary
->> source of this problem [0], because I don't understand some ideas in=
- the
->> code.
->>
->> [=E2=80=A6]
->>
->> Any next ideas/hints or explanation of these functions? I began stud=
-y
->> source code and mechanisms of the git this week, so don't beat me ye=
-t
->> please :-)
->>
->> Regards,
->> Petr
->>
->> [0] https://bugzilla.redhat.com/show_bug.cgi?id=3D1099919
->=20
-> Some pointers to related reports and investigations:
->=20
-> https://groups.google.com/forum/#!topic/mapsforge-dev/IF6mgmwvZmY
-> https://groups.google.com/forum/#!topic/mapsforge-dev/f2KvFALlkvo
-> https://code.google.com/p/support/issues/detail?id=3D31571
-> https://groups.google.com/forum/#!topic/mapsforge-dev/nomzr5dkkqc
-> http://thread.gmane.org/gmane.comp.version-control.git/254626
->=20
-> The last is my own bug report to this mailing list here, which
-> unfortunately received no reaction yet. In that report, I can confirm
-> that the commit introducing the assertion is the same commit which
-> causes things to fail:
-> https://github.com/git/git/commit/7218a215efc7ae46f7ca8d82442f354e
->=20
-> In this https://code.google.com/p/mapsforge/ repository, resolve_delt=
+[+cc spearce, as I think this is a bug in code.google.com's sending
+ side, and he can probably get the attention of the right folks]
+
+On Sat, Aug 23, 2014 at 12:12:08PM +0200, Ren=C3=A9 Scharfe wrote:
+
+> Git 1.7.6 clones the repo without reporting an error or warning, but =
 a
-> gets called twice for some delta. The first time, type and real_type =
-are
-> identical, but by the second pass in find_unresolved_deltas the real
-> type will have chaned to OBJ_TREE. This caused the old code to simply
-> scip the object, but the new code aborts instead.
+> check shows that a tree object is missing:
+
+Thanks for digging on this. I happened to be looking at it at the exact
+same time, so now I can stop. :)
+
+> The patch below, which makes index-pack ignore objects with unexpecte=
+d
+> real_type as before, changes the shown error message, but clone still
+> fails:
 >=20
-> So far my understanding. I'm not sure whether this kind of duplicate
-> resolution is something normal or indicates some breakage in the
-> repository in question. But aborting seems a bad solution in either c=
-ase.
-
-Git 1.7.6 clones the repo without reporting an error or warning, but a
-check shows that a tree object is missing:
-
-  $ git clone https://code.google.com/p/mapsforge/
-  Cloning into mapsforge...
-  remote: Counting objects: 12879, done.
-  Receiving objects: 100% (12879/12879), 10.19 MiB | 2.48 MiB/s, done.
-  Resolving deltas: 100% (4349/4349), done.
-  $ cd mapsforge/
-  $ git fsck
-  broken link from    tree eb95fb0268c43f512e2ce512e6625072acafbdb5
-                to    tree a0155d8d5bb58afb9a5d20459be023899c9a1cef
-  missing tree a0155d8d5bb58afb9a5d20459be023899c9a1cef
-  dangling tree b6f32087526f43205bf8b5e6539936da787ecb1a
-
-Git 2.1.0 hits an assertion:
-
-  $ git clone https://code.google.com/p/mapsforge/
-  Cloning into 'mapsforge'...
-  remote: Counting objects: 12879, done.
-  Receiving objects: 100% (12879/12879), 10.19 MiB | 2.53 MiB/s, done.
-  git: builtin/index-pack.c:918: find_unresolved_deltas_1: Assertion `c=
-hild->real_type =3D=3D OBJ_REF_DELTA' failed.
-  error: index-pack died of signal 6
-  fatal: index-pack failed
-
-The patch below, which makes index-pack ignore objects with unexpected
-real_type as before, changes the shown error message, but clone still
-fails:
-
-  $ git clone https://code.google.com/p/mapsforge/
-  Cloning into 'mapsforge'...
-  remote: Counting objects: 12879, done.
-  Receiving objects: 100% (12879/12879), 10.19 MiB | 2.43 MiB/s, done.
-  Resolving deltas: 100% (4348/4348), done.
-  fatal: did not receive expected object a0155d8d5bb58afb9a5d20459be023=
-899c9a1cef
-  fatal: index-pack failed
-
-Turning that fatal error into a warning get us a bit further:
-
-  $ git clone https://code.google.com/p/mapsforge/
-  Cloning into 'mapsforge'...
-  remote: Counting objects: 12879, done.
-  Receiving objects: 100% (12879/12879), 10.19 MiB | 2.38 MiB/s, done.
-  Resolving deltas: 100% (4350/4350), done.
-  warning: did not receive expected object a0155d8d5bb58afb9a5d20459be0=
+>   $ git clone https://code.google.com/p/mapsforge/
+>   Cloning into 'mapsforge'...
+>   remote: Counting objects: 12879, done.
+>   Receiving objects: 100% (12879/12879), 10.19 MiB | 2.43 MiB/s, done=
+=2E
+>   Resolving deltas: 100% (4348/4348), done.
+>   fatal: did not receive expected object a0155d8d5bb58afb9a5d20459be0=
 23899c9a1cef
-  fatal: The same object bc386be34bd4781f71bb68d72a6e0aee3124201e appea=
-rs twice in the pack
-  fatal: index-pack failed
+>   fatal: index-pack failed
 
-Disabling strict checking (WRITE_IDX_STRICT) as well lets clone
-succeed, but a check shows that a tree is missing, as wiht git 1.7.6:
+This makes sense. Early versions of index-pack didn't know how to check
+for missing objects, but now it does. However, we only trigger that cod=
+e
+if we are using --strict, or if we are cloning (in which case we pass
+the --check-self-contained-and-connected option).
 
-  $ git clone https://code.google.com/p/mapsforge/
-  Cloning into 'mapsforge'...
-  remote: Counting objects: 12879, done.
-  Receiving objects: 100% (12879/12879), 10.19 MiB | 2.37 MiB/s, done.
-  Resolving deltas: 100% (4349/4349), done.
-  warning: did not receive expected object a0155d8d5bb58afb9a5d20459be0=
-23899c9a1cef
-  Checking connectivity... done.
-  $ cd mapsforge/
-  $ git fsck
-  Checking object directories: 100% (256/256), done.
-  Checking objects: 100% (12879/12879), done.
-  broken link from    tree eb95fb0268c43f512e2ce512e6625072acafbdb5
-                to    tree a0155d8d5bb58afb9a5d20459be023899c9a1cef
-  missing tree a0155d8d5bb58afb9a5d20459be023899c9a1cef
+If you are doing a regular fetch, we rely on check_everything_connected
+after the pack is received. So (with your patch):
 
-Cloning the repo with Egit works fine, but git fsck shows the same
-results as above.
+  $ git init
+  $ git fetch https://code.google.com/p/mapsforge/
+  remote: Counting objects: 12298, done.
+  Receiving objects: 100% (12298/12298), 9.24 MiB | 959.00 KiB/s, done.
+  Resolving deltas: 100% (4107/4107), done.
+  error: Could not read a0155d8d5bb58afb9a5d20459be023899c9a1cef
+  fatal: bad tree object a0155d8d5bb58afb9a5d20459be023899c9a1cef
+  error: https://code.google.com/p/mapsforge/ did not send all necessar=
+y objects
 
-https://github.com/applantation/mapsforge has that missing tree
-object, by the way.
+That all makes sense.
 
-OK, what now?  It's better to show an error message instead of
-failing an assertion if a repo is found to be corrupt because the
-issue is caused by external input.  I don't know if the patch
-below may have any bad side effects, though, so no sign-off at
-this time.
+> Turning that fatal error into a warning get us a bit further:
+>=20
+>   $ git clone https://code.google.com/p/mapsforge/
+>   Cloning into 'mapsforge'...
+>   remote: Counting objects: 12879, done.
+>   Receiving objects: 100% (12879/12879), 10.19 MiB | 2.38 MiB/s, done=
+=2E
+>   Resolving deltas: 100% (4350/4350), done.
+>   warning: did not receive expected object a0155d8d5bb58afb9a5d20459b=
+e023899c9a1cef
+>   fatal: The same object bc386be34bd4781f71bb68d72a6e0aee3124201e app=
+ears twice in the pack
+>   fatal: index-pack failed
+>=20
+> Disabling strict checking (WRITE_IDX_STRICT) as well lets clone
+> succeed, but a check shows that a tree is missing, as wiht git 1.7.6:
 
-Allowing git to clone a broken repo sounds useful, up to point.
-In this particular case older versions had no problem doing that,
-so it seems worth supporting.
+Interesting that one object is duplicated and another object is missing=
+=2E
+The pack doesn't contain the sha1s of the objects; we compute them on
+the fly in index-pack. So it's likely that the real problem is that one
+entry in the pack either has the wrong delta data, or mentions the wron=
+g
+base object. And does it in such a way that we generate the another
+object that does exist (so the packfile data isn't garbled or corrupted=
+;
+it's a bug on the sending side that uses the wrong data).
 
-And how did the tree object went missing in the first place?
+> https://github.com/applantation/mapsforge has that missing tree
+> object, by the way.
 
-Ren=C3=A9
----
- builtin/index-pack.c | 33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+Unsurprisingly, it's a tree object quite similar to the duplicated one.
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 5568a5b..f7dc5b0 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -913,28 +913,33 @@ static struct base_data *find_unresolved_deltas_1=
-(struct base_data *base,
-=20
- 	if (base->ref_first <=3D base->ref_last) {
- 		struct object_entry *child =3D objects + deltas[base->ref_first].obj=
-_no;
--		struct base_data *result =3D alloc_base_data();
-=20
--		assert(child->real_type =3D=3D OBJ_REF_DELTA);
--		resolve_delta(child, base, result);
--		if (base->ref_first =3D=3D base->ref_last && base->ofs_last =3D=3D -=
-1)
--			free_base_data(base);
-+		if (child->real_type =3D=3D OBJ_REF_DELTA) {
-+			struct base_data *result =3D alloc_base_data();
-=20
--		base->ref_first++;
--		return result;
-+			resolve_delta(child, base, result);
-+			if (base->ref_first =3D=3D base->ref_last &&
-+			    base->ofs_last =3D=3D -1)
-+				free_base_data(base);
-+
-+			base->ref_first++;
-+			return result;
-+		}
- 	}
-=20
- 	if (base->ofs_first <=3D base->ofs_last) {
- 		struct object_entry *child =3D objects + deltas[base->ofs_first].obj=
-_no;
--		struct base_data *result =3D alloc_base_data();
-=20
--		assert(child->real_type =3D=3D OBJ_OFS_DELTA);
--		resolve_delta(child, base, result);
--		if (base->ofs_first =3D=3D base->ofs_last)
--			free_base_data(base);
-+		if (child->real_type =3D=3D OBJ_OFS_DELTA) {
-+			struct base_data *result =3D alloc_base_data();
-=20
--		base->ofs_first++;
--		return result;
-+			resolve_delta(child, base, result);
-+			if (base->ofs_first =3D=3D base->ofs_last)
-+				free_base_data(base);
-+
-+			base->ofs_first++;
-+			return result;
-+		}
- 	}
-=20
- 	unlink_base_data(base);
---=20
-2.1.0
+> OK, what now?  It's better to show an error message instead of
+> failing an assertion if a repo is found to be corrupt because the
+> issue is caused by external input.  I don't know if the patch
+> below may have any bad side effects, though, so no sign-off at
+> this time.
+
+Definitely. Your patch looks like an improvement. The objects in the
+delta list must have had their real_types set to REF_DELTA and OFS_DELT=
+A
+at some point (since that is how they got on the list). And there is no
+way for the type field to change from a delta type to anything else
+_except_ by us resolving the delta. So I think the condition triggering
+that assert cannot mean anything except that we have a duplicate object
+(and it is not actually the delta object that is duplicated, but rather
+its base, as seeing it again is what causes us to try to resolve twice)=
+=2E
+
+So we know at this point that we have a duplicate object, and we could
+warn or say something. But I think we probably would not want to. If
+--strict is in effect, then we will notice and complain later. And if i=
+t
+is not, then we should allow it without comment (in this case the repo
+is broken, but it would not _have_ to be).
+
+So I think your patch is doing the right thing.
+
+> Allowing git to clone a broken repo sounds useful, up to point.
+> In this particular case older versions had no problem doing that,
+> so it seems worth supporting.
+
+I think with your patch we are fine. Without --strict (which is implied
+on a clone), you can still "git init" and "git fetch" the broken pack
+(fetch will complain, but it leaves the pack in place).
+
+We may want to adjust the fact that --check-self-contained-and-connecte=
+d
+implies strict (it builds on the fsck bits of index-pack, but it does
+not have to imply a full fsck, nor strict index writing).
+
+> And how did the tree object went missing in the first place?
+
+My guess is a bug on the sending side. We have seen duplicate pack
+objects before, but never (AFAIK) combined with a missing object. This
+really seems like the sender just sent the wrong data for one object.
+
+IIRC, code.google.com is backed by their custom Dulwich implementation
+which runs on BigTable. We'll see if Shawn can get this to the right
+people as a bug report. :)
+
+-Peff
