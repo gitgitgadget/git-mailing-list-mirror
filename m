@@ -1,86 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: check-ref-format: include refs/ in the argument or to strip it?
-Date: Fri, 22 Aug 2014 19:59:00 -0700
-Message-ID: <20140823025900.GM20185@google.com>
-References: <gerrit.1408574889668.Iac983fc86f7edd2a0543779d85973c57bf068ca4@code-review.googlesource.com>
- <047d7b624d36142d46050131f336@google.com>
- <20140822154151.GK20185@google.com>
- <xmqqmwawnzfk.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/5] git-prompt: do not look for refs/stash in $GIT_DIR
+Date: Sat, 23 Aug 2014 01:26:51 -0400
+Message-ID: <20140823052650.GA18075@peff.net>
+References: <20140823052334.GA17813@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	Ronnie Sahlberg <sahlberg@google.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 23 04:59:13 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 23 07:27:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XL1Xs-00079l-4N
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Aug 2014 04:59:12 +0200
+	id 1XL3qv-0006tk-Gg
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Aug 2014 07:27:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbaHWC7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Aug 2014 22:59:06 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:62144 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751822AbaHWC7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Aug 2014 22:59:05 -0400
-Received: by mail-pa0-f43.google.com with SMTP id lf10so17274972pab.2
-        for <git@vger.kernel.org>; Fri, 22 Aug 2014 19:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=kfZy095ccoWYDBUdaVTOHWpt4c+SYEpPzZxqLpymYe0=;
-        b=vNk522GGVjOeTpgePKyasdvyKcZfHlx0IsNPYWGJ6y185n5DEa3QORxgFyupcm5P4u
-         xR38I0bU9WtZY9eVWxIVlpRnnf6c2PDiyNjcDUa+pYfnZlMpj3bNAvnXh024XQtlPOFo
-         fyrH7wtkALmJedEO5IxpdQlYDd0/wuHCy+3pvM+15qvrQO54ol2OHBBZTjIcFUkMhKce
-         uj8S97JxmTySW+WskvOrsooTt0rR+tPDz5S7DzHyY6chzr2Wub/Tql97n7IDUEybhdZq
-         XynjOVJKrcNowRGHXtaCJ+IpLnieF6/eDox3EA11jKVkDE5mOScErfyDGwaZ3sxLPBpb
-         MZHw==
-X-Received: by 10.66.102.37 with SMTP id fl5mr4469354pab.35.1408762743464;
-        Fri, 22 Aug 2014 19:59:03 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:c57b:d378:4566:1b8f])
-        by mx.google.com with ESMTPSA id om7sm33365006pdb.61.2014.08.22.19.59.02
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 22 Aug 2014 19:59:02 -0700 (PDT)
+	id S1752100AbaHWF0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Aug 2014 01:26:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57234 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752030AbaHWF0w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Aug 2014 01:26:52 -0400
+Received: (qmail 13553 invoked by uid 102); 23 Aug 2014 05:26:52 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 23 Aug 2014 00:26:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Aug 2014 01:26:51 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqmwawnzfk.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20140823052334.GA17813@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255728>
 
-Junio C Hamano wrote:
->> Michael Haggerty wrote[1]:
->>> Jonathan Nieder wrote:
+Since dd0b72c (bash prompt: use bash builtins to check stash
+state, 2011-04-01), git-prompt checks whether we have a
+stash by looking for $GIT_DIR/refs/stash. Generally external
+programs should never do this, because they would miss
+packed-refs.
 
->>>> The check-ref-format documentation is pretty unclear, but the
->>>> intent is that it would be used like
->>>>
->>>>	git check-ref-format heads/master
->>>>
->>>> (see the surviving examples in contrib/examples/). That way, it can
->>>> enforce the rule (from git-check-ref-format(1))
-[...]
->>> Thanks for the explanation and the pointer.
->
-> I wanted to follow this discussion, especially the ellided [...]
-> "pointer", but had a hart time finding what "pointer" was.
+That commit claims that packed-refs does not pack
+refs/stash, but that is not quite true. It does pack the
+ref, but due to a bug, fails to prune the ref. When we fix
+that bug, we would want to be doing the right thing here.
 
-I missed this question before.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I know we are pretty sensitive to forks in the prompt code (after all,
+that was the point of dd0b72c). This patch is essentially a reversion of
+this hunk of dd0b72c, and is definitely safe.
 
-The discussion happened at https://code-review.googlesource.com/1017.
-It's easier to see after clicking the 'Expand All' button, but even
-then it's hard to see the signal in the 'Patch Set <n> was rebased'
-noise.
+I think we could probably get by with:
 
-The pointer Michael mentioned was to the git-check-ref-format(1)
-manpage and old 'check-ref-format' callers that can be found in
-contrib/examples/.  Sorry for the lack of context.
+  [ -r "$g/logs/ref/stash" ]
 
-Jonathan
+since reflogs are always in the filesystem. However, that seems somewhat
+short-sighted, as the work Ronnie is doing is moving in the direction of
+more abstraction here. I hope a day will come soon when reflogs do not
+have to be stored in $GIT_DIR/logs, and then we would end up updating
+this code again.
+
+ contrib/completion/git-prompt.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 9d684b1..c5473dc 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -468,7 +468,8 @@ __git_ps1 ()
+ 			fi
+ 		fi
+ 		if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ] &&
+-		   [ -r "$g/refs/stash" ]; then
++		   git rev-parse --verify --quiet refs/stash >/dev/null
++		then
+ 			s="$"
+ 		fi
+ 
+-- 
+2.1.0.346.ga0367b9
