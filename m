@@ -1,87 +1,71 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] bisect: save heap memory. allocate only the required
- amount
-Date: Sun, 24 Aug 2014 16:32:12 +0100
-Message-ID: <53FA057C.3070206@ramsay1.demon.co.uk>
-References: <1408889844-5407-1-git-send-email-arjun024@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH v3 2/3] Introduce GIT_MMAP_LIMIT to allow testing expected mmap size
+Date: Sun, 24 Aug 2014 18:03:24 +0200
+Message-ID: <E4460202-E37A-498E-8062-DCCD9AE8E38C@zib.de>
+References: <1408637110-15669-1-git-send-email-prohaska@zib.de> <1408637110-15669-3-git-send-email-prohaska@zib.de> <xmqq1ts9qy24.fsf@gitster.dls.corp.google.com> <0342479D-7C9F-42E6-9B79-745AEDE57EB5@zib.de> <xmqqmwawpldt.fsf@gitster.dls.corp.google.com> <xmqqiolkpjtq.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Arjun Sreedharan <arjun024@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 24 17:32:25 2014
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	pclouds@gmail.com, john@keeping.me.uk, schacon@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 18:04:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLZmG-0008Kr-Tx
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 17:32:21 +0200
+	id 1XLaHA-0002Og-UJ
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 18:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752709AbaHXPcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2014 11:32:17 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:33964 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752723AbaHXPcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2014 11:32:17 -0400
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 977676F88D2;
-	Sun, 24 Aug 2014 16:31:52 +0100 (BST)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 50B0F6F88C2;
-	Sun, 24 Aug 2014 16:31:52 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Sun, 24 Aug 2014 16:31:51 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <1408889844-5407-1-git-send-email-arjun024@gmail.com>
-X-MDF-HostID: 3
+	id S1753004AbaHXQEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2014 12:04:12 -0400
+Received: from mailer.zib.de ([130.73.108.11]:48652 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752917AbaHXQEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2014 12:04:11 -0400
+Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7OG3XAB013266;
+	Sun, 24 Aug 2014 18:03:33 +0200 (CEST)
+Received: from [192.168.1.200] (ip5f5bd082.dynamic.kabel-deutschland.de [95.91.208.130] (may be forged))
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7OG3Ue5013107
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 24 Aug 2014 18:03:31 +0200 (CEST)
+In-Reply-To: <xmqqiolkpjtq.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
+X-Miltered: at mailer.zib.de with ID 53FA0CD5.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 53FA0CD5.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 53FA0CD5.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255796>
 
-On 24/08/14 15:17, Arjun Sreedharan wrote:
-> Find and allocate the required amount instead of
-> allocating extra 100 bytes
+On Aug 22, 2014, at 6:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+
+> Steffen Prohaska <prohaska@zib.de> writes:
 > 
-> Signed-off-by: Arjun Sreedharan <arjun024@gmail.com>
-> ---
->  bisect.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
+>>>> +	if (limit == -1) {
+>>>> +		const char *env = getenv("GIT_MMAP_LIMIT");
+>>>> +		limit = env ? atoi(env) * 1024 : 0;
+>> 
+>> ... this should then be changed to atol(env), and ... 
 > 
-> diff --git a/bisect.c b/bisect.c
-> index d6e851d..c96aab0 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -215,10 +215,13 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
->  	}
->  	qsort(array, cnt, sizeof(*array), compare_commit_dist);
->  	for (p = list, i = 0; i < cnt; i++) {
-> -		struct name_decoration *r = xmalloc(sizeof(*r) + 100);
-> +		char name[100];
-> +		sprintf(name, "dist=%d", array[i].distance);
-> +		int name_len = strlen(name);
-> +		struct name_decoration *r = xmalloc(sizeof(*r) + name_len);
->  		struct object *obj = &(array[i].commit->object);
-
-declaration(s) after statement.
-
->  
-> -		sprintf(r->name, "dist=%d", array[i].distance);
-> +		memcpy(r->name, name, name_len + 1);
->  		r->next = add_decoration(&name_decoration, obj, r);
->  		p->item = array[i].commit;
->  		p = p->next;
+> In the real codepath (not debugging aid like this) we try to avoid
+> atoi/atol so that we can catch errors like feeding "123Q" and
+> parsing it as 123.
 > 
+> But it is OK to be loose in an debugging aid.  If I were doing
+> this code, I actually would call git_parse_ulong() and not
+> define it in terms of kilobytes, though.
 
-HTH
+Thanks for suggesting this.  I wasn't aware of git_parse_ulong().
+I think it makes very much sense to use it, even though it's only a
+testing aid.
 
-ATB,
-Ramsay Jones
+I'll send a PATCH v5 series.
+
+	Steffen
