@@ -1,99 +1,86 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH v5 3/4] Introduce GIT_MMAP_LIMIT to allow testing expected mmap size
-Date: Sun, 24 Aug 2014 18:07:45 +0200
-Message-ID: <1408896466-23149-4-git-send-email-prohaska@zib.de>
-References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
-	john@keeping.me.uk, schacon@gmail.com,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 24 18:09:21 2014
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH] Undefine strlcpy if needed.
+Date: Sun, 24 Aug 2014 17:18:24 +0100
+Message-ID: <53FA1050.2060309@ramsay1.demon.co.uk>
+References: <1408854741-13956-1-git-send-email-tsunanet@gmail.com> <1408854930-14322-1-git-send-email-tsunanet@gmail.com> <53F9C818.8020607@ramsay1.demon.co.uk> <CAFKYj4dQhGgpS9Vf=5qoku49jEkR0ko7TuBNu4sQAJyiD7y+cg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: tsuna <tsunanet@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 18:18:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLaM1-00046D-1V
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 18:09:17 +0200
+	id 1XLaV1-0006um-RZ
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 18:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753022AbaHXQJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2014 12:09:13 -0400
-Received: from mailer.zib.de ([130.73.108.11]:49908 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752520AbaHXQJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2014 12:09:12 -0400
-Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7OG81lc016861;
-	Sun, 24 Aug 2014 18:08:02 +0200 (CEST)
-Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7OG81sF016835;
-	Sun, 24 Aug 2014 18:08:01 +0200 (CEST)
-X-Mailer: git-send-email 2.0.1.448.g1eafa63
-In-Reply-To: <1408896466-23149-1-git-send-email-prohaska@zib.de>
-X-Miltered: at mailer.zib.de with ID 53FA0DE1.003 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 53FA0DE1.003 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 53FA0DE1.003 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
-X-j-chkmail-Status: Ham
+	id S1753119AbaHXQSb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Aug 2014 12:18:31 -0400
+Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:60207 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753087AbaHXQS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2014 12:18:27 -0400
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id D186F18CF56;
+	Sun, 24 Aug 2014 17:18:24 +0100 (BST)
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 8C60A18CF4E;
+	Sun, 24 Aug 2014 17:18:24 +0100 (BST)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP;
+	Sun, 24 Aug 2014 17:18:24 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <CAFKYj4dQhGgpS9Vf=5qoku49jEkR0ko7TuBNu4sQAJyiD7y+cg@mail.gmail.com>
+X-MDF-HostID: 18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255802>
 
-Similar to testing expectations about malloc with GIT_ALLOC_LIMIT (see
-commit d41489 and previous commit), it can be useful to test
-expectations about mmap.
+On 24/08/14 12:13, tsuna wrote:
+> On Sun, Aug 24, 2014 at 4:10 AM, Ramsay Jones
+> <ramsay@ramsay1.demon.co.uk> wrote:
+>> Hmm, which version of OS X are we talking about?
+>=20
+> OS X 10.9.4:
+>=20
+> $ uname -a
+> Darwin damogran.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3
+> 21:27:35 PDT 2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64
 
-This introduces a new environment variable GIT_MMAP_LIMIT to limit the
-largest allowed mmap length.  xmmap() is modified to check the limit.
-Together with GIT_ALLOC_LIMIT tests can now easily confirm expectations
-about memory consumption.
+Hmm, does 'uname -r' return 13.3.0 or 13.4.0? (or something else!)
 
-GIT_MMAP_LIMIT will be used in the next commit to test that data will be
-streamed to an external filter without mmaping the entire file.
+>> config.mak.uname contains this:
+>>
+>>         ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
+>>                 NO_STRLCPY =3D YesPlease
+>>
+>> What does ./configure put in config.mak.autogen for NO_STRLCPY?
+>=20
+> NO_STRLCPY=3D
 
-[commit d41489]: d41489a6424308dc9a0409bc2f6845aa08bd4f7d Add more large
-    blob test cases
+OK, so I've got to my limit here! ;-) The conditional shown above
+(from config.mak.uname) should not have set NO_STRLCPY (assuming
+that 'uname -r' is returning 13.3.0 or 13.4.0). So, unless NO_STRLCPY
+is being set somewhere else (command-line, environment), this should
+just work. puzzled. :(
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- sha1_file.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+>=20
+> I guess I saw all the warnings because I did just a =E2=80=9Cgit pull=
+ =E2=80=94rebase
+> && make -j8=E2=80=9D without running =E2=80=9Cmake configure && ./con=
+figure=E2=80=9D.
+>=20
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 00c07f2..3204f66 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -663,10 +663,29 @@ void release_pack_memory(size_t need)
- 		; /* nothing */
- }
- 
-+static void mmap_limit_check(size_t length)
-+{
-+	static size_t limit = SIZE_MAX;
-+	if (limit == SIZE_MAX) {
-+		const char *var = "GIT_MMAP_LIMIT";
-+		unsigned long val = 0;
-+		const char *env = getenv(var);
-+		if (env && !git_parse_ulong(env, &val))
-+			die("Failed to parse %s", var);
-+		limit = val;
-+	}
-+	if (limit && length > limit)
-+		die("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX,
-+		    (uintmax_t)length, (uintmax_t)limit);
-+}
-+
- void *xmmap(void *start, size_t length,
- 	int prot, int flags, int fd, off_t offset)
- {
--	void *ret = mmap(start, length, prot, flags, fd, offset);
-+	void *ret;
-+
-+	mmap_limit_check(length);
-+	ret = mmap(start, length, prot, flags, fd, offset);
- 	if (ret == MAP_FAILED) {
- 		if (!length)
- 			return NULL;
--- 
-2.1.0.8.gd3b6067
+Yes, but use of configure is supposed to be optional ...
+
+Hopefully, someone who actually knows OS X can solve the mystery.
+
+ATB,
+Ramsay Jones
