@@ -1,86 +1,92 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] Undefine strlcpy if needed.
-Date: Sun, 24 Aug 2014 17:18:24 +0100
-Message-ID: <53FA1050.2060309@ramsay1.demon.co.uk>
-References: <1408854741-13956-1-git-send-email-tsunanet@gmail.com> <1408854930-14322-1-git-send-email-tsunanet@gmail.com> <53F9C818.8020607@ramsay1.demon.co.uk> <CAFKYj4dQhGgpS9Vf=5qoku49jEkR0ko7TuBNu4sQAJyiD7y+cg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: tsuna <tsunanet@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 24 18:18:37 2014
+From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+Subject: [PATCH 1/2] Check order when reading index
+Date: Sun, 24 Aug 2014 19:57:26 +0200
+Message-ID: <1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
+References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
+Cc: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 24 19:57:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLaV1-0006um-RZ
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 18:18:36 +0200
+	id 1XLc2t-0004u6-5a
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 19:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119AbaHXQSb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Aug 2014 12:18:31 -0400
-Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:60207 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753087AbaHXQS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2014 12:18:27 -0400
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id D186F18CF56;
-	Sun, 24 Aug 2014 17:18:24 +0100 (BST)
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 8C60A18CF4E;
-	Sun, 24 Aug 2014 17:18:24 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP;
-	Sun, 24 Aug 2014 17:18:24 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <CAFKYj4dQhGgpS9Vf=5qoku49jEkR0ko7TuBNu4sQAJyiD7y+cg@mail.gmail.com>
-X-MDF-HostID: 18
+	id S1753148AbaHXR5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2014 13:57:35 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:54580 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752935AbaHXR5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2014 13:57:34 -0400
+Received: by mail-wg0-f50.google.com with SMTP id n12so12012951wgh.21
+        for <git@vger.kernel.org>; Sun, 24 Aug 2014 10:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=d7c5oNvh58wx2uE67DaBPdeVtT9i2+IwAz91VGpvmzs=;
+        b=SQwUNU3xeIdZSJCwzjxPe05f2p+npdN6reInbbWaEfIoZ5B6Q1y/e28zLJDAhCCgeg
+         zk1b8PNim/SLzrxgl9LFJinsXH8ZCBveTc6R98MbDkaqIvhpCnpQ7t/hleuwIWWDX2Pd
+         q57Lc9bt3AE8qLddpGEiWl0i5Phx+m9qXBj6WrYoNzALJmNQgbGhvHpabMCicDu9DrSR
+         u91EDYfpu/VhA/B84aB+/q+9NABrMBN2vBp3S7tqZub9F3Ut80rWzmIsovyv+I3e33wu
+         7A2pJwyiZfKLp7OFccy3tqIGhlQLuJQ2hiPEmEljwYo2Cai66OhCK1zAUeJgtk+Qk9C0
+         41oQ==
+X-Received: by 10.180.218.4 with SMTP id pc4mr10495550wic.15.1408903052848;
+        Sun, 24 Aug 2014 10:57:32 -0700 (PDT)
+Received: from localhost.localdomain (4.Red-88-3-38.dynamicIP.rima-tde.net. [88.3.38.4])
+        by mx.google.com with ESMTPSA id fi1sm22712870wib.5.2014.08.24.10.57.31
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 24 Aug 2014 10:57:31 -0700 (PDT)
+X-Mailer: git-send-email 2.0.4.1.g0b8a4f9.dirty
+In-Reply-To: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255807>
 
-On 24/08/14 12:13, tsuna wrote:
-> On Sun, Aug 24, 2014 at 4:10 AM, Ramsay Jones
-> <ramsay@ramsay1.demon.co.uk> wrote:
->> Hmm, which version of OS X are we talking about?
->=20
-> OS X 10.9.4:
->=20
-> $ uname -a
-> Darwin damogran.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3
-> 21:27:35 PDT 2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64
+Signed-off-by: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+---
+ read-cache.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-Hmm, does 'uname -r' return 13.3.0 or 13.4.0? (or something else!)
-
->> config.mak.uname contains this:
->>
->>         ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
->>                 NO_STRLCPY =3D YesPlease
->>
->> What does ./configure put in config.mak.autogen for NO_STRLCPY?
->=20
-> NO_STRLCPY=3D
-
-OK, so I've got to my limit here! ;-) The conditional shown above
-(from config.mak.uname) should not have set NO_STRLCPY (assuming
-that 'uname -r' is returning 13.3.0 or 13.4.0). So, unless NO_STRLCPY
-is being set somewhere else (command-line, environment), this should
-just work. puzzled. :(
-
->=20
-> I guess I saw all the warnings because I did just a =E2=80=9Cgit pull=
- =E2=80=94rebase
-> && make -j8=E2=80=9D without running =E2=80=9Cmake configure && ./con=
-figure=E2=80=9D.
->=20
-
-Yes, but use of configure is supposed to be optional ...
-
-Hopefully, someone who actually knows OS X can solve the mystery.
-
-ATB,
-Ramsay Jones
+diff --git a/read-cache.c b/read-cache.c
+index 7f5645e..c1a9619 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1438,6 +1438,21 @@ static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
+ 	return ce;
+ }
+ 
++void check_ce_order(struct cache_entry *ce, struct cache_entry *next_ce)
++{
++	int name_compare = strcmp(ce->name, next_ce->name);
++	if (0 < name_compare)
++		die("Unordered stage entries in index");
++	if (!name_compare) {
++		if (!ce_stage(ce))
++			die("Multiple stage entries for merged file '%s'",
++				ce->name);
++		if (ce_stage(ce) >= ce_stage(next_ce))
++			die("Unordered stage entries for '%s'",
++				ce->name);
++	}
++}
++
+ /* remember to discard_cache() before reading a different cache! */
+ int read_index_from(struct index_state *istate, const char *path)
+ {
+@@ -1499,6 +1514,9 @@ int read_index_from(struct index_state *istate, const char *path)
+ 		ce = create_from_disk(disk_ce, &consumed, previous_name);
+ 		set_index_entry(istate, i, ce);
+ 
++		if (i > 0)
++			check_ce_order(istate->cache[i - 1], ce);
++
+ 		src_offset += consumed;
+ 	}
+ 	strbuf_release(&previous_name_buf);
+-- 
+2.0.4.1.g0b8a4f9.dirty
