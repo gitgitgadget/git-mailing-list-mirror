@@ -1,61 +1,80 @@
-From: =?ISO-8859-1?Q?G=E1bor_Szeder?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 1/5] git-prompt: do not look for refs/stash in $GIT_DIR
-Date: Sun, 24 Aug 2014 20:22:41 +0700
-Message-ID: <E1XLXkh-0002sL-IJ@iramx2.ira.uni-karlsruhe.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 24 15:39:48 2014
+From: Arjun Sreedharan <arjun024@gmail.com>
+Subject: [PATCH] bisect: save heap memory. allocate only the required amount
+Date: Sun, 24 Aug 2014 19:47:24 +0530
+Message-ID: <1408889844-5407-1-git-send-email-arjun024@gmail.com>
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 24 16:17:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLY1L-0003bj-EW
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 15:39:47 +0200
+	id 1XLYc2-0008Do-DN
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 16:17:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650AbaHXNj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2014 09:39:26 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:41499 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752573AbaHXNjZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Aug 2014 09:39:25 -0400
-X-Greylist: delayed 981 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Aug 2014 09:39:24 EDT
-Received: from [217.118.79.43] (helo=[192.168.43.124])
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1XLXkh-0002sL-IJ; Sun, 24 Aug 2014 15:22:47 +0200
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1408886567.
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1408887550.
+	id S1752760AbaHXORi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2014 10:17:38 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:49512 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752710AbaHXORh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2014 10:17:37 -0400
+Received: by mail-pa0-f42.google.com with SMTP id lf10so19426676pab.1
+        for <git@vger.kernel.org>; Sun, 24 Aug 2014 07:17:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=7YLp9w1p+geavD+aOq8CHnneofGLr1z3AATtLu6cDcY=;
+        b=y10dem4YPvhs1pUAd2Mtha9LQLfWeA+0CFswm47QYxLfERW9pIKyn1OUh20o+0Z99W
+         ng8rb2Non2YojyZqFLvMT5DGPM1yDCI9usT+8lagHWJj68dlCTywQKNgUZUjOblpJiyj
+         oMFv1GtLOezhqijn0vBfc1b/i0UKKJPNvHvm9E1MDiOJdASldkuIMV+ov6vrb41A4ciZ
+         15dn9vem1dLPBJOWuN3q+/Yn4C+QnT1LWlp0ngr7zd+XVRt312SVmt/v0RGtt+tCOP7F
+         hGro5ZAsfqboQ1JoNjTXn30QtIVb30Sfj2CsfbA5GRKvGkCi4gAHGhAHhXoCBYlIoIFe
+         Zcjw==
+X-Received: by 10.66.141.39 with SMTP id rl7mr21210369pab.8.1408889856671;
+        Sun, 24 Aug 2014 07:17:36 -0700 (PDT)
+Received: from localhost.localdomain ([117.204.88.13])
+        by mx.google.com with ESMTPSA id g6sm125059502pat.2.2014.08.24.07.17.34
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 24 Aug 2014 07:17:35 -0700 (PDT)
+X-Mailer: git-send-email 1.7.11.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255791>
 
-SGksCgpPbiBBdWcgMjMsIDIwMTQgMTI6MjYgUE0sIEplZmYgS2luZyA8cGVmZkBwZWZmLm5ldD4g
-d3JvdGU6Cj4gU2luY2UgZGQwYjcyYyAoYmFzaCBwcm9tcHQ6IHVzZSBiYXNoIGJ1aWx0aW5zIHRv
-IGNoZWNrIHN0YXNoIAo+IHN0YXRlLCAyMDExLTA0LTAxKSwgZ2l0LXByb21wdCBjaGVja3Mgd2hl
-dGhlciB3ZSBoYXZlIGEgCj4gc3Rhc2ggYnkgbG9va2luZyBmb3IgJEdJVF9ESVIvcmVmcy9zdGFz
-aC4gR2VuZXJhbGx5IGV4dGVybmFsIAo+IHByb2dyYW1zIHNob3VsZCBuZXZlciBkbyB0aGlzLCBi
-ZWNhdXNlIHRoZXkgd291bGQgbWlzcyAKPiBwYWNrZWQtcmVmcy4KCk5vdCBzdXJlIHdoZXRoZXIg
-dGhlIHByb21wdCBzY3JpcHQgaXMgZXh0ZXJuYWwgcHJvZ3JhbSBvciBub3QsIGJ1dCBkb2Vzbid0
-IG1hdHRlciwgdGhpcyBpcyB0aGUgcmlnaHQgdGhpbmcgdG8gZG8uCgo+IFRoYXQgY29tbWl0IGNs
-YWltcyB0aGF0IHBhY2tlZC1yZWZzIGRvZXMgbm90IHBhY2sgCj4gcmVmcy9zdGFzaCwgYnV0IHRo
-YXQgaXMgbm90IHF1aXRlIHRydWUuIEl0IGRvZXMgcGFjayB0aGUgCj4gcmVmLCBidXQgZHVlIHRv
-IGEgYnVnLCBmYWlscyB0byBwcnVuZSB0aGUgcmVmLiBXaGVuIHdlIGZpeCAKPiB0aGF0IGJ1Zywg
-d2Ugd291bGQgd2FudCB0byBiZSBkb2luZyB0aGUgcmlnaHQgdGhpbmcgaGVyZS4gCj4KPiBTaWdu
-ZWQtb2ZmLWJ5OiBKZWZmIEtpbmcgPHBlZmZAcGVmZi5uZXQ+IAo+IC0tLSAKPiBJIGtub3cgd2Ug
-YXJlIHByZXR0eSBzZW5zaXRpdmUgdG8gZm9ya3MgaW4gdGhlIHByb21wdCBjb2RlIChhZnRlciBh
-bGwsIAo+IHRoYXQgd2FzIHRoZSBwb2ludCBvZiBkZDBiNzJjKS4gVGhpcyBwYXRjaCBpcyBlc3Nl
-bnRpYWxseSBhIHJldmVyc2lvbiBvZiAKPiB0aGlzIGh1bmsgb2YgZGQwYjcyYywgYW5kIGlzIGRl
-ZmluaXRlbHkgc2FmZS4KCkknbSBub3Qgc3VyZSwgYnV0IGlmIEkgcmVtZW1iZXIgY29ycmVjdGx5
-IChkb24ndCBoYXZlIHRoZSBtZWFucyB0byBjaGVjayBpdCBhdCB0aGUgbW9tZW50LCBzb3JyeSkg
-aW4gdGhhdCBjb21taXQgSSBhbHNvIGFkZGVkIGEgJ2dpdCBwYWNrLXJlZicgaW52b2NhdGlvbiB0
-byB0aGUgcmVsZXZhbnQgdGVzdChzPykgdG8gZ3VhcmQgdXMgYWdhaW5zdCBicmVha2FnZXMgZHVl
-IHRvIGNoYW5nZXMgaW4gJ2dpdCBwYWNrLXJlZnMnLsKgIElmIHRoYXQgaXMgc28sIHRoZW4gSSB0
-aGluayB0aG9zZSBpbnZvY2F0aW9ucyBzaG91bGQgYmUgcmVtb3ZlZCBhcyB3ZWxsLCBhcyB0aGV5
-J2xsIGJlY29tZSB1c2VsZXNzLgoKQmVzdCwKR8OhYm9y
+Find and allocate the required amount instead of
+allocating extra 100 bytes
+
+Signed-off-by: Arjun Sreedharan <arjun024@gmail.com>
+---
+ bisect.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index d6e851d..c96aab0 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -215,10 +215,13 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
+ 	}
+ 	qsort(array, cnt, sizeof(*array), compare_commit_dist);
+ 	for (p = list, i = 0; i < cnt; i++) {
+-		struct name_decoration *r = xmalloc(sizeof(*r) + 100);
++		char name[100];
++		sprintf(name, "dist=%d", array[i].distance);
++		int name_len = strlen(name);
++		struct name_decoration *r = xmalloc(sizeof(*r) + name_len);
+ 		struct object *obj = &(array[i].commit->object);
+ 
+-		sprintf(r->name, "dist=%d", array[i].distance);
++		memcpy(r->name, name, name_len + 1);
+ 		r->next = add_decoration(&name_decoration, obj, r);
+ 		p->item = array[i].commit;
+ 		p = p->next;
+-- 
+1.7.11.7
