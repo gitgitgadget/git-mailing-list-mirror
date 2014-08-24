@@ -1,8 +1,7 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH v5 1/4] convert: Refactor would_convert_to_git() to single arg 'path'
-Date: Sun, 24 Aug 2014 18:07:43 +0200
-Message-ID: <1408896466-23149-2-git-send-email-prohaska@zib.de>
-References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
+Subject: [PATCH v5 0/4] Stream fd to clean filter; GIT_MMAP_LIMIT, GIT_ALLOC_LIMIT with git_parse_ulong()
+Date: Sun, 24 Aug 2014 18:07:42 +0200
+Message-ID: <1408896466-23149-1-git-send-email-prohaska@zib.de>
 Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
 	john@keeping.me.uk, schacon@gmail.com,
 	Steffen Prohaska <prohaska@zib.de>
@@ -13,72 +12,47 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLaLD-0003oS-Cu
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 18:08:27 +0200
+	id 1XLaLD-0003oS-Uc
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 18:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753123AbaHXQIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2014 12:08:18 -0400
-Received: from mailer.zib.de ([130.73.108.11]:49592 "EHLO mailer.zib.de"
+	id S1753128AbaHXQIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Aug 2014 12:08:22 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49612 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752959AbaHXQIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2014 12:08:17 -0400
+	id S1752959AbaHXQIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2014 12:08:21 -0400
 Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7OG816q016854;
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7OG81if016849;
 	Sun, 24 Aug 2014 18:08:01 +0200 (CEST)
 Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7OG81sD016835;
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7OG81sC016835;
 	Sun, 24 Aug 2014 18:08:01 +0200 (CEST)
 X-Mailer: git-send-email 2.0.1.448.g1eafa63
-In-Reply-To: <1408896466-23149-1-git-send-email-prohaska@zib.de>
-X-Miltered: at mailer.zib.de with ID 53FA0DE1.001 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 53FA0DE1.001 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 53FA0DE1.001 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-Miltered: at mailer.zib.de with ID 53FA0DE1.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 53FA0DE1.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 53FA0DE1.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
 X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255800>
 
-It is only the path that matters in the decision whether to filter or
-not.  Clarify this by making path the single argument of
-would_convert_to_git().
+Changes since v4: use git_parse_ulong() to parse env vars.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- convert.h   | 5 ++---
- sha1_file.c | 2 +-
- 2 files changed, 3 insertions(+), 4 deletions(-)
+Steffen Prohaska (4):
+  convert: Refactor would_convert_to_git() to single arg 'path'
+  Change GIT_ALLOC_LIMIT check to use git_parse_ulong()
+  Introduce GIT_MMAP_LIMIT to allow testing expected mmap size
+  convert: Stream from fd to required clean filter instead of mmap
 
-diff --git a/convert.h b/convert.h
-index 0c2143c..c638b33 100644
---- a/convert.h
-+++ b/convert.h
-@@ -40,10 +40,9 @@ extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int renormalize_buffer(const char *path, const char *src, size_t len,
- 			      struct strbuf *dst);
--static inline int would_convert_to_git(const char *path, const char *src,
--				       size_t len, enum safe_crlf checksafe)
-+static inline int would_convert_to_git(const char *path)
- {
--	return convert_to_git(path, src, len, NULL, checksafe);
-+	return convert_to_git(path, NULL, 0, NULL, 0);
- }
- 
- /*****************************************************************
-diff --git a/sha1_file.c b/sha1_file.c
-index 3f70b1d..00c07f2 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3144,7 +3144,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
- 	if (!S_ISREG(st->st_mode))
- 		ret = index_pipe(sha1, fd, type, path, flags);
- 	else if (size <= big_file_threshold || type != OBJ_BLOB ||
--		 (path && would_convert_to_git(path, NULL, 0, 0)))
-+		 (path && would_convert_to_git(path)))
- 		ret = index_core(sha1, fd, size, type, path, flags);
- 	else
- 		ret = index_stream(sha1, fd, size, type, path, flags);
+ convert.c             | 60 +++++++++++++++++++++++++++++++++++++++++++++------
+ convert.h             | 10 ++++++---
+ sha1_file.c           | 50 +++++++++++++++++++++++++++++++++++++++---
+ t/t0021-conversion.sh | 24 ++++++++++++++++-----
+ t/t1050-large.sh      |  2 +-
+ wrapper.c             | 16 ++++++++------
+ 6 files changed, 138 insertions(+), 24 deletions(-)
+
 -- 
 2.1.0.8.gd3b6067
