@@ -1,77 +1,92 @@
-From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-Subject: Re: [PATCH 2/2] Loop index increases monotonically when reading
- unmerged entries
-Date: Sun, 24 Aug 2014 20:04:22 +0200
-Message-ID: <CAPuZ2NEPcRm4S8m76kJ+8L7zR2RiVwu3Z6bNbZgfzAcVTYgOKA@mail.gmail.com>
-References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
-	<1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
-	<1408903047-8302-2-git-send-email-jsorianopastor@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] Undefine strlcpy if needed.
+Date: Sun, 24 Aug 2014 21:49:54 +0200
+Message-ID: <53FA41E2.9060907@web.de>
+References: <1408854741-13956-1-git-send-email-tsunanet@gmail.com> <1408854930-14322-1-git-send-email-tsunanet@gmail.com> <53F9C818.8020607@ramsay1.demon.co.uk> <CAFKYj4dQhGgpS9Vf=5qoku49jEkR0ko7TuBNu4sQAJyiD7y+cg@mail.gmail.com> <53FA1050.2060309@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 24 20:04:33 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	tsuna <tsunanet@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 24 21:51:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLc9Y-0007A7-KH
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 20:04:32 +0200
+	id 1XLdox-0000ix-Fh
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Aug 2014 21:51:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152AbaHXSEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Aug 2014 14:04:24 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:57684 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751148AbaHXSEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Aug 2014 14:04:23 -0400
-Received: by mail-pd0-f170.google.com with SMTP id g10so18381078pdj.15
-        for <git@vger.kernel.org>; Sun, 24 Aug 2014 11:04:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=e+R8nPUdkpaWzDyt0f7QRtQbN+C2nwsygXb9n4mOOLE=;
-        b=ih/tBcYv8YmYdIoM1sxQ2MM7iFuplvJOHhHTpRUIxiQwBC4Zws+uvT7QOhvUSPN1ta
-         OxnUi1tcbqplQT/iQxo8AST02MhtHEgCeawPRSFSZb4l/JVqEh98dJU57cmu9oUlB1xl
-         0y/sQQdDDk/5rNStBH7psg85icb3/7G1WT4KVBPkdWBbjvS480DOdzDJvCXRBwXykipb
-         MGf8LNQvk6NESn2LezP8syIJLMotUbNux6YkiYH4UPkQZzuwEXWbf0NdwJan9fmymNOk
-         98lPiqN9dcwD4TEKMoBG+S9dCAKoZbZQ0IjKBakSwrZ7m4a7TRCnjZ2JGvsMUqEcQjcE
-         Bupg==
-X-Received: by 10.68.215.67 with SMTP id og3mr22361808pbc.30.1408903462754;
- Sun, 24 Aug 2014 11:04:22 -0700 (PDT)
-Received: by 10.70.37.2 with HTTP; Sun, 24 Aug 2014 11:04:22 -0700 (PDT)
-In-Reply-To: <1408903047-8302-2-git-send-email-jsorianopastor@gmail.com>
+	id S1753368AbaHXTvR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Aug 2014 15:51:17 -0400
+Received: from mout.web.de ([212.227.15.4]:57064 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753281AbaHXTuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Aug 2014 15:50:00 -0400
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0LqGCu-1WiCJg2FE0-00dlWP; Sun, 24 Aug 2014 21:49:56
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <53FA1050.2060309@ramsay1.demon.co.uk>
+X-Provags-ID: V03:K0:kOUT43b2parQk4Nb1IAZZi+L+fvnQsFpwz3fpybB6lOFhBHGG4V
+ BjAhURYjiHXYKg31JORQTm4AtCXAXMae0dQ8+8YT5evKwGvJPt5g1HTvgtKRrSFmuan3oP3
+ dh6JSMVTm9m8juc+k74rtqN6COuzGpQlPiCOInfp3VbMrBqIaqjrQ8a7i0NVe05SmCwbFX8
+ McOSvg/0dtfEKmREXZFCw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255813>
 
-I think this line is dangerous, if add_cache_entry is not able to
-remove higher-stages it will be looping forever, as happens in the
-case of this thread.
-I cannot see why it's even needed, and removing it doesn't break any test.
+On 2014-08-24 18.18, Ramsay Jones wrote:
+> On 24/08/14 12:13, tsuna wrote:
+>> On Sun, Aug 24, 2014 at 4:10 AM, Ramsay Jones
+>> <ramsay@ramsay1.demon.co.uk> wrote:
+>>> Hmm, which version of OS X are we talking about?
+>>
+>> OS X 10.9.4:
+>>
+>> $ uname -a
+>> Darwin damogran.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  =
+3
+>> 21:27:35 PDT 2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64
+>=20
+> Hmm, does 'uname -r' return 13.3.0 or 13.4.0? (or something else!)
+>=20
+>>> config.mak.uname contains this:
+>>>
+>>>         ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
+>>>                 NO_STRLCPY =3D YesPlease
+>>>
+>>> What does ./configure put in config.mak.autogen for NO_STRLCPY?
+>>
+>> NO_STRLCPY=3D
+>=20
+> OK, so I've got to my limit here! ;-) The conditional shown above
+> (from config.mak.uname) should not have set NO_STRLCPY (assuming
+> that 'uname -r' is returning 13.3.0 or 13.4.0). So, unless NO_STRLCPY
+> is being set somewhere else (command-line, environment), this should
+> just work. puzzled. :(
+>=20
+>>
+>> I guess I saw all the warnings because I did just a =E2=80=9Cgit pul=
+l =E2=80=94rebase
+>> && make -j8=E2=80=9D without running =E2=80=9Cmake configure && ./co=
+nfigure=E2=80=9D.
+>>
+>=20
+> Yes, but use of configure is supposed to be optional ...
+>=20
+> Hopefully, someone who actually knows OS X can solve the mystery.
+>=20
+> ATB,
+> Ramsay Jones
 
-On Sun, Aug 24, 2014 at 7:57 PM, Jaime Soriano Pastor
-<jsorianopastor@gmail.com> wrote:
-> Signed-off-by: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-> ---
->  read-cache.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/read-cache.c b/read-cache.c
-> index c1a9619..3d70386 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1971,7 +1971,6 @@ int read_index_unmerged(struct index_state *istate)
->                 if (add_index_entry(istate, new_ce, 0))
->                         return error("%s: cannot drop to stage #0",
->                                      new_ce->name);
-> -               i = index_name_pos(istate, new_ce->name, len);
->         }
->         return unmerged;
->  }
-> --
-> 2.0.4.1.g0b8a4f9.dirty
->
+I need to admit that I can not reproduce the warning here,
+uname -r gives "13.3.0"
+
+Could it be that something is special on your machine ?
+Something in the environment  ?
+Does a fresh clone help ?
