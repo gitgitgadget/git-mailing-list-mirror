@@ -1,63 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Check order when reading index
-Date: Mon, 25 Aug 2014 13:52:17 -0700
-Message-ID: <CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
-References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com> <1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
- <xmqqvbpgmqmh.fsf@gitster.dls.corp.google.com> <20140825194430.GI30953@peff.net>
+Subject: Re: [PATCH 2/3] Makefile: use `find` to determine static header dependencies
+Date: Mon, 25 Aug 2014 14:03:26 -0700
+Message-ID: <xmqqppfol1sx.fsf@gitster.dls.corp.google.com>
+References: <20140822042716.GE27992@peff.net>
+	<20140822043303.GB18192@peff.net> <20140825194641.GS20185@google.com>
+	<20140825200042.GJ30953@peff.net> <20140825204516.GT20185@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jaime Soriano Pastor <jsorianopastor@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 22:52:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 23:03:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XM1Fs-0008Fu-Lx
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 22:52:45 +0200
+	id 1XM1QX-0003p6-P2
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 23:03:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933335AbaHYUwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 16:52:40 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:39841 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756571AbaHYUwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 16:52:39 -0400
-Received: by mail-la0-f54.google.com with SMTP id hz20so14007830lab.13
-        for <git@vger.kernel.org>; Mon, 25 Aug 2014 13:52:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=c1LCy8OHmC5V/trdHt6XMBfP6eO3xk4jnTp9/vempA8=;
-        b=pHjoI8ohbqgluo4T00dPs6j9zjfj7ltyislt40QcXIjsZtuVghzyvDZ1gutkaICo87
-         SSZH0BkmF9Ss3F2qsWHtIVnaolPGe86JOidCN13Ar1TAAQ4Hdd47uPFKNXMIuUO9APBX
-         ShiH0aVFJVFE1Gwc3v4iHTjOOFiYxHjGwclSn+xU0Zi6gckDXbooNs4y41Zrx0SdVFa8
-         O6yIJIZNV8fh2UQYXBisQLoLghz15cr7iLphLObZ5WkRxCBHqmISTa8HCpFxUhbh0FP3
-         oLxpKzmDsCcCRDcybsKvsXFHlz7VOr3RAdoVRQoulY7QVlLCb5DqG9Ni1DYwg6Qn3g92
-         osAg==
-X-Received: by 10.153.11.162 with SMTP id ej2mr23378575lad.15.1408999957611;
- Mon, 25 Aug 2014 13:52:37 -0700 (PDT)
-Received: by 10.112.97.177 with HTTP; Mon, 25 Aug 2014 13:52:17 -0700 (PDT)
-In-Reply-To: <20140825194430.GI30953@peff.net>
-X-Google-Sender-Auth: fxP7qosaWEzaof4wGr8C2B6h0T8
+	id S1755185AbaHYVDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2014 17:03:42 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50217 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751000AbaHYVDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2014 17:03:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2E9235BC7;
+	Mon, 25 Aug 2014 17:03:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YfCINZ6xtvsjxHNaeqi4qS3hYqw=; b=Oax2uJ
+	RqZ0kXexZO7duiLTIQCV0zkWNYS5czhG6GZx9Vr9+MJm1DhdHCNB9UEYRgE6sgIS
+	YJoZ3F97lOIdmhHZMtrifRwOzh830TrmHiOd3cAVypbTv0gaf2tUpKjSlIq1q6mq
+	bBnpLW0s9cfCzBJAAEutTDDMFzd4Ghp/5/RiQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pJ+Wjw03YVh2VBt9cy6pgDVxn4gpsrrh
+	0WM8SteB+V3W5HaRFserrNZ5l4uul4/ai1QsnS5w2DE05xy+0yFLb6O/46g0Z9d6
+	6FujQMqObuK6IJneElFdV1gfsl6J5bamS0sVmSSxvpO7GRt/9xfvvx1CEWgQA+67
+	1MjWhhtwQAI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 986AF35BC6;
+	Mon, 25 Aug 2014 17:03:40 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D556935BB8;
+	Mon, 25 Aug 2014 17:03:28 -0400 (EDT)
+In-Reply-To: <20140825204516.GT20185@google.com> (Jonathan Nieder's message of
+	"Mon, 25 Aug 2014 13:45:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 435064F0-2C9B-11E4-8981-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255867>
 
-On Mon, Aug 25, 2014 at 12:44 PM, Jeff King <peff@peff.net> wrote:
-> For my own curiosity, how do you get into this situation, and what does
-> it mean to have multiple stage#1 entries for the same path? What would
-> "git cat-file :1:path" output?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-That is how we natively (read: not with the funky "virtual" stuff
-merge-recursive does) express a merge with multiple merge bases.
-You also should be able to read this in the way how "git merge" invokes
-merge strategies (one or more bases, double-dash and then current
-HEAD and the other branches). I think there are some tests in 3way
-merge tests that checks what should happen when our HEAD matches
-one of the stage #1 while their branch matches a different one of the
-stage #1, too.
+> Jeff King wrote:
+>
+>> It is unfortunately easy for our static header list to grow
+>> stale, as none of the regular developers make use of it.
+>> Instead of trying to keep it up to date, let's invoke "find"
+>> to generate the list dynamically.
+>
+> Yep, I like this.
+>
+> It does mean that people who run "make pot" have to be a little more
+> vigilant about not keeping around extra .h files by mistake.  But I
+> trust them.
+>
+> [...]
+>> +LIB_H = $(shell $(FIND) . \
+>> +	-name .git -prune -o \
+>> +	-name t -prune -o \
+>> +	-name Documentation -prune -o \
+>> +	-name '*.h' -print)
+>
+> Tiny nit: I might use
+>
+> 	$(shell $(FIND) * \
+> 		-name . -o
+> 		-name '.*' -prune -o \
+> 		-name t -prune -o \
+> 		-name Documentation -prune -o \
+> 		-name '*.h' -print)
+>
+> or
+>
+> 	$(shell $(FIND) * \
+> 		-name '.?*' -prune -o \
+> 		-name t -prune -o \
+> 		-name Documentation -prune -o \
+> 		-name '*.h' -print)
+>
+> to avoid spending time looking in other dot-directories like .svn,
+> .hg, or .snapshot.
+
+Wouldn't it be sufficient to start digging not from "*" but from
+"??*"?  That is, something like
+
+	find ??* \( -name Documentation -o -name .\?\* \) -prune -o -name \*.h
+
+;-)
+
+> With or without such a change,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
