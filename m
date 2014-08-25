@@ -1,57 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 2/4] Change GIT_ALLOC_LIMIT check to use
- git_parse_ulong()
-Date: Mon, 25 Aug 2014 11:12:01 -0400
-Message-ID: <20140825151200.GC28176@peff.net>
-References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
- <1408896466-23149-3-git-send-email-prohaska@zib.de>
- <20140825113856.GA17288@peff.net>
- <7D29D002-6357-4060-90DF-3993D259C475@zib.de>
+From: Benjamin Siegmund <rialgar42@gmail.com>
+Subject: Help improving the future of debugging
+Date: Mon, 25 Aug 2014 17:30:02 +0200
+Message-ID: <CADkk7MOAMrogJ2OUPfzpwJ6g1vTNNhT5ZaZZAa6X5mq3ser-oA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>, pclouds@gmail.com,
-	john@keeping.me.uk, schacon@gmail.com
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Aug 25 17:12:19 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 25 17:30:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLvwL-0007ka-2n
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 17:12:13 +0200
+	id 1XLwDj-0006e8-Ft
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 17:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756036AbaHYPMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 11:12:06 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58462 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754586AbaHYPMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 11:12:03 -0400
-Received: (qmail 17441 invoked by uid 102); 25 Aug 2014 15:12:02 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Aug 2014 10:12:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Aug 2014 11:12:01 -0400
-Content-Disposition: inline
-In-Reply-To: <7D29D002-6357-4060-90DF-3993D259C475@zib.de>
+	id S1756046AbaHYPaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2014 11:30:05 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:48416 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755473AbaHYPaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2014 11:30:04 -0400
+Received: by mail-la0-f41.google.com with SMTP id s18so13418346lam.28
+        for <git@vger.kernel.org>; Mon, 25 Aug 2014 08:30:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=FlyH0KiyvGYQ28gAUlHNZUdGDiaEJfvmpQYLSQvJQLM=;
+        b=AkCChn6P5jYOksbBfccbOCTTzqo9Q72C7eM/1HgWOk33ipxw0nIgUB2fow9Ah/KFge
+         NyzrrIilHKVhfARVfBuXhs0a0d1pxJhWfKDO6jnj52B2imCM57qdQpbJibIO6Q3luFOM
+         OUWNYvrfutv6IUohjSGUCsS7mTOH1nWK3bENniDaROizWU73Bt1jjfcPqbTFEjy2x/Pd
+         ABeDoZ3IzFLD5tTMvgQg/HMQAC4MyA5KzDc/w2CqR28qGhWUDRwJOUViKUyvp3zEDInv
+         L/WSiSu/Zv3FgZfSzhP00C+oVK4QkZZ8aCNQvfa8rQTCPd7kGQsp3L0nvLW2Z4Iru5ZM
+         dkTg==
+X-Received: by 10.152.44.162 with SMTP id f2mr3796924lam.84.1408980602904;
+ Mon, 25 Aug 2014 08:30:02 -0700 (PDT)
+Received: by 10.113.2.34 with HTTP; Mon, 25 Aug 2014 08:30:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255832>
 
-On Mon, Aug 25, 2014 at 05:06:22PM +0200, Steffen Prohaska wrote:
+Dear Git Developers,
 
-> I think it's reasonable that GIT_ALLOC_LIMIT=0 means "no limit", so that
-> the limit can easily be disabled temporarily.
+since 1974 researchers and software developers try to ease software
+debugging. Over the last years, they created many new tools and
+formalized methods. We are interested if these advancements have
+reached professional software developers and how they influenced their
+approach. To find this out, we are conducting an Online Survey for
+Software Developers. From the results we expect new insights into
+debugging practice that help us to suggest new directions for future
+research. So if you are a software developer or know any software
+developers, you can really help us.  The survey is, of course, fully
+anonymous and will take about 15 minutes to fill out. Feel free to
+redistribute this message to anyone who you think might be interested.
+The survey can be reached at:
 
-IMHO, GIT_ALLOC_LIMIT= (i.e., the empty string) would be a good way to
-say that (and I guess that even works currently, due to the way atoi
-works, but I suspect git_parse_ulong might complain). It is probably not
-worth worrying about too much. This is not even a user-facing interface,
-and the test scripts just set it to 0.
 
-So I'd be OK going that direction, or just leaving it as-is.
+http://www.uni-potsdam.de/skopie-up/index.php/689349
 
--Peff
+
+Thank you for your interest,
+Benjamin Siegmund
