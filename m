@@ -1,112 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/4] convert: Refactor would_convert_to_git() to single arg 'path'
-Date: Mon, 25 Aug 2014 15:55:52 -0700
-Message-ID: <xmqqvbpgji13.fsf@gitster.dls.corp.google.com>
-References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
-	<1408896466-23149-2-git-send-email-prohaska@zib.de>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Show containing branches in log?
+Date: Mon, 25 Aug 2014 18:35:01 -0500
+Message-ID: <CAHd499CrxakA6+X8M0Ty4YtrRWjtsBUpwDW132NkSmp650SH+w@mail.gmail.com>
+References: <CAHd499A78BRVawWSHNnzJcD1Ca7RfFeEnJf0SB7py1MD5qwL0g@mail.gmail.com>
+	<CAA787rm=Pjy-GGzxCcy=NQNLUOCrTt4hYWS9iND8EAxxs67SuQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
-	john@keeping.me.uk, schacon@gmail.com
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Tue Aug 26 00:56:11 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+X-From: git-owner@vger.kernel.org Tue Aug 26 01:35:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XM3BI-0008Ar-Uw
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 00:56:09 +0200
+	id 1XM3nJ-0002si-4a
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 01:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754256AbaHYW4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 18:56:04 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53013 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751780AbaHYW4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 18:56:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2DD7B35246;
-	Mon, 25 Aug 2014 18:56:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gXcOnMdTY85A4PIT4cMvczVAd/g=; b=w7bGIK
-	mbFv8Vvz6qX6MfR1r+aaknfoabPW8gwU7RWDnFLt70SJ3ZRurXeG6p0f+4SIungD
-	yEWQEJGiU7WilI6iIPTvH6vxo5FUMg0pHds3kMoOtXlqYZQbS+H7Gr2lOfcLcme+
-	NlmhiPRgWMJNJEHA/x8bemu15PCbkTaBPbG7I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V8LHV/N5qdrQHqO9FPRtCJH4m3EthDuA
-	9gNkK8c3tosm6fE9ln09ykJ6wo3kWcYW10ML0jxS5OiIN7lCnMQxSbDsTTVNKukz
-	j1ToxIgs+yjtss7dGiF6LfB4QQX3f4sHhmZZqvvU4fxMM2d9s9XqsNGZ1d4qaunZ
-	mokdUmAFd/I=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 239B935244;
-	Mon, 25 Aug 2014 18:56:02 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 016943523A;
-	Mon, 25 Aug 2014 18:55:53 -0400 (EDT)
-In-Reply-To: <1408896466-23149-2-git-send-email-prohaska@zib.de> (Steffen
-	Prohaska's message of "Sun, 24 Aug 2014 18:07:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F7BA978A-2CAA-11E4-B3BE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756746AbaHYXfR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2014 19:35:17 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:62161 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755221AbaHYXfF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2014 19:35:05 -0400
+Received: by mail-vc0-f174.google.com with SMTP id la4so15964265vcb.19
+        for <git@vger.kernel.org>; Mon, 25 Aug 2014 16:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=yboMNF6P558n39uELiR8bMyyfbJan5qhh0XnUKKdSpw=;
+        b=hgEAF2bMneWIq9H7/IyU3t1UFPv1+zZdzHiVsupoZ1x+r+rQeRXM/iinQZNdzwyTHh
+         18vbMICJSGuiSUTUduDzQIHXU7ynWRpfaEWokI8KFJSLYu5wluGzloieDqOvXA3cuIxm
+         U/8SslVlIDkhYxkWgtuaJscPl7gQiA6Ma1vT0MsczDauIvwSev4gLIL4Y408egLKcZEv
+         wm2d1nQVUfbWKCTWetbPCUtDMVl7o2nBM7bZPiw/UUzzCMFo2tBRLlTC6VuXCuoqE8z6
+         JzRgvO5Cs6+J1sJhotG8Wr7CqELqhhux1ZamQkm3DaCAs3SV2l1P2ozKMQN+qZRMaAcq
+         sWtw==
+X-Received: by 10.220.119.8 with SMTP id x8mr4148376vcq.62.1409009703399; Mon,
+ 25 Aug 2014 16:35:03 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.201 with HTTP; Mon, 25 Aug 2014 16:35:01 -0700 (PDT)
+In-Reply-To: <CAA787rm=Pjy-GGzxCcy=NQNLUOCrTt4hYWS9iND8EAxxs67SuQ@mail.gmail.com>
+X-Google-Sender-Auth: RXOpkRHZAv4oTZF7TnfkFJIYgGo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255876>
 
-Steffen Prohaska <prohaska@zib.de> writes:
-
-> It is only the path that matters in the decision whether to filter or
-> not.  Clarify this by making path the single argument of
-> would_convert_to_git().
+On Thu, Jul 3, 2014 at 2:41 PM, =C3=98yvind A. Holm <sunny@sunbase.org>=
+ wrote:
+> On 2 July 2014 16:50, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+>> I know that with the `git branch` command I can determine which
+>> branches contain a commit. Is there a way to represent this
+>> graphically with `git log`? Sometimes I just have a commit, and I ne=
+ed
+>> to find out what branch contains that commit. The reason why `git
+>> branch --contains` doesn't solve this problem for me is that it name=
+s
+>> almost all branches because of merge commits. Too much ancestry has
+>> been built since this commit, so there is no way to find the "closes=
+t"
+>> branch that contains that commit.
+>>
+>> Is there a way to graphically see what is the "nearest" named ref to
+>> the specified commit in the logs?
 >
-> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> ---
-
-I've retitled this as:
-
-    convert: drop arguments other than 'path' from would_convert_to_git()
-
-to match the output from "git shortlog --since=3.months --no-merges"
-by using lowercase 'd' after the "convert: " area name, and also
-more importantly avoid calling "refactor" which this change is not.
-
-Thanks.
-
->  convert.h   | 5 ++---
->  sha1_file.c | 2 +-
->  2 files changed, 3 insertions(+), 4 deletions(-)
+> I have created a script for just this functionality which I use very
+> often, and have created a gist with the files at
+> <https://gist.github.com/sunny256/2eb583f21e0ffcfe994f>, I think it
+> should solve your problem. It contains these files:
 >
-> diff --git a/convert.h b/convert.h
-> index 0c2143c..c638b33 100644
-> --- a/convert.h
-> +++ b/convert.h
-> @@ -40,10 +40,9 @@ extern int convert_to_working_tree(const char *path, const char *src,
->  				   size_t len, struct strbuf *dst);
->  extern int renormalize_buffer(const char *path, const char *src, size_t len,
->  			      struct strbuf *dst);
-> -static inline int would_convert_to_git(const char *path, const char *src,
-> -				       size_t len, enum safe_crlf checksafe)
-> +static inline int would_convert_to_git(const char *path)
->  {
-> -	return convert_to_git(path, src, len, NULL, checksafe);
-> +	return convert_to_git(path, NULL, 0, NULL, 0);
->  }
->  
->  /*****************************************************************
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 3f70b1d..00c07f2 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -3144,7 +3144,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
->  	if (!S_ISREG(st->st_mode))
->  		ret = index_pipe(sha1, fd, type, path, flags);
->  	else if (size <= big_file_threshold || type != OBJ_BLOB ||
-> -		 (path && would_convert_to_git(path, NULL, 0, 0)))
-> +		 (path && would_convert_to_git(path)))
->  		ret = index_core(sha1, fd, size, type, path, flags);
->  	else
->  		ret = index_stream(sha1, fd, size, type, path, flags);
+>   git-wn
+>
+> "wn" means "What's New" and will create a visual graph of all commits
+> which has a specified ref as ancestor. It also needs the following
+> script, just put it into your $PATH somewhere:
+>
+>   git-lc
+>
+> "lc" means "List branches Containing this commit" and generates a lis=
+t
+> of all branches containing a specified ref.
+>
+> The files originates from <https://github.com/sunny256/utils>, but
+> I've modified them in the gist to make your life easier. :)
+>
+> Hope that helps,
+> =C3=98yvind
+
+I'm finally getting around to trying this out but it isn't working on
+Windows because there is no fmt command in msysgit. Do you have a
+workaround I can use? Thanks.
