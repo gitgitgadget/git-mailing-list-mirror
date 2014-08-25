@@ -1,93 +1,121 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] Undefine strlcpy if needed.
-Date: Mon, 25 Aug 2014 12:16:04 +0100
-Message-ID: <53FB1AF4.1000201@ramsay1.demon.co.uk>
-References: <1408854741-13956-1-git-send-email-tsunanet@gmail.com> <1408854930-14322-1-git-send-email-tsunanet@gmail.com> <53F9C818.8020607@ramsay1.demon.co.uk> <CAFKYj4dQhGgpS9Vf=5qoku49jEkR0ko7TuBNu4sQAJyiD7y+cg@mail.gmail.com> <53FA1050.2060309@ramsay1.demon.co.uk> <53FA41E2.9060907@web.de> <CAFKYj4eD8CXzafSC5LWpmaen=d6uw7yn0gZXFLG7VGLQwZdUWA@mail.gmail.com> <53FA8438.5070107@ramsay1.demon.co.uk> <CAFKYj4cDJhiVfdmzZ5KnNASBEp9bkj0asxANPv43QcMQP06z9A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 2/4] Change GIT_ALLOC_LIMIT check to use
+ git_parse_ulong()
+Date: Mon, 25 Aug 2014 07:38:56 -0400
+Message-ID: <20140825113856.GA17288@peff.net>
+References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
+ <1408896466-23149-3-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: tsuna <tsunanet@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 13:16:19 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	pclouds@gmail.com, john@keeping.me.uk, schacon@gmail.com
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Aug 25 13:39:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLsFz-0001Mk-4U
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 13:16:15 +0200
+	id 1XLsc7-0003MI-Q6
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 13:39:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430AbaHYLQJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2014 07:16:09 -0400
-Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:47666 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752690AbaHYLQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 07:16:08 -0400
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 522FAA64FDD;
-	Mon, 25 Aug 2014 12:16:06 +0100 (BST)
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 09BB6A64FDA;
-	Mon, 25 Aug 2014 12:16:06 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
-	Mon, 25 Aug 2014 12:16:05 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <CAFKYj4cDJhiVfdmzZ5KnNASBEp9bkj0asxANPv43QcMQP06z9A@mail.gmail.com>
-X-MDF-HostID: 8
+	id S1755354AbaHYLjC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2014 07:39:02 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58343 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753795AbaHYLjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2014 07:39:01 -0400
+Received: (qmail 6364 invoked by uid 102); 25 Aug 2014 11:39:00 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Aug 2014 06:39:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Aug 2014 07:38:56 -0400
+Content-Disposition: inline
+In-Reply-To: <1408896466-23149-3-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255820>
 
-On 25/08/14 02:54, tsuna wrote:
-> On Sun, Aug 24, 2014 at 5:32 PM, Ramsay Jones
-> <ramsay@ramsay1.demon.co.uk> wrote:
->> Again, I don't have access to an OS X system, so I don't know
->> which package provides libintl/gettext, but it seems to be missing
->> on your system.
->=20
-> Probably yeah, those libraries don=E2=80=99t seem to be provided in s=
-tandard
-> with OS X or OS X=E2=80=99s development tools, so maybe the Makefile =
-should
-> also default to having NO_GETTEXT=3DYesPlease when on OS X.
->=20
->> You can avoid the build failure, without running configure, by
->> setting NO_GETTEXT=3DYesPlease in your config.mak file.
->>
->>>
->>>
->>> I need to run configure first:
->>>
->>> $ make configure
->>>     GEN configure
->>> $ ./configure
->>> configure: Setting lib to 'lib' (the default)
->>> [=E2=80=A6]
->>
->> So, presumably, configure has set NO_GETEXT=3DYesPlease in your
->> config.mak.autogen file.
->=20
-> Yes it did.
->=20
-> I don=E2=80=99t mind running configure, but so far Git has compiled f=
-ine
-> without doing it.  Should we fix the default values of NO_STRLCPY /
-> NO_GETEXT on OS X?
->=20
+On Sun, Aug 24, 2014 at 06:07:44PM +0200, Steffen Prohaska wrote:
 
-Is NO_STRLCPY still a problem with a fresh clone (and putting
-NO_GETEXT=3DYesPlease in your config.mak)? I still do not understand
-why you were getting those warnings; AFAICT it should not be happening!
-Also, Torsten could not reproduce.
+> diff --git a/wrapper.c b/wrapper.c
+> index bc1bfb8..69d1c9b 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -11,14 +11,18 @@ static void (*try_to_free_routine)(size_t size) = do_nothing;
+>  
+>  static void memory_limit_check(size_t size)
+>  {
+> -	static int limit = -1;
+> -	if (limit == -1) {
+> -		const char *env = getenv("GIT_ALLOC_LIMIT");
+> -		limit = env ? atoi(env) * 1024 : 0;
+> +	static size_t limit = SIZE_MAX;
+> +	if (limit == SIZE_MAX) {
 
-As far as NO_GETTEXT is concerned, I have to defer to someone who has
-experience on that platform (I have _zero_ experience on OS X).
+You use SIZE_MAX as the sentinel for "not set", and 0 as the sentinel
+for "no limit". That seems kind of backwards.
 
-ATB,
-Ramsay Jones
+I guess you are inheriting this from the existing code, which lets
+GIT_ALLOC_LIMIT=0 mean "no limit". I'm not sure if we want to keep that
+or not (it would be backwards incompatible to change it, but we are
+already breaking compatibility here by assuming bytes rather than
+kilobytes; I think that's OK because this is not a documented feature,
+or one intended to be used externally).
+
+> +		const char *var = "GIT_ALLOC_LIMIT";
+> +		unsigned long val = 0;
+> +		const char *env = getenv(var);
+> +		if (env && !git_parse_ulong(env, &val))
+> +			die("Failed to parse %s", var);
+> +		limit = val;
+>  	}
+
+This and the next patch both look OK to me, but I notice this part is
+largely duplicated between the two. We already have git_env_bool to do a
+similar thing for boolean environment variables. Should we do something
+similar like:
+
+diff --git a/config.c b/config.c
+index 058505c..11919eb 100644
+--- a/config.c
++++ b/config.c
+@@ -1122,6 +1122,14 @@ int git_env_bool(const char *k, int def)
+ 	return v ? git_config_bool(k, v) : def;
+ }
+ 
++unsigned long git_env_ulong(const char *k, unsigned long val)
++{
++	const char *v = getenv(k);
++	if (v && !git_parse_ulong(k, &val))
++		die("failed to parse %s", k);
++	return val;
++}
++
+ int git_config_system(void)
+ {
+ 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
+
+It's not a lot of code, but I think the callers end up being much easier
+to read:
+
+  if (limit == SIZE_MAX)
+	limit = git_env_ulong("GIT_ALLOC_LIMIT", 0);
+
+>  	if (limit && size > limit)
+> -		die("attempting to allocate %"PRIuMAX" over limit %d",
+> -		    (intmax_t)size, limit);
+> +		die("attempting to allocate %"PRIuMAX" over limit %"PRIuMAX,
+> +		    (uintmax_t)size, (uintmax_t)limit);
+
+This part is duplicated, too, though I do not know if the infrastructure
+to avoid that is worth the trouble. Unless you wanted to do a whole:
+
+  check_limit(&limit, "GIT_ALLOC_LIMIT", size);
+
+or something, but I am also not convinced that is not just obfuscating
+things.
+
+-Peff
