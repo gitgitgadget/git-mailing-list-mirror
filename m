@@ -1,155 +1,120 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 5/5] fast-import: stop using lock_ref_sha1
-Date: Mon, 25 Aug 2014 10:22:48 -0700
-Message-ID: <CAL=YDW=k4QpejdqPgnVy+05hjsVHw35BBbKmsAEOP-9gBMjCJw@mail.gmail.com>
+Subject: Re: [PATCH 0/5] fix pack-refs pruning of refs/foo
+Date: Mon, 25 Aug 2014 10:38:56 -0700
+Message-ID: <CAL=YDWkFpjnsr+eqcOdrYQAPaPMfCdg17+yKvN=CwELbsOi-VA@mail.gmail.com>
 References: <20140823052334.GA17813@peff.net>
-	<20140823053322.GE18075@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 19:22:58 2014
+X-From: git-owner@vger.kernel.org Mon Aug 25 19:39:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLxyp-0003Wm-2E
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 19:22:55 +0200
+	id 1XLyER-0001uX-Pz
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 19:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933095AbaHYRWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 13:22:50 -0400
-Received: from mail-vc0-f173.google.com ([209.85.220.173]:42757 "EHLO
-	mail-vc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933093AbaHYRWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 13:22:49 -0400
-Received: by mail-vc0-f173.google.com with SMTP id hy10so15523570vcb.18
-        for <git@vger.kernel.org>; Mon, 25 Aug 2014 10:22:48 -0700 (PDT)
+	id S933071AbaHYRi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2014 13:38:59 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:40263 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933017AbaHYRi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2014 13:38:58 -0400
+Received: by mail-vc0-f176.google.com with SMTP id id10so15345469vcb.21
+        for <git@vger.kernel.org>; Mon, 25 Aug 2014 10:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=mr7CblZxRyB5i8G8YFmsIPleSEZNxNCxIgcNP1Dpm1U=;
-        b=eldaZTOQhkL3pZIDLe+q9iUNp6G10NGFcFvrkxM5CT5bQfMugAlkRn3apQK9pboxCj
-         b5UHJ4r4toNkGpciVblF3aCE1+m3/JbxgaFgCK8vj/aBuqAzK1567EzPxAlTibQPXJY5
-         Y0zFfdIMSKlwAZUf1y0hh80lZD7itZDr/oDfAkWozgaHSzMNGtoexySC23HwgyOdY47V
-         DNHLiM1UPyB6U/i05PKA+sSzcIwYN2TdlbVaQU6XV+0minZTS29mRu/FxRx730JShUvw
-         JLCYlNK910W8uB9zDFb2lEci1LKAgybZ4yCG2/0hrY57IGZzFxx+/AaQVNAjc0/BSvyR
-         s+kg==
+        bh=P1XqfFJHz/o6czE5/g8ELtigg2Owo1WqNIFnZa7jSuM=;
+        b=aFGdbzZ/wCN8ESBi8wqAVYZIKW3yaQj4P/Aw0b1twskSOVPvWkrBM/UUaftqvRS77V
+         H1uaylRQ4x6QBOt+eyVYe7NkC8buc13eDspp4NmkCI66ehO4DCa1zJROthtGuXYnaAdR
+         GoVab9CdiVCRPUfuS8qtwoWjwskEUb9BhdrjQ25x+Pd9oVfu6R6ZdaTLKwyUTCGW7IGT
+         80CJqUqkMTNC9RufxnqbNNPy2n8/rZGv2BOFjuX5NbxKcOAdvnRFecJAJQiy/5TBVdOk
+         OBvJaO/Vt9NndY8je7qd1i71ROSWtnQ03aBFlIZ2X3jp0fxbDK13BRM80dUXPrdLA8nQ
+         N2Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=mr7CblZxRyB5i8G8YFmsIPleSEZNxNCxIgcNP1Dpm1U=;
-        b=G8NV4WL46YLu0Yz323epby4QLAwcdK+OjA6pmIgswlMxAedLa3MCTdPIZmC2EJm1p8
-         mWok6SCCKUzWVf0Ek2iPwVAnS5TLQAGezY0kFZOBSZ12+Hk08tkyHcdsI4ntYnnF1/ao
-         eqeUn95CDCvFLbdABTgLoAGh233I161/F21+/4n4+EX2JyE6roV+YoqhN4pIgi4VvHTM
-         WiBdON5hFNgoOFW0CcOKod084g5WIhK6WdEa0MSUrvBgjrWzczmjRgQQq7yvaRtCUuLv
-         WRaic4Y2hUZWz4BRxDMfRzPiYjHkQQ9kQszewwCjmKuMddk36IOsUZjRXicaDzFyWcxa
-         n2CQ==
-X-Gm-Message-State: ALoCoQmQYe2twdA/cBFeEDxtT/+Lxem4Q5TnGkovd+bJQMHLmXSTOO1WwnGG+YqmqMzSXAyge/8r
-X-Received: by 10.53.12.225 with SMTP id et1mr16439986vdd.5.1408987368504;
- Mon, 25 Aug 2014 10:22:48 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Mon, 25 Aug 2014 10:22:48 -0700 (PDT)
-In-Reply-To: <20140823053322.GE18075@peff.net>
+        bh=P1XqfFJHz/o6czE5/g8ELtigg2Owo1WqNIFnZa7jSuM=;
+        b=Rom7vKGW5eKG9PWe475wpKhKJhd+f66merkoiQy1n1dai4A4ywSua//Ra571n3vGzB
+         QrlXTffQHPzlwruImd6gH8vq7ENHgIKllvexWOxO1vid0U/t5Xp+IfrRmGH5gjsqgiyQ
+         P8hbNQrfAWNtoJXBZPHEmgiCbQJzKomDBRLw9e5Q40ZhzUDiNu86hHn7sjqmfUwzMPYs
+         G7HCPptgKpGAvi9xohTQ5KQN4eFEPqWkN0njLcuf8WQmL83zc52IZBMoIsg9i5xYcDgf
+         655sE/RtMGMqAyU51q0oPPOLmnrbjRw1WazZaIQhNwH35V98sgUxORdmJRYRyP6Ch7ii
+         KH8A==
+X-Gm-Message-State: ALoCoQn3nb70xiBJPOVH2dOsFg0ALNOOj42nnd4a7bnNHtpH2xw7Kk1mT2/pqxalfRCdFmaDAMnc
+X-Received: by 10.52.246.198 with SMTP id xy6mr16696449vdc.7.1408988336684;
+ Mon, 25 Aug 2014 10:38:56 -0700 (PDT)
+Received: by 10.52.69.136 with HTTP; Mon, 25 Aug 2014 10:38:56 -0700 (PDT)
+In-Reply-To: <20140823052334.GA17813@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255841>
 
-The next ref transaction series does a similar change and ends up
-removing the function lock_ref_sha1() completely.
-https://code-review.googlesource.com/#/c/1017/19/refs.c
+On Fri, Aug 22, 2014 at 10:23 PM, Jeff King <peff@peff.net> wrote:
+> I noticed that "git pack-refs --all" will pack a top-level ref like
+> "refs/foo", but will not actually prune "$GIT_DIR/refs/foo". I do not
+> see the point in having a policy not to pack "refs/foo" if "--all" is
+> given. But even if we did have such a policy, this seems broken; we
+> should either pack and prune, or leave them untouched. I don't see any
+> indication that the existing behavior was intentional.
+>
+> The problem is that pack-refs's prune_ref calls lock_ref_sha1, which
+> enforces this "no toplevel" behavior. I am not sure there is any real
+> point to this, given that most callers use lock_any_ref_for_update,
+> which is exactly equivalent but without the toplevel check.
+>
+> The first two patches deal with this by switching pack-refs to use
+> lock_any_ref_for_update. This will conflict slightly with Ronnie's
+> ref-transaction work, as he gets rid of lock_ref_sha1 entirely, and
+> moves the code directly into prune_ref. This can be trivially resolved
+> in favor of my patch, I think.
+>
+> The third patch is a cleanup I noticed while looking around, and I think
+> should not conflict with anyone (and is a good thing to do).
+>
+> The last two are trickier. I wondered if we could get rid of
+> lock_ref_sha1 entirely. After pack-refs, there are two callers:
+> fast-import.c and walker.c. After converting the first, it occurred to
+> me that Ronnie might be touching the same areas, and I see that yes,
+> indeed, there's quite a bit of conflict (and he reaches the same end
+> goal of dropping it entirely).
+>
+> So in that sense I do not mind dropping the final two patches. Ronnie's
+> endpoint is much better, moving to a ref_transaction. However, there is
+> actually a buffer overflow in the existing code. Ronnie's series fixes
+> it in a similar way (moving to a strbuf), and I'm fine with that
+> endpoint. But given that the ref transaction code is not yet merged (and
+> would certainly never be maint-track), I think it is worth applying the
+> buffer overflow fix separately.
+>
+> I think the final patch can probably be dropped, then. It is a clean-up,
+> but one that we can just get when Ronnie's series is merged.
+>
+>   [1/5]: git-prompt: do not look for refs/stash in $GIT_DIR
+>   [2/5]: pack-refs: prune top-level refs like "refs/foo"
+>   [3/5]: fast-import: clean up pack_data pointer in end_packfile
+>   [4/5]: fast-import: fix buffer overflow in dump_tags
+>   [5/5]: fast-import: stop using lock_ref_sha1
+>
 
-So I think we can drop this patch.
++1 on 1-3
++1 on 4. While I have a similar fix in the transaction series, you
+should not need to wait for that series to address a security concern.
+5: I think this one is not as urgent as the others so would prefer if
+it is dropped, just so it doesn't cause more merge conflicts than is
+already present in the transaction series.
 
 
-ronnie sahlberg
+1-4:
+Reviewed-by: Ronnie Sahlberg <sahlberg@google.com>
 
 
-On Fri, Aug 22, 2014 at 10:33 PM, Jeff King <peff@peff.net> wrote:
-> We can use lock_any_ref_for_update instead. Besides being
-> more flexible, the only difference between the two is that
-> lock_ref_sha1 does not allow "top-level" refs like
-> "refs/foo" to be updated. However, we know that we do not
-> have such a ref, because we explicitly add the "tags/"
-> prefix ourselves.
->
-> Note that we now must feed the whole name "refs/tags/X"
-> instead of just "tags/X" to the function. As a result, our
-> failure error message is uses the longer name. This is
-> probably a good thing, though.
->
-> As an interesting side note, if we forgot to switch this
-> input to the function, the tests do not currently catch it.
-> We import a tag "X" and then check that we can access it at
-> "tags/X". If we accidentally created "tags/X" at the
-> top-level $GIT_DIR instead of under "refs/", we would still
-> find it due to our ref lookup procedure!
->
-> We do not make such a mistake in this patch, of course, but
-> while we're thinking about it, let's make the fast-import
-> tests more robust by checking for fully qualified
-> refnames.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> As I mentioned, I'd be OK with dropping this one in favor of just
-> waiting for Ronnie's transaction patches to graduate.
->
->  fast-import.c          | 4 ++--
->  t/t9300-fast-import.sh | 8 ++++----
->  2 files changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/fast-import.c b/fast-import.c
-> index a1479e9..04a85a4 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1738,8 +1738,8 @@ static void dump_tags(void)
->
->         for (t = first_tag; t; t = t->next_tag) {
->                 strbuf_reset(&ref_name);
-> -               strbuf_addf(&ref_name, "tags/%s", t->name);
-> -               lock = lock_ref_sha1(ref_name.buf, NULL);
-> +               strbuf_addf(&ref_name, "refs/tags/%s", t->name);
-> +               lock = lock_any_ref_for_update(ref_name.buf, NULL, 0, NULL);
->                 if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
->                         failure |= error("Unable to update %s", ref_name.buf);
->         }
-> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> index 5fc9ef2..f4c6673 100755
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -153,7 +153,7 @@ tag series-A
->  An annotated tag without a tagger
->  EOF
->  test_expect_success 'A: verify tag/series-A' '
-> -       git cat-file tag tags/series-A >actual &&
-> +       git cat-file tag refs/tags/series-A >actual &&
->         test_cmp expect actual
->  '
->
-> @@ -165,7 +165,7 @@ tag series-A-blob
->  An annotated tag that annotates a blob.
->  EOF
->  test_expect_success 'A: verify tag/series-A-blob' '
-> -       git cat-file tag tags/series-A-blob >actual &&
-> +       git cat-file tag refs/tags/series-A-blob >actual &&
->         test_cmp expect actual
->  '
->
-> @@ -232,8 +232,8 @@ EOF
->  test_expect_success \
->         'A: tag blob by sha1' \
->         'git fast-import <input &&
-> -       git cat-file tag tags/series-A-blob-2 >actual &&
-> -       git cat-file tag tags/series-A-blob-3 >>actual &&
-> +       git cat-file tag refs/tags/series-A-blob-2 >actual &&
-> +       git cat-file tag refs/tags/series-A-blob-3 >>actual &&
->         test_cmp expect actual'
->
->  test_tick
-> --
-> 2.1.0.346.ga0367b9
+> -Peff
