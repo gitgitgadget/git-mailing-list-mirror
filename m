@@ -1,102 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 4/4] convert: Stream from fd to required clean filter instead of mmap
-Date: Mon, 25 Aug 2014 11:35:45 -0700
-Message-ID: <xmqq4mx0mn7i.fsf@gitster.dls.corp.google.com>
-References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
-	<1408896466-23149-5-git-send-email-prohaska@zib.de>
-	<20140825124323.GB17288@peff.net>
-	<E23693B7-0D9D-477D-A303-4A68433EAB79@zib.de>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: [PATCH 00/18] Signed push
+Date: Mon, 25 Aug 2014 14:38:46 -0400
+Organization: PD Inc
+Message-ID: <7CB248C93DCA465FB383B6A248C81595@black>
+References: <1408485987-3590-1-git-send-email-gitster@pobox.com><53F7A119.7070704@gmail.com><xmqqiolknvfz.fsf@gitster.dls.corp.google.com><53F7A68D.2000109@gmail.com><xmqqegw8nu1g.fsf@gitster.dls.corp.google.com><53F7AA48.3000601@gmail.com><xmqqa96wnoj1.fsf@gitster.dls.corp.google.com><53F7C971.7080100@gmail.com> <xmqqha10mp3z.fsf@gitster.dls.corp.google.com>
+Reply-To: "Junio C Hamano" <gitster@pobox.com>,
+	  "Stefan Beller" <stefanbeller@gmail.com>, <git@vger.kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	pclouds@gmail.com, john@keeping.me.uk, schacon@gmail.com
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Aug 25 20:36:09 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Stefan Beller'" <stefanbeller@gmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 25 20:39:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLz7c-0007z5-A6
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 20:36:04 +0200
+	id 1XLzAd-0000nD-Pj
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 20:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752760AbaHYSf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 14:35:57 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53463 "EHLO smtp.pobox.com"
+	id S1756464AbaHYSjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2014 14:39:05 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:55293 "EHLO mail.pdinc.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751799AbaHYSf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 14:35:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 651AA354A0;
-	Mon, 25 Aug 2014 14:35:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ibrcWoPhpD7dhepTq6vipSoBBgg=; b=OrWqzb
-	Jp6k4tBWzAnthDQoN5ntUWSic11VZPO35VAmQW4U9afgdfIib6oLsA6jqc/TwBse
-	YOtsJaCLUE+gudEqyxDj0aXw5lU3eWNUrcwKLXyIRnvHzU+QoxJrbXsXdqGcpQbw
-	JU+ZjcpZ0OuQ5+7NjZLVBID25NmH8xTkQPKRE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ay7/bC/ii0RE6tfbJM3DcvzRzQ/7rhAc
-	wK1W5m+llYxGCgRNS0H78LE7DV09NfaCa8pjnjT5b1Ybris8Rf6yp2ENAIyvITcA
-	eHoJ9OY/OGfzxfhfONEf0zG66Kom42kWhGdTAgLk0wnpLQ7mDsGZKXuzTlvIYYNz
-	qdX0+FoON4c=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5A7FE3549F;
-	Mon, 25 Aug 2014 14:35:56 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 970C635497;
-	Mon, 25 Aug 2014 14:35:48 -0400 (EDT)
-In-Reply-To: <E23693B7-0D9D-477D-A303-4A68433EAB79@zib.de> (Steffen Prohaska's
-	message of "Mon, 25 Aug 2014 18:55:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A2324B42-2C86-11E4-9D1B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754646AbaHYSiu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2014 14:38:50 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s7PIcj3u012430;
+	Mon, 25 Aug 2014 14:38:46 -0400
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <xmqqha10mp3z.fsf@gitster.dls.corp.google.com>
+Thread-Index: Ac/AjxRFp3/23jQgR8uBWMWH9Vx9HwAA54nw
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255850>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+> -----Original Message-----
+> From: Junio C Hamano
+> Sent: Monday, August 25, 2014 13:55
+> 
+> Stefan Beller <stefanbeller@gmail.com> writes:
+> 
+> >> "burden" is not an issue, as I'll be signing the push certificate
+> >> anyway when I push.  A signed tag or a signed commit and 
+> signed push
+> >> certificate solves two completely separate and orthogonal issues.
+> >> 
+> >> What happens if you break into GitHub or k.org and did
+> >> 
+> >>     $ git tag maint_2014_08_22 master_2014_08_22
+> >
+> > Ok, I personally haven't used tags a lot.
+> > I just tried to
+> > 	git tag -s testbreaktag v2.1.0
+> > 	git show testbreaktag
+> > 	# However it would still read:
+> > tag v2.1.0
+> > Tagger: Junio C Hamano <gitster@pobox.com>
+> > Date:   Fri Aug 15 15:09:28 2014 -0700
+> >
+> > So as I do not posess your private key I could not create 
+> signed tags
+> > even if I were to break into github/k.org
+> 
+> The point was that after I push to 'maint', you break into the site
+> and copy or move that tag as if I pushed to 'master'.
 
->> Couldn't we do that with an lseek (or even an mmap with offset 0)? That
->> obviously would not work for non-file inputs, but I think we address
->> that already in index_fd: we push non-seekable things off to index_pipe,
->> where we spool them to memory.
->
-> It could be handled that way, but we would be back to the original problem
-> that 32-bit git fails for large files.
+What is needed is not a signed push per se, but rather a need for a set of signed HEADS ...
 
-Correct, and you are making an incremental improvement so that such
-a large blob can be handled _when_ the filters can successfully
-munge it back and forth.  If we fail due to out of memory when the
-filters cannot, that would be the same as without your improvement,
-so you are still making progress.
+> 
+> You could argue that I could create a signed tag 'maint-2014-08-25',
+> push it, and if you moved it to tags/master-2014-08-25 as an
+> attacker, the refname would not match the "tag " line in the signed
+> tag object.  While that is true, nobody other thaan fsck checks the
+> contents on the "tag " line in practice.
+> 
+> But more importantly.
+> 
+> I may deem a commit a sensible version for the 'master' branch of
+> one repository but it would not be sensible for another repository's
+> 'master' branch.  Imagine a world just like the kernel development
+> during 2.6 era used to be, where there was a separate tree 2.4
+> maintained with its own 'master' branch.  What is appropriate for
+> the tip of 'master' to one repository is not good for the other one,
 
-> To implement something like the ideal strategy below, the entire convert 
-> machinery for crlf and ident would have to be converted to a streaming
-> approach.
+... and these signed HEADS need to be tied to a particular repository instance. AFAIK git does not have any unique identifier per repository instance to leverage. If you were to make a repository instance id you could take that and the branch name as input to a signed hash for verification later. But this leads to deeper issues about new workflow, new configuration storage mechanisms, etc.
 
-Yes, that has always been the longer term vision since the day the
-streaming infrastructure was introduced.
-
->> So it seems like the ideal strategy would be:
->> 
->>  1. If it's seekable, try streaming. If not, fall back to lseek/mmap.
->> 
->>  2. If it's not seekable and the filter is required, try streaming. We
->>     die anyway if we fail.
-
-Puzzled...  Is it assumed that any content the filters tell us to
-use the contents from the db as-is by exiting with non-zero status
-will always be large not to fit in-core?  For small contents, isn't
-this "ideal" strategy a regression?
-
->>  3. If it's not seekable and the filter is not required, decide based
->>     on file size:
->> 
->>       a. If it's small, spool to memory and proceed as we do now.
->> 
->>       b. If it's big, spool to a seekable tempfile.
+> and your timestamped "tag " line may say for which branch the push
+> was for but does not say for which repository.  The exact problem is
+> also shared with the desire to have a "branch" object expressed
+> elsewhere; as there is no identity for a "branch" in a distributed
+> world, trying to name "branch" as if it is a global entity without
+> mentioning what repository will lead to tears.
+> 
+> Besides, these tags/maint-2014-08-25 tags will be interesting only
+> for those who are auditing and not for general public, and we do not
+> have a good way to "hide" uninteresting refs until those with narrow
+> niche interest ask yet, which is something we may want to add soon,
+> but I do not want "auditable push" taken hostage to that unrelated
+> feature.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> 
