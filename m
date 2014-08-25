@@ -1,116 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/18] Signed push
-Date: Mon, 25 Aug 2014 10:54:40 -0700
-Message-ID: <xmqqha10mp3z.fsf@gitster.dls.corp.google.com>
-References: <1408485987-3590-1-git-send-email-gitster@pobox.com>
-	<53F7A119.7070704@gmail.com>
-	<xmqqiolknvfz.fsf@gitster.dls.corp.google.com>
-	<53F7A68D.2000109@gmail.com>
-	<xmqqegw8nu1g.fsf@gitster.dls.corp.google.com>
-	<53F7AA48.3000601@gmail.com>
-	<xmqqa96wnoj1.fsf@gitster.dls.corp.google.com>
-	<53F7C971.7080100@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: check-ref-format: include refs/ in the argument or to strip it?
+Date: Mon, 25 Aug 2014 11:26:36 -0700
+Message-ID: <20140825182636.GO20185@google.com>
+References: <gerrit.1408574889668.Iac983fc86f7edd2a0543779d85973c57bf068ca4@code-review.googlesource.com>
+ <047d7b624d36142d46050131f336@google.com>
+ <20140822154151.GK20185@google.com>
+ <xmqqmwawnzfk.fsf@gitster.dls.corp.google.com>
+ <20140822184515.GL20185@google.com>
+ <20140823054646.GA18256@peff.net>
+ <CAL=YDWk5FxnNWaFXJk3t+H0Q_axETmNeb=puuUqhiDBNeQVDGQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 25 20:05:01 2014
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Mon Aug 25 20:26:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLydQ-00044K-V6
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 20:04:53 +0200
+	id 1XLyya-0004QF-5V
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 20:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933170AbaHYSEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 14:04:49 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62318 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933320AbaHYSBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 14:01:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C018A33AF5;
-	Mon, 25 Aug 2014 14:01:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IavHhkvoI6erB0e8rtJsIRB6LWA=; b=RqKNcU
-	MgByahmhLSq7I6xVNARnZ9ytHzSty2/FmHaVfxkuj6RICudm+pJUkaGQwVTG/2kt
-	S2siZffoooW4Qw6WUS7VvwiHQSg9ovxfyvxoxcl8P22zyyM839urp1iAJdaC90QV
-	gnBLh3v1Lm8DdcyGrryPkroFOJjt3Yb6/4xG8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oyaBd3/t1TGNIbfPmXiziYn1azW21zkg
-	u+Sa+vOpePwqqf68E2asc99piraQwXq8JZCQQPGWnnk4mF4jkzb+55gg9S2BIWGs
-	A8/psxijFdoUIUHVl+Q7FwmsQHugjI5qdhU3BDLYTgc6u64WM7Fr6RwnzJTb6I7E
-	UmCam56gZts=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B6E7E33AF4;
-	Mon, 25 Aug 2014 14:01:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BC69F33802;
-	Mon, 25 Aug 2014 13:54:42 -0400 (EDT)
-In-Reply-To: <53F7C971.7080100@gmail.com> (Stefan Beller's message of "Sat, 23
-	Aug 2014 00:51:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E4708254-2C80-11E4-9F85-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755000AbaHYS0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2014 14:26:40 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:47581 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751316AbaHYS0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2014 14:26:39 -0400
+Received: by mail-pd0-f171.google.com with SMTP id z10so20757029pdj.16
+        for <git@vger.kernel.org>; Mon, 25 Aug 2014 11:26:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=WAkiJ1gEnXC7RLTF26ZQ/Xixju8PZNM3jHhfmdRWLBc=;
+        b=vafGCA7A4cntl3uCt9BM7JbKN5PFgqQwtKod4VGQVK6woQuTy7w3efjgEqtdsKLKm6
+         AyeHbe30X+0d8b0cmECwjsRh0GAG4YtXnE4eKCVwBXFZdv0HF2c5ZewSil7hT3PEltqw
+         YQsp70TUUWllHCJ6t/emM98DfQdc43siW/Q8l4raFrsvot9M/5BFxF3/+fQ0j6J5866u
+         40Q7e6QtYf/P1FfwCOtos4AXA9DKddVTJBJbHjKOvtYeeqhN5/76Ex9SrWXVLIsOQTQj
+         StnmG3UOyoRcUjoe9yaiy/eNYAGHFlh2JcOmHW6bDMVb2VXzt21UR/6RfuRkeZd80hOZ
+         WpMQ==
+X-Received: by 10.70.102.175 with SMTP id fp15mr30524040pdb.52.1408991199314;
+        Mon, 25 Aug 2014 11:26:39 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:5425:d689:6054:193])
+        by mx.google.com with ESMTPSA id b9sm447697pbu.91.2014.08.25.11.26.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 25 Aug 2014 11:26:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAL=YDWk5FxnNWaFXJk3t+H0Q_axETmNeb=puuUqhiDBNeQVDGQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255847>
 
-Stefan Beller <stefanbeller@gmail.com> writes:
+Ronnie Sahlberg wrote:
+> On Fri, Aug 22, 2014 at 10:46 PM, Jeff King <peff@peff.net> wrote:
 
->> "burden" is not an issue, as I'll be signing the push certificate
->> anyway when I push.  A signed tag or a signed commit and signed push
->> certificate solves two completely separate and orthogonal issues.
->> 
->> What happens if you break into GitHub or k.org and did
->> 
->>     $ git tag maint_2014_08_22 master_2014_08_22
->
-> Ok, I personally haven't used tags a lot.
-> I just tried to
-> 	git tag -s testbreaktag v2.1.0
-> 	git show testbreaktag
-> 	# However it would still read:
-> tag v2.1.0
-> Tagger: Junio C Hamano <gitster@pobox.com>
-> Date:   Fri Aug 15 15:09:28 2014 -0700
->
-> So as I do not posess your private key I could not create signed tags
-> even if I were to break into github/k.org
+>> Yeah, this weird "do not allow refs/foo" behavior has continually
+>> confused me. Coincidentally I just noticed a case today where
+>> "pack-refs" treats "refs/foo" specially for no good reason:
+>>
+>>   http://thread.gmane.org/gmane.comp.version-control.git/255729
+>>
+>> After much head scratching over the years, I am of the opinion that
+>> nobody every really _meant_ to prevent "refs/foo", and that code
+>> comments like the one you quote above were an attempt to document
+>> existing buggy behavior that was really trying to differentiate "HEAD"
+>> from "refs/*". That's just my opinion, though. :)
 
-The point was that after I push to 'maint', you break into the site
-and copy or move that tag as if I pushed to 'master'.
+It's still very puzzling to me.  The comment came at the same time as
+the behavior, in v0.99.9~120 (git-check-ref-format: reject funny ref
+names, 2005-10-13).  Before that, the behavior was even stranger ---
+it checked that there was exactly one slash in the argument.
 
-You could argue that I could create a signed tag 'maint-2014-08-25',
-push it, and if you moved it to tags/master-2014-08-25 as an
-attacker, the refname would not match the "tag " line in the signed
-tag object.  While that is true, nobody other thaan fsck checks the
-contents on the "tag " line in practice.
+I'm willing to believe we might not want that check any more, though.
 
-But more importantly.
+[...]
+> There are also a lot of places where we assume that a refs will start
+> with "refs/heads/" and not just "refs/"
+> for_each_branch_ref(), log_ref_setup() (so no reflogs) is_branch() to
+> name a few.
 
-I may deem a commit a sensible version for the 'master' branch of
-one repository but it would not be sensible for another repository's
-'master' branch.  Imagine a world just like the kernel development
-during 2.6 era used to be, where there was a separate tree 2.4
-maintained with its own 'master' branch.  What is appropriate for
-the tip of 'master' to one repository is not good for the other one,
-and your timestamped "tag " line may say for which branch the push
-was for but does not say for which repository.  The exact problem is
-also shared with the desire to have a "branch" object expressed
-elsewhere; as there is no identity for a "branch" in a distributed
-world, trying to name "branch" as if it is a global entity without
-mentioning what repository will lead to tears.
+for_each_branch_ref is for iterating over local branches, which are
+defined as refs that start with refs/heads/*.  Likewise, the only
+point of is_branch is to check whether a ref is under refs/heads/*.
+That's not an assumption about all refs.
 
-Besides, these tags/maint-2014-08-25 tags will be interesting only
-for those who are auditing and not for general public, and we do not
-have a good way to "hide" uninteresting refs until those with narrow
-niche interest ask yet, which is something we may want to add soon,
-but I do not want "auditable push" taken hostage to that unrelated
-feature.
+log_ref_setup implements the policy that there are only reflogs for:
+
+ * refs where the reflog was explicitly created ("git branch
+   --create-reflog" does this, but for some reason there's no
+   corresponding "git update-ref --create-reflog" so people have
+   to use mkdir directly for other refs), plus
+
+ * if the '[core] logallrefupdates' configuration is enabled (and it
+   is by default for non-bare repositories), then HEAD, refs/heads/*,
+   refs/notes/*, and refs/remotes/*.
+
+This is documented in git-config(1) --- see core.logAllRefUpdates.
+
+That way, when tools internally use other refs (e.g., FETCH_HEAD),
+git doesn't have to automatically incur the cost of maintaining the
+reflog for those.  What other refs should there be reflogs for?  I
+haven't thought carefully about this.
+
+It definitely isn't an assumption that *all* refs will match that
+pattern.  But it might be worth changing for other reasons.
+
+Jonathan
