@@ -1,115 +1,94 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: check-ref-format: include refs/ in the argument or to strip it?
-Date: Mon, 25 Aug 2014 10:43:30 -0700
-Message-ID: <CAL=YDWk5FxnNWaFXJk3t+H0Q_axETmNeb=puuUqhiDBNeQVDGQ@mail.gmail.com>
-References: <gerrit.1408574889668.Iac983fc86f7edd2a0543779d85973c57bf068ca4@code-review.googlesource.com>
-	<047d7b624d36142d46050131f336@google.com>
-	<20140822154151.GK20185@google.com>
-	<xmqqmwawnzfk.fsf@gitster.dls.corp.google.com>
-	<20140822184515.GL20185@google.com>
-	<20140823054646.GA18256@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] t0026: Add missing &&
+Date: Mon, 25 Aug 2014 10:38:23 -0700
+Message-ID: <xmqqmwasmpv4.fsf@gitster.dls.corp.google.com>
+References: <53F797B3.3070107@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 19:43:39 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Aug 25 19:46:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLyIr-0003ie-79
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 19:43:37 +0200
+	id 1XLyLM-0004p5-QN
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 19:46:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933202AbaHYRnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 13:43:33 -0400
-Received: from mail-vc0-f179.google.com ([209.85.220.179]:54579 "EHLO
-	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932888AbaHYRnc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 13:43:32 -0400
-Received: by mail-vc0-f179.google.com with SMTP id hq11so15492913vcb.38
-        for <git@vger.kernel.org>; Mon, 25 Aug 2014 10:43:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8qC7qX2PsUzTjlMsIOrZiuT+OKuW9mCJTO7Dr4rrhjU=;
-        b=Pq+9rnNizFhNhWPMgZvEXFi0ZAo/FoOHlD8ZV2JI2iD9mRcM6Fb1MzS8CnTEEBIS8s
-         madIqQNxj6PcoR9OTGjn19fAZTS9Po/cyy9DBGO4uThELxhCJFlZm+xFipFOapwcm8cU
-         1enNXGPjmLQqLDlnmqg+EVAqEIJA0dXjoQuax6ddP4Du+MKdS3IHc64H2YCTjd/P5x0M
-         +zHKgqZi095ZBKb7cJ2qlqJhpEwk41N8cljvk8tvH6UzxKyRFSvvh2Nm5sdB2qe5wvIb
-         KXNQDpVCSfVmbkCL7UZ+hk+c4eeKyTtwtx60KqyVz4cWIYnghnl6Z5erm5+NfEqpYw0h
-         Qy4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=8qC7qX2PsUzTjlMsIOrZiuT+OKuW9mCJTO7Dr4rrhjU=;
-        b=ALUJcZvlUjDMOWJC/63Vq9Fdg1Fz/hIBHAyVFamZlrvZnCqawf1TW9SJNbIKRWj5/H
-         8BWh8c2LDwjyRNGm6fXGhy3SEPn4StzQxM4Xou12k7bxTFSIj9aqSxX4yTRdhcFQX1C3
-         qp44OriiP4qkf2QtBOGfU4wFlmYTAxkS7TF/fTskx/6mLLKs7RWpetOMgPRqf6LdG3Ss
-         tFUnaxlPq5wluk3JbaYG1347RCOQpq09nA0m70chpSnbblHwLbtnK4OXJFScJZ+elsNb
-         QA+JYvvtJwTzmcSUKk748cnHbjUx7sVQZAvdxh5TwBEoafwr2ONI/NQU7Oof1J0sB6HV
-         dZHA==
-X-Gm-Message-State: ALoCoQkAVvMSJHm/qd51ShkiwOgFQP4HmtXRtn3c1WV9xAGTq14mZZa2eBScnVBxJ6696tUqR5qv
-X-Received: by 10.52.137.2 with SMTP id qe2mr14338285vdb.11.1408988610787;
- Mon, 25 Aug 2014 10:43:30 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Mon, 25 Aug 2014 10:43:30 -0700 (PDT)
-In-Reply-To: <20140823054646.GA18256@peff.net>
+	id S933086AbaHYRqI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2014 13:46:08 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64995 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932256AbaHYRqG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2014 13:46:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 803E5334F2;
+	Mon, 25 Aug 2014 13:46:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=zWD4aWHTitYL
+	3JbG/8qDjl98rjY=; b=Ep3DDaDcu2vFsQyJ/gA+Xl1/ll5QwX0QWYGKB2H8jaTu
+	vBlsP+dpPahWCD/jA6rIrZE9DXUUxoqrZpi6pxyUQ1FGZ1Dp7e+Rk6NSF5sd2J/S
+	O+Tcxdz3fNbsfUjkc5sSDEP69ZENGfGphYw82fm/72ZLWBpxZtXjKxgaBxByJ+U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kdu3sd
+	uNh7uUDBxn2xkONn2Oun+B9z1Zy+lS3bjagenhY33iziyMQoL/RQDKi0jbRe4YLl
+	XFBITL1p7I7vup2k5G5c+vOhVY9y3nZnx+pfEMv+E487HAi7pmsuJWYvDFwRYYp7
+	8VqSM/viAnt5BFMUFWGXVfjeCouWk7AEP7PWI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 75C67334F1;
+	Mon, 25 Aug 2014 13:46:05 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8E076331BE;
+	Mon, 25 Aug 2014 13:38:25 -0400 (EDT)
+In-Reply-To: <53F797B3.3070107@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Fri, 22 Aug 2014 21:19:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9DFABD00-2C7E-11E4-AB4A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255844>
 
-On Fri, Aug 22, 2014 at 10:46 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Aug 22, 2014 at 11:45:15AM -0700, Jonathan Nieder wrote:
->
->> Junio C Hamano wrote:
->>
->> >                implication of which is that the 'at least one slash'
->> > rule was to expect things are 'refs/<anything>' so there will be at
->> > least one.  Even back then, that <anything> alone had at least one
->> > slash (e.g. heads/master), but the intention was *never* that we
->> > would forbid <anything> that does not have a slash by feeding
->> > <anything> part alone to check-ref-format, i.e. things like
->> > "refs/stash" were designed to be allowed.
->>
->> Now I'm more confused.  Until 5f7b202a (2008-01-01), there was a
->> comment
->>
->>               if (level < 2)
->>                       return -2; /* at least of form "heads/blah" */
->>
->> and that behavior has been preserved since the beginning.
->>
->> Why do most old callers pass a string that doesn't start with refs/
->> (e.g., see the callers in 03feddd6, 2005-10-13)?  Has the intent been
->> to relax the requirement since then?
->
-> Yeah, this weird "do not allow refs/foo" behavior has continually
-> confused me. Coincidentally I just noticed a case today where
-> "pack-refs" treats "refs/foo" specially for no good reason:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/255729
->
-> After much head scratching over the years, I am of the opinion that
-> nobody every really _meant_ to prevent "refs/foo", and that code
-> comments like the one you quote above were an attempt to document
-> existing buggy behavior that was really trying to differentiate "HEAD"
-> from "refs/*". That's just my opinion, though. :) I'd be happy if all of
-> the special-treatment of "refs/foo" went away and check_refname_format
-> always got the full ref.
->
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-There are also a lot of places where we assume that a refs will start
-with "refs/heads/" and not just "refs/"
-for_each_branch_ref(), log_ref_setup() (so no reflogs) is_branch() to
-name a few.
+> Fix the broken && chain
+>
+> Reported-By: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
 
-This makes the api a bit confusing and hard to predict. Which
-functions allow refs/foo and which will ignore it?
-Are there any compelling reasons why refs/foo should be allowed?
+Please fold this kind of "oops fix breakages discovered in the
+version that hasn't been reached 'next'" to the patch that
+introduces the breakage, with "Helped-by: whom".
+
+Thanks.
+
+>  t/t0026-eol-config.sh | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/t0026-eol-config.sh b/t/t0026-eol-config.sh
+> index 43a580a..4806969 100755
+> --- a/t/t0026-eol-config.sh
+> +++ b/t/t0026-eol-config.sh
+> @@ -84,9 +84,9 @@ test_expect_success NATIVE_CRLF 'eol native is crlf=
+' '
+> =20
+>  	rm -rf native_eol && mkdir native_eol &&
+>  	( cd native_eol &&
+> -	printf "*.txt text\n" > .gitattributes
+> -	printf "one\r\ntwo\r\nthree\r\n" > filedos.txt
+> -	printf "one\ntwo\nthree\n" > fileunix.txt
+> +	printf "*.txt text\n" > .gitattributes &&
+> +	printf "one\r\ntwo\r\nthree\r\n" > filedos.txt &&
+> +	printf "one\ntwo\nthree\n" > fileunix.txt &&
+>  	git init &&
+>  	git config core.autocrlf false &&
+>  	git config core.eol native &&
