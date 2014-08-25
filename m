@@ -1,120 +1,113 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 0/5] fix pack-refs pruning of refs/foo
-Date: Mon, 25 Aug 2014 10:38:56 -0700
-Message-ID: <CAL=YDWkFpjnsr+eqcOdrYQAPaPMfCdg17+yKvN=CwELbsOi-VA@mail.gmail.com>
-References: <20140823052334.GA17813@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] Push the NATIVE_CRLF Makefile variable to C and added a test for native.
+Date: Mon, 25 Aug 2014 10:36:09 -0700
+Message-ID: <xmqqr404mpyu.fsf@gitster.dls.corp.google.com>
+References: <53F797A1.1060804@web.de>
+	<xmqq61hknnjo.fsf@gitster.dls.corp.google.com>
+	<53F83321.1060906@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 25 19:39:07 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Aug 25 19:41:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLyER-0001uX-Pz
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 19:39:04 +0200
+	id 1XLyHF-000382-KT
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 19:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933071AbaHYRi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 13:38:59 -0400
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:40263 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933017AbaHYRi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 13:38:58 -0400
-Received: by mail-vc0-f176.google.com with SMTP id id10so15345469vcb.21
-        for <git@vger.kernel.org>; Mon, 25 Aug 2014 10:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=P1XqfFJHz/o6czE5/g8ELtigg2Owo1WqNIFnZa7jSuM=;
-        b=aFGdbzZ/wCN8ESBi8wqAVYZIKW3yaQj4P/Aw0b1twskSOVPvWkrBM/UUaftqvRS77V
-         H1uaylRQ4x6QBOt+eyVYe7NkC8buc13eDspp4NmkCI66ehO4DCa1zJROthtGuXYnaAdR
-         GoVab9CdiVCRPUfuS8qtwoWjwskEUb9BhdrjQ25x+Pd9oVfu6R6ZdaTLKwyUTCGW7IGT
-         80CJqUqkMTNC9RufxnqbNNPy2n8/rZGv2BOFjuX5NbxKcOAdvnRFecJAJQiy/5TBVdOk
-         OBvJaO/Vt9NndY8je7qd1i71ROSWtnQ03aBFlIZ2X3jp0fxbDK13BRM80dUXPrdLA8nQ
-         N2Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=P1XqfFJHz/o6czE5/g8ELtigg2Owo1WqNIFnZa7jSuM=;
-        b=Rom7vKGW5eKG9PWe475wpKhKJhd+f66merkoiQy1n1dai4A4ywSua//Ra571n3vGzB
-         QrlXTffQHPzlwruImd6gH8vq7ENHgIKllvexWOxO1vid0U/t5Xp+IfrRmGH5gjsqgiyQ
-         P8hbNQrfAWNtoJXBZPHEmgiCbQJzKomDBRLw9e5Q40ZhzUDiNu86hHn7sjqmfUwzMPYs
-         G7HCPptgKpGAvi9xohTQ5KQN4eFEPqWkN0njLcuf8WQmL83zc52IZBMoIsg9i5xYcDgf
-         655sE/RtMGMqAyU51q0oPPOLmnrbjRw1WazZaIQhNwH35V98sgUxORdmJRYRyP6Ch7ii
-         KH8A==
-X-Gm-Message-State: ALoCoQn3nb70xiBJPOVH2dOsFg0ALNOOj42nnd4a7bnNHtpH2xw7Kk1mT2/pqxalfRCdFmaDAMnc
-X-Received: by 10.52.246.198 with SMTP id xy6mr16696449vdc.7.1408988336684;
- Mon, 25 Aug 2014 10:38:56 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Mon, 25 Aug 2014 10:38:56 -0700 (PDT)
-In-Reply-To: <20140823052334.GA17813@peff.net>
+	id S933168AbaHYRll convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2014 13:41:41 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62349 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933149AbaHYRli convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Aug 2014 13:41:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 76F5B33317;
+	Mon, 25 Aug 2014 13:41:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=2x8bMsoAiux4
+	mdiy5luaImwQJ4o=; b=LmieR7l0dwny8Qo4qaX47iQORutXegy59JEeOQpO0JRm
+	0dIyrAOKkN6BAL3XlWs5jdifbfF4l7Iw0Xk/LxcPw6YSRK83ovDRsSx6BV8lcFx3
+	AfIFQs2DAo5Do5rchMkmmgzvMxZeg8FvFrtzrYHjb4vF78koT0Ppc9Z2bzc8Q8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nLu28m
+	rNaYIp8VAP+JXrzuBLaFrUw7MMiu3XxYTVrhEzHVtks5vR93VIeukyQca/04HCis
+	EcdaHVrFOi2lTu2kAe1BirL+J12FnSL5xFEfzUR6a9eh7BvbhC301F4RBoSsOro3
+	KKM9kvjgzJgBrbA9RAJ6KCvdIGPLPTa2qjVx8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E74833315;
+	Mon, 25 Aug 2014 13:41:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5FC43330D3;
+	Mon, 25 Aug 2014 13:36:11 -0400 (EDT)
+In-Reply-To: <53F83321.1060906@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Sat, 23 Aug 2014 08:22:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4DFF24BC-2C7E-11E4-B9B5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255842>
 
-On Fri, Aug 22, 2014 at 10:23 PM, Jeff King <peff@peff.net> wrote:
-> I noticed that "git pack-refs --all" will pack a top-level ref like
-> "refs/foo", but will not actually prune "$GIT_DIR/refs/foo". I do not
-> see the point in having a policy not to pack "refs/foo" if "--all" is
-> given. But even if we did have such a policy, this seems broken; we
-> should either pack and prune, or leave them untouched. I don't see any
-> indication that the existing behavior was intentional.
->
-> The problem is that pack-refs's prune_ref calls lock_ref_sha1, which
-> enforces this "no toplevel" behavior. I am not sure there is any real
-> point to this, given that most callers use lock_any_ref_for_update,
-> which is exactly equivalent but without the toplevel check.
->
-> The first two patches deal with this by switching pack-refs to use
-> lock_any_ref_for_update. This will conflict slightly with Ronnie's
-> ref-transaction work, as he gets rid of lock_ref_sha1 entirely, and
-> moves the code directly into prune_ref. This can be trivially resolved
-> in favor of my patch, I think.
->
-> The third patch is a cleanup I noticed while looking around, and I think
-> should not conflict with anyone (and is a good thing to do).
->
-> The last two are trickier. I wondered if we could get rid of
-> lock_ref_sha1 entirely. After pack-refs, there are two callers:
-> fast-import.c and walker.c. After converting the first, it occurred to
-> me that Ronnie might be touching the same areas, and I see that yes,
-> indeed, there's quite a bit of conflict (and he reaches the same end
-> goal of dropping it entirely).
->
-> So in that sense I do not mind dropping the final two patches. Ronnie's
-> endpoint is much better, moving to a ref_transaction. However, there is
-> actually a buffer overflow in the existing code. Ronnie's series fixes
-> it in a similar way (moving to a strbuf), and I'm fine with that
-> endpoint. But given that the ref transaction code is not yet merged (and
-> would certainly never be maint-track), I think it is worth applying the
-> buffer overflow fix separately.
->
-> I think the final patch can probably be dropped, then. It is a clean-up,
-> but one that we can just get when Ronnie's series is merged.
->
->   [1/5]: git-prompt: do not look for refs/stash in $GIT_DIR
->   [2/5]: pack-refs: prune top-level refs like "refs/foo"
->   [3/5]: fast-import: clean up pack_data pointer in end_packfile
->   [4/5]: fast-import: fix buffer overflow in dump_tags
->   [5/5]: fast-import: stop using lock_ref_sha1
->
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-+1 on 1-3
-+1 on 4. While I have a similar fix in the transaction series, you
-should not need to wait for that series to address a security concern.
-5: I think this one is not as urgent as the others so would prefer if
-it is dropped, just so it doesn't cause more merge conflicts than is
-already present in the transaction series.
+> On 2014-08-23 00.54, Junio C Hamano wrote:
+>> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>>=20
+>>> Commit 95f31e9a correctly points out that the NATIVE_CRLF setting i=
+s
+>>> incorrectly set on Mingw git. However, the Makefile variable is not
+>>> propagated to the C preprocessor and results in no change. This pat=
+ch
+>>> pushes the definition to the C code and adds a test to validate tha=
+t
+>>> when core.eol as native is crlf, we actually normalize text files t=
+o this
+>>> line ending convention when core.autocrlf is false.
+>>>
+>>> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+>>> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+>>> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+>>> ---
+>>=20
+>> Who should I record as the author of this patch?
+>>=20
+>
+> Sorry for missing this, here is what Mingw says:=20
+>
+> commit 0caba2cacbb9d8e6a31783b45f1a13e52dec6ce8
+> Author: Pat Thoyts <patthoyts@users.sourceforge.net>
+> Date:   Mon Nov 26 00:24:00 2012 +0000
+>
+>     Push the NATIVE_CRLF Makefile variable to C and added a test for =
+native.
+>    =20
+>     Commit 95f31e9a correctly points out that the NATIVE_CRLF setting=
+ is
+> []
 
+When forwarding somebody else's patch, please start the *body* of
+your message with the in-body header to force the author, followed
+by a blank line and then the message, i.e.
 
-1-4:
-Reviewed-by: Ronnie Sahlberg <sahlberg@google.com>
+ 	From: Pat Thoyts <patthoyts@users.sourceforge.net>
 
+	Commit 95f31e9a correctly points out that the NATIVE_CRLF setting is
+	incorrectly set on Mingw git. However, the Makefile variable is not...
+	...
 
-> -Peff
+The request applies to other patches in the series as well.  I
+suspect that using send-email on format-patch output may do the
+right thing automatically.
+
+Thanks.
