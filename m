@@ -1,81 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GIT PULL] l10n updates for 2.1.0 round 1
-Date: Mon, 25 Aug 2014 15:41:30 -0700
-Message-ID: <xmqqzjesjip1.fsf@gitster.dls.corp.google.com>
-References: <CANYiYbGwXujdPg1fQWjvWjzQ41D+v-xA_ty_MqC2FtTRjGRJYg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/4] convert: Refactor would_convert_to_git() to single arg 'path'
+Date: Mon, 25 Aug 2014 15:55:52 -0700
+Message-ID: <xmqqvbpgji13.fsf@gitster.dls.corp.google.com>
+References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
+	<1408896466-23149-2-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 00:41:47 2014
+Cc: git@vger.kernel.org, peff@peff.net, pclouds@gmail.com,
+	john@keeping.me.uk, schacon@gmail.com
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Tue Aug 26 00:56:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XM2xP-0003M5-40
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 00:41:47 +0200
+	id 1XM3BI-0008Ar-Uw
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 00:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756658AbaHYWln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 18:41:43 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57533 "EHLO smtp.pobox.com"
+	id S1754256AbaHYW4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Aug 2014 18:56:04 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53013 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752917AbaHYWlm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 18:41:42 -0400
+	id S1751780AbaHYW4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2014 18:56:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E8B9735F8A;
-	Mon, 25 Aug 2014 18:41:41 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2DD7B35246;
+	Mon, 25 Aug 2014 18:56:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jVdYpWHV/G1WtWPMq9IRTQgmVb4=; b=k8Ry79
-	VGm8+mQ6PGvBAc6XR/u36PtM42YgT0klFRcK4M5BrHiwvGadN8v1hqMVXd6o+r2a
-	uFXtEV+yk/uusXN8LHxEtb77nmpPbjsUm1Gk50XC9/vVM2jSe6CF7oYy3tU1iFW2
-	CpdCPv0IpfxqhdogRKmZizcMAoWynH32BWHjk=
+	:content-type; s=sasl; bh=gXcOnMdTY85A4PIT4cMvczVAd/g=; b=w7bGIK
+	mbFv8Vvz6qX6MfR1r+aaknfoabPW8gwU7RWDnFLt70SJ3ZRurXeG6p0f+4SIungD
+	yEWQEJGiU7WilI6iIPTvH6vxo5FUMg0pHds3kMoOtXlqYZQbS+H7Gr2lOfcLcme+
+	NlmhiPRgWMJNJEHA/x8bemu15PCbkTaBPbG7I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Nms9fg8Jx16Bix+aQMYp8PDn1+qt5cFM
-	uDgW/EMOLOZUk20I6Gvu1h+Jdksar3VRMPjn9fXF0cFp5AFjiMEmAmIBKwBxcheK
-	ODHj5ANC8TQ2ggtCSunwvQfjQIPUEAhMv8O1LVhQsOG0n9KQeTOhCw741VIlVUwo
-	6622X7nb5nw=
+	:content-type; q=dns; s=sasl; b=V8LHV/N5qdrQHqO9FPRtCJH4m3EthDuA
+	9gNkK8c3tosm6fE9ln09ykJ6wo3kWcYW10ML0jxS5OiIN7lCnMQxSbDsTTVNKukz
+	j1ToxIgs+yjtss7dGiF6LfB4QQX3f4sHhmZZqvvU4fxMM2d9s9XqsNGZ1d4qaunZ
+	mokdUmAFd/I=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DD1F135F89;
-	Mon, 25 Aug 2014 18:41:41 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 239B935244;
+	Mon, 25 Aug 2014 18:56:02 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3B21535F83;
-	Mon, 25 Aug 2014 18:41:32 -0400 (EDT)
-In-Reply-To: <CANYiYbGwXujdPg1fQWjvWjzQ41D+v-xA_ty_MqC2FtTRjGRJYg@mail.gmail.com>
-	(Jiang Xin's message of "Sat, 16 Aug 2014 19:05:03 +0800")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 016943523A;
+	Mon, 25 Aug 2014 18:55:53 -0400 (EDT)
+In-Reply-To: <1408896466-23149-2-git-send-email-prohaska@zib.de> (Steffen
+	Prohaska's message of "Sun, 24 Aug 2014 18:07:43 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F61D48A2-2CA8-11E4-B1BA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: F7BA978A-2CAA-11E4-B3BE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255875>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> The following changes since commit 49f1cb93a2f11845cfa2723611a729d3d7f02f0d:
+> It is only the path that matters in the decision whether to filter or
+> not.  Clarify this by making path the single argument of
+> would_convert_to_git().
 >
->   Git 2.1.0-rc0 (2014-07-27 15:22:22 -0700)
->
-> are available in the git repository at:
->
->   git://github.com/git-l10n/git-po
->
-> for you to fetch changes up to f7fbc357f863ecc5323f3fcf2fc9cbf2aa2a8587:
->
->   l10n: fr.po (2257t) update for version 2.1.0 (2014-08-07 09:07:18 +0200)
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> ---
 
-Thanks. I finally got around pulling this one.
+I've retitled this as:
 
-Sorry for the delay.
+    convert: drop arguments other than 'path' from would_convert_to_git()
+
+to match the output from "git shortlog --since=3.months --no-merges"
+by using lowercase 'd' after the "convert: " area name, and also
+more importantly avoid calling "refactor" which this change is not.
+
+Thanks.
+
+>  convert.h   | 5 ++---
+>  sha1_file.c | 2 +-
+>  2 files changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/convert.h b/convert.h
+> index 0c2143c..c638b33 100644
+> --- a/convert.h
+> +++ b/convert.h
+> @@ -40,10 +40,9 @@ extern int convert_to_working_tree(const char *path, const char *src,
+>  				   size_t len, struct strbuf *dst);
+>  extern int renormalize_buffer(const char *path, const char *src, size_t len,
+>  			      struct strbuf *dst);
+> -static inline int would_convert_to_git(const char *path, const char *src,
+> -				       size_t len, enum safe_crlf checksafe)
+> +static inline int would_convert_to_git(const char *path)
+>  {
+> -	return convert_to_git(path, src, len, NULL, checksafe);
+> +	return convert_to_git(path, NULL, 0, NULL, 0);
+>  }
+>  
+>  /*****************************************************************
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 3f70b1d..00c07f2 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -3144,7 +3144,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
+>  	if (!S_ISREG(st->st_mode))
+>  		ret = index_pipe(sha1, fd, type, path, flags);
+>  	else if (size <= big_file_threshold || type != OBJ_BLOB ||
+> -		 (path && would_convert_to_git(path, NULL, 0, 0)))
+> +		 (path && would_convert_to_git(path)))
+>  		ret = index_core(sha1, fd, size, type, path, flags);
+>  	else
+>  		ret = index_stream(sha1, fd, size, type, path, flags);
