@@ -1,119 +1,88 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 4/4] convert: Stream from fd to required clean filter
- instead of mmap
-Date: Mon, 25 Aug 2014 08:43:23 -0400
-Message-ID: <20140825124323.GB17288@peff.net>
-References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
- <1408896466-23149-5-git-send-email-prohaska@zib.de>
+Subject: Re: [PATCH 1/5] git-prompt: do not look for refs/stash in $GIT_DIR
+Date: Mon, 25 Aug 2014 08:46:31 -0400
+Message-ID: <20140825124631.GC17288@peff.net>
+References: <E1XLXkh-0002sL-IJ@iramx2.ira.uni-karlsruhe.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	pclouds@gmail.com, john@keeping.me.uk, schacon@gmail.com
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Aug 25 14:43:30 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: =?utf-8?B?R8OhYm9y?= Szeder <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Aug 25 14:46:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XLtcQ-0007kZ-Bm
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 14:43:30 +0200
+	id 1XLtfR-0000kT-L5
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Aug 2014 14:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755859AbaHYMn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Aug 2014 08:43:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58368 "HELO peff.net"
+	id S1753596AbaHYMqd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Aug 2014 08:46:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58376 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755855AbaHYMnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Aug 2014 08:43:25 -0400
-Received: (qmail 9875 invoked by uid 102); 25 Aug 2014 12:43:25 -0000
+	id S1753406AbaHYMqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Aug 2014 08:46:33 -0400
+Received: (qmail 10045 invoked by uid 102); 25 Aug 2014 12:46:32 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Aug 2014 07:43:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Aug 2014 08:43:23 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Aug 2014 07:46:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Aug 2014 08:46:31 -0400
 Content-Disposition: inline
-In-Reply-To: <1408896466-23149-5-git-send-email-prohaska@zib.de>
+In-Reply-To: <E1XLXkh-0002sL-IJ@iramx2.ira.uni-karlsruhe.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255822>
 
-On Sun, Aug 24, 2014 at 06:07:46PM +0200, Steffen Prohaska wrote:
+On Sun, Aug 24, 2014 at 08:22:41PM +0700, G=C3=A1bor Szeder wrote:
 
-> The data is streamed to the filter process anyway.  Better avoid mapping
-> the file if possible.  This is especially useful if a clean filter
-> reduces the size, for example if it computes a sha1 for binary data,
-> like git media.  The file size that the previous implementation could
-> handle was limited by the available address space; large files for
-> example could not be handled with (32-bit) msysgit.  The new
-> implementation can filter files of any size as long as the filter output
-> is small enough.
-> 
-> The new code path is only taken if the filter is required.  The filter
-> consumes data directly from the fd.  The original data is not available
-> to git, so it must fail if the filter fails.
+> On Aug 23, 2014 12:26 PM, Jeff King <peff@peff.net> wrote:
+> > Since dd0b72c (bash prompt: use bash builtins to check stash=20
+> > state, 2011-04-01), git-prompt checks whether we have a=20
+> > stash by looking for $GIT_DIR/refs/stash. Generally external=20
+> > programs should never do this, because they would miss=20
+> > packed-refs.
+>=20
+> Not sure whether the prompt script is external program or not, but
+> doesn't matter, this is the right thing to do.
 
-Can you clarify this second paragraph a bit more? If I understand
-correctly, we handle a non-required filter failing by just reading the
-data again (which we can do because we either read it into memory
-ourselves, or mmap it). With the streaming approach, we will read the
-whole file through our stream; if that fails we would then want to read
-the stream from the start.
+Yeah, by external I just meant "nothing outside of refs.c should make
+this assumption".
 
-Couldn't we do that with an lseek (or even an mmap with offset 0)? That
-obviously would not work for non-file inputs, but I think we address
-that already in index_fd: we push non-seekable things off to index_pipe,
-where we spool them to memory.
+> > That commit claims that packed-refs does not pack=20
+> > refs/stash, but that is not quite true. It does pack the=20
+> > ref, but due to a bug, fails to prune the ref. When we fix=20
+> > that bug, we would want to be doing the right thing here.=20
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>=20
+> > ---=20
+> > I know we are pretty sensitive to forks in the prompt code (after a=
+ll,=20
+> > that was the point of dd0b72c). This patch is essentially a reversi=
+on of=20
+> > this hunk of dd0b72c, and is definitely safe.
+>=20
+> I'm not sure, but if I remember correctly (don't have the means to
+> check it at the moment, sorry) in that commit I also added a 'git
+> pack-ref' invocation to the relevant test(s?) to guard us against
+> breakages due to changes in 'git pack-refs'.=C2=A0 If that is so, the=
+n I
+> think those invocations should be removed as well, as they'll become
+> useless.
 
-So it seems like the ideal strategy would be:
+It did add that change (that's actually how I noticed the problem!
+Thank you for being thorough in dd0b72c). My inclination is to leave th=
+e
+pack-refs invocations, as they protect against a certain class of error=
+s
+(we are not doing the risky behavior now, but the purpose of the test
+suite is to detect regressions; the next person to touch that code may
+not be so careful as you were).
 
-  1. If it's seekable, try streaming. If not, fall back to lseek/mmap.
-
-  2. If it's not seekable and the filter is required, try streaming. We
-     die anyway if we fail.
-
-  3. If it's not seekable and the filter is not required, decide based
-     on file size:
-
-       a. If it's small, spool to memory and proceed as we do now.
-
-       b. If it's big, spool to a seekable tempfile.
-
-Your patch implements part 2. But I would think part 1 is the most common
-case. And while part 3b seems unpleasant, it is better than the current
-code (with or without your patch), which will do 3a on a large file.
-
-Hmm. Though I guess in (3) we do not have the size up front, so it's
-complicated (we could spool N bytes to memory, then start dumping to a
-file after that). I do not think we necessarily need to implement that
-part, though. It seems like (1) is the thing I would expect to hit the
-most (i.e., people do not always mark their filters are "required").
-
-> -	write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
-> +	if (params->src) {
-> +	    write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
-
-Style: 4-space indentation (rather than a tab). There's more of it in
-this function (and in would_convert...) that I didn't mark.
-
-> +	} else {
-> +	    /* dup(), because copy_fd() closes the input fd. */
-> +	    fd = dup(params->fd);
-
-Not a problem you are introducing, but this seem kind of like a
-misfeature in copy_fd. Is it worth fixing? The function only has two
-existing callers.
-
-> +	/* Apply a filter to an fd only if the filter is required to succeed.
-> +	 * We must die if the filter fails, because the original data before
-> +	 * filtering is not available.
-> +	 */
-
-Style nit:
-
-  /*
-   * We have a blank line at the top of our
-   * multi-line comments.
-   */
+I don't feel too strongly, though, so if we want them gone, I'm OK with
+that.
 
 -Peff
