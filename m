@@ -1,150 +1,100 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] bisect: save heap memory. allocate only the required
- amount
-Date: Tue, 26 Aug 2014 12:57:21 +0100
-Message-ID: <53FC7621.7090102@ramsay1.demon.co.uk>
-References: <1408889844-5407-1-git-send-email-arjun024@gmail.com> <53FA0054.5060808@gmail.com> <CAPc5daWheSH8E-PycSUq2Coqp19t_+_6TuBEOKhK4QwsEtzkkA@mail.gmail.com> <20140825130732.GD17288@peff.net> <xmqq8umcl0al.fsf@gitster.dls.corp.google.com> <20140826110303.GA25736@peff.net>
+From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+Subject: Re: [PATCH 1/2] Check order when reading index
+Date: Tue, 26 Aug 2014 14:08:35 +0200
+Message-ID: <CAPuZ2NHafXQthtuq-RnTvpjVfNPaXHEy8SejuhPEnG+MwCK=sg@mail.gmail.com>
+References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
+	<1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
+	<xmqqvbpgmqmh.fsf@gitster.dls.corp.google.com>
+	<20140825194430.GI30953@peff.net>
+	<CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	Arjun Sreedharan <arjun024@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 13:57:36 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 26 14:09:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMFNY-0006ae-EA
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 13:57:36 +0200
+	id 1XMFYH-0002Jy-Dy
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 14:08:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754765AbaHZL5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 07:57:32 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:58342 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754717AbaHZL5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 07:57:31 -0400
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id C89F06F89F6;
-	Tue, 26 Aug 2014 12:57:02 +0100 (BST)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 7B17A6F8C2C;
-	Tue, 26 Aug 2014 12:57:02 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Tue, 26 Aug 2014 12:57:01 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <20140826110303.GA25736@peff.net>
-X-MDF-HostID: 3
+	id S1757931AbaHZMIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 08:08:37 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:53646 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757901AbaHZMIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 08:08:36 -0400
+Received: by mail-pd0-f182.google.com with SMTP id fp1so22420823pdb.27
+        for <git@vger.kernel.org>; Tue, 26 Aug 2014 05:08:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Ecq1vGm4CTwdyGo7gpuo4/oha9HqNOmqlHAngSSa/54=;
+        b=sziW2vc8l5tKnqNdIRv2kk4zZ+kZ3F+GySSDKHVVMicY8Nna/ZPV0jHGP0r9tEq/Ny
+         hD98bQXsW2XUL0hvK2NCJU/SeFgVVUTZZWwp7Fpo31D9+jdBgHOkHmsRVAgiq8nMCgWa
+         TCFouwYCkbwTH8IZAoDDKWzz+EpWQGL23eNMqjO3LEHjakRZprwWEEQpk1blulkgy/F5
+         cxybK67Vv/OofqA20dch9EWgS1tlJvwMZZWib7nQIMI8JhWwo+4/hVy2VEn6Xx72Wino
+         tqhrDZqsdS411NjKoaab6NaVwTbi7Fw7ZtJoN4xyqMie6RfNeshLTvz86VIGwVlVwSxi
+         pRFg==
+X-Received: by 10.70.134.205 with SMTP id pm13mr36539373pdb.80.1409054915754;
+ Tue, 26 Aug 2014 05:08:35 -0700 (PDT)
+Received: by 10.70.37.2 with HTTP; Tue, 26 Aug 2014 05:08:35 -0700 (PDT)
+In-Reply-To: <CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255891>
 
-On 26/08/14 12:03, Jeff King wrote:
-[snip]
-> 
-> Yeah, reading my suggestion again, it should clearly be
-> alloc_flex_struct or something.
-> 
-> Here's a fully-converted sample spot, where I think there's a slight
-> benefit:
-> 
-> diff --git a/remote.c b/remote.c
-> index 3d6c86a..ba32d40 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -928,14 +928,30 @@ int remote_find_tracking(struct remote *remote, struct refspec *refspec)
->  	return query_refspecs(remote->fetch, remote->fetch_refspec_nr, refspec);
->  }
->  
-> +static void *alloc_flex_struct(size_t base, size_t offset, const char *fmt, ...)
-> +{
-> +	va_list ap;
-> +	size_t extra;
-> +	char *ret;
-> +
-> +	va_start(ap, fmt);
-> +	extra = vsnprintf(NULL, 0, fmt, ap);
-> +	extra++; /* for NUL terminator */
-> +	va_end(ap);
-> +
-> +	ret = xcalloc(1, base + extra);
-> +	va_start(ap, fmt);
-> +	vsnprintf(ret + offset, extra, fmt, ap);
+On Mon, Aug 25, 2014 at 10:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Mon, Aug 25, 2014 at 12:44 PM, Jeff King <peff@peff.net> wrote:
+>> For my own curiosity, how do you get into this situation, and what does
+>> it mean to have multiple stage#1 entries for the same path? What would
+>> "git cat-file :1:path" output?
+>
+> That is how we natively (read: not with the funky "virtual" stuff
+> merge-recursive does) express a merge with multiple merge bases.
+> You also should be able to read this in the way how "git merge" invokes
+> merge strategies (one or more bases, double-dash and then current
+> HEAD and the other branches). I think there are some tests in 3way
+> merge tests that checks what should happen when our HEAD matches
+> one of the stage #1 while their branch matches a different one of the
+> stage #1, too.
 
-What is the relationship between 'base' and 'offset'?
+I'm a bit lost with this, conceptually it doesn't seem to be any
+problem with having multiple merge bases, but I don't manage to
+reproduce it.
+With "natively" do you mean some internal state that is never written
+into the index? If this were the case then there wouldn't be any
+problem with the restriction when reading the index file.
 
-Let me assume that base is always, depending on your compiler, either
-equal to offset or offset+1. Yes? (I'm assuming base is always the
-sizeof(struct whatever)). Do you need both base and offset?
+I have also tried to reproduce it by directly calling
+git-merge-recursive and the most I have got is what it seemed to be
+like a conflict in the stage #1:
 
-> +	va_end(ap);
-> +
-> +	return ret;
-> +}
-> +
->  static struct ref *alloc_ref_with_prefix(const char *prefix, size_t prefixlen,
->  		const char *name)
->  {
-> -	size_t len = strlen(name);
-> -	struct ref *ref = xcalloc(1, sizeof(struct ref) + prefixlen + len + 1);
-> -	memcpy(ref->name, prefix, prefixlen);
-> -	memcpy(ref->name + prefixlen, name, len);
-> -	return ref;
-> +	return alloc_flex_struct(sizeof(struct ref), offsetof(struct ref, name),
-> +				 "%.*s%s", prefixlen, prefix, name);
->  }
->  
->  struct ref *alloc_ref(const char *name)
-> 
-> Obviously the helper is much longer than the code it is replacing, but
-> it would be used in multiple spots. The main thing I like here is that
-> we are dropping the manual length computations, which are easy to get
-> wrong (it's easy to forget a +1 for a NUL terminator, etc).
-> 
-> The offsetof is a little ugly. And the fact that we have a pre-computed
-> length for prefixlen makes the format string a little ugly.
-> 
-> Here's a another example:
-> 
-> diff --git a/attr.c b/attr.c
-> index 734222d..100c423 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -89,8 +89,8 @@ static struct git_attr *git_attr_internal(const char *name, int len)
->  	if (invalid_attr_name(name, len))
->  		return NULL;
->  
-> -	a = xmalloc(sizeof(*a) + len + 1);
-> -	memcpy(a->name, name, len);
-> +	a = alloc_flex_array(sizeof(*a), offsetof(struct git_attr, name),
-> +			     "%.*s", len, name);
->  	a->name[len] = 0;
->  	a->h = hval;
->  	a->next = git_attr_hash[pos];
-> 
-> I think this is strictly worse for reading. The original computation was
-> pretty easy in the first place, so we are not getting much benefit
-> there. And again we have the precomputed "len" passed into the function,
-> so we have to use the less readable "%.*s". And note that offsetof()
-> requires us to pass a real typename instead of just "*a", as sizeof()
-> allows (I suspect passing "a->name - a" would work on many systems, but
-> I also suspect that is a gross violation of the C standard when "a" has
-> not yet been initialized).
-> 
-> So given that the benefit ranges from "a little" to "negative" in these
-> two examples, I'm inclined to give up this line of inquiry.
+$ git ls-files -s
+100644 1036ba5101378f06aa10c5fa249b67e14f83166b 1 conflict
+100644 2638c45f8e7bc5b56f70e92390153572811782c3 2 conflict
+100644 178481050188cf00d7d9cd5a11e43ab8fab9294f 3 conflict
 
-Indeed. :-D
+$ git cat-file blob 1036ba5101378f06aa10c5fa249b67e14f83166b
+<<<<<<< Temporary merge branch 1
+G
+=======
+E
+F
+>>>>>>> Temporary merge branch 2
 
-ATB,
-Ramsay Jones
+And after thinking a bit more about it, I don't see a way to have two
+stage #1 entries for the same path with git commands only. It seems
+that all entries are added through the add_index_entry_with_check()
+function (except maybe the added to the cached tree extension), and
+this function replaces existing entries if they have the same name and
+stage.
+Also, all tests pass with the patch, without allowing two entries for
+the same stage.
+
+So I'm afraid that I don't fully understand this case :/
