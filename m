@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] log-tree: make add_name_decoration a public function
-Date: Tue, 26 Aug 2014 06:23:36 -0400
-Message-ID: <20140826102335.GA25687@peff.net>
+Subject: [PATCH 2/3] log-tree: make name_decoration hash static
+Date: Tue, 26 Aug 2014 06:23:54 -0400
+Message-ID: <20140826102353.GB25687@peff.net>
 References: <20140826102051.GA4885@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -11,139 +11,132 @@ Cc: Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 12:23:44 2014
+X-From: git-owner@vger.kernel.org Tue Aug 26 12:24:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMDug-0007Ck-Uv
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 12:23:43 +0200
+	id 1XMDuy-0007Ie-IS
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 12:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934466AbaHZKXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 06:23:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59049 "HELO peff.net"
+	id S934454AbaHZKX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 06:23:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59061 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932729AbaHZKXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 06:23:37 -0400
-Received: (qmail 9536 invoked by uid 102); 26 Aug 2014 10:23:38 -0000
+	id S932729AbaHZKXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 06:23:55 -0400
+Received: (qmail 9557 invoked by uid 102); 26 Aug 2014 10:23:56 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Aug 2014 05:23:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2014 06:23:36 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Aug 2014 05:23:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2014 06:23:54 -0400
 Content-Disposition: inline
 In-Reply-To: <20140826102051.GA4885@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255885>
 
-The log-tree code keeps a "struct decoration" hash to show
-text decorations for each commit during log traversals. It
-makes this available to other files by providing global
-access to the hash. This can result in other code adding
-entries that do not conform to what log-tree expects.
+In the previous commit, we made add_name_decoration global
+so that adders would not have to access the hash directly.
+We now make the hash itself static so that callers _have_ to
+add through our function, making sure that all additions go
+through a single point.  To do this, we have to add one more
+accessor function: a way to lookup entries in the hash.
 
-For example, the bisect code adds its own "dist"
-decorations to be shown. Originally the bisect code was
-correct, but when the name_decoration code grew a new field
-in eb3005e (commit.h: add 'type' to struct name_decoration,
-2010-06-19), the bisect code was not updated. As a result,
-the log-tree code can access uninitialized memory and even
-segfault.
+Since the only caller doesn't actually look at the returned
+value, but rather only asks whether there is a decoration or
+not, we could provide only a boolean "has_name_decoration".
+That would allow us to make "struct name_decoration" local
+to log-tree, as well.
 
-We can fix this by making name_decoration's adding function
-public. If all callers use it, then any changes to structi
-initialization only need to happen in one place (and because
-the members come in as parameters, the compiler can notice a
-caller who does not supply enough information).
-
-As a bonus, this also means that the decoration hashes
-created by the bisect code will use less memory (previously
-we over-allocated space for the distance integer, but not we
-format it into a temporary buffer and copy it to the final
-flex-array).
+However, it's unlikely to cause any maintainability harm
+making the actual data public, and this interface is more
+flexible if we need to look at decorations from other parts
+of the code in the future.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- bisect.c   |  7 ++++---
- commit.h   | 12 ++++++++++++
- log-tree.c | 12 +-----------
- 3 files changed, 17 insertions(+), 14 deletions(-)
+ commit.h   |  2 +-
+ log-tree.c | 11 ++++++++---
+ revision.c |  2 +-
+ 3 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index d6e851d..df09cbc 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -215,11 +215,12 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
- 	}
- 	qsort(array, cnt, sizeof(*array), compare_commit_dist);
- 	for (p = list, i = 0; i < cnt; i++) {
--		struct name_decoration *r = xmalloc(sizeof(*r) + 100);
-+		char buf[100]; /* enough for dist=%d */
- 		struct object *obj = &(array[i].commit->object);
- 
--		sprintf(r->name, "dist=%d", array[i].distance);
--		r->next = add_decoration(&name_decoration, obj, r);
-+		snprintf(buf, sizeof(buf), "dist=%d", array[i].distance);
-+		add_name_decoration(DECORATION_NONE, buf, obj);
-+
- 		p->item = array[i].commit;
- 		p = p->next;
- 	}
 diff --git a/commit.h b/commit.h
-index a8cbf52..4902f97 100644
+index 4902f97..263b49e 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -33,6 +33,18 @@ struct name_decoration {
- 	char name[1];
+@@ -26,7 +26,6 @@ extern int save_commit_buffer;
+ extern const char *commit_type;
+ 
+ /* While we can decorate any object with a name, it's only used for commits.. */
+-extern struct decoration name_decoration;
+ struct name_decoration {
+ 	struct name_decoration *next;
+ 	int type;
+@@ -44,6 +43,7 @@ enum decoration_type {
  };
  
-+enum decoration_type {
-+	DECORATION_NONE = 0,
-+	DECORATION_REF_LOCAL,
-+	DECORATION_REF_REMOTE,
-+	DECORATION_REF_TAG,
-+	DECORATION_REF_STASH,
-+	DECORATION_REF_HEAD,
-+	DECORATION_GRAFTED,
-+};
-+
-+void add_name_decoration(enum decoration_type type, const char *name, struct object *obj);
-+
+ void add_name_decoration(enum decoration_type type, const char *name, struct object *obj);
++const struct name_decoration *get_name_decoration(const struct object *obj);
+ 
  struct commit *lookup_commit(const unsigned char *sha1);
  struct commit *lookup_commit_reference(const unsigned char *sha1);
- struct commit *lookup_commit_reference_gently(const unsigned char *sha1,
 diff --git a/log-tree.c b/log-tree.c
-index 0c53dc1..a821258 100644
+index a821258..7cbc4ee 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -14,16 +14,6 @@
+@@ -12,7 +12,7 @@
+ #include "sequencer.h"
+ #include "line-log.h"
  
- struct decoration name_decoration = { "object names" };
+-struct decoration name_decoration = { "object names" };
++static struct decoration name_decoration = { "object names" };
  
--enum decoration_type {
--	DECORATION_NONE = 0,
--	DECORATION_REF_LOCAL,
--	DECORATION_REF_REMOTE,
--	DECORATION_REF_TAG,
--	DECORATION_REF_STASH,
--	DECORATION_REF_HEAD,
--	DECORATION_GRAFTED,
--};
--
  static char decoration_colors[][COLOR_MAXLEN] = {
  	GIT_COLOR_RESET,
- 	GIT_COLOR_BOLD_GREEN,	/* REF_LOCAL */
-@@ -84,7 +74,7 @@ int parse_decorate_color_config(const char *var, const int ofs, const char *valu
- #define decorate_get_color_opt(o, ix) \
- 	decorate_get_color((o)->use_color, ix)
+@@ -83,6 +83,11 @@ void add_name_decoration(enum decoration_type type, const char *name, struct obj
+ 	res->next = add_decoration(&name_decoration, obj, res);
+ }
  
--static void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
-+void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
++const struct name_decoration *get_name_decoration(const struct object *obj)
++{
++	return lookup_decoration(&name_decoration, obj);
++}
++
+ static int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
  {
- 	int nlen = strlen(name);
- 	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + nlen);
+ 	struct object *obj;
+@@ -177,13 +182,13 @@ void format_decorations(struct strbuf *sb,
+ 			int use_color)
+ {
+ 	const char *prefix;
+-	struct name_decoration *decoration;
++	const struct name_decoration *decoration;
+ 	const char *color_commit =
+ 		diff_get_color(use_color, DIFF_COMMIT);
+ 	const char *color_reset =
+ 		decorate_get_color(use_color, DECORATION_NONE);
+ 
+-	decoration = lookup_decoration(&name_decoration, &commit->object);
++	decoration = get_name_decoration(&commit->object);
+ 	if (!decoration)
+ 		return;
+ 	prefix = " (";
+diff --git a/revision.c b/revision.c
+index 2571ada..5aff2b4 100644
+--- a/revision.c
++++ b/revision.c
+@@ -473,7 +473,7 @@ static int rev_compare_tree(struct rev_info *revs,
+ 		 * If we are simplifying by decoration, then the commit
+ 		 * is worth showing if it has a tag pointing at it.
+ 		 */
+-		if (lookup_decoration(&name_decoration, &commit->object))
++		if (get_name_decoration(&commit->object))
+ 			return REV_TREE_DIFFERENT;
+ 		/*
+ 		 * A commit that is not pointed by a tag is uninteresting
 -- 
 2.1.0.346.ga0367b9
