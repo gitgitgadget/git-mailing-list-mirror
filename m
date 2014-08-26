@@ -1,123 +1,63 @@
-From: Maxim Bublis <satori@yandex-team.ru>
-Subject: [PATCH] contrib/svn-fe: fix Makefile
-Date: Tue, 26 Aug 2014 16:44:22 +0400
-Message-ID: <1409057062-72857-1-git-send-email-satori@yandex-team.ru>
-Cc: Maxim Bublis <satori@yandex-team.ru>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 26 16:12:34 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug report: Author/Commit date in ISO 8601 format
+Date: Tue, 26 Aug 2014 10:22:03 -0400
+Message-ID: <20140826142203.GA31205@peff.net>
+References: <53FC3768.3090905@arc-aachen.de>
+ <20140826130610.GG29180@peff.net>
+ <53FC894F.9060402@arc-aachen.de>
+ <20140826133326.GA30887@peff.net>
+ <F8DE5B94F596455FA56956B8A865EC73@black>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+To: Oliver Busch <oliver.busch@arc-aachen.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 26 16:22:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMHU7-0002dH-Iu
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 16:12:31 +0200
+	id 1XMHdU-0007DI-9F
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 16:22:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758472AbaHZOMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 10:12:22 -0400
-Received: from 95.108.175.165-red.dhcp.yndx.net ([95.108.175.165]:61093 "EHLO
-	95.108.175.165-red.dhcp.yndx.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758466AbaHZOMU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Aug 2014 10:12:20 -0400
-X-Greylist: delayed 5133 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Aug 2014 10:12:19 EDT
-Received: by 95.108.175.165-red.dhcp.yndx.net (Postfix, from userid 1533206276)
-	id E1F3F2000B56; Tue, 26 Aug 2014 16:46:15 +0400 (MSK)
-X-Mailer: git-send-email 1.8.5.2 (Apple Git-48)
+	id S1758329AbaHZOWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 10:22:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59253 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758140AbaHZOWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 10:22:06 -0400
+Received: (qmail 22751 invoked by uid 102); 26 Aug 2014 14:22:04 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Aug 2014 09:22:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2014 10:22:03 -0400
+Content-Disposition: inline
+In-Reply-To: <F8DE5B94F596455FA56956B8A865EC73@black>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255906>
 
-Fixes several problems:
-  * include config.mak.uname, config.mak.autogen and config.mak
-    in order to use settings for prefix and other such things;
-  * link xdiff/lib.a as it is a requirement for libgit.a;
-  * fix CFLAGS and EXTLIBS for Linux and Mac OS X.
----
- contrib/svn-fe/Makefile | 47 ++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 38 insertions(+), 9 deletions(-)
+On Tue, Aug 26, 2014 at 10:10:33AM -0400, Jason Pyeron wrote:
 
-diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
-index 360d8da..8e1d622 100644
---- a/contrib/svn-fe/Makefile
-+++ b/contrib/svn-fe/Makefile
-@@ -1,18 +1,45 @@
- all:: svn-fe$X
- 
--CC = gcc
-+CC = cc
- RM = rm -f
- MV = mv
- 
- CFLAGS = -g -O2 -Wall
- LDFLAGS =
--ALL_CFLAGS = $(CFLAGS)
--ALL_LDFLAGS = $(LDFLAGS)
--EXTLIBS =
-+EXTLIBS = -lz
-+
-+include ../../config.mak.uname
-+-include ../../config.mak.autogen
-+-include ../../config.mak
-+
-+ifeq ($(uname_S),Darwin)
-+	CFLAGS += -I/opt/local/include
-+	LDFLAGS += -L/opt/local/lib
-+endif
-+
-+ifndef NO_OPENSSL
-+	EXTLIBS += -lssl -lcrypto
-+endif
-+
-+ifndef NO_PTHREADS
-+	CFLAGS += $(PTHREADS_CFLAGS)
-+	EXTLIBS += $(PTHREAD_LIBS)
-+endif
-+
-+ifdef HAVE_CLOCK_GETTIME
-+	CFLAGS += -DHAVE_CLOCK_GETTIME
-+	EXTLIBS += -lrt
-+endif
-+
-+ifdef NEEDS_LIBICONV
-+	EXTLIBS += -liconv
-+endif
- 
- GIT_LIB = ../../libgit.a
- VCSSVN_LIB = ../../vcs-svn/lib.a
--LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(EXTLIBS)
-+XDIFF_LIB = ../../xdiff/lib.a
-+
-+LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB)
- 
- QUIET_SUBDIR0 = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1 =
-@@ -33,12 +60,11 @@ ifndef V
- endif
- endif
- 
--svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
--	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ svn-fe.o \
--		$(ALL_LDFLAGS) $(LIBS)
-+svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(XDIFF_LIB) $(GIT_LIB)
-+	$(QUIET_LINK)$(CC) $(CFLAGS) $(LDFLAGS) $(EXTLIBS) -o $@ svn-fe.o $(LIBS)
- 
- svn-fe.o: svn-fe.c ../../vcs-svn/svndump.h
--	$(QUIET_CC)$(CC) -I../../vcs-svn -o $*.o -c $(ALL_CFLAGS) $<
-+	$(QUIET_CC)$(CC) $(CFLAGS) -I../../vcs-svn -o $*.o -c $<
- 
- svn-fe.html: svn-fe.txt
- 	$(QUIET_SUBDIR0)../../Documentation $(QUIET_SUBDIR1) \
-@@ -54,6 +80,9 @@ svn-fe.1: svn-fe.txt
- ../../vcs-svn/lib.a: FORCE
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) vcs-svn/lib.a
- 
-+../../xdiff/lib.a: FORCE
-+	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) xdiff/lib.a
-+
- ../../libgit.a: FORCE
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
- 
--- 
-1.8.5.2 (Apple Git-48)
+> > But I am not sure that "omitted" means "can be replaced with a space".
+> > And while you can define "by mutual agreement" as "git defines the
+> > format, so any consumers agree to it" that is not necessarily 
+> > useful to
+> > somebody who wants to feed the result to an iso8601 parser 
+> > that does not
+> > know or care about git (i.e., it shoves the conversion work onto the
+> > person in the middle).
+> 
+> Omitted /T?/ does not mean replaced with another character.
+
+I would agree. But that is the argument made in the thread I linked
+earlier.
+
+I do not think there is much point in re-opening the argument, though.
+Whatever git generates, changing the output would probably cause a lot
+of pain.  We are likely better off adding a new, "real" iso8601 format
+option (we can even deprecate the old one, or slate it for switching,
+but we would need a notification period).
+
+-Peff
