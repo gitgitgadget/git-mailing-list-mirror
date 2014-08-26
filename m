@@ -1,83 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] Makefile: use `find` to determine static header dependencies
-Date: Tue, 26 Aug 2014 09:54:19 -0700
-Message-ID: <xmqqiolfjio4.fsf@gitster.dls.corp.google.com>
-References: <20140822042716.GE27992@peff.net>
-	<20140822043303.GB18192@peff.net> <20140825194641.GS20185@google.com>
-	<20140825200042.GJ30953@peff.net> <20140825204516.GT20185@google.com>
-	<xmqqppfol1sx.fsf@gitster.dls.corp.google.com>
-	<20140825212705.GU20185@google.com>
-	<xmqq4mx0kyrx.fsf@gitster.dls.corp.google.com>
-	<20140826123427.GD29180@peff.net>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] po/TEAMS: add new members to German translation team
+Date: Tue, 26 Aug 2014 19:06:02 +0200
+Message-ID: <1409072762-6367-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 26 18:54:43 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	worldhello.net@gmail.com, Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 26 19:06:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMK0y-00077i-5D
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 18:54:36 +0200
+	id 1XMKCE-0003sF-Cs
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 19:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752113AbaHZQyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 12:54:32 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57418 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751995AbaHZQya (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 12:54:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD1A532834;
-	Tue, 26 Aug 2014 12:54:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WDcy/s8nL9zLiLEKtpKfmq8OeY8=; b=QXLmYZ
-	4jmrIN/OAm5VeLP+gcZIIKn54zGEo127MVCmwCQ5CCcloM3JHTri7DsQngfTkOhN
-	5q8AjFGMQFwZMt3lm1BcBs2dZtnOTkVcRG8v3CkGiGL3ZiSts7DjY0d/3RUd2FEK
-	pSoOIW4O59R3xiF1RqBd7GTKNKGRFOlbBBlYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GVY6FAtAQ5VTEF3mQ+6hORk+zEfHfzKO
-	SkymFo+GlnLImlhU1EyuBkhj0x+Mg5UArpVmM9dA+PXyz5S+k6qcaIjN0dAqU0Zo
-	JWzdJuqHzVX3JMJhfcGnxiMOww0FULPcy4Nz22CJxERqHSgpQhF22s/IatIMCEwW
-	xoLdJUHQcsY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C351032833;
-	Tue, 26 Aug 2014 12:54:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A18483282E;
-	Tue, 26 Aug 2014 12:54:21 -0400 (EDT)
-In-Reply-To: <20140826123427.GD29180@peff.net> (Jeff King's message of "Tue,
-	26 Aug 2014 08:34:27 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A07EAE92-2D41-11E4-8B78-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751843AbaHZRGJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2014 13:06:09 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:37263 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751435AbaHZRGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 13:06:08 -0400
+Received: by mail-wi0-f177.google.com with SMTP id ho1so4507723wib.10
+        for <git@vger.kernel.org>; Tue, 26 Aug 2014 10:06:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=s/F1/w3F1CapJbxlFyfExvLrdFRaLs17vPwEzKjTsYE=;
+        b=dO4vLGXAQTQDpgnDVguzpx6kelMqGd+2wHZpZwMarUZyF5/dqtUMTKdzA7/EoXWLRY
+         HObkrjuW5waSaB1tG2/muoxRYY8cweeH3/svNhPhmVV0lmpsp1C7xTVOIXes7EMwOacr
+         XaelZ1lTtA7ynjOQJ563a4bnzTePrQR7j4bzcLuODEMMDANvLydqBgtJgDbRBVHN0NLj
+         loAihjT1FNc/OBO5SRX0MbFjTiEcB+I2OTxslMJtl5C0ZJdD4MeJ/NUQq1tTJCIlC2xN
+         l06dbk7ZUUgi0bNMx1UlP5Hn26/68f/gb5ar/BBNJVeDsmq/xsDksMGl4ZENMEXnQ5+r
+         yeNQ==
+X-Received: by 10.180.160.229 with SMTP id xn5mr344877wib.64.1409072767528;
+        Tue, 26 Aug 2014 10:06:07 -0700 (PDT)
+Received: from localhost (dslb-088-073-189-170.088.073.pools.vodafone-ip.de. [88.73.189.170])
+        by mx.google.com with ESMTPSA id cz3sm9731170wjb.23.2014.08.26.10.06.06
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 26 Aug 2014 10:06:07 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.240.g9cce596
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255919>
 
-Jeff King <peff@peff.net> writes:
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/TEAMS | 2 ++
+ 1 file changed, 2 insertions(+)
 
->> Actually as you are not excluding CVS, RCS, etc., and using ??* as
->> the starting point will exclude .git, .hg, etc. at the top, I think
->> we can shorten it even further and say
->> 
->> 	find ??* -name Documentation -prune -o -name \*.h
->> 
->> or something.
->
-> I had originally considered starting with "find *", but I was worried
-> about shell globbing overflowing command-line limits here. "echo *" on a
-> built tree is about 12K.
-
-OK.  What I queued is still your original which is the most
-conservative among various "fun" alternatives we have seen so far on
-this thread, so we should be good ;-)
-
-Thanks.
+diff --git a/po/TEAMS b/po/TEAMS
+index 52c3d07..461cc14 100644
+--- a/po/TEAMS
++++ b/po/TEAMS
+@@ -15,6 +15,8 @@ Leader:		Ralf Thielow <ralf.thielow@googlemail.com>
+ Members:	Thomas Rast <tr@thomasrast.ch>
+ 		Jan Kr=C3=BCger <jk@jk.gs>
+ 		Christian Stimming <stimming@tuhh.de>
++		Phillip Szelat <phillip.szelat@gmail.com>
++		Matthias R=C3=BCster <matthias.ruester@gmail.com>
+=20
+ Language:	fr (French)
+ Repository:	https://github.com/jnavila/git
+--=20
+2.1.0.240.g9cce596
