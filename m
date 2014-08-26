@@ -1,90 +1,105 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] Check order when reading index
-Date: Tue, 26 Aug 2014 08:20:09 -0400
-Message-ID: <20140826122008.GC29180@peff.net>
-References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
- <1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
- <xmqqvbpgmqmh.fsf@gitster.dls.corp.google.com>
- <20140825194430.GI30953@peff.net>
- <CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
- <CAPuZ2NHafXQthtuq-RnTvpjVfNPaXHEy8SejuhPEnG+MwCK=sg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] Makefile: use `find` to determine static header
+ dependencies
+Date: Tue, 26 Aug 2014 08:34:27 -0400
+Message-ID: <20140826123427.GD29180@peff.net>
+References: <20140822042716.GE27992@peff.net>
+ <20140822043303.GB18192@peff.net>
+ <20140825194641.GS20185@google.com>
+ <20140825200042.GJ30953@peff.net>
+ <20140825204516.GT20185@google.com>
+ <xmqqppfol1sx.fsf@gitster.dls.corp.google.com>
+ <20140825212705.GU20185@google.com>
+ <xmqq4mx0kyrx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 14:20:20 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 26 14:34:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMFjW-0007FM-4F
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 14:20:18 +0200
+	id 1XMFxJ-0004S8-Jt
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 14:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755065AbaHZMUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 08:20:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59149 "HELO peff.net"
+	id S1754733AbaHZMe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 08:34:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59161 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754695AbaHZMUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 08:20:10 -0400
-Received: (qmail 15748 invoked by uid 102); 26 Aug 2014 12:20:10 -0000
+	id S1751006AbaHZMe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 08:34:28 -0400
+Received: (qmail 16509 invoked by uid 102); 26 Aug 2014 12:34:28 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Aug 2014 07:20:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2014 08:20:09 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Aug 2014 07:34:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2014 08:34:27 -0400
 Content-Disposition: inline
-In-Reply-To: <CAPuZ2NHafXQthtuq-RnTvpjVfNPaXHEy8SejuhPEnG+MwCK=sg@mail.gmail.com>
+In-Reply-To: <xmqq4mx0kyrx.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255895>
 
-On Tue, Aug 26, 2014 at 02:08:35PM +0200, Jaime Soriano Pastor wrote:
+On Mon, Aug 25, 2014 at 03:08:50PM -0700, Junio C Hamano wrote:
 
-> > That is how we natively (read: not with the funky "virtual" stuff
-> > merge-recursive does) express a merge with multiple merge bases.
-> > You also should be able to read this in the way how "git merge" invokes
-> > merge strategies (one or more bases, double-dash and then current
-> > HEAD and the other branches). I think there are some tests in 3way
-> > merge tests that checks what should happen when our HEAD matches
-> > one of the stage #1 while their branch matches a different one of the
-> > stage #1, too.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 > 
-> I'm a bit lost with this, conceptually it doesn't seem to be any
-> problem with having multiple merge bases, but I don't manage to
-> reproduce it.
-> With "natively" do you mean some internal state that is never written
-> into the index? If this were the case then there wouldn't be any
-> problem with the restriction when reading the index file.
-
-FWIW, that was my question on reading Junio's response, too.
-
-> I have also tried to reproduce it by directly calling
-> git-merge-recursive and the most I have got is what it seemed to be
-> like a conflict in the stage #1:
+> >> Wouldn't it be sufficient to start digging not from "*" but from
+> >> "??*"?
+> >
+> > Gah, the * was supposed to be . in my examples (though it doesn't
+> > hurt).
+> >
+> >> 	find ??* \( -name Documentation -o -name .\?\* \) -prune -o -name \*.h
+> >
+> > Heh.  Yeah, that would work. ;-)
 > 
-> $ git ls-files -s
-> 100644 1036ba5101378f06aa10c5fa249b67e14f83166b 1 conflict
-> 100644 2638c45f8e7bc5b56f70e92390153572811782c3 2 conflict
-> 100644 178481050188cf00d7d9cd5a11e43ab8fab9294f 3 conflict
+> Continuing useless discussion...
 > 
-> $ git cat-file blob 1036ba5101378f06aa10c5fa249b67e14f83166b
-> <<<<<<< Temporary merge branch 1
-> G
-> =======
-> E
-> F
-> >>>>>>> Temporary merge branch 2
+> Actually as you are not excluding CVS, RCS, etc., and using ??* as
+> the starting point will exclude .git, .hg, etc. at the top, I think
+> we can shorten it even further and say
+> 
+> 	find ??* -name Documentation -prune -o -name \*.h
+> 
+> or something.
 
-Yes, I think merge-recursive resolves the earlier merges and then feeds
-the result into the main merge. And that's how you end up with the
-"temporary merge branch" name instead of something useful.
+I had originally considered starting with "find *", but I was worried
+about shell globbing overflowing command-line limits here. "echo *" on a
+built tree is about 12K. That's laughably small for Linux, but would
+other systems (which, after all, are the main targets) be more picky?
 
-It might work to have a recursive merge that causes a conflict on path
-X, and then we further need to resolve that conflict. I'm not sure if we
-try to represent that in the index somehow, or if merge-recursive just
-bails in this case (I didn't try it).
+POSIX lists 4K as the minimum, and that has to fit the environment, too.
+
+I'd also be fine to try it and see if anybody on an antique system
+complains.
+
+> Don't we want to exclude contrib/ by the way?
+
+Probably. For calculating dependencies, it is OK to be overly
+conservative (the worst case is that we trigger a recompile if somebody
+touched contrib/.../foo.h, which is rather unlikely).
+
+For the .pot file, being conservative is a little annoying.  In theory
+we might want to translate stuff in contrib/, but it probably is just
+extra work for translators for not much benefit (though I have not
+really used gettext; I assume it only pulls in strings marked with _()
+and friends, so being conservative is maybe not that big a deal...).
+
+In that sense, maybe we should just hit the whole tree to be on the
+conservative side. The two reasons I did not in my initial attempt were:
+
+  1. Performance. But with the final form, we only the run the `find` at
+     all very rarely, so shaving off a few readdirs() is not that big a
+     deal.
+
+  2. There are a few problematic areas. t/perf may contain build trees
+     which are copies of git, which I expect would confuse gettext.
+
+So I dunno.
 
 -Peff
