@@ -1,115 +1,122 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 03/23] refs.c: add a new refs.c file to hold all common refs code
-Date: Tue, 26 Aug 2014 14:31:24 -0700
-Message-ID: <xmqqd2bngcpf.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v3 19/23] refs-be-files.c: add a backend method structure with transaction functions
+Date: Tue, 26 Aug 2014 14:38:42 -0700
+Message-ID: <xmqq8umbgcd9.fsf@gitster.dls.corp.google.com>
 References: <1408465847-30384-1-git-send-email-sahlberg@google.com>
-	<1408465847-30384-4-git-send-email-sahlberg@google.com>
+	<1408465847-30384-20-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 23:31:39 2014
+X-From: git-owner@vger.kernel.org Tue Aug 26 23:38:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMOL5-0002Fk-EN
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 23:31:39 +0200
+	id 1XMOS9-0005Er-5q
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 23:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755441AbaHZVbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 17:31:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54074 "EHLO smtp.pobox.com"
+	id S1755415AbaHZVix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 17:38:53 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53071 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755184AbaHZVbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 17:31:34 -0400
+	id S1755233AbaHZViw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 17:38:52 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 571573426F;
-	Tue, 26 Aug 2014 17:31:34 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C2AFB3440F;
+	Tue, 26 Aug 2014 17:38:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IY1i5iq8luBU+bvQUGAWW2CSkog=; b=U7vaAv
-	nVohVY4s2gue9j0cD0fRR2LrEhmbb9tlfvr1bU1M5+oev7uuyVk0jVVQqmq61dC4
-	W2Vh1WcJHnAmYZWUlAqf719RbMqDdF/F+zBCROhlOIdgCEer7YFmgx4TYWa1NI/T
-	es6URHExPO5qz9kAXY8CPY03fZDZprZHeun2k=
+	:content-type; s=sasl; bh=0vyVfPRDvRJJY1m8vX89sLEVGvc=; b=sHk0ws
+	ebkyPVJyM7h6FqKcNQwdyV3+tthaaRUvY7U2YqvtR05eU8ZjzYStS7ZtYaNPe/8F
+	Doo30IrQ6VIPcjTkVb1vjQhaY4ral8jcMQDbBWQTLSnjhOP2p+i+dBbPQmR0GlpM
+	0OsY8ZTBd7rRhhuRHGlP12WAHRODlOdfjAwbI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gRuSnnsUfCD1afp5EM6fHbb/PKKTKhpv
-	j+9RlAJ1wtBvQrE2pie31PkL+q3E5iApfhJ7QFPca8HV8zTdp//BtirpHr/Hoe+j
-	PJ8WH4bom7C5xmTNHJvQR942nBgKtwGYQe+6Iu5osN6jETEpydxdoDqlyYaiDoHE
-	obSiM1RjmFE=
+	:content-type; q=dns; s=sasl; b=tSMVbX/mY2PX3M1fjJlRh+tBNVZKDcCn
+	7dp/MAaPpiko4GHLrJBujkRYbo3LdCx6E3safmTSc9pAA1t9NRKJnAPMVVVKMU4G
+	ycb11dSx+UTH0IJE425U8v8IJ8JMZyilQ0j61eGI/zpHJZLGk6qKtZugnSABZMc4
+	xyGfXr7avYo=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4A8CC3426D;
-	Tue, 26 Aug 2014 17:31:34 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B68C73440E;
+	Tue, 26 Aug 2014 17:38:51 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5F2E53426B;
-	Tue, 26 Aug 2014 17:31:26 -0400 (EDT)
-In-Reply-To: <1408465847-30384-4-git-send-email-sahlberg@google.com> (Ronnie
-	Sahlberg's message of "Tue, 19 Aug 2014 09:30:27 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E3A4334406;
+	Tue, 26 Aug 2014 17:38:43 -0400 (EDT)
+In-Reply-To: <1408465847-30384-20-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Tue, 19 Aug 2014 09:30:43 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 559AA940-2D68-11E4-A227-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 5A66A1DA-2D69-11E4-9081-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255947>
 
 Ronnie Sahlberg <sahlberg@google.com> writes:
 
-> Create a new erfs.c file that will be used to hold all the refs
-> code that is backend agnostic and will be shared across all backends.
->
-> The reason we renamed everything to refs-be-files.c in the previous patch
-> and now start moving the common code back to the new refs.c file
-> instead of the other way around is the etive volumes of code.
+> diff --git a/refs-be-files.c b/refs-be-files.c
+> index e58a7e1..27eafd0 100644
+> --- a/refs-be-files.c
+> +++ b/refs-be-files.c
+> ...
+> +struct ref_be refs_files = {
+> +	files_transaction_begin,
+> +	files_transaction_update_sha1,
+> +	files_transaction_create_sha1,
+> +	files_transaction_delete_sha1,
+> +	files_transaction_update_reflog,
+> +	files_transaction_commit,
+> +	files_transaction_free,
+> +};
+> +
+> +struct ref_be *refs = &refs_files;
 
-Huh?  Why not create refs-be-files.c and move whatever need to be
-there over there, instead of rename the file and move things that
-shouldn't have been moved back like this?
-
-Puzzled.
-
-I do not see 02/23 here, but I am assuming that is is just
-
-    git mv refs.c refs-be-files.c
-
-which may have been a seven-line patch with "format-patch -M" ;-)
-
->
-> With the ref_cache, packed refs and loose ref handling that are all
-> part of the files based implementation the backend specific part
-> of the old refs.c file is several times larger than the backend agnostic
-> part. Therefore it makes more sense to first rename everything to be
-> part of the files based backend and then move the parts that can be used
-> as common code back to refs.c.
->
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
->  Makefile | 1 +
->  refs.c   | 3 +++
->  2 files changed, 4 insertions(+)
->  create mode 100644 refs.c
->
-> diff --git a/Makefile b/Makefile
-> index e010ad1..937d22a 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -857,6 +857,7 @@ LIB_OBJS += quote.o
->  LIB_OBJS += reachable.o
->  LIB_OBJS += read-cache.o
->  LIB_OBJS += reflog-walk.o
-> +LIB_OBJS += refs.o
->  LIB_OBJS += refs-be-files.o
->  LIB_OBJS += remote.o
->  LIB_OBJS += replace_object.o
 > diff --git a/refs.c b/refs.c
-> new file mode 100644
-> index 0000000..77492ff
-> --- /dev/null
+> index 6b434ad..b8c942f 100644
+> --- a/refs.c
 > +++ b/refs.c
-> @@ -0,0 +1,3 @@
-> +/*
-> + * Common refs code for all backends.
-> + */
+> ...
+> +void transaction_free(struct ref_transaction *transaction)
+> +{
+> +	return refs->transaction_free(transaction);
+> +}
+> diff --git a/refs.h b/refs.h
+> index a14fc5d..4b669f5 100644
+> --- a/refs.h
+> +++ b/refs.h
+> ...
+> +struct ref_be {
+> +	transaction_begin_fn transaction_begin;
+> +	transaction_update_sha1_fn transaction_update_sha1;
+> +	transaction_create_sha1_fn transaction_create_sha1;
+> +	transaction_delete_sha1_fn transaction_delete_sha1;
+> +	transaction_update_reflog_fn transaction_update_reflog;
+> +	transaction_commit_fn transaction_commit;
+> +	transaction_free_fn transaction_free;
+> +};
+> +
+> +extern struct ref_be *refs;
+> +
+>  #endif /* REFS_H */
+
+The overall structure is certainly nice, but this means you only can
+LINK with one backend.  Is that what we really want?
+
+I would have expected something like this:
+
+  * In refs.c, there is a "static struct ref_be *the_refs_backend"
+    that points at the chosen singleton backend;
+
+  * Upon start-up, set_refs_backend() function that is exported from
+    refs.c can be used to set the_refs_backend;
+
+  * Each refs-be-frotz.c will export "struct ref_be refs_frotz" (or
+    perhaps "struct refs_be refs_be_frotz") to the outside world, so
+    that the start-up code can call set_refs_backend() with it.
+
+  * It is probably sensible to keep the_refs_backend default to
+    &refs_be_files.
