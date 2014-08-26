@@ -1,63 +1,105 @@
-From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-Subject: Re: [PATCH 1/2] Check order when reading index
-Date: Tue, 26 Aug 2014 19:22:30 +0200
-Message-ID: <CAPuZ2NGTQoKnSfeN2zte5=fqswN5PcfAULdFy9WnGWPtc2Zskg@mail.gmail.com>
-References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
-	<1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
-	<xmqqvbpgmqmh.fsf@gitster.dls.corp.google.com>
-	<20140825194430.GI30953@peff.net>
-	<CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
-	<CAPuZ2NHafXQthtuq-RnTvpjVfNPaXHEy8SejuhPEnG+MwCK=sg@mail.gmail.com>
-	<20140826122008.GC29180@peff.net>
-	<xmqqmwarjiq7.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Improving the git remote command
+Date: Tue, 26 Aug 2014 10:24:35 -0700
+Message-ID: <xmqq7g1vjh9o.fsf@gitster.dls.corp.google.com>
+References: <53FC537C.4080206@gmail.com> <20140826124027.GE29180@peff.net>
+	<CAGK7Mr7BPvV6oO_t4x_1m9sDtWBgPWUqDq+3kZx6rVYAhY+wqA@mail.gmail.com>
+	<20140826163741.GA14983@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 19:22:36 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	=?utf-8?Q?R=C3=A9my?= Hubscher <hubscher.remy@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 26 19:24:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMKS3-0002XD-AD
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 19:22:35 +0200
+	id 1XMKUF-0003bn-VT
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 19:24:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752321AbaHZRWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 13:22:31 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34599 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751627AbaHZRWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 13:22:31 -0400
-Received: by mail-pa0-f47.google.com with SMTP id kx10so23742357pab.6
-        for <git@vger.kernel.org>; Tue, 26 Aug 2014 10:22:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mjzwqnPPnzj39k2yMpoOl8p6pbCaRzdL/SlDHy1ruaw=;
-        b=EdW3D2N3Bn3jzk96QjI8ENz0WYVLZtWRpXZPTRMYYbomyCgzl4WfDUr1VF07q70DZj
-         2lpqC/h/+R2M8blboovAlF6OjsYundeO3D73032dLlW4NAMQSNPbU3RnFq3knsufIF6V
-         8/cuQs7QblNVkhJsDRsXupSyQ77BWLv7/vEe8aW68hgx4oICOu5wXXRN1Lid7OeCgkax
-         3yZSjVuVbfjo7dR9rtUuEB5O3V5qyzjZizoaKzsbgEwNJjbFR4pt1Lt+tS+SSwB55aMy
-         P9d/NIKCeQDuKd0idKMcEtUiDNRLVYHQbwUEcCYZIdcrYyjkz1E9aaLjZNiVMqnPAVk0
-         2Veg==
-X-Received: by 10.68.215.67 with SMTP id og3mr39142726pbc.30.1409073750590;
- Tue, 26 Aug 2014 10:22:30 -0700 (PDT)
-Received: by 10.70.37.2 with HTTP; Tue, 26 Aug 2014 10:22:30 -0700 (PDT)
-In-Reply-To: <xmqqmwarjiq7.fsf@gitster.dls.corp.google.com>
+	id S1752131AbaHZRYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 13:24:48 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58061 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751826AbaHZRYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 13:24:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9AB2D32F32;
+	Tue, 26 Aug 2014 13:24:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rzDvjGwnoTqlDnX/OzCzPan/xnY=; b=Pn390Z
+	8/wog0ZFNnUFh6CLm/Po6WcveuNzu48zmv6pnk/tw4dbpmy8IaC2NkPDSbpIKOg4
+	+keZASiOFDfTyyQ1SW3mv7VoOR52p5qa67kACPVCejufAOmfrFzRvmOyR0dyZBhI
+	PjDUV01JdXlBoyc31T4b4siXAstVuBuOyRkkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uVOO6T3caC3kNWTNCdgI7ULj7uh6xya9
+	Y1w1ezHfMjc3vmQaG99Hw4Jl2WHOBpyFA0yO5BxuKGnUXxefg2MZBgk0vZS4uTi6
+	cKiP/yXCssrH+vX1blsXg1PfjxH+EPRkDbP8MdeyKyM9XNkE2jW51rQD6RXIKeO1
+	P+jss/+lV68=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8EB0E32F31;
+	Tue, 26 Aug 2014 13:24:46 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6226032F1D;
+	Tue, 26 Aug 2014 13:24:37 -0400 (EDT)
+In-Reply-To: <20140826163741.GA14983@peff.net> (Jeff King's message of "Tue,
+	26 Aug 2014 12:37:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DAC2E448-2D45-11E4-92B4-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255922>
 
-On Tue, Aug 26, 2014 at 6:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> ... But we are left with three options:
 >
-> Yes---that is what I meant by the "virtual stuff".  Unlike resolve
-> work by Daniel (around Sep 2005 $gmane/8088) that tried to use
-> multiple ancestors directly in a single merge, recursive limits
-> itself to repeated use of pairwise merges.
+>   1. Add "git remote list" with verbose output. This is bad because it
+>      differs gratuitously from "git remote".
+>
+>   2. Add "git remote list" with non-verbose output. This is good because
+>      it means "git remote" is just a shortcut for "git remote list",
+>      which is consistent with other parts of git. But it is potentially
+>      bad if "-v" is a better output format.
+>
+>   3. Add "git remote list" with verbose output, and tweak "git remote"
+>      to match. This is bad because it breaks backwards compatibility.
+>
+> The proposal is for (1). I think we agree that (3) is out. The question
+> is whether (1) or (2) is the least bad.
 
-Ok, I see now. Then what about checking also in check_ce_order() that
-only stage #1 can be repeated?
+I would imagine that those who want list of remotes programatically
+would read from "git config" output and it would be with less
+friction to change the output from "git remote", a command that is
+solely to cater to end-user humans, to suit people's needs, so I am
+not sure if (3) is immediately "out".
+
+Having said that, my preference is 
+
+    0. Do nothing, but document the "default to listing" better if
+       needed.
+
+and then 2. above, and then 1.
+
+> Yeah. Branch and tag need dashed subcommands because otherwise it is
+> ambiguous with creating tag called "list", functionality that existed
+> before "--list" was added. Git-remote was defined with subcommands from
+> day one, so it can get away with it. Git-stash is sort of in the
+> category as git-remote there, except that "save" can actually take an
+> argument. So to provide it you can't say "git stash foobar", but instead
+> have to say "git stash save foobar" (it actually used to allow the
+> former, but you can imagine the annoyance when you typo "git stash
+> lsit").
+
+Yeah, and there also is this one:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/231376/focus=231478
