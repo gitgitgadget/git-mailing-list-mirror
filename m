@@ -1,89 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 4/4] convert: Stream from fd to required clean filter
- instead of mmap
-Date: Tue, 26 Aug 2014 14:00:18 -0400
-Message-ID: <20140826180018.GB17546@peff.net>
-References: <1408896466-23149-1-git-send-email-prohaska@zib.de>
- <1408896466-23149-5-git-send-email-prohaska@zib.de>
- <20140825124323.GB17288@peff.net>
- <E23693B7-0D9D-477D-A303-4A68433EAB79@zib.de>
- <xmqq4mx0mn7i.fsf@gitster.dls.corp.google.com>
+From: Jonh Wendell <jonh.wendell@gmail.com>
+Subject: Re: [PATCH 0/2] describe: support the syntax "--abbrev=+"
+Date: Tue, 26 Aug 2014 15:04:31 -0300
+Message-ID: <CABXqP=hhc6zXm5x7CpAzP8n2exUPRNOAeg7ENVUL7T=gXGmVcg@mail.gmail.com>
+References: <1408814002-6553-1-git-send-email-jonh.wendell@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>, pclouds@gmail.com,
-	john@keeping.me.uk, schacon@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 26 20:00:36 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 26 20:04:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XML2p-0002is-0X
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 20:00:35 +0200
+	id 1XML6j-0004U9-3N
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 20:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267AbaHZSAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 14:00:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59420 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753252AbaHZSAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 14:00:20 -0400
-Received: (qmail 3797 invoked by uid 102); 26 Aug 2014 18:00:20 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Aug 2014 13:00:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Aug 2014 14:00:18 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq4mx0mn7i.fsf@gitster.dls.corp.google.com>
+	id S1753010AbaHZSEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 14:04:32 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:36114 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654AbaHZSEc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 14:04:32 -0400
+Received: by mail-ob0-f177.google.com with SMTP id wp18so11682711obc.36
+        for <git@vger.kernel.org>; Tue, 26 Aug 2014 11:04:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=LLdHG0q8DZL1xp5fNku4RLy9eBSl5+z8QqgKhYE2UlE=;
+        b=M367Z/JFAfa/slpCP2sl9ZmgCYcODoWne0OhOh+knxEzNez0HkQA8uG5TNHWteSxMW
+         mSy/RKqklrsuQ/RhoZp6/9AyMfy8Irk1uOewyZ9/+TMQMcByTbsljWDe53LZe/KnJ9sx
+         DpE77yVSAvMcM5bxqznmcxgtpicJIoGmg5NBslRG/VdoDeIVlMpLa6MqpkNAGJMxTSTd
+         61vcOelgcL7i0zLMVd7a5g6Q7+y50Fho/fOLoqh+Jtdk53ebi5H6HlOjxskGAAG0PkxD
+         H19oxbfZX8GVfb/JH4SPNfzjlOB3iprRciQf3HI4vytnplx0JJ597oJQXH6SN2pEYSS6
+         zI9A==
+X-Received: by 10.60.45.234 with SMTP id q10mr29279710oem.25.1409076271602;
+ Tue, 26 Aug 2014 11:04:31 -0700 (PDT)
+Received: by 10.76.11.3 with HTTP; Tue, 26 Aug 2014 11:04:31 -0700 (PDT)
+In-Reply-To: <1408814002-6553-1-git-send-email-jonh.wendell@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255932>
 
-On Mon, Aug 25, 2014 at 11:35:45AM -0700, Junio C Hamano wrote:
+hi there!
+just a ping here, these are my first patches to git.
+any comment, feedback?
 
-> Steffen Prohaska <prohaska@zib.de> writes:
-> 
-> >> Couldn't we do that with an lseek (or even an mmap with offset 0)? That
-> >> obviously would not work for non-file inputs, but I think we address
-> >> that already in index_fd: we push non-seekable things off to index_pipe,
-> >> where we spool them to memory.
-> >
-> > It could be handled that way, but we would be back to the original problem
-> > that 32-bit git fails for large files.
-> 
-> Correct, and you are making an incremental improvement so that such
-> a large blob can be handled _when_ the filters can successfully
-> munge it back and forth.  If we fail due to out of memory when the
-> filters cannot, that would be the same as without your improvement,
-> so you are still making progress.
+2014-08-23 14:13 GMT-03:00 Jonh Wendell <jonh.wendell@gmail.com>:
+> Sometimes it's interesting to have a simple output that answers the question:
+> Are there commits after the latest tag?
+>
+> One possible solution is to just print a "+" (plus) signal after the tag. Example:
+>
+>> git describe --abbrev=1 5261ec5d5
+> v2.1.0-rc1-2-g5261ec
+>
+>> git describe --abbrev=+ 5261ec5d5
+> v2.1.0-rc1+
+>
+>
+> Jonh Wendell (2):
+>   describe: support the syntax "--abbrev=+"
+>   describe: Add documentation for "--abbrev=+"
+>
+>  Documentation/git-describe.txt |  6 ++++++
+>  builtin/describe.c             | 26 +++++++++++++++++++++-----
+>  2 files changed, 27 insertions(+), 5 deletions(-)
+>
+> --
+> 1.9.3
+>
 
-I do not think my proposal makes anything worse than Steffen's patch.
-_If_ you have a non-required filter, and _if_ we can run it, then we
-stream the filter and hopefully end up with a small enough result to fit
-into memory. If we cannot run the filter, we are screwed anyway (we
-follow the regular code path and dump the whole thing into memory; i.e.,
-the same as without this patch series).
 
-I think the main argument against going further is just that it is not
-worth the complexity. Tell people doing reduction filters they need to
-use "required", and that accomplishes the same thing.
 
-> >> So it seems like the ideal strategy would be:
-> >> 
-> >>  1. If it's seekable, try streaming. If not, fall back to lseek/mmap.
-> >> 
-> >>  2. If it's not seekable and the filter is required, try streaming. We
-> >>     die anyway if we fail.
-> 
-> Puzzled...  Is it assumed that any content the filters tell us to
-> use the contents from the db as-is by exiting with non-zero status
-> will always be large not to fit in-core?  For small contents, isn't
-> this "ideal" strategy a regression?
-
-I am not sure what you mean by regression here. We will try to stream
-more often, but I do not see that as a bad thing.
-
--Peff
+-- 
+Jonh Wendell
+http://www.bani.com.br
