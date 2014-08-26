@@ -1,7 +1,7 @@
 From: Oliver Busch <oliver.busch@arc-aachen.de>
 Subject: Re: Bug report: Author/Commit date in ISO 8601 format
-Date: Tue, 26 Aug 2014 15:14:43 +0200
-Message-ID: <53FC8843.3030309@arc-aachen.de>
+Date: Tue, 26 Aug 2014 15:19:11 +0200
+Message-ID: <53FC894F.9060402@arc-aachen.de>
 References: <53FC3768.3090905@arc-aachen.de> <20140826130610.GG29180@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8;
@@ -9,50 +9,43 @@ Content-Type: text/plain; charset=utf-8;
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 26 15:14:53 2014
+X-From: git-owner@vger.kernel.org Tue Aug 26 15:19:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMGaI-0003tp-OG
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 15:14:51 +0200
+	id 1XMGec-0005dQ-GK
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Aug 2014 15:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758142AbaHZNOq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2014 09:14:46 -0400
-Received: from mout.kundenserver.de ([212.227.17.10]:61962 "EHLO
+	id S1754950AbaHZNTN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Aug 2014 09:19:13 -0400
+Received: from mout.kundenserver.de ([212.227.17.13]:56363 "EHLO
 	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754695AbaHZNOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 09:14:45 -0400
+	with ESMTP id S1753895AbaHZNTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 09:19:13 -0400
 Received: from [192.168.43.193] ([194.8.202.70])
-	by mrelayeu.kundenserver.de (node=mreue104) with ESMTP (Nemesis)
-	id 0LnSda-1WfnUy0xqQ-00heAJ; Tue, 26 Aug 2014 15:14:42 +0200
+	by mrelayeu.kundenserver.de (node=mreue102) with ESMTP (Nemesis)
+	id 0M57wk-1WOGg40ig2-00zEC1; Tue, 26 Aug 2014 15:19:10 +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
 In-Reply-To: <20140826130610.GG29180@peff.net>
-X-Provags-ID: V02:K0:7XPOwvPuVgqpVplZhJim8nTZAWATUDv6/3FCr2I5RwR
- EYXDPj8eOfDmUG7bwe2Vg+rPhANgnJNsHDLaNM0sjuB6xkoicO
- NIvlO8NOgwCdTdTzQi9F3XvOyB5eJmnBujHMotL0CbMz3BxGcV
- ilFnBBbHOWBd62e3x9NhLTzCG0Eeshejm0dWNFL2Dg/9lgouyb
- UiAuefFo1nBEQU0QjLYxSYBY8JoUo2CaYurb3mOl4ZxGIgyaQR
- WWbqud6lgtwDv7p7/767MKcgRra8jmqnTExvXcMAXFsT8Wi5jQ
- dAVZm8CHNc8Ac0vbzcee3EFImcYrAKnYIMqptZv1jY4XsM26ml
- qkfi6E0Ue++Don9I61lzqSQE7qZr68H15UCoxrtvH
+X-Provags-ID: V02:K0:5haXhnEM2oMvGSCOhvu1xQpTKaiwD8hEY1hXGzl46q4
+ n4ddzYYETXuavxQAihiVlSh3veS9SpLhqTCdYe0IFb/VFUgVrf
+ pIDC++OuKqIG3Rzr2fjZlaXLHgrsdAsRZ3pDIvQNbnr8d8Cqf4
+ hix88YL16dx5qUu2iIonclyT3D+xeI969OgerMftojjWDBgMkz
+ 5saa35Hjydt4DEnszpS9fN0p8ByKswvVzI5+sIiWZLKO4Vibvw
+ OK5j9cjkldlxGCKtZm2zVr6hjyxqxIr3GyCGIiWh2vaXZfcu31
+ lkYPARaaQhzz5FlWdqQKvKtrUcvez63bSS9T8G23v1RC/xCnOb
+ hr8E4Ygmop70rqW07g8PpukTK0b5cfQ2f5tyhmxat
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255902>
 
-Peff is right, I did not think of backwards compatibility issues. I=20
-believe a new option like "iso-strict" as he suggested will do the tric=
-k=20
-(and I'm probably not the only one to appreciate its implementation...)=
-=2E
-
-Regards,
-
-Oliver
+PS: As far as I understand it, there is no "optionality" of the "T" as=20
+an indicator for the start of the time part.
 
 Am 26.08.2014 um 15:06 schrieb Jeff King:
 > On Tue, Aug 26, 2014 at 09:29:44AM +0200, Oliver Busch wrote:
