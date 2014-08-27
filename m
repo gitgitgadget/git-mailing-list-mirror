@@ -1,90 +1,72 @@
-From: dev <dev@cor0.com>
-Subject: problem with def of inet_ntop() in git-compat-util.h as well as
- other places
-Date: Wed, 27 Aug 2014 15:15:05 -0400 (EDT)
-Message-ID: <1024776344.30870.1409166905539.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
-Reply-To: dev <dev@cor0.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] improving advice message from "git commit" during a merge
+Date: Wed, 27 Aug 2014 15:18:58 -0400
+Message-ID: <20140827191857.GB7561@peff.net>
+References: <xmqq4mwxeqr7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 27 21:15:39 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 21:19:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMign-0006P8-MV
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 21:15:26 +0200
+	id 1XMikK-00014F-Tp
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 21:19:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935511AbaH0TPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 15:15:20 -0400
-Received: from atl4mhfb02.myregisteredsite.com ([209.17.115.56]:42870 "EHLO
-	atl4mhfb02.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935490AbaH0TPS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2014 15:15:18 -0400
-Received: from atl4mhob10.myregisteredsite.com (atl4mhob10.myregisteredsite.com [209.17.115.48])
-	by atl4mhfb02.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7RJFHKg020496
-	for <git@vger.kernel.org>; Wed, 27 Aug 2014 15:15:17 -0400
-Received: from atl4oxapp02pod2.mgt.hosting.qts.netsol.com ([10.30.77.38])
-	by atl4mhob10.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7RJF5Mh006686
-	for <git@vger.kernel.org>; Wed, 27 Aug 2014 15:15:05 -0400
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v-
+	id S935501AbaH0TTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 15:19:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60274 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S935243AbaH0TS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 15:18:59 -0400
+Received: (qmail 17998 invoked by uid 102); 27 Aug 2014 19:18:59 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Aug 2014 14:18:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2014 15:18:58 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4mwxeqr7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256025>
 
+On Wed, Aug 27, 2014 at 11:23:08AM -0700, Junio C Hamano wrote:
 
+> When there are unmerged paths, you would often get something like
+> this:
+> 
+>     [git.git (pu|MERGING]$ git commit
+>     U       copy.c
+>     U       wrapper.c
+>     error: commit is not possible because you have unmerged files.
+>     hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+>     hint: as appropriate to mark resolution and make a commit, or use
+>     hint: 'git commit -a'.
+>     fatal: Exiting because of an unresolved conflict.
+> 
+> which is all good and correct, but I am wondering if we can be a bit
+> more helpful by customizing the message in various ways.
+> 
+>  - When all the unmerged paths have their conflicts resolved in the
+>    working tree, we do not have to say "Fix them up in the work
+>    tree,".  We can instead say "You seem to have fixed them up in
+>    the work tree already," or something.
 
-per :
+How are you determining what has been resolved? By looking for "<<<<<<<"
+markers? That feels a little flaky, but I guess it would probably work
+well enough in practice.
 
+If we started using that heuristic, it would probably make sense to
+teach "git status" about it (and then maybe just have a failed "commit"
+rely on wt_status to produce the output).
 
-  http://pubs.opengroup.org/onlinepubs/009695399/functions/inet_ntop.html
+> I am not doing this myself soon, though.  Hint, hint...
 
+Me either, though it all seems like a sensible direction to me.
 
-The last parameter is not unsigned long but socklen_t size.
-
-This causes a problem on things like Solaris :
-
- * new build flags
-    CC credential-store.o
-"git-compat-util.h", line 516: error: identifier redeclared: inet_ntop
-        current : function(int, pointer to const void, pointer to char,
-unsigned long) returning pointer to const char
-        previous: function(int, pointer to const void, pointer to char,
-unsigned int) returning pointer to const char :
-"/usr/include/arpa/inet.h", line 68
-cc: acomp failed for credential-store.c
-gmake: *** [credential-store.o] Error 2
-
-
-
-Therefore I hacked around it with a #ifdef __SunOS_5_10 for the sake of
-getting the build done.
-
-
-However ran into a problem, again, with compat/inet_ntop.c which seems
-to be not needed at all since inet_ntop() handles both IPv6 and IPv4
-just fine.   Really I don't see why this file gets carted around so much
-as it is even in the Apache svn codebase as well.
-
-Not needed.
-
-Therefore I commented out the inet_ntop() function entirely therein.
-
-Also the Makefile's generated are all borked full of GCCism "CFLAGS = -g
--O2 -Wall"  which means very little on some OS wherein the gcc compiler
-is not the default.  Love GCC. I bootstrap it all the time. However this
-is Solaris and am using ORacle Studio 12.3 compilers and therefore the
-CFLAGS in the Makefiles are just silly.  Lastly, the linkage to libintl
-should look in /usr/local/lib if the LD_LIBRARY_PATH and other env vars
-are setup correctly. However the Makefile's seem to miss this fact and
--lintl needs to be manually hacked into place.
-
-Still doesn't "just build" yet.  Getting there :-\
-
-dev
+-Peff
