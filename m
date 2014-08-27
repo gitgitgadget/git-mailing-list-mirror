@@ -1,70 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/6] commit: provide a function to find a header in a buffer
-Date: Wed, 27 Aug 2014 12:41:51 -0700
-Message-ID: <xmqqioldd8jk.fsf@gitster.dls.corp.google.com>
-References: <20140827075503.GA19521@peff.net>
-	<20140827075600.GA26384@peff.net>
-	<xmqqioldet75.fsf@gitster.dls.corp.google.com>
-	<20140827180016.GA6269@peff.net>
-	<xmqqwq9tda8t.fsf@gitster.dls.corp.google.com>
-	<20140827191414.GA7561@peff.net>
-	<xmqqsikhd98f.fsf@gitster.dls.corp.google.com>
-	<20140827193857.GD7561@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 27 21:42:51 2014
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: What happens when the repository is bigger than gc.autopacklimit * pack.packSizeLimit?
+Date: Wed, 27 Aug 2014 15:36:53 -0400
+Message-ID: <201408271936.s7RJarOh011358@hobgoblin.ariadne.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 27 21:43:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMj7C-000352-1h
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 21:42:42 +0200
+	id 1XMj7c-0003QX-47
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 21:43:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbaH0TmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 15:42:05 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55142 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964806AbaH0TmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 15:42:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A324E35AF3;
-	Wed, 27 Aug 2014 15:42:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qifyeTGnKvm2DVjwoN9JFfmxGgk=; b=o9ynZO
-	26fZTE8te/cT3XdI0++EGm0wQ8alpV+NAk3rHUp82ANIxnL6OwSszlhlu9U+E2zH
-	FSQVdcDjfhWThljQhO2Si757J6OeMWytrw3mOyltQ5D5F/SHBnvAxuiPRjpCSQV8
-	o03StIYMGy/JMD1GKVi5ZHlveRA3uas4+eBUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YFuD8xFB6Qr3ck4y3y7FHAibxc7lrmid
-	0vKQwZN13f8aaVAGRnuy3BdwjUhNaCGQzht9tNuaDznfAbMEJAUTGkW0WSyPQ2zC
-	+pZMAYrKoGOmoPdb7owUEIxaHIdSFQP0a4CaTV6RIiPdO9l/1cwmq19VNIOrrC0K
-	XKsBvWhh0M8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9977735AF2;
-	Wed, 27 Aug 2014 15:42:02 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 252A035AE8;
-	Wed, 27 Aug 2014 15:41:53 -0400 (EDT)
-In-Reply-To: <20140827193857.GD7561@peff.net> (Jeff King's message of "Wed, 27
-	Aug 2014 15:38:57 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 32107D64-2E22-11E4-AA9C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S964907AbaH0TnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 15:43:03 -0400
+Received: from qmta13.westchester.pa.mail.comcast.net ([76.96.59.243]:52515
+	"EHLO qmta13.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935467AbaH0TnB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2014 15:43:01 -0400
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Aug 2014 15:43:01 EDT
+Received: from omta23.westchester.pa.mail.comcast.net ([76.96.62.74])
+	by qmta13.westchester.pa.mail.comcast.net with comcast
+	id juQ71o0081c6gX85DvcvXU; Wed, 27 Aug 2014 19:36:55 +0000
+Received: from hobgoblin.ariadne.com ([24.34.72.61])
+	by omta23.westchester.pa.mail.comcast.net with comcast
+	id jvcu1o00Z1KKtkw3jvcvWM; Wed, 27 Aug 2014 19:36:55 +0000
+Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
+	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s7RJarQa011359
+	for <git@vger.kernel.org>; Wed, 27 Aug 2014 15:36:53 -0400
+Received: (from worley@localhost)
+	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s7RJarOh011358;
+	Wed, 27 Aug 2014 15:36:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1409168215;
+	bh=VVs6SyGExlZfRCFf4+gnh9MExmTdceyG8QIZV+D35o4=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=pTuvnXeCb0UNk1yEqjz//2tuVnl9VRFAuY+mMn8G4sIakwaz0yvhedM3M9zyAeqz2
+	 Xv03ixYAU9xwBqO+EU7Lr6jG77I4roBEajOaKQVQqWt9exyRTL1/cEOyTivnZFtdw8
+	 MQ8U2tUUmdQcWyxykdBnHiiqiE6bEq3ScNyORmKLp5s+O4ElVG+5uthVvJeKUHBzVY
+	 ToVjYI3u58ER2/jYxGWQe1tVbgZRGVE/UyAFcC3U4qUWolYdB1mN31Y56P+PfU0LlJ
+	 cvxEym3+vcer3KmSA2XKfkqa0HvmzVwuqV8PcU6VBj35e0nT/oT6+fGoZHo+qM6p72
+	 02ianVeirBODg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256032>
 
-Jeff King <peff@peff.net> writes:
+[Previously sent to the git-users mailing list, but it probably should
+be addressed here.]
 
-> What I didn't want to do is deal with it in each callsite, like:
+A number of commands invoke "git gc --auto" to clean up the repository
+when there might be a lot of dangling objects and/or there might be
+far too many unpacked files.  The manual pages say:
 
-OK.
+    git gc:
+       --auto
+           With this option, git gc checks whether any housekeeping is
+           required; if not, it exits without performing any work. Some git
+           commands run git gc --auto after performing operations that could
+           create many loose objects.
+
+           Housekeeping is required if there are too many loose objects or too
+           many packs in the repository. If the number of loose objects
+           exceeds the value of the gc.auto configuration variable, then all
+           loose objects are combined into a single pack using git repack -d
+           -l. Setting the value of gc.auto to 0 disables automatic packing of
+           loose objects.
+
+    git config:
+       gc.autopacklimit
+           When there are more than this many packs that are not marked with
+           *.keep file in the repository, git gc --auto consolidates them into
+           one larger pack. The default value is 50. Setting this to 0
+           disables it.
+
+What happens when the amount of data in the repository exceeds
+gc.autopacklimit * pack.packSizeLimit?  According to the
+documentation, "git gc --auto" will then *always* repack the
+repository, whether it needs it or not, because the data will require
+more than gc.autopacklimit pack files.
+
+And it appears from an experiment that this is what happens.  I have a
+repository with pack.packSizeLimit = 99m, and there are 104 pack
+files, and even when "git gc" is done, if I do "git gc --auto", it
+will do git-repack again.
+
+Looking at the code, I see:
+
+builtin/gc.c:
+static int too_many_packs(void)
+{
+	struct packed_git *p;
+	int cnt;
+
+	if (gc_auto_pack_limit <= 0)
+		return 0;
+
+	prepare_packed_git();
+	for (cnt = 0, p = packed_git; p; p = p->next) {
+		if (!p->pack_local)
+			continue;
+		if (p->pack_keep)
+			continue;
+		/*
+		 * Perhaps check the size of the pack and count only
+		 * very small ones here?
+		 */
+		cnt++;
+	}
+	return gc_auto_pack_limit <= cnt;
+}
+
+Yes, perhaps you *should* check the size of the pack!
+
+What is a good strategy for making this function behave as we want it to?
+
+Dale
