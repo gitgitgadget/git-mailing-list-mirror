@@ -1,63 +1,128 @@
-From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-Subject: Re: [PATCH 1/2] Check order when reading index
-Date: Wed, 27 Aug 2014 21:52:45 +0200
-Message-ID: <CAPuZ2NFzHjUSfi1H0RFvOuWdRptwxv-gsUOAJv0Uh5BFLWmnRA@mail.gmail.com>
-References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
-	<1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
-	<xmqqvbpgmqmh.fsf@gitster.dls.corp.google.com>
-	<20140825194430.GI30953@peff.net>
-	<CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
-	<CAPuZ2NHafXQthtuq-RnTvpjVfNPaXHEy8SejuhPEnG+MwCK=sg@mail.gmail.com>
-	<20140826122008.GC29180@peff.net>
-	<xmqqmwarjiq7.fsf@gitster.dls.corp.google.com>
-	<CAPuZ2NGTQoKnSfeN2zte5=fqswN5PcfAULdFy9WnGWPtc2Zskg@mail.gmail.com>
-	<xmqqy4ubi1ty.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: problem with def of inet_ntop() in git-compat-util.h as well as
+ other places
+Date: Wed, 27 Aug 2014 16:06:12 -0400
+Message-ID: <20140827200612.GA10469@peff.net>
+References: <1024776344.30870.1409166905539.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
+ <20140827192848.GC7561@peff.net>
+ <805178325.32077.1409168920760.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 21:52:52 2014
+Content-Type: text/plain; charset=utf-8
+Cc: jrnieder@gmail.com, git@vger.kernel.org
+To: dev <dev@cor0.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 22:06:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMjH2-0002Gn-95
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 21:52:52 +0200
+	id 1XMjUJ-0004hx-O7
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 22:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935467AbaH0Tws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 15:52:48 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:62658 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755657AbaH0Twr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 15:52:47 -0400
-Received: by mail-pa0-f49.google.com with SMTP id hz1so1112551pad.36
-        for <git@vger.kernel.org>; Wed, 27 Aug 2014 12:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=CK9gaDYU9eWdZ6QQTMcRT9Saqyj75UTlqRZOQhSpwDc=;
-        b=HuC+wmtbNxVYPEcjJ6X8p8uZHuOmjw8eIPNQYTfP+wIbOYLCoyGv8uMyyMtjjIfi/0
-         UxP90VC9oQccGGpwPZxIBScOR++p4X++9Lr2aEqjN+tszMS6wSZjYKnnO3yNpyar78cC
-         UhRvnwunTYyN4P/DQBZ0Dhn1t0KeViyFudRGuZ9GaqcbxmPRCM/ifSpEx4Iaxplw1U9u
-         Qy1OMXYdwZO/WEE1/woEdxV/uo8rCa11XfNqmHUnhwiS+otsoS4aZtgvBFuWNv5dzHcI
-         FZRKZ5wdjNedgAUP3GiNwtqfk65db8DLV3d8g6TzUqwaydGIMQolCTPX1TJXHBb+i/+M
-         zRZg==
-X-Received: by 10.70.95.34 with SMTP id dh2mr15157304pdb.119.1409169165862;
- Wed, 27 Aug 2014 12:52:45 -0700 (PDT)
-Received: by 10.70.37.2 with HTTP; Wed, 27 Aug 2014 12:52:45 -0700 (PDT)
-In-Reply-To: <xmqqy4ubi1ty.fsf@gitster.dls.corp.google.com>
+	id S932194AbaH0UGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 16:06:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60323 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750929AbaH0UGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 16:06:14 -0400
+Received: (qmail 20555 invoked by uid 102); 27 Aug 2014 20:06:14 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Aug 2014 15:06:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2014 16:06:12 -0400
+Content-Disposition: inline
+In-Reply-To: <805178325.32077.1409168920760.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256038>
 
-On Tue, Aug 26, 2014 at 7:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Does the current codebase choke with such entries in the index file,
-> like you saw in your index file with both stage #0 and stage #1
-> entries?
+On Wed, Aug 27, 2014 at 03:48:40PM -0400, dev wrote:
 
-Not sure, I couldn't reproduce an scenario with an index with multiple
-entries in the same stage for the same path.
+> $ gzip -dc $SRC/git-2.0.4.tar.gz | tar -xf -
+> $ mv git-2.0.4 git-2.0.4_SunOS5.10_sparcv9.002
+> $
+> $ cd git-2.0.4_SunOS5.10_sparcv9.002
+> $
+> $ echo $CFLAGS
+> -errfmt=error -erroff=%none -errshort=full -xstrconst -xildoff -m64
+> -xmemalign=8s -xnolibmil -Xa -xcode=pic32 -xregs=no%appl -xlibmieee -mc
+> -g -xs -ftrap=%none -Qy -xbuiltin=%none -xdebugformat=dwarf -xunroll=1
+> -xtarget=ultraT2 -xcache=8/16/4:4096/64/16
+
+Note that git's Makefile will not read CFLAGS from the environment (you
+have to give it to make on the command-line, or put it in config.mak).
+However, running "./configure" with that in the environment should put
+the result into config.mak.autogen.
+
+> $ env | sort | grep LD
+> BUILD=/usr/local/build
+> LD=/usr/ccs/bin/sparcv9/ld
+> LD_LIBRARY_PATH=/usr/local/lib:/usr/local/ssl/lib
+> LD_OPTIONS=-64 -Qy
+> -R/usr/local/lib/$ISALIST:/usr/local/ssl/lib/$ISALIST:/usr/local/lib:/usr/local/ssl/lib
+> -L/usr/local/lib/$ISALIST:/usr/local/ssl/lib$ISALIST:/usr/local/lib:/usr/local/ssl/lib
+
+I have never seen LD_OPTIONS before. The usual variable for this is
+LDFLAGS, and note that it is handled in the environment the same way as
+CFLAGS above.
+
+> checking for inet_ntop... no
+> checking for inet_ntop in -lresolv... no
+
+Well, that's likely the source of some of your problems. The config.log
+can probably tell you more about why the check does not find inet_ntop.
+
+> Then I see in some Makefile's :
+> 
+> $ find . -type f -name Makefile | xargs grep "^CFLAGS" | cut -f2 -d\:
+> CFLAGS = -g -O2 -Wall
+> CFLAGS = -g -O2 -Wall
+> CFLAGS = -g -O2 -Wall
+> CFLAGS = -g -O2 -Wall
+> CFLAGS = -O2 -Wall
+> $
+> 
+> So CFLAGS is ignored entirely.
+
+No, it's not. The Makefiles are not generated by autoconf, because
+autoconf is not required to build git (most of us do not use it at all).
+Instead, the static Makefile includes config.mak.autogen, which is
+generated by autoconf when you run "./configure" (and which overrides
+the default in the Makefile). Try grepping for CFLAGS in that file.
+
+> Also in the Makefile at the top level I see :
+> 
+> ifdef NO_INET_NTOP
+>         LIB_OBJS += compat/inet_ntop.o
+>         BASIC_CFLAGS += -DNO_INET_NTOP
+> endif
+> ifdef NO_INET_PTON
+>         LIB_OBJS += compat/inet_pton.o
+>         BASIC_CFLAGS += -DNO_INET_PTON
+> endif
+> 
+> No reason for either of those to be defined, but I bet that you are
+> right
+> and they are ... and should not be.
+
+I think they are defined by your config.mak.autogen, based on the output
+you showed above.
+
+> Anyways, thanks for the input. I would love to see this "just build" and
+> with a few more emails and some tinkering it should right?
+
+I do not see anything that drastic that needs changed. Building
+_without_ running ./configure might even just work (it has sane defaults
+for many operating systems), though you would need to pass along the
+bits from your environment, like:
+
+  make CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS"
+
+You would potentially also need to turn off a few feature flags manually
+(e.g., NO_EXPAT, NO_GETTEXT). There's a complete list at the top of the
+Makefile. The configure script can usually figure these out for you, but
+the static Makefile does not.
+
+-Peff
