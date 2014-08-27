@@ -1,73 +1,213 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: check-ref-format: include refs/ in the argument or to strip it?
-Date: Wed, 27 Aug 2014 22:53:37 +0200
-Message-ID: <53FE4551.20108@alum.mit.edu>
-References: <gerrit.1408574889668.Iac983fc86f7edd2a0543779d85973c57bf068ca4@code-review.googlesource.com> <047d7b624d36142d46050131f336@google.com> <20140822154151.GK20185@google.com> <xmqqmwawnzfk.fsf@gitster.dls.corp.google.com> <20140822184515.GL20185@google.com> <20140823054646.GA18256@peff.net> <CAL=YDWk5FxnNWaFXJk3t+H0Q_axETmNeb=puuUqhiDBNeQVDGQ@mail.gmail.com> <20140825182636.GO20185@google.com> <20140825190939.GC30953@peff.net>
+From: dev <dev@cor0.com>
+Subject: Re: problem with def of inet_ntop() in git-compat-util.h as well as
+ other places
+Date: Wed, 27 Aug 2014 17:00:28 -0400 (EDT)
+Message-ID: <597210348.36175.1409173228026.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
+References: <1024776344.30870.1409166905539.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827192848.GC7561@peff.net> <805178325.32077.1409168920760.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827200612.GA10469@peff.net>
+Reply-To: dev <dev@cor0.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 22:53:47 2014
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 27 23:00:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMkDw-0000fo-Ll
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 22:53:45 +0200
+	id 1XMkKi-0006Ng-UO
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 23:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935684AbaH0Uxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 16:53:41 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:60890 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932159AbaH0Uxk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2014 16:53:40 -0400
-X-AuditID: 12074413-f79ed6d000002501-7b-53fe4553c302
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id CB.BA.09473.3554EF35; Wed, 27 Aug 2014 16:53:39 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB04AB.dip0.t-ipconnect.de [93.219.4.171])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s7RKrb1d015803
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 27 Aug 2014 16:53:38 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <20140825190939.GC30953@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqBvs+i/YYPFqC4uuK91MFg29V5gt
-	3t5cwmjxo6WH2eLfhBoHVo+ds+6yeyzYVOrxrHcPo8fFS8oenzfJBbBGcdskJZaUBWem5+nb
-	JXBnnFlnW/COueLbx13sDYxtzF2MnBwSAiYSF15eZIWwxSQu3FvPBmILCVxmlHjxjb+LkQvI
-	Psckce39Q3aQBK+ApsTHhXPBbBYBVYnvT88zgdhsAroSi3qawWxRgSCJ2Z/nQdULSpyc+YSl
-	i5GDQ0TAWeL2enmQMLNAM6PErVZtEFtYwEfiwfubbBC7tjNL3Fm/E+w4TgE9iXXr5jCB9DIL
-	qEusnycE0Ssvsf3tHOYJjAKzkGyYhVA1C0nVAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6
-	5nq5mSV6qSmlmxghgS28g3HXSblDjAIcjEo8vB8W/AkWYk0sK67MPcQoycGkJMqbb/wvWIgv
-	KT+lMiOxOCO+qDQntfgQowQHs5IIb9mBv8FCvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZ
-	qakFqUUwWRkODiUJXj8XoKGCRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoBiNLwZG
-	KUiKB2jvNWegdt7igsRcoChE6ylGXY6Wpre9TEIsefl5qVLivLkgRQIgRRmleXArYGnsFaM4
-	0MfCvFEgl/AAUyDcpFdAS5iAlvzqAHmuuCQRISXVwMhje2Rv0nqlP2zvf0T9Dj8etOtipI/Y
-	tUt9nDNLfx34t62v/KLjxsgFXAqWdiFbi+/tOPEpg+2hserso2edD3MU/i4Xs7gV 
+	id S935912AbaH0VAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 17:00:41 -0400
+Received: from atl4mhob19.myregisteredsite.com ([209.17.115.112]:53767 "EHLO
+	atl4mhob19.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935336AbaH0VAk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2014 17:00:40 -0400
+Received: from atl4oxapp02pod2.mgt.hosting.qts.netsol.com ([10.30.77.38])
+	by atl4mhob19.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7RL0SYN020257;
+	Wed, 27 Aug 2014 17:00:28 -0400
+In-Reply-To: <20140827200612.GA10469@peff.net>
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v-
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256043>
 
-On 08/25/2014 09:09 PM, Jeff King wrote:
-> [...]
-> This patch introduces a new "always" mode for the
-> core.logallrefupdates option which will log updates to
-> everything under refs/, regardless where in the hierarchy it
-> is (we still will not log things like ORIG_HEAD and
-> FETCH_HEAD, which are known to be transient).
-> [...]
 
-I like the idea. I would use this setting on all my repos (information
-packrat that I am).
 
-Michael
+On August 27, 2014 at 4:06 PM Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 27, 2014 at 03:48:40PM -0400, dev wrote:
+>
+> > $ gzip -dc $SRC/git-2.0.4.tar.gz | tar -xf -
+> > $ mv git-2.0.4 git-2.0.4_SunOS5.10_sparcv9.002
+> > $
+> > $ cd git-2.0.4_SunOS5.10_sparcv9.002
+> > $
+> > $ echo $CFLAGS
+> > -errfmt=error -erroff=%none -errshort=full -xstrconst -xildoff -m64
+> > -xmemalign=8s -xnolibmil -Xa -xcode=pic32 -xregs=no%appl -xlibmieee
+> > -mc
+> > -g -xs -ftrap=%none -Qy -xbuiltin=%none -xdebugformat=dwarf
+> > -xunroll=1
+> > -xtarget=ultraT2 -xcache=8/16/4:4096/64/16
+>
+> Note that git's Makefile will not read CFLAGS from the environment
+> (you
+> have to give it to make on the command-line, or put it in config.mak).
+> However, running "./configure" with that in the environment should put
+> the result into config.mak.autogen.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+
+Well I have heard now a few times of this config.mak file and when I
+extract the source tarball I see :
+
+$ ls -lap config*
+-rw-r--r--   1 dclarke  adbs       44502 Jul 30 22:10 config.c
+-rw-r--r--   1 dclarke  adbs         540 Jul 30 22:10 config.mak.in
+-rw-r--r--   1 dclarke  adbs       15447 Jul 30 22:10 config.mak.uname
+-rwxr-x---   1 dclarke  adbs      217698 Jul 30 22:10 configure
+-rw-r--r--   1 dclarke  adbs       32144 Jul 30 22:10 configure.ac
+
+
+So I guess I have to create a config.mak file from somewhere.
+
+>From the INSTALL file I see that most of these variables are in the
+pre-written and supposedly ready to run Makefile.  OKay.  I think I
+had better crack that open and see what I need to change in there.
+Most likely CFLAGS and a way to locate OpenSSL libs etc but who knows.
+
+> I have never seen LD_OPTIONS before. The usual variable for this is
+> LDFLAGS, and note that it is handled in the environment the same way
+> as
+> CFLAGS above.
+
+The problem is that this is not Linux and not GNU ld and therefore :
+
+http://docs.oracle.com/cd/E19253-01/817-1984/6mhm7pl1l/index.html
+
+So if I want to ensure that things like ELF headers contain the correct
+stuff to locate libraries ( never ever use LD_LIBRARY_PATH as it is
+the kiss of death ) then I need things like LD_OPTIONS and others.
+
+So I will work through this from the Makefile provided and see if I
+can get the CFLAGS that I want as well as other env vars.
+
+> > So CFLAGS is ignored entirely.
+>
+> No, it's not. The Makefiles are not generated by autoconf, because
+> autoconf is not required to build git (most of us do not use it at
+> all).
+
+I should try that on Solaris once to see what happens.  Make popcorn.
+See below.
+
+> Instead, the static Makefile includes config.mak.autogen, which is
+> generated by autoconf when you run "./configure" (and which overrides
+> the default in the Makefile). Try grepping for CFLAGS in that file.
+>
+> > Also in the Makefile at the top level I see :
+> >
+> > ifdef NO_INET_NTOP
+> >         LIB_OBJS += compat/inet_ntop.o
+> >         BASIC_CFLAGS += -DNO_INET_NTOP
+> > endif
+> > ifdef NO_INET_PTON
+> >         LIB_OBJS += compat/inet_pton.o
+> >         BASIC_CFLAGS += -DNO_INET_PTON
+> > endif
+> >
+> > No reason for either of those to be defined, but I bet that you are
+> > right
+> > and they are ... and should not be.
+>
+> I think they are defined by your config.mak.autogen, based on the
+> output
+> you showed above.
+>
+> > Anyways, thanks for the input. I would love to see this "just build"
+> > and
+> > with a few more emails and some tinkering it should right?
+>
+> I do not see anything that drastic that needs changed. Building
+> _without_ running ./configure might even just work (it has sane
+> defaults
+> for many operating systems),
+
+
+$ make
+make: Fatal error in reader: Makefile, line 345: Unexpected end of line
+seen
+
+
+Instant fail.
+
+Let's try GNU make :
+
+$ gmake
+GIT_VERSION = 2.0.4
+    * new build flags
+    CC credential-store.o
+cc: -W option with unknown program all
+gmake: *** [credential-store.o] Error 1
+$
+
+More instant fail.
+
+Let's keep trying ...
+
+> though you would need to pass along the
+> bits from your environment, like:
+>
+>   make CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS"
+
+Sounds good ... let's see :
+
+gmake CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS"
+.
+.
+.  good things seem to happen ...
+.
+    LINK git-credential-store
+cc: Warning: Option -64 passed to ld, if ld is invoked, ignored
+otherwise
+cc: Warning: multiple use of -Q option, previous one discarded.
+ld: warning: option -Q appears more than once, first setting taken
+Undefined                       first referenced
+ symbol                             in file
+libiconv_close                      libgit.a(utf8.o)  (symbol belongs to
+implicit dependency /usr/local/lib/libiconv.so.2)
+libiconv_open                       libgit.a(utf8.o)  (symbol belongs to
+implicit dependency /usr/local/lib/libiconv.so.2)
+libiconv                            libgit.a(utf8.o)  (symbol belongs to
+implicit dependency /usr/local/lib/libiconv.so.2)
+ld: fatal: symbol referencing errors. No output written to
+git-credential-store
+gmake: *** [git-credential-store] Error 2
+$
+
+So this is not Linux and so a pile of fiddling is required. Welcome to
+the world of Oracle Solaris where nothing from the Linux world ever
+"just works".  It looks like somewhere along the line the idea of
+linking
+with -liconv or perhaps -lintl was lost.  Not sure yet.
+
+> You would potentially also need to turn off a few feature flags
+> manually
+> (e.g., NO_EXPAT, NO_GETTEXT). There's a complete list at the top of
+> the
+> Makefile. The configure script can usually figure these out for you,
+> but
+> the static Makefile does not.
+
+For now I want to keep chugging along to see if I can get a default
+no-hack
+build and then go back and start over with things in the Makefile to see
+if I can get the whole process to make the binaries that I want with
+the required bits in the ELF headers and correctly NEEDed libs etc.
+
+dev
