@@ -1,47 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: log.decorate=auto not documented
-Date: Wed, 27 Aug 2014 14:20:16 -0400
-Message-ID: <20140827182016.GB6590@peff.net>
-References: <53FDEF52.3030101@eisentraut.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC] improving advice message from "git commit" during a merge
+Date: Wed, 27 Aug 2014 11:23:08 -0700
+Message-ID: <xmqq4mwxeqr7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Peter Eisentraut <peter@eisentraut.org>
-X-From: git-owner@vger.kernel.org Wed Aug 27 20:20:27 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 27 20:23:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMhpa-0003MG-Ej
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 20:20:26 +0200
+	id 1XMhsS-0005je-2N
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 20:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935553AbaH0SUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 14:20:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60234 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S935433AbaH0SUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 14:20:18 -0400
-Received: (qmail 15036 invoked by uid 102); 27 Aug 2014 18:20:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Aug 2014 13:20:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2014 14:20:16 -0400
-Content-Disposition: inline
-In-Reply-To: <53FDEF52.3030101@eisentraut.org>
+	id S935615AbaH0SXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 14:23:20 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59154 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932413AbaH0SXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 14:23:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B281A33F45;
+	Wed, 27 Aug 2014 14:23:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=2
+	TU+khEIl0od8GqWQLe/EjFgZIE=; b=QF2wkWIwHi8JoxBFAO342XO7WwNsKooyI
+	Y9GV+nHA8wD5M9CBfc20ep3mIash3S/5M8RJ2Obj//u7+2M0ROPnEE+RAimfcTn6
+	6+AyYfP1xFbgyLLk+o4AmdcFzte1X5mwB2zqUrnbSkhixvbbo1BcoNMYEHa7FztZ
+	+fPCySrt+8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=UY1
+	qsIO9flKBp/76oZVIDRXfoAN+gl3E8AAZa/iURCLYawD2FBkM4Gywh4TMwkS9xW/
+	lk7UTOuxgh7ghm/oBTA7YarAVWmApODGkmermZZSnkeLVoxe9u9ZrmjNNhy3L4mC
+	wPVz0LTpFg3trPr4XYfQ2SW5LneHIZ2IJNSzZhck=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A8DBF33F43;
+	Wed, 27 Aug 2014 14:23:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A4AB733F3B;
+	Wed, 27 Aug 2014 14:23:10 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 333F35D2-2E17-11E4-BAFE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256020>
 
-On Wed, Aug 27, 2014 at 10:46:42AM -0400, Peter Eisentraut wrote:
+When there are unmerged paths, you would often get something like
+this:
 
-> The log.decorate=auto value, which is mentioned in the release notes of
-> Git 2.1, is not documented in either git-config.txt or git-log.txt.
-> 
-> It should also be documented that "auto" corresponds to "short".
+    [git.git (pu|MERGING]$ git commit
+    U       copy.c
+    U       wrapper.c
+    error: commit is not possible because you have unmerged files.
+    hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+    hint: as appropriate to mark resolution and make a commit, or use
+    hint: 'git commit -a'.
+    fatal: Exiting because of an unresolved conflict.
 
-Yes, you're right. Care to make a patch?
+which is all good and correct, but I am wondering if we can be a bit
+more helpful by customizing the message in various ways.
 
--Peff
+ - When all the unmerged paths have their conflicts resolved in the
+   working tree, we do not have to say "Fix them up in the work
+   tree,".  We can instead say "You seem to have fixed them up in
+   the work tree already," or something.
+
+ - When some of the unmerged paths have their conflicts still in the
+   working tree, we can name them separately from the ones that have
+   already been dealt with.
+
+    U       copy.c
+    U       wrapper.c (conflicts already resolved in the working tree)
+
+ - Hasty-and-careless new users will be incorrectly enticed to type
+   the command given by "or use 'git commit -a'" at the end of this
+   advice message without thinking.  Perhaps it is safer to stop the
+   sentence at "... and make a commit." and drop that last bit while
+   there are conflicts still in the working tree files.  We should
+   use the current end-of-message only when all the conflicts have
+   been resolved in the working tree.
+
+ - The "/rm" in "use 'git add/rm <file>'" is often useless, as it is
+   much rarer to remove a path than adding one.  Perhaps show that
+   part only when there is a conflicted path with stage #2 but not
+   stage #3 (i.e. they kept what we removed) or vice versa.  "add"
+   needs to stay there no matter what, as that is how we tell the
+   index "this is the final content".
+
+I am not doing this myself soon, though.  Hint, hint...
