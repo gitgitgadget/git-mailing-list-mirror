@@ -1,73 +1,84 @@
-From: Maxim Bublis <satori@yandex-team.ru>
-Subject: Re: [PATCH] contrib/svn-fe: fix Makefile
-Date: Wed, 27 Aug 2014 21:36:15 +0400
-Message-ID: <6CB16507-1C40-45CE-9D12-227A0171C183@yandex-team.ru>
-References: <1409057062-72857-1-git-send-email-satori@yandex-team.ru> <53FC5404.7050403@web.de>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/6] commit: provide a function to find a header in a
+ buffer
+Date: Wed, 27 Aug 2014 14:00:16 -0400
+Message-ID: <20140827180016.GA6269@peff.net>
+References: <20140827075503.GA19521@peff.net>
+ <20140827075600.GA26384@peff.net>
+ <xmqqioldet75.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Aug 27 19:41:40 2014
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 20:00:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMhE2-00064Y-8M
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 19:41:38 +0200
+	id 1XMhWB-0004N7-Ur
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 20:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933776AbaH0Rlc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Aug 2014 13:41:32 -0400
-Received: from forward-corp1f.mail.yandex.net ([95.108.130.40]:46901 "EHLO
-	forward-corp1f.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932511AbaH0Rl3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 13:41:29 -0400
-X-Greylist: delayed 309 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Aug 2014 13:41:29 EDT
-Received: from smtpcorp4.mail.yandex.net (smtpcorp4.mail.yandex.net [95.108.252.2])
-	by forward-corp1f.mail.yandex.net (Yandex) with ESMTP id E2FED2420143;
-	Wed, 27 Aug 2014 21:36:17 +0400 (MSK)
-Received: from smtpcorp4.mail.yandex.net (localhost [127.0.0.1])
-	by smtpcorp4.mail.yandex.net (Yandex) with ESMTP id A576D2C06B8;
-	Wed, 27 Aug 2014 21:36:17 +0400 (MSK)
-Received: from unknown (unknown [2a02:6b8:0:408:8d02:cccf:e15a:4cda])
-	by smtpcorp4.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id XCPROOD5IN-aHKikbPn;
-	Wed, 27 Aug 2014 21:36:17 +0400
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: 869533e9-1a03-458e-b447-04c6bceffac2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru; s=default;
-	t=1409160977; bh=8X2zwSey+YyhjSvjttyt22VgAI0eceuxF5y6/F+Vxcw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Content-Transfer-Encoding:Message-Id:References:To:X-Mailer;
-	b=tWZAMo+E2mSLY0XvLhHlCw9fCs1T6e5Rfm3JQnl/RHBgaOAshGE1dDHJh6CSXoIEy
-	 Ukvo1sMn9YbF2sJ+GF8lbHY4a4i/GevJdfLpV/k8sS/NdVAGNY6wbbuXzdjAUuz7/s
-	 3fi7p8h9ujyu89EcbRe+CF++m86FlIoaJq9Mtlu8=
-Authentication-Results: smtpcorp4.mail.yandex.net; dkim=pass header.i=@yandex-team.ru
-In-Reply-To: <53FC5404.7050403@web.de>
-X-Mailer: Apple Mail (2.1878.6)
+	id S934964AbaH0SAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 14:00:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60213 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750908AbaH0SAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 14:00:18 -0400
+Received: (qmail 13965 invoked by uid 102); 27 Aug 2014 18:00:18 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Aug 2014 13:00:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2014 14:00:16 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqioldet75.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256017>
 
+On Wed, Aug 27, 2014 at 10:30:22AM -0700, Junio C Hamano wrote:
 
-On 26 =D0=B0=D0=B2=D0=B3. 2014 =D0=B3., at 13:31, Torsten B=C3=B6gersha=
-usen <tboegi@web.de> wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > +const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
+> [...]
+> 
+> Hmph.  Does this have to worry about continuation lines in the
+> header part e.g. mergetag?  If the original in pretty.c was only
+> about the encoding, it may not have mattered, but now because it is
+> made public, it may matter more.
 
-> On 08/26/2014 02:44 PM, Maxim Bublis wrote:
->>=20
->> +
->> +ifeq ($(uname_S),Darwin)
->> +	CFLAGS +=3D -I/opt/local/include
->> +	LDFLAGS +=3D -L/opt/local/lib
->> +endif
->> +
-> Should it be possible to disable this by using NO_DARWIN_PORTS
-> like we do in the main Makefile ?
+If you mean parsing past continuation lines, then no, we do not need to
+worry. We go line by line and look for the key at the beginning of a
+line, so we would skip past any continuation lines.
 
-I think so, thanks for pointing me on that. Though I hope it wouldn=E2=80=
-=99t be too much "copy-paste=E2=80=9D
-from main Makefile to support all options in both Makefiles.
+If you mean including continuation lines in the output, I don't think
+that's a good idea here. It would mean the function would have to copy
+the value out (to get rid of the continuation whitespace) rather than
+point directly into the msg buffer.
+
+That may be something some callers want, but they should build it
+separately around this find_commit_header, so that callers that want a
+single line (like "encoding" or "author") do not have to pay the price.
+I didn't bother building it out here since there are no callers which
+want it yet (though I did not look at the mergetag code, which could
+possibly be converted).
+
+In the meantime, I hoped this comment would suffice for any callers to
+know whether it was suitable:
+
++/*
++ * Search the commit object contents given by "msg" for the header "key".
++ * Returns a pointer to the start of the header contents, or NULL. The length
++ * of the header, up to the first newline, is returned via out_len.
++ *
++ * Note that some headers (like mergetag) may be multi-line. It is the caller's
++ * responsibility to parse further in this case!
++ */
++extern const char *find_commit_header(const char *msg, const char *key,
++                                     size_t *out_len);
+
+-Peff
