@@ -1,85 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Document LF appearing in shallow command during
- send-pack/receive-pack
-Date: Wed, 27 Aug 2014 15:10:17 -0700
-Message-ID: <20140827221017.GY20185@google.com>
-References: <1409172416-10750-1-git-send-email-spearce@spearce.org>
+From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+Subject: Re: [PATCH 1/2] Check order when reading index
+Date: Thu, 28 Aug 2014 00:13:52 +0200
+Message-ID: <CAPuZ2NHTz2Qu3oorRVTHSb9E-gC_d1kNniVmtUPtpAqPVrUDtA@mail.gmail.com>
+References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
+	<1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
+	<xmqqvbpgmqmh.fsf@gitster.dls.corp.google.com>
+	<20140825194430.GI30953@peff.net>
+	<CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
+	<CAPuZ2NHafXQthtuq-RnTvpjVfNPaXHEy8SejuhPEnG+MwCK=sg@mail.gmail.com>
+	<20140826122008.GC29180@peff.net>
+	<xmqqmwarjiq7.fsf@gitster.dls.corp.google.com>
+	<CAPuZ2NGTQoKnSfeN2zte5=fqswN5PcfAULdFy9WnGWPtc2Zskg@mail.gmail.com>
+	<xmqqy4ubi1ty.fsf@gitster.dls.corp.google.com>
+	<CAPuZ2NFzHjUSfi1H0RFvOuWdRptwxv-gsUOAJv0Uh5BFLWmnRA@mail.gmail.com>
+	<xmqq61hdd4e9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Aug 28 00:10:30 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 00:14:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMlQD-0003ZP-Tj
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 00:10:30 +0200
+	id 1XMlTZ-0006NZ-An
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 00:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935884AbaH0WKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 18:10:23 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:59178 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932246AbaH0WKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 18:10:21 -0400
-Received: by mail-ie0-f171.google.com with SMTP id rp18so108651iec.2
-        for <git@vger.kernel.org>; Wed, 27 Aug 2014 15:10:20 -0700 (PDT)
+	id S935965AbaH0WNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 18:13:53 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:56494 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932246AbaH0WNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 18:13:52 -0400
+Received: by mail-ig0-f179.google.com with SMTP id r2so197603igi.0
+        for <git@vger.kernel.org>; Wed, 27 Aug 2014 15:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Z9ATFFuTHI9CqZlYe/2HT6GzTPPYqvEPUUzIo0a4+Kk=;
-        b=T10iqJQ/Hz8a5XSP94v63ofSctf5hfe8r1fcqoK6OX2+n68IYmB6wlpyoH7nVxY1zA
-         yIBvexMW6U8xcEPAdtdvlouB5BgKq3Y9p/hzxsIkdCxi6QOsu5sKiwEfajVcuPE8643z
-         eZ1BSdNhWJ/0dzPOHgbmJRPkIY03vE3GWgwCdIHQ6wbH4cEL86P5/bvdIWLnnnTuSnLK
-         fa/wft5V9fXVXgz5Pc3PcBDLYRQuM+647BOZ6bGw66V+k0evlZT1vdypwFoPlnVkOe4Y
-         7ycRQvarijag3DG4XF9n2fe1dp4rhEMHUGwUsAzUyJBrmNsMe/KzlRUN8wbSipWSyJTK
-         GCWg==
-X-Received: by 10.66.139.106 with SMTP id qx10mr32363920pab.126.1409177420820;
-        Wed, 27 Aug 2014 15:10:20 -0700 (PDT)
-Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id g7sm2326477pdj.7.2014.08.27.15.10.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 Aug 2014 15:10:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1409172416-10750-1-git-send-email-spearce@spearce.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=f+lxbcAIISlly078CqLhlJ4a1EwGZAjF/CXfAiTrnfY=;
+        b=d5dQfyOz71gJworDW2+AX1SvB5CTKmfkuTuPynHXbhbykb5tsskkrm28V+9KSxq43f
+         kq2TKRfXLcVOyptTKdIJJkEkZPAxAwudJOcSvMx+HaIQpxsSPd9lmPPJD0MTPgV6J6ag
+         vrMt15FrJ0LXhXltK3ejrvRLivfS5AoYDKtq0+oJ5+fxGW32VFn0rucPKXfNEvZlV2Nh
+         jw4rvTn/9+HhQ5ygf0CriJRQA+/vGKcl0IHKQekHW9z1JDcfNrf7Qd7jTg4y9FcEBTGe
+         ADQYRmmj9PfWw6zAJLwu5slFCiwiR6q7q9yLBOGFAPy25PBG9e3Ac2d+EamsPLoexo88
+         +vKQ==
+X-Received: by 10.66.251.132 with SMTP id zk4mr50457761pac.47.1409177632138;
+ Wed, 27 Aug 2014 15:13:52 -0700 (PDT)
+Received: by 10.70.37.2 with HTTP; Wed, 27 Aug 2014 15:13:52 -0700 (PDT)
+In-Reply-To: <xmqq61hdd4e9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256053>
 
-Shawn Pearce wrote:
+On Wed, Aug 27, 2014 at 11:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I was asking for an answer more from what you know about the code.
+> For example, would read_index_unmerged() choke if the index has two
+> or more stage #1 (or stage #3) entries for the same path (provided
+> that the index is otherwise normal, i.e. no stage #0 entry for that
+> path, entries are sorted by pathname order and stages are in an
+> order that does not decrease)?
 
-> The implementation sends an LF, but the protocol documentation was
-> missing this detail.
->
-> Signed-off-by: Shawn Pearce <spearce@spearce.org>
-> ---
->  Documentation/technical/pack-protocol.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-> index 18dea8d..569c48a 100644
-> --- a/Documentation/technical/pack-protocol.txt
-> +++ b/Documentation/technical/pack-protocol.txt
-> @@ -467,7 +467,7 @@ references.
->  ----
->    update-request    =  *shallow command-list [pack-file]
->  
-> -  shallow           =  PKT-LINE("shallow" SP obj-id)
-> +  shallow           =  PKT-LINE("shallow" SP obj-id LF)
-
-In git, the client sends LF and the server is happy with or
-without LF.  JGit and libgit2 don't send 'shallow' lines.
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
->  
->    command-list      =  PKT-LINE(command NUL capability-list LF)
->  		       *PKT-LINE(command LF)
-> -- 
+Oh, ok :) Re-reading the code a bit I think that there can be a
+potential problem in the add_index_entry_with_check() function. It's
+currently implemented to allow an only entry for each stage and each
+path, if an entry for a path and a stage is being added, and another
+one existed before, the old one is replaced, but just the first one,
+so adding an entry to stage #1 in an index with multiple entries at
+stage #1 would replace the first occurence, but not the rest, what
+could not be expected. The user could maybe expect that all entries
+are replaced, or only an specific one.
+If an stage #0 entry is added and there are multiple entries for any
+of the higher-stage entries there wouldn't be any problem as this
+function removes all the higher-stage entries for the same path
+without checking the stage. This last case is the one in
+read_index_unmerged().
