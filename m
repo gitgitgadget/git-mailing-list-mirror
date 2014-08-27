@@ -1,55 +1,52 @@
-From: Max Kirillov <max@max630.net>
-Subject: [RFC] add detached HEAD to --all listing
-Date: Wed, 27 Aug 2014 17:18:21 +0300
-Message-ID: <CAF7_NFRKzU0_5Eq4kgtW3RChW3z5q8QBjWvvN+TSyOhORkf8hQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/6] clean up author parsing
+Date: Wed, 27 Aug 2014 10:18:32 -0400
+Message-ID: <20140827141832.GB31879@peff.net>
+References: <20140827075503.GA19521@peff.net>
+ <CAP8UFD3Zk-Z+OWaCSfetSASYLBJ3kkDKYo2bB9QLJw8APTQPAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 27 16:18:38 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 16:19:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMe3Q-0006Gw-JD
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 16:18:28 +0200
+	id 1XMe4T-00071V-AW
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 16:19:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934769AbaH0OSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 10:18:24 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:52888 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933583AbaH0OSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 10:18:23 -0400
-Received: by mail-wi0-f181.google.com with SMTP id bs8so505773wib.14
-        for <git@vger.kernel.org>; Wed, 27 Aug 2014 07:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=j/sATXg0DUClgh/wymrWacjhgcrR3gdMHuzqcgdGAuQ=;
-        b=a0PsVnIcP6EfgehE9cgTYSspl18KVcCBa8UHrRPJzXnXMBMZ54TPjzTtg66krz7J5U
-         +Ld3j9Cjd0lmwSFjKmW14OYxG9zGeQovc14Qh6o8E0AxKxAWdIIE1/92se6QCT6JklQY
-         6qYcHKCU7OfVS1M48+YsvuiAzz09QFXk5PtVWEkVhXAACGTWo7oeSS0BfXi88j0iIOZF
-         /a6BBKoyo1GpFDZN8VUnFPEXwubIvLktgFD/dJqH/+Dst6Y0EDmlkb2I6/Kst8++831R
-         YsFDSWQk1oS6+iwHXJHE7c0WWPYnvyqWZMqC5QhuVNBghiu+XbKkY8RRI0PdcwtbZAS5
-         mrlg==
-X-Received: by 10.180.36.236 with SMTP id t12mr22828970wij.38.1409149101935;
- Wed, 27 Aug 2014 07:18:21 -0700 (PDT)
-Received: by 10.180.9.170 with HTTP; Wed, 27 Aug 2014 07:18:21 -0700 (PDT)
-X-Google-Sender-Auth: 6hDvCmEU4tJVwT4hd2vkhcYMNEc
+	id S934960AbaH0OSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 10:18:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60075 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934828AbaH0OSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 10:18:34 -0400
+Received: (qmail 1539 invoked by uid 102); 27 Aug 2014 14:18:34 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Aug 2014 09:18:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2014 10:18:32 -0400
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD3Zk-Z+OWaCSfetSASYLBJ3kkDKYo2bB9QLJw8APTQPAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255997>
 
-Hello.
+On Wed, Aug 27, 2014 at 11:06:27AM +0200, Christian Couder wrote:
 
-Could HEAD be added to list of heads while using --all switch?
-Detached heads are not something very unusual and incorrect, in
-submodules for example, or for some scripts. Having to specify it
-additionally when I meet such checkout feels like some flaw.
+> On Wed, Aug 27, 2014 at 9:55 AM, Jeff King <peff@peff.net> wrote:
+> >
+> >   [2/6]: record_author_info: fix memory leak on malformed commit
+> >   [3/6]: record_author_info: use find_commit_header
+> 
+> s/record_author_info/record_author_date/
 
-What are opinions on that, could it be changed?
+Thanks. I think I just had determine_author_info on the mind when I
+wrote the commit messages.
 
--- 
-Max
+-Peff
