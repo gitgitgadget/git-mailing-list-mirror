@@ -1,106 +1,132 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/3] log-tree: use FLEX_ARRAY in name_decoration
-Date: Tue, 26 Aug 2014 20:30:08 -0400
-Message-ID: <CAPig+cTHLOAe+mHr9jiR-k-3yrXfrAEjUSrHG=92kRSEGyto8Q@mail.gmail.com>
-References: <20140826102051.GA4885@peff.net>
-	<20140826102420.GC25687@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 03/20] refs.c: make ref_transaction_begin take an err argument
+Date: Tue, 26 Aug 2014 17:30:06 -0700
+Message-ID: <20140827003006.GD20185@google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+ <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+ <20140820231723.GF20185@google.com>
+ <20140826000354.GW20185@google.com>
+ <xmqqlhqbge3a.fsf@gitster.dls.corp.google.com>
+ <20140826221448.GY20185@google.com>
+ <20140827002804.GA20185@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Arjun Sreedharan <arjun024@gmail.com>,
-	git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 27 02:30:17 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 02:30:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMR7w-0005TL-Gs
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 02:30:16 +0200
+	id 1XMR81-0005WV-Ef
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 02:30:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756047AbaH0AaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 20:30:09 -0400
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:36234 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755893AbaH0AaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 20:30:08 -0400
-Received: by mail-yh0-f47.google.com with SMTP id f10so12732383yha.20
-        for <git@vger.kernel.org>; Tue, 26 Aug 2014 17:30:08 -0700 (PDT)
+	id S1756095AbaH0AaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 20:30:12 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:60969 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755893AbaH0AaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 20:30:11 -0400
+Received: by mail-pa0-f44.google.com with SMTP id eu11so24529874pac.31
+        for <git@vger.kernel.org>; Tue, 26 Aug 2014 17:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=pnzkh2y85Az2qX5+aTATB1aHLOUO5qliE6iYjZ3S0R8=;
-        b=lcEM1VpkdR3xKxahtuTAyhpQbGHllJ0pxYXdmYpJd6400LlhR8MHHImMIGxa3LmTtd
-         gjBYNM2tgF7P54JdolwjR7PcfsLVjqwIq9xydl66I9I2et3+UvViNe1CCntsF5Uo4ilN
-         dq3oMYFbcq5VPwdUsCnbBcvqbYCfVN+r3osKdOxJbPdWCQgSA5HkKmPjESuX7oi4vvc+
-         n4Gr/Q7htPKqBItMizJ/tW/bXiGRnBQbLGiOhrb46mSlbbVCA2Ri2j/m0iqC/eI156d3
-         Egvm3gTXUxohGK/lnr8jN5U4UY432iGPvEkC74IFYgi0bYO9v9qariaezxS2qk2H6wRq
-         fbIg==
-X-Received: by 10.236.157.134 with SMTP id o6mr5245396yhk.92.1409099408299;
- Tue, 26 Aug 2014 17:30:08 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Tue, 26 Aug 2014 17:30:08 -0700 (PDT)
-In-Reply-To: <20140826102420.GC25687@peff.net>
-X-Google-Sender-Auth: WFpBM0ymWsmn_pTnhBtsduaKBZ0
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=HNPcuvmMpCmlactOfim+I7hi/TntYkHbliPFr4jAmQM=;
+        b=jv5s5Qn7McS6nJsf3Byt19s3DSR7eWXa5vtec8ZVeGYs8bKJpdDQd6A78Ew/gaJ5B5
+         hhgizbzcZWJFnO06RuW3krWJChmhYQHSIhq2Q9fTG4q+SS5PTKiiTB0JMXsNkpwquuy4
+         Xahl0/T9vhHLQ/jRXLpvt2CMO246ZrAxqFFLFtcfkbAkTrwUfOY5oGHFiChHue34YIre
+         1Ht7+I8pnWMqZDibEjWQoG6sVWf0gooC1PCDfGJc/8ElwTYgE811+UrcA6vGrDyF0Tk2
+         JdfkjEhNGfudDzjIFbgCcSuMHWXN17nzcU3ikbJJ/AZ465cJXQmfpSh7vYYBoaP7WwH8
+         Lp+A==
+X-Received: by 10.70.35.15 with SMTP id d15mr41483874pdj.48.1409099410581;
+        Tue, 26 Aug 2014 17:30:10 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:4ba:9bd4:148:77e4])
+        by mx.google.com with ESMTPSA id y5sm4483300pbt.64.2014.08.26.17.30.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 26 Aug 2014 17:30:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20140827002804.GA20185@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255959>
 
-On Tue, Aug 26, 2014 at 6:24 AM, Jeff King <peff@peff.net> wrote:
-> We are already using the flex-array technique; let's
-> annotate it with our usual FLEX_ARRAY macro. Besides being
-> more readable, this is slightly more efficient on compilers
-> that understand flex-arrays.
->
-> Note that we need to bump the allocation in add_name_decoration,
-> which did not explicitly add one byte for the NUL terminator
-> of the string we putting into the flex-array (it did not
+From: Ronnie Sahlberg <sahlberg@google.com>
+Date: Mon, 19 May 2014 10:42:34 -0700
 
-s/we/we are/
+Add an err argument to _begin so that on non-fatal failures in future ref
+backends we can report a nice error back to the caller.
+While _begin can currently never fail for other reasons than OOM, in which
+case we die() anyway, we may add other types of backends in the future.
+For example, a hypothetical MySQL backend could fail in _begin with
+"Can not connect to MySQL server. No route to host".
 
-> need to before, because the struct itself was over-allocated
-> by one byte).
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This could come first in the series, but doing it last means we only
-> have to update one spot. :)
->
->  commit.h   | 2 +-
->  log-tree.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/commit.h b/commit.h
-> index 263b49e..1516fc9 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -29,7 +29,7 @@ extern const char *commit_type;
->  struct name_decoration {
->         struct name_decoration *next;
->         int type;
-> -       char name[1];
-> +       char name[FLEX_ARRAY];
->  };
->
->  enum decoration_type {
-> diff --git a/log-tree.c b/log-tree.c
-> index 7cbc4ee..fb60018 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -77,7 +77,7 @@ int parse_decorate_color_config(const char *var, const int ofs, const char *valu
->  void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
->  {
->         int nlen = strlen(name);
-> -       struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + nlen);
-> +       struct name_decoration *res = xmalloc(sizeof(*res) + nlen + 1);
->         memcpy(res->name, name, nlen + 1);
->         res->type = type;
->         res->next = add_decoration(&name_decoration, obj, res);
-> --
-> 2.1.0.346.ga0367b9
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ builtin/update-ref.c | 5 ++++-
+ refs.c               | 2 +-
+ refs.h               | 2 +-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 7c9c248..96a53b9 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -365,7 +365,9 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		die("Refusing to perform update with empty message.");
+ 
+ 	if (read_stdin) {
+-		transaction = ref_transaction_begin();
++		transaction = ref_transaction_begin(&err);
++		if (!transaction)
++			die("%s", err.buf);
+ 		if (delete || no_deref || argc > 0)
+ 			usage_with_options(git_update_ref_usage, options);
+ 		if (end_null)
+@@ -374,6 +376,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		if (ref_transaction_commit(transaction, msg, &err))
+ 			die("%s", err.buf);
+ 		ref_transaction_free(transaction);
++		strbuf_release(&err);
+ 		return 0;
+ 	}
+ 
+diff --git a/refs.c b/refs.c
+index 40f04f4..9cb7908 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3397,7 +3397,7 @@ struct ref_transaction {
+ 	size_t nr;
+ };
+ 
+-struct ref_transaction *ref_transaction_begin(void)
++struct ref_transaction *ref_transaction_begin(struct strbuf *err)
+ {
+ 	return xcalloc(1, sizeof(struct ref_transaction));
+ }
+diff --git a/refs.h b/refs.h
+index 71389a1..3f37c65 100644
+--- a/refs.h
++++ b/refs.h
+@@ -262,7 +262,7 @@ enum action_on_err {
+  * Begin a reference transaction.  The reference transaction must
+  * be freed by calling ref_transaction_free().
+  */
+-struct ref_transaction *ref_transaction_begin(void);
++struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+ 
+ /*
+  * The following functions add a reference check or update to a
+-- 
+2.1.0.rc2.206.gedb03e5
