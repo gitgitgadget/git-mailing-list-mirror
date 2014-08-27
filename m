@@ -1,81 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/6] commit: provide a function to find a header in a
- buffer
-Date: Wed, 27 Aug 2014 15:14:14 -0400
-Message-ID: <20140827191414.GA7561@peff.net>
-References: <20140827075503.GA19521@peff.net>
- <20140827075600.GA26384@peff.net>
- <xmqqioldet75.fsf@gitster.dls.corp.google.com>
- <20140827180016.GA6269@peff.net>
- <xmqqwq9tda8t.fsf@gitster.dls.corp.google.com>
+From: dev <dev@cor0.com>
+Subject: problem with def of inet_ntop() in git-compat-util.h as well as
+ other places
+Date: Wed, 27 Aug 2014 15:15:05 -0400 (EDT)
+Message-ID: <1024776344.30870.1409166905539.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
+Reply-To: dev <dev@cor0.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 21:14:28 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 27 21:15:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMifk-0005UE-MO
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 21:14:21 +0200
+	id 1XMign-0006P8-MV
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 21:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755454AbaH0TOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 15:14:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60264 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750764AbaH0TOQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 15:14:16 -0400
-Received: (qmail 17712 invoked by uid 102); 27 Aug 2014 19:14:16 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Aug 2014 14:14:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Aug 2014 15:14:14 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqwq9tda8t.fsf@gitster.dls.corp.google.com>
+	id S935511AbaH0TPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 15:15:20 -0400
+Received: from atl4mhfb02.myregisteredsite.com ([209.17.115.56]:42870 "EHLO
+	atl4mhfb02.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935490AbaH0TPS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2014 15:15:18 -0400
+Received: from atl4mhob10.myregisteredsite.com (atl4mhob10.myregisteredsite.com [209.17.115.48])
+	by atl4mhfb02.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7RJFHKg020496
+	for <git@vger.kernel.org>; Wed, 27 Aug 2014 15:15:17 -0400
+Received: from atl4oxapp02pod2.mgt.hosting.qts.netsol.com ([10.30.77.38])
+	by atl4mhob10.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7RJF5Mh006686
+	for <git@vger.kernel.org>; Wed, 27 Aug 2014 15:15:05 -0400
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v-
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256024>
 
-On Wed, Aug 27, 2014 at 12:05:06PM -0700, Junio C Hamano wrote:
 
-> > If you mean including continuation lines in the output, I don't think
-> > that's a good idea here. It would mean the function would have to copy
-> > the value out (to get rid of the continuation whitespace) rather than
-> > point directly into the msg buffer.
-> 
-> I meant the counting of out_len.  You do not copy the contents for
-> the caller for a single line case either, so I wouldn't expect it.
-> 
-> You locate where the stuff begins to make it easier for the caller
-> to read or copy, and the caller may choose to stop reading from the
-> location up to out_len bytes, or it may choose to ignore out_len and
-> stop at the first newline.  For the latter kind of caller, it does
-> not matter if out_len does not point at the end of the "field"
-> (i.e. for a continued-line case), but for the former, wouldn't it be
-> more useful if out_len told where the end of the "field" is?
 
-I think they are a direct tradeoff. If you include only the first line,
-then callers who want multiple lines have to keep parsing.  If you
-include multiple lines, then callers who care only about the first line
-will have to re-find the newline rather than just using "out_len"
-directly.
+per :
 
-I suppose you could argue that people who are only expecting one line
-(e.g., "encoding") should just assume that out_len ends at the first
-line. For correctly-formatted commits, that works the same under either
-scheme. For a broken commit where "encoding" _is_ multi-line, one case
-would ignore the continued bits and the other case would return an
-unexpected encoding value with newlines in it. The choice probably
-doesn't matter much in practice.
 
-Mostly I just punted on it with a comment since I did not plan to add
-any multi-line callers, and I figured we could sort it out then. If you
-feel strongly, it should be pretty easy to check for continuation and
-extend out_len if necessary.
+  http://pubs.opengroup.org/onlinepubs/009695399/functions/inet_ntop.html
 
--Peff
+
+The last parameter is not unsigned long but socklen_t size.
+
+This causes a problem on things like Solaris :
+
+ * new build flags
+    CC credential-store.o
+"git-compat-util.h", line 516: error: identifier redeclared: inet_ntop
+        current : function(int, pointer to const void, pointer to char,
+unsigned long) returning pointer to const char
+        previous: function(int, pointer to const void, pointer to char,
+unsigned int) returning pointer to const char :
+"/usr/include/arpa/inet.h", line 68
+cc: acomp failed for credential-store.c
+gmake: *** [credential-store.o] Error 2
+
+
+
+Therefore I hacked around it with a #ifdef __SunOS_5_10 for the sake of
+getting the build done.
+
+
+However ran into a problem, again, with compat/inet_ntop.c which seems
+to be not needed at all since inet_ntop() handles both IPv6 and IPv4
+just fine.   Really I don't see why this file gets carted around so much
+as it is even in the Apache svn codebase as well.
+
+Not needed.
+
+Therefore I commented out the inet_ntop() function entirely therein.
+
+Also the Makefile's generated are all borked full of GCCism "CFLAGS = -g
+-O2 -Wall"  which means very little on some OS wherein the gcc compiler
+is not the default.  Love GCC. I bootstrap it all the time. However this
+is Solaris and am using ORacle Studio 12.3 compilers and therefore the
+CFLAGS in the Makefiles are just silly.  Lastly, the linkage to libintl
+should look in /usr/local/lib if the LD_LIBRARY_PATH and other env vars
+are setup correctly. However the Makefile's seem to miss this fact and
+-lintl needs to be manually hacked into place.
+
+Still doesn't "just build" yet.  Getting there :-\
+
+dev
