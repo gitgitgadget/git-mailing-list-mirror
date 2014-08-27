@@ -1,158 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 02/20] refs.c: update ref_transaction_delete to check for
- error and return status
-Date: Tue, 26 Aug 2014 17:29:44 -0700
-Message-ID: <20140827002944.GC20185@google.com>
-References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
- <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
- <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
- <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
- <20140820231723.GF20185@google.com>
- <20140826000354.GW20185@google.com>
- <xmqqlhqbge3a.fsf@gitster.dls.corp.google.com>
- <20140826221448.GY20185@google.com>
- <20140827002804.GA20185@google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] log-tree: use FLEX_ARRAY in name_decoration
+Date: Tue, 26 Aug 2014 20:30:08 -0400
+Message-ID: <CAPig+cTHLOAe+mHr9jiR-k-3yrXfrAEjUSrHG=92kRSEGyto8Q@mail.gmail.com>
+References: <20140826102051.GA4885@peff.net>
+	<20140826102420.GC25687@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 27 02:29:54 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Arjun Sreedharan <arjun024@gmail.com>,
+	git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 27 02:30:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMR7Z-0005KM-Qv
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 02:29:54 +0200
+	id 1XMR7w-0005TL-Gs
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 02:30:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756011AbaH0A3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Aug 2014 20:29:50 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:55039 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755893AbaH0A3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Aug 2014 20:29:49 -0400
-Received: by mail-pd0-f174.google.com with SMTP id fp1so23554574pdb.19
-        for <git@vger.kernel.org>; Tue, 26 Aug 2014 17:29:49 -0700 (PDT)
+	id S1756047AbaH0AaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Aug 2014 20:30:09 -0400
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:36234 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755893AbaH0AaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Aug 2014 20:30:08 -0400
+Received: by mail-yh0-f47.google.com with SMTP id f10so12732383yha.20
+        for <git@vger.kernel.org>; Tue, 26 Aug 2014 17:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=a7YdeiCzFmHrOF960O3aSkLH+0GuZSFzBdKCZ83K27M=;
-        b=LCN6SSKG9RRM6Wynn1Cnxu+VSM4U2k3T94L58+mNhtMT5gf8z81r33wfYHHHAWWqHD
-         r0Fg0TJwrSTnPfGFpEkDImDu6aqYb19oYbVSi+pbywgHhNz0dIenRzhUs6k6N14DCFuA
-         9lev0BrAwbZJfNrBogX+p6tHi4x0uKDWJ46pWkvq950va3u70ErZXY65UIlxgHvp9hNW
-         nB5YKn+MNwacKSG/e4DqLuT6HqekMk7ZrCy+Ub6n4fLFLJOkASwl3TiVt6gEe/CP3rg4
-         c2FSzcgVBD4t8apuW1VaRYb7eUSQNjtzPf/lZbMSf4o6o0Oeph9V+rH8q/HQTmg+CZjc
-         Ld+A==
-X-Received: by 10.68.65.101 with SMTP id w5mr37147786pbs.5.1409099389279;
-        Tue, 26 Aug 2014 17:29:49 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:4ba:9bd4:148:77e4])
-        by mx.google.com with ESMTPSA id to4sm4515849pbc.39.2014.08.26.17.29.46
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 26 Aug 2014 17:29:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140827002804.GA20185@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=pnzkh2y85Az2qX5+aTATB1aHLOUO5qliE6iYjZ3S0R8=;
+        b=lcEM1VpkdR3xKxahtuTAyhpQbGHllJ0pxYXdmYpJd6400LlhR8MHHImMIGxa3LmTtd
+         gjBYNM2tgF7P54JdolwjR7PcfsLVjqwIq9xydl66I9I2et3+UvViNe1CCntsF5Uo4ilN
+         dq3oMYFbcq5VPwdUsCnbBcvqbYCfVN+r3osKdOxJbPdWCQgSA5HkKmPjESuX7oi4vvc+
+         n4Gr/Q7htPKqBItMizJ/tW/bXiGRnBQbLGiOhrb46mSlbbVCA2Ri2j/m0iqC/eI156d3
+         Egvm3gTXUxohGK/lnr8jN5U4UY432iGPvEkC74IFYgi0bYO9v9qariaezxS2qk2H6wRq
+         fbIg==
+X-Received: by 10.236.157.134 with SMTP id o6mr5245396yhk.92.1409099408299;
+ Tue, 26 Aug 2014 17:30:08 -0700 (PDT)
+Received: by 10.170.163.5 with HTTP; Tue, 26 Aug 2014 17:30:08 -0700 (PDT)
+In-Reply-To: <20140826102420.GC25687@peff.net>
+X-Google-Sender-Auth: WFpBM0ymWsmn_pTnhBtsduaKBZ0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255958>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Wed, 16 Apr 2014 15:27:45 -0700
+On Tue, Aug 26, 2014 at 6:24 AM, Jeff King <peff@peff.net> wrote:
+> We are already using the flex-array technique; let's
+> annotate it with our usual FLEX_ARRAY macro. Besides being
+> more readable, this is slightly more efficient on compilers
+> that understand flex-arrays.
+>
+> Note that we need to bump the allocation in add_name_decoration,
+> which did not explicitly add one byte for the NUL terminator
+> of the string we putting into the flex-array (it did not
 
-Change ref_transaction_delete() to do basic error checking and return
-non-zero of error. Update all callers to check the return for
-ref_transaction_delete(). There are currently no conditions in _delete that
-will return error but there will be in the future. Add an err argument that
-will be updated on failure.
+s/we/we are/
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin/update-ref.c |  5 +++--
- refs.c               | 16 +++++++++++-----
- refs.h               | 12 ++++++++----
- 3 files changed, 22 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 41121fa..7c9c248 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -258,8 +258,9 @@ static const char *parse_cmd_delete(struct strbuf *input, const char *next)
- 	if (*next != line_termination)
- 		die("delete %s: extra input: %s", refname, next);
- 
--	ref_transaction_delete(transaction, refname, old_sha1,
--			       update_flags, have_old);
-+	if (ref_transaction_delete(transaction, refname, old_sha1,
-+				   update_flags, have_old, &err))
-+		die("%s", err.buf);
- 
- 	update_flags = 0;
- 	free(refname);
-diff --git a/refs.c b/refs.c
-index c49f1c6..40f04f4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3469,19 +3469,25 @@ int ref_transaction_create(struct ref_transaction *transaction,
- 	return 0;
- }
- 
--void ref_transaction_delete(struct ref_transaction *transaction,
--			    const char *refname,
--			    const unsigned char *old_sha1,
--			    int flags, int have_old)
-+int ref_transaction_delete(struct ref_transaction *transaction,
-+			   const char *refname,
-+			   const unsigned char *old_sha1,
-+			   int flags, int have_old,
-+			   struct strbuf *err)
- {
--	struct ref_update *update = add_update(transaction, refname);
-+	struct ref_update *update;
- 
-+	if (have_old && !old_sha1)
-+		die("BUG: have_old is true but old_sha1 is NULL");
-+
-+	update = add_update(transaction, refname);
- 	update->flags = flags;
- 	update->have_old = have_old;
- 	if (have_old) {
- 		assert(!is_null_sha1(old_sha1));
- 		hashcpy(update->old_sha1, old_sha1);
- 	}
-+	return 0;
- }
- 
- int update_ref(const char *action, const char *refname,
-diff --git a/refs.h b/refs.h
-index b648819..71389a1 100644
---- a/refs.h
-+++ b/refs.h
-@@ -308,11 +308,15 @@ int ref_transaction_create(struct ref_transaction *transaction,
-  * Add a reference deletion to transaction.  If have_old is true, then
-  * old_sha1 holds the value that the reference should have had before
-  * the update (which must not be the null SHA-1).
-+ * Function returns 0 on success and non-zero on failure. A failure to delete
-+ * means that the transaction as a whole has failed and will need to be
-+ * rolled back.
-  */
--void ref_transaction_delete(struct ref_transaction *transaction,
--			    const char *refname,
--			    const unsigned char *old_sha1,
--			    int flags, int have_old);
-+int ref_transaction_delete(struct ref_transaction *transaction,
-+			   const char *refname,
-+			   const unsigned char *old_sha1,
-+			   int flags, int have_old,
-+			   struct strbuf *err);
- 
- /*
-  * Commit all of the changes that have been queued in transaction, as
--- 
-2.1.0.rc2.206.gedb03e5
+> need to before, because the struct itself was over-allocated
+> by one byte).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This could come first in the series, but doing it last means we only
+> have to update one spot. :)
+>
+>  commit.h   | 2 +-
+>  log-tree.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/commit.h b/commit.h
+> index 263b49e..1516fc9 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -29,7 +29,7 @@ extern const char *commit_type;
+>  struct name_decoration {
+>         struct name_decoration *next;
+>         int type;
+> -       char name[1];
+> +       char name[FLEX_ARRAY];
+>  };
+>
+>  enum decoration_type {
+> diff --git a/log-tree.c b/log-tree.c
+> index 7cbc4ee..fb60018 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -77,7 +77,7 @@ int parse_decorate_color_config(const char *var, const int ofs, const char *valu
+>  void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
+>  {
+>         int nlen = strlen(name);
+> -       struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + nlen);
+> +       struct name_decoration *res = xmalloc(sizeof(*res) + nlen + 1);
+>         memcpy(res->name, name, nlen + 1);
+>         res->type = type;
+>         res->next = add_decoration(&name_decoration, obj, res);
+> --
+> 2.1.0.346.ga0367b9
