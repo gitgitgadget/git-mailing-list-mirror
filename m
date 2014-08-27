@@ -1,124 +1,83 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Improving the git remote command
-Date: Wed, 27 Aug 2014 09:36:18 -0700
-Message-ID: <20140827163617.GA66615@gmail.com>
-References: <53FC537C.4080206@gmail.com>
- <20140826124027.GE29180@peff.net>
- <CAGK7Mr7BPvV6oO_t4x_1m9sDtWBgPWUqDq+3kZx6rVYAhY+wqA@mail.gmail.com>
- <20140826163741.GA14983@peff.net>
- <xmqq7g1vjh9o.fsf@gitster.dls.corp.google.com>
- <20140826173312.GB16394@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2014, #04; Tue, 26)
+Date: Wed, 27 Aug 2014 09:38:09 -0700
+Message-ID: <xmqqy4u9evm6.fsf@gitster.dls.corp.google.com>
+References: <xmqqy4uagaxt.fsf@gitster.dls.corp.google.com>
+	<20140827081323.GA26538@peff.net>
+	<xmqqfvgieyoo.fsf@gitster.dls.corp.google.com>
+	<20140827162819.GB1432@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	=?utf-8?B?UsOpbXk=?= Hubscher <hubscher.remy@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 27 18:36:09 2014
+X-From: git-owner@vger.kernel.org Wed Aug 27 18:38:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMgCc-0004Gp-4S
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 18:36:06 +0200
+	id 1XMgFI-0006W6-6m
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 18:38:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755217AbaH0QgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 12:36:00 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:59854 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752663AbaH0Qf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 12:35:59 -0400
-Received: by mail-pa0-f53.google.com with SMTP id rd3so583626pab.40
-        for <git@vger.kernel.org>; Wed, 27 Aug 2014 09:35:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=c7keiJwM0PO9CvmNVwavW3IDBEJMvAyjka634DfiCYc=;
-        b=yevXGaBs6rTU2UDNe23JcqQsSOW5pzGihSqmTLk+dTCa9a5XLIi7K9m+AlStazoXnM
-         bNwh/WFiIbJmEXyp09co36zlWOfINbcFyjxBoUcNA93aYOzaG7ZkQx9nXUqEgGSxjFCB
-         FE1BxEB5Dy1P+3Oi0HgL2x5ZMLwnkbG/MoFdyIn/R0Fl/5HGuuTVw06bcKToSW0BPpi9
-         6vv5rvahQoPE1MIYmT3dFg8sHr947Au+M+IDGx/DdDGABg0ERUR5/VThOihZ2AGm51e3
-         SAA5g9A6AdCHRGy+OkGMScjwzsbP8jtL6U0j2EC6TOCpBrQryuSP23VVBCXqa3e6DNeK
-         rVNg==
-X-Received: by 10.66.152.171 with SMTP id uz11mr46523705pab.96.1409157355948;
-        Wed, 27 Aug 2014 09:35:55 -0700 (PDT)
-Received: from gmail.com (wbucrp-gdm0a-as.bsc.disney.com. [204.238.46.100])
-        by mx.google.com with ESMTPSA id im1sm921695pbb.29.2014.08.27.09.35.54
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 27 Aug 2014 09:35:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140826173312.GB16394@peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S934962AbaH0QiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 12:38:22 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56525 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932275AbaH0QiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 12:38:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A6412343FF;
+	Wed, 27 Aug 2014 12:38:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=dyksJse1wX48e8CxflW5N32i3eE=; b=abxEXc
+	y5jn2Xm/Or1qy4Wym8fPswXwxuxpIm72Al0vXJHPPTop8uvKP7HbLIIGYisIMe38
+	Z9NDgyVlI1r4uxmCDnRQLkhTV11TilO070IYZk5dKJeONR+ZC4GhGxl599jRK0jU
+	afcphi25MnIDcuw2QxfpKR3wbUIvuHgcqlEGI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KSceiPX2JtP5aEtKhuIjvNSgsUoWh/iO
+	bzG/OdGAoefA3E0oJNN2N6ZsE92TdHLkyAFC0ag6QCxkhV0ptncOv3mbkwB/GEkG
+	KRY/0x4PmC/P1St4j9DfXSj89EmC8ytw004NBaC8YdO/Dr16mVyFLHhLqGW2js5i
+	1+yetvbdsnA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9BCEE343FE;
+	Wed, 27 Aug 2014 12:38:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EEAC7343E8;
+	Wed, 27 Aug 2014 12:38:11 -0400 (EDT)
+In-Reply-To: <20140827162819.GB1432@peff.net> (Jeff King's message of "Wed, 27
+	Aug 2014 12:28:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 88EE45E0-2E08-11E4-B5FD-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256009>
 
-On Tue, Aug 26, 2014 at 01:33:12PM -0400, Jeff King wrote:
-> On Tue, Aug 26, 2014 at 10:24:35AM -0700, Junio C Hamano wrote:
-> 
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > ... But we are left with three options:
-> > >
-> > >   1. Add "git remote list" with verbose output. This is bad because it
-> > >      differs gratuitously from "git remote".
-> > >
-> > >   2. Add "git remote list" with non-verbose output. This is good because
-> > >      it means "git remote" is just a shortcut for "git remote list",
-> > >      which is consistent with other parts of git. But it is potentially
-> > >      bad if "-v" is a better output format.
-> > >
-> > >   3. Add "git remote list" with verbose output, and tweak "git remote"
-> > >      to match. This is bad because it breaks backwards compatibility.
-> > >
-> > > The proposal is for (1). I think we agree that (3) is out. The question
-> > > is whether (1) or (2) is the least bad.
-> > 
-> > I would imagine that those who want list of remotes programatically
-> > would read from "git config" output and it would be with less
-> > friction to change the output from "git remote", a command that is
-> > solely to cater to end-user humans, to suit people's needs, so I am
-> > not sure if (3) is immediately "out".
-> 
-> Yeah, I touched on that earlier. I would personally consider "git
-> remote" to be a porcelain, and "git config" to be the appropriate
-> plumbing for accessing those values. However, it's a little tricky to
-> robustly get the list of remotes with "git config". So I would not be
-> surprised if scripts have used "git remote" to do the same thing (I know
-> for a fact that some internal scripts at GitHub did this, though I
-> recently cleaned them up so I do not have a vested interest either way
-> at this point).
-> 
-> That does not mean those scripts are right and we cannot change things,
-> but it may be a matter of practicality.
+Jeff King <peff@peff.net> writes:
 
-We have some internal scripts at Disney Animation that rely on "git remote"
-output so I would vote for #3 personally as well.
+> On Wed, Aug 27, 2014 at 08:31:51AM -0700, Junio C Hamano wrote:
+>
+>> >   - jk/send-pack-many-refspecs; this is in pu, but I didn't see it in
+>> >     "what's cooking". I'm concerned that the "ulimit" test gave you
+>> >     trouble and you punted on it. :)
+>> 
+>> It was picked up after the day's edition of "What's cooking" was
+>> written, or something, I think.
+>
+> Ah, sorry to nag, then.
 
-I know that "git config" is porcelain, and I can get remote.(.*).url,
-but that's not obvious and I highly doubt that anyone does that.
+Not at all. Reminders are very much appreciated.
 
-What if we said that "git remote list --porcelain" == "git remote"
-and then just leave "git remote" output as-is so that we don't have to
-have a flag day when we break people's scripts?
+>> >   - "fast-export --anonymize"; I noticed you didn't pick this up at all.
+>> ...
+> Makes sense. I think the v2 I sent[1] is OK, and as far as I was
+> planning to take it for now (there were some other possible enhancements
+> discussed, but I think those can happen in-tree if somebody feels like
+> working on it).
 
-Those that want verbose output can use "git remote list".
-
-> > Having said that, my preference is 
-> > 
-> >     0. Do nothing, but document the "default to listing" better if
-> >        needed.
-> > 
-> > and then 2. above, and then 1.
-> 
-> Yeah, I'd agree with that.
-
-Ditto.
--- 
-David
+I queued it as-is; sent some comments.
