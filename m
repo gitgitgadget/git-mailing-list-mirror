@@ -1,213 +1,87 @@
-From: dev <dev@cor0.com>
-Subject: Re: problem with def of inet_ntop() in git-compat-util.h as well as
- other places
-Date: Wed, 27 Aug 2014 17:00:28 -0400 (EDT)
-Message-ID: <597210348.36175.1409173228026.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
-References: <1024776344.30870.1409166905539.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827192848.GC7561@peff.net> <805178325.32077.1409168920760.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827200612.GA10469@peff.net>
-Reply-To: dev <dev@cor0.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Check order when reading index
+Date: Wed, 27 Aug 2014 14:11:26 -0700
+Message-ID: <xmqq61hdd4e9.fsf@gitster.dls.corp.google.com>
+References: <xmqq38cpsmli.fsf@gitster.dls.corp.google.com>
+	<1408903047-8302-1-git-send-email-jsorianopastor@gmail.com>
+	<xmqqvbpgmqmh.fsf@gitster.dls.corp.google.com>
+	<20140825194430.GI30953@peff.net>
+	<CAPc5daW-ZckFfhyueNLnPaBeriAmCUVJjFc1cw0O5iRi8F+Kng@mail.gmail.com>
+	<CAPuZ2NHafXQthtuq-RnTvpjVfNPaXHEy8SejuhPEnG+MwCK=sg@mail.gmail.com>
+	<20140826122008.GC29180@peff.net>
+	<xmqqmwarjiq7.fsf@gitster.dls.corp.google.com>
+	<CAPuZ2NGTQoKnSfeN2zte5=fqswN5PcfAULdFy9WnGWPtc2Zskg@mail.gmail.com>
+	<xmqqy4ubi1ty.fsf@gitster.dls.corp.google.com>
+	<CAPuZ2NFzHjUSfi1H0RFvOuWdRptwxv-gsUOAJv0Uh5BFLWmnRA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jrnieder@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 27 23:00:45 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 27 23:11:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMkKi-0006Ng-UO
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 23:00:45 +0200
+	id 1XMkVM-0006ja-Dj
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Aug 2014 23:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935912AbaH0VAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 17:00:41 -0400
-Received: from atl4mhob19.myregisteredsite.com ([209.17.115.112]:53767 "EHLO
-	atl4mhob19.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935336AbaH0VAk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Aug 2014 17:00:40 -0400
-Received: from atl4oxapp02pod2.mgt.hosting.qts.netsol.com ([10.30.77.38])
-	by atl4mhob19.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7RL0SYN020257;
-	Wed, 27 Aug 2014 17:00:28 -0400
-In-Reply-To: <20140827200612.GA10469@peff.net>
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v-
+	id S965070AbaH0VLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 17:11:39 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63293 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965028AbaH0VLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 17:11:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6487B351E5;
+	Wed, 27 Aug 2014 17:11:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LI34plnbLBjsQPsugIh4b61Lwb4=; b=WvYoh9
+	sZebCueduwJFbMW6gT7m1+2+q7DfEc9myAj4xTZmz5+Z8imv3jJn2NdKXz38F3WZ
+	6nSF3oBu8G0r+EcVuYcCzRvANtWb0cvQp7cnmvQ/EAorb+iaNkPcdWa0shKKs9aJ
+	QuLWxCpgPV9uX6f3RpqYawsQFqaw3uxBFQBu4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DKPccYieRfwM8HS3waibBpWhMeTwUXiy
+	FBzuFApxDrxEBpaji8DE4fMQ/dA1C+a9KyRbF86AUuSJpln61l+SYB/OS9Fxf84j
+	sIMhr+oWjeC/gqYgE7m3MM6/YdeOg6CNQy/d38zl8kLKcSzdtnF0Whn0+SCo3ucR
+	vPZaRwIlo6E=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B7F4351E4;
+	Wed, 27 Aug 2014 17:11:36 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4416B351DD;
+	Wed, 27 Aug 2014 17:11:28 -0400 (EDT)
+In-Reply-To: <CAPuZ2NFzHjUSfi1H0RFvOuWdRptwxv-gsUOAJv0Uh5BFLWmnRA@mail.gmail.com>
+	(Jaime Soriano Pastor's message of "Wed, 27 Aug 2014 21:52:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B5E3AC22-2E2E-11E4-827C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256044>
 
+Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
 
-
-On August 27, 2014 at 4:06 PM Jeff King <peff@peff.net> wrote:
-> On Wed, Aug 27, 2014 at 03:48:40PM -0400, dev wrote:
+> On Tue, Aug 26, 2014 at 7:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Does the current codebase choke with such entries in the index file,
+>> like you saw in your index file with both stage #0 and stage #1
+>> entries?
 >
-> > $ gzip -dc $SRC/git-2.0.4.tar.gz | tar -xf -
-> > $ mv git-2.0.4 git-2.0.4_SunOS5.10_sparcv9.002
-> > $
-> > $ cd git-2.0.4_SunOS5.10_sparcv9.002
-> > $
-> > $ echo $CFLAGS
-> > -errfmt=error -erroff=%none -errshort=full -xstrconst -xildoff -m64
-> > -xmemalign=8s -xnolibmil -Xa -xcode=pic32 -xregs=no%appl -xlibmieee
-> > -mc
-> > -g -xs -ftrap=%none -Qy -xbuiltin=%none -xdebugformat=dwarf
-> > -xunroll=1
-> > -xtarget=ultraT2 -xcache=8/16/4:4096/64/16
->
-> Note that git's Makefile will not read CFLAGS from the environment
-> (you
-> have to give it to make on the command-line, or put it in config.mak).
-> However, running "./configure" with that in the environment should put
-> the result into config.mak.autogen.
+> Not sure, I couldn't reproduce an scenario with an index with multiple
+> entries in the same stage for the same path.
 
+I think we have been discussing how to protect broken index file
+left by tools other people wrote, so I wouldn't be so surprised if
+our current toolset does not let you recreate certain breakages ;-)
 
-Well I have heard now a few times of this config.mak file and when I
-extract the source tarball I see :
-
-$ ls -lap config*
--rw-r--r--   1 dclarke  adbs       44502 Jul 30 22:10 config.c
--rw-r--r--   1 dclarke  adbs         540 Jul 30 22:10 config.mak.in
--rw-r--r--   1 dclarke  adbs       15447 Jul 30 22:10 config.mak.uname
--rwxr-x---   1 dclarke  adbs      217698 Jul 30 22:10 configure
--rw-r--r--   1 dclarke  adbs       32144 Jul 30 22:10 configure.ac
-
-
-So I guess I have to create a config.mak file from somewhere.
-
->From the INSTALL file I see that most of these variables are in the
-pre-written and supposedly ready to run Makefile.  OKay.  I think I
-had better crack that open and see what I need to change in there.
-Most likely CFLAGS and a way to locate OpenSSL libs etc but who knows.
-
-> I have never seen LD_OPTIONS before. The usual variable for this is
-> LDFLAGS, and note that it is handled in the environment the same way
-> as
-> CFLAGS above.
-
-The problem is that this is not Linux and not GNU ld and therefore :
-
-http://docs.oracle.com/cd/E19253-01/817-1984/6mhm7pl1l/index.html
-
-So if I want to ensure that things like ELF headers contain the correct
-stuff to locate libraries ( never ever use LD_LIBRARY_PATH as it is
-the kiss of death ) then I need things like LD_OPTIONS and others.
-
-So I will work through this from the Makefile provided and see if I
-can get the CFLAGS that I want as well as other env vars.
-
-> > So CFLAGS is ignored entirely.
->
-> No, it's not. The Makefiles are not generated by autoconf, because
-> autoconf is not required to build git (most of us do not use it at
-> all).
-
-I should try that on Solaris once to see what happens.  Make popcorn.
-See below.
-
-> Instead, the static Makefile includes config.mak.autogen, which is
-> generated by autoconf when you run "./configure" (and which overrides
-> the default in the Makefile). Try grepping for CFLAGS in that file.
->
-> > Also in the Makefile at the top level I see :
-> >
-> > ifdef NO_INET_NTOP
-> >         LIB_OBJS += compat/inet_ntop.o
-> >         BASIC_CFLAGS += -DNO_INET_NTOP
-> > endif
-> > ifdef NO_INET_PTON
-> >         LIB_OBJS += compat/inet_pton.o
-> >         BASIC_CFLAGS += -DNO_INET_PTON
-> > endif
-> >
-> > No reason for either of those to be defined, but I bet that you are
-> > right
-> > and they are ... and should not be.
->
-> I think they are defined by your config.mak.autogen, based on the
-> output
-> you showed above.
->
-> > Anyways, thanks for the input. I would love to see this "just build"
-> > and
-> > with a few more emails and some tinkering it should right?
->
-> I do not see anything that drastic that needs changed. Building
-> _without_ running ./configure might even just work (it has sane
-> defaults
-> for many operating systems),
-
-
-$ make
-make: Fatal error in reader: Makefile, line 345: Unexpected end of line
-seen
-
-
-Instant fail.
-
-Let's try GNU make :
-
-$ gmake
-GIT_VERSION = 2.0.4
-    * new build flags
-    CC credential-store.o
-cc: -W option with unknown program all
-gmake: *** [credential-store.o] Error 1
-$
-
-More instant fail.
-
-Let's keep trying ...
-
-> though you would need to pass along the
-> bits from your environment, like:
->
->   make CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS"
-
-Sounds good ... let's see :
-
-gmake CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS"
-.
-.
-.  good things seem to happen ...
-.
-    LINK git-credential-store
-cc: Warning: Option -64 passed to ld, if ld is invoked, ignored
-otherwise
-cc: Warning: multiple use of -Q option, previous one discarded.
-ld: warning: option -Q appears more than once, first setting taken
-Undefined                       first referenced
- symbol                             in file
-libiconv_close                      libgit.a(utf8.o)  (symbol belongs to
-implicit dependency /usr/local/lib/libiconv.so.2)
-libiconv_open                       libgit.a(utf8.o)  (symbol belongs to
-implicit dependency /usr/local/lib/libiconv.so.2)
-libiconv                            libgit.a(utf8.o)  (symbol belongs to
-implicit dependency /usr/local/lib/libiconv.so.2)
-ld: fatal: symbol referencing errors. No output written to
-git-credential-store
-gmake: *** [git-credential-store] Error 2
-$
-
-So this is not Linux and so a pile of fiddling is required. Welcome to
-the world of Oracle Solaris where nothing from the Linux world ever
-"just works".  It looks like somewhere along the line the idea of
-linking
-with -liconv or perhaps -lintl was lost.  Not sure yet.
-
-> You would potentially also need to turn off a few feature flags
-> manually
-> (e.g., NO_EXPAT, NO_GETTEXT). There's a complete list at the top of
-> the
-> Makefile. The configure script can usually figure these out for you,
-> but
-> the static Makefile does not.
-
-For now I want to keep chugging along to see if I can get a default
-no-hack
-build and then go back and start over with things in the Makefile to see
-if I can get the whole process to make the binaries that I want with
-the required bits in the ELF headers and correctly NEEDed libs etc.
-
-dev
+I was asking for an answer more from what you know about the code.
+For example, would read_index_unmerged() choke if the index has two
+or more stage #1 (or stage #3) entries for the same path (provided
+that the index is otherwise normal, i.e. no stage #0 entry for that
+path, entries are sorted by pathname order and stages are in an
+order that does not decrease)?
