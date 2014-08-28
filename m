@@ -1,215 +1,166 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/6] Accept object data in the fsck_object() function
-Date: Thu, 28 Aug 2014 16:46:42 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1408281646400.990@s15462909.onlinehome-server.info>
+Subject: [PATCH 4/6] fsck: check tag objects' headers
+Date: Thu, 28 Aug 2014 16:46:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1408281646530.990@s15462909.onlinehome-server.info>
 References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 28 16:47:08 2014
+X-From: git-owner@vger.kernel.org Thu Aug 28 16:47:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN0yf-0007Gp-VG
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 16:47:06 +0200
+	id 1XN0yh-0007Gp-Ic
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 16:47:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbaH1Oqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 10:46:48 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62077 "EHLO mout.gmx.net"
+	id S1752080AbaH1Oq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 10:46:58 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58152 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751502AbaH1Oqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2014 10:46:46 -0400
+	id S1751502AbaH1Oq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 10:46:58 -0400
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id 0MUoma-1WoudC3CxQ-00Y9xt;
- Thu, 28 Aug 2014 16:46:42 +0200
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0M85r3-1WRd5q2NAP-00ve3N;
+ Thu, 28 Aug 2014 16:46:55 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
 In-Reply-To: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:iYMElZQAkggRJVBm6BcndZWGllzacqGJq6Fn35KvxVBpD0Fq8Le
- vw5fwMkr/zfbIOKVKzqrTKs+eqDsk//ZBMj62LFFRlONdLJjTfvESHT4ns7MgdDE3VOsQzn
- JFtcVLsg34/AiE+wtoGv2iaqkNjG7WfCvtXSonjQoCplokIckZx3K+S0a3mqJKVk5q0N2Wg
- XAwhvXAlOzIVxStW5bx7A==
+X-Provags-ID: V03:K0:ZXAkHxuyINBhnK0Nx/3X2oKaSC0e1ap715ykq8Y4sN4L3xKReqq
+ CAd9PCnPBH+J2xHpKoNabBescIg/PRb+AakZA6eVM+Jka7w/CeJswH5Hz8hDTFi8MxPpMpE
+ X8OFhm7EHiF4GVwZ8dpEkly1vLs0tSUo/nNEN9SXa6H+UTUNC6/977hDekgdmrHH0E9SCmT
+ bGBS86EKk4B7oiqIwEO0A==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256088>
 
-When fsck'ing an incoming pack, we need to fsck objects that cannot be
-read via read_sha1_file() because they are not local yet (and might even
-be rejected if transfer.fsckobjects is set to 'true').
+We inspect commit objects pretty much in detail in git-fsck, but we just
+glanced over the tag objects. Let's be stricter.
 
-For commits, there is a hack in place: we basically cache commit
-objects' buffers anyway, but the same is not true, say, for tag objects.
-
-By refactoring fsck_object() to take the object buffer and size as
-optional arguments -- optional, because we still fall back to the
-previous method to look at the cached commit objects if the caller
-passes NULL -- we prepare the machinery for the upcoming handling of tag
-objects.
-
-The assumption that such buffers are inherently NUL terminated is now
-wrong, of course, hence we pass the size of the buffer so that we can
-add a sanity check later, to prevent running past the end of the buffer.
+This work was sponsored by GitHub Inc.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/fsck.c           |  2 +-
- builtin/index-pack.c     |  3 ++-
- builtin/unpack-objects.c | 14 ++++++++++----
- fsck.c                   | 24 +++++++++++++++---------
- fsck.h                   |  4 +++-
- 5 files changed, 31 insertions(+), 16 deletions(-)
+ fsck.c | 88 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 87 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index d42a27d..d9f4e6e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -298,7 +298,7 @@ static int fsck_obj(struct object *obj)
- 
- 	if (fsck_walk(obj, mark_used, NULL))
- 		objerror(obj, "broken links");
--	if (fsck_object(obj, check_strict, fsck_error_func))
-+	if (fsck_object(obj, NULL, 0, check_strict, fsck_error_func))
- 		return -1;
- 
- 	if (obj->type == OBJ_TREE) {
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 5568a5b..f2465ff 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -773,7 +773,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 			if (!obj)
- 				die(_("invalid %s"), typename(type));
- 			if (do_fsck_object &&
--			    fsck_object(obj, 1, fsck_error_function))
-+			    fsck_object(obj, buf, size, 1,
-+				    fsck_error_function))
- 				die(_("Error in object"));
- 			if (fsck_walk(obj, mark_link, NULL))
- 				die(_("Not all child objects of %s are reachable"), sha1_to_hex(obj->sha1));
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 99cde45..855d94b 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -164,10 +164,10 @@ static unsigned nr_objects;
-  * Called only from check_object() after it verified this object
-  * is Ok.
-  */
--static void write_cached_object(struct object *obj)
-+static void write_cached_object(struct object *obj, struct obj_buffer *obj_buf)
- {
- 	unsigned char sha1[20];
--	struct obj_buffer *obj_buf = lookup_object_buffer(obj);
-+
- 	if (write_sha1_file(obj_buf->buffer, obj_buf->size, typename(obj->type), sha1) < 0)
- 		die("failed to write object %s", sha1_to_hex(obj->sha1));
- 	obj->flags |= FLAG_WRITTEN;
-@@ -180,6 +180,8 @@ static void write_cached_object(struct object *obj)
-  */
- static int check_object(struct object *obj, int type, void *data)
- {
-+	struct obj_buffer *obj_buf;
-+
- 	if (!obj)
- 		return 1;
- 
-@@ -198,11 +200,15 @@ static int check_object(struct object *obj, int type, void *data)
- 		return 0;
- 	}
- 
--	if (fsck_object(obj, 1, fsck_error_function))
-+	obj_buf = lookup_object_buffer(obj);
-+	if (!obj_buf)
-+		die("Whoops! Cannot find object '%s'", sha1_to_hex(obj->sha1));
-+	if (fsck_object(obj, obj_buf->buffer, obj_buf->size, 1,
-+			fsck_error_function))
- 		die("Error in object");
- 	if (fsck_walk(obj, check_object, NULL))
- 		die("Error on reachable objects of %s", sha1_to_hex(obj->sha1));
--	write_cached_object(obj);
-+	write_cached_object(obj, obj_buf);
- 	return 0;
- }
- 
 diff --git a/fsck.c b/fsck.c
-index 56156ff..dd77628 100644
+index db6aaa4..d30946b 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -277,7 +277,7 @@ static int fsck_ident(const char **ident, struct object *obj, fsck_error error_f
- }
+@@ -6,6 +6,7 @@
+ #include "commit.h"
+ #include "tag.h"
+ #include "fsck.h"
++#include "refs.h"
  
- static int fsck_commit_buffer(struct commit *commit, const char *buffer,
--			      fsck_error error_func)
-+	unsigned long size, fsck_error error_func)
+ static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
  {
- 	unsigned char tree_sha1[20], sha1[20];
- 	struct commit_graft *graft;
-@@ -322,15 +322,18 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	return 0;
- }
- 
--static int fsck_commit(struct commit *commit, fsck_error error_func)
-+static int fsck_commit(struct commit *commit, const char *data,
-+	unsigned long size, fsck_error error_func)
- {
--	const char *buffer = get_commit_buffer(commit, NULL);
--	int ret = fsck_commit_buffer(commit, buffer, error_func);
--	unuse_commit_buffer(commit, buffer);
-+	const char *buffer = data ?  data : get_commit_buffer(commit, &size);
-+	int ret = fsck_commit_buffer(commit, buffer, size, error_func);
-+	if (!data)
-+		unuse_commit_buffer(commit, buffer);
+@@ -355,6 +356,90 @@ static int fsck_commit(struct commit *commit, const char *data,
  	return ret;
  }
  
--static int fsck_tag(struct tag *tag, fsck_error error_func)
-+static int fsck_tag(struct tag *tag, const char *data,
++static int fsck_tag_buffer(struct tag *tag, const char *data,
 +	unsigned long size, fsck_error error_func)
++{
++	unsigned char commit_sha1[20];
++	int ret = 0;
++	const char *buffer;
++	char *tmp = NULL, *eol;
++
++	if (data)
++		buffer = data;
++	else {
++		enum object_type type;
++
++		buffer = tmp = read_sha1_file(tag->object.sha1, &type, &size);
++		if (!buffer)
++			return error_func(&tag->object, FSCK_ERROR,
++				"cannot read tag object");
++
++		if (type != OBJ_TAG) {
++			ret = error_func(&tag->object, FSCK_ERROR,
++				"expected tag got %s",
++			    typename(type));
++			goto done;
++		}
++	}
++
++	if (must_have_empty_line(buffer, size, &tag->object, error_func))
++		goto done;
++
++	if (!skip_prefix(buffer, "object ", &buffer)) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'object' line");
++		goto done;
++	}
++	if (get_sha1_hex(buffer, commit_sha1) || buffer[40] != '\n') {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'object' line format - bad sha1");
++		goto done;
++	}
++	buffer += 41;
++
++	if (!skip_prefix(buffer, "type ", &buffer)) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'type' line");
++		goto done;
++	}
++	eol = strchr(buffer, '\n');
++	if (!eol) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - unexpected end after 'type' line");
++		goto done;
++	}
++	*eol = '\0';
++	if (type_from_string_gently(buffer) < 0)
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'type' value");
++	*eol = '\n';
++	if (ret)
++		goto done;
++	buffer = eol + 1;
++
++	if (!skip_prefix(buffer, "tag ", &buffer)) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'tag' line");
++		goto done;
++	}
++	eol = strchr(buffer, '\n');
++	if (!eol) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - unexpected end after 'type' line");
++		goto done;
++	}
++	*eol = '\0';
++	if (check_refname_format(buffer, REFNAME_ALLOW_ONELEVEL))
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'tag' name: %s", buffer);
++	*eol = '\n';
++	if (ret)
++		goto done;
++	buffer = eol + 1;
++
++	if (!skip_prefix(buffer, "tagger ", &buffer)) {
++		/* early tags do not contain 'tagger' lines; warn only */
++		error_func(&tag->object, FSCK_WARN, "invalid format - expected 'tagger' line");
++	}
++	ret = fsck_ident(&buffer, &tag->object, error_func);
++
++done:
++	free(tmp);
++	return ret;
++}
++
+ static int fsck_tag(struct tag *tag, const char *data,
+ 	unsigned long size, fsck_error error_func)
  {
- 	struct object *tagged = tag->tagged;
+@@ -362,7 +447,8 @@ static int fsck_tag(struct tag *tag, const char *data,
  
-@@ -339,7 +342,8 @@ static int fsck_tag(struct tag *tag, fsck_error error_func)
- 	return 0;
+ 	if (!tagged)
+ 		return error_func(&tag->object, FSCK_ERROR, "could not load tagged object");
+-	return 0;
++
++	return fsck_tag_buffer(tag, data, size, error_func);
  }
  
--int fsck_object(struct object *obj, int strict, fsck_error error_func)
-+int fsck_object(struct object *obj, void *data, unsigned long size,
-+	int strict, fsck_error error_func)
- {
- 	if (!obj)
- 		return error_func(obj, FSCK_ERROR, "no valid object to fsck");
-@@ -349,9 +353,11 @@ int fsck_object(struct object *obj, int strict, fsck_error error_func)
- 	if (obj->type == OBJ_TREE)
- 		return fsck_tree((struct tree *) obj, strict, error_func);
- 	if (obj->type == OBJ_COMMIT)
--		return fsck_commit((struct commit *) obj, error_func);
-+		return fsck_commit((struct commit *) obj, (const char *) data,
-+			size, error_func);
- 	if (obj->type == OBJ_TAG)
--		return fsck_tag((struct tag *) obj, error_func);
-+		return fsck_tag((struct tag *) obj, (const char *) data,
-+			size, error_func);
- 
- 	return error_func(obj, FSCK_ERROR, "unknown type '%d' (internal fsck error)",
- 			  obj->type);
-diff --git a/fsck.h b/fsck.h
-index 1e4f527..d1e6387 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -28,6 +28,8 @@ int fsck_error_function(struct object *obj, int type, const char *fmt, ...);
-  *    0		everything OK
-  */
- int fsck_walk(struct object *obj, fsck_walk_func walk, void *data);
--int fsck_object(struct object *obj, int strict, fsck_error error_func);
-+/* If NULL is passed for data, we assume the object is local and read it. */
-+int fsck_object(struct object *obj, void *data, unsigned long size,
-+	int strict, fsck_error error_func);
- 
- #endif
+ int fsck_object(struct object *obj, void *data, unsigned long size,
 -- 
 2.0.0.rc3.9669.g840d1f9
