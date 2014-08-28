@@ -1,141 +1,78 @@
-From: Maxim Bublis <satori@yandex-team.ru>
-Subject: [PATCH v2] contrib/svn-fe: fix Makefile
-Date: Thu, 28 Aug 2014 21:00:49 +0400
-Message-ID: <1409245249-78610-1-git-send-email-satori@yandex-team.ru>
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Maxim Bublis <satori@yandex-team.ru>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 28 19:02:40 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] improving advice message from "git commit" during a merge
+Date: Thu, 28 Aug 2014 10:11:13 -0700
+Message-ID: <xmqqoav4bkum.fsf@gitster.dls.corp.google.com>
+References: <xmqq4mwxeqr7.fsf@gitster.dls.corp.google.com>
+	<53FF1DEE.8030504@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 19:11:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN35q-0004YI-Qr
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 19:02:39 +0200
+	id 1XN3EQ-0003bF-A9
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 19:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbaH1RCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 13:02:34 -0400
-Received: from 95.108.175.165-red.dhcp.yndx.net ([95.108.175.165]:57499 "EHLO
-	95.108.175.165-red.dhcp.yndx.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751409AbaH1RCe (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Aug 2014 13:02:34 -0400
-Received: by 95.108.175.165-red.dhcp.yndx.net (Postfix, from userid 1533206276)
-	id 2BCB9204A310; Thu, 28 Aug 2014 21:02:25 +0400 (MSK)
-X-Mailer: git-send-email 1.8.5.2 (Apple Git-48)
+	id S1750900AbaH1RLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 13:11:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55642 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750820AbaH1RLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 13:11:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 838C835BDD;
+	Thu, 28 Aug 2014 13:11:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WYdLUTijDusGYJt52nqiga9ZsV8=; b=gQTIky
+	rE5+ddwWji8GNiP0UkiFdz+HROJKyEri2F3gYxGnc1m2tiZQc85XOwQP5xlln81T
+	gWTvycGuhI039SSOuPgs3H3g4m2gw/ggM78a0sSpO56tVMFSYel9GzHtMkw5OUN7
+	g5pkUKM6ZWfqbaUlV4uNRzgHoiQFUDJrNCWM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MqsGeU0qFUKeMheL9Kahgi+FkV0/esgN
+	qZkcRtf3X/1InjTrOIVkDXG6r6h/G0FGsvJushy6spkwhvKtS8flltd2GXL+kBid
+	M8p6lnL+54erj7zlxKutYHLva4W6LWjPRWgUZiV+bh5VZyqz8Ljdkdb6NJUuc1uW
+	/60YuZNLjUE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7890135BDC;
+	Thu, 28 Aug 2014 13:11:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BF1C135BCA;
+	Thu, 28 Aug 2014 13:11:15 -0400 (EDT)
+In-Reply-To: <53FF1DEE.8030504@gmail.com> (Stefan Beller's message of "Thu, 28
+	Aug 2014 14:17:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 51C96D64-2ED6-11E4-BB5B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256103>
 
-Fixes several problems:
-  * include config.mak.uname, config.mak.autogen and config.mak
-    in order to use settings for prefix and other such things;
-  * link xdiff/lib.a as it is a requirement for libgit.a;
-  * fix CFLAGS, LDFLAGS and EXTLIBS for Linux and Mac OS X.
+Stefan Beller <stefanbeller@gmail.com> writes:
 
-Signed-off-by: Maxim Bublis <satori@yandex-team.ru>
----
-Changes from previous version:
-  * added possibility to disable MacPorts and Fink;
-  * respecting NEEDS_CRYPTO_WITH_SSL.
- contrib/svn-fe/Makefile | 60 +++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 51 insertions(+), 9 deletions(-)
+> On 27.08.2014 20:23, Junio C Hamano wrote:
+>> I am not doing this myself soon, though.  Hint, hint...
+>
+> I asked once upon a time, if there was a place, 
+> which collects such topics for casual contributors and new comers.
+>
+> Would you mind to update the leftover bits at
+> http://git-blame.blogspot.de/search?q=leftover&by-date=true
+> ?
 
-diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
-index 360d8da..e8651aa 100644
---- a/contrib/svn-fe/Makefile
-+++ b/contrib/svn-fe/Makefile
-@@ -1,18 +1,58 @@
- all:: svn-fe$X
- 
--CC = gcc
-+CC = cc
- RM = rm -f
- MV = mv
- 
- CFLAGS = -g -O2 -Wall
- LDFLAGS =
--ALL_CFLAGS = $(CFLAGS)
--ALL_LDFLAGS = $(LDFLAGS)
--EXTLIBS =
-+EXTLIBS = -lz
-+
-+include ../../config.mak.uname
-+-include ../../config.mak.autogen
-+-include ../../config.mak
-+
-+ifeq ($(uname_S),Darwin)
-+	ifndef NO_FINK
-+		ifeq ($(shell test -d /sw/lib && echo y),y)
-+			CFLAGS += -I/sw/include
-+			LDFLAGS += -L/sw/lib
-+		endif
-+	endif
-+	ifndef NO_DARWIN_PORTS
-+		ifeq ($(shell test -d /opt/local/lib && echo y),y)
-+			CFLAGS += -I/opt/local/include
-+			LDFLAGS += -L/opt/local/lib
-+		endif
-+	endif
-+endif
-+
-+ifndef NO_OPENSSL
-+	EXTLIBS += -lssl
-+	ifdef NEEDS_CRYPTO_WITH_SSL
-+		EXTLIBS += -lcrypto
-+	endif
-+endif
-+
-+ifndef NO_PTHREADS
-+	CFLAGS += $(PTHREADS_CFLAGS)
-+	EXTLIBS += $(PTHREAD_LIBS)
-+endif
-+
-+ifdef HAVE_CLOCK_GETTIME
-+	CFLAGS += -DHAVE_CLOCK_GETTIME
-+	EXTLIBS += -lrt
-+endif
-+
-+ifdef NEEDS_LIBICONV
-+	EXTLIBS += -liconv
-+endif
- 
- GIT_LIB = ../../libgit.a
- VCSSVN_LIB = ../../vcs-svn/lib.a
--LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(EXTLIBS)
-+XDIFF_LIB = ../../xdiff/lib.a
-+
-+LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB)
- 
- QUIET_SUBDIR0 = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1 =
-@@ -33,12 +73,11 @@ ifndef V
- endif
- endif
- 
--svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
--	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ svn-fe.o \
--		$(ALL_LDFLAGS) $(LIBS)
-+svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(XDIFF_LIB) $(GIT_LIB)
-+	$(QUIET_LINK)$(CC) $(CFLAGS) $(LDFLAGS) $(EXTLIBS) -o $@ svn-fe.o $(LIBS)
- 
- svn-fe.o: svn-fe.c ../../vcs-svn/svndump.h
--	$(QUIET_CC)$(CC) -I../../vcs-svn -o $*.o -c $(ALL_CFLAGS) $<
-+	$(QUIET_CC)$(CC) $(CFLAGS) -I../../vcs-svn -o $*.o -c $<
- 
- svn-fe.html: svn-fe.txt
- 	$(QUIET_SUBDIR0)../../Documentation $(QUIET_SUBDIR1) \
-@@ -54,6 +93,9 @@ svn-fe.1: svn-fe.txt
- ../../vcs-svn/lib.a: FORCE
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) vcs-svn/lib.a
- 
-+../../xdiff/lib.a: FORCE
-+	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) xdiff/lib.a
-+
- ../../libgit.a: FORCE
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
- 
--- 
-1.8.5.2 (Apple Git-48)
+They live in a bit more permanent home at
+
+  http://git-blame.blogspot.com/p/leftover-bits.html
+
+these days.
+
+It is too early to tell this particular one will make an entry there
+yet ;-)
