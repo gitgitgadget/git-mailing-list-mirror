@@ -1,86 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] fsck: check tag objects' headers
-Date: Thu, 28 Aug 2014 14:36:22 -0700
-Message-ID: <xmqqegw08fft.fsf@gitster.dls.corp.google.com>
-References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
-	<alpine.DEB.1.00.1408281646530.990@s15462909.onlinehome-server.info>
-	<xmqqlhq88fyb.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] resolved deltas
+Date: Thu, 28 Aug 2014 18:08:21 -0400
+Message-ID: <20140828220821.GA31545@peff.net>
+References: <53F5D98F.4040700@redhat.com>
+ <53F79CE3.60803@gmx.net>
+ <53F868F8.9080000@web.de>
+ <20140823105640.GA6881@peff.net>
+ <20140823110459.GA13087@peff.net>
+ <20140823111804.GA17335@peff.net>
+ <53FB66D1.709@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 28 23:36:43 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Martin von Gagern <Martin.vGagern@gmx.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Fri Aug 29 00:08:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN7N1-0003RQ-FX
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 23:36:39 +0200
+	id 1XN7rr-0005lD-16
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 00:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752175AbaH1Vgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 17:36:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54614 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750894AbaH1Vgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2014 17:36:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 716BD356C9;
-	Thu, 28 Aug 2014 17:36:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z1Xa/ElfaBG4CZApMvn0d9CAiJ8=; b=enN0TX
-	CaNx4QwqtolO1EwSVjkpxYAN8pOwe6GYAjFkO2Mb/75sfqBQpjE9bPWeyw0dFfxJ
-	2RICed2hDwj3ulmcp6z4EPP9MRWjizaaY8UoI4gJLdLqvQgZADQd6t5Tj87MGI5a
-	v7PFo64yaweIOg7U42IMcf+alOBpBIuYWuO34=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KERIwFRbWAGSMnmNO8NPv3Qj3C8h2u4a
-	aSPSZOOaVTfb++vTTg79fX8bcw2EpY8y878JBzoYFXQsebFdgSbp/3CGG+ViGYtD
-	QIEZlj4/m9yec6YjUqGzPz4aYi/wSVsavzTqYFAaZ48J+Fj+W5vzpZ29PFT99BzK
-	jYw/GmSRxrU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 65468356C8;
-	Thu, 28 Aug 2014 17:36:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 67336356BC;
-	Thu, 28 Aug 2014 17:36:24 -0400 (EDT)
-In-Reply-To: <xmqqlhq88fyb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 28 Aug 2014 14:25:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5C1247B2-2EFB-11E4-A75B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752327AbaH1WIY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2014 18:08:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:32828 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752048AbaH1WIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 18:08:23 -0400
+Received: (qmail 906 invoked by uid 102); 28 Aug 2014 22:08:23 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Aug 2014 17:08:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Aug 2014 18:08:21 -0400
+Content-Disposition: inline
+In-Reply-To: <53FB66D1.709@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256127>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Aug 25, 2014 at 06:39:45PM +0200, Ren=C3=A9 Scharfe wrote:
 
->> +	if (check_refname_format(buffer, REFNAME_ALLOW_ONELEVEL))
->> +		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'tag' name: %s", buffer);
->> +	*eol = '\n';
->
-> I actually think this check is harmful.
+> Thanks, that looks good.  But while preparing the patch I noticed tha=
+t
+> the added test sometimes fails.  Helgrind pointed outet a race
+> condition.  It is not caused by the patch to turn the asserts into
+> regular ifs, however -- here's a Helgrind report for the original cod=
+e
+> with the new test:
 
-Let me take this one back; we do a moral equivalent when we create a
-tag, like this:
+Interesting. I couldn't convince Helgrind to catch such a case, but it
+makes sense. We split the delta-resolving work by dividing up the base
+objects. We then find any deltas that need that base object (which is
+read-only). If there's only one instances of the base, then we'll be th=
+e
+only thread working on those delta. But if there are two such bases,
+they're going to look at the same deltas.
 
-	strbuf_addf(sb, "refs/tags/%s", name);
-        return check_refname_format(sb->buf, 0);
+So we need some kind of mutual exclusion so that only one thread
+proceeds with resolving the delta. The "real_type" check sort-of
+functions in that way (except of course it is not actually thread safe)=
+=2E
+So one obvious option is just a coarse-grained global lock to modify or
+check real_type fields. That would probably perform badly (lots of
+useless lock contention on unrelated objects), but at least it would
+work.
 
-So validating using check_refname_format() is indeed a very good
-thing to do.
+If we accept pushing a lock into _each_ object_entry, then we would get
+a lot less lock contention (i.e., none at all in the common case of no
+duplicates). The cost is storing one lock per object, though. Not great=
+,
+but probably OK.
 
-As you have length and buffer here, I would suggest updating this
-part of your patch to print into a strbuf
+Is there some way we can make real_type itself more atomic? I.e., use i=
+t
+as the mutex with the rule that we do not "claim" the object_entry as
+ours to work on until we atomically set delta_obj->real_type. I think
+doing a compare-and-swap looking for OBJ_REF_DELTA and replacing it wit=
+h
+base->real_type would be enough there (and substitute OBJ_OFS_DELTA for
+the second conditional, of course).
 
-	strbuf_addf(&sb, "refs/tags/%.*s", (eol - buffer), buffer);
-       	if (check_refname_format(sb.buf))
-        	ret = ...
+However, I'm not sure we can portably rely on having a compare-and-swap
+primitive (or that we want to go through the hassle of conditionally
+using it).
 
-and keep the constness of the incoming data.
-
-	
+-Peff
