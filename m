@@ -1,169 +1,114 @@
-From: dev <dev@cor0.com>
-Subject: Re: problem with def of inet_ntop() in git-compat-util.h as well as
- other places
-Date: Thu, 28 Aug 2014 02:51:40 -0400 (EDT)
-Message-ID: <438501037.62058.1409208700534.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
-References: <1024776344.30870.1409166905539.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827192848.GC7561@peff.net> <805178325.32077.1409168920760.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827200612.GA10469@peff.net> <597210348.36175.1409173228026.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827222803.GZ20185@google.com>
-Reply-To: dev <dev@cor0.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 08:51:57 2014
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] merge, pull: stop advising 'commit -a' in case of conflict
+Date: Thu, 28 Aug 2014 11:46:58 +0200
+Message-ID: <1409219218-9475-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <xmqq4mwxeqr7.fsf@gitster.dls.corp.google.com>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Aug 28 11:47:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMtYo-0006G8-Sw
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 08:51:55 +0200
+	id 1XMwIZ-0006Di-Ex
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 11:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936150AbaH1Gvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 02:51:50 -0400
-Received: from atl4mhob03.myregisteredsite.com ([209.17.115.41]:35382 "EHLO
-	atl4mhob03.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934798AbaH1Gvt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Aug 2014 02:51:49 -0400
-Received: from atl4oxapp02pod2.mgt.hosting.qts.netsol.com ([10.30.77.38])
-	by atl4mhob03.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7S6petN008014;
-	Thu, 28 Aug 2014 02:51:40 -0400
-In-Reply-To: <20140827222803.GZ20185@google.com>
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v-
+	id S936290AbaH1JrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 05:47:10 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:54028 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934650AbaH1JrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 05:47:09 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s7S9l2rN006760
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 28 Aug 2014 11:47:02 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s7S9l2Fk006418;
+	Thu, 28 Aug 2014 11:47:02 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1XMwII-00030a-Hw; Thu, 28 Aug 2014 11:47:02 +0200
+X-Mailer: git-send-email 2.0.2.737.gfb43bde
+In-Reply-To: <xmqq4mwxeqr7.fsf@gitster.dls.corp.google.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 28 Aug 2014 11:47:02 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s7S9l2rN006760
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1409824022.99496@yTQoRd0cQ9aS23zGpBliTA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256076>
 
+'git commit -a' is rarely a good way to mark conflicts as resolved: the
+user anyway has to go manually through the list of conflicts to do the
+actual resolution, and it is usually better to use "git add" on each
+files after doing the resolution.
 
+On the other hand, using 'git commit -a' is potentially dangerous, as it
+makes it very easy to mistakenly commit conflict markers without
+noticing.
 
-On August 27, 2014 at 6:28 PM Jonathan Nieder <jrnieder@gmail.com>
-wrote:
-> Hi again,
->
-> dev wrote:
->
-> > So I guess I have to create a config.mak file from somewhere.
->
-> Sorry, let's take a step back.
+While we're there, synchronize the 'git pull' and 'git merge' messages:
+the first was ending with '...  and make a commit.', but not the later.
 
-Actually I think we have some real progress to report here.  After
-scanning through the various magic incantations in the Makefile and
-some trial and error I arrived at this gem :
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+>  - Hasty-and-careless new users will be incorrectly enticed to type
+>    the command given by "or use 'git commit -a'" at the end of this
+>    advice message without thinking.  Perhaps it is safer to stop the
+>    sentence at "... and make a commit." and drop that last bit while
+>    there are conflicts still in the working tree files.  We should
+>    use the current end-of-message only when all the conflicts have
+>    been resolved in the working tree.
 
-$ date
-Thu Aug 28 06:10:43 GMT 2014
+It was already on my todo-list, as a friend of mine semi-beginner with
+Git complained about the mis-advice the other day, and I had to agree.
 
-$ ls $SRC/git*
-/usr/local/src/git-2.0.4.tar.gz
-$ gzip -dc /usr/local/src/git-2.0.4.tar.gz | tar -xf -
-$ mv git-2.0.4 git-2.0.4_SunOS5.10_sparcv9.005
-$ cd git-2.0.4_SunOS5.10_sparcv9.005
+Eventually, git could detect that conflicts have been resolved, but
+then that would be a different message, as not only "use git commit
+-a" could be resurected, but "Fix them up in the work tree" should be
+dropped when it is the case.
 
-$ gmake CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS" NEEDS_LIBICONV=Yes \
-> SHELL_PATH=/usr/local/bin/bash \
-> SANE_TOOL_PATH=/usr/local/bin \
-> USE_LIBPCRE=1 LIBPCREDIR=/usr/local CURLDIR=/usr/local \
-> EXPATDIR=/usr/local NEEDS_LIBINTL_BEFORE_LIBICONV=1 \
-> NEEDS_SOCKET=1 NEEDS_RESOLV=1 USE_NSEC=1 \
-> PERL_PATH=/usr/local/bin/perl \
-> NO_PYTHON=1 DEFAULT_PAGER=/usr/xpg4/bin/more \
-> DEFAULT_EDITOR=/usr/local/bin/vim DEFAULT_HELP_FORMAT=man \
-> prefix=/usr/local
-GIT_VERSION = 2.0.4
-    * new build flags
-    CC credential-store.o
-    * new link flags
-    CC abspath.o
-    CC advice.o
-    CC alias.o
-.
-.
-.
-    GEN bin-wrappers/test-wildmatch
-    GEN git-remote-testgit
-$
+> I am not doing this myself soon, though.  Hint, hint...
 
-A full build.  Furthermore it looks like all the right bits are linked
-in and a test clone from a few open source projects works well.
+I guess I'm just taking the low hanging fruit here ;-).
 
-$ file git
-git: ELF 64-bit MSB executable, SPARC V9, total store ordering, version
-1, dynamically linked (uses shared libs), not stripped
-$ ldd git
-        libpcre.so.1 =>  /usr/local/lib/libpcre.so.1
-        libz.so.1 =>     /usr/local/lib/libz.so.1
-        libintl.so.8 =>  /usr/local/lib/libintl.so.8
-        libiconv.so.2 =>         /usr/local/lib/libiconv.so.2
-        libsocket.so.1 =>        /lib/64/libsocket.so.1
-        libnsl.so.1 =>   /lib/64/libnsl.so.1
-        libresolv.so.2 =>        /lib/64/libresolv.so.2
-        libcrypto.so.1.0.0 =>    /usr/local/ssl/lib/libcrypto.so.1.0.0
-        libpthread.so.1 =>       /lib/64/libpthread.so.1
-        libc.so.1 =>     /lib/64/libc.so.1
-        libmp.so.2 =>    /lib/64/libmp.so.2
-        libmd.so.1 =>    /lib/64/libmd.so.1
-        libscf.so.1 =>   /lib/64/libscf.so.1
-        libdl.so.1 =>    /lib/64/libdl.so.1
-        libz.so.1 (SUNW_1.1) =>  (version not found)
-        libdoor.so.1 =>  /lib/64/libdoor.so.1
-        libuutil.so.1 =>         /lib/64/libuutil.so.1
-        libgen.so.1 =>   /lib/64/libgen.so.1
-        libm.so.2 =>     /lib/64/libm.so.2
-        /platform/SUNW,T5240/lib/sparcv9/libc_psr.so.1
-        /platform/SUNW,T5240/lib/sparcv9/libmd_psr.so.1
-$
+ advice.c    | 3 +--
+ git-pull.sh | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-Ignore the misleading libz issue.  I really don't think it is a
-problem however I may dig into it. That is libz.so.1 which is needed
-by libcrypto.so.1.0.0 from OpenSSL 1.0.1i and I just don't see
-an issue given that OpenSSL 1.0.1i passes all its tests.
-
-I did run a few clone tests :
-
-$ pwd
-/export/home/dev/git_test
-$ $BUILD/git-2.0.4_SunOS5.10_sparcv9.005/git clone --verbose
-git://cmake.org/cmake.git
-Cloning into 'cmake'...
-warning: templates not found /usr/local/share/git-core/templates
-remote: Counting objects: 162733, done.
-remote: Compressing objects: 100% (41726/41726), done.
-remote: Total 162733 (delta 124662), reused 157579 (delta 119831)
-Receiving objects: 100% (162733/162733), 37.31 MiB | 1001.00 KiB/s,
-done.
-Resolving deltas: 100% (124662/124662), done.
-Checking connectivity... done.
-Checking out files: 100% (7410/7410), done.
-$
-$ cd cmake/
-$ $BUILD/git-2.0.4_SunOS5.10_sparcv9.005/git status
-On branch master
-Your branch is up-to-date with 'origin/master'.
-
-nothing to commit, working directory clean
-$ cd ..
-
-$ $BUILD/git-2.0.4_SunOS5.10_sparcv9.005/git clone --verbose
-git://git.apache.org/httpd.git
-Cloning into 'httpd'...
-warning: templates not found /usr/local/share/git-core/templates
-remote: Counting objects: 391450, done.
-remote: Compressing objects: 100% (80188/80188), done.
-remote: Total 391450 (delta 331921), reused 367848 (delta 309308)
-Receiving objects: 100% (391450/391450), 111.46 MiB | 420.00 KiB/s,
-done.
-Resolving deltas: 100% (331921/331921), done.
-Checking connectivity... done.
-Checking out files: 100% (3495/3495), done.
-
-
-So that looks pretty good thus far.
-
-I must say thank you for the guidance.  All I need to do now is figure
-out a way to run a test over SSH with a dummy repo of some sort.
-
-dev
+diff --git a/advice.c b/advice.c
+index 9b42033..3b8bf3c 100644
+--- a/advice.c
++++ b/advice.c
+@@ -86,8 +86,7 @@ int error_resolve_conflict(const char *me)
+ 		 * other commands doing a merge do.
+ 		 */
+ 		advise(_("Fix them up in the work tree, and then use 'git add/rm <file>'\n"
+-			 "as appropriate to mark resolution and make a commit, or use\n"
+-			 "'git commit -a'."));
++			 "as appropriate to mark resolution and make a commit."));
+ 	return -1;
+ }
+ 
+diff --git a/git-pull.sh b/git-pull.sh
+index 18a394f..4d4fc77 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -20,7 +20,7 @@ die_conflict () {
+     if [ $(git config --bool --get advice.resolveConflict || echo true) = "true" ]; then
+ 	die "$(gettext "Pull is not possible because you have unmerged files.
+ Please, fix them up in the work tree, and then use 'git add/rm <file>'
+-as appropriate to mark resolution, or use 'git commit -a'.")"
++as appropriate to mark resolution and make a commit.")"
+     else
+ 	die "$(gettext "Pull is not possible because you have unmerged files.")"
+     fi
+-- 
+2.0.2.737.gfb43bde
