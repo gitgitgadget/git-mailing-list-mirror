@@ -1,125 +1,98 @@
-From: dev <dev@cor0.com>
-Subject: Re: make install fails because GNU tar needed
-Date: Thu, 28 Aug 2014 11:08:56 -0400 (EDT)
-Message-ID: <502287515.26012.1409238536022.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
-References: <267282067.24350.1409235408562.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140828145056.GA26855@peff.net>
-Reply-To: dev <dev@cor0.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Aug 28 17:09:22 2014
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH v6 2/6] Add git_env_ulong() to parse environment variable
+Date: Thu, 28 Aug 2014 17:21:31 +0200
+Message-ID: <7AD881F3-DDD0-4094-90F3-C3E2F81DF664@zib.de>
+References: <1409066605-4851-1-git-send-email-prohaska@zib.de> <1409066605-4851-3-git-send-email-prohaska@zib.de> <20140826182125.GC17546@peff.net> <xmqq38cjhuje.fsf@gitster.dls.corp.google.com> <20140826203158.GA30651@peff.net> <xmqq38cihq7w.fsf@gitster.dls.corp.google.com> <20140827044621.GA32141@peff.net> <xmqqtx4yf0r2.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	pclouds@gmail.com, john@keeping.me.uk, schacon@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 17:22:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN1KC-0000nv-FU
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 17:09:20 +0200
+	id 1XN1Wi-0003FW-ER
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 17:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750961AbaH1PJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 11:09:16 -0400
-Received: from atl4mhob19.myregisteredsite.com ([209.17.115.112]:46413 "EHLO
-	atl4mhob19.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750794AbaH1PJP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Aug 2014 11:09:15 -0400
-Received: from atl4oxapp02pod2.mgt.hosting.qts.netsol.com ([10.30.77.38])
-	by atl4mhob19.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7SF8u5M021442;
-	Thu, 28 Aug 2014 11:08:56 -0400
-In-Reply-To: <20140828145056.GA26855@peff.net>
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v6.20.7-Rev18
+	id S1751346AbaH1PWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 11:22:12 -0400
+Received: from mailer.zib.de ([130.73.108.11]:61358 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750764AbaH1PWK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Aug 2014 11:22:10 -0400
+Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7SFLdHK012007;
+	Thu, 28 Aug 2014 17:21:39 +0200 (CEST)
+Received: from [192.168.1.200] (ip5f5bd082.dynamic.kabel-deutschland.de [95.91.208.130] (may be forged))
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7SFLaen011993
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 28 Aug 2014 17:21:37 +0200 (CEST)
+In-Reply-To: <xmqqtx4yf0r2.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
+X-Miltered: at mailer.zib.de with ID 53FF4903.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 53FF4903.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 53FF4903.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256096>
 
 
+On Aug 27, 2014, at 4:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-On August 28, 2014 at 10:50 AM Jeff King <peff@peff.net> wrote:
-> On Thu, Aug 28, 2014 at 10:16:48AM -0400, dev wrote:
->
-> > # gmake CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS" NEEDS_LIBICONV=Yes \
-> > > SHELL_PATH=/usr/local/bin/bash \
-> > > SANE_TOOL_PATH=/usr/local/bin \
-> > > USE_LIBPCRE=1 LIBPCREDIR=/usr/local CURLDIR=/usr/local \
-> > > EXPATDIR=/usr/local NEEDS_LIBINTL_BEFORE_LIBICONV=1 \
-> > > NEEDS_SOCKET=1 NEEDS_RESOLV=1 USE_NSEC=1 \
->
-> As an aside, you may be able to drop some of these defines. For
-> example,
-> we set NEEDS_SOCKET automatically on Solaris. See the "SunOS" section
-> of
-> config.mak.uname for the complete set of defaults.
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Tue, Aug 26, 2014 at 02:54:11PM -0700, Junio C Hamano wrote:
+>> 
+>>> A worse position is to have git_env_bool() that says "empty is
+>>> false" and add a new git_env_ulong() that says "empty is unset".
+>>> 
+>>> We should pick one or the other and use it for both.
+>> 
+>> Yeah, I agree they should probably behave the same.
+>> 
+>>>> The middle ground would be to die(). That does not seem super-friendly, but
+>>>> then we would also die with GIT_SMART_HTTP=foobar, so perhaps it is not
+>>>> unreasonable to just consider it a syntax error.
+>>> 
+>>> Hmm, I am not sure if dying is better.  Unless we decide to make
+>>> empty string no longer false everywhere and warn now and then later
+>>> die as part of a 3.0 transition plan or something, that is.
+>> 
+>> I think it is better in the sense that while it may be unexpected, it
+>> does not unexpectedly do something that the user cannot easily undo.
+>> 
+>> I really do not think this topic is worth the effort of a long-term
+>> deprecation scheme (which I agree _is_ required for a change to the
+>> config behavior). Let's just leave it as-is. We've seen zero real-world
+>> complaints, only my own surprise after reading the code (and Steffen's
+>> patch should be tweaked to match).
+> 
+> OK, then let's do that at least for now and move on.
 
-I figured as much but for the moment I am flailing along towards a nice
-working build first and then pray to the gods of complication for some
-kindness and simplification.  :-)
+Ok.  I saw that you tweaked my patch on pu.  Maybe remove the outdated
+comment above the function completely:
 
-Thus far the build process seems to work fine. I have no idea if I
-can use SSH protocol as I would need to set up a dummy to test it.
-Everything else seems to work. I think. :-\
+diff --git a/config.c b/config.c
+index 87db755..010bcd0 100644
+--- a/config.c
++++ b/config.c
+@@ -1122,9 +1122,6 @@ int git_env_bool(const char *k, int def)
+        return v ? git_config_bool(k, v) : def;
+ }
 
-> > Is there some magic somewhere to use ordinary POSIX tar ?
->
-> gmake TAR=tar ?
+-/*
+- * Use default if environment variable is unset or empty string.
+- */
+ unsigned long git_env_ulong(const char *k, unsigned long val)
+ {
+        const char *v = getenv(k);
 
-ha .. yeah I guess.
-
-Actually I found a file called GIT-BUILD-OPTIONS :
-
-# cat GIT-BUILD-OPTIONS
-SHELL_PATH='/usr/local/bin/bash'
-PERL_PATH='/usr/local/bin/perl'
-DIFF='diff'
-PYTHON_PATH='/usr/bin/python'
-TAR='tar'
-NO_CURL=''
-USE_LIBPCRE='1'
-NO_PERL=''
-NO_PYTHON='1'
-NO_UNIX_SOCKETS=''
-NO_GETTEXT=''
-GETTEXT_POISON=''
-
-
-Funny looking options for NO_foo where I would think that a null
-string indicates that in fact I have foo?  Because I do have curl
-and perl and most likely UNIX_SOCKETS.  Regardless, I simply edited
-that file and three others to stop the search for gtar.
-
-> The default of gtar for Solaris dates back to 2005. There may have
-> been
-> a reason then that is no longer valid now, or there may be something
-> besides "make install" which uses a more advanced feature.
-
-Yes, I seem to recall that long long ago there were problems with old
-tar on Solaris 2.5.1 back in the 90's and then it carried forwards up
-to Solaris 7 or 8.  The ultimate POSIX tar as well as tar that can
-archive
-or extract anything from anything is Joerg Schilling's star.
-
-   http://sourceforge.net/projects/s-tar/
-
-I use that nearly everywhere that I must ensure all metadata and data
-gets taken care of correctly and cross platform.  However, hell will
-freeze over before we ever see it included in a distro or UNIX anywhere
-so for now tar will suffice.
-
-> > /bin/sh: gtar: /bin/shnot found
-> > : gtar: not found
-> > gmake[1]: *** [install] Error 1
-> > gmake: *** [install] Error 2
-> >
-> > [...]
-> >
-> > Also, what is shnot ?
->
-> Two messages stepping on each other's toes?
-
-Yeah .. I saw that after I sent the email.
-
-dev
+	Steffen
