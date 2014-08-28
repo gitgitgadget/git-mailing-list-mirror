@@ -1,8 +1,8 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 3/6] Make sure fsck_commit_buffer() does not run out of the
- buffer
-Date: Thu, 28 Aug 2014 16:46:49 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1408281646450.990@s15462909.onlinehome-server.info>
+Subject: [PATCH 1/6] Refactor type_from_string() to avoid die()ing in case
+ of errors
+Date: Thu, 28 Aug 2014 16:46:36 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1408281646350.990@s15462909.onlinehome-server.info>
 References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
@@ -14,87 +14,84 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN0yh-0007Gp-0N
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 16:47:07 +0200
+	id 1XN0yg-0007Gp-F5
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 16:47:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752054AbaH1Oqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 10:46:53 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57550 "EHLO mout.gmx.net"
+	id S1752022AbaH1Oqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 10:46:51 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50394 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751502AbaH1Oqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2014 10:46:52 -0400
+	id S1751502AbaH1Oqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 10:46:50 -0400
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LiWzQ-1WkfPp0nS0-00cjwS;
- Thu, 28 Aug 2014 16:46:49 +0200
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MI5rO-1XJBDO3JaY-003ykA;
+ Thu, 28 Aug 2014 16:46:36 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
 In-Reply-To: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:Fl4ybzxrOsp7qU5sbm5rCt7kn0BXuOL2md64bN5ODaaILWYu0c7
- 2J/W02OWumKrLm0df/ihgssjTeUQ7lePFU+PpB58Ejwi5RZ6YBIVaIG8XmX3KuAdl2/3pYN
- UDCKV7RsPaktHl+CnycEIleCytE8w1SD14sCNFzCdzWQt5ZxSZAvbK7g9v6CNRQMSJ6a9r7
- Y7zLb9eDFYT81qfS9stEA==
+X-Provags-ID: V03:K0:7q6L7eroRjXgFGucle3xy/1ik0Zq2vXiG/W3hY9f7OHncQIKSCU
+ Tj5wMD3pVgN/ED5o2EmOrzjfDjNJWM8DqO2ku/UcPE142OmJBdH7J/wI3gtb04ndi/ibPzp
+ OWE9JubN4vQz5Tkn56ZJtx5Ed15CqEQ4TQUDbleqwwGIs2mE/3IMq0L9nIC+cpiIXaWjSKB
+ BShY5p+9rdsp2UEa72HRQ==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256086>
 
-So far, we assumed that the buffer is NUL terminated, but this is not
-a safe assumption, now that we opened the fsck_object() API to pass a
-buffer directly.
-
-So let's make sure that there is at least an empty line in the buffer.
-That way, our checks would fail if the empty line was encountered
-prematurely, and consequently we can get away with the current string
-comparisons even with non-NUL-terminated buffers are passed to
-fsck_object().
+In the next commits, we will enhance the fsck_tag() function to check
+tag objects more thoroughly. To this end, we need a function to verify
+that a given string is a valid object type, but that does not die() in
+the negative case.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ object.c | 13 ++++++++++++-
+ object.h |  1 +
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/fsck.c b/fsck.c
-index dd77628..db6aaa4 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -237,6 +237,26 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 	return retval;
+diff --git a/object.c b/object.c
+index a16b9f9..5eee592 100644
+--- a/object.c
++++ b/object.c
+@@ -33,13 +33,24 @@ const char *typename(unsigned int type)
+ 	return object_type_strings[type];
  }
  
-+static int must_have_empty_line(const void *data, unsigned long size,
-+	struct object *obj, fsck_error error_func)
-+{
-+	const char *buffer = (const char *)data;
-+	int i;
+-int type_from_string(const char *str)
++int type_from_string_gently(const char *str)
+ {
+ 	int i;
+ 
+ 	for (i = 1; i < ARRAY_SIZE(object_type_strings); i++)
+ 		if (!strcmp(str, object_type_strings[i]))
+ 			return i;
 +
-+	for (i = 0; i < size; i++) {
-+		switch (buffer[i]) {
-+		case '\0':
-+			return error_func(obj, FSCK_ERROR,
-+				"invalid message: NUL at offset %d", i);
-+		case '\n':
-+			if (i + 1 < size && buffer[i + 1] == '\n')
-+				return 0;
-+		}
-+	}
-+
-+	return error_func(obj, FSCK_ERROR, "invalid buffer: missing empty line");
++	return -1;
 +}
 +
- static int fsck_ident(const char **ident, struct object *obj, fsck_error error_func)
- {
- 	char *end;
-@@ -284,6 +304,9 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	unsigned parent_count, parent_line_count = 0;
- 	int err;
- 
-+	if (must_have_empty_line(buffer, size, &commit->object, error_func))
-+		return -1;
++int type_from_string(const char *str)
++{
++	int i = type_from_string_gently(str);
 +
- 	if (!skip_prefix(buffer, "tree ", &buffer))
- 		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'tree' line");
- 	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n')
++	if (i >= 0)
++		return i;
++
+ 	die("invalid object type \"%s\"", str);
+ }
+ 
+diff --git a/object.h b/object.h
+index 5e8d8ee..5c5d22f 100644
+--- a/object.h
++++ b/object.h
+@@ -54,6 +54,7 @@ struct object {
+ 
+ extern const char *typename(unsigned int type);
+ extern int type_from_string(const char *str);
++extern int type_from_string_gently(const char *str);
+ 
+ /*
+  * Return the current number of buckets in the object hashmap.
 -- 
 2.0.0.rc3.9669.g840d1f9
