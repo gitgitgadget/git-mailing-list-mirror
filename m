@@ -1,269 +1,180 @@
-From: dev <dev@cor0.com>
-Subject: Re: problem with def of inet_ntop() in git-compat-util.h as well as
- other places
-Date: Thu, 28 Aug 2014 00:54:30 -0400 (EDT)
-Message-ID: <1506847499.57192.1409201670955.JavaMail.vpopmail@webmail2.networksolutionsemail.com>
-References: <1024776344.30870.1409166905539.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827192848.GC7561@peff.net> <805178325.32077.1409168920760.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827200612.GA10469@peff.net> <597210348.36175.1409173228026.JavaMail.vpopmail@webmail2.networksolutionsemail.com> <20140827222803.GZ20185@google.com>
-Reply-To: dev <dev@cor0.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Using Gerrit to review Git patches (was: Re: Transaction patch
+ series overview)
+Date: Wed, 27 Aug 2014 22:07:28 -0700
+Message-ID: <CAJo=hJv7+iMHC7rO1w2Hmnq4Ho3W0hwh77Z_gRvY4hzE=VnxGQ@mail.gmail.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+ <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+ <20140820231723.GF20185@google.com> <20140826000354.GW20185@google.com> <53FE5359.4030403@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 06:54:47 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 28 07:07:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMrjS-0006Zh-6d
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 06:54:46 +0200
+	id 1XMrwC-0007be-0d
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 07:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932421AbaH1Eyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 00:54:41 -0400
-Received: from atl4mhob03.myregisteredsite.com ([209.17.115.41]:49236 "EHLO
-	atl4mhob03.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751463AbaH1Eyk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Aug 2014 00:54:40 -0400
-Received: from atl4oxapp02pod2.mgt.hosting.qts.netsol.com ([10.30.77.38])
-	by atl4mhob03.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s7S4sU1M018826;
-	Thu, 28 Aug 2014 00:54:30 -0400
-In-Reply-To: <20140827222803.GZ20185@google.com>
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v-
+	id S1756644AbaH1FHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 01:07:51 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:35102 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755116AbaH1FHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 01:07:50 -0400
+Received: by mail-ig0-f171.google.com with SMTP id l13so7459631iga.16
+        for <git@vger.kernel.org>; Wed, 27 Aug 2014 22:07:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=dxyJv431PiOfXHvVz4eLZ8jvbPW7r1zbel5PoiN6Zqg=;
+        b=AEPjV0fcVkUjOm95dFgQMstjhDYtYX2Ny2fWjmCoL167wOti2yQkbYe/Cqh4k/9KyW
+         SgN4VUQHpL9rtUK7VgswdfO8dhkBMjmcQyQKfriLWfMcSjGUWB+3deCjabG1yL7600aD
+         9Q7EU6qztC6jikZewXVabqItcmyKGyyDYHrKI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=dxyJv431PiOfXHvVz4eLZ8jvbPW7r1zbel5PoiN6Zqg=;
+        b=AdfnFXVrbT6/LGHk4fitE8oqMfNO3SpVAUTU6TO2TAMWCbGTDg9lCy5L5NunzmBWYq
+         UoJ/hWSYobLeL1oqUA2ECbVnLXb2MP6uQ4vIhQ/KDR4TWACaE3G3Fyg6kZrdVG/Q+H/5
+         j8vzHy3RUbk1fHStOX8Dkdbq+pJkQlLODdAUMLTzlsMlPDlPsdE2sUm8f33sjBljbnvn
+         uDm1ZB1l35KmVZH2BXrmiNifrxu1zVUPv5k0W0Z3InxkInZomAXzRGjBYGHsZ4iJvMVk
+         qONxi9eycA7bXn4igjtaTt6tyNegjyBWiIUz20hBMVv1qoNcCX4UFCoVfI2rcPFocY7k
+         KMvw==
+X-Gm-Message-State: ALoCoQkzCXEYav13L/fsngCcdLqaBWoTTjc5jjR4bv+HiAyi+LTxVBd0DohobDxk6JKMfOChIRFT
+X-Received: by 10.50.103.106 with SMTP id fv10mr742631igb.40.1409202468952;
+ Wed, 27 Aug 2014 22:07:48 -0700 (PDT)
+Received: by 10.64.245.164 with HTTP; Wed, 27 Aug 2014 22:07:28 -0700 (PDT)
+In-Reply-To: <53FE5359.4030403@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256073>
 
-
-
-On August 27, 2014 at 6:28 PM Jonathan Nieder <jrnieder@gmail.com>
-wrote:
-> Hi again,
+On Wed, Aug 27, 2014 at 2:53 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 08/26/2014 02:03 AM, Jonathan Nieder wrote:
+>> Jonathan Nieder wrote:
+>> [...]
+>>> I've having trouble keeping track of how patches change, which patches
+>>> have been reviewed and which haven't, unaddressed comments, and so on,
+>>> so as an experiment I've pushed this part of the series to the Gerrit
+>>> server at
+>>>
+>>>  https://code-review.googlesource.com/#/q/topic:ref-transaction-1
+>>
+>> Outcome of the experiment: patches gained some minor changes and then
+>> [...]
+>>
+>> I found the web UI helpful in seeing how each patch evolved since I
+>> last looked at it.  Interdiff relative to the version in pu is below.
+>> I'm still hoping for a tweak in response to a minor comment and then I
+>> can put up a copy of the updated series to pull.
 >
-> dev wrote:
+> Thanks for organizing this "experiment". I was one of the guinea pigs
+> :-) I have wanted to review more of Ronnie's patches (actually, all of
+> them!) but have been overwhelmed by the number of iterations and the
+> number of patch series flying around in parallel. I was also interested
+> to try out Gerrit, which I haven't used before. So I took up Jonathan's
+> invitation and reviewed the first patch series in Gerrit. Here are some
+> of my first impressions.
+
+Thank you for making this writeup. It contains many valuable nuggets
+that we should follow up on.
+
+> * Overall, I found it easier to review commits in Gerrit than on the
+> mailing list, especially a long patch series like this one that has seen
+> so much flux. It was easier to see the comments from all reviewers that
+> apply to a patch, which is difficult on the mailing list when comments
+> are scattered over the many iterations of the patch series. It was
+> easier to incrementally increase the context around a patch. It was easy
+> to use the copy-paste commands provided in the "download" menu to fetch
+> the commit that I was reviewing into my local Git repository, and from
+> there to build it or investigate it using other tools.
 >
-> > So I guess I have to create a config.mak file from somewhere.
->
-> Sorry, let's take a step back.
->
-> What exact commands do you use to build, starting from a pristine
-> extracted tarball?  What output do you get back?
+> * The Gerrit interface is very busy. It was somewhat overwhelming to me
+> as a beginner.
 
-$ ls $SRC/git*
-/usr/local/src/git-2.0.4.tar.gz
+Very astute observation. I have been using it for 5+ years so its hard
+for me to see things like this.
 
-$ gzip -dc /usr/local/src/git-2.0.4.tar.gz | tar -xf -
-$ mv git-2.0.4 git-2.0.4_SunOS5.10_sparcv9.002
-$ cd git-2.0.4_SunOS5.10_sparcv9.002
+Unfortunately many parts of the UI have grown over the years.
+Contributors come along and want to add X, months later another adds
+field Y. Suddenly we have the entire alphabet and we don't know how it
+got that way. Sounds like git reset --{hard|soft|mixed|wtf}. :)
 
-$ gmake CFLAGS="$CFLAGS" LDFLAGS="$LD_OPTIONS"
-    * new build flags
-    CC credential-store.o
-    * new link flags
-    CC abspath.o
-    CC advice.o
-    CC alias.o
-    CC alloc.o
-    CC archive.o
-    CC archive-tar.o
-    CC archive-zip.o
-    CC argv-array.o
-    * new prefix flags
-    CC attr.o
-    CC base85.o
-    CC bisect.o
-    CC blob.o
-    CC branch.o
-    CC bulk-checkin.o
-    CC bundle.o
-    CC cache-tree.o
-    CC color.o
-    CC column.o
-    CC combine-diff.o
-    CC commit.o
-    CC compat/obstack.o
-. . .
-    AR xdiff/lib.a
-    LINK git-credential-store
-cc: Warning: Option -64 passed to ld, if ld is invoked, ignored
-otherwise
-cc: Warning: multiple use of -Q option, previous one discarded.
-ld: warning: option -Q appears more than once, first setting taken
-Undefined                       first referenced
- symbol                             in file
-libiconv_close                      libgit.a(utf8.o)  (symbol belongs to
-implicit dependency /usr/local/lib/libiconv.so.2)
-libiconv_open                       libgit.a(utf8.o)  (symbol belongs to
-implicit dependency /usr/local/lib/libiconv.so.2)
-libiconv                            libgit.a(utf8.o)  (symbol belongs to
-implicit dependency /usr/local/lib/libiconv.so.2)
-ld: fatal: symbol referencing errors. No output written to
-git-credential-store
-gmake: *** [git-credential-store] Error 2
-$
+Its not an excuse. The UI should be less overwhelming. Its going to be
+a challenge.
 
-> Sounds like NEEDS_LIBICONV should be set on Solaris.  You can test
-> this by passing NEEDS_LIBICONV=YesPlease on the gmake command line and
-> seeing what happens.
+> On the other hand, the help menus ("?" key) are good and
+> the keyboard shortcuts are convenient. I didn't have to read much
+> documentation to get started doing review in Gerrit, at least at a basic
+> level.
 
-That looks to be the ticket to a binary.
+Yay!
 
-Entire build completes with piles of warnings but I get a git binary :
+> * During two of my big Gerrit sessions the website was very responsive
+> and pleasant to use. During the third, it was terribly slow, like 5 - 15
+> seconds per page update. If I had only experienced the slow behavior, I
+> would have rejected Gerrit immediately. I hope that the slow behavior
+> was a rare anomaly.
 
-$ file git
-git: ELF 64-bit MSB executable, SPARC V9, total store ordering, version
-1, dynamically linked (uses shared libs), not stripped
+This third session was a rare anomaly unique to
+code-review.googlesource.com. It isn't typical for Gerrit Code Review.
 
+We have a server set in Europe that was mostly answering you in the
+first two sessions. During the third session this server set was
+temporarily offline. Requests degraded to a server set in the US,
+which pushed us into a worst-case scenario due to a misconfiguration
+of our load balancers. The lag you experienced was mostly due to this
+misconfiguration, not EU-US networking.
 
-$ ldd git
-        libz.so.1 =>     /usr/local/lib/libz.so.1
-        libiconv.so.2 =>         /usr/local/lib/libiconv.so.2
-        libintl.so.8 =>  /usr/local/lib/libintl.so.8
-        libsocket.so.1 =>        /lib/64/libsocket.so.1
-        libnsl.so.1 =>   /lib/64/libnsl.so.1
-        libcrypto.so.1.0.0 =>    /usr/local/ssl/lib/libcrypto.so.1.0.0
-        libpthread.so.1 =>       /lib/64/libpthread.so.1
-        libc.so.1 =>     /lib/64/libc.so.1
-        libmp.so.2 =>    /lib/64/libmp.so.2
-        libmd.so.1 =>    /lib/64/libmd.so.1
-        libscf.so.1 =>   /lib/64/libscf.so.1
-        libdl.so.1 =>    /lib/64/libdl.so.1
-        libz.so.1 (SUNW_1.1) =>  (version not found)
-        libdoor.so.1 =>  /lib/64/libdoor.so.1
-        libuutil.so.1 =>         /lib/64/libuutil.so.1
-        libgen.so.1 =>   /lib/64/libgen.so.1
-        libm.so.2 =>     /lib/64/libm.so.2
-        /platform/SUNW,T5240/lib/sparcv9/libc_psr.so.1
-        /platform/SUNW,T5240/lib/sparcv9/libmd_psr.so.1
+Earlier today I brought back up the European server set, so latency
+should be reduced again.
 
+Unfortunately I haven't figured out how to fix the load balancer
+misconfiguration. :(
 
-Great, a problem with some libz.so.1 that we don't even need since we
-have libz in /usr/local/lib just fine.  I have to look into that.
+> * Gerrit sends out an endless flood of emails that mostly seem pretty
+> useless to me. I wish it weren't so chatty and that its emails were
+> better organized.
 
-Otherwise :
+Absolutely agree.
 
-$ ./git --version
-git version 2.0.4
+> * At one point a back-and-forth in a line comment grew into a more
+> general issue that was more appropriate for the mailing list. The
+> transition from Gerrit to mailing list was a bit awkward.
 
+We find this a bit awkward in JGit too. Our solution has been to
+(mostly) keep discussion within the code review context. This has to
+some extent forced more discussion to be around specific code, and
+avoid wandering off into the philosophical weeds. Without concrete
+code to talk about, there is nothing to say. :)
 
-$ elfdump -devl git
+A nice feature of Gerrit is another contributor can add their own
+iterations to the same commit in the series, offering up alternative
+proposals. Like on the mailing list, this allows someone to just say
+"what if you did it this way...", and give everyone a concrete chunk
+of code to consider and discuss. Again this avoids wandering off into
+the weeds.
 
-ELF Header
-  ei_magic:   { 0x7f, E, L, F }
-  ei_class:   ELFCLASS64          ei_data:       ELFDATA2MSB
-  ei_osabi:   ELFOSABI_SOLARIS    ei_abiversion: EAV_SUNW_CURRENT
-  e_machine:  EM_SPARCV9          e_version:     EV_CURRENT
-  e_type:     ET_EXEC
-  e_flags:    [ EF_SPARCV9_TSO EF_SPARC_SUN_US1 EF_SPARC_SUN_US3 ]
-  e_entry:           0x10002d960  e_ehsize:     64  e_shstrndx:  31
-  e_shoff:              0xe327d0  e_shentsize:  64  e_shnum:     32
-  e_phoff:                  0x40  e_phentsize:  56  e_phnum:     5
+> So, overall I found it pleasant and efficient to review patches in
+> Gerrit. I would welcome more such "experiments". It would have been even
+> better if Gerrit would generate more useful notification emails.
 
-Version Needed Section:  .SUNW_version
-     index  file                        version
-       [2]  libsocket.so.1              SUNW_1.4
-       [3]                              SUNW_1.1             [ INFO ]
-       [4]                              SUNW_0.7             [ INFO ]
-       [5]  libnsl.so.1                 SUNW_0.7
-       [6]                              SUNWprivate_1.1
-       [7]  libpthread.so.1             SUNW_1.2
-       [8]                              SUNW_0.9             [ INFO ]
-       [9]  libc.so.1                   SUNW_1.22
-      [10]                              SUNW_1.19            [ INFO ]
-      [11]                              SUNW_1.18            [ INFO ]
-      [12]                              SUNW_1.1             [ INFO ]
-      [13]                              SUNW_0.9             [ INFO ]
-      [14]                              SUNW_0.7             [ INFO ]
-      [15]                              SUNWprivate_1.1
+One idea has been to just stop sending automatic emails, and instead
+require the author to send a message saying "please take another look
+at my series". Just disable the #@!(@(! automatic email delivery that
+stems out of `git push ...` creating or updating pending reviews.
 
-Dynamic Section:  .dynamic
-     index  tag                value
-       [0]  NEEDED            0x11ecb             libz.so.1
-       [1]  NEEDED            0x11ed5             libiconv.so.2
-       [2]  NEEDED            0x11ee3             libintl.so.8
-       [3]  NEEDED            0x11e3b             libsocket.so.1
-       [4]  NEEDED            0x11e65             libnsl.so.1
-       [5]  NEEDED            0x11ef0             libcrypto.so.1.0.0
-       [6]  NEEDED            0x11e81             libpthread.so.1
-       [7]  NEEDED            0x11ea3             libc.so.1
-       [8]  INIT              0x1003e2b88
-       [9]  FINI              0x1003e2b98
-      [10]  RUNPATH           0x11f03
-            /usr/local/lib/$ISALIST:/usr/local/ssl/lib/$ISALIST:/usr/local/lib:/usr/local/ssl/lib:/usr/local/lib/SALIST:/usr/local/ssl/lib/SALIST:/usr/local/lib:/usr/local/ssl/lib
-      [11]  RPATH             0x11f03
-            /usr/local/lib/$ISALIST:/usr/local/ssl/lib/$ISALIST:/usr/local/lib:/usr/local/ssl/lib:/usr/local/lib/SALIST:/usr/local/ssl/lib/SALIST:/usr/local/lib:/usr/local/ssl/lib
-      [12]  HASH              0x100000178
-      [13]  STRTAB            0x100018a98
-      [14]  STRSZ             0x121ab
-      [15]  SYMTAB            0x100006408
-      [16]  SYMENT            0x18
-      [17]  CHECKSUM          0xaca0
-      [18]  VERNEED           0x10002ac48
-      [19]  VERNEEDNUM        0x4
-      [20]  PLTRELSZ          0x12f0
-      [21]  PLTREL            0x7
-      [22]  JMPREL            0x10002c670
-      [23]  RELA              0x10002c5f8
-      [24]  RELASZ            0x1368
-      [25]  RELAENT           0x18
-      [26]  DEBUG             0
-      [27]  FLAGS             0                   0
-      [28]  FLAGS_1           0                   0
-      [29]  SUNW_STRPAD       0x200
-      [30]  SUNW_LDMACH       0x2b                EM_SPARCV9
-      [31]  PLTGOT            0x10053d900
-   [32-42]  NULL              0
-$
-
-Funny I don't see libcurl anywhere. Thought that was needed? Also the
-RUNPATH
-and RPATH look duplicated and slightly borked but the initial data there
-is correct enough to locate all the libs except for some strange libz
-issue.
-
-What I need to do now is run some tests. Really I should keep going
-to get linkage with libssh2 and libcurl as well as correct perl in
-the /usr/local/bin directory. I'll have to keep tweaking with the
-various magic on the "gmake" command I guess.
-
-> But it seems odd --- was iconv once part of libc on Solaris and then
-> moved out or something?
-
-There are plenty of dependencies and therefore I have GNU libiconv thus
-:
-
-$ which iconv
-/usr/local/bin/iconv
-
-$ /usr/local/bin/iconv --version
-iconv (GNU libiconv 1.14)
-Copyright (C) 2000-2011 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later
-<http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-Written by Bruno Haible.
-
-
-$ ldd /usr/local/bin/iconv
-        libintl.so.8 =>  /usr/local/lib/libintl.so.8
-        libiconv.so.2 =>         /usr/local/lib/libiconv.so.2
-        libc.so.1 =>     /lib/64/libc.so.1
-        libm.so.2 =>     /lib/64/libm.so.2
-        /platform/SUNW,T5240/lib/sparcv9/libc_psr.so.1
-
-
-> There have been lots of people building git
-> on Solaris over the years (and writing patches to fix other build
-> problems) without needing to set that flag.
-
-Well I see what I see and am extracting from a tarball and reporting
-precisely what is happening. Traditionally git has been a nightmare
-to build on anything but linux. That is just my experience.  Let's
-not even talk about OpenBSD.  A real nightmare.
-
-dev
+Unfortunately there are factions within the Gerrit contributor base
+that find value in those automated emails. :(
