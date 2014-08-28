@@ -1,155 +1,59 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH v6 5/6] Change copy_fd() to not close input fd
-Date: Thu, 28 Aug 2014 17:37:41 +0200
-Message-ID: <3947B7A7-98D0-4313-B7D7-D5EB35427E56@zib.de>
-References: <1409066605-4851-1-git-send-email-prohaska@zib.de> <1409066605-4851-6-git-send-email-prohaska@zib.de> <20140826182905.GD17546@peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
-	Scott Chacon <schacon@gmail.com>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 17:38:08 2014
+From: =?big5?B?p/Wvp7TF?= <r01942008@ntu.edu.tw>
+Subject: Git Bug Resolve: bisect run failed to locate the right commit, not
+ git bug
+Date: Thu, 28 Aug 2014 15:43:12 +0000
+Message-ID: <C40A01C66E914D4EB90E1B40564B0E56CBFE311B@MBOX2-4.ntu.internal>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 28 17:43:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN1m4-0008Qx-FB
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 17:38:08 +0200
+	id 1XN1rO-0004kA-RW
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 17:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279AbaH1PiD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 11:38:03 -0400
-Received: from mailer.zib.de ([130.73.108.11]:64801 "EHLO mailer.zib.de"
+	id S1751893AbaH1PnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 11:43:18 -0400
+Received: from mail.ntu.edu.tw ([140.112.9.9]:65418 "EHLO mail.ntu.edu.tw"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750812AbaH1PiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2014 11:38:01 -0400
-Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7SFbmcI017998;
-	Thu, 28 Aug 2014 17:37:48 +0200 (CEST)
-Received: from [192.168.1.200] (ip5f5bd082.dynamic.kabel-deutschland.de [95.91.208.130] (may be forged))
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7SFbkeN017986
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 28 Aug 2014 17:37:47 +0200 (CEST)
-In-Reply-To: <20140826182905.GD17546@peff.net>
-X-Mailer: Apple Mail (2.1878.6)
-X-Miltered: at mailer.zib.de with ID 53FF4CCC.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 53FF4CCC.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 53FF4CCC.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
-X-j-chkmail-Status: Ham
+	id S1750930AbaH1PnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 11:43:16 -0400
+Received: from MBOX2-4.ntu.internal ([fe80::5d32:d7a9:9a20:f15]) by
+ Exchcas05.ntu.internal ([fe80::b9f2:172d:db56:4084%15]) with mapi id
+ 14.03.0123.003; Thu, 28 Aug 2014 23:43:13 +0800
+Thread-Topic: Git Bug Resolve: bisect run failed to locate the right commit,
+ not git bug
+Thread-Index: Ac/C1PRqDnQr6Kf9Tz6a6MDZBhqRtg==
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [223.133.125.143]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256099>
 
-
-On Aug 26, 2014, at 8:29 PM, Jeff King <peff@peff.net> wrote:
-
-> On Tue, Aug 26, 2014 at 05:23:24PM +0200, Steffen Prohaska wrote:
-> 
->> The caller opened the fd, so it should be responsible for closing it.
->> 
->> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
->> ---
->> copy.c     | 5 +----
->> lockfile.c | 3 +++
->> 2 files changed, 4 insertions(+), 4 deletions(-)
->> 
->> diff --git a/copy.c b/copy.c
->> index a7f58fd..d0a1d82 100644
->> --- a/copy.c
->> +++ b/copy.c
->> @@ -10,7 +10,6 @@ int copy_fd(int ifd, int ofd)
->> 			break;
->> 		if (len < 0) {
->> 			int read_error = errno;
->> -			close(ifd);
->> 			return error("copy-fd: read returned %s",
->> 				     strerror(read_error));
->> 		}
-> 
-> This saved errno is not necessary anymore (the problem was that close()
-> clobbered the error in the original code). It can go away, and we can
-> even drop the curly braces.
-> 
->> @@ -21,17 +20,14 @@ int copy_fd(int ifd, int ofd)
->> 				len -= written;
->> 			}
->> 			else if (!written) {
->> -				close(ifd);
->> 				return error("copy-fd: write returned 0");
->> 			} else {
->> 				int write_error = errno;
->> -				close(ifd);
->> 				return error("copy-fd: write returned %s",
->> 					     strerror(write_error));
->> 			}
->> 		}
-> 
-> Ditto here. Actually, isn't this whole write just a reimplementation of
-> write_in_full? The latter treats a return of 0 as ENOSPC rather than
-> using a custom message, but I think that is sane.
-> 
-> All together:
-
-Makes all sense, and seems sane to me, too.
-
-Junio, I saw that you have the changes on pu with 'SQUASH???...'.  Will you
-squash it, or shall I send another complete update of the patch series?
-
-	Steffen
-
-
-
-> ---
-> copy.c | 28 +++++-----------------------
-> 1 file changed, 5 insertions(+), 23 deletions(-)
-> 
-> diff --git a/copy.c b/copy.c
-> index a7f58fd..53a9ece 100644
-> --- a/copy.c
-> +++ b/copy.c
-> @@ -4,34 +4,16 @@ int copy_fd(int ifd, int ofd)
-> {
-> 	while (1) {
-> 		char buffer[8192];
-> -		char *buf = buffer;
-> 		ssize_t len = xread(ifd, buffer, sizeof(buffer));
-> 		if (!len)
-> 			break;
-> -		if (len < 0) {
-> -			int read_error = errno;
-> -			close(ifd);
-> +		if (len < 0)
-> 			return error("copy-fd: read returned %s",
-> -				     strerror(read_error));
-> -		}
-> -		while (len) {
-> -			int written = xwrite(ofd, buf, len);
-> -			if (written > 0) {
-> -				buf += written;
-> -				len -= written;
-> -			}
-> -			else if (!written) {
-> -				close(ifd);
-> -				return error("copy-fd: write returned 0");
-> -			} else {
-> -				int write_error = errno;
-> -				close(ifd);
-> -				return error("copy-fd: write returned %s",
-> -					     strerror(write_error));
-> -			}
-> -		}
-> +				     strerror(errno));
-> +		if (write_in_full(ofd, buffer, len) < 0)
-> +			return error("copy-fd: write returned %s",
-> +				     strerror(errno));
-> 	}
-> -	close(ifd);
-> 	return 0;
-> }
-> 
+RGVhciBnaXQgZGV2ZWxvcGVyOg0KDQpPbiBBdWd1c3QgMjcsIEkgcmVwb3J0IGEgYnVnIG9uIGdp
+dCBiaXNlY3Q6IA0KImJpc2VjdCBydW4gZmFpbGVkIHRvIGxvY2F0ZSB0aGUgcmlnaHQgY29tbWl0
+Ig0KDQpUb2RheSwgbXkgZnJpZW5kIHRvbGQgbWUgdGhhdCB0aGUgcHJvYmxlbSBtYXkgYmUgY2F1
+c2VkIGJ5IHRoZSBweXRob24gY29tcGlsZWQgZmlsZSAqLnB5Yy4NClNpbmNlIGlmIHB5dGhvbiBz
+ZWUgdGhlIHB5YyBpcyBhICJuZXciIGNvbXBpbGVkLCBpdCB3aWxsIGRpcmVjdGx5IHJ1biAqcHlj
+IGZpbGUgYnV0IHVwZGF0ZSBpdC4NCg0KV2hlbiB3ZSB1c2UgYmlzZWN0LXJ1biwgaXQgcXVpY2ts
+eSBjaGVja291dCBkaWZmZXJlbnQgdmVyc2lvbiBhbmQgcnVuIHRoZSBzY3JpcHQgdG8gdGVzdCBp
+dC4NCkl0J3Mgc28gZmFzdCB0aGF0IHRoZSAqcHljIGZpbGUgYXJlIHN0aWxsIG5ldyBmaWxlcywg
+c28gcHl0aG9uIHJ1biAqLnB5YyBhbmQgZ2V0IHNhbWUgcmVzdWx0Lg0KVGhhdCdzIHRoZSB3cm9u
+ZyByZXN1bHQgY2FtZSBmcm9tLg0KDQpUaGVyZSBhcmUgdHdvIHdheSB0byBhdm9pZCB0aGlzIHBy
+b2JsZW06DQpGaXJzdCBpcyBkZWxldGUgYWxsICoucHljIGJlZm9yZSBweXRob24gcnVuLCBhZGQg
+YSB0ZXN0LnNoIHdpdGggZm9sbG93aW5nIGNvbnRlbnQ6DQpmaW5kIC4gLW5hbWUgKi5weWMgLWV4
+ZWMgcm0ge30gXDsNCi4vYXV0b3NjcmlwdC5weQ0KDQpTZWNvbmQgaXMgbGV0IHB5dGhvbiBydW4g
+c2xvd2VyLCBhZGRpbmcgYSBkZWxheSBpbiBhdXRvc2NyaXB0LnB5Og0KaW1wb3J0IHRpbWUNCnRp
+bWUuc2xlZXAoMSkNCg0KQm90aCBtZXRob2QgbGV0IGdpdC1iaXNlY3QtcnVuIGdpdmUgdGhlIHJp
+Z2h0IHJlc3VsdC4NCg0KU29ycnkgYWJvdXQgdGhlIHdyb25nIGJ1ZyByZXBvcnQsIGl0IHByb3Zl
+IHRoYXQgZ2l0LWJpc2VjdC1ydW4gaXMgdmVyeSB2ZXJ5IGZhc3QgLS0gdG9vIGZhc3QgdG8gY2F1
+c2Ugc29tZSBtaXN0YWtlIGxvbA0KDQpTaW5jZXJlbHkgDQpZb2RhTGVlDQoyMDE0MDgyOA==
