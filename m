@@ -1,127 +1,198 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: Relative submodule URLs
-Date: Thu, 28 Aug 2014 13:44:18 -0400
-Message-ID: <53FF6A72.50605@xiplink.com>
-References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>	<20140818205505.GA20185@google.com> <CAHd499DVf4N3Y6m5qoiy-WQGX4K54umefRzehZMsrxiWbaiZ=g@mail.gmail.com> <53F76907.1090904@xiplink.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Robert Dailey <rcdailey.lists@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 19:44:16 2014
+From: Beat Bolli <bbolli@ewanet.ch>
+Subject: [PATCH] pretty: Provide a strict ISO8601 date format
+Date: Thu, 28 Aug 2014 19:49:49 +0200
+Message-ID: <1409248189-31409-1-git-send-email-bbolli@ewanet.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 28 20:00:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN3k8-0004hA-4k
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 19:44:16 +0200
+	id 1XN3zX-0002B1-PA
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 20:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183AbaH1RoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 13:44:12 -0400
-Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:40193 "EHLO
-	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751783AbaH1RoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2014 13:44:11 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp26.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 51D3880147;
-	Thu, 28 Aug 2014 13:44:10 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp26.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id E151C8010F;
-	Thu, 28 Aug 2014 13:44:09 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.2.10);
-	Thu, 28 Aug 2014 17:44:10 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <53F76907.1090904@xiplink.com>
+	id S1751479AbaH1SAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 14:00:04 -0400
+Received: from smtp3.mail.fcom.ch ([212.60.46.172]:42834 "EHLO
+	smtp3.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbaH1SAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 14:00:03 -0400
+X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Aug 2014 14:00:02 EDT
+Received: from drbeat.li (84-243-153-5.dyn.cable.fcom.ch [5.153.243.84])
+	by smtp3.mail.fcom.ch (Postfix) with ESMTP id B7B8821968
+	for <git@vger.kernel.org>; Thu, 28 Aug 2014 19:49:49 +0200 (CEST)
+Received: by drbeat.li (Postfix, from userid 1000)
+	id 2402321B05; Thu, 28 Aug 2014 19:49:49 +0200 (CEST)
+X-Mailer: git-send-email 2.1.0
+X-Virus-Scanned: clamav-milter 0.98.4 at smtp3.mail.fcom.ch
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256109>
 
-Sorry for dropping out of the conversation; the last few days were a bit hectic.
+It uses the '%aI' and '%cI' format specifiers or the '--date=iso-strict'
+date format name.
 
-Regarding recursive branching, I agree that a super-repo's branch names are
-not necessarily appropriate for its submodules, and that Heiko's "simple
-workflow" is a workable base to build upon.  More thought is needed here, but
-that's for another day.
+See http://article.gmane.org/gmane.comp.version-control.git/255879 for
+discussion.
 
-Regarding remote.default, Robert please understand that the feature doesn't
-exist, and the idea is to only serve as a fallback when the current methods
-for remote selection end up resorting to the hardcoded "origin" name.  More
-thought is also needed here, but not today.
+Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
+---
+ Documentation/git-rev-list.txt     |  2 +-
+ Documentation/pretty-formats.txt   |  6 ++++--
+ Documentation/rev-list-options.txt | 13 +++++++++++--
+ cache.h                            |  1 +
+ date.c                             | 10 ++++++++++
+ pretty.c                           |  5 ++++-
+ t/t4205-log-pretty-formats.sh      |  7 +++++++
+ 7 files changed, 38 insertions(+), 6 deletions(-)
 
-Both Heiko and Robert took issue with this statement of mine:
-
-On 14-08-22 12:00 PM, Marc Branchaud wrote:
-> A branch should fork the entire repo, including its submodules.  The
-> implication is that if you want to push that branch somewhere, that
-> somewhere needs to be able to accept the forks of the submodules *even
-> if those submodules aren't changed in your branch* because at the very
-> least the branch ref has to exist in the submodules' repositories.
-
-Heiko said: "It should be easy to work on a repository that is forked in its
-entirety, but it should also be possible (and properly supported) to only
-fork some submodules."
-
-You're right, I overstated it when I said that the branch ref has to exist in
-the unchanged submodules.  The super-repo branch records which submodules it
-updates, and when pushing the branch somewhere only those submodules' changes
-need to be pushed.
-
-Robert asked: "How will this impact *creating* branches? What about forking?
-Do you expect submodule forking & branching to be automatic as well? ... This
-seems difficult to do, especially the forking part since you would need an
-API for this (Github, Atlassian Stash, etc), unless you are thinking of
-something clever like local/relative forks."
-
-I meant "fork" in the local-branch sense:  The branch represents a topic in
-the repository, and it should encompass the entire repository including its
-submodules (just like the branch encompasses all the files in the repository,
-even though the branch's commits only change a subset of those files).  I
-think you're talking about "fork" in the sense of setting up a mirror of a
-repository.  I agree that there aren't really any tools for automatically
-doing that with repositories that contain relative-path submodules.  I think
-"git clone" could learn to do it, though.
-
-
-Heiko also said this:
-> On Fri, Aug 22, 2014 at 12:00:07PM -0400, Marc Branchaud wrote:
->> With relative-path submodules, the push's target repo *must* also have the
->> submodules in their proper places, so that they can get updated.
->> Furthermore, if you clone a repo that has relative-path submodules you
->> *must* also clone the submodules.
->
-> That is not true. You can have relative submodules and just clone/fetch
-> some from a different remote. Its just a question of how to
-> specifiy/transport this information.
-
-I meant that more as a general guideline than some kind of physical law.
-Sure, it's possible to scatter the submodules across all sorts of hosts, but
-it's not a good idea.  When it comes to relative-path submodules, pushing and
-fetching submodule changes in the super-repo should just involve the one
-remote host (whatever way that's determined).  This keeps things tractable,
-because otherwise your branch's changes are scattered among many different
-hosts and you end up considering weird things like "this part of the branch's
-changes are on host A but this other part are on host B, so let's record that
-somewhere, oh but what if host B is down when I'm trying to fetch, but I know
-that host C has the changes too so why don't I just fetch what I want from
-there".
-
-It's a nightmare.  It's infinitely better to treat a repository and its
-relative-path submodules as an atomic unit, so that any remote that hosts the
-repository also hosts the submodules.  When pushing a branch with submodule
-changes, expect to find those submodules on the target remote and update
-them.  Regardless of how the target remote is determined.  Same thing for
-fetching.  It's just so much simpler to work this way.
-
-So please, let's not try to specify submodule remotes per-branch or make that
-info pushable.  It's enough for a branch's local configuration to say that it
-tracks fetch/pull refs on different remotes.  The rest should flow from that.
-
-		M.
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 7a1585d..fd7f8b5 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -45,7 +45,7 @@ SYNOPSIS
+ 	     [ \--regexp-ignore-case | -i ]
+ 	     [ \--extended-regexp | -E ]
+ 	     [ \--fixed-strings | -F ]
+-	     [ \--date=(local|relative|default|iso|rfc|short) ]
++	     [ \--date=(local|relative|default|iso|iso-strict|rfc|short) ]
+ 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
+ 	     [ \--pretty | \--header ]
+ 	     [ \--bisect ]
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 85d6353..50a2c30 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -115,7 +115,8 @@ The placeholders are:
+ - '%aD': author date, RFC2822 style
+ - '%ar': author date, relative
+ - '%at': author date, UNIX timestamp
+-- '%ai': author date, ISO 8601 format
++- '%ai': author date, ISO 8601-like format
++- '%aI': author date, strict ISO 8601 format
+ - '%cn': committer name
+ - '%cN': committer name (respecting .mailmap, see
+   linkgit:git-shortlog[1] or linkgit:git-blame[1])
+@@ -126,7 +127,8 @@ The placeholders are:
+ - '%cD': committer date, RFC2822 style
+ - '%cr': committer date, relative
+ - '%ct': committer date, UNIX timestamp
+-- '%ci': committer date, ISO 8601 format
++- '%ci': committer date, ISO 8601-like format
++- '%cI': committer date, strict ISO 8601 format
+ - '%d': ref names, like the --decorate option of linkgit:git-log[1]
+ - '%e': encoding
+ - '%s': subject
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index deb8cca..5d311b8 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -677,7 +677,7 @@ include::pretty-options.txt[]
+ --relative-date::
+ 	Synonym for `--date=relative`.
+ 
+---date=(relative|local|default|iso|rfc|short|raw)::
++--date=(relative|local|default|iso|iso-strict|rfc|short|raw)::
+ 	Only takes effect for dates shown in human-readable format, such
+ 	as when using `--pretty`. `log.date` config variable sets a default
+ 	value for the log command's `--date` option.
+@@ -687,7 +687,16 @@ e.g. ``2 hours ago''.
+ +
+ `--date=local` shows timestamps in user's local time zone.
+ +
+-`--date=iso` (or `--date=iso8601`) shows timestamps in ISO 8601 format.
++`--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
++The differences to the strict ISO 8601 format are:
++
++	- a space instead of the `T` date/time delimiter
++	- a space between time and time zone
++	- no colon between hours and minutes of the time zone
++
+++
++`--date=iso-strict` (or `--date=iso8601-strict`) shows timestamps in strict
++ISO 8601 format.
+ +
+ `--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
+ format, often found in email messages.
+diff --git a/cache.h b/cache.h
+index fcb511d..fa92aaf 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1037,6 +1037,7 @@ enum date_mode {
+ 	DATE_SHORT,
+ 	DATE_LOCAL,
+ 	DATE_ISO8601,
++	DATE_ISO8601_STRICT,
+ 	DATE_RFC2822,
+ 	DATE_RAW
+ };
+diff --git a/date.c b/date.c
+index 782de95..d545ee6 100644
+--- a/date.c
++++ b/date.c
+@@ -200,6 +200,13 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 				tm->tm_mday,
+ 				tm->tm_hour, tm->tm_min, tm->tm_sec,
+ 				tz);
++	else if (mode == DATE_ISO8601_STRICT)
++		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+03d:%02d",
++				tm->tm_year + 1900,
++				tm->tm_mon + 1,
++				tm->tm_mday,
++				tm->tm_hour, tm->tm_min, tm->tm_sec,
++				tz / 100, abs(tz % 100));
+ 	else if (mode == DATE_RFC2822)
+ 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
+ 			weekday_names[tm->tm_wday], tm->tm_mday,
+@@ -751,6 +758,9 @@ enum date_mode parse_date_format(const char *format)
+ 	else if (!strcmp(format, "iso8601") ||
+ 		 !strcmp(format, "iso"))
+ 		return DATE_ISO8601;
++	else if (!strcmp(format, "iso8601-strict") ||
++		 !strcmp(format, "iso-strict"))
++		return DATE_ISO8601_STRICT;
+ 	else if (!strcmp(format, "rfc2822") ||
+ 		 !strcmp(format, "rfc"))
+ 		return DATE_RFC2822;
+diff --git a/pretty.c b/pretty.c
+index 3a1da6f..7dd5601 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -731,9 +731,12 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	case 'r':	/* date, relative */
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_RELATIVE));
+ 		return placeholder_len;
+-	case 'i':	/* date, ISO 8601 */
++	case 'i':	/* date, ISO 8601-like */
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_ISO8601));
+ 		return placeholder_len;
++	case 'I':	/* date, ISO 8601 strict */
++		strbuf_addstr(sb, show_ident_date(&s, DATE_ISO8601_STRICT));
++		return placeholder_len;
+ 	}
+ 
+ skip:
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 349c531..aad7a80 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -431,6 +431,13 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
++# ISO strict date format
++test_expect_success 'ISO and ISO-strict date formats display the same values' '
++	git log --format=%ai%n%ci | sed -e "s/ /T/; s/ //; s/..\$/:&/" >expected &&
++	git log --format=%aI%n%cI >actual &&
++	test_cmp expected actual
++'
++
+ # get new digests (with no abbreviations)
+ head1=$(git rev-parse --verify HEAD~0) &&
+ head2=$(git rev-parse --verify HEAD~1) &&
+-- 
+2.1.0
