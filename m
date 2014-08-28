@@ -1,79 +1,139 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: revert top most commit
-Date: Wed, 27 Aug 2014 17:22:43 -0700
-Message-ID: <20140828002243.GA20185@google.com>
-References: <1409174048.2715.12.camel@jekeller-desk1.amr.corp.intel.com>
- <1409177738.15185.5.camel@leckie>
- <1409179401.2715.17.camel@jekeller-desk1.amr.corp.intel.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "dturner@twopensource.com" <dturner@twopensource.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Keller, Jacob E" <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Thu Aug 28 02:22:53 2014
+From: Jonas 'Sortie' Termansen <sortie@maxsi.org>
+Subject: [PATCH 4/9] autoconf: Check for struct sigevent
+Date: Thu, 28 Aug 2014 03:04:17 +0200
+Message-ID: <1409187862-21257-5-git-send-email-sortie@maxsi.org>
+References: <1409187862-21257-1-git-send-email-sortie@maxsi.org>
+Cc: Jonas 'Sortie' Termansen <sortie@maxsi.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 28 03:11:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XMnUJ-00062A-8g
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 02:22:51 +0200
+	id 1XMoFQ-0001tm-2Z
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 03:11:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936038AbaH1AWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Aug 2014 20:22:47 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:57420 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932305AbaH1AWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Aug 2014 20:22:46 -0400
-Received: by mail-pa0-f43.google.com with SMTP id et14so163823pad.2
-        for <git@vger.kernel.org>; Wed, 27 Aug 2014 17:22:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=N+/91vsqj5tdIhcvC6v9Vz4+mOvNV2Q9WaiCzwUSFVY=;
-        b=ct1uV6SduxHBRQKBvhgHdlMTdb4+wnTwwDxUvFxvUMKgme/6b+TSos0F8nRamaHW+K
-         58IepqF3HGVKhrxYsObXcbED8AOf4cciA1Qu2/MOuqQA12GCzKcsnIFeO/pFe5s96Yjy
-         m+ZYAD+xNkPIiEaRDB43ZgBZw2lFPQv62t11gIaMm7ZPtogt2qV+8bvOrq5l7mqcfKnE
-         AAzRc80vuXuec76c1rqlBsTp7dni6ePcxPqET6Ylr4CAwiSvBuzxlrkQbMZQxmFECGzc
-         xy/uA5icQxQzZthBjV9/bcaeepQ3bhaV797QEr4mdYIpu1I6t2m/Tc5m7fv+5AFd2K93
-         FrGg==
-X-Received: by 10.68.115.48 with SMTP id jl16mr686006pbb.78.1409185366071;
-        Wed, 27 Aug 2014 17:22:46 -0700 (PDT)
-Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id dg5sm6474734pac.12.2014.08.27.17.22.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 27 Aug 2014 17:22:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1409179401.2715.17.camel@jekeller-desk1.amr.corp.intel.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751378AbaH1BL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Aug 2014 21:11:26 -0400
+Received: from csmtp7.one.com ([195.47.247.107]:59557 "EHLO csmtp7.one.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751086AbaH1BLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Aug 2014 21:11:25 -0400
+X-Greylist: delayed 311 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Aug 2014 21:11:25 EDT
+Received: from localhost.localdomain (0133301021.0.fullrate.dk [95.166.189.26])
+	by csmtp7.one.com (Postfix) with ESMTPA id 0AAD640001D68;
+	Thu, 28 Aug 2014 01:06:14 +0000 (UTC)
+X-Mailer: git-send-email 2.1.0
+In-Reply-To: <1409187862-21257-1-git-send-email-sortie@maxsi.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256059>
 
-Keller, Jacob E wrote:
->> On Wed, 2014-08-27 at 21:14 +0000, Keller, Jacob E wrote:
+This type will be used in a following commit.
 
->>> I am having trouble using revert. If I attempt to
->>>
->>> $ git revert <sha1id>
->>>
->>> where sha1id is the same as the HEAD commit, I instead get the output of
->>> what looks like git status.
-[...]
-> It's actually not my repository, I was helping a co-worker, and thought
-> I'd ask if anyone here knew if it was expected behavior or not.
+This type was not previously used by git. This can cause trouble for
+people on systems without struct sigevent if they only rely on
+config.mak.uname. They will need to set NO_STRUCT_SIGEVENT manually.
 
-More details about the output would help --- otherwise people have to
-guess[*].  I'm guessing your co-worker's working tree is not clean.
-Commiting or stashing their changes first might get things working.
+Signed-off-by: Jonas 'Sortie' Termansen <sortie@maxsi.org>
 
-Hope that helps,
-Jonathan
+---
 
-[*] Another nice thing about quoting output is that it becomes more
-obvious what about it wasn't helpful, which sometimes leads to patches
-from kind people on the list to fix it.
+This patch can be improved by finding out which systems doesn't have
+struct sigevent and adding entries for them to config.mak.uname.
+
+ Makefile          |  5 +++++
+ config.mak.uname  |  2 ++
+ configure.ac      |  7 +++++++
+ git-compat-util.h | 12 ++++++++++++
+ 4 files changed, 26 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 0dd3e35..b76dc43 100644
+--- a/Makefile
++++ b/Makefile
+@@ -186,6 +186,8 @@ all::
+ #
+ # Define NO_STRUCT_TIMESPEC if you don't have struct timespec
+ #
++# Define NO_STRUCT_SIGEVENT if you don't have struct sigevent
++#
+ # Define NO_STRUCT_ITIMERVAL if you don't have struct itimerval
+ # This also implies NO_SETITIMER
+ #
+@@ -1348,6 +1350,9 @@ endif
+ ifdef NO_STRUCT_TIMESPEC
+ 	COMPAT_CFLAGS += -DNO_STRUCT_TIMESPEC
+ endif
++ifdef NO_STRUCT_SIGEVENT
++	COMPAT_CFLAGS += -DNO_STRUCT_SIGEVENT
++endif
+ ifdef NO_STRUCT_ITIMERVAL
+ 	COMPAT_CFLAGS += -DNO_STRUCT_ITIMERVAL
+ 	NO_SETITIMER = YesPlease
+diff --git a/config.mak.uname b/config.mak.uname
+index 8121791..892afc5 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -357,6 +357,7 @@ ifeq ($(uname_S),Windows)
+ 	NO_D_INO_IN_DIRENT = YesPlease
+ 	NO_TIMER_T = UnfortunatelyYes
+ 	NO_STRUCT_TIMESPEC = UnfortunatelyYes
++	NO_STRUCT_SIGEVENT = UnfortunatelyYes
+ 
+ 	CC = compat/vcbuild/scripts/clink.pl
+ 	AR = compat/vcbuild/scripts/lib.pl
+@@ -508,6 +509,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_D_INO_IN_DIRENT = YesPlease
+ 	NO_TIMER_T = UnfortunatelyYes
+ 	NO_STRUCT_TIMESPEC = UnfortunatelyYes
++	NO_STRUCT_SIGEVENT = UnfortunatelyYes
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+diff --git a/configure.ac b/configure.ac
+index 5a5b167..31b3218 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -768,6 +768,13 @@ AC_CHECK_MEMBER(struct dirent.d_ino,
+ [#include <dirent.h>])
+ GIT_CONF_SUBST([NO_D_INO_IN_DIRENT])
+ #
++# Define NO_STRUCT_SIGEVENT if you don't have struct sigevent.
++AC_CHECK_TYPES([struct sigevent],
++[NO_STRUCT_SIGEVENT=],
++[NO_STRUCT_SIGEVENT=UnfortunatelyYes],
++[#include <signal.h>])
++GIT_CONF_SUBST([NO_STRUCT_SIGEVENT])
++#
+ # Define NO_D_TYPE_IN_DIRENT if your platform defines DT_UNKNOWN but lacks
+ # d_type in struct dirent (latest Cygwin -- will be fixed soonish).
+ AC_CHECK_MEMBER(struct dirent.d_type,
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e9e7e54..195eda6 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -198,6 +198,18 @@ struct timespec {
+ };
+ #endif
+ 
++#ifndef SIGEV_SIGNAL
++#define SIGEV_SIGNAL 1 /* dummy */
++#endif
++
++#ifdef NO_STRUCT_SIGEVENT
++struct sigevent /* dummy */
++{
++	int sigev_notify;
++	int sigev_signo;
++};
++#endif
++
+ #ifdef NO_STRUCT_ITIMERVAL
+ struct itimerval {
+ 	struct timeval it_interval;
+-- 
+2.1.0
