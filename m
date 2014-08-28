@@ -1,94 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] merge, pull: stop advising 'commit -a' in case of
- conflict
-Date: Thu, 28 Aug 2014 11:16:38 -0700
-Message-ID: <20140828181638.GB20185@google.com>
-References: <xmqq4mwxeqr7.fsf@gitster.dls.corp.google.com>
- <1409219218-9475-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] teach fast-export an --anonymize option
+Date: Thu, 28 Aug 2014 11:43:29 -0700
+Message-ID: <xmqqlhq8a20e.fsf@gitster.dls.corp.google.com>
+References: <20140827165854.GC1432@peff.net> <20140827170127.GA6138@peff.net>
+	<CACsJy8B3gFC7kLf-cLhAk3BgQ+v427rMXWHTqjU4LYP3NQte7Q@mail.gmail.com>
+	<20140828123257.GA18642@peff.net>
+	<53FF5CD7.8040603@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 28 20:16:53 2014
+Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Aug 28 20:44:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN4Fe-0000O4-Ei
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 20:16:50 +0200
+	id 1XN4fu-0007wC-Eq
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 20:43:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbaH1SQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 14:16:46 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33113 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750773AbaH1SQp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2014 14:16:45 -0400
-Received: by mail-pa0-f51.google.com with SMTP id rd3so3506328pab.24
-        for <git@vger.kernel.org>; Thu, 28 Aug 2014 11:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=IDRk50JflxS+KKGFsYZ6jSJxmDiJ6j228irFE5ID/Hw=;
-        b=RZOBoG1xdq4eISRQrlBzfZ2OaE3NyJ6CbCNG3vvjjOvtf8L2TQh5RipaEfXdWI0o/e
-         9H6jgyy7eeScxISg3L1eNRt5EBHTXRGTH0bNghwiF89iT51bDAUAr8WEppkVsBEQ+0Jb
-         Fl2aHjZUIDCdKyGTs3GPd6s+swZUWa7PoCgZBIJyZJ96KNRGCBlpVAFdTdbTJVvi72bD
-         Iap3N/YJOrhMoMzGk3RqfMRYbqzEGlsigH4r0kXKUkiS7DDruwnRR0BTsUhrWIzxmBxY
-         RmudcpCtuFDWZ0Q0F6dMNijkSIQxZi1IfrRg3DuEKcBSaXiNjEoHgwrmpV3BbuFlF0Hr
-         VhRA==
-X-Received: by 10.66.158.130 with SMTP id wu2mr8369617pab.59.1409249801762;
-        Thu, 28 Aug 2014 11:16:41 -0700 (PDT)
-Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id tx8sm15022358pac.42.2014.08.28.11.16.40
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 28 Aug 2014 11:16:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1409219218-9475-1-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754049AbaH1Snm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 14:43:42 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57778 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752653AbaH1Snk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 14:43:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 52FA535D2E;
+	Thu, 28 Aug 2014 14:43:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KUba3Xlk0L0a4Z2duZWBRCigcMQ=; b=r/gKrV
+	9GHySnCo9rAj0cZy639cWY75ynY9tbtf33v4jkI9gVDxMc3FTW3Ml9X+k+z5/T/M
+	As2XH6VyDKugnxKSK+7vcGQvXNfOd+DHMzZh3LUcgsLIJ+7qUqEFHQePsWqBZgXN
+	ey6kl0jfip+EQCI2Cau0Xsn+423NrEnWK5Qy4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CNXNR/rVULta1+XbylTubjT0Qxg/G8sb
+	Y50xhwo/Vt4FEQ7w6tlhFVSyaMC+KDXsAWdzmqAZn2qKPkuGdfJdAQpEdOuDzDCr
+	vF8IjIlMkXdGsOrSNtIyUPHXV+wOoGAUGuaxw0QEpeF20JkvqS2bdM/5MDlP0bn1
+	6CC8RJ3QCPo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 48B1C35D2D;
+	Thu, 28 Aug 2014 14:43:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 399A235D24;
+	Thu, 28 Aug 2014 14:43:31 -0400 (EDT)
+In-Reply-To: <53FF5CD7.8040603@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Thu, 28 Aug 2014 17:46:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 352B922E-2EE3-11E4-8F0C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256112>
 
-Matthieu Moy wrote:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-[...]
-> ---
->  advice.c    | 3 +--
->  git-pull.sh | 2 +-
->  2 files changed, 2 insertions(+), 3 deletions(-)
+> Dumb question (I have not even read the patch, so please just ignore me
+> if this is indeed dumb!): Is the map of <original-name, anonymized-name>
+> available to the user while he attempts to confirm that the bug is still
+> present?
+>
+> For example, if I anonymized git.git, and did 'git branch -v' (say), how
+> easy would it be for me to recognise which branch was 'next'?
 
-Thanks for taking it on.
+It is not dumb but actually is a very good point.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-[...]
-> It was already on my todo-list, as a friend of mine semi-beginner with
-> Git complained about the mis-advice the other day, and I had to agree.
-
-That's a useful sort of thing to put in a commit message. :)
-
-> Eventually, git could detect that conflicts have been resolved, but
-> then that would be a different message, as not only "use git commit
-> -a" could be resurected, but "Fix them up in the work tree" should be
-> dropped when it is the case.
-
-As is this --- when I wonder why code isn't a certain way, ideas for
-future work found in the description for the blamed commit are often
-helpful in explaining the current state and saving me from blind
-alleys in changing it.
-
-Anyway, this is already a very good change as-is.
-
-Actually, I'd be nervous about suggesting "use git commit -a" without
-at least also saying "inspect the result or run tests" in the
-no-conflict-markers-found case.  Rerere sometimes makes mistakes, and
-the result of picking one side when merging binary files can be even
-worse.
-
-Thanks,
-Jonathan
+There needs an easy way for the reporting user to turn an
+observation such as "When I do 'git log master..next' I see this one
+extraneous commit shown" into a corresponding statement to accompany
+the anonymised output.  The user needs it to make sure that the
+symptom reproduces in the anonymised repository in order to decide
+if it is even worthwhile to send the output for analysis in the
+first place.
