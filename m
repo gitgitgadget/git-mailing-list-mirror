@@ -1,94 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t0027: Tests for core.eol=native, eol=lf, eol=crlf
-Date: Thu, 28 Aug 2014 12:20:56 -0700
-Message-ID: <xmqqha0wa09z.fsf@gitster.dls.corp.google.com>
-References: <53EFBC3A.5020805@web.de>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Relative submodule URLs
+Date: Thu, 28 Aug 2014 21:35:33 +0200
+Message-ID: <20140828193533.GA20040@book.hvoigt.net>
+References: <CAHd499CRNjp-UzXiTt=xgDJWGOEqew+AuPFmrF3-VsEGefXiuA@mail.gmail.com>
+ <20140818205505.GA20185@google.com>
+ <CAHd499DVf4N3Y6m5qoiy-WQGX4K54umefRzehZMsrxiWbaiZ=g@mail.gmail.com>
+ <53F76907.1090904@xiplink.com>
+ <53FF6A72.50605@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Aug 28 21:21:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Robert Dailey <rcdailey.lists@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Thu Aug 28 21:35:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN5GB-00082o-QJ
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 21:21:28 +0200
+	id 1XN5U4-00041n-V5
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 21:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752AbaH1TVK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Aug 2014 15:21:10 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61170 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753006AbaH1TVH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Aug 2014 15:21:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD87F35A55;
-	Thu, 28 Aug 2014 15:21:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yi1C9zdhclqF
-	DZsdKecFAfJmyhw=; b=bnAKrLR1unqd47VxAt+Yrmc9rHsKV0GUPUDd8eV0lNae
-	3XJsZrBcrorVPwbA0oYwojAseHkLXW7CUYD6u010O1bLQtuCASId6BchdoqZaw3p
-	nvZ9kDw4Ct6CagZWXK9jE0eVQwaVkKY/ePiIBhHRRadcWd9VB39ZioQg2V6TU8E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QQHaAc
-	kukUrYpdAuF5uL3XkPOyG0kCdfXcPtM7FaHgR7dE222VuVpQQb5PQMUChTeQQ7ak
-	ApR7MACxqSsIXhNCnEZ65Vj9r/oTZNIpaG2Iyb6eMh24UY3SjS6tvVYiq2FQ8pHg
-	8yWN1gKq3uWfLrWwJu4dO6jsVbmi0R4Mpw0VY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C27E335A54;
-	Thu, 28 Aug 2014 15:21:06 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8BA4C35A4C;
-	Thu, 28 Aug 2014 15:20:58 -0400 (EDT)
-In-Reply-To: <53EFBC3A.5020805@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Sat, 16 Aug 2014 22:16:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 70AFAEFC-2EE8-11E4-988F-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751743AbaH1Tfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 15:35:43 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.40]:33535 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941AbaH1Tfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 15:35:42 -0400
+Received: from [77.21.76.69] (helo=book.hvoigt.net)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1XN5Tu-0005pe-O1; Thu, 28 Aug 2014 21:35:38 +0200
+Content-Disposition: inline
+In-Reply-To: <53FF6A72.50605@xiplink.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256117>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Thu, Aug 28, 2014 at 01:44:18PM -0400, Marc Branchaud wrote:
+> Heiko also said this:
+> > On Fri, Aug 22, 2014 at 12:00:07PM -0400, Marc Branchaud wrote:
+> >> With relative-path submodules, the push's target repo *must* also have the
+> >> submodules in their proper places, so that they can get updated.
+> >> Furthermore, if you clone a repo that has relative-path submodules you
+> >> *must* also clone the submodules.
+> >
+> > That is not true. You can have relative submodules and just clone/fetch
+> > some from a different remote. Its just a question of how to
+> > specifiy/transport this information.
+> 
+> I meant that more as a general guideline than some kind of physical law.
+> Sure, it's possible to scatter the submodules across all sorts of hosts, but
+> it's not a good idea.  When it comes to relative-path submodules, pushing and
+> fetching submodule changes in the super-repo should just involve the one
+> remote host (whatever way that's determined).  This keeps things tractable,
+> because otherwise your branch's changes are scattered among many different
+> hosts and you end up considering weird things like "this part of the branch's
+> changes are on host A but this other part are on host B, so let's record that
+> somewhere, oh but what if host B is down when I'm trying to fetch, but I know
+> that host C has the changes too so why don't I just fetch what I want from
+> there".
+> 
+> It's a nightmare.  It's infinitely better to treat a repository and its
+> relative-path submodules as an atomic unit, so that any remote that hosts the
+> repository also hosts the submodules.  When pushing a branch with submodule
+> changes, expect to find those submodules on the target remote and update
+> them.  Regardless of how the target remote is determined.  Same thing for
+> fetching.  It's just so much simpler to work this way.
 
-> Add test cases for core.eol "native" and "" (unset).
-> (MINGW uses CRLF, all other systems LF as native line endings)
->
-> Add test cases for the attributes "eol=3Dlf" and "eol=3Dcrlf"
->
-> Other minor changes:
-> - Use the more portable 'tr' instead of 'od -c' to convert '\n' into =
-'Q'
->   and '\0' into 'N'
-> - Style fixes for shell functions according to the coding guide lines
-> - Replace "txtbin" with "attr"
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
+You are right, its simpler. But I would not say "better". Depending on
+your project it might be "better" to just fork some submodules.
 
-It appears that I missed this patch?  You seem to have rerolled the
-corresponding 2/2, to which I responded ($gmane/255507).  Is this
-one still viable/necessary?
+> So please, let's not try to specify submodule remotes per-branch or make that
+> info pushable.  It's enough for a branch's local configuration to say that it
+> tracks fetch/pull refs on different remotes.  The rest should flow from that.
 
-If you are doing the whole-sale style fixes for this script, can you
-also fix the case/esac statement in create_gitattributes?  The case
-arm labels are indented one level too deep, making it harder to spot
-them than necessary.
+Why not? Git is all about flexibility. Of course if you organise your
+submodules in chaos you will get chaos. But consider this:
 
-Test files "setup master" step creates appear to end in an
-incomplete line.  Is this intended or by mistake?  Making sure
-things work even on files that end in an incomplete line is a good
-thing, but it looks somewhat strange not to test normal cases (in
-other words, it makes it appear as if normal cases work OK but
-incomplete lines cause corner case bugs and these tests are meant to
-check them, or something).
+You have this big project which consists of submodule (e.g. like Android
+with hundreds of submodules). Now you want to develop on something that
+involves just a subset of submodules, lets say two submodules.
 
-Thanks.
+Now if someone just wants to publish a small change to some submodules
+you are demanding to setup a mirror of *all* submodules that are in this
+big project. That might not even be feasible depending on the projects
+size and the remote quota. Not to speak about having to first create a
+fork of hundreds of repositories. So in this situation we should support
+just referring some submodules to other places.
+
+Regarding transporting this information. If you ask someone to try out
+your change it should be as simple as possible. It should be enough to
+say. clone from there and checkout that branch (once recursive checkout
+and fetch for submodules is in place). So here we need a way to
+transport this configuration for a fork.
+
+Yes for a small project where its feasible to simply clone all
+submodules you can just say: please fork everything. But for bigger
+projects thats not necessarily an option. So we should at least give the
+users that option. Then its a matter of policy how you work with a
+project.
+
+I am not saying that everything for this should be implemented in the
+first steps but we should keep it in mind and design everything in such
+a way that it is still possible to implement such a kind of workflow
+later.
+
+Cheers Heiko
