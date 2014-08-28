@@ -1,198 +1,150 @@
-From: Beat Bolli <bbolli@ewanet.ch>
-Subject: [PATCH] pretty: Provide a strict ISO8601 date format
-Date: Thu, 28 Aug 2014 19:49:49 +0200
-Message-ID: <1409248189-31409-1-git-send-email-bbolli@ewanet.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 28 20:00:12 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] teach fast-export an --anonymize option
+Date: Thu, 28 Aug 2014 11:11:47 -0700
+Message-ID: <xmqqwq9sa3h8.fsf@gitster.dls.corp.google.com>
+References: <20140827165854.GC1432@peff.net> <20140827170127.GA6138@peff.net>
+	<CACsJy8B3gFC7kLf-cLhAk3BgQ+v427rMXWHTqjU4LYP3NQte7Q@mail.gmail.com>
+	<20140828123257.GA18642@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 28 20:12:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XN3zX-0002B1-PA
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 20:00:12 +0200
+	id 1XN4B0-0004Tt-Su
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Aug 2014 20:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbaH1SAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Aug 2014 14:00:04 -0400
-Received: from smtp3.mail.fcom.ch ([212.60.46.172]:42834 "EHLO
-	smtp3.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750820AbaH1SAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Aug 2014 14:00:03 -0400
-X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Aug 2014 14:00:02 EDT
-Received: from drbeat.li (84-243-153-5.dyn.cable.fcom.ch [5.153.243.84])
-	by smtp3.mail.fcom.ch (Postfix) with ESMTP id B7B8821968
-	for <git@vger.kernel.org>; Thu, 28 Aug 2014 19:49:49 +0200 (CEST)
-Received: by drbeat.li (Postfix, from userid 1000)
-	id 2402321B05; Thu, 28 Aug 2014 19:49:49 +0200 (CEST)
-X-Mailer: git-send-email 2.1.0
-X-Virus-Scanned: clamav-milter 0.98.4 at smtp3.mail.fcom.ch
-X-Virus-Status: Clean
+	id S1751848AbaH1SL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Aug 2014 14:11:58 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61249 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750892AbaH1SL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Aug 2014 14:11:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 965723525A;
+	Thu, 28 Aug 2014 14:11:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sGVICMM0e1V/Lh1DETQYeKYQ+E8=; b=Z0HuIe
+	sx2qdJO+ENt1xV2zgZGsvNUm5qOForwbfpcuOVjOpeBfG1Sb0khsmpmuqYoZTUC1
+	ukC7IJeAGvXg+bV4i7n7UtAkVOZx7zdGefcnNjieFUAG8zebnR7aUPpJPhyOOYXS
+	Zd8hiQ0wBiBcmEJe08Ztn/2u0iQ5t4oDHwdRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BVErLTvdgWUquCWvLnOu58dLKOIoeGQR
+	FmsZO/jcXOsJvEcNgotTGwaFTG+Q7FS0i+GKqPOCoN1bBUt+yGDa8UTM9lvDgNiM
+	kAiGgpYAsCyWrLwkYVi9oCsEh9Z8UU0HD2+k9JV8+jWqFkSxpxISZScP7vjLuIZc
+	wZ2KN41LeIc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D75935258;
+	Thu, 28 Aug 2014 14:11:57 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 62FC03524E;
+	Thu, 28 Aug 2014 14:11:49 -0400 (EDT)
+In-Reply-To: <20140828123257.GA18642@peff.net> (Jeff King's message of "Thu,
+	28 Aug 2014 08:32:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C797AC56-2EDE-11E4-89AC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256110>
 
-It uses the '%aI' and '%cI' format specifiers or the '--date=iso-strict'
-date format name.
+Jeff King <peff@peff.net> writes:
 
-See http://article.gmane.org/gmane.comp.version-control.git/255879 for
-discussion.
+> Subject: docs/fast-export: explain --anonymize more completely
+>
+> The original commit made mention of this option, but not why
+> one might want it or how they might use it. Let's try to be
+> a little more thorough, and also explain how to confirm that
+> the output really is anonymous.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/git-fast-export.txt | 63 ++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 59 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+> index 52831fa..dbe9a46 100644
+> --- a/Documentation/git-fast-export.txt
+> +++ b/Documentation/git-fast-export.txt
+> @@ -106,10 +106,9 @@ marks the same across runs.
+>  	different from the commit's first parent).
+>  
+>  --anonymize::
+> -	Replace all refnames, paths, blob contents, commit and tag
+> -	messages, names, and email addresses in the output with
+> -	anonymized data, while still retaining the shape of history and
+> -	of the stored tree.
+> +	Anonymize the contents of the repository while still retaining
+> +	the shape of the history and stored tree.  See the section on
+> +	`ANONYMIZING` below.
 
-Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
----
- Documentation/git-rev-list.txt     |  2 +-
- Documentation/pretty-formats.txt   |  6 ++++--
- Documentation/rev-list-options.txt | 13 +++++++++++--
- cache.h                            |  1 +
- date.c                             | 10 ++++++++++
- pretty.c                           |  5 ++++-
- t/t4205-log-pretty-formats.sh      |  7 +++++++
- 7 files changed, 38 insertions(+), 6 deletions(-)
+Technically s/tree/trees/, I would think.  For a repository with
+multiple branches, perhaps s/history/histories/, too, but I would
+not insist on that ;-).
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 7a1585d..fd7f8b5 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -45,7 +45,7 @@ SYNOPSIS
- 	     [ \--regexp-ignore-case | -i ]
- 	     [ \--extended-regexp | -E ]
- 	     [ \--fixed-strings | -F ]
--	     [ \--date=(local|relative|default|iso|rfc|short) ]
-+	     [ \--date=(local|relative|default|iso|iso-strict|rfc|short) ]
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 85d6353..50a2c30 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -115,7 +115,8 @@ The placeholders are:
- - '%aD': author date, RFC2822 style
- - '%ar': author date, relative
- - '%at': author date, UNIX timestamp
--- '%ai': author date, ISO 8601 format
-+- '%ai': author date, ISO 8601-like format
-+- '%aI': author date, strict ISO 8601 format
- - '%cn': committer name
- - '%cN': committer name (respecting .mailmap, see
-   linkgit:git-shortlog[1] or linkgit:git-blame[1])
-@@ -126,7 +127,8 @@ The placeholders are:
- - '%cD': committer date, RFC2822 style
- - '%cr': committer date, relative
- - '%ct': committer date, UNIX timestamp
--- '%ci': committer date, ISO 8601 format
-+- '%ci': committer date, ISO 8601-like format
-+- '%cI': committer date, strict ISO 8601 format
- - '%d': ref names, like the --decorate option of linkgit:git-log[1]
- - '%e': encoding
- - '%s': subject
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index deb8cca..5d311b8 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -677,7 +677,7 @@ include::pretty-options.txt[]
- --relative-date::
- 	Synonym for `--date=relative`.
- 
----date=(relative|local|default|iso|rfc|short|raw)::
-+--date=(relative|local|default|iso|iso-strict|rfc|short|raw)::
- 	Only takes effect for dates shown in human-readable format, such
- 	as when using `--pretty`. `log.date` config variable sets a default
- 	value for the log command's `--date` option.
-@@ -687,7 +687,16 @@ e.g. ``2 hours ago''.
- +
- `--date=local` shows timestamps in user's local time zone.
- +
--`--date=iso` (or `--date=iso8601`) shows timestamps in ISO 8601 format.
-+`--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
-+The differences to the strict ISO 8601 format are:
-+
-+	- a space instead of the `T` date/time delimiter
-+	- a space between time and time zone
-+	- no colon between hours and minutes of the time zone
-+
-++
-+`--date=iso-strict` (or `--date=iso8601-strict`) shows timestamps in strict
-+ISO 8601 format.
- +
- `--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
- format, often found in email messages.
-diff --git a/cache.h b/cache.h
-index fcb511d..fa92aaf 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1037,6 +1037,7 @@ enum date_mode {
- 	DATE_SHORT,
- 	DATE_LOCAL,
- 	DATE_ISO8601,
-+	DATE_ISO8601_STRICT,
- 	DATE_RFC2822,
- 	DATE_RAW
- };
-diff --git a/date.c b/date.c
-index 782de95..d545ee6 100644
---- a/date.c
-+++ b/date.c
-@@ -200,6 +200,13 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
- 				tm->tm_mday,
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				tz);
-+	else if (mode == DATE_ISO8601_STRICT)
-+		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+03d:%02d",
-+				tm->tm_year + 1900,
-+				tm->tm_mon + 1,
-+				tm->tm_mday,
-+				tm->tm_hour, tm->tm_min, tm->tm_sec,
-+				tz / 100, abs(tz % 100));
- 	else if (mode == DATE_RFC2822)
- 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
- 			weekday_names[tm->tm_wday], tm->tm_mday,
-@@ -751,6 +758,9 @@ enum date_mode parse_date_format(const char *format)
- 	else if (!strcmp(format, "iso8601") ||
- 		 !strcmp(format, "iso"))
- 		return DATE_ISO8601;
-+	else if (!strcmp(format, "iso8601-strict") ||
-+		 !strcmp(format, "iso-strict"))
-+		return DATE_ISO8601_STRICT;
- 	else if (!strcmp(format, "rfc2822") ||
- 		 !strcmp(format, "rfc"))
- 		return DATE_RFC2822;
-diff --git a/pretty.c b/pretty.c
-index 3a1da6f..7dd5601 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -731,9 +731,12 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 	case 'r':	/* date, relative */
- 		strbuf_addstr(sb, show_ident_date(&s, DATE_RELATIVE));
- 		return placeholder_len;
--	case 'i':	/* date, ISO 8601 */
-+	case 'i':	/* date, ISO 8601-like */
- 		strbuf_addstr(sb, show_ident_date(&s, DATE_ISO8601));
- 		return placeholder_len;
-+	case 'I':	/* date, ISO 8601 strict */
-+		strbuf_addstr(sb, show_ident_date(&s, DATE_ISO8601_STRICT));
-+		return placeholder_len;
- 	}
- 
- skip:
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 349c531..aad7a80 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -431,6 +431,13 @@ EOF
- 	test_cmp expected actual
- '
- 
-+# ISO strict date format
-+test_expect_success 'ISO and ISO-strict date formats display the same values' '
-+	git log --format=%ai%n%ci | sed -e "s/ /T/; s/ //; s/..\$/:&/" >expected &&
-+	git log --format=%aI%n%cI >actual &&
-+	test_cmp expected actual
-+'
-+
- # get new digests (with no abbreviations)
- head1=$(git rev-parse --verify HEAD~0) &&
- head2=$(git rev-parse --verify HEAD~1) &&
--- 
-2.1.0
+> +ANONYMIZING
+> +-----------
+> +
+> +If the `--anonymize` option is given, git will attempt to remove all
+> +identifying information from the repository while still retaining enough
+> +of the original tree and history patterns to reproduce some bugs. The
+> +goal is that a git bug which is found on a private repository will
+> +persist in the anonymized repository, and the latter can be shared with
+> +git developers to help solve the bug.
+> +
+> +With this option, git will replace all refnames, paths, blob contents,
+> +commit and tag messages, names, and email addresses in the output with
+> +anonymized data.  Two instances of the same string will be replaced
+> +equivalently (e.g., two commits with the same author will have the same
+> +anonymized author in the output, but bear no resemblance to the original
+> +author string). The relationship between commits, branches, and tags is
+> +retained, as well as the commit timestamps (but the commit messages and
+> +refnames bear no resemblance to the originals). The relative makeup of
+> +the tree is retained (e.g., if you have a root tree with 10 files and 3
+> +trees, so will the output), but their names and the contents of the
+> +files will be replaced.
+
+While I do not think I or anybody who would ask other people to use
+this option would be confused, the phrase "the same string" may risk
+unnecessary worries from those who are asked to trust this option.
+
+I am not yet convinced that it is unlikely for the reader to read
+the above and imagine that the anonymiser may go word by word,
+replacing "the same string" with the same anonymised gibberish
+(which would be susceptible to old-school cryptoanalysis
+techniques).
+
+Among the ones that listed, refnames, blob contents, commit messages
+and tag messages are converted as a single "string" and I wish I
+could think of phrasing to stress that point somehow.
+
+Each path component in paths is converted as a single "string", so
+we can read from two anonymised paths if they refer to blobs in the
+same directory in the original.  This is a good thing, of course,
+but it shows that among those listed in "refnames, paths, blob
+contents, ..." in a flat sentence, some are treated as a single
+token for replacement but not others, and it is hard to tell for a
+reader which one is which, unless the reader knows the internals of
+Git, i.e. what kind of things we as the debuggers-of-Git would want
+to preserve.
+
+Isn't the unit for human identity anonymisation even more coarse?
+If it is not should it?
+
+In other words, do "Junio C Hamano <junio@pobox.com>" and "Junio C
+Hamano <gitster@pobox.com>" map to one gibberish human readable name
+with two gibberish e-mail addresses, or 2 "User$n <user$n>"?  Is the
+fact that this organization seems to allocate two e-mails to each
+developer something this organization may want to hide from the
+public (and something we as the Git debuggers would not benefit from
+knowing)?
