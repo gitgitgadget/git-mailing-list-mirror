@@ -1,187 +1,87 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 8/9] autoconf: Check for timer_settime
-Date: Fri, 29 Aug 2014 17:40:52 +0000
-Message-ID: <1409334052.18778.21.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1409330561-11806-1-git-send-email-jacob.e.keller@intel.com>
-	 <1409330561-11806-8-git-send-email-jacob.e.keller@intel.com>
-	 <5400B7C2.20603@kdbg.org>
+From: Scott Schmit <i.grok@comcast.net>
+Subject: Re: [PATCH] pretty: Provide a strict ISO8601 date format
+Date: Fri, 29 Aug 2014 13:44:39 -0400
+Message-ID: <20140829174439.GA10274@odin.ulthar.us>
+References: <1409248189-31409-1-git-send-email-bbolli@ewanet.ch>
+ <xmqq61hc8bvq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"sortie@maxsi.org" <sortie@maxsi.org>
-To: "j6t@kdbg.org" <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Aug 29 19:41:07 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Beat Bolli <bbolli@ewanet.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 19:50:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNQAZ-0007nE-CE
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 19:41:03 +0200
+	id 1XNQK4-0008E0-Hm
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 19:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754432AbaH2Rk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 13:40:57 -0400
-Received: from mga09.intel.com ([134.134.136.24]:1381 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754418AbaH2Rkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 13:40:55 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP; 29 Aug 2014 10:34:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.04,425,1406617200"; 
-   d="scan'208";a="595209106"
-Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
-  by orsmga002.jf.intel.com with ESMTP; 29 Aug 2014 10:40:53 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.235]) by
- ORSMSX104.amr.corp.intel.com ([169.254.3.101]) with mapi id 14.03.0195.001;
- Fri, 29 Aug 2014 10:40:53 -0700
-Thread-Topic: [PATCH 8/9] autoconf: Check for timer_settime
-Thread-Index: AQHPw6hLsFTOIp6bmE2ya5OMQ2wrbZvoSsEAgAAECAA=
-In-Reply-To: <5400B7C2.20603@kdbg.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <CEF87AB48F80884CA63473E797201AC5@intel.com>
+	id S1753727AbaH2Rus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 13:50:48 -0400
+Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:38877
+	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753268AbaH2Rur (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 13:50:47 -0400
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Aug 2014 13:50:47 EDT
+Received: from omta12.westchester.pa.mail.comcast.net ([76.96.62.44])
+	by qmta05.westchester.pa.mail.comcast.net with comcast
+	id khfa1o0020xGWP855hkiW8; Fri, 29 Aug 2014 17:44:42 +0000
+Received: from odin.ulthar.us ([IPv6:2001:470:8c86:0:225:64ff:fe8b:c2f2])
+	by omta12.westchester.pa.mail.comcast.net with comcast
+	id khkg1o00Y2Ekl483Yhkh9M; Fri, 29 Aug 2014 17:44:41 +0000
+Received: from odin.ulthar.us (localhost [127.0.0.1])
+	by odin.ulthar.us (8.14.7/8.14.5) with ESMTP id s7THieN5014419;
+	Fri, 29 Aug 2014 13:44:40 -0400
+Received: (from draco@localhost)
+	by odin.ulthar.us (8.14.7/8.14.7/Submit) id s7THidGD014418;
+	Fri, 29 Aug 2014 13:44:39 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq61hc8bvq.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1409334282;
+	bh=2t3hLvMhn7Ost2WNl+yKR+O6pQ4s9FzrgwHfQiBUYOM=;
+	h=Received:Received:Received:Received:Date:From:To:Subject:
+	 Message-ID:MIME-Version:Content-Type;
+	b=PjjQiOz+EmBV0+1psDnaM4ei7hdYsw57X8g7Q9D/1sm0P4V+VKc42p4w5FNppu899
+	 N4dWIwZEMbqUL8iCiE4ZevFhxpX69a8STcBDOMbXE7g2bCv+0KA+VxDOnPBws1RkEw
+	 9lHxVLVe684y6duZewI8R6Ct+ApPb+i2svHFfn9ckfUN49qseao7JKZ9S0BKoVxDRe
+	 MRJAXQlg9v+zhnPHvU/CDCg0nqGbpLIS5r8HM5XVxOM0gy7tK+UUwvwNKtZKy+aIeu
+	 HmWfktNhhyBi3oJ0P6/vvlHRmnoBvwolbUisK2XBpyqTjvetcsc1dX/O7sCkOGrkp7
+	 OIqwkU/vDGptQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256169>
 
-T24gRnJpLCAyMDE0LTA4LTI5IGF0IDE5OjI2ICswMjAwLCBKb2hhbm5lcyBTaXh0IHdyb3RlOg0K
-PiBBbSAyOS4wOC4yMDE0IDE4OjQyLCBzY2hyaWViIEphY29iIEtlbGxlcjoNCj4gPiBGcm9tOiBK
-b25hcyAnU29ydGllJyBUZXJtYW5zZW4gPHNvcnRpZUBtYXhzaS5vcmc+DQo+ID4gDQo+ID4gVGhp
-cyBmdW5jdGlvbiB3aWxsIGJlIHVzZWQgaW4gYSBmb2xsb3dpbmcgY29tbWl0Lg0KPiA+IA0KPiA+
-IFRoZSB0aW1lcl9zZXR0aW1lIGZ1bmN0aW9uIGlzIHByb3ZpZGVkIGluIGxpYnJ0IG9uIHNvbWUg
-c3lzdGVtcy4gV2UNCj4gPiBhbHJlYWR5IHVzZSB0aGlzIGxpYnJhcnkgc29tZXRpbWVzIHRvIGdl
-dCBjbG9ja19nZXR0aW1lLCBzbyByZXdvcmsgdGhlDQo+ID4gbG9naWMgc28gd2UgZG9uJ3QgbGlu
-ayB3aXRoIGl0IHR3aWNlLg0KPiA+IA0KPiA+IFRoaXMgZnVuY3Rpb24gd2FzIG5vdCBwcmV2aW91
-c2x5IHVzZWQgYnkgZ2l0LiBUaGlzIGNhbiBjYXVzZSB0cm91YmxlIGZvcg0KPiA+IHBlb3BsZSBv
-biBzeXN0ZW1zIHdpdGhvdXQgdGltZXJfc2V0dGltZSBpZiB0aGV5IG9ubHkgcmVseSBvbg0KPiA+
-IGNvbmZpZy5tYWsudW5hbWUuIFRoZXkgd2lsbCBuZWVkIHRvIHNldCBOT19USU1FUl9TRVRUSU1F
-IG1hbnVhbGx5Lg0KPiA+IA0KPiA+IEFkZCBwcm9wZXIgcmVwbGFjZW1lbnQgZnVuY3Rpb24gbWFj
-cm9zIGZvciBzZXRpdGltZXIgYW5kIHRpbWVyX3NldHRpbWUNCj4gPiB0aGF0IGltcGxlbWVudCB0
-aW1lcl9zZXR0aW1lIGFzIGEgd3JhcHBlciBmb3Igc2V0aXRpbWVyLiBJbiB0aGlzIHdheSwgaWYN
-Cj4gPiB0aGUgc3lzdGVtIGhhcyBzZXRpdGltZXIgYnV0IG5vdCB0aW1lcl9zZXR0aW1lIHRoZW4g
-d2Ugd2lsbCBiZSBhYmxlIHRvDQo+ID4gY2FsbCB0aW1lcl9jcmVhdGUsIHRpbWVyX3NldHRpbWUs
-IGFuZCB0aW1lcl9kZWxldGUgY29ycmVjdGx5IGFuZCBpdCB3aWxsDQo+ID4gd3JhcCB0byBzZXRp
-dGltZXIgdW5kZXIgdGhlIGhvb2QuIFRoaXMgd2lsbCBiZSB1c2VkIGluIHRoZSBmb2xsb3dpbmcN
-Cj4gPiBjb21taXQuDQo+ID4gDQo+ID4gU2lnbmVkLW9mZi1ieTogSm9uYXMgJ1NvcnRpZScgVGVy
-bWFuc2VuIDxzb3J0aWVAbWF4c2kub3JnPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEphY29iIEtlbGxl
-ciA8amFjb2IuZS5rZWxsZXJAaW50ZWwuY29tPg0KPiA+IC0tLQ0KPiA+ICBNYWtlZmlsZSAgICAg
-ICAgICB8IDIxICsrKysrKysrKysrKysrKysrKysrKw0KPiA+ICBjb25maWcubWFrLnVuYW1lICB8
-ICAzICsrKw0KPiA+ICBjb25maWd1cmUuYWMgICAgICB8ICA4ICsrKysrKysrDQo+ID4gIGdpdC1j
-b21wYXQtdXRpbC5oIHwgMjAgKysrKysrKysrKysrKysrKysrKy0NCj4gPiAgNCBmaWxlcyBjaGFu
-Z2VkLCA1MSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQo+ID4gDQo+ID4gZGlmZiAtLWdp
-dCBhL01ha2VmaWxlIGIvTWFrZWZpbGUNCj4gPiBpbmRleCA2NjMyOWU0YjM3MmIuLjUzMzdlZjBi
-N2NkNiAxMDA2NDQNCj4gPiAtLS0gYS9NYWtlZmlsZQ0KPiA+ICsrKyBiL01ha2VmaWxlDQo+ID4g
-QEAgLTE4MiwxNiArMTgyLDIyIEBAIGFsbDo6DQo+ID4gICMNCj4gPiAgIyBEZWZpbmUgTk9fU0VU
-SVRJTUVSIGlmIHlvdSBkb24ndCBoYXZlIHNldGl0aW1lcigpDQo+ID4gICMNCj4gPiArIyBEZWZp
-bmUgTk9fVElNRVJfU0VUVElNRSBpZiB5b3UgZG9uJ3QgaGF2ZSB0aW1lcl9zZXR0aW1lKCkNCj4g
-PiArIw0KPiA+ICAjIERlZmluZSBOT19USU1FUl9UIGlmIHlvdSBkb24ndCBoYXZlIHRpbWVyX3Qu
-DQo+ID4gKyMgVGhpcyBhbHNvIGltcGxpZXMgTk9fVElNRVJfU0VUVElNRQ0KPiA+ICAjDQo+ID4g
-ICMgRGVmaW5lIE5PX1NUUlVDVF9USU1FU1BFQyBpZiB5b3UgZG9uJ3QgaGF2ZSBzdHJ1Y3QgdGlt
-ZXNwZWMNCj4gPiArIyBUaGlzIGFsc28gaW1wbGllcyBOT19USU1FUl9TRVRUSU1FDQo+ID4gICMN
-Cj4gPiAgIyBEZWZpbmUgTk9fU1RSVUNUX1NJR0VWRU5UIGlmIHlvdSBkb24ndCBoYXZlIHN0cnVj
-dCBzaWdldmVudA0KPiA+ICsjIFRoaXMgYWxzbyBpbXBsaWVzIE5PX1RJTUVSX1NFVFRJTUUNCj4g
-PiAgIw0KPiA+ICAjIERlZmluZSBOT19TVFJVQ1RfSVRJTUVSVkFMIGlmIHlvdSBkb24ndCBoYXZl
-IHN0cnVjdCBpdGltZXJ2YWwNCj4gPiAgIyBUaGlzIGFsc28gaW1wbGllcyBOT19TRVRJVElNRVIN
-Cj4gPiAgIw0KPiA+ICAjIERlZmluZSBOT19TVFJVQ1RfSVRJTUVSU1BFQyBpZiB5b3UgZG9uJ3Qg
-aGF2ZSBzdHJ1Y3QgaXRpbWVyc3BlYw0KPiA+ICsjIFRoaXMgYWxzbyBpbXBsaWVzIE5PX1RJTUVS
-X1NFVFRJTUUNCj4gPiAgIw0KPiA+ICAjIERlZmluZSBOT19GQVNUX1dPUktJTkdfRElSRUNUT1JZ
-IGlmIGFjY2Vzc2luZyBvYmplY3RzIGluIHBhY2sgZmlsZXMgaXMNCj4gPiAgIyBnZW5lcmFsbHkg
-ZmFzdGVyIG9uIHlvdXIgcGxhdGZvcm0gdGhhbiBhY2Nlc3NpbmcgdGhlIHdvcmtpbmcgZGlyZWN0
-b3J5Lg0KPiA+IEBAIC0xMzQ4LDEyICsxMzU0LDE1IEBAIGlmZGVmIE9CSkVDVF9DUkVBVElPTl9V
-U0VTX1JFTkFNRVMNCj4gPiAgZW5kaWYNCj4gPiAgaWZkZWYgTk9fVElNRVJfVA0KPiA+ICAJQ09N
-UEFUX0NGTEFHUyArPSAtRE5PX1RJTUVSX1QNCj4gPiArCU5PX1RJTUVSX1NFVFRJTUUgPSBZZXNQ
-bGVhc2UNCj4gPiAgZW5kaWYNCj4gPiAgaWZkZWYgTk9fU1RSVUNUX1RJTUVTUEVDDQo+ID4gIAlD
-T01QQVRfQ0ZMQUdTICs9IC1ETk9fU1RSVUNUX1RJTUVTUEVDDQo+ID4gKwlOT19USU1FUl9TRVRU
-SU1FID0gWWVzUGxlYXNlDQo+ID4gIGVuZGlmDQo+ID4gIGlmZGVmIE5PX1NUUlVDVF9TSUdFVkVO
-VA0KPiA+ICAJQ09NUEFUX0NGTEFHUyArPSAtRE5PX1NUUlVDVF9TSUdFVkVOVA0KPiA+ICsJTk9f
-VElNRVJfU0VUVElNRSA9IFllc1BsZWFzZQ0KPiA+ICBlbmRpZg0KPiA+ICBpZmRlZiBOT19TVFJV
-Q1RfSVRJTUVSVkFMDQo+ID4gIAlDT01QQVRfQ0ZMQUdTICs9IC1ETk9fU1RSVUNUX0lUSU1FUlZB
-TA0KPiA+IEBAIC0xMzYxLDEwICsxMzcwLDE0IEBAIGlmZGVmIE5PX1NUUlVDVF9JVElNRVJWQUwN
-Cj4gPiAgZW5kaWYNCj4gPiAgaWZkZWYgTk9fU1RSVUNUX0lUSU1FUlNQRUMNCj4gPiAgCUNPTVBB
-VF9DRkxBR1MgKz0gLUROT19TVFJVQ1RfSVRJTUVSU1BFQw0KPiA+ICsJTk9fVElNRVJfU0VUVElN
-RSA9IFllc1BsZWFzZQ0KPiA+ICBlbmRpZg0KPiA+ICBpZmRlZiBOT19TRVRJVElNRVINCj4gPiAg
-CUNPTVBBVF9DRkxBR1MgKz0gLUROT19TRVRJVElNRVINCj4gPiAgZW5kaWYNCj4gPiAraWZkZWYg
-Tk9fVElNRVJfU0VUVElNRQ0KPiA+ICsJQ09NUEFUX0NGTEFHUyArPSAtRE5PX1RJTUVSX1NFVFRJ
-TUUNCj4gPiArZW5kaWYNCj4gPiAgaWZkZWYgTk9fUFJFQUQNCj4gPiAgCUNPTVBBVF9DRkxBR1Mg
-Kz0gLUROT19QUkVBRA0KPiA+ICAJQ09NUEFUX09CSlMgKz0gY29tcGF0L3ByZWFkLm8NCj4gPiBA
-QCAtMTUyNCw2ICsxNTM3LDE0IEBAIGVuZGlmDQo+ID4gIA0KPiA+ICBpZmRlZiBIQVZFX0NMT0NL
-X0dFVFRJTUUNCj4gPiAgCUJBU0lDX0NGTEFHUyArPSAtREhBVkVfQ0xPQ0tfR0VUVElNRQ0KPiA+
-ICsJTElOS19XSVRIX0xJQlJUID0gWWVzUGxlYXNlDQo+ID4gK2VuZGlmDQo+ID4gKw0KPiA+ICtp
-Zm5kZWYgTk9fVElNRVJfU0VUVElNRQ0KPiA+ICsJTElOS19XSVRIX0xJQlJUID0gWWVzUGxlYXNl
-DQo+ID4gK2VuZGlmDQo+ID4gKw0KPiA+ICtpZmRlZiBMSU5LX1dJVEhfTElCUlQNCj4gPiAgCUVY
-VExJQlMgKz0gLWxydA0KPiA+ICBlbmRpZg0KPiA+ICANCj4gPiBkaWZmIC0tZ2l0IGEvY29uZmln
-Lm1hay51bmFtZSBiL2NvbmZpZy5tYWsudW5hbWUNCj4gPiBpbmRleCBmMGQ5M2VmODY4YTcuLmQw
-NGRlYWIyZGZhOCAxMDA2NDQNCj4gPiAtLS0gYS9jb25maWcubWFrLnVuYW1lDQo+ID4gKysrIGIv
-Y29uZmlnLm1hay51bmFtZQ0KPiA+IEBAIC05OSw2ICs5OSw3IEBAIGlmZXEgKCQodW5hbWVfUyks
-RGFyd2luKQ0KPiA+ICAJVVNFX1NUX1RJTUVTUEVDID0gWWVzUGxlYXNlDQo+ID4gIAlIQVZFX0RF
-Vl9UVFkgPSBZZXNQbGVhc2UNCj4gPiAgCU5PX1NUUlVDVF9JVElNRVJTUEVDID0gVW5mb3J0dW5h
-dGVseVllcw0KPiA+ICsJTk9fVElNRVJfU0VUVElNRSA9IFVuZm9ydHVuYXRlbHlZZXMNCj4gPiAg
-CUNPTVBBVF9PQkpTICs9IGNvbXBhdC9wcmVjb21wb3NlX3V0Zjgubw0KPiA+ICAJQkFTSUNfQ0ZM
-QUdTICs9IC1EUFJFQ09NUE9TRV9VTklDT0RFDQo+ID4gIGVuZGlmDQo+ID4gQEAgLTM2MCw2ICsz
-NjEsNyBAQCBpZmVxICgkKHVuYW1lX1MpLFdpbmRvd3MpDQo+ID4gIAlOT19TVFJVQ1RfVElNRVNQ
-RUMgPSBVbmZvcnR1bmF0ZWx5WWVzDQo+ID4gIAlOT19TVFJVQ1RfU0lHRVZFTlQgPSBVbmZvcnR1
-bmF0ZWx5WWVzDQo+ID4gIAlOT19TVFJVQ1RfSVRJTUVSU1BFQyA9IFVuZm9ydHVuYXRlbHlZZXMN
-Cj4gPiArCU5PX1RJTUVSX1NFVFRJTUUgPSBVbmZvcnR1bmF0ZWx5WWVzDQo+ID4gIA0KPiA+ICAJ
-Q0MgPSBjb21wYXQvdmNidWlsZC9zY3JpcHRzL2NsaW5rLnBsDQo+ID4gIAlBUiA9IGNvbXBhdC92
-Y2J1aWxkL3NjcmlwdHMvbGliLnBsDQo+ID4gQEAgLTUxMyw2ICs1MTUsNyBAQCBpZm5lcSAoLCQo
-ZmluZHN0cmluZyBNSU5HVywkKHVuYW1lX1MpKSkNCj4gPiAgCU5PX1NUUlVDVF9USU1FU1BFQyA9
-IFVuZm9ydHVuYXRlbHlZZXMNCj4gPiAgCU5PX1NUUlVDVF9TSUdFVkVOVCA9IFVuZm9ydHVuYXRl
-bHlZZXMNCj4gPiAgCU5PX1NUUlVDVF9JVElNRVJTUEVDID0gVW5mb3J0dW5hdGVseVllcw0KPiA+
-ICsJTk9fVElNRVJfU0VUVElNRSA9IFVuZm9ydHVuYXRlbHlZZXMNCj4gPiAgCUNPTVBBVF9DRkxB
-R1MgKz0gLURfX1VTRV9NSU5HV19BQ0NFU1MgLURfVVNFXzMyQklUX1RJTUVfVCAtRE5PR0RJIC1J
-Y29tcGF0IC1JY29tcGF0L3dpbjMyDQo+ID4gIAlDT01QQVRfQ0ZMQUdTICs9IC1EU1RSSVBfRVhU
-RU5TSU9OPVwiLmV4ZVwiDQo+ID4gIAlDT01QQVRfT0JKUyArPSBjb21wYXQvbWluZ3cubyBjb21w
-YXQvd2luYW5zaS5vIFwNCj4gPiBkaWZmIC0tZ2l0IGEvY29uZmlndXJlLmFjIGIvY29uZmlndXJl
-LmFjDQo+ID4gaW5kZXggOTU0ZjlkZGIwM2MyLi45ZDZlYzQxYWNjODIgMTAwNjQ0DQo+ID4gLS0t
-IGEvY29uZmlndXJlLmFjDQo+ID4gKysrIGIvY29uZmlndXJlLmFjDQo+ID4gQEAgLTk0Niw2ICs5
-NDYsMTQgQEAgR0lUX0NIRUNLX0ZVTkMoc2V0aXRpbWVyLA0KPiA+ICBbTk9fU0VUSVRJTUVSPVll
-c1BsZWFzZV0pDQo+ID4gIEdJVF9DT05GX1NVQlNUKFtOT19TRVRJVElNRVJdKQ0KPiA+ICAjDQo+
-ID4gKyMgRGVmaW5lIE5PX1RJTUVSX1NFVFRJTUUgaWYgeW91IGRvbid0IGhhdmUgdGltZXJfc2V0
-dGltZQ0KPiA+ICtHSVRfQ0hFQ0tfRlVOQyh0aW1lcl9zZXR0aW1lLA0KPiA+ICtbTk9fVElNRVJf
-U0VUVElNRT1dLA0KPiA+ICtbQUNfU0VBUkNIX0xJQlModGltZXJfc2V0dGltZSxbcnRdLA0KPiA+
-ICsgIFtOT19USU1FUl9TRVRUSU1FPV0sDQo+ID4gKyAgW05PX1RJTUVSX1NFVFRJTUU9WWVzUGxl
-YXNlXSldKQ0KPiA+ICtHSVRfQ09ORl9TVUJTVChbTk9fVElNRVJfU0VUVElNRV0pDQo+ID4gKyMN
-Cj4gPiAgIyBEZWZpbmUgTk9fU1RSQ0FTRVNUUiBpZiB5b3UgZG9uJ3QgaGF2ZSBzdHJjYXNlc3Ry
-Lg0KPiA+ICBHSVRfQ0hFQ0tfRlVOQyhzdHJjYXNlc3RyLA0KPiA+ICBbTk9fU1RSQ0FTRVNUUj1d
-LA0KPiA+IGRpZmYgLS1naXQgYS9naXQtY29tcGF0LXV0aWwuaCBiL2dpdC1jb21wYXQtdXRpbC5o
-DQo+ID4gaW5kZXggNGVmMTdkZjg2YjBlLi5iMjM2MDIxOTYzMjMgMTAwNjQ0DQo+ID4gLS0tIGEv
-Z2l0LWNvbXBhdC11dGlsLmgNCj4gPiArKysgYi9naXQtY29tcGF0LXV0aWwuaA0KPiA+IEBAIC0y
-MjUsNyArMjI1LDI1IEBAIHN0cnVjdCBpdGltZXJzcGVjIHsNCj4gPiAgI2VuZGlmDQo+ID4gIA0K
-PiA+ICAjaWZkZWYgTk9fU0VUSVRJTUVSDQo+ID4gLSNkZWZpbmUgc2V0aXRpbWVyKHdoaWNoLHZh
-bHVlLG92YWx1ZSkNCj4gPiArI2RlZmluZSBzZXRpdGltZXIod2hpY2gsdmFsdWUsb3ZhbHVlKSAo
-KHZvaWQpICh3aGljaCksICh2b2lkKSAodmFsdWUpLCAodm9pZCkgKG92YWx1ZSksIGVycm5vID0g
-RU5PU1lTLCAtMSkNCj4gPiArI2VuZGlmDQo+ID4gKw0KPiA+ICsjaWZkZWYgTk9fVElNRVJfU0VU
-VElNRQ0KPiA+ICsjZGVmaW5lIHRpbWVyX2NyZWF0ZShjbG9ja2lkLCBzZXZwLCB0aW1lcnApICgo
-dm9pZCkgKGNsb2NraWQpLCAodm9pZCkgKHNldnApLCAodm9pZCkgKHRpbWVycCksIGVycm5vID0g
-RU5PU1lTLCAtMSkNCj4gPiArDQo+ID4gKyNkZWZpbmUgdGltZXJfZGVsZXRlKHRpbWVyKSBkbyB7
-CQlcDQo+ID4gKwlzdHJ1Y3QgaXRpbWVydmFsIHYgPSB7ezAsfSx9OwkJXA0KPiA+ICsJc2V0aXRp
-bWVyKElUSU1FUl9SRUFMLCAmdiwgTlVMTCk7CVwNCj4gPiArfSB3aGlsZSAoMCkNCj4gPiArDQo+
-ID4gKyNkZWZpbmUgdGltZXJfc2V0dGltZSh0aW1lciwgZmxhZ3MsIHZhbHVlLCBvdmFsdWUpIGRv
-IHsJCQkJXA0KPiA+ICsJc3RydWN0IGl0aW1lcnZhbCBfaXZhbHVlOwkJCQkJCVwNCj4gPiArCV9p
-dmFsdWUuaXRfaW50ZXJ2YWwudHZfc2VjID0gdmFsdWUuaXRfaW50ZXJ2YWwudHZfc2VjOwkJCVwN
-Cj4gPiArCV9pdmFsdWUuaXRfaW50ZXJ2YWwudHZfdXNlYyA9IHZhbHVlLml0X2ludGVydmFsLnR2
-X25zZWMgLyAxMDAwTDsJXA0KPiA+ICsJX2l2YWx1ZS5pdF92YWx1ZS50dl9zZWMgIHZhbHVlLml0
-X3ZhbHVlLnR2X3NlYzsJCQkJXA0KPiA+ICsJX2l2YWx1ZV9pdF92YWx1ZS50dl91c2VjID0gdmFs
-dWUuaXRfdmFsdWUudHZfbnNlYyAvIDEwMDBMOwkJXA0KPiA+ICsJc2V0aXRpbWVyKElUSU1FUl9S
-RUFMLCAmX2l2YWx1ZSwgTlVMTCk7CQkJCQlcDQo+ID4gK3doaWxlICgwKQ0KPiA+ICAjZW5kaWYN
-Cj4gPiAgDQo+ID4gICNpZm5kZWYgTk9fTElCR0VOX0gNCj4gPiANCj4gDQo+IFRoaXMgbG9va3Mg
-bGlrZSB0aGF0IHRoZSBmZWF0dXJlcyB0aGF0IHdlIG5lZWQgY2FuIGJlIG1hcHBlZCBiYWNrIGFu
-ZA0KPiBmb3J0aCBiZXR3ZWVuIHNldGl0aW1lcigpIGFuZCB0aW1lcl9zZXR0aW1lKCkuIFNvLCB3
-aHkgZG9uJ3QgeW91IGRlZmluZQ0KPiBhIGNvbXBhdC9zZXRpdGltZXIuW2NoXSBmb3IgeW91ciBz
-eXN0ZW0gdGhhdCBkb2VzIG5vdCBoYXZlIHNldGl0aW1lcigpDQo+IGFuZCBpbXBsZW1lbnQgc2V0
-aXRpbWVyKCkgaW4gdGVybXMgb2YgdGltZXJfc2V0dGltZSgpIGluc3RlYWQgb2YgdGhlDQo+IG90
-aGVyIHdheSByb3VuZD8gVGhlbiB5b3UgZG9uJ3QgbmVlZCB0byBjaGFuZ2UgYW55IG9mIHRoZSBj
-bGllbnQgY29kZS4NCj4gQWxzbywgeW91IHdvbid0IGhhdmUgdG8gd29ycnkgYWJvdXQgdGhlIG9k
-ZCB0aW1lcl9zZXR0aW1lKCkgaW4gT3BlbkJTRC4NCj4gDQo+IC0tIEhhbm5lcw0KPiANCg0KWW91
-IGNvdWxkIGRvIHRoYXQsIEkgc3VwcG9zZSwgdGhvdWdoIEkgcGVyc29uYWxseSBwcmVmZXIgdG8g
-dXNlIHRoZQ0KbmV3ZXIgc3RhbmRhcmQgaW4gdGhlIGNvcmUgY29kZSwgYW5kIG9ubHkgZmFsbGJh
-Y2sgdG8gb2xkZXIgc3RhbmRhcmRzIGluDQp0aGUgY2FzZSB3aGVyZSB5b3UgZG9uJ3QgaGF2ZSB3
-aGF0IGlzIG5ldyAoaW5zdGVhZCBvZiB0aGUgb3RoZXIgd2F5DQphcm91bmQpLg0KDQpPdmVyYWxs
-IGl0IGRvZXNuJ3QgcmVhbGx5IG1hdHRlciB0byBtZS4NCg0KUmVnYXJkcywNCkpha2UNCg==
+On Thu, Aug 28, 2014 at 03:53:13PM -0700, Junio C Hamano wrote:
+> Beat Bolli writes:
+> > +	else if (mode == DATE_ISO8601_STRICT)
+> > +		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+03d:%02d",
+> > +				tm->tm_year + 1900,
+> > +				tm->tm_mon + 1,
+> > +				tm->tm_mday,
+> > +				tm->tm_hour, tm->tm_min, tm->tm_sec,
+> > +				tz / 100, abs(tz % 100));
+> 
+> Wouldn't this misidentify a zone that is 30 minutes off of GMT,
+> i.e. tz == -30?  tz/100 would not be negative and "%+03d:" would
+> happily show "+00:", no?
+
+No.  strbuf_addf uses strbuf_vaddf which uses vsnprintf(3).  From man
+vsnprintf(3):
+>   The flag characters
+>       The character % is followed by zero or more of the following
+>       flags:
+>
+>       +      A sign (+ or -) should always be placed before a number
+>              produced by a signed conversion.  By default a sign is
+>              used only for negative numbers.  A + overrides a space if
+>              both are used.
+
+Perhaps you misread "%+03d:" as "+%02d:"?
+
+-- 
+Scott Schmit
