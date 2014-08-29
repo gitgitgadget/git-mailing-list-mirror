@@ -1,229 +1,187 @@
-From: Johannes Sixt <j6t@kdbg.org>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
 Subject: Re: [PATCH 8/9] autoconf: Check for timer_settime
-Date: Fri, 29 Aug 2014 19:26:26 +0200
-Message-ID: <5400B7C2.20603@kdbg.org>
-References: <1409330561-11806-1-git-send-email-jacob.e.keller@intel.com> <1409330561-11806-8-git-send-email-jacob.e.keller@intel.com>
+Date: Fri, 29 Aug 2014 17:40:52 +0000
+Message-ID: <1409334052.18778.21.camel@jekeller-desk1.amr.corp.intel.com>
+References: <1409330561-11806-1-git-send-email-jacob.e.keller@intel.com>
+	 <1409330561-11806-8-git-send-email-jacob.e.keller@intel.com>
+	 <5400B7C2.20603@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Jonas 'Sortie' Termansen <sortie@maxsi.org>
-To: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 29 19:26:49 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"sortie@maxsi.org" <sortie@maxsi.org>
+To: "j6t@kdbg.org" <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Aug 29 19:41:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNPwm-0003Nt-Sq
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 19:26:49 +0200
+	id 1XNQAZ-0007nE-CE
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 19:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754085AbaH2R0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 13:26:44 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:47316 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753727AbaH2R0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 13:26:31 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 87353130051;
-	Fri, 29 Aug 2014 19:26:27 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 9696119F497;
-	Fri, 29 Aug 2014 19:26:26 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
-In-Reply-To: <1409330561-11806-8-git-send-email-jacob.e.keller@intel.com>
+	id S1754432AbaH2Rk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 13:40:57 -0400
+Received: from mga09.intel.com ([134.134.136.24]:1381 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754418AbaH2Rkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 13:40:55 -0400
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga102.jf.intel.com with ESMTP; 29 Aug 2014 10:34:53 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.04,425,1406617200"; 
+   d="scan'208";a="595209106"
+Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
+  by orsmga002.jf.intel.com with ESMTP; 29 Aug 2014 10:40:53 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.235]) by
+ ORSMSX104.amr.corp.intel.com ([169.254.3.101]) with mapi id 14.03.0195.001;
+ Fri, 29 Aug 2014 10:40:53 -0700
+Thread-Topic: [PATCH 8/9] autoconf: Check for timer_settime
+Thread-Index: AQHPw6hLsFTOIp6bmE2ya5OMQ2wrbZvoSsEAgAAECAA=
+In-Reply-To: <5400B7C2.20603@kdbg.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <CEF87AB48F80884CA63473E797201AC5@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256168>
 
-Am 29.08.2014 18:42, schrieb Jacob Keller:
-> From: Jonas 'Sortie' Termansen <sortie@maxsi.org>
-> 
-> This function will be used in a following commit.
-> 
-> The timer_settime function is provided in librt on some systems. We
-> already use this library sometimes to get clock_gettime, so rework the
-> logic so we don't link with it twice.
-> 
-> This function was not previously used by git. This can cause trouble for
-> people on systems without timer_settime if they only rely on
-> config.mak.uname. They will need to set NO_TIMER_SETTIME manually.
-> 
-> Add proper replacement function macros for setitimer and timer_settime
-> that implement timer_settime as a wrapper for setitimer. In this way, if
-> the system has setitimer but not timer_settime then we will be able to
-> call timer_create, timer_settime, and timer_delete correctly and it will
-> wrap to setitimer under the hood. This will be used in the following
-> commit.
-> 
-> Signed-off-by: Jonas 'Sortie' Termansen <sortie@maxsi.org>
-> Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-> ---
->  Makefile          | 21 +++++++++++++++++++++
->  config.mak.uname  |  3 +++
->  configure.ac      |  8 ++++++++
->  git-compat-util.h | 20 +++++++++++++++++++-
->  4 files changed, 51 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index 66329e4b372b..5337ef0b7cd6 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -182,16 +182,22 @@ all::
->  #
->  # Define NO_SETITIMER if you don't have setitimer()
->  #
-> +# Define NO_TIMER_SETTIME if you don't have timer_settime()
-> +#
->  # Define NO_TIMER_T if you don't have timer_t.
-> +# This also implies NO_TIMER_SETTIME
->  #
->  # Define NO_STRUCT_TIMESPEC if you don't have struct timespec
-> +# This also implies NO_TIMER_SETTIME
->  #
->  # Define NO_STRUCT_SIGEVENT if you don't have struct sigevent
-> +# This also implies NO_TIMER_SETTIME
->  #
->  # Define NO_STRUCT_ITIMERVAL if you don't have struct itimerval
->  # This also implies NO_SETITIMER
->  #
->  # Define NO_STRUCT_ITIMERSPEC if you don't have struct itimerspec
-> +# This also implies NO_TIMER_SETTIME
->  #
->  # Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
->  # generally faster on your platform than accessing the working directory.
-> @@ -1348,12 +1354,15 @@ ifdef OBJECT_CREATION_USES_RENAMES
->  endif
->  ifdef NO_TIMER_T
->  	COMPAT_CFLAGS += -DNO_TIMER_T
-> +	NO_TIMER_SETTIME = YesPlease
->  endif
->  ifdef NO_STRUCT_TIMESPEC
->  	COMPAT_CFLAGS += -DNO_STRUCT_TIMESPEC
-> +	NO_TIMER_SETTIME = YesPlease
->  endif
->  ifdef NO_STRUCT_SIGEVENT
->  	COMPAT_CFLAGS += -DNO_STRUCT_SIGEVENT
-> +	NO_TIMER_SETTIME = YesPlease
->  endif
->  ifdef NO_STRUCT_ITIMERVAL
->  	COMPAT_CFLAGS += -DNO_STRUCT_ITIMERVAL
-> @@ -1361,10 +1370,14 @@ ifdef NO_STRUCT_ITIMERVAL
->  endif
->  ifdef NO_STRUCT_ITIMERSPEC
->  	COMPAT_CFLAGS += -DNO_STRUCT_ITIMERSPEC
-> +	NO_TIMER_SETTIME = YesPlease
->  endif
->  ifdef NO_SETITIMER
->  	COMPAT_CFLAGS += -DNO_SETITIMER
->  endif
-> +ifdef NO_TIMER_SETTIME
-> +	COMPAT_CFLAGS += -DNO_TIMER_SETTIME
-> +endif
->  ifdef NO_PREAD
->  	COMPAT_CFLAGS += -DNO_PREAD
->  	COMPAT_OBJS += compat/pread.o
-> @@ -1524,6 +1537,14 @@ endif
->  
->  ifdef HAVE_CLOCK_GETTIME
->  	BASIC_CFLAGS += -DHAVE_CLOCK_GETTIME
-> +	LINK_WITH_LIBRT = YesPlease
-> +endif
-> +
-> +ifndef NO_TIMER_SETTIME
-> +	LINK_WITH_LIBRT = YesPlease
-> +endif
-> +
-> +ifdef LINK_WITH_LIBRT
->  	EXTLIBS += -lrt
->  endif
->  
-> diff --git a/config.mak.uname b/config.mak.uname
-> index f0d93ef868a7..d04deab2dfa8 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -99,6 +99,7 @@ ifeq ($(uname_S),Darwin)
->  	USE_ST_TIMESPEC = YesPlease
->  	HAVE_DEV_TTY = YesPlease
->  	NO_STRUCT_ITIMERSPEC = UnfortunatelyYes
-> +	NO_TIMER_SETTIME = UnfortunatelyYes
->  	COMPAT_OBJS += compat/precompose_utf8.o
->  	BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
->  endif
-> @@ -360,6 +361,7 @@ ifeq ($(uname_S),Windows)
->  	NO_STRUCT_TIMESPEC = UnfortunatelyYes
->  	NO_STRUCT_SIGEVENT = UnfortunatelyYes
->  	NO_STRUCT_ITIMERSPEC = UnfortunatelyYes
-> +	NO_TIMER_SETTIME = UnfortunatelyYes
->  
->  	CC = compat/vcbuild/scripts/clink.pl
->  	AR = compat/vcbuild/scripts/lib.pl
-> @@ -513,6 +515,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
->  	NO_STRUCT_TIMESPEC = UnfortunatelyYes
->  	NO_STRUCT_SIGEVENT = UnfortunatelyYes
->  	NO_STRUCT_ITIMERSPEC = UnfortunatelyYes
-> +	NO_TIMER_SETTIME = UnfortunatelyYes
->  	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
->  	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
->  	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
-> diff --git a/configure.ac b/configure.ac
-> index 954f9ddb03c2..9d6ec41acc82 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -946,6 +946,14 @@ GIT_CHECK_FUNC(setitimer,
->  [NO_SETITIMER=YesPlease])
->  GIT_CONF_SUBST([NO_SETITIMER])
->  #
-> +# Define NO_TIMER_SETTIME if you don't have timer_settime
-> +GIT_CHECK_FUNC(timer_settime,
-> +[NO_TIMER_SETTIME=],
-> +[AC_SEARCH_LIBS(timer_settime,[rt],
-> +  [NO_TIMER_SETTIME=],
-> +  [NO_TIMER_SETTIME=YesPlease])])
-> +GIT_CONF_SUBST([NO_TIMER_SETTIME])
-> +#
->  # Define NO_STRCASESTR if you don't have strcasestr.
->  GIT_CHECK_FUNC(strcasestr,
->  [NO_STRCASESTR=],
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 4ef17df86b0e..b23602196323 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -225,7 +225,25 @@ struct itimerspec {
->  #endif
->  
->  #ifdef NO_SETITIMER
-> -#define setitimer(which,value,ovalue)
-> +#define setitimer(which,value,ovalue) ((void) (which), (void) (value), (void) (ovalue), errno = ENOSYS, -1)
-> +#endif
-> +
-> +#ifdef NO_TIMER_SETTIME
-> +#define timer_create(clockid, sevp, timerp) ((void) (clockid), (void) (sevp), (void) (timerp), errno = ENOSYS, -1)
-> +
-> +#define timer_delete(timer) do {		\
-> +	struct itimerval v = {{0,},};		\
-> +	setitimer(ITIMER_REAL, &v, NULL);	\
-> +} while (0)
-> +
-> +#define timer_settime(timer, flags, value, ovalue) do {				\
-> +	struct itimerval _ivalue;						\
-> +	_ivalue.it_interval.tv_sec = value.it_interval.tv_sec;			\
-> +	_ivalue.it_interval.tv_usec = value.it_interval.tv_nsec / 1000L;	\
-> +	_ivalue.it_value.tv_sec  value.it_value.tv_sec;				\
-> +	_ivalue_it_value.tv_usec = value.it_value.tv_nsec / 1000L;		\
-> +	setitimer(ITIMER_REAL, &_ivalue, NULL);					\
-> +while (0)
->  #endif
->  
->  #ifndef NO_LIBGEN_H
-> 
-
-This looks like that the features that we need can be mapped back and
-forth between setitimer() and timer_settime(). So, why don't you define
-a compat/setitimer.[ch] for your system that does not have setitimer()
-and implement setitimer() in terms of timer_settime() instead of the
-other way round? Then you don't need to change any of the client code.
-Also, you won't have to worry about the odd timer_settime() in OpenBSD.
-
--- Hannes
+T24gRnJpLCAyMDE0LTA4LTI5IGF0IDE5OjI2ICswMjAwLCBKb2hhbm5lcyBTaXh0IHdyb3RlOg0K
+PiBBbSAyOS4wOC4yMDE0IDE4OjQyLCBzY2hyaWViIEphY29iIEtlbGxlcjoNCj4gPiBGcm9tOiBK
+b25hcyAnU29ydGllJyBUZXJtYW5zZW4gPHNvcnRpZUBtYXhzaS5vcmc+DQo+ID4gDQo+ID4gVGhp
+cyBmdW5jdGlvbiB3aWxsIGJlIHVzZWQgaW4gYSBmb2xsb3dpbmcgY29tbWl0Lg0KPiA+IA0KPiA+
+IFRoZSB0aW1lcl9zZXR0aW1lIGZ1bmN0aW9uIGlzIHByb3ZpZGVkIGluIGxpYnJ0IG9uIHNvbWUg
+c3lzdGVtcy4gV2UNCj4gPiBhbHJlYWR5IHVzZSB0aGlzIGxpYnJhcnkgc29tZXRpbWVzIHRvIGdl
+dCBjbG9ja19nZXR0aW1lLCBzbyByZXdvcmsgdGhlDQo+ID4gbG9naWMgc28gd2UgZG9uJ3QgbGlu
+ayB3aXRoIGl0IHR3aWNlLg0KPiA+IA0KPiA+IFRoaXMgZnVuY3Rpb24gd2FzIG5vdCBwcmV2aW91
+c2x5IHVzZWQgYnkgZ2l0LiBUaGlzIGNhbiBjYXVzZSB0cm91YmxlIGZvcg0KPiA+IHBlb3BsZSBv
+biBzeXN0ZW1zIHdpdGhvdXQgdGltZXJfc2V0dGltZSBpZiB0aGV5IG9ubHkgcmVseSBvbg0KPiA+
+IGNvbmZpZy5tYWsudW5hbWUuIFRoZXkgd2lsbCBuZWVkIHRvIHNldCBOT19USU1FUl9TRVRUSU1F
+IG1hbnVhbGx5Lg0KPiA+IA0KPiA+IEFkZCBwcm9wZXIgcmVwbGFjZW1lbnQgZnVuY3Rpb24gbWFj
+cm9zIGZvciBzZXRpdGltZXIgYW5kIHRpbWVyX3NldHRpbWUNCj4gPiB0aGF0IGltcGxlbWVudCB0
+aW1lcl9zZXR0aW1lIGFzIGEgd3JhcHBlciBmb3Igc2V0aXRpbWVyLiBJbiB0aGlzIHdheSwgaWYN
+Cj4gPiB0aGUgc3lzdGVtIGhhcyBzZXRpdGltZXIgYnV0IG5vdCB0aW1lcl9zZXR0aW1lIHRoZW4g
+d2Ugd2lsbCBiZSBhYmxlIHRvDQo+ID4gY2FsbCB0aW1lcl9jcmVhdGUsIHRpbWVyX3NldHRpbWUs
+IGFuZCB0aW1lcl9kZWxldGUgY29ycmVjdGx5IGFuZCBpdCB3aWxsDQo+ID4gd3JhcCB0byBzZXRp
+dGltZXIgdW5kZXIgdGhlIGhvb2QuIFRoaXMgd2lsbCBiZSB1c2VkIGluIHRoZSBmb2xsb3dpbmcN
+Cj4gPiBjb21taXQuDQo+ID4gDQo+ID4gU2lnbmVkLW9mZi1ieTogSm9uYXMgJ1NvcnRpZScgVGVy
+bWFuc2VuIDxzb3J0aWVAbWF4c2kub3JnPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEphY29iIEtlbGxl
+ciA8amFjb2IuZS5rZWxsZXJAaW50ZWwuY29tPg0KPiA+IC0tLQ0KPiA+ICBNYWtlZmlsZSAgICAg
+ICAgICB8IDIxICsrKysrKysrKysrKysrKysrKysrKw0KPiA+ICBjb25maWcubWFrLnVuYW1lICB8
+ICAzICsrKw0KPiA+ICBjb25maWd1cmUuYWMgICAgICB8ICA4ICsrKysrKysrDQo+ID4gIGdpdC1j
+b21wYXQtdXRpbC5oIHwgMjAgKysrKysrKysrKysrKysrKysrKy0NCj4gPiAgNCBmaWxlcyBjaGFu
+Z2VkLCA1MSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQo+ID4gDQo+ID4gZGlmZiAtLWdp
+dCBhL01ha2VmaWxlIGIvTWFrZWZpbGUNCj4gPiBpbmRleCA2NjMyOWU0YjM3MmIuLjUzMzdlZjBi
+N2NkNiAxMDA2NDQNCj4gPiAtLS0gYS9NYWtlZmlsZQ0KPiA+ICsrKyBiL01ha2VmaWxlDQo+ID4g
+QEAgLTE4MiwxNiArMTgyLDIyIEBAIGFsbDo6DQo+ID4gICMNCj4gPiAgIyBEZWZpbmUgTk9fU0VU
+SVRJTUVSIGlmIHlvdSBkb24ndCBoYXZlIHNldGl0aW1lcigpDQo+ID4gICMNCj4gPiArIyBEZWZp
+bmUgTk9fVElNRVJfU0VUVElNRSBpZiB5b3UgZG9uJ3QgaGF2ZSB0aW1lcl9zZXR0aW1lKCkNCj4g
+PiArIw0KPiA+ICAjIERlZmluZSBOT19USU1FUl9UIGlmIHlvdSBkb24ndCBoYXZlIHRpbWVyX3Qu
+DQo+ID4gKyMgVGhpcyBhbHNvIGltcGxpZXMgTk9fVElNRVJfU0VUVElNRQ0KPiA+ICAjDQo+ID4g
+ICMgRGVmaW5lIE5PX1NUUlVDVF9USU1FU1BFQyBpZiB5b3UgZG9uJ3QgaGF2ZSBzdHJ1Y3QgdGlt
+ZXNwZWMNCj4gPiArIyBUaGlzIGFsc28gaW1wbGllcyBOT19USU1FUl9TRVRUSU1FDQo+ID4gICMN
+Cj4gPiAgIyBEZWZpbmUgTk9fU1RSVUNUX1NJR0VWRU5UIGlmIHlvdSBkb24ndCBoYXZlIHN0cnVj
+dCBzaWdldmVudA0KPiA+ICsjIFRoaXMgYWxzbyBpbXBsaWVzIE5PX1RJTUVSX1NFVFRJTUUNCj4g
+PiAgIw0KPiA+ICAjIERlZmluZSBOT19TVFJVQ1RfSVRJTUVSVkFMIGlmIHlvdSBkb24ndCBoYXZl
+IHN0cnVjdCBpdGltZXJ2YWwNCj4gPiAgIyBUaGlzIGFsc28gaW1wbGllcyBOT19TRVRJVElNRVIN
+Cj4gPiAgIw0KPiA+ICAjIERlZmluZSBOT19TVFJVQ1RfSVRJTUVSU1BFQyBpZiB5b3UgZG9uJ3Qg
+aGF2ZSBzdHJ1Y3QgaXRpbWVyc3BlYw0KPiA+ICsjIFRoaXMgYWxzbyBpbXBsaWVzIE5PX1RJTUVS
+X1NFVFRJTUUNCj4gPiAgIw0KPiA+ICAjIERlZmluZSBOT19GQVNUX1dPUktJTkdfRElSRUNUT1JZ
+IGlmIGFjY2Vzc2luZyBvYmplY3RzIGluIHBhY2sgZmlsZXMgaXMNCj4gPiAgIyBnZW5lcmFsbHkg
+ZmFzdGVyIG9uIHlvdXIgcGxhdGZvcm0gdGhhbiBhY2Nlc3NpbmcgdGhlIHdvcmtpbmcgZGlyZWN0
+b3J5Lg0KPiA+IEBAIC0xMzQ4LDEyICsxMzU0LDE1IEBAIGlmZGVmIE9CSkVDVF9DUkVBVElPTl9V
+U0VTX1JFTkFNRVMNCj4gPiAgZW5kaWYNCj4gPiAgaWZkZWYgTk9fVElNRVJfVA0KPiA+ICAJQ09N
+UEFUX0NGTEFHUyArPSAtRE5PX1RJTUVSX1QNCj4gPiArCU5PX1RJTUVSX1NFVFRJTUUgPSBZZXNQ
+bGVhc2UNCj4gPiAgZW5kaWYNCj4gPiAgaWZkZWYgTk9fU1RSVUNUX1RJTUVTUEVDDQo+ID4gIAlD
+T01QQVRfQ0ZMQUdTICs9IC1ETk9fU1RSVUNUX1RJTUVTUEVDDQo+ID4gKwlOT19USU1FUl9TRVRU
+SU1FID0gWWVzUGxlYXNlDQo+ID4gIGVuZGlmDQo+ID4gIGlmZGVmIE5PX1NUUlVDVF9TSUdFVkVO
+VA0KPiA+ICAJQ09NUEFUX0NGTEFHUyArPSAtRE5PX1NUUlVDVF9TSUdFVkVOVA0KPiA+ICsJTk9f
+VElNRVJfU0VUVElNRSA9IFllc1BsZWFzZQ0KPiA+ICBlbmRpZg0KPiA+ICBpZmRlZiBOT19TVFJV
+Q1RfSVRJTUVSVkFMDQo+ID4gIAlDT01QQVRfQ0ZMQUdTICs9IC1ETk9fU1RSVUNUX0lUSU1FUlZB
+TA0KPiA+IEBAIC0xMzYxLDEwICsxMzcwLDE0IEBAIGlmZGVmIE5PX1NUUlVDVF9JVElNRVJWQUwN
+Cj4gPiAgZW5kaWYNCj4gPiAgaWZkZWYgTk9fU1RSVUNUX0lUSU1FUlNQRUMNCj4gPiAgCUNPTVBB
+VF9DRkxBR1MgKz0gLUROT19TVFJVQ1RfSVRJTUVSU1BFQw0KPiA+ICsJTk9fVElNRVJfU0VUVElN
+RSA9IFllc1BsZWFzZQ0KPiA+ICBlbmRpZg0KPiA+ICBpZmRlZiBOT19TRVRJVElNRVINCj4gPiAg
+CUNPTVBBVF9DRkxBR1MgKz0gLUROT19TRVRJVElNRVINCj4gPiAgZW5kaWYNCj4gPiAraWZkZWYg
+Tk9fVElNRVJfU0VUVElNRQ0KPiA+ICsJQ09NUEFUX0NGTEFHUyArPSAtRE5PX1RJTUVSX1NFVFRJ
+TUUNCj4gPiArZW5kaWYNCj4gPiAgaWZkZWYgTk9fUFJFQUQNCj4gPiAgCUNPTVBBVF9DRkxBR1Mg
+Kz0gLUROT19QUkVBRA0KPiA+ICAJQ09NUEFUX09CSlMgKz0gY29tcGF0L3ByZWFkLm8NCj4gPiBA
+QCAtMTUyNCw2ICsxNTM3LDE0IEBAIGVuZGlmDQo+ID4gIA0KPiA+ICBpZmRlZiBIQVZFX0NMT0NL
+X0dFVFRJTUUNCj4gPiAgCUJBU0lDX0NGTEFHUyArPSAtREhBVkVfQ0xPQ0tfR0VUVElNRQ0KPiA+
+ICsJTElOS19XSVRIX0xJQlJUID0gWWVzUGxlYXNlDQo+ID4gK2VuZGlmDQo+ID4gKw0KPiA+ICtp
+Zm5kZWYgTk9fVElNRVJfU0VUVElNRQ0KPiA+ICsJTElOS19XSVRIX0xJQlJUID0gWWVzUGxlYXNl
+DQo+ID4gK2VuZGlmDQo+ID4gKw0KPiA+ICtpZmRlZiBMSU5LX1dJVEhfTElCUlQNCj4gPiAgCUVY
+VExJQlMgKz0gLWxydA0KPiA+ICBlbmRpZg0KPiA+ICANCj4gPiBkaWZmIC0tZ2l0IGEvY29uZmln
+Lm1hay51bmFtZSBiL2NvbmZpZy5tYWsudW5hbWUNCj4gPiBpbmRleCBmMGQ5M2VmODY4YTcuLmQw
+NGRlYWIyZGZhOCAxMDA2NDQNCj4gPiAtLS0gYS9jb25maWcubWFrLnVuYW1lDQo+ID4gKysrIGIv
+Y29uZmlnLm1hay51bmFtZQ0KPiA+IEBAIC05OSw2ICs5OSw3IEBAIGlmZXEgKCQodW5hbWVfUyks
+RGFyd2luKQ0KPiA+ICAJVVNFX1NUX1RJTUVTUEVDID0gWWVzUGxlYXNlDQo+ID4gIAlIQVZFX0RF
+Vl9UVFkgPSBZZXNQbGVhc2UNCj4gPiAgCU5PX1NUUlVDVF9JVElNRVJTUEVDID0gVW5mb3J0dW5h
+dGVseVllcw0KPiA+ICsJTk9fVElNRVJfU0VUVElNRSA9IFVuZm9ydHVuYXRlbHlZZXMNCj4gPiAg
+CUNPTVBBVF9PQkpTICs9IGNvbXBhdC9wcmVjb21wb3NlX3V0Zjgubw0KPiA+ICAJQkFTSUNfQ0ZM
+QUdTICs9IC1EUFJFQ09NUE9TRV9VTklDT0RFDQo+ID4gIGVuZGlmDQo+ID4gQEAgLTM2MCw2ICsz
+NjEsNyBAQCBpZmVxICgkKHVuYW1lX1MpLFdpbmRvd3MpDQo+ID4gIAlOT19TVFJVQ1RfVElNRVNQ
+RUMgPSBVbmZvcnR1bmF0ZWx5WWVzDQo+ID4gIAlOT19TVFJVQ1RfU0lHRVZFTlQgPSBVbmZvcnR1
+bmF0ZWx5WWVzDQo+ID4gIAlOT19TVFJVQ1RfSVRJTUVSU1BFQyA9IFVuZm9ydHVuYXRlbHlZZXMN
+Cj4gPiArCU5PX1RJTUVSX1NFVFRJTUUgPSBVbmZvcnR1bmF0ZWx5WWVzDQo+ID4gIA0KPiA+ICAJ
+Q0MgPSBjb21wYXQvdmNidWlsZC9zY3JpcHRzL2NsaW5rLnBsDQo+ID4gIAlBUiA9IGNvbXBhdC92
+Y2J1aWxkL3NjcmlwdHMvbGliLnBsDQo+ID4gQEAgLTUxMyw2ICs1MTUsNyBAQCBpZm5lcSAoLCQo
+ZmluZHN0cmluZyBNSU5HVywkKHVuYW1lX1MpKSkNCj4gPiAgCU5PX1NUUlVDVF9USU1FU1BFQyA9
+IFVuZm9ydHVuYXRlbHlZZXMNCj4gPiAgCU5PX1NUUlVDVF9TSUdFVkVOVCA9IFVuZm9ydHVuYXRl
+bHlZZXMNCj4gPiAgCU5PX1NUUlVDVF9JVElNRVJTUEVDID0gVW5mb3J0dW5hdGVseVllcw0KPiA+
+ICsJTk9fVElNRVJfU0VUVElNRSA9IFVuZm9ydHVuYXRlbHlZZXMNCj4gPiAgCUNPTVBBVF9DRkxB
+R1MgKz0gLURfX1VTRV9NSU5HV19BQ0NFU1MgLURfVVNFXzMyQklUX1RJTUVfVCAtRE5PR0RJIC1J
+Y29tcGF0IC1JY29tcGF0L3dpbjMyDQo+ID4gIAlDT01QQVRfQ0ZMQUdTICs9IC1EU1RSSVBfRVhU
+RU5TSU9OPVwiLmV4ZVwiDQo+ID4gIAlDT01QQVRfT0JKUyArPSBjb21wYXQvbWluZ3cubyBjb21w
+YXQvd2luYW5zaS5vIFwNCj4gPiBkaWZmIC0tZ2l0IGEvY29uZmlndXJlLmFjIGIvY29uZmlndXJl
+LmFjDQo+ID4gaW5kZXggOTU0ZjlkZGIwM2MyLi45ZDZlYzQxYWNjODIgMTAwNjQ0DQo+ID4gLS0t
+IGEvY29uZmlndXJlLmFjDQo+ID4gKysrIGIvY29uZmlndXJlLmFjDQo+ID4gQEAgLTk0Niw2ICs5
+NDYsMTQgQEAgR0lUX0NIRUNLX0ZVTkMoc2V0aXRpbWVyLA0KPiA+ICBbTk9fU0VUSVRJTUVSPVll
+c1BsZWFzZV0pDQo+ID4gIEdJVF9DT05GX1NVQlNUKFtOT19TRVRJVElNRVJdKQ0KPiA+ICAjDQo+
+ID4gKyMgRGVmaW5lIE5PX1RJTUVSX1NFVFRJTUUgaWYgeW91IGRvbid0IGhhdmUgdGltZXJfc2V0
+dGltZQ0KPiA+ICtHSVRfQ0hFQ0tfRlVOQyh0aW1lcl9zZXR0aW1lLA0KPiA+ICtbTk9fVElNRVJf
+U0VUVElNRT1dLA0KPiA+ICtbQUNfU0VBUkNIX0xJQlModGltZXJfc2V0dGltZSxbcnRdLA0KPiA+
+ICsgIFtOT19USU1FUl9TRVRUSU1FPV0sDQo+ID4gKyAgW05PX1RJTUVSX1NFVFRJTUU9WWVzUGxl
+YXNlXSldKQ0KPiA+ICtHSVRfQ09ORl9TVUJTVChbTk9fVElNRVJfU0VUVElNRV0pDQo+ID4gKyMN
+Cj4gPiAgIyBEZWZpbmUgTk9fU1RSQ0FTRVNUUiBpZiB5b3UgZG9uJ3QgaGF2ZSBzdHJjYXNlc3Ry
+Lg0KPiA+ICBHSVRfQ0hFQ0tfRlVOQyhzdHJjYXNlc3RyLA0KPiA+ICBbTk9fU1RSQ0FTRVNUUj1d
+LA0KPiA+IGRpZmYgLS1naXQgYS9naXQtY29tcGF0LXV0aWwuaCBiL2dpdC1jb21wYXQtdXRpbC5o
+DQo+ID4gaW5kZXggNGVmMTdkZjg2YjBlLi5iMjM2MDIxOTYzMjMgMTAwNjQ0DQo+ID4gLS0tIGEv
+Z2l0LWNvbXBhdC11dGlsLmgNCj4gPiArKysgYi9naXQtY29tcGF0LXV0aWwuaA0KPiA+IEBAIC0y
+MjUsNyArMjI1LDI1IEBAIHN0cnVjdCBpdGltZXJzcGVjIHsNCj4gPiAgI2VuZGlmDQo+ID4gIA0K
+PiA+ICAjaWZkZWYgTk9fU0VUSVRJTUVSDQo+ID4gLSNkZWZpbmUgc2V0aXRpbWVyKHdoaWNoLHZh
+bHVlLG92YWx1ZSkNCj4gPiArI2RlZmluZSBzZXRpdGltZXIod2hpY2gsdmFsdWUsb3ZhbHVlKSAo
+KHZvaWQpICh3aGljaCksICh2b2lkKSAodmFsdWUpLCAodm9pZCkgKG92YWx1ZSksIGVycm5vID0g
+RU5PU1lTLCAtMSkNCj4gPiArI2VuZGlmDQo+ID4gKw0KPiA+ICsjaWZkZWYgTk9fVElNRVJfU0VU
+VElNRQ0KPiA+ICsjZGVmaW5lIHRpbWVyX2NyZWF0ZShjbG9ja2lkLCBzZXZwLCB0aW1lcnApICgo
+dm9pZCkgKGNsb2NraWQpLCAodm9pZCkgKHNldnApLCAodm9pZCkgKHRpbWVycCksIGVycm5vID0g
+RU5PU1lTLCAtMSkNCj4gPiArDQo+ID4gKyNkZWZpbmUgdGltZXJfZGVsZXRlKHRpbWVyKSBkbyB7
+CQlcDQo+ID4gKwlzdHJ1Y3QgaXRpbWVydmFsIHYgPSB7ezAsfSx9OwkJXA0KPiA+ICsJc2V0aXRp
+bWVyKElUSU1FUl9SRUFMLCAmdiwgTlVMTCk7CVwNCj4gPiArfSB3aGlsZSAoMCkNCj4gPiArDQo+
+ID4gKyNkZWZpbmUgdGltZXJfc2V0dGltZSh0aW1lciwgZmxhZ3MsIHZhbHVlLCBvdmFsdWUpIGRv
+IHsJCQkJXA0KPiA+ICsJc3RydWN0IGl0aW1lcnZhbCBfaXZhbHVlOwkJCQkJCVwNCj4gPiArCV9p
+dmFsdWUuaXRfaW50ZXJ2YWwudHZfc2VjID0gdmFsdWUuaXRfaW50ZXJ2YWwudHZfc2VjOwkJCVwN
+Cj4gPiArCV9pdmFsdWUuaXRfaW50ZXJ2YWwudHZfdXNlYyA9IHZhbHVlLml0X2ludGVydmFsLnR2
+X25zZWMgLyAxMDAwTDsJXA0KPiA+ICsJX2l2YWx1ZS5pdF92YWx1ZS50dl9zZWMgIHZhbHVlLml0
+X3ZhbHVlLnR2X3NlYzsJCQkJXA0KPiA+ICsJX2l2YWx1ZV9pdF92YWx1ZS50dl91c2VjID0gdmFs
+dWUuaXRfdmFsdWUudHZfbnNlYyAvIDEwMDBMOwkJXA0KPiA+ICsJc2V0aXRpbWVyKElUSU1FUl9S
+RUFMLCAmX2l2YWx1ZSwgTlVMTCk7CQkJCQlcDQo+ID4gK3doaWxlICgwKQ0KPiA+ICAjZW5kaWYN
+Cj4gPiAgDQo+ID4gICNpZm5kZWYgTk9fTElCR0VOX0gNCj4gPiANCj4gDQo+IFRoaXMgbG9va3Mg
+bGlrZSB0aGF0IHRoZSBmZWF0dXJlcyB0aGF0IHdlIG5lZWQgY2FuIGJlIG1hcHBlZCBiYWNrIGFu
+ZA0KPiBmb3J0aCBiZXR3ZWVuIHNldGl0aW1lcigpIGFuZCB0aW1lcl9zZXR0aW1lKCkuIFNvLCB3
+aHkgZG9uJ3QgeW91IGRlZmluZQ0KPiBhIGNvbXBhdC9zZXRpdGltZXIuW2NoXSBmb3IgeW91ciBz
+eXN0ZW0gdGhhdCBkb2VzIG5vdCBoYXZlIHNldGl0aW1lcigpDQo+IGFuZCBpbXBsZW1lbnQgc2V0
+aXRpbWVyKCkgaW4gdGVybXMgb2YgdGltZXJfc2V0dGltZSgpIGluc3RlYWQgb2YgdGhlDQo+IG90
+aGVyIHdheSByb3VuZD8gVGhlbiB5b3UgZG9uJ3QgbmVlZCB0byBjaGFuZ2UgYW55IG9mIHRoZSBj
+bGllbnQgY29kZS4NCj4gQWxzbywgeW91IHdvbid0IGhhdmUgdG8gd29ycnkgYWJvdXQgdGhlIG9k
+ZCB0aW1lcl9zZXR0aW1lKCkgaW4gT3BlbkJTRC4NCj4gDQo+IC0tIEhhbm5lcw0KPiANCg0KWW91
+IGNvdWxkIGRvIHRoYXQsIEkgc3VwcG9zZSwgdGhvdWdoIEkgcGVyc29uYWxseSBwcmVmZXIgdG8g
+dXNlIHRoZQ0KbmV3ZXIgc3RhbmRhcmQgaW4gdGhlIGNvcmUgY29kZSwgYW5kIG9ubHkgZmFsbGJh
+Y2sgdG8gb2xkZXIgc3RhbmRhcmRzIGluDQp0aGUgY2FzZSB3aGVyZSB5b3UgZG9uJ3QgaGF2ZSB3
+aGF0IGlzIG5ldyAoaW5zdGVhZCBvZiB0aGUgb3RoZXIgd2F5DQphcm91bmQpLg0KDQpPdmVyYWxs
+IGl0IGRvZXNuJ3QgcmVhbGx5IG1hdHRlciB0byBtZS4NCg0KUmVnYXJkcywNCkpha2UNCg==
