@@ -1,92 +1,74 @@
-From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-Subject: [PATCH] read_index_from(): catch out of order entries when reading an index file
-Date: Fri, 29 Aug 2014 10:54:41 +0200
-Message-ID: <1409302481-4914-1-git-send-email-jsorianopastor@gmail.com>
-References: <CAPig+cS__Sw1gNj3Pz20OC51QBsuxBEXTzMStAerwfMuT2afQg@mail.gmail.com>
-Cc: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 29 10:56:16 2014
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n updates for Git 2.1.1
+Date: Fri, 29 Aug 2014 18:12:35 +0800
+Message-ID: <CANYiYbGV_CFAOHzrEvyr+juNd3XmB_5t_fhNdCMWsFQwnTrujw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 12:12:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNHyg-0005sA-IP
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 10:56:14 +0200
+	id 1XNJAf-0003m1-1w
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 12:12:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbaH2I4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 04:56:09 -0400
-Received: from mail-we0-f178.google.com ([74.125.82.178]:36150 "EHLO
-	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800AbaH2I4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 04:56:07 -0400
-Received: by mail-we0-f178.google.com with SMTP id u57so1900856wes.37
-        for <git@vger.kernel.org>; Fri, 29 Aug 2014 01:56:05 -0700 (PDT)
+	id S1751413AbaH2KMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 06:12:37 -0400
+Received: from mail-wg0-f41.google.com ([74.125.82.41]:61958 "EHLO
+	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751006AbaH2KMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 06:12:36 -0400
+Received: by mail-wg0-f41.google.com with SMTP id l18so1892406wgh.0
+        for <git@vger.kernel.org>; Fri, 29 Aug 2014 03:12:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=q4MH8Kq0ns3658/4rixrXo1v7MMlz0cibQ35V2CahQo=;
-        b=r0Jmi8M82qQs1kjrSdxdhhGy6P/vEEi9Xg7c73hNehM4wkABOInljpD5T5RMzphZhi
-         J1nFRHls1v4Ce8lMiY+E3zdZN+wvlF9NmEyuPNi8kyuHsw5n378HqvnqzHd11idqNW0s
-         N7xxNx9jgjpBRiQuXe1z5SRHjrFE9ADpz6Gpi9ISbf9Lgm6B8ZHjw1Lxh1qUWz6f1Wee
-         fkJYP38jwn0hRyFBs9MRf3wd5YWV+rWmoFWjC7ZbdByNJ3CZtxHr72228w4a0oBXEbZ1
-         r1qshMTXOwf9rzKlo4slqMzaGTEU2EzmiX2cWazsFNi082dpysv6I36qa6yfX+wTd6u4
-         qAHA==
-X-Received: by 10.194.59.42 with SMTP id w10mr11897918wjq.15.1409302565879;
-        Fri, 29 Aug 2014 01:56:05 -0700 (PDT)
-Received: from ubuntu-jsoriano.tuenti.local (240.red-80-28-193.adsl.static.ccgg.telefonica.net. [80.28.193.240])
-        by mx.google.com with ESMTPSA id s14sm24034566wik.23.2014.08.29.01.56.04
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 29 Aug 2014 01:56:04 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4.1.gca370f9.dirty
-In-Reply-To: <CAPig+cS__Sw1gNj3Pz20OC51QBsuxBEXTzMStAerwfMuT2afQg@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=jwPO+mYqOJV61cApcTu3a534eamcXHqyDMMj47VtY+M=;
+        b=tERYDNUXftajHg1bf9EGjNjqiWQCOADcRTMnZjLSnGpet90h73c5Lct3J143nOIM7/
+         2lRfTfzpPM78jN9Qf5LM/lyFOVl6GlKqoJ/6HsePct42duCsgB0zypRguQ4iwkyrnD14
+         UFweNBMan/4XQqa5Ax42YUI5VQdXW5blyEJqSFGt9xusdlYl16NPnJ221+KZQ1E/a3mC
+         77vmC6q/EGukcUC/rckJFBOplxx6QhXLfLqY1t9+8hoBflQ2FVn46OFSi6ckdqJqUY5X
+         ZbRLPKzLmgEjgCi/XtNjCxwMeNfcTE+Eat2vn0q+xa/BnXd1SuIVS606gzDnRUtK1vvs
+         I6QA==
+X-Received: by 10.194.7.136 with SMTP id j8mr12065055wja.62.1409307155052;
+ Fri, 29 Aug 2014 03:12:35 -0700 (PDT)
+Received: by 10.194.58.200 with HTTP; Fri, 29 Aug 2014 03:12:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256140>
 
-Signed-off-by: Jaime Soriano Pastor <jsorianopastor@gmail.com>
----
- read-cache.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+Hi Junio,
 
-diff --git a/read-cache.c b/read-cache.c
-index 5d3c8bd..023d6d7 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1465,6 +1465,21 @@ static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
- 	return ce;
- }
- 
-+static void check_ce_order(struct cache_entry *ce, struct cache_entry *next_ce)
-+{
-+	int name_compare = strcmp(ce->name, next_ce->name);
-+	if (0 < name_compare)
-+		die("unordered stage entries in index");
-+	if (!name_compare) {
-+		if (!ce_stage(ce))
-+			die("multiple stage entries for merged file '%s'",
-+				ce->name);
-+		if (ce_stage(ce) > ce_stage(next_ce))
-+			die("unordered stage entries for '%s'",
-+				ce->name);
-+	}
-+}
-+
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int must_exist)
- {
-@@ -1526,6 +1541,9 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 		ce = create_from_disk(disk_ce, &consumed, previous_name);
- 		set_index_entry(istate, i, ce);
- 
-+		if (i > 0)
-+			check_ce_order(istate->cache[i - 1], ce);
-+
- 		src_offset += consumed;
- 	}
- 	strbuf_release(&previous_name_buf);
--- 
-2.0.4.1.gca370f9.dirty
+Please pull the following l10n updates to the maint branch.
+
+The following changes since commit 869951babc24fef5c5cd58f86baefc25b6ed3765:
+
+  l10n: de.po: improve message when switching branches (2014-08-23
+19:17:38 +0200)
+
+are available in the git repository at:
+
+  git://github.com/git-l10n/git-po
+
+for you to fetch changes up to 782ac539ea6fd069ede52917f047ffa9a81947e5:
+
+  po/TEAMS: add new members to German translation team (2014-08-29
+07:08:17 +0200)
+
+----------------------------------------------------------------
+Ralf Thielow (2):
+      l10n: de.po: translate 38 new messages
+      po/TEAMS: add new members to German translation team
+
+ po/TEAMS |    2 +
+ po/de.po | 2872 +++++++++++++++++++++++++++++++++-----------------------------
+ 2 files changed, 1515 insertions(+), 1359 deletions(-)
+
+--
+Jiang Xin
