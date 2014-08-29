@@ -1,82 +1,70 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 8/9] autoconf: Check for timer_settime
-Date: Fri, 29 Aug 2014 15:23:31 +0000
-Message-ID: <1409325810.18778.6.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1409187862-21257-1-git-send-email-sortie@maxsi.org>
-	 <1409187862-21257-9-git-send-email-sortie@maxsi.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "sortie@maxsi.org" <sortie@maxsi.org>
-X-From: git-owner@vger.kernel.org Fri Aug 29 17:24:15 2014
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: What happens when the repository is bigger than gc.autopacklimit
+ * pack.packSizeLimit?
+Date: Fri, 29 Aug 2014 11:38:00 -0400
+Message-ID: <201408291538.s7TFc0DU001156@hobgoblin.ariadne.com>
+References: <201408271936.s7RJarOh011358@hobgoblin.ariadne.com> <20140827194746.GE7561@peff.net>
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 29 17:44:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNO29-0006OU-P9
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 17:24:14 +0200
+	id 1XNOLc-0006PJ-9N
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 17:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753302AbaH2PYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 11:24:08 -0400
-Received: from mga02.intel.com ([134.134.136.20]:53366 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752962AbaH2PYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 11:24:07 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by orsmga101.jf.intel.com with ESMTP; 29 Aug 2014 08:23:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.04,424,1406617200"; 
-   d="scan'208";a="473834483"
-Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
-  by azsmga001.ch.intel.com with ESMTP; 29 Aug 2014 08:23:31 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.235]) by
- ORSMSX101.amr.corp.intel.com ([169.254.8.102]) with mapi id 14.03.0195.001;
- Fri, 29 Aug 2014 08:23:31 -0700
-Thread-Topic: [PATCH 8/9] autoconf: Check for timer_settime
-Thread-Index: AQHPwl3FgRTCdlz78EaZvQVC0QR/1JvoKv0A
-In-Reply-To: <1409187862-21257-9-git-send-email-sortie@maxsi.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <C16389670CECCA4589A50FDC48D28BFE@intel.com>
+	id S1752877AbaH2PoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 11:44:11 -0400
+Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:47943
+	"EHLO qmta03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752650AbaH2PoJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 11:44:09 -0400
+X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Aug 2014 11:44:09 EDT
+Received: from omta05.westchester.pa.mail.comcast.net ([76.96.62.43])
+	by qmta03.westchester.pa.mail.comcast.net with comcast
+	id ke8p1o0020vyq2s53fe1p1; Fri, 29 Aug 2014 15:38:01 +0000
+Received: from hobgoblin.ariadne.com ([24.34.72.61])
+	by omta05.westchester.pa.mail.comcast.net with comcast
+	id kfe01o00y1KKtkw3Rfe1MY; Fri, 29 Aug 2014 15:38:01 +0000
+Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
+	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s7TFc0K9001157;
+	Fri, 29 Aug 2014 11:38:00 -0400
+Received: (from worley@localhost)
+	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s7TFc0DU001156;
+	Fri, 29 Aug 2014 11:38:00 -0400
+In-reply-to: <20140827194746.GE7561@peff.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1409326681;
+	bh=pyy5KQNFvHtOqDe/bPkHb2BXK3gTjOhVNXTx1VXvSUI=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=TRaa3ksjCPZU6jwrfy+yof6htxt4DdLya5EkrZZhsdf4L1nLXby+rToXEfJAdC1Ij
+	 N6+gjLLr5HGYoEITioE3AHGs8xQOUgF8woHIFVTOu367AaPQ8vyo1HQhk4SuhHNbC1
+	 TK5GAStsknLq2LdmZ0Unt3T7Chiy3/Wk6P4cmsF7HKaMFXJQ9Q0cO74aXdm23ICziK
+	 Sp33EQ2ZG76ocPJBgIpVhi56t1ROHSOJ+qhE7Q920krnWXvSPDk2qxE3Qxkse/yJhc
+	 8H70gm7VlzV+gG8UU0UYfaj18igqrpGm6DLnPLS/8+iEU4AGyeCDpgcbMa5uapoF8y
+	 4umtr0pGufTmg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256149>
 
-T24gVGh1LCAyMDE0LTA4LTI4IGF0IDAzOjA0ICswMjAwLCBKb25hcyAnU29ydGllJyBUZXJtYW5z
-ZW4gd3JvdGU6DQo+IFRoaXMgZnVuY3Rpb24gd2lsbCBiZSB1c2VkIGluIGEgZm9sbG93aW5nIGNv
-bW1pdC4NCj4gDQo+IFRoZSB0aW1lcl9zZXR0aW1lIGZ1bmN0aW9uIGlzIHByb3ZpZGVkIGluIGxp
-YnJ0IG9uIHNvbWUgc3lzdGVtcy4gV2UNCj4gYWxyZWFkeSB1c2UgdGhpcyBsaWJyYXJ5IHNvbWV0
-aW1lcyB0byBnZXQgY2xvY2tfZ2V0dGltZSwgc28gcmV3b3JrIHRoZQ0KPiBsb2dpYyBzbyB3ZSBk
-b24ndCBsaW5rIHdpdGggaXQgdHdpY2UuDQo+IA0KPiBUaGlzIGZ1bmN0aW9uIHdhcyBub3QgcHJl
-dmlvdXNseSB1c2VkIGJ5IGdpdC4gVGhpcyBjYW4gY2F1c2UgdHJvdWJsZSBmb3INCj4gcGVvcGxl
-IG9uIHN5c3RlbXMgd2l0aG91dCB0aW1lcl9zZXR0aW1lIGlmIHRoZXkgb25seSByZWx5IG9uDQo+
-IGNvbmZpZy5tYWsudW5hbWUuIFRoZXkgd2lsbCBuZWVkIHRvIHNldCBOT19USU1FUl9TRVRUSU1F
-IG1hbnVhbGx5Lg0KPiANCj4gQWRkIHByb3BlciByZXBsYWNlbWVudCBmdW5jdGlvbiBtYWNyb3Mg
-Zm9yIHNldGl0aW1lciBhbmQgdGltZXJfc2V0dGltZQ0KPiB0aGF0IGV2YWx1YXRlcyB0aGUgYXJn
-dW1lbnRzIGFuZCBmYWlscyB3aXRoIEVOT1NZUyB0byBzaW11bGF0ZSBzdHViDQo+IGltcGxlbWVu
-dGF0aW9ucy4gVGhpcyB3aWxsIGJlIHVzZWZ1bCBpbiBhIGZvbGxvd2luZyBjb21taXQuDQo+IA0K
-PiBTaWduZWQtb2ZmLWJ5OiBKb25hcyAnU29ydGllJyBUZXJtYW5zZW4gPHNvcnRpZUBtYXhzaS5v
-cmc+DQo+IA0KPiAtLS0NCj4gDQo+IFRoaXMgcGF0Y2ggY2FuIGJlIGltcHJvdmVkIGJ5IGZpbmRp
-bmcgb3V0IHdoaWNoIHN5c3RlbXMgZG9lc24ndCBoYXZlDQo+IHRpbWVyX3NldHRpbWUgYW5kIGFk
-ZGluZyBlbnRyaWVzIGZvciB0aGVtIHRvIGNvbmZpZy5tYWsudW5hbWUuDQo+IA0KPiAgTWFrZWZp
-bGUgICAgICAgICAgfCAyMSArKysrKysrKysrKysrKysrKysrKysNCj4gIGNvbmZpZy5tYWsudW5h
-bWUgIHwgIDMgKysrDQo+ICBjb25maWd1cmUuYWMgICAgICB8ICA4ICsrKysrKysrDQo+ICBnaXQt
-Y29tcGF0LXV0aWwuaCB8ICA4ICsrKysrKystDQo+ICA0IGZpbGVzIGNoYW5nZWQsIDM5IGluc2Vy
-dGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9NYWtlZmlsZSBiL01h
-a2VmaWxlDQo+IGluZGV4IDY2MzI5ZTQuLjU2MDllNDQgMTAwNjQ0DQo+IC0tLSBhL01ha2VmaWxl
-DQo+ICsrKyBiL01ha2VmaWxlDQo+IEBAIC0xODIsMTYgKzE4MiwyMiBAQCBhbGw6Og0KPiAgIw0K
-PiAgIyBEZWZpbmUgTk9fU0VUSVRJTUVSIGlmIHlvdSBkb24ndCBoYXZlIHNldGl0aW1lcigpDQo+
-ICAjDQo+ICsjIERlZmluZSBOT19USU1FUl9TRVRUSU1FIGlmIHlvdSBkb24ndCBoYXZlIHRpbWVy
-X3NldHRpbWUoKQ0KPiArIw0KPiAgIyBEZWZpbmUgTk9fVElNRVJfVCBpZiB5b3UgZG9uJ3QgaGF2
-ZSB0aW1lcl90Lg0KPiArIyBUaGlzIGFsc28gaW1wbGllcyBOT19TRVRJVElNRVINCg0KRG9uJ3Qg
-eW91IG1lYW4gaXQgaW1wbGllcyBOT19USU1FUl9TRVRUSU1FPw0KDQpJdCBzZWVtcyB0byBtZSB0
-aGF0IHRoZXNlIHdlcmUgYWxsIGFkZGVkIGZvciBUSU1FUl9TRVRUSU1FLCBhbmQgbm90DQpOT19T
-RVRUSU1FUj8gT3IgYW0gSSBqdXN0IHRob3JvdWdobHkgY29uZnVzZWQ/DQoNClJlZ2FyZHMsDQpK
-YWtlDQo=
+> From: Jeff King <peff@peff.net>
+
+> why are you setting the packsize limit to 99m in the first place?
+
+I want to copy the Git repository to box.com as a backup measure, and
+my account on box.com limits files to 100 MB.
+
+> There are more delta opportunities
+
+In this repository, only the smallest files are text files; the bulk
+of the files are executable binaries.  So I've set
+core.bigFileThreshold to 10k to stop Git from attempting
+delta-compression of the binaries.  That makes the repository slightly
+larger, but it dramatically speeds the repacking process.
+
+Dale
