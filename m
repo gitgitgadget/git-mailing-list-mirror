@@ -1,87 +1,111 @@
-From: Scott Schmit <i.grok@comcast.net>
-Subject: Re: [PATCH] pretty: Provide a strict ISO8601 date format
-Date: Fri, 29 Aug 2014 13:44:39 -0400
-Message-ID: <20140829174439.GA10274@odin.ulthar.us>
-References: <1409248189-31409-1-git-send-email-bbolli@ewanet.ch>
- <xmqq61hc8bvq.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] Use timer_settime for new platforms
+Date: Fri, 29 Aug 2014 11:02:18 -0700
+Message-ID: <xmqqd2bj6uol.fsf@gitster.dls.corp.google.com>
+References: <1409330561-11806-1-git-send-email-jacob.e.keller@intel.com>
+	<1409330561-11806-9-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Beat Bolli <bbolli@ewanet.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 19:50:53 2014
+Cc: git@vger.kernel.org, Jonas 'Sortie' Termansen <sortie@maxsi.org>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 20:02:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNQK4-0008E0-Hm
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 19:50:52 +0200
+	id 1XNQVT-0001x9-E2
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 20:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753727AbaH2Rus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 13:50:48 -0400
-Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:38877
-	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753268AbaH2Rur (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 13:50:47 -0400
-X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Aug 2014 13:50:47 EDT
-Received: from omta12.westchester.pa.mail.comcast.net ([76.96.62.44])
-	by qmta05.westchester.pa.mail.comcast.net with comcast
-	id khfa1o0020xGWP855hkiW8; Fri, 29 Aug 2014 17:44:42 +0000
-Received: from odin.ulthar.us ([IPv6:2001:470:8c86:0:225:64ff:fe8b:c2f2])
-	by omta12.westchester.pa.mail.comcast.net with comcast
-	id khkg1o00Y2Ekl483Yhkh9M; Fri, 29 Aug 2014 17:44:41 +0000
-Received: from odin.ulthar.us (localhost [127.0.0.1])
-	by odin.ulthar.us (8.14.7/8.14.5) with ESMTP id s7THieN5014419;
-	Fri, 29 Aug 2014 13:44:40 -0400
-Received: (from draco@localhost)
-	by odin.ulthar.us (8.14.7/8.14.7/Submit) id s7THidGD014418;
-	Fri, 29 Aug 2014 13:44:39 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq61hc8bvq.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1409334282;
-	bh=2t3hLvMhn7Ost2WNl+yKR+O6pQ4s9FzrgwHfQiBUYOM=;
-	h=Received:Received:Received:Received:Date:From:To:Subject:
-	 Message-ID:MIME-Version:Content-Type;
-	b=PjjQiOz+EmBV0+1psDnaM4ei7hdYsw57X8g7Q9D/1sm0P4V+VKc42p4w5FNppu899
-	 N4dWIwZEMbqUL8iCiE4ZevFhxpX69a8STcBDOMbXE7g2bCv+0KA+VxDOnPBws1RkEw
-	 9lHxVLVe684y6duZewI8R6Ct+ApPb+i2svHFfn9ckfUN49qseao7JKZ9S0BKoVxDRe
-	 MRJAXQlg9v+zhnPHvU/CDCg0nqGbpLIS5r8HM5XVxOM0gy7tK+UUwvwNKtZKy+aIeu
-	 HmWfktNhhyBi3oJ0P6/vvlHRmnoBvwolbUisK2XBpyqTjvetcsc1dX/O7sCkOGrkp7
-	 OIqwkU/vDGptQ==
+	id S1752727AbaH2SCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 14:02:35 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53660 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751944AbaH2SCe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 14:02:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BCC9233E65;
+	Fri, 29 Aug 2014 14:02:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HVocS7RdrQlVACoJmglNx4PkBcw=; b=J4OdqI
+	UXTvXpVA+FL+k/9T7hKOmzsBzdoO2WttYfHP4NvDpiST8tlTQFrjXeO9VyPolXvb
+	6dfaNdBDstq6uYjwLHNl6bUMtbPUJwEKX2WoTvjIrgOMP9t3AYbZ6quiSZvWwQOO
+	FuWrz7SD7323yND3NjSEcQ4t8nmp1SEIsT8qw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w3cE6V31ln+4Z07iJvPFAH/HTaxLHGim
+	goTqebWL7wqTRnjRcbvV57n10fUyNMK7KrjUhRYzQV9lYGCirmO1GZ5bT5FazzTo
+	Af6QvmP2tp97FqEdbPr8DxzB4Lh3wC7lENDSzrl93UIq7AQz592FpSDqRM1QtOBK
+	lZ6RbtFiMRg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B1EA933E64;
+	Fri, 29 Aug 2014 14:02:28 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7048933E5E;
+	Fri, 29 Aug 2014 14:02:20 -0400 (EDT)
+In-Reply-To: <1409330561-11806-9-git-send-email-jacob.e.keller@intel.com>
+	(Jacob Keller's message of "Fri, 29 Aug 2014 09:42:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9EE337A8-2FA6-11E4-BCD5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256170>
 
-On Thu, Aug 28, 2014 at 03:53:13PM -0700, Junio C Hamano wrote:
-> Beat Bolli writes:
-> > +	else if (mode == DATE_ISO8601_STRICT)
-> > +		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%+03d:%02d",
-> > +				tm->tm_year + 1900,
-> > +				tm->tm_mon + 1,
-> > +				tm->tm_mday,
-> > +				tm->tm_hour, tm->tm_min, tm->tm_sec,
-> > +				tz / 100, abs(tz % 100));
-> 
-> Wouldn't this misidentify a zone that is 30 minutes off of GMT,
-> i.e. tz == -30?  tz/100 would not be negative and "%+03d:" would
-> happily show "+00:", no?
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-No.  strbuf_addf uses strbuf_vaddf which uses vsnprintf(3).  From man
-vsnprintf(3):
->   The flag characters
->       The character % is followed by zero or more of the following
->       flags:
+> From: Jonas 'Sortie' Termansen <sortie@maxsi.org>
 >
->       +      A sign (+ or -) should always be placed before a number
->              produced by a signed conversion.  By default a sign is
->              used only for negative numbers.  A + overrides a space if
->              both are used.
+> setitimer() is an obsolescent XSI interface and may be removed in a
+> future standard. Applications should use the core POSIX timer_settime()
+> instead.
+>
+> It's important that code doesn't simply check if timer_settime is
+> available as it can give false positives. Some systems like contemporary
+> OpenBSD provides the function, but it unconditionally fails with ENOSYS
+> at runtime.
 
-Perhaps you misread "%+03d:" as "+%02d:"?
+Doesn't this paragraph need tweaking?  I think you lost (which is a
+good thing) "notice that timer_settime() call failed with ENOSYS and
+switch to setitimer()", no?
 
--- 
-Scott Schmit
+> Clean up the progress reporting and change it to use timer_settime,
+> which will fall back to setitimer automatically if timer_settime is not
+> supported. (see git-compat-util.h for how it does this). If both
+> functions are not present, then git-compat-util.h provides replacements
+> which will always fail with ENOSYS.
+
+While this paragraph may be true if patch 8b and 9 are taken
+together, isn't what it describes mostly what 8b did, not 9?
+
+Here by 8b I mean the change to git-compat-util.h in 8; the patch
+might want to be split into two, 8a for the autoconf part whose log
+message may begin with "This function was not previously used by
+git." and 8b that adds an emulation of timer_settime() API in terms
+of setitimer() API, or the other way around.
+
+What 9 did is only "we used to use the setitmer() API to implement
+the progress reporting; now we use timer_settime() API" (yes, it is
+thanks to the abstraction given by 8, but the "callers has to only
+know about one API, not worrying about the other API" is a merit
+attributable to 8b, not this one).
+
+> The approach used here enables us to use a single API (timer_settime)
+> without having to worry about checking for #ifdefs or if blocks which
+> make it an unreadable nightmare. The major downside is for systems
+> without timer_settime support, they may fall back on a wrapped
+> implementation which could have subtle differences. This should be a
+> minor issue as almost all modern systems provide timer_settime support.
+
+As this paragraph.
+
+> Note that this change means that git should never use setitimer on its
+> own now, as the fallback implementation of timer_settime assumes that it
+> is the sole user of ITIMER_REAL, and timer_delete will reset the
+> ITIMER_REAL.
+
+And this one.
