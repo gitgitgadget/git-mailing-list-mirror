@@ -1,80 +1,73 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: git fsck exit code?
-Date: Fri, 29 Aug 2014 16:18:00 -0400
-Organization: Twitter
-Message-ID: <1409343480.19256.2.camel@leckie>
-References: <1409177412.15185.3.camel@leckie>
-	 <20140829185325.GC29456@peff.net>
-	 <xmqqha0v5cgn.fsf@gitster.dls.corp.google.com>
+From: Scott Schmit <i.grok@comcast.net>
+Subject: Re: [PATCH] pretty: Provide a strict ISO8601 date format
+Date: Fri, 29 Aug 2014 16:29:16 -0400
+Message-ID: <20140829202916.GB10274@odin.ulthar.us>
+References: <1409248189-31409-1-git-send-email-bbolli@ewanet.ch>
+ <xmqq61hc8bvq.fsf@gitster.dls.corp.google.com>
+ <20140829174439.GA10274@odin.ulthar.us>
+ <xmqq1trz6sv0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Beat Bolli <bbolli@ewanet.ch>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 22:18:15 2014
+X-From: git-owner@vger.kernel.org Fri Aug 29 22:29:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNScb-00019U-Pw
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 22:18:10 +0200
+	id 1XNSnV-0002Km-Ti
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 22:29:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463AbaH2USF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 16:18:05 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:63575 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752902AbaH2USE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 16:18:04 -0400
-Received: by mail-qg0-f48.google.com with SMTP id z107so2772648qgd.21
-        for <git@vger.kernel.org>; Fri, 29 Aug 2014 13:18:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=QxFVpsG+TrV7SZD6+Bsmpe9CR3YDAA5oT4Ol3aobL8c=;
-        b=PXgdGKPNQkS9zX+2Wx+kj78+2WeU5kNcGYnrnqAKD8OUaeyauTwtB34bBDhS1GcK06
-         0CkAHIEvTg9OsyKAzNTarrSWK0VauM/mWv3IrkjXz4w8ATkuINQLLLP3WGiFHcpaaFZM
-         8KTc8sWBLr0oEZCKXmt2rjOqtU67lUaTvPj+W6CkIuLAAUWGnZKLonAXpyTLFC0dyFhZ
-         uQdtE/g9V1b4DKTZLMP/lPm07orImUocgD7UVLOWFqT6Gm143dMH5rxGdqddzYb365l1
-         ZA9nQ8qRu+rLL9tMBaDoVJY256DvCot4ZjUmbdGOg04qN/LCEP5XhZLcxVqZ+CFmzot+
-         ccHA==
-X-Gm-Message-State: ALoCoQm69hZbgOzaqYbY07ULj1/ZKwnCy+kuhAXB4YX9SQqzHfOHNQF+gjNWVZRklaXvqW3JRJjg
-X-Received: by 10.224.86.5 with SMTP id q5mr22061581qal.36.1409343482787;
-        Fri, 29 Aug 2014 13:18:02 -0700 (PDT)
-Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
-        by mx.google.com with ESMTPSA id v1sm2907893qat.17.2014.08.29.13.18.01
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Fri, 29 Aug 2014 13:18:02 -0700 (PDT)
-In-Reply-To: <xmqqha0v5cgn.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S1751259AbaH2U3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 16:29:22 -0400
+Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:41064
+	"EHLO qmta10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750788AbaH2U3V (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 16:29:21 -0400
+Received: from omta04.westchester.pa.mail.comcast.net ([76.96.62.35])
+	by qmta10.westchester.pa.mail.comcast.net with comcast
+	id kk0S1o0040ldTLk5AkVL3k; Fri, 29 Aug 2014 20:29:20 +0000
+Received: from odin.ulthar.us ([IPv6:2001:470:8c86:0:225:64ff:fe8b:c2f2])
+	by omta04.westchester.pa.mail.comcast.net with comcast
+	id kkVJ1o00R2Ekl4801kVK07; Fri, 29 Aug 2014 20:29:20 +0000
+Received: from odin.ulthar.us (localhost [127.0.0.1])
+	by odin.ulthar.us (8.14.7/8.14.5) with ESMTP id s7TKTHrx014849;
+	Fri, 29 Aug 2014 16:29:17 -0400
+Received: (from draco@localhost)
+	by odin.ulthar.us (8.14.7/8.14.7/Submit) id s7TKTGdH014848;
+	Fri, 29 Aug 2014 16:29:16 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq1trz6sv0.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1409344160;
+	bh=G6/52fAs3t1J8RvaiL1riPcjz8xaXnE0mowpp4RDVLE=;
+	h=Received:Received:Received:Received:Date:From:To:Subject:
+	 Message-ID:MIME-Version:Content-Type;
+	b=PeCruAtoV6mpn9TrzDpl6kNMSbDSkf1N2SuIlJfMLe20B00aRIVEwsJ2AGJVcpIkE
+	 C+zsrRbLGas3PmPKUqWFhFUiVg2/cBfZIkTpZF+p9bnraY5HttRJwXtSZbTjGYKHJh
+	 oFGzdEK8llS0aHX4kFBR8TX/ssBBCcN8SP2eRam31tp6Y9SKFeG/UcBO7cYhP7Y9cW
+	 feCQTOJibcH6lIkv0VRpfPFpJhh0U42od4N5EW5JjGbtshk47YOza+FsCbn3NdFjeb
+	 yB0kKxHer66BWJXHXrOeSQumtFvXAwwnVizbqLU9CNfoKi5XNwD7ODz+cdPIAQ4gmd
+	 h6MKa3K+2V/bw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256187>
 
-On Fri, 2014-08-29 at 12:21 -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Fri, Aug 29, 2014 at 11:41:39AM -0700, Junio C Hamano wrote:
+> You feed tz/100 to "%+03d:" (the "sign and hour" part of the
+> timezone).  What if tz is -30, i.e. less than an hour but still a
+> negative offset?  tz/100 would be zero and tz % 100 would be -30.
 > 
-> > On Wed, Aug 27, 2014 at 06:10:12PM -0400, David Turner wrote:
-> >
-> >> It looks like git fsck exits with 0 status even if there are some
-> >> errors. The only case where there's a non-zero exit code is if
-> >> verify_pack reports errors -- but not e.g. fsck_object_dir.
-> >
-> > It will also bail non-zero with _certain_ tree errors that cause git to
-> > die() rather than fscking more completely.
+>     tz = -30;
+>     printf("%+03d:%02d", tz / 100, abs(tz % 100));
 > 
-> Even if git does not die, whenever it says broken link, missing
-> object, or object corrupt, we set errors_found and that variable
-> affects the exit status of fsck.  What does "some errors" exactly
-> mean in the original report?  Dangling objects are *not* errors and
-> should not cause fsck to report an error with its exit status.
+> would show what?
 
-error in tree 9f50addba2b4e9e928d9c6a7056bdf71b36fba90: contains
-duplicate file entries
++00:30 because zero can't be negative in two's complement arithmetic.
 
-(at least -- there might be more, but that's the one that bit me)
+The "-30 / 100 = 0" part didn't click for some reason.  Sorry for the
+noise.
