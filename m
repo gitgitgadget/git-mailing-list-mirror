@@ -1,237 +1,75 @@
-From: Beat Bolli <bbolli@ewanet.ch>
-Subject: [PATCH v3] pretty: add --date=iso-strict, a strict ISO-8601 date format
-Date: Fri, 29 Aug 2014 22:55:50 +0200
-Message-ID: <1409345750-9608-1-git-send-email-bbolli@ewanet.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 29 22:56:02 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pretty: Provide a strict ISO8601 date format
+Date: Fri, 29 Aug 2014 13:57:34 -0700
+Message-ID: <xmqq8um75801.fsf@gitster.dls.corp.google.com>
+References: <1409248189-31409-1-git-send-email-bbolli@ewanet.ch>
+	<xmqq61hc8bvq.fsf@gitster.dls.corp.google.com>
+	<20140829174439.GA10274@odin.ulthar.us>
+	<xmqq1trz6sv0.fsf@gitster.dls.corp.google.com>
+	<20140829202916.GB10274@odin.ulthar.us>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Beat Bolli <bbolli@ewanet.ch>, git@vger.kernel.org
+To: Scott Schmit <i.grok@comcast.net>
+X-From: git-owner@vger.kernel.org Fri Aug 29 22:57:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNTDD-00089n-Pm
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 22:56:00 +0200
+	id 1XNTEz-0001Gl-9q
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 22:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbaH2Uzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 16:55:55 -0400
-Received: from smtp3.mail.fcom.ch ([212.60.46.172]:38846 "EHLO
-	smtp3.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751339AbaH2Uzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 16:55:54 -0400
-Received: from drbeat.li (84-243-153-5.dyn.cable.fcom.ch [5.153.243.84])
-	by smtp3.mail.fcom.ch (Postfix) with ESMTP id 62FF1200B9
-	for <git@vger.kernel.org>; Fri, 29 Aug 2014 22:55:50 +0200 (CEST)
-Received: by drbeat.li (Postfix, from userid 1000)
-	id A42E4200A8; Fri, 29 Aug 2014 22:55:50 +0200 (CEST)
-X-Mailer: git-send-email 2.1.0
-X-Virus-Scanned: clamav-milter 0.98.4 at smtp3.mail.fcom.ch
-X-Virus-Status: Clean
+	id S1750985AbaH2U5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 16:57:45 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54637 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750829AbaH2U5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 16:57:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 31595367CC;
+	Fri, 29 Aug 2014 16:57:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fm6HHRLfAql74vWo4UxrHZRlXT0=; b=ohtH00
+	UWUYwADKrHi6wUfS1eQVS18NCtrn1Jdp8pDESairLfd7m0lTkOgo0jm6B7Gv+n8F
+	wbbBeYsioOQYQEFdHv7dh1cxe5NhWogXtjGSE/n3ZXBBazv4I77fncBQQMZCcIqB
+	9M7A40MgKgivKWNMpQ8hXPC7eaGQ7ibSu+nbM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HguUALYCwbgUvDwhJQH8lI4R1H0UBO9v
+	Hi7RaUPTxcWvBe4Y2xLisKoSaknzt4owDF6JLom5ESV5u2SzJQnrEtqykFMmTnvb
+	4Dy/I0Vej3kLRBXm9X8NypkJVqrh6kVrYWlnz+GKaLd0dD2eo2k29djzyOFRIQXk
+	7jnrZ2PMcgQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2847B367CB;
+	Fri, 29 Aug 2014 16:57:44 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B2711367C5;
+	Fri, 29 Aug 2014 16:57:35 -0400 (EDT)
+In-Reply-To: <20140829202916.GB10274@odin.ulthar.us> (Scott Schmit's message
+	of "Fri, 29 Aug 2014 16:29:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1A7A3DF4-2FBF-11E4-8652-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256192>
 
-There has been concern that Git's "ISO" date format does not really
-conform to the ISO-8601 standard. Thus, it cannot be parsed by ISO-8601
-compliant parsers, e.g. those of XML toolchains.
+Scott Schmit <i.grok@comcast.net> writes:
 
-The --date=iso format Git uses deviates from ISO-8601 in these ways:
-  - a space instead of the "T" date/time delimiter
-  - a space between time and time zone
-  - no colon between hours and minutes of the time zone
+> +00:30 because zero can't be negative in two's complement arithmetic.
 
-Add a strict ISO-8601 date format for displaying committer and author
-dates. Use the '%aI' and '%cI' format specifiers (note the uppercase
-'I') and the '--date=iso-strict' or '--date=iso8601-strict' date format
-names.
+Yet to meet negative zero yet myself ;-)
 
-See http://thread.gmane.org/gmane.comp.version-control.git/255879 and
-http://thread.gmane.org/gmane.comp.version-control.git/52414/focus=52585
-for discussion.
+> The "-30 / 100 = 0" part didn't click for some reason.  Sorry for the
+> noise.
 
-Signed-off-by: Beat Bolli <bbolli@ewanet.ch>
----
+That's OK.  You are not the only one who didn't get this right the
+first time.  The important thing is that we get it right in the
+version we will use in the final product.
 
-v3:
-  - Improve the commit message
-  - Add the new format in builtin/blame.c
-
-v2:
-  - Improve the commit message
-  - Fix time zone display for negative values close to zero
-
- Documentation/git-rev-list.txt     |  2 +-
- Documentation/pretty-formats.txt   |  6 ++++--
- Documentation/rev-list-options.txt | 13 +++++++++++--
- builtin/blame.c                    |  3 +++
- cache.h                            |  1 +
- date.c                             | 14 +++++++++++++-
- pretty.c                           |  5 ++++-
- t/t4205-log-pretty-formats.sh      |  7 +++++++
- 8 files changed, 44 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 7a1585d..fd7f8b5 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -45,7 +45,7 @@ SYNOPSIS
- 	     [ \--regexp-ignore-case | -i ]
- 	     [ \--extended-regexp | -E ]
- 	     [ \--fixed-strings | -F ]
--	     [ \--date=(local|relative|default|iso|rfc|short) ]
-+	     [ \--date=(local|relative|default|iso|iso-strict|rfc|short) ]
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 85d6353..50a2c30 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -115,7 +115,8 @@ The placeholders are:
- - '%aD': author date, RFC2822 style
- - '%ar': author date, relative
- - '%at': author date, UNIX timestamp
--- '%ai': author date, ISO 8601 format
-+- '%ai': author date, ISO 8601-like format
-+- '%aI': author date, strict ISO 8601 format
- - '%cn': committer name
- - '%cN': committer name (respecting .mailmap, see
-   linkgit:git-shortlog[1] or linkgit:git-blame[1])
-@@ -126,7 +127,8 @@ The placeholders are:
- - '%cD': committer date, RFC2822 style
- - '%cr': committer date, relative
- - '%ct': committer date, UNIX timestamp
--- '%ci': committer date, ISO 8601 format
-+- '%ci': committer date, ISO 8601-like format
-+- '%cI': committer date, strict ISO 8601 format
- - '%d': ref names, like the --decorate option of linkgit:git-log[1]
- - '%e': encoding
- - '%s': subject
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index deb8cca..5d311b8 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -677,7 +677,7 @@ include::pretty-options.txt[]
- --relative-date::
- 	Synonym for `--date=relative`.
- 
----date=(relative|local|default|iso|rfc|short|raw)::
-+--date=(relative|local|default|iso|iso-strict|rfc|short|raw)::
- 	Only takes effect for dates shown in human-readable format, such
- 	as when using `--pretty`. `log.date` config variable sets a default
- 	value for the log command's `--date` option.
-@@ -687,7 +687,16 @@ e.g. ``2 hours ago''.
- +
- `--date=local` shows timestamps in user's local time zone.
- +
--`--date=iso` (or `--date=iso8601`) shows timestamps in ISO 8601 format.
-+`--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
-+The differences to the strict ISO 8601 format are:
-+
-+	- a space instead of the `T` date/time delimiter
-+	- a space between time and time zone
-+	- no colon between hours and minutes of the time zone
-+
-++
-+`--date=iso-strict` (or `--date=iso8601-strict`) shows timestamps in strict
-+ISO 8601 format.
- +
- `--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
- format, often found in email messages.
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 17d30d0..4f974aa 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2583,6 +2583,9 @@ parse_done:
- 	case DATE_ISO8601:
- 		blame_date_width = sizeof("2006-10-19 16:00:04 -0700");
- 		break;
-+	case DATE_ISO8601_STRICT:
-+		blame_date_width = sizeof("2006-10-19T16:00:04-07:00");
-+		break;
- 	case DATE_RAW:
- 		blame_date_width = sizeof("1161298804 -0700");
- 		break;
-diff --git a/cache.h b/cache.h
-index fcb511d..fa92aaf 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1037,6 +1037,7 @@ enum date_mode {
- 	DATE_SHORT,
- 	DATE_LOCAL,
- 	DATE_ISO8601,
-+	DATE_ISO8601_STRICT,
- 	DATE_RFC2822,
- 	DATE_RAW
- };
-diff --git a/date.c b/date.c
-index 782de95..5d73d9b 100644
---- a/date.c
-+++ b/date.c
-@@ -200,7 +200,16 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
- 				tm->tm_mday,
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				tz);
--	else if (mode == DATE_RFC2822)
-+	else if (mode == DATE_ISO8601_STRICT) {
-+		char sign = (tz >= 0) ? '+' : '-';
-+		tz = abs(tz);
-+		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
-+				tm->tm_year + 1900,
-+				tm->tm_mon + 1,
-+				tm->tm_mday,
-+				tm->tm_hour, tm->tm_min, tm->tm_sec,
-+				sign, tz / 100, tz % 100);
-+	} else if (mode == DATE_RFC2822)
- 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
- 			weekday_names[tm->tm_wday], tm->tm_mday,
- 			month_names[tm->tm_mon], tm->tm_year + 1900,
-@@ -751,6 +760,9 @@ enum date_mode parse_date_format(const char *format)
- 	else if (!strcmp(format, "iso8601") ||
- 		 !strcmp(format, "iso"))
- 		return DATE_ISO8601;
-+	else if (!strcmp(format, "iso8601-strict") ||
-+		 !strcmp(format, "iso-strict"))
-+		return DATE_ISO8601_STRICT;
- 	else if (!strcmp(format, "rfc2822") ||
- 		 !strcmp(format, "rfc"))
- 		return DATE_RFC2822;
-diff --git a/pretty.c b/pretty.c
-index 3a1da6f..7dd5601 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -731,9 +731,12 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 	case 'r':	/* date, relative */
- 		strbuf_addstr(sb, show_ident_date(&s, DATE_RELATIVE));
- 		return placeholder_len;
--	case 'i':	/* date, ISO 8601 */
-+	case 'i':	/* date, ISO 8601-like */
- 		strbuf_addstr(sb, show_ident_date(&s, DATE_ISO8601));
- 		return placeholder_len;
-+	case 'I':	/* date, ISO 8601 strict */
-+		strbuf_addstr(sb, show_ident_date(&s, DATE_ISO8601_STRICT));
-+		return placeholder_len;
- 	}
- 
- skip:
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 349c531..aad7a80 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -431,6 +431,13 @@ EOF
- 	test_cmp expected actual
- '
- 
-+# ISO strict date format
-+test_expect_success 'ISO and ISO-strict date formats display the same values' '
-+	git log --format=%ai%n%ci | sed -e "s/ /T/; s/ //; s/..\$/:&/" >expected &&
-+	git log --format=%aI%n%cI >actual &&
-+	test_cmp expected actual
-+'
-+
- # get new digests (with no abbreviations)
- head1=$(git rev-parse --verify HEAD~0) &&
- head2=$(git rev-parse --verify HEAD~1) &&
--- 
-2.1.0
+Thanks.
