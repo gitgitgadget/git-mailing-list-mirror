@@ -1,66 +1,112 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: What happens when the repository is bigger than gc.autopacklimit
- * pack.packSizeLimit?
-Date: Fri, 29 Aug 2014 14:54:45 -0400
-Message-ID: <201408291854.s7TIsjM3003040@hobgoblin.ariadne.com>
-References: <201408271936.s7RJarOh011358@hobgoblin.ariadne.com>
- <20140827194746.GE7561@peff.net>
- <201408291538.s7TFc0DU001156@hobgoblin.ariadne.com> <20140829184716.GB29456@peff.net>
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 29 20:54:51 2014
+From: Jonas 'Sortie' Termansen <Sortie@Maxsi.org>
+Subject: Re: [PATCH 1/9] git-compat-util.h: Add missing semicolon after struct
+ itimerval
+Date: Fri, 29 Aug 2014 20:54:52 +0200
+Message-ID: <5400CC7C.4010706@Maxsi.org>
+References: <1409330561-11806-1-git-send-email-jacob.e.keller@intel.com> <1409330916.18778.17.camel@jekeller-desk1.amr.corp.intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Keller, Jacob E" <jacob.e.keller@intel.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 29 20:55:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNRJy-0004yb-BB
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 20:54:50 +0200
+	id 1XNRK5-00056R-Uc
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 20:54:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753214AbaH2Syq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 14:54:46 -0400
-Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:32881
-	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752942AbaH2Syq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 14:54:46 -0400
-Received: from omta19.westchester.pa.mail.comcast.net ([76.96.62.98])
-	by qmta05.westchester.pa.mail.comcast.net with comcast
-	id khkP1o00627AodY55iulUH; Fri, 29 Aug 2014 18:54:45 +0000
-Received: from hobgoblin.ariadne.com ([24.34.72.61])
-	by omta19.westchester.pa.mail.comcast.net with comcast
-	id kiuk1o00r1KKtkw3fiulZ0; Fri, 29 Aug 2014 18:54:45 +0000
-Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
-	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s7TIsjUL003041;
-	Fri, 29 Aug 2014 14:54:45 -0400
-Received: (from worley@localhost)
-	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s7TIsjM3003040;
-	Fri, 29 Aug 2014 14:54:45 -0400
-In-reply-to: <20140829184716.GB29456@peff.net>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1409338485;
-	bh=tVi2OoIlIQFG3Cj2f47o57ffp/VKALS8hvzB/JXwWNM=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=pImuW6U5iVzeDsPfWrFwnh1OiyWzvImDVWtIKa7csRXUzVDj/lcxVZOYiXmQ+5cRr
-	 h7HaUOIaxfukrs3N5paeCr0ELVeLIRuNKLd0Teb46oucSRt/7p+G+3aS8gHTXXYg6I
-	 Za8wOSNp4TnDdMoFSpMCuT6vZmrQN4KSOKR1bP70W/KVMwNrPosvIcqYcB0uobOpdr
-	 qiaHLJd4YcQDRuanSnYdlE0yL7P3nz2MgRRF/Ky88TmRWZVzGampzShFw1FYhIPCaG
-	 8W//YHzW/4uIIwEZs3cLM8PgQbWniIm81WBEgliKZx+oe2XhRfnVwOqzsDYh/VoGeA
-	 UD12if18rpmWA==
+	id S1753397AbaH2Syy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 14:54:54 -0400
+Received: from csmtp2.one.com ([91.198.169.22]:35289 "EHLO csmtp2.one.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752942AbaH2Syx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 14:54:53 -0400
+Received: from [192.168.1.2] (0133301021.0.fullrate.dk [95.166.189.26])
+	by csmtp2.one.com (Postfix) with ESMTPA id A1A2F4000A2E3;
+	Fri, 29 Aug 2014 18:54:51 +0000 (UTC)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <1409330916.18778.17.camel@jekeller-desk1.amr.corp.intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256179>
 
-> From: Jeff King <peff@peff.net>
+Hi,
 
-> That makes sense, though I question whether packs are really helping you
-> in the first place. I wonder if you would be better off keep your
-> non-delta binaries as loose objects (this would require a new option to
-> pack-objects and teaching "gc --auto" to ignore these when counting
-> loose objects, but would be fairly straightforward).
+Thanks for the interest. :)
 
-Having 40,000 lose objects might be troublesome in its own way.
+There's a whole lot of emails being sent. I'll make a nice V2 shortly that
+takes your feedback into consideration. :)
 
-Dale
+But first let's discuss. I think we should define the intended criteria.
+
+I expect to find these systems out there:
+ * No setitimer and no timer_settime.
+ * Has setitimer and no timer_settime.
+ * Has setitimer and timer_settime (broken).
+ * Has setitimer and timer_settime (works).
+ * No setitimer and timer_settime (works).
+
+Which of these do we want to support? Right we support the cases where
+systems have setitimer, the cases without it is slightly broken prior to
+my fixes.
+
+Jake's modified patch set breaks the case where timer_settimer exists and
+is broken. As far as I know, that's only OpenBSD among the noticeable free
+software world, but could be more systems, perhaps in the future.
+
+The progress bar displayed is rather non-essential. If we go with Jake's
+proposal, we support most non-broken platforms, and the broken platforms
+will start working when they add POSIX timers.
+
+Ideally, I'd prefer to only support the systems with timer_settime that
+works, but real people use git on systems without and it is not too much
+work to support all of these combinations.
+
+I see these approaches to the problem:
+
+1) Only use setitimer (do nothing right now).
+
+ * Disadvantage: We don't support modern systems without setitimer but that
+   has timer_settime. Those are few, though, as setitimer is pretty much
+   universal at the moment.
+
+ * Disadvantage: We are using an older interface instead of the modern good
+   practices.
+
+2) Use setitimer (emulated with timer_create if needed).
+
+ * Disadvantage: The core source code doesn't employ current best practices.
+
+3) Use timer_create (emulated with setitimer if needed).
+
+ * Disadvantage: The build system may have a false positive when checking
+   whether timer_settime is available.
+
+4) Use both (decision is made at runtime if both are available)
+
+   If we do this well, the bulk of the compatibility code is isolated from
+   the real source code (that just uses timer_settime naively) and it can
+   be reduced when broken systems gets fixed.
+
+ * Advantage: No regressions.
+
+ * Disadvantage: The compatibility logic may be complicated.
+
+I'm personally in favor of proposal 3, but it's more in git's spirit to pick
+proposal 4 as supports more of the real systems out there.
+
+My first attempt was essentially proposal 4, but with no effort in trying to
+hide the fact that timer_settime might be broken. I'm going to develop a V2
+that isolates this compatibility logic from the core code. I'm not convinced
+this approach is actually cleaner, but we'll see when it's done. Either way,
+isolated compatibility code today can be removed tomorrow when we no longer
+need it. :)
+
+Jonas
