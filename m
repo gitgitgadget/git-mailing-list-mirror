@@ -1,70 +1,79 @@
 From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: What happens when the repository is bigger than gc.autopacklimit
- * pack.packSizeLimit?
-Date: Fri, 29 Aug 2014 11:38:00 -0400
-Message-ID: <201408291538.s7TFc0DU001156@hobgoblin.ariadne.com>
-References: <201408271936.s7RJarOh011358@hobgoblin.ariadne.com> <20140827194746.GE7561@peff.net>
+Subject: Re: What happens when the repository is bigger than gc.autopacklimit * pack.packSizeLimit?
+Date: Fri, 29 Aug 2014 11:47:35 -0400
+Message-ID: <201408291547.s7TFlZ4F002412@hobgoblin.ariadne.com>
+References: <201408271936.s7RJarOh011358@hobgoblin.ariadne.com> <xmqqa96pd59s.fsf@gitster.dls.corp.google.com>
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 29 17:44:22 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 17:47:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNOLc-0006PJ-9N
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 17:44:20 +0200
+	id 1XNOOs-0000pY-Vb
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 17:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752877AbaH2PoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 11:44:11 -0400
-Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:47943
+	id S1753097AbaH2Prj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 11:47:39 -0400
+Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:38509
 	"EHLO qmta03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752650AbaH2PoJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 11:44:09 -0400
-X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Aug 2014 11:44:09 EDT
-Received: from omta05.westchester.pa.mail.comcast.net ([76.96.62.43])
+	by vger.kernel.org with ESMTP id S1752755AbaH2Pri (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 11:47:38 -0400
+Received: from omta15.westchester.pa.mail.comcast.net ([76.96.62.87])
 	by qmta03.westchester.pa.mail.comcast.net with comcast
-	id ke8p1o0020vyq2s53fe1p1; Fri, 29 Aug 2014 15:38:01 +0000
+	id ke0Y1o0021swQuc53fnbmq; Fri, 29 Aug 2014 15:47:35 +0000
 Received: from hobgoblin.ariadne.com ([24.34.72.61])
-	by omta05.westchester.pa.mail.comcast.net with comcast
-	id kfe01o00y1KKtkw3Rfe1MY; Fri, 29 Aug 2014 15:38:01 +0000
+	by omta15.westchester.pa.mail.comcast.net with comcast
+	id kfnb1o00T1KKtkw3bfnbch; Fri, 29 Aug 2014 15:47:35 +0000
 Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
-	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s7TFc0K9001157;
-	Fri, 29 Aug 2014 11:38:00 -0400
+	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s7TFlZqL002413;
+	Fri, 29 Aug 2014 11:47:35 -0400
 Received: (from worley@localhost)
-	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s7TFc0DU001156;
-	Fri, 29 Aug 2014 11:38:00 -0400
-In-reply-to: <20140827194746.GE7561@peff.net>
+	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s7TFlZ4F002412;
+	Fri, 29 Aug 2014 11:47:35 -0400
+In-reply-to: <xmqqa96pd59s.fsf@gitster.dls.corp.google.com>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1409326681;
-	bh=pyy5KQNFvHtOqDe/bPkHb2BXK3gTjOhVNXTx1VXvSUI=;
+	s=q20140121; t=1409327255;
+	bh=gI2uWKa1bDID+eUe9gv1ATtreqZ4zVyHTsnbVQooEBs=;
 	h=Received:Received:Received:Received:Date:Message-Id:From:To:
 	 Subject;
-	b=TRaa3ksjCPZU6jwrfy+yof6htxt4DdLya5EkrZZhsdf4L1nLXby+rToXEfJAdC1Ij
-	 N6+gjLLr5HGYoEITioE3AHGs8xQOUgF8woHIFVTOu367AaPQ8vyo1HQhk4SuhHNbC1
-	 TK5GAStsknLq2LdmZ0Unt3T7Chiy3/Wk6P4cmsF7HKaMFXJQ9Q0cO74aXdm23ICziK
-	 Sp33EQ2ZG76ocPJBgIpVhi56t1ROHSOJ+qhE7Q920krnWXvSPDk2qxE3Qxkse/yJhc
-	 8H70gm7VlzV+gG8UU0UYfaj18igqrpGm6DLnPLS/8+iEU4AGyeCDpgcbMa5uapoF8y
-	 4umtr0pGufTmg==
+	b=ICwgtu2N1TNrUa1ouSxlPePXEDSRcZ2R33mUCZzIUASn6ArlP21pTbAzy9eiK5Whm
+	 e0NjUeA0PyetRbURPuBSTCTBQVYq3clC2BlF0EGlT5J5R+/q/JK0NGc21ktWiwC4OO
+	 HTb5nEzf9Y+3YXJnVInKCrkGIH8MhSBHB5ct7IoWfV+7Tl7lvBrU0g6es/AbqCuM7R
+	 6frDcXN9juMv4B0YVxXQF2pHfdq0Gmv5v/bZIVKja2SBDAdODUir+qHo2uqTOt82jR
+	 4YA2yhm82hhUOQUBVoH/598IwMlDaZRx01PLUeghOojYz9VWqQNFB1vcTExvpVWrh0
+	 xEaHbZVgE2u2g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256150>
 
-> From: Jeff King <peff@peff.net>
+> From: Junio C Hamano <gitster@pobox.com>
 
-> why are you setting the packsize limit to 99m in the first place?
+> But if your definition of the boundary between "small" and "large"
+> is unreasonably low (and/or your definition of "too many" is
+> unreasonably small), you will always have the problem you found.
 
-I want to copy the Git repository to box.com as a backup measure, and
-my account on box.com limits files to 100 MB.
+I would propose that a pack whose size is "close enough" to
+packSizeLimit should be assumed to have already been built by
+repacking, and shouldn't count against autopacklimit.
 
-> There are more delta opportunities
+That's easy to implement, and causes the desirable result that "git gc
+--auto" isn't triggerable immediate after repacking.
 
-In this repository, only the smallest files are text files; the bulk
-of the files are executable binaries.  So I've set
-core.bigFileThreshold to 10k to stop Git from attempting
-delta-compression of the binaries.  That makes the repository slightly
-larger, but it dramatically speeds the repacking process.
+Of course, eventually there will be enough loose objects, and
+everything will get repacked (even the "full" packs).  But that will
+happen only occasionally.
+
+That does leave open the question of what is "close enough".  Off the
+top of my head, a pack which is larger than packSizeLimit minus (the
+size limit for files we put in packs) can be considered "full" in this
+test.
+
+Then again, maybe the solution is to just set autopacklimit very high,
+perhaps even by default -- in real use, eventually the gc.auto test
+will be triggered.
 
 Dale
