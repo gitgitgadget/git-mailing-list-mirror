@@ -1,79 +1,47 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: What happens when the repository is bigger than gc.autopacklimit * pack.packSizeLimit?
-Date: Fri, 29 Aug 2014 11:47:35 -0400
-Message-ID: <201408291547.s7TFlZ4F002412@hobgoblin.ariadne.com>
-References: <201408271936.s7RJarOh011358@hobgoblin.ariadne.com> <xmqqa96pd59s.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 17:47:46 2014
+From: Jonas 'Sortie' Termansen <Sortie@Maxsi.org>
+Subject: Re: [PATCH 8/9] autoconf: Check for timer_settime
+Date: Fri, 29 Aug 2014 18:02:48 +0200
+Message-ID: <5400A428.9000202@Maxsi.org>
+References: <1409187862-21257-1-git-send-email-sortie@maxsi.org>	 <1409187862-21257-9-git-send-email-sortie@maxsi.org> <1409325810.18778.6.camel@jekeller-desk1.amr.corp.intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Keller, Jacob E" <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Aug 29 18:03:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNOOs-0000pY-Vb
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 17:47:43 +0200
+	id 1XNOdd-0005si-09
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 18:02:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753097AbaH2Prj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 11:47:39 -0400
-Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:38509
-	"EHLO qmta03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752755AbaH2Pri (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Aug 2014 11:47:38 -0400
-Received: from omta15.westchester.pa.mail.comcast.net ([76.96.62.87])
-	by qmta03.westchester.pa.mail.comcast.net with comcast
-	id ke0Y1o0021swQuc53fnbmq; Fri, 29 Aug 2014 15:47:35 +0000
-Received: from hobgoblin.ariadne.com ([24.34.72.61])
-	by omta15.westchester.pa.mail.comcast.net with comcast
-	id kfnb1o00T1KKtkw3bfnbch; Fri, 29 Aug 2014 15:47:35 +0000
-Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
-	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s7TFlZqL002413;
-	Fri, 29 Aug 2014 11:47:35 -0400
-Received: (from worley@localhost)
-	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s7TFlZ4F002412;
-	Fri, 29 Aug 2014 11:47:35 -0400
-In-reply-to: <xmqqa96pd59s.fsf@gitster.dls.corp.google.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1409327255;
-	bh=gI2uWKa1bDID+eUe9gv1ATtreqZ4zVyHTsnbVQooEBs=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=ICwgtu2N1TNrUa1ouSxlPePXEDSRcZ2R33mUCZzIUASn6ArlP21pTbAzy9eiK5Whm
-	 e0NjUeA0PyetRbURPuBSTCTBQVYq3clC2BlF0EGlT5J5R+/q/JK0NGc21ktWiwC4OO
-	 HTb5nEzf9Y+3YXJnVInKCrkGIH8MhSBHB5ct7IoWfV+7Tl7lvBrU0g6es/AbqCuM7R
-	 6frDcXN9juMv4B0YVxXQF2pHfdq0Gmv5v/bZIVKja2SBDAdODUir+qHo2uqTOt82jR
-	 4YA2yhm82hhUOQUBVoH/598IwMlDaZRx01PLUeghOojYz9VWqQNFB1vcTExvpVWrh0
-	 xEaHbZVgE2u2g==
+	id S1753310AbaH2QCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 12:02:50 -0400
+Received: from csmtp5.one.com ([195.47.247.105]:33712 "EHLO csmtp5.one.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752853AbaH2QCu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 12:02:50 -0400
+Received: from [192.168.1.2] (0133301021.0.fullrate.dk [95.166.189.26])
+	by csmtp5.one.com (Postfix) with ESMTPA id EF4C44000351D;
+	Fri, 29 Aug 2014 16:02:47 +0000 (UTC)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <1409325810.18778.6.camel@jekeller-desk1.amr.corp.intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256151>
 
-> From: Junio C Hamano <gitster@pobox.com>
+> Don't you mean it implies NO_TIMER_SETTIME?
+> 
+> It seems to me that these were all added for TIMER_SETTIME, and not
+> NO_SETTIMER? Or am I just thoroughly confused?
 
-> But if your definition of the boundary between "small" and "large"
-> is unreasonably low (and/or your definition of "too many" is
-> unreasonably small), you will always have the problem you found.
+Thanks, that's a mistake. I copy-pasted the wrong line. :P
 
-I would propose that a pack whose size is "close enough" to
-packSizeLimit should be assumed to have already been built by
-repacking, and shouldn't count against autopacklimit.
+All of those additions should just be:
+# This also implies NO_TIMER_SETTIME
 
-That's easy to implement, and causes the desirable result that "git gc
---auto" isn't triggerable immediate after repacking.
-
-Of course, eventually there will be enough loose objects, and
-everything will get repacked (even the "full" packs).  But that will
-happen only occasionally.
-
-That does leave open the question of what is "close enough".  Off the
-top of my head, a pack which is larger than packSizeLimit minus (the
-size limit for files we put in packs) can be considered "full" in this
-test.
-
-Then again, maybe the solution is to just set autopacklimit very high,
-perhaps even by default -- in real use, eventually the gc.auto test
-will be triggered.
-
-Dale
+Jonas
