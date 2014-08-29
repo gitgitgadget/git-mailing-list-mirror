@@ -1,83 +1,81 @@
-From: Beat Bolli <bbolli@ewanet.ch>
-Subject: Re: [PATCH v2] pretty: Provide a strict ISO8601 date format
-Date: Fri, 29 Aug 2014 23:30:58 +0200
-Message-ID: <5400F112.6030300@ewanet.ch>
-References: <1409331522-8457-1-git-send-email-bbolli@ewanet.ch>	<xmqqwq9r5dhb.fsf@gitster.dls.corp.google.com> <xmqqppfj5d8f.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] index-pack: handle duplicate base objects gracefully
+Date: Fri, 29 Aug 2014 14:56:18 -0700
+Message-ID: <xmqqegvz3qpp.fsf@gitster.dls.corp.google.com>
+References: <20140829205538.GD29456@peff.net> <20140829205809.GB7060@peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="6JG4otmOscrgN5JKBBNKWt8s2j1pfiJdt"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 29 23:31:09 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Shawn Pearce <spearce@spearce.org>,
+	Martin von Gagern <Martin.vGagern@gmx.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 29 23:56:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNTlF-0003R7-0y
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 23:31:09 +0200
+	id 1XNU9q-0006zf-0f
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Aug 2014 23:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234AbaH2VbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 17:31:03 -0400
-Received: from mx1.2b3w.ch ([92.42.186.250]:50521 "EHLO mx1.2b3w.ch"
+	id S1751255AbaH2V43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 17:56:29 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63210 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750788AbaH2VbB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 17:31:01 -0400
-Received: from mx1.2b3w.ch (localhost [127.0.0.1])
-	by mx1.2b3w.ch (Postfix) with ESMTP id A3D67C3444;
-	Fri, 29 Aug 2014 23:30:59 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	NORMAL_HTTP_TO_IP autolearn=ham version=3.3.2
-Received: from mcmini.bolli (84-243-153-5.dyn.cable.fcom.ch [5.153.243.84])
-	by mx1.2b3w.ch (Postfix) with ESMTPSA id 7E033C33DD;
-	Fri, 29 Aug 2014 23:30:59 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqppfj5d8f.fsf@gitster.dls.corp.google.com>
-OpenPGP: id=506A903A;
-	url=http://drbeat.li/pubkey.asc
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751249AbaH2V43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 17:56:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 74EB3361DC;
+	Fri, 29 Aug 2014 17:56:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qUosOB34GgXUxC3tGAZZ+2d0Ffk=; b=vB/IW3
+	cVwZ5fRuQUvfdX+Y07pRWuj9oYg9RLFiKleZ2a844u4cyxZmSqMkWca3nPRWniaE
+	A5z6sXte0GWhSbXBmoNnzZimIscVSI+QbOwIynCKlzMGVH4o1LAbvEopXFidejFb
+	opHYoLh5z6pI54SH13bNdLqEy57NZEG4NpIuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ooUiwXg4Alab23ZClRdCJBqWLAcQiV8K
+	aiZ9C+9+Gt8d6iz+4wu+D6bSY9W29h7zG6CnNDxbLnALEPBdDHxgtJyv0Lg8p8XL
+	TI2ak3iNMAjdVnir0oHLGw6wfA2qdTG/lwj3fC7eC1hqXjC7IckSC3auiEZiGMZL
+	XMdazgvnQW4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6AB10361DB;
+	Fri, 29 Aug 2014 17:56:28 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 07732361D2;
+	Fri, 29 Aug 2014 17:56:20 -0400 (EDT)
+In-Reply-To: <20140829205809.GB7060@peff.net> (Jeff King's message of "Fri, 29
+	Aug 2014 16:58:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4F29C878-2FC7-11E4-8068-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256197>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---6JG4otmOscrgN5JKBBNKWt8s2j1pfiJdt
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Jeff King <peff@peff.net> writes:
 
-On 29.08.14 21:04, Junio C Hamano wrote:
-> I've queued with this fix squashed in.
+> If a pack contains duplicates of an object, and if that
+> object has any deltas pointing at it with REF_DELTA, we will
+> try to resolve the deltas twice. While unusual, this is not
+> strictly an error, but we currently die() with an unhelpful
+> message.
 
-Oops, I just sent v3 with your latest fixes as well. Please ignore it.
+Hmm, I vaguely recall Shawn declaring this as an error in the pack
+stream, though.
 
+> The duplicate base object is not our concern during the
+> resolution phase, and the .idx-writing phase will decide
+> whether to complain or allow it (based on whether --strict
+> is set).
 
-Thanks,
-Beat
---=20
-mail: echo '<bNbolOli@ewaSPnetAM.ch>' | tr -d '[A-S]'
-pgp: 0x506A903A; 49D5 794A EA77 F907 764F  D89E 304B 93CF 506A 903A
-gsm: 4.7.7.6.0.7.7.9.7.1.4.e164.arpa
-icbm: 47.0452 N, 7.2715 E
+OK.  We still diagnose and just be more lenient without loosening
+the correctness of the result, so that would be not just OK but a
+very welcome change.
 
-"It takes love over gold, and mind over matter" -- Dire Straits
-
-
---6JG4otmOscrgN5JKBBNKWt8s2j1pfiJdt
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlQA8RIACgkQMEuTz1BqkDpgTwCeOivsoo3pMd0dS70imdI98VGq
-JvkAoIGcUUG+Fbg0Qd1UFu3OtixOygOF
-=GuPL
------END PGP SIGNATURE-----
-
---6JG4otmOscrgN5JKBBNKWt8s2j1pfiJdt--
+Will queue.  Thanks.
