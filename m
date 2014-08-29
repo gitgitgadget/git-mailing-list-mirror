@@ -1,88 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/commit.c: fix type warnings from gcc and sparse
-Date: Fri, 29 Aug 2014 15:17:33 -0700
-Message-ID: <xmqq7g1r3pqa.fsf@gitster.dls.corp.google.com>
-References: <5400AC05.9060900@ramsay1.demon.co.uk>
-	<20140829184435.GA29456@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/6] Accept object data in the fsck_object() function
+Date: Fri, 29 Aug 2014 19:05:46 -0400
+Message-ID: <20140829230546.GC24834@peff.net>
+References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
+ <alpine.DEB.1.00.1408281646400.990@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 30 00:17:55 2014
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 30 01:06:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNUUV-0007T2-3G
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 00:17:55 +0200
+	id 1XNVEx-0004Za-Te
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 01:05:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498AbaH2WRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Aug 2014 18:17:52 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59557 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751446AbaH2WRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Aug 2014 18:17:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EEAA536590;
-	Fri, 29 Aug 2014 18:17:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mYlaY6v2ZAsSDsyPYS7rz9Ic7JU=; b=CtGP1K
-	wIZHwsvvy0VkujzwV4++pSyDr9gnWOTXAEo0pnYhBPGdSXfqJUP8biWIsF9DLF6x
-	h7hfyTB8H5OoWGevpEceNGi3oogEtvQISc8ncdjAGk/381zYOM7Xs602qXtVgDj0
-	82aq8gNK5UyDav5SmefesU7RwCICSutrtJhL8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UL5kUpnV/21apdwOYJsY2HbqKUK78twv
-	mYR1v8jcKQpTlrcfltyje6USgYaFekZAgg1SgCR641LtRI/DBXmF2KHqDZ/SpikD
-	zqR6P9Zlp5BkOKJh1uQdNn0Uu7G/+zX01GDdlA0WYve4GPDy5utrO4znMIiKc26R
-	FGjCZeRDRqo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E2F0C3658F;
-	Fri, 29 Aug 2014 18:17:48 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 762A236561;
-	Fri, 29 Aug 2014 18:17:35 -0400 (EDT)
-In-Reply-To: <20140829184435.GA29456@peff.net> (Jeff King's message of "Fri,
-	29 Aug 2014 14:44:35 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 475A3C42-2FCA-11E4-AF9A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751806AbaH2XFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Aug 2014 19:05:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33476 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751636AbaH2XFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Aug 2014 19:05:48 -0400
+Received: (qmail 11495 invoked by uid 102); 29 Aug 2014 23:05:48 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Aug 2014 18:05:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Aug 2014 19:05:46 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1408281646400.990@s15462909.onlinehome-server.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256201>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 28, 2014 at 04:46:42PM +0200, Johannes Schindelin wrote:
 
-> On Fri, Aug 29, 2014 at 05:36:21PM +0100, Ramsay Jones wrote:
->
->> On 32-bit platforms (only), gcc and sparse both issue warnings
->> about the type of the pointer expression passed as the third
->> argument to find_commit_header().  In order to suppress the
->> warnings, we simply change the type of the 'len' variable to
->> size_t.
->> 
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->
-> Thanks, this looks good to me. I think I just switched between size_t
-> and "unsigned long" during the development and forgot to tweak this
-> spot.
->
->> If you need to re-roll your 'jk/commit-author-parsing' series, could
->> you please squash this into the equivalent of commit 95b5989
->> ("determine_author_info(): reuse parsing functions", 27-08-2014).
->
-> I don't think I have any other reason to re-roll at this point. I'm
-> happy to have this on top, or it can be squashed into the second from
-> the top (95b5989) if we want to keep the history cleaner.
->
-> I'm also happy to re-roll just for this, but my impression is that is
-> not really any easier on Junio than just squashing a patch in.
+> When fsck'ing an incoming pack, we need to fsck objects that cannot be
+> read via read_sha1_file() because they are not local yet (and might even
+> be rejected if transfer.fsckobjects is set to 'true').
+> 
+> For commits, there is a hack in place: we basically cache commit
+> objects' buffers anyway, but the same is not true, say, for tag objects.
+> 
+> By refactoring fsck_object() to take the object buffer and size as
+> optional arguments -- optional, because we still fall back to the
+> previous method to look at the cached commit objects if the caller
+> passes NULL -- we prepare the machinery for the upcoming handling of tag
+> objects.
+> 
+> The assumption that such buffers are inherently NUL terminated is now
+> wrong, of course, hence we pass the size of the buffer so that we can
+> add a sanity check later, to prevent running past the end of the buffer.
 
-Thanks for being very considerate ;-)  Have squashed it in with
-"rebase -i" while preparing for the mid-day pushout.
+After this, can we get rid of passing a "struct object" to the fsck code
+entirely? It should be able to operate only on a type/buffer pair, along
+with possibly a sha1 for error reporting.
+
+The buffer management in index-pack's sha1_object function is
+significantly complicated by attaching the temporary buffer to a "struct
+commit", only to then have to detach it a few lines later. It is the
+sole reason we had to add "detach_commit_buffer" a while ago.
+
+-Peff
