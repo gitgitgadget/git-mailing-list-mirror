@@ -1,93 +1,118 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH] reachable.c: add HEAD to reachability starting commits
-Date: Sat, 30 Aug 2014 23:58:35 +0300
-Message-ID: <1409432315-20803-1-git-send-email-max@max630.net>
-Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 30 23:07:31 2014
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH v3 1/2] Push the NATIVE_CRLF Makefile variable to C and added
+ a test for native.
+Date: Sat, 30 Aug 2014 23:38:59 +0200
+Message-ID: <54024473.4040709@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 30 23:39:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNpru-0001FD-Dt
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 23:07:30 +0200
+	id 1XNqMX-0002zy-Cd
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 23:39:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129AbaH3VH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2014 17:07:26 -0400
-Received: from p3plsmtpa08-05.prod.phx3.secureserver.net ([173.201.193.106]:37948
-	"EHLO p3plsmtpa08-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751898AbaH3VHZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Aug 2014 17:07:25 -0400
-X-Greylist: delayed 478 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Aug 2014 17:07:25 EDT
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa08-05.prod.phx3.secureserver.net with 
-	id l8zK1o00J3gsSd6018zR5N; Sat, 30 Aug 2014 13:59:27 -0700
-X-Mailer: git-send-email 2.0.1.1697.g73c6810
+	id S1752088AbaH3VjD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Aug 2014 17:39:03 -0400
+Received: from mout.web.de ([212.227.15.4]:49413 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752016AbaH3VjC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2014 17:39:02 -0400
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MEEMy-1XdIol43Q0-00FS21; Sat, 30 Aug 2014 23:39:00
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.0
+X-Provags-ID: V03:K0:tsXc8STgmXSQ1kd2AQ9zFGx33Hhkm0zcxrws7zMF2I6GZhgyH4V
+ vONYb2jbkrea7BRbWL4U4JCNmf5ReCh2NPSJnOyW70tMbDhUmWBVtyxPpLPIOUYmOZoy561
+ 2XFuWU0d4Z5osKxQjF6s28/4O7yanS0fKb3WXarSkna4qkAcmox9QlYZD3gNqGLJ5FX986b
+ ZuRkTj/cAzz4tYRbgWaKA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256269>
 
-HEAD is not explicitly used as a starting commit for
-calculating reachability, so if it's detached and reflogs
-are disabled it may be pruned.
+=46rom: Pat Thoyts <patthoyts@users.sourceforge.net>
 
-Add test which demonstrates it.
+Commit 95f31e9a correctly points out that the NATIVE_CRLF setting is
+incorrectly set on Mingw git. However, the Makefile variable is not
+propagated to the C preprocessor and results in no change. This patch
+pushes the definition to the C code and adds a test to validate that
+when core.eol as native is crlf, we actually normalize text files to th=
+is
+line ending convention when core.autocrlf is false.
 
-Signed-off-by: Max Kirillov <max@max630.net>
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
-Hi.
+This mini series mainly updates git.git with patches from msysgit:
+Patch 1 is taken "as is",
+Patch 2 is taken from msysgit "nearly as is": the broken && chain
+had been fixed.
 
-This is a followup of http://thread.gmane.org/gmane.comp.version-control.git/255996
-I digged it a bit more and look what I found!
+Changes since V2:
+- Patch 1 shoud have the right Author line
+ (I used git-send-email for V2, where the Author was lost:
+  web.de does not allow to send mails with "From: Pat Thoyts" in the
+  mail header, so it will change it to "From: tboegi".
+  And git-send-email does not add another
+  "From: " line into the subject of the email, so I did it by hand)
 
-Actually, I think would be nice if someone familiar with the code greps for
-for_each_ref() usage and for each case verify if head should be added.
- reachable.c               |  3 +++
- t/t5312-prune-detached.sh | 19 +++++++++++++++++++
- 2 files changed, 22 insertions(+)
- create mode 100755 t/t5312-prune-detached.sh
+Patch 2+3 had been squeezed together
+(This may make the integration in msysgit a liitle bit harder)
 
-diff --git a/reachable.c b/reachable.c
-index 654a8c5..6f6835b 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -229,6 +229,9 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	/* Add all external refs */
- 	for_each_ref(add_one_ref, revs);
- 
-+	/* detached HEAD is not included in the list above */
-+	head_ref(add_one_ref, revs);
+ Makefile              |  3 +++
+ t/t0026-eol-config.sh | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 9f984a9..7d7db02 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1479,6 +1479,9 @@ ifdef NO_REGEX
+ 	COMPAT_CFLAGS +=3D -Icompat/regex
+ 	COMPAT_OBJS +=3D compat/regex/regex.o
+ endif
++ifdef NATIVE_CRLF
++	BASIC_CFLAGS +=3D -DNATIVE_CRLF
++endif
+=20
+ ifdef USE_NED_ALLOCATOR
+        COMPAT_CFLAGS +=3D -Icompat/nedmalloc
+diff --git a/t/t0026-eol-config.sh b/t/t0026-eol-config.sh
+index 4807b0f..43a580a 100755
+--- a/t/t0026-eol-config.sh
++++ b/t/t0026-eol-config.sh
+@@ -80,4 +80,22 @@ test_expect_success 'autocrlf=3Dtrue overrides unset=
+ eol' '
+ 	test -z "$onediff" && test -z "$twodiff"
+ '
+=20
++test_expect_success NATIVE_CRLF 'eol native is crlf' '
 +
- 	/* Add all reflog info */
- 	if (mark_reflog)
- 		for_each_reflog(add_one_reflog, revs);
-diff --git a/t/t5312-prune-detached.sh b/t/t5312-prune-detached.sh
-new file mode 100755
-index 0000000..fac93e1
---- /dev/null
-+++ b/t/t5312-prune-detached.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+
-+test_description='no prune detached head without reflog'
-+. ./test-lib.sh
-+
-+test_expect_success 'make repo' '
-+	git config core.logAllRefUpdates false
-+	git commit --allow-empty -m commit1 &&
-+	git commit --allow-empty -m commit2 &&
-+	git checkout  --detach master &&
-+	git commit --allow-empty -m commit3
++	rm -rf native_eol && mkdir native_eol &&
++	( cd native_eol &&
++	printf "*.txt text\n" > .gitattributes
++	printf "one\r\ntwo\r\nthree\r\n" > filedos.txt
++	printf "one\ntwo\nthree\n" > fileunix.txt
++	git init &&
++	git config core.autocrlf false &&
++	git config core.eol native &&
++	git add filedos.txt fileunix.txt &&
++	git commit -m "first" &&
++	rm file*.txt &&
++	git reset --hard HEAD &&
++	has_cr filedos.txt && has_cr fileunix.txt
++	)
 +'
 +
-+test_expect_success 'prune does not delete anything' '
-+	git prune -n >prune_actual &&
-+	: >prune_expected &&
-+	test_cmp prune_expected prune_actual'
-+
-+test_done
--- 
-2.0.1.1697.g73c6810
+ test_done
+--=20
+2.1.0.rc2.210.g636bceb
