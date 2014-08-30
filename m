@@ -1,86 +1,85 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] http-walker: simplify process_alternates_response() using
- strbuf
-Date: Sat, 30 Aug 2014 17:55:45 +0200
-Message-ID: <5401F401.8040607@web.de>
+Subject: Re: [PATCH 2/2] index-pack: handle duplicate base objects gracefully
+Date: Sat, 30 Aug 2014 18:00:59 +0200
+Message-ID: <5401F53B.6070707@web.de>
+References: <20140829205538.GD29456@peff.net> <20140829205809.GB7060@peff.net> <xmqqegvz3qpp.fsf@gitster.dls.corp.google.com> <20140829220818.GA24834@peff.net> <CAJo=hJs3mM7=LcOop-WD=bipA=Wx-7MDh6ObQwFUE38tjurvcw@mail.gmail.com> <20140830131649.GA26833@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 30 17:56:25 2014
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin von Gagern <Martin.vGagern@gmx.net>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Aug 30 18:01:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNl0q-0002A5-Rz
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 17:56:25 +0200
+	id 1XNl5m-0006Qp-6l
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 18:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbaH3P4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2014 11:56:18 -0400
-Received: from mout.web.de ([212.227.17.12]:61809 "EHLO mout.web.de"
+	id S1751700AbaH3QB0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Aug 2014 12:01:26 -0400
+Received: from mout.web.de ([212.227.17.12]:59955 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751620AbaH3P4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2014 11:56:18 -0400
-Received: from [192.168.178.27] ([79.253.135.121]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0Lcge3-1Y6xOg47uR-00kBYK; Sat, 30 Aug 2014 17:56:02
+	id S1751677AbaH3QB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2014 12:01:26 -0400
+Received: from [192.168.178.27] ([79.253.135.121]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MRlIL-1XpzBl2sVV-00SwxQ; Sat, 30 Aug 2014 18:01:16
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-X-Provags-ID: V03:K0:RglXo5/UqIQiLk9XT0uhaA5VPm1bubKLPfSpvEEVinUtPls2p0c
- Vxxi8wVKAUN01M2D2n7eBhwcuHhV3RpDiFzTp6yiqnfmulofshF5CytmAyDSQxpJtl9YskZ
- OpdMFnmY0VYBkxXx8WEJRZa8MOMK+2I1olDH3oAjk52NSxAx8ol7pTW6uS6DLZzUQeP8znq
- pOjUcJbefQ3JDSF8qYUCA==
+In-Reply-To: <20140830131649.GA26833@peff.net>
+X-Provags-ID: V03:K0:d1GdlaMQ63/iC6NaUTgyvuwFA/BXwZxHJNthE3GYSHeNmoFLNmw
+ xGHGABrJD6gAX+AIwn6Uf4+0WQx6H0XXHdDRUba4TExWAb7EFbevLtsqp30uY/cA+NO0sWX
+ 0s8CoVjGyk3kNAEavXr227+6j98kNJuF31AMbz3MJfWUNgwg9NLd4kK0XqUf00lSSWTE8Vf
+ JUU6PP0SWuzFYd4sECuyg==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256256>
 
-Use strbuf to build the new base, which takes care of allocations and
-the terminating NUL character automatically.
+Am 30.08.2014 um 15:16 schrieb Jeff King:
+> On Fri, Aug 29, 2014 at 07:59:32PM -0700, Shawn Pearce wrote:
+>
+>>> I agree it is probably a bug on the sending side, but I think last =
+time
+>>> this came up we decided to try to be liberal in what we accept.  c.=
+f.
+>>> http://thread.gmane.org/gmane.comp.version-control.git/232305/focus=
+=3D232310
+>>
+>> IIRC they aren't valid pack files to contain duplicates.
+>>
+>> Once upon a time JGit had a bug and android.googlesource.com returne=
+d
+>> duplicate objects in a Linux kernel repository. This caused at least
+>> some versions of git-core to fail very badly in binary search at
+>> object lookup time or something. We had a lot of users angry with us=
+=2E
+>> :)
+>>
+>> I know Nico said its OK last year, but its really not. I don't think
+>> implementations are capable of handling it.
+>
+> We do detect and complain if --strict is given. Should we make it the
+> default instead? I think it is still worthwhile to have a mode that c=
+an
+> handle these packs. It may be the only reasonable way to recover the
+> data from such a broken pack (and that broken pack may be the only co=
+py
+> of the data you have, if you are stuck getting it out of a broken
+> implementation on a remote server).
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- http-walker.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+Sounds reasonable; being able to extract code from broken repos --=20
+especially in this real-world case -- is beneficial.
 
-diff --git a/http-walker.c b/http-walker.c
-index dbddfaa..88da546 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -230,7 +230,6 @@ static void process_alternates_response(void *callback_data)
- 			int okay = 0;
- 			int serverlen = 0;
- 			struct alt_base *newalt;
--			char *target = NULL;
- 			if (data[i] == '/') {
- 				/*
- 				 * This counts
-@@ -287,17 +286,15 @@ static void process_alternates_response(void *callback_data)
- 			}
- 			/* skip "objects\n" at end */
- 			if (okay) {
--				target = xmalloc(serverlen + posn - i - 6);
--				memcpy(target, base, serverlen);
--				memcpy(target + serverlen, data + i,
--				       posn - i - 7);
--				target[serverlen + posn - i - 7] = 0;
-+				struct strbuf target = STRBUF_INIT;
-+				strbuf_add(&target, base, serverlen);
-+				strbuf_add(&target, data + i, posn - i - 7);
- 				if (walker->get_verbosely)
--					fprintf(stderr,
--						"Also look at %s\n", target);
-+					fprintf(stderr, "Also look at %s\n",
-+						target.buf);
- 				newalt = xmalloc(sizeof(*newalt));
- 				newalt->next = NULL;
--				newalt->base = target;
-+				newalt->base = strbuf_detach(&target, NULL);
- 				newalt->got_indices = 0;
- 				newalt->packs = NULL;
- 
--- 
-2.1.0
+My only nit with patch 2: Petr Stodulka <pstodulk@redhat.com> and Marti=
+n=20
+von Gagern <Martin.vGagern@gmx.net> should be mentioned as bug reporter=
+s.
+
+Ren=C3=A9
