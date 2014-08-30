@@ -1,134 +1,93 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/2] stash: prefer --quiet over shell redirection
-Date: Sat, 30 Aug 2014 23:07:13 +0200
-Message-ID: <54023D01.6090504@kdbg.org>
-References: <1409427029-65886-1-git-send-email-davvid@gmail.com> <1409427029-65886-2-git-send-email-davvid@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Jon Seymour <jon.seymour@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 23:07:24 2014
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] reachable.c: add HEAD to reachability starting commits
+Date: Sat, 30 Aug 2014 23:58:35 +0300
+Message-ID: <1409432315-20803-1-git-send-email-max@max630.net>
+Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 30 23:07:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNprn-00017N-RT
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 23:07:24 +0200
+	id 1XNpru-0001FD-Dt
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 23:07:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093AbaH3VHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2014 17:07:17 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:25098 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751898AbaH3VHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2014 17:07:17 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 6B8B0130047;
-	Sat, 30 Aug 2014 23:07:14 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id BF87819F497;
-	Sat, 30 Aug 2014 23:07:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
-In-Reply-To: <1409427029-65886-2-git-send-email-davvid@gmail.com>
+	id S1752129AbaH3VH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2014 17:07:26 -0400
+Received: from p3plsmtpa08-05.prod.phx3.secureserver.net ([173.201.193.106]:37948
+	"EHLO p3plsmtpa08-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751898AbaH3VHZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Aug 2014 17:07:25 -0400
+X-Greylist: delayed 478 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Aug 2014 17:07:25 EDT
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa08-05.prod.phx3.secureserver.net with 
+	id l8zK1o00J3gsSd6018zR5N; Sat, 30 Aug 2014 13:59:27 -0700
+X-Mailer: git-send-email 2.0.1.1697.g73c6810
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256267>
 
-Am 30.08.2014 21:30, schrieb David Aguilar:
-> Use `git rev-parse --quiet` instead of redirecting to /dev/null.
-> 
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
->  git-stash.sh | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/git-stash.sh b/git-stash.sh
-> index bcc757b..5a5185b 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -50,7 +50,7 @@ clear_stash () {
->  	then
->  		die "$(gettext "git stash clear with parameters is unimplemented")"
->  	fi
-> -	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
-> +	if current=$(git rev-parse --quiet --verify $ref_stash)
->  	then
->  		git update-ref -d $ref_stash $current
->  	fi
-> @@ -67,7 +67,7 @@ create_stash () {
->  	fi
->  
->  	# state of the base commit
-> -	if b_commit=$(git rev-parse --verify HEAD)
-> +	if b_commit=$(git rev-parse --quiet --verify HEAD)
->  	then
->  		head=$(git rev-list --oneline -n 1 HEAD --)
->  	else
+HEAD is not explicitly used as a starting commit for
+calculating reachability, so if it's detached and reflogs
+are disabled it may be pruned.
 
-The else branch calls die; wouldn't it be useful to keep the error
-message of rev-parse?
+Add test which demonstrates it.
 
-> @@ -292,7 +292,7 @@ save_stash () {
->  }
->  
->  have_stash () {
-> -	git rev-parse --verify $ref_stash >/dev/null 2>&1
-> +	git rev-parse --quiet --verify $ref_stash
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+Hi.
 
-This change is not correct: --quiet removes only output on stderr, but
-not that on stdout.
+This is a followup of http://thread.gmane.org/gmane.comp.version-control.git/255996
+I digged it a bit more and look what I found!
 
->  }
->  
->  list_stash () {
-> @@ -392,12 +392,12 @@ parse_flags_and_rev()
->  		;;
->  	esac
->  
-> -	REV=$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) || {
-> +	REV=$(git rev-parse --quiet --symbolic --verify "$1") || {
->  		reference="$1"
->  		die "$(eval_gettext "\$reference is not valid reference")"
->  	}
->  
-> -	i_commit=$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
-> +	i_commit=$(git rev-parse --quiet --verify "$REV^2") &&
->  	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>/dev/null) &&
+Actually, I think would be nice if someone familiar with the code greps for
+for_each_ref() usage and for each case verify if head should be added.
+ reachable.c               |  3 +++
+ t/t5312-prune-detached.sh | 19 +++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+ create mode 100755 t/t5312-prune-detached.sh
 
-I see another rev-parse that you did not modify. An omission?
-
->  	s=$1 &&
->  	w_commit=$1 &&
-> @@ -409,7 +409,7 @@ parse_flags_and_rev()
->  	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
->  	IS_STASH_REF=t
->  
-> -	u_commit=$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
-> +	u_commit=$(git rev-parse --quiet --verify "$REV^3") &&
->  	u_tree=$(git rev-parse "$REV^3:" 2>/dev/null)
-
-I see yet another rev-parse that you did not modify.
-
->  }
->  
-> @@ -531,7 +531,7 @@ drop_stash () {
->  		die "$(eval_gettext "\${REV}: Could not drop stash entry")"
->  
->  	# clear_stash if we just dropped the last stash entry
-> -	git rev-parse --verify "$ref_stash@{0}" >/dev/null 2>&1 || clear_stash
-> +	git rev-parse --quiet --verify "$ref_stash@{0}" || clear_stash
-
-Again not correct.
-
->  }
->  
->  apply_to_branch () {
-> 
-
--- Hannes
+diff --git a/reachable.c b/reachable.c
+index 654a8c5..6f6835b 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -229,6 +229,9 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	/* Add all external refs */
+ 	for_each_ref(add_one_ref, revs);
+ 
++	/* detached HEAD is not included in the list above */
++	head_ref(add_one_ref, revs);
++
+ 	/* Add all reflog info */
+ 	if (mark_reflog)
+ 		for_each_reflog(add_one_reflog, revs);
+diff --git a/t/t5312-prune-detached.sh b/t/t5312-prune-detached.sh
+new file mode 100755
+index 0000000..fac93e1
+--- /dev/null
++++ b/t/t5312-prune-detached.sh
+@@ -0,0 +1,19 @@
++#!/bin/sh
++
++test_description='no prune detached head without reflog'
++. ./test-lib.sh
++
++test_expect_success 'make repo' '
++	git config core.logAllRefUpdates false
++	git commit --allow-empty -m commit1 &&
++	git commit --allow-empty -m commit2 &&
++	git checkout  --detach master &&
++	git commit --allow-empty -m commit3
++'
++
++test_expect_success 'prune does not delete anything' '
++	git prune -n >prune_actual &&
++	: >prune_expected &&
++	test_cmp prune_expected prune_actual'
++
++test_done
+-- 
+2.0.1.1697.g73c6810
