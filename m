@@ -1,120 +1,110 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] merge-tree: remove unused df_conflict arguments
-Date: Sat, 30 Aug 2014 23:40:34 +0200
-Message-ID: <540244D2.6070403@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 30 23:41:01 2014
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] rev-parse: include HEAD in --all output
+Date: Sun, 31 Aug 2014 01:24:48 +0300
+Message-ID: <1409437488-25233-1-git-send-email-max@max630.net>
+References: <CAF7_NFRz6Zc-wTDSFdkW4N2wRATZ8-g05j6sFu1t7DB0X72dkg@mail.gmail.com>
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
+	Max Kirillov <max@max630.net>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 31 00:34:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNqOK-0004aR-5h
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 23:41:00 +0200
+	id 1XNrE6-00085l-Mi
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 00:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235AbaH3Vk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2014 17:40:56 -0400
-Received: from mout.web.de ([212.227.15.4]:53707 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752216AbaH3Vk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2014 17:40:56 -0400
-Received: from [192.168.178.27] ([79.253.135.121]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0M3gLx-1YEz6g0Y53-00rLNN; Sat, 30 Aug 2014 23:40:51
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-X-Provags-ID: V03:K0:pvaNWRb4UgMr/fZM0b2fkkXAupUD3/nxVFRly1WnU0YFLyfOFyS
- 7LBtet1KDi6gS9mE3yhiMQskU2xhBP6/gAaQmGNjoToKQwvuMiuetv0T084QsbJmD6dMvBI
- MZnqV+jeKOw1dJFMXSAe/pSTWPmI6rJRO4M5kfMGwGj9cwphlft5WHKnwLzbZCJ9p2AHVg/
- UkSAYx9dFRB/senDygpPg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751705AbaH3WdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2014 18:33:23 -0400
+Received: from p3plsmtpa12-10.prod.phx3.secureserver.net ([68.178.252.239]:37936
+	"EHLO p3plsmtpa12-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751427AbaH3WdX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Aug 2014 18:33:23 -0400
+X-Greylist: delayed 469 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Aug 2014 18:33:23 EDT
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa12-10.prod.phx3.secureserver.net with 
+	id lARK1o0083gsSd601ARSna; Sat, 30 Aug 2014 15:25:33 -0700
+X-Mailer: git-send-email 2.0.1.1697.g73c6810
+In-Reply-To: <CAF7_NFRz6Zc-wTDSFdkW4N2wRATZ8-g05j6sFu1t7DB0X72dkg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256272>
 
-merge_trees_recursive() stores a pointer to its parameter df_conflict in
-its struct traverse_info, but it is never actually used.  Stop doing
-that, remove the parameter and inline the function into merge_trees(),
-as the latter is now only passing on its parameters.
+for_each_ref() does not include it itself, and without the hash
+the detached HEAD may be missed by some frontends (like gitk).
 
-Remove the parameter df_conflict from unresolved_directory() as well,
-now that there is no way to pass it to merge_trees_recursive() through
-that function anymore.
+Add test which verifies the head is returned
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Update test t6018-rev-list-glob.sh which relied on exact list of
+returned hashes.
+
+Signed-off-by: Max Kirillov <max@max630.net>
 ---
- builtin/merge-tree.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ builtin/rev-parse.c           |  1 +
+ t/t1514-rev-parse-detached.sh | 21 +++++++++++++++++++++
+ t/t6018-rev-list-glob.sh      |  4 ++--
+ 3 files changed, 24 insertions(+), 2 deletions(-)
+ create mode 100755 t/t1514-rev-parse-detached.sh
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 61cbde4..f9ab485 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -25,7 +25,7 @@ static void add_merge_entry(struct merge_list *entry)
- 	merge_result_end = &entry->next;
- }
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index d85e08c..42f468c 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -642,6 +642,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--all")) {
++				head_ref(show_reference, NULL);
+ 				for_each_ref(show_reference, NULL);
+ 				continue;
+ 			}
+diff --git a/t/t1514-rev-parse-detached.sh b/t/t1514-rev-parse-detached.sh
+new file mode 100755
+index 0000000..eeb2318
+--- /dev/null
++++ b/t/t1514-rev-parse-detached.sh
+@@ -0,0 +1,21 @@
++#!/bin/sh
++
++test_description='test git rev-parse references'
++
++. ./test-lib.sh
++
++test_expect_success 'make repo' '
++	git commit --allow-empty -m commit1 &&
++	git commit --allow-empty -m commit2 &&
++	git checkout  --detach master &&
++	git commit --allow-empty -m commit3
++'
++
++head_sha1=`git rev-parse HEAD`
++
++test_expect_success 'HEAD should be listed in rev-parse --all' '
++	git rev-parse --all >all_refs &&
++	grep -q "$head_sha1" all_refs
++'
++
++test_done
+diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
+index d00f7db..ba0b89c 100755
+--- a/t/t6018-rev-list-glob.sh
++++ b/t/t6018-rev-list-glob.sh
+@@ -134,11 +134,11 @@ test_expect_success 'rev-parse --exclude with --branches' '
+ '
  
--static void merge_trees_recursive(struct tree_desc t[3], const char *base, int df_conflict);
-+static void merge_trees(struct tree_desc t[3], const char *base);
+ test_expect_success 'rev-parse --exclude with --all' '
+-	compare rev-parse "--exclude=refs/remotes/* --all" "--branches --tags"
++	compare rev-parse "--exclude=refs/remotes/* --all" "HEAD --branches --tags"
+ '
  
- static const char *explanation(struct merge_list *entry)
- {
-@@ -195,8 +195,8 @@ static void resolve(const struct traverse_info *info, struct name_entry *ours, s
- 	add_merge_entry(final);
- }
+ test_expect_success 'rev-parse accumulates multiple --exclude' '
+-	compare rev-parse "--exclude=refs/remotes/* --exclude=refs/tags/* --all" --branches
++	compare rev-parse "--exclude=refs/remotes/* --exclude=refs/tags/* --all" "HEAD --branches"
+ '
  
--static void unresolved_directory(const struct traverse_info *info, struct name_entry n[3],
--				 int df_conflict)
-+static void unresolved_directory(const struct traverse_info *info,
-+				 struct name_entry n[3])
- {
- 	char *newbase;
- 	struct name_entry *p;
-@@ -218,7 +218,7 @@ static void unresolved_directory(const struct traverse_info *info, struct name_e
- 	buf2 = fill_tree_descriptor(t+2, ENTRY_SHA1(n + 2));
- #undef ENTRY_SHA1
- 
--	merge_trees_recursive(t, newbase, df_conflict);
-+	merge_trees(t, newbase);
- 
- 	free(buf0);
- 	free(buf1);
-@@ -259,7 +259,7 @@ static void unresolved(const struct traverse_info *info, struct name_entry n[3])
- 			dirmask |= (1 << i);
- 	}
- 
--	unresolved_directory(info, n, dirmask && (dirmask != mask));
-+	unresolved_directory(info, n);
- 
- 	if (dirmask == mask)
- 		return;
-@@ -335,21 +335,15 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
- 	return mask;
- }
- 
--static void merge_trees_recursive(struct tree_desc t[3], const char *base, int df_conflict)
-+static void merge_trees(struct tree_desc t[3], const char *base)
- {
- 	struct traverse_info info;
- 
- 	setup_traverse_info(&info, base);
--	info.data = &df_conflict;
- 	info.fn = threeway_callback;
- 	traverse_trees(3, t, &info);
- }
- 
--static void merge_trees(struct tree_desc t[3], const char *base)
--{
--	merge_trees_recursive(t, base, 0);
--}
--
- static void *get_tree_descriptor(struct tree_desc *desc, const char *rev)
- {
- 	unsigned char sha1[20];
+ test_expect_success 'rev-list --glob=refs/heads/subspace/*' '
 -- 
-2.1.0
+2.0.1.1697.g73c6810
