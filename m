@@ -1,58 +1,70 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] Improve English grammar
-Date: Sat, 30 Aug 2014 22:05:51 +0200
-Message-ID: <CALKQrgdd588+-L2QB1LixQfe4nGm38dLS=2RyNQVAF227xsaYg@mail.gmail.com>
-References: <20140830135601.0f9fce66fe68968f56bd2879@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/2] bisect: remove unnecessary redirection
+Date: Sat, 30 Aug 2014 22:57:05 +0200
+Message-ID: <54023AA1.40709@kdbg.org>
+References: <1409427029-65886-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, avarab@gmail.com,
-	vmiklos@frugalware.org, Philip Oakley <philipoakley@iee.org>
-To: Alex Henrie <alexhenrie24@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 30 22:50:42 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 30 22:57:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNpbb-0003XE-Dt
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 22:50:39 +0200
+	id 1XNpi0-0000lK-Da
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Aug 2014 22:57:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbaH3Uuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Aug 2014 16:50:35 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:49878 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751921AbaH3Uuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Aug 2014 16:50:35 -0400
-X-Greylist: delayed 2674 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Aug 2014 16:50:34 EDT
-Received: from mail-pa0-f53.google.com ([209.85.220.53])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1XNouM-000JNc-Ou
-	for git@vger.kernel.org; Sat, 30 Aug 2014 22:05:58 +0200
-Received: by mail-pa0-f53.google.com with SMTP id fa1so8994886pad.40
-        for <git@vger.kernel.org>; Sat, 30 Aug 2014 13:05:51 -0700 (PDT)
-X-Received: by 10.68.65.101 with SMTP id w5mr25968943pbs.5.1409429151441; Sat,
- 30 Aug 2014 13:05:51 -0700 (PDT)
-Received: by 10.70.10.5 with HTTP; Sat, 30 Aug 2014 13:05:51 -0700 (PDT)
-In-Reply-To: <20140830135601.0f9fce66fe68968f56bd2879@gmail.com>
+	id S1752055AbaH3U5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Aug 2014 16:57:12 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:22228 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752039AbaH3U5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Aug 2014 16:57:11 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id B445910012;
+	Sat, 30 Aug 2014 22:57:06 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 8682319F497;
+	Sat, 30 Aug 2014 22:57:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
+In-Reply-To: <1409427029-65886-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256265>
 
-On Sat, Aug 30, 2014 at 9:56 PM, Alex Henrie <alexhenrie24@gmail.com> wrote:
-> Hi, I submitted this patch a week ago and got no reply, so I'm sending
-> it again and CC'ing the original authors this time...
->
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Am 30.08.2014 21:30, schrieb David Aguilar:
+> `git rev-parse` is being called with --quiet so there's no need to
+> redirect to /dev/null.
+> 
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+>  git-bisect.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index 1e0d602..c1c2321 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -365,7 +365,7 @@ bisect_reset() {
+>  	}
+>  	case "$#" in
+>  	0) branch=$(cat "$GIT_DIR/BISECT_START") ;;
+> -	1) git rev-parse --quiet --verify "$1^{commit}" >/dev/null || {
+> +	1) git rev-parse --quiet --verify "$1^{commit}" || {
 
-Looks good to me.
+This is wrong. The redirection quells stdout, but --quiet is about stderr.
 
-Acked-by: Johan Herland <johan@herland.net>
+>  			invalid="$1"
+>  			die "$(eval_gettext "'\$invalid' is not a valid commit")"
+>  		}
+> 
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-- Hannes
