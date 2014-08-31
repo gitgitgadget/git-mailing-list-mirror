@@ -1,80 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] teach fast-export an --anonymize option
-Date: Sun, 31 Aug 2014 06:34:08 -0400
-Message-ID: <CAPig+cSKfxAsr+RQp8N8GAOe9fa_6kGPi_-X99Vs-2bYbBoC8A@mail.gmail.com>
-References: <20140827165854.GC1432@peff.net>
-	<20140827170127.GA6138@peff.net>
-	<CACsJy8B3gFC7kLf-cLhAk3BgQ+v427rMXWHTqjU4LYP3NQte7Q@mail.gmail.com>
-	<20140828123257.GA18642@peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 22/32] checkout: support checking out into a new working directory
+Date: Sun, 31 Aug 2014 12:08:49 +0100
+Organization: OPDS
+Message-ID: <64D6AA311E524C27A8B6EDE7A63489D7@PhilipOakley>
+References: <1409387642-24492-1-git-send-email-pclouds@gmail.com> <1409387642-24492-23-git-send-email-pclouds@gmail.com> <70985AC885404243A2B95F534083A0E9@PhilipOakley> <CACsJy8CpGhLN58GyJa_3-PDqNqYUCshPEGDr8-pKngad+-oAdg@mail.gmail.com> <CACsJy8ASW0xO3WzU7f+T4iDhjL=Y=C6K+Cvi-OWOnS16r=m+9Q@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 31 12:34:15 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Duy Nguyen" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 31 13:08:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XO2Sc-0003EF-Uj
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 12:34:15 +0200
+	id 1XO309-0004si-Kz
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 13:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751147AbaHaKeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2014 06:34:11 -0400
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:61739 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751046AbaHaKeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2014 06:34:09 -0400
-Received: by mail-yk0-f176.google.com with SMTP id 19so2555366ykq.21
-        for <git@vger.kernel.org>; Sun, 31 Aug 2014 03:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=a2A/SQ019d0WLMr0PUA3Nfr6hu+Jl2WiRQT7RGHI3vw=;
-        b=BNs9BIuJHFo8Ba0nF1kK0id6uiuazfVFJs0n3bk+wT9Hq7sOgih+ebf2HRuolC21A+
-         hpoKEml5zHi/lK4wyo9qxl4N4etvbh3piG2WRupDdg1ZkWddVrKJZW1Nq9kjnTExmJv/
-         VUN8btmmzN90eZtuymihcPxGDCRKEXIys2kYDXGTbSMO+ujTCveqckH4q/ZlfeSTOs24
-         SgFVjap8Yf8glrFFFf8zMIRsiwELtzBuUhgekUuA8XFOKu106e6QzqehjGSrWxghSkjt
-         QpjWhJdvldyLgptmejzimqCnjNIn1CyfUXaLOpt3AwILvYiSdZ8wWminhJPtvbI4mZPS
-         lTPg==
-X-Received: by 10.236.128.176 with SMTP id f36mr3644638yhi.87.1409481248350;
- Sun, 31 Aug 2014 03:34:08 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Sun, 31 Aug 2014 03:34:08 -0700 (PDT)
-In-Reply-To: <20140828123257.GA18642@peff.net>
-X-Google-Sender-Auth: rjLEKgx-JkwRVgO-GblSrkqS_L4
+	id S1751125AbaHaLIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2014 07:08:49 -0400
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:63197 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751046AbaHaLIt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Aug 2014 07:08:49 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AhwkAKABA1QCYJAzPGdsb2JhbABagw1kAUWCfIU7vBmKXgYCAgiBAxcFAQEBATg2g34FAQEEAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQIEgYHAxQGEwgCAQIDAYgdAwkMpSuGf4dUDYVlAReBLIt0gi01gks2gR0FhhSLHViIQ5B3ihk8L4JPAQEB
+X-IPAS-Result: AhwkAKABA1QCYJAzPGdsb2JhbABagw1kAUWCfIU7vBmKXgYCAgiBAxcFAQEBATg2g34FAQEEAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQIEgYHAxQGEwgCAQIDAYgdAwkMpSuGf4dUDYVlAReBLIt0gi01gks2gR0FhhSLHViIQ5B3ihk8L4JPAQEB
+X-IronPort-AV: E=Sophos;i="5.04,436,1406588400"; 
+   d="scan'208";a="119787933"
+Received: from host-2-96-144-51.as13285.net (HELO PhilipOakley) ([2.96.144.51])
+  by out1.ip07ir2.opaltelecom.net with SMTP; 31 Aug 2014 12:08:46 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256284>
 
-On Thu, Aug 28, 2014 at 8:32 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Aug 28, 2014 at 05:30:44PM +0700, Duy Nguyen wrote:
->
->> On Thu, Aug 28, 2014 at 12:01 AM, Jeff King <peff@peff.net> wrote:
->> > You can get an overview of what will be shared
->> > by running a command like:
->> >
->> >   git fast-export --anonymize --all |
->> >   perl -pe 's/\d+/X/g' |
->> >   sort -u |
->> >   less
->> >
->> > which will show every unique line we generate, modulo any
->> > numbers (each anonymized token is assigned a number, like
->> > "User 0", and we replace it consistently in the output).
+From: "Duy Nguyen" <pclouds@gmail.com>
+> On Sun, Aug 31, 2014 at 11:49 AM, Duy Nguyen <pclouds@gmail.com> 
+> wrote:
+>> All checkouts share the same repository. Linked checkouts see the
+>> repository a bit different from the main checkout. When you perform
+>> the command
 >>
->> I feel like this should be part of git-fast-export.txt, just to
->> increase the user's confidence in the tool (and I don't expect most
->> users to read this commit message).
+>> ------------
+>> git checkout --to <some-location> <some-branch>
+>> ------------
+>>
+>> The checkout at <some-location> will have a unique id that is also 
+>> the
+>> branch name (e.g. "<some-branch>"). A number may be appended to the 
+>> id
 >
-> Hmph. Whenever I say "I think this patch is done", suddenly the comments
-> start pouring in. :)
+> .. and I got my facts wrong. The above line should be:
+>
+> last component of <some-location>. A number may be appended to the id
+>
 
-Considering that the value of --anonymize is not yet known, is such an
-invasive change to fast-export.c warranted? Would it make sense
-instead to provide "anonymize" functionality as a contrib/ script or a
-distinct git-anonymize-foo command which accepts a fast-import stream
-as input and anonymizes it as output?
+That's fine. Glad that we're on the same wavelength for the 
+documentation.
+
+>> to make it unique. All worktree-specific files of this new checkout
+>> are in $GIT_DIR/repos/<unique-id> of the main checkout. So "HEAD"
+>> inside the linked checkout will be resolved to
+>> "$GIT_DIR/repos/<some-branch>/HEAD", while "HEAD" from the main
+>
+> s/<some-branch>/<unique-id>/
+>
+>> checkout remains "$GIT_DIR/HEAD".
+>
+>
+>
+> -- 
+Philip 
