@@ -1,96 +1,74 @@
 From: Max Kirillov <max@max630.net>
-Subject: [PATCH v2] reachable.c: add HEAD to reachability starting commits
-Date: Mon,  1 Sep 2014 00:16:44 +0300
-Message-ID: <1409519804-15960-1-git-send-email-max@max630.net>
-References: <20140831152806.GC17449@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Max Kirillov <max@max630.net>
+Subject: Re: [PATCH] rev-parse: include HEAD in --all output
+Date: Mon, 1 Sep 2014 00:36:06 +0300
+Message-ID: <20140831213606.GB6385@wheezy.local>
+References: <CAF7_NFRz6Zc-wTDSFdkW4N2wRATZ8-g05j6sFu1t7DB0X72dkg@mail.gmail.com>
+ <1409437488-25233-1-git-send-email-max@max630.net>
+ <20140831153054.GD17449@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 31 23:18:03 2014
+X-From: git-owner@vger.kernel.org Sun Aug 31 23:36:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOCVe-0000cc-SG
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 23:18:03 +0200
+	id 1XOCno-0001lA-N9
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 23:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbaHaVRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2014 17:17:24 -0400
-Received: from p3plsmtpa12-04.prod.phx3.secureserver.net ([68.178.252.233]:53197
-	"EHLO p3plsmtpa12-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751235AbaHaVRY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Aug 2014 17:17:24 -0400
+	id S1751665AbaHaVgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2014 17:36:40 -0400
+Received: from p3plsmtpa12-01.prod.phx3.secureserver.net ([68.178.252.230]:49099
+	"EHLO p3plsmtpa12-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751449AbaHaVgk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Aug 2014 17:36:40 -0400
 Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa12-04.prod.phx3.secureserver.net with 
-	id lZHF1o00D3gsSd601ZHJ3Z; Sun, 31 Aug 2014 14:17:20 -0700
-X-Mailer: git-send-email 2.0.1.1697.g73c6810
-In-Reply-To: <20140831152806.GC17449@peff.net>
+	by p3plsmtpa12-01.prod.phx3.secureserver.net with 
+	id lZca1o0053gsSd601ZccQC; Sun, 31 Aug 2014 14:36:39 -0700
+Content-Disposition: inline
+In-Reply-To: <20140831153054.GD17449@peff.net>
+From2: "Maksim Kirillov" <max630@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256300>
 
-HEAD is not explicitly used as a starting commit for
-calculating reachability, so if it's detached and reflogs
-are disabled it may be pruned.
+On Sun, Aug 31, 2014 at 11:30:54AM -0400, Jeff King wrote:
+> On Sun, Aug 31, 2014 at 01:24:48AM +0300, Max Kirillov wrote:
+> 
+>> for_each_ref() does not include it itself, and without
+>> the hash the detached HEAD may be missed by some
+>> frontends (like gitk).
+>> 
+>> Add test which verifies the head is returned
+>> 
+>> Update test t6018-rev-list-glob.sh which relied on exact
+>> list of returned hashes.
+> 
+> I think the missing bit of the justification here is that
+> "--all" _does_ include HEAD in other contexts (like in
+> git-log), and rev-parse should probably match it.
+> 
+> This is probably the right thing to do. It's possible that
+> some caller of rev-parse really depends on "--all" meaning
+> "just the refs", but I kind of doubt it. Being in sync
+> with the revision.c parser seems saner.
 
-Add tests which demonstrate it. Test 'prune: prune former HEAD after checking
-out branch' also reverts changes to repository.
+Actually, yes, this is a bit incompatible change, and while
+I'm pretty sure that rev-parse returning hashes should
+include detached HEAD, returning HEAD when it's called with
+something like "--symbolic" might be questioned. It could
+depend on the output mode (add HEAD only if printing hashes)
+but this kind of logic does not look good. So maybe some
+more opinions should be asked for.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Inserted test into existing script.
- reachable.c      |  3 +++
- t/t5304-prune.sh | 21 +++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+btw, manpage for git-rev-parse says "Show all refs found in
+refs/.", should it also be changed?
 
-diff --git a/reachable.c b/reachable.c
-index 654a8c5..6f6835b 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -229,6 +229,9 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	/* Add all external refs */
- 	for_each_ref(add_one_ref, revs);
- 
-+	/* detached HEAD is not included in the list above */
-+	head_ref(add_one_ref, revs);
-+
- 	/* Add all reflog info */
- 	if (mark_reflog)
- 		for_each_reflog(add_one_reflog, revs);
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 377d3d3..77cf064 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -104,6 +104,27 @@ test_expect_success 'prune: prune unreachable heads' '
- 
- '
- 
-+test_expect_success 'prune: do not prune detached HEAD with no reflog' '
-+
-+	git config core.logAllRefUpdates false &&
-+	test ! -e .git/logs &&
-+	git checkout --detach --quiet &&
-+	git commit --allow-empty -m "detached commit" &&
-+	git prune -n >prune_actual &&
-+	: >prune_expected &&
-+	test_cmp prune_actual prune_expected
-+
-+'
-+
-+test_expect_success 'prune: prune former HEAD after checking out branch' '
-+
-+	head_sha1=`git rev-parse HEAD` &&
-+	git checkout --quiet master &&
-+	git prune -v >prune_actual &&
-+	grep -q "$head_sha1" prune_actual
-+
-+'
-+
- test_expect_success 'prune: do not prune heads listed as an argument' '
- 
- 	: > file2 &&
 -- 
-2.0.1.1697.g73c6810
+Max
