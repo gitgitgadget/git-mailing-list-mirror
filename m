@@ -1,116 +1,80 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] stash: prefer --quiet over shell redirection
-Date: Sun, 31 Aug 2014 00:42:53 -0700
-Message-ID: <1409470973-67707-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Jon Seymour <jon.seymour@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 09:42:12 2014
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] teach fast-export an --anonymize option
+Date: Sun, 31 Aug 2014 06:34:08 -0400
+Message-ID: <CAPig+cSKfxAsr+RQp8N8GAOe9fa_6kGPi_-X99Vs-2bYbBoC8A@mail.gmail.com>
+References: <20140827165854.GC1432@peff.net>
+	<20140827170127.GA6138@peff.net>
+	<CACsJy8B3gFC7kLf-cLhAk3BgQ+v427rMXWHTqjU4LYP3NQte7Q@mail.gmail.com>
+	<20140828123257.GA18642@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 31 12:34:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNzm6-0003Hi-QG
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 09:42:11 +0200
+	id 1XO2Sc-0003EF-Uj
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 12:34:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbaHaHmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2014 03:42:07 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:63921 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750740AbaHaHmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2014 03:42:05 -0400
-Received: by mail-pd0-f179.google.com with SMTP id z10so3589365pdj.38
-        for <git@vger.kernel.org>; Sun, 31 Aug 2014 00:42:04 -0700 (PDT)
+	id S1751147AbaHaKeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2014 06:34:11 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:61739 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046AbaHaKeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2014 06:34:09 -0400
+Received: by mail-yk0-f176.google.com with SMTP id 19so2555366ykq.21
+        for <git@vger.kernel.org>; Sun, 31 Aug 2014 03:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=+iXJHheP0os/WF09p8oD7/RLY1oAV7f02Ukphz9+77A=;
-        b=cXc/Ho9kCHsa7VnV1SzaRGDpBbfCAHUhc0cfJB3E9t5UfjqAhNedGlUT8vUszkjRKZ
-         IJlM0HjafDmjytFS4vV9ahOgnTSo4riRAmmcPpcGiZOoy0zZjzqTjo/LdxE2L2BsbFJx
-         FXRSlLYR0AUzXaW2OiFJv4ik9XWU2R9GBWxfsAd6UxC1fx2ve/UpUuP5vSza4DNI8WNK
-         TFG4raycyPVm1M0dE0pEEoUJ7eabT1UW7HvhiVEiUolKbveBEHQfUFA2H83hMnPKGtJ4
-         +4UworHSYQ0wjjTivAqSR5b48faplCuKVZP/ET3nA9KIsDneu1oNYyvoxstM9pHOZbSW
-         Z6bQ==
-X-Received: by 10.68.238.69 with SMTP id vi5mr29061537pbc.0.1409470924487;
-        Sun, 31 Aug 2014 00:42:04 -0700 (PDT)
-Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id c3sm7004789pdj.6.2014.08.31.00.42.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 31 Aug 2014 00:42:03 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0.29.g9b751c4
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=a2A/SQ019d0WLMr0PUA3Nfr6hu+Jl2WiRQT7RGHI3vw=;
+        b=BNs9BIuJHFo8Ba0nF1kK0id6uiuazfVFJs0n3bk+wT9Hq7sOgih+ebf2HRuolC21A+
+         hpoKEml5zHi/lK4wyo9qxl4N4etvbh3piG2WRupDdg1ZkWddVrKJZW1Nq9kjnTExmJv/
+         VUN8btmmzN90eZtuymihcPxGDCRKEXIys2kYDXGTbSMO+ujTCveqckH4q/ZlfeSTOs24
+         SgFVjap8Yf8glrFFFf8zMIRsiwELtzBuUhgekUuA8XFOKu106e6QzqehjGSrWxghSkjt
+         QpjWhJdvldyLgptmejzimqCnjNIn1CyfUXaLOpt3AwILvYiSdZ8wWminhJPtvbI4mZPS
+         lTPg==
+X-Received: by 10.236.128.176 with SMTP id f36mr3644638yhi.87.1409481248350;
+ Sun, 31 Aug 2014 03:34:08 -0700 (PDT)
+Received: by 10.170.163.5 with HTTP; Sun, 31 Aug 2014 03:34:08 -0700 (PDT)
+In-Reply-To: <20140828123257.GA18642@peff.net>
+X-Google-Sender-Auth: rjLEKgx-JkwRVgO-GblSrkqS_L4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256283>
 
-Use `git rev-parse --verify --quiet` instead of redirecting
-stderr to /dev/null.
+On Thu, Aug 28, 2014 at 8:32 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 28, 2014 at 05:30:44PM +0700, Duy Nguyen wrote:
+>
+>> On Thu, Aug 28, 2014 at 12:01 AM, Jeff King <peff@peff.net> wrote:
+>> > You can get an overview of what will be shared
+>> > by running a command like:
+>> >
+>> >   git fast-export --anonymize --all |
+>> >   perl -pe 's/\d+/X/g' |
+>> >   sort -u |
+>> >   less
+>> >
+>> > which will show every unique line we generate, modulo any
+>> > numbers (each anonymized token is assigned a number, like
+>> > "User 0", and we replace it consistently in the output).
+>>
+>> I feel like this should be part of git-fast-export.txt, just to
+>> increase the user's confidence in the tool (and I don't expect most
+>> users to read this commit message).
+>
+> Hmph. Whenever I say "I think this patch is done", suddenly the comments
+> start pouring in. :)
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- git-stash.sh | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index bcc757b..2ff8b94 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -50,7 +50,7 @@ clear_stash () {
- 	then
- 		die "$(gettext "git stash clear with parameters is unimplemented")"
- 	fi
--	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
-+	if current=$(git rev-parse --verify --quiet $ref_stash)
- 	then
- 		git update-ref -d $ref_stash $current
- 	fi
-@@ -292,7 +292,7 @@ save_stash () {
- }
- 
- have_stash () {
--	git rev-parse --verify $ref_stash >/dev/null 2>&1
-+	git rev-parse --verify --quiet $ref_stash >/dev/null
- }
- 
- list_stash () {
-@@ -392,12 +392,12 @@ parse_flags_and_rev()
- 		;;
- 	esac
- 
--	REV=$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) || {
-+	REV=$(git rev-parse --symbolic --verify --quiet "$1") || {
- 		reference="$1"
- 		die "$(eval_gettext "\$reference is not valid reference")"
- 	}
- 
--	i_commit=$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
-+	i_commit=$(git rev-parse --verify --quiet "$REV^2") &&
- 	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>/dev/null) &&
- 	s=$1 &&
- 	w_commit=$1 &&
-@@ -409,7 +409,7 @@ parse_flags_and_rev()
- 	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
- 	IS_STASH_REF=t
- 
--	u_commit=$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
-+	u_commit=$(git rev-parse --verify --quiet "$REV^3") &&
- 	u_tree=$(git rev-parse "$REV^3:" 2>/dev/null)
- }
- 
-@@ -531,7 +531,8 @@ drop_stash () {
- 		die "$(eval_gettext "\${REV}: Could not drop stash entry")"
- 
- 	# clear_stash if we just dropped the last stash entry
--	git rev-parse --verify "$ref_stash@{0}" >/dev/null 2>&1 || clear_stash
-+	git rev-parse --verify --quiet "$ref_stash@{0}" >/dev/null ||
-+	clear_stash
- }
- 
- apply_to_branch () {
--- 
-2.1.0.29.g9b751c4
+Considering that the value of --anonymize is not yet known, is such an
+invasive change to fast-export.c warranted? Would it make sense
+instead to provide "anonymize" functionality as a contrib/ script or a
+distinct git-anonymize-foo command which accepts a fast-import stream
+as input and anonymizes it as output?
