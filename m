@@ -1,79 +1,82 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 22/32] checkout: support checking out into a new working directory
-Date: Sun, 31 Aug 2014 11:52:50 +0700
-Message-ID: <CACsJy8ASW0xO3WzU7f+T4iDhjL=Y=C6K+Cvi-OWOnS16r=m+9Q@mail.gmail.com>
-References: <1409387642-24492-1-git-send-email-pclouds@gmail.com>
- <1409387642-24492-23-git-send-email-pclouds@gmail.com> <70985AC885404243A2B95F534083A0E9@PhilipOakley>
- <CACsJy8CpGhLN58GyJa_3-PDqNqYUCshPEGDr8-pKngad+-oAdg@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 2/2] stash: prefer --quiet over shell redirection
+Date: Sun, 31 Aug 2014 00:35:51 -0700
+Message-ID: <20140831073550.GA66236@gmail.com>
+References: <1409427029-65886-1-git-send-email-davvid@gmail.com>
+ <1409427029-65886-2-git-send-email-davvid@gmail.com>
+ <54023D01.6090504@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Sun Aug 31 06:53:27 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jon Seymour <jon.seymour@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Aug 31 09:35:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XNx8n-0006jb-FU
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 06:53:25 +0200
+	id 1XNzfU-00085N-Tf
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 09:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750759AbaHaExW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2014 00:53:22 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:52710 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750715AbaHaExV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2014 00:53:21 -0400
-Received: by mail-ig0-f174.google.com with SMTP id a13so2209617igq.7
-        for <git@vger.kernel.org>; Sat, 30 Aug 2014 21:53:20 -0700 (PDT)
+	id S1751038AbaHaHe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2014 03:34:57 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:51544 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbaHaHe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2014 03:34:56 -0400
+Received: by mail-pd0-f173.google.com with SMTP id p10so3589713pdj.32
+        for <git@vger.kernel.org>; Sun, 31 Aug 2014 00:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=1Iez0ojN/W37koDVanUgO7e9CIjBjUwa0P4c/9iGLwM=;
-        b=DNBkg4fiNLaDl6glPStoRNKpyCul3nS6KUelZMaUh+Yfm/sB7HiITni7UAgrLhsYj/
-         QdNfam7ghgXq4HfI4mlvmjLNm5z0AIn+nbiHoZtNGcG5AJhzToaVTOCnnztyU3A2liLn
-         3ClL4G/H9ZbW/CIIBlKNythGC/XiXSKiFEsuTTvTCmYP1JQnFOSQCR7bYgci0iziW8ba
-         Ll9pepe5fBCUHkq/+UzwmxqSsFLnwO7wYXSuEwvRoOaXwAfEbiC5+F5twTPH0uv30poJ
-         1a6RsjqPE5YQX/3X9ZhEf8ujibuXgKKu5IizKtKknUAyHAXQkh6cZ8pUiqObDtQ7zPEy
-         Rdkw==
-X-Received: by 10.42.247.137 with SMTP id mc9mr19164653icb.13.1409460800789;
- Sat, 30 Aug 2014 21:53:20 -0700 (PDT)
-Received: by 10.107.13.80 with HTTP; Sat, 30 Aug 2014 21:52:50 -0700 (PDT)
-In-Reply-To: <CACsJy8CpGhLN58GyJa_3-PDqNqYUCshPEGDr8-pKngad+-oAdg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=o9QIwxodlehynUTOVoB51yllW9ovq+g2YAWjXk1OYZo=;
+        b=EGL6t19XAGs6PFiuGpF94iEvyBMtfB/Yp4Dda5TfwCWoPBPpObfxKUKrrb93beY1pY
+         a0MeATYIQQfwE4h/EUfQfQ1d5+w/xLzEO7Op8eQrJimXx5vNxss+G3MW3jphxiYHyUXy
+         JeuXyQ9M5fPZd05d12lQvFLPdLe9erP0In4eo3G0HJJnfPGu0Wux4tqtC4ylBFZ6ZnNq
+         SWdEd0l9HcmmLvcycndPWcaaL0VO2g4pn6oPh2ZwiWBBmJksrNwlREbETpK5+e8QaC/E
+         JsJ04a3D5uz//60LWfKBlGCzi5oiOlgVMbi4bFnCUVA0OO6uwZGaKdAwF+3VxxwQ8rQA
+         dtVA==
+X-Received: by 10.70.98.203 with SMTP id ek11mr29442658pdb.32.1409470496024;
+        Sun, 31 Aug 2014 00:34:56 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id b9sm4538821pbu.91.2014.08.31.00.34.54
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 31 Aug 2014 00:34:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <54023D01.6090504@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256281>
 
-On Sun, Aug 31, 2014 at 11:49 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> All checkouts share the same repository. Linked checkouts see the
-> repository a bit different from the main checkout. When you perform
-> the command
->
-> ------------
-> git checkout --to <some-location> <some-branch>
-> ------------
->
-> The checkout at <some-location> will have a unique id that is also the
-> branch name (e.g. "<some-branch>"). A number may be appended to the id
+On Sat, Aug 30, 2014 at 11:07:13PM +0200, Johannes Sixt wrote:
+> Am 30.08.2014 21:30, schrieb David Aguilar:
+> > @@ -392,12 +392,12 @@ parse_flags_and_rev()
+> >  		;;
+> >  	esac
+> >  
+> > -	REV=$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) || {
+> > +	REV=$(git rev-parse --quiet --symbolic --verify "$1") || {
+> >  		reference="$1"
+> >  		die "$(eval_gettext "\$reference is not valid reference")"
+> >  	}
+> >  
+> > -	i_commit=$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
+> > +	i_commit=$(git rev-parse --quiet --verify "$REV^2") &&
+> >  	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>/dev/null) &&
+> 
+> I see another rev-parse that you did not modify. An omission?
 
-.. and I got my facts wrong. The above line should be:
+The docs for --quiet say, "Only meaningful in --verify mode", so I didn't touch
+the non-verify call-sites.
 
-last component of <some-location>. A number may be appended to the id
-
-> to make it unique. All worktree-specific files of this new checkout
-> are in $GIT_DIR/repos/<unique-id> of the main checkout. So "HEAD"
-> inside the linked checkout will be resolved to
-> "$GIT_DIR/repos/<some-branch>/HEAD", while "HEAD" from the main
-
-s/<some-branch>/<unique-id>/
-
-> checkout remains "$GIT_DIR/HEAD".
-
-
-
+Thanks for the review. I'll address your notes and send a v2 shortly.
 -- 
-Duy
+David
