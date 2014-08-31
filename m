@@ -1,85 +1,205 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 22/32] checkout: support checking out into a new working directory
-Date: Sun, 31 Aug 2014 12:08:49 +0100
-Organization: OPDS
-Message-ID: <64D6AA311E524C27A8B6EDE7A63489D7@PhilipOakley>
-References: <1409387642-24492-1-git-send-email-pclouds@gmail.com> <1409387642-24492-23-git-send-email-pclouds@gmail.com> <70985AC885404243A2B95F534083A0E9@PhilipOakley> <CACsJy8CpGhLN58GyJa_3-PDqNqYUCshPEGDr8-pKngad+-oAdg@mail.gmail.com> <CACsJy8ASW0xO3WzU7f+T4iDhjL=Y=C6K+Cvi-OWOnS16r=m+9Q@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v8 1/4] cache-tree: Create/update cache-tree on checkou
+Date: Sun, 31 Aug 2014 13:07:03 +0100
+Message-ID: <20140831120703.GA1240@serenity.lan>
+References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Duy Nguyen" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 31 13:08:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sun Aug 31 14:07:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XO309-0004si-Kz
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 13:08:54 +0200
+	id 1XO3ul-0008LW-Ih
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Aug 2014 14:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751125AbaHaLIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2014 07:08:49 -0400
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:63197 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751046AbaHaLIt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Aug 2014 07:08:49 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhwkAKABA1QCYJAzPGdsb2JhbABagw1kAUWCfIU7vBmKXgYCAgiBAxcFAQEBATg2g34FAQEEAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQIEgYHAxQGEwgCAQIDAYgdAwkMpSuGf4dUDYVlAReBLIt0gi01gks2gR0FhhSLHViIQ5B3ihk8L4JPAQEB
-X-IPAS-Result: AhwkAKABA1QCYJAzPGdsb2JhbABagw1kAUWCfIU7vBmKXgYCAgiBAxcFAQEBATg2g34FAQEEAQgBARkVHgEBIQsCAwUCAQMOBwMCAgUhAgIUAQQIEgYHAxQGEwgCAQIDAYgdAwkMpSuGf4dUDYVlAReBLIt0gi01gks2gR0FhhSLHViIQ5B3ihk8L4JPAQEB
-X-IronPort-AV: E=Sophos;i="5.04,436,1406588400"; 
-   d="scan'208";a="119787933"
-Received: from host-2-96-144-51.as13285.net (HELO PhilipOakley) ([2.96.144.51])
-  by out1.ip07ir2.opaltelecom.net with SMTP; 31 Aug 2014 12:08:46 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751572AbaHaMHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2014 08:07:19 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:48663 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751388AbaHaMHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2014 08:07:18 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 2E578CDA557;
+	Sun, 31 Aug 2014 13:07:17 +0100 (BST)
+X-Quarantine-ID: <0xkRyvNP2m3S>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 0xkRyvNP2m3S; Sun, 31 Aug 2014 13:07:16 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 01B4FCDA58A;
+	Sun, 31 Aug 2014 13:07:08 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <1405140276-32162-1-git-send-email-dturner@twitter.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256285>
 
-From: "Duy Nguyen" <pclouds@gmail.com>
-> On Sun, Aug 31, 2014 at 11:49 AM, Duy Nguyen <pclouds@gmail.com> 
-> wrote:
->> All checkouts share the same repository. Linked checkouts see the
->> repository a bit different from the main checkout. When you perform
->> the command
->>
->> ------------
->> git checkout --to <some-location> <some-branch>
->> ------------
->>
->> The checkout at <some-location> will have a unique id that is also 
->> the
->> branch name (e.g. "<some-branch>"). A number may be appended to the 
->> id
->
-> .. and I got my facts wrong. The above line should be:
->
-> last component of <some-location>. A number may be appended to the id
->
+On Fri, Jul 11, 2014 at 09:44:33PM -0700, David Turner wrote:
+> When git checkout checks out a branch, create or update the
+> cache-tree so that subsequent operations are faster.
+> 
+> update_main_cache_tree learned a new flag, WRITE_TREE_REPAIR.  When
+> WRITE_TREE_REPAIR is set, portions of the cache-tree which do not
+> correspond to existing tree objects are invalidated (and portions which
+> do are marked as valid).  No new tree objects are created.
+> 
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
 
-That's fine. Glad that we're on the same wavelength for the 
-documentation.
+This causes an incorrect error message to be printed when switching
+branches with staged changes in a subdirectory.  The test case is pretty
+simple:
 
->> to make it unique. All worktree-specific files of this new checkout
->> are in $GIT_DIR/repos/<unique-id> of the main checkout. So "HEAD"
->> inside the linked checkout will be resolved to
->> "$GIT_DIR/repos/<some-branch>/HEAD", while "HEAD" from the main
->
-> s/<some-branch>/<unique-id>/
->
->> checkout remains "$GIT_DIR/HEAD".
->
->
->
+	git init test &&
+	cd test &&
+	mkdir sub &&
+	echo one >sub/one &&
+	git add sub/one &&
+	git commit -m one &&
+	echo two >sub/two &&
+	git add sub/two &&
+	git checkout -b test
+
+After this commit the output is:
+
+	error: invalid object 040000 0000000000000000000000000000000000000000 for 'bar'
+	A       bar/quux
+	Switched to branch 'test'
+
+but the "error:" line should not be there.
+
+Everything still works, but I think the error message is a bit scary
+considering that this isn't actually an error.
+
+>  builtin/checkout.c    |  8 ++++++++
+>  cache-tree.c          | 12 +++++++++++-
+>  cache-tree.h          |  1 +
+>  t/t0090-cache-tree.sh | 19 ++++++++++++++++---
+>  4 files changed, 36 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 07cf555..054214f 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -553,6 +553,14 @@ static int merge_working_tree(const struct checkout_opts *opts,
+>  		}
+>  	}
+>  
+> +	if (!active_cache_tree)
+> +		active_cache_tree = cache_tree();
+> +
+> +	if (!cache_tree_fully_valid(active_cache_tree))
+> +		cache_tree_update(active_cache_tree,
+> +				  (const struct cache_entry * const *)active_cache,
+> +				  active_nr, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
+> +
+>  	if (write_cache(newfd, active_cache, active_nr) ||
+>  	    commit_locked_index(lock_file))
+>  		die(_("unable to write new index file"));
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 7fa524a..f951d7d 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -239,9 +239,12 @@ static int update_one(struct cache_tree *it,
+>  	struct strbuf buffer;
+>  	int missing_ok = flags & WRITE_TREE_MISSING_OK;
+>  	int dryrun = flags & WRITE_TREE_DRY_RUN;
+> +	int repair = flags & WRITE_TREE_REPAIR;
+>  	int to_invalidate = 0;
+>  	int i;
+>  
+> +	assert(!(dryrun && repair));
+> +
+>  	*skip_count = 0;
+>  
+>  	if (0 <= it->entry_count && has_sha1_file(it->sha1))
+> @@ -374,7 +377,14 @@ static int update_one(struct cache_tree *it,
+>  #endif
+>  	}
+>  
+> -	if (dryrun)
+> +	if (repair) {
+> +		unsigned char sha1[20];
+> +		hash_sha1_file(buffer.buf, buffer.len, tree_type, sha1);
+> +		if (has_sha1_file(sha1))
+> +			hashcpy(it->sha1, sha1);
+> +		else
+> +			to_invalidate = 1;
+> +	} else if (dryrun)
+>  		hash_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1);
+>  	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1)) {
+>  		strbuf_release(&buffer);
+> diff --git a/cache-tree.h b/cache-tree.h
+> index f1923ad..666d18f 100644
+> --- a/cache-tree.h
+> +++ b/cache-tree.h
+> @@ -39,6 +39,7 @@ int update_main_cache_tree(int);
+>  #define WRITE_TREE_IGNORE_CACHE_TREE 2
+>  #define WRITE_TREE_DRY_RUN 4
+>  #define WRITE_TREE_SILENT 8
+> +#define WRITE_TREE_REPAIR 16
+>  
+>  /* error return codes */
+>  #define WRITE_TREE_UNREADABLE_INDEX (-1)
+> diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+> index 6c33e28..98fb1ab 100755
+> --- a/t/t0090-cache-tree.sh
+> +++ b/t/t0090-cache-tree.sh
+> @@ -44,14 +44,14 @@ test_expect_success 'read-tree HEAD establishes cache-tree' '
+>  
+>  test_expect_success 'git-add invalidates cache-tree' '
+>  	test_when_finished "git reset --hard; git read-tree HEAD" &&
+> -	echo "I changed this file" > foo &&
+> +	echo "I changed this file" >foo &&
+>  	git add foo &&
+>  	test_invalid_cache_tree
+>  '
+>  
+>  test_expect_success 'update-index invalidates cache-tree' '
+>  	test_when_finished "git reset --hard; git read-tree HEAD" &&
+> -	echo "I changed this file" > foo &&
+> +	echo "I changed this file" >foo &&
+>  	git update-index --add foo &&
+>  	test_invalid_cache_tree
+>  '
+> @@ -85,9 +85,22 @@ test_expect_success 'reset --hard without index gives cache-tree' '
+>  	test_shallow_cache_tree
+>  '
+>  
+> -test_expect_failure 'checkout gives cache-tree' '
+> +test_expect_success 'checkout gives cache-tree' '
+> +	git tag current &&
+>  	git checkout HEAD^ &&
+>  	test_shallow_cache_tree
+>  '
+>  
+> +test_expect_success 'checkout -b gives cache-tree' '
+> +	git checkout current &&
+> +	git checkout -b prev HEAD^ &&
+> +	test_shallow_cache_tree
+> +'
+> +
+> +test_expect_success 'checkout -B gives cache-tree' '
+> +	git checkout current &&
+> +	git checkout -B prev HEAD^ &&
+> +	test_shallow_cache_tree
+> +'
+> +
+>  test_done
 > -- 
-Philip 
+> 2.0.0.390.gcb682f8
