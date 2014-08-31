@@ -1,103 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] index-pack: handle duplicate base objects gracefully
-Date: Sun, 31 Aug 2014 15:23:30 -0700
-Message-ID: <xmqq38cc47tp.fsf@gitster.dls.corp.google.com>
-References: <20140829205538.GD29456@peff.net> <20140829205809.GB7060@peff.net>
-	<xmqqegvz3qpp.fsf@gitster.dls.corp.google.com>
-	<20140829220818.GA24834@peff.net>
-	<CAJo=hJs3mM7=LcOop-WD=bipA=Wx-7MDh6ObQwFUE38tjurvcw@mail.gmail.com>
-	<20140830131649.GA26833@peff.net>
-	<CAJo=hJu-DCMv=jepMJvcmR9EOedkynCyL0kD_hB+UGWxbErDfA@mail.gmail.com>
-	<20140831152437.GB17449@peff.net>
+Subject: Re: [PATCH 4/6] fsck: check tag objects' headers
+Date: Sun, 31 Aug 2014 15:46:42 -0700
+Message-ID: <xmqqwq9o2s6l.fsf@gitster.dls.corp.google.com>
+References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
+	<alpine.DEB.1.00.1408281646530.990@s15462909.onlinehome-server.info>
+	<xmqqlhq88fyb.fsf@gitster.dls.corp.google.com>
+	<xmqqegw08fft.fsf@gitster.dls.corp.google.com>
+	<20140829234641.GG24834@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Martin von Gagern <Martin.vGagern@gmx.net>,
-	git <git@vger.kernel.org>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 01 00:23:55 2014
+X-From: git-owner@vger.kernel.org Mon Sep 01 00:46:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XODXN-0001l5-5M
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 00:23:53 +0200
+	id 1XODth-0005E7-Ed
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 00:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751984AbaHaWXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Aug 2014 18:23:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52597 "EHLO smtp.pobox.com"
+	id S1751952AbaHaWqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Aug 2014 18:46:53 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55754 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751707AbaHaWXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Aug 2014 18:23:46 -0400
+	id S1751429AbaHaWqx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Aug 2014 18:46:53 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA53734335;
-	Sun, 31 Aug 2014 18:23:40 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 942EE34681;
+	Sun, 31 Aug 2014 18:46:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T5Xj4Aq1FLiDBRt8L4jEhdx63kU=; b=C676R4
-	csp557oryV6q9t5dGo4pDd4zA0loQU1PzPrymVuezH9dyOdF5p9HlVOoV0UtKqXn
-	blUcwmVKLh8VyABRteHL03o77sgVJgV4elI5MdAGizz5G+y1XtHsGdzsvamsrIoS
-	s4HEHx8iEARWClo9EYcz91T/FpC+npiUosvd0=
+	:content-type; s=sasl; bh=OYps49Ql4vItycqlIUhfPfYrEZ8=; b=vt3xvx
+	FhbGzWgCcIIdBljxz7AJiAv8oRPme/iww6c2N9OZInXJJFH396yn5HBhETjtD2hB
+	6yIeXnNA6kkMBZEDexgXQ3TUT6ETBlTbYdcQ9ATGuR1cwcMY8KOWiD4VdKPef+sW
+	EjjXa7/s/gEDSRjMdPKjKV3STs7AqG+fLjCjE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YZV8Haf83siTX7pn0hcNuGkcxwp4gqNO
-	mF5Kho5qWG1BjC0LYHuxBjn4UiqenVsmmCre2ZVnnAbjoyPIkxY+AYslE1rCBVJA
-	5x/aaL8BmZ3vc4qe+kkM7k35gyNUt4Ovpv0YFiOktBi9U+VQOGu93d1s+tw21Xah
-	woiLr6mtD4s=
+	:content-type; q=dns; s=sasl; b=btqFToRCIycCvXGPKwAQ6eQhoqEaZKFa
+	/J+XK1eVm0FJoi28jBEpYbDl63lOUpOUWTljFUfVFAA1Ez5HlygPvuv512o7XQ01
+	tO5bdLiN98Xxz/vWve5T4MOpSUc/h76GhFkFR22BYqbXTfiO1i5ZHwAfrw95SOMS
+	96T5CdEL6Ys=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AFE3B34334;
-	Sun, 31 Aug 2014 18:23:40 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8C09F3467F;
+	Sun, 31 Aug 2014 18:46:52 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2002A34331;
-	Sun, 31 Aug 2014 18:23:32 -0400 (EDT)
-In-Reply-To: <20140831152437.GB17449@peff.net> (Jeff King's message of "Sun,
-	31 Aug 2014 11:24:38 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C99F83467B;
+	Sun, 31 Aug 2014 18:46:43 -0400 (EDT)
+In-Reply-To: <20140829234641.GG24834@peff.net> (Jeff King's message of "Fri,
+	29 Aug 2014 19:46:41 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 70C18B28-315D-11E4-89BE-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: AE455AEE-3160-11E4-BB19-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256302>
 
 Jeff King <peff@peff.net> writes:
 
-> Broken ident lines are annoying, but not _too_ fundamentally bad.
-> Duplicate tree entries are a lot worse. Fsck even distinguishes between
-> "error" and "warning", but "index-pack --strict" treats both as a reason
-> to reject the object. We could perhaps loosen that, and make sure our
-> error/warning categories are reasonable.
+> Hmm. But that is because "git tag" always makes one type of tag: one in
+> which the "tag" field is the same as the refname in which we store it.
+> So the name must be a valid refname there to meet the ref storage
+> requirement, and therefore the tag name must, too.
+>
+> But is that something we necessarily need or want to enforce? Is it OK
+> for me to have refs/tags/foo pointing to a tag object that is not
+> related to "foo" (either semantically or syntactically)?
+>
+> I dunno. I cannot think of a reason you would want to do such a thing,
+> but this seems like outlawing it because git does not generate it, not
+> because it is necessarily a problematic thing to be doing.
 
-A pack stream that records the same object twice is not a breakage
-that is buried deep in the history and cannot be corrected without a
-wholesale history rewrite, unlike commit objects with broken ident
-lines or tree objects with 0-filled file type designators.
+Thanks for straightening me out.
 
-As such, I think it is a reasonable thing to do the following:
+If "git fsck" were a tool to validate that the objects and refs are
+in line with how "git-core" plumbing and Porcelain toolset uses the
+underlying Git data model, it makes sense to insist a tag has a name
+that is suitable for a refname, and the tag is pointed by a ref in
+"refs/tags/" followed by its name.  The rules such a "git fsck" should
+implement would be stricter than what the underlying Git data model
+could represent and existing Git tools could handle (i.e. a commit
+with broken ident line may not be usable with "shortlog -e" and would
+be flagged as corrupt).
 
- - "git repack" should be taught to dedup, as a way to recover from
-   such a breakage, if not done already.
+But tightening rules in that direction may risk hindering future
+progress in an unnecessary way.  We may want to be a bit lenient
+when we see something _unusual_ but not necessarily _wrong_, and the
+line between them would be blurry in places, as Git is an evolving
+software.  It is good to warn about an unsual ones, but we probably
+would not want to error on them.
 
- - "git fsck" should complain, suggesting users to repack to
-   recover.  It may even want to exit with non-zero status.
+This tightening may be too strict without a very good reason.  For
+example, a tentative signed tag (e.g. "for-linus") often used in a
+pull request to have it recorded in the resulting merge by the
+integrator does not inherently need to be named at all; the ref is
+only necessary as a means to transfer the signature from the
+contributor to the integrator, and once merged, there is no need for
+the tag to have any name.  When we try to improve the workflow to
+integrate authenticated work done on the side branch, we may come up
+with a way to do so _without_ having to actually have a tag name
+(i.e. the "tag" contributor creates for such a purpose may not be
+done by "git tag -s" when asking the result to be pulled but do
+something different, and it may be perfectly fine for such a
+tentative tag to lack the "tag " name line), but still allows us to
+record the same merge-tag in the resulting merge commit.
 
- - "git receive-pack" and "git fetch-pack" should warn, loudly,
-   without failing.  They should ideally not keep such a corrupt
-   pack stream on disk at all, de-duping the objects while
-   streaming, but if that is not practical, at least they should
-   give an easy way for the user to cause de-duping immediately (I
-   do not mind if that is "we detected that the other side fed us a
-   pack stream that is broken.  We automatically correct the
-   breakage for you by repacking.  Be patient while we do so").
-
- - If the other side of "receive-pack/fetch-pack" implements the
-   agent capability, upon detecting such a breakage, it may not be a
-   bad idea to offer the user to send an e-mail reporting the
-   version of the software to a wall-of-shame e-mail address ;-).
-
-I agree that a tree that records the same path twice should be
-outright rejected.  There is no sane recovery path.
+So...
