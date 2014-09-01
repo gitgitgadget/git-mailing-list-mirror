@@ -1,80 +1,79 @@
-From: "Finucane, Stephen" <stephen.finucane@intel.com>
-Subject: Dealing with conflicting tags - multiple remotes
-Date: Mon, 1 Sep 2014 15:36:22 +0000
-Message-ID: <6A74A01C3512C646A9ED99AFA28AEB9813F6F138@IRSMSX108.ger.corp.intel.com>
+From: Adria Farres <14farresa@gmail.com>
+Subject: Trailing whitespace on git diff output.
+Date: Mon, 1 Sep 2014 19:47:09 +0200
+Message-ID: <20140901174709.GA23397@vimeitor>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Gray, Mark D" <mark.d.gray@intel.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 01 17:37:28 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 01 19:47:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOTfW-0003u9-Am
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 17:37:22 +0200
+	id 1XOVgE-0004A8-6E
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 19:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754398AbaIAPg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2014 11:36:58 -0400
-Received: from mga09.intel.com ([134.134.136.24]:40546 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754101AbaIAPg5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Sep 2014 11:36:57 -0400
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga102.jf.intel.com with ESMTP; 01 Sep 2014 08:30:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.04,443,1406617200"; 
-   d="scan'208";a="566670812"
-Received: from irsmsx103.ger.corp.intel.com ([163.33.3.157])
-  by orsmga001.jf.intel.com with ESMTP; 01 Sep 2014 08:36:23 -0700
-Received: from irsmsx108.ger.corp.intel.com ([169.254.11.157]) by
- IRSMSX103.ger.corp.intel.com ([169.254.3.112]) with mapi id 14.03.0195.001;
- Mon, 1 Sep 2014 16:36:22 +0100
-Thread-Topic: Dealing with conflicting tags - multiple remotes
-Thread-Index: Ac/F+VK/5wO5U2eeSkaWPYUTHoJojA==
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [163.33.239.180]
+	id S1754437AbaIARqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2014 13:46:09 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:48565 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754186AbaIARqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2014 13:46:08 -0400
+Received: by mail-wi0-f179.google.com with SMTP id q5so6526581wiv.12
+        for <git@vger.kernel.org>; Mon, 01 Sep 2014 10:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=tYoZO8kYRkh62Ew513ZUmdod3ezyJPJ+TN1BUCyjQlY=;
+        b=LylLx8o8yiagl6i83wfvj+xhZNyPBO9S0CWbXKDr4SaT8eBhcU8VZJx3aqvBnExIsZ
+         J6thu1w+tVycI0NpuWMh317vm/o+saeY5Xa63h3fGEMt2Rm8rJAg9CmKdkEbhEFD1pCA
+         lxb6w97BBCqEDHSkIwK4Ch3Fysrr7d7psO1bwcZlv2FvFxpV6WCegWdW17AlDRy9EOY5
+         Ies1zPgp4If//85F8TPxl8eval1BZruJSlYITKly43h5J593AnxmMvqDryEdkWLqXXgV
+         Y1e8EPWBqcJQW33wF2OuuOp13vtadx8fpwZc/D9Rk9vBMwIi09eFTVYxuSJsF385A/d0
+         3aIw==
+X-Received: by 10.194.84.69 with SMTP id w5mr34786961wjy.0.1409593566957;
+        Mon, 01 Sep 2014 10:46:06 -0700 (PDT)
+Received: from vimeitor (231.Red-83-60-240.dynamicIP.rima-tde.net. [83.60.240.231])
+        by mx.google.com with ESMTPSA id r19sm27551867wik.0.2014.09.01.10.46.05
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Sep 2014 10:46:06 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256308>
 
-Hi,
+Hello,
 
-Take a repo with multiple remotes. These remotes each have a specific branch/tag naming convention, and there are tags in each that conflict with those in other remotes. In order to avoid conflicts, it seems possible to add something like this to the '.git/config' file:
+Today, while redirecting git diff's output to a text file, I noticed git diff
+leaves a trailing whitespace between different deltas of the same file (the line
+that separates two different deltas). For example, committing a file with the
+following content:
+---
+test
 
-    [remote "origin"]
-        url = git@github.com:schacon/simplegit-progit.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-        fetch = +refs/tags/*:refs/tags/origin/*
+test
+---
 
-This is discussed here:
+then changing it to the following:
+---
+test
+test
 
-    http://stackoverflow.com/a/5496610
-    http://git-scm.com/book/en/Git-Internals-The-Refspec
+test
+test
+---
 
-However, when you try to pull in these tags, you'll see two different sets of tags - one with the prefix ('origin' above) and one without. Why is this? Is this a bug, or by design?
+committing and diffing it, leaves a trailing whitespace on line 8 of the
+diff output.
 
-If this is not the recommended approach to avoid conflicts, could someone suggest a better one?
+Is that expected behavior? I'm using git 2.1.0.
 
-Regards,
-Stephen Finucane
+Sorry for taking your time,
 
-PS: system info -
- * Fedora 20 64-bit (3.15.7-200.fc20.x86_64)
- * git version 1.9.3
-
---------------------------------------------------------------
-Intel Shannon Limited
-Registered in Ireland
-Registered Office: Collinstown Industrial Park, Leixlip, County Kildare
-Registered Number: 308263
-Business address: Dromore House, East Park, Shannon, Co. Clare
-
-This e-mail and any attachments may contain confidential material for the sole use of the intended recipient(s). Any review or distribution by others is strictly prohibited. If you are not the intended recipient, please contact the sender and delete all copies.
+Adria
