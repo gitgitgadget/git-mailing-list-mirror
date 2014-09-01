@@ -1,111 +1,113 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: git fsck exit code?
-Date: Mon, 01 Sep 2014 14:17:43 -0400
-Organization: Twitter
-Message-ID: <1409595463.3057.3.camel@leckie>
-References: <1409177412.15185.3.camel@leckie>
-	 <20140829185325.GC29456@peff.net>
-	 <xmqqha0v5cgn.fsf@gitster.dls.corp.google.com>
-	 <1409343480.19256.2.camel@leckie>
-	 <CAA787rmf7aNJ+ErXk6Lc_hLVDxMV8s2Lx_YmZud83yia4n0VKA@mail.gmail.com>
+From: Bostjan Skufca <bostjan@a2o.si>
+Subject: Re: Configurable filename for what is now .gitignore
+Date: Mon, 1 Sep 2014 22:30:44 +0200
+Message-ID: <CAEp_DRBM6cexcoBrYmEktZXh4WMzE-tYwCi80-THCNwJqthQ=g@mail.gmail.com>
+References: <CAEp_DRDCQqkwL1N-PemLtOvPEv-xfBW4MatAOomwi+my9QeK8g@mail.gmail.com>
+	<20140830054312.GA28512@google.com>
+	<CAEp_DRATLprK9LZg45dn5LY=3C8cLM1BNg4rmi0XxJmdPhDGBw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git mailing list <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?=D8yvind?= "A. Holm" <sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Mon Sep 01 20:17:52 2014
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 01 22:30:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOWAp-0006Eh-As
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 20:17:51 +0200
+	id 1XOYFZ-0002X7-17
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 22:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581AbaIASRs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Sep 2014 14:17:48 -0400
-Received: from mail-qa0-f50.google.com ([209.85.216.50]:38050 "EHLO
-	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754252AbaIASRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2014 14:17:46 -0400
-Received: by mail-qa0-f50.google.com with SMTP id cm18so5157845qab.23
-        for <git@vger.kernel.org>; Mon, 01 Sep 2014 11:17:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=VuHO+yRI8IksZMHkxuaEiddXhMFjoC8ONrzO5OomRkA=;
-        b=XYF2D5YS8l+RxWl8IrhMeR1ZDl3FLDFNeMLlOgvlcjY++7VyovAtqaV/Z8bAaSzSBF
-         ZR8gi+xxNv8A37lZuKGmhXxAG9VDv8m3ZHQ7cjK4mrKOFIq0XHzgrdJBDTcZwE/nIJjl
-         UZaTwbpLjS+GTXLnQIE+E/aR64y8nnqp7NoYt56LdXh4rFr9sdrIoC9qSSyWggeu18dd
-         pwJiQyV8DsBu6Ea7ohKkALV53uY2oPbCO8PH7P2kxpJ6bL8KJH6Z+IeoCe7e5JlDiGYq
-         AYLj3xhQuioRURDE/xQ76tUOYRuusgvoLEyeInXjHVE3ik7A3mQ2w9u93ziboQkoKBWE
-         k++g==
-X-Gm-Message-State: ALoCoQlo1n3SvTY+YmOoiE/VWJsqwlfGu/RINKYzR9h0YgKwFFeYucVEGfPlfJbahS1qZUbyYisD
-X-Received: by 10.140.82.242 with SMTP id h105mr45252683qgd.98.1409595466208;
-        Mon, 01 Sep 2014 11:17:46 -0700 (PDT)
-Received: from [172.18.25.133] ([8.25.196.26])
-        by mx.google.com with ESMTPSA id 96sm1838274qgf.20.2014.09.01.11.17.44
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Sep 2014 11:17:45 -0700 (PDT)
-In-Reply-To: <CAA787rmf7aNJ+ErXk6Lc_hLVDxMV8s2Lx_YmZud83yia4n0VKA@mail.gmail.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S1752174AbaIAUat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2014 16:30:49 -0400
+Received: from portkey.s.itsis.si ([78.47.12.76]:42286 "EHLO
+	portkey.s.itsis.si" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751698AbaIAUas (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Sep 2014 16:30:48 -0400
+Received: from undisclosed (undisclosed [127.0.0.254]) (Authenticated sender: undisclosed) by portkey.s.itsis.si (Postfix) with ESMTPSA id 5FAAB80061
+	for <git@vger.kernel.org>; Mon,  1 Sep 2014 20:30:46 +0000 (UTC)
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.98.4 at portkey
+Received: by mail-ig0-f169.google.com with SMTP id r2so2677666igi.2
+        for <git@vger.kernel.org>; Mon, 01 Sep 2014 13:30:44 -0700 (PDT)
+X-Received: by 10.50.25.41 with SMTP id z9mr23779877igf.0.1409603444522; Mon,
+ 01 Sep 2014 13:30:44 -0700 (PDT)
+Received: by 10.50.218.174 with HTTP; Mon, 1 Sep 2014 13:30:44 -0700 (PDT)
+In-Reply-To: <CAEp_DRATLprK9LZg45dn5LY=3C8cLM1BNg4rmi0XxJmdPhDGBw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256311>
 
-On Sun, 2014-08-31 at 20:54 +0200, =C3=98yvind A. Holm wrote:
-> On 29 August 2014 22:18, David Turner <dturner@twopensource.com> wrot=
-e:
-> > On Fri, 2014-08-29 at 12:21 -0700, Junio C Hamano wrote:
-> > > Jeff King <peff@peff.net> writes:
-> > > > On Wed, Aug 27, 2014 at 06:10:12PM -0400, David Turner wrote:
-> > > > > It looks like git fsck exits with 0 status even if there are
-> > > > > some errors. The only case where there's a non-zero exit code=
- is
-> > > > > if verify_pack reports errors -- but not e.g. fsck_object_dir=
-=2E
-> > > >
-> > > > It will also bail non-zero with _certain_ tree errors that caus=
-e
-> > > > git to die() rather than fscking more completely.
-> > >
-> > > Even if git does not die, whenever it says broken link, missing
-> > > object, or object corrupt, we set errors_found and that variable
-> > > affects the exit status of fsck.  What does "some errors" exactly
-> > > mean in the original report?  Dangling objects are *not* errors a=
-nd
-> > > should not cause fsck to report an error with its exit status.
-> >
-> > error in tree 9f50addba2b4e9e928d9c6a7056bdf71b36fba90: contains
-> > duplicate file entries
->=20
-> I don't think git fsck should return !0 in this case. Yes, it's an
-> inconsistency in the repo, but it's sometimes due to erroneous
-> conversions from another SCM or some other (non-standard) implementat=
-ion
-> of the git client. I've seen things like this (and other inconsistenc=
-ies
-> in repos, like wrong date formats, non-standard Author fields, unsort=
-ed
-> trees, zero-padded file modes and so on), and the thing is, owners of
-> public repos with these errors tend to avoid fixing it because it
-> changes the commit SHAs. If git fsck starts to return !0 on these
-> errors, it will always return error on that repo, which in practise
-> means that the error code is rendered useless. IMHO git fsck should o=
-nly
-> return !0 on errors that can be fixed without changing the commit
-> history, for example missing or invalid objects.
+I see another crux of the problem.
 
-We could have one exit code for errors which can be fixed without
-rewriting history, and another for errors that can't.  Or different
-command-line arguments to suppress errors of this sort.
+There is currently no way to transfer/share repository configuration
+between clones.
+(Or is there? Could this be done with attributes? Probably not...)
 
-In my case, I actually could fix the issue, because it was in a
-newly-created branch; I just rewrote the script that created the branch
-to be a little smarter.
+This is a bit awkward.
+Are there any plans to provide such functionality? Pros/cons?
+
+(It should be limited in scope of course, to provide adequate security
+for all parties involved.)
+
+
+Thanks for sharing your opinion,
+b.
+
+
+PS: For those that did not follow this small thread, here is an
+example use case to illustrate the problem:
+
+1. I patch git to support custom filename for .gitignore
+2. I reconfigure it in my repository clone (i.e. change it to look for
+.gitexclude files)
+2a. This is configured in .git/config, for example as
+core.excludesDefaultFilename
+3. I can commit changes to repository code, namely a change which
+renames .gitignore(s) to .gitexclude(s) (which restores correct
+exclusion pattern parsing)
+4. When I push, only .gitignore rename to .gitexclude goes upstream.
+Info about required usage of .gitexclude instead of .gitignore stays
+in my repo clone.
+5. When someone pulls, they have messed up "git status" output until
+they manually set the same setting in their repo clone (using
+.gitexclude instead of .gitignore)
+
+
+On 31 August 2014 03:55, Bostjan Skufca <bostjan@a2o.si> wrote:
+> Hi Jonathan,
+>
+> nope, haven't seen zit before, it does partly what I would need, but
+> just for one file at a time (a "bit" awkward) and not really portable
+> (git clone will not clone .FILE.git/exclude, for example).
+>
+> Anyway, do you think that a patch which makes .gitignore filename
+> configurable would be appropriate for inclusion in future git
+> releases?
+>
+> b.
+>
+>
+>
+> On 30 August 2014 07:43, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Hi,
+>>
+>> Bostjan Skufca wrote:
+>>
+>>> Git is great for tracking code development, but when deploying
+>>> mentioned code by using git itself, various configuration files must
+>>> be created additionally, which are normally .gitignored, for various
+>>> reasons (code portability, sensitive data, etc). There is currently no
+>>> simple way of tracking changes to those critical configuration files
+>>> (at least none that I am aware of).
+>>>
+>>> One way to approach this would be tracking those changes in separate
+>>> git repository.
+>>
+>> Have you seen zit
+>> <https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Zit>?
+>>
+>> Curious,
+>> Jonathan
