@@ -1,70 +1,80 @@
-From: Cyrille Truchot <cyrille.truchot@pird.com>
-Subject: git stash -u deletes directories containing ignored files
-Date: Mon, 01 Sep 2014 16:08:49 +0200
-Message-ID: <54047DF1.9020800@pird.com>
+From: "Finucane, Stephen" <stephen.finucane@intel.com>
+Subject: Dealing with conflicting tags - multiple remotes
+Date: Mon, 1 Sep 2014 15:36:22 +0000
+Message-ID: <6A74A01C3512C646A9ED99AFA28AEB9813F6F138@IRSMSX108.ger.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 01 16:09:02 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Gray, Mark D" <mark.d.gray@intel.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 01 17:37:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOSI0-0003DZ-4t
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 16:09:00 +0200
+	id 1XOTfW-0003u9-Am
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Sep 2014 17:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753065AbaIAOI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Sep 2014 10:08:56 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:48125 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751665AbaIAOIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Sep 2014 10:08:55 -0400
-Received: from mfilter30-d.gandi.net (mfilter30-d.gandi.net [217.70.178.161])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id D411DA82C7
-	for <git@vger.kernel.org>; Mon,  1 Sep 2014 16:08:51 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter30-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter30-d.gandi.net (mfilter30-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id qDCy3mUW3ecH for <git@vger.kernel.org>;
-	Mon,  1 Sep 2014 16:08:50 +0200 (CEST)
-X-Originating-IP: 93.17.52.123
-Received: from [192.168.0.139] (123.52.17.93.rev.sfr.net [93.17.52.123])
-	(Authenticated sender: ct@pird.com)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 05155A8321
-	for <git@vger.kernel.org>; Mon,  1 Sep 2014 16:08:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20130509 Thunderbird/17.0.6
+	id S1754398AbaIAPg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Sep 2014 11:36:58 -0400
+Received: from mga09.intel.com ([134.134.136.24]:40546 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754101AbaIAPg5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Sep 2014 11:36:57 -0400
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP; 01 Sep 2014 08:30:53 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.04,443,1406617200"; 
+   d="scan'208";a="566670812"
+Received: from irsmsx103.ger.corp.intel.com ([163.33.3.157])
+  by orsmga001.jf.intel.com with ESMTP; 01 Sep 2014 08:36:23 -0700
+Received: from irsmsx108.ger.corp.intel.com ([169.254.11.157]) by
+ IRSMSX103.ger.corp.intel.com ([169.254.3.112]) with mapi id 14.03.0195.001;
+ Mon, 1 Sep 2014 16:36:22 +0100
+Thread-Topic: Dealing with conflicting tags - multiple remotes
+Thread-Index: Ac/F+VK/5wO5U2eeSkaWPYUTHoJojA==
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [163.33.239.180]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256307>
 
-Hey there,
+Hi,
 
-I'm sure you've already heard about this because this is referenced on 
-the web, but I cannot find anything about it on GitHub in the open 
-issues nor in the fixed ones.
+Take a repo with multiple remotes. These remotes each have a specific branch/tag naming convention, and there are tags in each that conflict with those in other remotes. In order to avoid conflicts, it seems possible to add something like this to the '.git/config' file:
 
-I'm working with Git for Windows, version 1.8.3.
-The .gitignorefile contains a line like this : 'mydirectory/*'.
-A new file is added in 'mydirectory' (but it's not showing with git 
-status as it is ignored).
-Let's say I want to stash several other files (tracked and untracked) 
-and I use git stash -u.
-The directory 'mydirectory' is then purely deleted, and not stashed. So, 
-unrecoverable.
+    [remote "origin"]
+        url = git@github.com:schacon/simplegit-progit.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        fetch = +refs/tags/*:refs/tags/origin/*
 
-This happens only if thhe start is present in the .gitignore, because 
-'mydirectory/' behaves normally.
+This is discussed here:
 
-So is there an open issue about this, or better, maybe it's already 
-fixed in the latest versions ?
-Thanks in advance for your reply, and many apologies if it's not relevant.
+    http://stackoverflow.com/a/5496610
+    http://git-scm.com/book/en/Git-Internals-The-Refspec
 
-Someone else has described the bug here:
-http://blog.icefusion.co.uk/git-stash-can-delete-ignored-files-git-stash-u/
+However, when you try to pull in these tags, you'll see two different sets of tags - one with the prefix ('origin' above) and one without. Why is this? Is this a bug, or by design?
+
+If this is not the recommended approach to avoid conflicts, could someone suggest a better one?
 
 Regards,
-Cyrille
+Stephen Finucane
+
+PS: system info -
+ * Fedora 20 64-bit (3.15.7-200.fc20.x86_64)
+ * git version 1.9.3
+
+--------------------------------------------------------------
+Intel Shannon Limited
+Registered in Ireland
+Registered Office: Collinstown Industrial Park, Leixlip, County Kildare
+Registered Number: 308263
+Business address: Dromore House, East Park, Shannon, Co. Clare
+
+This e-mail and any attachments may contain confidential material for the sole use of the intended recipient(s). Any review or distribution by others is strictly prohibited. If you are not the intended recipient, please contact the sender and delete all copies.
