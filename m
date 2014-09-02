@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 05/22] tag.c: use ref transactions when doing updates
-Date: Tue, 2 Sep 2014 14:01:22 -0700
-Message-ID: <20140902210122.GF18279@google.com>
+Subject: [PATCH 06/22] replace.c: use the ref transaction functions for
+ updates
+Date: Tue, 2 Sep 2014 14:01:48 -0700
+Message-ID: <20140902210148.GG18279@google.com>
 References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
  <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
  <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
@@ -18,41 +19,41 @@ Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 23:01:31 2014
+X-From: git-owner@vger.kernel.org Tue Sep 02 23:01:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOvCk-0001PM-PV
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:01:31 +0200
+	id 1XOvDA-0001g8-G4
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755245AbaIBVB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2014 17:01:27 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:53262 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130AbaIBVB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2014 17:01:26 -0400
-Received: by mail-pd0-f175.google.com with SMTP id ft15so9419853pdb.6
-        for <git@vger.kernel.org>; Tue, 02 Sep 2014 14:01:25 -0700 (PDT)
+	id S1755173AbaIBVBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2014 17:01:52 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:53294 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754759AbaIBVBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2014 17:01:52 -0400
+Received: by mail-pd0-f177.google.com with SMTP id r10so9404526pdi.8
+        for <git@vger.kernel.org>; Tue, 02 Sep 2014 14:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=YJbTcmtVlCOTdeybJ5kD9HrLSm5D40wO8y9NjvTWMOg=;
-        b=oHJnYMYHxfu0CToeet8pOkmmfkjZjEUte6j0eO0IrOGDuMmZJNHFxpfhMfpWl2HjtK
-         yOSPajRp/TLE7RzV1XT0w/Ts6neOM0mSpk8h3qDfLNPKqbBHKJtfNbqn8meneBd34n1B
-         7mFEGRh6vtOd+ogCtHQZaVftsylGYJwlSFRELMmg3daR2MsFSd7iiEBO+0GE3OWKB5yd
-         KkaFzqd9pgTbruCXqqrAxBr+tLNT2ZWBEWkqCT7Ny2yu8Rm1y62eeNLP1EfjhQcNV3hG
-         0/ipw8JKPUagrpUeKPjPli2rJhrPfmrQBFWHTequJlKuu/A4r6fC8CO+42zzTUAS/mIk
-         W7GA==
-X-Received: by 10.68.182.67 with SMTP id ec3mr51146190pbc.74.1409691685782;
-        Tue, 02 Sep 2014 14:01:25 -0700 (PDT)
+        bh=GHoZgts0LgtNowBT3bWvSX6TvuoJ92dprZ8tu6LKRNQ=;
+        b=wICb6Sfd/SFe56RipZRZVZoyRw8GFH+XkBSnc6VHLaxizk3AEhi7cB1iZazV4f/X8f
+         pEYph4Y6etoyUYxaImn9goxYIiKLdYlNZ2fSu0TlliXrLRdXS21mVzDQc3nJcZihrkkJ
+         eycbQ22s/Tp61yLh4q1A1CJqckjSIdr0Iuc13S4BjKjaFNp6JmZEaveu/4tHR1tgbB5v
+         SLH0BZMYsMZrsdsQq0KoBHbUf6zvVU456vdYAdFYFXUJYeD6DmdRPZAxsf97fN7zv13p
+         XW0ctJcreu921LDbbwn9Vbde8CVF5SRFHMmKCEB9HGlNyXzgftpt1rk4dq8CN/h1W8zo
+         i6uA==
+X-Received: by 10.70.45.74 with SMTP id k10mr49600887pdm.78.1409691711797;
+        Tue, 02 Sep 2014 14:01:51 -0700 (PDT)
 Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id pp2sm4855177pbc.66.2014.09.02.14.01.24
+        by mx.google.com with ESMTPSA id yw4sm4850946pbc.69.2014.09.02.14.01.50
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Sep 2014 14:01:24 -0700 (PDT)
+        Tue, 02 Sep 2014 14:01:50 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20140902205841.GA18279@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -60,63 +61,52 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256352>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Wed, 16 Apr 2014 15:30:41 -0700
+Date: Wed, 16 Apr 2014 15:32:29 -0700
 
-Change tag.c to use ref transactions for all ref updates.
+Update replace.c to use ref transactions for updates.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/tag.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ builtin/replace.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index c6e8a71..f3f172f 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -548,7 +548,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct strbuf ref = STRBUF_INIT;
- 	unsigned char object[20], prev[20];
- 	const char *object_ref, *tag;
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 1bb491d..1fcd06d 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -153,7 +153,8 @@ static int replace_object_sha1(const char *object_ref,
+ 	unsigned char prev[20];
+ 	enum object_type obj_type, repl_type;
+ 	char ref[PATH_MAX];
 -	struct ref_lock *lock;
- 	struct create_tag_options opt;
- 	char *cleanup_arg = NULL;
- 	int annotate = 0, force = 0, lines = -1;
-@@ -556,6 +555,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	const char *msgfile = NULL, *keyid = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct commit_list *with_commit = NULL;
 +	struct ref_transaction *transaction;
 +	struct strbuf err = STRBUF_INIT;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
-@@ -701,14 +702,17 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (annotate)
- 		create_tag(object, tag, &buf, &opt, prev, object);
  
--	lock = lock_any_ref_for_update(ref.buf, prev, 0, NULL);
+ 	obj_type = sha1_object_info(object, NULL);
+ 	repl_type = sha1_object_info(repl, NULL);
+@@ -166,12 +167,13 @@ static int replace_object_sha1(const char *object_ref,
+ 
+ 	check_ref_valid(object, prev, ref, sizeof(ref), force);
+ 
+-	lock = lock_any_ref_for_update(ref, prev, 0, NULL);
 -	if (!lock)
--		die(_("%s: cannot lock the ref"), ref.buf);
--	if (write_ref_sha1(lock, object, NULL) < 0)
--		die(_("%s: cannot update the ref"), ref.buf);
+-		die("%s: cannot lock the ref", ref);
+-	if (write_ref_sha1(lock, repl, NULL) < 0)
+-		die("%s: cannot update the ref", ref);
 +	transaction = ref_transaction_begin(&err);
 +	if (!transaction ||
-+	    ref_transaction_update(transaction, ref.buf, object, prev,
-+				   0, 1, &err) ||
++	    ref_transaction_update(transaction, ref, repl, prev, 0, 1, &err) ||
 +	    ref_transaction_commit(transaction, NULL, &err))
 +		die("%s", err.buf);
-+	ref_transaction_free(transaction);
- 	if (force && !is_null_sha1(prev) && hashcmp(prev, object))
- 		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
  
-+	strbuf_release(&err);
- 	strbuf_release(&buf);
- 	strbuf_release(&ref);
++	ref_transaction_free(transaction);
  	return 0;
+ }
+ 
 -- 
 2.1.0.rc2.206.gedb03e5
