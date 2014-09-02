@@ -1,128 +1,176 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 1/4] cache-tree: Create/update cache-tree on checkou
-Date: Tue, 02 Sep 2014 14:10:57 -0700
-Message-ID: <xmqq8um1zq1q.fsf@gitster.dls.corp.google.com>
-References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
-	<20140831120703.GA1240@serenity.lan>
-	<xmqqfvg9zqw9.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 22/22] update-ref --stdin: pass transaction around explicitly
+Date: Tue, 2 Sep 2014 14:11:21 -0700
+Message-ID: <20140902211121.GW18279@google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+ <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+ <20140820231723.GF20185@google.com>
+ <20140826000354.GW20185@google.com>
+ <xmqqlhqbge3a.fsf@gitster.dls.corp.google.com>
+ <20140826221448.GY20185@google.com>
+ <20140827002804.GA20185@google.com>
+ <20140902205841.GA18279@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	David Turner <dturner@twitter.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 02 23:11:08 2014
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 02 23:11:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOvM4-00079D-E3
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:11:08 +0200
+	id 1XOvMP-0007JR-4W
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755266AbaIBVLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2014 17:11:03 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57673 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754274AbaIBVLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2014 17:11:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D8CEE379AC;
-	Tue,  2 Sep 2014 17:11:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iLPFpOJO1eRloLfraI4l8eUaqTI=; b=ZXaZtf
-	hd6zrnV6RBddcBHVpmujuRwihZdvsHHCnBNvm7l6Pp6zO3riu8Z5i9mxPLREzxSV
-	B0AKkuIOhys7TdRy1EoSgJ2MI2C5YvRRE8CcVJUY8N8ghrQor56iVwzHMHwP9UtQ
-	Pr9eciYt4liazW/8FqeEPQwCzAN9lKOq7pyi0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AeIjbfg+0cuqu9FksoJARQb9Yze7vS6z
-	Ay70mx+nDD5jDGS4uDPvgmKdUpVoYBhap7/1jCIOSHAIxcpe1nVBVWr9mqn/b6c0
-	hcN3lqXOH8HmmeAD55mvjRQN7YNXJ37wgzAiVS0bQ6+RWMS1CWGXGyNiGb848alF
-	2GVABG8UR+Y=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 79935379AB;
-	Tue,  2 Sep 2014 17:11:00 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B61E0379A8;
-	Tue,  2 Sep 2014 17:10:58 -0400 (EDT)
-In-Reply-To: <xmqqfvg9zqw9.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 02 Sep 2014 13:52:38 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A2C36770-32E5-11E4-8EDB-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1755224AbaIBVLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2014 17:11:25 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:47627 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754274AbaIBVLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2014 17:11:24 -0400
+Received: by mail-pa0-f45.google.com with SMTP id bj1so15577850pad.32
+        for <git@vger.kernel.org>; Tue, 02 Sep 2014 14:11:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=TP+Dv1cttV/7vCTNMWvpZoQWFHo86UppCcBlNpGynzQ=;
+        b=UKlOwChF/q8IVd0C3PCFVRupYxei3IojVBBcNp5p/IMifdj9YhHUWzBoWonXmkh/uT
+         YBDSi2qkPm8n8RxsLVihGb9hvp7UM9wshk1q5zG6Day/+LfuywUsfP2XxjOEyB2MFvJc
+         mvQc7zBWaE/3mL2Q5M2tjOhMzMXDrEEE9KcFNcop+fI5c9xr0+pV/bc9bzpsNzhAnLY3
+         8+bTe4In9xclfVGr9BjuxXq+sPZ7tjylleObP9xZK5DdsgpLt66FFHu65uLfTNqaJfYq
+         qlgp3/9Z6hN3KRTd/YF+BC08KuS2yPUBOvrm8ox3thOmdEcDiQCN7eha+urdM/gJ6Aj/
+         OVhg==
+X-Received: by 10.66.119.174 with SMTP id kv14mr50840126pab.52.1409692284281;
+        Tue, 02 Sep 2014 14:11:24 -0700 (PDT)
+Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
+        by mx.google.com with ESMTPSA id ou6sm4833925pbb.88.2014.09.02.14.11.23
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 02 Sep 2014 14:11:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20140902205841.GA18279@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256369>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This makes it more obvious at a glance where the output of functions
+parsing the --stdin stream goes.
 
-> John Keeping <john@keeping.me.uk> writes:
->
->> On Fri, Jul 11, 2014 at 09:44:33PM -0700, David Turner wrote:
->>> When git checkout checks out a branch, create or update the
->>> cache-tree so that subsequent operations are faster.
->>> 
->>> update_main_cache_tree learned a new flag, WRITE_TREE_REPAIR.  When
->>> WRITE_TREE_REPAIR is set, portions of the cache-tree which do not
->>> correspond to existing tree objects are invalidated (and portions which
->>> do are marked as valid).  No new tree objects are created.
->>> 
->>> Signed-off-by: David Turner <dturner@twitter.com>
->>> ---
->>
->> This causes an incorrect error message to be printed when switching
->> branches with staged changes in a subdirectory.  The test case is pretty
->> simple:
->>
->> 	git init test &&
->> 	cd test &&
->> 	mkdir sub &&
->> 	echo one >sub/one &&
->> 	git add sub/one &&
->> 	git commit -m one &&
->> 	echo two >sub/two &&
->> 	git add sub/two &&
->> 	git checkout -b test
->>
->> After this commit the output is:
->>
->> 	error: invalid object 040000 0000000000000000000000000000000000000000 for 'bar'
->> 	A       bar/quux
->> 	Switched to branch 'test'
->>
->> but the "error:" line should not be there.
->
-> Yeah, this seems to be broken and I am unhappy that I didn't notice
-> it myself as I always use a version that is somewhat ahead of 'next'
-> myself.
+No functional change intended.
 
-Perhaps like this, to make sure that we do not throw a garbage
-object name into the cache tree when we avoid creating an unwanted
-tree object?
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+Thanks for reading.
 
-All the tests added by the series seems to pass, so I am assuming
-that this will not break the "repair" codepath when it should kick
-in.
+ builtin/update-ref.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-We may want to add your test to t0090 as well.
-
- cache-tree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/cache-tree.c b/cache-tree.c
-index f951d7d..e3baf42 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -398,7 +398,7 @@ static int update_one(struct cache_tree *it,
- 		it->entry_count, it->subtree_nr,
- 		sha1_to_hex(it->sha1));
- #endif
--	return i;
-+	return to_invalidate ? -1 : i;
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 866bbee..54a48c0 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -12,8 +12,6 @@ static const char * const git_update_ref_usage[] = {
+ 	NULL
+ };
+ 
+-static struct ref_transaction *transaction;
+-
+ static char line_termination = '\n';
+ static int update_flags;
+ 
+@@ -176,7 +174,8 @@ static int parse_next_sha1(struct strbuf *input, const char **next,
+  * depending on how line_termination is set.
+  */
+ 
+-static const char *parse_cmd_update(struct strbuf *input, const char *next)
++static const char *parse_cmd_update(struct ref_transaction *transaction,
++				    struct strbuf *input, const char *next)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	char *refname;
+@@ -209,7 +208,8 @@ static const char *parse_cmd_update(struct strbuf *input, const char *next)
+ 	return next;
  }
  
- int cache_tree_update(struct cache_tree *it,
+-static const char *parse_cmd_create(struct strbuf *input, const char *next)
++static const char *parse_cmd_create(struct ref_transaction *transaction,
++				    struct strbuf *input, const char *next)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	char *refname;
+@@ -239,7 +239,8 @@ static const char *parse_cmd_create(struct strbuf *input, const char *next)
+ 	return next;
+ }
+ 
+-static const char *parse_cmd_delete(struct strbuf *input, const char *next)
++static const char *parse_cmd_delete(struct ref_transaction *transaction,
++				    struct strbuf *input, const char *next)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	char *refname;
+@@ -273,7 +274,8 @@ static const char *parse_cmd_delete(struct strbuf *input, const char *next)
+ 	return next;
+ }
+ 
+-static const char *parse_cmd_verify(struct strbuf *input, const char *next)
++static const char *parse_cmd_verify(struct ref_transaction *transaction,
++				    struct strbuf *input, const char *next)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	char *refname;
+@@ -317,7 +319,7 @@ static const char *parse_cmd_option(struct strbuf *input, const char *next)
+ 	return next + 8;
+ }
+ 
+-static void update_refs_stdin(void)
++static void update_refs_stdin(struct ref_transaction *transaction)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	const char *next;
+@@ -332,13 +334,13 @@ static void update_refs_stdin(void)
+ 		else if (isspace(*next))
+ 			die("whitespace before command: %s", next);
+ 		else if (starts_with(next, "update "))
+-			next = parse_cmd_update(&input, next + 7);
++			next = parse_cmd_update(transaction, &input, next + 7);
+ 		else if (starts_with(next, "create "))
+-			next = parse_cmd_create(&input, next + 7);
++			next = parse_cmd_create(transaction, &input, next + 7);
+ 		else if (starts_with(next, "delete "))
+-			next = parse_cmd_delete(&input, next + 7);
++			next = parse_cmd_delete(transaction, &input, next + 7);
+ 		else if (starts_with(next, "verify "))
+-			next = parse_cmd_verify(&input, next + 7);
++			next = parse_cmd_verify(transaction, &input, next + 7);
+ 		else if (starts_with(next, "option "))
+ 			next = parse_cmd_option(&input, next + 7);
+ 		else
+@@ -373,6 +375,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 
+ 	if (read_stdin) {
+ 		struct strbuf err = STRBUF_INIT;
++		struct ref_transaction *transaction;
+ 
+ 		transaction = ref_transaction_begin(&err);
+ 		if (!transaction)
+@@ -381,7 +384,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 			usage_with_options(git_update_ref_usage, options);
+ 		if (end_null)
+ 			line_termination = '\0';
+-		update_refs_stdin();
++		update_refs_stdin(transaction);
+ 		if (ref_transaction_commit(transaction, msg, &err))
+ 			die("%s", err.buf);
+ 		ref_transaction_free(transaction);
+-- 
+2.1.0.rc2.206.gedb03e5
