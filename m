@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 04/22] refs.c: add transaction.status and track OPEN/CLOSED
-Date: Tue, 2 Sep 2014 14:00:59 -0700
-Message-ID: <20140902210059.GE18279@google.com>
+Subject: [PATCH 05/22] tag.c: use ref transactions when doing updates
+Date: Tue, 2 Sep 2014 14:01:22 -0700
+Message-ID: <20140902210122.GF18279@google.com>
 References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
  <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
  <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
@@ -18,41 +18,41 @@ Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 23:01:09 2014
+X-From: git-owner@vger.kernel.org Tue Sep 02 23:01:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOvCO-0001Cl-7Q
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:01:08 +0200
+	id 1XOvCk-0001PM-PV
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755092AbaIBVBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2014 17:01:03 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:55773 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754183AbaIBVBC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2014 17:01:02 -0400
-Received: by mail-pa0-f47.google.com with SMTP id hz1so15573930pad.6
-        for <git@vger.kernel.org>; Tue, 02 Sep 2014 14:01:01 -0700 (PDT)
+	id S1755245AbaIBVB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2014 17:01:27 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:53262 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755130AbaIBVB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2014 17:01:26 -0400
+Received: by mail-pd0-f175.google.com with SMTP id ft15so9419853pdb.6
+        for <git@vger.kernel.org>; Tue, 02 Sep 2014 14:01:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=CWtpXic2S7xU6dMjyY6trLHPCJYpaUDRjld82sEjCCo=;
-        b=d1M4jNM0lWZb9bIxWSIPexxqqFhUFE0Vnmwgty9i1+V1BijUIg5RByyZEGJ/v4mL9B
-         x+StwlJcE+kRsUYcuXOXludLppC53g7HEHgQZ+9xQ/if6ZVB3UByWpvun9At+WRx4N9X
-         z+FspfTAdKKZdD9t0ewb0DP9ofKDIXTaHqfKFHVLd0ruIraLxrS1Z1Gnia18GEOe0RFO
-         zdFfJfWoIWiojbR3pKigOp95/lM1EI0J1j0z7Z7bkHQdrzaYNIIVT3X/ta2E6Lhb7vgp
-         TjgwemVFyxPQa0luSBMTDz449Mut6thOuGVKaOzyyjvufKuZ/AgcWQUDrhrjxrKw/wAI
-         7ECQ==
-X-Received: by 10.68.68.133 with SMTP id w5mr6347312pbt.166.1409691661776;
-        Tue, 02 Sep 2014 14:01:01 -0700 (PDT)
+        bh=YJbTcmtVlCOTdeybJ5kD9HrLSm5D40wO8y9NjvTWMOg=;
+        b=oHJnYMYHxfu0CToeet8pOkmmfkjZjEUte6j0eO0IrOGDuMmZJNHFxpfhMfpWl2HjtK
+         yOSPajRp/TLE7RzV1XT0w/Ts6neOM0mSpk8h3qDfLNPKqbBHKJtfNbqn8meneBd34n1B
+         7mFEGRh6vtOd+ogCtHQZaVftsylGYJwlSFRELMmg3daR2MsFSd7iiEBO+0GE3OWKB5yd
+         KkaFzqd9pgTbruCXqqrAxBr+tLNT2ZWBEWkqCT7Ny2yu8Rm1y62eeNLP1EfjhQcNV3hG
+         0/ipw8JKPUagrpUeKPjPli2rJhrPfmrQBFWHTequJlKuu/A4r6fC8CO+42zzTUAS/mIk
+         W7GA==
+X-Received: by 10.68.182.67 with SMTP id ec3mr51146190pbc.74.1409691685782;
+        Tue, 02 Sep 2014 14:01:25 -0700 (PDT)
 Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id ca2sm4912685pbc.26.2014.09.02.14.01.00
+        by mx.google.com with ESMTPSA id pp2sm4855177pbc.66.2014.09.02.14.01.24
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Sep 2014 14:01:01 -0700 (PDT)
+        Tue, 02 Sep 2014 14:01:24 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20140902205841.GA18279@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -60,109 +60,63 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256351>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Tue, 29 Apr 2014 12:06:19 -0700
+Date: Wed, 16 Apr 2014 15:30:41 -0700
 
-Track the state of a transaction in a new state field. Check the field for
-sanity, i.e. that state must be OPEN when _commit/_create/_delete or
-_update is called or else die(BUG:...)
+Change tag.c to use ref transactions for all ref updates.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- refs.c | 34 +++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ builtin/tag.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 9cb7908..cc63056 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3387,6 +3387,21 @@ struct ref_update {
- };
+diff --git a/builtin/tag.c b/builtin/tag.c
+index c6e8a71..f3f172f 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -548,7 +548,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct strbuf ref = STRBUF_INIT;
+ 	unsigned char object[20], prev[20];
+ 	const char *object_ref, *tag;
+-	struct ref_lock *lock;
+ 	struct create_tag_options opt;
+ 	char *cleanup_arg = NULL;
+ 	int annotate = 0, force = 0, lines = -1;
+@@ -556,6 +555,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	const char *msgfile = NULL, *keyid = NULL;
+ 	struct msg_arg msg = { 0, STRBUF_INIT };
+ 	struct commit_list *with_commit = NULL;
++	struct ref_transaction *transaction;
++	struct strbuf err = STRBUF_INIT;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
+ 		{ OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
+@@ -701,14 +702,17 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (annotate)
+ 		create_tag(object, tag, &buf, &opt, prev, object);
  
- /*
-+ * Transaction states.
-+ * OPEN:   The transaction is in a valid state and can accept new updates.
-+ *         An OPEN transaction can be committed.
-+ * CLOSED: A closed transaction is no longer active and no other operations
-+ *         than free can be used on it in this state.
-+ *         A transaction can either become closed by successfully committing
-+ *         an active transaction or if there is a failure while building
-+ *         the transaction thus rendering it failed/inactive.
-+ */
-+enum ref_transaction_state {
-+	REF_TRANSACTION_OPEN   = 0,
-+	REF_TRANSACTION_CLOSED = 1
-+};
-+
-+/*
-  * Data structure for holding a reference transaction, which can
-  * consist of checks and updates to multiple references, carried out
-  * as atomically as possible.  This structure is opaque to callers.
-@@ -3395,6 +3410,7 @@ struct ref_transaction {
- 	struct ref_update **updates;
- 	size_t alloc;
- 	size_t nr;
-+	enum ref_transaction_state state;
- };
+-	lock = lock_any_ref_for_update(ref.buf, prev, 0, NULL);
+-	if (!lock)
+-		die(_("%s: cannot lock the ref"), ref.buf);
+-	if (write_ref_sha1(lock, object, NULL) < 0)
+-		die(_("%s: cannot update the ref"), ref.buf);
++	transaction = ref_transaction_begin(&err);
++	if (!transaction ||
++	    ref_transaction_update(transaction, ref.buf, object, prev,
++				   0, 1, &err) ||
++	    ref_transaction_commit(transaction, NULL, &err))
++		die("%s", err.buf);
++	ref_transaction_free(transaction);
+ 	if (force && !is_null_sha1(prev) && hashcmp(prev, object))
+ 		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
  
- struct ref_transaction *ref_transaction_begin(struct strbuf *err)
-@@ -3437,6 +3453,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
- {
- 	struct ref_update *update;
- 
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: update called for transaction that is not open");
-+
- 	if (have_old && !old_sha1)
- 		die("BUG: have_old is true but old_sha1 is NULL");
- 
-@@ -3457,6 +3476,9 @@ int ref_transaction_create(struct ref_transaction *transaction,
- {
- 	struct ref_update *update;
- 
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: create called for transaction that is not open");
-+
- 	if (!new_sha1 || is_null_sha1(new_sha1))
- 		die("BUG: create ref with null new_sha1");
- 
-@@ -3477,6 +3499,9 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- {
- 	struct ref_update *update;
- 
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: delete called for transaction that is not open");
-+
- 	if (have_old && !old_sha1)
- 		die("BUG: have_old is true but old_sha1 is NULL");
- 
-@@ -3532,8 +3557,13 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
- 
--	if (!n)
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: commit called for transaction that is not open");
-+
-+	if (!n) {
-+		transaction->state = REF_TRANSACTION_CLOSED;
- 		return 0;
-+	}
- 
- 	/* Allocate work space */
- 	delnames = xmalloc(sizeof(*delnames) * n);
-@@ -3595,6 +3625,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	clear_loose_ref_cache(&ref_cache);
- 
- cleanup:
-+	transaction->state = REF_TRANSACTION_CLOSED;
-+
- 	for (i = 0; i < n; i++)
- 		if (updates[i]->lock)
- 			unlock_ref(updates[i]->lock);
++	strbuf_release(&err);
+ 	strbuf_release(&buf);
+ 	strbuf_release(&ref);
+ 	return 0;
 -- 
 2.1.0.rc2.206.gedb03e5
