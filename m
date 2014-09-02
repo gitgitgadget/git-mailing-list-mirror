@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 09/22] fast-import.c: change update_branch to use ref
- transactions
-Date: Tue, 2 Sep 2014 14:03:25 -0700
-Message-ID: <20140902210325.GJ18279@google.com>
+Subject: [PATCH 10/22] branch.c: use ref transaction for all ref updates
+Date: Tue, 2 Sep 2014 14:04:05 -0700
+Message-ID: <20140902210405.GK18279@google.com>
 References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
  <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
  <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
@@ -19,41 +18,41 @@ Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 02 23:03:33 2014
+X-From: git-owner@vger.kernel.org Tue Sep 02 23:04:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOvEj-0002cJ-1g
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:03:33 +0200
+	id 1XOvFO-00031W-3L
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 23:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755135AbaIBVD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Sep 2014 17:03:29 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:42682 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754875AbaIBVD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2014 17:03:28 -0400
-Received: by mail-pa0-f42.google.com with SMTP id lf10so15663778pab.15
-        for <git@vger.kernel.org>; Tue, 02 Sep 2014 14:03:28 -0700 (PDT)
+	id S1755227AbaIBVEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Sep 2014 17:04:09 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:49773 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755208AbaIBVEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Sep 2014 17:04:08 -0400
+Received: by mail-pd0-f172.google.com with SMTP id z10so9499762pdj.31
+        for <git@vger.kernel.org>; Tue, 02 Sep 2014 14:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=kzq9XV2piCobuouf5S6s/wr6lwjffeaoh6kEN1knXh0=;
-        b=noG7J9b9SpGVDMM0FF2EPkXFe6wZyb8WRDSeTJiBaze1x5d5LQD4eDSVBp3D925GFO
-         Xa05sww2pvsWu541I0eUkWhGvHvh2Rd/Bf6jv2z4Z4MrmawuH7cdEs2pHNAKEHn+xRJR
-         hJY7Rf/jXWyshA2cXU6Gg7viCiIKzBUXA2/utboZbj8w72AEh9VtYYwg2ZdpMG7TQ9FC
-         McrcTc2dSrGyAGgXdQvVVkvhUWTuCrLiFF4GdFFYVWn43TTDJEzeT2BEZ0ZT654arp/Q
-         xY5khmqOWZ4VOyNH+Rjb47JRVF0Nasc2ePoaYC8tmrKtFFieN6A3nIM/rQFkK5Z1mHCs
-         giDA==
-X-Received: by 10.70.98.129 with SMTP id ei1mr50956674pdb.27.1409691808193;
-        Tue, 02 Sep 2014 14:03:28 -0700 (PDT)
+        bh=LBK1GLIBFc3xCb9zzOqhcUveOrzzzxDvF2agHqab1es=;
+        b=BLjvfLgFzFNw4wpcI2sLkH7lO10SDk7bokNJ1qkA+NmBsbmL/qAuASu7zYdpqK3l7m
+         YMYEsb/Rt5HR0OxgwL0TPSVziLydRr0xjHw8wQq5Lxgi/4C/O/z4ONahGy5/qdZSEyJr
+         QSaiKWycqH7BDdT8LLuJE2tMpRxRxslM3t1ShaOM7S4jzCkavs4A3C6pnNjU0gfTY1OE
+         YU3lUqHIXEeOl3+LFWTx/Ouq5/YyMscRo5RAZhx1GTn2MAFwbNn1SgWPBNh/d6teK7Oj
+         RwRc3GLBK5FrEcexEGkpbHv+c+yP32QuNl8b9JWqDcozCSrV5PSvr1ai347udRNhHDlJ
+         Y8aw==
+X-Received: by 10.70.128.195 with SMTP id nq3mr7599586pdb.158.1409691848171;
+        Tue, 02 Sep 2014 14:04:08 -0700 (PDT)
 Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id kq1sm6746340pdb.49.2014.09.02.14.03.26
+        by mx.google.com with ESMTPSA id y4sm6840063pdm.1.2014.09.02.14.04.06
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Sep 2014 14:03:27 -0700 (PDT)
+        Tue, 02 Sep 2014 14:04:07 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20140902205841.GA18279@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -61,77 +60,83 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256356>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Wed, 16 Apr 2014 16:21:13 -0700
+Date: Wed, 16 Apr 2014 16:21:53 -0700
 
-Change update_branch() to use ref transactions for updates.
+Change create_branch to use a ref transaction when creating the new branch.
+
+This also fixes a race condition in the old code where two concurrent
+create_branch could race since the lock_any_ref_for_update/write_ref_sha1
+did not protect against the ref already existing. I.e. one thread could end up
+overwriting a branch even if the forcing flag is false.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- fast-import.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ branch.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 6707a66..79160d5 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1679,8 +1679,9 @@ found_entry:
- static int update_branch(struct branch *b)
+diff --git a/branch.c b/branch.c
+index 660097b..37ac555 100644
+--- a/branch.c
++++ b/branch.c
+@@ -226,7 +226,6 @@ void create_branch(const char *head,
+ 		   int force, int reflog, int clobber_head,
+ 		   int quiet, enum branch_track track)
  {
- 	static const char *msg = "fast-import";
--	struct ref_lock *lock;
-+	struct ref_transaction *transaction;
- 	unsigned char old_sha1[20];
-+	struct strbuf err = STRBUF_INIT;
+-	struct ref_lock *lock = NULL;
+ 	struct commit *commit;
+ 	unsigned char sha1[20];
+ 	char *real_ref, msg[PATH_MAX + 20];
+@@ -285,15 +284,6 @@ void create_branch(const char *head,
+ 		die(_("Not a valid branch point: '%s'."), start_name);
+ 	hashcpy(sha1, commit->object.sha1);
  
- 	if (read_ref(b->name, old_sha1))
- 		hashclr(old_sha1);
-@@ -1689,29 +1690,33 @@ static int update_branch(struct branch *b)
- 			delete_ref(b->name, old_sha1, 0);
- 		return 0;
- 	}
--	lock = lock_any_ref_for_update(b->name, old_sha1, 0, NULL);
--	if (!lock)
--		return error("Unable to lock %s", b->name);
- 	if (!force_update && !is_null_sha1(old_sha1)) {
- 		struct commit *old_cmit, *new_cmit;
+-	if (!dont_change_ref) {
+-		lock = lock_any_ref_for_update(ref.buf, NULL, 0, NULL);
+-		if (!lock)
+-			die_errno(_("Failed to lock ref for update"));
+-	}
+-
+-	if (reflog)
+-		log_all_ref_updates = 1;
+-
+ 	if (forcing)
+ 		snprintf(msg, sizeof msg, "branch: Reset to %s",
+ 			 start_name);
+@@ -301,13 +291,26 @@ void create_branch(const char *head,
+ 		snprintf(msg, sizeof msg, "branch: Created from %s",
+ 			 start_name);
  
- 		old_cmit = lookup_commit_reference_gently(old_sha1, 0);
- 		new_cmit = lookup_commit_reference_gently(b->sha1, 0);
--		if (!old_cmit || !new_cmit) {
--			unlock_ref(lock);
-+		if (!old_cmit || !new_cmit)
- 			return error("Branch %s is missing commits.", b->name);
--		}
- 
- 		if (!in_merge_bases(old_cmit, new_cmit)) {
--			unlock_ref(lock);
- 			warning("Not updating %s"
- 				" (new tip %s does not contain %s)",
- 				b->name, sha1_to_hex(b->sha1), sha1_to_hex(old_sha1));
- 			return -1;
- 		}
- 	}
--	if (write_ref_sha1(lock, b->sha1, msg) < 0)
--		return error("Unable to update %s", b->name);
-+	transaction = ref_transaction_begin(&err);
-+	if (!transaction ||
-+	    ref_transaction_update(transaction, b->name, b->sha1, old_sha1,
-+				   0, 1, &err) ||
-+	    ref_transaction_commit(transaction, msg, &err)) {
++	if (reflog)
++		log_all_ref_updates = 1;
++
++	if (!dont_change_ref) {
++		struct ref_transaction *transaction;
++		struct strbuf err = STRBUF_INIT;
++
++		transaction = ref_transaction_begin(&err);
++		if (!transaction ||
++		    ref_transaction_update(transaction, ref.buf, sha1,
++					   null_sha1, 0, !forcing, &err) ||
++		    ref_transaction_commit(transaction, msg, &err))
++			die("%s", err.buf);
 +		ref_transaction_free(transaction);
-+		error("%s", err.buf);
 +		strbuf_release(&err);
-+		return -1;
 +	}
-+	ref_transaction_free(transaction);
-+	strbuf_release(&err);
- 	return 0;
- }
++
+ 	if (real_ref && track)
+ 		setup_tracking(ref.buf + 11, real_ref, track, quiet);
  
+-	if (!dont_change_ref)
+-		if (write_ref_sha1(lock, sha1, msg) < 0)
+-			die_errno(_("Failed to write ref"));
+-
+ 	strbuf_release(&ref);
+ 	free(real_ref);
+ }
 -- 
 2.1.0.rc2.206.gedb03e5
