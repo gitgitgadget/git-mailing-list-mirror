@@ -1,69 +1,71 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v3 2/2] MinGW: Update tests to handle a native eol of
- crlf
-Date: Tue, 02 Sep 2014 21:53:54 +0200
-Message-ID: <54062052.3070106@web.de>
-References: <5402447B.3080700@web.de> <xmqq1trt25zt.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] MinGW: Update tests to handle a native eol of crlf
+Date: Tue, 02 Sep 2014 13:49:53 -0700
+Message-ID: <xmqqk35lzr0u.fsf@gitster.dls.corp.google.com>
+References: <5402447B.3080700@web.de>
+	<xmqq1trt25zt.fsf@gitster.dls.corp.google.com>
+	<54062052.3070106@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Sep 02 21:54:10 2014
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 02 22:50:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XOu9Z-00065W-Vo
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 21:54:10 +0200
+	id 1XOv1d-0003gD-F2
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Sep 2014 22:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755060AbaIBTyA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2014 15:54:00 -0400
-Received: from mout.web.de ([212.227.15.4]:64545 "EHLO mout.web.de"
+	id S1754982AbaIBUt5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Sep 2014 16:49:57 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56601 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754830AbaIBTx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Sep 2014 15:53:58 -0400
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0MYO5B-1Xu1vX1e3V-00VAKb; Tue, 02 Sep 2014 21:53:54
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <xmqq1trt25zt.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:0QMcRj3QchvWc2P8dBKxeJVLhs3OnAbhODhct7UEyR2Osoqxd1W
- 6xX2ZeCoZ7q4wULOOmdJo3Rs1N8UBnq1bsrq0hBG9wCbIADTxt+Gj1R0QDCzWKtlYctZYc9
- Q/HZNfGDJpZD+armntQofdl+5yRSv0Rrz+9QIgZ8mt4TgYcLi6L+hszGeYJeCS/0YB1ZlWT
- U4nrL+f9ZclHmKqhIwc7A==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754183AbaIBUt5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Sep 2014 16:49:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 55C3737405;
+	Tue,  2 Sep 2014 16:49:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=u2aupzJaf61T
+	OnzKx1R8d5mo6qM=; b=fff/ABznJrLY/N/rY2m1F1kR1VX8tWBd9mcx64FsdWFR
+	LGVnqxyWBIjmWvvmZ71skpeYPh2siBT36lcTDrA+Y8XGB2d1IHpV6IFyVsSY5stp
+	aU/fwhgTu72VQVYIuPb6DRhpTqhOboSI2cItssnNfWalK9s10rPyD+Ybbne008Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=edeCXT
+	ORatS2fPYAt4M+CKolrphcFz0RiV+LQy0pKPGw/IkMrJmKbiHMyOxXOlVlYD1tkS
+	7/sjAdoKHepbYfpACAmJR0UvqXpdNdBTg4SOWJBoaU+8P9dnBAGtyG5jeqTYFUmM
+	YDIXYqiKSeDR71ZpJwD7TfbwCT0eD3SYi7Omk=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4C9C637404;
+	Tue,  2 Sep 2014 16:49:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CCA2B373FF;
+	Tue,  2 Sep 2014 16:49:55 -0400 (EDT)
+In-Reply-To: <54062052.3070106@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Tue, 02 Sep 2014 21:53:54 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B202F802-32E2-11E4-A766-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256344>
 
-On 2014-09-02 21.10, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> Integrate commit b1d07649588102 from msysgit:
->>   MinGW: Update tests to handle a native eol of crlf
->>
->>   Some of the tests were written with the assumption that the native=
- eol would
->>   always be lf. After defining NATIVE_CRLF on MinGW, these tests beg=
-an failing.
->>   This change will update the tests to also handle a native eol of c=
-rlf.
->>
->>   Signed-off-by: Brice Lambson <bricelam@live.com>
->>
->> On top of that, fix the broken && chain in t0026
->>
->> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
->> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->> ---
->=20
-> Should this be marked with "From: Brice Lambson <bricelam@live.com>"?
->=20
-> Thanks.
-Yes. If possible please squeeze.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+
+>> Should this be marked with "From: Brice Lambson <bricelam@live.com>"=
+?
+>>=20
+>> Thanks.
+> Yes. If possible please squeeze.
+
+OK, thanks.  Please double check the result on 'pu' in several
+hours.
