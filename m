@@ -1,57 +1,125 @@
-From: Mona Lisa Overdrive <mlisaoverdrive@gmail.com>
-Subject: How To Make a Distribution Build
-Date: Wed, 3 Sep 2014 08:53:24 -0500
-Message-ID: <CADLC7KqnMLSja-MbhXG5ajePATuSkF4bNHPV20dNuX8NSwv30A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Johan Herland <johan@herland.net>
+Subject: [RFC/PATCH 3/3] revert/cherry-pick --no-verify: Update documentation
+Date: Wed,  3 Sep 2014 16:03:54 +0200
+Message-ID: <1409753034-9459-4-git-send-email-johan@herland.net>
+References: <1409753034-9459-1-git-send-email-johan@herland.net>
+Cc: =?UTF-8?q?Lars=20Gullik=20Bj=C3=B8nnes?= <larsbj@gullik.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Neil Horman <nhorman@tuxdriver.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Johan Herland <johan@herland.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 15:53:44 2014
+X-From: git-owner@vger.kernel.org Wed Sep 03 16:13:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPB0J-0007LC-Gr
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 15:53:44 +0200
+	id 1XPBJS-0005PY-NE
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 16:13:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932640AbaICNxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 09:53:25 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:48871 "EHLO
-	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932431AbaICNxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 09:53:24 -0400
-Received: by mail-oi0-f42.google.com with SMTP id v63so5527374oia.15
-        for <git@vger.kernel.org>; Wed, 03 Sep 2014 06:53:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=DYfbsyBaOqOqCB5vG9k/MjbuAn/96AVaFJBHEGkjNBY=;
-        b=N4ysZwdeCgSjvOP/5gr3pox46WKeMBJ4O8niIKf7IjbpFVwn/vgHtF38DzCvSBQ7W6
-         8HvzLy+P3qgmvADRgz+8Ja/PignkNPpvf1SVMwKTrtmi4le4iI5uo6U5nyesRIYtKVpc
-         gplrXGDrXOF/wALbwOpX/bDXZ8gLBbVVkvTr6Ffp1fR+6UJmL65E2gzhxZ2+JwF0uh1m
-         vRHGXosKYvMbSEmGXDrJtLcjEtoSxaVSwSRudef+WoUWC6vrYmQ5bn90kBYmd2O5vS+y
-         f/a7YqA7mKN6O+XPLO6u8thZ/QTHmXht5VCIlsX6HIHExLJesH2gZHWeWrmdDMYtVCsQ
-         9Mog==
-X-Received: by 10.60.150.243 with SMTP id ul19mr2896233oeb.70.1409752404130;
- Wed, 03 Sep 2014 06:53:24 -0700 (PDT)
-Received: by 10.76.92.38 with HTTP; Wed, 3 Sep 2014 06:53:24 -0700 (PDT)
+	id S932565AbaICONZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 10:13:25 -0400
+Received: from alln-iport-1.cisco.com ([173.37.142.88]:38118 "EHLO
+	alln-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932495AbaICONY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 10:13:24 -0400
+X-Greylist: delayed 559 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Sep 2014 10:13:24 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AigFAJwfB1StJV2T/2dsb2JhbABZgw2BKtAaAYELFneEBAEFeRBRVxmIQr1oARePTQeETAWGFatmg2M7L4JPAQEB
+X-IronPort-AV: E=Sophos;i="5.04,457,1406592000"; 
+   d="scan'208";a="74511595"
+Received: from rcdn-core-11.cisco.com ([173.37.93.147])
+  by alln-iport-1.cisco.com with ESMTP; 03 Sep 2014 14:04:07 +0000
+Received: from jherland.rd.tandberg.com ([10.47.39.59])
+	by rcdn-core-11.cisco.com (8.14.5/8.14.5) with ESMTP id s83E41HD005685;
+	Wed, 3 Sep 2014 14:04:06 GMT
+X-Mailer: git-send-email 2.0.0.rc4.501.gdaf83ca
+In-Reply-To: <1409753034-9459-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256391>
 
-Hello,
-I just finished building and installing git on my Android device.
-After testing, I'd like to build it in such a way that I can tarball
-and upload/send it.  Are there any make targets that would allow me to
-do that or do I need to rebuild with the NO_CROSS_DIRECTORY_HARDLINKS
-option and install to a stage directory...like /usr/git or
-/usr/local/git?
+Add --no-verify to the revert and cherry-pick man pages. Also mention
+revert and cherry-pick in the corresponding documentation for the
+pre-commit and commit-msg hooks.
 
-Many thanks in advance.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ Documentation/git-cherry-pick.txt |  4 ++++
+ Documentation/git-revert.txt      |  4 ++++
+ Documentation/githooks.txt        | 20 ++++++++++----------
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
-MLO
-
-PS: I'm somewhat new to linux-based systems in general and the make
-system in particular; obvious follow-up questions may be asked
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 1c03c79..f56818f 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -97,6 +97,10 @@ OPTIONS
+ This is useful when cherry-picking more than one commits'
+ effect to your index in a row.
+ 
++--no-verify::
++	This option bypasses the pre-commit and commit-msg hooks.
++	See also linkgit:githooks[5].
++
+ -s::
+ --signoff::
+ 	Add Signed-off-by line at the end of the commit message.
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index cceb5f2..c9fb148 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -80,6 +80,10 @@ more details.
+ This is useful when reverting more than one commits'
+ effect to your index in a row.
+ 
++--no-verify::
++	This option bypasses the pre-commit and commit-msg hooks.
++	See also linkgit:githooks[5].
++
+ -S[<key-id>]::
+ --gpg-sign[=<key-id>]::
+ 	GPG-sign commits.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index d954bf6..9c3bf6c 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -72,11 +72,11 @@ the outcome of 'git am'.
+ pre-commit
+ ~~~~~~~~~~
+ 
+-This hook is invoked by 'git commit', and can be bypassed
+-with `--no-verify` option.  It takes no parameter, and is
+-invoked before obtaining the proposed commit log message and
+-making a commit.  Exiting with non-zero status from this script
+-causes the 'git commit' to abort.
++This hook is invoked by 'git commit' (including 'git revert' and
++'git cherry-pick'), and can be bypassed with `--no-verify` option.
++It takes no parameter, and is invoked before obtaining the proposed
++commit log message and making a commit.  Exiting with non-zero
++status from this script causes the 'git commit' to abort.
+ 
+ The default 'pre-commit' hook, when enabled, catches introduction
+ of lines with trailing whitespaces and aborts the commit when
+@@ -114,11 +114,11 @@ out the `Conflicts:` part of a merge's commit message.
+ commit-msg
+ ~~~~~~~~~~
+ 
+-This hook is invoked by 'git commit', and can be bypassed
+-with `--no-verify` option.  It takes a single parameter, the
+-name of the file that holds the proposed commit log message.
+-Exiting with non-zero status causes the 'git commit' to
+-abort.
++This hook is invoked by 'git commit' (including 'git revert'
++and 'git cherry-pick'), and can be bypassed with `--no-verify`
++option.  It takes a single parameter, the name of the file that
++holds the proposed commit log message. Exiting with non-zero
++status causes the 'git commit' to abort.
+ 
+ The hook is allowed to edit the message file in place, and can
+ be used to normalize the message into some project standard
+-- 
+2.0.0.rc4.501.gdaf83ca
