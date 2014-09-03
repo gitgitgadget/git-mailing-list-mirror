@@ -1,67 +1,56 @@
-From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCH 0/3] Teach revert/cherry-pick the --no-verify option
-Date: Wed,  3 Sep 2014 16:03:51 +0200
-Message-ID: <1409753034-9459-1-git-send-email-johan@herland.net>
-Cc: =?UTF-8?q?Lars=20Gullik=20Bj=C3=B8nnes?= <larsbj@gullik.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Johan Herland <johan@herland.net>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: [PATCH] completion: Add --ignore-blank-lines for diff
+Date: Wed, 03 Sep 2014 17:00:41 +0200
+Message-ID: <54072D19.6050102@virtuell-zuhause.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 16:14:37 2014
+X-From: git-owner@vger.kernel.org Wed Sep 03 17:03:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPBKW-0006DA-FU
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 16:14:36 +0200
+	id 1XPC5L-0005wJ-U2
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 17:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932721AbaICOOb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 10:14:31 -0400
-Received: from alln-iport-7.cisco.com ([173.37.142.94]:49331 "EHLO
-	alln-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755286AbaICOOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 10:14:31 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AikFAJwfB1StJV2T/2dsb2JhbABZgw1TV8hKh1CBDBZ3hQOKE71oARePTR2ENgWGFY9LnBuDYzsvgk8BAQE
-X-IronPort-AV: E=Sophos;i="5.04,457,1406592000"; 
-   d="scan'208";a="74567085"
-Received: from rcdn-core-11.cisco.com ([173.37.93.147])
-  by alln-iport-7.cisco.com with ESMTP; 03 Sep 2014 14:04:03 +0000
-Received: from jherland.rd.tandberg.com ([10.47.39.59])
-	by rcdn-core-11.cisco.com (8.14.5/8.14.5) with ESMTP id s83E41HA005685;
-	Wed, 3 Sep 2014 14:04:01 GMT
-X-Mailer: git-send-email 2.0.0.rc4.501.gdaf83ca
+	id S932952AbaICPAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 11:00:50 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:58030 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932862AbaICPAt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2014 11:00:49 -0400
+Received: from p5ddc0f44.dip0.t-ipconnect.de ([93.220.15.68] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1XPC3C-0006NB-Nk; Wed, 03 Sep 2014 17:00:46 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1409756449;79f44fdd;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256395>
 
-A colleague of mine noticed that cherry-pick does not accept the
---no-verify option to skip running the pre-commit/commit-msg hooks.
+Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+---
+ contrib/completion/git-completion.bash | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Here's a first attempt at adding --no-verify to the revert/cherry-pick.
-
-Have fun! :)
-
-...Johan
-
-Johan Herland (3):
-  t7503/4: Add failing testcases for revert/cherry-pick --no-verify
-  revert/cherry-pick: Add --no-verify option, and pass it on to commit
-  revert/cherry-pick --no-verify: Update documentation
-
- Documentation/git-cherry-pick.txt |  4 ++++
- Documentation/git-revert.txt      |  4 ++++
- Documentation/githooks.txt        | 20 ++++++++++----------
- builtin/revert.c                  |  1 +
- sequencer.c                       |  7 +++++++
- sequencer.h                       |  1 +
- t/t7503-pre-commit-hook.sh        | 24 ++++++++++++++++++++++++
- t/t7504-commit-msg-hook.sh        | 24 ++++++++++++++++++++++++
- 8 files changed, 75 insertions(+), 10 deletions(-)
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 06bf262..5ea5b82 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1175,8 +1175,8 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--full-index --binary --abbrev --diff-filter=
+ 			--find-copies-harder
+ 			--text --ignore-space-at-eol --ignore-space-change
+-			--ignore-all-space --exit-code --quiet --ext-diff
+-			--no-ext-diff
++			--ignore-all-space --ignore-blank-lines --exit-code
++			--quiet --ext-diff --no-ext-diff
+ 			--no-prefix --src-prefix= --dst-prefix=
+ 			--inter-hunk-context=
+ 			--patience --histogram --minimal
 -- 
-2.0.0.rc4.501.gdaf83ca
+1.9.4.msysgit.1
