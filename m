@@ -1,99 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] fsck: check tag objects' headers
-Date: Wed, 03 Sep 2014 16:14:34 -0700
-Message-ID: <xmqq7g1kwb39.fsf@gitster.dls.corp.google.com>
-References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
-	<alpine.DEB.1.00.1408281646530.990@s15462909.onlinehome-server.info>
-	<xmqqlhq88fyb.fsf@gitster.dls.corp.google.com>
-	<xmqqegw08fft.fsf@gitster.dls.corp.google.com>
-	<20140829234641.GG24834@peff.net>
-	<xmqqwq9o2s6l.fsf@gitster.dls.corp.google.com>
-	<20140903222937.GA30560@peff.net>
+Subject: Re: [RFC PATCHv2 1/2] am: add gitk patch format
+Date: Wed, 03 Sep 2014 16:19:56 -0700
+Message-ID: <xmqq38c8waub.fsf@gitster.dls.corp.google.com>
+References: <1409736919-22341-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-2-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 04 01:14:51 2014
+Cc: git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 01:20:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPJlH-0001A3-Gx
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 01:14:47 +0200
+	id 1XPJqX-0004G2-HY
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 01:20:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935521AbaICXOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 19:14:41 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65485 "EHLO smtp.pobox.com"
+	id S934533AbaICXUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 19:20:01 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63790 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933504AbaICXOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 19:14:37 -0400
+	id S934802AbaICXT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 19:19:59 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0BB1D38448;
-	Wed,  3 Sep 2014 19:14:37 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 69A1B3857B;
+	Wed,  3 Sep 2014 19:19:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aRq/T7tS101D3yhTCYtucJ/JMJ8=; b=JZoSmc
-	WLVfkfi/cHCj0E5R656fStAvaslwrYhOHK3VSAnuETI9lsK3D0nEsHZZDOajF9bZ
-	mc5rME5AmSdSuZhMMb4sqD1S4/ihFIr5HGC/rnhGP/M2ptYUUvFy0hveu6RcMMAj
-	jkSnjoCtiWQhWCVSx+Wc1VoPjNwepAPt5W3wA=
+	:content-type; s=sasl; bh=bqViU6Oi+7HZfqKtGgFdNnRfsLc=; b=MJXK2J
+	033Zr9yovRPeO+ak85Qslor6w+foeBzBIWEtEBWGTIoOIvFlbTAlc+eR4nLxSjVC
+	6QIW1FOnvOcByYayqZIEcihLLhBJlXuo2k+0j120DDGh3B28eMKV9kKIZovPTDk6
+	UnfqQ85Pc63sKPZEcTW9ZOQQKSfv4HOuO1uNc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d5rI9+QsZq8ZnTMIAaLOP/+DBfSm7kIw
-	Pufi4egrEzBAD+6z21Ya3JQtospatRL9fSBHH6bZRT49I+4zxfUHN40hCkJBSnCw
-	vy00CROsUO3scFLzjF6tf6g4z/HdtnUeXTL3aJ/Agst/CAOyxijR9175ZPW16TCW
-	pp/pyXASWDM=
+	:content-type; q=dns; s=sasl; b=CpjRS5a++IphJrxEbfh/DtA+PLIV+G1k
+	0UL3wWULMDRxSGIPvs7HxB65CFrs3rAkjQ1gHC3K9lde2OTB9q9X0gJ/8YGRiEZ3
+	1v6MKQvwSm3YT0Z5AiM8G1chxp+2pxwOY/7SJ547hCQRV5gKxddGH0fa5+5t2zj3
+	OaeuMjXNDgk=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0251638447;
-	Wed,  3 Sep 2014 19:14:37 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 610C83857A;
+	Wed,  3 Sep 2014 19:19:58 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7A8B738446;
-	Wed,  3 Sep 2014 19:14:36 -0400 (EDT)
-In-Reply-To: <20140903222937.GA30560@peff.net> (Jeff King's message of "Wed, 3
-	Sep 2014 18:29:37 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D9D0C38577;
+	Wed,  3 Sep 2014 19:19:57 -0400 (EDT)
+In-Reply-To: <1409782918-26133-2-git-send-email-judge.packham@gmail.com>
+	(Chris Packham's message of "Thu, 4 Sep 2014 10:21:57 +1200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1281AC0E-33C0-11E4-B8F8-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: D210C3B6-33C0-11E4-8420-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256430>
 
-Jeff King <peff@peff.net> writes:
+Chris Packham <judge.packham@gmail.com> writes:
 
-> This is a bit of an aside, but why do we have the "tag" line in the tag
-> object in the first place?
+> Patches created using gitk's "write commit to file" functionality (which
+> uses 'git diff-tree -p --pretty' under the hood) need some massaging in
+> order to apply cleanly.
 
-http://thread.gmane.org/gmane.linux.kernel/297998/focus=1410
-
-> It is part of the object contents, and therefore is part of the
-> signature (which the refname is not). That's somewhat redundant with the
-> tag message itself. E.g., the git v2.0.4 tag says:
->
->   object 32f56600bb6ac6fc57183e79d2c1515dfa56672f
->   type commit
->   tag v2.0.4
->   tagger Junio C Hamano <gitster@pobox.com> 1406755201 -0700
->
->   Git 2.0.4
->   -----BEGIN PGP SIGNATURE-----
->   ...
-
-Yes, usually we write a moral equivalent in a human readable form as
-the tag message, but the mapping "s/^v/Git /" between the tag name
-and the message is purely by convention, and I suspect some old tags
-I have may even have used "s/^v/Git v/" or "s/^v/git v/" or a
-similar inconsistent mapping.
-
-> The main advantage of the "tag" field is that it is machine-readable,
-> and that your verification process can check that "git verify-tag
-> v2.1.0" actually returns a tag that says "tag v2.1.0". But I do not
-> think we do that verification at all. I wonder if that is something we
-> should add support for.
-
-Yes.  That essentially boils down to "refs/tags/$tag" must have "tag $tag"
-line (the reverse may not have to be true if the hierarchy is
-outside refs/tags/, though).
+Shouldn't that output routine be the one to be corrected, then?  We
+really do not need yet another format to express the same thing,
+especially from the same suite of programs.
