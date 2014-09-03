@@ -1,85 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: add NO_CLOCK_GETTIME check
-Date: Wed, 03 Sep 2014 13:58:33 -0700
-Message-ID: <xmqqsik8whdy.fsf@gitster.dls.corp.google.com>
-References: <1409771687-5597-1-git-send-email-reubenhwk@gmail.com>
-	<xmqqwq9kwkrg.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Next Git conference or meeting
+Date: Wed, 3 Sep 2014 16:59:57 -0400
+Message-ID: <20140903205957.GA28644@peff.net>
+References: <CAP8UFD1Jzy2jzRaFh35=y1yCJcMHKSkXbSXp1SuBL2R2bQAJqQ@mail.gmail.com>
+ <1A6AAC8B-0C82-4296-B1C8-BF0739A28A80@gmail.com>
+ <20140902112117.GB5049@thunk.org>
+ <20140902135147.GC6232@thunk.org>
+ <CAP8UFD3x1Pm-+0GF+2CEFkZ34XDzZ95Wu0boPgGocE_8T7uk9g@mail.gmail.com>
+ <CAJo=hJs-wvT4fPA0Ad0tuOjBth0aRzbEFX6pu7N8Uq4TdToZgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, karsten.blees@gmail.com
-To: Reuben Hawkins <reubenhwk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 03 22:58:44 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Sep 03 23:00:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPHdY-00033c-N8
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 22:58:41 +0200
+	id 1XPHf1-0004AF-3z
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 23:00:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017AbaICU6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 16:58:36 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61134 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751389AbaICU6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 16:58:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 718203746B;
-	Wed,  3 Sep 2014 16:58:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p8XWA8l+UjP56ClHr2gtvdO7kWU=; b=VUm7V5
-	fkt76DS+qoyKV7FbT5F49jmZYbL1GFMgvoqlknwGGHv8iYtrHm0j+Q9CSeOFCCkm
-	1hHt33zF7rZS52E31bi/Tqn1IykvO/5l12xPL+oisfdw/24xrOtKKR0KEHe24uPg
-	6cii3GgWTXPZ+XYjX2D2VUgsdDfWes2ylmDgk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cxuuJ7JDGR9TmT9jhWgZBunAzrNH5dla
-	Q0NEWQ6ZarLcMcSPQ2MADBZhqDuxAFg7cSnaznNrgNr0PZeccM+mvG6hWAtSw0Ay
-	+4z0pdOgsRaPOnxOF4zTc2rTis0ilruwSPE81Yj1cQV3fabCZdTpcwj4tGa7Ttll
-	5ST7AHsrpk8=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 648053746A;
-	Wed,  3 Sep 2014 16:58:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D879037468;
-	Wed,  3 Sep 2014 16:58:34 -0400 (EDT)
-In-Reply-To: <xmqqwq9kwkrg.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 03 Sep 2014 12:45:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 11CDC3DC-33AD-11E4-BF12-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1755981AbaICVAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 17:00:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43713 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750939AbaICVAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 17:00:00 -0400
+Received: (qmail 2488 invoked by uid 102); 3 Sep 2014 21:00:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Sep 2014 15:59:59 -0500
+Received: (qmail 21957 invoked by uid 107); 3 Sep 2014 21:00:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Sep 2014 17:00:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2014 16:59:57 -0400
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJs-wvT4fPA0Ad0tuOjBth0aRzbEFX6pu7N8Uq4TdToZgw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256412>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Sep 03, 2014 at 10:15:15AM -0700, Shawn Pearce wrote:
 
->> +ifndef NO_CLOCK_GETTIME
->>  ifdef HAVE_CLOCK_GETTIME
->>  	BASIC_CFLAGS += -DHAVE_CLOCK_GETTIME
->>  	EXTLIBS += -lrt
->>  endif
->> +endif
->
-> I am not sure why you even need this change.  Wouldn't you get
-> exactly the same result if you did not define HAVE_CLOCK_GETTIME
-> when building?
+> I hadn't realized Git is turning 10 next year. Just been too busy
+> using Git to pay attention to its upcoming anniversary. Let me talk to
+> some folks at Google and see if we can organize something here in
+> Mountain View, or help the LinuxFoundation sponsor something.
 
-That is, doing something like:
+Christian mentioned that he talked to some GitHub folks at LinuxCon.
+Those folks have also started thinking about things. :)
 
-    $ make HAVE_CLOCK_GETTIME= V=1
+Things are still very tentative at this point, but I think they are
+considering something like the Git Merge conference we did earlier, and
+doing it in June in Europe (maybe Paris). I know they were going to
+reach out to Linux Foundation folks to try to jointly plan something,
+but I don't know if that has happened yet.
 
-would show lines like:
+So it seems there are a lot of different people who are all potentially
+interested in planning or taking part, and they should all be talking to
+each other. :)
 
-    cc -o credential-store.o -c -MF ./.depend/credential-store.o.d
-    -MQ credential-store.o -MMD -MP  -O2 -Wall -Wvla
-    -Wdeclaration-after-statement -Wno-format-zero-length -g
-    -I. -DHAVE_ALLOCA_H  -DHAVE_PATHS_H -DHAVE_DEV_TTY
-    -DXDL_FAST_HASH -DSHA1_HEADER='"block-sha1/sha1.h"'
-    -DNO_STRLCPY -DNO_MKSTEMPS -DSHELL_PATH='"/bin/sh"'  credential-store.c
-
-that does not have -DHAVE_CLOCK_GETTIME on the command line, no?
+-Peff
