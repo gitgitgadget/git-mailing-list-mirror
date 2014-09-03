@@ -1,178 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/3] t7503/4: Add failing testcases for revert/cherry-pick --no-verify
-Date: Wed, 03 Sep 2014 12:28:58 -0700
-Message-ID: <xmqqbnqwy03p.fsf@gitster.dls.corp.google.com>
-References: <1409753034-9459-1-git-send-email-johan@herland.net>
-	<1409753034-9459-2-git-send-email-johan@herland.net>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+Subject: Re: What's cooking in git.git (Sep 2014, #01; Tue, 2)
+Date: Wed, 3 Sep 2014 19:30:19 +0000
+Message-ID: <1409772619.28694.0.camel@jekeller-desk1.amr.corp.intel.com>
+References: <xmqqzjehy8vx.fsf@gitster.dls.corp.google.com>
+	 <5406B4EF.3050301@kdbg.org> <xmqqoauwy0lz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Lars Gullik =?utf-8?Q?Bj=C3=B8nnes?= <larsbj@gullik.org>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Sep 03 21:29:12 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "j6t@kdbg.org" <j6t@kdbg.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"sortie@maxsi.org" <sortie@maxsi.org>
+To: "gitster@pobox.com" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 21:30:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPGEu-0000Z4-4L
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 21:29:08 +0200
+	id 1XPGGX-0001jh-Bc
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 21:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753992AbaICT3D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 15:29:03 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57624 "EHLO smtp.pobox.com"
+	id S1751487AbaICTap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 15:30:45 -0400
+Received: from mga14.intel.com ([192.55.52.115]:15925 "EHLO mga14.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752548AbaICT3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 15:29:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF438372D4;
-	Wed,  3 Sep 2014 15:29:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rq3/FU9pcJRtnuCLF8P/ULOGR04=; b=L9BzAz
-	ifzyWHTYpILkn+MJzmUHJ1BUq6xD+Wt0Xp9Mez1/GPMSEosl0jK0m7RfyIrsFYke
-	di+aa4QyfWKYH/RvK41+DSGncuI0HjrTLNrmVu+aQnshjq/+SkRYNDb8WGpvYprG
-	P9lN3SBIAKMi/qhPjO4uJRV4pSgfWQNeFEnDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xLy081gIImSR/aQqw/MKhE1z9yXfg5Ms
-	g/acSDyWcOHSPRic/B/51vgSh+FrlWGHyancB05CFklkaJIqDAaI4yelR7xivCBM
-	iBavEZESEozODkw039fNFcD4XW3SCuuKqaVB8eGEFaLybWQ8UJufjSEvkU+MdnIx
-	AivAG2hVSC0=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ADFFF372D3;
-	Wed,  3 Sep 2014 15:29:00 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 237B5372CD;
-	Wed,  3 Sep 2014 15:29:00 -0400 (EDT)
-In-Reply-To: <1409753034-9459-2-git-send-email-johan@herland.net> (Johan
-	Herland's message of "Wed, 3 Sep 2014 16:03:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8E34C0A4-33A0-11E4-AE21-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1751431AbaICTap (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 15:30:45 -0400
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga103.fm.intel.com with ESMTP; 03 Sep 2014 12:22:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.97,862,1389772800"; 
+   d="scan'208";a="381004857"
+Received: from orsmsx107.amr.corp.intel.com ([10.22.240.5])
+  by FMSMGA003.fm.intel.com with ESMTP; 03 Sep 2014 12:25:41 -0700
+Received: from orsmsx160.amr.corp.intel.com (10.22.226.43) by
+ ORSMSX107.amr.corp.intel.com (10.22.240.5) with Microsoft SMTP Server (TLS)
+ id 14.3.195.1; Wed, 3 Sep 2014 12:30:19 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.235]) by
+ ORSMSX160.amr.corp.intel.com ([169.254.13.134]) with mapi id 14.03.0195.001;
+ Wed, 3 Sep 2014 12:30:19 -0700
+Thread-Topic: What's cooking in git.git (Sep 2014, #01; Tue, 2)
+Thread-Index: AQHPx6vGORjwMWaStEWPG63YsbufpZvwQP+A
+In-Reply-To: <xmqqoauwy0lz.fsf@gitster.dls.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <C65211420721194A8DC08841611DD337@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256406>
 
-Johan Herland <johan@herland.net> writes:
-
-> The revert/cherry-pick machinery currently exercises the pre-commit
-> and commit-msg hooks. However, where commit accepts a --no-verify
-> option to temporarily disable these hooks, the revert and cherry-pick
-> commands have no such option.
->
-> This patch adds some testcases demonstrating how the --no-verify
-> option is supposed when it is added to revert and cherry-pick
-> (in the next patch).
->
-> Signed-off-by: Johan Herland <johan@herland.net>
-> ---
-
-The added test looks OK; will queue.
-
-We may want to update its style of testing (the shell scripting
-style is also bad, but they assume and depend on that the previous
-steps have all passed to take the history and the repository into a
-certain state without explicit "reset --hard" to allow some previous
-steps to fail), though.
-
-Also, do we already test these commands with the --allow-empty
-option and/or the --allow-empty-message option, which I think share
-the same issue, somewhere in the test suite?  If not, we may want to
-while we remember the issue.
-
-Thanks.
-
->  t/t7503-pre-commit-hook.sh | 24 ++++++++++++++++++++++++
->  t/t7504-commit-msg-hook.sh | 24 ++++++++++++++++++++++++
->  2 files changed, 48 insertions(+)
->
-> diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
-> index 984889b..adc892b 100755
-> --- a/t/t7503-pre-commit-hook.sh
-> +++ b/t/t7503-pre-commit-hook.sh
-> @@ -60,6 +60,18 @@ test_expect_success 'with failing hook' '
->  
->  '
->  
-> +test_expect_success 'revert with failing hook' '
-> +
-> +	test_must_fail git revert HEAD
-> +
-> +'
-> +
-> +test_expect_success 'cherry-pick with failing hook' '
-> +
-> +	test_must_fail git cherry-pick --no-verify HEAD^
-> +
-> +'
-> +
->  test_expect_success '--no-verify with failing hook' '
->  
->  	echo "stuff" >> file &&
-> @@ -68,6 +80,18 @@ test_expect_success '--no-verify with failing hook' '
->  
->  '
->  
-> +test_expect_failure 'revert --no-verify with failing hook' '
-> +
-> +	git revert --no-verify HEAD
-> +
-> +'
-> +
-> +test_expect_failure 'cherry-pick --no-verify with failing hook' '
-> +
-> +	git cherry-pick --no-verify HEAD^
-> +
-> +'
-> +
->  chmod -x "$HOOK"
->  test_expect_success POSIXPERM 'with non-executable hook' '
->  
-> diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
-> index 1f53ea8..4f8b9fe 100755
-> --- a/t/t7504-commit-msg-hook.sh
-> +++ b/t/t7504-commit-msg-hook.sh
-> @@ -109,6 +109,18 @@ test_expect_success 'with failing hook' '
->  
->  '
->  
-> +test_expect_success 'revert with failing hook' '
-> +
-> +	test_must_fail git revert HEAD
-> +
-> +'
-> +
-> +test_expect_success 'cherry-pick with failing hook' '
-> +
-> +	test_must_fail git cherry-pick --no-verify HEAD^
-> +
-> +'
-> +
->  test_expect_success 'with failing hook (editor)' '
->  
->  	echo "more another" >> file &&
-> @@ -126,6 +138,18 @@ test_expect_success '--no-verify with failing hook' '
->  
->  '
->  
-> +test_expect_failure 'revert --no-verify with failing hook' '
-> +
-> +	git revert --no-verify HEAD
-> +
-> +'
-> +
-> +test_expect_failure 'cherry-pick --no-verify with failing hook' '
-> +
-> +	git cherry-pick --no-verify HEAD^
-> +
-> +'
-> +
->  test_expect_success '--no-verify with failing hook (editor)' '
->  
->  	echo "more stuff" >> file &&
+T24gV2VkLCAyMDE0LTA5LTAzIGF0IDEyOjE4IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
+Cj4gSm9oYW5uZXMgU2l4dCA8ajZ0QGtkYmcub3JnPiB3cml0ZXM6DQo+IA0KPiA+IEJ1dCBJTUhP
+LCB0aGlzIHRvcGljIGdvZXMgaW4gYSB3cm9uZyBkaXJlY3Rpb24uICJBdm9pZCBkZXByZWNhdGVk
+DQo+ID4gaW50ZXJmYWNlcyIgaXMgd2F5IG92ZXJyYXRlZC4gSXQgd291bGQgYmUgcHJlZmVyYWJs
+ZSAoSU1ITykgdG8gaW1wbGVtZW50DQo+ID4gc2V0aXRpbWVyKCkgaW4gY29tcGF0LyBmb3Igc3lz
+dGVtcyB0aGF0IGRvbid0IGhhdmUgaXQuDQo+IA0KPiBJIHRoaW5rIEkgYWdyZWUuDQo+IA0KPiBB
+ZGRpbmcgY29tcGF0L3NldGl0aW1lci5jIHRoYXQgaW1wbGVtZW50cyBnaXRfc2V0aXRpbWVyKCkg
+aW4gdGVybXMNCj4gb2Ygd2hhdGV2ZXIgaXMgYXZhaWxhYmxlIG9uIHRoZSBwbGF0Zm9ybSBhbmQg
+I2RlZmluZSBjYWxscyB0bw0KPiBzZXRpdGltZXIoKSBhd2F5IHRvIGdpdF9zZXRpdGltZXIoKSB3
+b3VsZCBiZSBhIGxvdCBsZXNzIGludHJ1c2l2ZQ0KPiBjaGFuZ2UgdGhhbiB0aGUgc2VyaWVzIHBv
+c3RlZC4NCj4gDQo+IFRoYW5rcy4NCj4gLS0NCj4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxp
+c3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGdpdCIgaW4NCj4gdGhlIGJvZHkgb2YgYSBt
+ZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcNCj4gTW9yZSBtYWpvcmRvbW8gaW5m
+byBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sDQoNCkkgc3Vw
+cG9zZSBvdmVyYWxsIHRoaXMgbWFrZXMgbW9yZSBzZW5zZSA6KSBUaGF0IHNob3VsZG4ndCBiZSBk
+aWZmaWN1bHQNCnRvIGRvLg0KDQpSZWdhcmRzLA0KSmFrZQ0K
