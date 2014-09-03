@@ -1,98 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/6] fsck: check tag objects' headers
-Date: Wed, 3 Sep 2014 18:29:37 -0400
-Message-ID: <20140903222937.GA30560@peff.net>
-References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
- <alpine.DEB.1.00.1408281646530.990@s15462909.onlinehome-server.info>
- <xmqqlhq88fyb.fsf@gitster.dls.corp.google.com>
- <xmqqegw08fft.fsf@gitster.dls.corp.google.com>
- <20140829234641.GG24834@peff.net>
- <xmqqwq9o2s6l.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] setup.c: set workdir when gitdir is not default
+Date: Thu,  4 Sep 2014 01:42:00 +0300
+Message-ID: <1409784120-2228-1-git-send-email-max@max630.net>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org, Max Kirillov <max@max630.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 00:29:54 2014
+X-From: git-owner@vger.kernel.org Thu Sep 04 00:43:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPJ3o-0005LM-2R
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 00:29:52 +0200
+	id 1XPJGV-0005ho-Ti
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 00:43:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933735AbaICW3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 18:29:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43820 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933040AbaICW3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 18:29:40 -0400
-Received: (qmail 6472 invoked by uid 102); 3 Sep 2014 22:29:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Sep 2014 17:29:40 -0500
-Received: (qmail 23128 invoked by uid 107); 3 Sep 2014 22:29:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Sep 2014 18:29:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Sep 2014 18:29:37 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqwq9o2s6l.fsf@gitster.dls.corp.google.com>
+	id S933087AbaICWmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 18:42:55 -0400
+Received: from p3plsmtpa08-08.prod.phx3.secureserver.net ([173.201.193.109]:35717
+	"EHLO p3plsmtpa08-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932852AbaICWmx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2014 18:42:53 -0400
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa08-08.prod.phx3.secureserver.net with 
+	id mmiV1o00D3gsSd601miqRw; Wed, 03 Sep 2014 15:42:52 -0700
+X-Mailer: git-send-email 2.0.1.1697.g73c6810
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256428>
 
-On Sun, Aug 31, 2014 at 03:46:42PM -0700, Junio C Hamano wrote:
+When gitfile is used, git sets GIT_DIR environment variable for
+subsequent commands, and that commands start working in mode "GIT_DIR
+set, workdir current", which is incorrect for the case when git runs
+from subdirectory of repository. This can be observed at least for
+running aliases - git fails with message "internal error: work tree has
+already been set"
 
-> If "git fsck" were a tool to validate that the objects and refs are
-> in line with how "git-core" plumbing and Porcelain toolset uses the
-> underlying Git data model, it makes sense to insist a tag has a name
-> that is suitable for a refname, and the tag is pointed by a ref in
-> "refs/tags/" followed by its name.  The rules such a "git fsck" should
-> implement would be stricter than what the underlying Git data model
-> could represent and existing Git tools could handle (i.e. a commit
-> with broken ident line may not be usable with "shortlog -e" and would
-> be flagged as corrupt).
+Fix by setting GIT_WORK_TREE environment also.
 
-This is a bit of an aside, but why do we have the "tag" line in the tag
-object in the first place?
+Add test which demonstrates problem with alias.
 
-It is part of the object contents, and therefore is part of the
-signature (which the refname is not). That's somewhat redundant with the
-tag message itself. E.g., the git v2.0.4 tag says:
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ setup.c            | 4 +++-
+ t/t0002-gitfile.sh | 7 +++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-  object 32f56600bb6ac6fc57183e79d2c1515dfa56672f
-  type commit
-  tag v2.0.4
-  tagger Junio C Hamano <gitster@pobox.com> 1406755201 -0700
-
-  Git 2.0.4
-  -----BEGIN PGP SIGNATURE-----
-  ...
-
-Imagine an evil person pushed the signed v2.0.4 tag to refs/tags/v2.1.0
-(perhaps because there is a bug in v2.0.4, and they want you to run the
-wrong version so they can exploit it). You can check with "git show"
-that the "tag" field is actually v2.0.4, but then you could similarly
-check that the message says "Git 2.0.4".
-
-The main advantage of the "tag" field is that it is machine-readable,
-and that your verification process can check that "git verify-tag
-v2.1.0" actually returns a tag that says "tag v2.1.0". But I do not
-think we do that verification at all. I wonder if that is something we
-should add support for.
-
-You gave examples later in your email of tags that would not necessarily
-care about this tag field (and anyway, if "for-linus" is used over and
-over, it is subject to these sorts of replays), so I do not think it is
-something we would want unconditionally in verify-tag.
-
-I think this may need to be filed under "possible policy flags for
-verifying" that we discussed earlier (i.e., in the same boat as "does
-the committer ident match the commit signature", as it is a
-porcelain-ish policy, not an integral part of the plumbing).
-
-So this is mostly food for thought at this point.
-
--Peff
+diff --git a/setup.c b/setup.c
+index 0a22f8b..bcf4e31 100644
+--- a/setup.c
++++ b/setup.c
+@@ -508,8 +508,10 @@ static const char *setup_discovered_git_dir(const char *gitdir,
+ 
+ 	/* #0, #1, #5, #8, #9, #12, #13 */
+ 	set_git_work_tree(".");
+-	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT))
++	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT)) {
+ 		set_git_dir(gitdir);
++		setenv(GIT_WORK_TREE_ENVIRONMENT, get_git_work_tree(), 1);
++	}
+ 	inside_git_dir = 0;
+ 	inside_work_tree = 1;
+ 	if (offset == len)
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index 37e9396..428cfdc 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -99,4 +99,11 @@ test_expect_success 'check rev-list' '
+ 	test "$SHA" = "$(git rev-list HEAD)"
+ '
+ 
++test_expect_success 'check alias call from subdirectory' '
++	git config alias.testalias "rev-parse HEAD" &&
++	mkdir -p subdir &&
++	cd subdir &&
++	git testalias
++'
++
+ test_done
+-- 
+2.0.1.1697.g73c6810
