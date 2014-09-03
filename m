@@ -1,87 +1,73 @@
-From: Reuben Hawkins <reubenhwk@gmail.com>
-Subject: [PATCH] Makefile: add NO_CLOCK_GETTIME check
-Date: Wed,  3 Sep 2014 12:14:47 -0700
-Message-ID: <1409771687-5597-1-git-send-email-reubenhwk@gmail.com>
-Cc: reubenhwk@gmail.com, karsten.blees@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 21:16:07 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Sep 2014, #01; Tue, 2)
+Date: Wed, 03 Sep 2014 12:18:00 -0700
+Message-ID: <xmqqoauwy0lz.fsf@gitster.dls.corp.google.com>
+References: <xmqqzjehy8vx.fsf@gitster.dls.corp.google.com>
+	<5406B4EF.3050301@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonas 'Sortie' Termansen <sortie@maxsi.org>,
+	Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Sep 03 21:18:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPG2G-0000Lp-Od
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 21:16:05 +0200
+	id 1XPG4M-0001V0-Ka
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 21:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951AbaICTPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 15:15:41 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:44022 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752777AbaICTPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 15:15:40 -0400
-Received: by mail-pa0-f41.google.com with SMTP id lj1so18367885pab.0
-        for <git@vger.kernel.org>; Wed, 03 Sep 2014 12:15:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=xStEd2xrmVyJFgePWrL0onRjYb9FgV+vrjFgfwiAWIs=;
-        b=Jk9tB1eBhgvgEzho0F+xS2WoDIb+NIVkbT4DKxA11FhW3u6uqOy6hw25mKhZrWo66X
-         EsgAciYTe/GwgTOA9YSZDkM39BzwvrApNjt2jR5x4ngLbtoFGiewusLXU95EcLOjt+TK
-         Nb8i50z4AqdrXSCqpR0FD/jNTHrt1T7qfBpL38uHR9J8F968ES9a5WClvQdH/fIJXv+X
-         XukulmYwivwCHXIcEs3lTFtyx0VbZ3Gw4kCAVPO7Al5l5DHq70W2BiQrxyaJgfZbpOIA
-         kMCtRnQ2vo+BohhlkPQQGBGCFWaikQDyO99RzzFg5wAbsJkW6fFP0o54z1217DsXXxrm
-         8ivA==
-X-Received: by 10.70.91.208 with SMTP id cg16mr60556735pdb.91.1409771735917;
-        Wed, 03 Sep 2014 12:15:35 -0700 (PDT)
-Received: from zoidberg.san.rr.com (cpe-76-88-40-245.san.res.rr.com. [76.88.40.245])
-        by mx.google.com with ESMTPSA id gw1sm7533325pbd.63.2014.09.03.12.15.34
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 03 Sep 2014 12:15:35 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+	id S1754582AbaICTSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 15:18:10 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57850 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753897AbaICTSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 15:18:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 69B4437CBD;
+	Wed,  3 Sep 2014 15:18:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PIorgedM6fgk+GNtObEXOgyiLmU=; b=EEK52s
+	c+WYDEqgko7xfI6yWsAqWNppcxdwBC73hOXTx6nw2J4pvbvX6cg/qlAPs0XBjk/z
+	kL6WB31HzrNwCaEI/IFhdmIeaBb/RvPLL5KMyPxEntBIVa8fOT1EyfL6+rGsDFWB
+	gss6T+J1BD01KMli7+D2v7ml/NEuQjb4SVtyc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZiRLWbU2dejO+0/7BRx+aIA67YNclwkt
+	ZJe4Cti0oe8rOiSbx/wM+GaIQx2XKMeh21gRjIF5ZkP6UZrfhrNoWfDN69VOCVlo
+	WwW+DOHhnP29nkX5mj/r6O9bu+4MxroGudIGLPtdKCMtmzp26MwtYbHpKoTS1Lf4
+	1/DK4olXL1E=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5EE4737CBB;
+	Wed,  3 Sep 2014 15:18:03 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D06CF37CB8;
+	Wed,  3 Sep 2014 15:18:02 -0400 (EDT)
+In-Reply-To: <5406B4EF.3050301@kdbg.org> (Johannes Sixt's message of "Wed, 03
+	Sep 2014 08:27:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 066F27C8-339F-11E4-AA03-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256403>
 
-Some really old platforms, rhel3, which don't define CLOCK_MONOTONIC, still
-need a way to build git.  Some high resolution timer code was added Jul 12,
-2014 to aid debugging performance issues.  That code uses clock_gettime and
-CLOCK_MONOTONIC.  That change breaks building git on ancient platforms which
-don't support CLOCK_MONOTONIC, so a way to disable that code is needed.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-To use this feature...
+> But IMHO, this topic goes in a wrong direction. "Avoid deprecated
+> interfaces" is way overrated. It would be preferable (IMHO) to implement
+> setitimer() in compat/ for systems that don't have it.
 
-$ make NO_CLOCK_GETTIME=1
+I think I agree.
 
-This change amends the commit...
+Adding compat/setitimer.c that implements git_setitimer() in terms
+of whatever is available on the platform and #define calls to
+setitimer() away to git_setitimer() would be a lot less intrusive
+change than the series posted.
 
- commit 148d6771bf5e00aa1d7fa2221507a3dfe4c1e37f
- Author: Karsten Blees <karsten.blees@gmail.com>
- Date:   Sat Jul 12 02:05:42 2014 +0200
-
-  trace: add high resolution timer function to debug performance issues
----
- Makefile | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index 9f984a9..0c1c8cf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1502,10 +1502,12 @@ ifdef GMTIME_UNRELIABLE_ERRORS
- 	BASIC_CFLAGS += -DGMTIME_UNRELIABLE_ERRORS
- endif
- 
-+ifndef NO_CLOCK_GETTIME
- ifdef HAVE_CLOCK_GETTIME
- 	BASIC_CFLAGS += -DHAVE_CLOCK_GETTIME
- 	EXTLIBS += -lrt
- endif
-+endif
- 
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
--- 
-1.9.1
+Thanks.
