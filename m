@@ -1,74 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: mini-GitTogether Oct 2014? (was: Next Git conference or meeting)
-Date: Wed, 03 Sep 2014 14:47:45 -0700
-Message-ID: <xmqqfvg8wf3y.fsf@gitster.dls.corp.google.com>
-References: <20140903210907.GB28644@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] parse-options: detect attempt to add a duplicate short
+ option name
+Date: Wed, 3 Sep 2014 14:58:34 -0700
+Message-ID: <20140903215834.GZ18279@google.com>
+References: <1409753034-9459-1-git-send-email-johan@herland.net>
+ <1409753034-9459-3-git-send-email-johan@herland.net>
+ <xmqq7g1kxzxi.fsf@gitster.dls.corp.google.com>
+ <xmqq1trsxzgy.fsf_-_@gitster.dls.corp.google.com>
+ <54077A3E.20703@web.de>
+ <xmqqoauwwh2c.fsf@gitster.dls.corp.google.com>
+ <20140903214624.GY18279@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 03 23:48:10 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 23:59:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPIPQ-00037x-TQ
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 23:48:09 +0200
+	id 1XPIZn-0001mI-CD
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 23:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756366AbaICVru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 17:47:50 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64981 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756840AbaICVrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 17:47:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9477A38CC8;
-	Wed,  3 Sep 2014 17:47:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vtSEfiBg8fG9OEgfLaXEpgCwSfE=; b=mZ72XP
-	Zzu2F+2vu32bp8oyIOu8oyARIOktlQBTH272YvXU7h0uLa2vdl3LkDY0QeZppQBC
-	Z+MQYDHiii5nxHhG2I3V5fsVwV9SVjjST+PB83lDGtmH1aDvH8t8+tk/hyPmoAd4
-	FiNN0w9fSmEPK4MptnaSMG4CamrRcNpbK7N+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u7/qfgDlklgNj/Wy0DQZPwAZOdmAAqwf
-	LV4UX4RypBaWVe8wcM303kIZkvMn97PUKWxOtxUpgEbzuCzI64nP25vZFT78t7gr
-	A7KxQ41Cffrbjpf8YVCw6rZ72ptjTwfxbqp9dKAz6d3Kol8kiZJ50SmRMp0fELEy
-	fHOVa/HTYiM=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8911038CC7;
-	Wed,  3 Sep 2014 17:47:48 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B78C238CC2;
-	Wed,  3 Sep 2014 17:47:46 -0400 (EDT)
-In-Reply-To: <20140903210907.GB28644@peff.net> (Jeff King's message of "Wed, 3
-	Sep 2014 17:09:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F14A9F84-33B3-11E4-ADEE-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S932259AbaICV6k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Sep 2014 17:58:40 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:48463 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932162AbaICV6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 17:58:38 -0400
+Received: by mail-pa0-f44.google.com with SMTP id rd3so18592265pab.31
+        for <git@vger.kernel.org>; Wed, 03 Sep 2014 14:58:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=9D7zr2XuAvmVUSTmt5Ji2ksYyDK7U7pIA2fk0giUW4Y=;
+        b=RbrFKEzPuhPJhi0PBOizNY9V/7rae00iWG5TlFwPe9yv9Qo3oqP5QYU6ojNYoB9OSk
+         v5Aq/5yFoPtjXHnaX2WWCSzJAdzjpJHYLGcL4jdcFwod/eu6KB9KHyormsMswl5D/kdO
+         rZKEs4lr8o9mTpPoWS1DdOfcfkIQIY8oGOTCrhKqJgkfJwvieMjf4CHn8DA7DhYZN2hB
+         aXoknvf+Bmra8Mp0WaqgY9DQiYjQXdJR9IniCMnMcpaG9sCmobmlSEgDVuIXCeaORUz/
+         4vU82INkC/3ydX7Z8okqwF7l9t2qrmLf3uQXzj6NoExVDs2TRe4qMj8IPsRfUIXPfxYP
+         C60w==
+X-Received: by 10.66.139.106 with SMTP id qx10mr464629pab.126.1409781517632;
+        Wed, 03 Sep 2014 14:58:37 -0700 (PDT)
+Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
+        by mx.google.com with ESMTPSA id dn5sm7794236pbb.2.2014.09.03.14.58.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 03 Sep 2014 14:58:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20140903214624.GY18279@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256422>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Sep 03, 2014 at 02:46:25PM -0700, Jonathan Nieder wrote:
+> Junio C Hamano wrote:
+>=20
+> > --- a/parse-options.c
+> > +++ b/parse-options.c
+> > @@ -345,12 +345,27 @@ static void check_typos(const char *arg, cons=
+t struct option *options)
+> >  static void parse_options_check(const struct option *opts)
+> >  {
+> >  	int err =3D 0;
+> > +	char short_opts[128];
+> > +
+> > +	memset(short_opts, '\0', sizeof(short_opts));
+> > =20
+> >  	for (; opts->type !=3D OPTION_END; opts++) {
+> >  		if ((opts->flags & PARSE_OPT_LASTARG_DEFAULT) &&
+> >  		    (opts->flags & PARSE_OPT_OPTARG))
+> >  			err |=3D optbug(opts, "uses incompatible flags "
+> >  					"LASTARG_DEFAULT and OPTARG");
+> > +		if (opts->short_name) {
+> > +			struct strbuf errmsg =3D STRBUF_INIT;
+> > +			if (opts->short_name < ' ' || 0x7F <=3D opts->short_name)
+> > +				strbuf_addf(&errmsg, "invalid short name (0x%02x)",
+> > +					    opts->short_name);
+> > +			else if (short_opts[opts->short_name]++)
+>=20
+> What happens on platforms with a signed char?
 
-> I know you are talking about something potentially much larger than
-> this, but I wanted to note that Michael Haggerty, Ramkumar Ramachandra,
-> and I will all be in the Bay Area for the GSoC Reunion, October 23-26.
->
-> I do not think we want to have a "real" conference, but I wonder if git
-> devs would have an interest in getting together for dinner or some
-> social time either right before or right after.
->
-> I'm thinking it would probably be small-ish (<20 people), and primarily
-> just for people who work on git to talk to each other in person.
+Ah, I see now that the "< ' '" check would catch that.
 
-I guess I'd be close enough to come.
+With Ren=E9's suggestions squashed in, that becomes
+
+ parse-options.c               | 9 +++++++++
+ t/t1502-rev-parse-parseopt.sh | 4 ++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/parse-options.c b/parse-options.c
+index e7dafa8..6ad7d90 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -347,12 +347,21 @@ static void check_typos(const char *arg, const st=
+ruct option *options)
+ static void parse_options_check(const struct option *opts)
+ {
+ 	int err =3D 0;
++	char short_opts[128];
++
++	memset(short_opts, '\0', sizeof(short_opts));
+=20
+ 	for (; opts->type !=3D OPTION_END; opts++) {
+ 		if ((opts->flags & PARSE_OPT_LASTARG_DEFAULT) &&
+ 		    (opts->flags & PARSE_OPT_OPTARG))
+ 			err |=3D optbug(opts, "uses incompatible flags "
+ 					"LASTARG_DEFAULT and OPTARG");
++		if (opts->short_name) {
++			if (opts->short_name <=3D ' ' || 0x7F <=3D opts->short_name)
++				err |=3D optbug(opts, "invalid short name");
++			else if (short_opts[opts->short_name]++)
++				err |=3D optbug(opts, "short name already used");
++		}
+ 		if (opts->flags & PARSE_OPT_NODASH &&
+ 		    ((opts->flags & PARSE_OPT_OPTARG) ||
+ 		     !(opts->flags & PARSE_OPT_NOARG) ||
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt=
+=2Esh
+index 922423e..ebe7c3b 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -19,7 +19,7 @@ sed -e 's/^|//' >expect <<\END_EXPECT
+ |    -d, --data[=3D...]      short and long option with an optional ar=
+gument
+ |
+ |Argument hints
+-|    -b <arg>              short option required argument
++|    -B <arg>              short option required argument
+ |    --bar2 <arg>          long option required argument
+ |    -e, --fuz <with-space>
+ |                          short and long option required argument
+@@ -51,7 +51,7 @@ sed -e 's/^|//' >optionspec <<\EOF
+ |d,data?   short and long option with an optional argument
+ |
+ | Argument hints
+-|b=3Darg     short option required argument
++|B=3Darg     short option required argument
+ |bar2=3Darg  long option required argument
+ |e,fuz=3Dwith-space  short and long option required argument
+ |s?some    short option optional argument
+--=20
+2.1.0.rc2.206.gedb03e5
