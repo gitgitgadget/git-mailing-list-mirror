@@ -1,84 +1,99 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH] setup.c: set workdir when gitdir is not default
-Date: Thu,  4 Sep 2014 01:42:00 +0300
-Message-ID: <1409784120-2228-1-git-send-email-max@max630.net>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
-	git@vger.kernel.org, Max Kirillov <max@max630.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 00:43:04 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/6] fsck: check tag objects' headers
+Date: Wed, 03 Sep 2014 16:14:34 -0700
+Message-ID: <xmqq7g1kwb39.fsf@gitster.dls.corp.google.com>
+References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info>
+	<alpine.DEB.1.00.1408281646530.990@s15462909.onlinehome-server.info>
+	<xmqqlhq88fyb.fsf@gitster.dls.corp.google.com>
+	<xmqqegw08fft.fsf@gitster.dls.corp.google.com>
+	<20140829234641.GG24834@peff.net>
+	<xmqqwq9o2s6l.fsf@gitster.dls.corp.google.com>
+	<20140903222937.GA30560@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 04 01:14:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPJGV-0005ho-Ti
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 00:43:00 +0200
+	id 1XPJlH-0001A3-Gx
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 01:14:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933087AbaICWmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 18:42:55 -0400
-Received: from p3plsmtpa08-08.prod.phx3.secureserver.net ([173.201.193.109]:35717
-	"EHLO p3plsmtpa08-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932852AbaICWmx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2014 18:42:53 -0400
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa08-08.prod.phx3.secureserver.net with 
-	id mmiV1o00D3gsSd601miqRw; Wed, 03 Sep 2014 15:42:52 -0700
-X-Mailer: git-send-email 2.0.1.1697.g73c6810
+	id S935521AbaICXOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 19:14:41 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65485 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933504AbaICXOh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 19:14:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0BB1D38448;
+	Wed,  3 Sep 2014 19:14:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aRq/T7tS101D3yhTCYtucJ/JMJ8=; b=JZoSmc
+	WLVfkfi/cHCj0E5R656fStAvaslwrYhOHK3VSAnuETI9lsK3D0nEsHZZDOajF9bZ
+	mc5rME5AmSdSuZhMMb4sqD1S4/ihFIr5HGC/rnhGP/M2ptYUUvFy0hveu6RcMMAj
+	jkSnjoCtiWQhWCVSx+Wc1VoPjNwepAPt5W3wA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d5rI9+QsZq8ZnTMIAaLOP/+DBfSm7kIw
+	Pufi4egrEzBAD+6z21Ya3JQtospatRL9fSBHH6bZRT49I+4zxfUHN40hCkJBSnCw
+	vy00CROsUO3scFLzjF6tf6g4z/HdtnUeXTL3aJ/Agst/CAOyxijR9175ZPW16TCW
+	pp/pyXASWDM=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0251638447;
+	Wed,  3 Sep 2014 19:14:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7A8B738446;
+	Wed,  3 Sep 2014 19:14:36 -0400 (EDT)
+In-Reply-To: <20140903222937.GA30560@peff.net> (Jeff King's message of "Wed, 3
+	Sep 2014 18:29:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1281AC0E-33C0-11E4-B8F8-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256429>
 
-When gitfile is used, git sets GIT_DIR environment variable for
-subsequent commands, and that commands start working in mode "GIT_DIR
-set, workdir current", which is incorrect for the case when git runs
-from subdirectory of repository. This can be observed at least for
-running aliases - git fails with message "internal error: work tree has
-already been set"
+Jeff King <peff@peff.net> writes:
 
-Fix by setting GIT_WORK_TREE environment also.
+> This is a bit of an aside, but why do we have the "tag" line in the tag
+> object in the first place?
 
-Add test which demonstrates problem with alias.
+http://thread.gmane.org/gmane.linux.kernel/297998/focus=1410
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
- setup.c            | 4 +++-
- t/t0002-gitfile.sh | 7 +++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+> It is part of the object contents, and therefore is part of the
+> signature (which the refname is not). That's somewhat redundant with the
+> tag message itself. E.g., the git v2.0.4 tag says:
+>
+>   object 32f56600bb6ac6fc57183e79d2c1515dfa56672f
+>   type commit
+>   tag v2.0.4
+>   tagger Junio C Hamano <gitster@pobox.com> 1406755201 -0700
+>
+>   Git 2.0.4
+>   -----BEGIN PGP SIGNATURE-----
+>   ...
 
-diff --git a/setup.c b/setup.c
-index 0a22f8b..bcf4e31 100644
---- a/setup.c
-+++ b/setup.c
-@@ -508,8 +508,10 @@ static const char *setup_discovered_git_dir(const char *gitdir,
- 
- 	/* #0, #1, #5, #8, #9, #12, #13 */
- 	set_git_work_tree(".");
--	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT))
-+	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT)) {
- 		set_git_dir(gitdir);
-+		setenv(GIT_WORK_TREE_ENVIRONMENT, get_git_work_tree(), 1);
-+	}
- 	inside_git_dir = 0;
- 	inside_work_tree = 1;
- 	if (offset == len)
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-index 37e9396..428cfdc 100755
---- a/t/t0002-gitfile.sh
-+++ b/t/t0002-gitfile.sh
-@@ -99,4 +99,11 @@ test_expect_success 'check rev-list' '
- 	test "$SHA" = "$(git rev-list HEAD)"
- '
- 
-+test_expect_success 'check alias call from subdirectory' '
-+	git config alias.testalias "rev-parse HEAD" &&
-+	mkdir -p subdir &&
-+	cd subdir &&
-+	git testalias
-+'
-+
- test_done
--- 
-2.0.1.1697.g73c6810
+Yes, usually we write a moral equivalent in a human readable form as
+the tag message, but the mapping "s/^v/Git /" between the tag name
+and the message is purely by convention, and I suspect some old tags
+I have may even have used "s/^v/Git v/" or "s/^v/git v/" or a
+similar inconsistent mapping.
+
+> The main advantage of the "tag" field is that it is machine-readable,
+> and that your verification process can check that "git verify-tag
+> v2.1.0" actually returns a tag that says "tag v2.1.0". But I do not
+> think we do that verification at all. I wonder if that is something we
+> should add support for.
+
+Yes.  That essentially boils down to "refs/tags/$tag" must have "tag $tag"
+line (the reverse may not have to be true if the hierarchy is
+outside refs/tags/, though).
