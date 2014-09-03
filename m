@@ -1,56 +1,102 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: [PATCH] completion: Add --ignore-blank-lines for diff
-Date: Wed, 03 Sep 2014 17:00:41 +0200
-Message-ID: <54072D19.6050102@virtuell-zuhause.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 03 17:03:06 2014
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH v3] reachable.c: add HEAD to reachability starting commits
+Date: Wed,  3 Sep 2014 19:14:10 +0300
+Message-ID: <1409760850-27322-1-git-send-email-max@max630.net>
+References: <xmqq4mwp3oeb.fsf@gitster.dls.corp.google.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Max Kirillov <max@max630.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 03 18:15:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPC5L-0005wJ-U2
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 17:03:00 +0200
+	id 1XPDDF-0003hQ-7m
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Sep 2014 18:15:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932952AbaICPAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 11:00:50 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:58030 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932862AbaICPAt (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2014 11:00:49 -0400
-Received: from p5ddc0f44.dip0.t-ipconnect.de ([93.220.15.68] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XPC3C-0006NB-Nk; Wed, 03 Sep 2014 17:00:46 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1409756449;79f44fdd;
+	id S1756171AbaICQOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 12:14:50 -0400
+Received: from p3plsmtpa12-10.prod.phx3.secureserver.net ([68.178.252.239]:59687
+	"EHLO p3plsmtpa12-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753857AbaICQOt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2014 12:14:49 -0400
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa12-10.prod.phx3.secureserver.net with 
+	id mgEg1o00D3gsSd601gEkQo; Wed, 03 Sep 2014 09:14:46 -0700
+X-Mailer: git-send-email 2.0.1.1697.g73c6810
+In-Reply-To: <xmqq4mwp3oeb.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256396>
 
-Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+HEAD is not explicitly used as a starting commit for
+calculating reachability, so if it's detached and reflogs
+are disabled it may be pruned.
+
+Add tests which demonstrate it. Test 'prune: prune former HEAD after checking
+out branch' also reverts changes to repository.
+
+Signed-off-by: Max Kirillov <max@max630.net>
 ---
- contrib/completion/git-completion.bash | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Fixed the notes.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 06bf262..5ea5b82 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1175,8 +1175,8 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--full-index --binary --abbrev --diff-filter=
- 			--find-copies-harder
- 			--text --ignore-space-at-eol --ignore-space-change
--			--ignore-all-space --exit-code --quiet --ext-diff
--			--no-ext-diff
-+			--ignore-all-space --ignore-blank-lines --exit-code
-+			--quiet --ext-diff --no-ext-diff
- 			--no-prefix --src-prefix= --dst-prefix=
- 			--inter-hunk-context=
- 			--patience --histogram --minimal
+(This filesystem stuff would not be needed if I had a separated repository
+without reflogs from scratch, like in v1. Having to handle leftouts from
+previous test cases does not add clarity here. Maybe it worth extracting all
+cases with no reflogs into a separated script.)
+ reachable.c      |  3 +++
+ t/t5304-prune.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/reachable.c b/reachable.c
+index 654a8c5..6f6835b 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -229,6 +229,9 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	/* Add all external refs */
+ 	for_each_ref(add_one_ref, revs);
+ 
++	/* detached HEAD is not included in the list above */
++	head_ref(add_one_ref, revs);
++
+ 	/* Add all reflog info */
+ 	if (mark_reflog)
+ 		for_each_reflog(add_one_reflog, revs);
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 377d3d3..01c6a3f 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -104,6 +104,28 @@ test_expect_success 'prune: prune unreachable heads' '
+ 
+ '
+ 
++test_expect_success 'prune: do not prune detached HEAD with no reflog' '
++
++	git checkout --detach --quiet &&
++	git commit --allow-empty -m "detached commit" &&
++	# verify that there is no reflogs
++	# (should be removed and disabled by previous test)
++	test ! -e .git/logs &&
++	git prune -n >prune_actual &&
++	: >prune_expected &&
++	test_cmp prune_actual prune_expected
++
++'
++
++test_expect_success 'prune: prune former HEAD after checking out branch' '
++
++	head_sha1=$(git rev-parse HEAD) &&
++	git checkout --quiet master &&
++	git prune -v >prune_actual &&
++	grep "$head_sha1" prune_actual
++
++'
++
+ test_expect_success 'prune: do not prune heads listed as an argument' '
+ 
+ 	: > file2 &&
 -- 
-1.9.4.msysgit.1
+2.0.1.1697.g73c6810
