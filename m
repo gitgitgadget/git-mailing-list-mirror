@@ -1,85 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] parse-options: detect attempt to add a duplicate short option name
-Date: Wed, 03 Sep 2014 15:16:29 -0700
-Message-ID: <xmqqbnqwwds2.fsf@gitster.dls.corp.google.com>
-References: <1409753034-9459-1-git-send-email-johan@herland.net>
-	<1409753034-9459-3-git-send-email-johan@herland.net>
-	<xmqq7g1kxzxi.fsf@gitster.dls.corp.google.com>
-	<xmqq1trsxzgy.fsf_-_@gitster.dls.corp.google.com>
-	<54077A3E.20703@web.de> <xmqqoauwwh2c.fsf@gitster.dls.corp.google.com>
-	<54078C2C.5020503@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Thu Sep 04 00:16:50 2014
+From: Chris Packham <judge.packham@gmail.com>
+Subject: [RFC PATCHv2 0/2] am: bug fix and new patch format support
+Date: Thu,  4 Sep 2014 10:21:56 +1200
+Message-ID: <1409782918-26133-1-git-send-email-judge.packham@gmail.com>
+References: <1409736919-22341-1-git-send-email-judge.packham@gmail.com>
+Cc: Chris Packham <judge.packham@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 04 00:22:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPIr5-0004IF-Ri
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 00:16:49 +0200
+	id 1XPIwb-0000KH-MF
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 00:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757196AbaICWQe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Sep 2014 18:16:34 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58838 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753283AbaICWQc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Sep 2014 18:16:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA73637646;
-	Wed,  3 Sep 2014 18:16:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8NitnI08dncy
-	4Mi8a3iv1/Y3qKk=; b=sA3XgCTdcZhptRGRBapDqviWzRWMu6B61MRUAC7GyJed
-	/vLacBbQsMZ4lgtmExbR/BZahie+NkKrKZ2fLSVobtU0xkZd1BPL5jIICAA2LRhk
-	V1R/C92dmM3yawyPOeR2hz6l6jwP1b3lKye1UC9Ar9JBjcOqTTVChfpW2tbT9T8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Na3lEF
-	dFhEwAPDz9ify3xMGyWa8zumKFcFx2bUnFX/4mLichjEq/wc2E1GoaIjoTsvjH1w
-	EqLIFXMDPptyHSnx+q3Ls36ReH/vZ/tJQbYQxa/vfs2VtQNcpLwPpT8rrItuENb/
-	K78Fi/492kaWr/jujNWDFuKdUpVbI4AwhZ0Ms=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D14EE37645;
-	Wed,  3 Sep 2014 18:16:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 57C4837644;
-	Wed,  3 Sep 2014 18:16:31 -0400 (EDT)
-In-Reply-To: <54078C2C.5020503@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
- message of "Wed, 03
-	Sep 2014 23:46:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F53251EC-33B7-11E4-86B4-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S934081AbaICWWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 18:22:20 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:54977 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933916AbaICWWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 18:22:17 -0400
+Received: by mail-pd0-f178.google.com with SMTP id y13so12163362pdi.9
+        for <git@vger.kernel.org>; Wed, 03 Sep 2014 15:22:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to;
+        bh=kF9qsNnrfxPPXI9m9EuYRuN4mr5znpewd8xErC1no7M=;
+        b=H2RCD4U+Gr6s8AOnN3UzFTLuZLd6f+IRYRh0dQ4j2VFM7AwUNIZ1S24dDM0K4t33Kw
+         8KEj8T9TH+FKefWnW2MuXyblXLzhpfuhXnkhY0Q01gp8FWfLtB/DKMI0/k0aX0WyIOpL
+         bG23mucsfQrnI3UlxOyaosvIBwGa9/Z6RnX8BwEtpkVEA4eMazlS7KpJVFPXwPsDTQGy
+         6Ri13sA1NWLtxbrUJwTeTA9d/Nbf7kk5HUM5jz461E1oFU3dBR+wHVLR4czKMDpi1/8o
+         ylVg8oV2lHxIG0dDfrfk7XefbCy2xzRHqucpjOVlfm06CXhf2Xtlqo5cPk6eGhs3rer7
+         wuog==
+X-Received: by 10.66.66.163 with SMTP id g3mr629923pat.150.1409782935793;
+        Wed, 03 Sep 2014 15:22:15 -0700 (PDT)
+Received: from chrisp3-dl.ws.atlnz.lc (2-163-36-202-static.alliedtelesis.co.nz. [202.36.163.2])
+        by mx.google.com with ESMTPSA id we5sm20099548pab.28.2014.09.03.15.22.14
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 03 Sep 2014 15:22:15 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <1409736919-22341-1-git-send-email-judge.packham@gmail.com>
+In-Reply-To: <1409736919-22341-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256424>
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+I've done some digging into the tr error message. I think the extra
+re-direction of stdin is unnecessary. I've removed it and the tests
+still pass. The error message I was seeing is no longer seen but I've
+found it hard to actually reproduce (even with different sized patches).
 
->> It bugged me enough that we didn't identify which short option
->> letter we were complaining about
->
-> The old code did report the short option.  E.g. for t1502 it said:
->
-> 	error: BUG: switch 'b' short name already used
->
-> You can leave that to optbug(), no need for the strbuf.
+I've also updated 'am: avoid re-directing stdin twice' to add some tests
+and only strip the description part of the patch.
 
-Not quite, as an opt with long name is reported with the long name
-only, which is not very nice when the problem we are reporting is
-about its short variant.
+Chris Packham (2):
+  am: add gitk patch format
+  am: avoid re-directing stdin twice
 
-> Space is allowed as a short option by the code; intentionally?
+ Documentation/git-am.txt |  3 ++-
+ git-am.sh                | 38 +++++++++++++++++++++++++++++++++++++-
+ t/t4150-am.sh            | 13 +++++++++++++
+ 3 files changed, 52 insertions(+), 2 deletions(-)
 
-I didn't think of a strong reason to declare either way, so, yes it
-was deliberate that I didn't tighten to disallow.
+-- 
+2.0.4.2.gadd452d
