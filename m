@@ -1,138 +1,199 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 20/21] signed push: add "pushee" header to push certificate
-Date: Thu,  4 Sep 2014 13:04:56 -0700
-Message-ID: <1409861097-19151-21-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 13/21] gpg-interface: move parse_gpg_output() to where it should be
+Date: Thu,  4 Sep 2014 13:04:49 -0700
+Message-ID: <1409861097-19151-14-git-send-email-gitster@pobox.com>
 References: <1409861097-19151-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 04 22:07:00 2014
+X-From: git-owner@vger.kernel.org Thu Sep 04 22:07:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPdJ6-0001FP-3i
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 22:07:00 +0200
+	id 1XPdJ1-0001FP-MY
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 22:06:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755438AbaIDUGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2014 16:06:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60612 "EHLO smtp.pobox.com"
+	id S1755413AbaIDUFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2014 16:05:54 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65074 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755428AbaIDUGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2014 16:06:13 -0400
+	id S1755329AbaIDUFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2014 16:05:52 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE44C3820F;
-	Thu,  4 Sep 2014 16:06:12 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 58DCE381DA;
+	Thu,  4 Sep 2014 16:05:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=b4uL
-	uRfuVXU9UJ+WSV3LBF+f154=; b=RyZPB5khanJQRPkN5uKZ1FJYY64uK1wvUmkm
-	12rraNkzy2Sm+W0Q3dHRhNAvlZbWYxhW3+XJKSNMXNGIhv1XZHyyo29FeWqHpCMf
-	CSaZFd0xR5J2hNPc2ujkItEmTBbZM4YWUm12yatiNJwT5xTEh1tNoAovjfgbRsRm
-	5MY3Tc4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=R789
+	ylst1eHXSQpmFIrS0EoKPLU=; b=YOWVX/T0fZ9hXskGTAAnQxYt43A77+CokP3a
+	rsneGrfK7kx24kgGC7H2yNeJAKcspEVRO44KJ5eEs3QAALRCRMQBjEGg2iVBiQc7
+	WjpRHoepXa2KQElOJH+cC9ylYyrWrxkSPvbyhtvJvbWZ+wkfEOEv8OcM1dt7FrmX
+	e7E8DkI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=QYi56s
-	13CohQJyKSocgJGkzH5rxn+HyZxpzN1awu56qU3JeCrFfUP6cZiBVO98eWTOCNXi
-	xXdhDFRgelX830NzS4YiydGaRk7N9vls2JaqfqAC8zjHrwJLh49iL0ocvN7fdOKH
-	02eJqGfjJ772YkbRs7503vVt4eIQRuQLf3ONc=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=xHUd/f
+	90SyI5nP0M6DbXCbge8S1lxTI4kWu+RDOUw+rkEUYZa5awnm43JEaqaIuGrBUE5J
+	rphcJwBumdNDHAqszFAlgbulojJ3qjCSrM6Os/4an3OTOvgtMxohqA7IwWMPXn2E
+	PKnsDZx+6NHeIheb1dZf5DjmjkPf/qOP90bxs=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C76923820E;
-	Thu,  4 Sep 2014 16:06:12 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2D270381D9;
+	Thu,  4 Sep 2014 16:05:51 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2B0C1381FD;
-	Thu,  4 Sep 2014 16:06:06 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B61E9381C7;
+	Thu,  4 Sep 2014 16:05:43 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-399-g1364b4d
 In-Reply-To: <1409861097-19151-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E76FCB36-346E-11E4-ADEE-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: DA10CF94-346E-11E4-AA06-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256474>
 
-Record the URL of the intended recipient for a push (after
-anonymizing it if it has authentication material) on a new "pushee
-URL" header.  Because the networking configuration (SSH-tunnels,
-proxies, etc.) on the pushing user's side varies, the receiving
-repository may not know the single canonical URL all the pushing
-users would refer it as (besides, many sites allow pushing over
-ssh://host/path and https://host/path protocols to the same
-repository but with different local part of the path).  So this
-value may not be reliably used for replay-attack prevention
-purposes, but this will still serve as a human readable hint to
-identify the repository the certificate refers to.
+Earlier, ffb6d7d5 (Move commit GPG signature verification to
+commit.c, 2013-03-31) moved this helper that used to be in pretty.c
+(i.e. the output code path) to commit.c for better reusability.
+
+It was a good first step in the right direction, but still suffers a
+myopic view that commits will be the only thing we would ever want
+to sign---we would actually want to be able to reuse it even wider.
+
+The function interprets what GPG said; gpg-interface is obviously a
+better place.  Move it there.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/technical/pack-protocol.txt | 6 ++++++
- send-pack.c                               | 5 +++++
- send-pack.h                               | 1 +
- transport.c                               | 1 +
- 4 files changed, 13 insertions(+)
+ commit.c        | 36 ------------------------------------
+ gpg-interface.c | 36 ++++++++++++++++++++++++++++++++++++
+ gpg-interface.h | 17 ++++++++++++-----
+ 3 files changed, 48 insertions(+), 41 deletions(-)
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 4a5c2e8..7b543dc 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -484,6 +484,7 @@ references.
-   push-cert         = PKT-LINE("push-cert" NUL capability-list LF)
- 		      PKT-LINE("certificate version 0.1" LF)
- 		      PKT-LINE("pusher" SP ident LF)
-+		      PKT-LINE("pushee" SP url LF)
- 		      PKT-LINE(LF)
- 		      *PKT-LINE(command LF)
- 		      *PKT-LINE(gpg-signature-lines LF)
-@@ -527,6 +528,11 @@ Currently, the following header fields are defined:
- 	Identify the GPG key in "Human Readable Name <email@address>"
- 	format.
+diff --git a/commit.c b/commit.c
+index ae7f2b1..01cdad2 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1220,42 +1220,6 @@ free_return:
+ 	free(buf);
+ }
  
-+`pushee` url::
-+	The repository URL (anonymized, if the URL contains
-+	authentication material) the user who ran `git push`
-+	intended to push into.
+-static struct {
+-	char result;
+-	const char *check;
+-} sigcheck_gpg_status[] = {
+-	{ 'G', "\n[GNUPG:] GOODSIG " },
+-	{ 'B', "\n[GNUPG:] BADSIG " },
+-	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
+-	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
+-};
+-
+-static void parse_gpg_output(struct signature_check *sigc)
+-{
+-	const char *buf = sigc->gpg_status;
+-	int i;
+-
+-	/* Iterate over all search strings */
+-	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+-		const char *found, *next;
+-
+-		if (!skip_prefix(buf, sigcheck_gpg_status[i].check + 1, &found)) {
+-			found = strstr(buf, sigcheck_gpg_status[i].check);
+-			if (!found)
+-				continue;
+-			found += strlen(sigcheck_gpg_status[i].check);
+-		}
+-		sigc->result = sigcheck_gpg_status[i].result;
+-		/* The trust messages are not followed by key/signer information */
+-		if (sigc->result != 'U') {
+-			sigc->key = xmemdupz(found, 16);
+-			found += 17;
+-			next = strchrnul(found, '\n');
+-			sigc->signer = xmemdupz(found, next - found);
+-		}
+-	}
+-}
+-
+ void check_commit_signature(const struct commit* commit, struct signature_check *sigc)
+ {
+ 	struct strbuf payload = STRBUF_INIT;
+diff --git a/gpg-interface.c b/gpg-interface.c
+index ff07012..3c9624c 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -21,6 +21,42 @@ void signature_check_clear(struct signature_check *sigc)
+ 	sigc->key = NULL;
+ }
+ 
++static struct {
++	char result;
++	const char *check;
++} sigcheck_gpg_status[] = {
++	{ 'G', "\n[GNUPG:] GOODSIG " },
++	{ 'B', "\n[GNUPG:] BADSIG " },
++	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
++	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
++};
 +
- The GPG signature lines are a detached signature for the contents
- recorded in the push certificate before the signature block begins.
- The detached signature is used to certify that the commands were
-diff --git a/send-pack.c b/send-pack.c
-index 61f321d..642ebc8 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -240,6 +240,11 @@ static int generate_push_cert(struct strbuf *req_buf,
- 	datestamp(stamp, sizeof(stamp));
- 	strbuf_addf(&cert, "certificate version 0.1\n");
- 	strbuf_addf(&cert, "pusher %s %s\n", signing_key, stamp);
-+	if (args->url && *args->url) {
-+		char *anon_url = transport_anonymize_url(args->url);
-+		strbuf_addf(&cert, "pushee %s\n", anon_url);
-+		free(anon_url);
++void parse_gpg_output(struct signature_check *sigc)
++{
++	const char *buf = sigc->gpg_status;
++	int i;
++
++	/* Iterate over all search strings */
++	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
++		const char *found, *next;
++
++		if (!skip_prefix(buf, sigcheck_gpg_status[i].check + 1, &found)) {
++			found = strstr(buf, sigcheck_gpg_status[i].check);
++			if (!found)
++				continue;
++			found += strlen(sigcheck_gpg_status[i].check);
++		}
++		sigc->result = sigcheck_gpg_status[i].result;
++		/* The trust messages are not followed by key/signer information */
++		if (sigc->result != 'U') {
++			sigc->key = xmemdupz(found, 16);
++			found += 17;
++			next = strchrnul(found, '\n');
++			sigc->signer = xmemdupz(found, next - found);
++		}
 +	}
- 	strbuf_addstr(&cert, "\n");
++}
++
+ void set_signing_key(const char *key)
+ {
+ 	free(configured_signing_key);
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 37c23da..8d677cc 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -5,16 +5,23 @@ struct signature_check {
+ 	char *payload;
+ 	char *gpg_output;
+ 	char *gpg_status;
+-	char result; /* 0 (not checked),
+-		      * N (checked but no further result),
+-		      * U (untrusted good),
+-		      * G (good)
+-		      * B (bad) */
++
++	/*
++	 * possible "result":
++	 * 0 (not checked)
++	 * N (checked but no further result)
++	 * U (untrusted good)
++	 * G (good)
++	 * B (bad)
++	 */
++	char result;
+ 	char *signer;
+ 	char *key;
+ };
  
- 	for (ref = remote_refs; ref; ref = ref->next) {
-diff --git a/send-pack.h b/send-pack.h
-index 3555d8e..5635457 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -2,6 +2,7 @@
- #define SEND_PACK_H
- 
- struct send_pack_args {
-+	const char *url;
- 	unsigned verbose:1,
- 		quiet:1,
- 		porcelain:1,
-diff --git a/transport.c b/transport.c
-index 07fdf86..1df1375 100644
---- a/transport.c
-+++ b/transport.c
-@@ -827,6 +827,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
- 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
- 	args.push_cert = !!(flags & TRANSPORT_PUSH_CERT);
-+	args.url = transport->url;
- 
- 	ret = send_pack(&args, data->fd, data->conn, remote_refs,
- 			&data->extra_have);
+ extern void signature_check_clear(struct signature_check *sigc);
++extern void parse_gpg_output(struct signature_check *);
++
+ extern int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key);
+ extern int verify_signed_buffer(const char *payload, size_t payload_size, const char *signature, size_t signature_size, struct strbuf *gpg_output, struct strbuf *gpg_status);
+ extern int git_gpg_config(const char *, const char *, void *);
 -- 
 2.1.0-399-g1364b4d
