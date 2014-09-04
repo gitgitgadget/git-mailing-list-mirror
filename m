@@ -1,58 +1,87 @@
-From: =?UTF-8?B?TmlrbGFzIEhhbWLDvGNoZW4=?= <mail@nh2.me>
-Subject: git format-patch --in-reply-to allows header injection. Intended?
-Date: Thu, 04 Sep 2014 23:21:49 +0200
-Message-ID: <5408D7ED.9010203@nh2.me>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: petr.mvd@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 04 23:29:49 2014
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH v2] setup.c: set workdir when gitdir is not default
+Date: Fri,  5 Sep 2014 00:33:44 +0300
+Message-ID: <1409866424-19068-1-git-send-email-max@max630.net>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org, Max Kirillov <max@max630.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 23:34:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPebE-0006GN-MK
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 23:29:49 +0200
+	id 1XPefl-00014i-DB
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 23:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755914AbaIDV3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2014 17:29:39 -0400
-Received: from mail.grenz-bonn.de ([178.33.37.38]:53494 "EHLO
-	mail.grenz-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755438AbaIDV3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2014 17:29:36 -0400
-X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Sep 2014 17:29:36 EDT
-Received: from [192.168.157.39] (unknown [74.125.61.156])
-	by ks357529.kimsufi.com (Postfix) with ESMTPSA id 9E28A7CADB;
-	Thu,  4 Sep 2014 23:22:01 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-X-Spam-Status: No, score=1.3 required=8.0 tests=RDNS_NONE autolearn=no
-	version=3.3.2
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on ks357529.kimsufi.com
+	id S1755299AbaIDVeY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2014 17:34:24 -0400
+Received: from p3plsmtpa09-08.prod.phx3.secureserver.net ([173.201.193.237]:46810
+	"EHLO p3plsmtpa09-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755230AbaIDVeY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Sep 2014 17:34:24 -0400
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa09-08.prod.phx3.secureserver.net with 
+	id n9aE1o0013gsSd6019aJ6h; Thu, 04 Sep 2014 14:34:23 -0700
+X-Mailer: git-send-email 2.0.1.1697.g73c6810
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256484>
 
-Hi,
+When gitfile is used, git sets GIT_DIR environment variable for
+subsequent commands, and that commands start working in mode "GIT_DIR
+set, workdir current", which is incorrect for the case when git runs
+from subdirectory of repository. This can be observed at least for
+running aliases - git fails with message "internal error: work tree has
+already been set"
 
-I just wanted to ask if the --in-reply-to flag of git format-patch is
-supposed to write the given string unmodified into the email or whether
-it ought to perform some check against header injection.
+Fix by setting GIT_WORK_TREE environment also.
 
-For example, if you pass "--in-reply-to=<msgid>\nTo: <other@example.com"
-(notice lack of trailing `>`), then the generated email will actually
-contain a
-  To: <other@example.com>
-header.
+Add test which demonstrates problem with alias.
 
-(Depending on your shell you might also use "--in-reply-to=`cat`" to get
-the above working more easily.)
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ setup.c            | 4 +++-
+ t/t0002-gitfile.sh | 9 +++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-Is this known and working as intended, or undesired?
-
-Thanks!
-Niklas
+diff --git a/setup.c b/setup.c
+index 0a22f8b..bcf4e31 100644
+--- a/setup.c
++++ b/setup.c
+@@ -508,8 +508,10 @@ static const char *setup_discovered_git_dir(const char *gitdir,
+ 
+ 	/* #0, #1, #5, #8, #9, #12, #13 */
+ 	set_git_work_tree(".");
+-	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT))
++	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT)) {
+ 		set_git_dir(gitdir);
++		setenv(GIT_WORK_TREE_ENVIRONMENT, get_git_work_tree(), 1);
++	}
+ 	inside_git_dir = 0;
+ 	inside_work_tree = 1;
+ 	if (offset == len)
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index 37e9396..64d59c3 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -99,4 +99,13 @@ test_expect_success 'check rev-list' '
+ 	test "$SHA" = "$(git rev-list HEAD)"
+ '
+ 
++test_expect_success 'check alias call from subdirectory' '
++	test_config alias.testalias "rev-parse HEAD" &&
++	mkdir -p subdir &&
++	(
++		cd subdir &&
++		git testalias
++	)
++'
++
+ test_done
+-- 
+2.0.1.1697.g73c6810
