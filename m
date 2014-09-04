@@ -1,119 +1,136 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 06/21] send-pack: refactor decision to send update per ref
-Date: Thu,  4 Sep 2014 13:04:42 -0700
-Message-ID: <1409861097-19151-7-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 04/21] receive-pack: factor out queueing of command
+Date: Thu,  4 Sep 2014 13:04:40 -0700
+Message-ID: <1409861097-19151-5-git-send-email-gitster@pobox.com>
 References: <1409861097-19151-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 04 22:05:49 2014
+X-From: git-owner@vger.kernel.org Thu Sep 04 22:05:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPdHs-0000jh-CQ
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 22:05:44 +0200
+	id 1XPdHq-0000jh-Nv
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 22:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755388AbaIDUF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2014 16:05:28 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52288 "EHLO smtp.pobox.com"
+	id S1755378AbaIDUFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2014 16:05:20 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52684 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755385AbaIDUFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2014 16:05:25 -0400
+	id S1755373AbaIDUFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2014 16:05:18 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F3E6838177;
-	Thu,  4 Sep 2014 16:05:23 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E55F38165;
+	Thu,  4 Sep 2014 16:05:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=zJOs
-	tz2ug9Fm4GZ31Xu+D2V6V/k=; b=lf2/rxzy4tqqnPA/uNw3QrPDtiM0hiwpq+rC
-	+FPYEzYy0Wn4CIDXwgEzagLmyUsbMQPB1FYskDR7d88rWd6wzoZ0OKRIC5KyXh8G
-	/qZhJznbOvKDkkL0Oa+ipjf2mVPCeOvvXo4OgafYCRZj658BbuQVTbAHl2jpKlTi
-	sEv6KBw=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=FQe+
+	WCg+D9idijwUVe93FDrEinM=; b=ecsLPD8edZdjUjPPLe6Kp1RKDm1uOLpw/7Gc
+	SdC/bP60zOj0+EywlZIVMNg4DEWe9eMhQbLsoPu0U3NGQFG0C0sSeVZ4au5JBVPE
+	WgC60W+K/L6S7lXyX59FIm4yab+E58vi+UjevUEqzMVNG6twMrzfqGGLZ++GQRhp
+	WE8uK2s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=dtgyNv
-	lLs/14DAt3jImMV3kf/3Px4m4tNQ9L8vavaEApl5YunmYooLF46Pbm6ZjuyGzkBh
-	fs4/t5RDguetjII3aC3V/AlvgbrTsUIb2vZS/fSUML/Oax7tj/AJsTS8Q4dkJzyD
-	MV4UAauqgCXPmaS+JpgywZ8Wst34/9/RliB6o=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Bgm5Se
+	jKrdYAyYmE639w7YopAyESP2f80vYTfNsQKlqoph1721KfURO6Sx/W8m4TZcn+UL
+	+5JBZ3/QIJsVBJiIpZ7tfgIG5mTYjornULki++3ptPlJGtJPXANiwmR68zmVWH6I
+	4KNmxSJ3Xhc/PIoaNwzOK1ghqtH7DrbZ+UUWI=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 753F638173;
-	Thu,  4 Sep 2014 16:05:23 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1C17838164;
+	Thu,  4 Sep 2014 16:05:17 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5DAD53816B;
-	Thu,  4 Sep 2014 16:05:21 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 618323815E;
+	Thu,  4 Sep 2014 16:05:13 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-399-g1364b4d
 In-Reply-To: <1409861097-19151-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: CCC4776E-346E-11E4-B7AA-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: C8065A6C-346E-11E4-8E9E-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256466>
 
-A new helper function ref_update_to_be_sent() decides for each ref
-if the update is to be sent based on the status previously set by
-set_ref_status_for_push() and also if this is a mirrored push.
+Make a helper function to accept a line of a protocol message and
+queue an update command out of the code from read_head_info().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- send-pack.c | 36 +++++++++++++++++++++---------------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ builtin/receive-pack.c | 50 +++++++++++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index 7428ae6..f3c5ebe 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -190,6 +190,26 @@ static void advertise_shallow_grafts_buf(struct strbuf *sb)
- 	for_each_commit_graft(advertise_shallow_grafts_cb, sb);
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index c9b92bf..341bb46 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -831,16 +831,40 @@ static void execute_commands(struct command *commands,
+ 		      "the reported refs above");
  }
  
-+static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args)
++static struct command **queue_command(struct command **p,
++				      const char *line,
++				      int linelen)
 +{
-+	if (!ref->peer_ref && !args->send_mirror)
-+		return 0;
++	unsigned char old_sha1[20], new_sha1[20];
++	struct command *cmd;
++	const char *refname;
++	int reflen;
 +
-+	/* Check for statuses set by set_ref_status_for_push() */
-+	switch (ref->status) {
-+	case REF_STATUS_REJECT_NONFASTFORWARD:
-+	case REF_STATUS_REJECT_ALREADY_EXISTS:
-+	case REF_STATUS_REJECT_FETCH_FIRST:
-+	case REF_STATUS_REJECT_NEEDS_FORCE:
-+	case REF_STATUS_REJECT_STALE:
-+	case REF_STATUS_REJECT_NODELETE:
-+	case REF_STATUS_UPTODATE:
-+		return 0;
-+	default:
-+		return 1;
-+	}
++	if (linelen < 83 ||
++	    line[40] != ' ' ||
++	    line[81] != ' ' ||
++	    get_sha1_hex(line, old_sha1) ||
++	    get_sha1_hex(line + 41, new_sha1))
++		die("protocol error: expected old/new/ref, got '%s'", line);
++
++	refname = line + 82;
++	reflen = linelen - 82;
++	cmd = xcalloc(1, sizeof(struct command) + reflen + 1);
++	hashcpy(cmd->old_sha1, old_sha1);
++	hashcpy(cmd->new_sha1, new_sha1);
++	memcpy(cmd->ref_name, refname, reflen);
++	cmd->ref_name[reflen] = '\0';
++	*p = cmd;
++	return &cmd->next;
 +}
 +
- int send_pack(struct send_pack_args *args,
- 	      int fd[], struct child_process *conn,
- 	      struct ref *remote_refs,
-@@ -248,23 +268,9 @@ int send_pack(struct send_pack_args *args,
- 	 */
- 	new_refs = 0;
- 	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!ref->peer_ref && !args->send_mirror)
-+		if (!ref_update_to_be_sent(ref, args))
- 			continue;
+ static struct command *read_head_info(struct sha1_array *shallow)
+ {
+ 	struct command *commands = NULL;
+ 	struct command **p = &commands;
+ 	for (;;) {
+ 		char *line;
+-		unsigned char old_sha1[20], new_sha1[20];
+-		struct command *cmd;
+-		char *refname;
+-		int len, reflen, linelen;
++		int len, linelen;
  
--		/* Check for statuses set by set_ref_status_for_push() */
--		switch (ref->status) {
--		case REF_STATUS_REJECT_NONFASTFORWARD:
--		case REF_STATUS_REJECT_ALREADY_EXISTS:
--		case REF_STATUS_REJECT_FETCH_FIRST:
--		case REF_STATUS_REJECT_NEEDS_FORCE:
--		case REF_STATUS_REJECT_STALE:
--		case REF_STATUS_REJECT_NODELETE:
--		case REF_STATUS_UPTODATE:
--			continue;
--		default:
--			; /* do nothing */
--		}
+ 		line = packet_read_line(0, &len);
+ 		if (!line)
+@@ -866,23 +890,7 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 				quiet = 1;
+ 		}
+ 
+-		if (linelen < 83 ||
+-		    line[40] != ' ' ||
+-		    line[81] != ' ' ||
+-		    get_sha1_hex(line, old_sha1) ||
+-		    get_sha1_hex(line + 41, new_sha1))
+-			die("protocol error: expected old/new/ref, got '%s'",
+-			    line);
 -
- 		if (!ref->deletion)
- 			new_refs++;
- 
+-		refname = line + 82;
+-		reflen = linelen - 82;
+-		cmd = xcalloc(1, sizeof(struct command) + reflen + 1);
+-		hashcpy(cmd->old_sha1, old_sha1);
+-		hashcpy(cmd->new_sha1, new_sha1);
+-		memcpy(cmd->ref_name, refname, reflen);
+-		cmd->ref_name[reflen] = '\0';
+-		*p = cmd;
+-		p = &cmd->next;
++		p = queue_command(p, line, linelen);
+ 	}
+ 	return commands;
+ }
 -- 
 2.1.0-399-g1364b4d
