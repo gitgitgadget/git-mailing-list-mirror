@@ -1,66 +1,94 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Interactive staging not functioning properly?
-Date: Thu, 4 Sep 2014 16:56:05 -0500
-Message-ID: <CAHd499BtOH1LUq7P4Zghfso4Q-L=Ns_G7vNXox557X5dxRV70w@mail.gmail.com>
-References: <CAHd499CdEORortwMWE5eLiKuiYV=yd=sZ4cny8gYe+HCzK4D5w@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC PATCHv2 1/2] am: add gitk patch format
+Date: Fri, 5 Sep 2014 10:47:39 +1200
+Message-ID: <CAFOYHZC5pWadJiqY=F3gP4DKcNzhogfWH76jAcez5AjW7FJrVQ@mail.gmail.com>
+References: <1409736919-22341-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-2-git-send-email-judge.packham@gmail.com>
+	<xmqq38c8waub.fsf@gitster.dls.corp.google.com>
+	<CAFOYHZCcAwHwRy50kE8=rRwEOtrXovNkkKSQo2Gwcfvbve1Qwg@mail.gmail.com>
+	<xmqqiol3uwr5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 04 23:56:14 2014
+Cc: GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 00:47:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPf0l-0007lL-JR
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 23:56:11 +0200
+	id 1XPfoe-0001rF-Ck
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 00:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343AbaIDV4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2014 17:56:06 -0400
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:65534 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbaIDV4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2014 17:56:05 -0400
-Received: by mail-vc0-f176.google.com with SMTP id ik5so11235222vcb.7
-        for <git@vger.kernel.org>; Thu, 04 Sep 2014 14:56:05 -0700 (PDT)
+	id S1756082AbaIDWrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2014 18:47:40 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:58604 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755358AbaIDWrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2014 18:47:39 -0400
+Received: by mail-pa0-f49.google.com with SMTP id kq14so20624818pab.8
+        for <git@vger.kernel.org>; Thu, 04 Sep 2014 15:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-type;
-        bh=92cau53AIQdZs3KB4jflFAJ7lNIeCQ3H5NgbJU5DyeY=;
-        b=fh1mubErvDwyKlz6kEuxiSvYH0X9pNGWMT2usvkv6abEuicZVJ4ALoLbf/HIZFbLtl
-         L4uCQJle0dzos+D5doBCF3qoDt6qGNB0tJFtDEK8MAWNGEFfIF4Y+FEQmUVHpFpYGRr/
-         3Fx06aTTVqzGQSHmidQskSPWMgpdWpMfrrYWHV6ZqqFwufV+qsmM2koSOSAGB2eajzMb
-         qJklQfDOw8kqvTA4UQwC5NaSN03XurBswm0lUD8DhgvwZ4jeir0dwBVIywpjC6hqSORP
-         IFxPtX9xwlr85ZECbnKpkefSCiVJlJKW/XwkHZAXsgtbpM8ZW0y1RPXotXl9N2ya8K+C
-         zgcA==
-X-Received: by 10.52.3.40 with SMTP id 8mr5790119vdz.24.1409867765217; Thu, 04
- Sep 2014 14:56:05 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.3.200 with HTTP; Thu, 4 Sep 2014 14:56:05 -0700 (PDT)
-In-Reply-To: <CAHd499CdEORortwMWE5eLiKuiYV=yd=sZ4cny8gYe+HCzK4D5w@mail.gmail.com>
-X-Google-Sender-Auth: BZH8AietHRaF9JR4HDoqkipBhCI
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=DFg3ze8VMTvbxDcxvFPDgLdGcc5bA/l/JOxvEiOJNus=;
+        b=qKlVZiSg4BUr2fh4hIR86tEA6gXv3qje2RHGv3CfU/xWla1ubPx2mfh7tt8aR6TPcF
+         z0HpUt3th3a7XRYq5WMBTeuaA+Bv2bWDf7d4oMhsnYbGN5oa2ivB3xvjtYZW/6qPhdUy
+         O2SEw5isqi49il4xfP2LGtRwrYjr4vvqefGit2Et9lGxUgAm6YlBMBzeqM11D5mvijSn
+         hiW0T6aYJAb5EypMKJSYqamm8kjM5nAadrOHDHX4R0kWVEYbDbFyn2plQhfkuQDgkk5w
+         efbHMTow4jNTE4ufAPjR5JzuMKem7VaG2zQqAp5Kkxc3yNsxGjJf92LudhHUHnYZvyjg
+         K7ZA==
+X-Received: by 10.66.136.12 with SMTP id pw12mr12701289pab.71.1409870859318;
+ Thu, 04 Sep 2014 15:47:39 -0700 (PDT)
+Received: by 10.70.36.6 with HTTP; Thu, 4 Sep 2014 15:47:39 -0700 (PDT)
+In-Reply-To: <xmqqiol3uwr5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256490>
 
-Sorry, I just realized that when the hunks are across file boundaries,
-it won't go back to it. I think this is a bit misleading, it would be
-great to see it go back to the ACTUAL previous hunk, regardless of
-which file it came from.
+Hi Junio,
 
-On Thu, Sep 4, 2014 at 4:54 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> I run the following:
+On Fri, Sep 5, 2014 at 5:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Packham <judge.packham@gmail.com> writes:
 >
-> $ git add -p
+>> Another thing that I've since realised is that this 'gitk' format is
+>> also what you've get from git show or git log -p. So this is actually
+>> allowing (for better or worse) things like 'git show $sha1 | git am
+>> --patch-format=gitk'[*1*]. That may mean that we should call the
+>> format something else ("pretty" perhaps?) and note that this is what
+>> gitk, git show and some incantations of git log generate.
 >
-> I skip the first hunk by typing "n". At the next hunk, I try "k" and
-> "K". In both cases, it shows me the same hunk I'm on again and says
-> "No previous hunk".
+> I would not call it "pretty", because "--pretty" is merely a
+> short-hand to "--pretty=<some format name>".
 >
-> Is this intended behavior? I expect to be taken back to the previous
-> hunk that I did not stage.
+> The output format indents the log message text by four spaces for
+> human reading to make it stand out from the patch text, and not
+> meant for machine consumption.
+
+Fair enough.
+
+> I doubt that a patchset that does
+> not update mailinfo and mailsplit to extract information and to undo
+> the indentation could be a right solution.
+
+I've read this sentence a couple of times and I can't understand it. I
+get that you are against adding yet more special cases to 'git am' to
+handle patches that weren't generated by 'git format-patch'. Are you
+saying that this won't go in or that the solution should be
+implemented differently.
+
+> "am" itself should not
+> be mucking with the input files.
 >
-> Running Git 2.1.0 on msysgit Windows.
+
+At the very least we need to drop the first line and replace "Author"
+with "From". Which would still leave the commit message indented.
+Something like the following allows the patch to be applied
+
+  sed -e '1d' -e 's/^Author:/From:/' <patch.patch | git am
+
+But it'd be nice if am could do that for me to save my fingers some work.
