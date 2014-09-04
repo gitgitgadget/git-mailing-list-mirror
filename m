@@ -1,87 +1,77 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH v2] setup.c: set workdir when gitdir is not default
-Date: Fri,  5 Sep 2014 00:33:44 +0300
-Message-ID: <1409866424-19068-1-git-send-email-max@max630.net>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
-	git@vger.kernel.org, Max Kirillov <max@max630.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 04 23:34:32 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git format-patch --in-reply-to allows header injection. Intended?
+Date: Thu, 04 Sep 2014 14:36:09 -0700
+Message-ID: <xmqqppfbqd9x.fsf@gitster.dls.corp.google.com>
+References: <5408D7ED.9010203@nh2.me>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, petr.mvd@gmail.com
+To: Niklas =?utf-8?Q?Hamb=C3=BCchen?= <mail@nh2.me>
+X-From: git-owner@vger.kernel.org Thu Sep 04 23:36:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPefl-00014i-DB
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 23:34:29 +0200
+	id 1XPehV-0002HM-Nn
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 23:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755299AbaIDVeY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2014 17:34:24 -0400
-Received: from p3plsmtpa09-08.prod.phx3.secureserver.net ([173.201.193.237]:46810
-	"EHLO p3plsmtpa09-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755230AbaIDVeY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Sep 2014 17:34:24 -0400
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa09-08.prod.phx3.secureserver.net with 
-	id n9aE1o0013gsSd6019aJ6h; Thu, 04 Sep 2014 14:34:23 -0700
-X-Mailer: git-send-email 2.0.1.1697.g73c6810
+	id S1755315AbaIDVgO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Sep 2014 17:36:14 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62459 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754470AbaIDVgN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Sep 2014 17:36:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C59C538FB2;
+	Thu,  4 Sep 2014 17:36:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=NzXvblqcKaCD
+	fPp2Aaok5KFjdyQ=; b=jOcjcOhf+5KGKKZPPfhPxyKqCwdZ4k+eOPPb4KO0l6NF
+	akDNGmpKKk9rJseuL2uvXzeDN4pNw39XE7Hl+pJRLUFUgLEooL3qG7jQwtuLv90A
+	mB5ZBOBiCMQjpnJMDTz6Wk3OSeZQfZMY7TW0W8xYHGO/x36zjq8PFFLUzq+WanY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LgmKMM
+	X/p3e0QK2Ens1mAyhmA/KnlGUT+Tc62EpxOcneysV/fm+IyfXiysn9tC2nVZl5D1
+	+AwzV1ZetB120bY+l7d+silp4yqn7QIQYCF91ciiHs5YFks12cjoRSmdat+KQGXX
+	ZWLg3kHasxuOY3exxaWuAZOlGS4ZWanN3Sui0=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8680238FB1;
+	Thu,  4 Sep 2014 17:36:12 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D54C538FAF;
+	Thu,  4 Sep 2014 17:36:11 -0400 (EDT)
+In-Reply-To: <5408D7ED.9010203@nh2.me> ("Niklas =?utf-8?Q?Hamb=C3=BCchen?=
+ =?utf-8?Q?=22's?= message of "Thu,
+	04 Sep 2014 23:21:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7D7BF7A6-347B-11E4-B6CF-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256485>
 
-When gitfile is used, git sets GIT_DIR environment variable for
-subsequent commands, and that commands start working in mode "GIT_DIR
-set, workdir current", which is incorrect for the case when git runs
-from subdirectory of repository. This can be observed at least for
-running aliases - git fails with message "internal error: work tree has
-already been set"
+Niklas Hamb=C3=BCchen <mail@nh2.me> writes:
 
-Fix by setting GIT_WORK_TREE environment also.
+> For example, if you pass "--in-reply-to=3D<msgid>\nTo: <other@example=
+=2Ecom"
+> (notice lack of trailing `>`), then the generated email will actually
+> contain a
+>   To: <other@example.com>
+> header.
 
-Add test which demonstrates problem with alias.
+While I do not think of a reason to specify such a string to the
+in-reply-to option (I'd rather edit the output in the editor if I
+wanted to do anything fancy [*1*]), I do not think there is a reason
+why you want to add a code to forbid such use, either.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
- setup.c            | 4 +++-
- t/t0002-gitfile.sh | 9 +++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/setup.c b/setup.c
-index 0a22f8b..bcf4e31 100644
---- a/setup.c
-+++ b/setup.c
-@@ -508,8 +508,10 @@ static const char *setup_discovered_git_dir(const char *gitdir,
- 
- 	/* #0, #1, #5, #8, #9, #12, #13 */
- 	set_git_work_tree(".");
--	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT))
-+	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT)) {
- 		set_git_dir(gitdir);
-+		setenv(GIT_WORK_TREE_ENVIRONMENT, get_git_work_tree(), 1);
-+	}
- 	inside_git_dir = 0;
- 	inside_work_tree = 1;
- 	if (offset == len)
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-index 37e9396..64d59c3 100755
---- a/t/t0002-gitfile.sh
-+++ b/t/t0002-gitfile.sh
-@@ -99,4 +99,13 @@ test_expect_success 'check rev-list' '
- 	test "$SHA" = "$(git rev-list HEAD)"
- '
- 
-+test_expect_success 'check alias call from subdirectory' '
-+	test_config alias.testalias "rev-parse HEAD" &&
-+	mkdir -p subdir &&
-+	(
-+		cd subdir &&
-+		git testalias
-+	)
-+'
-+
- test_done
--- 
-2.0.1.1697.g73c6810
+[Footnote]
+
+*1* For that matter, --in-reply-to option itself is superfluous.
