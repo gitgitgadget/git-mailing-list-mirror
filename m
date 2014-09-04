@@ -1,119 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 18/21] send-pack: send feature request on push-cert packet
-Date: Thu,  4 Sep 2014 13:04:54 -0700
-Message-ID: <1409861097-19151-19-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 12/21] send-pack: clarify that cmds_sent is a boolean
+Date: Thu,  4 Sep 2014 13:04:48 -0700
+Message-ID: <1409861097-19151-13-git-send-email-gitster@pobox.com>
 References: <1409861097-19151-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 04 22:07:05 2014
+X-From: git-owner@vger.kernel.org Thu Sep 04 22:07:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPdJ5-0001FP-3K
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 22:06:59 +0200
+	id 1XPdJ1-0001FP-4Y
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 22:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755433AbaIDUGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Sep 2014 16:06:15 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51214 "EHLO smtp.pobox.com"
+	id S1755408AbaIDUFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Sep 2014 16:05:50 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58241 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755419AbaIDUGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Sep 2014 16:06:09 -0400
+	id S1755329AbaIDUFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Sep 2014 16:05:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4894838203;
-	Thu,  4 Sep 2014 16:06:09 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EFF83381D4;
+	Thu,  4 Sep 2014 16:05:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=TIFH
-	INlc0WDldj6NgBJZ+NfTwkQ=; b=f/6TS8BsEKHZedx0JbS74SySiQCG/iGHLpEL
-	GBCai0TfLBpRBXMmi6fBN+OUPS/4qFkAOQYUjeZkPaiOyvdnZYgOMRD5cukxBghV
-	IrJqVIhU2MGWavapmwq9HAr1ODaL9B66oQCnXgADlZIiUOyEg4afsTxDzYOw8rDC
-	c3VJlnc=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=kgWn
+	D7qqTkgCClrGKIbZPtZ6c/U=; b=cum9Pd0aiLupwpeRgbvOKKHFNaApEhRaSRkl
+	893iCcbnPdK81rG876rmhTv92sp8SnI8joBtMQ/DuKC11SWtfKgyWiBEykETe3s9
+	0zp5lBIrO3jlm29E/GRcpeFv5K6i3Bfbh2uU/GYzmKnh9iN7KYtqMWTWKKvytOGj
+	ea8f/08=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=FB+TIo
-	dj0hylFEkqmSeDUibyakb20FShSNFB2vQ1E2/VY9Fr7t3JaycQFM+dso5L5IjiT7
-	5ELFSaeynSwBVcJtMuLANPMvm9Quf/utI7FAmB9J+S/UlxjY0gE5LFYLLJNBaPHk
-	oonjzm1Ml1fuxLPaHIpUm7d1xI9uOQCQ3F3C4=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Xfe62k
+	aeijhR0qcS7l/97Nk2KiK4L6W6W0ZFNcX7L/MuXbkhhezQ16lwkubZE+h4l7ghsj
+	nqku8Vn3mfg1V0FKT2MWhWvHkxAgtdVfo2jdty0ntxp4U9mhXzNfPrkY3sl+cmwX
+	89ExXGvjCK2dbTTS+fxIkhTle7lvuj1CeWwqU=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 381CD38202;
-	Thu,  4 Sep 2014 16:06:09 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F61C381D2;
+	Thu,  4 Sep 2014 16:05:48 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D4690381EA;
-	Thu,  4 Sep 2014 16:05:58 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BECFC381BE;
+	Thu,  4 Sep 2014 16:05:40 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-399-g1364b4d
 In-Reply-To: <1409861097-19151-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E31A7EA0-346E-11E4-94F4-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: D84C9F26-346E-11E4-A780-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256480>
 
-We would want to update the interim protocol so that we do not send
-the usual update commands when the push certificate feature is in
-use, as the same information is in the certificate.  Once that
-happens, the push-cert packet may become the only protocol command,
-but then there is no packet to put the feature request behind, like
-we always did.
+We use it to make sure that the feature request is sent only once on
+the very first request packet (ignoring the "shallow " line, which
+was an unfortunate mistake we cannot retroactively fix with existing
+receive-pack already deployed in the field) and we set it to "true"
+with cmds_sent++, not because we care about the actual number of
+updates sent but because it is merely an old idiomatic way.
 
-As we have prepared the receiving end that understands the push-cert
-feature to accept the feature request on the first protocol packet
-(other than "shallow ", which was an unfortunate historical mistake
-that has to come before everything else), we can give the feature
-request on the push-cert packet instead of the first update protocol
-packet, in preparation for the next step to actually update to the
-final protocol.
+Set it explicitly to one to clarify that the code that uses this
+variable only cares about its zero-ness.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- send-pack.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ send-pack.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/send-pack.c b/send-pack.c
-index 10c907f..4125892 100644
+index f3262f2..05926d2 100644
 --- a/send-pack.c
 +++ b/send-pack.c
-@@ -225,9 +225,10 @@ static const char *next_line(const char *line, size_t len)
- 	return nl + 1;
- }
+@@ -304,15 +304,16 @@ int send_pack(struct send_pack_args *args,
  
--static void generate_push_cert(struct strbuf *req_buf,
--			       const struct ref *remote_refs,
--			       struct send_pack_args *args)
-+static int generate_push_cert(struct strbuf *req_buf,
-+			      const struct ref *remote_refs,
-+			      struct send_pack_args *args,
-+			      const char *cap_string)
- {
- 	const struct ref *ref;
- 	char stamp[60];
-@@ -256,7 +257,7 @@ static void generate_push_cert(struct strbuf *req_buf,
- 	if (sign_buffer(&cert, &cert, signing_key))
- 		die(_("failed to sign the push certificate"));
+ 		old_hex = sha1_to_hex(ref->old_sha1);
+ 		new_hex = sha1_to_hex(ref->new_sha1);
+-		if (!cmds_sent)
++		if (!cmds_sent) {
+ 			packet_buf_write(&req_buf,
+ 					 "%s %s %s%c%s",
+ 					 old_hex, new_hex, ref->name, 0,
+ 					 cap_buf.buf);
+-		else
++			cmds_sent = 1;
++		} else {
+ 			packet_buf_write(&req_buf, "%s %s %s",
+ 					 old_hex, new_hex, ref->name);
+-		cmds_sent++;
++		}
+ 	}
  
--	packet_buf_write(req_buf, "push-cert\n");
-+	packet_buf_write(req_buf, "push-cert%c%s", 0, cap_string);
- 	for (cp = cert.buf; cp < cert.buf + cert.len; cp = np) {
- 		np = next_line(cp, cert.buf + cert.len - cp);
- 		packet_buf_write(req_buf,
-@@ -267,6 +268,7 @@ static void generate_push_cert(struct strbuf *req_buf,
- free_return:
- 	free(signing_key);
- 	strbuf_release(&cert);
-+	return 1;
- }
- 
- int send_pack(struct send_pack_args *args,
-@@ -335,7 +337,8 @@ int send_pack(struct send_pack_args *args,
- 		advertise_shallow_grafts_buf(&req_buf);
- 
- 	if (!args->dry_run && args->push_cert)
--		generate_push_cert(&req_buf, remote_refs, args);
-+		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
-+					       cap_buf.buf);
- 
- 	/*
- 	 * Clear the status for each ref and see if we need to send
+ 	if (args->stateless_rpc) {
 -- 
 2.1.0-399-g1364b4d
