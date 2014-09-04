@@ -1,59 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: A handful of topics merged to 'next'
-Date: Wed, 03 Sep 2014 16:23:43 -0700
-Message-ID: <xmqqy4u0uw3k.fsf@gitster.dls.corp.google.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC PATCHv2 1/2] am: add gitk patch format
+Date: Thu, 4 Sep 2014 12:46:43 +1200
+Message-ID: <CAFOYHZCcAwHwRy50kE8=rRwEOtrXovNkkKSQo2Gwcfvbve1Qwg@mail.gmail.com>
+References: <1409736919-22341-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-2-git-send-email-judge.packham@gmail.com>
+	<xmqq38c8waub.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 04 01:23:51 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 04 02:46:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPJu2-0006gE-Cr
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 01:23:50 +0200
+	id 1XPLCR-0001Mc-OM
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Sep 2014 02:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935259AbaICXXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Sep 2014 19:23:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50933 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934482AbaICXXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Sep 2014 19:23:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6D25E3864B;
-	Wed,  3 Sep 2014 19:23:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
-	boZenrIO1zr7NTCHH4ou7ipj7A=; b=IPYgYVvD6A5nY56at0irq2j6pJRhE083s
-	7Wb2cqlGMcfWsqO1iRN8vfsOXGFtez0Cwa8LhF2Un7sjl5zO2cg3XE+avalellM/
-	RFFFxKaGYbnZNyLYTyaC0yrVFIHV9GMZu+sy+TBqhiGzESK5ljhYuESK0vNw6cSk
-	4lzEz71atY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=fca
-	38mnNwyaAnzkxF/vR5e4L3TRpjYTRep4AU7Y/hs5Ot+edkOQAdK/ugHJFrjf6hF3
-	H9FAaZVxdTdQg+O3hAYHmx1Pxc+eggLgIT2+0ZPMPHeTStliB2qPmpfwWrzafr+y
-	M3K6Q53bg05AXnPYGtMiw5nJVkO1KcWEk6gDC0oA=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6561F3864A;
-	Wed,  3 Sep 2014 19:23:45 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DF82F38648;
-	Wed,  3 Sep 2014 19:23:44 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 596194BC-33C1-11E4-9310-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1756801AbaIDAqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Sep 2014 20:46:44 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:36591 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756237AbaIDAqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Sep 2014 20:46:44 -0400
+Received: by mail-pd0-f174.google.com with SMTP id ft15so12276254pdb.19
+        for <git@vger.kernel.org>; Wed, 03 Sep 2014 17:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=r/tea9mlj0k5YkI2lv+opH2EjNzkcWjkA1yCcsUkuFo=;
+        b=fS0Zapkth3tW1+D8eBdobaSkYblvIL7noYP3R1hkMkAcqyfbUf4xfDVsOoU2kl6GrW
+         RowOhOno+Z2zSKiDh/muYemG2SL18JbnAynfBCZaBpSNqsUl2B+O+PfVFKIaUWmp/TaE
+         7vjvhtc6a+YfPmYxMTY361rTVub198/3a6veTT0BlCrCvzpfDixl8z4xnkB3MvHl3VP+
+         l8IvA0puonE9MDO7Xx0raGzVSR7K+x8OtQIEgw88HPPj9Z9Hl3j/fSpMSiNCyChFMeQR
+         aDX+swUyUPYR2YCuX/+MzbROe00u/2POrcf7FMJMqDXU0EiPsjTQXFd6dTM3+RHg/TGE
+         gdzg==
+X-Received: by 10.70.35.207 with SMTP id k15mr1865454pdj.5.1409791603662; Wed,
+ 03 Sep 2014 17:46:43 -0700 (PDT)
+Received: by 10.70.36.6 with HTTP; Wed, 3 Sep 2014 17:46:43 -0700 (PDT)
+In-Reply-To: <xmqq38c8waub.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256432>
 
-Probably the most notable are ta/config-set-{1,2} series that use
-the caching config-set API to update git_config() calls and also
-many single-variable peekers.  I do not expect too many issues from
-the topics merged to 'next' today, but if you found breakages please
-holler.
+On Thu, Sep 4, 2014 at 11:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Packham <judge.packham@gmail.com> writes:
+>
+>> Patches created using gitk's "write commit to file" functionality (which
+>> uses 'git diff-tree -p --pretty' under the hood) need some massaging in
+>> order to apply cleanly.
+>
+> Shouldn't that output routine be the one to be corrected, then?  We
+> really do not need yet another format to express the same thing,
+> especially from the same suite of programs.
 
-Thanks.
+That's an option. It shouldn't be too hard to make gitk use 'git
+format-patch --stdout' instead. The problem for me is that it's easier
+for me to update my git installation to get git am to accept the
+current format than it is for me to ask the people generating these
+patches to change their git/gitk installation to generate a different
+format.
+
+Another thing that I've since realised is that this 'gitk' format is
+also what you've get from git show or git log -p. So this is actually
+allowing (for better or worse) things like 'git show $sha1 | git am
+--patch-format=gitk'[*1*]. That may mean that we should call the
+format something else ("pretty" perhaps?) and note that this is what
+gitk, git show and some incantations of git log generate.
+
+--
+[*1*] - Although I've just found a bug that affects the existing
+--patch-format=hg|stgit where reading from stdin is not currently
+supported. I'll send out a v3 of this series that includes some tests
+for those a bit later.
