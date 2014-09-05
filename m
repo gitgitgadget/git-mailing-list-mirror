@@ -1,222 +1,138 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 17/22] receive-pack: GPG-validate push certificates
-Date: Fri,  5 Sep 2014 13:55:05 -0700
-Message-ID: <1409950510-10209-18-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 20/22] signed push: add "pushee" header to push certificate
+Date: Fri,  5 Sep 2014 13:55:08 -0700
+Message-ID: <1409950510-10209-21-git-send-email-gitster@pobox.com>
 References: <1409950510-10209-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 05 22:56:10 2014
+X-From: git-owner@vger.kernel.org Fri Sep 05 22:56:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQ0YD-0005zC-M5
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:56:10 +0200
+	id 1XQ0YX-0006DI-KX
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752658AbaIEUz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 16:55:58 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51871 "EHLO smtp.pobox.com"
+	id S1752670AbaIEU4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2014 16:56:00 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53665 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752607AbaIEUzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2014 16:55:52 -0400
+	id S1752346AbaIEUz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 16:55:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C3C81366C8;
-	Fri,  5 Sep 2014 16:55:51 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 45B09366DC;
+	Fri,  5 Sep 2014 16:55:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=gDod
-	kSnNRXgu3EVPDOsrN5GC4zI=; b=qUzzjKkqrUwsQ2RY3e02cWQAiQFUlA1udiXz
-	F7Ml/AieVMGLSxDhoYJz3OHGZG8iT2OWNHlY0ZMJ4UB9VGSU4ulzmMC8qmOPBjRZ
-	/W1LtqctOpWH4Z2gho1dnP96nhENBbTSJ0vKRZb3lyhwN90G/4uvuRNWFI6yiLvb
-	oUimYgY=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=fM8o
+	vKgWQhHLaHpRZVsYSSZkcHo=; b=vLKnykzJgZB09zX1OML2+l88kjcEB3SJq7dD
+	z/qhEJArKlBwSLipegXs5Fm/5JX+xd0Bh8G9cbeCk6izJiZmztJMOXVgY2ysZCEI
+	05oHEFEd2X/f0f1RpR6Q7x03PuqJ/Atg28jcH5KsaznBw/UhV9tar9EGQaPn4Gi+
+	WMUwXig=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=eVQgRq
-	f/3eRI3bEIZxSe/2pTIo4M7RDKpMs4JqIkUBWx0S/Px33rfM92HnITkKWJCPjkql
-	0ni2m1Y3n5muuX4RGY/XFvdNAljllar0NPG+FVB60IU1iotdQ8afVpToBxX8FGjc
-	FUxUoVCtKAHF/XzllSl9Eoc6AAvc4fr+xCV6Q=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ij2Tcu
+	PJljIeme/L6FBNsDvESLhQ6JpooccARXLqhHy5SMz6jOGxD0Pe7O9GDd7uhI3nnh
+	k0uaPLvofn+t5b1bO24dc2Lr4j+RpwV1Ht0EXXp6YwhcVJQb6a9utT8w1E8EoAmm
+	UApiIgLXg9lzBPk0EsuVb9I8fd52lvEJmuttQ=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA563366C6;
-	Fri,  5 Sep 2014 16:55:51 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3C221366DB;
+	Fri,  5 Sep 2014 16:55:57 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0DDFB366C4;
-	Fri,  5 Sep 2014 16:55:50 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AD38C366D9;
+	Fri,  5 Sep 2014 16:55:56 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-404-gcacb207
 In-Reply-To: <1409950510-10209-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 04F9AD7C-353F-11E4-B7F0-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0858395C-353F-11E4-92EE-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256534>
 
-Reusing the GPG signature check helpers we already have, verify
-the signature in receive-pack and give the results to the hooks
-via GIT_PUSH_CERT_{SIGNER,KEY,STATUS} environment variables.
-
-Policy decisions, such as accepting or rejecting a good signature by
-a key that is not fully trusted, is left to the hook and kept
-outside of the core.
+Record the URL of the intended recipient for a push (after
+anonymizing it if it has authentication material) on a new "pushee
+URL" header.  Because the networking configuration (SSH-tunnels,
+proxies, etc.) on the pushing user's side varies, the receiving
+repository may not know the single canonical URL all the pushing
+users would refer it as (besides, many sites allow pushing over
+ssh://host/path and https://host/path protocols to the same
+repository but with different local part of the path).  So this
+value may not be reliably used for replay-attack prevention
+purposes, but this will still serve as a human readable hint to
+identify the repository the certificate refers to.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-receive-pack.txt | 25 ++++++++++++++++++++-----
- builtin/receive-pack.c             | 31 +++++++++++++++++++++++++++++++
- t/t5534-push-signed.sh             | 18 ++++++++++++++++--
- 3 files changed, 67 insertions(+), 7 deletions(-)
+ Documentation/technical/pack-protocol.txt | 6 ++++++
+ send-pack.c                               | 5 +++++
+ send-pack.h                               | 1 +
+ transport.c                               | 1 +
+ 4 files changed, 13 insertions(+)
 
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
-index 9c4d17c..e6df234 100644
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -56,7 +56,21 @@ sha1-old and sha1-new should be valid objects in the repository.
- When accepting a signed push (see linkgit:git-push[1]), the signed
- push certificate is stored in a blob and an environment variable
- `GIT_PUSH_CERT` can be consulted for its object name.  See the
--description of `post-receive` hook for an example.
-+description of `post-receive` hook for an example.  In addition, the
-+certificate is verified using GPG and the result is exported with
-+the following environment variables:
-+
-+`GIT_PUSH_CERT_SIGNER`::
-+	The name and the e-mail address of the owner of the key that
-+	signed the push certificate.
-+
-+`GIT_PUSH_CERT_KEY`::
-+	The GPG key ID of the key that signed the push certificate.
-+
-+`GIT_PUSH_CERT_STATUS`::
-+	The status of GPG verification of the push certificate,
-+	using the same mnemonic as used in `%G?` format of `git log`
-+	family of commands (see linkgit:git-log[1]).
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index 4a5c2e8..7b543dc 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -484,6 +484,7 @@ references.
+   push-cert         = PKT-LINE("push-cert" NUL capability-list LF)
+ 		      PKT-LINE("certificate version 0.1" LF)
+ 		      PKT-LINE("pusher" SP ident LF)
++		      PKT-LINE("pushee" SP url LF)
+ 		      PKT-LINE(LF)
+ 		      *PKT-LINE(command LF)
+ 		      *PKT-LINE(gpg-signature-lines LF)
+@@ -527,6 +528,11 @@ Currently, the following header fields are defined:
+ 	Identify the GPG key in "Human Readable Name <email@address>"
+ 	format.
  
- This hook is called before any refname is updated and before any
- fast-forward checks are performed.
-@@ -106,13 +120,14 @@ the update.  Refs that were created will have sha1-old equal to
- 0\{40}, otherwise sha1-old and sha1-new should be valid objects in
- the repository.
- 
--The `GIT_PUSH_CERT` environment variable can be inspected, just as
-+The `GIT_PUSH_CERT*` environment variables can be inspected, just as
- in `pre-receive` hook, after accepting a signed push.
- 
- Using this hook, it is easy to generate mails describing the updates
- to the repository.  This example script sends one mail message per
- ref listing the commits pushed to the repository, and logs the push
--certificates of signed pushes to a file:
-+certificates of signed pushes with good signatures to a logger
-+service:
- 
- 	#!/bin/sh
- 	# mail out commit update information.
-@@ -129,11 +144,11 @@ certificates of signed pushes to a file:
- 		mail -s "Changes to ref $ref" commit-list@mydomain
- 	done
- 	# log signed push certificate, if any
--	if test -n "${GIT_PUSH_CERT-}"
-+	if test -n "${GIT_PUSH_CERT-}" && test ${GIT_PUSH_CERT_STATUS} = G
- 	then
- 		(
- 			git cat-file blob ${GIT_PUSH_CERT}
--		) | mail -s "push certificate" push-log@mydomain
-+		) | mail -s "push certificate from $GIT_PUSH_CERT_SIGNER" push-log@mydomain
- 	fi
- 	exit 0
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 610b085..c0a3189 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -15,6 +15,8 @@
- #include "connected.h"
- #include "argv-array.h"
- #include "version.h"
-+#include "tag.h"
-+#include "gpg-interface.h"
- 
- static const char receive_pack_usage[] = "git receive-pack <git-dir>";
- 
-@@ -49,6 +51,7 @@ static const char *alt_shallow_file;
- static int accept_push_cert = 1;
- static struct strbuf push_cert = STRBUF_INIT;
- static unsigned char push_cert_sha1[20];
-+static struct signature_check sigcheck;
- 
- static enum deny_action parse_deny_action(const char *var, const char *value)
- {
-@@ -277,12 +280,40 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 		return;
- 
- 	if (!already_done) {
-+		struct strbuf gpg_output = STRBUF_INIT;
-+		struct strbuf gpg_status = STRBUF_INIT;
-+		int bogs /* beginning_of_gpg_sig */;
++`pushee` url::
++	The repository URL (anonymized, if the URL contains
++	authentication material) the user who ran `git push`
++	intended to push into.
 +
- 		already_done = 1;
- 		if (write_sha1_file(push_cert.buf, push_cert.len, "blob", push_cert_sha1))
- 			hashclr(push_cert_sha1);
-+
-+		memset(&sigcheck, '\0', sizeof(sigcheck));
-+		sigcheck.result = 'N';
-+
-+		bogs = parse_signature(push_cert.buf, push_cert.len);
-+		if (verify_signed_buffer(push_cert.buf, bogs,
-+					 push_cert.buf + bogs, push_cert.len - bogs,
-+					 &gpg_output, &gpg_status) < 0) {
-+			; /* error running gpg */
-+		} else {
-+			sigcheck.payload = push_cert.buf;
-+			sigcheck.gpg_output = gpg_output.buf;
-+			sigcheck.gpg_status = gpg_status.buf;
-+			parse_gpg_output(&sigcheck);
-+		}
-+
-+		strbuf_release(&gpg_output);
-+		strbuf_release(&gpg_status);
- 	}
- 	if (!is_null_sha1(push_cert_sha1)) {
- 		argv_array_pushf(&env, "GIT_PUSH_CERT=%s", sha1_to_hex(push_cert_sha1));
-+		argv_array_pushf(&env, "GIT_PUSH_CERT_SIGNER=%s",
-+				 sigcheck.signer ? sigcheck.signer : "");
-+		argv_array_pushf(&env, "GIT_PUSH_CERT_KEY=%s",
-+				 sigcheck.key ? sigcheck.key : "");
-+		argv_array_pushf(&env, "GIT_PUSH_CERT_STATUS=%c", sigcheck.result);
-+
- 		proc->env = env.argv;
- 	}
- }
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 58d9fa0..ad004d4 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -74,12 +74,26 @@ test_expect_success GPG 'signed push sends push certificate' '
- 	if test -n "${GIT_PUSH_CERT-}"
- 	then
- 		git cat-file blob $GIT_PUSH_CERT >../push-cert
--	fi
-+	fi &&
-+
-+	cat >../push-cert-status <<E_O_F
-+	SIGNER=${GIT_PUSH_CERT_SIGNER-nobody}
-+	KEY=${GIT_PUSH_CERT_KEY-nokey}
-+	STATUS=${GIT_PUSH_CERT_STATUS-nostatus}
-+	E_O_F
-+
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	SIGNER=C O Mitter <committer@example.com>
-+	KEY=13B6F51ECDDE430D
-+	STATUS=G
- 	EOF
+ The GPG signature lines are a detached signature for the contents
+ recorded in the push certificate before the signature block begins.
+ The detached signature is used to certify that the commands were
+diff --git a/send-pack.c b/send-pack.c
+index 857beb3..9c2c649 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -240,6 +240,11 @@ static int generate_push_cert(struct strbuf *req_buf,
+ 	datestamp(stamp, sizeof(stamp));
+ 	strbuf_addf(&cert, "certificate version 0.1\n");
+ 	strbuf_addf(&cert, "pusher %s %s\n", signing_key, stamp);
++	if (args->url && *args->url) {
++		char *anon_url = transport_anonymize_url(args->url);
++		strbuf_addf(&cert, "pushee %s\n", anon_url);
++		free(anon_url);
++	}
+ 	strbuf_addstr(&cert, "\n");
  
- 	git push --signed dst noop ff +noff &&
- 	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
--	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert
-+	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
-+	test_cmp expect dst/push-cert-status
- '
+ 	for (ref = remote_refs; ref; ref = ref->next) {
+diff --git a/send-pack.h b/send-pack.h
+index 3555d8e..5635457 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -2,6 +2,7 @@
+ #define SEND_PACK_H
  
- test_done
+ struct send_pack_args {
++	const char *url;
+ 	unsigned verbose:1,
+ 		quiet:1,
+ 		porcelain:1,
+diff --git a/transport.c b/transport.c
+index 07fdf86..1df1375 100644
+--- a/transport.c
++++ b/transport.c
+@@ -827,6 +827,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
+ 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
+ 	args.push_cert = !!(flags & TRANSPORT_PUSH_CERT);
++	args.url = transport->url;
+ 
+ 	ret = send_pack(&args, data->fd, data->conn, remote_refs,
+ 			&data->extra_have);
 -- 
 2.1.0-399-g2df620b
