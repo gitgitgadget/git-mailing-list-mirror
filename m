@@ -1,85 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 07/22] send-pack: always send capabilities
-Date: Fri,  5 Sep 2014 13:54:55 -0700
-Message-ID: <1409950510-10209-8-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 05/22] send-pack: move REF_STATUS_REJECT_NODELETE logic a bit higher
+Date: Fri,  5 Sep 2014 13:54:53 -0700
+Message-ID: <1409950510-10209-6-git-send-email-gitster@pobox.com>
 References: <1409950510-10209-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 05 22:55:51 2014
+X-From: git-owner@vger.kernel.org Fri Sep 05 22:55:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQ0Xu-0005bR-KD
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:55:51 +0200
+	id 1XQ0Xu-0005bR-32
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752279AbaIEUzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 16:55:33 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57023 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752183AbaIEUzc (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752226AbaIEUzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 5 Sep 2014 16:55:32 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50880 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751987AbaIEUz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 16:55:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3461636669;
-	Fri,  5 Sep 2014 16:55:31 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9E5F43665A;
+	Fri,  5 Sep 2014 16:55:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Rzva
-	FCiUEKrCbhGH8uFpNiDSeDM=; b=sK2FbOjA+U46ZN8VChx+0DTjEsAx2785o+AD
-	HvVcK3AqhSBMp7XTMydwGhuKjj+sNd+CLzPJmBjMB4XqgY2CpJxM9ieffN8B44Er
-	742/hLwtD8c5U2Wk1gUnjQqHKfcI+2ar8y0/OAVFOAdPz60Bq+Qom/FbM9SIZa8Q
-	aqtzeZ4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=h4ha
+	5jHn5o2psgwUQebxcJkr/DE=; b=ESJpZEUC3LlWV/j1gI0DTmScqGCx/WV1g0xL
+	C6TApbUMWMqRqIEYvvvAK1aJm8nKqHl6m7F0zvHD5STahPlLfBERnXL5Ov4arYs1
+	eIAJB74GTfJ5l7HRIYMpH5WtbtuFxrbuNH3DZf/chjPna1sz9HqcG0wFjWAYrEux
+	rKPHN9U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=xyMhU2
-	f8VlosMYcX+/vA+aswGUzNBQ1m8ZVmMLiaNU0idSssjdTl9NYWoA/36Krb4F0q9R
-	skChoDCyRjBoEp8gx9c8QGZgbqGvWWAD6iNugplxxeDeww/aweM63d7MGPj5fEn4
-	nrMwKjEe3jCdUD8UMWeC/8DmqjSidi5nnZNUQ=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=pcjhoJ
+	cSHTucVmjeQGudjtsTRcpdBf2qRcY2kRxp/vH8NvQcWLEQhqyi7+g4V1bcbIs0OW
+	/x3m3Y5lhNqg2FQ9Eh/xemwxIXUh+JmhSDuAQkxwlPyT88HuvJJQht1+mJR9DymY
+	9D+CaVSM2Bkw0u7TGfC1/SJONJlABla/rV+V8=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D052536668;
-	Fri,  5 Sep 2014 16:55:30 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 912FF36658;
+	Fri,  5 Sep 2014 16:55:28 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A50CB36660;
-	Fri,  5 Sep 2014 16:55:29 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 953783663D;
+	Fri,  5 Sep 2014 16:55:24 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-404-gcacb207
 In-Reply-To: <1409950510-10209-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: F83B7F34-353E-11E4-BB07-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: F5367492-353E-11E4-90F3-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256525>
 
-We tried to avoid sending one extra byte, NUL and nothing behind it
-to signal there is no protocol capabilities being sent, on the first
-command packet on the wire, but it just made the code look ugly.
+20e8b465 (refactor ref status logic for pushing, 2010-01-08)
+restructured the code to set status for each ref to be pushed, but
+did not quite go far enough.  We inspect the status set earlier by
+set_refs_status_for_push() and then perform yet another update to
+the status of a ref with an otherwise OK status to be deleted to
+mark it with REF_STATUS_REJECT_NODELETE when the protocol tells us
+never to delete.
+
+Split the latter into a separate loop that comes before we enter the
+per-ref loop.  This way we would have one less condition to check in
+the main loop.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- send-pack.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ send-pack.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/send-pack.c b/send-pack.c
-index 43e98fa..e81f741 100644
+index 6129b0f..22a1709 100644
 --- a/send-pack.c
 +++ b/send-pack.c
-@@ -281,8 +281,7 @@ int send_pack(struct send_pack_args *args,
- 			char *new_hex = sha1_to_hex(ref->new_sha1);
- 			int quiet = quiet_supported && (args->quiet || !args->progress);
+@@ -231,6 +231,15 @@ int send_pack(struct send_pack_args *args,
+ 		return 0;
+ 	}
  
--			if (!cmds_sent && (status_report || use_sideband ||
--					   quiet || agent_supported)) {
-+			if (!cmds_sent)
- 				packet_buf_write(&req_buf,
- 						 "%s %s %s%c%s%s%s%s%s",
- 						 old_hex, new_hex, ref->name, 0,
-@@ -292,7 +291,6 @@ int send_pack(struct send_pack_args *args,
- 						 agent_supported ? " agent=" : "",
- 						 agent_supported ? git_user_agent_sanitized() : ""
- 						);
--			}
- 			else
- 				packet_buf_write(&req_buf, "%s %s %s",
- 						 old_hex, new_hex, ref->name);
++	/*
++	 * NEEDSWORK: why does delete-refs have to be so specific to
++	 * send-pack machinery that set_ref_status_for_push() cannot
++	 * set this bit for us???
++	 */
++	for (ref = remote_refs; ref; ref = ref->next)
++		if (ref->deletion && !allow_deleting_refs)
++			ref->status = REF_STATUS_REJECT_NODELETE;
++
+ 	if (!args->dry_run)
+ 		advertise_shallow_grafts_buf(&req_buf);
+ 
+@@ -249,17 +258,13 @@ int send_pack(struct send_pack_args *args,
+ 		case REF_STATUS_REJECT_FETCH_FIRST:
+ 		case REF_STATUS_REJECT_NEEDS_FORCE:
+ 		case REF_STATUS_REJECT_STALE:
++		case REF_STATUS_REJECT_NODELETE:
+ 		case REF_STATUS_UPTODATE:
+ 			continue;
+ 		default:
+ 			; /* do nothing */
+ 		}
+ 
+-		if (ref->deletion && !allow_deleting_refs) {
+-			ref->status = REF_STATUS_REJECT_NODELETE;
+-			continue;
+-		}
+-
+ 		if (!ref->deletion)
+ 			new_refs++;
+ 
 -- 
 2.1.0-399-g2df620b
