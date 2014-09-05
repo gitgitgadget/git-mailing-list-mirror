@@ -1,117 +1,109 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] Teach revert/cherry-pick the --no-verify option
-Date: Fri, 05 Sep 2014 23:05:28 +0200
-Message-ID: <540A2598.8000101@gmail.com>
-References: <1409753034-9459-1-git-send-email-johan@herland.net>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC PATCHv3 1/4] am: avoid re-directing stdin twice
+Date: Sat, 6 Sep 2014 09:31:06 +1200
+Message-ID: <CAFOYHZBct1CRA+NumVMvbbuELWTRoGL5FkhBfHD2Wk7QZVe1fA@mail.gmail.com>
+References: <1409911611-20370-1-git-send-email-judge.packham@gmail.com>
+	<1409911611-20370-2-git-send-email-judge.packham@gmail.com>
+	<540A1C7B.80109@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Lars_Gullik_Bj=F8nnes?= <larsbj@gullik.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Johan Herland <johan@herland.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 05 23:05:40 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT <git@vger.kernel.org>, Stephen Boyd <bebarino@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Sep 05 23:31:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQ0hN-0004HX-Ny
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 23:05:38 +0200
+	id 1XQ169-0004Qt-Gd
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 23:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbaIEVFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 17:05:34 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:48483 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869AbaIEVFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2014 17:05:33 -0400
-Received: by mail-la0-f43.google.com with SMTP id gi9so3522478lab.16
-        for <git@vger.kernel.org>; Fri, 05 Sep 2014 14:05:31 -0700 (PDT)
+	id S1751922AbaIEVbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2014 17:31:08 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:62052 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751447AbaIEVbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 17:31:07 -0400
+Received: by mail-pa0-f43.google.com with SMTP id et14so23030797pad.16
+        for <git@vger.kernel.org>; Fri, 05 Sep 2014 14:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=JsUZVLu+ZoYFmDMDt66ORN9q9oFon4UWvtnOlBgE+4U=;
-        b=v4/+VsfYSK+EwdRtdnoZcNc0N7obD0PJR14SM+oKOhTrAC7cFy2QmtN7W4mxGIEF3O
-         2QPoj9NFU3wKubiXcojHWe8rTSJlics7vbwb1TkIcI0KJd+ltEKFKRN62TBTtGuussl6
-         MiNQuGyfreq1aL2ciBiskVrY2QcOFlJGR5a+1tz8swLGtqr3jBCN+AsiF0f5L1kPNFvA
-         Crlo/craU/Y6a6xAwy/PNTU290c6OCAZGiwvlHlG1KMLpbqVI8XXi81fm6GW46jw4C+7
-         7ub0Bb86WggnBZKTIWFTPYPG6yBf/Re16kWXZbeziLmaseLjSyMJqBKkxFRjZ022fpKL
-         F9eg==
-X-Received: by 10.152.18.166 with SMTP id x6mr14259078lad.1.1409951131596;
-        Fri, 05 Sep 2014 14:05:31 -0700 (PDT)
-Received: from client.googlemail.com (putty.olf.sgsnet.se. [46.239.119.252])
-        by mx.google.com with ESMTPSA id js10sm1030098lab.23.2014.09.05.14.05.29
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 05 Sep 2014 14:05:30 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <1409753034-9459-1-git-send-email-johan@herland.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5dbeUAwek9WXtw/0EvoaySnXumGpQS+2/vUycE/tS2I=;
+        b=lQZQ9Ih8vWlKGc6bo4Ln7YUvilzdWXX5I5wwBSsb5vPsy56ACPpV86KC/skXImihDo
+         WbTeCWrfLVoLIsHiY1P+33Qh2q8j1yZbR4Xb4qjw6aNd/Po3P3v52TtSCpiRM/NAgs2m
+         GJCsfD6EsJymj3iCtOxIBw5FxtbPYDYobq5eYWCQMDNDu3bDQFWntcmTK3EAll4dtken
+         eO+Xyx8if3i4zgyt3wbve4vztwYmCqIcAjMgPnsCoNpn9jjFDj+1OQx7Iq76tytZ8xua
+         KtmwHIsS3PurZZNfMfeaoB862rjUUmtC6X+t8KUAtPgdMG54Ay4GcG9Fap0tsBpai7O4
+         oMoA==
+X-Received: by 10.66.178.205 with SMTP id da13mr23433176pac.146.1409952666525;
+ Fri, 05 Sep 2014 14:31:06 -0700 (PDT)
+Received: by 10.70.36.6 with HTTP; Fri, 5 Sep 2014 14:31:06 -0700 (PDT)
+In-Reply-To: <540A1C7B.80109@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256542>
 
-Hi Johan,
+On Sat, Sep 6, 2014 at 8:26 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 05.09.2014 12:06, schrieb Chris Packham:
+>> In check_patch_format we feed $1 to a block that attempts to determine
+>> the patch format. Since we've already redirected $1 to stdin there is no
+>> need to redirect it again when we invoke tr. This prevents the following
+>> errors when invoking git am
+>>
+>>   $ git am patch.patch
+>>   tr: write error: Broken pipe
+>>   tr: write error
+>>   Patch format detection failed.
+>>
+>> Cc: Stephen Boyd <bebarino@gmail.com>
+>> Signed-off-by: Chris Packham <judge.packham@gmail.com>
+>> ---
+>> Nothing new since http://article.gmane.org/gmane.comp.version-control.git/256425
+>>
+>>  git-am.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/git-am.sh b/git-am.sh
+>> index ee61a77..fade7f8 100755
+>> --- a/git-am.sh
+>> +++ b/git-am.sh
+>> @@ -250,7 +250,7 @@ check_patch_format () {
+>>                       # discarding the indented remainder of folded lines,
+>>                       # and see if it looks like that they all begin with the
+>>                       # header field names...
+>> -                     tr -d '\015' <"$1" |
+>> +                     tr -d '\015' |
+>>                       sed -n -e '/^$/q' -e '/^[       ]/d' -e p |
+>>                       sane_egrep -v '^[!-9;-~]+:' >/dev/null ||
+>>                       patch_format=mbox
+>>
+>
+> I think this change is wrong. This pipeline checks whether one of the
+> lines at the top of the file contains something that looks like an email
+> header. With your change, the first three lines would not be looked at
+> because they were already consumed earlier.
+>
+> I wonder why tr (assuming it is *this* instance of tr) dies with a write
+> error instead of from a SIGPIPE. Is SIGPIPE ignored somewhere and then
+> the tr invocation inherits this "ignore SIGPIPE" setting?
+>
+> The only thing your version changes is that tr writes a bit less text
+> into the pipe. Perhaps its just sufficient that the output fits into the
+> pipe buffer, and no error occurs anymore? Then the new version is not a
+> real fix: make the patch text a bit longer, and the error is back.
+>
+> -- Hannes
+>
 
-Johan Herland writes:
-> A colleague of mine noticed that cherry-pick does not accept the
-> --no-verify option to skip running the pre-commit/commit-msg hooks.
+I did notice some oddities when attempting to reproduce this issue.
+They would be explained by the output fitting into the buffer. So yes
+perhaps this solution has just changed enough so that it no longer
+triggers on the particular patch I was testing with. It still seems a
+bit funny that we start re-reading the input part way through
+processing it.
 
-neither git-cherry-pick nor git-revert execute the pre-commit or
-commit-msg hooks at the moment. The underlying rationale can be found in
-the log message of commit 9fa4db5 ("Do not verify
-reverted/cherry-picked/rebased patches."). Indeed, the sequencer uses
-git-commit internally which executes the two verify hooks by default.
-However, the particular command line being used implicitly specifies the
---no-verify option. This behaviour is implemented in
-sequencer.c#run_git_commit as well, right before the configurable
-git-commit options are handled. I guess that's easily overlooked since
-the documentation doesn't mention it and the implementation uses the
-short version -n of --no-verify.
-
-The reasons why the new test cases succeed nonetheless are manifold. I
-hope they're still understandable even though I don't put the comments
-next to the code.
-
-The "revert with failing hook" test case fails if run in isolation,
-which can be achieved by using the very cool --run option of test-lib.
-More specifically, git-revert does not fail because it executes the
-failing hook but because the preceding test case leaves behind an
-uncommitted index.
-
-In the "cherry-pick with failing hook" test case, git-cherry-pick really
-fails because it doesn't know the --no-verify option yet, which
-presumably ended up there only by accident. This test case is
-meaningless if run in isolation because it assumes that "revert with
-failing hook" creates a commit (else HEAD^ points nowhere).
-
-I like your patchset for that it makes it explicit in both the
-documentation and the tests whether the commits resulting from
-cherry-picks are being verified or not.
-
-Kind regards,
-   Fabian
-
-> Here's a first attempt at adding --no-verify to the revert/cherry-pick.
-> 
-> Have fun! :)
-> 
-> ...Johan
-> 
-> Johan Herland (3):
->   t7503/4: Add failing testcases for revert/cherry-pick --no-verify
->   revert/cherry-pick: Add --no-verify option, and pass it on to commit
->   revert/cherry-pick --no-verify: Update documentation
-> 
->  Documentation/git-cherry-pick.txt |  4 ++++
->  Documentation/git-revert.txt      |  4 ++++
->  Documentation/githooks.txt        | 20 ++++++++++----------
->  builtin/revert.c                  |  1 +
->  sequencer.c                       |  7 +++++++
->  sequencer.h                       |  1 +
->  t/t7503-pre-commit-hook.sh        | 24 ++++++++++++++++++++++++
->  t/t7504-commit-msg-hook.sh        | 24 ++++++++++++++++++++++++
->  8 files changed, 75 insertions(+), 10 deletions(-)
+Perhaps putting the tr outside the whole block would be a better solution?
