@@ -1,109 +1,93 @@
 From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC PATCHv3 1/4] am: avoid re-directing stdin twice
-Date: Sat, 6 Sep 2014 09:31:06 +1200
-Message-ID: <CAFOYHZBct1CRA+NumVMvbbuELWTRoGL5FkhBfHD2Wk7QZVe1fA@mail.gmail.com>
-References: <1409911611-20370-1-git-send-email-judge.packham@gmail.com>
-	<1409911611-20370-2-git-send-email-judge.packham@gmail.com>
-	<540A1C7B.80109@kdbg.org>
+Subject: Re: [RFC PATCHv2 1/2] am: add gitk patch format
+Date: Sat, 6 Sep 2014 09:54:26 +1200
+Message-ID: <CAFOYHZDeasZMFfupoXXV7ZKox-E2iDer_kEzQuZ9OhexQ=99aQ@mail.gmail.com>
+References: <1409736919-22341-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-1-git-send-email-judge.packham@gmail.com>
+	<1409782918-26133-2-git-send-email-judge.packham@gmail.com>
+	<xmqq38c8waub.fsf@gitster.dls.corp.google.com>
+	<CAFOYHZCcAwHwRy50kE8=rRwEOtrXovNkkKSQo2Gwcfvbve1Qwg@mail.gmail.com>
+	<xmqqiol3uwr5.fsf@gitster.dls.corp.google.com>
+	<CAFOYHZC5pWadJiqY=F3gP4DKcNzhogfWH76jAcez5AjW7FJrVQ@mail.gmail.com>
+	<CAPc5daWip1dQ5Or6hzmdjoBUStusvs-jK0ODNuzAotNfM5BLbQ@mail.gmail.com>
+	<CAFOYHZDfpZPvuE_BZQHajc65fZNKoyqvFf+UZyf0LyLwrooqzA@mail.gmail.com>
+	<xmqq8ulxrkeq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>, Stephen Boyd <bebarino@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Sep 05 23:31:15 2014
+Cc: GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 23:54:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQ169-0004Qt-Gd
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 23:31:13 +0200
+	id 1XQ1Si-0003vT-Et
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 23:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751922AbaIEVbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 17:31:08 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:62052 "EHLO
+	id S1752027AbaIEVy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2014 17:54:27 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:61813 "EHLO
 	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751447AbaIEVbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2014 17:31:07 -0400
-Received: by mail-pa0-f43.google.com with SMTP id et14so23030797pad.16
-        for <git@vger.kernel.org>; Fri, 05 Sep 2014 14:31:06 -0700 (PDT)
+	with ESMTP id S1751000AbaIEVy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 17:54:26 -0400
+Received: by mail-pa0-f43.google.com with SMTP id et14so23063102pad.16
+        for <git@vger.kernel.org>; Fri, 05 Sep 2014 14:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=5dbeUAwek9WXtw/0EvoaySnXumGpQS+2/vUycE/tS2I=;
-        b=lQZQ9Ih8vWlKGc6bo4Ln7YUvilzdWXX5I5wwBSsb5vPsy56ACPpV86KC/skXImihDo
-         WbTeCWrfLVoLIsHiY1P+33Qh2q8j1yZbR4Xb4qjw6aNd/Po3P3v52TtSCpiRM/NAgs2m
-         GJCsfD6EsJymj3iCtOxIBw5FxtbPYDYobq5eYWCQMDNDu3bDQFWntcmTK3EAll4dtken
-         eO+Xyx8if3i4zgyt3wbve4vztwYmCqIcAjMgPnsCoNpn9jjFDj+1OQx7Iq76tytZ8xua
-         KtmwHIsS3PurZZNfMfeaoB862rjUUmtC6X+t8KUAtPgdMG54Ay4GcG9Fap0tsBpai7O4
-         oMoA==
-X-Received: by 10.66.178.205 with SMTP id da13mr23433176pac.146.1409952666525;
- Fri, 05 Sep 2014 14:31:06 -0700 (PDT)
-Received: by 10.70.36.6 with HTTP; Fri, 5 Sep 2014 14:31:06 -0700 (PDT)
-In-Reply-To: <540A1C7B.80109@kdbg.org>
+        bh=II8Ah2Xy6ZLQP8xgcBGeKlVXAjqFsz0RW08cvvXb1oo=;
+        b=hVEgauSs74GBNkJ1ZbAJ1qj8alCRX9bO2Z4aH6CPgjk0/8faKRVVGg8ZViZcExApVU
+         wvEi7C2DtXIbpAAYVMA3Lp0R/hYzazPP86FaqrQTT0TJceGC9uSYVFls1qoZZmJMpV88
+         ziAaUtmXWfC9fItDK4Ftm4QcCgZasbln9uxZJJtaTv/xFObo5C+BVL/yNYJVU1Bsb7KW
+         M0gZRNMgYqGeek0nxANl/hGo3d7tIyLKcxcO7gel4XsHx12t3SPr2srLFiFDz7FJLZtu
+         hFzCUANdNVmdgo1vdNtwDwjy5lC3i8BqBvXyP8O7cO/vMevYfsCAM2/ADIQTwI2gYGbN
+         UZRA==
+X-Received: by 10.66.178.205 with SMTP id da13mr23598682pac.146.1409954066560;
+ Fri, 05 Sep 2014 14:54:26 -0700 (PDT)
+Received: by 10.70.36.6 with HTTP; Fri, 5 Sep 2014 14:54:26 -0700 (PDT)
+In-Reply-To: <xmqq8ulxrkeq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256543>
 
-On Sat, Sep 6, 2014 at 8:26 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 05.09.2014 12:06, schrieb Chris Packham:
->> In check_patch_format we feed $1 to a block that attempts to determine
->> the patch format. Since we've already redirected $1 to stdin there is no
->> need to redirect it again when we invoke tr. This prevents the following
->> errors when invoking git am
->>
->>   $ git am patch.patch
->>   tr: write error: Broken pipe
->>   tr: write error
->>   Patch format detection failed.
->>
->> Cc: Stephen Boyd <bebarino@gmail.com>
->> Signed-off-by: Chris Packham <judge.packham@gmail.com>
->> ---
->> Nothing new since http://article.gmane.org/gmane.comp.version-control.git/256425
->>
->>  git-am.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/git-am.sh b/git-am.sh
->> index ee61a77..fade7f8 100755
->> --- a/git-am.sh
->> +++ b/git-am.sh
->> @@ -250,7 +250,7 @@ check_patch_format () {
->>                       # discarding the indented remainder of folded lines,
->>                       # and see if it looks like that they all begin with the
->>                       # header field names...
->> -                     tr -d '\015' <"$1" |
->> +                     tr -d '\015' |
->>                       sed -n -e '/^$/q' -e '/^[       ]/d' -e p |
->>                       sane_egrep -v '^[!-9;-~]+:' >/dev/null ||
->>                       patch_format=mbox
->>
+On Sat, Sep 6, 2014 at 6:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Packham <judge.packham@gmail.com> writes:
 >
-> I think this change is wrong. This pipeline checks whether one of the
-> lines at the top of the file contains something that looks like an email
-> header. With your change, the first three lines would not be looked at
-> because they were already consumed earlier.
+>> So teaching git mailinfo to do s/^    // (either when asked to or
+>> using some heuristic) would be a better approach? I also think we
+>> should accept "Author:" as an acceptable fallback if "From:" is not
+>> present.
 >
-> I wonder why tr (assuming it is *this* instance of tr) dies with a write
-> error instead of from a SIGPIPE. Is SIGPIPE ignored somewhere and then
-> the tr invocation inherits this "ignore SIGPIPE" setting?
->
-> The only thing your version changes is that tr writes a bit less text
-> into the pipe. Perhaps its just sufficient that the output fits into the
-> pipe buffer, and no error occurs anymore? Then the new version is not a
-> real fix: make the patch text a bit longer, and the error is back.
->
-> -- Hannes
+> Not as "a fallback" in the sense that "Author:" should not be
+> treated any specially when "am" (which stands for "apply mail") is\
+> operating on the patches in e-mails.
+
+I was proposing we avoid the "Patch does not have a valid e-mail
+address." error when we can dwim and determine the email address from
+"Author:". I originally was going to say "From:" should take
+precedence but it would be another way to indicate that the true
+author is not necessarily the person who sent the email.
+
+> Whatever wants to convert the
+> output from "log --pretty" as if it came from "log --pretty=email"
+> would certainly need to flip "Author:" to "From:" (what should
+> happen when it sees "From:" in the input, though???), and whatgver
+> wannts to pick metainfo from "log --pretty" output like mailinfo
+> does for "log --pretty=email" output would certainly need to pick
+> the authorship from "Author:" (without paying any attention to
+> "From:" if one exists).
 >
 
-I did notice some oddities when attempting to reproduce this issue.
-They would be explained by the output fitting into the buffer. So yes
-perhaps this solution has just changed enough so that it no longer
-triggers on the particular patch I was testing with. It still seems a
-bit funny that we start re-reading the input part way through
-processing it.
+Wow. I didn't know --pretty=email existed. Better yet it works for
+diff-tree so gitk should probably be using that to produce something
+that can be exported/imported easily.
 
-Perhaps putting the tr outside the whole block would be a better solution?
+I do wonder what the original use-case for "write commit to file" was.
+Once it's been written to a file what is one supposed to do with it?
+It's not something that 'git am' can consume (currently). Using 'git
+apply' or 'patch' would lose the commit message plus you have to
+manually stage/commit the changes.
