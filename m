@@ -1,99 +1,105 @@
 From: Chris Packham <judge.packham@gmail.com>
-Subject: [RFC PATCHv3 2/4] t/am: add test for stgit patch format
-Date: Fri,  5 Sep 2014 22:06:49 +1200
-Message-ID: <1409911611-20370-3-git-send-email-judge.packham@gmail.com>
+Subject: [RFC PATCHv3 3/4] t/am: add tests for hg patch format
+Date: Fri,  5 Sep 2014 22:06:50 +1200
+Message-ID: <1409911611-20370-4-git-send-email-judge.packham@gmail.com>
 References: <1409911611-20370-1-git-send-email-judge.packham@gmail.com>
-Cc: Chris Packham <judge.packham@gmail.com>
+Cc: Chris Packham <judge.packham@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 05 12:07:47 2014
+X-From: git-owner@vger.kernel.org Fri Sep 05 12:07:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPqQi-0005p6-US
+	id 1XPqQj-0005p6-ET
 	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 12:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756559AbaIEKHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 06:07:36 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:55009 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756543AbaIEKHf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2014 06:07:35 -0400
-Received: by mail-ie0-f175.google.com with SMTP id y20so13760952ier.34
-        for <git@vger.kernel.org>; Fri, 05 Sep 2014 03:07:35 -0700 (PDT)
+	id S1756571AbaIEKHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2014 06:07:40 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:34693 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756543AbaIEKHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 06:07:39 -0400
+Received: by mail-ie0-f182.google.com with SMTP id rd18so13750615iec.13
+        for <git@vger.kernel.org>; Fri, 05 Sep 2014 03:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wzRegNQBfSL7FTWRHFuGu3fFztB+2EUpOxgf5sXu6j8=;
-        b=Lkx4ehswf7icMW/ixY4BSF4DI3pr0+OMsry20GivlhqOEFOgih3Pp9Iu8meXw9pYHZ
-         qZlPdZ2juz+mbCLCF8ZoucZMFh+HbsYI9Aa/jprqbTSgy8RXAnOVPukwf7sStUsuIcjB
-         QKupJOGYvc/6N0iUt9Jf75YhXf7CTH1dQMOweJb2VtrcMIlNLiBkO5ITjc9b27mkW1Zj
-         t3k9BDizGchJG0qK0IEr5obcuLLi7XuS63EXQNJs95Wb3P7LYuH7ifTy5Oo+APRvabFF
-         EnNmbRTpUHyuUqcgyDWeBt3LQscc9RyKaQDn3rtatN5Wn9B+5NongKW2ST5tVgjeH8sc
-         fvkQ==
-X-Received: by 10.66.145.167 with SMTP id sv7mr19374141pab.5.1409911652201;
-        Fri, 05 Sep 2014 03:07:32 -0700 (PDT)
+        bh=e1lNwIwQVSG0bL0aDjLLgidUTfOrEaE+K5mDBx1ito8=;
+        b=iizqDTArm2mz4GPbPzJKXc3LeisNLt2sU9VmKL00QIXvXpEytMHmis4kYp+2pp25Cu
+         nyLCy5WraNsH5zu1VNOEIaCHegXBM50ge3WhMsGB2Qi95l9kJ1nvzIb80NtOUSodNtmA
+         +n4sKReKiRwXtI/9dd4OZym0BAiPyfM6Ud1+35QkTg+1nM+Nu45C4z4G+Bn2cgVHiEaZ
+         OZQV7XfUg+DmGrtr+MJLyyKP7R95WJHzBir02tsmhys0VoeAJvBKOaC7sU+R0KWvxSiU
+         hssEcUBEe9GBRlBxL8ZRvrQiTK/tUzWbeIqNsY2VdmVEEaVSIDobTMoc+Kxs4rFz+xbT
+         4r/g==
+X-Received: by 10.70.14.195 with SMTP id r3mr20062598pdc.90.1409911658656;
+        Fri, 05 Sep 2014 03:07:38 -0700 (PDT)
 Received: from chrisp3-dl.ws.atlnz.lc (2-163-36-202-static.alliedtelesis.co.nz. [202.36.163.2])
-        by mx.google.com with ESMTPSA id o2sm1348068pdk.87.2014.09.05.03.07.30
+        by mx.google.com with ESMTPSA id o2sm1348068pdk.87.2014.09.05.03.07.36
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 05 Sep 2014 03:07:31 -0700 (PDT)
+        Fri, 05 Sep 2014 03:07:38 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9.5
 In-Reply-To: <1409911611-20370-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256505>
 
-This adds a tests which exercise the detection of the stgit format.
-There is a current know breakage in that the code that deals with stgit
-in split_patches can't handle reading from stdin.
+This adds a tests which exercise the detection of the hg format.  As
+with stgit there is a current know breakage in where split_patches can't
+handle reading from stdin with these patch formats.
 
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 Signed-off-by: Chris Packham <judge.packham@gmail.com>
 ---
- t/t4150-am.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Note. I don't have access to a mercurial repository (plus I know next to
+nothing about it) so the patch I've generated for the test was created
+by looking at the format detection code. If someone can show me an
+actual example of what mercurial produces that'd be helpful.
+
+ t/t4150-am.sh | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 5edb79a..dbe3475 100755
+index dbe3475..8ee81cf 100755
 --- a/t/t4150-am.sh
 +++ b/t/t4150-am.sh
-@@ -103,6 +103,15 @@ test_expect_success setup '
- 		echo "X-Fake-Field: Line Three" &&
- 		git format-patch --stdout first | sed -e "1d"
- 	} > patch1-ws.eml &&
+@@ -112,6 +112,14 @@ test_expect_success setup '
+ 		echo "---" &&
+ 		git diff-tree --stat -p second | sed -e "1d"
+ 	} > patch1-stgit.eml &&
 +	{
-+		echo "From: $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>" &&
++		echo "# HG changeset patch"
++		echo "# User $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>"
 +		echo &&
 +		cat msg &&
-+		echo &&
-+		echo "Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" &&
 +		echo "---" &&
 +		git diff-tree --stat -p second | sed -e "1d"
-+	} > patch1-stgit.eml &&
++	} > patch1-hg.eml &&
  
  	sed -n -e "3,\$p" msg >file &&
  	git add file &&
-@@ -186,6 +195,24 @@ test_expect_success 'am applies patch e-mail with preceding whitespace' '
- 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+@@ -213,6 +221,24 @@ test_expect_failure 'am applies patch using --patch-format=stgit' '
+ 	git diff --exit-code second
  '
  
-+test_expect_success 'am applies patch generated by stgit' '
++test_expect_success 'am applies patch generated by hg' '
 +	rm -fr .git/rebase-apply &&
 +	git reset --hard &&
 +	git checkout first &&
-+	git am patch1-stgit.eml &&
++	git am patch1-hg.eml &&
 +	test_path_is_missing .git/rebase-apply &&
 +	git diff --exit-code second
 +'
 +
-+test_expect_failure 'am applies patch using --patch-format=stgit' '
++test_expect_failure 'am applies patch using --patch-format=hg' '
 +	rm -fr .git/rebase-apply &&
 +	git reset --hard &&
 +	git checkout first &&
-+	git am --patch-format=stgit <patch1-stgit.eml &&
++	git am --patch-format=hg <patch1-hg.eml &&
 +	test_path_is_missing .git/rebase-apply &&
 +	git diff --exit-code second
 +'
