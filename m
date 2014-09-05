@@ -1,105 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] i18n translate builtin warning, error, usage, fatal messages
-Date: Fri, 05 Sep 2014 12:47:42 -0700
-Message-ID: <xmqq4mwlrgrl.fsf@gitster.dls.corp.google.com>
-References: <1409943445-12283-1-git-send-email-sandy.carter@savoirfairelinux.com>
-	<1409943445-12283-3-git-send-email-sandy.carter@savoirfairelinux.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [RFC PATCHv3 1/4] am: avoid re-directing stdin twice
+Date: Fri, 05 Sep 2014 22:26:35 +0200
+Message-ID: <540A1C7B.80109@kdbg.org>
+References: <1409911611-20370-1-git-send-email-judge.packham@gmail.com> <1409911611-20370-2-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sandy Carter <sandy.carter@savoirfairelinux.com>
-X-From: git-owner@vger.kernel.org Fri Sep 05 21:47:58 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 05 22:26:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XPzUC-0007Wj-M6
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 21:47:57 +0200
+	id 1XQ05m-0001mS-4S
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbaIETrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 15:47:46 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64390 "EHLO smtp.pobox.com"
+	id S1751193AbaIEU0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2014 16:26:40 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:30707 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750885AbaIETrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2014 15:47:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CEDB036BBB;
-	Fri,  5 Sep 2014 15:47:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j1UOUQTJCRCbaufqqWoHLiSJX7w=; b=iVIjqy
-	u3RbSoqmrj626hhZmeLgcuCpnaKQ5C4Lw+81hBuW+r+W0BiLEvtm+yOqrAVdPDXX
-	vTfrF8wPZGcbze1lY8I+GppYNM0titTvqLgL46dmoC+644f7aoDo05ysRsgep6sT
-	AmufoW1yUkOva/hNiqj8Rp7BhxgdMI3sDH2Ic=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PR5EmZN89fhZE4KR7Eg2uZ9eyb40oHeZ
-	g3PRTzj7SuoyY5vyWedsLIclf3PbmKjbSRFP5T1zjyLCXIhFq0+iLyhc/xykJYmj
-	dcB8HBvFEWGZPebvGvuxkNIgBEhrV9x5w+vas8wIcOLRzqKKLs1gGD+H0iCMbvqb
-	c4We+ZCyp9A=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C4E4436BBA;
-	Fri,  5 Sep 2014 15:47:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4E3E936BB9;
-	Fri,  5 Sep 2014 15:47:44 -0400 (EDT)
-In-Reply-To: <1409943445-12283-3-git-send-email-sandy.carter@savoirfairelinux.com>
-	(Sandy Carter's message of "Fri, 5 Sep 2014 14:57:25 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 811767B4-3535-11E4-A47A-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1750940AbaIEU0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 16:26:39 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 7D97E10011;
+	Fri,  5 Sep 2014 22:26:36 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id B9A7D19F459;
+	Fri,  5 Sep 2014 22:26:35 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
+In-Reply-To: <1409911611-20370-2-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256517>
 
-Sandy Carter <sandy.carter@savoirfairelinux.com> writes:
-
-> Allow warnings, errors, usage and fatal messages to be translated to user
-> when checking out a ambiguous refname for example
->
-> Signed-off-by: Sandy Carter <sandy.carter@savoirfairelinux.com>
+Am 05.09.2014 12:06, schrieb Chris Packham:
+> In check_patch_format we feed $1 to a block that attempts to determine
+> the patch format. Since we've already redirected $1 to stdin there is no
+> need to redirect it again when we invoke tr. This prevents the following
+> errors when invoking git am
+> 
+>   $ git am patch.patch
+>   tr: write error: Broken pipe
+>   tr: write error
+>   Patch format detection failed.
+> 
+> Cc: Stephen Boyd <bebarino@gmail.com>
+> Signed-off-by: Chris Packham <judge.packham@gmail.com>
 > ---
+> Nothing new since http://article.gmane.org/gmane.comp.version-control.git/256425
+> 
+>  git-am.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/git-am.sh b/git-am.sh
+> index ee61a77..fade7f8 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -250,7 +250,7 @@ check_patch_format () {
+>  			# discarding the indented remainder of folded lines,
+>  			# and see if it looks like that they all begin with the
+>  			# header field names...
+> -			tr -d '\015' <"$1" |
+> +			tr -d '\015' |
+>  			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p |
+>  			sane_egrep -v '^[!-9;-~]+:' >/dev/null ||
+>  			patch_format=mbox
+> 
 
-Hmmmm.  Doesn't this break the plumbing commands whose messages are
-meant to be matched and interpreted by scripts?
+I think this change is wrong. This pipeline checks whether one of the
+lines at the top of the file contains something that looks like an email
+header. With your change, the first three lines would not be looked at
+because they were already consumed earlier.
 
->  usage.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/usage.c b/usage.c
-> index ed14645..24a450e 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -27,24 +27,24 @@ void vwritef(int fd, const char *prefix, const char *err, va_list params)
->  
->  static NORETURN void usage_builtin(const char *err, va_list params)
->  {
-> -	vreportf("usage: ", err, params);
-> +	vreportf(_("usage: "), err, params);
->  	exit(129);
->  }
->  
->  static NORETURN void die_builtin(const char *err, va_list params)
->  {
-> -	vreportf("fatal: ", err, params);
-> +	vreportf(_("fatal: "), err, params);
->  	exit(128);
->  }
->  
->  static void error_builtin(const char *err, va_list params)
->  {
-> -	vreportf("error: ", err, params);
-> +	vreportf(_("error: "), err, params);
->  }
->  
->  static void warn_builtin(const char *warn, va_list params)
->  {
-> -	vreportf("warning: ", warn, params);
-> +	vreportf(_("warning: "), warn, params);
->  }
->  
->  static int die_is_recursing_builtin(void)
+I wonder why tr (assuming it is *this* instance of tr) dies with a write
+error instead of from a SIGPIPE. Is SIGPIPE ignored somewhere and then
+the tr invocation inherits this "ignore SIGPIPE" setting?
+
+The only thing your version changes is that tr writes a bit less text
+into the pipe. Perhaps its just sufficient that the output fits into the
+pipe buffer, and no error occurs anymore? Then the new version is not a
+real fix: make the patch text a bit longer, and the error is back.
+
+-- Hannes
