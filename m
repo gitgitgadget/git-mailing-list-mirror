@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 20/22] signed push: add "pushee" header to push certificate
-Date: Fri,  5 Sep 2014 13:55:08 -0700
-Message-ID: <1409950510-10209-21-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 22/22] signed push: allow stale nonce in stateless mode
+Date: Fri,  5 Sep 2014 13:55:10 -0700
+Message-ID: <1409950510-10209-23-git-send-email-gitster@pobox.com>
 References: <1409950510-10209-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Sep 05 22:56:30 2014
@@ -10,129 +10,217 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQ0YX-0006DI-KX
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:56:29 +0200
+	id 1XQ0YY-0006DI-5E
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752670AbaIEU4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 16:56:00 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53665 "EHLO smtp.pobox.com"
+	id S1752646AbaIEU4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2014 16:56:12 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59090 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752346AbaIEUz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2014 16:55:57 -0400
+	id S1752700AbaIEU4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 16:56:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 45B09366DC;
-	Fri,  5 Sep 2014 16:55:57 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F8DE366ED;
+	Fri,  5 Sep 2014 16:56:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=fM8o
-	vKgWQhHLaHpRZVsYSSZkcHo=; b=vLKnykzJgZB09zX1OML2+l88kjcEB3SJq7dD
-	z/qhEJArKlBwSLipegXs5Fm/5JX+xd0Bh8G9cbeCk6izJiZmztJMOXVgY2ysZCEI
-	05oHEFEd2X/f0f1RpR6Q7x03PuqJ/Atg28jcH5KsaznBw/UhV9tar9EGQaPn4Gi+
-	WMUwXig=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=SveW
+	6iNdXm09dAd2tmqEaPwpmuk=; b=XMDOAZH3hBA/VliZImxI1LKhVsg/db2Z715Q
+	SSTPpHooVrR9LFcvJZyjmHAcfJtKIkDUqUj71Nz0AYyLgL+B7nj7pFRlgHOoIgvS
+	8L4DBGhrv85cxProOIdMEK7YuUFiyaTdvUWBSQ2lC3MXEri2j6AL7xKp6eUvRnrC
+	1kFjOF0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=ij2Tcu
-	PJljIeme/L6FBNsDvESLhQ6JpooccARXLqhHy5SMz6jOGxD0Pe7O9GDd7uhI3nnh
-	k0uaPLvofn+t5b1bO24dc2Lr4j+RpwV1Ht0EXXp6YwhcVJQb6a9utT8w1E8EoAmm
-	UApiIgLXg9lzBPk0EsuVb9I8fd52lvEJmuttQ=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=AObGaJ
+	UEC7866GhYYFfx6xFxwv16KhJCOx0PWM/of0bKRkgvucRiD0YNgnmkT+BtVcMDpu
+	6SIPS8aaOCdi1MD2/+rM7K/ya3jqot2ODOpL/yrNzK3WO8EqFGaL2RhIHZ8gP9F8
+	x11GaN4RWrkgJLmnLwwS0LgosbYiM59KGYy3M=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3C221366DB;
-	Fri,  5 Sep 2014 16:55:57 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 11B5E366EC;
+	Fri,  5 Sep 2014 16:56:02 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AD38C366D9;
-	Fri,  5 Sep 2014 16:55:56 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D5845366EA;
+	Fri,  5 Sep 2014 16:56:00 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-404-gcacb207
 In-Reply-To: <1409950510-10209-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 0858395C-353F-11E4-92EE-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0ADBD918-353F-11E4-A873-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256535>
 
-Record the URL of the intended recipient for a push (after
-anonymizing it if it has authentication material) on a new "pushee
-URL" header.  Because the networking configuration (SSH-tunnels,
-proxies, etc.) on the pushing user's side varies, the receiving
-repository may not know the single canonical URL all the pushing
-users would refer it as (besides, many sites allow pushing over
-ssh://host/path and https://host/path protocols to the same
-repository but with different local part of the path).  So this
-value may not be reliably used for replay-attack prevention
-purposes, but this will still serve as a human readable hint to
-identify the repository the certificate refers to.
+When operating with the stateless RPC mode, we will receive a nonce
+issued by another instance of us that advertised our capability and
+refs some time ago.  Update the logic to check received nonce to
+detect this case, compute how much time has passed since the nonce
+was issued and report the status with a new environment variable
+GIT_PUSH_CERT_NONCE_SLOP to the hooks.
+
+GIT_PUSH_CERT_NONCE_STATUS will report "SLOP" in such a case.  The
+hooks are free to decide how large a slop it is willing to accept.
+
+Strictly speaking, the "nonce" is not really a "nonce" anymore in
+the stateless RPC mode, as it will happily take any "nonce" issued
+by it (which is protected by HMAC and its secret key) as long as it
+is fresh enough.  The degree of this security degradation, relative
+to the native protocol, is about the same as the "we make sure that
+the 'git push' decided to update our refs with new objects based on
+the freshest observation of our refs by making sure the values they
+claim the original value of the refs they ask us to update exactly
+match the current state" security is loosened to accomodate the
+stateless RPC mode in the existing code without this series, so
+there is no need for those who are already using smart HTTP to push
+to their repositories to be alarmed any more than they already are.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/technical/pack-protocol.txt | 6 ++++++
- send-pack.c                               | 5 +++++
- send-pack.h                               | 1 +
- transport.c                               | 1 +
- 4 files changed, 13 insertions(+)
+ Documentation/git-receive-pack.txt | 11 ++++++++
+ builtin/receive-pack.c             | 57 ++++++++++++++++++++++++++++++++------
+ 2 files changed, 59 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 4a5c2e8..7b543dc 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -484,6 +484,7 @@ references.
-   push-cert         = PKT-LINE("push-cert" NUL capability-list LF)
- 		      PKT-LINE("certificate version 0.1" LF)
- 		      PKT-LINE("pusher" SP ident LF)
-+		      PKT-LINE("pushee" SP url LF)
- 		      PKT-LINE(LF)
- 		      *PKT-LINE(command LF)
- 		      *PKT-LINE(gpg-signature-lines LF)
-@@ -527,6 +528,11 @@ Currently, the following header fields are defined:
- 	Identify the GPG key in "Human Readable Name <email@address>"
- 	format.
- 
-+`pushee` url::
-+	The repository URL (anonymized, if the URL contains
-+	authentication material) the user who ran `git push`
-+	intended to push into.
+diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+index 2d4b452..2e5131d 100644
+--- a/Documentation/git-receive-pack.txt
++++ b/Documentation/git-receive-pack.txt
+@@ -89,6 +89,17 @@ the following environment variables:
+ 	"git push --signed" sent a bogus nonce.
+ `OK`;;
+ 	"git push --signed" sent the nonce we asked it to send.
++`SLOP`;;
++	"git push --signed" sent a nonce different from what we
++	asked it to send now, but in a previous session.  See
++	`GIT_PUSH_CERT_NONCE_SLOP` environment variable.
 +
- The GPG signature lines are a detached signature for the contents
- recorded in the push certificate before the signature block begins.
- The detached signature is used to certify that the commands were
-diff --git a/send-pack.c b/send-pack.c
-index 857beb3..9c2c649 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -240,6 +240,11 @@ static int generate_push_cert(struct strbuf *req_buf,
- 	datestamp(stamp, sizeof(stamp));
- 	strbuf_addf(&cert, "certificate version 0.1\n");
- 	strbuf_addf(&cert, "pusher %s %s\n", signing_key, stamp);
-+	if (args->url && *args->url) {
-+		char *anon_url = transport_anonymize_url(args->url);
-+		strbuf_addf(&cert, "pushee %s\n", anon_url);
-+		free(anon_url);
++`GIT_PUSH_CERT_NONCE_SLOP`::
++	"git push --signed" sent a nonce different from what we
++	asked it to send now, but in a different session whose
++	starting time is different by this many seconds from the
++	current session.  Only meaningful when
++	`GIT_PUSH_CERT_NONCE_STATUS` says `SLOP`.
+ 
+ This hook is called before any refname is updated and before any
+ fast-forward checks are performed.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index a1823e5..86fb5a4 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -43,6 +43,8 @@ static int prefer_ofs_delta = 1;
+ static int auto_update_server_info;
+ static int auto_gc = 1;
+ static int fix_thin = 1;
++static int stateless_rpc;
++static const char *service_dir;
+ static const char *head_name;
+ static void *head_name_to_free;
+ static int sent_capabilities;
+@@ -58,7 +60,9 @@ static const char *NONCE_UNSOLICITED = "UNSOLICITED";
+ static const char *NONCE_BAD = "BAD";
+ static const char *NONCE_MISSING = "MISSING";
+ static const char *NONCE_OK = "OK";
++static const char *NONCE_SLOP = "SLOP";
+ static const char *nonce_status;
++static long nonce_stamp_slop;
+ 
+ static enum deny_action parse_deny_action(const char *var, const char *value)
+ {
+@@ -359,6 +363,8 @@ static const char *find_header(const char *msg, size_t len, const char *key)
+ static const char *check_nonce(const char *buf, size_t len)
+ {
+ 	const char *nonce = find_header(buf, len, "nonce");
++	unsigned long stamp, ostamp;
++	char *bohmac, *expect;
+ 
+ 	if (!nonce)
+ 		return NONCE_MISSING;
+@@ -368,7 +374,39 @@ static const char *check_nonce(const char *buf, size_t len)
+ 		return NONCE_OK;
+ 
+ 	/* returned nonce MUST match what we gave out earlier */
+-	return NONCE_BAD;
++	if (!stateless_rpc)
++		return NONCE_BAD;
++
++	/*
++	 * In stateless mode, we may be receiving a nonce issued
++	 * by another instance of the server that serving the same
++	 * repository, and the timestamps may not match, but the
++	 * nonce-seed and dir should match, so we can recompute
++	 * and report the time slop.
++	 */
++
++	/* nonce is concat(<seconds-since-epoch>, "-", <hmac>) */
++	if (*nonce <= '0' || '9' < *nonce)
++		return NONCE_BAD;
++	stamp = strtoul(nonce, &bohmac, 10);
++	if (bohmac == nonce || bohmac[1] != '-')
++		return NONCE_BAD;
++
++	expect = prepare_push_cert_nonce(service_dir, stamp);
++	if (strcmp(expect, nonce)) {
++		free(expect);
++		return NONCE_BAD;
 +	}
- 	strbuf_addstr(&cert, "\n");
++	free(expect);
++
++	/*
++	 * By how many seconds is this nonce stale?  Negative
++	 * value would mean it was issued by another server
++	 * with its clock skewed in the future.
++	 */
++	ostamp = strtoul(push_cert_nonce, NULL, 10);
++	nonce_stamp_slop = (long)ostamp - (long)stamp;
++	return NONCE_SLOP;
+ }
  
- 	for (ref = remote_refs; ref; ref = ref->next) {
-diff --git a/send-pack.h b/send-pack.h
-index 3555d8e..5635457 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -2,6 +2,7 @@
- #define SEND_PACK_H
+ static void prepare_push_cert_sha1(struct child_process *proc)
+@@ -417,6 +455,9 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+ 		if (push_cert_nonce) {
+ 			argv_array_pushf(&env, "GIT_PUSH_CERT_NONCE=%s", push_cert_nonce);
+ 			argv_array_pushf(&env, "GIT_PUSH_CERT_NONCE_STATUS=%s", nonce_status);
++			if (nonce_status == NONCE_SLOP)
++				argv_array_pushf(&env, "GIT_PUSH_CERT_NONCE_SLOP=%ld",
++						 nonce_stamp_slop);
+ 		}
+ 		proc->env = env.argv;
+ 	}
+@@ -1352,9 +1393,7 @@ static int delete_only(struct command *commands)
+ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ {
+ 	int advertise_refs = 0;
+-	int stateless_rpc = 0;
+ 	int i;
+-	const char *dir = NULL;
+ 	struct command *commands;
+ 	struct sha1_array shallow = SHA1_ARRAY_INIT;
+ 	struct sha1_array ref = SHA1_ARRAY_INIT;
+@@ -1387,21 +1426,21 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
  
- struct send_pack_args {
-+	const char *url;
- 	unsigned verbose:1,
- 		quiet:1,
- 		porcelain:1,
-diff --git a/transport.c b/transport.c
-index 07fdf86..1df1375 100644
---- a/transport.c
-+++ b/transport.c
-@@ -827,6 +827,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
- 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
- 	args.push_cert = !!(flags & TRANSPORT_PUSH_CERT);
-+	args.url = transport->url;
+ 			usage(receive_pack_usage);
+ 		}
+-		if (dir)
++		if (service_dir)
+ 			usage(receive_pack_usage);
+-		dir = arg;
++		service_dir = arg;
+ 	}
+-	if (!dir)
++	if (!service_dir)
+ 		usage(receive_pack_usage);
  
- 	ret = send_pack(&args, data->fd, data->conn, remote_refs,
- 			&data->extra_have);
+ 	setup_path();
+ 
+-	if (!enter_repo(dir, 0))
+-		die("'%s' does not appear to be a git repository", dir);
++	if (!enter_repo(service_dir, 0))
++		die("'%s' does not appear to be a git repository", service_dir);
+ 
+ 	git_config(receive_pack_config, NULL);
+ 	if (cert_nonce_seed)
+-		push_cert_nonce = prepare_push_cert_nonce(dir, time(NULL));
++		push_cert_nonce = prepare_push_cert_nonce(service_dir, time(NULL));
+ 
+ 	if (0 <= transfer_unpack_limit)
+ 		unpack_limit = transfer_unpack_limit;
 -- 
 2.1.0-399-g2df620b
