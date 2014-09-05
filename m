@@ -1,123 +1,199 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 08/22] send-pack: factor out capability string generation
-Date: Fri,  5 Sep 2014 13:54:56 -0700
-Message-ID: <1409950510-10209-9-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 13/22] gpg-interface: move parse_gpg_output() to where it should be
+Date: Fri,  5 Sep 2014 13:55:01 -0700
+Message-ID: <1409950510-10209-14-git-send-email-gitster@pobox.com>
 References: <1409950510-10209-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 05 22:55:59 2014
+X-From: git-owner@vger.kernel.org Fri Sep 05 22:56:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQ0Xw-0005bR-9H
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:55:52 +0200
+	id 1XQ0Xy-0005bR-FJ
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Sep 2014 22:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbaIEUzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Sep 2014 16:55:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56688 "EHLO smtp.pobox.com"
+	id S1752580AbaIEUzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Sep 2014 16:55:47 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64172 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752378AbaIEUzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Sep 2014 16:55:36 -0400
+	id S1752554AbaIEUzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Sep 2014 16:55:45 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 24FAE36687;
-	Fri,  5 Sep 2014 16:55:35 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0C8BF366B0;
+	Fri,  5 Sep 2014 16:55:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=68Hp
-	/r2Syx8bwbwZJ7+FB38jL2Y=; b=LT/xXkFtjxfoRVBjDUXbh4+rFZfRylzj+9R4
-	Az1sBBvsevTGd7Yv3ntUpa45KeqCSakil3hbLHpHl0g7OadZhYmcwIgP2N/3jemy
-	Hu6SKAMYw0ANaif6tXUmGDtp1cNQPs5rcVZFJ4LGdgdM2v54CMvh6U9MhDf0vjlQ
-	U0/2Ar8=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=bhMK
+	JztfdziwFDkeO+SLAegI6rA=; b=yhs3eJ9Y8JrU7xAApWVKJbnUzO+pmhV9wpmL
+	0hg81MIebTyIvM8bURHJ6ItDdYUKLzDgsAJn6Sxh6hS/cEQuqW7aD1FqQJvJ7sBJ
+	YhhXidZDj3I467+8e6kEO9LlOax/XWq1sUur/hzAcv6NqutTtxp1m9EnQo7cOyBW
+	pgXxnLo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=wYR2v6
-	3pehaPIKMCR/S27gwM0MXNQ4LPxlL0+1ol+odHeVfV/eXY9k/9r+VwK0atRXuGB/
-	FY0mlDjK7gqRa+hzYcZgJIHLQ9EnxQxQHjXf8wvUVVkYfBTb4S3JsYlKVf1lA5G5
-	EtF5tMaHwEFKn8kigCCyw4xYYF/f+dD2QAGNc=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=jjcPEA
+	6nU/tATY+U2oeqBl/+YXGGp2avq9OyMl3qZHqq5WYDEaw4KqJ7V8lGPUAqPf0GrG
+	jyiTMoNDSVIPS0WD7WQqdSODfch8wu6YUrAmQl77oa4q5EFPMKyzrkLHbMLZNQS9
+	op4ZMIurKCA9TqvL5GO31RsTw1U6nRShrwMSs=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 62BB536685;
-	Fri,  5 Sep 2014 16:55:34 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 014D2366AF;
+	Fri,  5 Sep 2014 16:55:45 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 483EA36671;
-	Fri,  5 Sep 2014 16:55:32 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 127D6366A9;
+	Fri,  5 Sep 2014 16:55:43 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-404-gcacb207
 In-Reply-To: <1409950510-10209-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: F9CB2EB2-353E-11E4-BCA5-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0037CE54-353F-11E4-930B-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256530>
 
-A run of 'var ? " var" : ""' fed to a long printf string in a deeply
-nested block was hard to read.  Move it outside the loop and format
-it into a strbuf.
+Earlier, ffb6d7d5 (Move commit GPG signature verification to
+commit.c, 2013-03-31) moved this helper that used to be in pretty.c
+(i.e. the output code path) to commit.c for better reusability.
 
-As an added bonus, the trick to add "agent=<agent-name>" by using
-two conditionals is replaced by a more readable version.
+It was a good first step in the right direction, but still suffers
+from a myopic view that commits will be the only thing we would ever
+want to sign---we would actually want to be able to reuse it even
+wider.
+
+The function interprets what GPG said; gpg-interface is obviously a
+better place.  Move it there.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- send-pack.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ commit.c        | 36 ------------------------------------
+ gpg-interface.c | 36 ++++++++++++++++++++++++++++++++++++
+ gpg-interface.h | 16 +++++++++++-----
+ 3 files changed, 47 insertions(+), 41 deletions(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index e81f741..0cb44ab 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -218,6 +218,7 @@ int send_pack(struct send_pack_args *args,
- 	int in = fd[0];
- 	int out = fd[1];
- 	struct strbuf req_buf = STRBUF_INIT;
-+	struct strbuf cap_buf = STRBUF_INIT;
- 	struct ref *ref;
- 	int new_refs;
- 	int allow_deleting_refs = 0;
-@@ -251,6 +252,15 @@ int send_pack(struct send_pack_args *args,
- 		return 0;
- 	}
+diff --git a/commit.c b/commit.c
+index ae7f2b1..01cdad2 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1220,42 +1220,6 @@ free_return:
+ 	free(buf);
+ }
  
-+	if (status_report)
-+		strbuf_addstr(&cap_buf, " report-status");
-+	if (use_sideband)
-+		strbuf_addstr(&cap_buf, " side-band-64k");
-+	if (quiet_supported && (args->quiet || !args->progress))
-+		strbuf_addstr(&cap_buf, " quiet");
-+	if (agent_supported)
-+		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+-static struct {
+-	char result;
+-	const char *check;
+-} sigcheck_gpg_status[] = {
+-	{ 'G', "\n[GNUPG:] GOODSIG " },
+-	{ 'B', "\n[GNUPG:] BADSIG " },
+-	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
+-	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
+-};
+-
+-static void parse_gpg_output(struct signature_check *sigc)
+-{
+-	const char *buf = sigc->gpg_status;
+-	int i;
+-
+-	/* Iterate over all search strings */
+-	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+-		const char *found, *next;
+-
+-		if (!skip_prefix(buf, sigcheck_gpg_status[i].check + 1, &found)) {
+-			found = strstr(buf, sigcheck_gpg_status[i].check);
+-			if (!found)
+-				continue;
+-			found += strlen(sigcheck_gpg_status[i].check);
+-		}
+-		sigc->result = sigcheck_gpg_status[i].result;
+-		/* The trust messages are not followed by key/signer information */
+-		if (sigc->result != 'U') {
+-			sigc->key = xmemdupz(found, 16);
+-			found += 17;
+-			next = strchrnul(found, '\n');
+-			sigc->signer = xmemdupz(found, next - found);
+-		}
+-	}
+-}
+-
+ void check_commit_signature(const struct commit* commit, struct signature_check *sigc)
+ {
+ 	struct strbuf payload = STRBUF_INIT;
+diff --git a/gpg-interface.c b/gpg-interface.c
+index ff07012..3c9624c 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -21,6 +21,42 @@ void signature_check_clear(struct signature_check *sigc)
+ 	sigc->key = NULL;
+ }
+ 
++static struct {
++	char result;
++	const char *check;
++} sigcheck_gpg_status[] = {
++	{ 'G', "\n[GNUPG:] GOODSIG " },
++	{ 'B', "\n[GNUPG:] BADSIG " },
++	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
++	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
++};
 +
- 	/*
- 	 * NEEDSWORK: why does delete-refs have to be so specific to
- 	 * send-pack machinery that set_ref_status_for_push() cannot
-@@ -279,18 +289,12 @@ int send_pack(struct send_pack_args *args,
- 		} else {
- 			char *old_hex = sha1_to_hex(ref->old_sha1);
- 			char *new_hex = sha1_to_hex(ref->new_sha1);
--			int quiet = quiet_supported && (args->quiet || !args->progress);
++void parse_gpg_output(struct signature_check *sigc)
++{
++	const char *buf = sigc->gpg_status;
++	int i;
++
++	/* Iterate over all search strings */
++	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
++		const char *found, *next;
++
++		if (!skip_prefix(buf, sigcheck_gpg_status[i].check + 1, &found)) {
++			found = strstr(buf, sigcheck_gpg_status[i].check);
++			if (!found)
++				continue;
++			found += strlen(sigcheck_gpg_status[i].check);
++		}
++		sigc->result = sigcheck_gpg_status[i].result;
++		/* The trust messages are not followed by key/signer information */
++		if (sigc->result != 'U') {
++			sigc->key = xmemdupz(found, 16);
++			found += 17;
++			next = strchrnul(found, '\n');
++			sigc->signer = xmemdupz(found, next - found);
++		}
++	}
++}
++
+ void set_signing_key(const char *key)
+ {
+ 	free(configured_signing_key);
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 37c23da..82493b7 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -5,16 +5,22 @@ struct signature_check {
+ 	char *payload;
+ 	char *gpg_output;
+ 	char *gpg_status;
+-	char result; /* 0 (not checked),
+-		      * N (checked but no further result),
+-		      * U (untrusted good),
+-		      * G (good)
+-		      * B (bad) */
++
++	/*
++	 * possible "result":
++	 * 0 (not checked)
++	 * N (checked but no further result)
++	 * U (untrusted good)
++	 * G (good)
++	 * B (bad)
++	 */
++	char result;
+ 	char *signer;
+ 	char *key;
+ };
  
- 			if (!cmds_sent)
- 				packet_buf_write(&req_buf,
--						 "%s %s %s%c%s%s%s%s%s",
-+						 "%s %s %s%c%s",
- 						 old_hex, new_hex, ref->name, 0,
--						 status_report ? " report-status" : "",
--						 use_sideband ? " side-band-64k" : "",
--						 quiet ? " quiet" : "",
--						 agent_supported ? " agent=" : "",
--						 agent_supported ? git_user_agent_sanitized() : ""
--						);
-+						 cap_buf.buf);
- 			else
- 				packet_buf_write(&req_buf, "%s %s %s",
- 						 old_hex, new_hex, ref->name);
-@@ -311,6 +315,7 @@ int send_pack(struct send_pack_args *args,
- 		packet_flush(out);
- 	}
- 	strbuf_release(&req_buf);
-+	strbuf_release(&cap_buf);
- 
- 	if (use_sideband && cmds_sent) {
- 		memset(&demux, 0, sizeof(demux));
+ extern void signature_check_clear(struct signature_check *sigc);
++extern void parse_gpg_output(struct signature_check *);
+ extern int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key);
+ extern int verify_signed_buffer(const char *payload, size_t payload_size, const char *signature, size_t signature_size, struct strbuf *gpg_output, struct strbuf *gpg_status);
+ extern int git_gpg_config(const char *, const char *, void *);
 -- 
 2.1.0-399-g2df620b
