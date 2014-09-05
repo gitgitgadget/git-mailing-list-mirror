@@ -1,85 +1,77 @@
 From: William Clifford <mr.william.clifford@gmail.com>
-Subject: [PATCH/RFC 1/2] Add sequence.format to interactive rebase
-Date: Fri, 5 Sep 2014 01:40:01 -0700
-Message-ID: <861trli9lb.fsf@gmail.com>
+Subject: [PATCH/RFC 2/2] Add documentation for sequence.format
+Date: Fri, 5 Sep 2014 01:41:16 -0700
+Message-ID: <86zje9gv05.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 08:36:56 2014
+X-From: git-owner@vger.kernel.org Tue Sep 09 08:37:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRF2t-000679-4V
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 08:36:55 +0200
+	id 1XRF3Y-0006NL-9O
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 08:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755710AbaIIGgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 02:36:51 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:42400 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755666AbaIIGgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 02:36:50 -0400
-Received: by mail-pd0-f170.google.com with SMTP id fp1so593302pdb.15
-        for <git@vger.kernel.org>; Mon, 08 Sep 2014 23:36:50 -0700 (PDT)
+	id S1755875AbaIIGhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 02:37:25 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:38111 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755869AbaIIGhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 02:37:16 -0400
+Received: by mail-pa0-f49.google.com with SMTP id lf10so2812494pab.8
+        for <git@vger.kernel.org>; Mon, 08 Sep 2014 23:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:subject:date:message-id:mime-version:content-type;
-        bh=D0ndWWZ6h65upSgKJXNBvR3VUbL2L+RCkFxMzsciD7w=;
-        b=c/s6hP1L5QDhiySk1ICQ57bLXld9YtnrwKFrIfuG6PqyLKo6bp2O1HteLJDCiHajMX
-         d50V1vp0h6inU9oDHFBoq8tNvGcdozh5R3BBsj5ICwb2VZ7MeM8walFtoA19hWqyVgrK
-         6P0LWyElOrArZCTUG3iIyL5a0yhYmKgv6EMdoUrmD6G3qU8Ombg9Sf6K/vRW0dXwmPyT
-         09JPD+YcjRPX0znyPsq2Odrv313YTc2k637XkHwo2A1xAznN5O8QDxVZ4dOIDDJ53KGK
-         BCec/sBx2EIoxuGWUWVbTv6Jly6PjFBjwSt3FdXGJVmFnTaoj94j/mN9v0YHkctcbS3g
-         2z4A==
-X-Received: by 10.70.128.137 with SMTP id no9mr12992536pdb.143.1410244610235;
-        Mon, 08 Sep 2014 23:36:50 -0700 (PDT)
+        bh=X6eZO6gvCLLrL2XDIXsFSSW45BCcOF5ebB2Nh7nhagk=;
+        b=gqT5VTvK33RFOEE+6Wp29RDiESc7FP23wu7DZv2QrW8waeZXWDjARms+xqI8zr/M+9
+         0rem9HpTA+46DiCHVK/8TXPu8FVzxCAWhVWv0XsvxRK7BTucsKhwJhVIhSZzPufbWwvQ
+         wGu1z0L9stN3v/blwuRqujTQnWWbD8ajQM8Jo9xxRDfQFhlDremfvnaXdnelYCaeRgbl
+         XO/L+UFXi8Qcq8AqwVI4fRy9oEBG7+UumYv+nWjY8N6q5kD3l8RuoOg/iuK9MB67U5Ih
+         sssYzdk1Qhy8MBXIje6lIvYc8okC1J+cCCvRzfW7DGx0gRiOKmTFj8J8qmVfzI3yie9q
+         isTg==
+X-Received: by 10.67.1.195 with SMTP id bi3mr53626708pad.74.1410244636162;
+        Mon, 08 Sep 2014 23:37:16 -0700 (PDT)
 Received: from LOVE-MACHINE (75-175-34-145.ptld.qwest.net. [75.175.34.145])
-        by mx.google.com with ESMTPSA id we5sm11280385pab.28.2014.09.08.23.36.48
+        by mx.google.com with ESMTPSA id a15sm10711948pdj.33.2014.09.08.23.37.15
         for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Sep 2014 23:36:49 -0700 (PDT)
+        Mon, 08 Sep 2014 23:37:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256685>
 
-Allow user to customize the format of commit table in interactive
-rebase todo file. Short hashes are still required to be the second
-column so these are added to the format if not already present.
-Defaults to oneline as before.
+Explain sequence.format and GIT_SEQUENCE_FORMAT.
 
 Signed-off-by: William Clifford <mr.william.clifford@gmail.com>
 Signed-off-by: Matthew Boeh <m@mboeh.com>
 ---
- git-rebase--interactive.sh | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ Documentation/config.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index b64dd28..ba1f4b8 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -961,7 +961,19 @@ else
- 	revisions=$onto...$orig_head
- 	shortrevisions=$shorthead
- fi
--git rev-list $merges_option --pretty=oneline --abbrev-commit \
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e61775e..76f0a4d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -555,6 +555,15 @@ sequence.editor::
+ 	It can be overridden by the `GIT_SEQUENCE_EDITOR` environment variable.
+ 	When not configured the default commit message editor is used instead.
+ 
++sequence.format::
++	Format of commit table generated by `git rebase -i` for rebase
++	instruction file. It can be overridden by the
++	`GIT_SEQUENCE_FORMAT` environment variable. When not
++	configured the default `oneline` format is used instead. NOTE:
++	Because the second column must be the hash, you may omit this
++	in the format string and it will be inserted. Formats must be
++	one line.
 +
-+if test -z "$GIT_SEQUENCE_FORMAT"
-+then
-+	GIT_SEQUENCE_FORMAT="$(git config sequence.format)"
-+fi
-+if test -n "$GIT_SEQUENCE_FORMAT"
-+then
-+	if test "$GIT_SEQUENCE_FORMAT" = "${GIT_SEQUENCE_FORMAT#>%h}"
-+	then
-+		GIT_SEQUENCE_FORMAT=">%h $GIT_SEQUENCE_FORMAT"
-+	fi
-+fi
-+git rev-list $merges_option --pretty="${GIT_SEQUENCE_FORMAT:-oneline}" --abbrev-commit \
- 	--abbrev=7 --reverse --left-right --topo-order \
- 	$revisions ${restrict_revision+^$restrict_revision} | \
- 	sed -n "s/^>//p" |
+ core.pager::
+ 	Text viewer for use by Git commands (e.g., 'less').  The value
+ 	is meant to be interpreted by the shell.  The order of preference
 -- 
 William Clifford
