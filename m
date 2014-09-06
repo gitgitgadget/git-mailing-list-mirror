@@ -1,8 +1,8 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v4 0/1] Use absolute paths of lockfiles
-Date: Sat,  6 Sep 2014 12:31:28 +0200
-Message-ID: <1409999489-25193-1-git-send-email-mhagger@alum.mit.edu>
-References: <CACsJy8AJvt3bVj783eyHhiFaMD3Ys6pAsyT7S2TYi2a_ACKcRg@mail.gmail.com>
+Subject: [PATCH v4 1/1] lockfile.c: store absolute path
+Date: Sat,  6 Sep 2014 12:31:29 +0200
+Message-ID: <1409999489-25193-2-git-send-email-mhagger@alum.mit.edu>
+References: <1409999489-25193-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,78 +12,133 @@ Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
 	Yue Lin Ho <yuelinho777@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 12:31:50 2014
+X-From: git-owner@vger.kernel.org Sat Sep 06 12:31:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQDHZ-0000WD-1l
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 12:31:49 +0200
+	id 1XQDHf-0000cH-65
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 12:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187AbaIFKbp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Sep 2014 06:31:45 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:54630 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751156AbaIFKbn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Sep 2014 06:31:43 -0400
-X-AuditID: 1207440c-f79036d000005e77-01-540ae28f7b15
+	id S1751228AbaIFKbt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Sep 2014 06:31:49 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60427 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751156AbaIFKbq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Sep 2014 06:31:46 -0400
+X-AuditID: 1207440f-f79156d000006a5c-1f-540ae2923a3d
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id B7.3C.24183.F82EA045; Sat,  6 Sep 2014 06:31:43 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 58.3D.27228.292EA045; Sat,  6 Sep 2014 06:31:46 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB3D26.dip0.t-ipconnect.de [93.219.61.38])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s86AVdBT013096
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s86AVdBU013096
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 6 Sep 2014 06:31:40 -0400
+	Sat, 6 Sep 2014 06:31:44 -0400
 X-Mailer: git-send-email 2.1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqNv/iCvE4O4qTouuK91MFg29V5gt
-	nsy9y2xxe8V8ZovuKW8ZLXZPW8Bm0bbzCJMDu8ff9x+YPHbOusvu8fBVF7vHxUvKHo8nnmD1
-	+LxJLoAtitsmKbGkLDgzPU/fLoE749n7j0wFczkqbv48y97AeISti5GTQ0LAROLI1rfMELaY
-	xIV764HiXBxCApcZJXoP97FAOMeYJJa19bOCVLEJ6Eos6mlmArFFBNQkJrYdAitiFljEJLFk
-	cRdQgoNDWMBc4t8eXZAaFgFViem7toPV8wq4SBy83Qq1TU5iw+7/jCC2kECAxLl9u5ghagQl
-	Ts58wgIyhllAXWL9PCGQMLOAvETz1tnMExj5ZyGpmoVQNQtJ1QJG5lWMcok5pbm6uYmZOcWp
-	ybrFyYl5ealFuoZ6uZkleqkppZsYIWHOs4Px2zqZQ4wCHIxKPLwFDlwhQqyJZcWVuYcYJTmY
-	lER5VW4DhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwdkwGyvGmJFZWpRblw6SkOViUxHlVl6j7
-	CQmkJ5akZqemFqQWwWRlODiUJHjTHgI1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZk
-	xIPiMb4YGJEgKR6gvR8egOwtLkjMBYpCtJ5i1OVY1/mtn0mIJS8/L1VKnLcTpEgApCijNA9u
-	BSypvWIUB/pYmHcvSBUPMCHCTXoFtIQJaIl5OifIkpJEhJRUA2NoPlNd9f/obafa/blWHt7l
-	a1TubZmhX6GqcnPNi2CrA7EfrPpSGYQtN9X8MNpZeVk7fHbbpGsHjv9NceI3OC5t 
+In-Reply-To: <1409999489-25193-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHKsWRmVeSWpSXmKPExsUixO6iqDvpEVeIwYc3HBZdV7qZLBp6rzBb
+	PJl7l9ni9or5zBbdU94yWuyetoDNom3nESYHdo+/7z8weeycdZfd4+GrLnaPi5eUPR5PPMHq
+	8XmTXABbFLdNUmJJWXBmep6+XQJ3xoRJM9gK9ohVPNjbxdrAuF+oi5GDQ0LAROLi+fQuRk4g
+	U0ziwr31bF2MXBxCApcZJf6s72aBcI4xSbx4N5MFpIpNQFdiUU8zE4gtIqAmMbHtEFgRs8Ai
+	Jokli7vAEsIC5hKfrr8Ea2ARUJXY8XMrWJxXwEWis+UFG8Q6OYkNu/8zgticAq4Sh/dPZAWx
+	hYBq2o5+ZYSoF5Q4OfMJC8ilzALqEuvnCYGEmQXkJZq3zmaewCgwC0nVLISqWUiqFjAyr2KU
+	S8wpzdXNTczMKU5N1i1OTszLSy3SNdHLzSzRS00p3cQICX/+HYxd62UOMQpwMCrx8BY4cIUI
+	sSaWFVfmHmKU5GBSEuVVuQ0U4kvKT6nMSCzOiC8qzUktPsQowcGsJMLbMRkox5uSWFmVWpQP
+	k5LmYFES51Vfou4nJJCeWJKanZpakFoEk5Xh4FCS4E17CNQoWJSanlqRlplTgpBm4uAEGc4l
+	JVKcmpeSWpRYWpIRD4rT+GJgpIKkeID2fngAsre4IDEXKArReopRl2Nd57d+JiGWvPy8VClx
+	3qsgOwRAijJK8+BWwJLdK0ZxoI+FefeCjOIBJkq4Sa+AljABLTFP5wRZUpKIkJJqYGRlbQ9+
+	/IrzkVX1p89XWB8+6Wyp/dy0bKHx8dvsK6uOHX4TMcHrw9WbjGyWoaKTowyWXHhh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256585>
 
-This patch applies on top of the patch series that I just sent [1]:
+=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-    Lockfile correctness and refactoring, v4
+Locked paths can be saved in a linked list so that if something wrong
+happens, *.lock are removed. For relative paths, this works fine if we
+keep cwd the same, which is true 99% of time except:
 
-It has the same effect as Duy's [2]
+- update-index and read-tree hold the lock on $GIT_DIR/index really
+  early, then later on may call setup_work_tree() to move cwd.
 
-    Keep .lock file paths absolute, v3
+- Suppose a lock is being held (e.g. by "git add") then somewhere
+  down the line, somebody calls real_path (e.g. "link_alt_odb_entry"),
+  which temporarily moves cwd away and back.
 
-except that my patch series obviates the need for his patches 1/3 and
-2/3. So only one patch remains, the equivalent of his patch 3/3,
-simplified because lockfile::filename is now a strbuf.
+During that time when cwd is moved (either permanently or temporarily)
+and we decide to die(), attempts to remove relative *.lock will fail,
+and the next operation will complain that some files are still locked.
 
-So I've shamelessly labeled this "v4" of his patch series and I've
-left Duy as the author, because his commit message (which I used
-directly) has far more intellectual content than the code change. Duy,
-if that's not OK with you, please let me know.
+Avoid this case by turning relative paths to absolute before storing
+the path in "filename" field.
 
-Michael
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/256564
-[2] http://thread.gmane.org/gmane.comp.version-control.git/253817/focus=
-=3D254573
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-  lockfile.c: store absolute path
-
+Reported-by: Yue Lin Ho <yuelinho777@gmail.com>
+Helped-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Adapted-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
  lockfile.c                    | 14 +++++++++++---
  t/t2107-update-index-basic.sh | 15 +++++++++++++++
  2 files changed, 26 insertions(+), 3 deletions(-)
 
+diff --git a/lockfile.c b/lockfile.c
+index e54d260..31b63bb 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -172,9 +172,17 @@ static int lock_file(struct lock_file *lk, const c=
+har *path, int flags)
+ 		lock_file_list =3D lk;
+ 	}
+=20
+-	strbuf_addstr(&lk->filename, path);
+-	if (!(flags & LOCK_NODEREF))
+-		resolve_symlink(&lk->filename);
++	if (flags & LOCK_NODEREF) {
++		strbuf_add_absolute_path(&lk->filename, path);
++	} else {
++		struct strbuf resolved_path =3D STRBUF_INIT;
++
++		strbuf_addstr(&resolved_path, path);
++		resolve_symlink(&resolved_path);
++		strbuf_add_absolute_path(&lk->filename, resolved_path.buf);
++		strbuf_release(&resolved_path);
++	}
++
+ 	strbuf_addstr(&lk->filename, LOCK_SUFFIX);
+ 	lk->fd =3D open(lk->filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
+ 	if (lk->fd < 0) {
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic=
+=2Esh
+index 1bafb90..dfe02f4 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -65,4 +65,19 @@ test_expect_success '--cacheinfo mode,sha1,path (new=
+ syntax)' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success '.lock files cleaned up' '
++	mkdir cleanup &&
++	(
++	cd cleanup &&
++	mkdir worktree &&
++	git init repo &&
++	cd repo &&
++	git config core.worktree ../../worktree &&
++	# --refresh triggers late setup_work_tree,
++	# active_cache_changed is zero, rollback_lock_file fails
++	git update-index --refresh &&
++	! test -f .git/index.lock
++	)
++'
++
+ test_done
 --=20
 2.1.0
