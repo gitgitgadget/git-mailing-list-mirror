@@ -1,105 +1,99 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v4 19/32] commit_lock_file(): rollback lock file on failure to rename
-Date: Sat,  6 Sep 2014 09:50:33 +0200
-Message-ID: <1409989846-22401-20-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v4 14/32] lock_file(): exit early if lockfile cannot be opened
+Date: Sat,  6 Sep 2014 09:50:28 +0200
+Message-ID: <1409989846-22401-15-git-send-email-mhagger@alum.mit.edu>
 References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Sep 06 09:59:50 2014
+X-From: git-owner@vger.kernel.org Sat Sep 06 09:59:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQAuT-0005JL-Rg
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 09:59:50 +0200
+	id 1XQAuN-0005Dd-27
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 09:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbaIFH7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2014 03:59:41 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49033 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751381AbaIFH7g (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Sep 2014 03:59:36 -0400
-X-AuditID: 12074411-f79d86d000006a97-7f-540abd39d411
+	id S1751383AbaIFH7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2014 03:59:37 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:64343 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751237AbaIFH7f (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Sep 2014 03:59:35 -0400
+X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Sep 2014 03:59:35 EDT
+X-AuditID: 12074412-f792e6d000005517-6f-540abd31fdda
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id A9.7D.27287.93DBA045; Sat,  6 Sep 2014 03:52:25 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 8F.8E.21783.13DBA045; Sat,  6 Sep 2014 03:52:17 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB3D26.dip0.t-ipconnect.de [93.219.61.38])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s867pFHI006967
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s867pFHD006967
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 6 Sep 2014 03:52:24 -0400
+	Sat, 6 Sep 2014 03:52:16 -0400
 X-Mailer: git-send-email 2.1.0
 In-Reply-To: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrEIsWRmVeSWpSXmKPExsUixO6iqGu5lyvE4P1yfouuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMIsWRmVeSWpSXmKPExsUixO6iqGu4lyvE4M4xG4uuK91MFg29V5gt
 	nsy9y2xxe8V8ZosfLT3MFp0dXxkd2Dz+vv/A5PHwVRe7x7PePYweFy8pe3zeJOdx+9k2lgC2
-	KG6bpMSSsuDM9Dx9uwTujHUXL7IWHOGqONO+i6mBcQtHFyMnh4SAiURnzzdGCFtM4sK99Wxd
-	jFwcQgKXGSXWnTjCCuEcY5LYNOEFWBWbgK7Eop5mJpCEiEAbo8Sui5tZQRLMAikSHc+7gYo4
-	OIQFQiXu/E0DMVkEVCXuLDEEqeAVcJU4/OwMO8QyOYkNu/+DjeQEik9v6gSzhQRcJNpP9jNN
-	YORdwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXVC83s0QvNaV0EyMkzAR3MM44KXeIUYCD
-	UYmHt8CBK0SINbGsuDL3EKMkB5OSKG/ecqAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd6OyUA5
-	3pTEyqrUonyYlDQHi5I4L98SdT8hgfTEktTs1NSC1CKYrAwHh5IEr8seoEbBotT01Iq0zJwS
-	hDQTByfIcC4pkeLUvJTUosTSkox4UGTEFwNjAyTFA7SXFaSdt7ggMRcoCtF6ilGXY13nt34m
-	IZa8/LxUKXFeJpAiAZCijNI8uBWwpPKKURzoY2FeMZAqHmBCgpv0CmgJE9AS83ROkCUliQgp
-	qQbGou4Aof0+AdLLOHMPP5tYtUI7izFqwYfkxIst37+uTNflqTw353l39gHxK9fT9qaaGe5+
-	LBGqvcLlxZrSIrH5a3rP5fxa+fDIxbL9d98FHlyr5bvww6wwEb6WqIDsnIaJP87a 
+	KG6bpMSSsuDM9Dx9uwTujBOHBAquc1b0nfnM0sB4nr2LkZNDQsBEYs2/r4wQtpjEhXvr2boY
+	uTiEBC4zSjxe9Z8ZwjnGJLF98nawDjYBXYlFPc1MIAkRgTZGiV0XN7OCJJgFUiQ6nneDjRIW
+	8JM4+ecTG4jNIqAqsaj/NlicV8BV4sDRBiaIdXISG3b/B4tzAsWnN3WC2UICLhLtJ/uZJjDy
+	LmBkWMUol5hTmqubm5iZU5yarFucnJiXl1qka6aXm1mil5pSuokREmhCOxjXn5Q7xCjAwajE
+	w1vgwBUixJpYVlyZe4hRkoNJSZQ3bzlQiC8pP6UyI7E4I76oNCe1+BCjBAezkghvx2SgHG9K
+	YmVValE+TEqag0VJnPfnYnU/IYH0xJLU7NTUgtQimKwMB4eSBK/LHqBGwaLU9NSKtMycEoQ0
+	EwcnyHAuKZHi1LyU1KLE0pKMeFBsxBcDowMkxQO0lxWknbe4IDEXKArReopRl2Nd57d+JiGW
+	vPy8VClxXiaQIgGQoozSPLgVsLTyilEc6GNhXjGQKh5gSoKb9ApoCRPQEvN0TpAlJYkIKakG
+	Rra6tW8uCruyHVg0g3XpA7Pg3c1WXTePpwtxF1QFynAtNGqZ6OJrHbRnujuPZUpoy5bz/gtu
+	2X17ztLtKbtOw+nQsUQ+J9+F7jdcpfpPSkufKu4Xj3QWMi8JZnOO0o0snnqlVfUF 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256575>
 
-If rename() fails, call rollback_lock_file() to delete the lock file
-(in case it is still present) and reset the filename field to the
-empty string so that the lockfile object is left in a valid state.
+This is a bit easier to read than the old version, which nested part
+of the non-error code in an "if" block.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- lockfile.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ lockfile.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
 diff --git a/lockfile.c b/lockfile.c
-index 213783a..a7cdb64 100644
+index bfea333..71786c9 100644
 --- a/lockfile.c
 +++ b/lockfile.c
-@@ -306,25 +306,29 @@ int reopen_lock_file(struct lock_file *lk)
- int commit_lock_file(struct lock_file *lk)
- {
- 	char result_file[PATH_MAX];
-+	int save_errno;
- 
- 	if (!lk->filename[0])
- 		die("BUG: attempt to commit unlocked object");
- 
--	if (lk->fd >= 0 && close_lock_file(lk)) {
--		int save_errno = errno;
--		rollback_lock_file(lk);
--		errno = save_errno;
--		return -1;
+@@ -207,19 +207,18 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 		resolve_symlink(lk->filename, max_path_len);
+ 	strcat(lk->filename, LOCK_SUFFIX);
+ 	lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, 0666);
+-	if (0 <= lk->fd) {
+-		lk->owner = getpid();
+-		if (adjust_shared_perm(lk->filename)) {
+-			int save_errno = errno;
+-			error("cannot fix permission bits on %s",
+-			      lk->filename);
+-			rollback_lock_file(lk);
+-			errno = save_errno;
+-			return -1;
+-		}
 -	}
-+	if (lk->fd >= 0 && close_lock_file(lk))
-+		goto rollback;
- 
- 	strcpy(result_file, lk->filename);
- 	/* remove ".lock": */
- 	result_file[strlen(result_file) - LOCK_SUFFIX_LEN] = 0;
- 
- 	if (rename(lk->filename, result_file))
--		return -1;
-+		goto rollback;
-+
- 	lk->filename[0] = 0;
- 	return 0;
-+
-+rollback:
-+	save_errno = errno;
-+	rollback_lock_file(lk);
-+	errno = save_errno;
-+	return -1;
+-	else
++	if (lk->fd < 0) {
+ 		lk->filename[0] = 0;
++		return -1;
++	}
++	lk->owner = getpid();
++	if (adjust_shared_perm(lk->filename)) {
++		int save_errno = errno;
++		error("cannot fix permission bits on %s", lk->filename);
++		rollback_lock_file(lk);
++		errno = save_errno;
++		return -1;
++	}
+ 	return lk->fd;
  }
  
- int hold_locked_index(struct lock_file *lk, int die_on_error)
 -- 
 2.1.0
