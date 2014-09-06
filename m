@@ -1,81 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCHv3 1/4] am: avoid re-directing stdin twice
-Date: Sat, 06 Sep 2014 00:34:21 -0700
-Message-ID: <xmqqbnqtp5he.fsf@gitster.dls.corp.google.com>
-References: <1409911611-20370-1-git-send-email-judge.packham@gmail.com>
-	<1409911611-20370-2-git-send-email-judge.packham@gmail.com>
-	<540A1C7B.80109@kdbg.org>
-	<CAFOYHZBct1CRA+NumVMvbbuELWTRoGL5FkhBfHD2Wk7QZVe1fA@mail.gmail.com>
-	<xmqqoautpw1g.fsf@gitster.dls.corp.google.com>
-	<xmqqk35hpvbg.fsf@gitster.dls.corp.google.com>
-	<xmqqfvg5puws.fsf@gitster.dls.corp.google.com>
-	<CALaEz9Xbk_sAAJ0wNCgC9Rzr=E9Ke0H3YEwGr1_4VNgv0AwYhw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, GIT <git@vger.kernel.org>,
-	Chris Packham <judge.packham@gmail.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 06 09:38:46 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v4 01/32] unable_to_lock_die(): rename function from unable_to_lock_index_die()
+Date: Sat,  6 Sep 2014 09:50:15 +0200
+Message-ID: <1409989846-22401-2-git-send-email-mhagger@alum.mit.edu>
+References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Sep 06 09:52:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQAW5-0004Ge-Ue
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 09:34:38 +0200
+	id 1XQAn8-000069-UM
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 09:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750817AbaIFHeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2014 03:34:25 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62150 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750724AbaIFHeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2014 03:34:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD45232DC4;
-	Sat,  6 Sep 2014 03:34:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7QbfB6IBcIEf1qGHunWP3npnmRI=; b=GQuMcu
-	KE0qcRULY+6y6v8M0MYTb3d1nsUxa/M1a/2IoQW5VjADK/yo3Zro/Z8Nl8weK2Pz
-	WUEU1fa5KSlV0nNIRsVvKkZGAKM+xVE/uXR8uf+i7SPXhO1olkGbjM8ghgiTjLbg
-	qpGgA06wsSaXAK6Lb/FmQCV5nsfwxd5/2En3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eZXdImIO0+6cwxjIfNSqY+13I7Q8717n
-	DKgAP38+jkUMri39T2cYOYiFvHLW4TaeSa/GFkLtRQoQtRYMZduDOk5oxWrwfTmA
-	mwWZiGlxYxf9cw6AAqJ0wh+Pv/bJh41S0FXHjZ1M4E8ul26tKx0J/yZsF5oAYj8/
-	HgvZ/WE832s=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C4F9832DC3;
-	Sat,  6 Sep 2014 03:34:23 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4E03232DC1;
-	Sat,  6 Sep 2014 03:34:23 -0400 (EDT)
-In-Reply-To: <CALaEz9Xbk_sAAJ0wNCgC9Rzr=E9Ke0H3YEwGr1_4VNgv0AwYhw@mail.gmail.com>
-	(Stephen Boyd's message of "Fri, 5 Sep 2014 16:18:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 38DD4DCA-3598-11E4-8AAC-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1750806AbaIFHwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2014 03:52:00 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:42589 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750724AbaIFHv7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Sep 2014 03:51:59 -0400
+X-AuditID: 12074413-f79ed6d000002501-ec-540abd1feb2a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 38.53.09473.F1DBA045; Sat,  6 Sep 2014 03:51:59 -0400 (EDT)
+Received: from michael.fritz.box (p5DDB3D26.dip0.t-ipconnect.de [93.219.61.38])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s867pFH0006967
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sat, 6 Sep 2014 03:51:58 -0400
+X-Mailer: git-send-email 2.1.0
+In-Reply-To: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrEIsWRmVeSWpSXmKPExsUixO6iqCu/lyvEYNUaPouuK91MFg29V5gt
+	nsy9y2xxe8V8ZosfLT3MFp0dXxkd2Dz+vv/A5PHwVRe7x7PePYweFy8pe3zeJOdx+9k2lgC2
+	KG6bpMSSsuDM9Dx9uwTujBcXV7AX/BCreLh0FnMD4wGhLkZODgkBE4kNt/6zQthiEhfurWfr
+	YuTiEBK4zChx5MZBJgjnGJPEpEXL2EGq2AR0JRb1NIMlRATaGCV2XdwM1s4skCLR8bybsYuR
+	g0NYIF5i6/EYEJNFQFXi6205kApeAReJ3VP/MkMsk5PYsPs/I4jNKeAqMb2pE8wWAqppP9nP
+	NIGRdwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXXO93MwSvdSU0k2MkDAT3sG466TcIUYB
+	DkYlHt4CB64QIdbEsuLK3EOMkhxMSqK8ecuBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4OyYD
+	5XhTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErzNe4AaBYtS01Mr0jJz
+	ShDSTBycIMO5pESKU/NSUosSS0sy4kGREV8MjA2QFA/Q3kaQdt7igsRcoChE6ylGXY51nd/6
+	mYRY8vLzUqXEeZlAigRAijJK8+BWwJLKK0ZxoI+FeSeCVPEAExLcpFdAS5iAlpinc4IsKUlE
+	SEk1MDbsXrM57HCu67fMymNzT83w3dHSv3v+wcrUCa4H1x3av9ku5MJ0eRfp1YxpM0rt+y2c
+	zL+rPnpmx8tySbk0Wr+1Lvar4am+yUcnPQrh+cSUGvTi2deHByWeh56/OSPl1GKG 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256551>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+This function is used for other things besides the index, so rename it
+accordingly.
 
->>> I see Stephen who wrote the original "Thunderbird save-as" is
->>> already on the Cc list.  How about doing it this way instead?
->
-> It was so long ago I can't even remember writing that patch. But I
-> googled the thread from 4.5 years ago and I see that you suggested we
-> use tr because \r is not portable[1].
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ builtin/update-index.c | 2 +-
+ cache.h                | 2 +-
+ lockfile.c             | 6 +++---
+ refs.c                 | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-Hmph.  That's unfortunate that this may be one of those things that
-even though it is in POSIX the real world prevents us from using it.
-
-I wonder if things changed over the past four years, though.  Can
-folks on OSX or BSD do a quick check?
-
-Thanks.
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index e8c7fd4..6c95988 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -942,7 +942,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		if (newfd < 0) {
+ 			if (refresh_args.flags & REFRESH_QUIET)
+ 				exit(128);
+-			unable_to_lock_index_die(get_index_file(), lock_error);
++			unable_to_lock_die(get_index_file(), lock_error);
+ 		}
+ 		if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+ 			die("Unable to write new index file");
+diff --git a/cache.h b/cache.h
+index 4d5b76c..da77094 100644
+--- a/cache.h
++++ b/cache.h
+@@ -581,7 +581,7 @@ struct lock_file {
+ extern int unable_to_lock_error(const char *path, int err);
+ extern void unable_to_lock_message(const char *path, int err,
+ 				   struct strbuf *buf);
+-extern NORETURN void unable_to_lock_index_die(const char *path, int err);
++extern NORETURN void unable_to_lock_die(const char *path, int err);
+ extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+ extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
+ extern int commit_lock_file(struct lock_file *);
+diff --git a/lockfile.c b/lockfile.c
+index 2a800ce..f1ce154 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -185,7 +185,7 @@ int unable_to_lock_error(const char *path, int err)
+ 	return -1;
+ }
+ 
+-NORETURN void unable_to_lock_index_die(const char *path, int err)
++NORETURN void unable_to_lock_die(const char *path, int err)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+@@ -198,7 +198,7 @@ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
+ {
+ 	int fd = lock_file(lk, path, flags);
+ 	if (fd < 0 && (flags & LOCK_DIE_ON_ERROR))
+-		unable_to_lock_index_die(path, errno);
++		unable_to_lock_die(path, errno);
+ 	return fd;
+ }
+ 
+@@ -209,7 +209,7 @@ int hold_lock_file_for_append(struct lock_file *lk, const char *path, int flags)
+ 	fd = lock_file(lk, path, flags);
+ 	if (fd < 0) {
+ 		if (flags & LOCK_DIE_ON_ERROR)
+-			unable_to_lock_index_die(path, errno);
++			unable_to_lock_die(path, errno);
+ 		return fd;
+ 	}
+ 
+diff --git a/refs.c b/refs.c
+index 27927f2..5ae8e69 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2159,7 +2159,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 			 */
+ 			goto retry;
+ 		else
+-			unable_to_lock_index_die(ref_file, errno);
++			unable_to_lock_die(ref_file, errno);
+ 	}
+ 	return old_sha1 ? verify_lock(lock, old_sha1, mustexist) : lock;
+ 
+-- 
+2.1.0
