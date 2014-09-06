@@ -1,225 +1,715 @@
 From: Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH v3 4/8] combine-diff: do not pass revs->dense_combined_merges redundantly
-Date: Sat,  6 Sep 2014 19:57:02 +0200
-Message-ID: <33951a1d4be8ec15eec569e1a36c0a620b9edaa6.1409860234.git.tr@thomasrast.ch>
+Subject: [PATCH v3 8/8] log --remerge-diff: show what the conflict resolution changed
+Date: Sat,  6 Sep 2014 19:57:06 +0200
+Message-ID: <29c15efe998630143eaa75ec7155a31ce17bd433.1409860234.git.tr@thomasrast.ch>
 References: <cover.1409860234.git.tr@thomasrast.ch>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 06 19:57:41 2014
+X-From: git-owner@vger.kernel.org Sat Sep 06 19:57:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQKF1-0005nG-6a
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 19:57:39 +0200
+	id 1XQKFB-0005v0-9d
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Sep 2014 19:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbaIFR5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2014 13:57:35 -0400
+	id S1752394AbaIFR5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Sep 2014 13:57:42 -0400
 Received: from ip1.thgersdorf.net ([148.251.9.194]:40803 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752066AbaIFR5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2014 13:57:30 -0400
+	id S1752059AbaIFR5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2014 13:57:32 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id B8F1E4D66AD;
-	Sat,  6 Sep 2014 19:57:27 +0200 (CEST)
+	by localhost.psioc.net (Postfix) with ESMTP id 530434D6686;
+	Sat,  6 Sep 2014 19:57:30 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at psioc.net
 Received: from mail.psioc.net ([127.0.0.1])
 	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id FTgUkZB-m7ky; Sat,  6 Sep 2014 19:57:14 +0200 (CEST)
+	with LMTP id O7CwyI5f1OYZ; Sat,  6 Sep 2014 19:57:28 +0200 (CEST)
 Received: from linux.local (unknown [65.50.222.226])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 1F1C64D668B;
-	Sat,  6 Sep 2014 19:57:12 +0200 (CEST)
+	by mail.psioc.net (Postfix) with ESMTPSA id 62CAB4D66AE;
+	Sat,  6 Sep 2014 19:57:22 +0200 (CEST)
 X-Mailer: git-send-email 2.1.0.72.g9b94086
 In-Reply-To: <cover.1409860234.git.tr@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256597>
 
-The existing code passed revs->dense_combined_merges along revs itself
-into the combine-diff functions, which is rather redundant.  Remove
-the 'dense' argument until much further down the callchain to simplify
-callers.
+Git has --cc as a very fast inspection tool that shows a brief summary
+of what a conflicted merge "looks like", and -c/-m as "give me the
+full information" data dumps.
 
-Note that while the caller in submodule.c needs to do extra work now,
-the next commit will simplify this to a single setting again.
+But --cc actually loses information: if the merge lost(!) some changes
+from one side, that hunk would fully agree with the other side, and
+therefore be elided.  So --cc cannot be used to investigate mismerges.
+Indeed it is rather hard to find a merge that has lost changes, unless
+one knows where to look.
+
+The new option --remerge-diff is an attempt at filling this gap,
+admittedly at the cost of a lot of CPU cycles.  For each merge commit,
+it diffs the merge result against a recursive merge of the merge's
+parents.
+
+For files that can be auto-merged cleanly, it will typically show
+nothing.  However, it will make it obvious when the merge introduces
+extra changes.
+
+For files that result in merge conflicts, we diff against the
+representation with conflict hunks (what the user would usually see in
+the worktree).  So the diff will show what was changed in the conflict
+hunks to resolve the conflict.
+
+It still takes a bit of staring to tell an evil from a regular merge.
+But at least the information is there, unlike with --cc; and the
+output is usually much shorter than with -c.
 
 Signed-off-by: Thomas Rast <tr@thomasrast.ch>
 ---
- builtin/diff.c |  3 +--
- combine-diff.c | 13 ++++++-------
- diff-lib.c     |  6 ++----
- diff.h         |  6 +++---
- log-tree.c     |  2 +-
- submodule.c    |  5 ++++-
- 6 files changed, 17 insertions(+), 18 deletions(-)
+ Documentation/rev-list-options.txt |   7 +
+ log-tree.c                         | 297 +++++++++++++++++++++++++++++++++++++
+ merge-recursive.c                  |   3 +-
+ merge-recursive.h                  |   1 +
+ revision.c                         |   2 +
+ revision.h                         |   4 +-
+ t/t4213-log-remerge-diff.sh        | 222 +++++++++++++++++++++++++++
+ 7 files changed, 534 insertions(+), 2 deletions(-)
+ create mode 100755 t/t4213-log-remerge-diff.sh
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 0f247d2..47f663b 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -196,8 +196,7 @@ static int builtin_diff_combined(struct rev_info *revs,
- 		revs->dense_combined_merges = revs->combine_merges = 1;
- 	for (i = 1; i < ents; i++)
- 		sha1_array_append(&parents, ent[i].item->sha1);
--	diff_tree_combined(ent[0].item->sha1, &parents,
--			   revs->dense_combined_merges, revs);
-+	diff_tree_combined(ent[0].item->sha1, &parents, revs);
- 	sha1_array_clear(&parents);
- 	return 0;
- }
-diff --git a/combine-diff.c b/combine-diff.c
-index 91edce5..221ab22 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -966,7 +966,7 @@ static void show_combined_header(struct combine_diff_path *elem,
- }
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index deb8cca..7128350 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -805,6 +805,13 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+ 	in that case, the output represents the changes the merge
+ 	brought _into_ the then-current branch.
  
- static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
--			    int dense, int working_tree_file,
-+			    int working_tree_file,
- 			    struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
-@@ -981,6 +981,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	struct userdiff_driver *textconv = NULL;
- 	int is_binary;
- 	const char *line_prefix = diff_line_prefix(opt);
-+	int dense = rev->dense_combined_merges;
- 
- 	context = opt->context;
- 	userdiff = userdiff_find_by_path(elem->path);
-@@ -1228,7 +1229,6 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
-  */
- void show_combined_diff(struct combine_diff_path *p,
- 		       int num_parent,
--		       int dense,
- 		       struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
-@@ -1238,7 +1238,7 @@ void show_combined_diff(struct combine_diff_path *p,
- 				  DIFF_FORMAT_NAME_STATUS))
- 		show_raw_diff(p, num_parent, rev);
- 	else if (opt->output_format & DIFF_FORMAT_PATCH)
--		show_patch_diff(p, num_parent, dense, 1, rev);
-+		show_patch_diff(p, num_parent, 1, rev);
- }
- 
- static void free_combined_pair(struct diff_filepair *pair)
-@@ -1388,7 +1388,6 @@ static struct combine_diff_path *find_paths_multitree(
- 
- void diff_tree_combined(const unsigned char *sha1,
- 			const struct sha1_array *parents,
--			int dense,
- 			struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
-@@ -1516,7 +1515,7 @@ void diff_tree_combined(const unsigned char *sha1,
- 				printf("%s%c", diff_line_prefix(opt),
- 				       opt->line_termination);
- 			for (p = paths; p; p = p->next)
--				show_patch_diff(p, num_parent, dense,
-+				show_patch_diff(p, num_parent,
- 						0, rev);
- 		}
- 	}
-@@ -1531,7 +1530,7 @@ void diff_tree_combined(const unsigned char *sha1,
- 	free_pathspec(&diffopts.pathspec);
- }
- 
--void diff_tree_combined_merge(const struct commit *commit, int dense,
-+void diff_tree_combined_merge(const struct commit *commit,
- 			      struct rev_info *rev)
- {
- 	struct commit_list *parent = get_saved_parents(rev, commit);
-@@ -1541,6 +1540,6 @@ void diff_tree_combined_merge(const struct commit *commit, int dense,
- 		sha1_array_append(&parents, parent->item->object.sha1);
- 		parent = parent->next;
- 	}
--	diff_tree_combined(commit->object.sha1, &parents, dense, rev);
-+	diff_tree_combined(commit->object.sha1, &parents, rev);
- 	sha1_array_clear(&parents);
- }
-diff --git a/diff-lib.c b/diff-lib.c
-index 875aff8..3e533d2 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -171,9 +171,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			i--;
- 
- 			if (revs->combine_merges && num_compare_stages == 2) {
--				show_combined_diff(dpath, 2,
--						   revs->dense_combined_merges,
--						   revs);
-+				show_combined_diff(dpath, 2, revs);
- 				free(dpath);
- 				continue;
- 			}
-@@ -343,7 +341,7 @@ static int show_modified(struct rev_info *revs,
- 		p->parent[1].status = DIFF_STATUS_MODIFIED;
- 		p->parent[1].mode = old->ce_mode;
- 		hashcpy(p->parent[1].sha1, old->sha1);
--		show_combined_diff(p, 2, revs->dense_combined_merges, revs);
-+		show_combined_diff(p, 2, revs);
- 		free(p);
- 		return 0;
- 	}
-diff --git a/diff.h b/diff.h
-index b4a624d..3b1b54e 100644
---- a/diff.h
-+++ b/diff.h
-@@ -219,11 +219,11 @@ struct combine_diff_path {
- 	 sizeof(struct combine_diff_parent) * (n) + (l) + 1)
- 
- extern void show_combined_diff(struct combine_diff_path *elem, int num_parent,
--			      int dense, struct rev_info *);
-+			       struct rev_info *);
- 
--extern void diff_tree_combined(const unsigned char *sha1, const struct sha1_array *parents, int dense, struct rev_info *rev);
-+extern void diff_tree_combined(const unsigned char *sha1, const struct sha1_array *parents, struct rev_info *rev);
- 
--extern void diff_tree_combined_merge(const struct commit *commit, int dense, struct rev_info *rev);
-+extern void diff_tree_combined_merge(const struct commit *commit, struct rev_info *rev);
- 
- void diff_set_mnemonic_prefix(struct diff_options *options, const char *a, const char *b);
++--remerge-diff::
++	Diff merge commits against a recursive merge of their parents,
++	with conflict hunks.  Intuitively speaking, this shows what
++	the author of the merge changed to resolve the merge.  It
++	assumes that all (or most) merges are recursive merges; other
++	strategies are not supported.
++
+ -r::
+ 	Show recursive diffs.
  
 diff --git a/log-tree.c b/log-tree.c
-index 95e9b1d..40a9db1 100644
+index 8f57651..4db1385 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -714,7 +714,7 @@ int log_tree_diff_flush(struct rev_info *opt)
+@@ -11,6 +11,8 @@
+ #include "gpg-interface.h"
+ #include "sequencer.h"
+ #include "line-log.h"
++#include "cache-tree.h"
++#include "merge-recursive.h"
  
- static int do_diff_combined(struct rev_info *opt, struct commit *commit)
- {
--	diff_tree_combined_merge(commit, opt->dense_combined_merges, opt);
-+	diff_tree_combined_merge(commit, opt);
- 	return !opt->loginfo;
+ struct decoration name_decoration = { "object names" };
+ 
+@@ -719,6 +721,299 @@ static int do_diff_combined(struct rev_info *opt, struct commit *commit)
  }
  
-diff --git a/submodule.c b/submodule.c
-index c3a61e7..0499de6 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -482,10 +482,13 @@ static void find_unpushed_submodule_commits(struct commit *commit,
- 	struct rev_info rev;
+ /*
++ * Helpers for make_asymmetric_conflict_entries() below.
++ */
++static char *load_cache_entry_blob(struct cache_entry *entry,
++				   unsigned long *size)
++{
++	enum object_type type;
++	void *data;
++
++	if (!entry)
++		return NULL;
++
++	data = read_sha1_file(entry->sha1, &type, size);
++	if (type != OBJ_BLOB)
++		die("BUG: load_cache_entry_blob for non-blob");
++
++	return data;
++}
++
++static void strbuf_append_cache_entry_blob(struct strbuf *sb,
++					   struct cache_entry *entry)
++{
++	unsigned long size;
++	char *data = load_cache_entry_blob(entry, &size);;
++
++	if (!data)
++		return;
++
++	strbuf_add(sb, data, size);
++	free(data);
++}
++
++static void assemble_conflict_entry(struct strbuf *sb,
++				    const char *branch1,
++				    const char *branch2,
++				    struct cache_entry *entry1,
++				    struct cache_entry *entry2)
++{
++	strbuf_addf(sb, "<<<<<<< %s\n", branch1);
++	strbuf_append_cache_entry_blob(sb, entry1);
++	strbuf_addstr(sb, "=======\n");
++	strbuf_append_cache_entry_blob(sb, entry2);
++	strbuf_addf(sb, ">>>>>>> %s\n", branch2);
++}
++
++/*
++ * For --remerge-diff, we need conflicted (<<<<<<< ... >>>>>>>)
++ * representations of as many conflicts as possible.  Default conflict
++ * generation only applies to files that have all three stages.
++ *
++ * This function generates conflict hunk representations for files
++ * that have only one of stage 2 or 3.  The corresponding side in the
++ * conflict hunk format will be empty.  A stage 1, if any, will be
++ * dropped in the process.
++ */
++static void make_asymmetric_conflict_entries(const char *branch1,
++					     const char *branch2)
++{
++	int o = 0, i = 0;
++
++	/*
++	 * NEEDSWORK: we trample all over the cache below, so we need
++	 * to set up the name hash early, before modifying it.  And
++	 * after that we cannot free any cache entries, because they
++	 * remain hashed even if deleted.  Sigh.
++	 */
++	init_name_hash(&the_index, 1);
++
++	/*
++	 * The loop always starts with 'i' pointing at the first entry
++	 * for a pathname.
++	 */
++	while (i < active_nr) {
++		struct cache_entry *ce;
++		struct cache_entry *stage1 = NULL;
++		struct cache_entry *stage2 = NULL;
++		struct cache_entry *stage3 = NULL;
++		struct cache_entry *new_ce = NULL;
++		struct strbuf content = STRBUF_INIT;
++		unsigned char sha1[20];
++
++		assert(o <= i);
++
++		ce = active_cache[i];
++
++		/*
++		 * Pass through stage 0 and submodules unchanged, we
++		 * don't know how to handle them.
++		 */
++		if (ce_stage(ce) == 0
++		    || S_ISGITLINK(ce->ce_mode)) {
++			active_cache[o++] = ce;
++			i++;
++			continue;
++		}
++
++		/*
++		 * Collect the stages we have.  Point 'i' past the
++		 * entry.
++		 */
++		if (/* i < active_nr && */
++		    !strcmp(ce->name, active_cache[i]->name) &&
++		    ce_stage(active_cache[i]) == 1)
++			stage1 = active_cache[i++];
++
++		if (i < active_nr &&
++		    !strcmp(ce->name, active_cache[i]->name) &&
++		    ce_stage(active_cache[i]) == 2)
++			stage2 = active_cache[i++];
++
++		if (i < active_nr &&
++		    !strcmp(ce->name, active_cache[i]->name) &&
++		    ce_stage(active_cache[i]) == 3)
++			stage3 = active_cache[i++];
++
++		if (!stage2 && !stage3)
++			die("BUG: merging resulted in conflict with neither "
++			    "stage 2 nor 3");
++
++		if (cache_dir_exists(ce->name, ce->ce_namelen)) {
++			/*
++			 * If a conflicting directory for this entry exists,
++			 * we can drop it:
++			 *
++			 * In the face of a file/directory conflict,
++			 * merge-recursive
++			 * - puts the file at stage >0 as usual
++			 * - also attempts to check out the file as
++			 *   'file~side' where side is the sha1 of the commit
++			 *   the file came from, to avoid colliding with the
++			 *   directory
++			 *
++			 * But we have requested that files go to the index
++			 * instead of the worktree, so by the time we get
++			 * here, we have both stage>0 'file' from ordinary
++			 * merging and a stage=0 'file~side' from the "write
++			 * all files to index".
++			 *
++			 * We need to remove one of them.  Currently we ditch
++			 * the 'file' entry because it's easier to detect.
++			 * This amounts to always renaming the file to make
++			 * room for the directory.
++			 *
++			 * NEEDSWORK: Two options:
++			 *
++			 * - If the merge result kept the file, it would be
++			 *   better to rename the _directory_ to make room for
++			 *   the file, so that filenames match between the
++			 *   result and the re-merge.
++			 *
++			 * - Or we could avoid going through a tree, since the
++			 *   index can represent (though it's not "legal") a
++			 *   file/directory collision just fine.
++			 */
++		} else {
++			/*
++			 * Otherwise, there is room for a file entry
++			 * at stage 0.  It has fake-conflict content,
++			 * but its mode is the same.
++			 */
++
++			assemble_conflict_entry(&content,
++						branch1, branch2,
++						stage2, stage3);
++			if (write_sha1_file(content.buf, content.len,
++					    typename(OBJ_BLOB), sha1))
++				die("write_sha1_file failed");
++			strbuf_release(&content);
++
++			new_ce = xcalloc(1, cache_entry_size(ce->ce_namelen));
++			new_ce->ce_mode = ce->ce_mode;
++			new_ce->ce_flags = ce->ce_flags & ~CE_STAGEMASK;
++			new_ce->ce_namelen = ce->ce_namelen;
++			hashcpy(new_ce->sha1, sha1);
++			memcpy(new_ce->name, ce->name, ce->ce_namelen+1);
++			active_cache[o++] = new_ce;
++			add_name_hash(&the_index, new_ce);
++		}
++
++		if (stage1)
++			remove_name_hash(&the_index, stage1);
++		if (stage2)
++			remove_name_hash(&the_index, stage2);
++		if (stage3)
++			remove_name_hash(&the_index, stage3);
++		free(stage1);
++		free(stage2);
++		free(stage3);
++	}
++
++	active_nr = o;
++}
++
++/*
++ * --remerge-diff doesn't currently handle entries that cannot be
++ * turned into a stage0 conflicted-file format blob.  So this routine
++ * clears the corresponding entries from the index.  This is
++ * suboptimal; we should eventually handle them _somehow_.
++*/
++static void drop_non_stage0()
++{
++	int o = 0, i = 0;
++
++	while (i < active_nr) {
++		struct cache_entry *ce = active_cache[i];
++		const char *name;
++
++		if (!ce_stage(ce)) {
++			active_cache[o++] = active_cache[i++];
++			continue;
++		}
++
++		name = ce->name;
++
++		printf("Cannot handle stage %d entry '%s', skipping\n",
++		       ce_stage(ce), name);
++		i++;
++
++		while (i < active_nr && !strcmp(name, active_cache[i]->name))
++			free(active_cache[i++]);
++
++		free(ce);
++	}
++
++	active_nr = o;
++}
++
++static int do_diff_remerge(struct rev_info *opt, struct commit *commit)
++{
++	struct commit_list *merge_bases;
++	struct commit *result, *parent1, *parent2;
++	struct merge_options o;
++	char *branch1, *branch2;
++	struct cache_tree *orig_cache_tree;
++
++	/*
++	 * We show the log message early to avoid headaches later.  In
++	 * general we need to run this before printing anything in
++	 * this routine.
++	 */
++	if (opt->loginfo && !opt->no_commit_id) {
++		show_log(opt);
++
++		if (opt->verbose_header && opt->diffopt.output_format)
++			printf("%s%c", diff_line_prefix(&opt->diffopt),
++			       opt->diffopt.line_termination);
++	}
++
++	if (commit->parents->next->next) {
++		printf("--remerge-diff not supported for octopus merges.\n");
++		return !opt->loginfo;
++	}
++
++	parent1 = commit->parents->item;
++	parent2 = commit->parents->next->item;
++	parse_commit(parent1);
++	parse_commit(parent2);
++	branch1 = xstrdup(sha1_to_hex(parent1->object.sha1));
++	branch2 = xstrdup(sha1_to_hex(parent2->object.sha1));
++
++	merge_bases = get_octopus_merge_bases(commit->parents);
++	init_merge_options(&o);
++	o.verbosity = -1;
++	o.no_worktree = 1;
++	o.conflicts_in_index = 1;
++	o.use_ondisk_index = 0;
++	o.branch1 = branch1;
++	o.branch2 = branch2;
++	merge_recursive(&o, parent1, parent2, merge_bases, &result);
++
++	make_asymmetric_conflict_entries(branch1, branch2);
++	drop_non_stage0();
++
++	free(branch1);
++	free(branch2);
++
++	orig_cache_tree = the_index.cache_tree;
++	the_index.cache_tree = cache_tree();
++	if (cache_tree_update(&the_index, WRITE_TREE_SILENT) < 0) {
++		printf("BUG: merge conflicts not fully folded, cannot diff.\n");
++		return !opt->loginfo;
++	}
++
++	diff_tree_sha1(the_index.cache_tree->sha1, commit->tree->object.sha1,
++		       "", &opt->diffopt);
++	log_tree_diff_flush(opt);
++
++	cache_tree_free(&the_index.cache_tree);
++	the_index.cache_tree = orig_cache_tree;
++
++	return !opt->loginfo;
++}
++
++/*
+  * Show the diff of a commit.
+  *
+  * Return true if we printed any log info messages
+@@ -751,6 +1046,8 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 			return 0;
+ 		else if (merge_diff_mode_is_any_combined(opt))
+ 			return do_diff_combined(opt, commit);
++		else if (opt->merge_diff_mode == MERGE_DIFF_REMERGE)
++			return do_diff_remerge(opt, commit);
+ 		else if (opt->first_parent_only) {
+ 			/*
+ 			 * Generate merge log entry only for the first
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 20d3051..c5d0bb3 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1962,7 +1962,7 @@ int merge_recursive(struct merge_options *o,
+ 	}
  
- 	init_revisions(&rev, NULL);
-+	rev.ignore_merges = 0;
-+	rev.combined_merges = 1;
-+	rev.dense_combined_merges = 1;
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = collect_submodules_from_diff;
- 	rev.diffopt.format_callback_data = needs_pushing;
--	diff_tree_combined_merge(commit, 1, &rev);
-+	diff_tree_combined_merge(commit, &rev);
- }
+ 	discard_cache();
+-	if (!o->call_depth)
++	if (!o->call_depth && o->use_ondisk_index)
+ 		read_cache();
  
- int find_unpushed_submodules(unsigned char new_sha1[20],
+ 	o->ancestor = "merged common ancestors";
+@@ -2057,6 +2057,7 @@ void init_merge_options(struct merge_options *o)
+ 	o->diff_rename_limit = -1;
+ 	o->merge_rename_limit = -1;
+ 	o->renormalize = 0;
++	o->use_ondisk_index = 1;
+ 	git_config(merge_recursive_config, o);
+ 	if (getenv("GIT_MERGE_VERBOSITY"))
+ 		o->verbosity =
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 9b8e20b..d7466c7 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -17,6 +17,7 @@ struct merge_options {
+ 	unsigned renormalize : 1;
+ 	unsigned no_worktree : 1; /* do not touch worktree */
+ 	unsigned conflicts_in_index : 1; /* index will contain conflict hunks */
++	unsigned use_ondisk_index : 1; /* tree-level merge loads .git/index */
+ 	long xdl_opts;
+ 	int verbosity;
+ 	int diff_rename_limit;
+diff --git a/revision.c b/revision.c
+index 7a9a141..5ccf225 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1815,6 +1815,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->merge_diff_mode = MERGE_DIFF_COMBINED;
+ 	} else if (!strcmp(arg, "--cc")) {
+ 		revs->merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
++	} else if (!strcmp(arg, "--remerge-diff")) {
++		revs->merge_diff_mode = MERGE_DIFF_REMERGE;
+ 	} else if (!strcmp(arg, "-v")) {
+ 		revs->verbose_header = 1;
+ 	} else if (!strcmp(arg, "--pretty")) {
+diff --git a/revision.h b/revision.h
+index 0eb34c2..38544ea 100644
+--- a/revision.h
++++ b/revision.h
+@@ -60,7 +60,9 @@ enum merge_diff_mode {
+ 	/* combined format (-c) */
+ 	MERGE_DIFF_COMBINED,
+ 	/* combined-condensed format (-cc) */
+-	MERGE_DIFF_COMBINED_CONDENSED
++	MERGE_DIFF_COMBINED_CONDENSED,
++	/* --remerge-diff */
++	MERGE_DIFF_REMERGE
+ };
+ 
+ struct rev_info {
+diff --git a/t/t4213-log-remerge-diff.sh b/t/t4213-log-remerge-diff.sh
+new file mode 100755
+index 0000000..36ef17a
+--- /dev/null
++++ b/t/t4213-log-remerge-diff.sh
+@@ -0,0 +1,222 @@
++#!/bin/sh
++
++test_description='test log --remerge-diff'
++. ./test-lib.sh
++
++# A -----------------+----
++# | \  \      \      |    \
++# |  C  \      \     |    |
++# B  |\  \      |    |    |
++# |  | |  D     U   dir  file
++# |\ | |__|__   |    | \ /|
++# | X  |_ |  \  |    |  X |
++# |/ \/  \|   \ |    | / \|
++# M1 M2   M3   M4    M5   M6
++# ^  ^    ^     ^    ^    ^
++# |  |    |     |    |    filedir
++# |  |    |     |    dirfile
++# |  |    dm    unrelated
++# |  evil
++# benign
++#
++#
++# M1 has a "benign" conflict
++# M2 has an "evil" conflict: it ignores the changes in D
++# M3 has a delete/modify conflict, resolved in favor of a modification
++# M4 is a merge of an unrelated change, without conflicts
++# M5 has a file/directory conflict, resolved in favor of the directory
++# M6 has a file/directory conflict, resolved in favor of the file
++
++test_expect_success 'setup' '
++	test_commit A file original &&
++	test_commit B file change &&
++	git checkout -b side A &&
++	test_commit C file side &&
++	git checkout -b delete A &&
++	git rm file &&
++	test_commit D &&
++	git checkout -b benign master &&
++	test_must_fail git merge C &&
++	test_commit M1 file merged &&
++	git checkout -b evil B &&
++	test_must_fail git merge C &&
++	test_commit M2 file change &&
++	git checkout -b dm C &&
++	test_must_fail git merge D &&
++	test_commit M3 file resolved &&
++	git checkout -b unrelated A &&
++	test_commit unrelated_file &&
++	git merge C &&
++	test_tick &&
++	git tag M4 &&
++	git checkout -b dir A &&
++	mkdir sub &&
++	test_commit dir sub/file &&
++	git checkout -b file A &&
++	test_commit file sub &&
++	git checkout -b dirfile tags/dir &&
++	test_must_fail git merge tags/file &&
++	git rm --cached sub &&
++	test_commit M5 sub/file resolved &&
++	git checkout -b filedir tags/file &&
++	test_must_fail git merge tags/dir &&
++	git rm --cached sub/file &&
++	rm -rf sub &&
++	test_commit M6 sub resolved &&
++	git branch -D master side delete dir file
++'
++
++test_expect_success 'unrelated merge: without conflicts' '
++	git log -p --cc unrelated >expected &&
++	git log -p --remerge-diff unrelated >actual &&
++	test_cmp expected actual
++'
++
++clean_output () {
++	git name-rev --name-only --stdin |
++	# strip away bits that aren't treated by the above
++	sed -e 's/^\(index\|Merge:\|Date:\).*/\1/'
++}
++
++cat >expected <<EOF
++commit benign
++Merge:
++Author: A U Thor <author@example.com>
++Date:
++
++    M1
++
++diff --git a/file b/file
++index
++--- a/file
+++++ b/file
++@@ -1,5 +1 @@
++-<<<<<<< tags/B
++-change
++-=======
++-side
++->>>>>>> tags/C
+++merged
++EOF
++
++test_expect_success 'benign merge: conflicts resolved' '
++	git log -1 -p --remerge-diff benign >output &&
++	clean_output <output >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++commit evil
++Merge:
++Author: A U Thor <author@example.com>
++Date:
++
++    M2
++
++diff --git a/file b/file
++index
++--- a/file
+++++ b/file
++@@ -1,5 +1 @@
++-<<<<<<< tags/B
++ change
++-=======
++-side
++->>>>>>> tags/C
++EOF
++
++test_expect_success 'evil merge: changes ignored' '
++	git log -1 --remerge-diff -p evil >output &&
++	clean_output <output >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++commit dm
++Merge:
++Author: A U Thor <author@example.com>
++Date:
++
++    M3
++
++diff --git a/file b/file
++index
++--- a/file
+++++ b/file
++@@ -1,4 +1 @@
++-<<<<<<< tags/C
++-side
++-=======
++->>>>>>> tags/D
+++resolved
++EOF
++
++test_expect_success 'delete/modify conflict' '
++	git log -1 --remerge-diff -p dm >output &&
++	clean_output <output >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++commit dirfile
++Merge:
++Author: A U Thor <author@example.com>
++Date:
++
++    M5
++
++diff --git a/sub/file b/sub/file
++index
++--- a/sub/file
+++++ b/sub/file
++@@ -1 +1 @@
++-dir
+++resolved
++diff --git a/sub~tags/file b/sub~tags/file
++deleted file mode 100644
++index
++--- a/sub~tags/file
+++++ /dev/null
++@@ -1 +0,0 @@
++-file
++EOF
++
++test_expect_success 'file/directory conflict resulting in directory' '
++	git log -1 --remerge-diff -p dirfile >output &&
++	clean_output <output >actual &&
++	test_cmp expected actual
++'
++
++# This is wishful thinking, see the NEEDSWORK in
++# make_asymmetric_conflict_entries().
++cat >expected <<EOF
++commit filedir
++Merge:
++Author: A U Thor <author@example.com>
++Date:
++
++    M6
++
++diff --git a/sub b/sub
++index
++--- a/sub
+++++ b/sub
++@@ -1 +1 @@
++-file
+++resolved
++diff --git a/sub/file b/sub/file
++deleted file mode 100644
++index
++--- a/sub/file
+++++ /dev/null
++@@ -1 +0,0 @@
++-dir
++EOF
++
++test_expect_failure 'file/directory conflict resulting in file' '
++	git log -1 --remerge-diff -p filedir >output &&
++	clean_output <output >actual &&
++	test_cmp expected actual
++'
++
++test_done
 -- 
 2.1.0.72.g9b94086
