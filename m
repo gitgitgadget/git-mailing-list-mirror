@@ -1,104 +1,115 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [RFC PATCH v2 2/2] headers: include dependent headers
-Date: Sun, 07 Sep 2014 08:41:48 +0200
-Message-ID: <540BFE2C.6060409@web.de>
-References: <1410049821-49861-1-git-send-email-davvid@gmail.com> <1410049821-49861-2-git-send-email-davvid@gmail.com>
+Subject: [PATCH 1/2] strbuf: export strbuf_addchars()
+Date: Sun, 07 Sep 2014 09:03:32 +0200
+Message-ID: <540C0344.9060002@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>
-To: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 07 08:42:24 2014
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 07 09:04:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQWB4-0004PH-TL
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Sep 2014 08:42:23 +0200
+	id 1XQWW7-0001Wr-QG
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Sep 2014 09:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750911AbaIGGmI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Sep 2014 02:42:08 -0400
-Received: from mout.web.de ([212.227.15.3]:57270 "EHLO mout.web.de"
+	id S1750877AbaIGHDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2014 03:03:54 -0400
+Received: from mout.web.de ([212.227.15.3]:53999 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750822AbaIGGmH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2014 02:42:07 -0400
-Received: from [192.168.178.27] ([79.250.174.198]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LqDD6-1Y3xee3Hgu-00dlFw; Sun, 07 Sep 2014 08:42:04
+	id S1750822AbaIGHDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2014 03:03:54 -0400
+Received: from [192.168.178.27] ([79.250.174.198]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LeLin-1YA64f3Hpt-00qCVj; Sun, 07 Sep 2014 09:03:48
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-In-Reply-To: <1410049821-49861-2-git-send-email-davvid@gmail.com>
-X-Provags-ID: V03:K0:DddK+U7rU7lXMhYXBCF16qaoqKtulykTWdmVSK/yK/Ks/wXhP3F
- d9rGEJsJ88U4x1m0mk1BXS9TN6lHQ2ygCgRrJNvYVbzhYhfLJsMmpK2Hge6lMsc0RzYMfB0
- mIbj9bYKAlHyOyuOdPFTP80GaJhj9hhQcbeM+wW29fFesTGhdL8Ez9bnjgYQbrHSx0BXjvR
- 5golpd6+rz7957BpUX0KA==
+X-Provags-ID: V03:K0:L/yUWVvqb50aYko/qzvoyU4eZVEr4UX8oHQiZZwuJxnNzj8Y5mq
+ K4xthNQdXQf6X1Tb/U4NL41KP6pwtMc8x2e6mjnSpG59SBjFFfBGzOlMjjNqpTobysUW1mf
+ 90q4l6bRnWmVcudfl03KgGMcAMvQGcAqP3KJCN4jifdmv998f0Lkbx1EHTx/42jpJqQ9X5g
+ ZU6qKU5VbZeG1VFJUs7Tg==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256612>
 
-Am 07.09.2014 um 02:30 schrieb David Aguilar:
-> Add dependent headers so that including a header does not
-> require including additional headers.
->=20
-> This makes it so that "gcc -c $header" succeeds for each header.
->=20
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> Addresses Ren=C3=A9's note to not include strbuf.h when cache.h is al=
-ready
-> included.
+Move strbuf_addchars() to strbuf.c, where it belongs, and make it
+available for other callers.
 
-Perhaps squash this in in order to catch two more cases and also
-avoid including git-compat-util.h if we already have cache.h:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ Documentation/technical/api-strbuf.txt | 4 ++++
+ strbuf.c                               | 7 +++++++
+ strbuf.h                               | 1 +
+ utf8.c                                 | 7 -------
+ 4 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/builtin.h b/builtin.h
-index df40fce..0419af3 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -1,7 +1,6 @@
- #ifndef BUILTIN_H
- #define BUILTIN_H
-=20
--#include "git-compat-util.h"
- #include "cache.h"
- #include "commit.h"
-=20
-diff --git a/commit.h b/commit.h
-index 1fe0731..dddc876 100644
---- a/commit.h
-+++ b/commit.h
-@@ -3,7 +3,6 @@
-=20
- #include "object.h"
- #include "tree.h"
--#include "strbuf.h"
- #include "decorate.h"
- #include "gpg-interface.h"
- #include "string-list.h"
-diff --git a/dir.h b/dir.h
-index 727160e..6b00001 100644
---- a/dir.h
-+++ b/dir.h
-@@ -3,7 +3,6 @@
-=20
- /* See Documentation/technical/api-directory-listing.txt */
-=20
--#include "strbuf.h"
- #include "pathspec.h"
- #include "cache.h"
-=20
-diff --git a/khash.h b/khash.h
-index 89f9579..fc8b1bf 100644
---- a/khash.h
-+++ b/khash.h
-@@ -26,7 +26,6 @@
- #ifndef __AC_KHASH_H
- #define __AC_KHASH_H
-=20
--#include "git-compat-util.h"
- #include "cache.h"
-=20
- #define AC_VERSION_KHASH_H "0.2.8"
+diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
+index 430302c..cca6543 100644
+--- a/Documentation/technical/api-strbuf.txt
++++ b/Documentation/technical/api-strbuf.txt
+@@ -160,6 +160,10 @@ then they will free() it.
+ 
+ 	Add a single character to the buffer.
+ 
++`strbuf_addchars`::
++
++	Add a character the specified number of times to the buffer.
++
+ `strbuf_insert`::
+ 
+ 	Insert data to the given position of the buffer. The remaining contents
+diff --git a/strbuf.c b/strbuf.c
+index 4d31443..0346e74 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -204,6 +204,13 @@ void strbuf_adddup(struct strbuf *sb, size_t pos, size_t len)
+ 	strbuf_setlen(sb, sb->len + len);
+ }
+ 
++void strbuf_addchars(struct strbuf *sb, int c, size_t n)
++{
++	strbuf_grow(sb, n);
++	memset(sb->buf + sb->len, c, n);
++	strbuf_setlen(sb, sb->len + n);
++}
++
+ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
+ {
+ 	va_list ap;
+diff --git a/strbuf.h b/strbuf.h
+index 7bdc1da..652b6c4 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -138,6 +138,7 @@ static inline void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2)
+ 	strbuf_add(sb, sb2->buf, sb2->len);
+ }
+ extern void strbuf_adddup(struct strbuf *sb, size_t pos, size_t len);
++extern void strbuf_addchars(struct strbuf *sb, int c, size_t n);
+ 
+ typedef size_t (*expand_fn_t) (struct strbuf *sb, const char *placeholder, void *context);
+ extern void strbuf_expand(struct strbuf *sb, const char *format, expand_fn_t fn, void *context);
+diff --git a/utf8.c b/utf8.c
+index b30790d..6d4d04a 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -239,13 +239,6 @@ int is_utf8(const char *text)
+ 	return 1;
+ }
+ 
+-static void strbuf_addchars(struct strbuf *sb, int c, size_t n)
+-{
+-	strbuf_grow(sb, n);
+-	memset(sb->buf + sb->len, c, n);
+-	strbuf_setlen(sb, sb->len + n);
+-}
+-
+ static void strbuf_add_indented_text(struct strbuf *buf, const char *text,
+ 				     int indent, int indent2)
+ {
+-- 
+2.1.0
