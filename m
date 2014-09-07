@@ -1,115 +1,1160 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [RFC PATCH v2 1/2] Makefile: add check-headers target
-Date: Sat,  6 Sep 2014 17:30:20 -0700
-Message-ID: <1410049821-49861-1-git-send-email-davvid@gmail.com>
+Subject: [RFC PATCH v2 2/2] headers: include dependent headers
+Date: Sat,  6 Sep 2014 17:30:21 -0700
+Message-ID: <1410049821-49861-2-git-send-email-davvid@gmail.com>
+References: <1410049821-49861-1-git-send-email-davvid@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jeff King <peff@peff.net>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 07 02:30:42 2014
+X-From: git-owner@vger.kernel.org Sun Sep 07 02:30:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQQNL-0005AX-7d
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Sep 2014 02:30:39 +0200
+	id 1XQQNS-0005Du-AM
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Sep 2014 02:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbaIGAaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Sep 2014 20:30:35 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:63986 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752047AbaIGAae (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Sep 2014 20:30:34 -0400
-Received: by mail-pa0-f41.google.com with SMTP id lf10so2751990pab.28
-        for <git@vger.kernel.org>; Sat, 06 Sep 2014 17:30:33 -0700 (PDT)
+	id S1752093AbaIGAah convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Sep 2014 20:30:37 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:51633 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752047AbaIGAag (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Sep 2014 20:30:36 -0400
+Received: by mail-pa0-f53.google.com with SMTP id rd3so75258pab.12
+        for <git@vger.kernel.org>; Sat, 06 Sep 2014 17:30:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=9feMsyNy5qZIwsZswtLVtTE5kFGPaulVNmz7o1VwooU=;
-        b=mdhClEBhpoPNvy0UDxCQGfgueHLOCjxOYg82nGcd86k3QnG+K8f2qLHh/bigTchjU+
-         Xn/OjjHkuB65Q+TgIvOpcKVXCryp9HBB7khdbKd2bbdbRL/NCgJZYfCNMW7j4gjjtGRN
-         gcuD67tYbRs0zH79CVDjwKbD6KE34mkSUaFf7yuFdCSqzmhCfbm908kDMe9+68ULfCnS
-         CggetXHL9iBSdVXlaN+1Sy9m0lXsBOOfwlHKOkfL3xHGGi6ozxtBZxUVCUhDb4InnJT0
-         xNNiJNMluMw6Vvvn32U5aOWXuAT90XQlErpdkcTcmPP95JMhHk+vXdWvUyjvhG84nk30
-         Xu4A==
-X-Received: by 10.70.48.97 with SMTP id k1mr6230213pdn.135.1410049833858;
-        Sat, 06 Sep 2014 17:30:33 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=2ffAdXOw3U8NS3z7ZdU31Ibc/4S8BVop8jsfaSceEdI=;
+        b=ny9hUpHU5fDvvxbRhhd+5JCS54IxEt+q0ZVysmmrX2Zm9QzYVVRRaykyQGJ6C31Ezs
+         mMCb6nT/080GC9nFr2u/1MYzK0lsKb52KscYkuyaBBaPVn62ytyD3fUf9woqekhgXqZM
+         XOwII/sHVfVXkyMkNeeNnR+h76GZ5MOCQ8wsldorS3Kav8zrrUAAqe0JwSS+bh8CcB1g
+         5NEs0OG8RfMVQ0tCRHvowG3KHc5cGoH9yd5qoGFsZE7W1CT9LgVjYoTFRuKiv5+NV0XZ
+         608WDZ1FHREFOGDv9cR6+6/hx8X0Ff0hwGCeJ1lqX4JVL7Htu2rvqgaLMjUU8gngvZ6b
+         YA5g==
+X-Received: by 10.70.94.228 with SMTP id df4mr25398790pdb.64.1410049835638;
+        Sat, 06 Sep 2014 17:30:35 -0700 (PDT)
 Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id z3sm5196150pbt.84.2014.09.06.17.30.32
+        by mx.google.com with ESMTPSA id z3sm5196150pbt.84.2014.09.06.17.30.33
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 06 Sep 2014 17:30:33 -0700 (PDT)
+        Sat, 06 Sep 2014 17:30:34 -0700 (PDT)
 X-Mailer: git-send-email 2.1.0.62.g3e88d26
+In-Reply-To: <1410049821-49861-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256609>
 
-This allows us to ensure that each header can be included
-individually without needing to include other headers first.
+Add dependent headers so that including a header does not
+require including additional headers.
+
+This makes it so that "gcc -c $header" succeeds for each header.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-Changes since v1:
-We now include xdiff, ewah, and vcs-svn headers.
+Addresses Ren=C3=A9's note to not include strbuf.h when cache.h is alre=
+ady
+included.
 
- Makefile         |  6 ++++++
- check-headers.sh | 29 +++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
- create mode 100755 check-headers.sh
+ archive.h                | 1 +
+ argv-array.h             | 2 ++
+ attr.h                   | 2 ++
+ branch.h                 | 2 ++
+ cache-tree.h             | 1 +
+ color.h                  | 3 ++-
+ column.h                 | 2 ++
+ commit.h                 | 1 +
+ compat/bswap.h           | 7 +++++++
+ compat/precompose_utf8.h | 8 +++-----
+ convert.h                | 3 +++
+ credential.h             | 1 +
+ csum-file.h              | 2 ++
+ delta.h                  | 2 ++
+ diff.h                   | 2 +-
+ diffcore.h               | 2 ++
+ dir.h                    | 2 ++
+ ewah/ewok.h              | 2 ++
+ ewah/ewok_rlw.h          | 2 ++
+ exec_cmd.h               | 2 ++
+ fsck.h                   | 2 ++
+ gpg-interface.h          | 2 ++
+ graph.h                  | 2 ++
+ hashmap.h                | 2 ++
+ help.h                   | 2 ++
+ khash.h                  | 3 +++
+ kwset.h                  | 2 ++
+ line-log.h               | 1 +
+ list-objects.h           | 2 ++
+ ll-merge.h               | 2 ++
+ mailmap.h                | 3 +++
+ merge-recursive.h        | 2 ++
+ notes-cache.h            | 1 +
+ notes-merge.h            | 3 +++
+ notes-utils.h            | 1 +
+ notes.h                  | 1 +
+ object.h                 | 2 ++
+ pack-bitmap.h            | 2 ++
+ pack-objects.h           | 2 ++
+ pack-revindex.h          | 2 ++
+ parse-options.h          | 2 ++
+ patch-ids.h              | 3 +++
+ pathspec.h               | 2 ++
+ progress.h               | 2 ++
+ quote.h                  | 3 ++-
+ reachable.h              | 2 ++
+ reflog-walk.h            | 1 +
+ refs.h                   | 4 ++++
+ remote.h                 | 1 +
+ resolve-undo.h           | 2 ++
+ send-pack.h              | 4 ++++
+ sequencer.h              | 3 +++
+ sha1-lookup.h            | 2 ++
+ shortlog.h               | 2 ++
+ sideband.h               | 2 ++
+ strbuf.h                 | 2 ++
+ submodule.h              | 6 ++++--
+ tag.h                    | 1 +
+ tree-walk.h              | 2 ++
+ tree.h                   | 1 +
+ unicode_width.h          | 3 +++
+ unpack-trees.h           | 2 ++
+ url.h                    | 2 ++
+ urlmatch.h               | 2 ++
+ utf8.c                   | 7 -------
+ utf8.h                   | 9 +++++++++
+ vcs-svn/fast_export.h    | 5 +++--
+ vcs-svn/repo_tree.h      | 3 ++-
+ vcs-svn/svndiff.h        | 5 +++--
+ wt-status.h              | 1 +
+ xdiff/xdiffi.h           | 2 ++
+ xdiff/xemit.h            | 1 +
+ xdiff/xprepare.h         | 2 ++
+ xdiff/xutils.h           | 2 ++
+ 74 files changed, 159 insertions(+), 22 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 30cc622..39ecc70 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2591,6 +2591,12 @@ check-docs::
- check-builtins::
- 	./check-builtins.sh
- 
-+### Make sure headers include their dependencies
-+#
-+check-headers::
-+	./check-headers.sh $(CC) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS)
+diff --git a/archive.h b/archive.h
+index 4a791e1..b2ca5bf 100644
+--- a/archive.h
++++ b/archive.h
+@@ -1,6 +1,7 @@
+ #ifndef ARCHIVE_H
+ #define ARCHIVE_H
+=20
++#include "cache.h"
+ #include "pathspec.h"
+=20
+ struct archiver_args {
+diff --git a/argv-array.h b/argv-array.h
+index c65e6e8..7d877af 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -1,6 +1,8 @@
+ #ifndef ARGV_ARRAY_H
+ #define ARGV_ARRAY_H
+=20
++#include "git-compat-util.h"
 +
+ extern const char *empty_argv[];
+=20
+ struct argv_array {
+diff --git a/attr.h b/attr.h
+index 8b08d33..34e63f8 100644
+--- a/attr.h
++++ b/attr.h
+@@ -1,6 +1,8 @@
+ #ifndef ATTR_H
+ #define ATTR_H
+=20
++#include "cache.h"
 +
- ### Test suite coverage testing
- #
- .PHONY: coverage coverage-clean coverage-compile coverage-test coverage-report
-diff --git a/check-headers.sh b/check-headers.sh
-new file mode 100755
-index 0000000..2722dd2
---- /dev/null
-+++ b/check-headers.sh
-@@ -0,0 +1,29 @@
-+#!/bin/sh
+ /* An attribute is a pointer to this opaque structure */
+ struct git_attr;
+=20
+diff --git a/branch.h b/branch.h
+index 64173ab..d5fdcc6 100644
+--- a/branch.h
++++ b/branch.h
+@@ -3,6 +3,8 @@
+=20
+ /* Functions for acting on the information about branches. */
+=20
++#include "cache.h"
 +
-+exit_code=0
+ /*
+  * Creates a new branch, where head is the branch currently checked
+  * out, name is the new branch name, start_name is the name of the
+diff --git a/cache-tree.h b/cache-tree.h
+index b47ccec..30b0775 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -3,6 +3,7 @@
+=20
+ #include "tree.h"
+ #include "tree-walk.h"
++#include "cache.h"
+=20
+ struct cache_tree;
+ struct cache_tree_sub {
+diff --git a/color.h b/color.h
+index 9a8495b..6b50a0f 100644
+--- a/color.h
++++ b/color.h
+@@ -1,7 +1,8 @@
+ #ifndef COLOR_H
+ #define COLOR_H
+=20
+-struct strbuf;
++#include "git-compat-util.h"
++#include "strbuf.h"
+=20
+ /*  2 + (2 * num_attrs) + 8 + 1 + 8 + 'm' + NUL */
+ /* "\033[1;2;4;5;7;38;5;2xx;48;5;2xxm\0" */
+diff --git a/column.h b/column.h
+index 0a61917..5d094b4 100644
+--- a/column.h
++++ b/column.h
+@@ -1,6 +1,8 @@
+ #ifndef COLUMN_H
+ #define COLUMN_H
+=20
++#include "string-list.h"
 +
-+maybe_exit () {
-+	status="$1"
-+	if test "$status" != 0
-+	then
-+		exit_code="$status"
-+		if test -n "$CHECK_HEADERS_STOP"
-+		then
-+			exit "$status"
-+		fi
-+	fi
-+}
+ #define COL_LAYOUT_MASK   0x000F
+ #define COL_ENABLE_MASK   0x0030   /* always, never or auto */
+ #define COL_PARSEOPT      0x0040   /* --column is given from cmdline *=
+/
+diff --git a/commit.h b/commit.h
+index aa8c3ca..1fe0731 100644
+--- a/commit.h
++++ b/commit.h
+@@ -7,6 +7,7 @@
+ #include "decorate.h"
+ #include "gpg-interface.h"
+ #include "string-list.h"
++#include "cache.h"
+=20
+ struct commit_list {
+ 	struct commit *item;
+diff --git a/compat/bswap.h b/compat/bswap.h
+index f6fd9a6..0c164be 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -1,3 +1,8 @@
++#ifndef COMPAT_BSWAP_H
++#define COMPAT_BSWAP_H
 +
-+IFS='
-+'
-+git ls-files *.h ewah/*.h vcs-svn/*.h xdiff/*.h |
-+while read header
-+do
-+	subdir=$(dirname "$header") &&
-+	echo "HEADER $header" &&
-+	"$@" -Wno-unused -I"$subdir" -c -o "$header".check -x c - <"$header" &&
-+	rm "$header".check ||
-+	maybe_exit $?
-+done
++#include "git-compat-util.h"
 +
-+exit $exit_code
--- 
+ /*
+  * Let's make sure we always have a sane definition for ntohl()/htonl(=
+).
+  * Some libraries define those as a function call, just to perform byt=
+e
+@@ -173,3 +178,5 @@ static inline uint64_t git_bswap64(uint64_t x)
+ 	*((unsigned char *)(p) + 3) =3D __v >>  0; } while (0)
+=20
+ #endif
++
++#endif
+diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
+index 3b73585..34d1051 100644
+--- a/compat/precompose_utf8.h
++++ b/compat/precompose_utf8.h
+@@ -1,9 +1,8 @@
+ #ifndef PRECOMPOSE_UNICODE_H
+-#include <sys/stat.h>
+-#include <sys/types.h>
+-#include <dirent.h>
+-#include <iconv.h>
++#define  PRECOMPOSE_UNICODE_H
+=20
++#include "git-compat-util.h"
++#include <iconv.h>
+=20
+ typedef struct dirent_prec_psx {
+ 	ino_t d_ino;            /* Posix */
+@@ -41,5 +40,4 @@ int precompose_utf8_closedir(PREC_DIR *dirp);
+ #define DIR PREC_DIR
+ #endif /* PRECOMPOSE_UNICODE_C */
+=20
+-#define  PRECOMPOSE_UNICODE_H
+ #endif /* PRECOMPOSE_UNICODE_H */
+diff --git a/convert.h b/convert.h
+index 0c2143c..bb3266b 100644
+--- a/convert.h
++++ b/convert.h
+@@ -4,6 +4,9 @@
+ #ifndef CONVERT_H
+ #define CONVERT_H
+=20
++#include "git-compat-util.h"
++#include "strbuf.h"
++
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE =3D 0,
+ 	SAFE_CRLF_FAIL =3D 1,
+diff --git a/credential.h b/credential.h
+index 0c3e85e..cfa87f1 100644
+--- a/credential.h
++++ b/credential.h
+@@ -1,6 +1,7 @@
+ #ifndef CREDENTIAL_H
+ #define CREDENTIAL_H
+=20
++#include "git-compat-util.h"
+ #include "string-list.h"
+=20
+ struct credential {
+diff --git a/csum-file.h b/csum-file.h
+index bb543d5..9e29e35 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -1,6 +1,8 @@
+ #ifndef CSUM_FILE_H
+ #define CSUM_FILE_H
+=20
++#include "cache.h"
++
+ struct progress;
+=20
+ /* A SHA1-protected file */
+diff --git a/delta.h b/delta.h
+index 9b67531..668e163 100644
+--- a/delta.h
++++ b/delta.h
+@@ -1,6 +1,8 @@
+ #ifndef DELTA_H
+ #define DELTA_H
+=20
++#include "git-compat-util.h"
++
+ /* opaque object for delta index */
+ struct delta_index;
+=20
+diff --git a/diff.h b/diff.h
+index b4a624d..27f7696 100644
+--- a/diff.h
++++ b/diff.h
+@@ -6,11 +6,11 @@
+=20
+ #include "tree-walk.h"
+ #include "pathspec.h"
++#include "strbuf.h"
+=20
+ struct rev_info;
+ struct diff_options;
+ struct diff_queue_struct;
+-struct strbuf;
+ struct diff_filespec;
+ struct userdiff_driver;
+ struct sha1_array;
+diff --git a/diffcore.h b/diffcore.h
+index c876dac..1f3290c 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -4,6 +4,8 @@
+ #ifndef DIFFCORE_H
+ #define DIFFCORE_H
+=20
++#include "diff.h"
++
+ /* This header file is internal between diff.c and its diff transforme=
+rs
+  * (e.g. diffcore-rename, diffcore-pickaxe).  Never include this heade=
+r
+  * in anything else.
+diff --git a/dir.h b/dir.h
+index 6c45e9d..727160e 100644
+--- a/dir.h
++++ b/dir.h
+@@ -4,6 +4,8 @@
+ /* See Documentation/technical/api-directory-listing.txt */
+=20
+ #include "strbuf.h"
++#include "pathspec.h"
++#include "cache.h"
+=20
+ struct dir_entry {
+ 	unsigned int len;
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index f6ad190..7812863 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -20,6 +20,8 @@
+ #ifndef __EWOK_BITMAP_H__
+ #define __EWOK_BITMAP_H__
+=20
++#include "git-compat-util.h"
++
+ #ifndef ewah_malloc
+ #	define ewah_malloc xmalloc
+ #endif
+diff --git a/ewah/ewok_rlw.h b/ewah/ewok_rlw.h
+index 63efdf9..b34dfa1 100644
+--- a/ewah/ewok_rlw.h
++++ b/ewah/ewok_rlw.h
+@@ -20,6 +20,8 @@
+ #ifndef __EWOK_RLW_H__
+ #define __EWOK_RLW_H__
+=20
++#include "ewah/ewok.h"
++
+ #define RLW_RUNNING_BITS (sizeof(eword_t) * 4)
+ #define RLW_LITERAL_BITS (sizeof(eword_t) * 8 - 1 - RLW_RUNNING_BITS)
+=20
+diff --git a/exec_cmd.h b/exec_cmd.h
+index e4c9702..daa26e2 100644
+--- a/exec_cmd.h
++++ b/exec_cmd.h
+@@ -1,6 +1,8 @@
+ #ifndef GIT_EXEC_CMD_H
+ #define GIT_EXEC_CMD_H
+=20
++#include "git-compat-util.h"
++
+ extern void git_set_argv_exec_path(const char *exec_path);
+ extern const char *git_extract_argv0_path(const char *path);
+ extern const char *git_exec_path(void);
+diff --git a/fsck.h b/fsck.h
+index 1e4f527..99b2802 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -1,6 +1,8 @@
+ #ifndef GIT_FSCK_H
+ #define GIT_FSCK_H
+=20
++#include "object.h"
++
+ #define FSCK_ERROR 1
+ #define FSCK_WARN 2
+=20
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 37c23da..f42b706 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -1,6 +1,8 @@
+ #ifndef GPG_INTERFACE_H
+ #define GPG_INTERFACE_H
+=20
++#include "strbuf.h"
++
+ struct signature_check {
+ 	char *payload;
+ 	char *gpg_output;
+diff --git a/graph.h b/graph.h
+index 0be62bd..17e6a11 100644
+--- a/graph.h
++++ b/graph.h
+@@ -1,6 +1,8 @@
+ #ifndef GRAPH_H
+ #define GRAPH_H
+=20
++#include "revision.h"
++
+ /* A graph is a pointer to this opaque structure */
+ struct git_graph;
+=20
+diff --git a/hashmap.h b/hashmap.h
+index ab7958a..8605fae 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -1,6 +1,8 @@
+ #ifndef HASHMAP_H
+ #define HASHMAP_H
+=20
++#include "git-compat-util.h"
++
+ /*
+  * Generic implementation of hash-based key-value mappings.
+  * See Documentation/technical/api-hashmap.txt.
+diff --git a/help.h b/help.h
+index b21d7c9..a3bf882 100644
+--- a/help.h
++++ b/help.h
+@@ -1,6 +1,8 @@
+ #ifndef HELP_H
+ #define HELP_H
+=20
++#include "git-compat-util.h"
++
+ struct cmdnames {
+ 	int alloc;
+ 	int cnt;
+diff --git a/khash.h b/khash.h
+index 06c7906..89f9579 100644
+--- a/khash.h
++++ b/khash.h
+@@ -26,6 +26,9 @@
+ #ifndef __AC_KHASH_H
+ #define __AC_KHASH_H
+=20
++#include "git-compat-util.h"
++#include "cache.h"
++
+ #define AC_VERSION_KHASH_H "0.2.8"
+=20
+ typedef uint32_t khint32_t;
+diff --git a/kwset.h b/kwset.h
+index a21b2ea..2acc585 100644
+--- a/kwset.h
++++ b/kwset.h
+@@ -25,6 +25,8 @@
+    The author may be reached (Email) at the address mike@ai.mit.edu,
+    or (US mail) as Mike Haertel c/o Free Software Foundation. */
+=20
++#include "git-compat-util.h"
++
+ struct kwsmatch
+ {
+   int index;			/* Index number of matching keyword. */
+diff --git a/line-log.h b/line-log.h
+index a9212d8..e1d47e0 100644
+--- a/line-log.h
++++ b/line-log.h
+@@ -2,6 +2,7 @@
+ #define LINE_LOG_H
+=20
+ #include "diffcore.h"
++#include "string-list.h"
+=20
+ struct rev_info;
+ struct commit;
+diff --git a/list-objects.h b/list-objects.h
+index 136a1da..8810db6 100644
+--- a/list-objects.h
++++ b/list-objects.h
+@@ -1,6 +1,8 @@
+ #ifndef LIST_OBJECTS_H
+ #define LIST_OBJECTS_H
+=20
++#include "revision.h"
++
+ typedef void (*show_commit_fn)(struct commit *, void *);
+ typedef void (*show_object_fn)(struct object *, const struct name_path=
+ *, const char *, void *);
+ void traverse_commit_list(struct rev_info *, show_commit_fn, show_obje=
+ct_fn, void *);
+diff --git a/ll-merge.h b/ll-merge.h
+index 244a31f..b72b199 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -5,6 +5,8 @@
+ #ifndef LL_MERGE_H
+ #define LL_MERGE_H
+=20
++#include "xdiff/xdiff.h"
++
+ struct ll_merge_options {
+ 	unsigned virtual_ancestor : 1;
+ 	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
+diff --git a/mailmap.h b/mailmap.h
+index ed7c93b..27ac3c7 100644
+--- a/mailmap.h
++++ b/mailmap.h
+@@ -1,6 +1,9 @@
+ #ifndef MAILMAP_H
+ #define MAILMAP_H
+=20
++#include "git-compat-util.h"
++#include "string-list.h"
++
+ int read_mailmap(struct string_list *map, char **repo_abbrev);
+ void clear_mailmap(struct string_list *map);
+=20
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 9e090a3..05500b3 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -1,7 +1,9 @@
+ #ifndef MERGE_RECURSIVE_H
+ #define MERGE_RECURSIVE_H
+=20
++#include "strbuf.h"
+ #include "string-list.h"
++#include "commit.h"
+=20
+ struct merge_options {
+ 	const char *ancestor;
+diff --git a/notes-cache.h b/notes-cache.h
+index 356f88f..4ecd767 100644
+--- a/notes-cache.h
++++ b/notes-cache.h
+@@ -1,6 +1,7 @@
+ #ifndef NOTES_CACHE_H
+ #define NOTES_CACHE_H
+=20
++#include "git-compat-util.h"
+ #include "notes.h"
+=20
+ struct notes_cache {
+diff --git a/notes-merge.h b/notes-merge.h
+index 1d01f6a..73d961d 100644
+--- a/notes-merge.h
++++ b/notes-merge.h
+@@ -1,6 +1,9 @@
+ #ifndef NOTES_MERGE_H
+ #define NOTES_MERGE_H
+=20
++#include "notes.h"
++#include "commit.h"
++
+ #define NOTES_MERGE_WORKTREE "NOTES_MERGE_WORKTREE"
+=20
+ enum notes_merge_verbosity {
+diff --git a/notes-utils.h b/notes-utils.h
+index 890ddb3..eaac967 100644
+--- a/notes-utils.h
++++ b/notes-utils.h
+@@ -2,6 +2,7 @@
+ #define NOTES_UTILS_H
+=20
+ #include "notes.h"
++#include "commit.h"
+=20
+ /*
+  * Create new notes commit from the given notes tree
+diff --git a/notes.h b/notes.h
+index 2a3f923..12318a4 100644
+--- a/notes.h
++++ b/notes.h
+@@ -1,6 +1,7 @@
+ #ifndef NOTES_H
+ #define NOTES_H
+=20
++#include "strbuf.h"
+ #include "string-list.h"
+=20
+ /*
+diff --git a/object.h b/object.h
+index 5e8d8ee..e61b290 100644
+--- a/object.h
++++ b/object.h
+@@ -1,6 +1,8 @@
+ #ifndef OBJECT_H
+ #define OBJECT_H
+=20
++#include "cache.h"
++
+ struct object_list {
+ 	struct object *item;
+ 	struct object_list *next;
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 8b7f4e9..945ff30 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -1,9 +1,11 @@
+ #ifndef PACK_BITMAP_H
+ #define PACK_BITMAP_H
+=20
++#include "git-compat-util.h"
+ #include "ewah/ewok.h"
+ #include "khash.h"
+ #include "pack-objects.h"
++#include "revision.h"
+=20
+ struct bitmap_disk_entry {
+ 	uint32_t object_pos;
+diff --git a/pack-objects.h b/pack-objects.h
+index d1b98b3..2c28bea 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -1,6 +1,8 @@
+ #ifndef PACK_OBJECTS_H
+ #define PACK_OBJECTS_H
+=20
++#include "pack.h"
++
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+ 	unsigned long size;	/* uncompressed size */
+diff --git a/pack-revindex.h b/pack-revindex.h
+index d737f98..4e574b3 100644
+--- a/pack-revindex.h
++++ b/pack-revindex.h
+@@ -1,6 +1,8 @@
+ #ifndef PACK_REVINDEX_H
+ #define PACK_REVINDEX_H
+=20
++#include "git-compat-util.h"
++
+ struct revindex_entry {
+ 	off_t offset;
+ 	unsigned int nr;
+diff --git a/parse-options.h b/parse-options.h
+index 7940bc7..933a1b7 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -1,6 +1,8 @@
+ #ifndef PARSE_OPTIONS_H
+ #define PARSE_OPTIONS_H
+=20
++#include "git-compat-util.h"
++
+ enum parse_opt_type {
+ 	/* special types */
+ 	OPTION_END,
+diff --git a/patch-ids.h b/patch-ids.h
+index c8c7ca1..016eb2d 100644
+--- a/patch-ids.h
++++ b/patch-ids.h
+@@ -1,6 +1,9 @@
+ #ifndef PATCH_IDS_H
+ #define PATCH_IDS_H
+=20
++#include "commit.h"
++#include "diff.h"
++
+ struct patch_id {
+ 	unsigned char patch_id[20];
+ 	char seen;
+diff --git a/pathspec.h b/pathspec.h
+index 0c11262..c92fafc 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -1,6 +1,8 @@
+ #ifndef PATHSPEC_H
+ #define PATHSPEC_H
+=20
++#include "git-compat-util.h"
++
+ /* Pathspec magic */
+ #define PATHSPEC_FROMTOP	(1<<0)
+ #define PATHSPEC_MAXDEPTH	(1<<1)
+diff --git a/progress.h b/progress.h
+index 611e4c4..4c78a2c 100644
+--- a/progress.h
++++ b/progress.h
+@@ -1,6 +1,8 @@
+ #ifndef PROGRESS_H
+ #define PROGRESS_H
+=20
++#include "git-compat-util.h"
++
+ struct progress;
+=20
+ void display_throughput(struct progress *progress, off_t total);
+diff --git a/quote.h b/quote.h
+index 71dcc3a..37f857b 100644
+--- a/quote.h
++++ b/quote.h
+@@ -1,7 +1,8 @@
+ #ifndef QUOTE_H
+ #define QUOTE_H
+=20
+-struct strbuf;
++#include "git-compat-util.h"
++#include "strbuf.h"
+=20
+ /* Help to copy the thing properly quoted for the shell safety.
+  * any single quote is replaced with '\'', any exclamation point
+diff --git a/reachable.h b/reachable.h
+index 5d082ad..5536382 100644
+--- a/reachable.h
++++ b/reachable.h
+@@ -1,6 +1,8 @@
+ #ifndef REACHEABLE_H
+ #define REACHEABLE_H
+=20
++#include "revision.h"
++
+ struct progress;
+ extern void mark_reachable_objects(struct rev_info *revs, int mark_ref=
+log, struct progress *);
+=20
+diff --git a/reflog-walk.h b/reflog-walk.h
+index 50265f5..d5378b9 100644
+--- a/reflog-walk.h
++++ b/reflog-walk.h
+@@ -2,6 +2,7 @@
+ #define REFLOG_WALK_H
+=20
+ #include "cache.h"
++#include "commit.h"
+=20
+ struct reflog_walk_info;
+=20
+diff --git a/refs.h b/refs.h
+index ec46acd..5c43232 100644
+--- a/refs.h
++++ b/refs.h
+@@ -1,6 +1,10 @@
+ #ifndef REFS_H
+ #define REFS_H
+=20
++#include "git-compat-util.h"
++#include "strbuf.h"
++#include "string-list.h"
++
+ struct ref_lock {
+ 	char *ref_name;
+ 	char *orig_ref_name;
+diff --git a/remote.h b/remote.h
+index 8b62efd..24bcbd7 100644
+--- a/remote.h
++++ b/remote.h
+@@ -3,6 +3,7 @@
+=20
+ #include "parse-options.h"
+ #include "hashmap.h"
++#include "strbuf.h"
+=20
+ enum {
+ 	REMOTE_CONFIG,
+diff --git a/resolve-undo.h b/resolve-undo.h
+index 4630645..815050d 100644
+--- a/resolve-undo.h
++++ b/resolve-undo.h
+@@ -1,6 +1,8 @@
+ #ifndef RESOLVE_UNDO_H
+ #define RESOLVE_UNDO_H
+=20
++#include "cache.h"
++
+ struct resolve_undo_info {
+ 	unsigned int mode[3];
+ 	unsigned char sha1[3][20];
+diff --git a/send-pack.h b/send-pack.h
+index 8e84392..f0c463a 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -1,6 +1,10 @@
+ #ifndef SEND_PACK_H
+ #define SEND_PACK_H
+=20
++#include "git-compat-util.h"
++#include "run-command.h"
++#include "remote.h"
++
+ struct send_pack_args {
+ 	unsigned verbose:1,
+ 		quiet:1,
+diff --git a/sequencer.h b/sequencer.h
+index db43e9c..c817247 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -1,6 +1,9 @@
+ #ifndef SEQUENCER_H
+ #define SEQUENCER_H
+=20
++#include "git-compat-util.h"
++#include "strbuf.h"
++
+ #define SEQ_DIR		"sequencer"
+ #define SEQ_HEAD_FILE	"sequencer/head"
+ #define SEQ_TODO_FILE	"sequencer/todo"
+diff --git a/sha1-lookup.h b/sha1-lookup.h
+index 20af285..f375596 100644
+--- a/sha1-lookup.h
++++ b/sha1-lookup.h
+@@ -1,6 +1,8 @@
+ #ifndef SHA1_LOOKUP_H
+ #define SHA1_LOOKUP_H
+=20
++#include "git-compat-util.h"
++
+ typedef const unsigned char *sha1_access_fn(size_t index, void *table)=
+;
+=20
+ extern int sha1_pos(const unsigned char *sha1,
+diff --git a/shortlog.h b/shortlog.h
+index de4f86f..e5949e7 100644
+--- a/shortlog.h
++++ b/shortlog.h
+@@ -1,6 +1,8 @@
+ #ifndef SHORTLOG_H
+ #define SHORTLOG_H
+=20
++#include "git-compat-util.h"
++#include "commit.h"
+ #include "string-list.h"
+=20
+ struct shortlog {
+diff --git a/sideband.h b/sideband.h
+index e46bed0..411aa51 100644
+--- a/sideband.h
++++ b/sideband.h
+@@ -1,6 +1,8 @@
+ #ifndef SIDEBAND_H
+ #define SIDEBAND_H
+=20
++#include "git-compat-util.h"
++
+ #define SIDEBAND_PROTOCOL_ERROR -2
+ #define SIDEBAND_REMOTE_ERROR -1
+=20
+diff --git a/strbuf.h b/strbuf.h
+index 7bdc1da..c3ea9a2 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -1,6 +1,8 @@
+ #ifndef STRBUF_H
+ #define STRBUF_H
+=20
++#include "git-compat-util.h"
++
+ /* See Documentation/technical/api-strbuf.txt */
+=20
+ extern char strbuf_slopbuf[];
+diff --git a/submodule.h b/submodule.h
+index 7beec48..52bb673 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -1,8 +1,10 @@
+ #ifndef SUBMODULE_H
+ #define SUBMODULE_H
+=20
+-struct diff_options;
+-struct argv_array;
++#include "git-compat-util.h"
++#include "diff.h"
++#include "argv-array.h"
++#include "string-list.h"
+=20
+ enum {
+ 	RECURSE_SUBMODULES_ON_DEMAND =3D -1,
+diff --git a/tag.h b/tag.h
+index bc8a1e4..68b0334 100644
+--- a/tag.h
++++ b/tag.h
+@@ -1,6 +1,7 @@
+ #ifndef TAG_H
+ #define TAG_H
+=20
++#include "git-compat-util.h"
+ #include "object.h"
+=20
+ extern const char *tag_type;
+diff --git a/tree-walk.h b/tree-walk.h
+index ae7fb3a..0818126 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -1,6 +1,8 @@
+ #ifndef TREE_WALK_H
+ #define TREE_WALK_H
+=20
++#include "strbuf.h"
++
+ struct name_entry {
+ 	const unsigned char *sha1;
+ 	const char *path;
+diff --git a/tree.h b/tree.h
+index d84ac63..9565406 100644
+--- a/tree.h
++++ b/tree.h
+@@ -2,6 +2,7 @@
+ #define TREE_H
+=20
+ #include "object.h"
++#include "pathspec.h"
+=20
+ extern const char *tree_type;
+=20
+diff --git a/unicode_width.h b/unicode_width.h
+index 47cdd23..b35bdc4 100644
+--- a/unicode_width.h
++++ b/unicode_width.h
+@@ -1,3 +1,6 @@
++#include "git-compat-util.h"
++#include "utf8.h"
++
+ static const struct interval zero_width[] =3D {
+ { 0x0300, 0x036F },
+ { 0x0483, 0x0489 },
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 36a73a6..e4792ec 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -1,7 +1,9 @@
+ #ifndef UNPACK_TREES_H
+ #define UNPACK_TREES_H
+=20
++#include "cache.h"
+ #include "string-list.h"
++#include "tree-walk.h"
+=20
+ #define MAX_UNPACK_TREES 8
+=20
+diff --git a/url.h b/url.h
+index abdaf6f..f4a23c3 100644
+--- a/url.h
++++ b/url.h
+@@ -1,6 +1,8 @@
+ #ifndef URL_H
+ #define URL_H
+=20
++#include "strbuf.h"
++
+ extern int is_url(const char *url);
+ extern int is_urlschemechar(int first_flag, int ch);
+ extern char *url_decode(const char *url);
+diff --git a/urlmatch.h b/urlmatch.h
+index b461dfd..9f7c781 100644
+--- a/urlmatch.h
++++ b/urlmatch.h
+@@ -1,4 +1,6 @@
+ #ifndef URL_MATCH_H
++
++#include "git-compat-util.h"
+ #include "string-list.h"
+=20
+ struct url_info {
+diff --git a/utf8.c b/utf8.c
+index b30790d..fb9f299 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -2,13 +2,6 @@
+ #include "strbuf.h"
+ #include "utf8.h"
+=20
+-/* This code is originally from http://www.cl.cam.ac.uk/~mgk25/ucs/ */
+-
+-struct interval {
+-	ucs_char_t first;
+-	ucs_char_t last;
+-};
+-
+ size_t display_mode_esc_sequence_len(const char *s)
+ {
+ 	const char *p =3D s;
+diff --git a/utf8.h b/utf8.h
+index 65d0e42..af855c5 100644
+--- a/utf8.h
++++ b/utf8.h
+@@ -1,8 +1,17 @@
+ #ifndef GIT_UTF8_H
+ #define GIT_UTF8_H
+=20
++#include "strbuf.h"
++
+ typedef unsigned int ucs_char_t;  /* assuming 32bit int */
+=20
++/* This code is originally from http://www.cl.cam.ac.uk/~mgk25/ucs/ */
++
++struct interval {
++	ucs_char_t first;
++	ucs_char_t last;
++};
++
+ size_t display_mode_esc_sequence_len(const char *s);
+ int utf8_width(const char **start, size_t *remainder_p);
+ int utf8_strnwidth(const char *string, int len, int skip_ansi);
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+index c8b5adb..7fd5364 100644
+--- a/vcs-svn/fast_export.h
++++ b/vcs-svn/fast_export.h
+@@ -1,8 +1,9 @@
+ #ifndef FAST_EXPORT_H_
+ #define FAST_EXPORT_H_
+=20
+-struct strbuf;
+-struct line_buffer;
++#include "git-compat-util.h"
++#include "strbuf.h"
++#include "vcs-svn/line_buffer.h"
+=20
+ void fast_export_init(int fd);
+ void fast_export_deinit(void);
+diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
+index 889c6a3..3a946f7 100644
+--- a/vcs-svn/repo_tree.h
++++ b/vcs-svn/repo_tree.h
+@@ -1,7 +1,8 @@
+ #ifndef REPO_TREE_H_
+ #define REPO_TREE_H_
+=20
+-struct strbuf;
++#include "git-compat-util.h"
++#include "strbuf.h"
+=20
+ #define REPO_MODE_DIR 0040000
+ #define REPO_MODE_BLB 0100644
+diff --git a/vcs-svn/svndiff.h b/vcs-svn/svndiff.h
+index 74eb464..d0cbd51 100644
+--- a/vcs-svn/svndiff.h
++++ b/vcs-svn/svndiff.h
+@@ -1,8 +1,9 @@
+ #ifndef SVNDIFF_H_
+ #define SVNDIFF_H_
+=20
+-struct line_buffer;
+-struct sliding_view;
++#include "git-compat-util.h"
++#include "vcs-svn/line_buffer.h"
++#include "vcs-svn/sliding_window.h"
+=20
+ extern int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
+ 		struct sliding_view *preimage, FILE *postimage);
+diff --git a/wt-status.h b/wt-status.h
+index 283a9fe..38f930a 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -4,6 +4,7 @@
+ #include <stdio.h>
+ #include "string-list.h"
+ #include "color.h"
++#include "pathspec.h"
+=20
+ enum color_wt_status {
+ 	WT_STATUS_HEADER =3D 0,
+diff --git a/xdiff/xdiffi.h b/xdiff/xdiffi.h
+index 8b81206..d1f0e1d 100644
+--- a/xdiff/xdiffi.h
++++ b/xdiff/xdiffi.h
+@@ -23,6 +23,8 @@
+ #if !defined(XDIFFI_H)
+ #define XDIFFI_H
+=20
++#include "xdiff.h"
++#include "xtypes.h"
+=20
+ typedef struct s_diffdata {
+ 	long nrec;
+diff --git a/xdiff/xemit.h b/xdiff/xemit.h
+index d297107..ad719ad 100644
+--- a/xdiff/xemit.h
++++ b/xdiff/xemit.h
+@@ -23,6 +23,7 @@
+ #if !defined(XEMIT_H)
+ #define XEMIT_H
+=20
++#include "xdiffi.h"
+=20
+ typedef int (*emit_func_t)(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t =
+*ecb,
+ 			   xdemitconf_t const *xecfg);
+diff --git a/xdiff/xprepare.h b/xdiff/xprepare.h
+index 8fb06a5..a2958cf 100644
+--- a/xdiff/xprepare.h
++++ b/xdiff/xprepare.h
+@@ -23,6 +23,8 @@
+ #if !defined(XPREPARE_H)
+ #define XPREPARE_H
+=20
++#include "xdiff.h"
++#include "xtypes.h"
+=20
+=20
+ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp=
+,
+diff --git a/xdiff/xutils.h b/xdiff/xutils.h
+index 4646ce5..a55237b 100644
+--- a/xdiff/xutils.h
++++ b/xdiff/xutils.h
+@@ -23,6 +23,8 @@
+ #if !defined(XUTILS_H)
+ #define XUTILS_H
+=20
++#include "xdiff.h"
++#include "xtypes.h"
+=20
+=20
+ long xdl_bogosqrt(long n);
+--=20
 2.1.0.62.g3e88d26
