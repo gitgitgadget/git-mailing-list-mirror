@@ -1,100 +1,89 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v3 2/2] headers: include dependent headers
-Date: Sun, 07 Sep 2014 22:57:56 +0100
-Message-ID: <540CD4E4.7060600@ramsay1.demon.co.uk>
-References: <1410082617-59230-1-git-send-email-davvid@gmail.com> <540C350F.3080906@web.de> <540C3AEC.7080908@ramsay1.demon.co.uk> <20140907203715.GB61326@gmail.com>
+From: xmeng <xmeng@cs.wisc.edu>
+Subject: Check out git-author
+Date: Sun, 07 Sep 2014 18:05:13 -0500
+Message-ID: <0a3b0f232ec56517d4db43c6bd6ebb63@cs.wisc.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 07 23:58:09 2014
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 08 01:10:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQkTG-0003HT-DX
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Sep 2014 23:58:06 +0200
+	id 1XQlbe-0002nn-QP
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 01:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707AbaIGV6B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Sep 2014 17:58:01 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:51662 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752542AbaIGV6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Sep 2014 17:58:00 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 007CB400DE0;
-	Sun,  7 Sep 2014 22:57:52 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id AE712400DAD;
-	Sun,  7 Sep 2014 22:57:52 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
-	Sun,  7 Sep 2014 22:57:52 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <20140907203715.GB61326@gmail.com>
-X-MDF-HostID: 19
+	id S1752777AbaIGXKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Sep 2014 19:10:47 -0400
+Received: from sandstone.cs.wisc.edu ([128.105.6.39]:57031 "EHLO
+	sandstone.cs.wisc.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752662AbaIGXKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Sep 2014 19:10:46 -0400
+X-Greylist: delayed 333 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Sep 2014 19:10:46 EDT
+Received: from webmail.cs.wisc.edu (lilo.cs.wisc.edu [128.105.7.102])
+	by sandstone.cs.wisc.edu (8.14.1/8.14.1) with ESMTP id s87N5Dh4026713
+	for <git@vger.kernel.org>; Sun, 7 Sep 2014 18:05:13 -0500
+X-Sender: xmeng@cs.wisc.edu
+User-Agent: Roundcube Webmail/0.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256630>
 
-On 07/09/14 21:37, David Aguilar wrote:
-> On Sun, Sep 07, 2014 at 12:01:00PM +0100, Ramsay Jones wrote:
->> On 07/09/14 11:35, Ren=C3=A9 Scharfe wrote:
->>> Am 07.09.2014 um 11:36 schrieb David Aguilar:
->>>> Add dependent headers so that including a header does not
->>>> require including additional headers.
->>>>
->>>> This makes it so that "gcc -c $header" succeeds for each header.
->>>
->>>> diff --git a/cache.h b/cache.h
->>>> index 4d5b76c..8b827d7 100644
->>>> --- a/cache.h
->>>> +++ b/cache.h
->>>> @@ -1,7 +1,6 @@
->>>>   #ifndef CACHE_H
->>>>   #define CACHE_H
->>>>
->>>> -#include "git-compat-util.h"
->>>>   #include "strbuf.h"
->>>>   #include "hashmap.h"
->>>>   #include "advice.h"
->>>
->>> Oh, that's a new change and worth mentioning in the commit message.
->>
->> Hmm, does this not break git? Unless you also change each '.c' file =
-which
->> includes cache.h to also include git-compat-util.h first, then I sus=
-pect
->> (if nothing else) file I/O may be broken. (see _FILE_OFFSET_BITS).
->>
->> Also, see Documentation/CodingGuidelines (lines 331-333).
->=20
-> This one should be okay because hashmap.h includes git-compat-util.h.
+Hi all,
 
-It is important that each compilation unit include 'git-compat-util.h'
-at the start. From the CodingGuidelines we see that 'cache.h' and
-'builtin.h' are *blessed* headers which can be used instead. (I have
-always thought that this was a mistake; it would be much easier to
-just stick to using 'git-compat-util.h' at the top of each '.c' file ;-=
-)
+I have been using git-blame to track who changed a line of code or who 
+to blame for a line of code. It is easy to use. For example, for this 
+particular line of code:
 
-The fact that hashmap.h happens to include git-compat-util.h is not
-at all relevant here.
+$ git blame -L 2235,2235 fs/ext4/mballoc.c
+85556c9a (Wei Yongjun 2012-09-26 20:43:37 -0400 2235)   
+meta_group_info[i] = kmem_cache_zalloc(cachep, GFP_KERNEL);
 
->=20
-> Jonathan will be re-rolling so I'll definitely read and test the
-> patches when they're ready.  They'll probably be a more focused,
-> surgical change then this version.
+The problem with git-blame is that it only reports the last 
+author/commit that changed the line, regardless of the magnitude of the 
+change. Sometimes, the last author may only change a tiny part of the 
+code and should not be blamed. I developed a built-in tool called 
+"git-author" to address this problem. Git-author is designed to track 
+the complete development history of a line. For the same line of code:
 
-OK.
+$ git author -c -L 2235,2235 fs/ext4/mballoc.c
+        CURRENT LINE 2235:       meta_group_info[i] = 
+kmem_cache_zalloc(cachep, GFP_KERNEL);
+85556c9 Wei Yongjun     :       meta_group_info[i] = 
+kmem_cache_zalloc(cachep, GFP_KERNEL);
+fb1813f Curt Wohlgemuth :       meta_group_info[i] = 
+kmem_cache_alloc(cachep, GFP_KERNEL);
+5f21b0e Frederic Bohe   :       meta_group_info[i] = kzalloc(len, 
+GFP_KERNEL);
+c9de560 Alex Tomas      :               meta_group_info[j] = 
+kzalloc(len, GFP_KERNEL);
 
-ATB,
-Ramsay Jones
+Git-author shows the complete development history of this line code. We 
+can see "Wei Yongjun" only changed the line to call a different function 
+(from "kmem_cache_alloc" to "kmem_cache_zalloc"). "Wei yongjun" is not 
+responsible for the other part of the line. "Curt Wohlgemuth" changed 
+the line to call a different function (from "kzalloc" to 
+"kmem_cache_alloc") and to use a different parameter (from "len" to 
+"cachep") and "Frederic Bohe" changed the line to use a different array 
+index (from "i" to "j").
+
+Git-author should be useful to people who wants to see the complete 
+history of lines of code.
+
+If you are interested in git-author, you can check it out at 
+https://github.com/mxz297/git/tree/git-author (please check out branch 
+'git-author'). Also we have a paper describing more technical details 
+about git-author in ICSM 2013 
+(ftp://ftp.cs.wisc.edu/paradyn/papers/Meng13Authorship.pdf).
+
+Let me know if you have any question, feedback, bug about git-author!
+
+
+Thanks
+
+--Xiaozhu
