@@ -1,98 +1,60 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: Re: git rebase: yet another newbie quest.
-Date: Mon, 08 Sep 2014 17:52:44 +0400
-Message-ID: <87sik28bir.fsf@osv.gnss.ru>
-References: <87a96ecqe9.fsf@osv.gnss.ru> <20140905154159.GB1510@thunk.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH 22/32] checkout: support checking out into a new working
+ directory
+Date: Mon, 08 Sep 2014 10:06:25 -0400
+Message-ID: <540DB7E1.4090302@xiplink.com>
+References: <1409387642-24492-1-git-send-email-pclouds@gmail.com> <1409387642-24492-23-git-send-email-pclouds@gmail.com> <70985AC885404243A2B95F534083A0E9@PhilipOakley> <CACsJy8CpGhLN58GyJa_3-PDqNqYUCshPEGDr8-pKngad+-oAdg@mail.gmail.com> <CACsJy8ASW0xO3WzU7f+T4iDhjL=Y=C6K+Cvi-OWOnS16r=m+9Q@mail.gmail.com> <64D6AA311E524C27A8B6EDE7A63489D7@PhilipOakley> <CACsJy8CTLRpjmh+0K6ypLKUgi52gsFEqnNsha2yfOvRVCdhdMQ@mail.gmail.com> <5405D983.3050707@xiplink.com> <xmqqfvga2ai9.fsf@gitster.dls.corp.google.com> <CACsJy8DxUguPohjYGTgnHjBc=0mqn20c67pTBN34VRz7oCjyGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Theodore Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 08 15:53:06 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Philip Oakley <philipoakley@iee.org>
+To: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 16:06:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQzNN-0007WH-1W
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 15:53:01 +0200
+	id 1XQzaZ-0004ZV-SM
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 16:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753956AbaIHNwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2014 09:52:55 -0400
-Received: from mail.javad.com ([54.86.164.124]:57185 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752874AbaIHNwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2014 09:52:54 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id A03CD615BB;
-	Mon,  8 Sep 2014 13:52:53 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <sorganov@gmail.com>)
-	id 1XQzN6-0000t0-Nd; Mon, 08 Sep 2014 17:52:44 +0400
-In-Reply-To: <20140905154159.GB1510@thunk.org> (Theodore Ts'o's message of
-	"Fri, 5 Sep 2014 11:41:59 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1754267AbaIHOGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 10:06:35 -0400
+Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:44736 "EHLO
+	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753947AbaIHOGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 10:06:13 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp14.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 2F041803D4;
+	Mon,  8 Sep 2014 10:06:11 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp14.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id EF695803E7;
+	Mon,  8 Sep 2014 10:06:10 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.2.10);
+	Mon, 08 Sep 2014 14:06:11 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <CACsJy8DxUguPohjYGTgnHjBc=0mqn20c67pTBN34VRz7oCjyGA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256648>
 
-Theodore Ts'o <tytso@mit.edu> writes:
-> I'm not going to say what you *should* have done, since it's not clear
-> whether anything close to what you were doing is a supported workflow.
-> But I can tell you what I *do* myself.  Personally, I vastly distrust
-> git pull --rebase.
+On 14-09-08 06:52 AM, Duy Nguyen wrote:
+> 
+> While we're changing the terms, I wonder if "primary working
+> directory" and "secondary working directories" are better than "main
+> checkout" and "linked checkout".
 
-Thank you for sharing your experience!
+I might have a slight preference for main/linked, because primary/secondary
+can imply that there are further orders -- tertiary, quaternary, etc.  Also,
+at least in English, "linked" is commonly used and it doesn't necessarily
+imply an implementation (e.g. with hard or soft filesystem links).
 
-In the particular case at hand though, "git rebase" is the actual cause
-of the problem, not "git pull --rebase".
+(How many angels can dance on the threshold of an open bikeshed door? :) )
 
-> So in general, my pulls are all the equivalent of "git pull
-> --ff-only", and if I want to rebase the topic branch (which in
-> general, is a bad idea to do regularly; I will generally not do it at
-> all until I'm almost done).  So I'll branch the topic branch off of
-> origin (which tracks origin/master, typically):
->
-> git checkout -b topic1 origin
-> <hack hack hack>
-> git commit
->
->   ...
-> <make>
->
-> In general, I will only rebase a topic branch when it's needed to fix
-> a serious conflcit caused by significant changes upstream.  And in
-> that case, I might do something like this:
->
-> git checkout topic1
-> git rebase origin/master
-> <make>
-> <make check>
-
-Yeah, it's a good way to do things, but for most of quick fixes I'm lazy
-to create topic branch, and in this case it lead to a nasty unexpected
-trouble.
-
-I didn't intend to make topic branch from the very beginning, and
-already made a commit or two on the remote tracking branch bofore I
-realized I'd better use topic branch. It'd create no problem as far as I
-can see, provided vanilla "git rebase" has "sane" defaults. That said,
-I've already been once pointed to by Junio that my definition of "sane"
-doesn't take into account workflows of others, so now I try to be
-carefull calling vanilla "git rebase" names.
-
-Please also notice that I didn't pull immediately after I've re-arranged
-my branches, and this fact only made it more difficult to find and
-isolate the problem.
-
-[...]
-
-> P.S.  There is a separate, and completely valid discussion which is
-> how to prevent a newbie from falling into a same trap you did.  I'll
-> defer that discussion to others...
-
-Yeah, it'd be fine if at least documentation is fixed.
-
--- 
-Sergey.
+		M.
