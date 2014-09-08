@@ -1,73 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] renaming strcmp/strncmp-icase
-Date: Mon, 08 Sep 2014 12:56:01 -0700
-Message-ID: <xmqqegvlnay6.fsf@gitster.dls.corp.google.com>
-References: <xmqqmwaalzb4.fsf@gitster.dls.corp.google.com>
-	<540E03F6.3010100@web.de>
+Subject: Re: [RFC PATCH v2 1/2] Makefile: add check-headers target
+Date: Mon, 08 Sep 2014 12:57:46 -0700
+Message-ID: <xmqqa969nav9.fsf@gitster.dls.corp.google.com>
+References: <1410049821-49861-1-git-send-email-davvid@gmail.com>
+	<xmqqiokylz46.fsf@gitster.dls.corp.google.com>
+	<vpqsik13o84.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Sep 08 22:00:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 08 22:04:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XR52r-00009J-Tn
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 21:56:14 +0200
+	id 1XR54T-0001Yq-8N
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 21:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753797AbaIHT4G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Sep 2014 15:56:06 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52529 "EHLO smtp.pobox.com"
+	id S1754071AbaIHT5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 15:57:49 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59407 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752665AbaIHT4F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Sep 2014 15:56:05 -0400
+	id S1753924AbaIHT5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 15:57:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D2AF936AC9;
-	Mon,  8 Sep 2014 15:56:03 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A44B836B68;
+	Mon,  8 Sep 2014 15:57:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=azLZO5cOQMYa
-	lNlYRfF0puJ0u1g=; b=IhgQHSCUoJ6siWD1HMUOXMjCEqtobNVxkcY2PfvH/ABr
-	B7sfDa/NdTTtrfB2BJ13Ii+Aj+eYOi8+w3yQD8EqaPmwfmt69MqVmKu0SD60VqvZ
-	R9WW5IYcVbAQ06f+oSmSU9VZUkithUn/T+vKjpyYN8/r2f0+VJwyLMx3L2H/JxY=
+	:content-type; s=sasl; bh=aCD4RSRYSL61Y6UC+gl7BrLN8X8=; b=mk1JKz
+	4IueEw9OlKWZfkuaGH8RiXE1SMjrjsrIomjkKPyE4Vv/8pRLqAynNfs8fsfJlGVn
+	OU+HgNxNENqbFmexxHrdEzetOGNiPcrdTqJQ3lEQEyIpUGGexoPEydQ0GwlV8wwm
+	QlMT24FJq6y6jwRWhY8Yb8my/rvVp3vQz0eVQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UrRTd3
-	zFdL18hUVHeH6BA101Mnd2EndhTSV/r/gSH6dcOreGyifY/QssNy5pb8bj8kowvB
-	ok5jF2xoZoYojAQ2SHug6d1hd4yRbJFeofBQnTzt27JHllAeJxkxTgLRiCe4TIZI
-	aZ+bbFPmaQTzYQ/PTkcxLu3H6zpfui2TcWdAs=
+	:content-type; q=dns; s=sasl; b=d/z3M1EvmTkot+wk2LX1RBE243x72QmB
+	9r3FQOqM+MFCG+HaMMs8VYdp1xucVOXCevTRlBEL9kS7FrUosv//kVgFjUXPJY02
+	Q5z/iQR9xm9DG5sE8DnNB23FRsEWdjm5HGmNid4pXFfmenh3eOclnJO6H40QwkvP
+	wsRL2SLxI+Q=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9CC936AC8;
-	Mon,  8 Sep 2014 15:56:03 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 993F636B67;
+	Mon,  8 Sep 2014 15:57:48 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 261CE36AC2;
-	Mon,  8 Sep 2014 15:56:03 -0400 (EDT)
-In-Reply-To: <540E03F6.3010100@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Mon, 08 Sep 2014 21:31:02 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 11ACB36B66;
+	Mon,  8 Sep 2014 15:57:48 -0400 (EDT)
+In-Reply-To: <vpqsik13o84.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	08 Sep 2014 21:29:31 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 29A8F862-3792-11E4-AD15-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 683C7482-3792-11E4-861D-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256674>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> And then we have this in name-hash.c:
-> (Which may explain the "icase" suffix ?)
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> static int same_name(const struct cache_entry *ce, const char *name, =
-int namelen, int icase)
+>> David Aguilar <davvid@gmail.com> writes:
+>>
+>>> +IFS='
+>>> +'
+>>> +git ls-files *.h ewah/*.h vcs-svn/*.h xdiff/*.h |
+>>
+>> Hmm.  This is only for true developers (not one who merely compiles
+>> after expanding a tarball), so "git ls-files" may probably be OK.
+>>
+>> But "/bin/ls" would be equally fine for that, no?
+>
+> Actually, since this is "| while read header", I have to wonder why this
+> is not written as
+>
+> for header in .h ewah/*.h vcs-svn/*.h xdiff/*.h
+> do
+> 	...
+> done
 
-As this file-scope static function takes the "icase" as an explicit
-argument, I do not see anything confusing about it.  My complaint
-was it is confusing that str[n]cmp_icase is not always icase, even
-though the name of the function implies that it would be to those
-who haven't looked at its implementation for a while.
+Yes, that would be even better.  Then you wouldn't even have to
+worry about $IFS dance.
