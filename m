@@ -1,94 +1,106 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: BUG I can't start git on Windows 7
-Date: Mon, 08 Sep 2014 18:02:35 +0200
-Message-ID: <540DD31B.20404@virtuell-zuhause.de>
-References: <CA+4EQ5eXQTVPz-20Y-k-sJMyVcvAeUXBm44LGYFuqmaEwgB3Rg@mail.gmail.com> <20140908193402.c755f942853c278c10b75c7d@domain007.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 4/8] combine-diff: do not pass revs->dense_combined_merges redundantly
+Date: Mon, 08 Sep 2014 10:29:41 -0700
+Message-ID: <xmqqvboynhq2.fsf@gitster.dls.corp.google.com>
+References: <cover.1409860234.git.tr@thomasrast.ch>
+	<33951a1d4be8ec15eec569e1a36c0a620b9edaa6.1409860234.git.tr@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>, 
- Petr Bena <benapetr@gmail.com>
-X-From: msysgit+bncBCL7JHHTPAIKBJVXUACRUBDBLBX6O@googlegroups.com Mon Sep 08 18:02:45 2014
-Return-path: <msysgit+bncBCL7JHHTPAIKBJVXUACRUBDBLBX6O@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f57.google.com ([74.125.82.57])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Mon Sep 08 19:29:55 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCL7JHHTPAIKBJVXUACRUBDBLBX6O@googlegroups.com>)
-	id 1XR1Or-00009k-Ul
-	for gcvm-msysgit@m.gmane.org; Mon, 08 Sep 2014 18:02:41 +0200
-Received: by mail-wg0-f57.google.com with SMTP id m15sf181319wgh.12
-        for <gcvm-msysgit@m.gmane.org>; Mon, 08 Sep 2014 09:02:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=mEpFDeVeHHwooIinDr73k0jr8PnuSCF9cBTpyPKWsDs=;
-        b=QL/baxC7Nd5x85T6WeUXHmJmUkEidmQ0u9omAzcSQPT4vyzh9dH9GWvXT/ssoU3O/c
-         ggGEhjNvr/riqnQ/e2X7kojwv+xbomWCHHAOo1r5UzgkZ/b15CvgPT6TKu1UCJeStoer
-         mmvMMT/lJinEq6fqba7mxZwn2qDknuBkQeoxT1SOEmwoRWnURw9DOerwKhYyFQWdi3sW
-         wOdWRbAMvQgdK94dp1N9bq1aF39O+EY1kiTEgFwB8OPxJW3bv0GWLOIMbZIzniWSe4um
-         nMOEtZrETm4yWCSkX5F4YdfxnYBkYauwyufvoENPvWFcYuvq7GN2Ar32Zw/iOH4i/fyV
-         Agfg==
-X-Received: by 10.152.8.11 with SMTP id n11mr393366laa.2.1410192161150;
-        Mon, 08 Sep 2014 09:02:41 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.205.68 with SMTP id le4ls339029lac.87.gmail; Mon, 08 Sep
- 2014 09:02:39 -0700 (PDT)
-X-Received: by 10.112.182.8 with SMTP id ea8mr429062lbc.11.1410192159373;
-        Mon, 08 Sep 2014 09:02:39 -0700 (PDT)
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [2a01:488:42::50ed:84a3])
-        by gmr-mx.google.com with ESMTPS id b6si1257443lbd.1.2014.09.08.09.02.39
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 08 Sep 2014 09:02:39 -0700 (PDT)
-Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:84a3;
-Received: from p5ddc3a6f.dip0.t-ipconnect.de ([93.220.58.111] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XR1Ol-00014G-Gr; Mon, 08 Sep 2014 18:02:35 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-In-Reply-To: <20140908193402.c755f942853c278c10b75c7d@domain007.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1410192159;a29ba86a;
-X-Original-Sender: thomas.braun@virtuell-zuhause.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
- sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256657>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XR2lG-0007gw-Qv
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 19:29:55 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754411AbaIHR3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 13:29:51 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61974 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754071AbaIHR3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 13:29:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B30B36C56;
+	Mon,  8 Sep 2014 13:29:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=07Nhd11Va6kkEu2HtdNjZ3+fZwQ=; b=kiF/Q4
+	ckePF3MNbYJINfk//2qQKSXQhyef9CDLB1C5g/empLBl1oc3iumFh7wpC10pn48G
+	/9wqXeKy7USQaaU1I53Bi9Dz2lu+LaQetR6i8uUgPsluZ10tUFsNROqqReivg0Wi
+	CbXqPzEEZ12mrDFf+TCCIOkJAaXbSfMJ41wts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QNorYeUasP/z8ZNI7/t7ArZenC1H6lDI
+	LeM1x41w4NlKKBLhsVohu162vuPuK4D0ufjRae0ZlKAnU0tRM2CfneZZPRe2uozD
+	XI9jgkjgCd7R6+s6s+MLJG8r+gVqKRRK8FqhEIEFnZepAi2+NDCOVHYXq5VvvCXV
+	Ut9IK0n+/uE=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2F7BC36C54;
+	Mon,  8 Sep 2014 13:29:44 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A319036C53;
+	Mon,  8 Sep 2014 13:29:43 -0400 (EDT)
+In-Reply-To: <33951a1d4be8ec15eec569e1a36c0a620b9edaa6.1409860234.git.tr@thomasrast.ch>
+	(Thomas Rast's message of "Sat, 6 Sep 2014 19:57:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B8AE2312-377D-11E4-96FB-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256658>
 
-Am 08.09.2014 um 17:34 schrieb Konstantin Khomoutov:
-> I wonder, why the error message mentions Cygwin though.
+Thomas Rast <tr@thomasrast.ch> writes:
 
-This is a leftover. Msys was forked from cygwin some time ago.
+> The existing code passed revs->dense_combined_merges along revs itself
+> into the combine-diff functions, which is rather redundant.  Remove
+> the 'dense' argument until much further down the callchain to simplify
+> callers.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+It was not apparent that the changes to diff_tree_combined_merge()
+was correct without looking at both of its callsites, but one passes
+the .dense_combined_merges member, and the other in submodules
+always gives true, which you covered here:
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+> Note that while the caller in submodule.c needs to do extra work now,
+> the next commit will simplify this to a single setting again.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> diff --git a/submodule.c b/submodule.c
+> index c3a61e7..0499de6 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -482,10 +482,13 @@ static void find_unpushed_submodule_commits(struct commit *commit,
+>  	struct rev_info rev;
+>  
+>  	init_revisions(&rev, NULL);
+> +	rev.ignore_merges = 0;
+> +	rev.combined_merges = 1;
+> +	rev.dense_combined_merges = 1;
+>  	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+>  	rev.diffopt.format_callback = collect_submodules_from_diff;
+>  	rev.diffopt.format_callback_data = needs_pushing;
+> -	diff_tree_combined_merge(commit, 1, &rev);
+> +	diff_tree_combined_merge(commit, &rev);
+>  }
+
+I briefly wondered if there can be any unwanted side effects in this
+particular codepath that is caused by setting rev.combined_merges
+which was not set in the original code, but seeing that this &rev is
+not used for anything other than diff_tree_combined_merge(), it
+should be OK.
+
+Also I wondered if this is leaking whatever in the &rev structure,
+but in this call I think rev is used only for its embedded diffopt
+in a way that does not leak anything, so it seems to be OK, but I'd
+appreciate if submodule folks can double check.
+
+Thanks.
