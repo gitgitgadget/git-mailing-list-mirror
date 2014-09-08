@@ -1,84 +1,90 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: t2017 test failure in pu
-Date: Mon, 08 Sep 2014 11:56:03 +0100
-Message-ID: <540D8B43.9060806@ramsay1.demon.co.uk>
+From: Colin Yates <colin.yates@gmail.com>
+Subject: Please help provide clarity on git rebase internals
+Date: Mon, 8 Sep 2014 12:25:25 +0100
+Message-ID: <CAE2xRkHgnXK84u5zeLyVZqAnvu3u+0gSgaB+smFXu6Y7pkY1kQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 12:56:14 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 08 13:25:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQwcF-0007yC-SR
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 12:56:12 +0200
+	id 1XQx4c-0001po-Ms
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 13:25:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbaIHK4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2014 06:56:07 -0400
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:41683 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753033AbaIHK4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2014 06:56:06 -0400
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 2AD50384089;
-	Mon,  8 Sep 2014 11:55:32 +0100 (BST)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id D8035384084;
-	Mon,  8 Sep 2014 11:55:31 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
-	Mon,  8 Sep 2014 11:55:31 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-X-MDF-HostID: 4
+	id S1753033AbaIHLZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 07:25:26 -0400
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:41262 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751404AbaIHLZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 07:25:26 -0400
+Received: by mail-yh0-f44.google.com with SMTP id a41so9132608yho.3
+        for <git@vger.kernel.org>; Mon, 08 Sep 2014 04:25:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Jr/2wTW3rKYh21Gc3qaow5H2nOn2r/N9Qi+1wRxbp5w=;
+        b=sWiglm+n9LVyOQoMTEdDIE/fo0QObIZ5ZsglZlVW77487iBCsyN0HvmUcjbgHxduoq
+         L0ozGvVmdDQcjLFt/vTdsqL1b60tz/145SK5O8r+228cd0OFQPdDIDZ8dxW38JUiTSRn
+         opC35YHbTlYQeYlNHSKUABkb6xpA/T4XVHpouDsPPCk/841IdXHayTJto2BWSWHn3R4q
+         sGavWag5aw5AW7BJE47i+AdLhvlF5aEKrtEi9I0dorS9QqgtRvUOVMEECVIkBmN20/qu
+         HoysShiHT7Oro2qo98bxBaWrQI8UmcTYhpSHUiKa844LO5RwUT4a4j3V6QMXuZfUiNpG
+         aNlg==
+X-Received: by 10.236.165.199 with SMTP id e47mr41466239yhl.12.1410175525552;
+ Mon, 08 Sep 2014 04:25:25 -0700 (PDT)
+Received: by 10.182.231.232 with HTTP; Mon, 8 Sep 2014 04:25:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256640>
 
-Hi Junio,
+Hi all,
 
-The current 'pu' branch has a test failure for me, namely test
-t2017-checkout-orphan.sh #9.
+TLDR; I am seeing merge conflicts when rebasing even though applying
+them to HEAD of target branch should work. Can you please upgrade my
+understanding so I understand.
 
-I had a quick squint at the conflict resolution in commit acdbdf99 and
-the only thing that seemed relevant was the dropping of the
-'log_all_ref_updates' dance. So, I quickly put it back, like so:
+My understanding is that rebasing branch B onto branch A unrolls all
+of branch B's commits and then "reduces" them onto the HEAD of branch
+A.
 
-    diff --git a/builtin/checkout.c b/builtin/checkout.c
-    index 18a4519..de27a1b 100644
-    --- a/builtin/checkout.c
-    +++ b/builtin/checkout.c
-    @@ -602,9 +602,15 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
-     		if (opts->new_orphan_branch) {
-     			if (opts->new_branch_log && !log_all_ref_updates) {
-     				const char *ref_name;
-    +				int ret, temp;
-     
-     				ref_name = mkpath("refs/heads/%s", opts->new_orphan_branch);
-    -				if (create_reflog(ref_name)) {
-    +				temp = log_all_ref_updates;
-    +				log_all_ref_updates = 1;
-    +				ret = create_reflog(ref_name);
-    +				log_all_ref_updates = temp;
-    +
-    +				if (ret) {
-     					fprintf(stderr, _("Can not do reflog for '%s'\n"),
-     					    opts->new_orphan_branch);
-     					return;
+For example, I took featureA branch from develop three days ago.
+develop subsequently had commits #d1, #d2 and #d3. featureA also had
+#f1 and #f2 and in terms of time they are all intermingled.
 
-and everything works again. (I've only just noticed that the 'dance'
-is now within a conditional such that "!log_all_ref_updates" is true, so
-that the above can be simplified!)
+My understanding of rebase is that after issuing "git fetch; git
+rebase origin/develop" in featureA branch a git log should show #f2,
+#f1, #d3, #d2, #d1.
 
-I guess 'create_reflog' should be called 'maybe_create_reflog' :-D
+I am seeing this, but sometimes I see something I can't explain and
+that is a merge conflict as if git was doing a merge rather than a
+rebase.
 
-HTH
+For example, let's imagine that #f1 removed fileA, some time later #d1
+added a line to that file. If I was doing a merge then of course this
+should be a conflict, however applying #f1 to develop HEAD should work
+even if fileA has changed (i.e. #f1 removes the updated fileA).
 
-ATB,
-Ramsay Jones
+As it is I am frequently running into merge conflicts in this manner
+when it *appears* git is applying a patch from featureA onto develop
+_as it was then the patch was made_.
+
+I am also seeing merge conflicts that occur between commits in the
+develop branch itself as well, which I assumed would be effectively
+read-only.
+
+In terms of functional programming I thought rebase was a pure reduce
+of a sequence of patches from featureA branch onto HEAD.
+
+I have no idea what git is doing internally, and if I am confident of
+anything it is almost certainly that the bug is in my understanding
+:).
+
+What am I missing?
+
+Thanks,
+
+Col
