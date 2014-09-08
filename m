@@ -1,74 +1,114 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC PATCH v2 1/2] Makefile: add check-headers target
-Date: Mon, 08 Sep 2014 21:29:31 +0200
-Message-ID: <vpqsik13o84.fsf@anie.imag.fr>
-References: <1410049821-49861-1-git-send-email-davvid@gmail.com>
-	<xmqqiokylz46.fsf@gitster.dls.corp.google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [RFH] renaming strcmp/strncmp-icase
+Date: Mon, 08 Sep 2014 21:31:02 +0200
+Message-ID: <540E03F6.3010100@web.de>
+References: <xmqqmwaalzb4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 21:30:09 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 08 21:31:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XR4dc-0004K4-GZ
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 21:30:08 +0200
+	id 1XR4eg-0004me-9g
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 21:31:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754056AbaIHT3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2014 15:29:48 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37864 "EHLO rominette.imag.fr"
+	id S1754036AbaIHTbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 15:31:08 -0400
+Received: from mout.web.de ([212.227.15.14]:56846 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753446AbaIHT3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2014 15:29:47 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s88JTTwb024521
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 8 Sep 2014 21:29:29 +0200
-Received: from anie.imag.fr (ensi-vpn-248.imag.fr [129.88.57.248])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s88JTV3C001413;
-	Mon, 8 Sep 2014 21:29:31 +0200
-In-Reply-To: <xmqqiokylz46.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 08 Sep 2014 11:56:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 08 Sep 2014 21:29:29 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s88JTTwb024521
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1410809371.19841@RfFkxVB+CoNUQ2pJXL45wQ
+	id S1752748AbaIHTbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 15:31:07 -0400
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0Lj2TO-1XwZNu0qJa-00dBli; Mon, 08 Sep 2014 21:31:04
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <xmqqmwaalzb4.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:TZc1DaJOmcxLN03ZYUwzlwnsOw9365c4g5HfV5vqOI5DMh3cAvY
+ uI7dBozYJBPUPgZOk3LPezWrT0uFFMdciXyjsBc4pvZtUQRB2XB8bfhw2VOA9X8wFXp2Wo2
+ 1ZyB3a8ywcE8ZxmdBh8v6u4CJpfAxSFtT7qee6z9aGY/DxXONFcffHFGgosMjvRFOgw0Uv5
+ G6P82EQpw28MXojdd0m5A==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256671>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2014-09-08 20.52, Junio C Hamano wrote:
+> There are these two functions in dir.c that has only a handful of
+> callers outside:
+> 
+>     int strcmp_icase(const char *a, const char *b);
+>     int strncmp_icase(const char *a, const char *b, size_t count);
+> 
+> How many of you would think these are about comparing two strings in
+> a case-insensitive way?
+> 
+> If you raised your hand (like I did), you were wrong.  These do
+> comparison case-insensitively only on a case-insensitive filesystem,
+> and hence calling it makes sense only for pathnames you grabbed out
+> of the filesystem via readdir() (or the user gave us, intending to
+> name paths).
+> 
+> To avoid confusion, I think they should be renamed to stress the
+> fact that these are about comparing *PATHS*.  As I always say, I am
+> bad at naming things and good suggestions are appreciated.
+> 
+> FYI, there are names I thought about and haven't managed to convince
+> myself that they are good.
+> 
+> A good name for the non-n variant may be "compare_paths()", but that
+> is used in "combine-diff.c".  "compare_pathnames()" may be a
+> compromise.
+> 
+> However, either of these makes it hard to come up with a
+> corresponding name for the "n" (counted) variant.  The best I could
+> do was "compare_pathnames_counted()", but a nice similarity to
+> strcmp()/strncmp() pair is lost.
+> 
+> pathnamecmp()/pathnamencmp() perhaps?
+> 
+> I dunno.
+And then we have this in name-hash.c:
+(Which may explain the "icase" suffix ?)
 
-> David Aguilar <davvid@gmail.com> writes:
->
->> +IFS='
->> +'
->> +git ls-files *.h ewah/*.h vcs-svn/*.h xdiff/*.h |
->
-> Hmm.  This is only for true developers (not one who merely compiles
-> after expanding a tarball), so "git ls-files" may probably be OK.
->
-> But "/bin/ls" would be equally fine for that, no?
+static int same_name(const struct cache_entry *ce, const char *name, int namelen, int icase)
+{
+	int len = ce_namelen(ce);
 
-Actually, since this is "| while read header", I have to wonder why this
-is not written as
+	/*
+	 * Always do exact compare, even if we want a case-ignoring comparison;
+	 * we do the quick exact one first, because it will be the common case.
+	 */
+	if (len == namelen && !memcmp(name, ce->name, len))
+		return 1;
 
-for header in .h ewah/*.h vcs-svn/*.h xdiff/*.h
-do
-	...
-done
+	if (!icase)
+		return 0;
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+	return slow_same_name(name, namelen, ce->name, len);
+}
+
+-----------
+static int slow_same_name(const char *name1, int len1, const char *name2, int len2)
+{
+	if (len1 != len2)
+		return 0;
+
+	while (len1) {
+		unsigned char c1 = *name1++;
+		unsigned char c2 = *name2++;
+		len1--;
+		if (c1 != c2) {
+			c1 = toupper(c1);
+			c2 = toupper(c2);
+			if (c1 != c2)
+				return 0;
+		}
+	}
+	return 1;
+}
