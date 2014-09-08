@@ -1,114 +1,100 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [RFH] renaming strcmp/strncmp-icase
-Date: Mon, 08 Sep 2014 21:31:02 +0200
-Message-ID: <540E03F6.3010100@web.de>
-References: <xmqqmwaalzb4.fsf@gitster.dls.corp.google.com>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: git rebase: yet another newbie quest.
+Date: Mon, 08 Sep 2014 23:49:25 +0400
+Message-ID: <87egvlzyd6.fsf@osv.gnss.ru>
+References: <87a96ecqe9.fsf@osv.gnss.ru> <20140905154159.GB1510@thunk.org>
+	<87sik28bir.fsf@osv.gnss.ru> <20140908140758.GI1066@thunk.org>
+	<87fvg23yhx.fsf@osv.gnss.ru> <20140908173251.GA24855@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 08 21:31:15 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Sep 08 21:49:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XR4eg-0004me-9g
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 21:31:14 +0200
+	id 1XR4wV-0003eY-64
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 21:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754036AbaIHTbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2014 15:31:08 -0400
-Received: from mout.web.de ([212.227.15.14]:56846 "EHLO mout.web.de"
+	id S1753171AbaIHTt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 15:49:29 -0400
+Received: from mail.javad.com ([54.86.164.124]:33874 "EHLO mail.javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752748AbaIHTbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2014 15:31:07 -0400
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0Lj2TO-1XwZNu0qJa-00dBli; Mon, 08 Sep 2014 21:31:04
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <xmqqmwaalzb4.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:TZc1DaJOmcxLN03ZYUwzlwnsOw9365c4g5HfV5vqOI5DMh3cAvY
- uI7dBozYJBPUPgZOk3LPezWrT0uFFMdciXyjsBc4pvZtUQRB2XB8bfhw2VOA9X8wFXp2Wo2
- 1ZyB3a8ywcE8ZxmdBh8v6u4CJpfAxSFtT7qee6z9aGY/DxXONFcffHFGgosMjvRFOgw0Uv5
- G6P82EQpw28MXojdd0m5A==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752665AbaIHTt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 15:49:28 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id 4D38D615BB;
+	Mon,  8 Sep 2014 19:49:27 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1XR4wH-0001K1-Hk; Mon, 08 Sep 2014 23:49:25 +0400
+In-Reply-To: <20140908173251.GA24855@thunk.org> (Theodore Ts'o's message of
+	"Mon, 8 Sep 2014 13:32:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256672>
 
-On 2014-09-08 20.52, Junio C Hamano wrote:
-> There are these two functions in dir.c that has only a handful of
-> callers outside:
-> 
->     int strcmp_icase(const char *a, const char *b);
->     int strncmp_icase(const char *a, const char *b, size_t count);
-> 
-> How many of you would think these are about comparing two strings in
-> a case-insensitive way?
-> 
-> If you raised your hand (like I did), you were wrong.  These do
-> comparison case-insensitively only on a case-insensitive filesystem,
-> and hence calling it makes sense only for pathnames you grabbed out
-> of the filesystem via readdir() (or the user gave us, intending to
-> name paths).
-> 
-> To avoid confusion, I think they should be renamed to stress the
-> fact that these are about comparing *PATHS*.  As I always say, I am
-> bad at naming things and good suggestions are appreciated.
-> 
-> FYI, there are names I thought about and haven't managed to convince
-> myself that they are good.
-> 
-> A good name for the non-n variant may be "compare_paths()", but that
-> is used in "combine-diff.c".  "compare_pathnames()" may be a
-> compromise.
-> 
-> However, either of these makes it hard to come up with a
-> corresponding name for the "n" (counted) variant.  The best I could
-> do was "compare_pathnames_counted()", but a nice similarity to
-> strcmp()/strncmp() pair is lost.
-> 
-> pathnamecmp()/pathnamencmp() perhaps?
-> 
-> I dunno.
-And then we have this in name-hash.c:
-(Which may explain the "icase" suffix ?)
+Theodore Ts'o <tytso@mit.edu> writes:
 
-static int same_name(const struct cache_entry *ce, const char *name, int namelen, int icase)
-{
-	int len = ce_namelen(ce);
+> On Mon, Sep 08, 2014 at 07:47:38PM +0400, Sergey Organov wrote:
+>> 
+>> except that I wanted to configure upstream as well for the topic-branch,
+>> that looks like pretty legit desire. If I didn't, I'd need to specify
+>> upstream explicitly in the "git rebase", and I'd not notice the problem
+>> at all, as the actual problem is that "git rebase" and "git rebase
+>> <upstream>" work differently!
+>
+> Right, so I never do that.  I have master track origin/master, where
+> it automagically does the right thing, but I'm not even sure I can
+> articulate what it *means* to have topic also track origin/master.
 
-	/*
-	 * Always do exact compare, even if we want a case-ignoring comparison;
-	 * we do the quick exact one first, because it will be the common case.
-	 */
-	if (len == namelen && !memcmp(name, ce->name, len))
-		return 1;
+You got it somewhat wrong. I intended 'topic' to track 'master', not
+'origin/master'.
 
-	if (!icase)
-		return 0;
+> I just don't have a mental model for it, and so it falls in the category
+> of "it's too complicated for my simple brain to figure out".
 
-	return slow_same_name(name, namelen, ce->name, len);
-}
+I thought it's rather common for one local branch to track another in
+the git world. At least all machinery is there, and I don't see how
+tracking local branch is different from tracking remote branch,
+fundamentally.
 
------------
-static int slow_same_name(const char *name1, int len1, const char *name2, int len2)
-{
-	if (len1 != len2)
-		return 0;
+> So I just do "git rebase master", and I would never even *consider*
+> doing a "git pull --rebase".  I'll do a "git fetch", and then look at
+> what just landed, and and then checkout master, update it to
+> origin/master, and then run the regression tests to make sure what
+> just came in from outside actually was *sane*, and only then would I
+> do a "git checkout topic; git rebase master", and then re-run the
+> regression tests a third time.
 
-	while (len1) {
-		unsigned char c1 = *name1++;
-		unsigned char c2 = *name2++;
-		len1--;
-		if (c1 != c2) {
-			c1 = toupper(c1);
-			c2 = toupper(c2);
-			if (c1 != c2)
-				return 0;
-		}
-	}
-	return 1;
-}
+Yeah, and I simply wanted to shorten it to "git checkout topic; git
+rebase", by making git remember I want to rebase w.r.t. 'master' by
+default. 
+
+> Otherwise, how would I know whether the regression came in from
+> origin/master, or from my topic branch, or from the result of rebasing
+> the topic branch on top of origin/master?
+
+As far as I can see, what I did is almost exactly what you do, except I
+didn't want to tell "master" every time I want to rebase 'topic' branch.
+Configuring tracking branch and saying just "git rebase" when you are on
+the branch seems to be logical, and there doesn't seem to be anything
+wrong with it (except strange git default behavior), or does it?
+
+> And of course, this goes back to my observation that I don't rebase my
+> topic branchs all that often anyway, just because the moment you do
+> the rebase, you've invalidated all of the testing that you've done to
+> date.  In fact, some upstreams will tell explicitly tell you to never
+> rebase a topic branch before you ask them to pull it in, unless you
+> need to handle some non-trivial merge conflict.
+
+That's good advice indeed, but it's unrelated to the issue at hand, as you
+still rebase, sooner or later.
+
+-- 
+Sergey.
