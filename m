@@ -1,60 +1,98 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH 22/32] checkout: support checking out into a new working
- directory
-Date: Mon, 08 Sep 2014 10:06:25 -0400
-Message-ID: <540DB7E1.4090302@xiplink.com>
-References: <1409387642-24492-1-git-send-email-pclouds@gmail.com> <1409387642-24492-23-git-send-email-pclouds@gmail.com> <70985AC885404243A2B95F534083A0E9@PhilipOakley> <CACsJy8CpGhLN58GyJa_3-PDqNqYUCshPEGDr8-pKngad+-oAdg@mail.gmail.com> <CACsJy8ASW0xO3WzU7f+T4iDhjL=Y=C6K+Cvi-OWOnS16r=m+9Q@mail.gmail.com> <64D6AA311E524C27A8B6EDE7A63489D7@PhilipOakley> <CACsJy8CTLRpjmh+0K6ypLKUgi52gsFEqnNsha2yfOvRVCdhdMQ@mail.gmail.com> <5405D983.3050707@xiplink.com> <xmqqfvga2ai9.fsf@gitster.dls.corp.google.com> <CACsJy8DxUguPohjYGTgnHjBc=0mqn20c67pTBN34VRz7oCjyGA@mail.gmail.com>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: git rebase: yet another newbie quest.
+Date: Mon, 8 Sep 2014 10:07:58 -0400
+Message-ID: <20140908140758.GI1066@thunk.org>
+References: <87a96ecqe9.fsf@osv.gnss.ru>
+ <20140905154159.GB1510@thunk.org>
+ <87sik28bir.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>
-To: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 16:06:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sergey Organov <sorganov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 16:08:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQzaZ-0004ZV-SM
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 16:06:40 +0200
+	id 1XQzc1-0005Bp-2T
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 16:08:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754267AbaIHOGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2014 10:06:35 -0400
-Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:44736 "EHLO
-	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753947AbaIHOGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2014 10:06:13 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp14.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 2F041803D4;
-	Mon,  8 Sep 2014 10:06:11 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp14.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id EF695803E7;
-	Mon,  8 Sep 2014 10:06:10 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.2.10);
-	Mon, 08 Sep 2014 14:06:11 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <CACsJy8DxUguPohjYGTgnHjBc=0mqn20c67pTBN34VRz7oCjyGA@mail.gmail.com>
+	id S1753848AbaIHOIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 10:08:04 -0400
+Received: from imap.thunk.org ([74.207.234.97]:43681 "EHLO imap.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754032AbaIHOID (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 10:08:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=E22mXEuieoiVm7IAwiKXYcl3+N5xYLPLeDi8b/plVcs=;
+	b=DeMzh0DVrM2fxwF97PF/ZiF+ppErR7qnoWMjIQHM5jwSupu8dUv8Gu7YqrD2V3HvA3KT5d6bWzYK8HJb3pPDYanXZ6fSJ0pSJGbEUPhBfDAO6xumIBUk0qPxiw/+Q8yx7Oe4Gj+x+Kl8M9qNvqHG3wjf4FyPBpbZMTQYDelumks=;
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1XQzbs-0004Bg-Kl; Mon, 08 Sep 2014 14:08:00 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id 2BE1A580506; Mon,  8 Sep 2014 10:07:59 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <87sik28bir.fsf@osv.gnss.ru>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256649>
 
-On 14-09-08 06:52 AM, Duy Nguyen wrote:
+On Mon, Sep 08, 2014 at 05:52:44PM +0400, Sergey Organov wrote:
 > 
-> While we're changing the terms, I wonder if "primary working
-> directory" and "secondary working directories" are better than "main
-> checkout" and "linked checkout".
+> I didn't intend to make topic branch from the very beginning, and
+> already made a commit or two on the remote tracking branch bofore I
+> realized I'd better use topic branch. It'd create no problem as far as I
+> can see, provided vanilla "git rebase" has "sane" defaults. That said,
+> I've already been once pointed to by Junio that my definition of "sane"
+> doesn't take into account workflows of others, so now I try to be
+> carefull calling vanilla "git rebase" names.
 
-I might have a slight preference for main/linked, because primary/secondary
-can imply that there are further orders -- tertiary, quaternary, etc.  Also,
-at least in English, "linked" is commonly used and it doesn't necessarily
-imply an implementation (e.g. with hard or soft filesystem links).
+Right, so what I typically in that situation is the following:
 
-(How many angels can dance on the threshold of an open bikeshed door? :) )
+<on the master branch>
+<hack hack hack>
+git commit
+<hack hack hack>
+git commit
+<oops, I should have created a topic branch>
+git checkout -b topic-branch
+git branch -f master origin/msater
 
-		M.
+This resets the master branch to only have what is in the upstream
+commit.
+
+> Please also notice that I didn't pull immediately after I've re-arranged
+> my branches, and this fact only made it more difficult to find and
+> isolate the problem.
+
+It's also the case that I rarely will do a "git rebase" without taking
+a look at the branches to make sure it will do what I expect.  I'll do
+that using either "gitk" or "git lgt", where git lgt is defined in my
+.gitconfig as:
+
+[alias]
+	lgt = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
+
+And typically what I will do is something like this:
+
+gitk -20 master origin/master topic
+
+-or-
+
+git lgt -20 master origin/master topic
+
+The "git lgt" command is very handy when I want to see how the
+branches are arranged, and I'm logged remotely over ssh/tmux or some
+such, so gitk isn't really available to me.
+
+Cheers,
+
+						- Ted
