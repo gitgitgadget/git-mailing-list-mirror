@@ -1,61 +1,60 @@
-From: Petr Bena <benapetr@gmail.com>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
 Subject: Re: BUG I can't start git on Windows 7
-Date: Mon, 8 Sep 2014 17:57:40 +0200
-Message-ID: <CA+4EQ5f9+derXY5+c-eNwH05mHERgbPB_6i1fx33KmGuo2EjmQ@mail.gmail.com>
-References: <CA+4EQ5eXQTVPz-20Y-k-sJMyVcvAeUXBm44LGYFuqmaEwgB3Rg@mail.gmail.com>
-	<20140908193402.c755f942853c278c10b75c7d@domain007.com>
-	<CA+4EQ5cHx2Gz8CB_bCLrVNRpYEEr+vdJa5omgh1_5_3jj_q_sw@mail.gmail.com>
+Date: Mon, 08 Sep 2014 18:02:35 +0200
+Message-ID: <540DD31B.20404@virtuell-zuhause.de>
+References: <CA+4EQ5eXQTVPz-20Y-k-sJMyVcvAeUXBm44LGYFuqmaEwgB3Rg@mail.gmail.com> <20140908193402.c755f942853c278c10b75c7d@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: msysgit+bncBCLOXUXL2AFRB5FDW6QAKGQEZCI7FTI@googlegroups.com Mon Sep 08 17:57:43 2014
-Return-path: <msysgit+bncBCLOXUXL2AFRB5FDW6QAKGQEZCI7FTI@googlegroups.com>
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>, 
+ Petr Bena <benapetr@gmail.com>
+X-From: msysgit+bncBCL7JHHTPAIKBJVXUACRUBDBLBX6O@googlegroups.com Mon Sep 08 18:02:45 2014
+Return-path: <msysgit+bncBCL7JHHTPAIKBJVXUACRUBDBLBX6O@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ig0-f190.google.com ([209.85.213.190])
+Received: from mail-wg0-f57.google.com ([74.125.82.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCLOXUXL2AFRB5FDW6QAKGQEZCI7FTI@googlegroups.com>)
-	id 1XR1K1-0006gH-OM
-	for gcvm-msysgit@m.gmane.org; Mon, 08 Sep 2014 17:57:42 +0200
-Received: by mail-ig0-f190.google.com with SMTP id r2sf3180126igi.17
-        for <gcvm-msysgit@m.gmane.org>; Mon, 08 Sep 2014 08:57:40 -0700 (PDT)
+	(envelope-from <msysgit+bncBCL7JHHTPAIKBJVXUACRUBDBLBX6O@googlegroups.com>)
+	id 1XR1Or-00009k-Ul
+	for gcvm-msysgit@m.gmane.org; Mon, 08 Sep 2014 18:02:41 +0200
+Received: by mail-wg0-f57.google.com with SMTP id m15sf181319wgh.12
+        for <gcvm-msysgit@m.gmane.org>; Mon, 08 Sep 2014 09:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=6CiRInW/u5Njj0j4KJOp4IOeZXr3aHAtVhlTwO/Oj+w=;
-        b=x+8HvAmJxRce5UKPvw9Oku4R7j8wkkRFeQyJfe+jeCGf1cuVRtCw091AGStXC+LjXL
-         bvVTvSFqXN1vk0yzhimVdxiGBbbS9jxX2b6YVEh1iKBcQR9MY9owN3NGwx3okLiwdYrd
-         nT3Ole9fZ1P/WnkUm0/IoENDVSYIR71ysp9j62ADFy7HlOcNww9FGNevPCbXJPJ0wmgB
-         ret7GGmUi1CkIDBmVrVqV4ALq/uDFhEi5A5vVAXsFSj8oY2TwojSqdDVFvYMkfdtTzub
-         ZVl/hgM3XTZ/A1Cghby/1DvNegWIrMNs0q9zPAhPFtyWOI5dzJ/HLw14QH5KP0yVPxHG
-         3U0g==
-X-Received: by 10.50.154.66 with SMTP id vm2mr277436igb.5.1410191860914;
-        Mon, 08 Sep 2014 08:57:40 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=mEpFDeVeHHwooIinDr73k0jr8PnuSCF9cBTpyPKWsDs=;
+        b=QL/baxC7Nd5x85T6WeUXHmJmUkEidmQ0u9omAzcSQPT4vyzh9dH9GWvXT/ssoU3O/c
+         ggGEhjNvr/riqnQ/e2X7kojwv+xbomWCHHAOo1r5UzgkZ/b15CvgPT6TKu1UCJeStoer
+         mmvMMT/lJinEq6fqba7mxZwn2qDknuBkQeoxT1SOEmwoRWnURw9DOerwKhYyFQWdi3sW
+         wOdWRbAMvQgdK94dp1N9bq1aF39O+EY1kiTEgFwB8OPxJW3bv0GWLOIMbZIzniWSe4um
+         nMOEtZrETm4yWCSkX5F4YdfxnYBkYauwyufvoENPvWFcYuvq7GN2Ar32Zw/iOH4i/fyV
+         Agfg==
+X-Received: by 10.152.8.11 with SMTP id n11mr393366laa.2.1410192161150;
+        Mon, 08 Sep 2014 09:02:41 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.124.38 with SMTP id mf6ls1898303igb.36.canary; Mon, 08 Sep
- 2014 08:57:40 -0700 (PDT)
-X-Received: by 10.68.216.231 with SMTP id ot7mr9366894pbc.2.1410191860284;
-        Mon, 08 Sep 2014 08:57:40 -0700 (PDT)
-Received: from mail-vc0-x22e.google.com (mail-vc0-x22e.google.com [2607:f8b0:400c:c03::22e])
-        by gmr-mx.google.com with ESMTPS id ew8si343857vdb.1.2014.09.08.08.57.40
+Received: by 10.152.205.68 with SMTP id le4ls339029lac.87.gmail; Mon, 08 Sep
+ 2014 09:02:39 -0700 (PDT)
+X-Received: by 10.112.182.8 with SMTP id ea8mr429062lbc.11.1410192159373;
+        Mon, 08 Sep 2014 09:02:39 -0700 (PDT)
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [2a01:488:42::50ed:84a3])
+        by gmr-mx.google.com with ESMTPS id b6si1257443lbd.1.2014.09.08.09.02.39
         for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 08 Sep 2014 08:57:40 -0700 (PDT)
-Received-SPF: pass (google.com: domain of benapetr@gmail.com designates 2607:f8b0:400c:c03::22e as permitted sender) client-ip=2607:f8b0:400c:c03::22e;
-Received: by mail-vc0-f174.google.com with SMTP id hy10so1294512vcb.5
-        for <msysgit@googlegroups.com>; Mon, 08 Sep 2014 08:57:40 -0700 (PDT)
-X-Received: by 10.52.0.132 with SMTP id 4mr21761249vde.10.1410191860171; Mon,
- 08 Sep 2014 08:57:40 -0700 (PDT)
-Received: by 10.221.10.69 with HTTP; Mon, 8 Sep 2014 08:57:40 -0700 (PDT)
-In-Reply-To: <CA+4EQ5cHx2Gz8CB_bCLrVNRpYEEr+vdJa5omgh1_5_3jj_q_sw@mail.gmail.com>
-X-Original-Sender: benapetr@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of benapetr@gmail.com designates 2607:f8b0:400c:c03::22e
- as permitted sender) smtp.mail=benapetr@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 08 Sep 2014 09:02:39 -0700 (PDT)
+Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:84a3;
+Received: from p5ddc3a6f.dip0.t-ipconnect.de ([93.220.58.111] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1XR1Ol-00014G-Gr; Mon, 08 Sep 2014 18:02:35 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+In-Reply-To: <20140908193402.c755f942853c278c10b75c7d@domain007.com>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1410192159;a29ba86a;
+X-Original-Sender: thomas.braun@virtuell-zuhause.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
+ sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -67,48 +66,12 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256657>
 
-For others who are lazy to open the link, solution is executing this
-as administrator from your bin folder from where git is installed:
+Am 08.09.2014 um 17:34 schrieb Konstantin Khomoutov:
+> I wonder, why the error message mentions Cygwin though.
 
-rebase.exe -b 0x50000000 msys-1.0.dll
-
-or reboot, but some people don't reboot their PC's ever, so you might
-prefer this.
-
-
-
-
-On Mon, Sep 8, 2014 at 5:56 PM, Petr Bena <benapetr@gmail.com> wrote:
-> Yes that fixed it, thanks :)
->
-> On Mon, Sep 8, 2014 at 5:34 PM, Konstantin Khomoutov
-> <flatworm@users.sourceforge.net> wrote:
->> On Mon, 8 Sep 2014 11:15:44 +0200
->> Petr Bena <benapetr@gmail.com> wrote:
->>
->>> I installed git on my system using official package from git-scm.com
->>> but I can't launch it, I am always getting this error:
->>>
->>> C:\Users\petr.bena>"C:\Program Files (x86)\Git\bin\sh.exe" --login -i
->>>       0 [main] us 0 init_cheap: VirtualAlloc pointer is null, Win32
->>> error 487 AllocationBase 0x0, BaseAddress 0x68570000, RegionSize
->>> 0x40000, State 0x10000 C:\Program Files (x86)\Git\bin\sh.exe: ***
->>> Couldn't reserve space for cygwin's heap, Win32 error 0
->>>
->>>
->>> At some point this could be an issue with cygwin, but I am not sure.
->>> Did anyone had similar issue?
->>
->> Does [1] help?
->>
->> I wonder, why the error message mentions Cygwin though.
->> One reason might be is that MinGW is originally a fork of some very
->> early Cygwin release so may be some error message is lingering there,
->> unmodified.
->>
->> 1. http://stackoverflow.com/a/24406417/720999
+This is a leftover. Msys was forked from cygwin some time ago.
 
 -- 
 -- 
