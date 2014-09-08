@@ -1,98 +1,86 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: git rebase: yet another newbie quest.
-Date: Mon, 8 Sep 2014 10:07:58 -0400
-Message-ID: <20140908140758.GI1066@thunk.org>
-References: <87a96ecqe9.fsf@osv.gnss.ru>
- <20140905154159.GB1510@thunk.org>
- <87sik28bir.fsf@osv.gnss.ru>
+From: "R. Klomp" <r.klomp@students.uu.nl>
+Subject: Re:
+Date: Mon, 8 Sep 2014 16:36:49 +0200
+Message-ID: <CAE8x=qVrK5-nhzL57ADwzQmD+NE-ScnJyPgum6cK6hPox5+VMg@mail.gmail.com>
+References: <CAE8x=qW7EwO9YyrQ49vYH50BFcF7RF43eVqDeVex7FKut0oaaw@mail.gmail.com>
+	<CAOqJoqGSRUw_UT4LhqpYX-WX6AEd2ReAWjgNS76Cra-SMKw3NQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergey Organov <sorganov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 08 16:08:10 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: p.duijst@stylecncmachines.com, git@vger.kernel.org
+To: Jim Naslund <jnaslund@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 08 16:37:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XQzc1-0005Bp-2T
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 16:08:09 +0200
+	id 1XR03v-0008Ej-1j
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Sep 2014 16:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753848AbaIHOIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Sep 2014 10:08:04 -0400
-Received: from imap.thunk.org ([74.207.234.97]:43681 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754032AbaIHOID (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Sep 2014 10:08:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=E22mXEuieoiVm7IAwiKXYcl3+N5xYLPLeDi8b/plVcs=;
-	b=DeMzh0DVrM2fxwF97PF/ZiF+ppErR7qnoWMjIQHM5jwSupu8dUv8Gu7YqrD2V3HvA3KT5d6bWzYK8HJb3pPDYanXZ6fSJ0pSJGbEUPhBfDAO6xumIBUk0qPxiw/+Q8yx7Oe4Gj+x+Kl8M9qNvqHG3wjf4FyPBpbZMTQYDelumks=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1XQzbs-0004Bg-Kl; Mon, 08 Sep 2014 14:08:00 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 2BE1A580506; Mon,  8 Sep 2014 10:07:59 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <87sik28bir.fsf@osv.gnss.ru>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1754147AbaIHOgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Sep 2014 10:36:53 -0400
+Received: from mail-lb0-f193.google.com ([209.85.217.193]:49067 "EHLO
+	mail-lb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753060AbaIHOgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Sep 2014 10:36:52 -0400
+Received: by mail-lb0-f193.google.com with SMTP id z11so1391393lbi.4
+        for <git@vger.kernel.org>; Mon, 08 Sep 2014 07:36:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=GenqoslfQNd4aKXAO+E8qFqNObclO87GoAbRYQc0Ys4=;
+        b=L3KrTjbcdtdmN/odYmwc6OCMK7GomeaEwtmJravEKnOIlYpFu76olRleU3YZWDKmQy
+         DMMDwJIOEiDpKCpTuxFs38/zrFPp5rwKCgDd117CF1394vzi4zx9M/VolILKJ8iYuxhX
+         l4/XCOnuPgTW1en1QgF5c/oqbLuFPSczzkSYg/d66ktyPA1tA5nGtm9GJBRZ4piVCJVs
+         jbTslFoRV0eurOJKw6w0YHsN88XuBlVo1ZuWemgkngd8jqsCco9Pi8f3o5MF11yR/ULG
+         wnBPWbmWzyDXBmS7wYrpaX9cpyFpWhf54d6CG4Kc4ChH6MEcrLEVcCE6b1K1EjN3TYlf
+         Mh4w==
+X-Gm-Message-State: ALoCoQnjuPPY6YHoN5SwdcaDM7nKc+m1dYjMZoeOGszUvEZilZWMprPNPgthU4AOEJBIAPTxu0on
+X-Received: by 10.112.135.230 with SMTP id pv6mr3018685lbb.105.1410187009698;
+ Mon, 08 Sep 2014 07:36:49 -0700 (PDT)
+Received: by 10.112.167.3 with HTTP; Mon, 8 Sep 2014 07:36:49 -0700 (PDT)
+In-Reply-To: <CAOqJoqGSRUw_UT4LhqpYX-WX6AEd2ReAWjgNS76Cra-SMKw3NQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256650>
 
-On Mon, Sep 08, 2014 at 05:52:44PM +0400, Sergey Organov wrote:
-> 
-> I didn't intend to make topic branch from the very beginning, and
-> already made a commit or two on the remote tracking branch bofore I
-> realized I'd better use topic branch. It'd create no problem as far as I
-> can see, provided vanilla "git rebase" has "sane" defaults. That said,
-> I've already been once pointed to by Junio that my definition of "sane"
-> doesn't take into account workflows of others, so now I try to be
-> carefull calling vanilla "git rebase" names.
+Ok great! That indeed fixed the issue.
+Although I still don't understand why it didn't work without -solo..
+since it didn't work when no instance of Beyond Compare was running as
+well.
 
-Right, so what I typically in that situation is the following:
+There must be something not quite right in either Git or Beyond Compare.
 
-<on the master branch>
-<hack hack hack>
-git commit
-<hack hack hack>
-git commit
-<oops, I should have created a topic branch>
-git checkout -b topic-branch
-git branch -f master origin/msater
-
-This resets the master branch to only have what is in the upstream
-commit.
-
-> Please also notice that I didn't pull immediately after I've re-arranged
-> my branches, and this fact only made it more difficult to find and
-> isolate the problem.
-
-It's also the case that I rarely will do a "git rebase" without taking
-a look at the branches to make sure it will do what I expect.  I'll do
-that using either "gitk" or "git lgt", where git lgt is defined in my
-.gitconfig as:
-
-[alias]
-	lgt = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
-
-And typically what I will do is something like this:
-
-gitk -20 master origin/master topic
-
--or-
-
-git lgt -20 master origin/master topic
-
-The "git lgt" command is very handy when I want to see how the
-branches are arranged, and I'm logged remotely over ssh/tmux or some
-such, so gitk isn't really available to me.
-
-Cheers,
-
-						- Ted
+On Mon, Sep 8, 2014 at 3:37 PM, Jim Naslund <jnaslund@gmail.com> wrote:
+>
+> On Sep 8, 2014 7:39 AM, "R. Klomp" <r.klomp@students.uu.nl> wrote:
+>>
+>> It seems like there's a bug involving git difftool's -d flag and Beyond
+>> Compare.
+>>
+>> When using the difftool Beyond Compare, git difftool <..> <..> -d
+>> immidiatly shuts down once the diff tree has been created. Beyond
+>> Compare successfully shows the files that differ.
+>> However, since git difftool doesn't wait for Beyond Compare to shut
+>> down, all temporary files are gone. Due to this it's impossible to
+>> view changes made inside files using the -d flag.
+>>
+>> I haven't tested if this issue also happens with other difftools.
+>>
+>> I'm using the latest versions of both Beyond Compare 3 (3.3.12, Pro
+>> Edition for Windows) and Git (1.9.4 for Windows).
+>>
+>>
+>> Thanks in advance for your help!
+>
+> I see the same behavior. For me it had something to do with the diff opening
+> in a new tab in an existing window. Adding -solo to difftool.cmd will make
+> beyond compare use a new window which fixes the issue for me.
+>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message tomajordomo@vger.kernel.org
+>> More majordomo info at http://vger.kernel.org/majordomo-info.html
