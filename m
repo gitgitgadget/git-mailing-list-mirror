@@ -1,85 +1,94 @@
-From: Harry Jeffery <harry@exec64.co.uk>
-Subject: Re: [PATCH] pretty-format: add append line-feed format specifier
-Date: Tue, 09 Sep 2014 20:30:20 +0100
-Message-ID: <540F554C.5010301@exec64.co.uk>
-References: <540F426E.6080908@exec64.co.uk> <xmqqmwa8k3lg.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] git-as-svn: subversion frontend server for git repository
+Date: Tue, 09 Sep 2014 12:30:23 -0700
+Message-ID: <xmqqiokwk2wg.fsf@gitster.dls.corp.google.com>
+References: <20140909111903.GA13137@seldon>
+	<xmqqy4tsloxs.fsf@gitster.dls.corp.google.com>
+	<20140909185711.GA14554@seldon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 21:30:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, bozaro@yandex.ru
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Tue Sep 09 21:30:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRR7J-0001n0-3y
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 21:30:19 +0200
+	id 1XRR7g-00021H-0r
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 21:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535AbaIITaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 15:30:08 -0400
-Received: from mail-we0-f180.google.com ([74.125.82.180]:43044 "EHLO
-	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752505AbaIITaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 15:30:04 -0400
-Received: by mail-we0-f180.google.com with SMTP id t60so3146398wes.11
-        for <git@vger.kernel.org>; Tue, 09 Sep 2014 12:30:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=bVhHp/U5jIttQMOfJg+NLeWyQuTz2nIONhoWLqcNcgA=;
-        b=Ot0S9fNZWd5YCa0FwbZC/BPfGXbXFPnNYmJe0Tegk+ilAr+zTITZFuzt02VGXszcKE
-         aOShaYS2YD1IAoS076BsPPaHQKDs6OEkDjgUs9055sidzTaNV87GW3+LmvWHp8QCE8hs
-         uuFsqwJuOI0oDPK52C8yYFy4rtZ3hsCMNJf0XlwYGmPICCPw7brbFfJmpQ/S0LASGg1y
-         1Ge3cK81vVpoGYhcZSd2jwjl8yxujoQFQS6ogq1dmXLGZVSCqP/OshYfveMGomQy8aBK
-         3l1AKkEGBEREoRZS0ch3C8a5GZzeZMiKaWIFwUjmCquxmWTlcJp7T+edm4ZOl4BsOgUH
-         SpRQ==
-X-Gm-Message-State: ALoCoQmoPP9tEHVWfwfV9wMxE9w9fu3x8i0404XaQL5rsfEpDu+Ou5j2Y4HqRZrB1sp7Wk09e97K
-X-Received: by 10.194.89.168 with SMTP id bp8mr44248949wjb.53.1410291001855;
-        Tue, 09 Sep 2014 12:30:01 -0700 (PDT)
-Received: from [192.168.0.14] (cpc69047-oxfd25-2-0-cust267.4-3.cable.virginm.net. [81.109.93.12])
-        by mx.google.com with ESMTPSA id ew1sm15967070wjb.31.2014.09.09.12.30.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Sep 2014 12:30:01 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <xmqqmwa8k3lg.fsf@gitster.dls.corp.google.com>
+	id S1752522AbaIITa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 15:30:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60448 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752277AbaIITaZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 15:30:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 299D73811E;
+	Tue,  9 Sep 2014 15:30:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wE/UGskxD0uWwbLcn4sCNVLADvM=; b=fsbAnb
+	vLzA8o7hq8qmsMJA1iUeUNxBNfXENqOYGlGCef6Wpk7FmI3UyoI7l7sCjcZRUKI0
+	gyytFsiXoTQ/4eXXnmtMRLsnnGLOnXJXk8s7T3pXmQ5XfsoNee5RAuBiHY8jJP6J
+	LWPyPOsxcsXjwQ64q6HJX02bXJX+7vLh+gSEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pItVPNC8se/3ikq0ZniEGpEO9xl3HpY2
+	D9hMM5njPNPyjKyOS8edYmCO3V6l7s9iy4FI7im4HEccsP/JzaHWrwuEWi7E2Ssp
+	x2umMuwVnCEZICAE7Z6uHMTbYp0McFNFARamL0tOSp3NnXnKoCoBy3/WT9NeguuS
+	6GObXgeqRJg=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 20B3B3811D;
+	Tue,  9 Sep 2014 15:30:25 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9A34F3811C;
+	Tue,  9 Sep 2014 15:30:24 -0400 (EDT)
+In-Reply-To: <20140909185711.GA14554@seldon> (Marat Radchenko's message of
+	"Tue, 9 Sep 2014 22:57:11 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BF0ACE42-3857-11E4-9374-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256706>
 
-On 09/09/14 20:15, Junio C Hamano wrote:
-> Is this different from "%n%-d"?
+Marat Radchenko <marat@slonopotamus.org> writes:
+
+>> >   * You must not do 'inverted merges'. Old HEAD must be reachable from
+>> >     new HEAD by first-parent traversal.
+>> 
+>> I am not sure what you mean by this to properly assess how
+>> significant this limitation is.  Care to draw a simple picture?
 >
+> SVN doesn't support nonlinear history (except merge-info crutch).
+> ...
+> And now the *bad* case. You have the same initial history but do *inverted merge*:
 
-Yes. "%n%-d" will place the newline before the expansion, not after.
+That is a bad way to answer a question that asks "what do you mean
+by an 'inverted merge', which is not in our normal lexicon?" ;-)
 
-log --decorate --pretty=format:"%n%-d%h\\ %t\\ [%cn]\\ %s"
----
+	You must not merge the current tip of SVN server *into* the
+	work you did on top of a past state you obtained from the
+	SVN server.  Check out the current state from the SVN side,
+	and merge your work into it instead.
 
-  (HEAD, upstream/master, master)85f0837 c29da1d [Junio C Hamano] Start 
-the post-2.1 cycle
-  f655651 4027a43 [Junio C Hamano] Merge branch 'rs/strbuf-getcwd'
-  51eeaea 1f4970c [Junio C Hamano] Merge branch 'ta/pretty-parse-config'
-  4740891 8961621 [Junio C Hamano] Merge branch 'bc/archive-pax-header-mode'
----
+or something like that is what people would understand without
+introducing a new/unused word to the world.  And
 
-log --decorate --pretty=format:"%_d%%h\\ %t\\ [%cn]\\ %s"
----
-  (HEAD, upstream/master, master)
-85f0837 c29da1d [Junio C Hamano] Start the post-2.1 cycle
-f655651 4027a43 [Junio C Hamano] Merge branch 'rs/strbuf-getcwd'
-51eeaea 1f4970c [Junio C Hamano] Merge branch 'ta/pretty-parse-config'
-4740891 8961621 [Junio C Hamano] Merge branch 'bc/archive-pax-header-mode'
----
+> A -- D -- E -- F -- G'
+>  \                 /
+>   B -- C ---------/
+>        ^
+>        |
+>     Previous branch tip
 
-The latter is the output I've been trying to accomplish, and as far as I 
-can tell, this patch is the only way to achieve it.
+this illustrates the topology you meant reasonably well, especially
+if you marked D, E and F as "your own work" (as opposed to what the
+server side did in the meantime while you worked, i.e. B and C).
 
-Well, you can do "%d%n" but that will put a blank line before every 
-commit that doesn't have a ref.
+Thanks for a clarification.
