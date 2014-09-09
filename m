@@ -1,142 +1,172 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pretty-format: add append line-feed format specifier
-Date: Tue, 9 Sep 2014 17:45:21 -0400
-Message-ID: <20140909214520.GA13603@peff.net>
-References: <540F426E.6080908@exec64.co.uk>
- <xmqqmwa8k3lg.fsf@gitster.dls.corp.google.com>
- <540F554C.5010301@exec64.co.uk>
- <xmqqegvkk2k3.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fsck: exit with non-zero status upon error from fsck_obj()
+Date: Tue, 09 Sep 2014 15:03:33 -0700
+Message-ID: <xmqq4mwgjvt6.fsf_-_@gitster.dls.corp.google.com>
+References: <1409177412.15185.3.camel@leckie>
+	<20140829185325.GC29456@peff.net>
+	<xmqqha0v5cgn.fsf@gitster.dls.corp.google.com>
+	<1409343480.19256.2.camel@leckie> <20140829203145.GA510@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Harry Jeffery <harry@exec64.co.uk>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 23:45:34 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Turner <dturner@twopensource.com>,
+	git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 10 00:03:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRTE8-0000Gt-M8
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 23:45:29 +0200
+	id 1XRTVl-0002nu-5s
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 00:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbaIIVpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 17:45:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46190 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751673AbaIIVpY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 17:45:24 -0400
-Received: (qmail 18105 invoked by uid 102); 9 Sep 2014 21:45:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Sep 2014 16:45:24 -0500
-Received: (qmail 10978 invoked by uid 107); 9 Sep 2014 21:45:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Sep 2014 17:45:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Sep 2014 17:45:21 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqegvkk2k3.fsf@gitster.dls.corp.google.com>
+	id S1751712AbaIIWDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 18:03:37 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59012 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751268AbaIIWDg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 18:03:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9F7038EA7;
+	Tue,  9 Sep 2014 18:03:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bBLKDke3twh5fdIqjHO64CITptA=; b=vdVfpz
+	NeHXIfHqOxLnFaPUIuH79TmS6aclz4UoWtyaKT8YEXHRYhBGSPJQNjYHhRhycqXS
+	wcds4StC0aTEKAmovtXE+nbiJqG6K+8MgAgzxd7DmpG9RoPafG0ZtZOAFDOg5IOV
+	6oMvPHaVTi2psv0aFAxBIro8sN5TxImXt/0Bw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mJcGYtSRKvB3Ag3UkZBqUgltY3exgXTC
+	aZSIneBtse2Nag/hGdhfLpLNQbiUXL/G7JTnHZ1Ey08Oozy+wftd8RaNzou8CeOr
+	GcDLYqil+lGm+yt+W7Hpv0A/lpp5dXOcwdCX7DqhlfsNSZifYDd13f5slDBT3e99
+	9EqnCukJ8dM=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C09EF38EA6;
+	Tue,  9 Sep 2014 18:03:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3E7D838EA5;
+	Tue,  9 Sep 2014 18:03:35 -0400 (EDT)
+In-Reply-To: <20140829203145.GA510@peff.net> (Jeff King's message of "Fri, 29
+	Aug 2014 16:31:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 25147EE4-386D-11E4-B4A1-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256712>
 
-On Tue, Sep 09, 2014 at 12:37:48PM -0700, Junio C Hamano wrote:
+From: Jeff King <peff@peff.net>
+Date: Fri, 29 Aug 2014 16:31:46 -0400
 
-> Harry Jeffery <harry@exec64.co.uk> writes:
-> 
-> > On 09/09/14 20:15, Junio C Hamano wrote:
-> >> Is this different from "%n%-d"?
-> >>
-> >
-> > Yes. "%n%-d" will place the newline before the expansion, not after.
-> 
-> Maybe "%[-+ ]" needs to be rethought, instead of making things worse
-> by turning it into "%[-_+ ]", as the next person who comes would
-> want to add space after the expansion and would need to find yet
-> another letter like you did with '_'.
+Upon finding a corrupt loose object, we forgot to note the error to
+signal it with the exit status of the entire process.
 
-Yeah, that was my thought on reading the initial patch, too. Why limit
-ourselves to newlines and spaces. I'd much rather have full conditional
-expansion, like "${foo:+prefix $foo suffix}" in the shell.
+[jc: adjusted t1450 and added another test]
 
-Something like the patch below might work, but I didn't test it very
-thoroughly (and note the comments, which might need dealing with). Maybe
-it would make a sensible base for Harry to build on if he wants to
-pursue this.
-
-With it, you can do:
-
-  git log --format='%h %s%if(%d,%n  Decoration:%d)' origin
-
-to get:
-
-  85f0837 Start the post-2.1 cycle
-    Decoration: (origin/master, origin/HEAD, github/foo)
-  f655651 Merge branch 'rs/strbuf-getcwd'
-  51eeaea Merge branch 'ta/pretty-parse-config'
-  4740891 Merge branch 'bc/archive-pax-header-mode'
-  0e28161 Merge branch 'pr/remotes-in-hashmap'
-  44ceb79 Merge branch 'jk/pretty-empty-format'
-  56f214e Merge branch 'ta/config-set'
-  e8e4ce7 Merge branch 'rs/init-no-duplicate-real-path'
-  1d8a6f6 Merge branch 'mm/config-edit-global'
-  c518279 Merge branch 'jc/reopen-lock-file'
-  96db324 Merge git://github.com/git-l10n/git-po
-    Decoration: (origin/maint)
-
-You could also make "%d" more flexible with it. We unconditionally
-include the " (...)" wrapper when expanding it. But assuming we
-introduced a "%D" that is _just_ the decoration names, you could do:
-
-  %if(%D, (%D))
-
-to get the same effect with much more flexibility.
-
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-diff --git a/pretty.c b/pretty.c
-index fe34ddc..96cd512 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1398,6 +1398,42 @@ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
- 		ADD_SP_BEFORE_NON_EMPTY
- 	} magic = NO_MAGIC;
+
+ * I think your fix is a right one that catches all the "we can
+   parse minimally for the purpose of 'struct object' class system,
+   but the object is semantically broken" cases, as fsck_obj() is
+   where such a validation should all happen.
+
+   I can haz a sign off?  Thanks.
+
+ builtin/fsck.c  |  3 ++-
+ t/t1450-fsck.sh | 30 +++++++++++++++++++++++++-----
+ 2 files changed, 27 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 1affdd5..8abe644 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -389,7 +389,8 @@ static void fsck_sha1_list(void)
+ 		unsigned char *sha1 = entry->sha1;
  
-+	if (starts_with(placeholder, "if(")) {
-+		const char *cond_beg, *cond_end;
-+		const char *data_beg, *data_end;
-+		char *buf;
-+		struct strbuf scratch = STRBUF_INIT;
+ 		sha1_list.entry[i] = NULL;
+-		fsck_sha1(sha1);
++		if (fsck_sha1(sha1))
++			errors_found |= ERROR_OBJECT;
+ 		free(entry);
+ 	}
+ 	sha1_list.nr = 0;
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 8c739c9..c8dff9c 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -101,7 +101,7 @@ test_expect_success 'email with embedded > is not okay' '
+ 	test_when_finished "remove_object $new" &&
+ 	git update-ref refs/heads/bogus "$new" &&
+ 	test_when_finished "git update-ref -d refs/heads/bogus" &&
+-	git fsck 2>out &&
++	test_must_fail git fsck 2>out &&
+ 	cat out &&
+ 	grep "error in commit $new" out
+ '
+@@ -113,7 +113,7 @@ test_expect_success 'missing < email delimiter is reported nicely' '
+ 	test_when_finished "remove_object $new" &&
+ 	git update-ref refs/heads/bogus "$new" &&
+ 	test_when_finished "git update-ref -d refs/heads/bogus" &&
+-	git fsck 2>out &&
++	test_must_fail git fsck 2>out &&
+ 	cat out &&
+ 	grep "error in commit $new.* - bad name" out
+ '
+@@ -125,7 +125,7 @@ test_expect_success 'missing email is reported nicely' '
+ 	test_when_finished "remove_object $new" &&
+ 	git update-ref refs/heads/bogus "$new" &&
+ 	test_when_finished "git update-ref -d refs/heads/bogus" &&
+-	git fsck 2>out &&
++	test_must_fail git fsck 2>out &&
+ 	cat out &&
+ 	grep "error in commit $new.* - missing email" out
+ '
+@@ -137,7 +137,7 @@ test_expect_success '> in name is reported' '
+ 	test_when_finished "remove_object $new" &&
+ 	git update-ref refs/heads/bogus "$new" &&
+ 	test_when_finished "git update-ref -d refs/heads/bogus" &&
+-	git fsck 2>out &&
++	test_must_fail git fsck 2>out &&
+ 	cat out &&
+ 	grep "error in commit $new" out
+ '
+@@ -151,11 +151,31 @@ test_expect_success 'integer overflow in timestamps is reported' '
+ 	test_when_finished "remove_object $new" &&
+ 	git update-ref refs/heads/bogus "$new" &&
+ 	test_when_finished "git update-ref -d refs/heads/bogus" &&
+-	git fsck 2>out &&
++	test_must_fail git fsck 2>out &&
+ 	cat out &&
+ 	grep "error in commit $new.*integer overflow" out
+ '
+ 
++test_expect_success 'malformatted tree object' '
++	test_when_finished "git update-ref -d refs/tags/wrong" &&
++	test_when_finished "remove_object \$T" &&
++	T=$(
++		GIT_INDEX_FILE=test-index &&
++		export GIT_INDEX_FILE &&
++		rm -f test-index &&
++		>x &&
++		git add x &&
++		T=$(git write-tree) &&
++		(
++			git cat-file tree $T &&
++			git cat-file tree $T
++		) |
++		git hash-object -w -t tree --stdin
++	) &&
++	test_must_fail git fsck 2>out &&
++	grep "error in tree .*contains duplicate file entries" out
++'
 +
-+		/* can't handle commas in conditions; allow backslash-escaping? */
-+		cond_beg = cond_end = placeholder + 3;
-+		for (cond_end = cond_beg; *cond_end != ','; cond_end++)
-+			if (!*cond_end)
-+				return 0;
-+
-+		/* ditto for nested parentheses; backslash escaping? */
-+		data_beg = cond_end + 1;
-+		for (data_end = data_beg; *data_end != ')'; data_end++)
-+			if (!*data_end)
-+				return 0;
-+
-+		/*
-+		 * Should teach formatters to return size only without
-+		 * actually writing to scratch buffer?
-+		 */
-+		buf = xmemdupz(cond_beg, cond_end - cond_beg);
-+		strbuf_expand(&scratch, buf, format_commit_item, context);
-+		free(buf);
-+
-+		if (scratch.len) {
-+			buf = xmemdupz(data_beg, data_end - data_beg);
-+			strbuf_expand(sb, buf, format_commit_item, context);
-+			free(buf);
-+		}
-+		strbuf_release(&scratch);
-+
-+		return data_end - placeholder + 1;
-+	}
-+
- 	switch (placeholder[0]) {
- 	case '-':
- 		magic = DEL_LF_BEFORE_EMPTY;
+ test_expect_success 'tag pointing to nonexistent' '
+ 	cat >invalid-tag <<-\EOF &&
+ 	object ffffffffffffffffffffffffffffffffffffffff
+-- 
+2.1.0-449-g93bbe5b
