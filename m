@@ -1,84 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] fsck: exit with non-zero status upon error from
- fsck_obj()
-Date: Tue, 9 Sep 2014 15:29:36 -0700
-Message-ID: <20140909222936.GA701@google.com>
-References: <1409177412.15185.3.camel@leckie>
- <20140829185325.GC29456@peff.net>
- <xmqqha0v5cgn.fsf@gitster.dls.corp.google.com>
- <1409343480.19256.2.camel@leckie>
- <20140829203145.GA510@peff.net>
- <xmqq4mwgjvt6.fsf_-_@gitster.dls.corp.google.com>
- <xmqqvbowigeh.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pretty-format: add append line-feed format specifier
+Date: Tue, 9 Sep 2014 18:31:59 -0400
+Message-ID: <20140909223158.GD14029@peff.net>
+References: <540F426E.6080908@exec64.co.uk>
+ <xmqqmwa8k3lg.fsf@gitster.dls.corp.google.com>
+ <540F554C.5010301@exec64.co.uk>
+ <xmqqegvkk2k3.fsf@gitster.dls.corp.google.com>
+ <20140909214520.GA13603@peff.net>
+ <540F7C70.4010909@exec64.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
-	git mailing list <git@vger.kernel.org>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 10 00:29:49 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Harry Jeffery <harry@exec64.co.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 10 00:32:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRTv1-0002CS-2k
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 00:29:47 +0200
+	id 1XRTxH-0003aK-6M
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 00:32:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbaIIW3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 18:29:43 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:49164 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750980AbaIIW3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 18:29:42 -0400
-Received: by mail-pd0-f171.google.com with SMTP id p10so6887442pdj.16
-        for <git@vger.kernel.org>; Tue, 09 Sep 2014 15:29:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=SqeLOg81G6fPeWbrQVY6GtHIR97w14LvH7oPFckUcoc=;
-        b=IlE/G84Yb/19/RJoz6scVOPphPS5oM2R9J5tZt15X7kIZKsol5glwjUGoJkn16PsZA
-         pZQAEtFrXa7HX9JcaZhwUBPCq/HrTBHL+qOanoVa/yH4eOo9twa86GbbPb2azMezn4Jk
-         0fgqNsQtaoCDnDgHlUbAAkA/6pEVpKe+7G1D6IF5Gww7Ibt9d8SR8cGbwvFZoxzeashK
-         uRKCVw4SPBuSakMwHwtavVjZQlo8BWayQGH0CTNkqoNE0SPX+Wob7cBaLHxE7ZfcS3oV
-         i098aSlVLR8l9NjQ66RglWO0YSbG32K4EyvEsHzSBvhN2ZL3+X6rIoiR4SGGnDVs0kfo
-         l6ug==
-X-Received: by 10.70.96.233 with SMTP id dv9mr20068275pdb.146.1410301782249;
-        Tue, 09 Sep 2014 15:29:42 -0700 (PDT)
-Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id kp6sm12523568pbc.67.2014.09.09.15.29.41
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Sep 2014 15:29:41 -0700 (PDT)
+	id S1752550AbaIIWcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 18:32:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46241 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752326AbaIIWcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 18:32:01 -0400
+Received: (qmail 20085 invoked by uid 102); 9 Sep 2014 22:32:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Sep 2014 17:32:01 -0500
+Received: (qmail 11482 invoked by uid 107); 9 Sep 2014 22:32:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Sep 2014 18:32:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Sep 2014 18:31:59 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqvbowigeh.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <540F7C70.4010909@exec64.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256719>
 
-Junio C Hamano wrote:
+On Tue, Sep 09, 2014 at 11:17:20PM +0100, Harry Jeffery wrote:
 
-> By the way, Jonathan, with dbedf8bf (t1450 (fsck): remove dangling
-> objects, 2010-09-06) you added a 'test_might_fail git fsck' to the
-> 1450 test that catches an object corruption.  Do you remember if
-> there was some flakiness in this test that necessitated it, or is it
-> merely "I think this should fail, but it does not, and we may fix it
-> some day but I am not doing that in this patch?"
+> I definitely prefer your more general solution to my
+> bare-minimum-to-scratch-itch patch. I'd certainly be willing to take your
+> patch and expand upon it (pun unintended) once Junio has weighed in on your
+> suggestions.
 
-Thomas is the person to ask. :)  See v1.6.3-rc0~176^2~3 (Test fsck a
-bit harder, 2009-02-19):
+Thanks. I am always happy to see contributors willing to pick up and run
+with ideas.
 
-> +	(git fsck 2>out; true) &&
+It is probably out-of-scope for what you want, but while we are talking
+about %d, it may be worth considering whether there is something simple
+we can do to make formatting list-like items more flexible. E.g., even
+with "%D", you are stuck with the format "foo, bar, baz" for multiple
+decorations. Some kind of "%join(%d,; )" might work to produce "foo;
+bar; baz" (or whatever you want). But that may also be crossing the line
+into insanity, and we would be better to allow some Turing-complete
+embedded language like lua. For that matter, conditionals might be
+crossing that insanity line, too.
 
-which that cleanup tightened to test_might_fail.
+> Regardless of what happens with the conditional expansion I think it would
+> definitely be a useful addition to be able to print the decorators without
+> the " (...)" wrapper. I think it's general enough that it'd warrant its own
+> separate patch rather than being part of a patch series for the conditional
+> expansion.
 
-But yes, I'm pretty sure it was for futureproofing, not for hiding
-flakiness.  I think your patch does the right thing in changing it to
-test_must_fail now that fsck exits nonzero.
+Yeah, I agree it can be separate.
 
-Thanks,
-Jonathan
+-Peff
