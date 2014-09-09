@@ -1,130 +1,144 @@
-From: Harry Jeffery <harry@exec64.co.uk>
-Subject: [PATCH] pretty-format: add append line-feed format specifier
-Date: Tue, 09 Sep 2014 19:09:50 +0100
-Message-ID: <540F426E.6080908@exec64.co.uk>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: Re: [ANNOUNCE] git-as-svn: subversion frontend server for git
+ repository
+Date: Tue, 9 Sep 2014 22:57:11 +0400
+Message-ID: <20140909185711.GA14554@seldon>
+References: <20140909111903.GA13137@seldon>
+ <xmqqy4tsloxs.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 09 20:09:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, bozaro@yandex.ru, marat@slonopotamus.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 09 20:57:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRPrN-0003Cd-4z
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 20:09:45 +0200
+	id 1XRQbS-000709-7E
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 20:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733AbaIISJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 14:09:37 -0400
-Received: from mail-we0-f179.google.com ([74.125.82.179]:64092 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbaIISJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 14:09:36 -0400
-Received: by mail-we0-f179.google.com with SMTP id u56so3397714wes.10
-        for <git@vger.kernel.org>; Tue, 09 Sep 2014 11:09:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=eEsp6satJlaAEOly5Es31E1Q5gkddAnf6kCGAxh9i2I=;
-        b=arvD6cZ1+zmeLMoUhC4blJ7cvfqCfKH/IfM+2llb1NQs8/RE3FKJ3yfokPbADOr6Nf
-         A51o500OW9kMnhgzq+5AIbqYtbKFn7kCEDN3ST11Ttuy32MHxaFg7VGc664c6sBVEUYY
-         L7HaxdTMjp/q6ubxpS2JHQ4I8uSF+BR2jepGPtJdKGo5yMNCI/O56k6EZDAZxmfs489P
-         TQzhyQXo7N7ml9iikq8HTdYCY0SkiJXL533Yo9xgvziexX6qtsNMLBcfP75yKk5+bHw3
-         GoLLCdMfxCajiIbJZysd0SyQ6vUheQt/6lEYWeV4JEmtWWKt7H8nxd7PASe+RwA1fF/3
-         2MIQ==
-X-Gm-Message-State: ALoCoQlI9WGzVQDEPDxZ1GoMvQG3mlBfQtP0rz+dVWAhMHgSLpV5cevExdsqQLc2TMyyIg0lOVYl
-X-Received: by 10.194.94.196 with SMTP id de4mr45714060wjb.86.1410286172510;
-        Tue, 09 Sep 2014 11:09:32 -0700 (PDT)
-Received: from [192.168.0.14] (cpc69047-oxfd25-2-0-cust267.4-3.cable.virginm.net. [81.109.93.12])
-        by mx.google.com with ESMTPSA id y5sm15747131wje.32.2014.09.09.11.09.30
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Sep 2014 11:09:31 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+	id S1752037AbaIIS5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 14:57:18 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:53039 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751832AbaIIS5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 14:57:17 -0400
+Received: from marat by slonopotamus.org with local (Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1XRQbH-0003oF-JZ; Tue, 09 Sep 2014 22:57:11 +0400
+Content-Disposition: inline
+In-Reply-To: <xmqqy4tsloxs.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256700>
 
-Add a new format prefix `_` that causes a line-feed to be inserted
-immediately after an expansion if the expansion expands to a non-empty
-string. This is useful for when you would like a line for an expansion
-to be prepended, but only when the expansion expands to a non empty
-string, such as inserting a '%_d' expansion before a commit to show any
-refs pointing towards it.
+On Tue, Sep 09, 2014 at 09:49:03AM -0700, Junio C Hamano wrote:
+> Marat Radchenko <marat@slonopotamus.org> writes:
+> 
+> > Some time ago I complained [1] about troubles using Git
+> > on a project with high ratio of non-programmers.
+> > ...
+> > Then, a lost'n'forgotten git_svn_server [4] was found.
+> > ...
+> 
+> Interesting.
 
-Signed-off-by: Harry Jeffery <harry@exec64.co.uk>
----
-  Documentation/pretty-formats.txt |  4 ++++
-  pretty.c                         | 10 ++++++++--
-  2 files changed, 12 insertions(+), 2 deletions(-)
+Actually, no. As I said, git_svn_server made several ineffective
+architectural choices. It can be viewed as a proof-of-concept work though.
 
-diff --git a/Documentation/pretty-formats.txt 
-b/Documentation/pretty-formats.txt
-index 85d6353..842cd17 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -197,6 +197,10 @@ If you add a ` ` (space) after '%' of a 
-placeholder, a space
-  is inserted immediately before the expansion if and only if the
-  placeholder expands to a non-empty string.
+> > Current limitations:
+> > ...
+> >   * You must not do 'inverted merges'. Old HEAD must be reachable from
+> >     new HEAD by first-parent traversal.
+> 
+> I am not sure what you mean by this to properly assess how
+> significant this limitation is.  Care to draw a simple picture?
 
-+If you add a `_` (underscore) after '%' of a placeholder, a line-feed
-+is inserted immediately after the expansion if and only if the
-+placeholder expands to a non-empty string.
-+
-  * 'tformat:'
-  +
-  The 'tformat:' format works exactly like 'format:', except that it
-diff --git a/pretty.c b/pretty.c
-index 44b9f64..ddb930d 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1416,7 +1416,8 @@ static size_t format_commit_item(struct strbuf 
-*sb, /* in UTF-8 */
-  		NO_MAGIC,
-  		ADD_LF_BEFORE_NON_EMPTY,
-  		DEL_LF_BEFORE_EMPTY,
--		ADD_SP_BEFORE_NON_EMPTY
-+		ADD_SP_BEFORE_NON_EMPTY,
-+		ADD_LF_AFTER_NON_EMPTY
-  	} magic = NO_MAGIC;
+SVN doesn't support nonlinear history (except merge-info crutch).
 
-  	switch (placeholder[0]) {
-@@ -1429,6 +1430,9 @@ static size_t format_commit_item(struct strbuf 
-*sb, /* in UTF-8 */
-  	case ' ':
-  		magic = ADD_SP_BEFORE_NON_EMPTY;
-  		break;
-+	case '_':
-+		magic = ADD_LF_AFTER_NON_EMPTY;
-+		break;
-  	default:
-  		break;
-  	}
-@@ -1449,6 +1453,8 @@ static size_t format_commit_item(struct strbuf 
-*sb, /* in UTF-8 */
-  	} else if (orig_len != sb->len) {
-  		if (magic == ADD_LF_BEFORE_NON_EMPTY)
-  			strbuf_insert(sb, orig_len, "\n", 1);
-+		else if (magic == ADD_LF_AFTER_NON_EMPTY)
-+			strbuf_addch(sb, '\n');
-  		else if (magic == ADD_SP_BEFORE_NON_EMPTY)
-  			strbuf_insert(sb, orig_len, " ", 1);
-  	}
-@@ -1460,7 +1466,7 @@ static size_t userformat_want_item(struct strbuf 
-*sb, const char *placeholder,
-  {
-  	struct userformat_want *w = context;
+Thus, we only expose "main" history line to SVN where "main" means
+"reachable through first-parent traversal from branch tip".
 
--	if (*placeholder == '+' || *placeholder == '-' || *placeholder == ' ')
-+	if (*placeholder == '+' || *placeholder == '-' || *placeholder == ' ' 
-|| *placeholder == '_')
-  		placeholder++;
+To keep SVN history consistent, commits that once became visible to SVN
+have to remain visible. This limitation will be removed when git-as-svn
+gets persistent storage and will be able to remember what *was* main line.
 
-  	switch (*placeholder) {
--- 
-2.1.0
+Imagine you had following history:
+
+--- time --->
+
+A -- B -- C
+
+Now you merge (via Git) a feature branch:
+
+A -- B -- C -- G
+ \            /
+  D -- E --- F
+
+For SVN, history will look this way:
+
+A -- B -- C -- F
+
+We might introduce merge-info support for this one day.
+
+And now the *bad* case. You have the same initial history but do *inverted merge*:
+
+A -- D -- E -- F -- G'
+ \                 /
+  B -- C ---------/
+       ^
+       |
+    Previous branch tip
+
+That's where things brake because for SVN, history transforms from
+
+A -- B -- C
+
+to
+
+A -- D -- E -- F -- G'
+
+And all users who checked out revisions B & C get their working copies screwed.
+
+This also means that push --force also must not be performed.
+
+Quoting my initial post [1] about inverted merges (you might call them
+"merges with swapped parents").
+
+> I call it "swapped/reverse merge problem".
+>
+> In short:
+> 1. Hack, hack, hack
+> 2. Commit
+> 3. Push, woops, reject (non-ff)
+> 4. Pull
+> 5. Push
+>
+> The root of evil is step #4 that creates a merge commit with "swapped" parents - 
+> local commits become first parent, remote commits become second. If one would want to 
+> make proper parent order, he would have to: 1. git fetch
+> 2. git checkout origin/master -b tmp
+> 3. git merge master
+> 4. git push
+> 5. git checkout master
+> 6. git merge origin/master
+> 7. git branch -d tmp
+> 
+> And all this branch dance produces exactly the same commit (content-wise) as simple
+> "pull, push" sequence with the only difference in parent order. And things become
+> even worse if comeone pushes more commits to remote repo while you perform this
+> dance.
+>
+> We can't expect all developers (especially, designers and artist) to do it. They
+> don't want to use branches and just work on mainline. This is especially important on
+> early development stages when new features (that designers' work depends upon) are
+> added every day.
+>
+> Additionally, many git-related tools depend on first-parent convention and show wrong
+> graphs/diffs.
+
+[1] http://marc.info/?l=git&m=139866660018802
