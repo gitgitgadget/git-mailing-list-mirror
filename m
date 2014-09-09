@@ -1,144 +1,51 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: [ANNOUNCE] git-as-svn: subversion frontend server for git
- repository
-Date: Tue, 9 Sep 2014 22:57:11 +0400
-Message-ID: <20140909185711.GA14554@seldon>
-References: <20140909111903.GA13137@seldon>
- <xmqqy4tsloxs.fsf@gitster.dls.corp.google.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
+Subject: Re: [PATCH] Improve English grammar
+Date: Tue, 9 Sep 2014 12:58:27 -0600
+Message-ID: <CAMMLpeTmRSsaoebcLQuk5U_PA7YV+0v_gsO0as7n9NC8P_oDcQ@mail.gmail.com>
+References: <20140830135601.0f9fce66fe68968f56bd2879@gmail.com>
+ <CALKQrgdd588+-L2QB1LixQfe4nGm38dLS=2RyNQVAF227xsaYg@mail.gmail.com>
+ <xmqqa96h26s3.fsf@gitster.dls.corp.google.com> <CAMMLpeThp2O3dbC0YamitW3gTaxmhgbd-HnfXBAOM5LPFOy7sw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bozaro@yandex.ru, marat@slonopotamus.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 20:57:26 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 09 20:58:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRQbS-000709-7E
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 20:57:23 +0200
+	id 1XRQcy-0007uN-2K
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 20:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037AbaIIS5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 14:57:18 -0400
-Received: from seldon.slonopotamus.org ([94.242.204.247]:53039 "EHLO
-	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbaIIS5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 14:57:17 -0400
-Received: from marat by slonopotamus.org with local (Exim 4.80.1)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1XRQbH-0003oF-JZ; Tue, 09 Sep 2014 22:57:11 +0400
-Content-Disposition: inline
-In-Reply-To: <xmqqy4tsloxs.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1751873AbaIIS6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 14:58:49 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:45712 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004AbaIIS6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 14:58:48 -0400
+Received: by mail-ig0-f172.google.com with SMTP id h15so5165878igd.17
+        for <git@vger.kernel.org>; Tue, 09 Sep 2014 11:58:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=liNKvcn3UG/jR4KrtQbInS/XrIQdmfv9ltKOQ9xOu3M=;
+        b=x2qWEkjttaagz4IIgfgcmmNjLRXc+lqIxXDnv0iPu4Yr3oewuTwKP70ziN6uktY+ZV
+         8mWmcTxc0Z6VSfk9Vi+8CpOFIgTnL1l5/bQ5DlKf91FFxfXBwVncSgz5zYSsMdTW+3JK
+         N2XrDPzxWyiBiD8R9PtOQjR8JBlbCTj7WT8wUBGX67cr7Kx5kLM1s/ZNKM5mVnD9gzSn
+         1jFM/6DutVCSldak5y767UfbiOQ9hOpq9sF1F24x1m8wMWHaDP24Sa6gTSqkKnMNCDnw
+         Gv6Abu7fwdChvKx+xJ5E+V3Vb8Aw1kRbq3RvaqMZRi7poiZe5kY13B9WpO/P8uSB3zeg
+         VClg==
+X-Received: by 10.42.199.197 with SMTP id et5mr17422782icb.56.1410289127852;
+ Tue, 09 Sep 2014 11:58:47 -0700 (PDT)
+Received: by 10.107.19.136 with HTTP; Tue, 9 Sep 2014 11:58:27 -0700 (PDT)
+In-Reply-To: <CAMMLpeThp2O3dbC0YamitW3gTaxmhgbd-HnfXBAOM5LPFOy7sw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256701>
 
-On Tue, Sep 09, 2014 at 09:49:03AM -0700, Junio C Hamano wrote:
-> Marat Radchenko <marat@slonopotamus.org> writes:
-> 
-> > Some time ago I complained [1] about troubles using Git
-> > on a project with high ratio of non-programmers.
-> > ...
-> > Then, a lost'n'forgotten git_svn_server [4] was found.
-> > ...
-> 
-> Interesting.
+I see it's been accepted now. Thank you!
 
-Actually, no. As I said, git_svn_server made several ineffective
-architectural choices. It can be viewed as a proof-of-concept work though.
-
-> > Current limitations:
-> > ...
-> >   * You must not do 'inverted merges'. Old HEAD must be reachable from
-> >     new HEAD by first-parent traversal.
-> 
-> I am not sure what you mean by this to properly assess how
-> significant this limitation is.  Care to draw a simple picture?
-
-SVN doesn't support nonlinear history (except merge-info crutch).
-
-Thus, we only expose "main" history line to SVN where "main" means
-"reachable through first-parent traversal from branch tip".
-
-To keep SVN history consistent, commits that once became visible to SVN
-have to remain visible. This limitation will be removed when git-as-svn
-gets persistent storage and will be able to remember what *was* main line.
-
-Imagine you had following history:
-
---- time --->
-
-A -- B -- C
-
-Now you merge (via Git) a feature branch:
-
-A -- B -- C -- G
- \            /
-  D -- E --- F
-
-For SVN, history will look this way:
-
-A -- B -- C -- F
-
-We might introduce merge-info support for this one day.
-
-And now the *bad* case. You have the same initial history but do *inverted merge*:
-
-A -- D -- E -- F -- G'
- \                 /
-  B -- C ---------/
-       ^
-       |
-    Previous branch tip
-
-That's where things brake because for SVN, history transforms from
-
-A -- B -- C
-
-to
-
-A -- D -- E -- F -- G'
-
-And all users who checked out revisions B & C get their working copies screwed.
-
-This also means that push --force also must not be performed.
-
-Quoting my initial post [1] about inverted merges (you might call them
-"merges with swapped parents").
-
-> I call it "swapped/reverse merge problem".
->
-> In short:
-> 1. Hack, hack, hack
-> 2. Commit
-> 3. Push, woops, reject (non-ff)
-> 4. Pull
-> 5. Push
->
-> The root of evil is step #4 that creates a merge commit with "swapped" parents - 
-> local commits become first parent, remote commits become second. If one would want to 
-> make proper parent order, he would have to: 1. git fetch
-> 2. git checkout origin/master -b tmp
-> 3. git merge master
-> 4. git push
-> 5. git checkout master
-> 6. git merge origin/master
-> 7. git branch -d tmp
-> 
-> And all this branch dance produces exactly the same commit (content-wise) as simple
-> "pull, push" sequence with the only difference in parent order. And things become
-> even worse if comeone pushes more commits to remote repo while you perform this
-> dance.
->
-> We can't expect all developers (especially, designers and artist) to do it. They
-> don't want to use branches and just work on mainline. This is especially important on
-> early development stages when new features (that designers' work depends upon) are
-> added every day.
->
-> Additionally, many git-related tools depend on first-parent convention and show wrong
-> graphs/diffs.
-
-[1] http://marc.info/?l=git&m=139866660018802
+-Alex
