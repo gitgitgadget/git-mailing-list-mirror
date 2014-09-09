@@ -1,78 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 0/2] custom format for interactive rebase todo
-Date: Tue, 09 Sep 2014 09:58:13 -0700
-Message-ID: <xmqqtx4gloii.fsf@gitster.dls.corp.google.com>
-References: <864mwhi9qu.fsf@gmail.com>
+Subject: Re: [PATCH] gitk: show detached HEAD if --all is specified
+Date: Tue, 09 Sep 2014 10:02:53 -0700
+Message-ID: <xmqqppf4loaq.fsf@gitster.dls.corp.google.com>
+References: <1410247756-10879-1-git-send-email-max@max630.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: William Clifford <mr.william.clifford@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 09 18:58:28 2014
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Tue Sep 09 19:03:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XROkK-0001Wq-Bq
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 18:58:25 +0200
+	id 1XROom-0004QV-Bl
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 19:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757417AbaIIQ6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 12:58:17 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54669 "EHLO smtp.pobox.com"
+	id S1757339AbaIIRC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 13:02:56 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50051 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757401AbaIIQ6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 12:58:16 -0400
+	id S1754492AbaIIRCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 13:02:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B186537597;
-	Tue,  9 Sep 2014 12:58:15 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3156A376BE;
+	Tue,  9 Sep 2014 13:02:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sOBS4N6GuSpab408FsgxxqRl6Oc=; b=GgUG4A
-	kXkcm7GWZptA2ZdhWGZu/Uirde6dxoMOg40nhvU3Bey8in4qxKarycCr1dhVqvjV
-	jrjNTC6YT4TzlH46KdtiTN8jnklQBMJ/CX9KV0zAvPlG+dMBV7Hinv3RQ8RUjqk/
-	W0Ss3wtwRz1z8YT0TBKypbwFqEc4eQ8FI5O4M=
+	:content-type; s=sasl; bh=hYqreWLBHAbfFoRzf8xf7tXQ4SM=; b=Fy9Jzy
+	lOu2VCbaMh35JwzlCKIEBYvqEQ+VwtZrWfsoicH5r72PWR7Mof0bqKErOt974YXg
+	QM2OGyPnU9ZAA+Rrrr/IC9ItrT8wpDePWX68ViHJPaUKVfW6cjazyhODK5fnXG9U
+	P/XbGG5w11d971DYrm6u0o12W9IqIe7Uzl+Kc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LTSe0p7ulR6eHbDvZDRCSjR+1Bop8eiq
-	8IvRhKo28wiI+yy2mVC1fjb2scdes/uc9zqtacq19TdBMaUk/NgWp8/jzOGdrC1k
-	Ji0/lvnhKjbxS6RxETiPh312ok9P77ahLfFFczctTnqfWCg5RL231pqfwv09MqkF
-	jrVzqy3Q2XY=
+	:content-type; q=dns; s=sasl; b=o8aRoyzhvlPTKyZVXdyOHaCr+5JWHQw3
+	MZZb3llk+z6ncrZyhI/KMZMxbc/g1SdI+7JGNUHs6T2GAtPxA5LZTAN1hIibBedS
+	sn1HHwOYiRv5RkP5ZPNn1n9BqCbCQJa8d+BvcKzZ7fuALB4NKvWvMgaXWu/urB6u
+	MvOqFSjMqQs=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A58BC37596;
-	Tue,  9 Sep 2014 12:58:15 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 28F8A376BD;
+	Tue,  9 Sep 2014 13:02:55 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0D37637595;
-	Tue,  9 Sep 2014 12:58:14 -0400 (EDT)
-In-Reply-To: <864mwhi9qu.fsf@gmail.com> (William Clifford's message of "Mon, 8
-	Sep 2014 21:47:56 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9E275376BB;
+	Tue,  9 Sep 2014 13:02:54 -0400 (EDT)
+In-Reply-To: <1410247756-10879-1-git-send-email-max@max630.net> (Max
+	Kirillov's message of "Tue, 9 Sep 2014 10:29:16 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7D63B18A-3842-11E4-A6E0-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 240A23B6-3843-11E4-9910-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256694>
 
-William Clifford <mr.william.clifford@gmail.com> writes:
+Max Kirillov <max@max630.net> writes:
 
-> A couple of examples:
->
-> - `git config sequence.format "%<(12,trunc)%ae %s"`
-> - `git config sequence.format "%s <%aN %aE>"`
-> - `git config sequence.format "%s%n%%n%b"`
-> ... I'm unsure what would happen if I tried to rebase with the
-> third style unedited or uncommented.
+> If HEAD is detached, 'gitk --all' does not show it. This is inconvenient
+> for frontend program, and for example git log does show the detached HEAD.
 
-It should be simply forbidden.  The body part may have a line that
-is similar enough (i.e. starting with one of the command words and
-then a hexadecimal string) to confuse the sequencing machinery.
-
-Other than that safety issue, I am not fundamentally opposed to the
-idea.
-
-As to the implementation in 1/2, your unconditional use of ">%h" is
-wrong (you would end up including the commits from the left side).
-
-Use '%m' instead of a hardcoded '>', perhaps?
+"git log" does use the same revision machinery as rev-parse uses
+internally to parse its command line arguments.  What does it do
+differently?
