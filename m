@@ -1,91 +1,74 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Next Git conference or meeting
-Date: Tue, 9 Sep 2014 17:49:06 +0200
-Message-ID: <CAP8UFD2BfhYrqT1_EZOKmy9_FtbSmpHU0UYRtr-eukmdRGCWig@mail.gmail.com>
-References: <CAP8UFD1Jzy2jzRaFh35=y1yCJcMHKSkXbSXp1SuBL2R2bQAJqQ@mail.gmail.com>
-	<1A6AAC8B-0C82-4296-B1C8-BF0739A28A80@gmail.com>
-	<20140902112117.GB5049@thunk.org>
-	<20140902135147.GC6232@thunk.org>
-	<CAP8UFD3x1Pm-+0GF+2CEFkZ34XDzZ95Wu0boPgGocE_8T7uk9g@mail.gmail.com>
-	<CAJo=hJs-wvT4fPA0Ad0tuOjBth0aRzbEFX6pu7N8Uq4TdToZgw@mail.gmail.com>
-	<20140903205957.GA28644@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] git-as-svn: subversion frontend server for git repository
+Date: Tue, 09 Sep 2014 09:49:03 -0700
+Message-ID: <xmqqy4tsloxs.fsf@gitster.dls.corp.google.com>
+References: <20140909111903.GA13137@seldon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Theodore Ts'o" <tytso@mit.edu>,
-	Luca Milanesio <luca.milanesio@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 09 17:49:19 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, bozaro@yandex.ru
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Tue Sep 09 18:49:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRNfQ-0006FA-TW
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 17:49:17 +0200
+	id 1XRObQ-0004Jb-OI
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Sep 2014 18:49:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272AbaIIPtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Sep 2014 11:49:09 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:34791 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754164AbaIIPtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Sep 2014 11:49:07 -0400
-Received: by mail-ie0-f169.google.com with SMTP id rl12so4314164iec.28
-        for <git@vger.kernel.org>; Tue, 09 Sep 2014 08:49:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=hRs8jKR7EdQKhe0D0Yg0YzqCC4osmMRqoUuwPIkwxM8=;
-        b=JZ2O9kfY+BHWo/7RGW8UfQd2C9i/HAwluJn+JfXFa6n9H7qqblvWxbSFd6NPNaWOvS
-         66fOzPm0Kfe+bK+BPTfvGi1xYcS6k3UhvbejX00QwIFPjvCJvtpF35dwxY0zKRR8P5Y/
-         ipMPIq67NGw8WzbH4cj1lLvttz2pzxy88bTTAny/nfy9TugkT1zlr4upIZcye4migbTm
-         DYEudj1wZMO52YLsazKRuxoCqYImXvPZRxRAr/Qh5x4qUw0rojI93aNbdKZr8MA6R/Mv
-         cPM+eJe5YdnMl0792sD7TPCOdyLflUWhmUktDioysZYe9j1gWCYe6/puSPvwP4kyrCpU
-         aAmQ==
-X-Received: by 10.42.100.6 with SMTP id y6mr5214165icn.28.1410277746435; Tue,
- 09 Sep 2014 08:49:06 -0700 (PDT)
-Received: by 10.50.250.179 with HTTP; Tue, 9 Sep 2014 08:49:06 -0700 (PDT)
-In-Reply-To: <20140903205957.GA28644@peff.net>
+	id S1754300AbaIIQtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Sep 2014 12:49:08 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62707 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753426AbaIIQtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Sep 2014 12:49:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 06FA1372EF;
+	Tue,  9 Sep 2014 12:49:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=r3Xgzp/oNyTrwBNJKSTDfltRI2U=; b=TJlgn8
+	RgDl4MMBGwciOjrYLdz5ibGCccEJnSOtUHMEaRhN7uVbPN5M4+VRrxHvCCl6F1so
+	1c9P865lkydLYvQc3TNg89ZHOiRYSNA/HRpRj0uecDDUoRzpVyQ+zTHiLXxp3eh6
+	FGPQGBil902P5t8N+XEi+idlLVupqSjPR2aFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wnVHOwHi7bdq0o4Nin0TqAunLTSXpL9j
+	Jjazrk47suXzd9H5Mc0sNqCWApFgYQj9T7c5LiaPHYzpqjX7eitZlJTdAH6s95kd
+	rKgLv2GsuBNgmgAkKnfb405X0QvW7SB59ISeGDsio8AFQaJWhh0mpat/JetPi9q7
+	sjVt0fTDSxY=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id ED8D3372EE;
+	Tue,  9 Sep 2014 12:49:05 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 73530372ED;
+	Tue,  9 Sep 2014 12:49:05 -0400 (EDT)
+In-Reply-To: <20140909111903.GA13137@seldon> (Marat Radchenko's message of
+	"Tue, 9 Sep 2014 15:19:04 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 35D008CE-3841-11E4-8E10-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256692>
 
-Hi Shawn and Peff,
+Marat Radchenko <marat@slonopotamus.org> writes:
 
-On Wed, Sep 3, 2014 at 10:59 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Sep 03, 2014 at 10:15:15AM -0700, Shawn Pearce wrote:
->
->> I hadn't realized Git is turning 10 next year. Just been too busy
->> using Git to pay attention to its upcoming anniversary. Let me talk to
->> some folks at Google and see if we can organize something here in
->> Mountain View, or help the LinuxFoundation sponsor something.
+> Some time ago I complained [1] about troubles using Git
+> on a project with high ratio of non-programmers.
+> ...
+> Then, a lost'n'forgotten git_svn_server [4] was found.
+> ...
 
-Did you talk to some folks?
+Interesting.
 
-> Christian mentioned that he talked to some GitHub folks at LinuxCon.
-> Those folks have also started thinking about things. :)
->
-> Things are still very tentative at this point, but I think they are
-> considering something like the Git Merge conference we did earlier, and
-> doing it in June in Europe (maybe Paris). I know they were going to
-> reach out to Linux Foundation folks to try to jointly plan something,
-> but I don't know if that has happened yet.
+> Current limitations:
+> ...
+>   * You must not do 'inverted merges'. Old HEAD must be reachable from
+>     new HEAD by first-parent traversal.
 
-Could you ask if they talked to Linux Foundation folks?
-
-It would be very easy for me to come if it was in Paris, but I'd
-rather make it easy for Junio, Linus, you guys, and other
-contributors, unless everyone wants to take advantage of the
-conference to visit Paris :-)
-
-> So it seems there are a lot of different people who are all potentially
-> interested in planning or taking part, and they should all be talking to
-> each other. :)
-
-Maybe we should have a mailing list for that.
-
-Thanks,
-Christian.
+I am not sure what you mean by this to properly assess how
+significant this limitation is.  Care to draw a simple picture?
