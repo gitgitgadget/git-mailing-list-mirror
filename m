@@ -1,122 +1,68 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git-notes.txt: Explain how to transfer notes between repos
-Date: Wed, 10 Sep 2014 15:59:00 -0400
-Message-ID: <CAPig+cQeJz2DZ+=qdAM-grOC=kQ+DSTL8gsycyq8djrGoaPVJg@mail.gmail.com>
-References: <1410357414-691-1-git-send-email-sunny@sunbase.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Next Git conference or meeting
+Date: Wed, 10 Sep 2014 16:14:58 -0400
+Message-ID: <20140910201458.GA25734@peff.net>
+References: <CAP8UFD1Jzy2jzRaFh35=y1yCJcMHKSkXbSXp1SuBL2R2bQAJqQ@mail.gmail.com>
+ <1A6AAC8B-0C82-4296-B1C8-BF0739A28A80@gmail.com>
+ <20140902112117.GB5049@thunk.org>
+ <20140902135147.GC6232@thunk.org>
+ <CAP8UFD3x1Pm-+0GF+2CEFkZ34XDzZ95Wu0boPgGocE_8T7uk9g@mail.gmail.com>
+ <CAJo=hJs-wvT4fPA0Ad0tuOjBth0aRzbEFX6pu7N8Uq4TdToZgw@mail.gmail.com>
+ <20140903205957.GA28644@peff.net>
+ <CAP8UFD2BfhYrqT1_EZOKmy9_FtbSmpHU0UYRtr-eukmdRGCWig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Wed Sep 10 21:59:10 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>, Theodore Ts'o <tytso@mit.edu>,
+	Luca Milanesio <luca.milanesio@gmail.com>,
+	git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 10 22:15:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRo2k-0001co-TQ
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 21:59:07 +0200
+	id 1XRoIV-0003gY-ON
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 22:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398AbaIJT7C convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Sep 2014 15:59:02 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:62034 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752035AbaIJT7B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Sep 2014 15:59:01 -0400
-Received: by mail-yk0-f171.google.com with SMTP id 79so3269729ykr.16
-        for <git@vger.kernel.org>; Wed, 10 Sep 2014 12:59:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=uojiQo9R0uz+oOc2XYPPxfTilrMVzmUG+WRBHEIUOZo=;
-        b=GLwC1Plq+cJRdRZ+6knlksuZz8Pj6h27xxFjsxpq/OATyZ+uz7qU9Jp8ai+mfLdC83
-         cs+f7sY3cVVjxhQafSglExhK7Opn1xvmNEmFZC9QPO7O1/auGFdntsFGYPXDxLFmC4Ks
-         Z0RlyOVpLOQvuKAo3liPpd7CcNDF5Ld8wMnbPC8Px5CG53VuueU0Y3eJyRbTwRUyt2fm
-         RqK4GuMs2/+CKRdNnCIhWXQVBWUvR1EGkWzpd2toqI81MQsJyrbneWrcosOlmoFcmlJl
-         sgnglJ0GPd7Jb2EA01TS/10F7TEGdCYyx/seiZ23I88aVCwnH5OjLPjNGHa00iJadkqo
-         Jn8w==
-X-Received: by 10.236.44.147 with SMTP id n19mr64072214yhb.82.1410379140579;
- Wed, 10 Sep 2014 12:59:00 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Wed, 10 Sep 2014 12:59:00 -0700 (PDT)
-In-Reply-To: <1410357414-691-1-git-send-email-sunny@sunbase.org>
-X-Google-Sender-Auth: 5YLkpAdS0acEe2B1wIKmiUCzWc8
+	id S1753451AbaIJUPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2014 16:15:16 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46670 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753389AbaIJUPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2014 16:15:01 -0400
+Received: (qmail 11674 invoked by uid 102); 10 Sep 2014 20:15:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 15:15:00 -0500
+Received: (qmail 19558 invoked by uid 107); 10 Sep 2014 20:15:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 16:15:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Sep 2014 16:14:58 -0400
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD2BfhYrqT1_EZOKmy9_FtbSmpHU0UYRtr-eukmdRGCWig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256763>
 
-On Wed, Sep 10, 2014 at 9:56 AM, =C3=98yvind A. Holm <sunny@sunbase.org=
-> wrote:
-> The documentation for git notes did not mention anywhere how to trans=
-fer
-> notes between repositories, create a section that explains this topic=
-=2E
->
-> Signed-off-by: =C3=98yvind A. Holm <sunny@sunbase.org>
-> ---
-> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.tx=
-t
-> index 310f0a5..4237bec 100644
-> --- a/Documentation/git-notes.txt
-> +++ b/Documentation/git-notes.txt
-> @@ -264,6 +264,45 @@ prior to the merge, these will also be removed b=
-y this notes merge
->  strategy.
->
->
-> +TRANSFERRING NOTES ACROSS REPOSITORIES
-> +--------------------------------------
-> +
-> +Notes are not transferred by default when using the standard
-> +fetch/push commands, but has be done explicitly. To fetch all notes
+On Tue, Sep 09, 2014 at 05:49:06PM +0200, Christian Couder wrote:
 
-At minimum: s/has be/has to be/
+> > Christian mentioned that he talked to some GitHub folks at LinuxCon.
+> > Those folks have also started thinking about things. :)
+> >
+> > Things are still very tentative at this point, but I think they are
+> > considering something like the Git Merge conference we did earlier, and
+> > doing it in June in Europe (maybe Paris). I know they were going to
+> > reach out to Linux Foundation folks to try to jointly plan something,
+> > but I don't know if that has happened yet.
+> 
+> Could you ask if they talked to Linux Foundation folks?
 
-Slightly improved phrasing, perhaps:
+I've just asked; I'll let you know if I hear.
 
-    Notes are not transferred, by default, when using the standard
-    fetch/push commands, thus must be transferred explicitly.
+I've seen LF folks mentioned a few times in this thread. Are there
+specific people (with email addresses) that I should be pointing them
+at?
 
-> +from a particular remote, use
-
-s/use/use:/
-
-> +------------
-> +$ git fetch origin refs/notes/*:refs/notes/*
-> +------------
-> +
-> +`git fetch` can be configured to automatically fetch notes from a
-> +remote with this command:
-> +
-> +------------
-> +$ git config --add remote.origin.fetch +refs/notes/*:refs/notes/*
-> +------------
-> +
-> +To transfer notes to a remote repository:
-> +
-> +------------
-> +$ git push origin refs/notes/*
-> +------------
-> +
-> +If you don't want to fetch or push all notes stored under
-> +`refs/notes/`, replace the asterisk with the specific type of notes
-> +you want to transfer:
-> +
-> +------------
-> +$ git fetch origin refs/notes/commits:refs/notes/commits
-> +------------
-> +
-> +or
-> +
-> +------------
-> +$ git push origin refs/notes/commits
-> +------------
-> +
-> +
->  EXAMPLES
->  --------
->
-> --
-> 2.1.0.127.g0c72b98
+-Peff
