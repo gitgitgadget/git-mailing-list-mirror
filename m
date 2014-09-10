@@ -1,89 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] refs: write packed_refs file using stdio
-Date: Wed, 10 Sep 2014 07:39:48 -0400
-Message-ID: <20140910113948.GA16224@peff.net>
-References: <20140910100352.GA12164@peff.net>
- <54103437.2090305@alum.mit.edu>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4 19/32] commit_lock_file(): rollback lock file on
+ failure to rename
+Date: Wed, 10 Sep 2014 19:55:07 +0700
+Message-ID: <CACsJy8AOvyt3FxcnZKa+x77WJ90Zn7DhiBUpbQ8DhU-D3SLfyA@mail.gmail.com>
+References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
+ <1409989846-22401-20-git-send-email-mhagger@alum.mit.edu> <20140910075519.GA16413@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Sep 10 13:39:56 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 10 14:55:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRgFf-0004EI-0F
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 13:39:55 +0200
+	id 1XRhR1-0003of-09
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 14:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750899AbaIJLjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2014 07:39:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46489 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750734AbaIJLjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2014 07:39:51 -0400
-Received: (qmail 22176 invoked by uid 102); 10 Sep 2014 11:39:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 06:39:50 -0500
-Received: (qmail 16243 invoked by uid 107); 10 Sep 2014 11:40:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 07:40:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Sep 2014 07:39:48 -0400
-Content-Disposition: inline
-In-Reply-To: <54103437.2090305@alum.mit.edu>
+	id S1751013AbaIJMzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2014 08:55:39 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:41070 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770AbaIJMzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2014 08:55:38 -0400
+Received: by mail-ig0-f172.google.com with SMTP id h15so6405499igd.5
+        for <git@vger.kernel.org>; Wed, 10 Sep 2014 05:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=gpyeGYpBUaLMi293d7OHb5VfawZH0ZZotqSft3OGEZg=;
+        b=jtXFcx47Ny2VK3Ozro8G3/p+kpOxU4xS/v2teH5Ju2hmspbxjc+Gm0ERDdLBpO55Et
+         fqE/zv7Zdj6mFYg/Qd7ItmHazqrKOlZ6dO1KAbZkYvC8INXJBWA+DGiLWw3O8KSlIbnB
+         u6wrooEY9gTv2NhRPMiAo4EK8LGmoE1WCy4bv+WNoR1iBJWZjBUgBWiXpdHkMJ4n7fPK
+         oeMrKQcx3XTtHhsrY7gP8szDB9MmHuXVOnc60TPv047R2hG0YgMlr/heyTMzCaXSovGZ
+         dv1YlZKMPBvYr8C2J6/0Bsf/2k9WqjCG0cSEcC87vO6J2KC/yPRO2F925L3cr8aCSZB1
+         8Akg==
+X-Received: by 10.42.136.129 with SMTP id u1mr17310176ict.65.1410353738052;
+ Wed, 10 Sep 2014 05:55:38 -0700 (PDT)
+Received: by 10.107.131.150 with HTTP; Wed, 10 Sep 2014 05:55:07 -0700 (PDT)
+In-Reply-To: <20140910075519.GA16413@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256736>
 
-On Wed, Sep 10, 2014 at 01:21:27PM +0200, Michael Haggerty wrote:
+On Wed, Sep 10, 2014 at 2:55 PM, Jeff King <peff@peff.net> wrote:
+> BTW, while grepping for commit_lock_file calls, I notice we often commit
+> the shallow file without checking the return code. I'm not sure what we
+> should do in each case, but I imagine that calling die() is probably
+> better than continuing as if it succeeded. +cc Duy
 
-> > +	if (fclose(out))
-> > +		die_errno("write error");
-> > +	packed_ref_cache->lock->fd = -1;
-> 
-> It might be a minuscule bit safer to set `lock->fd = -1` *before*
-> calling `fclose()`.
-
-Yeah, I considered that. The worst case is a signal coming in between
-the two calls (or a somebody calling die() between the two :) ). In that
-case the lockfile code will close() the fd again, which should be a noop
-(since nobody will have opened it in the interim...right?).
-
-That "since" assumption is the dangerous part. But on the other hand, if
-we unset the fd first, then the lockfile code may fail to close it if it
-is called before the fclose() (definitely by a signal in this case). I
-think there are platforms where that would cause us to fail to remove
-the file, which is annoying.
-
-So I dunno. We cannot be atomic here. I could go either way.
-
-> TBH, it makes me uncomfortable having code outside of `lockfile.c`
-> having this level of intimacy with lockfile objects.
-
-I kind of agree.
-
-> I think it would be better to have a
-> 
->     FILE *fopen_lock_file(struct *lock_file, const char *mode);
-> 
-> that records the `FILE *` inside the `lockfile` instance, and to teach
-> `commit_lock_file()` and its friends to call `fclose()` if the `FILE *`
-> was created. I think that such a feature would encourage other lockfile
-> users to use the more convenient and readable stdio API.
-
-I was tempted by that. We could also do:
-
-  if (fflush(out))
-	die_errno("write error");
-  if (commit_lock_file(...))
-     ...
-
-which sidesteps the issue. We do then have to _later_ call fclose(out)
-to free the handle memory, which is going to want to close the fd again.
-Putting us back in the "let's hope nobody opened it in the meantime"
-case from above.
-
--Peff
+Noted. To be fixed soon. It looks like we could make gcc warn about
+ignoring return code like this with
+__attribute__((warn_unused_result)) (but I haven't tested). If it does
+help catch mishandling in future commit_lock_file calls and does not
+upset other compilers, we may want to add it to commit_lock_file.
+-- 
+Duy
