@@ -1,93 +1,181 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 00/32] Lockfile correctness and refactoring
-Date: Wed, 10 Sep 2014 04:13:59 -0400
-Message-ID: <20140910081358.GB16413@peff.net>
-References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH] refs: write packed_refs file using stdio
+Date: Wed, 10 Sep 2014 06:03:52 -0400
+Message-ID: <20140910100352.GA12164@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Sep 10 10:14:12 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 10 12:04:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRd2Y-0005kY-SL
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 10:14:11 +0200
+	id 1XRekq-00021x-II
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 12:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882AbaIJIOF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Sep 2014 04:14:05 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46421 "HELO cloud.peff.net"
+	id S1752266AbaIJKD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2014 06:03:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46437 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751635AbaIJIOB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2014 04:14:01 -0400
-Received: (qmail 12606 invoked by uid 102); 10 Sep 2014 08:14:01 -0000
+	id S1752250AbaIJKDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2014 06:03:55 -0400
+Received: (qmail 17729 invoked by uid 102); 10 Sep 2014 10:03:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 03:14:01 -0500
-Received: (qmail 14972 invoked by uid 107); 10 Sep 2014 08:14:21 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 05:03:55 -0500
+Received: (qmail 15310 invoked by uid 107); 10 Sep 2014 10:04:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 04:14:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Sep 2014 04:13:59 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 06:04:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Sep 2014 06:03:52 -0400
 Content-Disposition: inline
-In-Reply-To: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256729>
 
-On Sat, Sep 06, 2014 at 09:50:14AM +0200, Michael Haggerty wrote:
+We write each line of a new packed-refs file individually
+using a write() syscall (and sometimes 2, if the ref is
+peeled). Since each line is only about 50-100 bytes long,
+this creates a lot of system call overhead.
 
-> Sorry for the long delay since v3. This version mostly cleans up a
-> couple more places where the lockfile object was left in an
-> ill-defined state. Thanks to Johannes Sixt and Torsten B=C3=B6gershau=
-sen
-> for their review of v3.
->=20
-> I believe that this series addresses all of the comments from v1 [1],
-> v2 [2], and v3 [3].
+We can instead open a stdio handle around our descriptor and
+use fprintf to write to it. The extra buffering is not a
+problem for us, because nobody will read our new packed-refs
+file until we call commit_lock_file (by which point we have
+flushed everything).
 
-This looks pretty good to me overall.
+On a pathological repository with 8.5 million refs, this
+dropped the time to run `git pack-refs` from 20s to 6s.
 
-I did coincidentally have an interesting experience with our lockfile
-code earlier today, which I'd like to relate.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Obviously that repo is ridiculous (but a sad reality for me).
 
-I was running pack-refs on a repository with a very large number of
-loose refs (about 1.8 million). Needless to say, this ran very slowly
-and thrashed the disk, as that's almost 7G using 4K inodes. But it did
-eventually generate a packed-refs file, at which point it tried to prun=
-e
-the loose refs.
+However, I think the benefits extend to smaller files, too. And it's
+pretty easy to do (and I actually think the resulting write_packed_entry
+is a lot easier to read, as well as lifting some arbitrary limits).
 
-To do so, we have to lock each ref before removing it (to protect
-against a simultaneous update). Each call to lock_ref_sha1_basic
-allocates a "struct lock_file", which then gets added to the global
-lock_file list. Each one contains a fixed PATH_MAX buffer (4K on this
-machine). After we're done updating the ref, we leak the lock_file
-struct, since there's no way to remove it from the list.
+ cache.h        |  2 ++
+ refs.c         | 39 ++++++++++++++++-----------------------
+ write_or_die.c | 15 +++++++++++++++
+ 3 files changed, 33 insertions(+), 23 deletions(-)
 
-As a result, git tried to allocate 7G of RAM and got OOM-killed (the
-machine had only 8G). In addition to thrashing the disk even harder,
-since there was no room left for disk cache while we touched millions o=
-f
-loose refs. :)
-
-Your change in this series to use a strbuf would make this a lot better=
-=2E
-But I still wonder how hard it would be to just remove lock_file struct=
-s
-from the global list when they are committed or rolled back. That would
-presumably also make the "avoid transitory valid states" patch from you=
-r
-series a bit easier, too (you could prepare the lockfile in peace, and
-then link it in fully formed, and do the opposite when removing it).
-
-I think with your strbuf patch, this leak at least becomes reasonable.
-So maybe it's not worth going further. But I'd be interested to hear
-your thoughts since you've been touching the area recently.
-
--Peff
+diff --git a/cache.h b/cache.h
+index 4d5b76c..bc286ce 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1395,6 +1395,8 @@ extern const char *git_mailmap_blob;
+ 
+ /* IO helper functions */
+ extern void maybe_flush_or_die(FILE *, const char *);
++__attribute__((format (printf, 2, 3)))
++extern void fprintf_or_die(FILE *, const char *fmt, ...);
+ extern int copy_fd(int ifd, int ofd);
+ extern int copy_file(const char *dst, const char *src, int mode);
+ extern int copy_file_with_time(const char *dst, const char *src, int mode);
+diff --git a/refs.c b/refs.c
+index 27927f2..f08faed 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2191,25 +2191,12 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+  * Write an entry to the packed-refs file for the specified refname.
+  * If peeled is non-NULL, write it as the entry's peeled value.
+  */
+-static void write_packed_entry(int fd, char *refname, unsigned char *sha1,
++static void write_packed_entry(FILE *fh, char *refname, unsigned char *sha1,
+ 			       unsigned char *peeled)
+ {
+-	char line[PATH_MAX + 100];
+-	int len;
+-
+-	len = snprintf(line, sizeof(line), "%s %s\n",
+-		       sha1_to_hex(sha1), refname);
+-	/* this should not happen but just being defensive */
+-	if (len > sizeof(line))
+-		die("too long a refname '%s'", refname);
+-	write_or_die(fd, line, len);
+-
+-	if (peeled) {
+-		if (snprintf(line, sizeof(line), "^%s\n",
+-			     sha1_to_hex(peeled)) != PEELED_LINE_LENGTH)
+-			die("internal error");
+-		write_or_die(fd, line, PEELED_LINE_LENGTH);
+-	}
++	fprintf_or_die(fh, "%s %s\n", sha1_to_hex(sha1), refname);
++	if (peeled)
++		fprintf_or_die(fh, "^%s\n", sha1_to_hex(peeled));
+ }
+ 
+ /*
+@@ -2217,13 +2204,12 @@ static void write_packed_entry(int fd, char *refname, unsigned char *sha1,
+  */
+ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
+ {
+-	int *fd = cb_data;
+ 	enum peel_status peel_status = peel_entry(entry, 0);
+ 
+ 	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
+ 		error("internal error: %s is not a valid packed reference!",
+ 		      entry->name);
+-	write_packed_entry(*fd, entry->name, entry->u.value.sha1,
++	write_packed_entry(cb_data, entry->name, entry->u.value.sha1,
+ 			   peel_status == PEEL_PEELED ?
+ 			   entry->u.value.peeled : NULL);
+ 	return 0;
+@@ -2259,15 +2245,22 @@ int commit_packed_refs(void)
+ 		get_packed_ref_cache(&ref_cache);
+ 	int error = 0;
+ 	int save_errno = 0;
++	FILE *out;
+ 
+ 	if (!packed_ref_cache->lock)
+ 		die("internal error: packed-refs not locked");
+-	write_or_die(packed_ref_cache->lock->fd,
+-		     PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER));
+ 
++	out = fdopen(packed_ref_cache->lock->fd, "w");
++	if (!out)
++		die_errno("unable to fdopen packed-refs descriptor");
++
++	fprintf_or_die(out, "%s", PACKED_REFS_HEADER);
+ 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
+-				 0, write_packed_entry_fn,
+-				 &packed_ref_cache->lock->fd);
++				 0, write_packed_entry_fn, out);
++	if (fclose(out))
++		die_errno("write error");
++	packed_ref_cache->lock->fd = -1;
++
+ 	if (commit_lock_file(packed_ref_cache->lock)) {
+ 		save_errno = errno;
+ 		error = -1;
+diff --git a/write_or_die.c b/write_or_die.c
+index b50f99a..e7afe7a 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -49,6 +49,21 @@ void maybe_flush_or_die(FILE *f, const char *desc)
+ 	}
+ }
+ 
++void fprintf_or_die(FILE *f, const char *fmt, ...)
++{
++	va_list ap;
++	int ret;
++
++	va_start(ap, fmt);
++	ret = vfprintf(f, fmt, ap);
++	va_end(ap);
++
++	if (ret < 0) {
++		check_pipe(errno);
++		die_errno("write error");
++	}
++}
++
+ void fsync_or_die(int fd, const char *msg)
+ {
+ 	if (fsync(fd) < 0) {
+-- 
+2.1.0.373.g91ca799
