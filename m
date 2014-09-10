@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 28/32] gc: support prune --worktrees
-Date: Thu, 11 Sep 2014 05:42:04 +0700
-Message-ID: <1410388928-32265-29-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 29/32] count-objects: report unused files in $GIT_DIR/worktrees/...
+Date: Thu, 11 Sep 2014 05:42:05 +0700
+Message-ID: <1410388928-32265-30-git-send-email-pclouds@gmail.com>
 References: <1409387642-24492-1-git-send-email-pclouds@gmail.com>
  <1410388928-32265-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,142 +12,158 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 11 00:44:48 2014
+X-From: git-owner@vger.kernel.org Thu Sep 11 00:44:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRqd0-0002Vy-8p
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 00:44:42 +0200
+	id 1XRqd5-0002ZJ-Lj
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 00:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753426AbaIJWoi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Sep 2014 18:44:38 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:34886 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753361AbaIJWoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2014 18:44:37 -0400
-Received: by mail-pd0-f178.google.com with SMTP id p10so9088172pdj.9
-        for <git@vger.kernel.org>; Wed, 10 Sep 2014 15:44:37 -0700 (PDT)
+	id S1753430AbaIJWon convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Sep 2014 18:44:43 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:62076 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753361AbaIJWom (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2014 18:44:42 -0400
+Received: by mail-pa0-f48.google.com with SMTP id hz1so11244302pad.21
+        for <git@vger.kernel.org>; Wed, 10 Sep 2014 15:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=p4YlTP1ZloIvgtbeubNbjbIErYSqSv7Stv3Y1npOWeI=;
-        b=c/osc/fD7DGHOh+HQkyxEZ/a/6jzkd1ij4/x12rXgD6T0HK9BjUADuacPapGKOanbh
-         /XGUZSMMOjTn4kZ5j3acsBNc21bRZO7e4Rc4j9rxAcZjwva6gqj1XbODR+dlTnOPnTLu
-         apgOSBTCvfirloWhVFkb12whPLOTGyhCnkvl9rUhKe+NIlT3RDoYws0n5gc+kqnNgvKZ
-         91+TWojCL6lz1oSYFHw+kNFRyDI/w2MuYB9s8TGI3jFJNlWlLkCpbjBslSBeKILaZ68C
-         DXcGnEn29tZ122gVjxzIjSCkJpyqGC3b9bk/csNg4yHqFLXHQ1kGcwtxNzjNV8FQ2g12
-         76ng==
-X-Received: by 10.68.68.134 with SMTP id w6mr40484302pbt.110.1410389077392;
-        Wed, 10 Sep 2014 15:44:37 -0700 (PDT)
+        bh=vaccOHUUq4V7AtI4jwBD1smTOg+DhZWlydECX1u+KUE=;
+        b=Y2OGah/ISEXbSrjdNJVGy5LAFPIrVksbzTc9QuVnKUK7HRrY4oy+xiXVTjGPdqo/fy
+         xNYbtHZbvuuGiUgcsJ0Mtlo8tId6w7z8XKi9LSetH5eS5uMy1DB5SzfxAuC9FFU0N9ae
+         CvKgpiyRZGnrvZJWhc/4RTnqTo0/Eu9SfApz4TZGmSkwF+qIUXLnBbcPkp1hSI9kbG/D
+         vMJ844tK2kF6c19wnJU07KNlPtI7M04vgXgp9waaP++bTW+yUzf7M1g8J/1RmoLa7vmw
+         MC+5MnB/jcYHQuhfiz63CZ6KjyMalRuwG9LZzWkDIRKESc8iARgtVnnfdft0XgT9PjUZ
+         9frQ==
+X-Received: by 10.68.220.228 with SMTP id pz4mr10144433pbc.16.1410389082582;
+        Wed, 10 Sep 2014 15:44:42 -0700 (PDT)
 Received: from lanh ([115.73.197.210])
-        by mx.google.com with ESMTPSA id wi10sm15407124pbc.95.2014.09.10.15.44.34
+        by mx.google.com with ESMTPSA id l3sm15619477pdr.17.2014.09.10.15.44.39
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Sep 2014 15:44:36 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 11 Sep 2014 05:44:56 +0700
+        Wed, 10 Sep 2014 15:44:42 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 11 Sep 2014 05:45:02 +0700
 X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
 In-Reply-To: <1410388928-32265-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256806>
+
+In linked checkouts, borrowed parts like config is taken from
+$GIT_COMMON_DIR. $GIT_DIR/config is never used. Report them as
+garbage.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt       |  7 +++++++
- Documentation/git-checkout.txt |  2 +-
- builtin/gc.c                   | 11 +++++++++++
- 3 files changed, 19 insertions(+), 1 deletion(-)
+ builtin/count-objects.c |  4 +++-
+ cache.h                 |  1 +
+ path.c                  | 29 +++++++++++++++++++++++++++--
+ 3 files changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 286e539..a85f684 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1211,6 +1211,13 @@ gc.pruneexpire::
- 	"now" may be used to disable this  grace period and always prune
- 	unreachable objects immediately.
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index a7f70cb..d3a1620 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -102,8 +102,10 @@ int cmd_count_objects(int argc, const char **argv,=
+ const char *prefix)
+ 	/* we do not take arguments other than flags for now */
+ 	if (argc)
+ 		usage_with_options(count_objects_usage, opts);
+-	if (verbose)
++	if (verbose) {
+ 		report_garbage =3D real_report_garbage;
++		report_linked_checkout_garbage();
++	}
+ 	memcpy(path, objdir, len);
+ 	if (len && objdir[len-1] !=3D '/')
+ 		path[len++] =3D '/';
+diff --git a/cache.h b/cache.h
+index bf4d15e..12f0fc0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -690,6 +690,7 @@ extern const char *mkpath(const char *fmt, ...) __a=
+ttribute__((format (printf, 1
+ extern const char *git_path(const char *fmt, ...) __attribute__((forma=
+t (printf, 1, 2)));
+ extern const char *git_path_submodule(const char *path, const char *fm=
+t, ...)
+ 	__attribute__((format (printf, 2, 3)));
++extern void report_linked_checkout_garbage(void);
 =20
-+gc.pruneworktreesexpire::
-+	When 'git gc' is run, it will call
-+	'prune --worktrees --expire 3.months.ago'.
-+	Override the grace period with this config variable. The value
-+	"now" may be used to disable the grace period and prune
-+	$GIT_DIR/worktrees immediately.
-+
- gc.reflogexpire::
- gc.<pattern>.reflogexpire::
- 	'git reflog expire' removes reflog entries older than
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
-t.txt
-index a29748e..23f0c80 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -433,7 +433,7 @@ inside $GIT_DIR. Use `git rev-parse --git-path` to =
-get the final path.
+ /*
+  * Return the name of the file in the local object database that would
+diff --git a/path.c b/path.c
+index 1fd99f8..d07ae69 100644
+--- a/path.c
++++ b/path.c
+@@ -4,6 +4,7 @@
+ #include "cache.h"
+ #include "strbuf.h"
+ #include "string-list.h"
++#include "dir.h"
 =20
- When you are done, simply deleting the linked working directory would
- suffice. $GIT_DIR/worktrees can be cleaned up using `git prune
----worktrees`.
-+--worktrees`, which is part of automated garbage collection.
-=20
- After you move a linked working directory to another file system, or
- on a file system that does not support hard link, execute any git
-diff --git a/builtin/gc.c b/builtin/gc.c
-index e38c902..00239ca 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -33,11 +33,13 @@ static int gc_auto_threshold =3D 6700;
- static int gc_auto_pack_limit =3D 50;
- static int detach_auto =3D 1;
- static const char *prune_expire =3D "2.weeks.ago";
-+static const char *prune_worktrees_expire =3D "3.months.ago";
-=20
- static struct argv_array pack_refs_cmd =3D ARGV_ARRAY_INIT;
- static struct argv_array reflog =3D ARGV_ARRAY_INIT;
- static struct argv_array repack =3D ARGV_ARRAY_INIT;
- static struct argv_array prune =3D ARGV_ARRAY_INIT;
-+static struct argv_array prune_worktrees =3D ARGV_ARRAY_INIT;
- static struct argv_array rerere =3D ARGV_ARRAY_INIT;
-=20
- static char *pidfile;
-@@ -97,6 +99,8 @@ static int gc_config(const char *var, const char *val=
-ue, void *cb)
- 	}
- 	if (!strcmp(var, "gc.pruneexpire"))
- 		return git_config_date_string(&prune_expire, var, value);
-+	if (!strcmp(var, "gc.pruneworktreesexpire"))
-+		return git_config_date_string(&prune_worktrees_expire, var, value);
- 	return git_default_config(var, value, cb);
+ static int get_st_mode_bits(const char *path, int *mode)
+ {
+@@ -91,9 +92,9 @@ static void replace_dir(struct strbuf *buf, int len, =
+const char *newdir)
  }
 =20
-@@ -304,6 +308,7 @@ int cmd_gc(int argc, const char **argv, const char =
-*prefix)
- 	argv_array_pushl(&reflog, "reflog", "expire", "--all", NULL);
- 	argv_array_pushl(&repack, "repack", "-d", "-l", NULL);
- 	argv_array_pushl(&prune, "prune", "--expire", NULL);
-+	argv_array_pushl(&prune_worktrees, "prune", "--worktrees", "--expire"=
-, NULL);
- 	argv_array_pushl(&rerere, "rerere", "gc", NULL);
+ static const char *common_list[] =3D {
+-	"/branches", "/hooks", "/info", "/logs", "/lost-found", "/modules",
++	"/branches", "/hooks", "/info", "!/logs", "/lost-found", "/modules",
+ 	"/objects", "/refs", "/remotes", "/worktrees", "/rr-cache", "/svn",
+-	"config", "gc.pid", "packed-refs", "shallow",
++	"config", "!gc.pid", "packed-refs", "shallow",
+ 	NULL
+ };
 =20
- 	git_config(gc_config, NULL);
-@@ -373,6 +378,12 @@ int cmd_gc(int argc, const char **argv, const char=
- *prefix)
- 			return error(FAILED_RUN, prune.argv[0]);
+@@ -107,6 +108,8 @@ static void update_common_dir(struct strbuf *buf, i=
+nt git_dir_len)
+ 	for (p =3D common_list; *p; p++) {
+ 		const char *path =3D *p;
+ 		int is_dir =3D 0;
++		if (*path =3D=3D '!')
++			path++;
+ 		if (*path =3D=3D '/') {
+ 			path++;
+ 			is_dir =3D 1;
+@@ -122,6 +125,28 @@ static void update_common_dir(struct strbuf *buf, =
+int git_dir_len)
  	}
+ }
 =20
-+	if (prune_worktrees_expire) {
-+		argv_array_push(&prune_worktrees, prune_worktrees_expire);
-+		if (run_command_v_opt(prune_worktrees.argv, RUN_GIT_CMD))
-+			return error(FAILED_RUN, prune_worktrees.argv[0]);
-+	}
++void report_linked_checkout_garbage(void)
++{
++	struct strbuf sb =3D STRBUF_INIT;
++	const char **p;
++	int len;
 +
- 	if (run_command_v_opt(rerere.argv, RUN_GIT_CMD))
- 		return error(FAILED_RUN, rerere.argv[0]);
-=20
++	if (!git_common_dir_env)
++		return;
++	strbuf_addf(&sb, "%s/", get_git_dir());
++	len =3D sb.len;
++	for (p =3D common_list; *p; p++) {
++		const char *path =3D *p;
++		if (*path =3D=3D '!')
++			continue;
++		strbuf_setlen(&sb, len);
++		strbuf_addstr(&sb, path);
++		if (file_exists(sb.buf))
++			report_garbage("unused in linked checkout", sb.buf);
++	}
++	strbuf_release(&sb);
++}
++
+ static void adjust_git_path(struct strbuf *buf, int git_dir_len)
+ {
+ 	const char *base =3D buf->buf + git_dir_len;
 --=20
 2.1.0.rc0.78.gc0d8480
