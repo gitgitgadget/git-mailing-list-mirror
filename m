@@ -1,60 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2] refs: speed up is_refname_available
-Date: Wed, 10 Sep 2014 15:21:39 -0700
-Message-ID: <xmqqk35bf764.fsf@gitster.dls.corp.google.com>
+Date: Wed, 10 Sep 2014 15:22:01 -0700
+Message-ID: <xmqqiokvf75i.fsf@gitster.dls.corp.google.com>
 References: <20140910101730.GA12399@peff.net>
 	<20140910111155.GA14995@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>, Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu Sep 11 00:21:47 2014
+X-From: git-owner@vger.kernel.org Thu Sep 11 00:22:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRqGo-0005rq-JQ
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 00:21:47 +0200
+	id 1XRqHC-00065m-EB
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 00:22:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbaIJWVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2014 18:21:43 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57534 "EHLO smtp.pobox.com"
+	id S1752441AbaIJWWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2014 18:22:06 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57722 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751971AbaIJWVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2014 18:21:42 -0400
+	id S1751803AbaIJWWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2014 18:22:04 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DB13439C54;
-	Wed, 10 Sep 2014 18:21:41 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 259F139C7C;
+	Wed, 10 Sep 2014 18:22:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w9Vd1MlTu0GLTK5LDaZXOBp+KjI=; b=grpwc9
-	TtbizgIwboBe5PQnqj6fkNBz82bttO01krHehIfkKeIEQ/3ETJs+nbLWZXlvzK1W
-	Zz/LEU3Qs8BQJuXX0kexllIqlcaCsgCHJYN9BmAzKUTjDxqV+LMDUqYivA7Nl4mD
-	ySBE6HlfcFtCT3fTJtrhnPxU5Thy3QdDYpGps=
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=pdTHxbuFk+TZBEEv7a2zJtv37f4=; b=Of6km7
+	hZcUGfSDsYdxhBfTt8EKz2RFzDRWMT3/8+3PVpSMd1tkejbJ9Hrhuuf0wq7fkMwb
+	Y2H+BdMPltKpjE9Py91xazeA8RLlpmSgIiLSqgMjv50Ke5m9eYsrGblMxaA+9j80
+	NsL15efipKHHkC+bduVoFScD+RhyqneNY4p1o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QoaN94sBZULDgKjzKyelCPsNfomaOsT5
-	nLm7FP+1xqFfMmLq3Jz1OfClG8ouIztmkfXDJdgXGBmthX80Lnw6m1r5GkYhw0gX
-	Im1ksuNG+FCc789MKc8gWQoaHORocD0IMb+AWCr9Ykbav1vstDbgpdaJ+8JxG6P+
-	y9F1DHqV78g=
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qf9nmPR4RFb1NACOtKJZOCYn7ye3RSNj
+	A+fMzXeAruqXmLeT5F93H7vNTiGzyMJ7QBBP5n8L8zh2SODHSdDI4wSxLcRgH2P4
+	Wux7dFF6WDu+rXA3rp6HuzGPT5aiWVcIFovPyoweknTyXUINZmTYN7ljxOzSrYDP
+	9cOAUevDpBo=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D25A939C53;
-	Wed, 10 Sep 2014 18:21:41 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1973E39C7B;
+	Wed, 10 Sep 2014 18:22:04 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4C9D639C52;
-	Wed, 10 Sep 2014 18:21:41 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6FF5C39C73;
+	Wed, 10 Sep 2014 18:22:03 -0400 (EDT)
 In-Reply-To: <20140910111155.GA14995@peff.net> (Jeff King's message of "Wed,
 	10 Sep 2014 07:11:55 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D6D5AE70-3938-11E4-AC4C-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: E4088B08-3938-11E4-8209-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256775>
 
 Jeff King <peff@peff.net> writes:
 
@@ -77,6 +77,8 @@ I am tempted to
 
  - drop other rs/ref-transaction* topics temporarily, expecting them
    to be rerolled like rs/ref-transaction-1 was done recently;
+
+ - try merging this and see how it goes; and
 
  - ask you three (or four, counting Duy as well) who seem to want to
    touch refs to coordinate among yourselves a bit better next time
