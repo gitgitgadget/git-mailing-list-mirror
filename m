@@ -1,147 +1,107 @@
 From: Harry Jeffery <harry@exec64.co.uk>
-Subject: [PATCH 1/2] log-tree: make format_decorations more flexible
-Date: Wed, 10 Sep 2014 22:58:48 +0100
-Message-ID: <5410C998.5060701@exec64.co.uk>
+Subject: [PATCH 2/2] pretty: add %D format specifier
+Date: Wed, 10 Sep 2014 23:00:15 +0100
+Message-ID: <5410C9EF.9080509@exec64.co.uk>
+References: <5410C998.5060701@exec64.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 10 23:58:46 2014
+X-From: git-owner@vger.kernel.org Thu Sep 11 00:00:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRpuY-0000lW-5T
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 23:58:46 +0200
+	id 1XRpvm-0001Yq-SH
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 00:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856AbaIJV6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2014 17:58:32 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:49231 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256AbaIJV6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2014 17:58:31 -0400
-Received: by mail-wi0-f177.google.com with SMTP id em10so2922449wid.10
-        for <git@vger.kernel.org>; Wed, 10 Sep 2014 14:58:29 -0700 (PDT)
+	id S1753269AbaIJV76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2014 17:59:58 -0400
+Received: from mail-we0-f181.google.com ([74.125.82.181]:48960 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752967AbaIJV75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Sep 2014 17:59:57 -0400
+Received: by mail-we0-f181.google.com with SMTP id w62so2869277wes.40
+        for <git@vger.kernel.org>; Wed, 10 Sep 2014 14:59:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=mSwSwL4gbs6u1qrqxx3bFUWqO1D30O3at108plpgpzM=;
-        b=KI6Lz529+dhZWV6m/2b65+E8LuqNlokZrOhCFbWIZhom4cRYCeaM7hnMASJWFkQcvf
-         bGLWaiH0UsJmGu/QyaF4l8myP6bEvDUw8WJonq8MzfjwqCN+SnKYBKtj0w7d9lHQxtz1
-         nsl2sYg6eBDNMe5n0WL7CFENDkcahU2utDB/VQ/5hTL5szWldBGqIO2RlWx21zR7/oaU
-         ii+5n73P32fsA0rEyNGInVMQYal8iTimM2+dnyZix77fRReArB2tXXJZ9hOFjvSsgOyM
-         7oz0uoyJRc77DFVPBb1dOvyno8ymbmLnXLGPLxhK12xBLWOBjkEvLT/YYDWPWKNDXMAn
-         CwhQ==
-X-Gm-Message-State: ALoCoQldjIfEnWvhGOA0NMcpKBJEraHN3QfiAa0uuTMgGToEsESxml/ZLHzSn14RwnmED13bHp1g
-X-Received: by 10.180.20.196 with SMTP id p4mr39499740wie.56.1410386309398;
-        Wed, 10 Sep 2014 14:58:29 -0700 (PDT)
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=VqEMRUPKR9K0P8K8CNCV19vQ8jWiAzlmgUDvsmquZEY=;
+        b=HcCw4HPH2tYbor/wDk/q090mxhZQW9yLMtzu7h5H4fHXMrv73OULV2TL5Rk1IY/30K
+         iiLj6X7gTdxkPMRZf/iHgWmHUXSrmL6Qatb90K7CDzcogXeB/YqoM3FEK+qU2QOC/QgL
+         5u6onfjqFveAmjrI5d75QiVmZeNe1vgjNmbFP0pIkhYSBQZIYZDgPQqBWJe87kBJweRS
+         nC4caIOanpP9NxtS5qBxDaVYRQzyr3YMZt1xvtYELnwiuOI86Ve8HV63TwFFB2ya5z5U
+         7Imn13hcIEcMNCudz4tiALhYfiZecOgaOJ1w5lXMd5wPkmog1XhbMoRY3no1ESs1SwCj
+         LIJw==
+X-Gm-Message-State: ALoCoQmIVSbXlcWVCT8KL1dTjMsc1We1wd/3Cbx8p+tCHYrqgck8aqb6GyXkfPhr9t8iko+Z23Be
+X-Received: by 10.194.191.135 with SMTP id gy7mr8312763wjc.39.1410386396498;
+        Wed, 10 Sep 2014 14:59:56 -0700 (PDT)
 Received: from [192.168.0.14] (cpc69047-oxfd25-2-0-cust267.4-3.cable.virginm.net. [81.109.93.12])
-        by mx.google.com with ESMTPSA id fy4sm3852138wib.22.2014.09.10.14.58.28
+        by mx.google.com with ESMTPSA id ec2sm3856890wib.19.2014.09.10.14.59.55
         for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Sep 2014 14:58:28 -0700 (PDT)
+        Wed, 10 Sep 2014 14:59:55 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <5410C998.5060701@exec64.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256772>
 
-The prefix, separator and suffix for decorations are hard-coded. Make
-format_decorations more flexible by having the caller specify the
-prefix, separator and suffix.
+%d prints decorations wrapped by " (" and ")". %D provides the same
+output without the parenthesis, making " (%D)" and "%d" equivalent to
+one another.
 
 Signed-off-by: Harry Jeffery <harry@exec64.co.uk>
 ---
-  log-tree.c | 16 +++++++++-------
-  log-tree.h |  2 +-
-  pretty.c   |  2 +-
-  3 files changed, 11 insertions(+), 9 deletions(-)
+  Documentation/pretty-formats.txt | 6 ++++--
+  pretty.c                         | 4 ++++
+  2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/log-tree.c b/log-tree.c
-index 95e9b1d..860694c 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -184,9 +184,11 @@ static void show_children(struct rev_info *opt, 
-struct commit *commit, int abbre
-   */
-  void format_decorations(struct strbuf *sb,
-  			const struct commit *commit,
--			int use_color)
-+			int use_color,
-+			const char* prefix,
-+			const char* sep,
-+			const char* suffix)
-  {
--	const char *prefix;
-  	struct name_decoration *decoration;
-  	const char *color_commit =
-  		diff_get_color(use_color, DIFF_COMMIT);
-@@ -196,20 +198,20 @@ void format_decorations(struct strbuf *sb,
-  	decoration = lookup_decoration(&name_decoration, &commit->object);
-  	if (!decoration)
-  		return;
--	prefix = " (";
-+	strbuf_addstr(sb, prefix);
-  	while (decoration) {
-  		strbuf_addstr(sb, color_commit);
--		strbuf_addstr(sb, prefix);
-  		strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
-  		if (decoration->type == DECORATION_REF_TAG)
-  			strbuf_addstr(sb, "tag: ");
-  		strbuf_addstr(sb, decoration->name);
-+		if(decoration->next)
-+			strbuf_addstr(sb, sep);
-  		strbuf_addstr(sb, color_reset);
--		prefix = ", ";
-  		decoration = decoration->next;
-  	}
-  	strbuf_addstr(sb, color_commit);
--	strbuf_addch(sb, ')');
-+	strbuf_addstr(sb, suffix);
-  	strbuf_addstr(sb, color_reset);
-  }
+diff --git a/Documentation/pretty-formats.txt 
+b/Documentation/pretty-formats.txt
+index eac7909..2632e1a 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -128,6 +128,7 @@ The placeholders are:
+  - '%ct': committer date, UNIX timestamp
+  - '%ci': committer date, ISO 8601 format
+  - '%d': ref names, like the --decorate option of linkgit:git-log[1]
++- '%D': ref names without the " (", ")" wrapping.
+  - '%e': encoding
+  - '%s': subject
+  - '%f': sanitized subject line, suitable for a filename
+@@ -182,8 +183,9 @@ The placeholders are:
+  NOTE: Some placeholders may depend on other options given to the
+  revision traversal engine. For example, the `%g*` reflog options will
+  insert an empty string unless we are traversing reflog entries (e.g., by
+-`git log -g`). The `%d` placeholder will use the "short" decoration
+-format if `--decorate` was not already provided on the command line.
++`git log -g`). The `%d` and `%D` placeholders will use the "short"
++decoration format if `--decorate` was not already provided on the command
++line.
 
-@@ -221,7 +223,7 @@ void show_decorations(struct rev_info *opt, struct 
-commit *commit)
-  		printf("\t%s", (char *) commit->util);
-  	if (!opt->show_decorations)
-  		return;
--	format_decorations(&sb, commit, opt->diffopt.use_color);
-+	format_decorations(&sb, commit, opt->diffopt.use_color, " (", ", ", ")");
-  	fputs(sb.buf, stdout);
-  	strbuf_release(&sb);
-  }
-diff --git a/log-tree.h b/log-tree.h
-index d6ecd4d..4816911 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -13,7 +13,7 @@ int log_tree_diff_flush(struct rev_info *);
-  int log_tree_commit(struct rev_info *, struct commit *);
-  int log_tree_opt_parse(struct rev_info *, const char **, int);
-  void show_log(struct rev_info *opt);
--void format_decorations(struct strbuf *sb, const struct commit *commit, 
-int use_color);
-+void format_decorations(struct strbuf *sb, const struct commit *commit, 
-int use_color, const char* prefix, const char* sep, const char* suffix);
-  void show_decorations(struct rev_info *opt, struct commit *commit);
-  void log_write_email_headers(struct rev_info *opt, struct commit *commit,
-  			     const char **subject_p,
+  If you add a `+` (plus sign) after '%' of a placeholder, a line-feed
+  is inserted immediately before the expansion if and only if the
 diff --git a/pretty.c b/pretty.c
-index 44b9f64..e4dc093 100644
+index e4dc093..a75ad0d 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -1195,7 +1195,7 @@ static size_t format_commit_one(struct strbuf *sb, 
-/* in UTF-8 */
-  		return 1;
-  	case 'd':
+@@ -1197,6 +1197,10 @@ static size_t format_commit_one(struct strbuf 
+*sb, /* in UTF-8 */
   		load_ref_decorations(DECORATE_SHORT_REFS);
--		format_decorations(sb, commit, c->auto_color);
-+		format_decorations(sb, commit, c->auto_color, " (", ", ", ")");
+  		format_decorations(sb, commit, c->auto_color, " (", ", ", ")");
   		return 1;
++	case 'D':
++		load_ref_decorations(DECORATE_SHORT_REFS);
++		format_decorations(sb, commit, c->auto_color, "", ", ", "");
++		return 1;
   	case 'g':		/* reflog info */
   		switch(placeholder[1]) {
+  		case 'd':	/* reflog selector */
 -- 
 2.1.0
