@@ -1,295 +1,225 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2] refs: speed up is_refname_available
-Date: Wed, 10 Sep 2014 07:11:55 -0400
-Message-ID: <20140910111155.GA14995@peff.net>
-References: <20140910101730.GA12399@peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] refs: write packed_refs file using stdio
+Date: Wed, 10 Sep 2014 13:21:27 +0200
+Message-ID: <54103437.2090305@alum.mit.edu>
+References: <20140910100352.GA12164@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 10 13:12:08 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 10 13:28:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XRfog-0004Nn-UL
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 13:12:03 +0200
+	id 1XRg4j-000628-5b
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Sep 2014 13:28:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143AbaIJLL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Sep 2014 07:11:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46469 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751333AbaIJLL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Sep 2014 07:11:58 -0400
-Received: (qmail 20861 invoked by uid 102); 10 Sep 2014 11:11:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 06:11:58 -0500
-Received: (qmail 15994 invoked by uid 107); 10 Sep 2014 11:12:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Sep 2014 07:12:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Sep 2014 07:11:55 -0400
-Content-Disposition: inline
-In-Reply-To: <20140910101730.GA12399@peff.net>
+	id S1751616AbaIJL2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Sep 2014 07:28:33 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47149 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751283AbaIJL2c (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Sep 2014 07:28:32 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Sep 2014 07:28:32 EDT
+X-AuditID: 1207440d-f797f6d000000a4a-8f-54103439d08b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 57.8A.02634.93430145; Wed, 10 Sep 2014 07:21:29 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB1DEC.dip0.t-ipconnect.de [93.219.29.236])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8ABLReF030261
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 10 Sep 2014 07:21:29 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
+In-Reply-To: <20140910100352.GA12164@peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmplleLIzCtJLcpLzFFi42IRYndR1LU0EQgxWL7HxKLrSjeTxY+WHmYH
+	Jo9nvXsYPT5vkgtgiuK2SUosKQvOTM/Tt0vgztg14xlrwW+9iplH/jI3ME5S7WLk4JAQMJF4
+	vN68i5ETyBSTuHBvPVsXIxeHkMBlRokdDQ9YIZzzTBJ9V3qZQKp4BbQl1m86wwpiswioSkw6
+	dosNxGYT0JVY1NMMViMqECQx+/M8doh6QYmTM5+wgNgiAkYSNz58A6sXFrCV2HjqDliNEFDv
+	kkfnwOKcAnoSq2bcZQM5jllAXWL9PCGQMLOAvMT2t3OYJzDyz0IydRZC1SwkVQsYmVcxyiXm
+	lObq5iZm5hSnJusWJyfm5aUW6Rrp5WaW6KWmlG5ihAQj7w7G/+tkDjEKcDAq8fDuqOIPEWJN
+	LCuuzD3EKMnBpCTK+9hIIESILyk/pTIjsTgjvqg0J7X4EKMEB7OSCG8aSI43JbGyKrUoHyYl
+	zcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMFrZwzUKFiUmp5akZaZU4KQZuLgBBnOJSVS
+	nJqXklqUWFqSEQ+KxvhiYDyCpHiA9n4H21tckJgLFIVoPcWoy7Gu81s/kxBLXn5eqpQ4LyPI
+	DgGQoozSPLgVsNTzilEc6GNhXiOQKh5g2oKb9ApoCRPQkoPG/CBLShIRUlINjLZ7GrjmKAaJ
+	KUV3bdo6+VuyomRv6tcobWPx9dt37WSuu/vRmuU3y99U4cCCp/cs7K3n+Jv43lx5rfiq24xW
+	Z1MxIw6t2fcmh118tOjfuiV/pu7L4bosOvmEE1PtwhRfc5v7sy9+CVhmFp0WX2F0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256734>
 
-Our filesystem ref storage does not allow D/F conflicts; so
-if "refs/heads/a/b" exists, we do not allow "refs/heads/a"
-to exist (and vice versa). This falls out naturally for
-loose refs, where the filesystem enforces the condition. But
-for packed-refs, we have to make the check ourselves.
+On 09/10/2014 12:03 PM, Jeff King wrote:
+> We write each line of a new packed-refs file individually
+> using a write() syscall (and sometimes 2, if the ref is
+> peeled). Since each line is only about 50-100 bytes long,
+> this creates a lot of system call overhead.
+> 
+> We can instead open a stdio handle around our descriptor and
+> use fprintf to write to it. The extra buffering is not a
+> problem for us, because nobody will read our new packed-refs
+> file until we call commit_lock_file (by which point we have
+> flushed everything).
+> 
+> On a pathological repository with 8.5 million refs, this
+> dropped the time to run `git pack-refs` from 20s to 6s.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Obviously that repo is ridiculous (but a sad reality for me).
+> 
+> However, I think the benefits extend to smaller files, too. And it's
+> pretty easy to do (and I actually think the resulting write_packed_entry
+> is a lot easier to read, as well as lifting some arbitrary limits).
+> 
+>  cache.h        |  2 ++
+>  refs.c         | 39 ++++++++++++++++-----------------------
+>  write_or_die.c | 15 +++++++++++++++
+>  3 files changed, 33 insertions(+), 23 deletions(-)
+> 
+> diff --git a/cache.h b/cache.h
+> index 4d5b76c..bc286ce 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1395,6 +1395,8 @@ extern const char *git_mailmap_blob;
+>  
+>  /* IO helper functions */
+>  extern void maybe_flush_or_die(FILE *, const char *);
+> +__attribute__((format (printf, 2, 3)))
+> +extern void fprintf_or_die(FILE *, const char *fmt, ...);
+>  extern int copy_fd(int ifd, int ofd);
+>  extern int copy_file(const char *dst, const char *src, int mode);
+>  extern int copy_file_with_time(const char *dst, const char *src, int mode);
+> diff --git a/refs.c b/refs.c
+> index 27927f2..f08faed 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2191,25 +2191,12 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+>   * Write an entry to the packed-refs file for the specified refname.
+>   * If peeled is non-NULL, write it as the entry's peeled value.
+>   */
+> -static void write_packed_entry(int fd, char *refname, unsigned char *sha1,
+> +static void write_packed_entry(FILE *fh, char *refname, unsigned char *sha1,
+>  			       unsigned char *peeled)
+>  {
+> -	char line[PATH_MAX + 100];
+> -	int len;
+> -
+> -	len = snprintf(line, sizeof(line), "%s %s\n",
+> -		       sha1_to_hex(sha1), refname);
+> -	/* this should not happen but just being defensive */
+> -	if (len > sizeof(line))
+> -		die("too long a refname '%s'", refname);
+> -	write_or_die(fd, line, len);
+> -
+> -	if (peeled) {
+> -		if (snprintf(line, sizeof(line), "^%s\n",
+> -			     sha1_to_hex(peeled)) != PEELED_LINE_LENGTH)
+> -			die("internal error");
+> -		write_or_die(fd, line, PEELED_LINE_LENGTH);
+> -	}
+> +	fprintf_or_die(fh, "%s %s\n", sha1_to_hex(sha1), refname);
+> +	if (peeled)
+> +		fprintf_or_die(fh, "^%s\n", sha1_to_hex(peeled));
+>  }
+>  
+>  /*
+> @@ -2217,13 +2204,12 @@ static void write_packed_entry(int fd, char *refname, unsigned char *sha1,
+>   */
+>  static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
+>  {
+> -	int *fd = cb_data;
+>  	enum peel_status peel_status = peel_entry(entry, 0);
+>  
+>  	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
+>  		error("internal error: %s is not a valid packed reference!",
+>  		      entry->name);
+> -	write_packed_entry(*fd, entry->name, entry->u.value.sha1,
+> +	write_packed_entry(cb_data, entry->name, entry->u.value.sha1,
+>  			   peel_status == PEEL_PEELED ?
+>  			   entry->u.value.peeled : NULL);
+>  	return 0;
+> @@ -2259,15 +2245,22 @@ int commit_packed_refs(void)
+>  		get_packed_ref_cache(&ref_cache);
+>  	int error = 0;
+>  	int save_errno = 0;
+> +	FILE *out;
+>  
+>  	if (!packed_ref_cache->lock)
+>  		die("internal error: packed-refs not locked");
+> -	write_or_die(packed_ref_cache->lock->fd,
+> -		     PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER));
+>  
+> +	out = fdopen(packed_ref_cache->lock->fd, "w");
+> +	if (!out)
+> +		die_errno("unable to fdopen packed-refs descriptor");
+> +
+> +	fprintf_or_die(out, "%s", PACKED_REFS_HEADER);
+>  	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
+> -				 0, write_packed_entry_fn,
+> -				 &packed_ref_cache->lock->fd);
+> +				 0, write_packed_entry_fn, out);
+> +	if (fclose(out))
+> +		die_errno("write error");
+> +	packed_ref_cache->lock->fd = -1;
 
-We do so by iterating over the entire packed-refs namespace
-and checking whether each name creates a conflict. If you
-have a very large number of refs, this is quite inefficient,
-as you end up doing a large number of comparisons with
-uninteresting bits of the ref tree (e.g., we know that all
-of "refs/tags" is uninteresting in the example above, yet we
-check each entry in it).
+It might be a minuscule bit safer to set `lock->fd = -1` *before*
+calling `fclose()`.
 
-Instead, let's take advantage of the fact that we have the
-packed refs stored as a trie of ref_entry structs. We can
-find each component of the proposed refname as we walk
-through the trie, checking for D/F conflicts as we go. For a
-refname of depth N (i.e., 4 in the above example), we only
-have to visit N nodes. And at each visit, we can binary
-search the M names at that level, for a total complexity of
-O(N lg M). ("M" is different at each level, of course, but
-we can take the worst-case "M" as a bound).
+TBH, it makes me uncomfortable having code outside of `lockfile.c`
+having this level of intimacy with lockfile objects. I think it would be
+better to have a
 
-In a pathological case of fetching 30,000 fresh refs into a
-repository with 8.5 million refs, this dropped the time to
-run "git fetch" from tens of minutes to ~30s.
+    FILE *fopen_lock_file(struct *lock_file, const char *mode);
 
-This may also help smaller cases in which we check against
-loose refs (which we do when renaming a ref), as we may
-avoid a disk access for unrelated loose directories.
+that records the `FILE *` inside the `lockfile` instance, and to teach
+`commit_lock_file()` and its friends to call `fclose()` if the `FILE *`
+was created. I think that such a feature would encourage other lockfile
+users to use the more convenient and readable stdio API.
 
-Note that the tests we add appear at first glance to be
-redundant with what is already in t3210. However, the early
-tests are not robust; they are run with reflogs turned on,
-meaning that we are not actually testing
-is_refname_available at all! The operations will still fail
-because the reflogs will hit D/F conflicts in the
-filesystem. To get a true test, we must turn off reflogs
-(but we don't want to do so for the entire script, because
-the point of turning them on was to cover some other cases).
+But there is precedent for what you are doing so I will add
+`fopen_lock_file()` to my mythical todo list and not bother you further
+with the idea.
+
+> +
+>  	if (commit_lock_file(packed_ref_cache->lock)) {
+>  		save_errno = errno;
+>  		error = -1;
+> diff --git a/write_or_die.c b/write_or_die.c
+> index b50f99a..e7afe7a 100644
+> --- a/write_or_die.c
+> +++ b/write_or_die.c
+> @@ -49,6 +49,21 @@ void maybe_flush_or_die(FILE *f, const char *desc)
+>  	}
+>  }
+>  
+> +void fprintf_or_die(FILE *f, const char *fmt, ...)
+> +{
+> +	va_list ap;
+> +	int ret;
+> +
+> +	va_start(ap, fmt);
+> +	ret = vfprintf(f, fmt, ap);
+> +	va_end(ap);
+> +
+> +	if (ret < 0) {
+> +		check_pipe(errno);
+> +		die_errno("write error");
+> +	}
+> +}
+> +
+>  void fsync_or_die(int fd, const char *msg)
+>  {
+>  	if (fsync(fd) < 0) {
+> 
 
 Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Jeff King <peff@peff.net>
----
-Sorry for the quick v2; Michael and I crossed emails off-list, and I
-missed some of his review. This version has some minor style and comment
-fixups.
 
- refs.c               | 122 +++++++++++++++++++++++++++++++++++++--------------
- t/t3210-pack-refs.sh |  31 ++++++++++++-
- 2 files changed, 120 insertions(+), 33 deletions(-)
+Michael
 
-diff --git a/refs.c b/refs.c
-index 27927f2..eb2262a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -779,37 +779,32 @@ static void prime_ref_dir(struct ref_dir *dir)
- 			prime_ref_dir(get_ref_dir(entry));
- 	}
- }
--/*
-- * Return true iff refname1 and refname2 conflict with each other.
-- * Two reference names conflict if one of them exactly matches the
-- * leading components of the other; e.g., "foo/bar" conflicts with
-- * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
-- * "foo/barbados".
-- */
--static int names_conflict(const char *refname1, const char *refname2)
-+
-+static int entry_matches(struct ref_entry *entry, const char *refname)
- {
--	for (; *refname1 && *refname1 == *refname2; refname1++, refname2++)
--		;
--	return (*refname1 == '\0' && *refname2 == '/')
--		|| (*refname1 == '/' && *refname2 == '\0');
-+	return refname && !strcmp(entry->name, refname);
- }
- 
--struct name_conflict_cb {
--	const char *refname;
--	const char *oldrefname;
--	const char *conflicting_refname;
-+struct nonmatching_ref_data {
-+	const char *skip;
-+	struct ref_entry *found;
- };
- 
--static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
-+static int nonmatching_ref_fn(struct ref_entry *entry, void *vdata)
- {
--	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
--	if (data->oldrefname && !strcmp(data->oldrefname, entry->name))
-+	struct nonmatching_ref_data *data = vdata;
-+
-+	if (entry_matches(entry, data->skip))
- 		return 0;
--	if (names_conflict(data->refname, entry->name)) {
--		data->conflicting_refname = entry->name;
--		return 1;
--	}
--	return 0;
-+
-+	data->found = entry;
-+	return 1;
-+}
-+
-+static void report_refname_conflict(struct ref_entry *entry,
-+				    const char *refname)
-+{
-+	error("'%s' exists; cannot create '%s'", entry->name, refname);
- }
- 
- /*
-@@ -818,21 +813,84 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
-  * oldrefname is non-NULL, ignore potential conflicts with oldrefname
-  * (e.g., because oldrefname is scheduled for deletion in the same
-  * operation).
-+ *
-+ * Two reference names conflict if one of them exactly matches the
-+ * leading components of the other; e.g., "foo/bar" conflicts with
-+ * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
-+ * "foo/barbados".
-  */
- static int is_refname_available(const char *refname, const char *oldrefname,
- 				struct ref_dir *dir)
- {
--	struct name_conflict_cb data;
--	data.refname = refname;
--	data.oldrefname = oldrefname;
--	data.conflicting_refname = NULL;
-+	const char *slash;
-+	size_t len;
-+	int pos;
-+	char *dirname;
- 
--	sort_ref_dir(dir);
--	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
--		error("'%s' exists; cannot create '%s'",
--		      data.conflicting_refname, refname);
-+	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
-+		/*
-+		 * We are still at a leading dir of the refname; we are
-+		 * looking for a conflict with a leaf entry.
-+		 *
-+		 * If we find one, we still must make sure it is
-+		 * not "oldrefname".
-+		 */
-+		pos = search_ref_dir(dir, refname, slash - refname);
-+		if (pos >= 0) {
-+			struct ref_entry *entry = dir->entries[pos];
-+			if (entry_matches(entry, oldrefname))
-+				return 1;
-+			report_refname_conflict(entry, refname);
-+			return 0;
-+		}
-+
-+
-+		/*
-+		 * Otherwise, we can try to continue our search with
-+		 * the next component; if we come up empty, we know
-+		 * there is nothing under this whole prefix.
-+		 */
-+		pos = search_ref_dir(dir, refname, slash + 1 - refname);
-+		if (pos < 0)
-+			return 1;
-+
-+		dir = get_ref_dir(dir->entries[pos]);
-+	}
-+
-+	/*
-+	 * We are at the leaf of our refname; we want to
-+	 * make sure there are no directories which match it.
-+	 */
-+	len = strlen(refname);
-+	dirname = xmallocz(len + 1);
-+	sprintf(dirname, "%s/", refname);
-+	pos = search_ref_dir(dir, dirname, len + 1);
-+	free(dirname);
-+
-+	if (pos >= 0) {
-+		/*
-+		 * We found a directory named "refname". It is a
-+		 * problem iff it contains any ref that is not
-+		 * "oldrefname".
-+		 */
-+		struct ref_entry *entry = dir->entries[pos];
-+		struct ref_dir *dir = get_ref_dir(entry);
-+		struct nonmatching_ref_data data;
-+
-+		data.skip = oldrefname;
-+		sort_ref_dir(dir);
-+		if (!do_for_each_entry_in_dir(dir, 0, nonmatching_ref_fn, &data))
-+			return 1;
-+
-+		report_refname_conflict(data.found, refname);
- 		return 0;
- 	}
-+
-+	/*
-+	 * There is no point in searching for another leaf
-+	 * node which matches it; such an entry would be the
-+	 * ref we are looking for, not a conflict.
-+	 */
- 	return 1;
- }
- 
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 1a2080e..3d5cb4c 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -11,7 +11,9 @@ semantic is still the same.
- '
- . ./test-lib.sh
- 
--echo '[core] logallrefupdates = true' >>.git/config
-+test_expect_success 'enable reflogs' '
-+	git config core.logallrefupdates true
-+'
- 
- test_expect_success \
-     'prepare a trivial repository' \
-@@ -151,4 +153,31 @@ test_expect_success 'delete ref while another dangling packed ref' '
- 	test_cmp /dev/null result
- '
- 
-+test_expect_success 'disable reflogs' '
-+	git config core.logallrefupdates false &&
-+	rm -rf .git/logs
-+'
-+
-+test_expect_success 'create packed foo/bar/baz branch' '
-+	git branch foo/bar/baz &&
-+	git pack-refs --all --prune &&
-+	test_path_is_missing .git/refs/heads/foo/bar/baz &&
-+	test_path_is_missing .git/logs/refs/heads/foo/bar/baz
-+'
-+
-+test_expect_success 'notice d/f conflict with existing directory' '
-+	test_must_fail git branch foo &&
-+	test_must_fail git branch foo/bar
-+'
-+
-+test_expect_success 'existing directory reports concrete ref' '
-+	test_must_fail git branch foo 2>stderr &&
-+	grep refs/heads/foo/bar/baz stderr
-+'
-+
-+test_expect_success 'notice d/f conflict with existing ref' '
-+	test_must_fail git branch foo/bar/baz/extra &&
-+	test_must_fail git branch foo/bar/baz/lots/of/extra/components
-+'
-+
- test_done
 -- 
-2.1.0.373.g91ca799
+Michael Haggerty
+mhagger@alum.mit.edu
