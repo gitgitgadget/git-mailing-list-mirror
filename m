@@ -1,104 +1,165 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 5/6] Add regression tests for stricter tag fsck'ing
-Date: Thu, 11 Sep 2014 16:26:41 +0200 (CEST)
-Message-ID: <d88ae0c81b7b2ca32abe2abb2133ba3a5d6256dd.1410445431.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 4/6] fsck: check tag objects' headers
+Date: Thu, 11 Sep 2014 16:26:38 +0200 (CEST)
+Message-ID: <d55da50e2ebdf70a36db58114f81bf2e2acae709.1410445431.git.johannes.schindelin@gmx.de>
 References: <alpine.DEB.1.00.1409101552250.990@s15462909.onlinehome-server.info> <cover.1410445430.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 11 16:28:10 2014
+X-From: git-owner@vger.kernel.org Thu Sep 11 16:28:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS5M0-0005bp-Im
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 16:28:08 +0200
+	id 1XS5Ly-0005bp-Tj
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 16:28:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754502AbaIKO1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 10:27:46 -0400
-Received: from mout.gmx.net ([212.227.15.19]:61683 "EHLO mout.gmx.net"
+	id S1754251AbaIKO0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 10:26:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:57542 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754371AbaIKO0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 10:26:44 -0400
+	id S1753550AbaIKO0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 10:26:41 -0400
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LoVOE-1XzUPj3g8Q-00gb1U;
- Thu, 11 Sep 2014 16:26:41 +0200
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0Mchyv-1XjTcl2H8T-00Hstv;
+ Thu, 11 Sep 2014 16:26:38 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
 In-Reply-To: <cover.1410445430.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:gZwCft2TpqgBdNP85xg8itINDdSkoq8CCmTiVC4E/6P8z2I0BwI
- Hk0dIMFc0FmWpR0q1oEnXZx2tLR/ACFt712vKqh5Px4ZHdjeMlMJl2L2hGHHbbxYGsASKKY
- OyU1FpVn7IhPzhzibrrbyl2VM/SEMQebmvm+BwkN6sHxWihBDUdvLu+2uss/XAv6njLuHEF
- OlbZD/s0Ex+hPufOv1mYw==
+X-Provags-ID: V03:K0:7YRHAvnE2g/uRsVoO+FPuoeAOzjxiia/sdcR7I4opOJMNyL9wWN
+ ckJVpdIN7GzG7svJ0NT1Xfb+rqcExpOa/cq+MDiNRljQEo8vgqbN9efxZJGAb2rqLgZwoRV
+ ZlO1y1lLy7bd4smjv3Pg/JV+xCAGrh9iw3sZPItz5Aupn3n45med6o8bzAdvckBTzsiuCSi
+ N8S/4sndMBQOSQ8wFC7Mw==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256846>
 
-The intent of the new test case is to catch general breakages in
-the fsck_tag() function, not so much to test it extensively, trying to
-strike the proper balance between thoroughness and speed.
+We inspect commit objects pretty much in detail in git-fsck, but we just
+glanced over the tag objects. Let's be stricter.
 
-While it *would* have been nice to test the code path where fsck_object()
-encounters an invalid tag object, this is not possible using git fsck: tag
-objects are parsed already before fsck'ing (and the parser already fails
-upon such objects).
-
-Even worse: we would not even be able write out invalid tag objects
-because git hash-object parses those objects, too, unless we resorted to
-really ugly hacks such as using something like this in the unit tests
-(essentially depending on Perl *and* Compress::Zlib):
-
-	hash_invalid_object () {
-		contents="$(printf '%s %d\0%s' "$1" ${#2} "$2")" &&
-		sha1=$(echo "$contents" | test-sha1) &&
-		suffix=${sha1#??} &&
-		mkdir -p .git/objects/${sha1%$suffix} &&
-		echo "$contents" |
-		perl -MCompress::Zlib -e 'undef $/; print compress(<>)' \
-			> .git/objects/${sha1%$suffix}/$suffix &&
-		echo $sha1
-	}
+Since we do not want to limit 'tag' lines unduly, values that would fail
+the refname check only result in warnings, not errors.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1450-fsck.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ fsck.c | 86 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 85 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 8c739c9..2b6a6f2 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -194,6 +194,26 @@ test_expect_success 'tag pointing to something else than its type' '
- 	test_must_fail git fsck --tags
- '
+diff --git a/fsck.c b/fsck.c
+index 73da6f8..2fffa43 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -6,6 +6,7 @@
+ #include "commit.h"
+ #include "tag.h"
+ #include "fsck.h"
++#include "refs.h"
  
-+test_expect_success 'tag with incorrect tag name & missing tagger' '
-+	sha=$(git rev-parse HEAD) &&
-+	cat >wrong-tag <<-EOF &&
-+	object $sha
-+	type commit
-+	tag wrong name format
+ static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
+ {
+@@ -355,6 +356,88 @@ static int fsck_commit(struct commit *commit, const char *data,
+ 	return ret;
+ }
+ 
++static int fsck_tag_buffer(struct tag *tag, const char *data,
++	unsigned long size, fsck_error error_func)
++{
++	unsigned char sha1[20];
++	int ret = 0;
++	const char *buffer;
++	char *to_free = NULL, *eol;
++	struct strbuf sb = STRBUF_INIT;
 +
-+	This is an invalid tag.
-+	EOF
++	if (data)
++		buffer = data;
++	else {
++		enum object_type type;
 +
-+	tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
-+	test_when_finished "remove_object $tag" &&
-+	echo $tag >.git/refs/tags/wrong &&
-+	test_when_finished "git update-ref -d refs/tags/wrong" &&
-+	git fsck --tags 2>out &&
-+	cat out &&
-+	grep "invalid .tag. name" out &&
-+	grep "expected .tagger. line" out
-+'
++		buffer = to_free =
++			read_sha1_file(tag->object.sha1, &type, &size);
++		if (!buffer)
++			return error_func(&tag->object, FSCK_ERROR,
++				"cannot read tag object");
 +
- test_expect_success 'cleaned up' '
- 	git fsck >actual 2>&1 &&
- 	test_cmp empty actual
++		if (type != OBJ_TAG) {
++			ret = error_func(&tag->object, FSCK_ERROR,
++				"expected tag got %s",
++			    typename(type));
++			goto done;
++		}
++	}
++
++	if (require_end_of_header(buffer, size, &tag->object, error_func))
++		goto done;
++
++	if (!skip_prefix(buffer, "object ", &buffer)) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'object' line");
++		goto done;
++	}
++	if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n') {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'object' line format - bad sha1");
++		goto done;
++	}
++	buffer += 41;
++
++	if (!skip_prefix(buffer, "type ", &buffer)) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'type' line");
++		goto done;
++	}
++	eol = strchr(buffer, '\n');
++	if (!eol) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - unexpected end after 'type' line");
++		goto done;
++	}
++	if (type_from_string_gently(buffer, eol - buffer, 1) < 0)
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'type' value");
++	if (ret)
++		goto done;
++	buffer = eol + 1;
++
++	if (!skip_prefix(buffer, "tag ", &buffer)) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'tag' line");
++		goto done;
++	}
++	eol = strchr(buffer, '\n');
++	if (!eol) {
++		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - unexpected end after 'type' line");
++		goto done;
++	}
++	strbuf_addf(&sb, "refs/tags/%.*s", (int)(eol - buffer), buffer);
++	if (check_refname_format(sb.buf, 0))
++		error_func(&tag->object, FSCK_WARN, "invalid 'tag' name: %s", buffer);
++	buffer = eol + 1;
++
++	if (!skip_prefix(buffer, "tagger ", &buffer))
++		/* early tags do not contain 'tagger' lines; warn only */
++		error_func(&tag->object, FSCK_WARN, "invalid format - expected 'tagger' line");
++	else
++		ret = fsck_ident(&buffer, &tag->object, error_func);
++
++done:
++	strbuf_release(&sb);
++	free(to_free);
++	return ret;
++}
++
+ static int fsck_tag(struct tag *tag, const char *data,
+ 	unsigned long size, fsck_error error_func)
+ {
+@@ -362,7 +445,8 @@ static int fsck_tag(struct tag *tag, const char *data,
+ 
+ 	if (!tagged)
+ 		return error_func(&tag->object, FSCK_ERROR, "could not load tagged object");
+-	return 0;
++
++	return fsck_tag_buffer(tag, data, size, error_func);
+ }
+ 
+ int fsck_object(struct object *obj, void *data, unsigned long size,
 -- 
 2.0.0.rc3.9669.g840d1f9
