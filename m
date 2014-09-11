@@ -1,126 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 6/6] Make sure that index-pack --strict checks tag objects
-Date: Thu, 11 Sep 2014 14:16:36 -0700
-Message-ID: <xmqqoauldfij.fsf@gitster.dls.corp.google.com>
-References: <alpine.DEB.1.00.1409101552250.990@s15462909.onlinehome-server.info>
-	<cover.1410445430.git.johannes.schindelin@gmx.de>
-	<2738eace005dce9002c1a1f5e87ad63aebdf83ef.1410445431.git.johannes.schindelin@gmx.de>
-	<xmqqha0edony.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Sep 11 23:16:46 2014
+Subject: [PATCH 0/3] hash-object --literally
+Date: Thu, 11 Sep 2014 14:17:20 -0700
+Message-ID: <1410470243-26552-1-git-send-email-gitster@pobox.com>
+References: <xmqqoauldfij.fsf@gitster.dls.corp.google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 11 23:17:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSBjQ-000480-3l
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 23:16:44 +0200
+	id 1XSBkB-0004YK-MT
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 23:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754020AbaIKVQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 17:16:41 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50413 "EHLO smtp.pobox.com"
+	id S1753779AbaIKVR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 17:17:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59656 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752144AbaIKVQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 17:16:39 -0400
+	id S1751282AbaIKVR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 17:17:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DBCFB3ACA7;
-	Thu, 11 Sep 2014 17:16:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qLugt9rrlB6dObxKzwJrV/sxFnA=; b=DjuHMR
-	ehY0VFKvFEqsdTl0kXrBXZ9iIHKYmocPxMfn+plvbpM/9a/sRpqH6Sr3bsMO5vAe
-	jDkRlHVAfL5iUgRlHGMU3gOYFDJ+PQmXDnmXK4ejgQgBx15wEhV00vGW7t2vO3+T
-	oxzeT6ifS78045q4bbqaSpd6t3WK81e2qNTzE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bv50kGYGY8LnFwu7lnNQCH9eeT1q+UA0
-	Rpbmhh+oCEb+/1HTk4CNMOXsV/cH4iC3UA91H/KKiRULhJqucJ6H0Mofa4jlEM7R
-	IdWq0E0h63Ig0b1xpzVtKOgJtCpw/h4JS6I2ds8wWYhGo5AOqxi8OeSfha9Fgyhr
-	3hxAs0WMeUI=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2E9993ACDB;
+	Thu, 11 Sep 2014 17:17:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=nswG
+	64PaYodWzF/H1ZLjfjtP9KI=; b=iSNwZLl08FNB7IIyxk9fBvnbHOim/gCEjHOM
+	WB+rErUfanVDZXHyL2Fi8c7xWHKa99t1znTi7lU0u6AHdi8zPm1jzACgZt8mw3QK
+	GZX3eogkzpENBPVg06nIE9EF7A8oo2G4kMrHNluvrNQ7THsw2zy+7nT4pby6/wSk
+	c9oB8M8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=xn+IFh
+	OlxFHBZG3cxNIYm7PUGXpkjg+nEZQ3iR1a1If1xO9yw36axxd8dj7yEayI74GGyM
+	dFo069ewcsNs+GhpVx9SvGm/WKt0Q+UEca13/P9EdVlWtVOtcvnQiZdwXQfGz1bv
+	bdS3wYmX36XnpsTTULdfHTHV0gr0gzWhj2o24=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D200E3ACA6;
-	Thu, 11 Sep 2014 17:16:38 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 26EAB3ACDA;
+	Thu, 11 Sep 2014 17:17:26 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4DE263ACA5;
-	Thu, 11 Sep 2014 17:16:38 -0400 (EDT)
-In-Reply-To: <xmqqha0edony.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 11 Sep 2014 10:58:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EAE1FF84-39F8-11E4-B45A-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8DBA83ACD6;
+	Thu, 11 Sep 2014 17:17:25 -0400 (EDT)
+X-Mailer: git-send-email 2.1.0-459-g1bc3b2b
+In-Reply-To: <xmqqoauldfij.fsf@gitster.dls.corp.google.com>
+X-Pobox-Relay-ID: 070D0EE2-39F9-11E4-AD4D-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256878>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Our toolset may have become too tight without leaving enough escape
+hatch to hinder further development.  "hash-object" makes minimum
+sanity checks by default for a very good reason, but it means that
+we cannot deliberately create broken datastreams to test against
+fsck and other codepaths that are supposed to detect and report such
+broken data that we may encounter in the field, perhaps created by
+third-party tools.
 
-> When our toolset has become too tight without leaving enough escape
-> hatch to hinder further development, it is very sensible to at least
-> think about adding a new "--for-debug" option to hash-object and
-> pack-objects that allows us to deliberately create broken
-> datastreams to test against.
->
-> I think peff recently added helpers to t5303 to allow us test
-> corrupt pack streams, which is a way different from what you
-> envisioned above (i.e. "actively break pack-index") to test
-> breakages like the ones you were trying to test here.
->
-> Having said all that, I do think the series that added new warnings,
-> errors and a test for the new warnings is an improvement without a
-> test for the new errors.  So let's queue this, see if somebody comes
-> up a way to check for these error detection codepath on top of this
-> series.
+These changes teach a new "--literally" option to "hash-object" to
+allow us throw any garbage to create a broken loose object.  You can
+even do something horrible like
 
-It wasn't too painful to do one of them, and the result looks rather
-nice.  It lets us add this patch on top of your series.
+	git hash-object -t bogus --literally -w --stdin </dev/null
+	
+by any garbage typename if you wanted to.
 
--- >8 --
-Subject: [PATCH] t1450: make sure fsck detects a malformed tagger line
+It probably needs to be accompanied by "cat-file --literally" that
+does not take "-t <type>" option or does not complain even if the
+contents look unreasonable.  But that is for another day (hint,
+hint).
 
-With "hash-object --literally", write a tag object that is not
-supposed to pass one of the new checks added to "fsck", and make
-sure that the new check catches the breakage.
+The second patch is optional.  I thought I may want to pass this as
+a new HASH_LITERALLY bit down the callchain to index_fd(), but I
+decided against it, as that will allow other codepaths to create
+broken datastream, spreading this debugging aid a bit too widely for
+my taste.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t1450-fsck.sh | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+Junio C Hamano (3):
+  hash-object: reduce file-scope statics
+  hash-object: pass 'write_object' as a flag
+  hash-object: add --literally option
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 9118253..6ecb844 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -234,6 +234,25 @@ test_expect_success 'tag with incorrect tag name & missing tagger' '
- 	grep "expected .tagger. line" out
- '
- 
-+test_expect_success 'tag with bad tagger' '
-+	sha=$(git rev-parse HEAD) &&
-+	cat >wrong-tag <<-EOF &&
-+	object $sha
-+	type commit
-+	tag not-quite-wrong
-+	tagger Bad Tagger Name
-+
-+	This is an invalid tag.
-+	EOF
-+
-+	tag=$(git hash-object --literally -t tag -w --stdin <wrong-tag) &&
-+	test_when_finished "remove_object $tag" &&
-+	echo $tag >.git/refs/tags/wrong &&
-+	test_when_finished "git update-ref -d refs/tags/wrong" &&
-+	test_must_fail git fsck --tags 2>out &&
-+	grep "error in tag .*: invalid author/committer" out
-+'
-+
- test_expect_success 'cleaned up' '
- 	git fsck >actual 2>&1 &&
- 	test_cmp empty actual
+ builtin/hash-object.c | 103 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 61 insertions(+), 42 deletions(-)
+
 -- 
 2.1.0-459-g1bc3b2b
