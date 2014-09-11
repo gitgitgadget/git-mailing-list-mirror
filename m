@@ -1,199 +1,189 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] log-tree: make format_decorations more flexible
-Date: Thu, 11 Sep 2014 15:39:55 -0700
-Message-ID: <xmqq7g19dbno.fsf@gitster.dls.corp.google.com>
-References: <5410C998.5060701@exec64.co.uk>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v4 10/32] cache.h: define constants LOCK_SUFFIX and LOCK_SUFFIX_LEN
+Date: Thu, 11 Sep 2014 15:42:59 -0700
+Message-ID: <CAL=YDWmgwwQsCSpVsQ5U+c=4RcLdzo-j_hmxDk-AJWdRUk_SsQ@mail.gmail.com>
+References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
+	<1409989846-22401-11-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Harry Jeffery <harry@exec64.co.uk>
-X-From: git-owner@vger.kernel.org Fri Sep 12 00:40:03 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 12 00:43:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSD22-0008N9-Sc
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 00:40:03 +0200
+	id 1XSD51-0001Zt-4r
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 00:43:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753797AbaIKWj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 18:39:58 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60473 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751320AbaIKWj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 18:39:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 588973A0C7;
-	Thu, 11 Sep 2014 18:39:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T/P8kHKMHUX/65OQR2fZED1hVT8=; b=ksAylz
-	K1B9OojX08JgW30/ZHK3DEaf3T2swmrT3rbbUTmSaNM2nJQppgnY8+w9GK2KL9kx
-	kuL+PYblSoN/d/5o5iVSy3AomLcbTovkXqPCuGuuKTTL87ER2Coi9/5kTZaRlH44
-	vj/diZ3I+QqvNUbuINBDQf1GCdnhgXi2Qo/0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EHcB6bDfhSfbMMozb3sJVOfZrdSqMu/+
-	2mn9JP4nA+4FvN080R7npCBmoVR88D7jrlCAdQTDYGWQhS8i+edt7z3JceMtaoEn
-	zM03Bj3Z+vozCSRlDhfDl9fGCCchdM9ZUuIHUK21ppwFnJd+kyGanqe/WRNwLYCU
-	u7ua+SxA7u4=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4E2853A0C6;
-	Thu, 11 Sep 2014 18:39:57 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B7E8B3A0C4;
-	Thu, 11 Sep 2014 18:39:56 -0400 (EDT)
-In-Reply-To: <5410C998.5060701@exec64.co.uk> (Harry Jeffery's message of "Wed,
-	10 Sep 2014 22:58:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8E2E2DE2-3A04-11E4-8810-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1752090AbaIKWnC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 18:43:02 -0400
+Received: from mail-vc0-f175.google.com ([209.85.220.175]:55581 "EHLO
+	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105AbaIKWnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 18:43:00 -0400
+Received: by mail-vc0-f175.google.com with SMTP id hq11so2809532vcb.34
+        for <git@vger.kernel.org>; Thu, 11 Sep 2014 15:43:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=zrSWiZS0c6jV4N0DRSK1rnyriiPo/nrBNgTJi+7fuTg=;
+        b=MtWMUr9MaI5Z3xBe266rlVs5j735jjqc5cK9m7K2BzrCfQ6oSnWNrvc5H0D5dGjJRJ
+         JvDM1RXkBxbLQ0Enydq1lBwpzk28FWkjVAY89fXqh7soT4qbliOsK3HpNnuH7L+WDk8x
+         DeZzriS5pqS9FPruspWLqTq9Cq+vPx45tmtsedJck0YkqHmmXkK/BYzqofJm4ZASFri9
+         NexdT6Ud45hTC6nbgm5fbDbP9qQOH0wQZVgKIIGgcLCzGqkBjoOyTOwzWA2FNnMBTlf7
+         CzZHT6FnYLoWXA4iVAni+bRMozsfFF9kFzFbTE0XryDhVv6qBhpET9+mgqUpUaSk9D3D
+         zDOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=zrSWiZS0c6jV4N0DRSK1rnyriiPo/nrBNgTJi+7fuTg=;
+        b=i27WSoZvXmjEd9yc8utalz7yAF8s8NVAwUl6QMnIPuad9UfpmqXkj1Gi0uOWvwkpm5
+         ex3dxYhiDkE+dWeoAGuuZTTnaxt580ssDZTROE9a2ec2tjhgX218RM+7LokILbgPyJ8O
+         P/CY4QElqK9eFB3TpFEMQ51gtm7EdaIWGmUX19kY7NWBp0IrPL0XYb36qaBfSuG2A+Du
+         pEZ5Cjzc0f7xKvbhydlp8OMOB3mFhvl4scy7DviI4tE96QEc8nIMhIOPzFq7K2xIVzEB
+         xJk8ewcS33CttxgCeDi1eDczUVxIWxPHVKt0Sglzb45x0swdIhx9bwWeJ+QlHQ/SHhaU
+         J6zA==
+X-Gm-Message-State: ALoCoQnkqM5wzwpP78kD/bBZ2x3ubNepmkzBZ7gCiNCfLTI42H5VlnD2PjuLHjOQ7B3vb+fBJcQt
+X-Received: by 10.52.30.2 with SMTP id o2mr2701823vdh.12.1410475379830; Thu,
+ 11 Sep 2014 15:42:59 -0700 (PDT)
+Received: by 10.52.231.232 with HTTP; Thu, 11 Sep 2014 15:42:59 -0700 (PDT)
+In-Reply-To: <1409989846-22401-11-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256886>
 
-Harry Jeffery <harry@exec64.co.uk> writes:
+Maybe we should not have a public constant defined for the length :
++#define LOCK_SUFFIX_LEN 5
 
-> The prefix, separator and suffix for decorations are hard-coded. Make
-> format_decorations more flexible by having the caller specify the
-> prefix, separator and suffix.
+since it encourages unsafe code like :  (this was unsafe long before
+your patch so not a regression)
++       i = strlen(result_file) - LOCK_SUFFIX_LEN; /* .lock */
+        result_file[i] = 0;
+
+
+
+What about removing LOCK_SUFFIX_LEN from the public API and introduce
+a helper function something like :
+
+
+/* pointer to the character where the lock suffix starts */
+char *lock_suffix_ptr_safe(const char *filename)
+{
+    size_t len = strlen(filename);
+    if (len < 5)
+       die("BUG:...
+    if (strcmp(filename + len - 5, LOCK_SUFFIX)
+       die("BUG:...
+    return filename + len - 5;
+}
+
+and use it instead?
+
+
+On Sat, Sep 6, 2014 at 12:50 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> There are a few places that use these values, so define constants for
+> them.
 >
-> Signed-off-by: Harry Jeffery <harry@exec64.co.uk>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 > ---
->  log-tree.c | 16 +++++++++-------
->  log-tree.h |  2 +-
->  pretty.c   |  2 +-
->  3 files changed, 11 insertions(+), 9 deletions(-)
+>  cache.h    |  4 ++++
+>  lockfile.c | 11 ++++++-----
+>  refs.c     |  7 ++++---
+>  3 files changed, 14 insertions(+), 8 deletions(-)
 >
-> diff --git a/log-tree.c b/log-tree.c
-> index 95e9b1d..860694c 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -184,9 +184,11 @@ static void show_children(struct rev_info *opt,
-> struct commit *commit, int abbre
->   */
->  void format_decorations(struct strbuf *sb,
->  			const struct commit *commit,
-> -			int use_color)
-> +			int use_color,
-> +			const char* prefix,
-> +			const char* sep,
-> +			const char* suffix)
-
-In our codebase, please make asterisks stick to the variable not the
-type, i.e.
-
-	const char *prefix,
-        const char *separator,
-        const char *suffix)
-
-Was there a reason why "sep" alone needed to be abbreviated?
-
->  	if (!decoration)
->  		return;
-> -	prefix = " (";
-> +	strbuf_addstr(sb, prefix);
->  	while (decoration) {
->  		strbuf_addstr(sb, color_commit);
-> -		strbuf_addstr(sb, prefix);
->  		strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
->  		if (decoration->type == DECORATION_REF_TAG)
->  			strbuf_addstr(sb, "tag: ");
->  		strbuf_addstr(sb, decoration->name);
-> +		if(decoration->next)
-
-Have SP between the control statement (i.e. not a function name) and
-its opening parenthesis, i.e.
-
-		if (decoration->next)
-
-> +			strbuf_addstr(sb, sep);
->  		strbuf_addstr(sb, color_reset);
-> -		prefix = ", ";
->  		decoration = decoration->next;
->  	}
-
-Hmph.  I was kind of found of the nice trick to use a punctuation,
-which first points at the prefix " (" and then later points at the
-separator ", ", to allow the code that prefixes the punctuation
-before showing a new item.  It is now lost.
-
->  	strbuf_addstr(sb, color_commit);
-> -	strbuf_addch(sb, ')');
-> +	strbuf_addstr(sb, suffix);
->  	strbuf_addstr(sb, color_reset);
->  }
+> diff --git a/cache.h b/cache.h
+> index da77094..41d829b 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -569,6 +569,10 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
+>  #define REFRESH_IN_PORCELAIN   0x0020  /* user friendly output, not "needs update" */
+>  extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
 >
-> @@ -221,7 +223,7 @@ void show_decorations(struct rev_info *opt, struct
-> commit *commit)
->  		printf("\t%s", (char *) commit->util);
->  	if (!opt->show_decorations)
->  		return;
-> -	format_decorations(&sb, commit, opt->diffopt.use_color);
-> +	format_decorations(&sb, commit, opt->diffopt.use_color, " (", ", ", ")");
->  	fputs(sb.buf, stdout);
->  	strbuf_release(&sb);
+> +/* String appended to a filename to derive the lockfile name: */
+> +#define LOCK_SUFFIX ".lock"
+> +#define LOCK_SUFFIX_LEN 5
+> +
+>  struct lock_file {
+>         struct lock_file *next;
+>         int fd;
+> diff --git a/lockfile.c b/lockfile.c
+> index 964b3fc..bfea333 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -176,10 +176,11 @@ static char *resolve_symlink(char *p, size_t s)
+>  static int lock_file(struct lock_file *lk, const char *path, int flags)
+>  {
+>         /*
+> -        * subtract 5 from size to make sure there's room for adding
+> -        * ".lock" for the lock file name
+> +        * subtract LOCK_SUFFIX_LEN from size to make sure there's
+> +        * room for adding ".lock" for the lock file name:
+>          */
+> -       static const size_t max_path_len = sizeof(lk->filename) - 5;
+> +       static const size_t max_path_len = sizeof(lk->filename) -
+> +                                          LOCK_SUFFIX_LEN;
+>
+>         if (!lock_file_list) {
+>                 /* One-time initialization */
+> @@ -204,7 +205,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+>         strcpy(lk->filename, path);
+>         if (!(flags & LOCK_NODEREF))
+>                 resolve_symlink(lk->filename, max_path_len);
+> -       strcat(lk->filename, ".lock");
+> +       strcat(lk->filename, LOCK_SUFFIX);
+>         lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, 0666);
+>         if (0 <= lk->fd) {
+>                 lk->owner = getpid();
+> @@ -314,7 +315,7 @@ int commit_lock_file(struct lock_file *lk)
+>         if (lk->fd >= 0 && close_lock_file(lk))
+>                 return -1;
+>         strcpy(result_file, lk->filename);
+> -       i = strlen(result_file) - 5; /* .lock */
+> +       i = strlen(result_file) - LOCK_SUFFIX_LEN; /* .lock */
+>         result_file[i] = 0;
+>         if (rename(lk->filename, result_file))
+>                 return -1;
+> diff --git a/refs.c b/refs.c
+> index 5ae8e69..828522d 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -74,7 +74,8 @@ out:
+>                 if (refname[1] == '\0')
+>                         return -1; /* Component equals ".". */
+>         }
+> -       if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
+> +       if (cp - refname >= LOCK_SUFFIX_LEN &&
+> +           !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
+>                 return -1; /* Refname ends with ".lock". */
+>         return cp - refname;
 >  }
-> diff --git a/log-tree.h b/log-tree.h
-> index d6ecd4d..4816911 100644
-> --- a/log-tree.h
-> +++ b/log-tree.h
-> @@ -13,7 +13,7 @@ int log_tree_diff_flush(struct rev_info *);
->  int log_tree_commit(struct rev_info *, struct commit *);
->  int log_tree_opt_parse(struct rev_info *, const char **, int);
->  void show_log(struct rev_info *opt);
-> -void format_decorations(struct strbuf *sb, const struct commit
-> *commit, int use_color);
-> +void format_decorations(struct strbuf *sb, const struct commit
-> *commit, int use_color, const char* prefix, const char* sep, const
-
-Linewrapped by your MUA, perhaps?
-
-Again, please check where your asterisks are.
-
-> char* suffix);
->  void show_decorations(struct rev_info *opt, struct commit *commit);
->  void log_write_email_headers(struct rev_info *opt, struct commit *commit,
->  			     const char **subject_p,
-> diff --git a/pretty.c b/pretty.c
-> index 44b9f64..e4dc093 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -1195,7 +1195,7 @@ static size_t format_commit_one(struct strbuf
-> *sb, /* in UTF-8 */
->  		return 1;
->  	case 'd':
->  		load_ref_decorations(DECORATE_SHORT_REFS);
-> -		format_decorations(sb, commit, c->auto_color);
-> +		format_decorations(sb, commit, c->auto_color, " (", ", ", ")");
-
-My eyes hurt staring at this line and the same one in the other
-file, trying to see which comma is which.
-
-I wonder if doing something like this once at a single place:
-
-#define format_decorations_std(strbuf, commit, color) \
-		format_decorations((strbuf), (commit), (color), " (", ", ", ")")
-
-and using
-
-	format_decorations_std(sb, commit, opt->diffopt.use_color);
-	format_decorations_std(sb, commit, c->auto_color);
-
-or even better, name the one that takes three extra parameters as
-format_decorations_extended(), and keep the behaviour of the
-original one the same, i.e.
-
-	#define format_decorations(strbuf, commit, color) \
-		format_decorations_extended((strbuf), (commit), (color), " (", ", ", ")")
-
-That way you do not have to touch the original callers, nor you
-would have to worry about breaking any topic that somebody else may
-be preparing that adds new calls to format_decorations().
-
->  		return 1;
->  	case 'g':		/* reflog info */
->  		switch(placeholder[1]) {
+> @@ -2545,11 +2546,11 @@ static int delete_ref_loose(struct ref_lock *lock, int flag)
+>  {
+>         if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+>                 /* loose */
+> -               int err, i = strlen(lock->lk->filename) - 5; /* .lock */
+> +               int err, i = strlen(lock->lk->filename) - LOCK_SUFFIX_LEN;
+>
+>                 lock->lk->filename[i] = 0;
+>                 err = unlink_or_warn(lock->lk->filename);
+> -               lock->lk->filename[i] = '.';
+> +               lock->lk->filename[i] = LOCK_SUFFIX[0];
+>                 if (err && errno != ENOENT)
+>                         return 1;
+>         }
+> --
+> 2.1.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
