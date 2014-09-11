@@ -1,167 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] hash-object: pass 'write_object' as a flag
-Date: Thu, 11 Sep 2014 14:17:22 -0700
-Message-ID: <1410470243-26552-3-git-send-email-gitster@pobox.com>
-References: <xmqqoauldfij.fsf@gitster.dls.corp.google.com>
- <1410470243-26552-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 11 23:17:43 2014
+Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch series overview)
+Date: Thu, 11 Sep 2014 14:40:03 -0700
+Message-ID: <xmqqk359defg.fsf@gitster.dls.corp.google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+	<CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+	<CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+	<CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+	<20140820231723.GF20185@google.com>
+	<20140911030318.GD18279@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 11 23:40:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSBkH-0004bn-FJ
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 23:17:37 +0200
+	id 1XSC69-0000s1-PX
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 23:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757540AbaIKVRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 17:17:32 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58172 "EHLO smtp.pobox.com"
+	id S1753709AbaIKVkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 17:40:07 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50356 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751282AbaIKVRa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 17:17:30 -0400
+	id S1752704AbaIKVkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 17:40:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 03AB73ACE3;
-	Thu, 11 Sep 2014 17:17:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Y0PK
-	RtMz41I2suuWqqk9shKPKc0=; b=x5QNVtN5pUebt5elr6mgG9yowZneKQgAhytk
-	Bj88CHbXbKVFm1M8zsr/wsEEfeFsI1ppaTaSsUo2SbxLOLBoQcq6GWeTqQO3RvTn
-	hOQWLaJr1tRXEGDuiHOMMJ9ybtV3sd10BYDPFvB3sIaXZyvN20txv0JvqLDcl5v9
-	VWwyxjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=c/sOrv
-	jddAUJzjfkl3V6hMDo1bRrLNR3+jxwM7j2xLseD7roD05qfR4YOSmLXo/FKw2Y59
-	Ihogs8VRpEmffw1iMHI8j52Qj1lhMc5URxX/AkewYMAFBJOCvAaS2luwdLjXZaXr
-	R2ga5HyPIuPMccCY6LyjVIEftQN94fDl1YAU4=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 870A33A299;
+	Thu, 11 Sep 2014 17:40:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/P2g6TTy51NDYK/RB5wJF8OfyFA=; b=poMntF
+	HgC6hN/3rTzlrzrJUmlM4Z6jKyefc134I07gOsuwZ/WRp+PD/UgmYpSEAyIX/SfU
+	QZeQt98Hq5ZsEn0Vj807/GaBr4aNoAwnmUFemhsi0ImGqAH9opjZs10OfKUF18Jr
+	t4XHWJutwISXC8Q7RYurCDNVv99wWY6XZtt9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NT0guGcyp2otxlHXM0SC/mBvsALq1SZS
+	DI6BBML9ATIexvanDRjMQHIK0i0HnNdJy80SLxCNi2jL/ZEf9tDCEoyQT5ycOKUA
+	fIThzjQGz7Xlnr0C9Q2sz6rqx8iEPB/8UEQECqro4NaSfsApama0VhXhxSK3jBai
+	pqqFCWGcNqk=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EE2CD3ACE2;
-	Thu, 11 Sep 2014 17:17:29 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B4083A297;
+	Thu, 11 Sep 2014 17:40:05 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7072D3ACE1;
-	Thu, 11 Sep 2014 17:17:29 -0400 (EDT)
-X-Mailer: git-send-email 2.1.0-459-g1bc3b2b
-In-Reply-To: <1410470243-26552-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 095CF4AA-39F9-11E4-9AB3-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E48273A295;
+	Thu, 11 Sep 2014 17:40:04 -0400 (EDT)
+In-Reply-To: <20140911030318.GD18279@google.com> (Jonathan Nieder's message of
+	"Wed, 10 Sep 2014 20:03:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 314AD204-39FC-11E4-995D-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256882>
 
-Instead of forcing callers of lower level functions write
-(write_object ? HASH_WRITE_OBJECT : 0), prepare the flag to be
-passed down in the callchain from the command line parser.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/hash-object.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+> Jonathan Nieder wrote:
+>
+>> The next series from Ronnie's collection is available at
+>> https://code-review.googlesource.com/#/q/topic:ref-transaction in case
+>> someone wants a fresh series to look at.
+>
+> Here is the outcome of that review.  It could use another set of eyes
+> (hint, hint) but should be mostly ready.  Interdiff below.  This is meant
+> to replace rs/ref-transaction in 'pu' and I'd prefer to wait a little
+> for more comments before merging to 'next'.
 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 40008e2..1fb07ee 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -10,33 +10,31 @@
- #include "parse-options.h"
- #include "exec_cmd.h"
- 
--static void hash_fd(int fd, const char *type, int write_object, const char *path)
-+static void hash_fd(int fd, const char *type, const char *path, unsigned flags)
- {
- 	struct stat st;
- 	unsigned char sha1[20];
--	unsigned flags = (HASH_FORMAT_CHECK |
--			  (write_object ? HASH_WRITE_OBJECT : 0));
- 
- 	if (fstat(fd, &st) < 0 ||
- 	    index_fd(sha1, fd, &st, type_from_string(type), path, flags))
--		die(write_object
-+		die((flags & HASH_WRITE_OBJECT)
- 		    ? "Unable to add %s to database"
- 		    : "Unable to hash %s", path);
- 	printf("%s\n", sha1_to_hex(sha1));
- 	maybe_flush_or_die(stdout, "hash to stdout");
- }
- 
--static void hash_object(const char *path, const char *type, int write_object,
--			const char *vpath)
-+static void hash_object(const char *path, const char *type, const char *vpath,
-+			unsigned flags)
- {
- 	int fd;
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0)
- 		die_errno("Cannot open '%s'", path);
--	hash_fd(fd, type, write_object, vpath);
-+	hash_fd(fd, type, vpath, flags);
- }
- 
--static void hash_stdin_paths(const char *type, int write_objects, int no_filters)
-+static void hash_stdin_paths(const char *type, int no_filters, unsigned flags)
- {
- 	struct strbuf buf = STRBUF_INIT, nbuf = STRBUF_INIT;
- 
-@@ -47,8 +45,7 @@ static void hash_stdin_paths(const char *type, int write_objects, int no_filters
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &nbuf);
- 		}
--		hash_object(buf.buf, type, write_objects,
--			    no_filters ? NULL : buf.buf);
-+		hash_object(buf.buf, type, no_filters ? NULL : buf.buf, flags);
- 	}
- 	strbuf_release(&buf);
- 	strbuf_release(&nbuf);
-@@ -64,12 +61,13 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	const char *type = blob_type;
- 	int hashstdin = 0;
- 	int stdin_paths = 0;
--	int write_object = 0;
- 	int no_filters = 0;
-+	unsigned flags = HASH_FORMAT_CHECK;
- 	const char *vpath = NULL;
- 	const struct option hash_object_options[] = {
- 		OPT_STRING('t', NULL, &type, N_("type"), N_("object type")),
--		OPT_BOOL('w', NULL, &write_object, N_("write the object into the object database")),
-+		OPT_BIT('w', NULL, &flags, N_("write the object into the object database"),
-+			HASH_WRITE_OBJECT),
- 		OPT_COUNTUP( 0 , "stdin", &hashstdin, N_("read the object from stdin")),
- 		OPT_BOOL( 0 , "stdin-paths", &stdin_paths, N_("read file names from stdin")),
- 		OPT_BOOL( 0 , "no-filters", &no_filters, N_("store file as is without filters")),
-@@ -83,7 +81,7 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, NULL, hash_object_options,
- 			     hash_object_usage, 0);
- 
--	if (write_object) {
-+	if (flags & HASH_WRITE_OBJECT) {
- 		prefix = setup_git_directory();
- 		prefix_length = prefix ? strlen(prefix) : 0;
- 		if (vpath && prefix)
-@@ -113,19 +111,19 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (hashstdin)
--		hash_fd(0, type, write_object, vpath);
-+		hash_fd(0, type, vpath, flags);
- 
- 	for (i = 0 ; i < argc; i++) {
- 		const char *arg = argv[i];
- 
- 		if (0 <= prefix_length)
- 			arg = prefix_filename(prefix, prefix_length, arg);
--		hash_object(arg, type, write_object,
--			    no_filters ? NULL : vpath ? vpath : arg);
-+		hash_object(arg, type, no_filters ? NULL : vpath ? vpath : arg,
-+			    flags);
- 	}
- 
- 	if (stdin_paths)
--		hash_stdin_paths(type, write_object, no_filters);
-+		hash_stdin_paths(type, no_filters, flags);
- 
- 	return 0;
- }
--- 
-2.1.0-459-g1bc3b2b
+Alright.  I'd assume that all the other rs/ref-transaction* topics
+that depends on rs/ref-transaction series will be rerolled on top of
+this new round when ready.
+
+Thanks.
