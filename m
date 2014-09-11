@@ -1,165 +1,145 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 4/6] fsck: check tag objects' headers
-Date: Thu, 11 Sep 2014 16:26:38 +0200 (CEST)
-Message-ID: <d55da50e2ebdf70a36db58114f81bf2e2acae709.1410445431.git.johannes.schindelin@gmx.de>
-References: <alpine.DEB.1.00.1409101552250.990@s15462909.onlinehome-server.info> <cover.1410445430.git.johannes.schindelin@gmx.de>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v2 22/32] checkout: support checking out into a new working
+ directory
+Date: Thu, 11 Sep 2014 11:02:36 -0400
+Message-ID: <5411B98C.1090905@xiplink.com>
+References: <1409387642-24492-1-git-send-email-pclouds@gmail.com> <1410388928-32265-1-git-send-email-pclouds@gmail.com> <1410388928-32265-23-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 11 16:28:13 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 11 17:02:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS5Ly-0005bp-Tj
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 16:28:07 +0200
+	id 1XS5tK-0002u8-Bv
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 17:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754251AbaIKO0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 10:26:43 -0400
-Received: from mout.gmx.net ([212.227.17.22]:57542 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753550AbaIKO0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 10:26:41 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0Mchyv-1XjTcl2H8T-00Hstv;
- Thu, 11 Sep 2014 16:26:38 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <cover.1410445430.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:7YRHAvnE2g/uRsVoO+FPuoeAOzjxiia/sdcR7I4opOJMNyL9wWN
- ckJVpdIN7GzG7svJ0NT1Xfb+rqcExpOa/cq+MDiNRljQEo8vgqbN9efxZJGAb2rqLgZwoRV
- ZlO1y1lLy7bd4smjv3Pg/JV+xCAGrh9iw3sZPItz5Aupn3n45med6o8bzAdvckBTzsiuCSi
- N8S/4sndMBQOSQ8wFC7Mw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753239AbaIKPCa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Sep 2014 11:02:30 -0400
+Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:60242 "EHLO
+	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752045AbaIKPC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 11:02:29 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp20.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 8368E180102;
+	Thu, 11 Sep 2014 11:02:28 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp20.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 452241800FF;
+	Thu, 11 Sep 2014 11:02:28 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.2.10);
+	Thu, 11 Sep 2014 15:02:28 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <1410388928-32265-23-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256847>
 
-We inspect commit objects pretty much in detail in git-fsck, but we just
-glanced over the tag objects. Let's be stricter.
+On 14-09-10 06:41 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> "git checkout --to" sets up a new working directory with a .git file
+> pointing to $GIT_DIR/worktrees/<id>. It then executes "git checkout"
+> again on the new worktree with the same arguments except "--to" is
+> taken out. The second checkout execution, which is not contaminated
+> with any info from the current repository, will actually check out an=
+d
+> everything that normal "git checkout" does.
+>=20
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Documentation/git-checkout.txt         | 43 +++++++++++++++
+>  Documentation/git.txt                  |  3 +-
+>  Documentation/gitrepository-layout.txt |  7 +++
+>  builtin/checkout.c                     | 95 ++++++++++++++++++++++++=
++++++++++-
+>  path.c                                 |  2 +-
+>  t/t2025-checkout-to.sh (new +x)        | 63 ++++++++++++++++++++++
+>  6 files changed, 209 insertions(+), 4 deletions(-)
+>  create mode 100755 t/t2025-checkout-to.sh
+>=20
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-check=
+out.txt
+> index 33ad2ad..bd0fc1d 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -225,6 +225,13 @@ This means that you can use `git checkout -p` to=
+ selectively discard
+>  edits from your current working tree. See the ``Interactive Mode''
+>  section of linkgit:git-add[1] to learn how to operate the `--patch` =
+mode.
+> =20
+> +--to=3D<path>::
+> +	Check out a branch in a separate working directory at
+> +	`<path>`. A new working directory is linked to the current
+> +	repository, sharing everything except working directory
+> +	specific files such as HEAD, index... See "MULTIPLE CHECKOUT
+> +	MODE" section for more information.
+> +
+>  <branch>::
+>  	Branch to checkout; if it refers to a branch (i.e., a name that,
+>  	when prepended with "refs/heads/", is a valid ref), then that
+> @@ -388,6 +395,42 @@ $ git reflog -2 HEAD # or
+>  $ git log -g -2 HEAD
+>  ------------
+> =20
+> +MULTIPLE CHECKOUT MODE
+> +----------------------
+> +Normally a working directory is attached to repository. When "git
+> +checkout --to" is used, a new working directory is attached to the
+> +current repository. This new working directory is called "linked
+> +checkout" as compared to the "main checkout" prepared by "git init" =
+or
+> +"git clone". A repository has one main checkout and zero or more
+> +linked checkouts.
+> +
+> +Each linked checkout has a private directory in $GIT_DIR/worktrees i=
+n
+> +the main checkout, usually named after the base name of the new
+> +working directory, optionally with a number added to make it
+> +unique. For example, the command `git checkout --to ../test-next nex=
+t`
+> +running with $GIT_DIR=3D/path/main may create the directory
+> +`$GIT_DIR/worktrees/test-next` (or `$GIT_DIR/worktrees/test-next1` i=
+f
+> +`test-next` is already taken).
+> +
+> +Within a linked checkout, $GIT_DIR is set to point to this private
+> +directory (e.g. `/path/main/worktrees/test-next` in the example) and
+> +$GIT_COMMON_DIR is set to point back to the main checkout's $GIT_DIR
+> +(e.g. `/path/main`). Setting is done via a .git file located at the
+> +top directory of the linked checkout.
+> +
+> +Path resolution via `git rev-parse --git-path` would use either
+> +$GIT_DIR or $GIT_COMMON_DIR depending on the path. For example, the
+> +linked checkout's `$GIT_DIR/HEAD` resolve to
+> +`/path/main/worktrees/test-next/HEAD` (not `/path/main/HEAD` which i=
+s
+> +the main checkout's HEAD) while `$GIT_DIR/refs/heads/master` would u=
+se
+> +$GIT_COMMON_DIR and resolve to `/path/main/refs/heads/master`, which
+> +is shared across checkouts.
+> +
+> +See linkgit:gitrepository-layout[5] for more information. The rule o=
+f
+> +thumb is do not make any assumption about whether a path belongs to
+> +$GIT_DIR or $GIT_COMMON_DIR when you need to directly access somethi=
+ng
+> +inside $GIT_DIR. Use `git rev-parse --git-path` to get the final pat=
+h.
+> +
 
-Since we do not want to limit 'tag' lines unduly, values that would fail
-the refname check only result in warnings, not errors.
+Um, didn't you say in [1] that you'd use the text I posted in [2]?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- fsck.c | 86 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 85 insertions(+), 1 deletion(-)
+[1] http://article.gmane.org/gmane.comp.version-control.git/256446
+[2] http://article.gmane.org/gmane.comp.version-control.git/256323
 
-diff --git a/fsck.c b/fsck.c
-index 73da6f8..2fffa43 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -6,6 +6,7 @@
- #include "commit.h"
- #include "tag.h"
- #include "fsck.h"
-+#include "refs.h"
- 
- static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
- {
-@@ -355,6 +356,88 @@ static int fsck_commit(struct commit *commit, const char *data,
- 	return ret;
- }
- 
-+static int fsck_tag_buffer(struct tag *tag, const char *data,
-+	unsigned long size, fsck_error error_func)
-+{
-+	unsigned char sha1[20];
-+	int ret = 0;
-+	const char *buffer;
-+	char *to_free = NULL, *eol;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	if (data)
-+		buffer = data;
-+	else {
-+		enum object_type type;
-+
-+		buffer = to_free =
-+			read_sha1_file(tag->object.sha1, &type, &size);
-+		if (!buffer)
-+			return error_func(&tag->object, FSCK_ERROR,
-+				"cannot read tag object");
-+
-+		if (type != OBJ_TAG) {
-+			ret = error_func(&tag->object, FSCK_ERROR,
-+				"expected tag got %s",
-+			    typename(type));
-+			goto done;
-+		}
-+	}
-+
-+	if (require_end_of_header(buffer, size, &tag->object, error_func))
-+		goto done;
-+
-+	if (!skip_prefix(buffer, "object ", &buffer)) {
-+		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'object' line");
-+		goto done;
-+	}
-+	if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n') {
-+		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'object' line format - bad sha1");
-+		goto done;
-+	}
-+	buffer += 41;
-+
-+	if (!skip_prefix(buffer, "type ", &buffer)) {
-+		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'type' line");
-+		goto done;
-+	}
-+	eol = strchr(buffer, '\n');
-+	if (!eol) {
-+		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - unexpected end after 'type' line");
-+		goto done;
-+	}
-+	if (type_from_string_gently(buffer, eol - buffer, 1) < 0)
-+		ret = error_func(&tag->object, FSCK_ERROR, "invalid 'type' value");
-+	if (ret)
-+		goto done;
-+	buffer = eol + 1;
-+
-+	if (!skip_prefix(buffer, "tag ", &buffer)) {
-+		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - expected 'tag' line");
-+		goto done;
-+	}
-+	eol = strchr(buffer, '\n');
-+	if (!eol) {
-+		ret = error_func(&tag->object, FSCK_ERROR, "invalid format - unexpected end after 'type' line");
-+		goto done;
-+	}
-+	strbuf_addf(&sb, "refs/tags/%.*s", (int)(eol - buffer), buffer);
-+	if (check_refname_format(sb.buf, 0))
-+		error_func(&tag->object, FSCK_WARN, "invalid 'tag' name: %s", buffer);
-+	buffer = eol + 1;
-+
-+	if (!skip_prefix(buffer, "tagger ", &buffer))
-+		/* early tags do not contain 'tagger' lines; warn only */
-+		error_func(&tag->object, FSCK_WARN, "invalid format - expected 'tagger' line");
-+	else
-+		ret = fsck_ident(&buffer, &tag->object, error_func);
-+
-+done:
-+	strbuf_release(&sb);
-+	free(to_free);
-+	return ret;
-+}
-+
- static int fsck_tag(struct tag *tag, const char *data,
- 	unsigned long size, fsck_error error_func)
- {
-@@ -362,7 +445,8 @@ static int fsck_tag(struct tag *tag, const char *data,
- 
- 	if (!tagged)
- 		return error_func(&tag->object, FSCK_ERROR, "could not load tagged object");
--	return 0;
-+
-+	return fsck_tag_buffer(tag, data, size, error_func);
- }
- 
- int fsck_object(struct object *obj, void *data, unsigned long size,
--- 
-2.0.0.rc3.9669.g840d1f9
+		M.
