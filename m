@@ -1,323 +1,150 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH/RFC] submodule: add ability to shallowly clone any branch
- in a submodule
-Date: Thu, 11 Sep 2014 21:21:04 +0200
-Message-ID: <5411F620.4000408@web.de>
-References: <1410455473-2367-1-git-send-email-cole.minnaar@gmail.com>
+Subject: Re: Diffs for submodule conflicts during rebase usually empty
+Date: Thu, 11 Sep 2014 21:29:28 +0200
+Message-ID: <5411F818.6030701@web.de>
+References: <20140911135057.o7j9bwlnz4okgwsw@webmail.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Cole Minnaar <cole.minnaar@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 11 21:21:22 2014
+To: ezyang <ezyang@mit.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 11 21:29:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS9vf-0002ZT-5Q
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:21:15 +0200
+	id 1XSA3l-0007T0-LO
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:29:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753595AbaIKTVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 15:21:10 -0400
-Received: from mout.web.de ([212.227.15.14]:54583 "EHLO mout.web.de"
+	id S1755792AbaIKT3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 15:29:34 -0400
+Received: from mout.web.de ([212.227.15.3]:57850 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753235AbaIKTVJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 15:21:09 -0400
-Received: from [192.168.178.41] ([79.193.78.148]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LdEmn-1Y9i8e1F5t-00iSJc; Thu, 11 Sep 2014 21:21:05
+	id S1755782AbaIKT3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 15:29:33 -0400
+Received: from [192.168.178.41] ([79.193.78.148]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0LoYWI-1XzY3v1THG-00gYFo; Thu, 11 Sep 2014 21:29:29
  +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <1410455473-2367-1-git-send-email-cole.minnaar@gmail.com>
-X-Provags-ID: V03:K0:dhW4w0g6Jzxeko4yMhWmWoqAAXUMARd8IinBAIu1UiOGi2K+Kx3
- fiTwAXoi4naqXCTUqppGBaXLCIuKNzeN594Jxrpn+g9a6jSQWKznH8yRO4HNi0t/FdaEB1d
- 8Yo/aDQErdMWJkBV1QNkVCACct2cs6up5GeoIVVje7EZHKt0zKmUY1lNgdW7hbCWB1haJYp
- Fa6eVzQ3pp4GcGTgbdxgQ==
+In-Reply-To: <20140911135057.o7j9bwlnz4okgwsw@webmail.mit.edu>
+X-Provags-ID: V03:K0:5h6QEoTZ8BT+lcrX+dUkaRyX0J5ExuVospar67ybzPzW96wr2EO
+ 0YMQwwD7d9+fXGToCzkmUXuCAXnej4R6HJROdKSAddy1zRr/qEd8i3kVxT+eVJndIzqKBEI
+ PFKz2QwfQb35cbShgy1imJRm3p/CGA+USAtne5JCgS6vBsw74KaAdqNoRxPGooKI+mfPt6B
+ xo838sBeetUm5qFwCp9Qg==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256868>
 
-Am 11.09.2014 um 19:11 schrieb Cole Minnaar:
-> Currently when specifying the `--depth` option to the 'submodule add'
-> command, it can only create a shallow submodule clone of the currently active
-> branch from the cloned repository. If a branch is specified using the
-> `--branch` command, the 'submodule add' will result in an error as the
-> branch will not exist in the cloned repository. Subsequently, if a
-> repository is cloned which contains submodules, and both the `--depth` and
-> `--recursive` options are specified, the top level repository will be
-> cloned using the specified depth, but each submodule will be cloned in
-> its entirety.
+Am 11.09.2014 um 19:50 schrieb ezyang:
+> Hello all,
 >
-> Added the ability to shallowly clone any branch as a submodule, not just
-> the current active branch from the cloned repository. Also includes the
-> ability to shallowly clone a repository and all its submodules.
-> Added support to the 'submodule add' and 'submodule update' command to handle
-> `--no-single-branch`, which is then passed to the clone command in order
-> to setup remote-tracking branches in the shallowly cloned submodules.
+> In many situations, if you have a submodule conflict during a rebase,
+> and you type 'git diff' to get a summary of the situation, you will get
+> an empty diff.  Here's a simple transcript for one such case (I'm sorry
+> I can't make it much shorter), tested on git version 2.0.3.693.g996b0fd:
 >
-> Signed-off-by: Cole Minnaar <cole.minnaar@gmail.com>
-> ---
+>      git init
+>      mkdir b
+>      cd b
+>      git init
+>      git commit --allow-empty -m "submodule initial"
+>      cd ..
+>      git submodule add ./b
+>      git commit -am "parent initial"
+>      git branch dev
+>      cd b
+>      touch a
+>      git add a
+>      git commit -m "submodule master"
+>      cd ..
+>      git commit -am "parent master"
+>      git checkout dev
+>      git submodule update
+>      cd b
+>      touch b
+>      git add b
+>      git commit -m "submodule dev"
+>      cd ..
+>      git commit -am "parent dev"
+>      git rebase master
+>      git diff b
+>
+> The last output is:
+>
+>      diff --cc b
+>      index 4b1b6c6,c423df2..0000000
+>      --- a/b
+>      +++ b/b
 
-Sorry for not having found the time to respond to your first message,
-great to see you started working on this.
+Thanks for providing a simple way to reproduce what you are seeing.
 
-While I have no objection to what you are trying to achieve here, I
-think you are doing too much in a single commit. At least the changes
-to "git clone" (passing --depth and --no-single-branch on to the "git
-submodule update" when called with "--recurse-submodules") and the
-"git submodule" script should be separated into their own commits.
+> As it turns out, this behavior is logical in a perverse sort of way.
+>
+>      - The rebase operation doesn't go about updating your submodule
+>        checkouts, so whatever is in the file is what the submodule
+>        was pointing to before your initiated the rebase.
+>
+>      - By default, 'git diff' on a merge conflict (implicitly
+>        'git diff --cc') only will report if the submodule's HEAD
+>        differs from all of the merge heads.  So if you only had
+>        one commit which changed the submodule, you're probably
+>        on that commit, and so the "current state" of the submodule
+>
+> However, just because behavior is logical, doesn't mean it is user
+> friendly.  There are a few problems here:
+>
+>      1. Git is treating the lagging submodule HEAD as if it were
+>      actually a resolution that you might want for the conflict.
+>      Actually, it's basically almost always wrong (in the example
+>      above, if you commit it you'll be discarding commits made on
+>      master.)  There is a sorter of wider UI issue here where Git
+>      can't tell if you've legitimately changed the HEAD pointer
+>      of a submodule, or if you checked out a new revision with different
+>      submodule pointers and forgot to run 'git submodule update'.
+>      (But by the way, you can't even do that here, because this is
+>      a merge!)
+>
+>      2. The behavior of not reporting the diff when the diff for one
+>      branch is non-empty is illogical: for submodules (whose "file
+>      contents" are so short), you basically always want some hashes,
+>      and not an empty diff.  Doubly so when the "resolution" is
+>      bogus (c.f. (1)).
+>
+> Of course, changing behavior in a backwards-incompatible way is never a
+> good way, so it's not exactly obvious what should be done here. I would
+> recommend tweaking the default combined diff behavior for submodules and
+> adding an admonition to the user that the submodules have not been
+> updated in the rebase message (I can submit a patch for this if people
+> agree if it's a good idea), but maybe that's too much of a behavior
+> change.
+>
+> By the way, the difference between 'git diff -c' and 'git diff --cc'
+> does not seem to be documented anywhere, except for an oblique comment
+> in diff-format.txt "Note that 'combined diff' lists only files which
+> were modified from all parents." -- the user expected, of course, to
+> figure out that 'combined diff' here refers to --cc, but not -c.
 
-And from a cursory glance I wonder if "git submodule update" with
-branch should always imply --no-singe-branch? Then maybe we do not
-need to add this option to the submodule script but simply always
-add it when called with --branch?
+It looks to me like your confusion is because current Git isn't
+terribly good at displaying merge conflicts in submodules. While
+diff produces rather confusing output:
 
->   Documentation/git-clone.txt     |  6 +++++-
->   Documentation/git-submodule.txt |  8 ++++++--
->   builtin/clone.c                 | 15 +++++++++------
->   git-submodule.sh                | 24 ++++++++++++++++++++----
->   t/t7400-submodule-basic.sh      | 33 ++++++++++++++++++++++++++++++++-
->   5 files changed, 72 insertions(+), 14 deletions(-)
->
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> index 0363d00..5eef11c 100644
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -178,7 +178,9 @@ objects from the source repository into a pack in the cloned repository.
->
->   --depth <depth>::
->   	Create a 'shallow' clone with a history truncated to the
-> -	specified number of revisions.
-> +	specified number of revisions. If `--recursive` was also specified,
-> +	the depth value will be passed to all submodules within when
-> +	cloning.
->
->   --[no-]single-branch::
->   	Clone only the history leading to the tip of a single branch,
-> @@ -192,6 +194,8 @@ objects from the source repository into a pack in the cloned repository.
->   	initial cloning.  If the HEAD at the remote did not point at any
->   	branch when `--single-branch` clone was made, no remote-tracking
->   	branch is created.
-> +	If `--recursive` was also specified, this option will also be passed
-> +	to all submodules when cloning.
->
->   --recursive::
->   --recurse-submodules::
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 8e6af65..176f150 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -10,13 +10,14 @@ SYNOPSIS
->   --------
->   [verse]
->   'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
-> -	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
-> +	      [--reference <repository>] [--depth <depth>] [--no-single-branch]
-> +	      [--] <repository> [<path>]
->   'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
->   'git submodule' [--quiet] init [--] [<path>...]
->   'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
->   'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
->   	      [-f|--force] [--rebase|--merge] [--reference <repository>]
-> -	      [--depth <depth>] [--recursive] [--] [<path>...]
-> +	      [--recursive] [--depth <depth>] [--no-single-branch] [--] [<path>...]
->   'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
->   	      [commit] [--] [<path>...]
->   'git submodule' [--quiet] foreach [--recursive] <command>
-> @@ -354,6 +355,9 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
->   	clone with a history truncated to the specified number of revisions.
->   	See linkgit:git-clone[1]
->
-> +--no-single-branch::
-> +	This option is valid for add and update commands. Fetch histories near the tips
-> +	of all branches and create remote-tracking branches in the submodule.
->
->   <path>...::
->   	Paths to submodule(s). When specified this will restrict the command
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index dd4092b..b27917c 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -48,6 +48,7 @@ static int option_verbosity;
->   static int option_progress = -1;
->   static struct string_list option_config;
->   static struct string_list option_reference;
-> +static struct argv_array argv_submodule_cmd = ARGV_ARRAY_INIT;
->
->   static int opt_parse_reference(const struct option *opt, const char *arg, int unset)
->   {
-> @@ -100,10 +101,6 @@ static struct option builtin_clone_options[] = {
->   	OPT_END()
->   };
->
-> -static const char *argv_submodule[] = {
-> -	"submodule", "update", "--init", "--recursive", NULL
-> -};
-> -
->   static char *get_repo_path(const char *repo, int *is_bundle)
->   {
->   	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-> @@ -663,8 +660,14 @@ static int checkout(void)
->   	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
->   			   sha1_to_hex(sha1), "1", NULL);
->
-> -	if (!err && option_recursive)
-> -		err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
-> +	if (!err && option_recursive) {
-> +		argv_array_pushl(&argv_submodule_cmd, "submodule", "update", "--init", "--recursive", NULL);
-> +		if (option_depth)
-> +			argv_array_pushf(&argv_submodule_cmd, "--depth=%d", atoi(option_depth));
-> +		if (!option_single_branch)
-> +			argv_array_pushl(&argv_submodule_cmd, "--no-single-branch", NULL);
-> +		err = run_command_v_opt(argv_submodule_cmd.argv, RUN_GIT_CMD);
-> +	}
->
->   	return err;
->   }
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 9245abf..9c0c858 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -5,11 +5,11 @@
->   # Copyright (c) 2007 Lars Hjemli
->
->   dashless=$(basename "$0" | sed -e 's/-/ /')
-> -USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
-> +USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--depth <depth>] [--no-single-branch] [--] <repository> [<path>]
->      or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
->      or: $dashless [--quiet] init [--] [<path>...]
->      or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
-> -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
-> +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--depth <depth>] [--no-single-branch] [--] [<path>...]
->      or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
->      or: $dashless [--quiet] foreach [--recursive] <command>
->      or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-> @@ -259,6 +259,13 @@ module_clone()
->   	url=$3
->   	reference="$4"
->   	depth="$5"
-> +	clone_branch=
-> +	if test -n "$6"
-> +	then
-> +		clone_branch="--branch=$6"
-> +	fi
-> +
-> +	no_single_branch="$7"
->   	quiet=
->   	if test -n "$GIT_QUIET"
->   	then
-> @@ -282,6 +289,7 @@ module_clone()
->   		(
->   			clear_local_git_env
->   			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} \
-> +				${clone_branch:+"$clone_branch"} ${no_single_branch:+"$no_single_branch"} \
->   				--separate-git-dir "$gitdir" "$url" "$sm_path"
->   		) ||
->   		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
-> @@ -328,6 +336,7 @@ cmd_add()
->   {
->   	# parse $args after "submodule ... add".
->   	reference_path=
-> +	no_single_branch=
->   	while test $# -ne 0
->   	do
->   		case "$1" in
-> @@ -363,6 +372,9 @@ cmd_add()
->   		--depth=*)
->   			depth=$1
->   			;;
-> +		--no-single-branch)
-> +			no_single_branch="--no-single-branch"
-> +			;;
->   		--)
->   			shift
->   			break
-> @@ -472,7 +484,7 @@ Use -f if you really want to add it." >&2
->   				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
->   			fi
->   		fi
-> -		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
-> +		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" "$branch" "$no_single_branch" || exit
->   		(
->   			clear_local_git_env
->   			cd "$sm_path" &&
-> @@ -724,6 +736,7 @@ cmd_deinit()
->   cmd_update()
->   {
->   	# parse $args after "submodule ... update".
-> +	no_single_branch=
->   	while test $# -ne 0
->   	do
->   		case "$1" in
-> @@ -770,6 +783,9 @@ cmd_update()
->   		--depth=*)
->   			depth=$1
->   			;;
-> +		--no-single-branch)
-> +			no_single_branch="--no-single-branch"
-> +			;;
->   		--)
->   			shift
->   			break
-> @@ -834,7 +850,7 @@ Maybe you want to use 'update --init'?")"
->
->   		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
->   		then
-> -			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
-> +			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" "$branch" "$no_single_branch" || exit
->   			cloned_modules="$cloned_modules;$name"
->   			subsha1=
->   		else
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 7c88245..81c05ae 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -136,7 +136,6 @@ test_expect_success 'submodule add --branch' '
->   	echo "refs/heads/initial" >expect-head &&
->   	cat <<-\EOF >expect-heads &&
->   	refs/heads/initial
-> -	refs/heads/master
->   	EOF
->   	>empty &&
->
-> @@ -982,5 +981,37 @@ test_expect_success 'submodule add clone shallow submodule' '
->   	)
->   '
->
-> +test_expect_success 'submodule add --branch --depth' '
-> +	(
-> +		cd addtest2 &&
-> +		git submodule add -b initial --depth 1 -- file://"$submodurl" submod-branch-depth &&
-> +		test "initial" = "$(git config -f .gitmodules submodule.submod-branch-depth.branch)" &&
-> +		(
-> +			cd submod-branch-depth &&
-> +			test 1 = $(git log --oneline | wc -l)
-> +		)
-> +	)
-> +'
-> +
-> +cat >remote <<\EOF
-> +  origin/HEAD -> origin/second
-> +  origin/initial
-> +  origin/master
-> +  origin/second
-> +EOF
-> +
-> +test_expect_success 'submodule add --branch --depth --no-single-branch' '
-> +	(
-> +		cd addtest2 &&
-> +		git submodule add -b initial --depth 1 --no-single-branch -- file://"$submodurl" submod-branch-depth-all &&
-> +		test "initial" = "$(git config -f .gitmodules submodule.submod-branch-depth-all.branch)" &&
-> +		(
-> +			cd submod-branch-depth-all &&
-> +			test 1 = $(git log --oneline | wc -l)
-> +			git branch -r >../../remote-out
-> +		)
-> +	) &&
-> +	test_cmp remote remote-out
-> +'
->
->   test_done
->
+	$ git diff
+	diff --cc b
+	index fc12d34,33d9fa9..0000000
+	--- a/b
+	+++ b/b
+
+Git does know what's going on, just fails to display it properly
+in the diff, as the output of ls-files shows:
+
+	$git ls-files -u
+	160000 6a6e215138b7f343fba67ba1b6ffc152019c6085 1	b
+	160000 fc12d3455b120916ec508c3ccd04f23957c08ea5 2	b
+	160000 33d9fa9f9e25de2a85f84993d8f6c752f84c769a 3	b
+
+I agree that this needs to be improved, but am currently lacking
+the time to do it myself. But I believe this will get important
+rather soonish when we recursively update submodules too ...
