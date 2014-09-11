@@ -1,65 +1,84 @@
-From: Harry Jeffery <harry@exec64.co.uk>
-Subject: Re: [PATCH 2/2] pretty: add %D format specifier
-Date: Thu, 11 Sep 2014 18:26:40 +0100
-Message-ID: <5411DB50.8080602@exec64.co.uk>
-References: <5410C998.5060701@exec64.co.uk> <5410C9EF.9080509@exec64.co.uk> <xmqq61guf641.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: use single-parameter --cacheinfo in example
+Date: Thu, 11 Sep 2014 10:35:30 -0700
+Message-ID: <xmqqppf2dpr1.fsf@gitster.dls.corp.google.com>
+References: <1410448791-31514-1-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 11 19:26:47 2014
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Sep 11 19:35:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS88l-0007Lj-6W
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 19:26:39 +0200
+	id 1XS8HS-0004gf-Gg
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 19:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbaIKR0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 13:26:32 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:44798 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999AbaIKR03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 13:26:29 -0400
-Received: by mail-wg0-f52.google.com with SMTP id x13so6703604wgg.35
-        for <git@vger.kernel.org>; Thu, 11 Sep 2014 10:26:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=QYRS3hwrr56bzPznO49lRGm7eygs0rx90g0NaxGHlgY=;
-        b=XATTi5rJt16RyH1wMoHJseg/jRp6g+fFBCYvIgVG8ZylTnBPRjrW7jMwV0g22CnyNV
-         9grc9BjVFv9125hMVdtSAVvey4xn1Lx42huNvlBXFAnLQlLNspEtSrtzRWp40IdsZsip
-         xew6LJ3qc7l2EAnxGoW2oCtVqhd5GMKKytmWxk18ohR58KPJ9ENK/7zhS9XBZfw/Kp9A
-         Q6MXUKAHyp/a8AWAto+omAsrEQnxnEy4yk4UCbTrNPDu/3x7fe1AjcdA9busCcEpjwoA
-         q+xjauVCV8Gp5uEDo6YMY+T/SXv9b84v6WVoZyaxq+7WhmluqZnUxv1EtaiR5iBTgWIQ
-         QfVw==
-X-Gm-Message-State: ALoCoQl+jw7yZmX7pD27chPeaL+UwobINndjKnS6lzJTn/9huF8Uridcyh9zBxmQWr/L41301g5v
-X-Received: by 10.180.100.37 with SMTP id ev5mr8746544wib.49.1410456383122;
-        Thu, 11 Sep 2014 10:26:23 -0700 (PDT)
-Received: from [192.168.0.6] (cpc69047-oxfd25-2-0-cust267.4-3.cable.virginm.net. [81.109.93.12])
-        by mx.google.com with ESMTPSA id xn15sm6591126wib.13.2014.09.11.10.26.21
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Sep 2014 10:26:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <xmqq61guf641.fsf@gitster.dls.corp.google.com>
+	id S1752063AbaIKRfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 13:35:34 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57479 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750899AbaIKRfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 13:35:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4422C38B5C;
+	Thu, 11 Sep 2014 13:35:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7PjDVD8pcoiBpKvjxDepIXBNPTw=; b=GV68st
+	ck0O+vnzU9B+ZLltpAHKmYq9M+6PvvrBuS6XImfuyAY+lK43Ie5aWUCo/Xv3e1Y8
+	l2EgEHtCfCxDkmniyGk5MgEjLB6cNnAKCcTx0gZCbAPM775gurt3vfxENYhhDHrZ
+	cr830+lUa9Q244pob8ekI8lftZyA88F6T5Wbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rL5II1vyxa1CUAPFdICpZOU0F23Rn9i1
+	U7osEHhvJMebos3cLgJN3Bm6nMZCmr9xqUCAoGgWDom5qs3hHPe8VDQVDUE8gbCQ
+	Vcd170pZQmetE5dpNEJyYWltUTc5q0beDCJ76rKqM3BHD7yCN/5QSNIlLHYZsem4
+	NqriynhK4OY=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF73538B59;
+	Thu, 11 Sep 2014 13:35:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A865238B54;
+	Thu, 11 Sep 2014 13:35:31 -0400 (EDT)
+In-Reply-To: <1410448791-31514-1-git-send-email-prohaska@zib.de> (Steffen
+	Prohaska's message of "Thu, 11 Sep 2014 17:19:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 075AB1C0-39DA-11E4-B207-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256858>
 
-On 11/09/14 17:56, Junio C Hamano wrote:
- > Because patch 1/2 alone does not make much sense without 2/2, it
- > probably would have been better to do these as a single patch.
+Steffen Prohaska <prohaska@zib.de> writes:
 
-Would you like me to resubmit it as a single patch, or are you applying 
-them as is?
+> The single-parameter form is described as the preferred way.  Separate
+> arguments are only supported for backward compatibility.  Update the
+> example to the recommended form.
+>
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> ---
 
- > And of course a few additional tests to t4205 would not hurt ;-)
+My fault.  Thanks for catching.
 
-Sure. Should the tests be in the same patch, or a subsequent one?
+>  Documentation/git-update-index.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+> index dfc09d9..82eca6f 100644
+> --- a/Documentation/git-update-index.txt
+> +++ b/Documentation/git-update-index.txt
+> @@ -202,7 +202,7 @@ merging.
+>  To pretend you have a file with mode and sha1 at path, say:
+>  
+>  ----------------
+> -$ git update-index --cacheinfo mode sha1 path
+> +$ git update-index --cacheinfo <mode>,<sha1>,<path>
+>  ----------------
+>  
+>  '--info-only' is used to register files without placing them in the object
