@@ -1,150 +1,94 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Diffs for submodule conflicts during rebase usually empty
-Date: Thu, 11 Sep 2014 21:29:28 +0200
-Message-ID: <5411F818.6030701@web.de>
-References: <20140911135057.o7j9bwlnz4okgwsw@webmail.mit.edu>
+Subject: Re: [PATCH v3 4/8] combine-diff: do not pass revs->dense_combined_merges
+ redundantly
+Date: Thu, 11 Sep 2014 21:37:45 +0200
+Message-ID: <5411FA09.3050303@web.de>
+References: <cover.1409860234.git.tr@thomasrast.ch>	<33951a1d4be8ec15eec569e1a36c0a620b9edaa6.1409860234.git.tr@thomasrast.ch> <xmqqvboynhq2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-To: ezyang <ezyang@mit.edu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 11 21:29:48 2014
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+To: Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Thu Sep 11 21:38:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSA3l-0007T0-LO
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:29:37 +0200
+	id 1XSABu-000447-BU
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:38:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755792AbaIKT3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 15:29:34 -0400
-Received: from mout.web.de ([212.227.15.3]:57850 "EHLO mout.web.de"
+	id S1756090AbaIKThz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 15:37:55 -0400
+Received: from mout.web.de ([212.227.17.11]:55764 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755782AbaIKT3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 15:29:33 -0400
-Received: from [192.168.178.41] ([79.193.78.148]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0LoYWI-1XzY3v1THG-00gYFo; Thu, 11 Sep 2014 21:29:29
+	id S1752886AbaIKThy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 15:37:54 -0400
+Received: from [192.168.178.41] ([79.193.78.148]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Lh6UN-1Y6x012VDb-00oaT9; Thu, 11 Sep 2014 21:37:46
  +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <20140911135057.o7j9bwlnz4okgwsw@webmail.mit.edu>
-X-Provags-ID: V03:K0:5h6QEoTZ8BT+lcrX+dUkaRyX0J5ExuVospar67ybzPzW96wr2EO
- 0YMQwwD7d9+fXGToCzkmUXuCAXnej4R6HJROdKSAddy1zRr/qEd8i3kVxT+eVJndIzqKBEI
- PFKz2QwfQb35cbShgy1imJRm3p/CGA+USAtne5JCgS6vBsw74KaAdqNoRxPGooKI+mfPt6B
- xo838sBeetUm5qFwCp9Qg==
+In-Reply-To: <xmqqvboynhq2.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:n9pay3bJh8JcNJeoTUyHCo4/1CK2jX8FPINV/lVgZu6LD43c61K
+ fuM5r0nEamavxktczTXMXNGYjbVgEp/76XiNAoxxBn7UYKMNgDtnSFOV/s6bjfvEKJeRHt4
+ bKCwEGPjJd5FJzaqPa6o7h3AXXJGMin5GSWFiEPMRaWrIAictb26B50mnIiYhI6LgGYizwB
+ HAXD4wla00WIi1xSehHMw==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256869>
 
-Am 11.09.2014 um 19:50 schrieb ezyang:
-> Hello all,
+Am 08.09.2014 um 19:29 schrieb Junio C Hamano:
+> Thomas Rast <tr@thomasrast.ch> writes:
 >
-> In many situations, if you have a submodule conflict during a rebase,
-> and you type 'git diff' to get a summary of the situation, you will get
-> an empty diff.  Here's a simple transcript for one such case (I'm sorry
-> I can't make it much shorter), tested on git version 2.0.3.693.g996b0fd:
+>> The existing code passed revs->dense_combined_merges along revs itself
+>> into the combine-diff functions, which is rather redundant.  Remove
+>> the 'dense' argument until much further down the callchain to simplify
+>> callers.
 >
->      git init
->      mkdir b
->      cd b
->      git init
->      git commit --allow-empty -m "submodule initial"
->      cd ..
->      git submodule add ./b
->      git commit -am "parent initial"
->      git branch dev
->      cd b
->      touch a
->      git add a
->      git commit -m "submodule master"
->      cd ..
->      git commit -am "parent master"
->      git checkout dev
->      git submodule update
->      cd b
->      touch b
->      git add b
->      git commit -m "submodule dev"
->      cd ..
->      git commit -am "parent dev"
->      git rebase master
->      git diff b
+> It was not apparent that the changes to diff_tree_combined_merge()
+> was correct without looking at both of its callsites, but one passes
+> the .dense_combined_merges member, and the other in submodules
+> always gives true, which you covered here:
 >
-> The last output is:
+>> Note that while the caller in submodule.c needs to do extra work now,
+>> the next commit will simplify this to a single setting again.
 >
->      diff --cc b
->      index 4b1b6c6,c423df2..0000000
->      --- a/b
->      +++ b/b
+>> diff --git a/submodule.c b/submodule.c
+>> index c3a61e7..0499de6 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -482,10 +482,13 @@ static void find_unpushed_submodule_commits(struct commit *commit,
+>>   	struct rev_info rev;
+>>
+>>   	init_revisions(&rev, NULL);
+>> +	rev.ignore_merges = 0;
+>> +	rev.combined_merges = 1;
+>> +	rev.dense_combined_merges = 1;
+>>   	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+>>   	rev.diffopt.format_callback = collect_submodules_from_diff;
+>>   	rev.diffopt.format_callback_data = needs_pushing;
+>> -	diff_tree_combined_merge(commit, 1, &rev);
+>> +	diff_tree_combined_merge(commit, &rev);
+>>   }
+>
+> I briefly wondered if there can be any unwanted side effects in this
+> particular codepath that is caused by setting rev.combined_merges
+> which was not set in the original code, but seeing that this &rev is
+> not used for anything other than diff_tree_combined_merge(), it
+> should be OK.
+>
+> Also I wondered if this is leaking whatever in the &rev structure,
+> but in this call I think rev is used only for its embedded diffopt
+> in a way that does not leak anything, so it seems to be OK, but I'd
+> appreciate if submodule folks can double check.
 
-Thanks for providing a simple way to reproduce what you are seeing.
-
-> As it turns out, this behavior is logical in a perverse sort of way.
->
->      - The rebase operation doesn't go about updating your submodule
->        checkouts, so whatever is in the file is what the submodule
->        was pointing to before your initiated the rebase.
->
->      - By default, 'git diff' on a merge conflict (implicitly
->        'git diff --cc') only will report if the submodule's HEAD
->        differs from all of the merge heads.  So if you only had
->        one commit which changed the submodule, you're probably
->        on that commit, and so the "current state" of the submodule
->
-> However, just because behavior is logical, doesn't mean it is user
-> friendly.  There are a few problems here:
->
->      1. Git is treating the lagging submodule HEAD as if it were
->      actually a resolution that you might want for the conflict.
->      Actually, it's basically almost always wrong (in the example
->      above, if you commit it you'll be discarding commits made on
->      master.)  There is a sorter of wider UI issue here where Git
->      can't tell if you've legitimately changed the HEAD pointer
->      of a submodule, or if you checked out a new revision with different
->      submodule pointers and forgot to run 'git submodule update'.
->      (But by the way, you can't even do that here, because this is
->      a merge!)
->
->      2. The behavior of not reporting the diff when the diff for one
->      branch is non-empty is illogical: for submodules (whose "file
->      contents" are so short), you basically always want some hashes,
->      and not an empty diff.  Doubly so when the "resolution" is
->      bogus (c.f. (1)).
->
-> Of course, changing behavior in a backwards-incompatible way is never a
-> good way, so it's not exactly obvious what should be done here. I would
-> recommend tweaking the default combined diff behavior for submodules and
-> adding an admonition to the user that the submodules have not been
-> updated in the rebase message (I can submit a patch for this if people
-> agree if it's a good idea), but maybe that's too much of a behavior
-> change.
->
-> By the way, the difference between 'git diff -c' and 'git diff --cc'
-> does not seem to be documented anywhere, except for an oblique comment
-> in diff-format.txt "Note that 'combined diff' lists only files which
-> were modified from all parents." -- the user expected, of course, to
-> figure out that 'combined diff' here refers to --cc, but not -c.
-
-It looks to me like your confusion is because current Git isn't
-terribly good at displaying merge conflicts in submodules. While
-diff produces rather confusing output:
-
-	$ git diff
-	diff --cc b
-	index fc12d34,33d9fa9..0000000
-	--- a/b
-	+++ b/b
-
-Git does know what's going on, just fails to display it properly
-in the diff, as the output of ls-files shows:
-
-	$git ls-files -u
-	160000 6a6e215138b7f343fba67ba1b6ffc152019c6085 1	b
-	160000 fc12d3455b120916ec508c3ccd04f23957c08ea5 2	b
-	160000 33d9fa9f9e25de2a85f84993d8f6c752f84c769a 3	b
-
-I agree that this needs to be improved, but am currently lacking
-the time to do it myself. But I believe this will get important
-rather soonish when we recursively update submodules too ...
+The only thing the collect_submodules_from_diff() callback does
+is to collect the to-be-pushed submodules in the needs_pushing
+string_list initialized with STRING_LIST_INIT_DUP which is cleared
+at the end of push_unpushed_submodules(), so I think we should be
+ok here.
