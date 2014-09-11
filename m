@@ -1,74 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] pretty: add %D format specifier
-Date: Thu, 11 Sep 2014 12:42:37 -0700
-Message-ID: <xmqq8ulqdjv6.fsf@gitster.dls.corp.google.com>
-References: <5410C998.5060701@exec64.co.uk> <5410C9EF.9080509@exec64.co.uk>
-	<xmqq61guf641.fsf@gitster.dls.corp.google.com>
-	<5411DB50.8080602@exec64.co.uk>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v4 13/32] write_packed_entry_fn(): convert cb_data into a
+ (const int *)
+Date: Thu, 11 Sep 2014 12:55:15 -0700
+Message-ID: <CAL=YDWnHKUTiKnW5tVfdppw0g6HpXHPbL-b_EViRZHheQO3Uqg@mail.gmail.com>
+References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
+	<1409989846-22401-14-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Harry Jeffery <harry@exec64.co.uk>
-X-From: git-owner@vger.kernel.org Thu Sep 11 21:42:46 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 11 21:55:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSAGS-0006fN-9M
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:42:44 +0200
+	id 1XSASn-0005U3-0i
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097AbaIKTmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 15:42:40 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52350 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753999AbaIKTmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 15:42:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 83A5E3A44A;
-	Thu, 11 Sep 2014 15:42:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EVdZd57L6hwjgdqtINXjoUVDjEI=; b=mCA96x
-	2DCQeHLc9dIbHgjsS6GB2Wxk9uHIxgnEZGNn9AqXvxwELYI3JjsY4vAdWieswJ4p
-	5VxD4fEkCjfAJbNR9HI5Emtx0apYN/UTsswVy36sBWR7nGpkLdvIbWNi9iCtpj+j
-	wJMZt/d54siD+0w6Cl1WEBHCCc74GW5LJRy+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pxZ83QYylOBpw8um4sbFx00iI2hmofY9
-	w98f7OxjjqGmMzhxnoh6zH6oYK4v4PAgo8uTBCpL1SN1Od1VPXh8MyZSingt7yTx
-	wDHgCT+0lZOfxuK4/0YdoQfqIAshLQh4IQsSVwKgTF+E1fHE74DasMtFYXK7slt3
-	XCImoxG5Oq0=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 783133A448;
-	Thu, 11 Sep 2014 15:42:39 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EFFAF3A447;
-	Thu, 11 Sep 2014 15:42:38 -0400 (EDT)
-In-Reply-To: <5411DB50.8080602@exec64.co.uk> (Harry Jeffery's message of "Thu,
-	11 Sep 2014 18:26:40 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C9930056-39EB-11E4-B97F-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1754168AbaIKTzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 15:55:21 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:38109 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752075AbaIKTzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 15:55:18 -0400
+Received: by mail-vc0-f174.google.com with SMTP id hy10so6318747vcb.5
+        for <git@vger.kernel.org>; Thu, 11 Sep 2014 12:55:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5PP9JtYGONEuPv38TV4Pg4z6mZwFl/eoQI8n+kyegjk=;
+        b=ZiDpDu7NcchHSCazrX28R9njt9VdJpcyoiUxYDmecjH84WKj2AM20tlF1S5jyli1LB
+         Ek53DVt/hRmAVAwFsYI9D8L74xZCeKeDYW0u/YfNcZinZ85NfPRQWPzsfiHopIEjkuSE
+         Z9bzS30NmmoWSwYnMbEqwa9Do7PZa1KzAEujEIphhd5qjdKSpYXFqNfRqxvrmsk92IEl
+         /yf4KKT550AgKkF8+2ETlpKxxiJfjDWBPFpWrCszusMVQef0+354OkWALpDRoAkIP3VW
+         ey8gMYIbZCTGrAf/MzHpR9NlHuwtvI6yfo7sPKjEtNZnsJ7Ct3dcZsI4pQ3UPTVqFfzJ
+         W/0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=5PP9JtYGONEuPv38TV4Pg4z6mZwFl/eoQI8n+kyegjk=;
+        b=Vf8/5yEgbptivl0cNBEil9yPixtlylb0X15ajmatl+fpzyh6JiqZGdh8m09kI+doFm
+         oAgXu98MEI1JrllEfXRKarxbFSaMzyu8b8rCIgvExcNOhT+fD3giSJEXVsp1DDV6R9KI
+         PPw5MQrWcaeXejYIiLaSfld/PjljqmMXjV5R6FSH6ttPD85945Xzm+LiLLO3kSWfzFSt
+         U0hi5H8JLSRPKqR71VLNmJD5lJyh90COwEg93FMvkM3SrOimJ3kt3N6aJdS+6qab4BK2
+         X1Awql0Wc7o4CW0S/qwisHZzM/0AaimQvTNX01P1o16vK0r5CGiHezEsNgIHTX2y+MZY
+         6ksQ==
+X-Gm-Message-State: ALoCoQmnHiSmQPFBxzkB9mA8MCb77tqfTyI2/xtCWfrkzszBVpjBZg6DBTJbL17NoWgAV8Gb2scA
+X-Received: by 10.52.245.101 with SMTP id xn5mr2280176vdc.32.1410465315541;
+ Thu, 11 Sep 2014 12:55:15 -0700 (PDT)
+Received: by 10.52.231.232 with HTTP; Thu, 11 Sep 2014 12:55:15 -0700 (PDT)
+In-Reply-To: <1409989846-22401-14-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256871>
 
-Harry Jeffery <harry@exec64.co.uk> writes:
+Reviewed-by: Ronnie Sahlberg <sahlberg@google.com>
 
-> On 11/09/14 17:56, Junio C Hamano wrote:
->> Because patch 1/2 alone does not make much sense without 2/2, it
->> probably would have been better to do these as a single patch.
+On Sat, Sep 6, 2014 at 12:50 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> This makes it obvious that we have no plans to change the integer
+> pointed to, which is actually the fd field from a struct lock_file.
 >
-> Would you like me to resubmit it as a single patch, or are you
-> applying them as is?
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->> And of course a few additional tests to t4205 would not hurt ;-)
+> diff --git a/refs.c b/refs.c
+> index 8a63073..21b0da3 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2218,7 +2218,7 @@ static void write_packed_entry(int fd, char *refname, unsigned char *sha1,
+>   */
+>  static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
+>  {
+> -       int *fd = cb_data;
+> +       const int *fd = cb_data;
+>         enum peel_status peel_status = peel_entry(entry, 0);
 >
-> Sure. Should the tests be in the same patch, or a subsequent one?
-
-All in one; that way, "git show $that_single_patch" later can become
-more useful by demonstrating expected uses in its test.
+>         if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
+> --
+> 2.1.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
