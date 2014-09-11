@@ -1,100 +1,90 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 3/6] Make sure fsck_commit_buffer() does not run out of
- the buffer
-Date: Thu, 11 Sep 2014 16:26:33 +0200 (CEST)
-Message-ID: <2f5a78c03de27bcf31151380710a504b72338c57.1410445431.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 6/6] Make sure that index-pack --strict checks tag
+ objects
+Date: Thu, 11 Sep 2014 16:26:45 +0200 (CEST)
+Message-ID: <2738eace005dce9002c1a1f5e87ad63aebdf83ef.1410445431.git.johannes.schindelin@gmx.de>
 References: <alpine.DEB.1.00.1409101552250.990@s15462909.onlinehome-server.info> <cover.1410445430.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 11 16:26:59 2014
+X-From: git-owner@vger.kernel.org Thu Sep 11 16:27:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS5Ke-0004ay-6e
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 16:26:44 +0200
+	id 1XS5L7-0004wM-0B
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 16:27:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753182AbaIKO0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 10:26:38 -0400
-Received: from mout.gmx.net ([212.227.15.18]:65448 "EHLO mout.gmx.net"
+	id S1753008AbaIKO0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 10:26:50 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59238 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751355AbaIKO0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 10:26:37 -0400
+	id S1754845AbaIKO0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 10:26:48 -0400
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LcBin-1YAjt63gP7-00jbRx;
- Thu, 11 Sep 2014 16:26:33 +0200
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MS0c2-1XvHK819UA-00T9U6;
+ Thu, 11 Sep 2014 16:26:46 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
 In-Reply-To: <cover.1410445430.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:FEvZ/zU1Za6Sf0ahzzN924rx8mfK8R9esjCcAmlwPcO5oL6m7hO
- QYyKNCbl6N1FVmwqTE46RhD8RZE+phB/CoDo8I2/ZRCfZXMgC7aiJBWaDjYxui6TGSgZzJi
- qFJiW8fE4XUTQrwa9imZ+Q5j/xLvoXwDhmoiX0FVemvLmb6+Qc4vgPPxdOIpbS0NOQ3Hu9b
- LyVwQDAA+tBVRr2v7fGcg==
+X-Provags-ID: V03:K0:avJFMPAG8vfnEedV1gq6SbtTaGvxNvCo6lexfKln5hbdauBsRnn
+ Hv51d9HQdT8QppQ9r4AlhOjHep7EUuwedQbNIpi6yGoUAsuEmLYUFqEOHJ5zHfd4vB0kmdl
+ g/UhpD7jooX2/x3o0YUOPvfMH6rMftVRRqhye5YtwZJ0qFg+y52gyib8TaFUM/J/MQa7Prz
+ ZSSa1bLtYLZEsz9VAIZFQ==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256844>
 
-So far, we assumed that the buffer is NUL terminated, but this is not
-a safe assumption, now that we opened the fsck_object() API to pass a
-buffer directly.
+One of the most important use cases for the strict tag object checking
+is when transfer.fsckobjects is set to true to catch invalid objects
+early on. This new regression test essentially tests the same code path
+by directly calling 'index-pack --strict' on a pack containing an
+tag object without a 'tagger' line.
 
-So let's make sure that there is at least an empty line in the buffer.
-That way, our checks would fail if the empty line was encountered
-prematurely, and consequently we can get away with the current string
-comparisons even with non-NUL-terminated buffers are passed to
-fsck_object().
+Technically, this test is not enough: it only exercises a code path that
+*warns*, not one that *fails*. The reason is that it would be exquisitely
+convoluted to test that: not only hash-object, but also pack-index
+actually *parse* tag objects when encountering them. Therefore we would
+have to actively *break* pack-index in order to test this. Or rewrite
+both hash-object and pack-index in shell script. Ain't gonna happen.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ t/t5302-pack-index.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/fsck.c b/fsck.c
-index dd77628..73da6f8 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -237,6 +237,26 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 	return retval;
- }
+diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
+index 4bbb718..4d033df 100755
+--- a/t/t5302-pack-index.sh
++++ b/t/t5302-pack-index.sh
+@@ -243,4 +243,23 @@ test_expect_success 'running index-pack in the object store' '
+     test -f .git/objects/pack/pack-${pack1}.idx
+ '
  
-+static int require_end_of_header(const void *data, unsigned long size,
-+	struct object *obj, fsck_error error_func)
-+{
-+	const char *buffer = (const char *)data;
-+	unsigned long i;
++test_expect_success 'index-pack --strict warns upon missing tagger in tag' '
++    sha=$(git rev-parse HEAD) &&
++    cat >wrong-tag <<EOF &&
++object $sha
++type commit
++tag guten tag
 +
-+	for (i = 0; i < size; i++) {
-+		switch (buffer[i]) {
-+		case '\0':
-+			return error_func(obj, FSCK_ERROR,
-+				"unterminated header: NUL at offset %d", i);
-+		case '\n':
-+			if (i + 1 < size && buffer[i + 1] == '\n')
-+				return 0;
-+		}
-+	}
++This is an invalid tag.
++EOF
 +
-+	return error_func(obj, FSCK_ERROR, "unterminated header");
-+}
++    tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
++    pack1=$(echo $tag $sha | git pack-objects tag-test) &&
++    echo remove tag object &&
++    thirtyeight=${tag#??} &&
++    rm -f .git/objects/${tag%$thirtyeight}/$thirtyeight &&
++    git index-pack --strict tag-test-${pack1}.pack 2> err &&
++    grep "^error:.* expected .tagger. line" err
++'
 +
- static int fsck_ident(const char **ident, struct object *obj, fsck_error error_func)
- {
- 	char *end;
-@@ -284,6 +304,9 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	unsigned parent_count, parent_line_count = 0;
- 	int err;
- 
-+	if (require_end_of_header(buffer, size, &commit->object, error_func))
-+		return -1;
-+
- 	if (!skip_prefix(buffer, "tree ", &buffer))
- 		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'tree' line");
- 	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n')
+ test_done
 -- 
 2.0.0.rc3.9669.g840d1f9
