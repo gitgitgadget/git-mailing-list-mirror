@@ -1,84 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: use single-parameter --cacheinfo in example
-Date: Thu, 11 Sep 2014 10:35:30 -0700
-Message-ID: <xmqqppf2dpr1.fsf@gitster.dls.corp.google.com>
-References: <1410448791-31514-1-git-send-email-prohaska@zib.de>
+From: ezyang <ezyang@mit.edu>
+Subject: Diffs for submodule conflicts during rebase usually empty
+Date: Thu, 11 Sep 2014 13:50:57 -0400
+Message-ID: <20140911135057.o7j9bwlnz4okgwsw@webmail.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Sep 11 19:35:39 2014
+Content-Type: text/plain;
+	charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 11 19:56:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS8HS-0004gf-Gg
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 19:35:38 +0200
+	id 1XS8bJ-00021Z-0V
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 19:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063AbaIKRfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 13:35:34 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57479 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750899AbaIKRfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 13:35:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4422C38B5C;
-	Thu, 11 Sep 2014 13:35:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7PjDVD8pcoiBpKvjxDepIXBNPTw=; b=GV68st
-	ck0O+vnzU9B+ZLltpAHKmYq9M+6PvvrBuS6XImfuyAY+lK43Ie5aWUCo/Xv3e1Y8
-	l2EgEHtCfCxDkmniyGk5MgEjLB6cNnAKCcTx0gZCbAPM775gurt3vfxENYhhDHrZ
-	cr830+lUa9Q244pob8ekI8lftZyA88F6T5Wbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rL5II1vyxa1CUAPFdICpZOU0F23Rn9i1
-	U7osEHhvJMebos3cLgJN3Bm6nMZCmr9xqUCAoGgWDom5qs3hHPe8VDQVDUE8gbCQ
-	Vcd170pZQmetE5dpNEJyYWltUTc5q0beDCJ76rKqM3BHD7yCN/5QSNIlLHYZsem4
-	NqriynhK4OY=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF73538B59;
-	Thu, 11 Sep 2014 13:35:32 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A865238B54;
-	Thu, 11 Sep 2014 13:35:31 -0400 (EDT)
-In-Reply-To: <1410448791-31514-1-git-send-email-prohaska@zib.de> (Steffen
-	Prohaska's message of "Thu, 11 Sep 2014 17:19:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 075AB1C0-39DA-11E4-B207-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1752232AbaIKR4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 13:56:04 -0400
+Received: from dmz-mailsec-scanner-5.mit.edu ([18.7.68.34]:46826 "EHLO
+	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750852AbaIKR4C (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2014 13:56:02 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Sep 2014 13:56:02 EDT
+X-AuditID: 12074422-f79436d000000c21-e8-5411e104af78
+Received: from mailhub-4.mit.edu ( [18.7.62.40])
+	(using TLS with cipher AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by dmz-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id EF.BE.03105.401E1145; Thu, 11 Sep 2014 13:51:00 -0400 (EDT)
+Received: from outgoing.mit.edu (outgoing-1.mit.edu [18.9.28.12])
+	by mailhub-4.mit.edu (8.13.8/8.9.2) with ESMTP id s8BHoxPZ022866
+	for <git@vger.kernel.org>; Thu, 11 Sep 2014 13:51:00 -0400
+Received: from webmail-4.mit.edu (webmail-4.mit.edu [18.9.23.14])
+	)
+	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id s8BHowH0012647
+	for <git@vger.kernel.org>; Thu, 11 Sep 2014 13:50:59 -0400
+Received: from webmail-4.mit.edu (webmail-4.mit.edu [127.0.0.1]) by webmail-4.mit.edu (8.13.8) with ESMTP
+	id s8BHow63008188; Thu, 11 Sep 2014 13:50:58 -0400
+Received: (from nobody@localhost)
+	by webmail-4.mit.edu (8.13.8/8.13.8/Submit) id s8BHov7I008187
+	for git@vger.kernel.org; Thu, 11 Sep 2014 13:50:57 -0400
+X-Authentication-Warning: webmail-4.mit.edu: nobody set sender to ezyang@mit.edu using -f
+Received: from ool-18b93804.dyn.optonline.net
+	(ool-18b93804.dyn.optonline.net [24.185.56.4])   (User authenticated as
+	ezyang@ATHENA.MIT.EDU) by webmail.mit.edu (Horde MIME library) with HTTP;
+	Thu, 11 Sep 2014 13:50:57 -0400
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.0.3)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixG6nocvyUDDEYGWHpUXXlW4mB0aPz5vk
+	AhijuGxSUnMyy1KL9O0SuDIOb9jPVDBPquLehPMsDYx7hbsYOTkkBEwkPuxbygJhi0lcuLee
+	DcQWEpjGJNHartjFyAVkH2SUePJ2IytE4iijxJXjFRCJeYwSq7fsYoZw5jBKHO1aywwxKlJi
+	9/MdLBCJp4wSh3duYAJJ8ArYSpxvus8OYrMIqEqsXdsC1sAmICvx8cMKsBoRAXGJt8dngtUI
+	CzhJ3D5wnRmiV1Di5MwnYLcyC+hJ/P95irGLkQPIlpZY/o8DIiwvsf3tHLByUQFziQd7dzBO
+	YBSehaR7FpLuWQjds5B0L2BkWcUom5JbpZubmJlTnJqsW5ycmJeXWqRrqpebWaKXmlK6iREc
+	8i5KOxh/HlQ6xCjAwajEw1vBIhgixJpYVlyZe4hRkoNJSZT32m2gEF9SfkplRmJxRnxRaU5q
+	8SFGCQ5mJRFe54VAOd6UxMqq1KJ8mJQ0B4uSOO+mH3whQgLpiSWp2ampBalFMFkZDg4lCV7Z
+	B0CNgkWp6akVaZk5JQhpJg5OkOE8QMOv3gcZXlyQmFucmQ6RP8Woy7Gu81s/kxBLXn5eqpQ4
+	bx9IkQBIUUZpHtwcWKp6xSgO9JYwbzrIOh5gmoOb9ApoCRPQkoPG/CBLShIRUlINjL2szT0s
+	JdU7C6v63t2Oa+3YJONtdCazxHrTLZlXRkaxX/N+l2bO+H505a0P7w7yi6bn/1H8/UTldfa9
+	M9f7TLNK56+MzjdjsDthlb/wcOptdrY76mvXdbhJbG9KVZ9inl0wW7uc44mBQu2v 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256859>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Hello all,
 
-> The single-parameter form is described as the preferred way.  Separate
-> arguments are only supported for backward compatibility.  Update the
-> example to the recommended form.
->
-> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> ---
+In many situations, if you have a submodule conflict during a rebase,
+and you type 'git diff' to get a summary of the situation, you will get
+an empty diff.  Here's a simple transcript for one such case (I'm sorry
+I can't make it much shorter), tested on git version 2.0.3.693.g996b0fd:
 
-My fault.  Thanks for catching.
+    git init
+    mkdir b
+    cd b
+    git init
+    git commit --allow-empty -m "submodule initial"
+    cd ..
+    git submodule add ./b
+    git commit -am "parent initial"
+    git branch dev
+    cd b
+    touch a
+    git add a
+    git commit -m "submodule master"
+    cd ..
+    git commit -am "parent master"
+    git checkout dev
+    git submodule update
+    cd b
+    touch b
+    git add b
+    git commit -m "submodule dev"
+    cd ..
+    git commit -am "parent dev"
+    git rebase master
+    git diff b
 
->  Documentation/git-update-index.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index dfc09d9..82eca6f 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -202,7 +202,7 @@ merging.
->  To pretend you have a file with mode and sha1 at path, say:
->  
->  ----------------
-> -$ git update-index --cacheinfo mode sha1 path
-> +$ git update-index --cacheinfo <mode>,<sha1>,<path>
->  ----------------
->  
->  '--info-only' is used to register files without placing them in the object
+The last output is:
+
+    diff --cc b
+    index 4b1b6c6,c423df2..0000000
+    --- a/b
+    +++ b/b
+
+As it turns out, this behavior is logical in a perverse sort of way.
+
+    - The rebase operation doesn't go about updating your submodule
+      checkouts, so whatever is in the file is what the submodule
+      was pointing to before your initiated the rebase.
+
+    - By default, 'git diff' on a merge conflict (implicitly
+      'git diff --cc') only will report if the submodule's HEAD
+      differs from all of the merge heads.  So if you only had
+      one commit which changed the submodule, you're probably
+      on that commit, and so the "current state" of the submodule
+
+However, just because behavior is logical, doesn't mean it is user
+friendly.  There are a few problems here:
+
+    1. Git is treating the lagging submodule HEAD as if it were
+    actually a resolution that you might want for the conflict.
+    Actually, it's basically almost always wrong (in the example
+    above, if you commit it you'll be discarding commits made on
+    master.)  There is a sorter of wider UI issue here where Git
+    can't tell if you've legitimately changed the HEAD pointer
+    of a submodule, or if you checked out a new revision with different
+    submodule pointers and forgot to run 'git submodule update'.
+    (But by the way, you can't even do that here, because this is
+    a merge!)
+
+    2. The behavior of not reporting the diff when the diff for one
+    branch is non-empty is illogical: for submodules (whose "file
+    contents" are so short), you basically always want some hashes,
+    and not an empty diff.  Doubly so when the "resolution" is
+    bogus (c.f. (1)).
+
+Of course, changing behavior in a backwards-incompatible way is never a
+good way, so it's not exactly obvious what should be done here. I would
+recommend tweaking the default combined diff behavior for submodules and
+adding an admonition to the user that the submodules have not been
+updated in the rebase message (I can submit a patch for this if people
+agree if it's a good idea), but maybe that's too much of a behavior
+change.
+
+By the way, the difference between 'git diff -c' and 'git diff --cc'
+does not seem to be documented anywhere, except for an oblique comment
+in diff-format.txt "Note that 'combined diff' lists only files which
+were modified from all parents." -- the user expected, of course, to
+figure out that 'combined diff' here refers to --cc, but not -c.
+
+Cheers,
+Edward
