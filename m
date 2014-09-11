@@ -1,86 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/6] Improve tag checking in fsck and with
- transfer.fsckobjects
-Date: Thu, 11 Sep 2014 16:20:15 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1409111616380.990@s15462909.onlinehome-server.info>
-References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info> <alpine.DEB.1.00.1409101552250.990@s15462909.onlinehome-server.info> <xmqq7g1bgp5r.fsf@gitster.dls.corp.google.com> <xmqqsijzf9ij.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 6/6] Make sure that index-pack --strict fails upon
+ invalid tag objects
+Date: Thu, 11 Sep 2014 16:22:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1409111620420.990@s15462909.onlinehome-server.info>
+References: <alpine.DEB.1.00.1408171840040.990@s15462909.onlinehome-server.info> <cover.1410356761.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.1409101553140.990@s15462909.onlinehome-server.info> <xmqqoaunf8fv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 11 16:20:24 2014
+X-From: git-owner@vger.kernel.org Thu Sep 11 16:22:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS5EV-0000EH-GG
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 16:20:23 +0200
+	id 1XS5GX-0001eh-9X
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 16:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751873AbaIKOUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 10:20:19 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56484 "EHLO mout.gmx.net"
+	id S1753409AbaIKOWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 10:22:15 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58846 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751283AbaIKOUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 10:20:17 -0400
+	id S1753039AbaIKOWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 10:22:14 -0400
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Mb8HX-1XmDLQ2BD9-00Kgsv;
- Thu, 11 Sep 2014 16:20:15 +0200
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MN748-1XPsKo3QJk-006j4Z;
+ Thu, 11 Sep 2014 16:22:10 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqqsijzf9ij.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqoaunf8fv.fsf@gitster.dls.corp.google.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:kZEMPijKpurkdR7dRloRaFjj5DFXMK32BnMUoslFLB1PLLHAlt6
- wh63eq00g/FFh1nyy+vogM+MqUatCkouUKUONjD/8PGm6LcKMS0BUci6FWjfCu3I+eeA+IJ
- UytVge+lUet76R6OObLKaIMH6RapB1aKjpS/AnnXsKhBzujbja0qW9uENAw0bWURmYofFYI
- z7SNMZhklaElHnSQKqBYA==
+X-Provags-ID: V03:K0:rNlmGe2Y+xs51coxW0M03iwNr8LWi6/LxHMuSN2H5xJ4BM+HN3Z
+ IZlIJtYuZyJ5I7zSGIguCi/0e6fEVEmZh7fKuD/nd5AZWVd/cobgc540ugE9ZkZHJngC1dD
+ T2llp1cRnrucXGdjxnHXJRegVosVdmihVfhUhxhZXR5A5J+mPNeGQziVwZxDvLZNvHQ9LXL
+ w2Q7SgokNoHvvQ7R2Tf3g==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256839>
 
-Hi Junio,
+Hi,
 
 On Wed, 10 Sep 2014, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> >
-> >> This patch series introduces detailed checking of tag objects when calling
-> >> git fsck, and also when transfer.fsckobjects is set to true.
-> >>
-> >> To this end, the fsck machinery is reworked to accept the buffer and size
-> >> of the object to check, and for commit and tag objects, we verify that the
-> >> buffers contain an end of header (i.e. an empty line) to guarantee that our
-> >> checks do not run beyond the buffer.
-> >
-> > Overall they looked sensible and I am trying to queue them on 'pu'
-> > for today's pushout.
-> >
-> > Thanks.
+> > +    tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
+> > +    pack1=$(echo $tag | git pack-objects tag-test) &&
+> > +    echo remove tag object &&
+> > +    thirtyeight=${tag#??} &&
+> > +    rm -f .git/objects/${tag%$thirtyeight}/$thirtyeight &&
+> > +    test_must_fail git index-pack --strict tag-test-${pack1}.pack 2> err &&
 > 
-> I was expecting to see interesting interactions with the "oops, fsck
-> was not exiting with non-zero status in some cases" fix by Peff with
-> the patch 5/6 of this series that adds two new tests to t1450, but
-> because the breakage in these two cases are both only warning-events
-> and not error-events, I didn't prefix "git fsck" with test_must_fail
-> after all.
+> I had to drop "must fail" from this one (will amend the "SQUASH???"
+> again).
 
-There were a couple of issues, thanks for pointing out that I missed
-something. Short story: hash-object, fsck *and* pack-objects parse tag
-objects as they are encountered. Therefore, it would be a bit hard to test
-because we would have to emulate broken hash-object and pack-objects to
-generate a pack containing an invalid tag object.
-
-As a compromise, I now test for the warnings to make sure that the code
-path is triggered, but do not explicitly test with a pack that would make
-index-pack --strict *fail*.
-
-Okay?
+Funny. It failed here, but for the wrong reason: index-pack --strict
+failed here because the object referenced by the tag object was not in the
+pack.
 
 Ciao,
 Dscho
-
-P.S.: I squashed your changes in slightly modified form.
