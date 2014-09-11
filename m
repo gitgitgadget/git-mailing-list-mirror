@@ -1,88 +1,102 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: How to update index stat info without reading file content?
-Date: Thu, 11 Sep 2014 21:04:08 +0200
-Message-ID: <99C877A8-8145-4D8E-BE83-0F8A1FC16214@zib.de>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 11 21:04:23 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v4 04/32] rollback_lock_file(): exit early if lock is not active
+Date: Thu, 11 Sep 2014 12:13:16 -0700
+Message-ID: <CAL=YDWn_PAbO5T+WFPTcFSVCvNp5EUd6egv76RQmheFYiMpPPg@mail.gmail.com>
+References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>
+	<1409989846-22401-5-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Sep 11 21:13:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XS9fJ-0000ot-Fn
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:04:21 +0200
+	id 1XS9o4-000679-S3
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Sep 2014 21:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754865AbaIKTER convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Sep 2014 15:04:17 -0400
-Received: from mailer.zib.de ([130.73.108.11]:36885 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753286AbaIKTEQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2014 15:04:16 -0400
-Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s8BJ4FwI003805
-	for <git@vger.kernel.org>; Thu, 11 Sep 2014 21:04:15 +0200 (CEST)
-Received: from [192.168.1.200] (ip5f5bd2cf.dynamic.kabel-deutschland.de [95.91.210.207] (may be forged))
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s8BJ4DJf027261
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 11 Sep 2014 21:04:14 +0200 (CEST)
-X-Mailer: Apple Mail (2.1878.6)
-X-Miltered: at mailer.zib.de with ID 5411F22F.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 5411F22F.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 5411F22F.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
-X-j-chkmail-Status: Ham
+	id S1753657AbaIKTNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 15:13:19 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:49803 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753004AbaIKTNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 15:13:17 -0400
+Received: by mail-vc0-f172.google.com with SMTP id hy10so6999945vcb.17
+        for <git@vger.kernel.org>; Thu, 11 Sep 2014 12:13:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xSYWaKUJdTnXf4eSqpO6zphP6M5MD8HtRFkG4FCjz6s=;
+        b=bofGwbnOv3RYSQTzqO7NEl6wdsWa30D7zKgLVjLePSSaHaBL7MQn6w+AUiaIF0fhEa
+         b6EncLGjaeniaxYXirL0chvXuz7zarBF8RZrvTjdNJ4qK93AHUFJQiC2mHuV/6MrOVF4
+         2NNRhsHKedXjRehXUkNm9NXjRnVHfOK6HCEEzRlsYAaDtqtR/ZxfdGRIY4dNIgWMaulY
+         CbX67J6Sy5A44+iTQ8kEz5RmxpdEMrlOhMAYmDTVh3HmYPsYES+j54xMogiTPFUPzsS4
+         HKKM1emgqz1RWj5cVCa9mrsAADW15iRtJxwiFExHS5ERELNwOCZOstUhk8MwJAo1Z4HK
+         yW4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=xSYWaKUJdTnXf4eSqpO6zphP6M5MD8HtRFkG4FCjz6s=;
+        b=TNiqjQ/ZE91gqiQ2Gfreb7erHaSmJbTk6/LjLsTU7rBlZWtyekAW4ut5ogYlXPtg6M
+         61J5UxH4OoThe6pe///s9kiWqAQW4kETEmHnb2LgK3ZTLJ0uJObnGWlrZWtADJpfFi9t
+         IUsLVz6XV5mIeKUplT+o2IUu8UX5cmCkiLPaHx9I2bQdt244vmAuO33MLZ3fQho3jHUH
+         yMPdsRxYg3irdP86TR/R+spSEMnv7MP53eFi8eMqXlhJY+bWPunBSQ/FDrGCEpRjDAAP
+         /OpNp0i/iVggA4CkedF8SqR65ucYfA7CwoxoOCCS3PPQQM3EaNSjwR13BGiqc6jkAFAy
+         dd4A==
+X-Gm-Message-State: ALoCoQk1/BhWPdK+ZTjWdUnvzZkJYS6OvdfHTvV5pLImrODj1T72L/JZ1RI7XitVF5Q5RK5PSWFm
+X-Received: by 10.52.51.203 with SMTP id m11mr2060723vdo.72.1410462796554;
+ Thu, 11 Sep 2014 12:13:16 -0700 (PDT)
+Received: by 10.52.231.232 with HTTP; Thu, 11 Sep 2014 12:13:16 -0700 (PDT)
+In-Reply-To: <1409989846-22401-5-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256863>
 
-Hi,
+Reviewed-by: Ronnie Sahlberg <sahlberg@google.com>
 
-Is there a way to update the stat information recorded in the index wit=
-hout reading the file content from disk?
-
-Starting from a clean working copy with a committed `file`, I'd like=20
-
-    touch file
-    git <magic-command> file
-
-to bring the index into essentially the same state as
-
-    touch file
-    git status
-
-but without reading the content of `file`.  (I'd be willing to wait a b=
-it between touch and the magic command, to avoid any racy-git-related c=
-ode paths.)
-
-`git-update-index --assume-unchanged` is related.  But it requires comp=
-letely manual handling of changes, because git will not look at marked =
-files until told otherwise with `--no-assume-unchanged`.  I'd like to t=
-ell git only that the current file content is known to be up-to-date.  =
-Any future changes should be handled as usual.
-
-In the documentation, `git add --refresh file` sounds a bit like what I=
-'m looking for.  The documentation of `--refresh` states: "Don=92t add =
-the file(s), but only refresh their stat() information in the index."  =
-But it doesn't do what I want.
-
-I looked a bit into `read-cache.c`.  The comment above `refresh_cache_e=
-nt()` sounds promising:
-
-     "refresh" does not calculate a new sha1 file or bring the
-     cache up-to-date for mode/content changes. But what it
-     _does_ do is to "re-match" the stat information of a file
-     with the cache, so that you can refresh the cache for a
-     file that hasn't been changed but where the stat entry is
-     out of date.
-
-But it isn't obvious to me whether what I'm looking for is available.  =
-All code paths that eventually reach `fill_stat_cache_info()` seem to g=
-o through `ce_compare_data()` and therefore `index_fd()`, which reads t=
-he data from disk.
-
-	Steffen
+On Sat, Sep 6, 2014 at 12:50 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Eliminate a layer of nesting.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  lockfile.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+>
+> diff --git a/lockfile.c b/lockfile.c
+> index a548e08..49179d8 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -272,10 +272,11 @@ int hold_locked_index(struct lock_file *lk, int die_on_error)
+>
+>  void rollback_lock_file(struct lock_file *lk)
+>  {
+> -       if (lk->filename[0]) {
+> -               if (lk->fd >= 0)
+> -                       close(lk->fd);
+> -               unlink_or_warn(lk->filename);
+> -               lk->filename[0] = 0;
+> -       }
+> +       if (!lk->filename[0])
+> +               return;
+> +
+> +       if (lk->fd >= 0)
+> +               close(lk->fd);
+> +       unlink_or_warn(lk->filename);
+> +       lk->filename[0] = 0;
+>  }
+> --
+> 2.1.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
