@@ -1,181 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] make config --add behave correctly for empty and NULL values
-Date: Thu, 11 Sep 2014 16:35:33 -0700
-Message-ID: <xmqqy4tpbuii.fsf@gitster.dls.corp.google.com>
-References: <1408357077-4745-1-git-send-email-tanayabh@gmail.com>
-	<xmqqvbppwtir.fsf@gitster.dls.corp.google.com>
-	<20140819051732.GA13765@peff.net>
-	<xmqqmwb1vwvs.fsf@gitster.dls.corp.google.com>
-	<20140819062000.GA7805@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch
+ series overview)
+Date: Thu, 11 Sep 2014 17:47:17 -0700
+Message-ID: <20140912004717.GY18279@google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+ <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+ <20140820231723.GF20185@google.com>
+ <20140911030318.GD18279@google.com>
+ <xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 12 01:35:52 2014
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 02:47:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSDu1-00037R-J9
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 01:35:49 +0200
+	id 1XSF1J-00034Z-Ie
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 02:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbaIKXfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Sep 2014 19:35:37 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56210 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751109AbaIKXfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Sep 2014 19:35:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B5433AF03;
-	Thu, 11 Sep 2014 19:35:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RhizEtbU1Oz1zXcDkUFft8a+U5g=; b=wReNAY
-	EcX5hqAoHu4qCHR6/PujOpjZGVHGlmtnvCSLy03DgiwNEWiaUAusYmqGS5BCxRfm
-	0G9Ho2X4+iZYeeV2+avdFNJA+QM1+EbdKWZEdK/tSyqCPbBDSuJQS7iu16FPRU7u
-	7mlxAEzaeJqcOWim4cB4/XI3iMhUGG2QN+TCg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qmO5I1s0tdcsjnwZHFe2fRaXlkUH5jaU
-	9IF4gFvvpSuGU0Ku7sOIzCyb9Oh6MsToAlCxSKfTkCpvgY71Q1BA3GNtFzhyGoes
-	HO2vea5TQvZreOSn9uOxiIUJXZ54PAq9QK0/bioUPWkvuHbrzwBnXNIA3LYy7ADn
-	sg0Zg6fs/0w=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B5FB03AF01;
-	Thu, 11 Sep 2014 19:35:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E4A5C3AEFE;
-	Thu, 11 Sep 2014 19:35:34 -0400 (EDT)
-In-Reply-To: <20140819062000.GA7805@peff.net> (Jeff King's message of "Tue, 19
-	Aug 2014 02:20:00 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 53E4EA2E-3A0C-11E4-AB02-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1754272AbaILArV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 20:47:21 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:57901 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751187AbaILArU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 20:47:20 -0400
+Received: by mail-pa0-f41.google.com with SMTP id bj1so12980pad.0
+        for <git@vger.kernel.org>; Thu, 11 Sep 2014 17:47:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NP8mfBo1N+9rjiVP1tV0RqMkzfO/HDoAp7Z1e+I3p44=;
+        b=AnwaPwczIBpap4I0bcMKByWwo2vwg0DzHhc5yee7cEWTPO9+niCDrvhZAR28ESpjp4
+         tWsBHyoH79mEtJ720ekSD3fNZl3QrNoeB2jUwRFSBYStpFlJmN7l2ZBMhG6u7UX9dFT5
+         GppdbVGWCvYHkJBm0/LYXkHJba2Xicxa6lPAqpXOK1SOZxMyj6uVAZE7ikY9cADqWLX2
+         d2qgjhE9chRzK/mf4ZShDAfz00OOjkkA+7WCGEuxMLBCVL31sRZPWqRDL5yTITqF718i
+         NGOInk9piGs2ZGdxliu5JO2A6MjBhr/RiaKlCuL/K9vHXB+CuqTuVHPjgNmn0z2bBYpY
+         QPYw==
+X-Received: by 10.68.94.34 with SMTP id cz2mr6420007pbb.7.1410482840271;
+        Thu, 11 Sep 2014 17:47:20 -0700 (PDT)
+Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
+        by mx.google.com with ESMTPSA id ry9sm2239745pab.37.2014.09.11.17.47.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 11 Sep 2014 17:47:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256890>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Here is the patch I wrote, for reference (I also think breaking the
-> "matches" function into a series of conditionals, as you showed, is way
-> more readable):
+>> These patches are also available from the git repository at
+>>
+>>   git://repo.or.cz/git/jrn.git tags/rs/ref-transaction
+>
+> The tag fetched and built as-is seems to break 5514 among other
+> things ("git remote rm" segfaults).
 
-OK, while reviewing the today's issue of "What's cooking" and making
-topics graduate to 'master', I got annoyed that the bottom of jch
-branch still needed to be kept.  Let's do this.
+Yeah, I noticed that right after sending the series out. :/
+
+The patch below fixes it[1].
 
 -- >8 --
-From: Jeff King <peff@peff.net>
-Date: Tue, 19 Aug 2014 02:20:00 -0400
-Subject: [PATCH] config: avoid a funny sentinel value "a^"
+From: Ronnie Sahlberg <sahlberg@google.com>
+Date: Thu, 11 Sep 2014 08:42:57 -0700
+Subject: remote rm/prune: print a message when writing packed-refs fails
 
-Introduce CONFIG_REGEX_NONE as a more explicit sentinel value to say
-"we do not want to replace any existing entry" and use it in the
-implementation of "git config --add".
+Until v2.1.0-rc0~22^2~11 (refs.c: add an err argument to
+repack_without_refs, 2014-06-20), repack_without_refs forgot to
+provide an error message when commit_packed_refs fails.  Even today,
+it only provides a message for callers that pass a non-NULL err
+parameter.  Internal callers in refs.c pass non-NULL err but
+"git remote" does not.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+That means that "git remote rm" and "git remote prune" can fail
+without printing a message about why.  Fix them by passing in a
+non-NULL err parameter and printing the returned message.
+
+This is the last caller to a ref handling function passing err ==
+NULL.  A later patch can drop support for err == NULL, avoiding such
+problems in the future.
+
+Change-Id: Ifb8a726ef03d0aa282a25a102313064d2e8ec283
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/config.c |  3 ++-
- cache.h          |  2 ++
- config.c         | 23 +++++++++++++++++------
- 3 files changed, 21 insertions(+), 7 deletions(-)
+[1] https://code-review.googlesource.com/1110
+    https://code-review.googlesource.com/1060
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 8224699..bf1aa6b 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -599,7 +599,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
- 		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], value, "a^", 0);
-+						       argv[0], value,
-+						       CONFIG_REGEX_NONE, 0);
- 	}
- 	else if (actions == ACTION_REPLACE_ALL) {
- 		check_write();
-diff --git a/cache.h b/cache.h
-index c708062..8356168 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1233,6 +1233,8 @@ extern int update_server_info(int);
- #define CONFIG_INVALID_PATTERN 6
- #define CONFIG_GENERIC_ERROR 7
+ builtin/remote.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 6eaeee7..ef1ffc3 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -750,13 +750,16 @@ static int mv(int argc, const char **argv)
  
-+#define CONFIG_REGEX_NONE ((void *)1)
-+
- struct git_config_source {
- 	unsigned int use_stdin:1;
- 	const char *file;
-diff --git a/config.c b/config.c
-index ffe0104..2e709bf 100644
---- a/config.c
-+++ b/config.c
-@@ -1230,10 +1230,15 @@ static struct {
- 
- static int matches(const char *key, const char *value)
+ static int remove_branches(struct string_list *branches)
  {
--	return !strcmp(key, store.key) &&
--		(store.value_regex == NULL ||
--		 (store.do_not_match ^
--		  (value && !regexec(store.value_regex, value, 0, NULL, 0))));
-+	if (strcmp(key, store.key))
-+		return 0; /* not ours */
-+	if (!store.value_regex)
-+		return 1; /* always matches */
-+	if (store.value_regex == CONFIG_REGEX_NONE)
-+		return 0; /* never matches */
-+
-+	return store.do_not_match ^
-+		(value && !regexec(store.value_regex, value, 0, NULL, 0));
- }
++	struct strbuf err = STRBUF_INIT;
+ 	const char **branch_names;
+ 	int i, result = 0;
  
- static int store_aux(const char *key, const char *value, void *cb)
-@@ -1495,6 +1500,8 @@ out_free_ret_1:
- /*
-  * If value==NULL, unset in (remove from) config,
-  * if value_regex!=NULL, disregard key/value pairs where value does not match.
-+ * if value_regex==CONFIG_REGEX_NONE, do not match any existing values
-+ *     (only add a new one)
-  * if multi_replace==0, nothing, or only one matching key/value is replaced,
-  *     else all matching key/values (regardless how many) are removed,
-  *     before the new pair is written.
-@@ -1578,6 +1585,8 @@ int git_config_set_multivar_in_file(const char *config_filename,
+ 	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
+ 	for (i = 0; i < branches->nr; i++)
+ 		branch_names[i] = branches->items[i].string;
+-	result |= repack_without_refs(branch_names, branches->nr, NULL);
++	if (repack_without_refs(branch_names, branches->nr, &err))
++		result |= error("%s", err.buf);
++	strbuf_release(&err);
+ 	free(branch_names);
  
- 		if (value_regex == NULL)
- 			store.value_regex = NULL;
-+		else if (value_regex == CONFIG_REGEX_NONE)
-+			store.value_regex = CONFIG_REGEX_NONE;
- 		else {
- 			if (value_regex[0] == '!') {
- 				store.do_not_match = 1;
-@@ -1609,7 +1618,8 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 		if (git_config_from_file(store_aux, config_filename, NULL)) {
- 			error("invalid config file %s", config_filename);
- 			free(store.key);
--			if (store.value_regex != NULL) {
-+			if (store.value_regex != NULL &&
-+			    store.value_regex != CONFIG_REGEX_NONE) {
- 				regfree(store.value_regex);
- 				free(store.value_regex);
- 			}
-@@ -1618,7 +1628,8 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 		}
+ 	for (i = 0; i < branches->nr; i++) {
+@@ -1333,9 +1336,13 @@ static int prune_remote(const char *remote, int dry_run)
+ 		delete_refs = xmalloc(states.stale.nr * sizeof(*delete_refs));
+ 		for (i = 0; i < states.stale.nr; i++)
+ 			delete_refs[i] = states.stale.items[i].util;
+-		if (!dry_run)
+-			result |= repack_without_refs(delete_refs,
+-						      states.stale.nr, NULL);
++		if (!dry_run) {
++			struct strbuf err = STRBUF_INIT;
++			if (repack_without_refs(delete_refs, states.stale.nr,
++						&err))
++				result |= error("%s", err.buf);
++			strbuf_release(&err);
++		}
+ 		free(delete_refs);
+ 	}
  
- 		free(store.key);
--		if (store.value_regex != NULL) {
-+		if (store.value_regex != NULL &&
-+		    store.value_regex != CONFIG_REGEX_NONE) {
- 			regfree(store.value_regex);
- 			free(store.value_regex);
- 		}
 -- 
-2.1.0-466-g6597b3e
+2.1.0.rc2.206.gedb03e5
