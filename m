@@ -1,74 +1,75 @@
-From: Jonh Wendell <jonh.wendell@gmail.com>
-Subject: [PATCH 2/2] describe: Add documentation for "--abbrev=+"
-Date: Fri, 12 Sep 2014 11:26:44 -0300
-Message-ID: <1410532004-22769-3-git-send-email-jonh.wendell@gmail.com>
-References: <1410532004-22769-1-git-send-email-jonh.wendell@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonh Wendell <jonh.wendell@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 12 16:27:30 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pretty-format: add append line-feed format specifier
+Date: Fri, 12 Sep 2014 09:36:56 -0700
+Message-ID: <xmqqtx4cbxsn.fsf@gitster.dls.corp.google.com>
+References: <540F426E.6080908@exec64.co.uk>
+	<xmqqmwa8k3lg.fsf@gitster.dls.corp.google.com>
+	<540F554C.5010301@exec64.co.uk>
+	<xmqqegvkk2k3.fsf@gitster.dls.corp.google.com>
+	<20140909214520.GA13603@peff.net>
+	<xmqqtx4fgzqe.fsf@gitster.dls.corp.google.com>
+	<20140912044901.GC15519@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Harry Jeffery <harry@exec64.co.uk>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 12 18:37:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSRoq-0005er-Dx
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 16:27:24 +0200
+	id 1XSTqM-0004Gi-4y
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 18:37:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754313AbaILO1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2014 10:27:17 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:37618 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754001AbaILO1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2014 10:27:16 -0400
-Received: by mail-qa0-f42.google.com with SMTP id j7so788672qaq.29
-        for <git@vger.kernel.org>; Fri, 12 Sep 2014 07:27:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7z3k3veen3AYol1YxIFAGffhW1vynvbXswP7vPGHBJY=;
-        b=hoGLiiINyQrM9zjdTchR4TE1efB4LBub8KMG8hGSGpKECXfplDP2O97qh3tKnM6ocW
-         c8Rtl5BcYzIUkPsLV2SCIwqE+9r3bvVVTC8I1Mme2Ko5RB1K05+v1V90JeiITiMA4vcb
-         0lWXKjEeJV6gdT60oxfO3EEUvmVoFGG02XuA1j3eJxHAqqQFGSzMM4ec8IGcLRBwocU5
-         6D0qpMdP3eYwIo+Yt2/4OfpRfvM+06srAo9BPTyfNqTvakkpYF3eNng4FzdyX2pyXwqP
-         vwuhWY8xMTA2hfCkZWeQ5XddZg+Gj7IRNAL45cgYDTAqtJ/PgKSiqf0op57L+bu495VG
-         AnYA==
-X-Received: by 10.140.82.213 with SMTP id h79mr4951109qgd.51.1410532035474;
-        Fri, 12 Sep 2014 07:27:15 -0700 (PDT)
-Received: from wendell-laptop.spo.virtua.com.br ([189.102.225.80])
-        by mx.google.com with ESMTPSA id y10sm3088066qar.29.2014.09.12.07.27.13
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Sep 2014 07:27:15 -0700 (PDT)
-X-Mailer: git-send-email 1.9.3
-In-Reply-To: <1410532004-22769-1-git-send-email-jonh.wendell@gmail.com>
+	id S1752242AbaILQhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2014 12:37:00 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52718 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751245AbaILQg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2014 12:36:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9122E38C43;
+	Fri, 12 Sep 2014 12:36:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MgOiPeidKKHM6+yI+ttBkyR4ZjI=; b=cYYqn+
+	FPWuJlpCpUI0ys212hGau/GnxKaH1bh4SxCwpGGHfvcg1uhGQ8XbkflNfpJCigzK
+	M+SAAIgM6uAuDAdBlH2siVl21YRTqd2RvYuJI546TBCCs+dPzKukz2WnkZBByah9
+	TS4M1z1HPiqxk6sLrkh0Xcp7MpaHHidgfcrfs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ivhw1RJdpbVt+a537pmXUXHtdwTFtLwt
+	u2hlVxH2u2Y0QrEA/krBj+ApbyxUXn3b/avuUSjGnCEHdV6oFHSX52lmOTJrKg+R
+	AylCQ1AEqEW3EMD71RFgvDcdlNbgLrxSwxmVdrrfrWelVPUFr5+QDCy/mM+MVcs5
+	q32/RtiJ3PQ=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 855ED38C42;
+	Fri, 12 Sep 2014 12:36:58 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F150238C41;
+	Fri, 12 Sep 2014 12:36:57 -0400 (EDT)
+In-Reply-To: <20140912044901.GC15519@peff.net> (Jeff King's message of "Fri,
+	12 Sep 2014 00:49:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0370B82C-3A9B-11E4-8916-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256926>
 
-Signed-off-by: Jonh Wendell <jonh.wendell@gmail.com>
----
- Documentation/git-describe.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index d20ca40..e291770 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -54,6 +54,12 @@ OPTIONS
- 	abbreviated object name, use <n> digits, or as many digits
- 	as needed to form a unique object name.  An <n> of 0
- 	will suppress long format, only showing the closest tag.
-+	+
-+	+
-+	A special case of <n> equals to "\+" (without quotes) will print
-+	just a "+" sign instead of the whole suffix. This is useful if you
-+	only need to know if the supplied <commit-ish> points to an exact
-+	match or if there are commits between the tag found and the <commit-ish>.
- 
- --candidates=<n>::
- 	Instead of considering only the 10 most recent tags as
--- 
-1.9.3
+> I dunno. I wrote that original set of lua pretty-format patches to try
+> to stop the insanity once and for all. But I realized that I do not
+> actually want to do anything complicated with the output formats, and
+> "--oneline" and a few simple "--format" calls usually are enough.
+
+Yeah, I share that exactly, and %+ and friends are meant to be on
+this side of the line between "a few simple" and "complicated".  I
+was not sure which side %if() falls myself, and while I still am not
+sure, if I were asked to decide which today, I would probably say it
+is on the "simple" side.
