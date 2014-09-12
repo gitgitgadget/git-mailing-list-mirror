@@ -1,118 +1,155 @@
-From: "Rom Walton" <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>
-Subject: Re: (local ?) BOINC repo broken again -or- how to act
-	on the CR/LF changes made upstream
-Date: Fri, 12 Sep 2014 15:10:06 -0400
-Message-ID: <1BAFA9B4D550C347962F76F2E03B3BBB22C5FB@romw-mail.romwnet.org>
-References: <541336D6.3050803@gmx.de>
-	<1BAFA9B4D550C347962F76F2E03B3BBB22C5F9@romw-mail.romwnet.org>
-	<54133C3A.4080700@gmx.de>
-	<1BAFA9B4D550C347962F76F2E03B3BBB22C5FA@romw-mail.romwnet.org>
-	<541343BC.1050503@gmx.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch
+ series overview)
+Date: Fri, 12 Sep 2014 12:18:12 -0700
+Message-ID: <20140912191812.GZ18279@google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+ <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+ <20140820231723.GF20185@google.com>
+ <20140911030318.GD18279@google.com>
+ <xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>
+ <20140912004717.GY18279@google.com>
+ <xmqqsijwaclo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-To: =?utf-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster-Mmb7MZpHnFY@public.gmane.org>,
-	<git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-X-From: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org Fri Sep 12 21:10:17 2014
-Return-path: <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-Envelope-to: gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
-Received: from mailapps1.ssl.berkeley.edu ([128.32.13.237])
-	by plane.gmane.org with smtp (Exim 4.69)
-	(envelope-from <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>)
-	id 1XSWEX-0006za-8t
-	for gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Fri, 12 Sep 2014 21:10:13 +0200
-Received: from mailapps1.ssl.berkeley.edu (localhost [127.0.0.1])
-	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 4A1552FEA63;
-	Fri, 12 Sep 2014 12:10:11 -0700 (PDT)
-X-Original-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
-Delivered-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
-Received: from mail2.ssl.berkeley.edu (mail2.ssl.berkeley.edu [128.32.13.252])
-	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 5C87B2FEA4D
-	for <boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org>;
-	Fri, 12 Sep 2014 12:10:09 -0700 (PDT)
-Received: from mailwall2.ssl.berkeley.edu (mailwall2.ssl.berkeley.edu
-	[128.32.147.8])
-	by mail2.ssl.berkeley.edu (8.13.8/8.13.8) with ESMTP id s8CJA90D001016
-	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Fri, 12 Sep 2014 12:10:09 -0700
-X-ASG-Debug-ID: 1410549008-04b397145f29ee60001-LQ66t1
-Received: from mho-01-ewr.mailhop.org (mho-03-ewr.mailhop.org [204.13.248.66])
-	by mailwall2.ssl.berkeley.edu with ESMTP id 3x7dYsAj2NnEZmhR
-	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>;
-	Fri, 12 Sep 2014 12:10:08 -0700 (PDT)
-X-Barracuda-Envelope-From: romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org
-X-Barracuda-Apparent-Source-IP: 204.13.248.66
-Received: from 173-160-3-53-naples.hfc.comcastbusiness.net ([173.160.3.53]
-	helo=mail.romwnet.org)
-	by mho-01-ewr.mailhop.org with esmtpsa (TLSv1:RC4-MD5:128)
-	(Exim 4.72) (envelope-from <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>)
-	id 1XSWES-000H1S-C0; Fri, 12 Sep 2014 19:10:08 +0000
-X-Mail-Handler: Dyn Standard SMTP by Dyn
-X-Originating-IP: 173.160.3.53
-X-Report-Abuse-To: abuse-yJRlmlznMY/QT0dZR+AlfA@public.gmane.org (see
-	http://www.dyndns.com/services/sendlabs/outbound_abuse.html for
-	abuse reporting information)
-X-MHO-User: U2FsdGVkX19SU3VpUbIelxKVH4+0KyKofl/pb9F7AqI=
-X-ASG-Orig-Subj: RE: [boinc_dev] (local ?) BOINC repo broken again -or- how to
-	act on the CR/LF changes made upstream
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [boinc_dev] (local ?) BOINC repo broken again -or- how to act on
-	the CR/LF changes made upstream
-Thread-Index: Ac/OvHi5Itf20a+aT5StoZ0yKcUUogAAKVJg
-X-Barracuda-Connect: mho-03-ewr.mailhop.org[204.13.248.66]
-X-Barracuda-Start-Time: 1410549008
-X-Barracuda-URL: http://mailwall2.ssl.berkeley.edu:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at ssl.berkeley.edu
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score-Disabled: per user
-X-BeenThere: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-X-Mailman-Version: 2.1.15
-Precedence: list
-List-Id: BOINC development <boinc_dev.ssl.berkeley.edu>
-List-Unsubscribe: <http://lists.ssl.berkeley.edu/mailman/options/boinc_dev>,
-	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.ssl.berkeley.edu/pipermail/boinc_dev/>
-List-Post: <mailto:boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-List-Help: <mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.ssl.berkeley.edu/mailman/listinfo/boinc_dev>,
-	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=subscribe>
-Errors-To: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-Sender: "boinc_dev" <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256944>
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 21:18:22 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XSWMO-0002wI-Cs
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 21:18:20 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751432AbaILTSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2014 15:18:16 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:62084 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751017AbaILTSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2014 15:18:15 -0400
+Received: by mail-pd0-f170.google.com with SMTP id fp1so1848514pdb.1
+        for <git@vger.kernel.org>; Fri, 12 Sep 2014 12:18:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=1Si1prYxp4MU6MvulMwZJgJNT78g8K7gzwRFMdKemHc=;
+        b=py2iO+tGztL3W7MAemh2B9adTuVYRuVETkf/O6F/7YSD1lVXOmzFpYUkXiUGfDpCM0
+         GVFfRs9X54JW4RLcQkamElw2Frl7BF8DH2V0pddlPCSX0/ZEQBZ5GS4JXVSKnrDeDCID
+         LDelFI1uyLpawDNPSb/Re3vQYRgxuywwK8sf+sOcjOpaoyV+BfYuLv4dIJ2HSAR8i4nN
+         9m2zvOA1tnwK39gpmiP5H366R6tBl3/x+Y9TrgpAYQLmTE/hbeREXYxxvsR/BiTkZOdZ
+         ldVKFhc0ZF6XegQ/DveMrItQHdo4VUxOHE7m22x3yh2aD7zGxWWnuLUa0vUiT8XVq36i
+         shYg==
+X-Received: by 10.70.128.195 with SMTP id nq3mr17022425pdb.158.1410549494986;
+        Fri, 12 Sep 2014 12:18:14 -0700 (PDT)
+Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
+        by mx.google.com with ESMTPSA id ez8sm4592033pdb.63.2014.09.12.12.18.13
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 12 Sep 2014 12:18:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqsijwaclo.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256945>
 
-SSBmb3VuZCB0aGlzOg0KaHR0cDovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8xNzIyMzUy
-Ny9ob3ctZG8taS1mb3JjZS1naXQtdG8tY2hlY2tvdXQtdGhlLW1hc3Rlci1icmFuY2gtYW5kLXJl
-bW92ZS1jYXJyaWFnZS1yZXR1cm5zLWFmdA0KDQpUaGF0IG1pZ2h0IGhlbHAgaW4gdGhlIGZ1dHVy
-ZS4NCg0KLS0tLS0gUm9tDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBUb3Jh
-bGYgRsO2cnN0ZXIgW21haWx0bzp0b3JhbGYuZm9lcnN0ZXJAZ214LmRlXSANClNlbnQ6IEZyaWRh
-eSwgU2VwdGVtYmVyIDEyLCAyMDE0IDM6MDQgUE0NClRvOiBSb20gV2FsdG9uOyBnaXRAdmdlci5r
-ZXJuZWwub3JnDQpDYzogYm9pbmNfZGV2QHNzbC5iZXJrZWxleS5lZHUNClN1YmplY3Q6IFJlOiBb
-Ym9pbmNfZGV2XSAobG9jYWwgPykgQk9JTkMgcmVwbyBicm9rZW4gYWdhaW4gLW9yLSBob3cgdG8g
-YWN0IG9uIHRoZSBDUi9MRiBjaGFuZ2VzIG1hZGUgdXBzdHJlYW0NCg0KT24gMDkvMTIvMjAxNCAw
-ODo1NSBQTSwgUm9tIFdhbHRvbiB3cm90ZToNCj4gQ3J1ZC4uLg0KPiANCj4gV2VsbCwgcGVyc29u
-YWxseSwgSSB3b3VsZCBkZWxldGUgdGhlIGxvY2FsZSBkaXJlY3RvcnkgYW5kIHRoZSB0d28gdHJh
-bnNsYXRpb24gZmlsZXMgaW4gaHRtbC4NCj4gDQo+IERvIHRoZSAnZ2l0IHB1bGwnLCBhbmQgdGhl
-biBzd2l0Y2ggYmV0d2VlbiBtYXN0ZXIgYW5kIHNvbWUgb3RoZXIgYnJhbmNoLg0KPiANCj4gbGlr
-ZToNCj4gZ2l0IGNoZWNrb3V0IC1mIGNsaWVudF9yZWxlYXNlLzcvNy40DQo+IGdpdCBjaGVja291
-dCAtZiBtYXN0ZXINCj4gDQo+IEl0IGlzIHJvdW5kIGFib3V0LCBidXQgaXQgc2hvdWxkIGdldCB0
-aGUgam9iIGRvbmUuDQoNClJlLWNsb25pbmcgc2VlbXMgdG8gYmUgdGhlIG9ubHkgd2F5LCBiL2Mg
-Og0KDQp0Zm9lcnN0ZUBuMjIgfi9kZXZlbC9ib2luYy12MiAkIGdpdCBjaGVja291dCAtZiBjbGll
-bnRfcmVsZWFzZS83LzcuNCBCcmFuY2ggY2xpZW50X3JlbGVhc2UvNy83LjQgc2V0IHVwIHRvIHRy
-YWNrIHJlbW90ZSBicmFuY2ggY2xpZW50X3JlbGVhc2UvNy83LjQgZnJvbSBvcmlnaW4uDQpTd2l0
-Y2hlZCB0byBhIG5ldyBicmFuY2ggJ2NsaWVudF9yZWxlYXNlLzcvNy40Jw0KDQp0Zm9lcnN0ZUBu
-MjIgfi9kZXZlbC9ib2luYy12MiAkIGdpdCBjaGVja291dCAtZiBtYXN0ZXIgQ2hlY2tpbmcgb3V0
-IGZpbGVzOiAxMDAlICgyMzQvMjM0KSwgZG9uZS4NClN3aXRjaGVkIHRvIGJyYW5jaCAnbWFzdGVy
-Jw0KWW91ciBicmFuY2ggaXMgYmVoaW5kICdvcmlnaW4vbWFzdGVyJyBieSA3IGNvbW1pdHMsIGFu
-ZCBjYW4gYmUgZmFzdC1mb3J3YXJkZWQuDQogICh1c2UgImdpdCBwdWxsIiB0byB1cGRhdGUgeW91
-ciBsb2NhbCBicmFuY2gpDQoNCnRmb2Vyc3RlQG4yMiB+L2RldmVsL2JvaW5jLXYyICQgZ2l0IHB1
-bGwgVXBkYXRpbmcgY2U5N2U4NS4uZDJlNTU4Mg0KZXJyb3I6IFlvdXIgbG9jYWwgY2hhbmdlcyB0
-byB0aGUgZm9sbG93aW5nIGZpbGVzIHdvdWxkIGJlIG92ZXJ3cml0dGVuIGJ5IG1lcmdlOg0KLi4u
-DQo8c2FtZSBwaWN0dXJlIGFzIGJlZm9yZT4NCg0KLS0NClRvcmFsZg0KcGdwIGtleTogMDA3NiBF
-OTRFDQoNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmJv
-aW5jX2RldiBtYWlsaW5nIGxpc3QKYm9pbmNfZGV2QHNzbC5iZXJrZWxleS5lZHUKaHR0cDovL2xp
-c3RzLnNzbC5iZXJrZWxleS5lZHUvbWFpbG1hbi9saXN0aW5mby9ib2luY19kZXYKVG8gdW5zdWJz
-Y3JpYmUsIHZpc2l0IHRoZSBhYm92ZSBVUkwgYW5kCihuZWFyIGJvdHRvbSBvZiBwYWdlKSBlbnRl
-ciB5b3VyIGVtYWlsIGFkZHJlc3Mu
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> > Junio C Hamano wrote:
+
+>>> The tag fetched and built as-is seems to break 5514 among other
+>>> things ("git remote rm" segfaults).
+>>
+>> Yeah, I noticed that right after sending the series out. :/
+>>
+>> The patch below fixes it[1].
+>
+> Is this meant to replace anything, or is it "Oops, the previous ones
+> are broken, and this is to patch it up on top"?
+
+It's "Oops, the next one (refs.c: do not permit err == NULL) is broken,
+and this is to patch it up in advance". :)
+
+But it should apply on top, too.
+
+There were a few other minor changes, and I think with them the series
+should be ready for "next".  My "send and hope that more reviewers
+appear" strategy didn't really work, so I'll send a reroll of the
+series as-is in an hour or so.
+
+Here's an interdiff as a preview.
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 5d5bc56..4bf931e 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -238,9 +238,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					    RESOLVE_REF_READING
+ 					    | RESOLVE_REF_NODEREF
+ 					    | RESOLVE_REF_ALLOW_BAD_NAME);
+-		if (!target ||
+-		    (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+-		     is_null_sha1(sha1))) {
++		if (!target) {
+ 			error(remote_branch
+ 			      ? _("remote branch '%s' not found.")
+ 			      : _("branch '%s' not found."), bname.buf);
+@@ -268,8 +266,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 			       ? _("Deleted remote branch %s (was %s).\n")
+ 			       : _("Deleted branch %s (was %s).\n"),
+ 			       bname.buf,
+-			       (flags & REF_ISSYMREF)
+-			       ? target
++			       (flags & REF_ISBROKEN) ? "broken"
++			       : (flags & REF_ISSYMREF) ? target
+ 			       : find_unique_abbrev(sha1, DEFAULT_ABBREV));
+ 		}
+ 		delete_branch_config(bname.buf);
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 6eaeee7..ef1ffc3 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -750,13 +750,16 @@ static int mv(int argc, const char **argv)
+ 
+ static int remove_branches(struct string_list *branches)
+ {
++	struct strbuf err = STRBUF_INIT;
+ 	const char **branch_names;
+ 	int i, result = 0;
+ 
+ 	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
+ 	for (i = 0; i < branches->nr; i++)
+ 		branch_names[i] = branches->items[i].string;
+-	result |= repack_without_refs(branch_names, branches->nr, NULL);
++	if (repack_without_refs(branch_names, branches->nr, &err))
++		result |= error("%s", err.buf);
++	strbuf_release(&err);
+ 	free(branch_names);
+ 
+ 	for (i = 0; i < branches->nr; i++) {
+@@ -1333,9 +1336,13 @@ static int prune_remote(const char *remote, int dry_run)
+ 		delete_refs = xmalloc(states.stale.nr * sizeof(*delete_refs));
+ 		for (i = 0; i < states.stale.nr; i++)
+ 			delete_refs[i] = states.stale.items[i].util;
+-		if (!dry_run)
+-			result |= repack_without_refs(delete_refs,
+-						      states.stale.nr, NULL);
++		if (!dry_run) {
++			struct strbuf err = STRBUF_INIT;
++			if (repack_without_refs(delete_refs, states.stale.nr,
++						&err))
++				result |= error("%s", err.buf);
++			strbuf_release(&err);
++		}
+ 		free(delete_refs);
+ 	}
+ 
