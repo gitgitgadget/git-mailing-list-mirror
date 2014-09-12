@@ -1,101 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch series overview)
-Date: Fri, 12 Sep 2014 13:47:42 -0700
-Message-ID: <xmqqd2b0a7m9.fsf@gitster.dls.corp.google.com>
-References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
-	<CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
-	<CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
-	<CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
-	<20140820231723.GF20185@google.com>
-	<20140911030318.GD18279@google.com>
-	<xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>
-	<20140912004717.GY18279@google.com>
-	<xmqqsijwaclo.fsf@gitster.dls.corp.google.com>
-	<20140912191812.GZ18279@google.com>
-	<xmqqk358a9yz.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch series
+ overview)
+Date: Fri, 12 Sep 2014 23:52:16 +0200
+Message-ID: <54136B10.4050001@alum.mit.edu>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>	<CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>	<CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>	<CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>	<20140820231723.GF20185@google.com>	<20140911030318.GD18279@google.com>	<xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>	<20140912004717.GY18279@google.com>	<xmqqsijwaclo.fsf@gitster.dls.corp.google.com>	<20140912191812.GZ18279@google.com> <xmqqk358a9yz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 22:47:51 2014
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 23:59:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSXl0-0004fY-Uc
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 22:47:51 +0200
+	id 1XSYsG-0003ZD-Oz
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 23:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbaILUrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2014 16:47:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52526 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752059AbaILUrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2014 16:47:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 390B739753;
-	Fri, 12 Sep 2014 16:47:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TZtwPJUai7SVMoq7ZVB3eGM3P7c=; b=mB2uQT
-	JHPmS94JgNa0nhU9iH6AcN+7vWBKrzl/0TzW3HZxxLm6zLfpX+g2KjKeTl3GV047
-	o0x8gWbiG++Bvj80V3HMFdWWGVTrl4hCF732SIxgRHnK0NKldR7umbP+js4KIWok
-	TmexZ5lk2onjtzN6P9/ooy7yymppofLw4Mvxk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mIp7Op62BVpKw8/ICSlW+zaSRG5STDHZ
-	3xG0rtZ14XksqkSjx+vGaauiKNnptdue3aAB5OSkgUmLnX6mgeRwEdgEROZ0Vjv8
-	HLrZlhpxHo7mpAoezjAuR/C6evIElUPbk1RJ2nO77evnnZAZDg7Q9kkRDyBQBrkm
-	6nHURmRUjio=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2E4CC39752;
-	Fri, 12 Sep 2014 16:47:45 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9999339751;
-	Fri, 12 Sep 2014 16:47:44 -0400 (EDT)
-In-Reply-To: <xmqqk358a9yz.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 12 Sep 2014 12:56:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0BEFB07A-3ABE-11E4-9B3E-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1752502AbaILV7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2014 17:59:21 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:48347 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752337AbaILV7U (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2014 17:59:20 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Sep 2014 17:59:20 EDT
+X-AuditID: 1207440c-f79036d000005e77-c0-54136b126857
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 86.C6.24183.21B63145; Fri, 12 Sep 2014 17:52:18 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB1EE6.dip0.t-ipconnect.de [93.219.30.230])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8CLqGJ3027364
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 12 Sep 2014 17:52:17 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
+In-Reply-To: <xmqqk358a9yz.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDKsWRmVeSWpSXmKPExsUixO6iqCuULRxi0HlDzqLrSjeTRUPvFWaL
+	tzeXMFr8m1DjwOKxc9Zddo8Fm0o9Ll5S9vi8SS6AJYrbJimxpCw4Mz1P3y6BO+PD4Z8sBdPY
+	Kx6ffcXewHiWtYuRk0NCwETiS+9yRghbTOLCvfVsXYxcHEIClxklvs75xgThnGeSePDiFztI
+	Fa+AtsSD9sdg3SwCqhK7D+1kBrHZBHQlFvU0M4HYogIBEh86HzBC1AtKnJz5hAXEFhHwkdh5
+	uRksziwQL/Ho+Vk2EFtYIEri6YaHLBDL9rBITHz0HmwQp4C1xI2T11ghGvQkdlz/BWXLSzRv
+	nc08gVFgFpIds5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqFebmaJXmpK6SZG
+	SDjz7GD8tk7mEKMAB6MSD6+DtnCIEGtiWXFl7iFGSQ4mJVFe9XSgEF9SfkplRmJxRnxRaU5q
+	8SFGCQ5mJRHeqCCgHG9KYmVValE+TEqag0VJnFd1ibqfkEB6YklqdmpqQWoRTFaGg0NJgvdk
+	JlCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCha44uB8QqS4gHaWwjSzltckJgL
+	FIVoPcVozNHS9LaXiWNd57d+JiGWvPy8VClx3haQUgGQ0ozSPLhFsET2ilEc6G9h3vcgVTzA
+	JAg37xXQKiagVe/mCIGsKklESEk1MKbMWuZzIOVj+ew+npAlf1Q437b84BW6nznr/G7RSxPm
+	xgo75rbOY668meHy6qLRVImvoZuL3PfFRhhXd6apB6utiLY1/nNY86LAu9m/ksQM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256950>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On 09/12/2014 09:56 PM, Junio C Hamano wrote:
 > Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> It's "Oops, the next one (refs.c: do not permit err == NULL) is broken,
->> and this is to patch it up in advance". :)
->>
->> But it should apply on top, too.
->
-> I think "in advance" makes sense for this one, too.
->
+> [...]
 >> There were a few other minor changes, and I think with them the series
 >> should be ready for "next".  My "send and hope that more reviewers
 >> appear" strategy didn't really work,...
->
+> 
 > You sent them just a few days ago.  Expecting anybody to have a
 > solid time to sit thru a 19-patch series inside that timeframe is
 > not so realistic.
->
+
+It's hard to tell from my glacial (tectonic?) pace, but I really do plan
+to work through all of Ronnie's ref-related patches. Of course it's up
+to you whether to wait for me. I really hope to get through the third
+series by the end of next week.
+
 >> so I'll send a reroll of the series as-is in an hour or so.
->
-> OK.  Thanks.
 
-I do not think I have enough time to pick a reroll up to redo the
-day's integration, so please take time to make it perfect.
+Jonathan: Is a current version of this patch series set up for review in
+Gerrit?
 
-I noticed that with this series merged to the version I use daily,
-detaching HEAD (i.e. "git checkout HEAD^0") breaks my HEAD reflog,
-which made me redo the integration ejecting the series out of 'pu'.
+Michael
 
-Not happy, as my workflow relies fairly heavily on detached HEAD
-X-<.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
