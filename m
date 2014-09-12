@@ -1,88 +1,67 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v4 6/6] Make sure that index-pack --strict checks tag
- objects
-Date: Fri, 12 Sep 2014 10:08:16 +0200 (CEST)
-Message-ID: <71bf293f1e6fd292c8ae5725a5a71d5f21eea19d.1410509169.git.johannes.schindelin@gmx.de>
-References: <cover.1410445430.git.johannes.schindelin@gmx.de> <cover.1410509168.git.johannes.schindelin@gmx.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 2/2] make config --add behave correctly for empty and NULL values
+Date: Fri, 12 Sep 2014 10:15:14 +0200
+Message-ID: <vpqegvhfe5p.fsf@anie.imag.fr>
+References: <1408357077-4745-1-git-send-email-tanayabh@gmail.com>
+	<xmqqvbppwtir.fsf@gitster.dls.corp.google.com>
+	<20140819051732.GA13765@peff.net>
+	<xmqqmwb1vwvs.fsf@gitster.dls.corp.google.com>
+	<20140819062000.GA7805@peff.net>
+	<xmqqy4tpbuii.fsf@gitster.dls.corp.google.com>
+	<54129F66.9080905@gmail.com> <54129FE1.6020303@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 12 10:09:11 2014
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 10:15:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSLun-0005kT-Aj
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 10:09:09 +0200
+	id 1XSM17-0000jz-KD
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 10:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300AbaILIJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2014 04:09:00 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52880 "EHLO mout.gmx.net"
+	id S1753059AbaILIPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2014 04:15:34 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39811 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753123AbaILIIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2014 04:08:19 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id 0MNHqL-1XQR1U1gEL-006yOt;
- Fri, 12 Sep 2014 10:08:17 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <cover.1410509168.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:XWb5DOqTMDdA+2ZKiRzSRO7neH8e15PxFyatHiaQcXrzH3WmLxG
- +r+IR4sk+jSTO3CSehDCV4PBhAfwr5PyewA2Vp/BQYtYInBGcDkQPi/svc46ziUpXS7wma3
- qgZe2tHsHBfBSV7GJ/AZNc2nsyqU2erfrj/iTpTNDYi3RrAyCuvoP2OmhNyx6HpIEI5GluS
- ABCvHU7ejCfRtdMxlHu0g==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752962AbaILIPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2014 04:15:32 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s8C8FEFs013464
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 12 Sep 2014 10:15:14 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s8C8FE2D027301;
+	Fri, 12 Sep 2014 10:15:14 +0200
+In-Reply-To: <54129FE1.6020303@gmail.com> (Tanay Abhra's message of "Fri, 12
+	Sep 2014 12:55:21 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 12 Sep 2014 10:15:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s8C8FEFs013464
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1411114516.51202@SvW/BOXl9rqbqN2BhUBPtg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256913>
 
-One of the most important use cases for the strict tag object checking
-is when transfer.fsckobjects is set to true to catch invalid objects
-early on. This new regression test essentially tests the same code path
-by directly calling 'index-pack --strict' on a pack containing an
-tag object without a 'tagger' line.
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Technically, this test is not enough: it only exercises a code path that
-*warns*, not one that *fails*. The reason is that hash-object and
-pack-objects both insist on parsing the tag objects and would fail on
-invalid tag objects at this time.
+> +const char CONFIG_REGEX_NONE[] = "a^";
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t5302-pack-index.sh | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+I have a slight preference for this version (no magic (void *)1 value,
+and belts-and-suspenders solution since someone actually using the regex
+should still get a correct behavior.
 
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index 4bbb718..61bc8da 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -243,4 +243,23 @@ test_expect_success 'running index-pack in the object store' '
-     test -f .git/objects/pack/pack-${pack1}.idx
- '
- 
-+test_expect_success 'index-pack --strict warns upon missing tagger in tag' '
-+    sha=$(git rev-parse HEAD) &&
-+    cat >wrong-tag <<EOF &&
-+object $sha
-+type commit
-+tag guten tag
-+
-+This is an invalid tag.
-+EOF
-+
-+    tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
-+    pack1=$(echo $tag $sha | git pack-objects tag-test) &&
-+    echo remove tag object &&
-+    thirtyeight=${tag#??} &&
-+    rm -f .git/objects/${tag%$thirtyeight}/$thirtyeight &&
-+    git index-pack --strict tag-test-${pack1}.pack 2>err &&
-+    grep "^error:.* expected .tagger. line" err
-+'
-+
- test_done
+But I'm fine with both Junio/Peff's version or this one.
+
 -- 
-2.0.0.rc3.9669.g840d1f9
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
