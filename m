@@ -1,121 +1,153 @@
-From: "Rom Walton" <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>
-Subject: Re: (local ?) BOINC repo broken again -or- how to act
-	on the CR/LF changes made upstream
-Date: Fri, 12 Sep 2014 14:55:20 -0400
-Message-ID: <1BAFA9B4D550C347962F76F2E03B3BBB22C5FA@romw-mail.romwnet.org>
-References: <541336D6.3050803@gmx.de>
-	<1BAFA9B4D550C347962F76F2E03B3BBB22C5F9@romw-mail.romwnet.org>
-	<54133C3A.4080700@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch series overview)
+Date: Fri, 12 Sep 2014 12:00:03 -0700
+Message-ID: <xmqqsijwaclo.fsf@gitster.dls.corp.google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+	<CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+	<CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+	<CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+	<20140820231723.GF20185@google.com>
+	<20140911030318.GD18279@google.com>
+	<xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>
+	<20140912004717.GY18279@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-To: =?utf-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster-Mmb7MZpHnFY@public.gmane.org>,
-	<git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-X-From: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org Fri Sep 12 20:55:28 2014
-Return-path: <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-Envelope-to: gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
-Received: from mailapps1.ssl.berkeley.edu ([128.32.13.237])
-	by plane.gmane.org with smtp (Exim 4.69)
-	(envelope-from <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>)
-	id 1XSW0D-0007Ng-88
-	for gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Fri, 12 Sep 2014 20:55:25 +0200
-Received: from mailapps1.ssl.berkeley.edu (localhost [127.0.0.1])
-	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id A97AD2FEA48;
-	Fri, 12 Sep 2014 11:55:23 -0700 (PDT)
-X-Original-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
-Delivered-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
-Received: from mail2.ssl.berkeley.edu (mail2.ssl.berkeley.edu [128.32.13.252])
-	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id EA1052FEA40
-	for <boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org>;
-	Fri, 12 Sep 2014 11:55:22 -0700 (PDT)
-Received: from mailwall2.ssl.berkeley.edu (mailwall2.ssl.berkeley.edu
-	[128.32.147.8])
-	by mail2.ssl.berkeley.edu (8.13.8/8.13.8) with ESMTP id s8CItMlB032563
-	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Fri, 12 Sep 2014 11:55:22 -0700
-X-ASG-Debug-ID: 1410548122-04b397145f29e2a0001-LQ66t1
-Received: from mho-01-ewr.mailhop.org (mho-03-ewr.mailhop.org [204.13.248.66])
-	by mailwall2.ssl.berkeley.edu with ESMTP id mqn3cQSII9AXQRWk
-	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>;
-	Fri, 12 Sep 2014 11:55:22 -0700 (PDT)
-X-Barracuda-Envelope-From: romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org
-X-Barracuda-Apparent-Source-IP: 204.13.248.66
-Received: from 173-160-3-53-naples.hfc.comcastbusiness.net ([173.160.3.53]
-	helo=mail.romwnet.org)
-	by mho-01-ewr.mailhop.org with esmtpsa (TLSv1:RC4-MD5:128)
-	(Exim 4.72) (envelope-from <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>)
-	id 1XSW09-00080m-Vp; Fri, 12 Sep 2014 18:55:22 +0000
-X-Mail-Handler: Dyn Standard SMTP by Dyn
-X-Originating-IP: 173.160.3.53
-X-Report-Abuse-To: abuse-yJRlmlznMY/QT0dZR+AlfA@public.gmane.org (see
-	http://www.dyndns.com/services/sendlabs/outbound_abuse.html for
-	abuse reporting information)
-X-MHO-User: U2FsdGVkX1/M8suBWglvS3N4klN9a88ntKuiyS5/XrE=
-X-ASG-Orig-Subj: RE: [boinc_dev] (local ?) BOINC repo broken again -or- how to
-	act on the CR/LF changes made upstream
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [boinc_dev] (local ?) BOINC repo broken again -or- how to act on
-	the CR/LF changes made upstream
-Thread-Index: Ac/Ot+8445asMC5xT1mWHHb+KVYbEAAAiYXw
-X-Barracuda-Connect: mho-03-ewr.mailhop.org[204.13.248.66]
-X-Barracuda-Start-Time: 1410548122
-X-Barracuda-URL: http://mailwall2.ssl.berkeley.edu:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at ssl.berkeley.edu
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score-Disabled: per user
-X-BeenThere: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-X-Mailman-Version: 2.1.15
-Precedence: list
-List-Id: BOINC development <boinc_dev.ssl.berkeley.edu>
-List-Unsubscribe: <http://lists.ssl.berkeley.edu/mailman/options/boinc_dev>,
-	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.ssl.berkeley.edu/pipermail/boinc_dev/>
-List-Post: <mailto:boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-List-Help: <mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.ssl.berkeley.edu/mailman/listinfo/boinc_dev>,
-	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=subscribe>
-Errors-To: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-Sender: "boinc_dev" <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256939>
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 21:00:25 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XSW4x-0001fK-7B
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 21:00:19 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751300AbaILTAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2014 15:00:11 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65428 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751186AbaILTAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2014 15:00:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F10E835DFF;
+	Fri, 12 Sep 2014 15:00:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6v+EelYlgINHwgXup3oEc4QTYTs=; b=pWs01w
+	3sPuQXLFwpnYyn5MIoUYC23H9OUmgXXvN2Cwc5Ayr4zofM4wh344d/zQF8MiE6Vs
+	vA6hnTjJSf6blk2zGCb8U7WSFACAbJJb/98gidHELHGvxQjRM1q1+Ng794EEfxdz
+	8X1LPkhku//jJ0czEoDMXHUjczKoHFL/IN1F4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VZ/MLHU+gVdeq5IomGESq/NYEaPS0QIl
+	t8cJhIICTpqEa8FJumTEnkx7jBM6ADyAkVim/xC5dLtu765m3gt4OfelsEr++UJ0
+	O9ZkKJNqZDUVGOK2Dn/I24Qdw3xieJ7XzyCrv+hflB0J0rvpo6SgDvbDf3UluJ5h
+	YCDqGdVtcrY=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 63E7035DFE;
+	Fri, 12 Sep 2014 15:00:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 046A635DEF;
+	Fri, 12 Sep 2014 15:00:06 -0400 (EDT)
+In-Reply-To: <20140912004717.GY18279@google.com> (Jonathan Nieder's message of
+	"Thu, 11 Sep 2014 17:47:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0328BB3A-3AAF-11E4-8260-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256940>
 
-Q3J1ZC4uLg0KDQpXZWxsLCBwZXJzb25hbGx5LCBJIHdvdWxkIGRlbGV0ZSB0aGUgbG9jYWxlIGRp
-cmVjdG9yeSBhbmQgdGhlIHR3byB0cmFuc2xhdGlvbiBmaWxlcyBpbiBodG1sLg0KDQpEbyB0aGUg
-J2dpdCBwdWxsJywgYW5kIHRoZW4gc3dpdGNoIGJldHdlZW4gbWFzdGVyIGFuZCBzb21lIG90aGVy
-IGJyYW5jaC4NCg0KbGlrZToNCmdpdCBjaGVja291dCAtZiBjbGllbnRfcmVsZWFzZS83LzcuNA0K
-Z2l0IGNoZWNrb3V0IC1mIG1hc3Rlcg0KDQpJdCBpcyByb3VuZCBhYm91dCwgYnV0IGl0IHNob3Vs
-ZCBnZXQgdGhlIGpvYiBkb25lLg0KDQotLS0tLSBSb20NCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdl
-LS0tLS0NCkZyb206IFRvcmFsZiBGw7Zyc3RlciBbbWFpbHRvOnRvcmFsZi5mb2Vyc3RlckBnbXgu
-ZGVdIA0KU2VudDogRnJpZGF5LCBTZXB0ZW1iZXIgMTIsIDIwMTQgMjozMiBQTQ0KVG86IFJvbSBX
-YWx0b247IGdpdEB2Z2VyLmtlcm5lbC5vcmcNCkNjOiBib2luY19kZXZAc3NsLmJlcmtlbGV5LmVk
-dQ0KU3ViamVjdDogUmU6IFtib2luY19kZXZdIChsb2NhbCA/KSBCT0lOQyByZXBvIGJyb2tlbiBh
-Z2FpbiAtb3ItIGhvdyB0byBhY3Qgb24gdGhlIENSL0xGIGNoYW5nZXMgbWFkZSB1cHN0cmVhbQ0K
-DQpPbiAwOS8xMi8yMDE0IDA4OjE5IFBNLCBSb20gV2FsdG9uIHdyb3RlOg0KPiBUcnk6DQo+IGdp
-dCBjaGVja291dCAtZiBtYXN0ZXINCj4gZ2l0IHB1bGwgb3JpZ2luDQo+IA0KPiBJIGNvbW1pdHRl
-ZCBmaXhlcyBmb3IgdGhhdCBzdHVmZiB0aGlzIG1vcm5pbmcuDQoNCmRvZXNuJ3QgaGVscGVkIDoN
-Cg0KdGZvZXJzdGVAbjIyIH4vZGV2ZWwvYm9pbmMtdjIgJCBnaXQgY2hlY2tvdXQgLWYgbWFzdGVy
-IEFscmVhZHkgb24gJ21hc3RlcicNCllvdXIgYnJhbmNoIGlzIGJlaGluZCAnb3JpZ2luL21hc3Rl
-cicgYnkgNyBjb21taXRzLCBhbmQgY2FuIGJlIGZhc3QtZm9yd2FyZGVkLg0KICAodXNlICJnaXQg
-cHVsbCIgdG8gdXBkYXRlIHlvdXIgbG9jYWwgYnJhbmNoKQ0KDQp0Zm9lcnN0ZUBuMjIgfi9kZXZl
-bC9ib2luYy12MiAkIGdpdCBwdWxsIG9yaWdpbiBVcGRhdGluZyBjZTk3ZTg1Li5kMmU1NTgyDQpl
-cnJvcjogWW91ciBsb2NhbCBjaGFuZ2VzIHRvIHRoZSBmb2xsb3dpbmcgZmlsZXMgd291bGQgYmUg
-b3ZlcndyaXR0ZW4gYnkgbWVyZ2U6DQogICAgICAgIGh0bWwvbGFuZ3VhZ2VzL3RyYW5zbGF0aW9u
-cy9odS5wbw0KICAgICAgICBodG1sL2xhbmd1YWdlcy90cmFuc2xhdGlvbnMvbmwucG8NCiAgICAg
-ICAgbG9jYWxlL2JnL0JPSU5DLVdlYi5wbw0KICAgICAgICBsb2NhbGUvZGEvQk9JTkMtV2ViLnBv
-DQogICAgICAgIGxvY2FsZS9lbC9CT0lOQy1XZWIucG8NCiAgICAgICAgbG9jYWxlL2ZyL0JPSU5D
-LVdlYi5wbw0KICAgICAgICBsb2NhbGUvaHIvQk9JTkMtV2ViLnBvDQogICAgICAgIGxvY2FsZS9o
-dS9CT0lOQy1Qcm9qZWN0LUdlbmVyaWMucG8NCiAgICAgICAgbG9jYWxlL2h1L0JPSU5DLVdlYi5w
-bw0KICAgICAgICBsb2NhbGUvaXRfSVQvQk9JTkMtUHJvamVjdC1HZW5lcmljLnBvDQogICAgICAg
-IGxvY2FsZS9sdi9CT0lOQy1XZWIucG8NCiAgICAgICAgbG9jYWxlL25sL0JPSU5DLVByb2plY3Qt
-R2VuZXJpYy5wbw0KICAgICAgICBsb2NhbGUvbmwvQk9JTkMtV2ViLnBvDQogICAgICAgIGxvY2Fs
-ZS9wbC9CT0lOQy1XZWIucG8NCiAgICAgICAgbG9jYWxlL3B0X0JSL0JPSU5DLVdlYi5wbw0KICAg
-ICAgICBsb2NhbGUvcm8vQk9JTkMtV2ViLnBvDQogICAgICAgIGxvY2FsZS9zay9CT0lOQy1XZWIu
-cG8NCiAgICAgICAgbG9jYWxlL3poX1RXL0JPSU5DLVdlYi5wbw0KUGxlYXNlLCBjb21taXQgeW91
-ciBjaGFuZ2VzIG9yIHN0YXNoIHRoZW0gYmVmb3JlIHlvdSBjYW4gbWVyZ2UuDQpBYm9ydGluZw0K
-DQotLQ0KVG9yYWxmDQpwZ3Aga2V5OiAwMDc2IEU5NEUNCg0KX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX18KYm9pbmNfZGV2IG1haWxpbmcgbGlzdApib2luY19k
-ZXZAc3NsLmJlcmtlbGV5LmVkdQpodHRwOi8vbGlzdHMuc3NsLmJlcmtlbGV5LmVkdS9tYWlsbWFu
-L2xpc3RpbmZvL2JvaW5jX2RldgpUbyB1bnN1YnNjcmliZSwgdmlzaXQgdGhlIGFib3ZlIFVSTCBh
-bmQKKG5lYXIgYm90dG9tIG9mIHBhZ2UpIGVudGVyIHlvdXIgZW1haWwgYWRkcmVzcy4=
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>>> These patches are also available from the git repository at
+>>>
+>>>   git://repo.or.cz/git/jrn.git tags/rs/ref-transaction
+>>
+>> The tag fetched and built as-is seems to break 5514 among other
+>> things ("git remote rm" segfaults).
+>
+> Yeah, I noticed that right after sending the series out. :/
+>
+> The patch below fixes it[1].
+
+Is this meant to replace anything, or is it "Oops, the previous ones
+are broken, and this is to patch it up on top"?
+
+> -- >8 --
+> From: Ronnie Sahlberg <sahlberg@google.com>
+> Date: Thu, 11 Sep 2014 08:42:57 -0700
+> Subject: remote rm/prune: print a message when writing packed-refs fails
+>
+> Until v2.1.0-rc0~22^2~11 (refs.c: add an err argument to
+> repack_without_refs, 2014-06-20), repack_without_refs forgot to
+> provide an error message when commit_packed_refs fails.  Even today,
+> it only provides a message for callers that pass a non-NULL err
+> parameter.  Internal callers in refs.c pass non-NULL err but
+> "git remote" does not.
+>
+> That means that "git remote rm" and "git remote prune" can fail
+> without printing a message about why.  Fix them by passing in a
+> non-NULL err parameter and printing the returned message.
+>
+> This is the last caller to a ref handling function passing err ==
+> NULL.  A later patch can drop support for err == NULL, avoiding such
+> problems in the future.
+>
+> Change-Id: Ifb8a726ef03d0aa282a25a102313064d2e8ec283
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> [1] https://code-review.googlesource.com/1110
+>     https://code-review.googlesource.com/1060
+>
+>  builtin/remote.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 6eaeee7..ef1ffc3 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -750,13 +750,16 @@ static int mv(int argc, const char **argv)
+>  
+>  static int remove_branches(struct string_list *branches)
+>  {
+> +	struct strbuf err = STRBUF_INIT;
+>  	const char **branch_names;
+>  	int i, result = 0;
+>  
+>  	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
+>  	for (i = 0; i < branches->nr; i++)
+>  		branch_names[i] = branches->items[i].string;
+> -	result |= repack_without_refs(branch_names, branches->nr, NULL);
+> +	if (repack_without_refs(branch_names, branches->nr, &err))
+> +		result |= error("%s", err.buf);
+> +	strbuf_release(&err);
+>  	free(branch_names);
+>  
+>  	for (i = 0; i < branches->nr; i++) {
+> @@ -1333,9 +1336,13 @@ static int prune_remote(const char *remote, int dry_run)
+>  		delete_refs = xmalloc(states.stale.nr * sizeof(*delete_refs));
+>  		for (i = 0; i < states.stale.nr; i++)
+>  			delete_refs[i] = states.stale.items[i].util;
+> -		if (!dry_run)
+> -			result |= repack_without_refs(delete_refs,
+> -						      states.stale.nr, NULL);
+> +		if (!dry_run) {
+> +			struct strbuf err = STRBUF_INIT;
+> +			if (repack_without_refs(delete_refs, states.stale.nr,
+> +						&err))
+> +				result |= error("%s", err.buf);
+> +			strbuf_release(&err);
+> +		}
+>  		free(delete_refs);
+>  	}
