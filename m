@@ -1,111 +1,126 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 10/32] cache.h: define constants LOCK_SUFFIX and LOCK_SUFFIX_LEN
-Date: Fri, 12 Sep 2014 19:13:28 +0200
-Message-ID: <541329B8.1050200@alum.mit.edu>
-References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu>	<1409989846-22401-11-git-send-email-mhagger@alum.mit.edu> <CAL=YDWmgwwQsCSpVsQ5U+c=4RcLdzo-j_hmxDk-AJWdRUk_SsQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] make config --add behave correctly for empty and NULL values
+Date: Fri, 12 Sep 2014 10:29:25 -0700
+Message-ID: <xmqqa964bvd6.fsf@gitster.dls.corp.google.com>
+References: <1408357077-4745-1-git-send-email-tanayabh@gmail.com>
+	<xmqqvbppwtir.fsf@gitster.dls.corp.google.com>
+	<20140819051732.GA13765@peff.net>
+	<xmqqmwb1vwvs.fsf@gitster.dls.corp.google.com>
+	<20140819062000.GA7805@peff.net>
+	<xmqqy4tpbuii.fsf@gitster.dls.corp.google.com>
+	<54129F66.9080905@gmail.com> <54129FE1.6020303@gmail.com>
+	<vpqegvhfe5p.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 19:20:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tanay Abhra <tanayabh@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 12 19:29:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSUWU-00043m-90
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 19:20:38 +0200
+	id 1XSUf7-0000sY-Ht
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 19:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbaILRUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2014 13:20:34 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:52708 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751489AbaILRUd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Sep 2014 13:20:33 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Sep 2014 13:20:33 EDT
-X-AuditID: 12074412-f792e6d000005517-87-541329bbdf2f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id EC.9D.21783.BB923145; Fri, 12 Sep 2014 13:13:31 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB1EE6.dip0.t-ipconnect.de [93.219.30.230])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8CHDTFu013163
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 12 Sep 2014 13:13:30 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <CAL=YDWmgwwQsCSpVsQ5U+c=4RcLdzo-j_hmxDk-AJWdRUk_SsQ@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJKsWRmVeSWpSXmKPExsUixO6iqLtbUzjEoKfV1KLrSjeTRUPvFWaL
-	J3PvMlv8aOlhtvg3ocais+MrowObx4JNpR4PX3Wxezzr3cPocfGSssfnTXIet59tYwlgi+K2
-	SUosKQvOTM/Tt0vgzph76wprwWveil2Hz7E2MF7h6mLk4JAQMJHYMTG1i5ETyBSTuHBvPVsX
-	IxeHkMBlRonp605DOeeZJBp3nWIHqeIV0JZ4/+otC4jNIqAq8bnzGjOIzSagK7Gop5kJxBYV
-	CJD40PmAEaJeUOLkzCdg9SICmhI3+08zgQxlFrjBKLH0Rg8jyBXCAuESn67FQSw7zCixYsV1
-	sEGcAoESz9ZdAmtmFlCX+DPvEjOELS/RvHU28wRGgVlIdsxCUjYLSdkCRuZVjHKJOaW5urmJ
-	mTnFqcm6xcmJeXmpRbpmermZJXqpKaWbGCFBL7SDcf1JuUOMAhyMSjy8FSyCIUKsiWXFlbmH
-	GCU5mJREeT+rCIcI8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFl1gDK8aYkVlalFuXDpKQ5WJTE
-	eX8uVvcTEkhPLEnNTk0tSC2CycpwcChJ8L4HaRQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0kt
-	SiwtyYgHxWp8MTBaQVI8QHuFNUH2Fhck5gJFIVpPMepyrOv81s8kxJKXn5cqJc77GmSHAEhR
-	Rmke3ApYinvFKA70sTDvRpAqHmB6hJv0CmgJE9CSd3OEQJaUJCKkpBoYZ5W92vniyPtbr9an
-	sEy/9bXGp311ZPPXnbenfOjY/q/Nd9P9tPN/z+R0eexOebUoJZfN/1Gi9JWE+NlZ 
+	id S1751139AbaILR33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Sep 2014 13:29:29 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64149 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750997AbaILR32 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Sep 2014 13:29:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE84837874;
+	Fri, 12 Sep 2014 13:29:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PLiLas/zo0Wq7mFWt6pG2s8Xwho=; b=F5AOV5
+	fA6/zC1O1CNf+935sdzMEi8EEYT48mplfddd+5TlwJQWEyRUexiDuq7ibRvWTZUq
+	ypEVHGB29qTq/N5ELgqdfKOkEQ4olBTLzO8FA/2UGdhRURxf8kK7o346Uh3UojUZ
+	5exOdVh1psw57i3ue+TIllLCOL1bUD8rbkJy4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iJXjuThP0xk3DY20mG+OvDpJYkieHBOW
+	mbQITfv4jU4k9P3ResbIYDb9YtVCcZY99hg0Vl0E+S10iZWGyaJAmkaXUMAbtjbd
+	xOsG8k5CyNx4BjGNlIvRmkj58LhnYGbYDAkaHKySaQU1SiI5+IiK6lW5fw1n5VXH
+	4P4CZ9HtVLw=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D450837873;
+	Fri, 12 Sep 2014 13:29:27 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4E75D3786D;
+	Fri, 12 Sep 2014 13:29:27 -0400 (EDT)
+In-Reply-To: <vpqegvhfe5p.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
+	12 Sep 2014 10:15:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 58966A7A-3AA2-11E4-86B2-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256929>
 
-On 09/12/2014 12:42 AM, Ronnie Sahlberg wrote:
-> Maybe we should not have a public constant defined for the length :
-> +#define LOCK_SUFFIX_LEN 5
-> 
-> since it encourages unsafe code like :  (this was unsafe long before
-> your patch so not a regression)
-> +       i = strlen(result_file) - LOCK_SUFFIX_LEN; /* .lock */
->         result_file[i] = 0;
-> 
-> 
-> 
-> What about removing LOCK_SUFFIX_LEN from the public API and introduce
-> a helper function something like :
-> 
-> 
-> /* pointer to the character where the lock suffix starts */
-> char *lock_suffix_ptr_safe(const char *filename)
-> {
->     size_t len = strlen(filename);
->     if (len < 5)
->        die("BUG:...
->     if (strcmp(filename + len - 5, LOCK_SUFFIX)
->        die("BUG:...
->     return filename + len - 5;
-> }
-> 
-> and use it instead?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-At the end of this patch series, LOCK_SUFFIX_LEN is only used in two
-places outside of lockfile.c:
+> Tanay Abhra <tanayabh@gmail.com> writes:
+>
+>> +const char CONFIG_REGEX_NONE[] = "a^";
+>
+> I have a slight preference for this version (no magic (void *)1 value,
+> and belts-and-suspenders solution since someone actually using the regex
+> should still get a correct behavior.
+>
+> But I'm fine with both Junio/Peff's version or this one.
 
-* In check_refname_component(), to ensure that no component of a
-reference name ends with ".lock". This only indirectly has anything to
-do with lockfiles.
+I do not care too deeply either way, to be honest.
 
-* In delete_ref_loose(), to derive the name of the loose reference file
-from the name of the lockfile. It immediately xmemdupz()s the part of
-the filename that it needs, so it is kosher.
+But if we were to redo this in the right way, I suspect that the
+best solution may be to correct the root cause, which is the design
+mistake in the git_config_set_multivar_in_file API.  The function
+takes a regexp (possibly NULL) and a multi_replace bit, and with
+that expresses these three combinations:
 
-I will add a function get_locked_file_path() for the use of the second
-caller.
+    - a non-NULL regexp means only the existing ones that match are
+      subject to replacement;
 
-I like being able to use the symbolic constant at the first caller, and
-it is not dangerous. I don't think it is so important to make the
-constant private, because I think somebody programming sloppily wouldn't
-be deterred for long by not seeing a symbolic constant for the suffix
-length. So if it's OK with you I'll leave the constant.
+    - NULL regexp means all of the existing ones that match are
+      subject to replacement;
 
-Michael
+    - multi-replace bit controls which ones among the replacement
+      candidates are replaced (either the first one or all).
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+But we actually want to express three, not two, different handling
+for the existing entries.  Either (1) use the regexp to decide which
+ones are subject to replacement, (2) declare all of them are subject
+to replacement, or (3) declare none of them are to be replaced.  The
+last one cannot be expressed without coming up with a trick to say
+"I am giving a regexp that hopefully will not match anything as a
+workaround because otherwise you will replace all of them but what I
+really want to say is I do not want you to replace anything", and
+this thread discusses a fix to the bug in the implementation that
+failed to come up with a "hopefully will not match anything"
+pattern.  And we are still discussing to fix a better workaround.
+
+Instead of polishing the workaround, wouldn't it be better to make
+it unnecessary to work it around?  For exaple, we could turn the
+last parameter to the function into an "unsigned flag" with two
+bits, CONFIG_SET_USE_REGEXP_TO_FILTER (if set, use the regexp to
+filter which of the existing entries to be replaced) and
+CONFIG_SET_REPLACE_MULTI (if set, replace all the eligible ones),
+and the result would be conceptually a lot cleaner, no?
+
+Some notes:
+
+ - Because most callers expect "replace" behaviour, instead of
+   adding CONFIG_SET_USE_REGEXP_TO_FILTER to the majority of
+   existing callers, a new flag CONFIG_SET_JUST_APPEND (which is
+   exactly the negation of the USE_REGEXP_TO_FILTER) would be a more
+   practical thing to introduce.
+
+ - We can keep using value_regexp==NULL (under !JUST_APPEND) to mean
+   value_regexp=".*", i.e. matches anything, as a short-hand.
+
+Hmm?
