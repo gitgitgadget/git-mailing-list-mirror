@@ -1,213 +1,181 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 23/32] prune: strategies for linked checkouts
-Date: Thu, 11 Sep 2014 23:06:22 -0400
-Message-ID: <CAPig+cQGeEzrx9N1Rrxhf--gphWSam88BV06AJTA=6-YZvQ4Tg@mail.gmail.com>
-References: <1409387642-24492-1-git-send-email-pclouds@gmail.com>
-	<1410388928-32265-1-git-send-email-pclouds@gmail.com>
-	<1410388928-32265-24-git-send-email-pclouds@gmail.com>
-	<5411C16C.9010406@xiplink.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] fsck: return non-zero status on missing ref tips
+Date: Thu, 11 Sep 2014 23:38:30 -0400
+Message-ID: <20140912033830.GA5507@peff.net>
+References: <1409177412.15185.3.camel@leckie>
+ <20140829185325.GC29456@peff.net>
+ <xmqqha0v5cgn.fsf@gitster.dls.corp.google.com>
+ <1409343480.19256.2.camel@leckie>
+ <20140829203145.GA510@peff.net>
+ <xmqq4mwgjvt6.fsf_-_@gitster.dls.corp.google.com>
+ <20140909220709.GA14029@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 05:06:29 2014
+Content-Type: text/plain; charset=utf-8
+Cc: David Turner <dturner@twopensource.com>,
+	git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 12 05:38:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSHBs-0000Wc-VQ
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 05:06:29 +0200
+	id 1XSHh0-0006ff-U4
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 05:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506AbaILDGY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Sep 2014 23:06:24 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:49990 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752413AbaILDGX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Sep 2014 23:06:23 -0400
-Received: by mail-yk0-f169.google.com with SMTP id 20so69445yks.28
-        for <git@vger.kernel.org>; Thu, 11 Sep 2014 20:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=6kpnICFjmlDbKH+aLqHAqvNeD4RQ6wYohSzIK/hAcbY=;
-        b=CxKLdpJVB26tJljJiC4IeVajUPNcL0Vusl143vPoj4DZNnVw6fEKiBGbzUtOA36VqM
-         gi4wbW1LxOxQh0y0hHnfl0SEsTPEROw8MiWoCxueJgewBTFzW7VsXGJrTruA/SBsFbn6
-         mGLKZ6INlDvr3UGL676dwGNxharYLP73Y56aqgtWD5zJuWVJMqyjjuRwBK/8NQ/Gn5ki
-         8yguM/DiDHiNrnljTqkCPPb0Smwn2zr28J/UTQ1at3R/sbo9BqTCwyOEOgtWO0OPV48p
-         jtegQYWmN1yMEEkuMqCAD7E8SgmyiUgM5eiExzorYugpYgamAOtzYP//Q6zYjfpn9r0V
-         W5Ag==
-X-Received: by 10.236.29.5 with SMTP id h5mr6482492yha.58.1410491182888; Thu,
- 11 Sep 2014 20:06:22 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Thu, 11 Sep 2014 20:06:22 -0700 (PDT)
-In-Reply-To: <5411C16C.9010406@xiplink.com>
-X-Google-Sender-Auth: 6NYySL-UE6OvnMIRl1ly7yo479s
+	id S1752136AbaILDie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Sep 2014 23:38:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47298 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751605AbaILDid (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Sep 2014 23:38:33 -0400
+Received: (qmail 29418 invoked by uid 102); 12 Sep 2014 03:38:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Sep 2014 22:38:33 -0500
+Received: (qmail 31430 invoked by uid 107); 12 Sep 2014 03:38:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Sep 2014 23:38:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Sep 2014 23:38:30 -0400
+Content-Disposition: inline
+In-Reply-To: <20140909220709.GA14029@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256895>
 
-On Thu, Sep 11, 2014 at 11:36 AM, Marc Branchaud <marcnarc@xiplink.com>=
- wrote:
-> On 14-09-10 06:41 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
-:
->> (alias R=3D$GIT_COMMON_DIR/worktrees/<id>)
->>
->>  - linked checkouts are supposed to keep its location in $R/gitdir u=
-p
->>    to date. The use case is auto fixup after a manual checkout move.
->>
->>  - linked checkouts are supposed to update mtime of $R/gitdir. If
->>    $R/gitdir's mtime is older than a limit, and it points to nowhere=
-,
->>    worktrees/<id> is to be pruned.
->>
->>  - If $R/locked exists, worktrees/<id> is not supposed to be pruned.=
- If
->>    $R/locked exists and $R/gitdir's mtime is older than a really lon=
-g
->>    limit, warn about old unused repo.
->>
->>  - "git checkout --to" is supposed to make a hard link named $R/link
->>    pointing to the .git file on supported file systems to help detec=
-t
->>    the user manually deleting the checkout. If $R/link exists and it=
-s
->>    link count is greated than 1, the repo is kept.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  Documentation/git-checkout.txt             | 18 ++++++
->>  Documentation/git-prune.txt                |  3 +
->>  Documentation/gitrepository-layout.txt     | 19 ++++++
->>  builtin/checkout.c                         | 19 +++++-
->>  builtin/prune.c                            | 95 +++++++++++++++++++=
-+++++++++++
->>  setup.c                                    | 13 ++++
->>  t/t2026-prune-linked-checkouts.sh (new +x) | 84 +++++++++++++++++++=
-+++++++
->>  7 files changed, 249 insertions(+), 2 deletions(-)
->>  create mode 100755 t/t2026-prune-linked-checkouts.sh
->>
->> diff --git a/Documentation/git-checkout.txt b/Documentation/git-chec=
-kout.txt
->> index bd0fc1d..a29748e 100644
->> --- a/Documentation/git-checkout.txt
->> +++ b/Documentation/git-checkout.txt
->> @@ -431,6 +431,24 @@ thumb is do not make any assumption about wheth=
-er a path belongs to
->>  $GIT_DIR or $GIT_COMMON_DIR when you need to directly access someth=
-ing
->>  inside $GIT_DIR. Use `git rev-parse --git-path` to get the final pa=
-th.
->>
->> +When you are done, simply deleting the linked working directory wou=
-ld
->> +suffice. $GIT_DIR/worktrees can be cleaned up using `git prune
->> +--worktrees`.
->
-> This needs a tweak or two so that it follows more naturally from the =
-previous
-> paragraph.  How about:
->
->         When you are done with a linked working tree you can simply d=
-elete
->         it.  You can clean up any stale $GIT_DIR/worktrees entries wi=
-th
->         `git prune --worktrees`.
+> On Tue, Sep 09, 2014 at 03:03:33PM -0700, Junio C Hamano wrote:
+> 
+> > Upon finding a corrupt loose object, we forgot to note the error to
+> > signal it with the exit status of the entire process.
+> > 
+> > [jc: adjusted t1450 and added another test]
+> > 
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> > 
+> >  * I think your fix is a right one that catches all the "we can
+> >    parse minimally for the purpose of 'struct object' class system,
+> >    but the object is semantically broken" cases, as fsck_obj() is
+> >    where such a validation should all happen.
 
-Thanks for these rewrites; I was going to provide similar suggestions.
+Here's another structural case that we should catch but do not:
 
-One minor addition for clarification would be to mention that the 'git
-prune --worktrees' invocation applies to the main worktree:
+-- >8 --
+Subject: fsck: return non-zero status on missing ref tips
 
-    When you are done with a linked working tree, you can simply delete
-    it. You can clean up any stale $GIT_DIR/worktrees entries via
-    `git prune --worktrees` in the main worktree.
+Fsck tries hard to detect missing objects, and will complain
+(and exit non-zero) about any inter-object links that are
+missing. However, it will not exit non-zero for any missing
+ref tips, meaning that a severely broken repository may
+still pass "git fsck && echo ok".
 
-> Then in commit 28, when you add worktrees pruning to gc, you should c=
-hange
-> this paragraph again:
->
->         When you are done with a linked working tree you can simply d=
-elete
->         it.  The working tree's entry in the repository's $GIT_DIR/wo=
-rktrees
->         directory will eventually be removed automatically (see
->         `gc.pruneworktreesexpire` in linkgit::git-config[1]), or you =
-can run
->         `git prune --worktrees` to clean up any stale entries in
->         $GIT_DIR/worktrees.
+The problem is that we use for_each_ref to iterate over the
+ref tips, which hides broken tips. It does at least print an
+error from the refs.c code, but fsck does not ever see the
+ref and cannot note the problem in its exit code. We can solve
+this by using for_each_rawref and noting the error ourselves.
 
-Ditto about qualifying 'git prune --worktrees' with "in the main work t=
-ree".
+In addition to adding tests for this case, we add tests for
+all types of missing-object links (all of which worked, but
+which we were not testing).
 
->> +After you move a linked working directory to another file system, o=
-r
->> +on a file system that does not support hard link, execute any git
->> +command (e.g. `git status`) in the new working directory so that it
->> +could update its location in $GIT_DIR/worktrees and not be
->> +accidentally pruned.
->
-> It took me a couple of seconds to parse that.  How about:
->
->         If you move a linked working directory to another file system=
-, or
->         within a file system that does not support hard links, you ne=
-ed to
->         run at least one git command inside the moved linked working
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Just below here we check that refs/heads/* points only to commit
+objects. That's also sort-of-structural, but is pretty easy to recover
+from without data loss, so I don't think it is as obvious a candidate
+for a non-zero exit.
 
-I trip over "moved linked" every time I read it. I think there's
-sufficient context in the 'if' clause leading to this that "moved" can
-be dropped.
+ builtin/fsck.c  |  3 ++-
+ t/t1450-fsck.sh | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 1 deletion(-)
 
->         directory (e.g. `git status`) in order to update its entry in
->         $GIT_DIR/worktrees so that it does not get automatically remo=
-ved.
->
->> +To stop `git prune --worktrees` from deleting a specific working
->> +directory (e.g. because it's on a portable device), you could add t=
-he
->> +file 'locked' to $GIT_DIR/worktrees. For example, if `.git` file of
->> +the new working directory points to `/path/main/worktrees/test-next=
-`,
->> +the full path of the 'locked' file would be
->> +`/path/main/worktrees/test-next/locked`. See
->> +linkgit:gitrepository-layout[5] for details.
->
-> Sorry, I can't help rewriting this one too:
->
->         To prevent `git prune --worktrees` from deleting a
->         $GIT_DIR/worktrees entry (which can be useful in some situati=
-ons,
->         such as when the entry's working tree is stored on a portable
->         device), add a file named 'locked' to the entry's directory. =
- For
->         example, if a linked working tree's `.git` file points to
->         `/path/main/.git/worktrees/test-next` then a file named
->         `/path/main/.git/worktrees/test-next/locked` will prevent the
->         `test-next` entry from being pruned.  See
->         linkgit:gitrepository-layout[5] for details.
-
-Each time I read this (or Duy's original), the first question that
-pops into my head is "should 'locked' be empty or have content, and if
-content, what content?" gitrepository-layout.txt does explain the
-content (if the reader bothers to chase the link), but perhaps it is
-worth an explanatory sentence here?
-
-> I also suggest this paragraph get updated in commit 28, but just chan=
-ge the
-> first clause, before "(which can be ...":
->
->         To prevent a $GIT_DIR/worktrees entry from being pruned (whic=
-h ...
->
-> Thanks for all this work!
->
->                 M.
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 29de901..0928a98 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -489,6 +489,7 @@ static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int f
+ 	obj = parse_object(sha1);
+ 	if (!obj) {
+ 		error("%s: invalid sha1 pointer %s", refname, sha1_to_hex(sha1));
++		errors_found |= ERROR_REACHABLE;
+ 		/* We'll continue with the rest despite the error.. */
+ 		return 0;
+ 	}
+@@ -505,7 +506,7 @@ static void get_default_heads(void)
+ {
+ 	if (head_points_at && !is_null_sha1(head_sha1))
+ 		fsck_handle_ref("HEAD", head_sha1, 0, NULL);
+-	for_each_ref(fsck_handle_ref, NULL);
++	for_each_rawref(fsck_handle_ref, NULL);
+ 	if (include_reflogs)
+ 		for_each_reflog(fsck_handle_reflog, NULL);
+ 
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 0de755c..b52397a 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -302,4 +302,60 @@ test_expect_success 'fsck notices ".git" in trees' '
+ 	)
+ '
+ 
++# create a static test repo which is broken by omitting
++# one particular object ($1, which is looked up via rev-parse
++# in the new repository).
++create_repo_missing () {
++	rm -rf missing &&
++	git init missing &&
++	(
++		cd missing &&
++		git commit -m one --allow-empty &&
++		mkdir subdir &&
++		echo content >subdir/file &&
++		git add subdir/file &&
++		git commit -m two &&
++		unrelated=$(echo unrelated | git hash-object --stdin -w) &&
++		git tag -m foo tag $unrelated &&
++		sha1=$(git rev-parse --verify "$1") &&
++		path=$(echo $sha1 | sed 's|..|&/|') &&
++		rm .git/objects/$path
++	)
++}
++
++test_expect_success 'fsck notices missing blob' '
++	create_repo_missing HEAD:subdir/file &&
++	test_must_fail git -C missing fsck
++'
++
++test_expect_success 'fsck notices missing subtree' '
++	create_repo_missing HEAD:subdir &&
++	test_must_fail git -C missing fsck
++'
++
++test_expect_success 'fsck notices missing root tree' '
++	create_repo_missing HEAD^{tree} &&
++	test_must_fail git -C missing fsck
++'
++
++test_expect_success 'fsck notices missing parent' '
++	create_repo_missing HEAD^ &&
++	test_must_fail git -C missing fsck
++'
++
++test_expect_success 'fsck notices missing tagged object' '
++	create_repo_missing tag^{blob} &&
++	test_must_fail git -C missing fsck
++'
++
++test_expect_success 'fsck notices ref pointing to missing commit' '
++	create_repo_missing HEAD &&
++	test_must_fail git -C missing fsck
++'
++
++test_expect_success 'fsck notices ref pointing to missing tag' '
++	create_repo_missing tag &&
++	test_must_fail git -C missing fsck
++'
++
+ test_done
+-- 
+2.1.0.373.g91ca799
