@@ -1,228 +1,118 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v2 23/32] prune: strategies for linked checkouts
-Date: Fri, 12 Sep 2014 15:08:02 -0400
-Message-ID: <54134492.6020004@xiplink.com>
-References: <1409387642-24492-1-git-send-email-pclouds@gmail.com>	<1410388928-32265-1-git-send-email-pclouds@gmail.com>	<1410388928-32265-24-git-send-email-pclouds@gmail.com>	<5411C16C.9010406@xiplink.com> <CAPig+cQGeEzrx9N1Rrxhf--gphWSam88BV06AJTA=6-YZvQ4Tg@mail.gmail.com>
+From: "Rom Walton" <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>
+Subject: Re: (local ?) BOINC repo broken again -or- how to act
+	on the CR/LF changes made upstream
+Date: Fri, 12 Sep 2014 15:10:06 -0400
+Message-ID: <1BAFA9B4D550C347962F76F2E03B3BBB22C5FB@romw-mail.romwnet.org>
+References: <541336D6.3050803@gmx.de>
+	<1BAFA9B4D550C347962F76F2E03B3BBB22C5F9@romw-mail.romwnet.org>
+	<54133C3A.4080700@gmx.de>
+	<1BAFA9B4D550C347962F76F2E03B3BBB22C5FA@romw-mail.romwnet.org>
+	<541343BC.1050503@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Sep 12 21:08:47 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSWD6-0006Bm-Rf
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Sep 2014 21:08:45 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752594AbaILTIl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Sep 2014 15:08:41 -0400
-Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:33383 "EHLO
-	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922AbaILTIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2014 15:08:40 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp12.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 37A2710014A;
-	Fri, 12 Sep 2014 15:08:39 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp12.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id DF2691000C5;
-	Fri, 12 Sep 2014 15:08:38 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.2.10);
-	Fri, 12 Sep 2014 19:08:39 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <CAPig+cQGeEzrx9N1Rrxhf--gphWSam88BV06AJTA=6-YZvQ4Tg@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256943>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+To: =?utf-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster-Mmb7MZpHnFY@public.gmane.org>,
+	<git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+X-From: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org Fri Sep 12 21:10:17 2014
+Return-path: <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Envelope-to: gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
+Received: from mailapps1.ssl.berkeley.edu ([128.32.13.237])
+	by plane.gmane.org with smtp (Exim 4.69)
+	(envelope-from <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>)
+	id 1XSWEX-0006za-8t
+	for gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Fri, 12 Sep 2014 21:10:13 +0200
+Received: from mailapps1.ssl.berkeley.edu (localhost [127.0.0.1])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 4A1552FEA63;
+	Fri, 12 Sep 2014 12:10:11 -0700 (PDT)
+X-Original-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Delivered-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Received: from mail2.ssl.berkeley.edu (mail2.ssl.berkeley.edu [128.32.13.252])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 5C87B2FEA4D
+	for <boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org>;
+	Fri, 12 Sep 2014 12:10:09 -0700 (PDT)
+Received: from mailwall2.ssl.berkeley.edu (mailwall2.ssl.berkeley.edu
+	[128.32.147.8])
+	by mail2.ssl.berkeley.edu (8.13.8/8.13.8) with ESMTP id s8CJA90D001016
+	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Fri, 12 Sep 2014 12:10:09 -0700
+X-ASG-Debug-ID: 1410549008-04b397145f29ee60001-LQ66t1
+Received: from mho-01-ewr.mailhop.org (mho-03-ewr.mailhop.org [204.13.248.66])
+	by mailwall2.ssl.berkeley.edu with ESMTP id 3x7dYsAj2NnEZmhR
+	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>;
+	Fri, 12 Sep 2014 12:10:08 -0700 (PDT)
+X-Barracuda-Envelope-From: romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org
+X-Barracuda-Apparent-Source-IP: 204.13.248.66
+Received: from 173-160-3-53-naples.hfc.comcastbusiness.net ([173.160.3.53]
+	helo=mail.romwnet.org)
+	by mho-01-ewr.mailhop.org with esmtpsa (TLSv1:RC4-MD5:128)
+	(Exim 4.72) (envelope-from <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>)
+	id 1XSWES-000H1S-C0; Fri, 12 Sep 2014 19:10:08 +0000
+X-Mail-Handler: Dyn Standard SMTP by Dyn
+X-Originating-IP: 173.160.3.53
+X-Report-Abuse-To: abuse-yJRlmlznMY/QT0dZR+AlfA@public.gmane.org (see
+	http://www.dyndns.com/services/sendlabs/outbound_abuse.html for
+	abuse reporting information)
+X-MHO-User: U2FsdGVkX19SU3VpUbIelxKVH4+0KyKofl/pb9F7AqI=
+X-ASG-Orig-Subj: RE: [boinc_dev] (local ?) BOINC repo broken again -or- how to
+	act on the CR/LF changes made upstream
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [boinc_dev] (local ?) BOINC repo broken again -or- how to act on
+	the CR/LF changes made upstream
+Thread-Index: Ac/OvHi5Itf20a+aT5StoZ0yKcUUogAAKVJg
+X-Barracuda-Connect: mho-03-ewr.mailhop.org[204.13.248.66]
+X-Barracuda-Start-Time: 1410549008
+X-Barracuda-URL: http://mailwall2.ssl.berkeley.edu:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at ssl.berkeley.edu
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score-Disabled: per user
+X-BeenThere: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: BOINC development <boinc_dev.ssl.berkeley.edu>
+List-Unsubscribe: <http://lists.ssl.berkeley.edu/mailman/options/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.ssl.berkeley.edu/pipermail/boinc_dev/>
+List-Post: <mailto:boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+List-Help: <mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.ssl.berkeley.edu/mailman/listinfo/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=subscribe>
+Errors-To: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+Sender: "boinc_dev" <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256944>
 
-On 14-09-11 11:06 PM, Eric Sunshine wrote:
-> On Thu, Sep 11, 2014 at 11:36 AM, Marc Branchaud <marcnarc@xiplink.co=
-m> wrote:
->> On 14-09-10 06:41 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrot=
-e:
->>> (alias R=3D$GIT_COMMON_DIR/worktrees/<id>)
->>>
->>>  - linked checkouts are supposed to keep its location in $R/gitdir =
-up
->>>    to date. The use case is auto fixup after a manual checkout move=
-=2E
->>>
->>>  - linked checkouts are supposed to update mtime of $R/gitdir. If
->>>    $R/gitdir's mtime is older than a limit, and it points to nowher=
-e,
->>>    worktrees/<id> is to be pruned.
->>>
->>>  - If $R/locked exists, worktrees/<id> is not supposed to be pruned=
-=2E If
->>>    $R/locked exists and $R/gitdir's mtime is older than a really lo=
-ng
->>>    limit, warn about old unused repo.
->>>
->>>  - "git checkout --to" is supposed to make a hard link named $R/lin=
-k
->>>    pointing to the .git file on supported file systems to help dete=
-ct
->>>    the user manually deleting the checkout. If $R/link exists and i=
-ts
->>>    link count is greated than 1, the repo is kept.
->>>
->>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
-mail.com>
->>> ---
->>>  Documentation/git-checkout.txt             | 18 ++++++
->>>  Documentation/git-prune.txt                |  3 +
->>>  Documentation/gitrepository-layout.txt     | 19 ++++++
->>>  builtin/checkout.c                         | 19 +++++-
->>>  builtin/prune.c                            | 95 ++++++++++++++++++=
-++++++++++++
->>>  setup.c                                    | 13 ++++
->>>  t/t2026-prune-linked-checkouts.sh (new +x) | 84 ++++++++++++++++++=
-++++++++
->>>  7 files changed, 249 insertions(+), 2 deletions(-)
->>>  create mode 100755 t/t2026-prune-linked-checkouts.sh
->>>
->>> diff --git a/Documentation/git-checkout.txt b/Documentation/git-che=
-ckout.txt
->>> index bd0fc1d..a29748e 100644
->>> --- a/Documentation/git-checkout.txt
->>> +++ b/Documentation/git-checkout.txt
->>> @@ -431,6 +431,24 @@ thumb is do not make any assumption about whet=
-her a path belongs to
->>>  $GIT_DIR or $GIT_COMMON_DIR when you need to directly access somet=
-hing
->>>  inside $GIT_DIR. Use `git rev-parse --git-path` to get the final p=
-ath.
->>>
->>> +When you are done, simply deleting the linked working directory wo=
-uld
->>> +suffice. $GIT_DIR/worktrees can be cleaned up using `git prune
->>> +--worktrees`.
->>
->> This needs a tweak or two so that it follows more naturally from the=
- previous
->> paragraph.  How about:
->>
->>         When you are done with a linked working tree you can simply =
-delete
->>         it.  You can clean up any stale $GIT_DIR/worktrees entries w=
-ith
->>         `git prune --worktrees`.
->=20
-> Thanks for these rewrites; I was going to provide similar suggestions=
-=2E
->=20
-> One minor addition for clarification would be to mention that the 'gi=
-t
-> prune --worktrees' invocation applies to the main worktree:
->=20
->     When you are done with a linked working tree, you can simply dele=
-te
->     it. You can clean up any stale $GIT_DIR/worktrees entries via
->     `git prune --worktrees` in the main worktree.
->=20
->> Then in commit 28, when you add worktrees pruning to gc, you should =
-change
->> this paragraph again:
->>
->>         When you are done with a linked working tree you can simply =
-delete
->>         it.  The working tree's entry in the repository's $GIT_DIR/w=
-orktrees
->>         directory will eventually be removed automatically (see
->>         `gc.pruneworktreesexpire` in linkgit::git-config[1]), or you=
- can run
->>         `git prune --worktrees` to clean up any stale entries in
->>         $GIT_DIR/worktrees.
->=20
-> Ditto about qualifying 'git prune --worktrees' with "in the main work=
- tree".
->=20
->>> +After you move a linked working directory to another file system, =
-or
->>> +on a file system that does not support hard link, execute any git
->>> +command (e.g. `git status`) in the new working directory so that i=
-t
->>> +could update its location in $GIT_DIR/worktrees and not be
->>> +accidentally pruned.
->>
->> It took me a couple of seconds to parse that.  How about:
->>
->>         If you move a linked working directory to another file syste=
-m, or
->>         within a file system that does not support hard links, you n=
-eed to
->>         run at least one git command inside the moved linked working
->=20
-> I trip over "moved linked" every time I read it. I think there's
-> sufficient context in the 'if' clause leading to this that "moved" ca=
-n
-> be dropped.
-
-=46ine by me, as are your other suggestions.
-
-		M.
-
-
->>         directory (e.g. `git status`) in order to update its entry i=
-n
->>         $GIT_DIR/worktrees so that it does not get automatically rem=
-oved.
->>
->>> +To stop `git prune --worktrees` from deleting a specific working
->>> +directory (e.g. because it's on a portable device), you could add =
-the
->>> +file 'locked' to $GIT_DIR/worktrees. For example, if `.git` file o=
-f
->>> +the new working directory points to `/path/main/worktrees/test-nex=
-t`,
->>> +the full path of the 'locked' file would be
->>> +`/path/main/worktrees/test-next/locked`. See
->>> +linkgit:gitrepository-layout[5] for details.
->>
->> Sorry, I can't help rewriting this one too:
->>
->>         To prevent `git prune --worktrees` from deleting a
->>         $GIT_DIR/worktrees entry (which can be useful in some situat=
-ions,
->>         such as when the entry's working tree is stored on a portabl=
-e
->>         device), add a file named 'locked' to the entry's directory.=
-  For
->>         example, if a linked working tree's `.git` file points to
->>         `/path/main/.git/worktrees/test-next` then a file named
->>         `/path/main/.git/worktrees/test-next/locked` will prevent th=
-e
->>         `test-next` entry from being pruned.  See
->>         linkgit:gitrepository-layout[5] for details.
->=20
-> Each time I read this (or Duy's original), the first question that
-> pops into my head is "should 'locked' be empty or have content, and i=
-f
-> content, what content?" gitrepository-layout.txt does explain the
-> content (if the reader bothers to chase the link), but perhaps it is
-> worth an explanatory sentence here?
->=20
->> I also suggest this paragraph get updated in commit 28, but just cha=
-nge the
->> first clause, before "(which can be ...":
->>
->>         To prevent a $GIT_DIR/worktrees entry from being pruned (whi=
-ch ...
->>
->> Thanks for all this work!
->>
->>                 M.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+SSBmb3VuZCB0aGlzOg0KaHR0cDovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8xNzIyMzUy
+Ny9ob3ctZG8taS1mb3JjZS1naXQtdG8tY2hlY2tvdXQtdGhlLW1hc3Rlci1icmFuY2gtYW5kLXJl
+bW92ZS1jYXJyaWFnZS1yZXR1cm5zLWFmdA0KDQpUaGF0IG1pZ2h0IGhlbHAgaW4gdGhlIGZ1dHVy
+ZS4NCg0KLS0tLS0gUm9tDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBUb3Jh
+bGYgRsO2cnN0ZXIgW21haWx0bzp0b3JhbGYuZm9lcnN0ZXJAZ214LmRlXSANClNlbnQ6IEZyaWRh
+eSwgU2VwdGVtYmVyIDEyLCAyMDE0IDM6MDQgUE0NClRvOiBSb20gV2FsdG9uOyBnaXRAdmdlci5r
+ZXJuZWwub3JnDQpDYzogYm9pbmNfZGV2QHNzbC5iZXJrZWxleS5lZHUNClN1YmplY3Q6IFJlOiBb
+Ym9pbmNfZGV2XSAobG9jYWwgPykgQk9JTkMgcmVwbyBicm9rZW4gYWdhaW4gLW9yLSBob3cgdG8g
+YWN0IG9uIHRoZSBDUi9MRiBjaGFuZ2VzIG1hZGUgdXBzdHJlYW0NCg0KT24gMDkvMTIvMjAxNCAw
+ODo1NSBQTSwgUm9tIFdhbHRvbiB3cm90ZToNCj4gQ3J1ZC4uLg0KPiANCj4gV2VsbCwgcGVyc29u
+YWxseSwgSSB3b3VsZCBkZWxldGUgdGhlIGxvY2FsZSBkaXJlY3RvcnkgYW5kIHRoZSB0d28gdHJh
+bnNsYXRpb24gZmlsZXMgaW4gaHRtbC4NCj4gDQo+IERvIHRoZSAnZ2l0IHB1bGwnLCBhbmQgdGhl
+biBzd2l0Y2ggYmV0d2VlbiBtYXN0ZXIgYW5kIHNvbWUgb3RoZXIgYnJhbmNoLg0KPiANCj4gbGlr
+ZToNCj4gZ2l0IGNoZWNrb3V0IC1mIGNsaWVudF9yZWxlYXNlLzcvNy40DQo+IGdpdCBjaGVja291
+dCAtZiBtYXN0ZXINCj4gDQo+IEl0IGlzIHJvdW5kIGFib3V0LCBidXQgaXQgc2hvdWxkIGdldCB0
+aGUgam9iIGRvbmUuDQoNClJlLWNsb25pbmcgc2VlbXMgdG8gYmUgdGhlIG9ubHkgd2F5LCBiL2Mg
+Og0KDQp0Zm9lcnN0ZUBuMjIgfi9kZXZlbC9ib2luYy12MiAkIGdpdCBjaGVja291dCAtZiBjbGll
+bnRfcmVsZWFzZS83LzcuNCBCcmFuY2ggY2xpZW50X3JlbGVhc2UvNy83LjQgc2V0IHVwIHRvIHRy
+YWNrIHJlbW90ZSBicmFuY2ggY2xpZW50X3JlbGVhc2UvNy83LjQgZnJvbSBvcmlnaW4uDQpTd2l0
+Y2hlZCB0byBhIG5ldyBicmFuY2ggJ2NsaWVudF9yZWxlYXNlLzcvNy40Jw0KDQp0Zm9lcnN0ZUBu
+MjIgfi9kZXZlbC9ib2luYy12MiAkIGdpdCBjaGVja291dCAtZiBtYXN0ZXIgQ2hlY2tpbmcgb3V0
+IGZpbGVzOiAxMDAlICgyMzQvMjM0KSwgZG9uZS4NClN3aXRjaGVkIHRvIGJyYW5jaCAnbWFzdGVy
+Jw0KWW91ciBicmFuY2ggaXMgYmVoaW5kICdvcmlnaW4vbWFzdGVyJyBieSA3IGNvbW1pdHMsIGFu
+ZCBjYW4gYmUgZmFzdC1mb3J3YXJkZWQuDQogICh1c2UgImdpdCBwdWxsIiB0byB1cGRhdGUgeW91
+ciBsb2NhbCBicmFuY2gpDQoNCnRmb2Vyc3RlQG4yMiB+L2RldmVsL2JvaW5jLXYyICQgZ2l0IHB1
+bGwgVXBkYXRpbmcgY2U5N2U4NS4uZDJlNTU4Mg0KZXJyb3I6IFlvdXIgbG9jYWwgY2hhbmdlcyB0
+byB0aGUgZm9sbG93aW5nIGZpbGVzIHdvdWxkIGJlIG92ZXJ3cml0dGVuIGJ5IG1lcmdlOg0KLi4u
+DQo8c2FtZSBwaWN0dXJlIGFzIGJlZm9yZT4NCg0KLS0NClRvcmFsZg0KcGdwIGtleTogMDA3NiBF
+OTRFDQoNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmJv
+aW5jX2RldiBtYWlsaW5nIGxpc3QKYm9pbmNfZGV2QHNzbC5iZXJrZWxleS5lZHUKaHR0cDovL2xp
+c3RzLnNzbC5iZXJrZWxleS5lZHUvbWFpbG1hbi9saXN0aW5mby9ib2luY19kZXYKVG8gdW5zdWJz
+Y3JpYmUsIHZpc2l0IHRoZSBhYm92ZSBVUkwgYW5kCihuZWFyIGJvdHRvbSBvZiBwYWdlKSBlbnRl
+ciB5b3VyIGVtYWlsIGFkZHJlc3Mu
