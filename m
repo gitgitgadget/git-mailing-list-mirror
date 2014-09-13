@@ -1,114 +1,195 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [PATCH 4/8] staging: et131x: Remove ununsed statistics
-Date: Sun, 14 Sep 2014 00:09:08 +0300
-Message-ID: <20140913210908.GG6549@mwanda>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH] mailinfo: do not treat ">From" lines as in-body headers
+Date: Sat, 13 Sep 2014 17:25:05 -0400
+Message-ID: <20140913212504.GA25190@peff.net>
 References: <1410472786-14552-1-git-send-email-mark.einon@gmail.com>
  <1410472786-14552-5-git-send-email-mark.einon@gmail.com>
- <20140913093746.GD6600@mwanda> <20140913154556.GA12361@kroah.com>
+ <20140913093746.GD6600@mwanda>
+ <20140913154556.GA12361@kroah.com>
  <20140913203645.GB24854@peff.net>
  <20140913204745.GA12291@msilap.einon.net>
  <20140913205751.GA17875@mwanda>
+ <20140913210908.GG6549@mwanda>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, devel@driverdev.osuosl.org, git@vger.kernel.org,
- Greg KH <gregkh@linuxfoundation.org>
-To: Mark Einon <mark.einon@gmail.com>
-X-From: driverdev-devel-bounces@linuxdriverproject.org Sat Sep 13 23:09:25 2014
-Return-path: <driverdev-devel-bounces@linuxdriverproject.org>
-Envelope-to: glddd-devel@m.gmane.org
-Received: from fraxinus.osuosl.org ([140.211.166.137])
+Content-Type: text/plain; charset=utf-8
+Cc: Mark Einon <mark.einon@gmail.com>,
+	Greg KH <gregkh@linuxfoundation.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Dan Carpenter <dan.carpenter@oracle.com>
+X-From: git-owner@vger.kernel.org Sat Sep 13 23:25:17 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <driverdev-devel-bounces@linuxdriverproject.org>)
-	id 1XSuZR-0006pp-HF
-	for glddd-devel@m.gmane.org; Sat, 13 Sep 2014 23:09:25 +0200
-Received: from localhost (localhost [127.0.0.1])
-	by fraxinus.osuosl.org (Postfix) with ESMTP id CA545A1DCD;
-	Sat, 13 Sep 2014 21:09:24 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at osuosl.org
-Received: from fraxinus.osuosl.org ([127.0.0.1])
-	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Q1R2yhLwjlcw; Sat, 13 Sep 2014 21:09:23 +0000 (UTC)
-Received: from ash.osuosl.org (ash.osuosl.org [140.211.166.34])
-	by fraxinus.osuosl.org (Postfix) with ESMTP id E56D2A1DA4;
-	Sat, 13 Sep 2014 21:09:22 +0000 (UTC)
-X-Original-To: devel@linuxdriverproject.org
-Delivered-To: driverdev-devel@osuosl.org
-Received: from silver.osuosl.org (silver.osuosl.org [140.211.166.136])
- by ash.osuosl.org (Postfix) with ESMTP id F3B941C266B
- for <devel@linuxdriverproject.org>; Sat, 13 Sep 2014 21:09:21 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by silver.osuosl.org (Postfix) with ESMTP id EDA693346D
- for <devel@linuxdriverproject.org>; Sat, 13 Sep 2014 21:09:21 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at osuosl.org
-Received: from silver.osuosl.org ([127.0.0.1])
- by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XfKCctCCrgWw for <devel@linuxdriverproject.org>;
- Sat, 13 Sep 2014 21:09:21 +0000 (UTC)
-X-Greylist: domain auto-whitelisted by SQLgrey-1.7.6
-Received: from userp1040.oracle.com (userp1040.oracle.com [156.151.31.81])
- by silver.osuosl.org (Postfix) with ESMTPS id 0D3C831684
- for <devel@driverdev.osuosl.org>; Sat, 13 Sep 2014 21:09:20 +0000 (UTC)
-Received: from acsinet22.oracle.com (acsinet22.oracle.com [141.146.126.238])
- by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id
- s8DL9IgM016787
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
- Sat, 13 Sep 2014 21:09:19 GMT
-Received: from aserz7022.oracle.com (aserz7022.oracle.com [141.146.126.231])
- by acsinet22.oracle.com (8.14.4+Sun/8.14.4) with ESMTP id s8DL9IWh010800
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
- Sat, 13 Sep 2014 21:09:18 GMT
-Received: from abhmp0003.oracle.com (abhmp0003.oracle.com [141.146.116.9])
- by aserz7022.oracle.com (8.14.4+Sun/8.14.4) with ESMTP id s8DL9IDS010794;
- Sat, 13 Sep 2014 21:09:18 GMT
-Received: from mwanda (/41.202.233.190)
- by default (Oracle Beehive Gateway v4.0)
- with ESMTP ; Sat, 13 Sep 2014 14:09:17 -0700
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XSuom-000241-Ac
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 23:25:16 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752241AbaIMVZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2014 17:25:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47839 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752118AbaIMVZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Sep 2014 17:25:08 -0400
+Received: (qmail 11602 invoked by uid 102); 13 Sep 2014 21:25:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Sep 2014 16:25:08 -0500
+Received: (qmail 10694 invoked by uid 107); 13 Sep 2014 21:25:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Sep 2014 17:25:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Sep 2014 17:25:05 -0400
 Content-Disposition: inline
-In-Reply-To: <20140913205751.GA17875@mwanda>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Source-IP: acsinet22.oracle.com [141.146.126.238]
-X-BeenThere: driverdev-devel@linuxdriverproject.org
-X-Mailman-Version: 2.1.14
-Precedence: list
-List-Id: Linux Driver Project Developer List
- <driverdev-devel.linuxdriverproject.org>
-List-Unsubscribe: <http://driverdev.linuxdriverproject.org/mailman/options/driverdev-devel>, 
- <mailto:driverdev-devel-request@linuxdriverproject.org?subject=unsubscribe>
-List-Archive: <http://driverdev.linuxdriverproject.org/pipermail/driverdev-devel>
-List-Post: <mailto:driverdev-devel@linuxdriverproject.org>
-List-Help: <mailto:driverdev-devel-request@linuxdriverproject.org?subject=help>
-List-Subscribe: <http://driverdev.linuxdriverproject.org/mailman/listinfo/driverdev-devel>, 
- <mailto:driverdev-devel-request@linuxdriverproject.org?subject=subscribe>
-Errors-To: driverdev-devel-bounces@linuxdriverproject.org
-Sender: driverdev-devel-bounces@linuxdriverproject.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256980>
+In-Reply-To: <20140913210908.GG6549@mwanda>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256981>
 
-On Sat, Sep 13, 2014 at 11:57:51PM +0300, Dan Carpenter wrote:
-> On Sat, Sep 13, 2014 at 09:47:45PM +0100, Mark Einon wrote:
-> > On Sat, Sep 13, 2014 at 04:36:45PM -0400, Jeff King wrote:
-> > > I don't think we can make this 100% foolproof without knowing which mbox
-> > > variant the writer used. But dropping the line is probably the worst
-> > > possible thing, as it does not match _any_ variants. :)
-> > 
-> > Hi,
-> > 
-> > FYI it was 'git send-email' v2.1.0 that sent the mail, and I don't have
-> > the offending character in any versions of the mail I can see.
-> > 
+[-cc driver-devel list, as this is getting into git patches]
+
+On Sun, Sep 14, 2014 at 12:09:08AM +0300, Dan Carpenter wrote:
+
+> > > FYI it was 'git send-email' v2.1.0 that sent the mail, and I don't have
+> > > the offending character in any versions of the mail I can see.
+> [...]
+> Piper mail has '>From'.
+> http://driverdev.linuxdriverproject.org/pipermail/driverdev-devel/2014-September/058299.html
 > 
-> The mailing list version has it.
-> 
-> http://www.spinics.net/lists/linux-driver-devel/msg54372.html
+> but gmane gets it right.
+> http://comments.gmane.org/gmane.linux.drivers.driver-project.devel/57684
 
-Or based on Peff's email it might be a bug in the spinics list software.
-Here are some other examples:
+Thanks both of you for following up. I did confirm that git-send-email
+does not add such quoting. From your findings above, I'd agree that it's
+the list-archive software munging it, and they are buggy IMHO (they
+should de-quote on display).
 
-Piper mail has '>From'.
-http://driverdev.linuxdriverproject.org/pipermail/driverdev-devel/2014-September/058299.html
+Here's an RFC patch to help the "git am" side handle this case better.
 
-but gmane gets it right.
-http://comments.gmane.org/gmane.linux.drivers.driver-project.devel/57684
+-- >8 --
+Subject: mailinfo: do not treat ">From" lines as in-body headers
 
-regards,
-dan carpenter
+Since commit 81c5cf7 (mailinfo: skip bogus UNIX From line
+inside body, 2006-05-21), we have treated lines like ">From"
+in the body as headers. This makes "git am" work for people
+who erroneously paste the whole mbox entry:
+
+  From 12345abcd...
+  From: them
+  Subject: [PATCH] whatever
+
+into their email body. However, it also causes false
+positives for people who really do have ">From" in the first
+paragraph of their commit messages. In this case, we'll drop
+the line completely, breaking the commit message.
+
+We could try to make our checking more robust by doing one
+or both of:
+
+  - making sure the line looks like a git "From " line
+    (40-hex sha1, date, etc).
+
+  - seeing if the following lines are actually rfc2822
+    headers
+
+However, it's probably not worth the complexity. There are a
+few reasons to think that this code is not actually
+triggered very often. One, the patch was written in 2006,
+when git was still relatively new, and people frequently
+made mistakes in sending patches; these days we not see this
+error much. And two, we check only the quoted ">From" form,
+and not the regular "From". So whether it kicks in at all
+depends entirely on how the mbox is saved by the user's MUA.
+And in the intervening 8 years, nobody has complained about
+the "From" case.
+
+With this patch, we will simply treat such ">From" lines as
+normal body lines (and stop in-body header parsing). Note
+that we do _not_ unquote them into "From". Whether
+from-quoting is in effect depends on the exact mbox format
+being used, which depends on the MUA writing the file. We
+cannot know for sure whether to unquote or not, so we leave
+the line alone.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I admit my arguments that it is not in use are a little flaky, and this
+may just be me being lazy. Trying to match arbitrary "From" lines is
+very hard and heuristic-filled, but if we are only trying to match
+git-generated mbox lines, that's much easier. It would not hurt too much
+to go that route.
+
+I also tend to think we should unquote ">From" into "From". As discussed
+above, we do know whether the author meant the literal former, or meant
+the latter and it quoted into the former. But I'd guess that a literal
+">From" is quite rare, so we'd probably serve more people by de-quoting.
+That is really a separate issue for another patch, though.
+
+ builtin/mailinfo.c         |  4 ----
+ t/t5100-mailinfo.sh        |  9 +++++++++
+ t/t5100/quoted-from.expect |  3 +++
+ t/t5100/quoted-from.in     | 10 ++++++++++
+ 4 files changed, 22 insertions(+), 4 deletions(-)
+ create mode 100644 t/t5100/quoted-from.expect
+ create mode 100644 t/t5100/quoted-from.in
+
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index cf11c8d..0a08e44 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -328,10 +328,6 @@ static int check_header(const struct strbuf *line,
+ 	}
+ 
+ 	/* for inbody stuff */
+-	if (starts_with(line->buf, ">From") && isspace(line->buf[5])) {
+-		ret = 1; /* Should this return 0? */
+-		goto check_header_out;
+-	}
+ 	if (starts_with(line->buf, "[PATCH]") && isspace(line->buf[7])) {
+ 		for (i = 0; header[i]; i++) {
+ 			if (!strcmp("Subject", header[i])) {
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 3e64a7a..578ff16 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -89,4 +89,13 @@ test_expect_success 'mailinfo on from header without name works' '
+ 
+ '
+ 
++test_expect_success 'mailinfo on message with quoted >From' '
++	mkdir quoted-from &&
++	git mailsplit -oquoted-from "$TEST_DIRECTORY"/t5100/quoted-from.in &&
++	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.in quoted-from/0001 &&
++	git mailinfo quoted-from/msg quoted-from/patch \
++	  <quoted-from/0001 >quoted-from/out &&
++	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.expect quoted-from/msg
++'
++
+ test_done
+diff --git a/t/t5100/quoted-from.expect b/t/t5100/quoted-from.expect
+new file mode 100644
+index 0000000..8c9d48c
+--- /dev/null
++++ b/t/t5100/quoted-from.expect
+@@ -0,0 +1,3 @@
++>From the depths of history, we are stuck with the
++flaky mbox format.
++
+diff --git a/t/t5100/quoted-from.in b/t/t5100/quoted-from.in
+new file mode 100644
+index 0000000..847e1c4
+--- /dev/null
++++ b/t/t5100/quoted-from.in
+@@ -0,0 +1,10 @@
++From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
++From: Author Name <somebody@example.com>
++Date: Sun, 25 May 2008 00:38:18 -0700
++Subject: [PATCH] testing quoted >From
++
++>From the depths of history, we are stuck with the
++flaky mbox format.
++
++---
++patch
+-- 
+2.1.0.373.g91ca799
