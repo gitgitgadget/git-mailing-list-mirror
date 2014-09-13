@@ -1,195 +1,144 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH] mailinfo: do not treat ">From" lines as in-body headers
-Date: Sat, 13 Sep 2014 17:25:05 -0400
-Message-ID: <20140913212504.GA25190@peff.net>
-References: <1410472786-14552-1-git-send-email-mark.einon@gmail.com>
- <1410472786-14552-5-git-send-email-mark.einon@gmail.com>
- <20140913093746.GD6600@mwanda>
- <20140913154556.GA12361@kroah.com>
- <20140913203645.GB24854@peff.net>
- <20140913204745.GA12291@msilap.einon.net>
- <20140913205751.GA17875@mwanda>
- <20140913210908.GG6549@mwanda>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] stash: prefer --quiet over shell redirection
+Date: Sat, 13 Sep 2014 14:57:59 -0700
+Message-ID: <20140913215758.GA72562@gmail.com>
+References: <1409470973-67707-1-git-send-email-davvid@gmail.com>
+ <xmqqoaukacc3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Mark Einon <mark.einon@gmail.com>,
-	Greg KH <gregkh@linuxfoundation.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Dan Carpenter <dan.carpenter@oracle.com>
-X-From: git-owner@vger.kernel.org Sat Sep 13 23:25:17 2014
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jon Seymour <jon.seymour@gmail.com>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 13 23:58:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSuom-000241-Ac
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 23:25:16 +0200
+	id 1XSvKr-00019B-DZ
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 23:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752241AbaIMVZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Sep 2014 17:25:09 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47839 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752118AbaIMVZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Sep 2014 17:25:08 -0400
-Received: (qmail 11602 invoked by uid 102); 13 Sep 2014 21:25:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Sep 2014 16:25:08 -0500
-Received: (qmail 10694 invoked by uid 107); 13 Sep 2014 21:25:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Sep 2014 17:25:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Sep 2014 17:25:05 -0400
+	id S1752159AbaIMV6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2014 17:58:12 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:51312 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752145AbaIMV6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Sep 2014 17:58:11 -0400
+Received: by mail-pd0-f178.google.com with SMTP id p10so3670089pdj.9
+        for <git@vger.kernel.org>; Sat, 13 Sep 2014 14:58:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=9c6Q8lz4aJG6BI7c7zu6pQfwSR+JJS+62uL2coj7KvM=;
+        b=uAYcMHFC7Fgl2OBrmWZfCkyEop3tIYZhI84OOpvzIhi12qggIa+/sM5IRlvfQBXaUp
+         JE/ehz1+PUTO8MOdO17bpIkxMABAV36NF7kMmHqU9+XXmify9veOcBcgixDAnEmLZuHO
+         HGv1iBD4xwMP+wzjePsgp7jU3kzSfNR85pOSXIE9oPpKVufHcPHOYlqAunv80abbm1YZ
+         MhLECtL/8RrjBVlnU3qW0bZcZo3+EkIV+LHPlb8B40E8x7S5gDODxTKzPr58vIfaY/qg
+         yKaGWp7xkiAcriDR+sZ92vWFecbTQBfh+RhXhqEseJ7Qgs8oXbJalBhLrV/BXPnq/ZO3
+         ljcA==
+X-Received: by 10.66.138.46 with SMTP id qn14mr24933800pab.77.1410645490705;
+        Sat, 13 Sep 2014 14:58:10 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id f12sm3420921pdl.94.2014.09.13.14.58.08
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 13 Sep 2014 14:58:09 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20140913210908.GG6549@mwanda>
+In-Reply-To: <xmqqoaukacc3.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256982>
 
-[-cc driver-devel list, as this is getting into git patches]
-
-On Sun, Sep 14, 2014 at 12:09:08AM +0300, Dan Carpenter wrote:
-
-> > > FYI it was 'git send-email' v2.1.0 that sent the mail, and I don't have
-> > > the offending character in any versions of the mail I can see.
-> [...]
-> Piper mail has '>From'.
-> http://driverdev.linuxdriverproject.org/pipermail/driverdev-devel/2014-September/058299.html
+On Fri, Sep 12, 2014 at 12:05:48PM -0700, Junio C Hamano wrote:
+> David Aguilar <davvid@gmail.com> writes:
 > 
-> but gmane gets it right.
-> http://comments.gmane.org/gmane.linux.drivers.driver-project.devel/57684
+> > Use `git rev-parse --verify --quiet` instead of redirecting
+> > stderr to /dev/null.
+> >
+> > Signed-off-by: David Aguilar <davvid@gmail.com>
+> > ---
+> 
+> Has this patch ever been tested?  t3903 seems to break with this at
+> least for me.
 
-Thanks both of you for following up. I did confirm that git-send-email
-does not add such quoting. From your findings above, I'd agree that it's
-the list-archive software munging it, and they are buggy IMHO (they
-should de-quote on display).
+Oops, I thought I did but it's definitely failing in pu.
 
-Here's an RFC patch to help the "git am" side handle this case better.
+The root cause is that "git rev-parse --verify --quiet" is not
+actually quiet.
 
--- >8 --
-Subject: mailinfo: do not treat ">From" lines as in-body headers
+I'll send a patch to fix this shortly.
 
-Since commit 81c5cf7 (mailinfo: skip bogus UNIX From line
-inside body, 2006-05-21), we have treated lines like ">From"
-in the body as headers. This makes "git am" work for people
-who erroneously paste the whole mbox entry:
+It touches the ref machinery, which I know Ronnie has been improving,
+so I hope this doesn't cause any conflicts with other in-flight topics.
 
-  From 12345abcd...
-  From: them
-  Subject: [PATCH] whatever
 
-into their email body. However, it also causes false
-positives for people who really do have ">From" in the first
-paragraph of their commit messages. In this case, we'll drop
-the line completely, breaking the commit message.
+> >  git-stash.sh | 13 +++++++------
+> >  1 file changed, 7 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/git-stash.sh b/git-stash.sh
+> > index bcc757b..2ff8b94 100755
+> > --- a/git-stash.sh
+> > +++ b/git-stash.sh
+> > @@ -50,7 +50,7 @@ clear_stash () {
+> >  	then
+> >  		die "$(gettext "git stash clear with parameters is unimplemented")"
+> >  	fi
+> > -	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
+> > +	if current=$(git rev-parse --verify --quiet $ref_stash)
+> >  	then
+> >  		git update-ref -d $ref_stash $current
+> >  	fi
+> > @@ -292,7 +292,7 @@ save_stash () {
+> >  }
+> >  
+> >  have_stash () {
+> > -	git rev-parse --verify $ref_stash >/dev/null 2>&1
+> > +	git rev-parse --verify --quiet $ref_stash >/dev/null
+> >  }
+> >  
+> >  list_stash () {
+> > @@ -392,12 +392,12 @@ parse_flags_and_rev()
+> >  		;;
+> >  	esac
+> >  
+> > -	REV=$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) || {
+> > +	REV=$(git rev-parse --symbolic --verify --quiet "$1") || {
+> >  		reference="$1"
+> >  		die "$(eval_gettext "\$reference is not valid reference")"
+> >  	}
+> >  
+> > -	i_commit=$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
+> > +	i_commit=$(git rev-parse --verify --quiet "$REV^2") &&
+> >  	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>/dev/null) &&
+> >  	s=$1 &&
+> >  	w_commit=$1 &&
+> > @@ -409,7 +409,7 @@ parse_flags_and_rev()
+> >  	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
+> >  	IS_STASH_REF=t
+> >  
+> > -	u_commit=$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
+> > +	u_commit=$(git rev-parse --verify --quiet "$REV^3") &&
+> >  	u_tree=$(git rev-parse "$REV^3:" 2>/dev/null)
+> >  }
+> >  
+> > @@ -531,7 +531,8 @@ drop_stash () {
+> >  		die "$(eval_gettext "\${REV}: Could not drop stash entry")"
+> >  
+> >  	# clear_stash if we just dropped the last stash entry
+> > -	git rev-parse --verify "$ref_stash@{0}" >/dev/null 2>&1 || clear_stash
+> > +	git rev-parse --verify --quiet "$ref_stash@{0}" >/dev/null ||
+> > +	clear_stash
+> >  }
+> >  
+> >  apply_to_branch () {
 
-We could try to make our checking more robust by doing one
-or both of:
-
-  - making sure the line looks like a git "From " line
-    (40-hex sha1, date, etc).
-
-  - seeing if the following lines are actually rfc2822
-    headers
-
-However, it's probably not worth the complexity. There are a
-few reasons to think that this code is not actually
-triggered very often. One, the patch was written in 2006,
-when git was still relatively new, and people frequently
-made mistakes in sending patches; these days we not see this
-error much. And two, we check only the quoted ">From" form,
-and not the regular "From". So whether it kicks in at all
-depends entirely on how the mbox is saved by the user's MUA.
-And in the intervening 8 years, nobody has complained about
-the "From" case.
-
-With this patch, we will simply treat such ">From" lines as
-normal body lines (and stop in-body header parsing). Note
-that we do _not_ unquote them into "From". Whether
-from-quoting is in effect depends on the exact mbox format
-being used, which depends on the MUA writing the file. We
-cannot know for sure whether to unquote or not, so we leave
-the line alone.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I admit my arguments that it is not in use are a little flaky, and this
-may just be me being lazy. Trying to match arbitrary "From" lines is
-very hard and heuristic-filled, but if we are only trying to match
-git-generated mbox lines, that's much easier. It would not hurt too much
-to go that route.
-
-I also tend to think we should unquote ">From" into "From". As discussed
-above, we do know whether the author meant the literal former, or meant
-the latter and it quoted into the former. But I'd guess that a literal
-">From" is quite rare, so we'd probably serve more people by de-quoting.
-That is really a separate issue for another patch, though.
-
- builtin/mailinfo.c         |  4 ----
- t/t5100-mailinfo.sh        |  9 +++++++++
- t/t5100/quoted-from.expect |  3 +++
- t/t5100/quoted-from.in     | 10 ++++++++++
- 4 files changed, 22 insertions(+), 4 deletions(-)
- create mode 100644 t/t5100/quoted-from.expect
- create mode 100644 t/t5100/quoted-from.in
-
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index cf11c8d..0a08e44 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -328,10 +328,6 @@ static int check_header(const struct strbuf *line,
- 	}
- 
- 	/* for inbody stuff */
--	if (starts_with(line->buf, ">From") && isspace(line->buf[5])) {
--		ret = 1; /* Should this return 0? */
--		goto check_header_out;
--	}
- 	if (starts_with(line->buf, "[PATCH]") && isspace(line->buf[7])) {
- 		for (i = 0; header[i]; i++) {
- 			if (!strcmp("Subject", header[i])) {
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 3e64a7a..578ff16 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -89,4 +89,13 @@ test_expect_success 'mailinfo on from header without name works' '
- 
- '
- 
-+test_expect_success 'mailinfo on message with quoted >From' '
-+	mkdir quoted-from &&
-+	git mailsplit -oquoted-from "$TEST_DIRECTORY"/t5100/quoted-from.in &&
-+	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.in quoted-from/0001 &&
-+	git mailinfo quoted-from/msg quoted-from/patch \
-+	  <quoted-from/0001 >quoted-from/out &&
-+	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.expect quoted-from/msg
-+'
-+
- test_done
-diff --git a/t/t5100/quoted-from.expect b/t/t5100/quoted-from.expect
-new file mode 100644
-index 0000000..8c9d48c
---- /dev/null
-+++ b/t/t5100/quoted-from.expect
-@@ -0,0 +1,3 @@
-+>From the depths of history, we are stuck with the
-+flaky mbox format.
-+
-diff --git a/t/t5100/quoted-from.in b/t/t5100/quoted-from.in
-new file mode 100644
-index 0000000..847e1c4
---- /dev/null
-+++ b/t/t5100/quoted-from.in
-@@ -0,0 +1,10 @@
-+From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
-+From: Author Name <somebody@example.com>
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+Subject: [PATCH] testing quoted >From
-+
-+>From the depths of history, we are stuck with the
-+flaky mbox format.
-+
-+---
-+patch
 -- 
-2.1.0.373.g91ca799
+David
