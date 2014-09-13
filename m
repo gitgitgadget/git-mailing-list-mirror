@@ -1,7 +1,7 @@
-From: Mark Einon <mark.einon@gmail.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 Subject: Re: [PATCH 4/8] staging: et131x: Remove ununsed statistics
-Date: Sat, 13 Sep 2014 22:06:52 +0100
-Message-ID: <20140913210652.GB12291@msilap.einon.net>
+Date: Sun, 14 Sep 2014 00:09:08 +0300
+Message-ID: <20140913210908.GG6549@mwanda>
 References: <1410472786-14552-1-git-send-email-mark.einon@gmail.com>
  <1410472786-14552-5-git-send-email-mark.einon@gmail.com>
  <20140913093746.GD6600@mwanda> <20140913154556.GA12361@kroah.com>
@@ -13,50 +13,61 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: Jeff King <peff@peff.net>, devel@driverdev.osuosl.org, git@vger.kernel.org,
  Greg KH <gregkh@linuxfoundation.org>
-To: Dan Carpenter <dan.carpenter@oracle.com>
-X-From: driverdev-devel-bounces@linuxdriverproject.org Sat Sep 13 23:07:01 2014
+To: Mark Einon <mark.einon@gmail.com>
+X-From: driverdev-devel-bounces@linuxdriverproject.org Sat Sep 13 23:09:25 2014
 Return-path: <driverdev-devel-bounces@linuxdriverproject.org>
 Envelope-to: glddd-devel@m.gmane.org
 Received: from fraxinus.osuosl.org ([140.211.166.137])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <driverdev-devel-bounces@linuxdriverproject.org>)
-	id 1XSuX6-0006F6-Ld
-	for glddd-devel@m.gmane.org; Sat, 13 Sep 2014 23:07:01 +0200
+	id 1XSuZR-0006pp-HF
+	for glddd-devel@m.gmane.org; Sat, 13 Sep 2014 23:09:25 +0200
 Received: from localhost (localhost [127.0.0.1])
-	by fraxinus.osuosl.org (Postfix) with ESMTP id A8C51A1DD5;
-	Sat, 13 Sep 2014 21:06:59 +0000 (UTC)
+	by fraxinus.osuosl.org (Postfix) with ESMTP id CA545A1DCD;
+	Sat, 13 Sep 2014 21:09:24 +0000 (UTC)
 X-Virus-Scanned: amavisd-new at osuosl.org
 Received: from fraxinus.osuosl.org ([127.0.0.1])
 	by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UMu8ukz-CpXi; Sat, 13 Sep 2014 21:06:57 +0000 (UTC)
+	with ESMTP id Q1R2yhLwjlcw; Sat, 13 Sep 2014 21:09:23 +0000 (UTC)
 Received: from ash.osuosl.org (ash.osuosl.org [140.211.166.34])
-	by fraxinus.osuosl.org (Postfix) with ESMTP id 7409CA1DCC;
-	Sat, 13 Sep 2014 21:06:57 +0000 (UTC)
+	by fraxinus.osuosl.org (Postfix) with ESMTP id E56D2A1DA4;
+	Sat, 13 Sep 2014 21:09:22 +0000 (UTC)
 X-Original-To: devel@linuxdriverproject.org
 Delivered-To: driverdev-devel@osuosl.org
-Received: from whitealder.osuosl.org (whitealder.osuosl.org [140.211.166.138])
- by ash.osuosl.org (Postfix) with ESMTP id BAFC91C266B
- for <devel@linuxdriverproject.org>; Sat, 13 Sep 2014 21:06:56 +0000 (UTC)
+Received: from silver.osuosl.org (silver.osuosl.org [140.211.166.136])
+ by ash.osuosl.org (Postfix) with ESMTP id F3B941C266B
+ for <devel@linuxdriverproject.org>; Sat, 13 Sep 2014 21:09:21 +0000 (UTC)
 Received: from localhost (localhost [127.0.0.1])
- by whitealder.osuosl.org (Postfix) with ESMTP id B486292128
- for <devel@linuxdriverproject.org>; Sat, 13 Sep 2014 21:06:56 +0000 (UTC)
+ by silver.osuosl.org (Postfix) with ESMTP id EDA693346D
+ for <devel@linuxdriverproject.org>; Sat, 13 Sep 2014 21:09:21 +0000 (UTC)
 X-Virus-Scanned: amavisd-new at osuosl.org
-Received: from whitealder.osuosl.org ([127.0.0.1])
+Received: from silver.osuosl.org ([127.0.0.1])
  by localhost (.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Rsu73Wf08KFd for <devel@linuxdriverproject.org>;
- Sat, 13 Sep 2014 21:06:55 +0000 (UTC)
-X-Greylist: from auto-whitelisted by SQLgrey-1.7.6
-Received: from mail.einon.net (unknown [80.229.23.162])
- by whitealder.osuosl.org (Postfix) with ESMTPS id B574B92127
- for <devel@driverdev.osuosl.org>; Sat, 13 Sep 2014 21:06:55 +0000 (UTC)
-Received: from msilap.einon.net (unknown [192.168.2.86])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.einon.net (Postfix) with ESMTPSA id C317F34;
- Sat, 13 Sep 2014 22:06:53 +0100 (BST)
+ with ESMTP id XfKCctCCrgWw for <devel@linuxdriverproject.org>;
+ Sat, 13 Sep 2014 21:09:21 +0000 (UTC)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.7.6
+Received: from userp1040.oracle.com (userp1040.oracle.com [156.151.31.81])
+ by silver.osuosl.org (Postfix) with ESMTPS id 0D3C831684
+ for <devel@driverdev.osuosl.org>; Sat, 13 Sep 2014 21:09:20 +0000 (UTC)
+Received: from acsinet22.oracle.com (acsinet22.oracle.com [141.146.126.238])
+ by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id
+ s8DL9IgM016787
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+ Sat, 13 Sep 2014 21:09:19 GMT
+Received: from aserz7022.oracle.com (aserz7022.oracle.com [141.146.126.231])
+ by acsinet22.oracle.com (8.14.4+Sun/8.14.4) with ESMTP id s8DL9IWh010800
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+ Sat, 13 Sep 2014 21:09:18 GMT
+Received: from abhmp0003.oracle.com (abhmp0003.oracle.com [141.146.116.9])
+ by aserz7022.oracle.com (8.14.4+Sun/8.14.4) with ESMTP id s8DL9IDS010794;
+ Sat, 13 Sep 2014 21:09:18 GMT
+Received: from mwanda (/41.202.233.190)
+ by default (Oracle Beehive Gateway v4.0)
+ with ESMTP ; Sat, 13 Sep 2014 14:09:17 -0700
 Content-Disposition: inline
 In-Reply-To: <20140913205751.GA17875@mwanda>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Source-IP: acsinet22.oracle.com [141.146.126.238]
 X-BeenThere: driverdev-devel@linuxdriverproject.org
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,7 +82,7 @@ List-Subscribe: <http://driverdev.linuxdriverproject.org/mailman/listinfo/driver
  <mailto:driverdev-devel-request@linuxdriverproject.org?subject=subscribe>
 Errors-To: driverdev-devel-bounces@linuxdriverproject.org
 Sender: driverdev-devel-bounces@linuxdriverproject.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256980>
 
 On Sat, Sep 13, 2014 at 11:57:51PM +0300, Dan Carpenter wrote:
 > On Sat, Sep 13, 2014 at 09:47:45PM +0100, Mark Einon wrote:
@@ -90,10 +101,14 @@ On Sat, Sep 13, 2014 at 11:57:51PM +0300, Dan Carpenter wrote:
 > 
 > http://www.spinics.net/lists/linux-driver-devel/msg54372.html
 
-Fair enough. The marc.info version doesn't though, so it's proably not my MUA:
+Or based on Peff's email it might be a bug in the spinics list software.
+Here are some other examples:
 
-http://marc.info/?l=linux-driver-devel&m=141047281318963&w=2
+Piper mail has '>From'.
+http://driverdev.linuxdriverproject.org/pipermail/driverdev-devel/2014-September/058299.html
 
-Cheers,
+but gmane gets it right.
+http://comments.gmane.org/gmane.linux.drivers.driver-project.devel/57684
 
-Mark
+regards,
+dan carpenter
