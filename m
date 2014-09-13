@@ -1,219 +1,103 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] refs: make rev-parse --quiet actually quiet
-Date: Sat, 13 Sep 2014 14:58:06 -0700
-Message-ID: <1410645486-40818-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Jon Seymour <jon.seymour@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 13 23:58:26 2014
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [RFC/PATCH] mailinfo: do not treat ">From" lines as in-body
+ headers
+Date: Sat, 13 Sep 2014 22:57:14 +0000
+Message-ID: <20140913225713.GB189120@vauxhall.crustytoothpaste.net>
+References: <1410472786-14552-1-git-send-email-mark.einon@gmail.com>
+ <1410472786-14552-5-git-send-email-mark.einon@gmail.com>
+ <20140913093746.GD6600@mwanda>
+ <20140913154556.GA12361@kroah.com>
+ <20140913203645.GB24854@peff.net>
+ <20140913204745.GA12291@msilap.einon.net>
+ <20140913205751.GA17875@mwanda>
+ <20140913210908.GG6549@mwanda>
+ <20140913212504.GA25190@peff.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="oLBj+sq0vYjzfsbl"
+Cc: Dan Carpenter <dan.carpenter@oracle.com>,
+	Mark Einon <mark.einon@gmail.com>,
+	Greg KH <gregkh@linuxfoundation.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 14 00:57:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSvKr-00019B-Ur
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 23:58:26 +0200
+	id 1XSwG1-0005uq-38
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 00:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbaIMV6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Sep 2014 17:58:16 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:45670 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146AbaIMV6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Sep 2014 17:58:12 -0400
-Received: by mail-pa0-f48.google.com with SMTP id hz1so3797986pad.21
-        for <git@vger.kernel.org>; Sat, 13 Sep 2014 14:58:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=q855ZDxtW610sBAKzKVO1urWwbWP9xLETphSi5hoSuw=;
-        b=p6S0FhqNzp2wuELdYrJDljvR4XOYIb6NXI/Z2iKzWgtmsdhY7ljupGZHv0Gt+vLZin
-         LuPFJGrdn9QWUsb6/msjh/vfjAvPMH60/kKBAN+Z4V7XvpxoPSLAw2ZDEsN4s6wyfycQ
-         bpPhc82yZNDAKivpJkGk/0O1lPtxBf8HM+M81nUeRUrbMVdkcJyVdfdnjq2MAe3+8vKb
-         AEr4sLZHtvyEOMT9uvjjj57O75GksU8zqNq4hmCP12Hg5ybGXHQnYHoBBKIW/RgRuMHj
-         oRBJEQly4rXpHd2OYTyUVpsIVTc7w6/E/5YDcsF6Dl7U26qMJeOq8e54wpI3DAQ+yWLg
-         lYZg==
-X-Received: by 10.68.220.105 with SMTP id pv9mr26124733pbc.8.1410645491989;
-        Sat, 13 Sep 2014 14:58:11 -0700 (PDT)
-Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id ra8sm7718442pab.9.2014.09.13.14.58.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 13 Sep 2014 14:58:11 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0.28.gcf9f0e7.dirty
+	id S1752161AbaIMW5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2014 18:57:25 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50153 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751724AbaIMW5Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Sep 2014 18:57:24 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 70CEC2808F;
+	Sat, 13 Sep 2014 22:57:17 +0000 (UTC)
+Mail-Followup-To: Jeff King <peff@peff.net>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Mark Einon <mark.einon@gmail.com>,
+	Greg KH <gregkh@linuxfoundation.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <20140913212504.GA25190@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256984>
 
-When a reflog is deleted, e.g. when "git stash" clears its stashes,
-"git rev-parse --verify --quiet" dies:
 
-	fatal: Log for refs/stash is empty.
+--oLBj+sq0vYjzfsbl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The reason is that the get_sha1() code path does not allow us
-to suppress this message.
+On Sat, Sep 13, 2014 at 05:25:05PM -0400, Jeff King wrote:
+> Thanks both of you for following up. I did confirm that git-send-email
+> does not add such quoting. From your findings above, I'd agree that it's
+> the list-archive software munging it, and they are buggy IMHO (they
+> should de-quote on display).
 
-Pass the flags bitfield through the get_sha1_with_context()
-so that read_ref_at() can suppress the message.
+I wonder if git send-email should do what mutt does in this case, which
+is use quoted-printable encoding and encode the first F as =3D46 (as well
+as any equals signs as =3D3D).  It looks like mailinfo.c already is
+capable of handling that, and that would avoid the entire issue.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Use get_sha1_with_context1() instead of get_sha1() in rev-parse
-so that the --quiet flag is honored.
+--oLBj+sq0vYjzfsbl
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-This should be applied before "stash: prefer --quiet over shell redirection"
-which is currently in pu.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This fixes t3903-stash.sh.
+iQIcBAEBCgAGBQJUFMvJAAoJEL9TXYEfUvaL2MgQAIG0aowj+piE0f0uLn+iKclI
+AbSF3Utwg9LYROXgLIhBNJbUYqLgumO8Bud5DeXZB80bHqmuHBsaNKEPmEpcKW49
+7rTphXEG7F696eTrrDQ5nGVSpb4iZgKfpVp+5/wE4O2wzwnhx+TjcfFw0QoKRG6r
+XMQi9cWMUgwcdYEA/8U5M6Tkat2niIDttV/M+llGh68FoQi0k+GNKhJ9N/UFleVE
+OetqgibKuMn1MI0pDyagX4uRszwqBzTeIpbP70fpsHglMdJ1LPxDMQAGWRMy92a/
+7jJjPIbKtXS9XqxSbqnqSh5xONkshxPodmo+rBycoAwxjbCXaz9d4mLZHx4qBWgm
+0XJtsRTnA5n9Wl1A5qcdeuEsiYb27n7peDumoq6c/nIrHw4CICjtb3f/La9R0/bt
+k0rRXWxW84DTCNFF6DI376vLuP0pB4yHGhXA1J2z51nRMBIlrJc1WCGzjxtRvOdI
+7ovji/QD+z5h1XFt8z4TMqN1z0Gp73pOQSyZBzsVoIZxU9/176HVibU2ONx3DrR1
+xEMkwK9HzzmhKKyGPjjprcBX/5J5geEmhQm5pQCh3j6475KhzVvj/4N/9pJCNU9m
+1A7DhGr8GrJGFP+GswtSHGeadIX+sVR7b7yNXes8eq6Wn+GIzUHw3y/pislnLR4b
+fJnk0KvizIPTErdHm3J7
+=4srz
+-----END PGP SIGNATURE-----
 
-Ronnie, I see you've been making a lot of changes in this area so you
-may want to take a look.
-
- builtin/rev-parse.c   |  5 ++++-
- builtin/show-branch.c |  5 +++--
- refs.c                | 10 +++++++---
- refs.h                |  3 ++-
- sha1_name.c           |  7 ++++---
- 5 files changed, 20 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index d85e08c..8bc1374 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -508,7 +508,9 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 	int has_dashdash = 0;
- 	int output_prefix = 0;
- 	unsigned char sha1[20];
-+	unsigned int flags = 0;
- 	const char *name = NULL;
-+	struct object_context unused;
- 
- 	if (argc > 1 && !strcmp("--parseopt", argv[1]))
- 		return cmd_parseopt(argc - 1, argv + 1, prefix);
-@@ -596,6 +598,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 			}
- 			if (!strcmp(arg, "--quiet") || !strcmp(arg, "-q")) {
- 				quiet = 1;
-+				flags |= GET_SHA1_QUIETLY;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--short") ||
-@@ -818,7 +821,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 			name++;
- 			type = REVERSED;
- 		}
--		if (!get_sha1(name, sha1)) {
-+		if (!get_sha1_with_context(name, flags, sha1, &unused)) {
- 			if (verify)
- 				revs_count++;
- 			else
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 298c95e..46498e1 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -723,6 +723,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		char nth_desc[256];
- 		char *ref;
- 		int base = 0;
-+		unsigned int flags = 0;
- 
- 		if (ac == 0) {
- 			static const char *fake_av[2];
-@@ -749,7 +750,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 				/* Ah, that is a date spec... */
- 				unsigned long at;
- 				at = approxidate(reflog_base);
--				read_ref_at(ref, at, -1, sha1, NULL,
-+				read_ref_at(ref, flags, at, -1, sha1, NULL,
- 					    NULL, NULL, &base);
- 			}
- 		}
-@@ -760,7 +761,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			unsigned long timestamp;
- 			int tz;
- 
--			if (read_ref_at(ref, 0, base+i, sha1, &logmsg,
-+			if (read_ref_at(ref, flags, 0, base+i, sha1, &logmsg,
- 					&timestamp, &tz, NULL)) {
- 				reflog = i;
- 				break;
-diff --git a/refs.c b/refs.c
-index 27927f2..fff0513 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3104,7 +3104,7 @@ static int read_ref_at_ent_oldest(unsigned char *osha1, unsigned char *nsha1,
- 	return 1;
- }
- 
--int read_ref_at(const char *refname, unsigned long at_time, int cnt,
-+int read_ref_at(const char *refname, unsigned int flags, unsigned long at_time, int cnt,
- 		unsigned char *sha1, char **msg,
- 		unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt)
- {
-@@ -3122,8 +3122,12 @@ int read_ref_at(const char *refname, unsigned long at_time, int cnt,
- 
- 	for_each_reflog_ent_reverse(refname, read_ref_at_ent, &cb);
- 
--	if (!cb.reccnt)
--		die("Log for %s is empty.", refname);
-+	if (!cb.reccnt) {
-+		if (flags & GET_SHA1_QUIETLY)
-+			exit(1);
-+		else
-+			die("Log for %s is empty.", refname);
-+	}
- 	if (cb.found_it)
- 		return 0;
- 
-diff --git a/refs.h b/refs.h
-index ec46acd..fb4f2c5 100644
---- a/refs.h
-+++ b/refs.h
-@@ -171,7 +171,8 @@ extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, cons
- int log_ref_setup(const char *refname, char *logfile, int bufsize);
- 
- /** Reads log for the value of ref during at_time. **/
--extern int read_ref_at(const char *refname, unsigned long at_time, int cnt,
-+extern int read_ref_at(const char *refname, unsigned int flags,
-+		       unsigned long at_time, int cnt,
- 		       unsigned char *sha1, char **msg,
- 		       unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt);
- 
-diff --git a/sha1_name.c b/sha1_name.c
-index 63ee66f..30845f1 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -432,7 +432,8 @@ static inline int upstream_mark(const char *string, int len)
- static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
- static int interpret_nth_prior_checkout(const char *name, int namelen, struct strbuf *buf);
- 
--static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
-+static int get_sha1_basic(const char *str, int len, unsigned char *sha1,
-+			  unsigned int flags)
- {
- 	static const char *warn_msg = "refname '%.*s' is ambiguous.";
- 	static const char *object_name_msg = N_(
-@@ -545,7 +546,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 				return -1;
- 			}
- 		}
--		if (read_ref_at(real_ref, at_time, nth, sha1, NULL,
-+		if (read_ref_at(real_ref, flags, at_time, nth, sha1, NULL,
- 				&co_time, &co_tz, &co_cnt)) {
- 			if (!len) {
- 				if (starts_with(real_ref, "refs/heads/")) {
-@@ -801,7 +802,7 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
- 	if (!ret)
- 		return 0;
- 
--	ret = get_sha1_basic(name, len, sha1);
-+	ret = get_sha1_basic(name, len, sha1, lookup_flags);
- 	if (!ret)
- 		return 0;
- 
--- 
-2.1.0.28.gcf9f0e7.dirty
+--oLBj+sq0vYjzfsbl--
