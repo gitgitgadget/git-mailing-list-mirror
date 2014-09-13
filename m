@@ -1,69 +1,95 @@
-From: Ian Liu Rodrigues <ian.liu88@gmail.com>
-Subject: [PATCH] Makefile: fix some typos in the preamble
-Date: Sat, 13 Sep 2014 11:20:22 -0300
-Message-ID: <CAD+ArX07pvmFKaCzy+dTcbga56U=fCgpPN-T3+QSudfFSVr=bQ@mail.gmail.com>
+From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster-Mmb7MZpHnFY@public.gmane.org>
+Subject: Re: (local ?) BOINC repo broken again -or- how to act
+ on the CR/LF changes made upstream
+Date: Sat, 13 Sep 2014 16:55:51 +0200
+Message-ID: <54145AF7.4090606@gmx.de>
+References: <541336D6.3050803@gmx.de>
+	<1BAFA9B4D550C347962F76F2E03B3BBB22C5F9@romw-mail.romwnet.org>
+	<54133C3A.4080700@gmx.de>
+	<1BAFA9B4D550C347962F76F2E03B3BBB22C5FA@romw-mail.romwnet.org>
+	<541343BC.1050503@gmx.de>
+	<1BAFA9B4D550C347962F76F2E03B3BBB22C5FB@romw-mail.romwnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 13 16:21:09 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSoCJ-00018f-Bk
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 16:21:08 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbaIMOUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Sep 2014 10:20:55 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:44635 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751663AbaIMOUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Sep 2014 10:20:54 -0400
-Received: by mail-la0-f48.google.com with SMTP id ty20so2527257lab.35
-        for <git@vger.kernel.org>; Sat, 13 Sep 2014 07:20:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=APLDcBCjVu9CN/UfkfD+aXnWi6giol4WppObYIUlx3I=;
-        b=eoPVSfYEi8YFq2NQoXYvF7zR+PIJGlm4cNUfpN5WXrt9yw810MB9bx7jmFRAG31UAe
-         hEZNYVUSY87ELTFi2L50H6N8f8Z0WrC1xJSn/O7++i2w+INRdN7Xwgf7u/7JCVSe3j8j
-         HP2qfzmaRp4n4ElyDcCeXiRFakcTZYexpQotakcqirSYw4Sz8OfO5Ai2OwM3t/qtJ7/H
-         vaiheF/9gOiu7KMwyDpUEwQIsdWOZMNmzKeexiLlSFEtFjl4Rso5aR+RSxzesudzBCYk
-         w1QGga2bG0DzmDjHSn/seOcyoR9kgqff130m7a9pFDFYaYV4m0uz7OmI9DwtSZfmT4Uq
-         etqw==
-X-Received: by 10.152.4.39 with SMTP id h7mr16471862lah.49.1410618052457; Sat,
- 13 Sep 2014 07:20:52 -0700 (PDT)
-Received: by 10.25.22.209 with HTTP; Sat, 13 Sep 2014 07:20:22 -0700 (PDT)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256966>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+To: Rom Walton <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org Sat Sep 13 16:56:01 2014
+Return-path: <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Envelope-to: gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
+Received: from mailapps1.ssl.berkeley.edu ([128.32.13.237])
+	by plane.gmane.org with smtp (Exim 4.69)
+	(envelope-from <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>)
+	id 1XSok4-00033S-Vq
+	for gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Sat, 13 Sep 2014 16:56:01 +0200
+Received: from mailapps1.ssl.berkeley.edu (localhost [127.0.0.1])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 6A3BB2FEACC;
+	Sat, 13 Sep 2014 07:55:58 -0700 (PDT)
+X-Original-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Delivered-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Received: from mail2.ssl.berkeley.edu (mail2.ssl.berkeley.edu [128.32.13.252])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id A40F92FEA9A
+	for <boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org>;
+	Sat, 13 Sep 2014 07:55:56 -0700 (PDT)
+Received: from mailwall2.ssl.berkeley.edu (mailwall2.ssl.berkeley.edu
+	[128.32.147.8])
+	by mail2.ssl.berkeley.edu (8.13.8/8.13.8) with ESMTP id s8DEtuEl020506
+	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Sat, 13 Sep 2014 07:55:56 -0700
+X-ASG-Debug-ID: 1410620155-04b397145f2b1c50001-LQ66t1
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15]) by
+	mailwall2.ssl.berkeley.edu with ESMTP id JehuwcEFFATcS2Tt for
+	<boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Sat, 13 Sep 2014 07:55:55 -0700 (PDT)
+X-Barracuda-Envelope-From: toralf.foerster-Mmb7MZpHnFY@public.gmane.org
+X-Barracuda-Apparent-Source-IP: 212.227.15.15
+Received: from [192.168.178.21] ([80.171.149.20]) by mail.gmx.com (mrgmx002)
+	with ESMTPSA (Nemesis) id 0MdaCy-1Xh1fR1MCa-00PJhu;
+	Sat, 13 Sep 2014 16:55:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686;
+	rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+X-ASG-Orig-Subj: Re: [boinc_dev] (local ?) BOINC repo broken again -or- how to
+	act on the CR/LF changes made upstream
+In-Reply-To: <1BAFA9B4D550C347962F76F2E03B3BBB22C5FB-xy+Cp4waYzmnovBw3M9VzQFcV7zePqp5@public.gmane.org>
+X-Provags-ID: V03:K0:KMPbqWTyro8XMNwB9eFXSW6Wx2PXGX5lH0iwHzF/NYQbBZWuASy
+	ZeJBAyeSFGAn8IFzp1FcVA4q6nEjAbEG7b9Nt5M/bD+ldVQDDY9yewOvflaflPvYmW/FUet
+	pnr071yU36bhfbVUoqg5lFGTDR8+1szLzk+QXU+NG3ZxsWKd3OV4Y0WuYDsdlneDiwgvMgD
+	Z43gqrxWAUl8BeaRDExWA==
+X-UI-Out-Filterresults: notjunk:1;
+X-Barracuda-Connect: mout.gmx.net[212.227.15.15]
+X-Barracuda-Start-Time: 1410620155
+X-Barracuda-URL: http://mailwall2.ssl.berkeley.edu:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at ssl.berkeley.edu
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score-Disabled: per user
+X-BeenThere: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: BOINC development <boinc_dev.ssl.berkeley.edu>
+List-Unsubscribe: <http://lists.ssl.berkeley.edu/mailman/options/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.ssl.berkeley.edu/pipermail/boinc_dev/>
+List-Post: <mailto:boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+List-Help: <mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.ssl.berkeley.edu/mailman/listinfo/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=subscribe>
+Errors-To: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+Sender: "boinc_dev" <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256967>
 
-Signed-off-by: Ian Liu Rodrigues <ian.liu88@gmail.com>
----
- Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On 09/12/2014 09:10 PM, Rom Walton wrote:
+> I found this:
+> http://stackoverflow.com/questions/17223527/how-do-i-force-git-to-checkout-the-master-branch-and-remove-carriage-returns-aft
+> 
+> That might help in the future.
 
-diff --git a/Makefile b/Makefile
-index 9f984a9..496af55 100644
---- a/Makefile
-+++ b/Makefile
-@@ -14,11 +14,11 @@ all::
- # Define INLINE to a suitable substitute (such as '__inline' or '') if git
- # fails to compile with errors about undefined inline functions or similar.
- #
--# Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
-+# Define SNPRINTF_RETURNS_BOGUS if you are on a system which snprintf()
- # or vsnprintf() return -1 instead of number of characters which would
- # have been written to the final string if enough space had been available.
- #
--# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
-+# Define FREAD_READS_DIRECTORIES if you are on a system which succeeds
- # when attempting to read from an fopen'ed directory.
- #
- # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+This helped :
+
+git reset --hard 9e860d0451
+git pull
+git clean -f
+git gc
+git prune
+
+
 -- 
-2.1.0
+Toralf
+pgp key: 0076 E94E
