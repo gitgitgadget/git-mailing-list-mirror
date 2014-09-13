@@ -1,78 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch
- series overview)
-Date: Fri, 12 Sep 2014 16:57:45 -0700
-Message-ID: <20140912235745.GB18279@google.com>
-References: <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
- <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
- <20140820231723.GF20185@google.com>
- <20140911030318.GD18279@google.com>
- <xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>
- <20140912004717.GY18279@google.com>
- <xmqqsijwaclo.fsf@gitster.dls.corp.google.com>
- <20140912191812.GZ18279@google.com>
- <xmqqk358a9yz.fsf@gitster.dls.corp.google.com>
- <54136B10.4050001@alum.mit.edu>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] repack: call prune_packed_objects() and update_server_info()
+ directly
+Date: Sat, 13 Sep 2014 09:28:01 +0200
+Message-ID: <5413F201.8030005@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sat Sep 13 01:57:54 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <stefanbeller@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 13 09:28:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSaiv-00075b-Hq
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 01:57:53 +0200
+	id 1XShlH-0005dK-VF
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 09:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbaILX5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Sep 2014 19:57:50 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:43864 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751705AbaILX5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Sep 2014 19:57:49 -0400
-Received: by mail-pa0-f53.google.com with SMTP id rd3so2283917pab.26
-        for <git@vger.kernel.org>; Fri, 12 Sep 2014 16:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZEiJhWGnH0kBNzHegFxdalKcduQMWv0CM3ktMmJkTuA=;
-        b=jN1JJrinzsVVrIEXxCSmO/x+8vrcaYq8nDl7cvj3zq3YehllFOOxQjzgAkO2Fi9Amr
-         dr/PiPs5xGsfWnG68Y8YPOSfCo1nne2Zly4ziJm5a9bmX4iYCNTV5u9DWkFZxWqHUxUu
-         39nSIiPAl3dW1rIqM36d2zPMzI6csymxVCxMI3R44BU9pX70Y0s95YEdkX+YBIl0HYxl
-         Xm9JKdJosVk4RQqDlSTt6m7NVQz98rRC2FUnBgWLDjhvFE3jIkKRIOVpBtHbHoaaM5FL
-         JELAbvPPFyXitvAIyAsqucYUeRChN83i9il3Z0NrH8nyoTI7QuG+va9rzwO/CuYJ3vPC
-         oTEw==
-X-Received: by 10.70.21.228 with SMTP id y4mr15506025pde.19.1410566268125;
-        Fri, 12 Sep 2014 16:57:48 -0700 (PDT)
-Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id ca2sm4944776pbc.26.2014.09.12.16.57.46
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 12 Sep 2014 16:57:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <54136B10.4050001@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751667AbaIMH2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2014 03:28:44 -0400
+Received: from mout.web.de ([212.227.15.3]:57729 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751150AbaIMH2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Sep 2014 03:28:43 -0400
+Received: from [192.168.178.27] ([79.253.169.236]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MMIdp-1XRKJp25wD-0080o4; Sat, 13 Sep 2014 09:28:40
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+X-Provags-ID: V03:K0:LqnKX64/d/wSHPj1nZ/dF5QUWuC9THEeHAJnJoSLOQhGlkMth37
+ M588D9vCwCMR+Pe4Qu0bOAfSfB4cKiInJSfP7EOhf2hI7DpXuhoD3XdDbGO/irrMw83/YIi
+ N1NU1UqNZm0xdUpGNWpNYP0+DUN6iNglBXO2jYHJBT5Hfck66XnMQYSerxlA4m3CH5syxdK
+ 9Qkx1jIn8Sl+yW8PyPjlA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256953>
 
-Michael Haggerty wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
+Call the functions behind git prune-packed and git update-server-info
+directly instead of using run_command().  This is shorter, easier and
+quicker.
 
->>> so I'll send a reroll of the series as-is in an hour or so.
->
-> Jonathan: Is a current version of this patch series set up for review in
-> Gerrit?
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/repack.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
-Yes.
-(https://code-review.googlesource.com/#/q/project:git+topic:ref-transaction)
-
-Thanks,
-Jonathan
+diff --git a/builtin/repack.c b/builtin/repack.c
+index fc088db..2aae05d 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -377,6 +377,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	/* End of pack replacement. */
+ 
+ 	if (delete_redundant) {
++		int opts = 0;
+ 		sort_string_list(&names);
+ 		for_each_string_list_item(item, &existing_packs) {
+ 			char *sha1;
+@@ -387,25 +388,13 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 			if (!string_list_has_string(&names, sha1))
+ 				remove_redundant_pack(packdir, item->string);
+ 		}
+-		argv_array_push(&cmd_args, "prune-packed");
+-		if (quiet)
+-			argv_array_push(&cmd_args, "--quiet");
+-
+-		memset(&cmd, 0, sizeof(cmd));
+-		cmd.argv = cmd_args.argv;
+-		cmd.git_cmd = 1;
+-		run_command(&cmd);
+-		argv_array_clear(&cmd_args);
++		if (!quiet && isatty(2))
++			opts |= PRUNE_PACKED_VERBOSE;
++		prune_packed_objects(opts);
+ 	}
+ 
+-	if (!no_update_server_info) {
+-		argv_array_push(&cmd_args, "update-server-info");
+-		memset(&cmd, 0, sizeof(cmd));
+-		cmd.argv = cmd_args.argv;
+-		cmd.git_cmd = 1;
+-		run_command(&cmd);
+-		argv_array_clear(&cmd_args);
+-	}
++	if (!no_update_server_info)
++		update_server_info(0);
+ 	remove_temporary_files();
+ 	string_list_clear(&names, 0);
+ 	string_list_clear(&rollback, 0);
+-- 
+2.1.0
