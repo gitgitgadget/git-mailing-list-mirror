@@ -1,95 +1,84 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] repack: call prune_packed_objects() and update_server_info()
- directly
-Date: Sat, 13 Sep 2014 09:28:01 +0200
-Message-ID: <5413F201.8030005@web.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v4 11/32] delete_ref_loose(): don't muck around in the
+ lock_file's filename
+Date: Sat, 13 Sep 2014 09:41:18 +0200
+Message-ID: <5413F51E.3060600@kdbg.org>
+References: <1409989846-22401-1-git-send-email-mhagger@alum.mit.edu> <1409989846-22401-12-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 13 09:28:48 2014
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Sep 13 09:41:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XShlH-0005dK-VF
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 09:28:48 +0200
+	id 1XShxe-00025j-SC
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Sep 2014 09:41:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbaIMH2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Sep 2014 03:28:44 -0400
-Received: from mout.web.de ([212.227.15.3]:57729 "EHLO mout.web.de"
+	id S1751684AbaIMHlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2014 03:41:23 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:41464 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751150AbaIMH2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Sep 2014 03:28:43 -0400
-Received: from [192.168.178.27] ([79.253.169.236]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MMIdp-1XRKJp25wD-0080o4; Sat, 13 Sep 2014 09:28:40
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-X-Provags-ID: V03:K0:LqnKX64/d/wSHPj1nZ/dF5QUWuC9THEeHAJnJoSLOQhGlkMth37
- M588D9vCwCMR+Pe4Qu0bOAfSfB4cKiInJSfP7EOhf2hI7DpXuhoD3XdDbGO/irrMw83/YIi
- N1NU1UqNZm0xdUpGNWpNYP0+DUN6iNglBXO2jYHJBT5Hfck66XnMQYSerxlA4m3CH5syxdK
- 9Qkx1jIn8Sl+yW8PyPjlA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751597AbaIMHlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Sep 2014 03:41:22 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 71856130050;
+	Sat, 13 Sep 2014 09:41:19 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 4B59419F364;
+	Sat, 13 Sep 2014 09:41:18 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+In-Reply-To: <1409989846-22401-12-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256954>
 
-Call the functions behind git prune-packed and git update-server-info
-directly instead of using run_command().  This is shorter, easier and
-quicker.
+Am 06.09.2014 um 09:50 schrieb Michael Haggerty:
+> It's bad manners.  Especially since, if unlink_or_warn() failed, the
+> memory wasn't restored to its original contents.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/repack.c | 23 ++++++-----------------
- 1 file changed, 6 insertions(+), 17 deletions(-)
+I do not see how the old code did not restore the file name. Except for
+this nit, the patch looks good.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index fc088db..2aae05d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -377,6 +377,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	/* End of pack replacement. */
- 
- 	if (delete_redundant) {
-+		int opts = 0;
- 		sort_string_list(&names);
- 		for_each_string_list_item(item, &existing_packs) {
- 			char *sha1;
-@@ -387,25 +388,13 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			if (!string_list_has_string(&names, sha1))
- 				remove_redundant_pack(packdir, item->string);
- 		}
--		argv_array_push(&cmd_args, "prune-packed");
--		if (quiet)
--			argv_array_push(&cmd_args, "--quiet");
--
--		memset(&cmd, 0, sizeof(cmd));
--		cmd.argv = cmd_args.argv;
--		cmd.git_cmd = 1;
--		run_command(&cmd);
--		argv_array_clear(&cmd_args);
-+		if (!quiet && isatty(2))
-+			opts |= PRUNE_PACKED_VERBOSE;
-+		prune_packed_objects(opts);
- 	}
- 
--	if (!no_update_server_info) {
--		argv_array_push(&cmd_args, "update-server-info");
--		memset(&cmd, 0, sizeof(cmd));
--		cmd.argv = cmd_args.argv;
--		cmd.git_cmd = 1;
--		run_command(&cmd);
--		argv_array_clear(&cmd_args);
--	}
-+	if (!no_update_server_info)
-+		update_server_info(0);
- 	remove_temporary_files();
- 	string_list_clear(&names, 0);
- 	string_list_clear(&rollback, 0);
--- 
-2.1.0
+> 
+> So make our own copy to work with.
+> 
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 15 +++++++++------
+>  1 file changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/refs.c b/refs.c
+> index 828522d..8a63073 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2545,12 +2545,15 @@ static int repack_without_ref(const char *refname)
+>  static int delete_ref_loose(struct ref_lock *lock, int flag)
+>  {
+>  	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+> -		/* loose */
+> -		int err, i = strlen(lock->lk->filename) - LOCK_SUFFIX_LEN;
+> -
+> -		lock->lk->filename[i] = 0;
+> -		err = unlink_or_warn(lock->lk->filename);
+> -		lock->lk->filename[i] = LOCK_SUFFIX[0];
+> +		/*
+> +		 * loose.  The loose file name is the same as the
+> +		 * lockfile name, minus ".lock":
+> +		 */
+> +		char *loose_filename = xmemdupz(
+> +				lock->lk->filename,
+> +				strlen(lock->lk->filename) - LOCK_SUFFIX_LEN);
+> +		int err = unlink_or_warn(loose_filename);
+> +		free(loose_filename);
+>  		if (err && errno != ENOENT)
+>  			return 1;
+>  	}
+> 
