@@ -1,110 +1,83 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [PATCH] t1503: test rev-parse --verify --quiet with deleted reflogs
-Date: Sun, 14 Sep 2014 18:20:57 +0200
-Message-ID: <5415C069.9000702@gmail.com>
-References: <1410683442-74523-1-git-send-email-davvid@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH 1/2] add macro REALLOCARRAY
+Date: Sun, 14 Sep 2014 18:55:56 +0200
+Message-ID: <5415C89C.4090509@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 14 18:21:08 2014
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 14 18:57:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTCY0-00073U-8W
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 18:21:08 +0200
+	id 1XTD6g-0000x9-TB
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 18:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766AbaINQVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Sep 2014 12:21:03 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:45240 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752668AbaINQVB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Sep 2014 12:21:01 -0400
-Received: by mail-lb0-f175.google.com with SMTP id v6so3288732lbi.34
-        for <git@vger.kernel.org>; Sun, 14 Sep 2014 09:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=vvD/zf4zQRDI0xoJbwYulxHM8e68K0KNDNWXa58jpnc=;
-        b=BxzsTqKEMwb3zkt30wV/qq0KW14QIVaoJmvcUnzZGtcjv3yngOUK094/bwc+B/2uEf
-         FH21GPxHjsKiKgM1Qg9KiXbi1cGlqPEAWSKkvgkKEzo+NzMyW6EAJReEwgU0s+ZO4oTV
-         xor4WooWJxilCQ0DAQj/7yznO0FSV4fP/D7AzfGA+UUakXCM7IMwjvMOlm1mu1ILFB/t
-         hUsJgcMDX5MPHedNNVgIY9HpvwwXcZW0+lLpsa/K0jVFGp9YwOrC9IPFvqQ3uBUV68/S
-         ZUhsbPbYlCnDjFxATEDq8ZoxGpDM9oPM9FSvKcjRMHLfh6m8BG9Oa/EImoUtx7CnSFwc
-         Gzsg==
-X-Received: by 10.152.22.137 with SMTP id d9mr22688846laf.29.1410711660177;
-        Sun, 14 Sep 2014 09:21:00 -0700 (PDT)
-Received: from client.googlemail.com (dhcp-183168.eduroam.chalmers.se. [129.16.183.168])
-        by mx.google.com with ESMTPSA id dw2sm3393342lbc.38.2014.09.14.09.20.58
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Sep 2014 09:20:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <1410683442-74523-1-git-send-email-davvid@gmail.com>
+	id S1752717AbaINQ4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2014 12:56:49 -0400
+Received: from mout.web.de ([212.227.15.4]:64138 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752658AbaINQ4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Sep 2014 12:56:48 -0400
+Received: from [192.168.178.27] ([79.253.153.35]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0LzVMw-1YOnsU2kkc-014jjD; Sun, 14 Sep 2014 18:56:36
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+X-Provags-ID: V03:K0:YQpezvIMYO6a54qKjopo8jvjgDKexxDTGtEApvc/YCVLuwhm7cA
+ pdT6YwGpt5dpOyH1OeuqU2j9BVsTYIf57qod6xUvvKy76XAQCYYR7HQV4leAkQV3j1YMnDA
+ SZFRMSGoC20yB9oOIGpZ8dFADgA2677sW3GkcD1mIb83E3LI/W4T07ncZAlMN2Lc57K1yBF
+ LXXsHxU5HOF1o0BwfjwUw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257019>
 
-Hi David,
+The macro ALLOC_GROW manages several aspects of dynamic memory
+allocations for arrays: It performs overprovisioning in order to avoid
+reallocations in future calls, updates the allocation size variable,
+multiplies the item size and thus allows users to simply specify the
+item count, performs the reallocation and updates the array pointer.
 
-On 09/14/2014 10:30 AM, David Aguilar wrote:
-> Ensure that rev-parse --verify --quiet is silent when asked
-> about deleted reflog entries.
-> 
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> This verifies and depends on "refs: make rev-parse --quiet actually quiet".
-> 
->  t/t1503-rev-parse-verify.sh | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
-> index 813cc1b..731c21c 100755
-> --- a/t/t1503-rev-parse-verify.sh
-> +++ b/t/t1503-rev-parse-verify.sh
-> @@ -83,6 +83,15 @@ test_expect_success 'fails silently when using -q' '
->  	test -z "$(cat error)"
->  '
->  
-> +test_expect_success 'fails silently when using -q with deleted reflogs' '
-> +	ref=$(git rev-parse HEAD) &&
-> +	: >.git/logs/refs/test &&
-> +	git update-ref -m test refs/test "$ref" &&
+Sometimes this is too much.  Add the macro REALLOCARRAY, which only
+takes care of the latter three points and allows users to specify the
+number of items an array can store directly.  It can increase and
+also decrease its size.  Using this macro avoids duplicating the
+array pointer name and takes care of item sizes automatically.
 
-I'm just curious, why not simply
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ Documentation/technical/api-allocation-growing.txt | 3 +++
+ git-compat-util.h                                  | 2 ++
+ 2 files changed, 5 insertions(+)
 
-   git branch test
-
-?
-
-> +	git reflog delete --updateref --rewrite refs/test@{0} &&
-> +	test_must_fail git rev-parse --verify --quiet refs/test@{0} 2>error &&
-
-Is it a shortcoming of the specification that it doesn't consider
-whatever might be written to stdout? Is it acceptable that if the
-git-rev-parse command succeeds, the error message from test_must_fail
-will be written to the file "error" and, therefore, somewhat hidden from
-the user running the tests?
-
-> +	test -z "$(cat error)"
-
-test(1) comes with an option (-s) to perform such tests and test-lib.sh
-defines test_must_be_empty which additionally outputs the given file's
-contents if its not empty.
-
-> +'
-> +
->  test_expect_success 'no stdout output on error' '
->  	test -z "$(git rev-parse --verify)" &&
->  	test -z "$(git rev-parse --verify foo)" &&
-> 
-
-Kind regards,
-   Fabian
+diff --git a/Documentation/technical/api-allocation-growing.txt b/Documentation/technical/api-allocation-growing.txt
+index 542946b..4b5f049 100644
+--- a/Documentation/technical/api-allocation-growing.txt
++++ b/Documentation/technical/api-allocation-growing.txt
+@@ -34,3 +34,6 @@ item[nr++] = value you like;
+ ------------
+ 
+ You are responsible for updating the `nr` variable.
++
++If you need to specify the number of elements to allocate explicitly
++then use the macro `REALLOCARRAY(item, alloc)` instead of `ALLOC_GROW`.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4e7e3f8..d926e4c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -626,6 +626,8 @@ extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
+ extern int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1);
+ extern char *xgetcwd(void);
+ 
++#define REALLOCARRAY(x, alloc) x = xrealloc((x), (alloc) * sizeof(*(x)))
++
+ static inline size_t xsize_t(off_t len)
+ {
+ 	if (len > (size_t) len)
+-- 
+2.1.0
