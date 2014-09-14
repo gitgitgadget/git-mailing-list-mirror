@@ -1,156 +1,176 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH 1/2] check-headers: add header usage checks for .c files
-Date: Sun, 14 Sep 2014 00:40:44 -0700
-Message-ID: <1410680445-84593-1-git-send-email-davvid@gmail.com>
+Subject: [PATCH 2/2] cleanups: ensure that git-compat-util.h is included first
+Date: Sun, 14 Sep 2014 00:40:45 -0700
+Message-ID: <1410680445-84593-2-git-send-email-davvid@gmail.com>
+References: <1410680445-84593-1-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 14 09:41:02 2014
+X-From: git-owner@vger.kernel.org Sun Sep 14 09:41:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XT4Qf-000153-Pm
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 09:41:02 +0200
+	id 1XT4Qg-000153-QY
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 09:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752445AbaINHk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Sep 2014 03:40:57 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:43923 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752383AbaINHk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Sep 2014 03:40:57 -0400
-Received: by mail-pa0-f53.google.com with SMTP id rd3so4381656pab.40
-        for <git@vger.kernel.org>; Sun, 14 Sep 2014 00:40:56 -0700 (PDT)
+	id S1752476AbaINHk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2014 03:40:59 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:58999 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752383AbaINHk6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Sep 2014 03:40:58 -0400
+Received: by mail-pa0-f44.google.com with SMTP id kx10so4324498pab.17
+        for <git@vger.kernel.org>; Sun, 14 Sep 2014 00:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=hPylhs5JEpgXY0tQjCR8YkGGqku3Iy7HweVmm2b+SFI=;
-        b=xtyil65eyUdTSBRjCNJGjU0dmHTqdTmbdlabLpj+bkS9pWKePY8CL3sVnGUPO8VrVg
-         jcBgHzyrD7S6mj6ZbbSewzLyWDsK/6jAa0VrrefIT+c8dvbqMgUHTK3ps1RnCSMyUK8C
-         d9fod/kfelyPVDXv+OFTQR5ziaU6b+xzZIiyTPv3MQbalWN70XZeFdid4wF55bR6l+8L
-         s3sfj7DS+641JdZ2DhtmeTRJwhSiuw8Jz1HBDK41Na3rT1f3ydQnNzP++7ihRx0ucs7x
-         K1kHgKsp3qRNjKC94/zZL9eAUUUOfFXppJk4hcI6ZxHqvsBiCyT2idOQBnQkD5hWgfpX
-         K+nA==
-X-Received: by 10.67.23.136 with SMTP id ia8mr1709866pad.125.1410680456654;
-        Sun, 14 Sep 2014 00:40:56 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=348JnAvuwONuNSPIYXDmxH+u3+MRvtS6S1aeZWk9ESQ=;
+        b=uNC88OBthEyXZWLeTo/RwPup4BOZHqUu65nqDsy/yrw0A3DI/9FSRLZ7tQ4pUW65uc
+         7W/vSQ/IjEJgSzIdZ5jAsZRa5lMx8JPVR0QJfzhRNFKUF43KoiFJoXZS6NABSLy2vFdq
+         KDPIehhWdgnW7HeUX5Di8R4DziIhMhYbhhBNLyL8sTwOcaTKsGIi1Xm9FI4EXKKCHqoH
+         5D7ghDNjSBcaxzlT++PVoPNnKTtiAbhuHldPLvyUJvbW3w3NYEreVv212KcmUzToVJuA
+         eIoQ/y/Atbr5uVwAqn7lbsaWuGtdxzZHhK9VIYI86ooKD28LqTQZCpCyW17nJ2GKVie/
+         DkQw==
+X-Received: by 10.66.227.71 with SMTP id ry7mr28281472pac.32.1410680458162;
+        Sun, 14 Sep 2014 00:40:58 -0700 (PDT)
 Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id dl8sm8157177pdb.65.2014.09.14.00.40.55
+        by mx.google.com with ESMTPSA id dl8sm8157177pdb.65.2014.09.14.00.40.56
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 14 Sep 2014 00:40:55 -0700 (PDT)
+        Sun, 14 Sep 2014 00:40:57 -0700 (PDT)
 X-Mailer: git-send-email 2.1.0.241.ga16d620
+In-Reply-To: <1410680445-84593-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257000>
 
-Teach check-header.sh to ensure that the first included header in .c
-files is either git-compat-util.h, builtin.h, or cache.h.
+CodingGuidelines states that the first #include in C files should be
+git-compat-util.h or another header file that includes it, such as
+cache.h or builtin.h.
 
-Ensure that common-cmds.h is only included by help.c.
-
-Move the logic into functions so that we can skip parts of the check.
+Tweak the tiny minority of files that do not follow this advice.
+This makes "make check-headers SKIP_HEADER_CHECK=1" happy.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-This depends on my previous patch that adds check-header.sh.
+ bulk-checkin.c    | 1 +
+ bulk-checkin.h    | 2 --
+ http.c            | 1 +
+ merge-recursive.c | 2 +-
+ sigchain.c        | 2 +-
+ test-regex.c      | 2 +-
+ test-sigchain.c   | 2 +-
+ varint.c          | 1 +
+ varint.h          | 2 --
+ 9 files changed, 7 insertions(+), 8 deletions(-)
 
- check-headers.sh | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 61 insertions(+), 5 deletions(-)
-
-diff --git a/check-headers.sh b/check-headers.sh
-index ef06f56..7f25e7a 100755
---- a/check-headers.sh
-+++ b/check-headers.sh
-@@ -1,5 +1,9 @@
- #!/bin/sh
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 98e651c..0c4b8a7 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -1,6 +1,7 @@
+ /*
+  * Copyright (c) 2011, Google Inc.
+  */
++#include "cache.h"
+ #include "bulk-checkin.h"
+ #include "csum-file.h"
+ #include "pack.h"
+diff --git a/bulk-checkin.h b/bulk-checkin.h
+index 4f599f8..fbd40fc 100644
+--- a/bulk-checkin.h
++++ b/bulk-checkin.h
+@@ -4,8 +4,6 @@
+ #ifndef BULK_CHECKIN_H
+ #define BULK_CHECKIN_H
  
-+# This script is run via make.
-+# "make check-headers SKIP_HEADER_CHECK=1" skips the header dependency check.
-+# "make check-headers SKIP_USAGE_CHECK=1" skips the header usage check.
-+
- exit_code=0
+-#include "cache.h"
+-
+ extern int index_bulk_checkin(unsigned char sha1[],
+ 			      int fd, size_t size, enum object_type type,
+ 			      const char *path, unsigned flags);
+diff --git a/http.c b/http.c
+index 0adcec4..040f362 100644
+--- a/http.c
++++ b/http.c
+@@ -1,3 +1,4 @@
++#include "git-compat-util.h"
+ #include "http.h"
+ #include "pack.h"
+ #include "sideband.h"
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 8ab944c..df8157b 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3,8 +3,8 @@
+  * Fredrik Kuivinen.
+  * The thieves were Alex Riesen and Johannes Schindelin, in June/July 2006
+  */
+-#include "advice.h"
+ #include "cache.h"
++#include "advice.h"
+ #include "cache-tree.h"
+ #include "commit.h"
+ #include "blob.h"
+diff --git a/sigchain.c b/sigchain.c
+index 1118b99..faa375d 100644
+--- a/sigchain.c
++++ b/sigchain.c
+@@ -1,5 +1,5 @@
+-#include "sigchain.h"
+ #include "cache.h"
++#include "sigchain.h"
  
- maybe_exit () {
-@@ -14,11 +18,11 @@ maybe_exit () {
- 	fi
- }
+ #define SIGCHAIN_MAX_SIGNALS 32
  
--for header in *.h ewah/*.h vcs-svn/*.h xdiff/*.h
--do
-+check_header () {
-+	header="$1"
- 	case "$header" in
- 	common-cmds.h)
--		# should only be included by help.c
-+		# should only be included by help.c, not checked
- 		;;
- 	*)
- 		subdir=$(dirname "$header") &&
-@@ -29,6 +33,58 @@ do
- 		maybe_exit $?
- 		;;
- 	esac
--done
-+}
-+
-+check_headers () {
-+	for header in *.h ewah/*.h vcs-svn/*.h xdiff/*.h
-+	do
-+		check_header "$header"
-+	done
-+}
-+
-+check_header_usage () {
-+	first=$(grep '^#include' "$1" |
-+		head -n1 |
-+		sed -e 's,#include ",,' -e 's,"$,,')
-+
-+	case "$first" in
-+	cache.h|builtin.h|git-compat-util.h)
-+		# happy
-+		;;
-+	*)
-+		echo "error: $1 must #include \"git-compat-util.h\" before $first"
-+		maybe_exit 1
-+		;;
-+	esac
-+
-+	if grep common-cmds.h "$1" >/dev/null && test "$1" != help.c
-+	then
-+		echo "error: $1 must not include common-cmds.h"
-+		maybe_exit 1
-+	fi
-+}
-+
-+check_usage () {
-+	# Implementation files should #include git-compat-util.h, cache.h,
-+	# or builtin.h before any others.
-+	for impl in *.c builtin/*.c
-+	do
-+		check_header_usage "$impl"
-+	done
-+}
-+
-+main () {
-+	if test -z "$SKIP_HEADER_CHECK"
-+	then
-+		check_headers "$@"
-+	fi
-+
-+	if test -z "$SKIP_USAGE_CHECK"
-+	then
-+		check_usage
-+	fi
-+
-+	exit $exit_code
-+}
+diff --git a/test-regex.c b/test-regex.c
+index b5bfd54..0dc598e 100644
+--- a/test-regex.c
++++ b/test-regex.c
+@@ -1,4 +1,4 @@
+-#include <git-compat-util.h>
++#include "git-compat-util.h"
  
--exit $exit_code
-+main "$@"
+ int main(int argc, char **argv)
+ {
+diff --git a/test-sigchain.c b/test-sigchain.c
+index 42db234..e499fce 100644
+--- a/test-sigchain.c
++++ b/test-sigchain.c
+@@ -1,5 +1,5 @@
+-#include "sigchain.h"
+ #include "cache.h"
++#include "sigchain.h"
+ 
+ #define X(f) \
+ static void f(int sig) { \
+diff --git a/varint.c b/varint.c
+index 4ed7729..409c497 100644
+--- a/varint.c
++++ b/varint.c
+@@ -1,3 +1,4 @@
++#include "git-compat-util.h"
+ #include "varint.h"
+ 
+ uintmax_t decode_varint(const unsigned char **bufp)
+diff --git a/varint.h b/varint.h
+index 0321195..c1c44d9 100644
+--- a/varint.h
++++ b/varint.h
+@@ -1,8 +1,6 @@
+ #ifndef VARINT_H
+ #define VARINT_H
+ 
+-#include "git-compat-util.h"
+-
+ extern int encode_varint(uintmax_t, unsigned char *);
+ extern uintmax_t decode_varint(const unsigned char **);
+ 
 -- 
 2.1.0.241.ga16d620
