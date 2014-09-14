@@ -1,50 +1,126 @@
 From: Max Kirillov <max@max630.net>
-Subject: [PATCH v2 0/3] gitk: save only changed configuration on exit
-Date: Sun, 14 Sep 2014 23:35:56 +0300
-Message-ID: <1410726959-20353-1-git-send-email-max@max630.net>
+Subject: [PATCH v2 3/3] gitk: synchronize config write
+Date: Sun, 14 Sep 2014 23:35:59 +0300
+Message-ID: <1410726959-20353-4-git-send-email-max@max630.net>
+References: <1410726959-20353-1-git-send-email-max@max630.net>
 Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>
 To: Paul Mackerras <paulus@samba.org>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 14 22:36:58 2014
+X-From: git-owner@vger.kernel.org Sun Sep 14 22:36:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTGXZ-0000XM-R9
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 22:36:58 +0200
+	id 1XTGXa-0000XM-RP
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 22:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804AbaINUgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Sep 2014 16:36:42 -0400
+	id S1752849AbaINUg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2014 16:36:56 -0400
 Received: from p3plsmtpa12-04.prod.phx3.secureserver.net ([68.178.252.233]:41331
 	"EHLO p3plsmtpa12-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752788AbaINUgm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Sep 2014 16:36:42 -0400
+	by vger.kernel.org with ESMTP id S1752821AbaINUgq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Sep 2014 16:36:46 -0400
 Received: from wheezy.local ([82.181.81.240])
 	by p3plsmtpa12-04.prod.phx3.secureserver.net with 
-	id r8cb1o0065B68XE018cfsW; Sun, 14 Sep 2014 13:36:41 -0700
+	id r8cb1o0065B68XE018cksn; Sun, 14 Sep 2014 13:36:46 -0700
 X-Mailer: git-send-email 2.0.1.1697.g73c6810
+In-Reply-To: <1410726959-20353-1-git-send-email-max@max630.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257028>
 
-Changes since v1:
+If several gitk instances are closed simultaneously, safestuff procedure
+can run at the same time, resulting in a conflict which may cause losing
+of some of the instance's changes, failing the saving operation or even
+corrupting the configuration file. This can happen, for example, at user
+session closing, or at group closing of all instances of an application
+which is possible in some desktop environments.
 
-* Add value check to config_variable_change_cb
-* Squash 2/3 and 3/3 and the value check into one commit. There is no really
-  reasons to divide them except following the real coding history
-* Describle the previous undesirable behavior in commit message
-* Synchronize writing of config file
+To avoid this, make sure that only one saving operation is in progress.
+It is guarded by existence of $config_file_tmp file. Both creating the
+file and moving it to $config_file are atomic operations, so it should
+be reliable.
 
-Max Kirillov (3):
-  gitk refactor: remove boilerplate for configuration variables
-  gitk: write only changed configuration variables
-  gitk: synchronize config write
+Reading does not need to be syncronized, because moving is atomic
+operation, and the $config_file always refers to full and correct file.
+But, if there is a stale $config_file_tmp file, report it at gitk start.
+If such file is detected at saving, just abort the saving, because this
+is how gitk used to handle errors while saving.
 
- gitk | 215 +++++++++++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 139 insertions(+), 76 deletions(-)
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ gitk | 33 ++++++++++++++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 3 deletions(-)
 
+diff --git a/gitk b/gitk
+index e76445b..c65103e 100755
+--- a/gitk
++++ b/gitk
+@@ -2771,6 +2771,19 @@ proc doprogupdate {} {
+     }
+ }
+ 
++proc config_check_tmp_exists {tries_left} {
++    global config_file_tmp
++
++    if {[file exists $config_file_tmp]} {
++	incr tries_left -1
++	if {$tries_left > 0} {
++	    after 100 [list config_check_tmp_exists $tries_left]
++	} else {
++	    error_popup "Probably there is stale $config_file_tmp file; config saving is going to fail. Check if it is being used by any existing gitk process and remove it otherwise"
++	}
++    }
++}
++
+ proc config_resolve_variable {name name2} {
+     set var_name ""
+     set key ""
+@@ -2819,11 +2832,16 @@ proc savestuff {w} {
+ 
+     if {$stuffsaved} return
+     if {![winfo viewable .]} return
++    set remove_tmp 0
+     catch {
+-	if {[file exists $config_file_tmp]} {
+-	    file delete -force $config_file_tmp
++	set try_count 0
++	while {[catch {set f [open $config_file_tmp {WRONLY CREAT EXCL}]}]} {
++	    if {[incr try_count] > 50} {
++		error "Unable to write config file: $config_file_tmp exists"
++	    }
++	    after 100
+ 	}
+-	set f [open $config_file_tmp w]
++	set remove_tmp 1
+ 	if {$::tcl_platform(platform) eq {windows}} {
+ 	    file attributes $config_file_tmp -hidden true
+ 	}
+@@ -2890,6 +2908,14 @@ proc savestuff {w} {
+ 	puts $f "}"
+ 	close $f
+ 	file rename -force $config_file_tmp $config_file
++	set remove_tmp 0
++	return ""
++    } err
++    if {$err ne ""} {
++	puts "Error saving config: $err"
++    }
++    if {$remove_tmp} {
++	file delete -force $config_file_tmp
+     }
+     set stuffsaved 1
+ }
+@@ -12169,6 +12195,7 @@ catch {
+     }
+     source $config_file
+ }
++config_check_tmp_exists 50
+ 
+ set config_variables {
+     mainfont textfont uifont tabstop findmergefiles maxgraphpct maxwidth
 -- 
 2.0.1.1697.g73c6810
