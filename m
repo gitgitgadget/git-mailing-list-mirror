@@ -1,83 +1,247 @@
-From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster-Mmb7MZpHnFY@public.gmane.org>
-Subject: Re: (local ?) BOINC repo broken again -or- how to act
- on the CR/LF changes made upstream
-Date: Sun, 14 Sep 2014 11:04:29 +0200
-Message-ID: <54155A1D.8040504@gmx.de>
-References: <541336D6.3050803@gmx.de>
-	<1BAFA9B4D550C347962F76F2E03B3BBB22C5F9@romw-mail.romwnet.org>
-	<54155708.7090508@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi-S0/GAf8tV78@public.gmane.org>,
-	Rom Walton <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-X-From: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org Sun Sep 14 11:04:40 2014
-Return-path: <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-Envelope-to: gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
-Received: from mailapps1.ssl.berkeley.edu ([128.32.13.237])
-	by plane.gmane.org with smtp (Exim 4.69)
-	(envelope-from <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>)
-	id 1XT5jb-00027m-SZ
-	for gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Sun, 14 Sep 2014 11:04:40 +0200
-Received: from mailapps1.ssl.berkeley.edu (localhost [127.0.0.1])
-	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id C2A032FEAD0;
-	Sun, 14 Sep 2014 02:04:37 -0700 (PDT)
-X-Original-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
-Delivered-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
-Received: from mail2.ssl.berkeley.edu (mail2.ssl.berkeley.edu [128.32.13.252])
-	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 06C9F2FE953
-	for <boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org>;
-	Sun, 14 Sep 2014 02:04:36 -0700 (PDT)
-Received: from mailwall2.ssl.berkeley.edu (mailwall2.ssl.berkeley.edu
-	[128.32.147.8])
-	by mail2.ssl.berkeley.edu (8.13.8/8.13.8) with ESMTP id s8E94ZW3000354
-	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Sun, 14 Sep 2014 02:04:35 -0700
-X-ASG-Debug-ID: 1410685474-04b39714612bfad0001-LQ66t1
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21]) by
-	mailwall2.ssl.berkeley.edu with ESMTP id y0QdcvC0L7OLAtH9 for
-	<boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Sun, 14 Sep 2014 02:04:35 -0700 (PDT)
-X-Barracuda-Envelope-From: toralf.foerster-Mmb7MZpHnFY@public.gmane.org
-X-Barracuda-Apparent-Source-IP: 212.227.17.21
-Received: from [192.168.178.21] ([78.54.169.101]) by mail.gmx.com (mrgmx103)
-	with ESMTPSA (Nemesis) id 0Lkfii-1Y1Kce3wiC-00aYyk;
-	Sun, 14 Sep 2014 11:04:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686;
-	rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-X-ASG-Orig-Subj: Re: [boinc_dev] (local ?) BOINC repo broken again -or- how to
-	act on the CR/LF changes made upstream
-In-Reply-To: <54155708.7090508-S0/GAf8tV78@public.gmane.org>
-X-Provags-ID: V03:K0:LYwpCfWmSv0eZ1dNqQjs+IN0ztfyYHq+xAw68Tr3qT2bzk6oRc8
-	WUOIE6IODf+aYS3CxCZMAWV1318DhKbZ8vBtlGv3eIssx3eWy8jyJJeFfAuNtcJ6VYya5Yg
-	WZbnff2LRzuSqbidvUr/faXwnYoPS8C8V2jShdekPtbJDFMGzvHU/i4UcMeHpQmyHpDiEpy
-	Ycs2rp8nHrncLtsW237vw==
-X-UI-Out-Filterresults: notjunk:1;
-X-Barracuda-Connect: mout.gmx.net[212.227.17.21]
-X-Barracuda-Start-Time: 1410685474
-X-Barracuda-URL: http://mailwall2.ssl.berkeley.edu:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at ssl.berkeley.edu
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score-Disabled: per user
-X-BeenThere: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-X-Mailman-Version: 2.1.15
-Precedence: list
-List-Id: BOINC development <boinc_dev.ssl.berkeley.edu>
-List-Unsubscribe: <http://lists.ssl.berkeley.edu/mailman/options/boinc_dev>,
-	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.ssl.berkeley.edu/pipermail/boinc_dev/>
-List-Post: <mailto:boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-List-Help: <mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.ssl.berkeley.edu/mailman/listinfo/boinc_dev>,
-	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=subscribe>
-Errors-To: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
-Sender: "boinc_dev" <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257012>
+From: Cole Minnaar <cole.minnaar@gmail.com>
+Subject: [PATCH/RFC 1/2] submodule: add ability to shallowly clone any branch in a repo as a submodule
+Date: Sun, 14 Sep 2014 12:38:36 +0200
+Message-ID: <ede7b63c6028591281a7eefea5e9cd45cccd0a93.1410691049.git.cole.minnaar@gmail.com>
+Cc: Cole Minnaar <cole.minnaar@gmail.com>, Jens.Lehmann@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 14 12:38:51 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by plane.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XT7Cg-0007KP-W0
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 12:38:47 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752493AbaINKin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2014 06:38:43 -0400
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:37080 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752439AbaINKim (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Sep 2014 06:38:42 -0400
+Received: by mail-wg0-f49.google.com with SMTP id m15so2681325wgh.32
+        for <git@vger.kernel.org>; Sun, 14 Sep 2014 03:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=W8aCtawNbkrr4RSm2qKYF0L8LSPQJqXS69q5A9E8yK8=;
+        b=mYnaVOKBloSPqAvQ8P00CqZdel/dWdlMFm5DDGaytPSUAEwOqG+BuO4sjQS+opK9hb
+         31qYm/+8qR6ngbwX9W/yy9EjU3MnLQVXUuLts8a2sPDyCm49UEUbxiYkqgYxRgIXkFjk
+         +HvJlai41cnN0AC1ENIRwkBkESX1iBUeGRyKFJnfw4HrQUnohoLq4I0d4LNpYfeBbjxS
+         i9fbr7vMgIhgaRKctiY3129vofH7K0gmOuq8kjEjQjfpnPvTse9tQX9rBA2NUJ+zqIyQ
+         ZYQfNE2g+TRtqqgD5+/iV+JAUW6xgwHI9vnXr46KGVNiNleWgc1jU0I9/F893bFhQdCk
+         8n/Q==
+X-Received: by 10.194.219.193 with SMTP id pq1mr25575282wjc.5.1410691120876;
+        Sun, 14 Sep 2014 03:38:40 -0700 (PDT)
+Received: from localhost.localdomain (196-210-108-164.dynamic.isadsl.co.za. [196.210.108.164])
+        by mx.google.com with ESMTPSA id wr8sm10703076wjb.20.2014.09.14.03.38.39
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 14 Sep 2014 03:38:40 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.238.gce1d3a9.dirty
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257013>
 
-T24gMDkvMTQvMjAxNCAxMDo1MSBBTSwgVG9yc3RlbiBCw7ZnZXJzaGF1c2VuIHdyb3RlOgo+IEl0
-IG1heSBiZSB0aGF0IHRoZXJlIGlzIGEgYnVnIGluIHRoZSB0b29scyB5b3UgYXJlIHVzaW5nLgpJ
-IHVzZSBnaXQgMi4xLjAKCi0tIApUb3JhbGYKcGdwIGtleTogMDA3NiBFOTRFCgpfX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpib2luY19kZXYgbWFpbGluZyBs
-aXN0CmJvaW5jX2RldkBzc2wuYmVya2VsZXkuZWR1Cmh0dHA6Ly9saXN0cy5zc2wuYmVya2VsZXku
-ZWR1L21haWxtYW4vbGlzdGluZm8vYm9pbmNfZGV2ClRvIHVuc3Vic2NyaWJlLCB2aXNpdCB0aGUg
-YWJvdmUgVVJMIGFuZAoobmVhciBib3R0b20gb2YgcGFnZSkgZW50ZXIgeW91ciBlbWFpbCBhZGRy
-ZXNzLg==
+Currently when specifying the `--depth` option to the 'submodule add'
+command, it can only create a shallow submodule clone of the currently
+active branch from the cloned repository. If a branch is specified using
+the `--branch` option, and the `--depth` option is also specified, the
+'submodule add' command will result in an error as the branch will not
+be present in the cloned repository. If a repository is shallowly cloned
+as a submodule, there is no way to specify that the shallowly cloned
+submodule should setup remote-tracking branches.
+
+Added the ability to shallowly clone any branch as a submodule, not just
+the current active branch in the cloned repository.
+Added support to the 'submodule add' and 'submodule update' commands to
+handle `--no-single-branch` option, which is in turn passed to the clone
+command in order to setup remote-tracking branches in the shallowly
+cloned submodule.
+
+Signed-off-by: Cole Minnaar <cole.minnaar@gmail.com>
+---
+ Documentation/git-submodule.txt |  8 ++++++--
+ git-submodule.sh                | 24 ++++++++++++++++++++----
+ t/t7400-submodule-basic.sh      | 33 ++++++++++++++++++++++++++++++++-
+ 3 files changed, 58 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 8e6af65..5b913ab 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -10,13 +10,14 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
+-	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
++	      [--reference <repository>] [--depth <depth>] [--no-single-branch]
++	      [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+ 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+ 	      [-f|--force] [--rebase|--merge] [--reference <repository>]
+-	      [--depth <depth>] [--recursive] [--] [<path>...]
++	      [--depth <depth>] [--recursive] [--no-single-branch] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+ 	      [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach [--recursive] <command>
+@@ -354,6 +355,9 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
+ 	clone with a history truncated to the specified number of revisions.
+ 	See linkgit:git-clone[1]
+ 
++--no-single-branch::
++	This option is valid for add and update commands. Fetch histories near the tips
++	of all branches and create remote-tracking branches in the submodule.
+ 
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9245abf..9c0c858 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,11 +5,11 @@
+ # Copyright (c) 2007 Lars Hjemli
+ 
+ dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
++USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--depth <depth>] [--no-single-branch] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+-   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--depth <depth>] [--no-single-branch] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+@@ -259,6 +259,13 @@ module_clone()
+ 	url=$3
+ 	reference="$4"
+ 	depth="$5"
++	clone_branch=
++	if test -n "$6"
++	then
++		clone_branch="--branch=$6"
++	fi
++
++	no_single_branch="$7"
+ 	quiet=
+ 	if test -n "$GIT_QUIET"
+ 	then
+@@ -282,6 +289,7 @@ module_clone()
+ 		(
+ 			clear_local_git_env
+ 			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} \
++				${clone_branch:+"$clone_branch"} ${no_single_branch:+"$no_single_branch"} \
+ 				--separate-git-dir "$gitdir" "$url" "$sm_path"
+ 		) ||
+ 		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
+@@ -328,6 +336,7 @@ cmd_add()
+ {
+ 	# parse $args after "submodule ... add".
+ 	reference_path=
++	no_single_branch=
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -363,6 +372,9 @@ cmd_add()
+ 		--depth=*)
+ 			depth=$1
+ 			;;
++		--no-single-branch)
++			no_single_branch="--no-single-branch"
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -472,7 +484,7 @@ Use -f if you really want to add it." >&2
+ 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+ 			fi
+ 		fi
+-		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
++		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" "$branch" "$no_single_branch" || exit
+ 		(
+ 			clear_local_git_env
+ 			cd "$sm_path" &&
+@@ -724,6 +736,7 @@ cmd_deinit()
+ cmd_update()
+ {
+ 	# parse $args after "submodule ... update".
++	no_single_branch=
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -770,6 +783,9 @@ cmd_update()
+ 		--depth=*)
+ 			depth=$1
+ 			;;
++		--no-single-branch)
++			no_single_branch="--no-single-branch"
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -834,7 +850,7 @@ Maybe you want to use 'update --init'?")"
+ 
+ 		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+ 		then
+-			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
++			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" "$branch" "$no_single_branch" || exit
+ 			cloned_modules="$cloned_modules;$name"
+ 			subsha1=
+ 		else
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 7c88245..81c05ae 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -136,7 +136,6 @@ test_expect_success 'submodule add --branch' '
+ 	echo "refs/heads/initial" >expect-head &&
+ 	cat <<-\EOF >expect-heads &&
+ 	refs/heads/initial
+-	refs/heads/master
+ 	EOF
+ 	>empty &&
+ 
+@@ -982,5 +981,37 @@ test_expect_success 'submodule add clone shallow submodule' '
+ 	)
+ '
+ 
++test_expect_success 'submodule add --branch --depth' '
++	(
++		cd addtest2 &&
++		git submodule add -b initial --depth 1 -- file://"$submodurl" submod-branch-depth &&
++		test "initial" = "$(git config -f .gitmodules submodule.submod-branch-depth.branch)" &&
++		(
++			cd submod-branch-depth &&
++			test 1 = $(git log --oneline | wc -l)
++		)
++	)
++'
++
++cat >remote <<\EOF
++  origin/HEAD -> origin/second
++  origin/initial
++  origin/master
++  origin/second
++EOF
++
++test_expect_success 'submodule add --branch --depth --no-single-branch' '
++	(
++		cd addtest2 &&
++		git submodule add -b initial --depth 1 --no-single-branch -- file://"$submodurl" submod-branch-depth-all &&
++		test "initial" = "$(git config -f .gitmodules submodule.submod-branch-depth-all.branch)" &&
++		(
++			cd submod-branch-depth-all &&
++			test 1 = $(git log --oneline | wc -l)
++			git branch -r >../../remote-out
++		)
++	) &&
++	test_cmp remote remote-out
++'
+ 
+ test_done
+-- 
+2.1.0.238.gce1d3a9.dirty
