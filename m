@@ -1,89 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] mailinfo: do not treat ">From" lines as in-body
- headers
-Date: Sat, 13 Sep 2014 21:01:21 -0400
-Message-ID: <20140914010120.GA28498@peff.net>
-References: <20140913093746.GD6600@mwanda>
- <20140913154556.GA12361@kroah.com>
- <20140913203645.GB24854@peff.net>
- <20140913204745.GA12291@msilap.einon.net>
- <20140913205751.GA17875@mwanda>
- <20140913210908.GG6549@mwanda>
- <20140913212504.GA25190@peff.net>
- <20140913225713.GB189120@vauxhall.crustytoothpaste.net>
- <20140914004725.GA28010@peff.net>
- <CAPc5daWxZdi+JTTsznefPk2U+Q8uWWYuBUa-rJA4knDZzwU38w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Mark Einon <mark.einon@gmail.com>,
-	Greg KH <gregkh@linuxfoundation.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] help: ensure that common-cmds.h is only included by help.c
+Date: Sat, 13 Sep 2014 18:11:13 -0700
+Message-ID: <1410657073-3089-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 14 03:01:28 2014
+X-From: git-owner@vger.kernel.org Sun Sep 14 03:11:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XSyBz-0007VC-OR
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 03:01:28 +0200
+	id 1XSyLn-000168-Gy
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 03:11:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268AbaINBBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Sep 2014 21:01:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47894 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752214AbaINBBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Sep 2014 21:01:23 -0400
-Received: (qmail 20781 invoked by uid 102); 14 Sep 2014 01:01:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Sep 2014 20:01:23 -0500
-Received: (qmail 11663 invoked by uid 107); 14 Sep 2014 01:01:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Sep 2014 21:01:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Sep 2014 21:01:21 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPc5daWxZdi+JTTsznefPk2U+Q8uWWYuBUa-rJA4knDZzwU38w@mail.gmail.com>
+	id S1752244AbaINBLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Sep 2014 21:11:23 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:53010 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752232AbaINBLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Sep 2014 21:11:22 -0400
+Received: by mail-pd0-f172.google.com with SMTP id v10so3857937pde.17
+        for <git@vger.kernel.org>; Sat, 13 Sep 2014 18:11:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=CkCWRcKf51YJSyL9IAfBmqXL5Px1oEy3shykjEUUvd0=;
+        b=JuiI8UcOrEvcEVuzOZjn3qjwf/RwVPHStH6PXxXNy9UHujtCFEgIJ7dL0sKNCLYm38
+         S0TTuDJclEVUYoKmw3S+M4RO9ZBq2hW42eX6/9mq7NrHEJdci+7xvqvrQzfqYReeq6b4
+         ueSQSjpYpHDwSMceOeV+6vGKSRVNXAZdiI8UBj/XpqLrgBD+bHQ+pOTgpMcvFDueqp3d
+         cgL7chnn/avQ2uoF73Q2RN8ngIUm4VqZ/0Upq9qPjOCK+kJPoRXycT9zyxaVcVv2ch6p
+         57bQO4RX88C19cpIVprDwOPQjtVtgyqjEwROo1zJcui4Th4IMKeabJA/CSeDsuCemOc/
+         b74w==
+X-Received: by 10.68.143.100 with SMTP id sd4mr26527319pbb.76.1410657081783;
+        Sat, 13 Sep 2014 18:11:21 -0700 (PDT)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id p3sm7602134pde.35.2014.09.13.18.11.20
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 13 Sep 2014 18:11:21 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.241.ga16d620
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256990>
 
-On Sat, Sep 13, 2014 at 05:55:49PM -0700, Junio C Hamano wrote:
+Add a #ifndef guard to ensure that common-cmds.h can only
+be included by help.c.
 
-> On Sat, Sep 13, 2014 at 5:47 PM, Jeff King <peff@peff.net> wrote:
-> >
-> > On Sat, Sep 13, 2014 at 10:57:14PM +0000, brian m. carlson wrote:
-> >
-> > > I wonder if git send-email should do what mutt does in this case, which
-> > > is use quoted-printable encoding and encode the first F as =46 (as well
-> > > as any equals signs as =3D).  It looks like mailinfo.c already is
-> > > capable of handling that, and that would avoid the entire issue.
-> >
-> > That's not an unreasonable tactic. However, I think we'd still want to
-> > do something with mailinfo on the receiving end, similar to the patch I
-> > sent. We don't know that the sending side is necessarily send-email.
-> 
-> Hmm, isn't the ">" stuffing in front of a beginning-of-line "From " purely
-> a local matter of MUA that stores messages in (old-style) mbox format
-> where a line that begins with "From " is what defines the end of the
-> previous message?
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ generate-cmdlist.sh | 4 ++++
+ help.c              | 3 ++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-Yes, it is[1].
-
-> Why should send-email do anything when it sends individual messages
-> separately out?
-
-It does not need to, but the QP-transformation helps protect against
-other, stupider software downstream.  And unlike From-quoting it is
-actually well-specified and reversible.
-
--Peff
-
-[1] We do use the mbox format in git, and AFAIK do not do any
-    From-quoting of this nature.  I haven't tested, but I suspect that
-    certain format-patch output would be corrupted when reading back via
-    "git am", let alone other random mbox readers.  If we wanted to do
-    the QP magic brian suggests, it would probably make sense to do it
-    as part of format-patch.
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 9a4c9b9..99cd140 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -1,6 +1,10 @@
+ #!/bin/sh
+ 
+ echo "/* Automatically generated by $0 */
++#ifndef GIT_HELP_INTERNAL
++#error \"common-cmds.h can only be included by help.c\"
++#endif
++
+ struct cmdname_help {
+     char name[16];
+     char help[80];
+diff --git a/help.c b/help.c
+index 7af65e2..abf1689 100644
+--- a/help.c
++++ b/help.c
+@@ -3,11 +3,12 @@
+ #include "exec_cmd.h"
+ #include "levenshtein.h"
+ #include "help.h"
+-#include "common-cmds.h"
+ #include "string-list.h"
+ #include "column.h"
+ #include "version.h"
+ #include "refs.h"
++#define GIT_HELP_INTERNAL
++#include "common-cmds.h"
+ 
+ void add_cmdname(struct cmdnames *cmds, const char *name, int len)
+ {
+-- 
+2.1.0.241.ga16d620
