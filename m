@@ -1,83 +1,493 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH 1/2] add macro REALLOCARRAY
-Date: Sun, 14 Sep 2014 18:55:56 +0200
-Message-ID: <5415C89C.4090509@web.de>
+Subject: [PATCH 2/2] use REALLOCARRAY for changing the allocation size of
+ arrays
+Date: Sun, 14 Sep 2014 18:57:41 +0200
+Message-ID: <5415C905.7000804@web.de>
+References: <5415C89C.4090509@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 14 18:57:03 2014
+X-From: git-owner@vger.kernel.org Sun Sep 14 18:58:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTD6g-0000x9-TB
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 18:56:59 +0200
+	id 1XTD8A-0001PY-5q
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 18:58:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752717AbaINQ4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Sep 2014 12:56:49 -0400
-Received: from mout.web.de ([212.227.15.4]:64138 "EHLO mout.web.de"
+	id S1752728AbaINQ6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2014 12:58:25 -0400
+Received: from mout.web.de ([212.227.15.14]:54393 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752658AbaINQ4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Sep 2014 12:56:48 -0400
-Received: from [192.168.178.27] ([79.253.153.35]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0LzVMw-1YOnsU2kkc-014jjD; Sun, 14 Sep 2014 18:56:36
+	id S1752566AbaINQ6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Sep 2014 12:58:23 -0400
+Received: from [192.168.178.27] ([79.253.153.35]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0Lym19-1YNQwU2LiB-0165VN; Sun, 14 Sep 2014 18:58:21
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-X-Provags-ID: V03:K0:YQpezvIMYO6a54qKjopo8jvjgDKexxDTGtEApvc/YCVLuwhm7cA
- pdT6YwGpt5dpOyH1OeuqU2j9BVsTYIf57qod6xUvvKy76XAQCYYR7HQV4leAkQV3j1YMnDA
- SZFRMSGoC20yB9oOIGpZ8dFADgA2677sW3GkcD1mIb83E3LI/W4T07ncZAlMN2Lc57K1yBF
- LXXsHxU5HOF1o0BwfjwUw==
+In-Reply-To: <5415C89C.4090509@web.de>
+X-Provags-ID: V03:K0:b+izksJwuHkeAzRbEmF5wbxL+UBWDZeDvcKcpXjbZ5aR5Fr64G4
+ lj8/wL7cNa7mCPJqDKLo5lZcZ2cdV1B4IY18m7zzG4DoHtAAmOUnxOOLfckOOk2ZjpVJdsW
+ Tuw/Qf/b0YQEK628ZcCX0L7xirmM0gPsmuUXXFWmG+hDjNDSGKRvOoPeagt3YLm91gMeA24
+ KkwKtCHVSehoG5le7w3WA==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257019>
-
-The macro ALLOC_GROW manages several aspects of dynamic memory
-allocations for arrays: It performs overprovisioning in order to avoid
-reallocations in future calls, updates the allocation size variable,
-multiplies the item size and thus allows users to simply specify the
-item count, performs the reallocation and updates the array pointer.
-
-Sometimes this is too much.  Add the macro REALLOCARRAY, which only
-takes care of the latter three points and allows users to specify the
-number of items an array can store directly.  It can increase and
-also decrease its size.  Using this macro avoids duplicating the
-array pointer name and takes care of item sizes automatically.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257020>
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- Documentation/technical/api-allocation-growing.txt | 3 +++
- git-compat-util.h                                  | 2 ++
- 2 files changed, 5 insertions(+)
+ attr.c                 |  3 +--
+ builtin/apply.c        |  2 +-
+ builtin/for-each-ref.c |  9 +++------
+ builtin/index-pack.c   |  4 +---
+ builtin/log.c          |  2 +-
+ builtin/merge.c        |  2 +-
+ builtin/mv.c           |  8 ++++----
+ builtin/pack-objects.c |  3 +--
+ builtin/show-branch.c  |  2 +-
+ cache.h                |  2 +-
+ column.c               |  6 ++----
+ commit-slab.h          |  3 +--
+ fast-import.c          |  2 +-
+ git.c                  |  3 +--
+ graph.c                | 14 ++++----------
+ khash.h                | 12 ++++--------
+ line-log.c             |  2 +-
+ object.c               |  2 +-
+ pack-bitmap-write.c    |  3 +--
+ pack-bitmap.c          |  6 ++----
+ pack-objects.c         |  3 +--
+ revision.c             |  2 +-
+ sh-i18n--envsubst.c    |  5 +----
+ shallow.c              |  3 +--
+ string-list.c          |  3 +--
+ walker.c               |  4 ++--
+ 26 files changed, 40 insertions(+), 70 deletions(-)
 
-diff --git a/Documentation/technical/api-allocation-growing.txt b/Documentation/technical/api-allocation-growing.txt
-index 542946b..4b5f049 100644
---- a/Documentation/technical/api-allocation-growing.txt
-+++ b/Documentation/technical/api-allocation-growing.txt
-@@ -34,3 +34,6 @@ item[nr++] = value you like;
- ------------
+diff --git a/attr.c b/attr.c
+index 734222d..e89be50 100644
+--- a/attr.c
++++ b/attr.c
+@@ -97,8 +97,7 @@ static struct git_attr *git_attr_internal(const char *name, int len)
+ 	a->attr_nr = attr_nr++;
+ 	git_attr_hash[pos] = a;
  
- You are responsible for updating the `nr` variable.
-+
-+If you need to specify the number of elements to allocate explicitly
-+then use the macro `REALLOCARRAY(item, alloc)` instead of `ALLOC_GROW`.
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 4e7e3f8..d926e4c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -626,6 +626,8 @@ extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
- extern int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1);
- extern char *xgetcwd(void);
+-	check_all_attr = xrealloc(check_all_attr,
+-				  sizeof(*check_all_attr) * attr_nr);
++	REALLOCARRAY(check_all_attr, attr_nr);
+ 	check_all_attr[a->attr_nr].attr = a;
+ 	check_all_attr[a->attr_nr].value = ATTR__UNKNOWN;
+ 	return a;
+diff --git a/builtin/apply.c b/builtin/apply.c
+index f204cca..ae6ac6b 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -2626,7 +2626,7 @@ static void update_image(struct image *img,
+ 		 * NOTE: this knows that we never call remove_first_line()
+ 		 * on anything other than pre/post image.
+ 		 */
+-		img->line = xrealloc(img->line, nr * sizeof(*img->line));
++		REALLOCARRAY(img->line, nr);
+ 		img->line_allocated = img->line;
+ 	}
+ 	if (preimage_limit != postimage->nr)
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 47bd624..c5a06f3 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -138,10 +138,8 @@ static int parse_atom(const char *atom, const char *ep)
+ 	/* Add it in, including the deref prefix */
+ 	at = used_atom_cnt;
+ 	used_atom_cnt++;
+-	used_atom = xrealloc(used_atom,
+-			     (sizeof *used_atom) * used_atom_cnt);
+-	used_atom_type = xrealloc(used_atom_type,
+-				  (sizeof(*used_atom_type) * used_atom_cnt));
++	REALLOCARRAY(used_atom, used_atom_cnt);
++	REALLOCARRAY(used_atom_type, used_atom_cnt);
+ 	used_atom[at] = xmemdupz(atom, ep - atom);
+ 	used_atom_type[at] = valid_atom[i].cmp_type;
+ 	if (*atom == '*')
+@@ -870,8 +868,7 @@ static int grab_single_ref(const char *refname, const unsigned char *sha1, int f
+ 	ref->flag = flag;
  
-+#define REALLOCARRAY(x, alloc) x = xrealloc((x), (alloc) * sizeof(*(x)))
-+
- static inline size_t xsize_t(off_t len)
+ 	cnt = cb->grab_cnt;
+-	cb->grab_array = xrealloc(cb->grab_array,
+-				  sizeof(*cb->grab_array) * (cnt + 1));
++	REALLOCARRAY(cb->grab_array, cnt + 1);
+ 	cb->grab_array[cnt++] = ref;
+ 	cb->grab_cnt = cnt;
+ 	return 0;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 5568a5b..5d03e00 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1140,9 +1140,7 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+ 		int nr_objects_initial = nr_objects;
+ 		if (nr_unresolved <= 0)
+ 			die(_("confusion beyond insanity"));
+-		objects = xrealloc(objects,
+-				   (nr_objects + nr_unresolved + 1)
+-				   * sizeof(*objects));
++		REALLOCARRAY(objects, nr_objects + nr_unresolved + 1);
+ 		memset(objects + nr_objects + 1, 0,
+ 		       nr_unresolved * sizeof(*objects));
+ 		f = sha1fd(output_fd, curr_pack);
+diff --git a/builtin/log.c b/builtin/log.c
+index e4d8122..3852a63 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1440,7 +1440,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 
+ 		nr++;
+-		list = xrealloc(list, nr * sizeof(list[0]));
++		REALLOCARRAY(list, nr);
+ 		list[nr - 1] = commit;
+ 	}
+ 	if (nr == 0)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 9da9e30..92e376f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -556,7 +556,7 @@ static void parse_branch_merge_options(char *bmo)
+ 	if (argc < 0)
+ 		die(_("Bad branch.%s.mergeoptions string: %s"), branch,
+ 		    split_cmdline_strerror(argc));
+-	argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
++	REALLOCARRAY(argv, argc + 2);
+ 	memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
+ 	argc++;
+ 	argv[0] = "branch.*.mergeoptions";
+diff --git a/builtin/mv.c b/builtin/mv.c
+index bf784cb..236554d 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -184,10 +184,10 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 
+ 				modes[i] = WORKING_DIRECTORY;
+ 				n = argc + last - first;
+-				source = xrealloc(source, n * sizeof(char *));
+-				destination = xrealloc(destination, n * sizeof(char *));
+-				modes = xrealloc(modes, n * sizeof(enum update_mode));
+-				submodule_gitfile = xrealloc(submodule_gitfile, n * sizeof(char *));
++				REALLOCARRAY(source, n);
++				REALLOCARRAY(destination, n);
++				REALLOCARRAY(modes, n);
++				REALLOCARRAY(submodule_gitfile, n);
+ 
+ 				dst = add_slash(dst);
+ 				dst_len = strlen(dst);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index b59f5d8..a6661b4 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -89,8 +89,7 @@ static void index_commit_for_bitmap(struct commit *commit)
  {
- 	if (len > (size_t) len)
+ 	if (indexed_commits_nr >= indexed_commits_alloc) {
+ 		indexed_commits_alloc = (indexed_commits_alloc + 32) * 2;
+-		indexed_commits = xrealloc(indexed_commits,
+-			indexed_commits_alloc * sizeof(struct commit *));
++		REALLOCARRAY(indexed_commits, indexed_commits_alloc);
+ 	}
+ 
+ 	indexed_commits[indexed_commits_nr++] = commit;
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 298c95e..9d465a8 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -563,7 +563,7 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 			default_arg[default_num++] = "show-branch";
+ 		} else if (default_alloc <= default_num + 1) {
+ 			default_alloc = default_alloc * 3 / 2 + 20;
+-			default_arg = xrealloc(default_arg, sizeof *default_arg * default_alloc);
++			REALLOCARRAY(default_arg, default_alloc);
+ 		}
+ 		default_arg[default_num++] = xstrdup(value);
+ 		default_arg[default_num] = NULL;
+diff --git a/cache.h b/cache.h
+index dfa1a56..fec45d0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -482,7 +482,7 @@ extern int daemonize(void);
+ 				alloc = (nr); \
+ 			else \
+ 				alloc = alloc_nr(alloc); \
+-			x = xrealloc((x), alloc * sizeof(*(x))); \
++			REALLOCARRAY(x, alloc); \
+ 		} \
+ 	} while (0)
+ 
+diff --git a/column.c b/column.c
+index 76b615d..7459304 100644
+--- a/column.c
++++ b/column.c
+@@ -81,8 +81,7 @@ static void compute_column_width(struct column_data *data)
+  */
+ static void shrink_columns(struct column_data *data)
+ {
+-	data->width = xrealloc(data->width,
+-			       sizeof(*data->width) * data->cols);
++	REALLOCARRAY(data->width, data->cols);
+ 	while (data->rows > 1) {
+ 		int x, total_width, cols, rows;
+ 		rows = data->rows;
+@@ -91,8 +90,7 @@ static void shrink_columns(struct column_data *data)
+ 		data->rows--;
+ 		data->cols = DIV_ROUND_UP(data->list->nr, data->rows);
+ 		if (data->cols != cols)
+-			data->width = xrealloc(data->width,
+-					       sizeof(*data->width) * data->cols);
++			REALLOCARRAY(data->width, data->cols);
+ 		compute_column_width(data);
+ 
+ 		total_width = strlen(data->opts.indent);
+diff --git a/commit-slab.h b/commit-slab.h
+index 375c9c7..c94846c 100644
+--- a/commit-slab.h
++++ b/commit-slab.h
+@@ -90,8 +90,7 @@ static MAYBE_UNUSED elemtype *slabname## _at(struct slabname *s,	\
+ 									\
+ 	if (s->slab_count <= nth_slab) {				\
+ 		int i;							\
+-		s->slab = xrealloc(s->slab,				\
+-				   (nth_slab + 1) * sizeof(*s->slab));	\
++		REALLOCARRAY(s->slab, nth_slab + 1);			\
+ 		stat_ ##slabname## realloc++;				\
+ 		for (i = s->slab_count; i <= nth_slab; i++)		\
+ 			s->slab[i] = NULL;				\
+diff --git a/fast-import.c b/fast-import.c
+index c071253..d788e8f 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -878,7 +878,7 @@ static void start_packfile(void)
+ 	pack_size = sizeof(hdr);
+ 	object_count = 0;
+ 
+-	all_packs = xrealloc(all_packs, sizeof(*all_packs) * (pack_id + 1));
++	REALLOCARRAY(all_packs, pack_id + 1);
+ 	all_packs[pack_id] = p;
+ }
+ 
+diff --git a/git.c b/git.c
+index 210f1ae..7587b3a 100644
+--- a/git.c
++++ b/git.c
+@@ -282,8 +282,7 @@ static int handle_alias(int *argcp, const char ***argv)
+ 				  "trace: alias expansion: %s =>",
+ 				  alias_command);
+ 
+-		new_argv = xrealloc(new_argv, sizeof(char *) *
+-				    (count + *argcp));
++		REALLOCARRAY(new_argv, count + *argcp);
+ 		/* insert after command name */
+ 		memcpy(new_argv + count, *argv + 1, sizeof(char *) * *argcp);
+ 
+diff --git a/graph.c b/graph.c
+index 6404331..494cf3e 100644
+--- a/graph.c
++++ b/graph.c
+@@ -267,16 +267,10 @@ static void graph_ensure_capacity(struct git_graph *graph, int num_columns)
+ 		graph->column_capacity *= 2;
+ 	} while (graph->column_capacity < num_columns);
+ 
+-	graph->columns = xrealloc(graph->columns,
+-				  sizeof(struct column) *
+-				  graph->column_capacity);
+-	graph->new_columns = xrealloc(graph->new_columns,
+-				      sizeof(struct column) *
+-				      graph->column_capacity);
+-	graph->mapping = xrealloc(graph->mapping,
+-				  sizeof(int) * 2 * graph->column_capacity);
+-	graph->new_mapping = xrealloc(graph->new_mapping,
+-				      sizeof(int) * 2 * graph->column_capacity);
++	REALLOCARRAY(graph->columns, graph->column_capacity);
++	REALLOCARRAY(graph->new_columns, graph->column_capacity);
++	REALLOCARRAY(graph->mapping, graph->column_capacity * 2);
++	REALLOCARRAY(graph->new_mapping, graph->column_capacity * 2);
+ }
+ 
+ /*
+diff --git a/khash.h b/khash.h
+index 06c7906..a5c56ed 100644
+--- a/khash.h
++++ b/khash.h
+@@ -121,13 +121,9 @@ static const double __ac_HASH_UPPER = 0.77;
+ 				if (!new_flags) return -1;								\
+ 				memset(new_flags, 0xaa, __ac_fsize(new_n_buckets) * sizeof(khint32_t)); \
+ 				if (h->n_buckets < new_n_buckets) {	/* expand */		\
+-					khkey_t *new_keys = (khkey_t*)xrealloc((void *)h->keys, new_n_buckets * sizeof(khkey_t)); \
+-					if (!new_keys) return -1;							\
+-					h->keys = new_keys;									\
++					REALLOCARRAY(h->keys, new_n_buckets); \
+ 					if (kh_is_map) {									\
+-						khval_t *new_vals = (khval_t*)xrealloc((void *)h->vals, new_n_buckets * sizeof(khval_t)); \
+-						if (!new_vals) return -1;						\
+-						h->vals = new_vals;								\
++						REALLOCARRAY(h->vals, new_n_buckets); \
+ 					}													\
+ 				} /* otherwise shrink */								\
+ 			}															\
+@@ -160,8 +156,8 @@ static const double __ac_HASH_UPPER = 0.77;
+ 				}														\
+ 			}															\
+ 			if (h->n_buckets > new_n_buckets) { /* shrink the hash table */ \
+-				h->keys = (khkey_t*)xrealloc((void *)h->keys, new_n_buckets * sizeof(khkey_t)); \
+-				if (kh_is_map) h->vals = (khval_t*)xrealloc((void *)h->vals, new_n_buckets * sizeof(khval_t)); \
++				REALLOCARRAY(h->keys, new_n_buckets); \
++				if (kh_is_map) REALLOCARRAY(h->vals, new_n_buckets); \
+ 			}															\
+ 			free(h->flags); /* free the working space */				\
+ 			h->flags = new_flags;										\
+diff --git a/line-log.c b/line-log.c
+index 1008e72..5eed873 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -533,7 +533,7 @@ static void fill_line_ends(struct diff_filespec *spec, long *lines,
+ 	}
+ 
+ 	/* shrink the array to fit the elements */
+-	ends = xrealloc(ends, cur * sizeof(*ends));
++	REALLOCARRAY(ends, cur);
+ 	*lines = cur-1;
+ 	*line_ends = ends;
+ }
+diff --git a/object.c b/object.c
+index a16b9f9..000d315 100644
+--- a/object.c
++++ b/object.c
+@@ -312,7 +312,7 @@ static void add_object_array_with_mode_context(struct object *obj, const char *n
+ 
+ 	if (nr >= alloc) {
+ 		alloc = (alloc + 32) * 2;
+-		objects = xrealloc(objects, alloc * sizeof(*objects));
++		REALLOCARRAY(objects, alloc);
+ 		array->alloc = alloc;
+ 		array->objects = objects;
+ 	}
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 5f1791a..7a01f6d 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -111,8 +111,7 @@ static inline void push_bitmapped_commit(struct commit *commit, struct ewah_bitm
+ {
+ 	if (writer.selected_nr >= writer.selected_alloc) {
+ 		writer.selected_alloc = (writer.selected_alloc + 32) * 2;
+-		writer.selected = xrealloc(writer.selected,
+-					   writer.selected_alloc * sizeof(struct bitmapped_commit));
++		REALLOCARRAY(writer.selected, writer.selected_alloc);
+ 	}
+ 
+ 	writer.selected[writer.selected_nr].commit = commit;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 91e4101..aa36317 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -400,10 +400,8 @@ static int ext_index_add_object(struct object *object, const char *name)
+ 	if (hash_ret > 0) {
+ 		if (eindex->count >= eindex->alloc) {
+ 			eindex->alloc = (eindex->alloc + 16) * 3 / 2;
+-			eindex->objects = xrealloc(eindex->objects,
+-				eindex->alloc * sizeof(struct object *));
+-			eindex->hashes = xrealloc(eindex->hashes,
+-				eindex->alloc * sizeof(uint32_t));
++			REALLOCARRAY(eindex->objects, eindex->alloc);
++			REALLOCARRAY(eindex->hashes, eindex->alloc);
+ 		}
+ 
+ 		bitmap_pos = eindex->count;
+diff --git a/pack-objects.c b/pack-objects.c
+index 9992f3e..076b434 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -92,8 +92,7 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
+ 
+ 	if (pdata->nr_objects >= pdata->nr_alloc) {
+ 		pdata->nr_alloc = (pdata->nr_alloc  + 1024) * 3 / 2;
+-		pdata->objects = xrealloc(pdata->objects,
+-					  pdata->nr_alloc * sizeof(*new_entry));
++		REALLOCARRAY(pdata->objects, pdata->nr_alloc);
+ 	}
+ 
+ 	new_entry = pdata->objects + pdata->nr_objects++;
+diff --git a/revision.c b/revision.c
+index 0d3e417..eaa3f74 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1397,7 +1397,7 @@ static void prepare_show_merge(struct rev_info *revs)
+ 			continue;
+ 		if (ce_path_match(ce, &revs->prune_data, NULL)) {
+ 			prune_num++;
+-			prune = xrealloc(prune, sizeof(*prune) * prune_num);
++			REALLOCARRAY(prune, prune_num);
+ 			prune[prune_num-2] = ce->name;
+ 			prune[prune_num-1] = NULL;
+ 		}
+diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
+index 6dd03a9..55d2a8b 100644
+--- a/sh-i18n--envsubst.c
++++ b/sh-i18n--envsubst.c
+@@ -208,11 +208,8 @@ string_list_append (string_list_ty *slp, const char *s)
+   /* Grow the list.  */
+   if (slp->nitems >= slp->nitems_max)
+     {
+-      size_t nbytes;
+-
+       slp->nitems_max = slp->nitems_max * 2 + 4;
+-      nbytes = slp->nitems_max * sizeof (slp->item[0]);
+-      slp->item = (const char **) xrealloc (slp->item, nbytes);
++      REALLOCARRAY(slp->item, slp->nitems_max);
+     }
+ 
+   /* Add the string to the end of the list.  */
+diff --git a/shallow.c b/shallow.c
+index de07709..f25109a 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -392,8 +392,7 @@ static uint32_t *paint_alloc(struct paint_info *info)
+ 	void *p;
+ 	if (!info->slab_count || info->free + size > info->end) {
+ 		info->slab_count++;
+-		info->slab = xrealloc(info->slab,
+-				      info->slab_count * sizeof(*info->slab));
++		REALLOCARRAY(info->slab, info->slab_count);
+ 		info->free = xmalloc(COMMIT_SLAB_SIZE);
+ 		info->slab[info->slab_count - 1] = info->free;
+ 		info->end = info->free + COMMIT_SLAB_SIZE;
+diff --git a/string-list.c b/string-list.c
+index db38b62..9050d38 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -43,8 +43,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
+ 
+ 	if (list->nr + 1 >= list->alloc) {
+ 		list->alloc += 32;
+-		list->items = xrealloc(list->items, list->alloc
+-				* sizeof(struct string_list_item));
++		REALLOCARRAY(list->items, list->alloc);
+ 	}
+ 	if (index < list->nr)
+ 		memmove(list->items + index + 1, list->items + index,
+diff --git a/walker.c b/walker.c
+index f8d3709..169f5cb 100644
+--- a/walker.c
++++ b/walker.c
+@@ -228,8 +228,8 @@ int walker_targets_stdin(char ***target, const char ***write_ref)
+ 
+ 		if (targets >= targets_alloc) {
+ 			targets_alloc = targets_alloc ? targets_alloc * 2 : 64;
+-			*target = xrealloc(*target, targets_alloc * sizeof(**target));
+-			*write_ref = xrealloc(*write_ref, targets_alloc * sizeof(**write_ref));
++			REALLOCARRAY(*target, targets_alloc);
++			REALLOCARRAY(*write_ref, targets_alloc);
+ 		}
+ 		(*target)[targets] = xstrdup(tg_one);
+ 		(*write_ref)[targets] = rf_one ? xstrdup(rf_one) : NULL;
 -- 
 2.1.0
