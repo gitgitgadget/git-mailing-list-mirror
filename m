@@ -1,168 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] describe: support the syntax "--abbrev=+"
-Date: Sun, 14 Sep 2014 04:56:38 -0400
-Message-ID: <CAPig+cQJS+fFTLPXBa1a0-TH-FSAJaHX4w49CsxnjRKgsAsiSw@mail.gmail.com>
-References: <1410532004-22769-1-git-send-email-jonh.wendell@gmail.com>
-	<1410532004-22769-2-git-send-email-jonh.wendell@gmail.com>
-	<20140914081847.GA20526@peff.net>
+From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster-Mmb7MZpHnFY@public.gmane.org>
+Subject: Re: (local ?) BOINC repo broken again -or- how to act
+ on the CR/LF changes made upstream
+Date: Sun, 14 Sep 2014 11:04:29 +0200
+Message-ID: <54155A1D.8040504@gmx.de>
+References: <541336D6.3050803@gmx.de>
+	<1BAFA9B4D550C347962F76F2E03B3BBB22C5F9@romw-mail.romwnet.org>
+	<54155708.7090508@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonh Wendell <jonh.wendell@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 14 10:56:46 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XT5bw-0000Mi-Qj
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 10:56:45 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752504AbaINI4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Sep 2014 04:56:41 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:35215 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752490AbaINI4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Sep 2014 04:56:39 -0400
-Received: by mail-yk0-f177.google.com with SMTP id 79so1419680ykr.22
-        for <git@vger.kernel.org>; Sun, 14 Sep 2014 01:56:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=N76ruEzTj4CQecHVI6OTmNjNy4Iodr7PAw88YNLClhA=;
-        b=bDnhW4dsLZEPukKkm+o50Vecs0jGh3qQthCY5JgGoADhLyUKwnuKvp3+CVbvV88wcB
-         bgyjxIaas1fH4rUClMKK4SShTinf9D//HjXGVQXiVK8445y0JabJNYOW5LWtP6bh2rz9
-         kdizm0tKGHen0/i62a+ui/BqcKoBnn/S7nHntY3/RpKGV9hm2IzDRCcxUC+iKbO5gZhW
-         MjSJVHOVy/h9LqJICQuruvFtqL6DTsx418xJhujYDBlYwCiaOOPYPjAS/2xV64CCyd0J
-         tIqJWlfJxS2i4ImrvDo2FhbPdFwuBz/HvDgVNxwoVTaVSw5RilKuTUgig0YQ1IiFOmE5
-         1S4w==
-X-Received: by 10.236.220.136 with SMTP id o8mr24765088yhp.29.1410684998980;
- Sun, 14 Sep 2014 01:56:38 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Sun, 14 Sep 2014 01:56:38 -0700 (PDT)
-In-Reply-To: <20140914081847.GA20526@peff.net>
-X-Google-Sender-Auth: G0MfqnCHwfjxdPLVOBs10gkM3qY
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257011>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi-S0/GAf8tV78@public.gmane.org>,
+	Rom Walton <romw-egxtZiWXYP1AfugRpC6u6w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org Sun Sep 14 11:04:40 2014
+Return-path: <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Envelope-to: gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
+Received: from mailapps1.ssl.berkeley.edu ([128.32.13.237])
+	by plane.gmane.org with smtp (Exim 4.69)
+	(envelope-from <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>)
+	id 1XT5jb-00027m-SZ
+	for gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Sun, 14 Sep 2014 11:04:40 +0200
+Received: from mailapps1.ssl.berkeley.edu (localhost [127.0.0.1])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id C2A032FEAD0;
+	Sun, 14 Sep 2014 02:04:37 -0700 (PDT)
+X-Original-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Delivered-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Received: from mail2.ssl.berkeley.edu (mail2.ssl.berkeley.edu [128.32.13.252])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 06C9F2FE953
+	for <boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org>;
+	Sun, 14 Sep 2014 02:04:36 -0700 (PDT)
+Received: from mailwall2.ssl.berkeley.edu (mailwall2.ssl.berkeley.edu
+	[128.32.147.8])
+	by mail2.ssl.berkeley.edu (8.13.8/8.13.8) with ESMTP id s8E94ZW3000354
+	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Sun, 14 Sep 2014 02:04:35 -0700
+X-ASG-Debug-ID: 1410685474-04b39714612bfad0001-LQ66t1
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21]) by
+	mailwall2.ssl.berkeley.edu with ESMTP id y0QdcvC0L7OLAtH9 for
+	<boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Sun, 14 Sep 2014 02:04:35 -0700 (PDT)
+X-Barracuda-Envelope-From: toralf.foerster-Mmb7MZpHnFY@public.gmane.org
+X-Barracuda-Apparent-Source-IP: 212.227.17.21
+Received: from [192.168.178.21] ([78.54.169.101]) by mail.gmx.com (mrgmx103)
+	with ESMTPSA (Nemesis) id 0Lkfii-1Y1Kce3wiC-00aYyk;
+	Sun, 14 Sep 2014 11:04:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686;
+	rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+X-ASG-Orig-Subj: Re: [boinc_dev] (local ?) BOINC repo broken again -or- how to
+	act on the CR/LF changes made upstream
+In-Reply-To: <54155708.7090508-S0/GAf8tV78@public.gmane.org>
+X-Provags-ID: V03:K0:LYwpCfWmSv0eZ1dNqQjs+IN0ztfyYHq+xAw68Tr3qT2bzk6oRc8
+	WUOIE6IODf+aYS3CxCZMAWV1318DhKbZ8vBtlGv3eIssx3eWy8jyJJeFfAuNtcJ6VYya5Yg
+	WZbnff2LRzuSqbidvUr/faXwnYoPS8C8V2jShdekPtbJDFMGzvHU/i4UcMeHpQmyHpDiEpy
+	Ycs2rp8nHrncLtsW237vw==
+X-UI-Out-Filterresults: notjunk:1;
+X-Barracuda-Connect: mout.gmx.net[212.227.17.21]
+X-Barracuda-Start-Time: 1410685474
+X-Barracuda-URL: http://mailwall2.ssl.berkeley.edu:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at ssl.berkeley.edu
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score-Disabled: per user
+X-BeenThere: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: BOINC development <boinc_dev.ssl.berkeley.edu>
+List-Unsubscribe: <http://lists.ssl.berkeley.edu/mailman/options/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.ssl.berkeley.edu/pipermail/boinc_dev/>
+List-Post: <mailto:boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+List-Help: <mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.ssl.berkeley.edu/mailman/listinfo/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=subscribe>
+Errors-To: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+Sender: "boinc_dev" <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257012>
 
-On Sun, Sep 14, 2014 at 4:18 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Sep 12, 2014 at 11:26:43AM -0300, Jonh Wendell wrote:
->
->> It will print just a "+" sign appended to the found tag, if there
->> are commits between the tag and the supplied commit.
->>
->> It's useful when you just need a simple output to know if the
->> supplied commit is an exact match or not.
->
-> Seems like a reasonable extension of the "--abbrev=0" behavior.
-
-My reaction is opposite: Such overloading of --abbrev= feels abusive,
-non-obvious, and is inconsistent with --abbrev accepted by other
-commands.
-
-It's also potentially ambiguous. If the tag name ends with a '+' and
-there are no commits atop it, then the client can be fooled into
-thinking there are. Being able to configure the suffix, rather than
-hardcoding '+', might help, but seems ugly.
-
-The justification in the cover letter is that it provides a way to
-check if there are commits atop the latest tag. Within a script, it
-might be sufficient merely to compare the output of 'git describe' and
-'git describe --abbrev=0'. If they differ, then there are commits atop
-the latest tag.
-
-Thus, this feature seems somewhat misguided, but perhaps I'm missing
-something obvious.
-
->>  builtin/describe.c | 26 +++++++++++++++++++++-----
->>  1 file changed, 21 insertions(+), 5 deletions(-)
->
-> You can probably just squash the related documentation in with this
-> patch. Also, maybe some tests in t6120? It doesn't look like we test
-> --abbrev=0, either; if you are feeling especially charitable, it might
-> be good to add some tests for it, too.
->
->> @@ -378,8 +379,12 @@ static void describe(const char *arg, int last_one)
->>       }
->>
->>       display_name(all_matches[0].name);
->> -     if (abbrev)
->> -             show_suffix(all_matches[0].depth, cmit->object.sha1);
->> +     if (abbrev) {
->> +             if (simple_abbrev)
->> +                     printf("+");
->> +             else
->> +                     show_suffix(all_matches[0].depth, cmit->object.sha1);
->> +     }
->
-> This covers the case when we do have a commit to show. The exact-match
-> case is handled elsewhere, and I wondered what would happen if you
-> passed "--long", but:
->
->> +     if (longformat && (abbrev == 0 || simple_abbrev))
->> +             die(_("--long is incompatible with --abbrev=+ or --abbrev=0"));
->
-> You cover that here. Good.
->
->> +static int parse_opt_abbrev_for_describe_cb(const struct option *opt, const char *arg, int unset)
->> +{
->> +     if (arg && !strncmp(arg, "+", 1)) {
->
-> Why strncmp here? If I pass "--abbrev=+10", shouldn't that be an error?
->
->> +             simple_abbrev = 1;
->> +             return 0;
->> +     }
->> +
->> +     return parse_opt_abbrev_cb(opt, arg, unset);
->> +}
->
-> What happens if you pass the option multiple times? I'd expect later
-> ones to override earlier ones. For "--abbrev=0 --abbrev=10" this just
-> works, because they both store the value in the abbrev variable. But you
-> store simple_abbrev as a separate variable.
->
-> What do these do?
->
->   1. --abbrev=10 --abbrev=+
->
->   2. --abbrev=+ --abbrev=10
->
->   3. --abbrev=0 --abbrev=+
->
-> The first one will respect simple_abbrev, since it avoids calling
-> show_suffix at all. Good. The second one will do the same. We probably
-> need to reset simple_abbrev to 0 whenever we see another --abbrev. The
-> third one will not respect simple_abbrev, because we never enter the "if
-> (abbrev)" conditional. We probably need to reset "abbrev" to something
-> non-zero when we set simple_abbrev.
->
-> I.e.:
->
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index 3a5c052..532161e 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -397,9 +397,11 @@ static int parse_opt_abbrev_for_describe_cb(const struct option *opt, const char
->  {
->         if (arg && !strncmp(arg, "+", 1)) {
->                 simple_abbrev = 1;
-> +               abbrev = 1; /* doesn't matter as long as it is non-zero */
->                 return 0;
->         }
->
-> +       simple_abbrev = 0;
->         return parse_opt_abbrev_cb(opt, arg, unset);
->  }
->
->
-> Another alternative would be to stuff the simple_abbrev flag into
-> an unused value of "abbrev" (say, -2), but that is probably a little
-> less obvious than just resetting them together as above.
->
-> -Peff
+T24gMDkvMTQvMjAxNCAxMDo1MSBBTSwgVG9yc3RlbiBCw7ZnZXJzaGF1c2VuIHdyb3RlOgo+IEl0
+IG1heSBiZSB0aGF0IHRoZXJlIGlzIGEgYnVnIGluIHRoZSB0b29scyB5b3UgYXJlIHVzaW5nLgpJ
+IHVzZSBnaXQgMi4xLjAKCi0tIApUb3JhbGYKcGdwIGtleTogMDA3NiBFOTRFCgpfX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpib2luY19kZXYgbWFpbGluZyBs
+aXN0CmJvaW5jX2RldkBzc2wuYmVya2VsZXkuZWR1Cmh0dHA6Ly9saXN0cy5zc2wuYmVya2VsZXku
+ZWR1L21haWxtYW4vbGlzdGluZm8vYm9pbmNfZGV2ClRvIHVuc3Vic2NyaWJlLCB2aXNpdCB0aGUg
+YWJvdmUgVVJMIGFuZAoobmVhciBib3R0b20gb2YgcGFnZSkgZW50ZXIgeW91ciBlbWFpbCBhZGRy
+ZXNzLg==
