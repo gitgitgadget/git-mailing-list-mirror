@@ -1,149 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] credential-cache: close stderr in daemon process
-Date: Sun, 14 Sep 2014 03:35:06 -0400
-Message-ID: <20140914073506.GA19667@peff.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] help: ensure that common-cmds.h is only included by
+ help.c
+Date: Sun, 14 Sep 2014 00:35:13 -0700
+Message-ID: <20140914073511.GA39361@gmail.com>
+References: <1410657073-3089-1-git-send-email-davvid@gmail.com>
+ <5414f6b2.XwoOyI03zlXiZ3ds%perryh@pluto.rain.com>
+ <CAPc5daXDCAi3eP3YmXfcO+9ncN8=b6tCGUFUxwKE=MuRBuXvEg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 14 09:35:18 2014
+Cc: Perry Hutchison <perryh@pluto.rain.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 14 09:35:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XT4L6-0008Hk-6M
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 09:35:16 +0200
+	id 1XT4LK-0008Km-6F
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Sep 2014 09:35:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533AbaINHfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Sep 2014 03:35:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47945 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752443AbaINHfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Sep 2014 03:35:09 -0400
-Received: (qmail 5000 invoked by uid 102); 14 Sep 2014 07:35:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 14 Sep 2014 02:35:09 -0500
-Received: (qmail 13528 invoked by uid 107); 14 Sep 2014 07:35:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 14 Sep 2014 03:35:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Sep 2014 03:35:06 -0400
+	id S1752489AbaINHf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Sep 2014 03:35:26 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:39534 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752379AbaINHf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Sep 2014 03:35:26 -0400
+Received: by mail-pd0-f180.google.com with SMTP id ft15so4187854pdb.39
+        for <git@vger.kernel.org>; Sun, 14 Sep 2014 00:35:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=zuODzYIdtU2PbY2/T5XXLfafnzyt2yiSOObCqROnbzk=;
+        b=ph97RsbNtzX8NODNW1MC6jE93k9Naxo63SmIEQHvac8AoDFhVCvZ0h+wMd7Lm+v57G
+         CZEP0r/SvZC47CZZx0If+0SBA2jDWMYii/pcH5mww4Sf7G5xtuvyAPoKcpwvr5DjTWwP
+         6dwGqfB1HaafjMAxJkAJggKjCE8BeFNvTkp8Ere5AjnYYHtiBo01K1kc09VzWO5RwtdP
+         Cx2CA15SVW0cLXpJFiH/nEufdcnwUNnuNl3Hr9rluWtx7YTDa551h1mN0NbGP1MtOJfK
+         9DYncbJTUkRBeXmd1Fb/5fecoDd2ztH/YpTQI5q8vFLxnxL0+gZlFoi9d6rFjN4YGqUn
+         DxUQ==
+X-Received: by 10.68.131.163 with SMTP id on3mr29144738pbb.38.1410680125231;
+        Sun, 14 Sep 2014 00:35:25 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id p4sm8201953pdp.27.2014.09.14.00.35.22
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 14 Sep 2014 00:35:24 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <CAPc5daXDCAi3eP3YmXfcO+9ncN8=b6tCGUFUxwKE=MuRBuXvEg@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/256998>
 
-If the stderr of "git credential-cache" is redirected to a
-pipe, the reader on the other end of a pipe may be surprised
-that the pipe remains open long after the process exits.
-This happens because we may auto-spawn a daemon which is
-long-lived, and which keeps stderr open.
+On Sat, Sep 13, 2014 at 10:23:03PM -0700, Junio C Hamano wrote:
+> On Sat, Sep 13, 2014 at 7:00 PM, Perry Hutchison <perryh@pluto.rain.com> wrote:
+> > David Aguilar <davvid@gmail.com> wrote:
+> >> Add a #ifndef guard to ensure that common-cmds.h can only
+> >> be included by help.c.
+> >
+> > This strikes me as a very peculiar, and sub-optimal, way of
+> > achieving the purpose.  If these definitions are intended to
+> > be private to help.c, why not put them there and eliminate
+> > common-cmds.h entirely?
+> 
+> Have you studied where common-cmds.h comes from?
+> After you have done so, would you make the same suggestion?
+> 
+> Having said that, I also do not think this is such a good idea.
+> Wouldn't the new "check" script added in this series a better
+> place? For example, it may want to make sure that git-compat-util.h
+> (or a couple of its equivalents) is the first file included in any mainline
+> C source file, and such an inclusion is done unconditionally.
+> 
+> Which would mean that the checker would scan *.c files with grep
+> or a Perl script. It would be trivial to enforce "nobody other than these
+> small selected C files is allowed to include common-cmds.h" rule.
 
-We can solve this by redirecting the daemon's stderr to
-/dev/null once we are ready to go into our event loop. We
-would not want to do so before then, because we may want to
-report errors about the setup (e.g., failure to establish
-the listening socket).
+Good idea. I implemented this check and the tweaks to make it
+pass are small and focused. I'll send these patches shortly.
 
-This does mean that we will not report errors we encounter
-for specific clients. That's acceptable, as such errors
-should be rare (e.g., clients sending buggy requests).
-However, we also provide an escape hatch: if you want to see
-these later messages, you can provide the "--debug" option
-to keep stderr open.
+> Regarding the other patch that butchers many *.h files, I am not
+> still very enthused. Including cache.h at the beginning of branch.h,
+> for example, would mean git-compat-util.h ends up included at the
+> beginning of branch.h.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-credential-cache--daemon.txt |  6 +++++-
- credential-cache--daemon.c                     | 23 +++++++++++++++++++----
- 2 files changed, 24 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-credential-cache--daemon.txt b/Documentation/git-credential-cache--daemon.txt
-index d15db42..7051c6b 100644
---- a/Documentation/git-credential-cache--daemon.txt
-+++ b/Documentation/git-credential-cache--daemon.txt
-@@ -8,7 +8,7 @@ git-credential-cache--daemon - Temporarily store user credentials in memory
- SYNOPSIS
- --------
- [verse]
--git credential-cache--daemon <socket>
-+git credential-cache--daemon [--debug] <socket>
- 
- DESCRIPTION
- -----------
-@@ -21,6 +21,10 @@ for `git-credential-cache` clients. Clients may store and retrieve
- credentials. Each credential is held for a timeout specified by the
- client; once no credentials are held, the daemon exits.
- 
-+If the `--debug` option is specified, the daemon does not close its
-+stderr stream, and may output extra diagnostics to it even after it has
-+begun listening for clients.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
-index 3b370ca..c07a67c 100644
---- a/credential-cache--daemon.c
-+++ b/credential-cache--daemon.c
-@@ -2,6 +2,7 @@
- #include "credential.h"
- #include "unix-socket.h"
- #include "sigchain.h"
-+#include "parse-options.h"
- 
- static const char *socket_path;
- 
-@@ -201,7 +202,7 @@ static int serve_cache_loop(int fd)
- 	return 1;
- }
- 
--static void serve_cache(const char *socket_path)
-+static void serve_cache(const char *socket_path, int debug)
- {
- 	int fd;
- 
-@@ -211,6 +212,8 @@ static void serve_cache(const char *socket_path)
- 
- 	printf("ok\n");
- 	fclose(stdout);
-+	if (!debug)
-+		freopen("/dev/null", "w", stderr);
- 
- 	while (serve_cache_loop(fd))
- 		; /* nothing */
-@@ -252,16 +255,28 @@ static void check_socket_directory(const char *path)
- 
- int main(int argc, const char **argv)
- {
--	socket_path = argv[1];
-+	static const char *usage[] = {
-+		"git-credential-cache--daemon [opts] <socket_path>",
-+		NULL
-+	};
-+	int debug = 0;
-+	const struct option options[] = {
-+		OPT_BOOL(0, "debug", &debug,
-+			 N_("print debugging messages to stderr")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, NULL, options, usage, 0);
-+	socket_path = argv[0];
- 
- 	if (!socket_path)
--		die("usage: git-credential-cache--daemon <socket_path>");
-+		usage_with_options(usage, options);
- 	check_socket_directory(socket_path);
- 
- 	atexit(cleanup_socket);
- 	sigchain_push_common(cleanup_socket_on_signal);
- 
--	serve_cache(socket_path);
-+	serve_cache(socket_path, debug);
- 
- 	return 0;
- }
+I can look into Jonathan's forward-decl approach later too.
+That'll probably result in less of a butchering.
 -- 
-2.1.0.373.g91ca799
+David
