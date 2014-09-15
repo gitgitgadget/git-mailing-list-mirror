@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v14 07/11] trailer: add interpret-trailers command
-Date: Mon, 15 Sep 2014 07:31:37 +0200
-Message-ID: <20140915053142.26573.41071.chriscool@tuxfamily.org>
-References: <20140915052330.26573.34823.chriscool@tuxfamily.org>
+Subject: [PATCH v14 00/11] Add interpret-trailers builtin
+Date: Mon, 15 Sep 2014 07:31:30 +0200
+Message-ID: <20140915052330.26573.34823.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
 	Thomas Rast <tr@thomasrast.ch>,
@@ -14,148 +13,140 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Marc Branchaud <marcnarc@xiplink.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 07:46:19 2014
+X-From: git-owner@vger.kernel.org Mon Sep 15 07:46:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTP79-0001MG-Tl
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 07:46:16 +0200
+	id 1XTP7E-0001NZ-UJ
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 07:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751553AbaIOFqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2014 01:46:05 -0400
+	id S1751750AbaIOFqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2014 01:46:14 -0400
 Received: from delay-5y.bbox.fr ([194.158.98.76]:41109 "EHLO delay-5y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751409AbaIOFqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 01:46:03 -0400
-Received: from mail-1y.bbox.fr (bt8sssom.cs.dolmen.bouyguestelecom.fr [172.24.208.144])
-	by delay-5y.bbox.fr (Postfix) with ESMTP id DE01662728
-	for <git@vger.kernel.org>; Mon, 15 Sep 2014 07:36:29 +0200 (CEST)
+	id S1751297AbaIOFqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2014 01:46:05 -0400
+Received: from mail-3y.bbox.fr (bt8sssoh.cs.dolmen.bouyguestelecom.fr [172.24.208.141])
+	by delay-5y.bbox.fr (Postfix) with ESMTP id 35C096271B
+	for <git@vger.kernel.org>; Mon, 15 Sep 2014 07:36:25 +0200 (CEST)
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 319493A;
-	Mon, 15 Sep 2014 07:34:08 +0200 (CEST)
-X-git-sha1: 5f1db0358a76f5f7838aebd82fa43747402352ca 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 1D0DB7D;
+	Mon, 15 Sep 2014 07:34:01 +0200 (CEST)
 X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140915052330.26573.34823.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257037>
 
-This patch adds the "git interpret-trailers" command.
-This command uses the previously added process_trailers()
-function in trailer.c.
+This patch series implements a new command:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- .gitignore                   |  1 +
- Makefile                     |  1 +
- builtin.h                    |  1 +
- builtin/interpret-trailers.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- git.c                        |  1 +
- 5 files changed, 48 insertions(+)
+        git interpret-trailers
+
+and an infrastructure to process trailers that can be reused,
+for example in "commit.c".
+
+1) Rationale
+
+This command should help with RFC 822 style headers, called
+"trailers", that are found at the end of commit messages.
+
+(Note that these headers do not follow and are not intended to
+follow many rules that are in RFC 822. For example they do not
+follow the line breaking rules, the encoding rules and probably
+many other rules.)
+
+For a long time, these trailers have become a de facto standard
+way to add helpful information into commit messages.
+
+Until now git commit has only supported the well known
+"Signed-off-by: " trailer, that is used by many projects like
+the Linux kernel and Git.
+
+It is better to keep builtin/commit.c uncontaminated by any more
+hard-wired logic, like what we have for the signed-off-by line.  Any
+new things can and should be doable in hooks, and this filter would
+help writing these hooks.
+
+And that is why the design goal of the filter is to make it at least
+as powerful as the built-in logic we have for signed-off-by lines;
+that would allow us to later eject the hard-wired logic for
+signed-off-by line from the main codepath, if/when we wanted to.
+
+Alternatively, we could build a library-ish API around this filter
+code and replace the hard-wired logic for signed-off-by line with a
+call into that API, if/when we wanted to, but that requires (in
+addition to the "at least as powerful as the built-in logic") that
+the implementation of this stand-alone filter can be cleanly made
+into a reusable library, so that is a bit higher bar to cross than
+"everything can be doable with hooks" alternative.
+
+2) Current state
+
+Currently the usage string of this command is:
+
+git interpret-trailers [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+
+The following features are implemented:
+
+        - the result is printed on stdout
+        - the --trailer arguments are interpreted
+        - messages read from <file>... or stdin are interpreted
+        - the "trailer.separators" option in the config is interpreted
+        - the "trailer.where" option is interpreted
+        - the "trailer.ifexists" option is interpreted
+        - the "trailer.ifmissing" option is interpreted
+        - the "trailer.<token>.key" options are interpreted
+        - the "trailer.<token>.where" options are interpreted
+        - the "trailer.<token>.ifexist" options are interpreted
+        - the "trailer.<token>.ifmissing" options are interpreted
+        - the "trailer.<token>.command" config works
+        - $ARG can be used in commands
+        - messages can contain a patch
+        - lines in messages starting with a comment char are ignored
+        - there are 49 tests
+        - there is some documentation
+        - there are examples in the documentation
+
+3) Changes since version 13, thanks to Marc and Junio
+
+* improved documentation (patch 11/11)
+* rework the way trailer.<token>.command are handled, so
+  that it is simpler to understand and closer to what is
+  described in the documentation (patches 9/11, 10/11
+  and 11/11) 
+
+Christian Couder (11):
+  trailer: add data structures and basic functions
+  trailer: process trailers from input message and arguments
+  trailer: read and process config information
+  trailer: process command line trailer arguments
+  trailer: parse trailers from file or stdin
+  trailer: put all the processing together and print
+  trailer: add interpret-trailers command
+  trailer: add tests for "git interpret-trailers"
+  trailer: execute command from 'trailer.<name>.command'
+  trailer: add tests for commands in config file
+  Documentation: add documentation for 'git interpret-trailers'
+
+ .gitignore                               |   1 +
+ Documentation/git-interpret-trailers.txt | 313 ++++++++++++
+ Makefile                                 |   2 +
+ builtin.h                                |   1 +
+ builtin/interpret-trailers.c             |  44 ++
+ command-list.txt                         |   1 +
+ git.c                                    |   1 +
+ t/t7513-interpret-trailers.sh            | 851 +++++++++++++++++++++++++++++++
+ trailer.c                                | 847 ++++++++++++++++++++++++++++++
+ trailer.h                                |   6 +
+ 10 files changed, 2067 insertions(+)
+ create mode 100644 Documentation/git-interpret-trailers.txt
  create mode 100644 builtin/interpret-trailers.c
+ create mode 100755 t/t7513-interpret-trailers.sh
+ create mode 100644 trailer.c
+ create mode 100644 trailer.h
 
-diff --git a/.gitignore b/.gitignore
-index cf0d191..85593de 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -74,6 +74,7 @@
- /git-index-pack
- /git-init
- /git-init-db
-+/git-interpret-trailers
- /git-instaweb
- /git-log
- /git-ls-files
-diff --git a/Makefile b/Makefile
-index ef82972..0b06ae0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -953,6 +953,7 @@ BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
-+BUILTIN_OBJS += builtin/interpret-trailers.o
- BUILTIN_OBJS += builtin/log.o
- BUILTIN_OBJS += builtin/ls-files.o
- BUILTIN_OBJS += builtin/ls-remote.o
-diff --git a/builtin.h b/builtin.h
-index 5d91f31..b87df70 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -73,6 +73,7 @@ extern int cmd_hash_object(int argc, const char **argv, const char *prefix);
- extern int cmd_help(int argc, const char **argv, const char *prefix);
- extern int cmd_index_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_init_db(int argc, const char **argv, const char *prefix);
-+extern int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
- extern int cmd_log(int argc, const char **argv, const char *prefix);
- extern int cmd_log_reflog(int argc, const char **argv, const char *prefix);
- extern int cmd_ls_files(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-new file mode 100644
-index 0000000..46838d2
---- /dev/null
-+++ b/builtin/interpret-trailers.c
-@@ -0,0 +1,44 @@
-+/*
-+ * Builtin "git interpret-trailers"
-+ *
-+ * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-+ *
-+ */
-+
-+#include "cache.h"
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "string-list.h"
-+#include "trailer.h"
-+
-+static const char * const git_interpret_trailers_usage[] = {
-+	N_("git interpret-trailers [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]"),
-+	NULL
-+};
-+
-+int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
-+{
-+	int trim_empty = 0;
-+	struct string_list trailers = STRING_LIST_INIT_DUP;
-+
-+	struct option options[] = {
-+		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
-+		OPT_STRING_LIST(0, "trailer", &trailers, N_("trailer"),
-+				N_("trailer(s) to add")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_interpret_trailers_usage, 0);
-+
-+	if (argc) {
-+		int i;
-+		for (i = 0; i < argc; i++)
-+			process_trailers(argv[i], trim_empty, &trailers);
-+	} else
-+		process_trailers(NULL, trim_empty, &trailers);
-+
-+	string_list_clear(&trailers, 0);
-+
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index 5ebb32f..e327a90 100644
---- a/git.c
-+++ b/git.c
-@@ -417,6 +417,7 @@ static struct cmd_struct commands[] = {
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
- 	{ "init", cmd_init_db, NO_SETUP },
- 	{ "init-db", cmd_init_db, NO_SETUP },
-+	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP },
- 	{ "log", cmd_log, RUN_SETUP },
- 	{ "ls-files", cmd_ls_files, RUN_SETUP },
- 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
 -- 
 2.0.3.960.g41c6e4c
