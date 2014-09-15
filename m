@@ -1,88 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: fix some typos in the preamble
-Date: Mon, 15 Sep 2014 11:58:14 -0700
-Message-ID: <xmqqd2aw7ltl.fsf@gitster.dls.corp.google.com>
-References: <CAD+ArX07pvmFKaCzy+dTcbga56U=fCgpPN-T3+QSudfFSVr=bQ@mail.gmail.com>
+Subject: Re: [PATCH] compat-util: add _DEFAULT_SOURCE define
+Date: Mon, 15 Sep 2014 12:02:33 -0700
+Message-ID: <xmqq61go7lme.fsf@gitster.dls.corp.google.com>
+References: <1410672815-2555-1-git-send-email-sergey.senozhatsky@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ian Liu Rodrigues <ian.liu88@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 20:58:25 2014
+To: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 21:02:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTbTh-0005Nh-8m
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 20:58:21 +0200
+	id 1XTbXt-00074m-2E
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 21:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbaIOS6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2014 14:58:17 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50903 "EHLO smtp.pobox.com"
+	id S1754204AbaIOTCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2014 15:02:37 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54268 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753478AbaIOS6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 14:58:17 -0400
+	id S1754108AbaIOTCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2014 15:02:36 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 70CFC39D1C;
-	Mon, 15 Sep 2014 14:58:16 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F25FE39EB7;
+	Mon, 15 Sep 2014 15:02:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=net6/hT3v9IHxysZGFV/3gGjLYg=; b=rqxWm4
-	lMMjDSEXd7Voszq0tTSCSYRblQONGT58CC2BMZEEuqL78u2RAIwWMEsKgf2zqpyK
-	kxTvHYEnQ9z/r60xbQU293cz2g46xS3rVeCze0GUVdkijhqxXpLl1I2Vt4Yp41zH
-	so5/GBMpo5JiLSEooOgwOqqpo2DlfjKMQ4CKY=
+	:content-type; s=sasl; bh=JJvNosvpBNqUQc6VWEr2ObR4xto=; b=HR8M62
+	yokUCznTYY2Hr9VLArolOykqttVLyMsdVDWV62Ty2FfRncbH53tJKSGawxx8IGUA
+	35XYtbTu+wMdv8Q3Rhc8WHmVfTPHnQkUGmG+Qu05yzxvGTnVrh0+5n+rq/ZUHtdK
+	EOufY3Gha2j6ogKBtsKn26rhi6u4PB09ZjTU8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KTn+06Uk4rLbMfismA9XpTCLI5Es3Cyj
-	dGKWaWQ2FWkO4lVtvYoYvNKuN1PhdJNkFqarQL5wSdPAbNuycBsiY2H16IJA1qpS
-	enrY8ShKZnQlhJjFlv7A0cCUf6LXi5t3KAmC2GzEx7IL63G0qPmsIA4P6kJf0FzM
-	fRkYX2MxyYw=
+	:content-type; q=dns; s=sasl; b=qfoNk0vrJEvS/6rJ1dHUI3foFv8Zdg0C
+	oyDGeGDMjyrM9fJGEQw+FujRatgzSiZITnkmkaMEB/P53A00+54Ht6E6JKXE+6Wm
+	eBKUWEbple0oE2TqwETJXjNZgQt8cbQ6SFNUvt3foIv1HWKU0Yyyiug/SpcpQ6Bp
+	rQl4DGgSW54=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 652E239D1B;
-	Mon, 15 Sep 2014 14:58:16 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E91A339EB5;
+	Mon, 15 Sep 2014 15:02:35 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DFD0539D1A;
-	Mon, 15 Sep 2014 14:58:15 -0400 (EDT)
-In-Reply-To: <CAD+ArX07pvmFKaCzy+dTcbga56U=fCgpPN-T3+QSudfFSVr=bQ@mail.gmail.com>
-	(Ian Liu Rodrigues's message of "Sat, 13 Sep 2014 11:20:22 -0300")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 54BDA39EB2;
+	Mon, 15 Sep 2014 15:02:35 -0400 (EDT)
+In-Reply-To: <1410672815-2555-1-git-send-email-sergey.senozhatsky@gmail.com>
+	(Sergey Senozhatsky's message of "Sun, 14 Sep 2014 14:33:35 +0900")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3FEA67BE-3D0A-11E4-AD36-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: DA8C6BA0-3D0A-11E4-9F8B-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257068>
 
-Ian Liu Rodrigues <ian.liu88@gmail.com> writes:
+Sergey Senozhatsky <sergey.senozhatsky@gmail.com> writes:
 
-> Signed-off-by: Ian Liu Rodrigues <ian.liu88@gmail.com>
-> ---
->  Makefile | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> glibc has deprecated the use of _BSD_SOURCE define
 >
-> diff --git a/Makefile b/Makefile
-> index 9f984a9..496af55 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -14,11 +14,11 @@ all::
->  # Define INLINE to a suitable substitute (such as '__inline' or '') if git
->  # fails to compile with errors about undefined inline functions or similar.
->  #
-> -# Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
-> +# Define SNPRINTF_RETURNS_BOGUS if you are on a system which snprintf()
->  # or vsnprintf() return -1 instead of number of characters which would
+>   warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+>
+> To make it easier to maintain a cross platform source code, that
+> warning can be suppressed by _DEFAULT_SOURCE.
+>
+> Define both _BSD_SOURCE, _DEFAULT_SOURCE and cleanup the build.
 
-The change is correct but I wonder if "which snprintf()" should be
-"whose snprintf()".
+I can see you defined DEFAULT_SOURCE, but where did you do "cleanup
+the build"?  Or did you mean "define both (in order) to clean up"?
 
->  # have been written to the final string if enough space had been available.
->  #
-> -# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
-> +# Define FREAD_READS_DIRECTORIES if you are on a system which succeeds
->  # when attempting to read from an fopen'ed directory.
->  #
->  # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+Just making sure we are not only seeing a patch half eaten by mail
+transport somewhere.
 
-Thanks.
+>
+> Signed-off-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+> ---
+>  git-compat-util.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 4e7e3f8..08a9ee2 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -82,6 +82,7 @@
+>  #define _ALL_SOURCE 1
+>  #define _GNU_SOURCE 1
+>  #define _BSD_SOURCE 1
+> +#define _DEFAULT_SOURCE 1
+>  #define _NETBSD_SOURCE 1
+>  #define _SGI_SOURCE 1
