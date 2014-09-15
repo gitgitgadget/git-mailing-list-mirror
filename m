@@ -1,93 +1,72 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git merge --abort deletes unstaged files
-Date: Tue, 16 Sep 2014 00:28:33 +0200
-Message-ID: <87egvcldri.fsf@igel.home>
-References: <04af01cfd0fb$d077e200$7167a600$@webkr.de>
-	<87k354x0qt.fsf@igel.home>
-	<xmqq61go65zu.fsf@gitster.dls.corp.google.com>
-	<87iokolfc9.fsf@igel.home>
-	<CAPc5daW5XejS7JFmQagOwgqSxS=subdJyCbM3JL2fa=4RmYsEg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/3] t1503: test rev-parse --verify --quiet with deleted reflogs
+Date: Mon, 15 Sep 2014 15:32:37 -0700
+Message-ID: <xmqqk3544ire.fsf@gitster.dls.corp.google.com>
+References: <1410808059-1459-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?QW5kcsOpIEjDpG5zZWw=?= <andre@webkr.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 00:28:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Fabian Ruch <bafain@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 16 00:32:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTelF-0007oS-A9
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 00:28:41 +0200
+	id 1XTepC-0000u2-J6
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 00:32:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758481AbaIOW2i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2014 18:28:38 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:59207 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753874AbaIOW2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 18:28:36 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3hxj026ZTvz3hhtV;
-	Tue, 16 Sep 2014 00:28:34 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3hxj022rqnzvh2q;
-	Tue, 16 Sep 2014 00:28:34 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id wEjaghZrns17; Tue, 16 Sep 2014 00:28:33 +0200 (CEST)
-X-Auth-Info: bDDFAOR2gJhqKJ2BohBcPdQLDff5HNevS3szExMBguSF4QjhrTZ/Z7SvVIQJBSZ5
-Received: from igel.home (host-188-174-223-9.customer.m-online.net [188.174.223.9])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Tue, 16 Sep 2014 00:28:33 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 3FE462C1D58; Tue, 16 Sep 2014 00:28:33 +0200 (CEST)
-X-Yow: I'm also against BODY-SURFING!!
-In-Reply-To: <CAPc5daW5XejS7JFmQagOwgqSxS=subdJyCbM3JL2fa=4RmYsEg@mail.gmail.com>
-	(Junio C. Hamano's message of "Mon, 15 Sep 2014 15:02:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.93 (gnu/linux)
+	id S1758922AbaIOWcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2014 18:32:42 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64929 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755058AbaIOWck (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2014 18:32:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0853C3B32C;
+	Mon, 15 Sep 2014 18:32:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=velmbFVY2CJbm/ZvY+7H8bwPkdw=; b=T+6Z8X
+	YHJGCPc3df3CyzjqpSGfPqX84cesQ7Z7YxvYL+zvGScpyeTnjZlGezb5NQI/X/om
+	YN+giPmtAx8LUXqT2pEsKGlD/eJ05VyBRzI4tfSbCtrFxu/ElTCVCdYtrYSZ2NYT
+	DA60MGzfhbw8kwUercVr5TKIVwIGaQgFCOPKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F//Lcc2VoMNl73lK1Xb7B5LcCaPtueil
+	d4IVLruOxBni7r1YCV+3BPJ1TniqFsgbSrheoIIwHlmWQbCCfBHvpoFN6H6fHYrp
+	2TtHkwQamBKWW2urT+CBwSeLRXAOMN97TQhpNpqu03ltTnY6XrzlOA0deCPN9dY0
+	AOqsXAL3K/s=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F26023B32B;
+	Mon, 15 Sep 2014 18:32:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7095C3B32A;
+	Mon, 15 Sep 2014 18:32:39 -0400 (EDT)
+In-Reply-To: <1410808059-1459-1-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Mon, 15 Sep 2014 12:07:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 332FDFC2-3D28-11E4-89BF-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257112>
 
-Junio C Hamano <gitster@pobox.com> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> On Mon, Sep 15, 2014 at 2:54 PM, Andreas Schwab <schwab@linux-m68k.or=
-g> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Andreas Schwab <schwab@linux-m68k.org> writes:
->>>
->>>> Andr=C3=A9 H=C3=A4nsel <andre@webkr.de> writes:
->>>>
->>>>> I ran git merge to merge a branch. There were some conflicted fil=
-es.
->>>>> Although they were automatically resolved by git rerere, I still =
-had to add
->>>>> them.
->>>>
->>>> If you want them to be added automatically, set rerere.autoupdate=3D=
-true.
->>>
->>> I would have to caution against doing so without thinking, though.
->>> In other words, it is OK if you are Andreas who knows what he is
->>> doing, but it is not a very good advice to give to random newbies.
->>
->> If you are used to doing "git add ." afterwards it can't be much wor=
-se.
+> Ensure that rev-parse --verify --quiet is silent when asked
+> about deleted reflog entries.
 >
-> The right response to such a user would be to teach "add -u",
+> Helped-by: Fabian Ruch <bafain@gmail.com>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+> Differences since last time:
+>
+> This goes back to the original approach of using "git update-ref"
+> plumbing instead of "git branch" when testing deleted reflogs.
 
-That's actually what I meant above.
-
-Andreas.
-
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+Is this 1/3 (the first one in the series) supposed to pass without
+no other patches, either in the series or something outside?
