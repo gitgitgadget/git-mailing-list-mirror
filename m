@@ -1,174 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 14/23] gpg-interface: move parse_signature() to where it should be
-Date: Mon, 15 Sep 2014 15:24:15 -0700
-Message-ID: <1410819864-22967-15-git-send-email-gitster@pobox.com>
+Subject: [PATCH v5 15/23] pack-protocol doc: typofix for PKT-LINE
+Date: Mon, 15 Sep 2014 15:24:16 -0700
+Message-ID: <1410819864-22967-16-git-send-email-gitster@pobox.com>
 References: <1410819864-22967-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 16 00:25:11 2014
+X-From: git-owner@vger.kernel.org Tue Sep 16 00:25:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTehn-0006RL-Qg
+	id 1XTeho-0006RL-Be
 	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 00:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758724AbaIOWY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2014 18:24:56 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56384 "EHLO smtp.pobox.com"
+	id S1758727AbaIOWY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2014 18:24:58 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54008 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755520AbaIOWYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 18:24:54 -0400
+	id S1755836AbaIOWY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2014 18:24:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2CAC83B1BF;
-	Mon, 15 Sep 2014 18:24:54 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E5E033B1C2;
+	Mon, 15 Sep 2014 18:24:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=nfT4
-	7Q68J/SvL3Xvo9ie+dTsjVc=; b=uD80isVTYOn1mOHdRZLYaTp74GfBPXBghTLH
-	TCRrsh4gaJxAM94p+LcHmYWIN1rvOCnQfO7ombEHPnZbnU83I1cDFvAPmYQhmazE
-	Padi4NJA2KcZY14WhWDWR6xK3SHTKGIohIArzwj/LGNub5HIy3C55J6JwRw1PcVb
-	TkiciTY=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=dsnb
+	a0bsBuHy3Gr98huSdHpeWU0=; b=p+4YVJtaH0TiokoV2vuemTSQ07eTzkoTjS2S
+	8MaSKajo3P7p6Ou8UaQDh2ZOkp9wQXNdtFguh724msMMRKO2aVAAZ4HjIVIfkpnc
+	b9I2s5yKz/H4ErDidzMhlxegzOihDi85gKKM6miajcm9zIUfXC9LIdOsGsMy3mph
+	ewsFGn4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Iu90Xp
-	Dxlg9Y2T0VGW6PAWE6N60N31XDW1ZP9zeV7shMe7wD+NRPvPKFuaRnML9xxi94hx
-	DmDQ2MXrG5a7GoSqdVG5u1s26g0KnP9MIEUFKGJtKvJIrAcR+jBta/zHOCTmPH0K
-	qsY1bCxyjmlTfFKKACDkvrCizMaFNqI2IzfdE=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=JovgLe
+	OUv1Y8Q8VLDVKfGm1UdoTm8wAM9ai4T2hOpwACxske2W7YJcMZ9ticqH3vWyNIfS
+	SrdDHRq5EuK+dTlsGZKWBBpAkR2NtFPxqT322KU/QNjrOFlicOV5uBziFR6gggUG
+	qydokpxvVjP+tcLlw0b+kSNACqkRSN7ucNOXM=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 243DA3B1BE;
-	Mon, 15 Sep 2014 18:24:54 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA4B53B1C1;
+	Mon, 15 Sep 2014 18:24:55 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 963593B1BD;
-	Mon, 15 Sep 2014 18:24:53 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5F78F3B1C0;
+	Mon, 15 Sep 2014 18:24:55 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-420-g23b5121
 In-Reply-To: <1410819864-22967-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1D85273C-3D27-11E4-9F4E-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 1E93ECA8-3D27-11E4-AE72-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257100>
 
-Our signed-tag objects set the standard format used by Git to store
-GPG-signed payload (i.e. the payload followed by its detached
-signature) [*1*], and it made sense to have a helper to find the
-boundary between the payload and its signature in tag.c back then.
+Everywhere else we use PKT-LINE to denote the pkt-line formatted
+data, but "shallow/deepen" messages are described with PKT_LINE().
 
-Newer code added later to parse other kinds of objects that learned
-to use the same format to store GPG-signed payload (e.g. signed
-commits), however, kept using the helper from the same location.
-
-Move it to gpg-interface; the helper is no longer about signed tag,
-but it is how our code and data interact with GPG.
-
-[Reference]
-*1* http://thread.gmane.org/gmane.linux.kernel/297998/focus=1383
+Fix them.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- gpg-interface.c | 21 +++++++++++++++++++++
- gpg-interface.h |  1 +
- tag.c           | 20 --------------------
- tag.h           |  1 -
- 4 files changed, 22 insertions(+), 21 deletions(-)
+ Documentation/technical/pack-protocol.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 3c9624c..0dd11ea 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -7,6 +7,9 @@
- static char *configured_signing_key;
- static const char *gpg_program = "gpg";
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index 18dea8d..a845d51 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -212,9 +212,9 @@ out of what the server said it could do with the first 'want' line.
+   want-list         =  first-want
+ 		       *additional-want
  
-+#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-+#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
-+
- void signature_check_clear(struct signature_check *sigc)
- {
- 	free(sigc->payload);
-@@ -57,6 +60,24 @@ void parse_gpg_output(struct signature_check *sigc)
- 	}
- }
+-  shallow-line      =  PKT_LINE("shallow" SP obj-id)
++  shallow-line      =  PKT-LINE("shallow" SP obj-id)
  
-+/*
-+ * Look at GPG signed content (e.g. a signed tag object), whose
-+ * payload is followed by a detached signature on it.  Return the
-+ * offset where the embedded detached signature begins, or the end of
-+ * the data when there is no such signature.
-+ */
-+size_t parse_signature(const char *buf, unsigned long size)
-+{
-+	char *eol;
-+	size_t len = 0;
-+	while (len < size && !starts_with(buf + len, PGP_SIGNATURE) &&
-+			!starts_with(buf + len, PGP_MESSAGE)) {
-+		eol = memchr(buf + len, '\n', size - len);
-+		len += eol ? eol - (buf + len) + 1 : size - len;
-+	}
-+	return len;
-+}
-+
- void set_signing_key(const char *key)
- {
- 	free(configured_signing_key);
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 82493b7..87a4f2e 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -20,6 +20,7 @@ struct signature_check {
- };
+-  depth-request     =  PKT_LINE("deepen" SP depth)
++  depth-request     =  PKT-LINE("deepen" SP depth)
  
- extern void signature_check_clear(struct signature_check *sigc);
-+extern size_t parse_signature(const char *buf, unsigned long size);
- extern void parse_gpg_output(struct signature_check *);
- extern int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key);
- extern int verify_signed_buffer(const char *payload, size_t payload_size, const char *signature, size_t signature_size, struct strbuf *gpg_output, struct strbuf *gpg_status);
-diff --git a/tag.c b/tag.c
-index 82d841b..5b0ac62 100644
---- a/tag.c
-+++ b/tag.c
-@@ -4,9 +4,6 @@
- #include "tree.h"
- #include "blob.h"
- 
--#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
--#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
--
- const char *tag_type = "tag";
- 
- struct object *deref_tag(struct object *o, const char *warn, int warnlen)
-@@ -143,20 +140,3 @@ int parse_tag(struct tag *item)
- 	free(data);
- 	return ret;
- }
--
--/*
-- * Look at a signed tag object, and return the offset where
-- * the embedded detached signature begins, or the end of the
-- * data when there is no such signature.
-- */
--size_t parse_signature(const char *buf, unsigned long size)
--{
--	char *eol;
--	size_t len = 0;
--	while (len < size && !starts_with(buf + len, PGP_SIGNATURE) &&
--			!starts_with(buf + len, PGP_MESSAGE)) {
--		eol = memchr(buf + len, '\n', size - len);
--		len += eol ? eol - (buf + len) + 1 : size - len;
--	}
--	return len;
--}
-diff --git a/tag.h b/tag.h
-index bc8a1e4..f4580ae 100644
---- a/tag.h
-+++ b/tag.h
-@@ -17,6 +17,5 @@ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long si
- extern int parse_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
- extern struct object *deref_tag_noverify(struct object *);
--extern size_t parse_signature(const char *buf, unsigned long size);
- 
- #endif /* TAG_H */
+   first-want        =  PKT-LINE("want" SP obj-id SP capability-list LF)
+   additional-want   =  PKT-LINE("want" SP obj-id LF)
 -- 
 2.1.0-410-gd72dacd
