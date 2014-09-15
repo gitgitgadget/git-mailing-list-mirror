@@ -1,82 +1,78 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git merge --abort deletes unstaged files
-Date: Mon, 15 Sep 2014 23:54:30 +0200
-Message-ID: <87iokolfc9.fsf@igel.home>
-References: <04af01cfd0fb$d077e200$7167a600$@webkr.de>
-	<87k354x0qt.fsf@igel.home>
-	<xmqq61go65zu.fsf@gitster.dls.corp.google.com>
+Date: Mon, 15 Sep 2014 15:02:24 -0700
+Message-ID: <CAPc5daW5XejS7JFmQagOwgqSxS=subdJyCbM3JL2fa=4RmYsEg@mail.gmail.com>
+References: <04af01cfd0fb$d077e200$7167a600$@webkr.de> <87k354x0qt.fsf@igel.home>
+ <xmqq61go65zu.fsf@gitster.dls.corp.google.com> <87iokolfc9.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?QW5kcsOpIEjDpG5zZWw=?= <andre@webkr.de>,
-	<git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 23:54:42 2014
+Cc: =?UTF-8?B?QW5kcsOpIEjDpG5zZWw=?= <andre@webkr.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Sep 16 00:02:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTeEJ-0002Yh-SG
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 23:54:40 +0200
+	id 1XTeMF-0005kK-Eo
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 00:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755106AbaIOVyf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2014 17:54:35 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:48494 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753717AbaIOVye (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 17:54:34 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3hxhDm3Ctqz3hhwv;
-	Mon, 15 Sep 2014 23:54:31 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3hxhDl3WLTzvh2p;
-	Mon, 15 Sep 2014 23:54:31 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id pSBMl8ljekTC; Mon, 15 Sep 2014 23:54:30 +0200 (CEST)
-X-Auth-Info: +b3nAKocBOSZGAgtHHWJZ/D0a0BxrA6aG228jOFhlZ+h4BFQLNh8YYieQU4mt4Il
-Received: from igel.home (host-188-174-223-9.customer.m-online.net [188.174.223.9])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Mon, 15 Sep 2014 23:54:30 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 41A952C34AC; Mon, 15 Sep 2014 23:54:30 +0200 (CEST)
-X-Yow: Why is everything made of Lycra Spandex?
-In-Reply-To: <xmqq61go65zu.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 15 Sep 2014 12:25:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.93 (gnu/linux)
+	id S1754933AbaIOWCr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2014 18:02:47 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:50960 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753831AbaIOWCq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2014 18:02:46 -0400
+Received: by mail-lb0-f171.google.com with SMTP id 10so5372555lbg.2
+        for <git@vger.kernel.org>; Mon, 15 Sep 2014 15:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=tpd2cl7ShPpouZ+PQrBm52AXrDpidkXFeLip2JwEte4=;
+        b=O9JQXP1HbkjVKagXy13xMsV2XhmvCkjo+TdjEMsQq5/wtaTqmIo4/u4hQj3vo7pUFa
+         yLgOl/yrMHhgdZAq85zjOPb0T+Sqi8MjalfRQCW7ZyIjBKtPOP3kyJsmgY3WafHjG4yk
+         5rQ5FLpEgzbSxsmsi60phrbGSVzX/LQWOaDFNIi79Tmb+pPaKM2LgZ5REQd8H32ftV6k
+         dlIUtBrGyZ5O/dgzGKfDHxUw9zIxHEOSfRHcIge7dhIsQuY+PAAIZ0ul9fLODlRCkZnF
+         S1+wFn9sgj4PVDoVY2198LBao+w3k/Q3Ul3Y26it3NjE8JwYRwiUoDHhUOi18hIO/3de
+         3LYA==
+X-Received: by 10.112.54.135 with SMTP id j7mr29460035lbp.51.1410818564843;
+ Mon, 15 Sep 2014 15:02:44 -0700 (PDT)
+Received: by 10.112.97.177 with HTTP; Mon, 15 Sep 2014 15:02:24 -0700 (PDT)
+In-Reply-To: <87iokolfc9.fsf@igel.home>
+X-Google-Sender-Auth: Y46Bp5QzA10VklB51sdU_KJZlh0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257086>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Andreas Schwab <schwab@linux-m68k.org> writes:
+On Mon, Sep 15, 2014 at 2:54 PM, Andreas Schwab <schwab@linux-m68k.org>=
+ wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> Andr=C3=A9 H=C3=A4nsel <andre@webkr.de> writes:
+>> Andreas Schwab <schwab@linux-m68k.org> writes:
 >>
->>> I ran git merge to merge a branch. There were some conflicted files=
-=2E
->>> Although they were automatically resolved by git rerere, I still ha=
-d to add
->>> them.
->>
->> If you want them to be added automatically, set rerere.autoupdate=3D=
+>>> Andr=C3=A9 H=C3=A4nsel <andre@webkr.de> writes:
+>>>
+>>>> I ran git merge to merge a branch. There were some conflicted file=
+s.
+>>>> Although they were automatically resolved by git rerere, I still h=
+ad to add
+>>>> them.
+>>>
+>>> If you want them to be added automatically, set rerere.autoupdate=3D=
 true.
+>>
+>> I would have to caution against doing so without thinking, though.
+>> In other words, it is OK if you are Andreas who knows what he is
+>> doing, but it is not a very good advice to give to random newbies.
 >
-> I would have to caution against doing so without thinking, though.
-> In other words, it is OK if you are Andreas who knows what he is
-> doing, but it is not a very good advice to give to random newbies.
+> If you are used to doing "git add ." afterwards it can't be much wors=
+e.
 
-If you are used to doing "git add ." afterwards it can't be much worse.
-
-Andreas.
-
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+The right response to such a user would be to teach "add -u", or better=
+ yet
+to teach to use "add" on individual files as they are examined, no?
