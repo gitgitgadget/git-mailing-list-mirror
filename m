@@ -1,80 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git merge --abort deletes unstaged files
-Date: Mon, 15 Sep 2014 12:25:25 -0700
-Message-ID: <xmqq61go65zu.fsf@gitster.dls.corp.google.com>
-References: <04af01cfd0fb$d077e200$7167a600$@webkr.de>
-	<87k354x0qt.fsf@igel.home>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 1/2] check-headers: add header usage checks for .c files
+Date: Mon, 15 Sep 2014 12:49:16 -0700
+Message-ID: <20140915194915.GA1740@gmail.com>
+References: <1410680445-84593-1-git-send-email-davvid@gmail.com>
+ <xmqqk35466e1.fsf@gitster.dls.corp.google.com>
+ <xmqqfvfs66ad.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?QW5kcsOpIEjDpG5zZWw=?= <andre@webkr.de>,
-	<git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Sep 15 21:25:41 2014
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 21:49:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTbu1-00084c-U5
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 21:25:34 +0200
+	id 1XTcHG-0001ER-M8
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 21:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754530AbaIOTZa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2014 15:25:30 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50767 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754187AbaIOTZ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2014 15:25:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 100A53A477;
-	Mon, 15 Sep 2014 15:25:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=nffLWtYPiXtF
-	ksSb3+WpDDqbvd8=; b=ojlXuKhUU6w3eM+wUlQMrYkkZMXRXTaPxlbguNkpln0O
-	hF2+6EqBPzG7wAHNaRNSibSohzOvOBI71fY3e74MJ47XfvFjSmEqezBvVyii44XL
-	kXC3xk5FIJHbLh9gD1zZzbZngWBPf7XpyJw/MF6MWIgIOp0akX7cP6Az95HCEws=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fEVXYD
-	KEOHQnvIjMufas2mVYOGStUYjc/VxkkfymQSvBhjKjCM15BkKK3cwhyQN/EkhTqs
-	57g6DjoI8gZ4FkBb1OAT7k+SNLXA4uUNpN+ceSSZWFhICAQ4dP19jVOVw5S830ix
-	B7mTO42hZQ/Ck4YsWpb4p7VOj+pvsQVOxDwks=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA2A43A474;
-	Mon, 15 Sep 2014 15:25:27 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 151B83A46D;
-	Mon, 15 Sep 2014 15:25:27 -0400 (EDT)
-In-Reply-To: <87k354x0qt.fsf@igel.home> (Andreas Schwab's message of "Mon, 15
-	Sep 2014 19:16:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0C2B360C-3D0E-11E4-9649-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1756544AbaIOTtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2014 15:49:23 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:64080 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754799AbaIOTtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2014 15:49:20 -0400
+Received: by mail-pd0-f177.google.com with SMTP id y10so6833386pdj.8
+        for <git@vger.kernel.org>; Mon, 15 Sep 2014 12:49:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=7BZ0er2TXPBeNIpx9JFN333ckU6XArhLH8mMjUn2lmA=;
+        b=vFdnPVbUzP/pACjeXl9o5T6ir6RaTTefcAN6qztjyA6iHB3TuY716nMcJmrkTM2iXe
+         oXgJThipC5SOjVjAOWIPlQxguzSV7n2MYdL/7DXo5K6N6y0Wkdua6l43g0IRbXgg0w7+
+         mXNi0m53sBiXSa2HC4dDtKBRJb0jsXk+Nzrtaq28+Qfvelwk/C5oELJDzZtcCMrKUxgm
+         nHUKzfqOirx/H13IGtIEjkf8bbVTxT2jw1kIIAaBzdSxy+G2stXVL+GTyQ/YbQko4JzI
+         DSLvAY4mle6q7qjbE7BmxMpkOHmoLT3zhWqAAdtyOA68kLnzu+4jwyV/Kz0jq3O1J4Mm
+         xuuA==
+X-Received: by 10.66.158.130 with SMTP id wu2mr41991516pab.59.1410810560474;
+        Mon, 15 Sep 2014 12:49:20 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id j13sm12150090pbq.42.2014.09.15.12.49.19
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Sep 2014 12:49:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqfvfs66ad.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257077>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Mon, Sep 15, 2014 at 12:19:06PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > David Aguilar <davvid@gmail.com> writes:
+> >
+> >> Teach check-header.sh to ensure that the first included header in .c
+> >> files is either git-compat-util.h, builtin.h, or cache.h.
+> >>
+> >> Ensure that common-cmds.h is only included by help.c.
+> >>
+> >> Move the logic into functions so that we can skip parts of the check.
+> >>
+> >> Signed-off-by: David Aguilar <davvid@gmail.com>
+> >> ---
+> >> This depends on my previous patch that adds check-header.sh.
+> >> ...
+> >> +check_headers () {
+> >> +	for header in *.h ewah/*.h vcs-svn/*.h xdiff/*.h
+> >> +	do
+> >> +		check_header "$header"
+> >
+> > Hmmmm, doesn't check_header run "$@" as a command?
+> 
+> Taking the previous two together, perhaps
 
-> Andr=C3=A9 H=C3=A4nsel <andre@webkr.de> writes:
->
->> I ran git merge to merge a branch. There were some conflicted files.
->> Although they were automatically resolved by git rerere, I still had=
- to add
->> them.
->
-> If you want them to be added automatically, set rerere.autoupdate=3Dt=
-rue.
+Thanks, yes, that's better.
 
-I would have to caution against doing so without thinking, though.
-In other words, it is OK if you are Andreas who knows what he is
-doing, but it is not a very good advice to give to random newbies.
 
-"rerere" will apply whatever matching previous resolution, which may
-hopefully be the correct resolution this time too, but it is a good
-habit to get into to double check if such a merely textual side-port
-of previous resolution is really applicable to the current conflict.
+>  check-headers.sh | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
+> 
+> diff --git a/check-headers.sh b/check-headers.sh
+> index 7f25e7a..526381e 100755
+> --- a/check-headers.sh
+> +++ b/check-headers.sh
+> @@ -20,6 +20,7 @@ maybe_exit () {
+>  
+>  check_header () {
+>  	header="$1"
+> +	shift
+>  	case "$header" in
+>  	common-cmds.h)
+>  		# should only be included by help.c, not checked
+> @@ -38,15 +39,17 @@ check_header () {
+>  check_headers () {
+>  	for header in *.h ewah/*.h vcs-svn/*.h xdiff/*.h
+>  	do
+> -		check_header "$header"
+> +		check_header "$header" "$@"
+>  	done
+>  }
+>  
+>  check_header_usage () {
+> -	first=$(grep '^#include' "$1" |
+> -		head -n1 |
+> -		sed -e 's,#include ",,' -e 's,"$,,')
+> -
+> +	first=$( 
+> +		sed -n -e '/^#include/{
+> +			s/#include ["<]\(.*\)".*/\1/p
+> +			q
+> +		}' "$1"
+> +	)
+>  	case "$first" in
+>  	cache.h|builtin.h|git-compat-util.h)
+>  		# happy
+
+-- 
+David
