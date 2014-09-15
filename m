@@ -1,69 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git branch --merged and git branch --verbose do not combine
-Date: Mon, 15 Sep 2014 11:06:23 -0700
-Message-ID: <xmqq38bs92sg.fsf@gitster.dls.corp.google.com>
-References: <87fvfutza3.fsf@fencepost.gnu.org>
+Subject: Re: [PATCH] t1503: test rev-parse --verify --quiet with deleted reflogs
+Date: Mon, 15 Sep 2014 11:17:31 -0700
+Message-ID: <xmqqy4tk7npg.fsf@gitster.dls.corp.google.com>
+References: <1410683442-74523-1-git-send-email-davvid@gmail.com>
+	<5415C069.9000702@gmail.com> <20140914185403.GA93515@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Sep 15 20:06:31 2014
+Cc: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 20:18:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTafX-0001Nb-77
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 20:06:31 +0200
+	id 1XTarN-0005yx-RD
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 20:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754043AbaIOSG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2014 14:06:27 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64800 "EHLO smtp.pobox.com"
+	id S1754537AbaIOSSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2014 14:18:42 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52898 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753046AbaIOSG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 14:06:26 -0400
+	id S1754468AbaIOSRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2014 14:17:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 297123AD76;
-	Mon, 15 Sep 2014 14:06:26 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 51CC3390FC;
+	Mon, 15 Sep 2014 14:17:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5YLRkTEogBHNizgJj4KXrYq3DcQ=; b=askpK7
-	frMXaL9lGPSyAZHgknKmex0n1CScuaC0l2YmsqNcG0VhF4W3Mhl0dPNAyejDGfQx
-	lkMhFPkhJ6uX2oH+F2eHQ3Vy2ASwIawYqF6vL/VmUfoRZ//f7Jm4CAOAA9EbtzrE
-	xWaVrWZGFACVbcwQ+2HfS6eINAO8MifHVTxIA=
+	:content-type; s=sasl; bh=0GL1yOAWexHjjtHDCXbF5iCjTPs=; b=C5cGqF
+	ICGCXWd2aO+EB7yP2ObwguJlCQn7C5einmMya4oPQGReRB5wFLRPb7V1XnSrAIOo
+	+ObvoIEgvdVEIi3QnhuEDKQbsgfkdDEKSzczflKIOsBImWEYM4woTKPVUz+Ry3SR
+	pm6T9t4A/oH2yTnSeMzblv5EjJhVqWJsSKSKA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rmTMVPGTtzKLxCG8Kt6uWtz00sYrkW9v
-	a9/jXzaPgJxWgNtnQ1BeXMipwV2nqvdz9wFxgGO5RmmLBRRChEMHauFP3IwQavp5
-	7dvYEzIB1URpdEeqaL4gs3CKFgyJlzM3q/l8JtmshKGc0FfpNm3y5srN7QohI3QE
-	hILysFApzGY=
+	:content-type; q=dns; s=sasl; b=Rdme3nHeM4XdB2ROhjE4I61BOZ72FPeK
+	oISdA1qLvQlZOyi4+zoPdE5jNY1v1gAY5zqR1UBvU61pLTRXgN6OiIrqDz7YxZAD
+	M3axDDowL2oMmezysbeHhpFIT7nho0Xg85gBQ11ah86jmV/hkJg+W9pcOOC2oq5M
+	r/fpvBitXxE=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1FC3B3AD75;
-	Mon, 15 Sep 2014 14:06:26 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 45E3B390FB;
+	Mon, 15 Sep 2014 14:17:34 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 96AC53AD74;
-	Mon, 15 Sep 2014 14:06:25 -0400 (EDT)
-In-Reply-To: <87fvfutza3.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Sun, 14 Sep 2014 09:52:04 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B2924390FA;
+	Mon, 15 Sep 2014 14:17:33 -0400 (EDT)
+In-Reply-To: <20140914185403.GA93515@gmail.com> (David Aguilar's message of
+	"Sun, 14 Sep 2014 11:54:04 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 02084C92-3D03-11E4-B255-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9042E0D4-3D04-11E4-8F40-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257062>
 
-David Kastrup <dak@gnu.org> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> dak@lola:/usr/local/tmp/lilypond$ ../git/git branch --merged --verbose
-> fatal: malformed object name --verbose
+> Good point. The --quiet spec doesn't say anything about stdout,
 
-Only at the very end of the command line if you omit something that
-is required, Git helps by defaulting the missing rev to HEAD.  You
-can be a bit more explicit in the middle, i.e. instead of asking
-"Which are branches that already has been merged in --verbose?", you
-can ask "branch --merged HEAD --verbose", meaning "What are branhes
-that already has been merged in HEAD, please give me a verbose
-answer?" perhaps?
+Please correct it while at it in the doc ;-)
+
+I think I had to look it up in the documentation and then in code if
+
+    git rev-parse --verify --quiet "$object"
+
+the right way to check if the object is a good name without output
+when it is, and get diagnosis in an appropriate error message when
+it isn't.
