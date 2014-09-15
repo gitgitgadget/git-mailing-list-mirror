@@ -1,133 +1,109 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] fsck: return non-zero status on missing ref tips
-Date: Mon, 15 Sep 2014 16:57:33 +0200
-Message-ID: <5416FE5D.5050102@alum.mit.edu>
-References: <1409177412.15185.3.camel@leckie> <20140829185325.GC29456@peff.net> <xmqqha0v5cgn.fsf@gitster.dls.corp.google.com> <1409343480.19256.2.camel@leckie> <20140829203145.GA510@peff.net> <xmqq4mwgjvt6.fsf_-_@gitster.dls.corp.google.com> <20140909220709.GA14029@peff.net> <20140912033830.GA5507@peff.net> <20140912042939.GA5968@peff.net>
+From: "R. Klomp" <r.klomp@students.uu.nl>
+Subject: Re:
+Date: Mon, 15 Sep 2014 17:10:34 +0200
+Message-ID: <CAE8x=qXt4LH=0=7kX7CMz16m8rLn7rt6bkE3MBwoyr5y5VYD+w@mail.gmail.com>
+References: <CAE8x=qW7EwO9YyrQ49vYH50BFcF7RF43eVqDeVex7FKut0oaaw@mail.gmail.com>
+	<CAOqJoqGSRUw_UT4LhqpYX-WX6AEd2ReAWjgNS76Cra-SMKw3NQ@mail.gmail.com>
+	<CAE8x=qVrK5-nhzL57ADwzQmD+NE-ScnJyPgum6cK6hPox5+VMg@mail.gmail.com>
+	<20140910000045.GA12644@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: David Turner <dturner@twopensource.com>,
-	git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 15 17:04:44 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jim Naslund <jnaslund@gmail.com>, p.duijst@stylecncmachines.com,
+	git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 15 17:10:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTXpa-0007Wc-3i
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 17:04:42 +0200
+	id 1XTXvN-0001Wa-6Q
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Sep 2014 17:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752865AbaIOPEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2014 11:04:38 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:64067 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751847AbaIOPEh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2014 11:04:37 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Sep 2014 11:04:37 EDT
-X-AuditID: 1207440f-f79156d000006a5c-0a-5416fe5ffebf
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 39.19.27228.F5EF6145; Mon, 15 Sep 2014 10:57:35 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB2598.dip0.t-ipconnect.de [93.219.37.152])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8FEvXHf019167
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 15 Sep 2014 10:57:34 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <20140912042939.GA5968@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqBv/TyzEYPlGaYv5m04wWnRd6Way
-	aOi9wmzxo6WH2YHF41nvHkaPi5eUPRY8v8/u8XmTXABLFLdNUmJJWXBmep6+XQJ3xvdD15kK
-	5kpVtPdHNDCeF+li5OSQEDCRmPllFyOELSZx4d56ti5GLg4hgcuMEu3HjzNBOOeZJP5daWUF
-	qeIV0JZovHeeDcRmEVCVmHRoK1g3m4CuxKKeZiYQW1QgQOJD5wNGiHpBiZMzn7CA2CICjhIX
-	thwBs5kFYiTWTV3GDGILC7hKXFzzkRli2TUmifkHt4ElOIGGPny3gA2iQV3iz7xLzBC2vETz
-	1tnMExgFZiHZMQtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zro5WaW6KWmlG5i
-	hAQ0/w7GrvUyhxgFOBiVeHhPTBALEWJNLCuuzD3EKMnBpCTKa/gHKMSXlJ9SmZFYnBFfVJqT
-	WnyIUYKDWUmEl/cXUI43JbGyKrUoHyYlzcGiJM6rvkTdT0ggPbEkNTs1tSC1CCYrw8GhJMEb
-	8BeoUbAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQkIx4Uq/HFwGgFSfEA7QVr5y0uSMwF
-	ikK0nmLU5VjX+a2fSYglLz8vVUqc9xvI4QIgRRmleXArYOnrFaM40MfCvDogo3iAqQ9u0iug
-	JUxAS872gC0pSURISTUwSq3tnuC+IKGv/s0ama3zRI6qy24OfqV/KTdrwud3ZdpZy1OOf/9c
-	OdV+57XJ1kx3N35Xe/N7leUzIYXJWgHxz1fvFlQS4lrpdZgn9me4YqBC3W67lD9O 
+	id S1753015AbaIOPKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Sep 2014 11:10:37 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:48955 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752717AbaIOPKg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Sep 2014 11:10:36 -0400
+Received: by mail-la0-f42.google.com with SMTP id hz20so4918963lab.1
+        for <git@vger.kernel.org>; Mon, 15 Sep 2014 08:10:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=QqcTkJu+9WM7nzto1hRhbApAv76DzbxwMcp1iQCqr84=;
+        b=A+/teFqwz6HPyoPb/KyEMv68cB18hYVVNSfzDtUAkd+sxX0qpKlXKOxUEyJEOMCKLE
+         GrDChvZmann/YamAta75dMEC+SsUavJ+XzQrTHQltutX0O9idf3fvqpHrdhkEU9fu8vL
+         1cWSZ0UTGfQG8D9JshyEsPbATr974h6W6bc2pz0ZwhDl4ZcDjAeIAuly6E1AtvbY6M+j
+         FZxDx4uogR7Ctmp+4r0yLs+ySPzKA4qJID187tGaF8ppiKXVQ4K7UD89DFZkXTN8GdSq
+         gEb1KzaJIuFs+Tt+IeM/wnRQpmNJwq5ytkAHPcY93LkiogUhbuLlDV39+wzcEv5XHZD+
+         e8jw==
+X-Gm-Message-State: ALoCoQnwgvXUX0mtObp9y88/2CZhoN03weNa5EUzRAzCf4tsK1OMNaJVlSaWA9Pk9/4Mrt+Ezb1O
+X-Received: by 10.152.28.134 with SMTP id b6mr29054547lah.33.1410793834307;
+ Mon, 15 Sep 2014 08:10:34 -0700 (PDT)
+Received: by 10.112.142.6 with HTTP; Mon, 15 Sep 2014 08:10:34 -0700 (PDT)
+In-Reply-To: <20140910000045.GA12644@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257053>
 
-On 09/12/2014 06:29 AM, Jeff King wrote:
-> [+cc mhagger for packed-refs wisdom]
-> 
-> On Thu, Sep 11, 2014 at 11:38:30PM -0400, Jeff King wrote:
-> 
->> Fsck tries hard to detect missing objects, and will complain
->> (and exit non-zero) about any inter-object links that are
->> missing. However, it will not exit non-zero for any missing
->> ref tips, meaning that a severely broken repository may
->> still pass "git fsck && echo ok".
+I couldn't find information about whether the -solo feature is
+available in all Beyond Compare versions.
+At the least I can say that it is available in version 3 for Windows,
+since that is the version that we're using.
+
+This issue does not occur when using the normal difftool (command: git
+difftool), which is odd and indicates that something must be wrong in
+either Git or Beyond Compare.
+
+On Wed, Sep 10, 2014 at 2:00 AM, David Aguilar <davvid@gmail.com> wrote:
+> On Mon, Sep 08, 2014 at 04:36:49PM +0200, R. Klomp wrote:
+>> Ok great! That indeed fixed the issue.
+>> Although I still don't understand why it didn't work without -solo..
+>> since it didn't work when no instance of Beyond Compare was running as
+>> well.
 >>
->> The problem is that we use for_each_ref to iterate over the
->> ref tips, which hides broken tips. It does at least print an
->> error from the refs.c code, but fsck does not ever see the
->> ref and cannot note the problem in its exit code. We can solve
->> this by using for_each_rawref and noting the error ourselves.
-> 
-> There's a possibly related problem with packed-refs that I noticed while
-> looking at this.
-> 
-> When we call pack-refs, it will refuse to pack any broken loose refs,
-> and leave them loose. Which is sane. But when we delete a ref, we need
-> to rewrite the packed-refs file, and we omit any broken packed refs. We
-> wouldn't have written a broken entry, but we may get broken later (i.e.,
-> the tip object may go missing after the packed-refs file is written).
-> 
-> If we only have a packed copy of "refs/heads/master" and it is broken,
-> then deleting any _other_ unrelated ref will cause refs/heads/master to
-> be dropped from the packed-refs file entirely. We get an error message,
-> but that's easy to miss, and the pointer to master's sha1 is lost
-> forever.
-
-I was confused for a while by your observation, because the curate
-function has
-
-	if (read_ref_full(entry->name, sha1, 0, &flags))
-		/* We should at least have found the packed ref. */
-		die("Internal error");
-
-, which looks like more than "emit an error message and continue". But
-in fact the flow never gets this far, because iterating without
-DO_FOR_EACH_INCLUDE_BROKEN doesn't just skip references for which
-REF_ISBROKEN is set, but also (do to a test in do_one_ref()) references
-for which ref_resolves_to_object() fails. The ultimate source of my
-confusion is that the word BROKEN has two different meanings in the two
-constants' names.
-
-> [...]
-> I am tempted to say that we do not need to do curate_each_ref_fn at all.
-> Any entry with a broken sha1 is either:
-> 
->   1. A truly broken ref, in which case we should make sure to keep it
->      (i.e., it is not cruft at all).
-> 
->   2. A crufty entry that has been replaced by a loose reference that has
->      not yet been packed. Such a crufty entry may point to broken
->      objects, and that is OK.
-> 
-> In case 2, we _could_ delete the cruft. But I do not think we need to.
-> The loose ref will take precedence to anybody who actually does a ref
-> lookup, so the cruft is not hurting anybody.
-> 
-> Dropping curate_packed_ref_fn (as below) fixes the test above. And
-> miraculously does not even seem to conflict with ref patches in pu. :)
-> 
-> Am I missing any case that it is actually helping?
-
-Something inside me screams out in horror that we would pass up an
-opportunity to delete unneeded cruft from the packed-refs file. But I
-can't think of a rational reason to disagree with you, so as far as I'm
-concerned your suggestion seems OK.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+>> There must be something not quite right in either Git or Beyond Compare.
+>>
+>> On Mon, Sep 8, 2014 at 3:37 PM, Jim Naslund <jnaslund@gmail.com> wrote:
+>> >
+>> > On Sep 8, 2014 7:39 AM, "R. Klomp" <r.klomp@students.uu.nl> wrote:
+>> >>
+>> >> It seems like there's a bug involving git difftool's -d flag and Beyond
+>> >> Compare.
+>> >>
+>> >> When using the difftool Beyond Compare, git difftool <..> <..> -d
+>> >> immidiatly shuts down once the diff tree has been created. Beyond
+>> >> Compare successfully shows the files that differ.
+>> >> However, since git difftool doesn't wait for Beyond Compare to shut
+>> >> down, all temporary files are gone. Due to this it's impossible to
+>> >> view changes made inside files using the -d flag.
+>> >>
+>> >> I haven't tested if this issue also happens with other difftools.
+>> >>
+>> >> I'm using the latest versions of both Beyond Compare 3 (3.3.12, Pro
+>> >> Edition for Windows) and Git (1.9.4 for Windows).
+>> >>
+>> >>
+>> >> Thanks in advance for your help!
+>> >
+>> > I see the same behavior. For me it had something to do with the diff opening
+>> > in a new tab in an existing window. Adding -solo to difftool.cmd will make
+>> > beyond compare use a new window which fixes the issue for me.
+>
+> Interesting. Would it be worth changing difftool to use -solo by default, or
+> are there any downsides to doing so?
+>
+> Is -solo a new feature that only exists in new versions of beyond compare?
+> I would be okay saying that the user should use a fairly new version.
+>
+> Can we rely on -solo being available on all platforms?
+> If so, I'd be okay with changing the default if there are no other downsides.
+>
+> The --dir-diff feature is not the only one that needs this blocking behavior.
+> Does this issue also happen in the normal difftool mode without -d?
+> --
+> David
