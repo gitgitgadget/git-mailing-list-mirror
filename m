@@ -1,55 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Apparent bug in git-gc
-Date: Mon, 15 Sep 2014 20:30:47 -0400
-Message-ID: <20140916003046.GE5019@peff.net>
-References: <201409152334.s8FNY33M032615@hobgoblin.ariadne.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] add macro REALLOCARRAY
+Date: Mon, 15 Sep 2014 20:04:37 -0700
+Message-ID: <CAPc5daXuYVXG=b3Mjn=8oE71FqE_PRZ=XHXW_0F5uHawWwy4HQ@mail.gmail.com>
+References: <5415C89C.4090509@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 16 02:30:54 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 16 05:05:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTgfV-0006or-Li
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 02:30:54 +0200
+	id 1XTj4h-0003Ny-QV
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 05:05:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757898AbaIPAau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2014 20:30:50 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48657 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754659AbaIPAat (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 20:30:49 -0400
-Received: (qmail 13607 invoked by uid 102); 16 Sep 2014 00:30:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Sep 2014 19:30:49 -0500
-Received: (qmail 26403 invoked by uid 107); 16 Sep 2014 00:31:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Sep 2014 20:31:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Sep 2014 20:30:47 -0400
-Content-Disposition: inline
-In-Reply-To: <201409152334.s8FNY33M032615@hobgoblin.ariadne.com>
+	id S1754079AbaIPDE7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Sep 2014 23:04:59 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:35696 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753118AbaIPDE7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Sep 2014 23:04:59 -0400
+Received: by mail-lb0-f170.google.com with SMTP id c11so5729542lbj.15
+        for <git@vger.kernel.org>; Mon, 15 Sep 2014 20:04:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=g9V0CVhw3TGfz/ZbJuUGMnGZopnvq49y7JPGktdiAl4=;
+        b=LzzoTt+fCXhqcSzQQeFdDGUJbw5I8KTYRQeS3jJVqJTS9ZIMeXhzehP68yJFRAnxUJ
+         QH9na8UGOsF7cpbEHh7h9ieBKergbi8tIpS9TBjbu67HfpGtMKAlkaUiretrpytC5Yj2
+         Q4IDWze13Dzz0LJ3TrR/j6nvU/mSkXe9iQRX0bcGYuBUYSyFev3s1VU4nBrjzDgrzlD5
+         nNAFOlhSxETfp7WHfXh2QDCp95H/+OkJsbF22071GTgY7C/7orS3dtwWvMmqndasH/Yh
+         2NaY9Kg7a7HkQV2P/Y7txxmtDKVH+2z6WLb9dbFb5UX+5Bdfadv/hxv56g/pHNOHbR4C
+         gdAg==
+X-Received: by 10.112.149.2 with SMTP id tw2mr20714551lbb.21.1410836697518;
+ Mon, 15 Sep 2014 20:04:57 -0700 (PDT)
+Received: by 10.112.97.177 with HTTP; Mon, 15 Sep 2014 20:04:37 -0700 (PDT)
+In-Reply-To: <5415C89C.4090509@web.de>
+X-Google-Sender-Auth: L-x1PKAuNEmon8S4EZmRHODmWbE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257122>
 
-On Mon, Sep 15, 2014 at 07:34:03PM -0400, Dale R. Worley wrote:
+On Sun, Sep 14, 2014 at 9:55 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
+:
+> +#define REALLOCARRAY(x, alloc) x =3D xrealloc((x), (alloc) * sizeof(=
+*(x)))
 
-> I have an 11 GB repository.  It passes git-fsck (though with a number
-> of dangling objects).  But when I run git-gc on it, the file
-> refs/heads/master disappears.
+I have been wondering if "x" could be an expression that has an operato=
+r
+that binds weaker than the assignment '=3D'.  That may necessitate the =
+LHS
+of the assignment to be somehow marked as bound the tightest, i.e.
 
-That's the expected behavior. Gc runs "git pack-refs", which puts an
-entry into packed-refs and prunes the loose ref.
+#define REALLOC_ARRAY(x, alloc) (x) =3D xrealloc((x), (alloc) * sizeof(=
+*(x)))
 
-> Since HEAD points to refs/heads/master, this makes the repository
-> unusable.
-
-Unusable how?  Does `git rev-parse refs/heads/master` still produce a
-sha1? Does `git rev-parse HEAD`? If not, then that is definitely a bug.
-
--Peff
+Or am I being overly silly?
