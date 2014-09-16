@@ -1,124 +1,91 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v4 3/3] stash: prefer --quiet over shell redirection of the standard error stream
-Date: Mon, 15 Sep 2014 20:24:10 -0700
-Message-ID: <1410837850-5169-3-git-send-email-davvid@gmail.com>
-References: <1410837850-5169-1-git-send-email-davvid@gmail.com>
- <1410837850-5169-2-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Jon Seymour <jon.seymour@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>,
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v14 01/11] trailer: add data structures and basic functions
+Date: Tue, 16 Sep 2014 10:01:11 +0200
+Message-ID: <CAP8UFD3wi2KCZhDAF7vqMpb72DbLMbHNDiDGi0tFLW+vzsQqSA@mail.gmail.com>
+References: <20140915052330.26573.34823.chriscool@tuxfamily.org>
+	<20140915053142.26573.86374.chriscool@tuxfamily.org>
+	<xmqqsijs4o02.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
-	Fabian Ruch <bafain@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 16 05:24:30 2014
+X-From: git-owner@vger.kernel.org Tue Sep 16 10:01:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTjNV-0000h4-QD
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 05:24:30 +0200
+	id 1XTnhN-0008OY-Ky
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 10:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754818AbaIPDYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Sep 2014 23:24:25 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:47388 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754407AbaIPDYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Sep 2014 23:24:24 -0400
-Received: by mail-pa0-f43.google.com with SMTP id fa1so7983790pad.2
-        for <git@vger.kernel.org>; Mon, 15 Sep 2014 20:24:23 -0700 (PDT)
+	id S1753389AbaIPIBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2014 04:01:13 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:59792 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753346AbaIPIBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2014 04:01:12 -0400
+Received: by mail-ie0-f175.google.com with SMTP id at20so5752363iec.6
+        for <git@vger.kernel.org>; Tue, 16 Sep 2014 01:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=B9BT+gP+9ZwFO2XxMMQoYsU4ivLsOpyTegFNqyhf1Ys=;
-        b=pzqBcbtw7mX2sJV70wFhLcFJ4UAWOfoBEcM3EVPaV6qfSN/LmiG8nJKO1QwafCbqfC
-         b9tS6XwTzq0gfA21sDoYuWI4IaXuBduoPCb4gfk6tBOK1NTRnQtPyKww8my5xB1xg0I4
-         Z9Q41DYyCpZx/Dhp/VK0j4lZLufg+lpQvEx4UR9iQujU4/anDEOZcPhCYLgcpoDMChBk
-         6HShs3fPwSYhbrsJaeD3wGq2FmcZOyFTLJU8dg9t3Z5pgAfrw44MaBvIJYd+UFdgI5iH
-         jlpuPqYBRscflEhi+gjckLro/QHG+w+A8cIm2P1a7s329a5NQnKNjnOJjJQDRXaFBDEK
-         K24A==
-X-Received: by 10.66.197.132 with SMTP id iu4mr11103595pac.132.1410837863677;
-        Mon, 15 Sep 2014 20:24:23 -0700 (PDT)
-Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id v1sm12633581pdp.76.2014.09.15.20.24.19
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Sep 2014 20:24:23 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0.30.g05c535b.dirty
-In-Reply-To: <1410837850-5169-2-git-send-email-davvid@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=x3DDmbqS8tWmTYVb+B1ZCSyYeH4xLsipMWHLHJMqNxw=;
+        b=C6hd7fRqOsEJazamcnbC/PSYlHli6QT4T7hdifxPPh41b0+b5Xx6TAIVE+c6hIW7KD
+         e9InwkMDervskqF0AR1un9JPanSxYYuoqBVtTgCdCyV6DrawxKVpIYB/Rgoz96UomY6N
+         MzTqw6rm4LD2KC7xbh0pWluMCXh/LUcE9INOX0VmqKfI8UV4p5dOne7MDrjyHvukJfXg
+         KHXGCLN0LkTTkp2ybzW+/jdCu2EDwHnEkgx98Gj6CB5zbFPrpE03VCE0pe4C051C8C3V
+         LNa4nPHUazTqzBm5Pl+nxsXsryBour1nwPRWpvG/bjNcXnPh4pU7w572msiBEpG26C1i
+         W5nQ==
+X-Received: by 10.51.17.66 with SMTP id gc2mr28516785igd.40.1410854471796;
+ Tue, 16 Sep 2014 01:01:11 -0700 (PDT)
+Received: by 10.50.250.179 with HTTP; Tue, 16 Sep 2014 01:01:11 -0700 (PDT)
+In-Reply-To: <xmqqsijs4o02.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257127>
 
-Use `git rev-parse --verify --quiet` instead of redirecting
-stderr to /dev/null.
+On Mon, Sep 15, 2014 at 10:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+>> +/* Get the length of buf from its beginning until its last alphanumeric character */
+>
+> That makes it sound as if feeding "abc%de#f@" to the function returns
+> 3 for "abc", but
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-This patch is unchanged from when it was first written,
-but is now correct thanks to the preceding patch.
+For me the last alphanumeric character in "abc%de#f@" is "f", so it is
+the length from the beginning to "f" so it should return 8.
 
- git-stash.sh | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+>> +static size_t alnum_len(const char *buf, size_t len)
+>> +{
+>> +     while (len > 0 && !isalnum(buf[len - 1]))
+>> +             len--;
+>> +     return len;
+>> +}
+>
+> doesn't it look at '@', be unhappy and decrement, look at 'f' and
+> break out to return the length of "abc%de#f"?
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 9c1ba8e..7ece0f1 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -50,7 +50,7 @@ clear_stash () {
- 	then
- 		die "$(gettext "git stash clear with parameters is unimplemented")"
- 	fi
--	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
-+	if current=$(git rev-parse --verify --quiet $ref_stash)
- 	then
- 		git update-ref -d $ref_stash $current
- 	fi
-@@ -292,7 +292,7 @@ save_stash () {
- }
- 
- have_stash () {
--	git rev-parse --verify $ref_stash >/dev/null 2>&1
-+	git rev-parse --verify --quiet $ref_stash >/dev/null
- }
- 
- list_stash () {
-@@ -392,12 +392,12 @@ parse_flags_and_rev()
- 		;;
- 	esac
- 
--	REV=$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) || {
-+	REV=$(git rev-parse --symbolic --verify --quiet "$1") || {
- 		reference="$1"
- 		die "$(eval_gettext "\$reference is not valid reference")"
- 	}
- 
--	i_commit=$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
-+	i_commit=$(git rev-parse --verify --quiet "$REV^2") &&
- 	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>/dev/null) &&
- 	s=$1 &&
- 	w_commit=$1 &&
-@@ -409,7 +409,7 @@ parse_flags_and_rev()
- 	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
- 	IS_STASH_REF=t
- 
--	u_commit=$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
-+	u_commit=$(git rev-parse --verify --quiet "$REV^3") &&
- 	u_tree=$(git rev-parse "$REV^3:" 2>/dev/null)
- }
- 
-@@ -531,7 +531,8 @@ drop_stash () {
- 		die "$(eval_gettext "\${REV}: Could not drop stash entry")"
- 
- 	# clear_stash if we just dropped the last stash entry
--	git rev-parse --verify "$ref_stash@{0}" >/dev/null 2>&1 || clear_stash
-+	git rev-parse --verify --quiet "$ref_stash@{0}" >/dev/null ||
-+	clear_stash
- }
- 
- apply_to_branch () {
--- 
-2.1.0.30.g05c535b.dirty
+Yeah, that's the expected behavior.
+
+> Perhaps that behaviour _is_ what you want, but then the comment is
+> lying, no?
+
+I don't think so, but maybe you are parsing the comment in a different
+way than I am.
+What would you suggest instead?
+
+Thanks,
+Christian.
