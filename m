@@ -1,192 +1,101 @@
-From: Harry Jeffery <harry@exec64.co.uk>
-Subject: [PATCH v3] pretty: add %D format specifier
-Date: Tue, 16 Sep 2014 17:37:38 +0000
-Message-ID: <541875ef.6153c20a.4ef5.ffff8cbb@mx.google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 16 19:40:31 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] mailinfo: do not treat ">From" lines as in-body headers
+Date: Tue, 16 Sep 2014 11:01:05 -0700
+Message-ID: <xmqqy4tj30ny.fsf@gitster.dls.corp.google.com>
+References: <20140913205751.GA17875@mwanda> <20140913210908.GG6549@mwanda>
+	<20140913212504.GA25190@peff.net>
+	<20140913225713.GB189120@vauxhall.crustytoothpaste.net>
+	<20140914004725.GA28010@peff.net>
+	<CAPc5daWxZdi+JTTsznefPk2U+Q8uWWYuBUa-rJA4knDZzwU38w@mail.gmail.com>
+	<20140914010120.GA28498@peff.net> <20140914013038.GA5974@peff.net>
+	<xmqqha087lwv.fsf@gitster.dls.corp.google.com>
+	<xmqq1trc63o8.fsf@gitster.dls.corp.google.com>
+	<20140916001948.GC5019@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Mark Einon <mark.einon@gmail.com>,
+	Greg KH <gregkh@linuxfoundation.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 16 20:01:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XTwjl-0003Fz-TA
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 19:40:22 +0200
+	id 1XTx43-0005qu-Iq
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Sep 2014 20:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584AbaIPRkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2014 13:40:11 -0400
-Received: from mail-we0-f180.google.com ([74.125.82.180]:48842 "EHLO
-	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754444AbaIPRkC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2014 13:40:02 -0400
-Received: by mail-we0-f180.google.com with SMTP id t60so198196wes.25
-        for <git@vger.kernel.org>; Tue, 16 Sep 2014 10:40:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:to:from:date:subject;
-        bh=VHD/nQHIkod8mg7T8jPKgjcIjswgLfJUPN8ihlsCiXY=;
-        b=YwmDBq+CAffZtmuRJvM03eZai646XbM5DHq9W5Fnl4jMYw6lhsJ21ywR/9Jocx8mIx
-         ZW5yNsFCoMEgc7gdiGkGXBvEhgYbwxzpF0eCBfQDy121F2ZNwuMaq8O7vQnozhwd2Mai
-         Vt1E3u84FYnCzdZvR06v4nE2wFVikUmK+Q6nKA2sR2AkxKu3Ab7U/OecRyHpSQQeVGoU
-         7bJ5kNNG1YNjelVpRNZwqw5vonTS1FOs5ltKr+2IDZzLxMfTBKZEnaOXzooBwZkN6vIk
-         mzJogYbug1YRyb9yYHYR7fGZ/x0WC9kCT7SWXxMjKxkpsDt8vWTkIitLbFobEJxrMuVA
-         Y7rw==
-X-Gm-Message-State: ALoCoQlLTXikkaBpsld84CuIkyAqoQnGPO6VMW/nlALoj+SlKjosthO1zwWZel77QGnICgCG9nga
-X-Received: by 10.180.36.15 with SMTP id m15mr35663397wij.6.1410889200556;
-        Tue, 16 Sep 2014 10:40:00 -0700 (PDT)
-Received: from localhost (cpc69047-oxfd25-2-0-cust267.4-3.cable.virginm.net. [81.109.93.12])
-        by mx.google.com with ESMTPSA id p1sm19138894wjy.22.2014.09.16.10.39.59
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Sep 2014 10:39:59 -0700 (PDT)
+	id S1754370AbaIPSBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Sep 2014 14:01:16 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58377 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754226AbaIPSBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Sep 2014 14:01:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4137038402;
+	Tue, 16 Sep 2014 14:01:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uzgTGhIQtjbW46tF53VVLAnCoI4=; b=xZRBOj
+	0epblcDWQr/7XLFW3rLYXQK9ppiqzE1iMo/MKHqxcy6wvIjVfDHhyZqtjQpn9VF6
+	NkWEzoRtbeMFhY5nsS8Bb2bt9ykmO8whrbZdBDIFCu+7pJyWekAXILQRy6wAWgF+
+	GIymLrWsd67yTH7nGFgkbxgAY1POHTaLrmexU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m+C2E4/cCZLL1zJIvFw4O59sDWWXQw2f
+	MnZpzVMDffR7sOmhZ0TUH2C5NfHyZ+Gxn24SmJufUVFiz2XpSwJg3M2wk/sCy6wb
+	M/NqjI/G6SJ4wTqIIxawiKv75ZCbY1ZcfrYOmNYiBN+8b6tp0euvAxO6GNG9nS16
+	63uxgqiJBr8=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A77F838401;
+	Tue, 16 Sep 2014 14:01:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D6F5A38400;
+	Tue, 16 Sep 2014 14:01:07 -0400 (EDT)
+In-Reply-To: <20140916001948.GC5019@peff.net> (Jeff King's message of "Mon, 15
+	Sep 2014 20:19:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6F10067C-3DCB-11E4-A1FD-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257133>
 
-Add a new format specifier, '%D' that is identical in behaviour to '%d',
-except that it does not include the ' (' prefix or ')' suffix provided
-by '%d'.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Harry Jeffery <harry@exec64.co.uk>
----
- Documentation/pretty-formats.txt |  6 ++++--
- log-tree.c                       | 24 +++++++++++++-----------
- log-tree.h                       |  8 +++++++-
- pretty.c                         |  4 ++++
- t/t4205-log-pretty-formats.sh    | 11 +++++++++++
- 5 files changed, 39 insertions(+), 14 deletions(-)
+> The only cases that I can think of that would be a problem with this
+> strictness are:
+>
+>   1. Somebody writes format-patch output to a file, reads in the mbox
+>      using another program, and then writes out the result (munging the
+>      mbox From line). And then pastes the whole thing into their email
+>      body.
+>
+>      I can see the first part happening. But given that it is totally
+>      irrelevant _unless_ they then screw up and paste the From line in
+>      the body (which is already a corner case), it probably doesn't
+>      matter.
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index eac7909..2632e1a 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -128,6 +128,7 @@ The placeholders are:
- - '%ct': committer date, UNIX timestamp
- - '%ci': committer date, ISO 8601 format
- - '%d': ref names, like the --decorate option of linkgit:git-log[1]
-+- '%D': ref names without the " (", ")" wrapping.
- - '%e': encoding
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
-@@ -182,8 +183,9 @@ The placeholders are:
- NOTE: Some placeholders may depend on other options given to the
- revision traversal engine. For example, the `%g*` reflog options will
- insert an empty string unless we are traversing reflog entries (e.g., by
--`git log -g`). The `%d` placeholder will use the "short" decoration
--format if `--decorate` was not already provided on the command line.
-+`git log -g`). The `%d` and `%D` placeholders will use the "short"
-+decoration format if `--decorate` was not already provided on the command
-+line.
- 
- If you add a `+` (plus sign) after '%' of a placeholder, a line-feed
- is inserted immediately before the expansion if and only if the
-diff --git a/log-tree.c b/log-tree.c
-index 95e9b1d..61d1dea 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -179,14 +179,16 @@ static void show_children(struct rev_info *opt, struct commit *commit, int abbre
- }
- 
- /*
-- * The caller makes sure there is no funny color before
-- * calling. format_decorations makes sure the same after return.
-+ * The caller makes sure there is no funny color before calling.
-+ * format_decorations_extended makes sure the same after return.
-  */
--void format_decorations(struct strbuf *sb,
-+void format_decorations_extended(struct strbuf *sb,
- 			const struct commit *commit,
--			int use_color)
-+			int use_color,
-+			const char *prefix,
-+			const char *separator,
-+			const char *suffix)
- {
--	const char *prefix;
- 	struct name_decoration *decoration;
- 	const char *color_commit =
- 		diff_get_color(use_color, DIFF_COMMIT);
-@@ -196,20 +198,20 @@ void format_decorations(struct strbuf *sb,
- 	decoration = lookup_decoration(&name_decoration, &commit->object);
- 	if (!decoration)
- 		return;
--	prefix = " (";
-+	strbuf_addstr(sb, color_commit);
-+	strbuf_addstr(sb, prefix);
- 	while (decoration) {
--		strbuf_addstr(sb, color_commit);
--		strbuf_addstr(sb, prefix);
- 		strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
- 		if (decoration->type == DECORATION_REF_TAG)
- 			strbuf_addstr(sb, "tag: ");
- 		strbuf_addstr(sb, decoration->name);
- 		strbuf_addstr(sb, color_reset);
--		prefix = ", ";
-+		strbuf_addstr(sb, color_commit);
-+		if (decoration->next)
-+			strbuf_addstr(sb, separator);
- 		decoration = decoration->next;
- 	}
--	strbuf_addstr(sb, color_commit);
--	strbuf_addch(sb, ')');
-+	strbuf_addstr(sb, suffix);
- 	strbuf_addstr(sb, color_reset);
- }
- 
-diff --git a/log-tree.h b/log-tree.h
-index d6ecd4d..b26160c 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -13,7 +13,13 @@ int log_tree_diff_flush(struct rev_info *);
- int log_tree_commit(struct rev_info *, struct commit *);
- int log_tree_opt_parse(struct rev_info *, const char **, int);
- void show_log(struct rev_info *opt);
--void format_decorations(struct strbuf *sb, const struct commit *commit, int use_color);
-+void format_decorations_extended(struct strbuf *sb, const struct commit *commit,
-+			     int use_color,
-+			     const char *prefix,
-+			     const char *separator,
-+			     const char *suffix);
-+#define format_decorations(strbuf, commit, color) \
-+			     format_decorations_extended((strbuf), (commit), (color), " (", ", ", ")")
- void show_decorations(struct rev_info *opt, struct commit *commit);
- void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			     const char **subject_p,
-diff --git a/pretty.c b/pretty.c
-index 44b9f64..46d65b9 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1197,6 +1197,10 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 		load_ref_decorations(DECORATE_SHORT_REFS);
- 		format_decorations(sb, commit, c->auto_color);
- 		return 1;
-+	case 'D':
-+		load_ref_decorations(DECORATE_SHORT_REFS);
-+		format_decorations_extended(sb, commit, c->auto_color, "", ", ", "");
-+		return 1;
- 	case 'g':		/* reflog info */
- 		switch(placeholder[1]) {
- 		case 'd':	/* reflog selector */
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index de0cc4a..38148c1 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -457,4 +457,15 @@ EOF
- 	test_cmp expected actual1
- '
- 
-+test_expect_success 'clean log decoration' '
-+	git log --no-walk --tags --pretty="%H %D" --decorate=full >actual &&
-+	cat <<EOF >expected &&
-+$head1 tag: refs/tags/tag2
-+$head2 tag: refs/tags/message-one
-+$old_head1 tag: refs/tags/message-two
-+EOF
-+	sort actual >actual1 &&
-+	test_cmp expected actual1
-+'
-+
- test_done
--- 
-2.1.0
+Yeah, I tend to agree.
+
+>   2. We change the static From lines that git generates. We can always
+>      update the parser, of course, but it may be running a different
+>      version of git than the sender.  People with an old git running
+>      "git am" would stop skipping past "From" lines in messages from
+>      people on newer gits.
+
+I hope that it is not going to happen; the reason we refrain from
+ever changing the datestamp has been to keep it constant to help
+those who write magic(5), and I do not think we have a reason to
+defeat that.
+
+> I think you forgot to "git add" mbox.h. That being said, if we did go
+> this route, I do not see any reason to share the code at all. This can
+> be purely a mailinfo.c thing.
+
+OK.  A reroll coming today when I find time.
