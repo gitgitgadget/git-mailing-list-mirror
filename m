@@ -1,144 +1,78 @@
-From: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-Subject: Re: [PATCH] compat-util: add _DEFAULT_SOURCE define
-Date: Wed, 17 Sep 2014 12:54:50 +0900
-Message-ID: <20140917035450.GA881@swordfish>
-References: <1410672815-2555-1-git-send-email-sergey.senozhatsky@gmail.com>
- <xmqq61go7lme.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] pretty: add %D format specifier
+Date: Tue, 16 Sep 2014 21:30:50 -0700
+Message-ID: <xmqqy4tizx51.fsf@gitster.dls.corp.google.com>
+References: <541875ef.6153c20a.4ef5.ffff8cbb@mx.google.com>
+	<xmqqegvb2yza.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 17 05:55:21 2014
+Cc: git@vger.kernel.org
+To: Harry Jeffery <harry@exec64.co.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 17 06:31:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XU6Ku-0006JB-HG
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Sep 2014 05:55:20 +0200
+	id 1XU6tU-0007N8-Sh
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Sep 2014 06:31:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754165AbaIQDzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Sep 2014 23:55:14 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:60266 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754063AbaIQDzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Sep 2014 23:55:12 -0400
-Received: by mail-pd0-f181.google.com with SMTP id w10so1216161pde.40
-        for <git@vger.kernel.org>; Tue, 16 Sep 2014 20:55:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=zOF7Se88NgM1BMxCdg0USCb68MNOJufqer2CioxFMqc=;
-        b=YG7kVYJnpJ/g8VKXu68eMiqdrYakI+l+GucfaFmiqWROaCET6SdzVZX4NCs9C2W+5v
-         T1c/egTgUPkJFZM8ZxYzD8yTHfQRzIAdr+pIWaMinMzwZ53iuWHRaBBIDrBB7cyyOGMF
-         ri+/cxSjS0sMSyD2eu8iSCxAQemfYH/skhIHN0/gwZLY3zPXYIPJv7oLGw6xUqKgtp9z
-         PcHbbea25UnCQyCB3WP39UN2iN9dxorkl4BAkLo19O5X38O1/u0AgiXRyrLc+iDHgJkk
-         hnMHbskFsQqrf5INL7AoyONZ2nuSKskRJBGZeIPJ+Yo0wXSIzjK9xXF4S0qu/OHzts8v
-         MX3g==
-X-Received: by 10.70.126.9 with SMTP id mu9mr903710pdb.151.1410926112054;
-        Tue, 16 Sep 2014 20:55:12 -0700 (PDT)
-Received: from localhost ([175.223.24.46])
-        by mx.google.com with ESMTPSA id fh10sm15432567pdb.71.2014.09.16.20.55.10
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Sep 2014 20:55:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqq61go7lme.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751007AbaIQEay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2014 00:30:54 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54341 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750893AbaIQEax (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2014 00:30:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F0E343BB25;
+	Wed, 17 Sep 2014 00:30:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=amjVbZQE/w5ZUUF1qYT+H3ZSuI0=; b=WZ6fd0
+	BrdEnYLRlr5/es+X/YiR0ygbm26Aya7lhi1xQvThQS2/4Nctg/HYUB4JqeAT+UO6
+	81AzjAhdkxets+SfhR4iYH9zJ5WhR8KyS+8VpNC2fwgANEZS+wzBBtW/x9JMm+qc
+	Ob9bsfTzFoWKVZBIi6BINLxreSkkSq6ly0pPI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FDWwtP4fcAO5M8u8LCMZ17hxkfeyQozD
+	oIecugBbSd9ZhsjHItzRI7D8KUOGwddotWc84nNqOrCClnecLEsVvIdTE4zAaUYX
+	cbh3YhJe6BXAJ+NHIjzO25veiPbU0jp/8RwFvia8pM9IluX79BfVOmm+UGsM9+hm
+	ylOF8VdLXiQ=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E6AC83BB24;
+	Wed, 17 Sep 2014 00:30:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0526E3BB23;
+	Wed, 17 Sep 2014 00:30:51 -0400 (EDT)
+In-Reply-To: <xmqqegvb2yza.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 16 Sep 2014 11:37:29 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6829DE66-3E23-11E4-9B01-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257210>
 
-Hello,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On (09/15/14 12:02), Junio C Hamano wrote:
-> Date: Mon, 15 Sep 2014 12:02:33 -0700
-> From: Junio C Hamano <gitster@pobox.com>
-> To: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH] compat-util: add _DEFAULT_SOURCE define
-> User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-> 
-> Sergey Senozhatsky <sergey.senozhatsky@gmail.com> writes:
-> 
-> > glibc has deprecated the use of _BSD_SOURCE define
-> >
-> >   warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
-> >
-> > To make it easier to maintain a cross platform source code, that
-> > warning can be suppressed by _DEFAULT_SOURCE.
-> >
-> > Define both _BSD_SOURCE, _DEFAULT_SOURCE and cleanup the build.
-> 
-> I can see you defined DEFAULT_SOURCE, but where did you do "cleanup
-> the build"?  Or did you mean "define both (in order) to clean up"?
+>> +test_expect_success 'clean log decoration' '
+>> +	git log --no-walk --tags --pretty="%H %D" --decorate=full >actual &&
+>> +	cat <<EOF >expected &&
+>> +$head1 tag: refs/tags/tag2
+>> +$head2 tag: refs/tags/message-one
+>> +$old_head1 tag: refs/tags/message-two
+>> +EOF
+> ...
+> Hmph.  I actually think the part that prepares the history makes
+> sure that the output order of the commits is predictable by using
+> test_commit and test_tick.  I see existing tests at the end (which
+> is a sign that they were added more recently than the rest of the
+> test script, and can indicate a careless addition) already has
+> "sort", but we shouldn't have to sort.
 
-yes. sorry, I meant "in order to clean up". otherwise, the build is
-a bit noisy:
-
-[..]
-    CC base85.o
-    CC bisect.o
-    * new link flags
-    * new prefix flags
-    CC branch.o
-    CC blob.o
-In file included from /usr/include/unistd.h:25:0,
-                 from git-compat-util.h:98,
-                 from cache.h:4,
-                 from blob.c:1:
-/usr/include/features.h:148:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
- # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
-   ^
-In file included from /usr/include/unistd.h:25:0,
-                 from git-compat-util.h:98,
-                 from branch.c:1:
-/usr/include/features.h:148:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
- # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
-   ^
-In file included from /usr/include/unistd.h:25:0,
-                 from git-compat-util.h:98,
-                 from cache.h:4,
-                 from base85.c:1:
-/usr/include/features.h:148:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
- # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
-   ^
-In file included from /usr/include/unistd.h:25:0,
-                 from git-compat-util.h:98,
-                 from cache.h:4,
-                 from bisect.c:1:
-/usr/include/features.h:148:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
- # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
-   ^
-
-[..]
-
-> Just making sure we are not only seeing a patch half eaten by mail
-> transport somewhere.
-
-sure.
-
-	-ss
-
-> >
-> > Signed-off-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-> > ---
-> >  git-compat-util.h | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/git-compat-util.h b/git-compat-util.h
-> > index 4e7e3f8..08a9ee2 100644
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -82,6 +82,7 @@
-> >  #define _ALL_SOURCE 1
-> >  #define _GNU_SOURCE 1
-> >  #define _BSD_SOURCE 1
-> > +#define _DEFAULT_SOURCE 1
-> >  #define _NETBSD_SOURCE 1
-> >  #define _SGI_SOURCE 1
-> 
+Actually --tags may feed the tips in unspecified order and --no-walk
+ensures the commits will be shown in that unspecified order, so for
+a test that runs "log --no-walk --tags", sorting is unavoidable.
