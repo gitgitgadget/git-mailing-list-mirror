@@ -1,117 +1,125 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6 02/23] receive-pack: parse feature request a bit earlier
-Date: Wed, 17 Sep 2014 15:45:37 -0700
-Message-ID: <1410993958-32394-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v6 08/23] send-pack: factor out capability string generation
+Date: Wed, 17 Sep 2014 15:45:43 -0700
+Message-ID: <1410993958-32394-9-git-send-email-gitster@pobox.com>
 References: <1410993958-32394-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 18 00:47:17 2014
+X-From: git-owner@vger.kernel.org Thu Sep 18 00:47:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUO0K-0002S5-IY
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 00:47:16 +0200
+	id 1XUO0L-0002S5-2y
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 00:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756942AbaIQWqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2014 18:46:09 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57593 "EHLO smtp.pobox.com"
+	id S1756906AbaIQWrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2014 18:47:13 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62518 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756816AbaIQWqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2014 18:46:06 -0400
+	id S1757099AbaIQWqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2014 18:46:23 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0138039DD0;
-	Wed, 17 Sep 2014 18:46:06 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9F85E39E07;
+	Wed, 17 Sep 2014 18:46:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=57Sr
-	L4FONNu6zaukHpsmU6S+ulU=; b=naiLhaRitJdPo2UJWkA4MZ44Ms1xjMDNKOnt
-	tvAhLVuGGUp2qnMqndwjmMA3h35E3xEF8JSg09Jt0/S1wyrOMyjSaoZKZSATe9mN
-	r/52QL9nQKQfTbIRKtsR0mWTdqNlzfFGDn2KbWR9tC1wwFe8GjSm75LGe5jNFTC3
-	pDHdNMQ=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=nOPH
+	aTB5kTrrH2GfX44tyubX/wk=; b=UeVU/E9QM2fxX2euAk/VhW8aLZN6NPcZayv6
+	eWXt81MkBMeyapWQkCMp+yySu6cGk186AFW6QiFcr5W3iizReiD78E+WbIGAYGs0
+	Qfh3q3yH2+xBJa+xG8pk2i0Wys0nOFevRwybZowvf+usfJOve2ZAcex8lAZgi58e
+	ftih2UQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=UfDz9R
-	yO+cpK6QEp33dKcA+e/XB0r+7jfLzKhgH16wNWp1ymMOozcZU6MdH+3C8Atku7Sm
-	Vl78oeWsB3sbBzn5rZir3dPEyDCMuUjlOoq3PfFv8spjzzoILMN5P7zFt3uhVlmP
-	MLrWp7NGsl/ri490bsel5coZZhjkiyPpL6FQw=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=jlWsuG
+	ot9/y/4tL50rQ9WrvRPWL1JChZg6VlXHU8O3bnzUBt+EZWGWPi9mi5udKMx8rbSj
+	YohegPkgQK5hqYYst6an4qnHCry6fsbHlnAnlyUCijbbSpCAf7X0R41UBl63GWgP
+	XT2d7msu86wmeHR/0/apZfUlIbkNAfacVxirk=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EB14039DCF;
-	Wed, 17 Sep 2014 18:46:05 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9642439E06;
+	Wed, 17 Sep 2014 18:46:22 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3E27839DCE;
-	Wed, 17 Sep 2014 18:46:05 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2769439DF8;
+	Wed, 17 Sep 2014 18:46:17 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-403-g099cf47
 In-Reply-To: <1410993958-32394-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 684D3B88-3EBC-11E4-89E5-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 6F664842-3EBC-11E4-9021-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257250>
 
-Ideally, we should have also allowed the first "shallow" to carry
-the feature request trailer, but that is water under the bridge
-now.  This makes the next step to factor out the queuing of commands
-easier to review.
+A run of 'var ? " var" : ""' fed to a long printf string in a deeply
+nested block was hard to read.  Move it outside the loop and format
+it into a strbuf.
+
+As an added bonus, the trick to add "agent=<agent-name>" by using
+two conditionals is replaced by a more readable version.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
  Unchanged since v5.
 
- builtin/receive-pack.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ send-pack.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 1663beb..a91eec8 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -840,7 +840,7 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 		unsigned char old_sha1[20], new_sha1[20];
- 		struct command *cmd;
- 		char *refname;
--		int len, reflen;
-+		int len, reflen, linelen;
+diff --git a/send-pack.c b/send-pack.c
+index e81f741..0cb44ab 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -218,6 +218,7 @@ int send_pack(struct send_pack_args *args,
+ 	int in = fd[0];
+ 	int out = fd[1];
+ 	struct strbuf req_buf = STRBUF_INIT;
++	struct strbuf cap_buf = STRBUF_INIT;
+ 	struct ref *ref;
+ 	int new_refs;
+ 	int allow_deleting_refs = 0;
+@@ -251,6 +252,15 @@ int send_pack(struct send_pack_args *args,
+ 		return 0;
+ 	}
  
- 		line = packet_read_line(0, &len);
- 		if (!line)
-@@ -853,7 +853,18 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 			continue;
- 		}
- 
--		if (len < 83 ||
-+		linelen = strlen(line);
-+		if (linelen < len) {
-+			const char *feature_list = line + linelen + 1;
-+			if (parse_feature_request(feature_list, "report-status"))
-+				report_status = 1;
-+			if (parse_feature_request(feature_list, "side-band-64k"))
-+				use_sideband = LARGE_PACKET_MAX;
-+			if (parse_feature_request(feature_list, "quiet"))
-+				quiet = 1;
-+		}
++	if (status_report)
++		strbuf_addstr(&cap_buf, " report-status");
++	if (use_sideband)
++		strbuf_addstr(&cap_buf, " side-band-64k");
++	if (quiet_supported && (args->quiet || !args->progress))
++		strbuf_addstr(&cap_buf, " quiet");
++	if (agent_supported)
++		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
 +
-+		if (linelen < 83 ||
- 		    line[40] != ' ' ||
- 		    line[81] != ' ' ||
- 		    get_sha1_hex(line, old_sha1) ||
-@@ -862,16 +873,7 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 			    line);
+ 	/*
+ 	 * NEEDSWORK: why does delete-refs have to be so specific to
+ 	 * send-pack machinery that set_ref_status_for_push() cannot
+@@ -279,18 +289,12 @@ int send_pack(struct send_pack_args *args,
+ 		} else {
+ 			char *old_hex = sha1_to_hex(ref->old_sha1);
+ 			char *new_hex = sha1_to_hex(ref->new_sha1);
+-			int quiet = quiet_supported && (args->quiet || !args->progress);
  
- 		refname = line + 82;
--		reflen = strlen(refname);
--		if (reflen + 82 < len) {
--			const char *feature_list = refname + reflen + 1;
--			if (parse_feature_request(feature_list, "report-status"))
--				report_status = 1;
--			if (parse_feature_request(feature_list, "side-band-64k"))
--				use_sideband = LARGE_PACKET_MAX;
--			if (parse_feature_request(feature_list, "quiet"))
--				quiet = 1;
--		}
-+		reflen = linelen - 82;
- 		cmd = xcalloc(1, sizeof(struct command) + reflen + 1);
- 		hashcpy(cmd->old_sha1, old_sha1);
- 		hashcpy(cmd->new_sha1, new_sha1);
+ 			if (!cmds_sent)
+ 				packet_buf_write(&req_buf,
+-						 "%s %s %s%c%s%s%s%s%s",
++						 "%s %s %s%c%s",
+ 						 old_hex, new_hex, ref->name, 0,
+-						 status_report ? " report-status" : "",
+-						 use_sideband ? " side-band-64k" : "",
+-						 quiet ? " quiet" : "",
+-						 agent_supported ? " agent=" : "",
+-						 agent_supported ? git_user_agent_sanitized() : ""
+-						);
++						 cap_buf.buf);
+ 			else
+ 				packet_buf_write(&req_buf, "%s %s %s",
+ 						 old_hex, new_hex, ref->name);
+@@ -311,6 +315,7 @@ int send_pack(struct send_pack_args *args,
+ 		packet_flush(out);
+ 	}
+ 	strbuf_release(&req_buf);
++	strbuf_release(&cap_buf);
+ 
+ 	if (use_sideband && cmds_sent) {
+ 		memset(&demux, 0, sizeof(demux));
 -- 
 2.1.0-403-g099cf47
