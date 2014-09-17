@@ -1,75 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Query: Failed to suppress CC while sending patchset
-Date: Wed, 17 Sep 2014 13:31:46 +0200
-Message-ID: <vpqd2aumqjh.fsf@anie.imag.fr>
-References: <CAMf-jSkjYFEsN01DZc=Xc6qb037zeVeo4cUKDJJN-Q0Z4f6B9Q@mail.gmail.com>
-	<vpqd2au20md.fsf@anie.imag.fr>
-	<CAMf-jSnx_NphQ5XR5eY6B9cFLbWPhh1vJtFw5=2jXt7-30VW=A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Pramod Gurav <pramod.gurav.etc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 17 13:31:56 2014
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: [PATCH] help: Fix size passed to qsort
+Date: Wed, 17 Sep 2014 14:14:39 +0200
+Message-ID: <1410956079-23513-1-git-send-email-stefanbeller@gmail.com>
+Cc: Stefan Beller <stefanbeller@gmail.com>
+To: pdebie@ai.rug.nl, gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 17 14:14:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUDSl-0007pC-Na
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Sep 2014 13:31:56 +0200
+	id 1XUE8G-0005MZ-DT
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Sep 2014 14:14:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755296AbaIQLbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2014 07:31:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57479 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753107AbaIQLbv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2014 07:31:51 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s8HBVjPd024901
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Sep 2014 13:31:46 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s8HBVkio003358;
-	Wed, 17 Sep 2014 13:31:46 +0200
-In-Reply-To: <CAMf-jSnx_NphQ5XR5eY6B9cFLbWPhh1vJtFw5=2jXt7-30VW=A@mail.gmail.com>
-	(Pramod Gurav's message of "Wed, 17 Sep 2014 16:59:35 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 17 Sep 2014 13:31:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s8HBVjPd024901
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1411558307.6528@MW88ypm4eMd4DrDypn+1XQ
+	id S1755294AbaIQMOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2014 08:14:44 -0400
+Received: from mail-we0-f169.google.com ([74.125.82.169]:58004 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754856AbaIQMOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2014 08:14:43 -0400
+Received: by mail-we0-f169.google.com with SMTP id w61so1322585wes.28
+        for <git@vger.kernel.org>; Wed, 17 Sep 2014 05:14:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=wx/s3m6rFeut01z5PNWOuZIuy+BQxDzLyrumhfkl9n0=;
+        b=j3E6y2pkqbvVDBLdwRHRhaomJVQH7z/GIMuLs1Ex8bTaBGOU5X48D2rsccktzf2S/X
+         NK5YK8nPRFMwmahcmAVDKVBHB9gXD2ijr75rygx9fUSwT/HMtE+Vp8SJgTJ6hIJ0jrYx
+         nPHl8VvOEl3ktD1PyDTtthnv5+dLdV1XSDsNRn1FK1aLZ8hRqSi+iUjALTt21qociepH
+         6/MDmjELOfPynfzkb2ypvfjX7WqV+93t6Xxoade+cnC6Td519CFDLhJiVrOPfWHysr/L
+         Iq6uF35HHVOfga2lU3FGk+Zs3QAOgky1BWAaBay+/ZhGMTKnxWYO7ETzBqVx7WNVeG9Z
+         5aLw==
+X-Received: by 10.180.38.7 with SMTP id c7mr5089944wik.65.1410956082728;
+        Wed, 17 Sep 2014 05:14:42 -0700 (PDT)
+Received: from localhost (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id cw6sm21970615wjb.18.2014.09.17.05.14.41
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 17 Sep 2014 05:14:41 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.238.gce1d3a9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257221>
 
-Pramod Gurav <pramod.gurav.etc@gmail.com> writes:
+We actually want to have the size of one 'name' and not the size
+of the names array.
 
-> Thanks Matthieu for suggestion.
->
-> On Wed, Sep 17, 2014 at 12:29 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Pramod Gurav <pramod.gurav.etc@gmail.com> writes:
->>
->>> gpramod:linux-next$ git send-email --to=pramod.gurav.etc@gmail.com
->>> --suppress-cc=cc --suppress-cc=self --suppress-cc=author 000*
->>
->> I guess you lacked the --suppress-cc=bodycc.
->
-> how does it differ from --suppress-cc=cc? from help I understand cc
-> avoids people in Cc lines in the patch header and bodycc avoids people
-> in Cc lines in the patch body?
->
-> Patch body is commit message, right? What is patch header?
+Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
+---
+ help.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I don't use these options, but I would guess the "header" are the
-email-like headers at the top of the generated patch, and the body is
-the part after the blank lines.
-
+diff --git a/help.c b/help.c
+index 7af65e2..2072a87 100644
+--- a/help.c
++++ b/help.c
+@@ -305,7 +305,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 	add_cmd_list(&main_cmds, &aliases);
+ 	add_cmd_list(&main_cmds, &other_cmds);
+ 	qsort(main_cmds.names, main_cmds.cnt,
+-	      sizeof(main_cmds.names), cmdname_compare);
++	      sizeof(*main_cmds.names), cmdname_compare);
+ 	uniq(&main_cmds);
+ 
+ 	/* This abuses cmdname->len for levenshtein distance */
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.1.0.238.gce1d3a9
