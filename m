@@ -1,176 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6 14/23] gpg-interface: move parse_signature() to where it should be
-Date: Wed, 17 Sep 2014 15:45:49 -0700
-Message-ID: <1410993958-32394-15-git-send-email-gitster@pobox.com>
+Subject: [PATCH v6 02/23] receive-pack: parse feature request a bit earlier
+Date: Wed, 17 Sep 2014 15:45:37 -0700
+Message-ID: <1410993958-32394-3-git-send-email-gitster@pobox.com>
 References: <1410993958-32394-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 18 00:47:15 2014
+X-From: git-owner@vger.kernel.org Thu Sep 18 00:47:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUO0G-0002Qm-OJ
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 00:47:13 +0200
+	id 1XUO0K-0002S5-IY
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 00:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932130AbaIQWqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Sep 2014 18:46:37 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65353 "EHLO smtp.pobox.com"
+	id S1756942AbaIQWqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Sep 2014 18:46:09 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57593 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932108AbaIQWqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Sep 2014 18:46:35 -0400
+	id S1756816AbaIQWqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Sep 2014 18:46:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AA5DD39E1C;
-	Wed, 17 Sep 2014 18:46:34 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0138039DD0;
+	Wed, 17 Sep 2014 18:46:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ZVL0
-	q++jdOvPb7ZhhKlCK2b+CNE=; b=ZuQ0LbQB9RI6SblFO7W8TrGVq/a1i1okrWoY
-	OTSOK+qGSsh0yl1uXRJ92R2YqJv2WTxlYWwgAKV36DW+qKc/xccuMvrciYNT+f9p
-	bLN68Kh7XSiYnSbz5RALTf1YEdYiaKKGx4FgtsE2HfS22Cu1DEj0QaJaMoKkQeCW
-	zNS28zM=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=57Sr
+	L4FONNu6zaukHpsmU6S+ulU=; b=naiLhaRitJdPo2UJWkA4MZ44Ms1xjMDNKOnt
+	tvAhLVuGGUp2qnMqndwjmMA3h35E3xEF8JSg09Jt0/S1wyrOMyjSaoZKZSATe9mN
+	r/52QL9nQKQfTbIRKtsR0mWTdqNlzfFGDn2KbWR9tC1wwFe8GjSm75LGe5jNFTC3
+	pDHdNMQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=VS9Gso
-	wvrq2VqaPRcyIBYVOUamFWfTOF1SqjP+yMHlalJQ+ESwxbuoDf3dU96IgzpUnXu7
-	LIanlgY3dMstaWfCcPj7Cbsw8OG+jjO8mINA2iTYUcpxY0rARgLgmazRo79xwoW5
-	kwCYqz9eiu+EtlevJdB7d19X2GRNBbQMtJAEs=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=UfDz9R
+	yO+cpK6QEp33dKcA+e/XB0r+7jfLzKhgH16wNWp1ymMOozcZU6MdH+3C8Atku7Sm
+	Vl78oeWsB3sbBzn5rZir3dPEyDCMuUjlOoq3PfFv8spjzzoILMN5P7zFt3uhVlmP
+	MLrWp7NGsl/ri490bsel5coZZhjkiyPpL6FQw=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A0EEE39E1B;
-	Wed, 17 Sep 2014 18:46:34 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EB14039DCF;
+	Wed, 17 Sep 2014 18:46:05 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D813639E10;
-	Wed, 17 Sep 2014 18:46:28 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3E27839DCE;
+	Wed, 17 Sep 2014 18:46:05 -0400 (EDT)
 X-Mailer: git-send-email 2.1.0-403-g099cf47
 In-Reply-To: <1410993958-32394-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 766321D8-3EBC-11E4-916D-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 684D3B88-3EBC-11E4-89E5-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257249>
 
-Our signed-tag objects set the standard format used by Git to store
-GPG-signed payload (i.e. the payload followed by its detached
-signature) [*1*], and it made sense to have a helper to find the
-boundary between the payload and its signature in tag.c back then.
-
-Newer code added later to parse other kinds of objects that learned
-to use the same format to store GPG-signed payload (e.g. signed
-commits), however, kept using the helper from the same location.
-
-Move it to gpg-interface; the helper is no longer about signed tag,
-but it is how our code and data interact with GPG.
-
-[Reference]
-*1* http://thread.gmane.org/gmane.linux.kernel/297998/focus=1383
+Ideally, we should have also allowed the first "shallow" to carry
+the feature request trailer, but that is water under the bridge
+now.  This makes the next step to factor out the queuing of commands
+easier to review.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
  Unchanged since v5.
 
- gpg-interface.c | 21 +++++++++++++++++++++
- gpg-interface.h |  1 +
- tag.c           | 20 --------------------
- tag.h           |  1 -
- 4 files changed, 22 insertions(+), 21 deletions(-)
+ builtin/receive-pack.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 3c9624c..0dd11ea 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -7,6 +7,9 @@
- static char *configured_signing_key;
- static const char *gpg_program = "gpg";
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 1663beb..a91eec8 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -840,7 +840,7 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 		unsigned char old_sha1[20], new_sha1[20];
+ 		struct command *cmd;
+ 		char *refname;
+-		int len, reflen;
++		int len, reflen, linelen;
  
-+#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-+#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
+ 		line = packet_read_line(0, &len);
+ 		if (!line)
+@@ -853,7 +853,18 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 			continue;
+ 		}
+ 
+-		if (len < 83 ||
++		linelen = strlen(line);
++		if (linelen < len) {
++			const char *feature_list = line + linelen + 1;
++			if (parse_feature_request(feature_list, "report-status"))
++				report_status = 1;
++			if (parse_feature_request(feature_list, "side-band-64k"))
++				use_sideband = LARGE_PACKET_MAX;
++			if (parse_feature_request(feature_list, "quiet"))
++				quiet = 1;
++		}
 +
- void signature_check_clear(struct signature_check *sigc)
- {
- 	free(sigc->payload);
-@@ -57,6 +60,24 @@ void parse_gpg_output(struct signature_check *sigc)
- 	}
- }
++		if (linelen < 83 ||
+ 		    line[40] != ' ' ||
+ 		    line[81] != ' ' ||
+ 		    get_sha1_hex(line, old_sha1) ||
+@@ -862,16 +873,7 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 			    line);
  
-+/*
-+ * Look at GPG signed content (e.g. a signed tag object), whose
-+ * payload is followed by a detached signature on it.  Return the
-+ * offset where the embedded detached signature begins, or the end of
-+ * the data when there is no such signature.
-+ */
-+size_t parse_signature(const char *buf, unsigned long size)
-+{
-+	char *eol;
-+	size_t len = 0;
-+	while (len < size && !starts_with(buf + len, PGP_SIGNATURE) &&
-+			!starts_with(buf + len, PGP_MESSAGE)) {
-+		eol = memchr(buf + len, '\n', size - len);
-+		len += eol ? eol - (buf + len) + 1 : size - len;
-+	}
-+	return len;
-+}
-+
- void set_signing_key(const char *key)
- {
- 	free(configured_signing_key);
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 82493b7..87a4f2e 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -20,6 +20,7 @@ struct signature_check {
- };
- 
- extern void signature_check_clear(struct signature_check *sigc);
-+extern size_t parse_signature(const char *buf, unsigned long size);
- extern void parse_gpg_output(struct signature_check *);
- extern int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key);
- extern int verify_signed_buffer(const char *payload, size_t payload_size, const char *signature, size_t signature_size, struct strbuf *gpg_output, struct strbuf *gpg_status);
-diff --git a/tag.c b/tag.c
-index 82d841b..5b0ac62 100644
---- a/tag.c
-+++ b/tag.c
-@@ -4,9 +4,6 @@
- #include "tree.h"
- #include "blob.h"
- 
--#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
--#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
--
- const char *tag_type = "tag";
- 
- struct object *deref_tag(struct object *o, const char *warn, int warnlen)
-@@ -143,20 +140,3 @@ int parse_tag(struct tag *item)
- 	free(data);
- 	return ret;
- }
--
--/*
-- * Look at a signed tag object, and return the offset where
-- * the embedded detached signature begins, or the end of the
-- * data when there is no such signature.
-- */
--size_t parse_signature(const char *buf, unsigned long size)
--{
--	char *eol;
--	size_t len = 0;
--	while (len < size && !starts_with(buf + len, PGP_SIGNATURE) &&
--			!starts_with(buf + len, PGP_MESSAGE)) {
--		eol = memchr(buf + len, '\n', size - len);
--		len += eol ? eol - (buf + len) + 1 : size - len;
--	}
--	return len;
--}
-diff --git a/tag.h b/tag.h
-index bc8a1e4..f4580ae 100644
---- a/tag.h
-+++ b/tag.h
-@@ -17,6 +17,5 @@ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long si
- extern int parse_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
- extern struct object *deref_tag_noverify(struct object *);
--extern size_t parse_signature(const char *buf, unsigned long size);
- 
- #endif /* TAG_H */
+ 		refname = line + 82;
+-		reflen = strlen(refname);
+-		if (reflen + 82 < len) {
+-			const char *feature_list = refname + reflen + 1;
+-			if (parse_feature_request(feature_list, "report-status"))
+-				report_status = 1;
+-			if (parse_feature_request(feature_list, "side-band-64k"))
+-				use_sideband = LARGE_PACKET_MAX;
+-			if (parse_feature_request(feature_list, "quiet"))
+-				quiet = 1;
+-		}
++		reflen = linelen - 82;
+ 		cmd = xcalloc(1, sizeof(struct command) + reflen + 1);
+ 		hashcpy(cmd->old_sha1, old_sha1);
+ 		hashcpy(cmd->new_sha1, new_sha1);
 -- 
 2.1.0-403-g099cf47
