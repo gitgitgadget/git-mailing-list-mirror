@@ -1,101 +1,114 @@
-From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: git svn's performance issue and strange pauses, and other thing
-Date: Thu, 18 Sep 2014 08:39:53 +0100
-Message-ID: <1411025993.80693.YahooMailBasic@web172304.mail.ir2.yahoo.com>
-Reply-To: htl10@users.sourceforge.net
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v5 08/35] lock_file(): always add lock_file object to
+ lock_file_list
+Date: Thu, 18 Sep 2014 09:47:18 +0200
+Message-ID: <541A8E06.8080609@alum.mit.edu>
+References: <1410896036-12750-1-git-send-email-mhagger@alum.mit.edu> <1410896036-12750-9-git-send-email-mhagger@alum.mit.edu> <541A6047.6000707@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-To: normalperson@yhbt.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 18 09:46:40 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Ronnie Sahlberg <sahlberg@google.com>,
+	git@vger.kernel.org
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Sep 18 09:54:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUWQJ-0000DU-9i
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 09:46:39 +0200
+	id 1XUWXt-0002mL-DK
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 09:54:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755996AbaIRHqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2014 03:46:35 -0400
-Received: from nm16-vm8.bullet.mail.ir2.yahoo.com ([212.82.96.214]:49816 "EHLO
-	nm16-vm8.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754936AbaIRHqe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2014 03:46:34 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Sep 2014 03:46:34 EDT
-Received: from [212.82.98.126] by nm16.bullet.mail.ir2.yahoo.com with NNFMP; 18 Sep 2014 07:39:53 -0000
-Received: from [212.82.98.93] by tm19.bullet.mail.ir2.yahoo.com with NNFMP; 18 Sep 2014 07:39:53 -0000
-Received: from [127.0.0.1] by omp1030.mail.ir2.yahoo.com with NNFMP; 18 Sep 2014 07:39:53 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 272787.95409.bm@omp1030.mail.ir2.yahoo.com
-Received: (qmail 3011 invoked by uid 60001); 18 Sep 2014 07:39:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1411025993; bh=Lh0+e7O9x/FQnEGvs90RpANf7WMrmO3Vj+MdZ59mzms=; h=Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=bMo+9lBocgYB2+ivTQiQr/iUB+5ru2i/+ZEXiRyyRCr3+2X04VSUguLgeXadGW5fqHuNT6S2PqkWN4lH0CmRVtHMJBTaOYEDGaM4BbHYe531ETn3/VA6Ia+yMB/M7jBqwgxBvwjokrC4QbQOUjmvlkA6mOaY5fDe7De+SGnsE3w=
-X-YMail-OSG: RPeiT8QVM1m63DmAT94zrqPc5q3QiGCW9sv5HDK8K33kZLH
- XO6QYXJsykVivvoBuyaPjqbYzs2IlTyFYguxs10zaUx3LOF2oxfC89DfIl87
- _vgpA5EqNSYHn_VQya7TSv7rhzgkqEhY8Kbjw2JMEpSMnzw52uHZak5M191P
- SS7VCEfC._mOTCRcE0BvYQk60OAnsdVHcQI2qSIiVKTi4m9JHMqYBk6EZA7O
- WLgjQGhh__ecnw40rCtykcqyuTYXTe9VKl3RR8PTF98wUodd2wzsjDX.iX18
- pXlT4yMeOWtNFhLR3ClR7Mv5ALtFBkz298GZ.v6LVNm.b4i8mbOhlOO0jL3N
- jQSYHgMSsHVzVkNZlJOpr1yv_qercq15NqlW0Kel6VrRZm5wqe74ZeGe3w94
- c8ERd04vq4NFWWj5vJ9EgQbkZiclIMjpt_Qh1qfK_fR0UXwlV7nV8UUQEDrB
- S7r.XKrVOoQS8MMchzCyBE0fMMSGIlEQv1HVxwochuagEBr1W_ukyLfrXgmh
- 4_mqc4rGYxvNxdWEka.Dv5fkvR384OibzMoNujd4KRRT5JcqzFdekPncF3FA
- alF.ZrRfEMOsJITn9OxqOIs6pYg4NEOaf.sFIlw.kjgpjGJcfPucV9phJm.i
- VHhdEg3LtsVI-
-Received: from [86.30.137.134] by web172304.mail.ir2.yahoo.com via HTTP; Thu, 18 Sep 2014 08:39:53 BST
-X-Rocket-MIMEInfo: 002.001,KEkgYW0gbm90IG9uIHRoZSBsaXN0IC0gcGxlYXNlIENDKQ0KDQpUaGFua3MgZm9yIGdpdC1zdm4gLSBJIHVzZSBpdCBpbnN0ZWFkIG9mIHN1YnZlcnNpb24gaXRzZWxmIGZvciBtYW55IHllYXJzIG5vdy4NCg0KSnVzdCB0aG91Z2h0IEknZCBhc2svcmVwb3J0IGEgZmV3IGlzc3VlcyBJIG5vdGljZWQgZm9yIHNvbWUgdGltZQ0Kbm93LCBvZiB0cmFja2luZyBkZXZlbG9wbWVudCBvZiBhIHBhcnRpY3VsYXIgc3VidmVyc2lvbi1iYXNlZA0KZGV2ZWxvcG1lbnQgcHJvamVjdC4gQnJvYWRseSBzcGVha2luZywgSSABMAEBAQE-
-X-RocketYMMF: hintak_leung
-X-Mailer: YahooMailClassic/735 YahooMailWebService/0.8.201.700
+	id S1751595AbaIRHyZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Sep 2014 03:54:25 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:45854 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750834AbaIRHyZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Sep 2014 03:54:25 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Sep 2014 03:54:24 EDT
+X-AuditID: 1207440d-f797f6d000000a4a-43-541a8e0acb17
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id ED.C0.02634.A0E8A145; Thu, 18 Sep 2014 03:47:22 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB07BC.dip0.t-ipconnect.de [93.219.7.188])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8I7lIaS000319
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 18 Sep 2014 03:47:20 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
+In-Reply-To: <541A6047.6000707@web.de>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJKsWRmVeSWpSXmKPExsUixO6iqMvVJxVicPWskUXXlW4mi4beK8wW
+	T+beZbb40dLDbPFvQo1FZ8dXRgc2jwWbSj0evupi93jWu4fR4+IlZY/Pm+Q8bj/bxhLAFsVt
+	k5RYUhacmZ6nb5fAnXH12w3Wgll8FR/vTmJrYFzJ3cXIySEhYCKxcOMLNghbTOLCvfVANheH
+	kMBlRomupVtZIZxzTBKP9j1gBqniFdCW2PPkKguIzSKgKtE7uxnMZhPQlVjU08wEYosKBEh8
+	6HzACFEvKHFy5hMWkEEiAh2MEi//fwRKcHAwCyRJfO7IBqkRFoiSmHTwNhPEsumMEg2Nd5lA
+	ajgF1CSWt6qA1DAL6EnsuP6LFcKWl2jeOpt5AqPALCQrZiEpm4WkbAEj8ypGucSc0lzd3MTM
+	nOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkKDn3cH4f53MIUYBDkYlHt4DvFIhQqyJZcWVuYcY
+	JTmYlER5KxqAQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR483yBcrwpiZVVqUX5MClpDhYlcV61
+	Jep+QgLpiSWp2ampBalFMFkZDg4lCd7rPUCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJ
+	pSUZ8aBYjS8GRitIigdor0ovyN7igsRcoChE6ylGXY51nd/6mYRY8vLzUqXEebNBdgiAFGWU
+	5sGtgKW4V4ziQB8L8zKDjOIBpke4Sa+AljABLTHpBltSkoiQkmpgdDvBPO3ISq/nQaH7lu4M
+	WrIpZOOeSqM9wt9XnT2T1WQZd1EpWYfd7Llj2vvNb+U3/ZxzV8PDIVlBxNj1d5Kd 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257255>
 
-(I am not on the list - please CC)
+On 09/18/2014 06:32 AM, Torsten B=F6gershausen wrote:
+> On 09/16/2014 09:33 PM, Michael Haggerty wrote:
+> []
+>>
+>> diff --git a/lockfile.c b/lockfile.c
+>> index 983c3ec..00c972c 100644
+>> --- a/lockfile.c
+>> +++ b/lockfile.c
+>> @@ -129,6 +129,22 @@ static int lock_file(struct lock_file *lk, cons=
+t char *path, int flags)
+>>  	 */
+>>  	static const size_t max_path_len =3D sizeof(lk->filename) - 5;
+>> =20
+>> +	if (!lock_file_list) {
+>> +		/* One-time initialization */
+>> +		sigchain_push_common(remove_lock_file_on_signal);
+>> +		atexit(remove_lock_file);
+>> +	}
+>> +
+>> +	if (!lk->on_list) {
+>> +		/* Initialize *lk and add it to lock_file_list: */
+>> +		lk->fd =3D -1;
+>> +		lk->owner =3D 0;
+>> +		lk->on_list =3D 1;
+>> +		lk->filename[0] =3D 0;
+> Does it makes sense to change the order here:
+>=20
+> Do the full initialization, and once that is completed, set on_list =3D=
+ 1
+> +		lk->filename[0] =3D 0;
+> +		lk->on_list =3D 1;
 
-Thanks for git-svn - I use it instead of subversion itself for many years now.
+=46rom a functional standpoint, it doesn't matter. This function is the
+only place that uses on_list, and it is basically only used to make sur=
+e
+that each lock_file structure is initialized and registered in
+lock_file_list exactly once. In particular, the signal handling code
+doesn't care about the on_list field.
 
-Just thought I'd ask/report a few issues I noticed for some time
-now, of tracking development of a particular subversion-based
-development project. Broadly speaking, I think there are 3 problems,
-especially noticeable against a particular repository, but 
-to a lesser extent with some others too.
+So the only important timing requirement WRT on_list is that it be set
+before this function is called again with the same lock_file object. Bu=
+t
+any code that would call this function twice, simultaneously, with the
+same lock_file argument would be broken far more seriously than could b=
+e
+fixed by changing the order that the fields are initialized.
 
-- just doing "git svn fetch --all" seems to consume a lot of memory,
-for very little actual fetched changes. (in the 2GB+ region, sometimes).
+But I guess you are right that it looks more natural to set this field
+only after all of the initialization is done. I will make the change.
 
-- "git svn fetch --all" also seems to take a long time too, for certain
-fetched changes. (in the minutes region).
+Michael
 
--  I know I can probably just "read the source", but I'd like to know
-why .git/svn/.caches is even larger than .git/objects (which supposedly
-contains everything that's of interest)? I hope this can be documented
-towards the end of the man-page, for example, of important parts
-of .git/svn (and what not to do with them...), without needing to
-'read the source'. Here is part of "du" from a couple of days ago:
-
-254816	.git/objects
-307056	.git/svn/.caches
-332452	.git/svn
-588064	.git
-
-The actual .git/config is here - this should be sufficient info for
-somebody looking into experiencing the issues I mentioned above.
-
---------
-$ more .git/config 
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[svn-remote "svn"]
-	url = https://svn.r-project.org/R
-	fetch = trunk:refs/remotes/trunk
-	branches = branches/*:refs/remotes/*
-	tags = tags/*:refs/remotes/tags/*
-[pack]
-	threads = 1
-------------
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
