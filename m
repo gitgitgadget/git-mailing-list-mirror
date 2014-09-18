@@ -1,65 +1,112 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Code changes in merge commits
-Date: Mon, 29 Sep 2014 12:02:50 +0100
-Message-ID: <CAHQ6N+qGTubVB7F8LzfX=bODn6jdYtV9fz=RJ2fzS2aqhe5-uw@mail.gmail.com>
-References: <CAHQ6N+p1GqQfTs0H-4ij_QfkWQGfTUbWBzMC4E7LCEynPT78kA@mail.gmail.com>
- <CAHQ6N+rJDtq_vtfotM+GXLdN_P==oTqGbFZ97ZQea9+mcoRBog@mail.gmail.com> <vpq8ul2pu9n.fsf@anie.imag.fr>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH v2] Documentation/git-rebase.txt: discuss --fork-point assumption
+ of vanilla "git rebase" in DESCRIPTION.
+Date: Thu, 18 Sep 2014 23:03:25 +0400
+Message-ID: <87k34mn0ht.fsf@osv.gnss.ru>
+References: <87r3z72wiu.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 29 13:03:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 29 13:13:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYYjc-000430-LW
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 13:03:16 +0200
+	id 1XYYtL-0000tx-7d
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 13:13:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752243AbaI2LDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2014 07:03:12 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:34786 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971AbaI2LDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2014 07:03:11 -0400
-Received: by mail-we0-f172.google.com with SMTP id q58so3874422wes.3
-        for <git@vger.kernel.org>; Mon, 29 Sep 2014 04:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0aZvSHvpYi5TstsV9r2V58CizYua1kNqQddKce/J/V4=;
-        b=OijpVw8doRT/jE9L8s1cLfidPOhH03m2cvz7/k5OnOdAyGq6XIo/itKGGRhLTGbIsH
-         R2WfBlKv3GudzCkMFilqdFPbezIg/HpVoeD4MLuYoQZM7quQlBOX6PecyS/iYUZoLzm8
-         WdyOf7pre2YHEz5lDgK1byRv3pJFXjjfuj5iSLpiiMtNyPoa8ZxHCV2pmb7CgG+amXG7
-         rgynpT1rhoTpv3Wczp2jjeCBJVFpigdNz3xPryV0vCSBrBrRSvHAbRMfGiiIIBappja7
-         Wdlkg5jU+KI2wZGZaxIMzSGCpACRgyPnS+zYQWHjQcbF7oZd0UTWMZhQLDSFyRoDCbjk
-         sd1Q==
-X-Received: by 10.180.96.71 with SMTP id dq7mr1996506wib.66.1411988590552;
- Mon, 29 Sep 2014 04:03:10 -0700 (PDT)
-Received: by 10.27.130.193 with HTTP; Mon, 29 Sep 2014 04:02:50 -0700 (PDT)
-In-Reply-To: <vpq8ul2pu9n.fsf@anie.imag.fr>
+	id S1753766AbaI2LNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2014 07:13:06 -0400
+Received: from mail.javad.com ([54.86.164.124]:54720 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751921AbaI2LNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2014 07:13:05 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id 59EC661861;
+	Mon, 29 Sep 2014 11:13:04 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1XYYt4-0004vZ-J0; Mon, 29 Sep 2014 15:13:02 +0400
+In-Reply-To: <87r3z72wiu.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257622>
 
-> What I'd love to see with "git log -p" is the diff between a trivial
-> merge (possibly including conflict markers) and the actual merge commit.
-> That would imply that "git log" would redo the merge before computing
-> the diff (rather heavyweight :-( ), but an empty diff would mean "no
-> change other than merge", and if any, we would see the conflict
-> resolution or additional changes in the diff.
+Vanilla "git rebase" defaults to --fork-point that in some cases
+makes behavior very different from "git rebase <upstream>",
+where --no-fork-point is assumed. This fact was not mentioned in
+the DESCRIPTION section of the manual page, even though the case of
+omitted <upstream> was otherwise discussed. That in turn made actual
+behavior of vanilla "git rebase" hardly discoverable.
 
-This would be wonderful.  And I'd rather have git do the heavyweight
-work than doing it myself :-/
+While we are at it, clarify the --fork-point description itself as well.
 
-I don't know the git internals at all - would it be possible to "save"
-the results of the diff?  This is what I was aiming for in my idea of
-making the merge and conflict-resolution as separate commits.
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+---
+As asked by Junio C Hamano <gitster@pobox.com>, the newly introduced
+'fork_point' term has been described.
 
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+
+ Documentation/git-rebase.txt | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 4138554..2e6f125 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -21,15 +21,17 @@ If <branch> is specified, 'git rebase' will perform an automatic
+ it remains on the current branch.
+ 
+ If <upstream> is not specified, the upstream configured in
+-branch.<name>.remote and branch.<name>.merge options will be used; see
+-linkgit:git-config[1] for details.  If you are currently not on any
+-branch or if the current branch does not have a configured upstream,
+-the rebase will abort.
++branch.<name>.remote and branch.<name>.merge options will be used (see
++linkgit:git-config[1] for details) and the `--fork-point` option is
++assumed.  If you are currently not on any branch or if the current
++branch does not have a configured upstream, the rebase will abort.
+ 
+ All changes made by commits in the current branch but that are not
+ in <upstream> are saved to a temporary area.  This is the same set
+-of commits that would be shown by `git log <upstream>..HEAD` (or
+-`git log HEAD`, if --root is specified).
++of commits that would be shown by `git log <upstream>..HEAD`; or by
++`git log 'fork_point'..HEAD`, if --fork-point is either specified or
++assumed (see --fork-point description below); or by `git log HEAD`, if
++--root is specified.
+ 
+ The current branch is reset to <upstream>, or <newbase> if the
+ --onto option was supplied.  This has the exact same effect as
+@@ -327,13 +329,18 @@ link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details)
+ 
+ --fork-point::
+ --no-fork-point::
+-	Use 'git merge-base --fork-point' to find a better common ancestor
+-	between `upstream` and `branch` when calculating which commits have
+-	have been introduced by `branch` (see linkgit:git-merge-base[1]).
++	Use reflog to find a better common ancestor between <upstream>
++	and <branch> when calculating which commits have been
++	introduced by <branch>. 
+ +
+-If no non-option arguments are given on the command line, then the default is
+-`--fork-point @{u}` otherwise the `upstream` argument is interpreted literally
+-unless the `--fork-point` option is specified.
++When --fork-point is active, 'fork_point' will be used instead of
++<upstream> to calculate the set of commits to rebase, where
++'fork_point' is the result of `git merge-base --fork-point <upstream>
++<branch>` command (see linkgit:git-merge-base[1]).  If 'fork_point'
++ends up being empty, the <upstream> will be used instead.
+++
++If either <upstream> or --root is given on the command line, then the
++default is `--no-fork-point`, otherwise the default is `--fork-point`.
+ 
+ --ignore-whitespace::
+ --whitespace=<option>::
+-- 
+1.9.3
