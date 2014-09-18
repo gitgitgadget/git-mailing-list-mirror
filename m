@@ -1,188 +1,130 @@
-From: Harry Jeffery <harry@exec64.co.uk>
-Subject: [PATCH v4] pretty: add %D format specifier
-Date: Thu, 18 Sep 2014 21:53:53 +0100
-Message-ID: <1411073633-31271-1-git-send-email-harry@exec64.co.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 18 22:54:11 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff --no-index: allow pathspec after --
+Date: Thu, 18 Sep 2014 15:41:44 -0700
+Message-ID: <xmqqha04o8k7.fsf@gitster.dls.corp.google.com>
+References: <1410256584-19562-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 00:41:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUiiQ-0005Y0-DA
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 22:54:10 +0200
+	id 1XUkOd-0002Y4-Gx
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 00:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757049AbaIRUyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2014 16:54:05 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:37169 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756203AbaIRUyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2014 16:54:04 -0400
-Received: by mail-wg0-f51.google.com with SMTP id k14so1500820wgh.22
-        for <git@vger.kernel.org>; Thu, 18 Sep 2014 13:54:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=nmcHWj0QWmwEGlsRwl9/cH51BhyipjJ8gJy+vYEieXk=;
-        b=XPj6ZcXtYXWKt2JNIUiY85jpd3PAPIAjA6Pu949wvJWwWW7KbXNvC800EMyAss+9c3
-         4sHi5Qc25rdVIvb7MBn5rNHeFHiwNPmMwUkCu+RqyCVAwAtvpQWMrZz6Cg63yaryA7H3
-         C/LMXWbj+Wr8KvRrBmEek+k0Uj7TN3vwFv67Uu6ATXlK4jNMYPu5zUkXWoC2KwZDMFtE
-         UofeXBBq2H7gEKUg2kDzn4XfMDH2/u3xvAGJqCqVcDM1+pf/gzMCmfnKFXYDSc2aaIav
-         /4qZ5K3cwHpiUOliovlsqNDRdsT4jWK46/j/p+gJC9XK/th2y8hr5a20LaymTAdKEkSk
-         AIiA==
-X-Gm-Message-State: ALoCoQksgG915jRCZZvKNDXekFBF4DYWOcOlOcRcYZhcOMtmYjBJcbvPEOFKGf5A7FdVni+l3ZZz
-X-Received: by 10.180.86.33 with SMTP id m1mr49501014wiz.11.1411073641505;
-        Thu, 18 Sep 2014 13:54:01 -0700 (PDT)
-Received: from zenbook.localdomain (cpc69047-oxfd25-2-0-cust267.4-3.cable.virginm.net. [81.109.93.12])
-        by mx.google.com with ESMTPSA id bk6sm27364715wjb.26.2014.09.18.13.53.59
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 Sep 2014 13:54:00 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0
+	id S1756478AbaIRWls convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Sep 2014 18:41:48 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56617 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751401AbaIRWlr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Sep 2014 18:41:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B6DB3BA99;
+	Thu, 18 Sep 2014 18:41:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=1rKcG8reEjN5
+	fvdpraAD0p8y85E=; b=A1c25EnAId/JzsEJLI549w2V4snjO7kjYXw3n62B34Kq
+	gJUDQfi5z+CkWmlbywa8kP3xggm+6P3CXKsnKXBYs6cW8qR4Q2Qsslw9YuSICtrg
+	gkAsCMn6EGz5ca1o/OU7hkJrDvDQz/TiXO1EtManJ1Z+UX1AzlP21ELORi87vp8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iqH/gs
+	7NUx8XETmenm1XD8nGw4XN5RGGFovA88t32g+p0spvopHoH7qqeW1z7mUrt4aVF2
+	vx91NBxJOeBMllWuTyddKQmoLNSybcJL2GQxpm1q9tXEiyU9xXarRO2CA/60+qGy
+	rcgtzVrKsZSvsbaby5bu60TUD6oZfi5PsZCsw=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6FF6B3BA97;
+	Thu, 18 Sep 2014 18:41:46 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E69B73BA94;
+	Thu, 18 Sep 2014 18:41:45 -0400 (EDT)
+In-Reply-To: <1410256584-19562-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 9 Sep
+ 2014 16:56:24 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F8278A38-3F84-11E4-B24C-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257276>
 
-Add a new format specifier, '%D' that is identical in behaviour to '%d',
-except that it does not include the ' (' prefix or ')' suffix provided
-by '%d'.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Signed-off-by: Harry Jeffery <harry@exec64.co.uk>
----
- Documentation/pretty-formats.txt |  6 ++++--
- log-tree.c                       | 17 +++++++++--------
- log-tree.h                       |  8 +++++++-
- pretty.c                         |  4 ++++
- t/t4205-log-pretty-formats.sh    | 11 +++++++++++
- 5 files changed, 35 insertions(+), 11 deletions(-)
+> Another patch to test the water before I put more effort into it.
+>
+> Commit d516c2d (Teach git-diff-files the new option `--no-index` -
+> 2007-02-22) brings the bells and whistles of git-diff to the world
+> outside a git repository. This patch continues that direction and add=
+s
+> a new syntax
+>
+>     git diff --no-index [--] <path> <path> -- <pathspec>
+>
+> It's easy to guess that the two directories will be filtered by
+> pathspec,...
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index eac7909..2632e1a 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -128,6 +128,7 @@ The placeholders are:
- - '%ct': committer date, UNIX timestamp
- - '%ci': committer date, ISO 8601 format
- - '%d': ref names, like the --decorate option of linkgit:git-log[1]
-+- '%D': ref names without the " (", ")" wrapping.
- - '%e': encoding
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
-@@ -182,8 +183,9 @@ The placeholders are:
- NOTE: Some placeholders may depend on other options given to the
- revision traversal engine. For example, the `%g*` reflog options will
- insert an empty string unless we are traversing reflog entries (e.g., by
--`git log -g`). The `%d` placeholder will use the "short" decoration
--format if `--decorate` was not already provided on the command line.
-+`git log -g`). The `%d` and `%D` placeholders will use the "short"
-+decoration format if `--decorate` was not already provided on the command
-+line.
- 
- If you add a `+` (plus sign) after '%' of a placeholder, a line-feed
- is inserted immediately before the expansion if and only if the
-diff --git a/log-tree.c b/log-tree.c
-index 95e9b1d..8d05bb3 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -179,14 +179,16 @@ static void show_children(struct rev_info *opt, struct commit *commit, int abbre
- }
- 
- /*
-- * The caller makes sure there is no funny color before
-- * calling. format_decorations makes sure the same after return.
-+ * The caller makes sure there is no funny color before calling.
-+ * format_decorations_extended makes sure the same after return.
-  */
--void format_decorations(struct strbuf *sb,
-+void format_decorations_extended(struct strbuf *sb,
- 			const struct commit *commit,
--			int use_color)
-+			int use_color,
-+			const char *prefix,
-+			const char *separator,
-+			const char *suffix)
- {
--	const char *prefix;
- 	struct name_decoration *decoration;
- 	const char *color_commit =
- 		diff_get_color(use_color, DIFF_COMMIT);
-@@ -196,7 +198,6 @@ void format_decorations(struct strbuf *sb,
- 	decoration = lookup_decoration(&name_decoration, &commit->object);
- 	if (!decoration)
- 		return;
--	prefix = " (";
- 	while (decoration) {
- 		strbuf_addstr(sb, color_commit);
- 		strbuf_addstr(sb, prefix);
-@@ -205,11 +206,11 @@ void format_decorations(struct strbuf *sb,
- 			strbuf_addstr(sb, "tag: ");
- 		strbuf_addstr(sb, decoration->name);
- 		strbuf_addstr(sb, color_reset);
--		prefix = ", ";
-+		prefix = separator;
- 		decoration = decoration->next;
- 	}
- 	strbuf_addstr(sb, color_commit);
--	strbuf_addch(sb, ')');
-+	strbuf_addstr(sb, suffix);
- 	strbuf_addstr(sb, color_reset);
- }
- 
-diff --git a/log-tree.h b/log-tree.h
-index d6ecd4d..b26160c 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -13,7 +13,13 @@ int log_tree_diff_flush(struct rev_info *);
- int log_tree_commit(struct rev_info *, struct commit *);
- int log_tree_opt_parse(struct rev_info *, const char **, int);
- void show_log(struct rev_info *opt);
--void format_decorations(struct strbuf *sb, const struct commit *commit, int use_color);
-+void format_decorations_extended(struct strbuf *sb, const struct commit *commit,
-+			     int use_color,
-+			     const char *prefix,
-+			     const char *separator,
-+			     const char *suffix);
-+#define format_decorations(strbuf, commit, color) \
-+			     format_decorations_extended((strbuf), (commit), (color), " (", ", ", ")")
- void show_decorations(struct rev_info *opt, struct commit *commit);
- void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 			     const char **subject_p,
-diff --git a/pretty.c b/pretty.c
-index 44b9f64..46d65b9 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1197,6 +1197,10 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 		load_ref_decorations(DECORATE_SHORT_REFS);
- 		format_decorations(sb, commit, c->auto_color);
- 		return 1;
-+	case 'D':
-+		load_ref_decorations(DECORATE_SHORT_REFS);
-+		format_decorations_extended(sb, commit, c->auto_color, "", ", ", "");
-+		return 1;
- 	case 'g':		/* reflog info */
- 		switch(placeholder[1]) {
- 		case 'd':	/* reflog selector */
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index de0cc4a..eb3d7a2 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -457,4 +457,15 @@ EOF
- 	test_cmp expected actual1
- '
- 
-+test_expect_success 'clean log decoration' '
-+	git log --no-walk --tags --pretty="%H %D" --decorate=full >actual &&
-+	cat >expected <<EOF &&
-+$head1 tag: refs/tags/tag2
-+$head2 tag: refs/tags/message-one
-+$old_head1 tag: refs/tags/message-two
-+EOF
-+	sort actual >actual1 &&
-+	test_cmp expected actual1
-+'
-+
- test_done
--- 
-2.1.0
+Ugh.  Nobody's diff works that way, and nowhere in our UI we use
+double-dashes that way, either.
+
+So while I like the idea of "I want to tell Git to compare these two
+directories with these pathspec", I do not think we would want to
+touch such a syntax with 10 foot pole X-<.
+
+> @@ -194,19 +207,23 @@ void diff_no_index(struct rev_info *revs,
+>  		int j;
+>  		if (!strcmp(argv[i], "--no-index"))
+>  			i++;
+> -		else if (!strcmp(argv[i], "--"))
+> +		else if (!strcmp(argv[i], "--")) {
+>  			i++;
+> -		else {
+> +			break;
+> +		} else {
+
+I think this part is a good bugfix regardless of your new feature.
+
+The general command line structure ought to be:
+
+   $ git diff [--no-index] [--<diff options>...] [--] <path> <path>
+
+but the existing code is too loose in that "--" is just ignored.
+The caller in builtin/diff.c makes sure "--no-index" comes before
+"--", the latter of which stops option processing, so it is not so
+grave a bug, though.
+
+Coming back to the command line syntax for the new feature, if I had
+to choose, I would say
+
+	git diff --no-index [-<options>] [--] <path> <path> <pathspec>
+
+perhaps?  As we never compare anything other than two things, we can
+do the following:
+
+ * Implicit --no-index heuristics will kick in _ONLY_ when we have
+   two things at the end after parsing options in builtin/diff.c, as
+   before;
+
+ * In diff_no_index() after parsing options at its beginning,
+
+  - if we have only two things left, they may be
+
+    . two files;
+    . a file and "-" or "-" and a file; or
+    . two directories (fully traversed without pathspecs)
+
+    just as before.
+
+  - if we have more than two things left, the first two of these
+    _MUST_ be directories, and the remainder is pathspec to filter
+    the result of directory traversal.
+
+Wluldn't that be cleaner and easier to understand?
