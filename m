@@ -1,114 +1,237 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v5 08/35] lock_file(): always add lock_file object to
- lock_file_list
-Date: Thu, 18 Sep 2014 09:47:18 +0200
-Message-ID: <541A8E06.8080609@alum.mit.edu>
-References: <1410896036-12750-1-git-send-email-mhagger@alum.mit.edu> <1410896036-12750-9-git-send-email-mhagger@alum.mit.edu> <541A6047.6000707@web.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] branch: clean up commit flags after merge-filter walk
+Date: Thu, 18 Sep 2014 06:49:43 -0400
+Message-ID: <20140918104943.GA13481@peff.net>
+References: <87fvfutza3.fsf@fencepost.gnu.org>
+ <xmqq38bs92sg.fsf@gitster.dls.corp.google.com>
+ <87a960r9d2.fsf@fencepost.gnu.org>
+ <xmqqwq944ov0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Ronnie Sahlberg <sahlberg@google.com>,
-	git@vger.kernel.org
-To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Sep 18 09:54:30 2014
+Content-Type: text/plain; charset=utf-8
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 18 12:49:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUWXt-0002mL-DK
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 09:54:29 +0200
+	id 1XUZHd-0002iw-Dq
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 12:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595AbaIRHyZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Sep 2014 03:54:25 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:45854 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750834AbaIRHyZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Sep 2014 03:54:25 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Sep 2014 03:54:24 EDT
-X-AuditID: 1207440d-f797f6d000000a4a-43-541a8e0acb17
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id ED.C0.02634.A0E8A145; Thu, 18 Sep 2014 03:47:22 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB07BC.dip0.t-ipconnect.de [93.219.7.188])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8I7lIaS000319
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 18 Sep 2014 03:47:20 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <541A6047.6000707@web.de>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJKsWRmVeSWpSXmKPExsUixO6iqMvVJxVicPWskUXXlW4mi4beK8wW
-	T+beZbb40dLDbPFvQo1FZ8dXRgc2jwWbSj0evupi93jWu4fR4+IlZY/Pm+Q8bj/bxhLAFsVt
-	k5RYUhacmZ6nb5fAnXH12w3Wgll8FR/vTmJrYFzJ3cXIySEhYCKxcOMLNghbTOLCvfVANheH
-	kMBlRomupVtZIZxzTBKP9j1gBqniFdCW2PPkKguIzSKgKtE7uxnMZhPQlVjU08wEYosKBEh8
-	6HzACFEvKHFy5hMWkEEiAh2MEi//fwRKcHAwCyRJfO7IBqkRFoiSmHTwNhPEsumMEg2Nd5lA
-	ajgF1CSWt6qA1DAL6EnsuP6LFcKWl2jeOpt5AqPALCQrZiEpm4WkbAEj8ypGucSc0lzd3MTM
-	nOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkKDn3cH4f53MIUYBDkYlHt4DvFIhQqyJZcWVuYcY
-	JTmYlER5KxqAQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR483yBcrwpiZVVqUX5MClpDhYlcV61
-	Jep+QgLpiSWp2ampBalFMFkZDg4lCd7rPUCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJ
-	pSUZ8aBYjS8GRitIigdor0ovyN7igsRcoChE6ylGXY51nd/6mYRY8vLzUqXEebNBdgiAFGWU
-	5sGtgKW4V4ziQB8L8zKDjOIBpke4Sa+AljABLTHpBltSkoiQkmpgdDvBPO3ISq/nQaH7lu4M
-	WrIpZOOeSqM9wt9XnT2T1WQZd1EpWYfd7Llj2vvNb+U3/ZxzV8PDIVlBxNj1d5Kd 
+	id S1756339AbaIRKtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2014 06:49:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49773 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755987AbaIRKts (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2014 06:49:48 -0400
+Received: (qmail 3110 invoked by uid 102); 18 Sep 2014 10:49:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Sep 2014 05:49:48 -0500
+Received: (qmail 20869 invoked by uid 107); 18 Sep 2014 10:50:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Sep 2014 06:50:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Sep 2014 06:49:43 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwq944ov0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257256>
 
-On 09/18/2014 06:32 AM, Torsten B=F6gershausen wrote:
-> On 09/16/2014 09:33 PM, Michael Haggerty wrote:
-> []
->>
->> diff --git a/lockfile.c b/lockfile.c
->> index 983c3ec..00c972c 100644
->> --- a/lockfile.c
->> +++ b/lockfile.c
->> @@ -129,6 +129,22 @@ static int lock_file(struct lock_file *lk, cons=
-t char *path, int flags)
->>  	 */
->>  	static const size_t max_path_len =3D sizeof(lk->filename) - 5;
->> =20
->> +	if (!lock_file_list) {
->> +		/* One-time initialization */
->> +		sigchain_push_common(remove_lock_file_on_signal);
->> +		atexit(remove_lock_file);
->> +	}
->> +
->> +	if (!lk->on_list) {
->> +		/* Initialize *lk and add it to lock_file_list: */
->> +		lk->fd =3D -1;
->> +		lk->owner =3D 0;
->> +		lk->on_list =3D 1;
->> +		lk->filename[0] =3D 0;
-> Does it makes sense to change the order here:
->=20
-> Do the full initialization, and once that is completed, set on_list =3D=
- 1
-> +		lk->filename[0] =3D 0;
-> +		lk->on_list =3D 1;
+On Mon, Sep 15, 2014 at 01:20:51PM -0700, Junio C Hamano wrote:
 
-=46rom a functional standpoint, it doesn't matter. This function is the
-only place that uses on_list, and it is basically only used to make sur=
-e
-that each lock_file structure is initialized and registered in
-lock_file_list exactly once. In particular, the signal handling code
-doesn't care about the on_list field.
+> David Kastrup <dak@gnu.org> writes:
+> 
+> > This gives the same result as
+> >
+> > git branch --verbose --merged
+> >
+> > namely _only_ listing the current branch verbosely.
+> 
+> Hmph.  Then that is a different issue.  As I never use --merged
+> myself, even though I use "git branch [--verbose] --no-merged pu"
+> quite often to check the list of topics that I received but not yet
+> merged anywhere in my tree, I wouldn't be entirely surprised that
+> the combination does not work, but with a quick glance of the code,
+> especially how matches_merge_filter() uses "--[no-]merged", I cannot
+> offhand imagine how --no-merged would work and --merged break.
 
-So the only important timing requirement WRT on_list is that it be set
-before this function is called again with the same lock_file object. Bu=
-t
-any code that would call this function twice, simultaneously, with the
-same lock_file argument would be broken far more seriously than could b=
-e
-fixed by changing the order that the fields are initialized.
+Ugh. The bug is caused by a failure to clean up the global flag state. I
+am really tempted to try converting the revision walker to keep its
+flags in a commit_slab so that this sort of thing can never bite us
+again.
 
-But I guess you are right that it looks more natural to set this field
-only after all of the initialization is done. I will make the change.
+But here is the minimal fix.
 
-Michael
+-- >8 --
+Subject: branch: clean up commit flags after merge-filter walk
 
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
+When we run `branch --merged`, we use prepare_revision_walk
+with the merge-filter marked as UNINTERESTING. Any branch
+tips that are marked UNINTERESTING after it returns must be
+ancestors of that commit. As we iterate through the list of
+refs to show, we check item->commit->object.flags to see
+whether it was marked.
+
+This interacts badly with --verbose, which will do a
+separate walk to find the ahead/behind information for each
+branch. There are two bad things that can happen:
+
+  1. The ahead/behind walk may get the wrong results,
+     because it can see a bogus UNINTERESTING flag leftover
+     from the merge-filter walk.
+
+  2. We may omit some branches if their tips are involved in
+     the ahead/behind traversal of a branch shown earlier.
+     The ahead/behind walk carefully cleans up its commit
+     flags, meaning it may also erase the UNINTERESTING
+     flag that we expect to check later.
+
+We can solve this by moving the merge-filter state for each
+ref into its "struct ref_item" as soon as we finish the
+merge-filter walk. That fixes (2). Then we are free to clear
+the commit flags we used in the walk, fixing (1).
+
+Note that we actually do away with the matches_merge_filter
+helper entirely here, and inline it between the revision
+walk and the flag-clearing. This ensures that nobody
+accidentally calls it at the wrong time (it is only safe to
+check in that instant between the setting and clearing of
+the global flag).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/branch.c           | 33 +++++++++++++++++++--------------
+ t/t3201-branch-contains.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 14 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index ced422b..9e4666f 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -280,6 +280,7 @@ struct ref_item {
+ 	char *dest;
+ 	unsigned int kind, width;
+ 	struct commit *commit;
++	int ignore;
+ };
+ 
+ struct ref_list {
+@@ -385,6 +386,7 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 	newitem->commit = commit;
+ 	newitem->width = utf8_strwidth(refname);
+ 	newitem->dest = resolve_symref(orig_refname, prefix);
++	newitem->ignore = 0;
+ 	/* adjust for "remotes/" */
+ 	if (newitem->kind == REF_REMOTE_BRANCH &&
+ 	    ref_list->kinds != REF_REMOTE_BRANCH)
+@@ -484,17 +486,6 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+ 	free(ref);
+ }
+ 
+-static int matches_merge_filter(struct commit *commit)
+-{
+-	int is_merged;
+-
+-	if (merge_filter == NO_FILTER)
+-		return 1;
+-
+-	is_merged = !!(commit->object.flags & UNINTERESTING);
+-	return (is_merged == (merge_filter == SHOW_MERGED));
+-}
+-
+ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
+ 			     int verbose, int abbrev)
+ {
+@@ -522,10 +513,9 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ {
+ 	char c;
+ 	int color;
+-	struct commit *commit = item->commit;
+ 	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
+ 
+-	if (!matches_merge_filter(commit))
++	if (item->ignore)
+ 		return;
+ 
+ 	switch (item->kind) {
+@@ -575,7 +565,7 @@ static int calc_maxwidth(struct ref_list *refs)
+ {
+ 	int i, w = 0;
+ 	for (i = 0; i < refs->index; i++) {
+-		if (!matches_merge_filter(refs->list[i].commit))
++		if (refs->list[i].ignore)
+ 			continue;
+ 		if (refs->list[i].width > w)
+ 			w = refs->list[i].width;
+@@ -618,6 +608,7 @@ static void show_detached(struct ref_list *ref_list)
+ 		item.kind = REF_LOCAL_BRANCH;
+ 		item.dest = NULL;
+ 		item.commit = head_commit;
++		item.ignore = 0;
+ 		if (item.width > ref_list->maxwidth)
+ 			ref_list->maxwidth = item.width;
+ 		print_ref_item(&item, ref_list->maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
+@@ -656,6 +647,20 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 
+ 		if (prepare_revision_walk(&ref_list.revs))
+ 			die(_("revision walk setup failed"));
++
++		for (i = 0; i < ref_list.index; i++) {
++			struct ref_item *item = &ref_list.list[i];
++			struct commit *commit = item->commit;
++			int is_merged = !!(commit->object.flags & UNINTERESTING);
++			item->ignore = is_merged != (merge_filter == SHOW_MERGED);
++		}
++
++		for (i = 0; i < ref_list.index; i++) {
++			struct ref_item *item = &ref_list.list[i];
++			clear_commit_marks(item->commit, ALL_REV_FLAGS);
++		}
++		clear_commit_marks(filter, ALL_REV_FLAGS);
++
+ 		if (verbose)
+ 			ref_list.maxwidth = calc_maxwidth(&ref_list);
+ 	}
+diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
+index 141b061..912a663 100755
+--- a/t/t3201-branch-contains.sh
++++ b/t/t3201-branch-contains.sh
+@@ -130,4 +130,33 @@ test_expect_success 'implicit --list conflicts with modification options' '
+ 
+ '
+ 
++# We want to set up a case where the walk for the tracking info
++# of one branch crosses the tip of another branch (and make sure
++# that the latter walk does not mess up our flag to see if it was
++# merged).
++#
++# Here "topic" tracks "master" with one extra commit, and "zzz" points to the
++# same tip as master The name "zzz" must come alphabetically after "topic"
++# as we process them in that order.
++test_expect_success 'branch --merged with --verbose' '
++	git branch --track topic master &&
++	git branch zzz topic &&
++	git checkout topic &&
++	test_commit foo &&
++	git branch --merged topic >actual &&
++	cat >expect <<-\EOF &&
++	  master
++	* topic
++	  zzz
++	EOF
++	test_cmp expect actual &&
++	git branch --verbose --merged topic >actual &&
++	cat >expect <<-\EOF &&
++	  master c77a0a9 second on master
++	* topic  2c939f4 [ahead 1] foo
++	  zzz    c77a0a9 second on master
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.1.0.486.g83bb229
