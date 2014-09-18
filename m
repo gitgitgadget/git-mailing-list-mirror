@@ -1,81 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v21 0/19] rs/ref-transaction (Re: Transaction patch
- series overview)
-Date: Thu, 18 Sep 2014 09:57:22 -0700
-Message-ID: <20140918165721.GA772@google.com>
-References: <20140911030318.GD18279@google.com>
- <xmqqfvfxdcjz.fsf@gitster.dls.corp.google.com>
- <20140912004717.GY18279@google.com>
- <xmqqsijwaclo.fsf@gitster.dls.corp.google.com>
- <20140912191812.GZ18279@google.com>
- <xmqqk358a9yz.fsf@gitster.dls.corp.google.com>
- <54136B10.4050001@alum.mit.edu>
- <20140912235745.GB18279@google.com>
- <54198B39.8020405@alum.mit.edu>
- <xmqqfvfoq3ra.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] help: Fix size passed to qsort
+Date: Thu, 18 Sep 2014 10:17:14 -0700
+Message-ID: <xmqq8ulgq25h.fsf@gitster.dls.corp.google.com>
+References: <1410956079-23513-1-git-send-email-stefanbeller@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 18 18:57:39 2014
+Content-Type: text/plain
+Cc: pdebie@ai.rug.nl, git@vger.kernel.org
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 18 19:17:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUf1W-0008Gg-Ur
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 18:57:39 +0200
+	id 1XUfKe-0006Cx-7b
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 19:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932302AbaIRQ5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2014 12:57:31 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:44752 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932274AbaIRQ53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Sep 2014 12:57:29 -0400
-Received: by mail-pd0-f180.google.com with SMTP id ft15so1763070pdb.25
-        for <git@vger.kernel.org>; Thu, 18 Sep 2014 09:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=rLVS6tA4GTxa+r7FUBEJMRnB07pUPV+Mu549nd9z/rY=;
-        b=cPOCTViT/kiCmCfLv6H4jb0S3nDnRLQsABPYJS/jjOz5nqqi1rNw6+K/0XTxC+VcT5
-         wBbvBanDhbNfswjzJZQcIiw2dAEliQIlTNhB76+T8BLbiE770BvLBxnyCf9pRUuQySKA
-         axawZAZOUUBf2Zax/8uhXTssdEnqLv6r+iVZA38vkZQQ3FuUBESNDxBVkM6obTOwuSYg
-         AKjlqgAqRvuwN2KEMimYych4rdsFasgdBBZObGnzXmdhCbxVm+I0PPm/0tWrM9k6apCF
-         Hi0LNkQ4feGZiNHeSFaLrSOjbqqRRGGiSwm7ofXsm/Rb6UEikvjSka7/avqLGY6dVh6h
-         W8KQ==
-X-Received: by 10.66.120.99 with SMTP id lb3mr6211861pab.152.1411059449334;
-        Thu, 18 Sep 2014 09:57:29 -0700 (PDT)
-Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id om6sm20184200pdb.89.2014.09.18.09.57.27
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 18 Sep 2014 09:57:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqfvfoq3ra.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932146AbaIRRRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2014 13:17:18 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59971 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932117AbaIRRRR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2014 13:17:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8E71D39F40;
+	Thu, 18 Sep 2014 13:17:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=X/npjxvYEII0lZ56Z/GajQh7Ryw=; b=e8aYxu
+	yqgBoP5zrkgSfjM+zsYlXogQmX3LFkEFrTd7Ku4dmg5q2uyVsrOx8kSm3QMDeENU
+	uRqyG6xaAmrngd31G+esBPJe8QCUwzQiysxq+MSZE8WNqkwHSnI4Gi7W9r9lkLKW
+	Va8INNn3vVpcaZKidN+gOVp2/rJS9A3vV+m+k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qdGuFErrk8UCV7jkmMZ2M4ZK//AbM8xW
+	aTU4ytmdcGlNNAXfdR9hfiyiyUr6LATyMVw8m32SiQDW5P+VwdVDQ2xq5wB7kpIZ
+	MGM3Qd3oaMr/uMmADLSngrhHymPn7vi1IcDKz7futPhtxI/NWAWDcssa8FDvghEN
+	ia4O+n/NTnE=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 80F7039F3F;
+	Thu, 18 Sep 2014 13:17:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8B7BA39F3D;
+	Thu, 18 Sep 2014 13:17:15 -0400 (EDT)
+In-Reply-To: <1410956079-23513-1-git-send-email-stefanbeller@gmail.com>
+	(Stefan Beller's message of "Wed, 17 Sep 2014 14:14:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A2E89DDC-3F57-11E4-9881-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257267>
 
-Junio C Hamano wrote:
+Stefan Beller <stefanbeller@gmail.com> writes:
 
-> Jonathan: Is a current version of this patch series set up to be
-> fetched so that it can be reviewed outside Gerrit?
+> We actually want to have the size of one 'name' and not the size
+> of the names array.
 
-The current tip is 06d707cb63e34fc55a18ecc47e668f3c44acae57 from
-https://code.googlesource.com/git (fetch-by-sha1 should work).  Each
-reroll gets its own refname of the form refs/changes/62/1062/<number>
-with <number> increasing.  The "Download" widget in the top-right
-corner of https://code-review.googlesource.com/1062 shows the refname.
+I suspect that the latter is "size of a pointer that points at a
+cmdname structure", but the original code in help_unknown_cmd() is
+wrong.  The ones in load_command_list() do this correctly and
+another qsort() invocation in this function does so as well.  I
+wonder why they didn't correctly cut&paste ;-)
 
-There are plenty of unaddressed comments from Michael, so I'd hold off
-on picking up the latest for pu for now.
+746c221a (git wrapper: also use aliases to correct mistyped
+commands, 2008-09-10) seemed to have introduced the culprit.
 
-Thanks,
-Jonathan
+The call to uniq() would fail to uniquify because main_cmds would
+have the standard command all in front and then aliases and commands
+in the user's PATH later, but I do not quite see if there is any
+end-user observable breakages that can arise from this.  What is the
+practical implication of this breakage?
+
+No, I am not saying we do not have to fix it; I am just being
+curious why this patch does not show the existing breakage with a
+new test.
+
+Thanks.
+
+>
+> Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
+> ---
+>  help.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/help.c b/help.c
+> index 7af65e2..2072a87 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -305,7 +305,7 @@ const char *help_unknown_cmd(const char *cmd)
+>  	add_cmd_list(&main_cmds, &aliases);
+>  	add_cmd_list(&main_cmds, &other_cmds);
+>  	qsort(main_cmds.names, main_cmds.cnt,
+> -	      sizeof(main_cmds.names), cmdname_compare);
+> +	      sizeof(*main_cmds.names), cmdname_compare);
+>  	uniq(&main_cmds);
+>  
+>  	/* This abuses cmdname->len for levenshtein distance */
