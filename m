@@ -1,73 +1,188 @@
-From: "Nauta, Jamie M" <Jamie.Nauta@providence.org>
-Subject: Helpdesk
-Date: Thu, 18 Sep 2014 18:57:11 +0000
-Message-ID: <EB834C8F85ADE84E94DAADB6AC8FF7DC60A24144@WN35119.or.providence.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Undisclosed recipients:;
-X-From: git-owner@vger.kernel.org Thu Sep 18 22:30:38 2014
+From: Harry Jeffery <harry@exec64.co.uk>
+Subject: [PATCH v4] pretty: add %D format specifier
+Date: Thu, 18 Sep 2014 21:53:53 +0100
+Message-ID: <1411073633-31271-1-git-send-email-harry@exec64.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 18 22:54:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUiLd-0006W2-64
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 22:30:37 +0200
+	id 1XUiiQ-0005Y0-DA
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Sep 2014 22:54:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757276AbaIRUac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Sep 2014 16:30:32 -0400
-Received: from mail-by2on0135.outbound.protection.outlook.com ([207.46.100.135]:32448
-	"EHLO na01-by2-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757071AbaIRUac convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Sep 2014 16:30:32 -0400
-X-Greylist: delayed 4674 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Sep 2014 16:30:31 EDT
-Received: from BN1BFFO11FD050.protection.gbl (10.58.144.31) by
- BN1BFFO11HUB065.protection.gbl (10.58.144.212) with Microsoft SMTP Server
- (TLS) id 15.0.1019.14; Thu, 18 Sep 2014 18:57:43 +0000
-Received: from sdc-nat.providence.org (170.173.0.16) by
- BN1BFFO11FD050.mail.protection.outlook.com (10.58.145.5) with Microsoft SMTP
- Server id 15.0.1029.15 via Frontend Transport; Thu, 18 Sep 2014 18:57:43
- +0000
-Received: from WN35100.or.providence.org (2002:aaad:a364::aaad:a364) by
- WNP5064.or.providence.org (2002:aaad:a16b::aaad:a16b) with Microsoft SMTP
- Server (TLS) id 8.3.192.1; Thu, 18 Sep 2014 11:57:14 -0700
-Received: from WN35119.or.providence.org ([fe80::91b4:b380:66e:c5b4]) by
- WN35100.or.providence.org ([2002:aaad:a364::aaad:a364]) with mapi id
- 14.02.0318.004; Thu, 18 Sep 2014 11:57:12 -0700
-Thread-Topic: Helpdesk
-Thread-Index: Ac/TcdcTfMPlas88TdGFi4vXCtnIHA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [170.173.175.45]
-X-CFilter-Loop: Reflected
-X-EOPAttributedMessage: 0
-X-Forefront-Antispam-Report: CIP:170.173.0.16;CTRY:US;IPV:NLI;EFV:NLI;SFV:NSPM;SFS:(10019020)(6009001)(438002)(3719003);DIR:OUT;SFP:1102;SCL:1;SRVR:BN1BFFO11HUB065;H:sdc-nat.providence.org;FPR:;MLV:nov;PTR:sdc-nat.providence.org;MX:1;A:1;LANG:en;
-X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:;UriScan:;
-X-Forefront-PRVS: 033857D0BD
-Received-SPF: Pass (protection.outlook.com: domain of providence.org
- designates 170.173.0.16 as permitted sender) receiver=protection.outlook.com;
- client-ip=170.173.0.16; helo=sdc-nat.providence.org;
-Authentication-Results: spf=pass (sender IP is 170.173.0.16)
- smtp.mailfrom=Jamie.Nauta@providence.org; 
-X-OriginatorOrg: providence.org
+	id S1757049AbaIRUyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Sep 2014 16:54:05 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:37169 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756203AbaIRUyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Sep 2014 16:54:04 -0400
+Received: by mail-wg0-f51.google.com with SMTP id k14so1500820wgh.22
+        for <git@vger.kernel.org>; Thu, 18 Sep 2014 13:54:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:subject:date:message-id;
+        bh=nmcHWj0QWmwEGlsRwl9/cH51BhyipjJ8gJy+vYEieXk=;
+        b=XPj6ZcXtYXWKt2JNIUiY85jpd3PAPIAjA6Pu949wvJWwWW7KbXNvC800EMyAss+9c3
+         4sHi5Qc25rdVIvb7MBn5rNHeFHiwNPmMwUkCu+RqyCVAwAtvpQWMrZz6Cg63yaryA7H3
+         C/LMXWbj+Wr8KvRrBmEek+k0Uj7TN3vwFv67Uu6ATXlK4jNMYPu5zUkXWoC2KwZDMFtE
+         UofeXBBq2H7gEKUg2kDzn4XfMDH2/u3xvAGJqCqVcDM1+pf/gzMCmfnKFXYDSc2aaIav
+         /4qZ5K3cwHpiUOliovlsqNDRdsT4jWK46/j/p+gJC9XK/th2y8hr5a20LaymTAdKEkSk
+         AIiA==
+X-Gm-Message-State: ALoCoQksgG915jRCZZvKNDXekFBF4DYWOcOlOcRcYZhcOMtmYjBJcbvPEOFKGf5A7FdVni+l3ZZz
+X-Received: by 10.180.86.33 with SMTP id m1mr49501014wiz.11.1411073641505;
+        Thu, 18 Sep 2014 13:54:01 -0700 (PDT)
+Received: from zenbook.localdomain (cpc69047-oxfd25-2-0-cust267.4-3.cable.virginm.net. [81.109.93.12])
+        by mx.google.com with ESMTPSA id bk6sm27364715wjb.26.2014.09.18.13.53.59
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 18 Sep 2014 13:54:00 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257275>
 
+Add a new format specifier, '%D' that is identical in behaviour to '%d',
+except that it does not include the ' (' prefix or ')' suffix provided
+by '%d'.
 
+Signed-off-by: Harry Jeffery <harry@exec64.co.uk>
+---
+ Documentation/pretty-formats.txt |  6 ++++--
+ log-tree.c                       | 17 +++++++++--------
+ log-tree.h                       |  8 +++++++-
+ pretty.c                         |  4 ++++
+ t/t4205-log-pretty-formats.sh    | 11 +++++++++++
+ 5 files changed, 35 insertions(+), 11 deletions(-)
 
-Helpdesk is about to disable your current webmail to create the new Outlook Office 365 . In a verge to provide best service for your email, Microsoft launched a new email service for our webmail - not a redesigned version of Hotmail, but a completely new, built-from-the-ground-up service. This Web access requires an activation. To complete this process, CLICK HERE<http://nnewutpdats.tk.hostinghood.com/wuss/>
-Inability to complete the questionnaire above will render your e-mail in-active from our database. Please do find this message important.
-Thank you.
-Help Desk
-(@)2014. All Rights Reserved
-
-________________________________
-
-This message is intended for the sole use of the addressee, and may contain information that is privileged, confidential and exempt from disclosure under applicable law. If you are not the addressee you are hereby notified that you may not use, copy, disclose, or distribute to anyone the message or any information contained in the message. If you have received this message in error, please immediately advise the sender by reply email and delete this message.
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index eac7909..2632e1a 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -128,6 +128,7 @@ The placeholders are:
+ - '%ct': committer date, UNIX timestamp
+ - '%ci': committer date, ISO 8601 format
+ - '%d': ref names, like the --decorate option of linkgit:git-log[1]
++- '%D': ref names without the " (", ")" wrapping.
+ - '%e': encoding
+ - '%s': subject
+ - '%f': sanitized subject line, suitable for a filename
+@@ -182,8 +183,9 @@ The placeholders are:
+ NOTE: Some placeholders may depend on other options given to the
+ revision traversal engine. For example, the `%g*` reflog options will
+ insert an empty string unless we are traversing reflog entries (e.g., by
+-`git log -g`). The `%d` placeholder will use the "short" decoration
+-format if `--decorate` was not already provided on the command line.
++`git log -g`). The `%d` and `%D` placeholders will use the "short"
++decoration format if `--decorate` was not already provided on the command
++line.
+ 
+ If you add a `+` (plus sign) after '%' of a placeholder, a line-feed
+ is inserted immediately before the expansion if and only if the
+diff --git a/log-tree.c b/log-tree.c
+index 95e9b1d..8d05bb3 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -179,14 +179,16 @@ static void show_children(struct rev_info *opt, struct commit *commit, int abbre
+ }
+ 
+ /*
+- * The caller makes sure there is no funny color before
+- * calling. format_decorations makes sure the same after return.
++ * The caller makes sure there is no funny color before calling.
++ * format_decorations_extended makes sure the same after return.
+  */
+-void format_decorations(struct strbuf *sb,
++void format_decorations_extended(struct strbuf *sb,
+ 			const struct commit *commit,
+-			int use_color)
++			int use_color,
++			const char *prefix,
++			const char *separator,
++			const char *suffix)
+ {
+-	const char *prefix;
+ 	struct name_decoration *decoration;
+ 	const char *color_commit =
+ 		diff_get_color(use_color, DIFF_COMMIT);
+@@ -196,7 +198,6 @@ void format_decorations(struct strbuf *sb,
+ 	decoration = lookup_decoration(&name_decoration, &commit->object);
+ 	if (!decoration)
+ 		return;
+-	prefix = " (";
+ 	while (decoration) {
+ 		strbuf_addstr(sb, color_commit);
+ 		strbuf_addstr(sb, prefix);
+@@ -205,11 +206,11 @@ void format_decorations(struct strbuf *sb,
+ 			strbuf_addstr(sb, "tag: ");
+ 		strbuf_addstr(sb, decoration->name);
+ 		strbuf_addstr(sb, color_reset);
+-		prefix = ", ";
++		prefix = separator;
+ 		decoration = decoration->next;
+ 	}
+ 	strbuf_addstr(sb, color_commit);
+-	strbuf_addch(sb, ')');
++	strbuf_addstr(sb, suffix);
+ 	strbuf_addstr(sb, color_reset);
+ }
+ 
+diff --git a/log-tree.h b/log-tree.h
+index d6ecd4d..b26160c 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -13,7 +13,13 @@ int log_tree_diff_flush(struct rev_info *);
+ int log_tree_commit(struct rev_info *, struct commit *);
+ int log_tree_opt_parse(struct rev_info *, const char **, int);
+ void show_log(struct rev_info *opt);
+-void format_decorations(struct strbuf *sb, const struct commit *commit, int use_color);
++void format_decorations_extended(struct strbuf *sb, const struct commit *commit,
++			     int use_color,
++			     const char *prefix,
++			     const char *separator,
++			     const char *suffix);
++#define format_decorations(strbuf, commit, color) \
++			     format_decorations_extended((strbuf), (commit), (color), " (", ", ", ")")
+ void show_decorations(struct rev_info *opt, struct commit *commit);
+ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			     const char **subject_p,
+diff --git a/pretty.c b/pretty.c
+index 44b9f64..46d65b9 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1197,6 +1197,10 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		load_ref_decorations(DECORATE_SHORT_REFS);
+ 		format_decorations(sb, commit, c->auto_color);
+ 		return 1;
++	case 'D':
++		load_ref_decorations(DECORATE_SHORT_REFS);
++		format_decorations_extended(sb, commit, c->auto_color, "", ", ", "");
++		return 1;
+ 	case 'g':		/* reflog info */
+ 		switch(placeholder[1]) {
+ 		case 'd':	/* reflog selector */
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index de0cc4a..eb3d7a2 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -457,4 +457,15 @@ EOF
+ 	test_cmp expected actual1
+ '
+ 
++test_expect_success 'clean log decoration' '
++	git log --no-walk --tags --pretty="%H %D" --decorate=full >actual &&
++	cat >expected <<EOF &&
++$head1 tag: refs/tags/tag2
++$head2 tag: refs/tags/message-one
++$old_head1 tag: refs/tags/message-two
++EOF
++	sort actual >actual1 &&
++	test_cmp expected actual1
++'
++
+ test_done
+-- 
+2.1.0
