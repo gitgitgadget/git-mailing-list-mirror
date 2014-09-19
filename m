@@ -1,119 +1,152 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] notes: accept any ref for merge
-Date: Fri, 19 Sep 2014 16:01:38 +0200
-Message-ID: <CALKQrgc4nZdaXM-Ooh1pP4x4nZRLexJzLyaBmrgn+qVaQGCg+g@mail.gmail.com>
-References: <1411112385-33479-1-git-send-email-schacon@gmail.com>
-	<20140919093910.GA15891@peff.net>
+From: pb158 <pb158@tlen.pl>
+Subject: [PATCH] git-gui: add configurable tab size to the diff view
+ git-gui - why not added to git-gui ?
+Date: Fri, 19 Sep 2014 16:33:53 +0200
+Message-ID: <lvhesi$qqs$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 19 16:24:32 2014
+Content-Type: text/plain; charset=iso-8859-2; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 19 16:38:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUz6t-0002mB-GU
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 16:24:31 +0200
+	id 1XUzKd-0007gp-80
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 16:38:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756425AbaISOBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2014 10:01:49 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:55968 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753398AbaISOBs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2014 10:01:48 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1XUykr-0005jz-Pf
-	for git@vger.kernel.org; Fri, 19 Sep 2014 16:01:46 +0200
-Received: by mail-pa0-f51.google.com with SMTP id fa1so169299pad.24
-        for <git@vger.kernel.org>; Fri, 19 Sep 2014 07:01:38 -0700 (PDT)
-X-Received: by 10.70.137.74 with SMTP id qg10mr1284981pdb.128.1411135298442;
- Fri, 19 Sep 2014 07:01:38 -0700 (PDT)
-Received: by 10.70.10.5 with HTTP; Fri, 19 Sep 2014 07:01:38 -0700 (PDT)
-In-Reply-To: <20140919093910.GA15891@peff.net>
+	id S1757418AbaISOfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2014 10:35:22 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46246 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756553AbaISOfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2014 10:35:17 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1XUzH6-0006QE-OJ
+	for git@vger.kernel.org; Fri, 19 Sep 2014 16:35:04 +0200
+Received: from static-78-9-71-254.ssp.dialog.net.pl ([78.9.71.254])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 19 Sep 2014 16:35:04 +0200
+Received: from pb158 by static-78-9-71-254.ssp.dialog.net.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 19 Sep 2014 16:35:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: static-78-9-71-254.ssp.dialog.net.pl
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:35.0) Gecko/20100101 Thunderbird/35.0a1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257288>
 
-On Fri, Sep 19, 2014 at 11:39 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Sep 19, 2014 at 09:39:45AM +0200, Scott Chacon wrote:
->> Currently if you try to merge notes, the notes code ensures that the
->> reference is under the 'refs/notes' namespace. In order to do any sort
->> of collaborative workflow, this doesn't work well as you can't easily
->> have local notes refs seperate from remote notes refs.
->>
->> This patch changes the expand_notes_ref function to check for simply a
->> leading refs/ instead of refs/notes to check if we're being passed an
->> expanded notes reference. This would allow us to set up
->> refs/remotes-notes or otherwise keep mergeable notes references outside
->> of what would be contained in the notes push refspec.
->
-> I think this change affects not just "git notes merge", but all of the
-> notes lookups (including just "git notes show"). However, I'd argue
-> that's a good thing, as it allows more flexibility in note storage. The
-> downside is that if you have a notes ref like
-> "refs/notes/refs/heads/master", you can no longer refer to it as
-> "refs/heads/master" (you have to use the fully qualified name to get the
-> note). But:
->
->   1. This makes the notes resolution a lot more like regular ref
->      resolution (i.e., we now allow fully qualified refs, and you can
->      store remote notes outside of refs/notes if you want to).
->
->   2. There are already a bunch of names that have the same problem. You
->      cannot refer to "refs/notes/notes/foo" as "notes/foo", nor
->      "refs/notes/refs/notes/foo" as "refs/notes/foo". Yes, these are
->      silly names, so is the example above.
->
-> So it's backwards incompatible with the current behavior, but I think in
-> a good way.
+Home of the original description and the author of the patch:
 
-FWIW, I agree with this analysis.
+http://www.spinics.net/lists/git/msg174415.html
 
->> ---
->>  notes.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> I think you need to adjust t3308 (and you should probably add a new test
-> exercising your case; this is exactly the sort of thing that it's easy
-> to accidentally regress later).
+Why not added this useful little patch for git-gui ?
 
-Agree here as well.
+( this patch resolve my problem with 8 spaces tab Linux Eclipse + Java 
+program source + git gui
+and I apply locally it to each new version git before source compilation )
 
-AFAICS, the only diff you'll need to make the test suite pass is this:
+original content of the message from the link above:
 
-diff --git a/t/t3308-notes-merge.sh b/t/t3308-notes-merge.sh
-index 24d82b4..f0feb64 100755
---- a/t/t3308-notes-merge.sh
-+++ b/t/t3308-notes-merge.sh
-@@ -90,7 +90,6 @@ test_expect_success 'fail to merge various non-note-trees' '
-        test_must_fail git notes merge refs/notes/ &&
-        test_must_fail git notes merge refs/notes/dir &&
-        test_must_fail git notes merge refs/notes/dir/ &&
--       test_must_fail git notes merge refs/heads/master &&
-        test_must_fail git notes merge x: &&
-        test_must_fail git notes merge x:foo &&
-        test_must_fail git notes merge foo^{bar
+----------------------
 
-Additionally, I suggest adding another test demonstrating your use
-case as well. Something like setting up a small scenario for notes
-collaboration, and walking through the various steps:
+For Tk 8.5 the "wordprocessor" mode allows us to get a bit fancy for merge
+diffs and intend the tabs by one to compensate for the additional diff
+marker at the line start.
 
- - Creating a couple of repos where notes are added/edited
- - Setting up config to allow pushing and/or fetching notes
- - Performing the push/fetch
- - Merging with the corresponding local notes ref
+The code is heavily based on how gitk handles tabs.
 
-Have fun! :)
+Signed-off-by: Michael Lutz <michi@xxxxxxxxxxxxxx>
+---
+  git-gui.sh     |    1 +
+  lib/diff.tcl   |   20 +++++++++++++++++++-
+  lib/option.tcl |    1 +
+  3 files changed, 21 insertions(+), 1 deletions(-)
 
-...Johan
+diff --git a/git-gui.sh b/git-gui.sh
+index ba4e5c1..22d7665 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -892,6 +892,7 @@ set default_config(gui.fontdiff) [font configure 
+font_diff]
+  set default_config(gui.maxfilesdisplayed) 5000
+  set default_config(gui.usettk) 1
+  set default_config(gui.warndetachedcommit) 1
++set default_config(gui.tabsize) 8
+  set font_descs {
+  	{fontui   font_ui   {mc "Main Font"}}
+  	{fontdiff font_diff {mc "Diff/Console Font"}}
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index ec44055..f314197 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -1,6 +1,19 @@
+  # git-gui diff viewer
+  # Copyright (C) 2006, 2007 Shawn Pearce
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
++proc apply_tab_size {{firsttab {}}} {
++	global have_tk85 repo_config ui_diff
++
++	set w [font measure font_diff "0"]
++	if {$have_tk85 && $firsttab != 0} {
++		$ui_diff configure -tabs [list [expr {$firsttab * $w}] [expr 
+{($firsttab + $repo_config(gui.tabsize)) * $w}]]
++	} elseif {$have_tk85 || $repo_config(gui.tabsize) != 8} {
++		$ui_diff configure -tabs [expr {$repo_config(gui.tabsize) * $w}]
++	} else {
++		$ui_diff configure -tabs {}
++	}
++}
++
+  proc clear_diff {} {
+  	global ui_diff current_diff_path current_diff_header
+  	global ui_index ui_workdir
+@@ -105,6 +118,8 @@ proc show_diff {path w {lno {}} {scroll_pos {}} 
+{callback {}}} {
+
+  	set cont_info [list $scroll_pos $callback]
+
++	apply_tab_size 0
++
+  	if {[string first {U} $m] >= 0} {
+  		merge_load_stages $path [list show_unmerged_diff $cont_info]
+  	} elseif {$m eq {_O}} {
+@@ -398,7 +413,10 @@ proc read_diff {fd conflict_size cont_info} {
+
+  		# -- Automatically detect if this is a 3 way diff.
+  		#
+-		if {[string match {@@@ *} $line]} {set is_3way_diff 1}
++		if {[string match {@@@ *} $line]} {
++			set is_3way_diff 1
++			apply_tab_size 1
++		}
+
+  		if {$::current_diff_inheader} {
+
+diff --git a/lib/option.tcl b/lib/option.tcl
+index 0cf1da1..b940c44 100644
+--- a/lib/option.tcl
++++ b/lib/option.tcl
+@@ -159,6 +159,7 @@ proc do_options {} {
+  		{c gui.encoding {mc "Default File Contents Encoding"}}
+  		{b gui.warndetachedcommit {mc "Warn before committing to a detached 
+head"}}
+  		{s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" 
+"no" "ask"}}
++		{i-1..99 gui.tabsize {mc "Tab spacing"}}
+  		} {
+  		set type [lindex $option 0]
+  		set name [lindex $option 1]
+
+---------------
+
+Regards,
+
+Krzysztof
