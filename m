@@ -1,78 +1,111 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: [PATCH] notes: accept any ref for merge
-Date: Fri, 19 Sep 2014 09:39:45 +0200
-Message-ID: <1411112385-33479-1-git-send-email-schacon@gmail.com>
-Cc: Scott Chacon <schacon@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 19 09:40:04 2014
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn's performance issue and strange pauses, and other thing
+Date: Fri, 19 Sep 2014 08:25:29 +0000
+Message-ID: <20140919082529.GA32459@dcvr.yhbt.net>
+References: <1411025993.80693.YahooMailBasic@web172304.mail.ir2.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakob Stoklund Olesen <stoklund@2pi.dk>,
+	Sam Vilain <sam@vilain.net>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Andrew Myrick <amyrick@apple.com>
+To: Hin-Tak Leung <htl10@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Sep 19 10:25:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUsnR-0000jj-54
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 09:40:02 +0200
+	id 1XUtVb-0003Pm-Gd
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 10:25:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668AbaISHj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2014 03:39:57 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:46869 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751029AbaISHj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2014 03:39:56 -0400
-Received: by mail-wg0-f46.google.com with SMTP id n12so1991059wgh.29
-        for <git@vger.kernel.org>; Fri, 19 Sep 2014 00:39:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=nlospyNH0odSH3FFqfjUiDsrNCaEatpprNxZQt/5818=;
-        b=egVps5BtxIbLoOpQ7aiRWrUawJKr6VazgFuvb6gdLacprifbuxUymnHMRvFGNaHDed
-         wS5PbKO/mo8je/TanOhTKSTURL1n/62QBE6Q2rxuqsiTlY8ZO4MtI2bKupYXdFuSTYb+
-         zbqBjbRkcCzIlppYrRsC6P/vOF9JtmPp6Jyq8OW9ZSCSm5F9Se2jL7rh+c08sgWfSK9h
-         GSrqy902XYh/wh4MKHJzHH/3n3Rp8qkOInDYZg83Ik1ztM6wl20gEx81+LIU/oKJiQTR
-         ZTogX7iJb/qb1wN+5+smLYR2QCf7WrXNhth4sC4SfArsqc4BPM8hOYqap7Sa/S0GKCsm
-         r3WA==
-X-Received: by 10.180.99.35 with SMTP id en3mr4610264wib.50.1411112395524;
-        Fri, 19 Sep 2014 00:39:55 -0700 (PDT)
-Received: from localhost.localdomain (85-168-227-34.rev.numericable.fr. [85.168.227.34])
-        by mx.google.com with ESMTPSA id cz3sm1295818wjb.23.2014.09.19.00.39.53
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 19 Sep 2014 00:39:54 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0
+	id S1752277AbaISIZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2014 04:25:34 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55066 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750738AbaISIZc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2014 04:25:32 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD4AF1F7C9;
+	Fri, 19 Sep 2014 08:25:29 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1411025993.80693.YahooMailBasic@web172304.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257282>
 
-Currently if you try to merge notes, the notes code ensures that the
-reference is under the 'refs/notes' namespace. In order to do any sort
-of collaborative workflow, this doesn't work well as you can't easily
-have local notes refs seperate from remote notes refs.
+Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
+> (I am not on the list - please CC)
 
-This patch changes the expand_notes_ref function to check for simply a
-leading refs/ instead of refs/notes to check if we're being passed an
-expanded notes reference. This would allow us to set up
-refs/remotes-notes or otherwise keep mergeable notes references outside
-of what would be contained in the notes push refspec.
+Done, it is standard practice for git :)
 
-Signed-off-by: Scott Chacon <schacon@gmail.com>
----
- notes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Thanks for git-svn - I use it instead of subversion itself for many years now.
+> 
+> Just thought I'd ask/report a few issues I noticed for some time
+> now, of tracking development of a particular subversion-based
+> development project. Broadly speaking, I think there are 3 problems,
+> especially noticeable against a particular repository, but 
+> to a lesser extent with some others too.
+> 
+> - just doing "git svn fetch --all" seems to consume a lot of memory,
+> for very little actual fetched changes. (in the 2GB+ region, sometimes).
+> 
+> - "git svn fetch --all" also seems to take a long time too, for certain
+> fetched changes. (in the minutes region).
 
-diff --git a/notes.c b/notes.c
-index 5fe691d..78d58af 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1293,7 +1293,7 @@ int copy_note(struct notes_tree *t,
- 
- void expand_notes_ref(struct strbuf *sb)
- {
--	if (starts_with(sb->buf, "refs/notes/"))
-+	if (starts_with(sb->buf, "refs/"))
- 		return; /* we're happy */
- 	else if (starts_with(sb->buf, "notes/"))
- 		strbuf_insert(sb, 0, "refs/", 5);
--- 
-2.0.0
+Jakob sent some patches a few months ago which seem to address the
+issue.  Unfortunately we forgot about them :x
+
+Can you take a look at the following two "mergeinfo-speedups"
+in my repo?  (git://bogomips.org/git-svn)
+
+Jakob Stoklund Olesen (2):
+      git-svn: only look at the new parts of svn:mergeinfo
+      git-svn: only look at the root path for svn:mergeinfo
+
+Also downloadable here:
+
+http://bogomips.org/git-svn.git/patch?id=9b258e721b30785357535
+http://bogomips.org/git-svn.git/patch?id=73409a2145e93b436d74a
+
+Can you please give them a try?
+
+> -  I know I can probably just "read the source", but I'd like to know
+> why .git/svn/.caches is even larger than .git/objects (which supposedly
+> contains everything that's of interest)? I hope this can be documented
+> towards the end of the man-page, for example, of important parts
+> of .git/svn (and what not to do with them...), without needing to
+> 'read the source'. Here is part of "du" from a couple of days ago:
+> 
+> 254816	.git/objects
+> 307056	.git/svn/.caches
+> 332452	.git/svn
+> 588064	.git
+> 
+> The actual .git/config is here - this should be sufficient info for
+> somebody looking into experiencing the issues I mentioned above.
+
+IIRC, the caching is unique to mergeinfo, so perhaps Jakob's patches
+help, there, too.
+
+Sorry I don't understand the mergeinfo stuff more, I've never worked on
+a project which uses it.
+
+> --------
+> $ more .git/config 
+> [core]
+> 	repositoryformatversion = 0
+> 	filemode = true
+> 	bare = false
+> 	logallrefupdates = true
+> [svn-remote "svn"]
+> 	url = https://svn.r-project.org/R
+> 	fetch = trunk:refs/remotes/trunk
+> 	branches = branches/*:refs/remotes/*
+> 	tags = tags/*:refs/remotes/tags/*
+> [pack]
+> 	threads = 1
+> ------------
