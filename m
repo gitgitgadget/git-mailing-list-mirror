@@ -1,93 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-gui: add configurable tab size to the diff view git-gui - why not added to git-gui ?
-Date: Fri, 19 Sep 2014 10:02:23 -0700
-Message-ID: <xmqq8ulfo868.fsf@gitster.dls.corp.google.com>
-References: <lvhesi$qqs$1@ger.gmane.org>
-	<xmqqd2aro8fx.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, pb158 <pb158@tlen.pl>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Sep 19 19:02:33 2014
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH 0/7] l10n: de.po: use imperative form for command options
+Date: Fri, 19 Sep 2014 19:12:43 +0200
+Message-ID: <1411146770-8508-1-git-send-email-ralf.thielow@gmail.com>
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 19 19:13:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XV1Zn-0000KJ-Sa
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 19:02:32 +0200
+	id 1XV1k3-0003qI-6I
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 19:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580AbaISRC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2014 13:02:27 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56095 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757497AbaISRC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2014 13:02:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9A8C239E6A;
-	Fri, 19 Sep 2014 13:02:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NZTj/tl1eC5dWkYlEmYEET9TLtQ=; b=v/r0Sp
-	XPl/JIn+KgAggfUJHt+4jr+OvEVob3fVyTMEzuy1tyHY2GG8c4/XKsbG4lgg2Sbq
-	t3MgMuo7hD5WjbW05MxLQCktAwAHm2YAvrOow+KeYRftJmFKQmY8xyuobgrWv1oO
-	BOeKX7/vHJGa1f5+XF0Dr9DvcfIMadCJtF794=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q7ZyntbXquw2vjqm/VqmHepxnVAxci5R
-	ZXl9/w9YJYwR20ojDIJ5MxVdrVMhckAtzpG7O+VWJyp/di5GdpWoPcPJMj1euP26
-	seNSNcvptA+rRP5Le6jNHt222Gq2m03esQnpep+maZ/7EByTaVFOknvC7j2dCWUo
-	kE6SzNvDaVk=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8E02939E69;
-	Fri, 19 Sep 2014 13:02:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BBAD839E66;
-	Fri, 19 Sep 2014 13:02:24 -0400 (EDT)
-In-Reply-To: <xmqqd2aro8fx.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 19 Sep 2014 09:56:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BA70A0FE-401E-11E4-909E-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1757469AbaISRNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2014 13:13:00 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:59632 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757445AbaISRNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Sep 2014 13:13:00 -0400
+Received: by mail-wg0-f43.google.com with SMTP id y10so34074wgg.2
+        for <git@vger.kernel.org>; Fri, 19 Sep 2014 10:12:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=D/hisv1qreGYqPH8N1I+XUUxgjKUFPprVOB14pXljm8=;
+        b=PSl7gzTeCnYxeurjR1+nx/o1y6T3S1DtlrzIh2ewPxKoLN4DBiLVj6H7GIJHQDVSUZ
+         thfsn9eLHxFBZ54SQyMcTui1qR4/Xdp9fY6u1KTwUnSgupP2CDydZN5bjcGoDLJlEWV5
+         +5IlGarrD3RlqWH1pgQ1VD3tYB4qOQWbDD6as1lMopMaU9yjtLjfoCGRUZhz5Wexo5i7
+         yWnkiKmy8V49Odv5V4O25r0zJH32UuhQwjxjUQQ4TXTXM3ylNbzSrZGN9bwjwRy+eZ+v
+         04GXBf9YvMlRT8H/+WaZ7rYa3GN7FfmfJxa8DAdnJxVGt6q/MhWyrZgT1MRJ2Y0JYwkE
+         dVrQ==
+X-Received: by 10.194.95.8 with SMTP id dg8mr2512548wjb.1.1411146778885;
+        Fri, 19 Sep 2014 10:12:58 -0700 (PDT)
+Received: from localhost (dslb-178-000-162-213.178.000.pools.vodafone-ip.de. [178.0.162.213])
+        by mx.google.com with ESMTPSA id cf3sm2902038wjc.17.2014.09.19.10.12.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Sep 2014 10:12:58 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.368.g9f4fb5d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257291>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Some people have suggested to use an imperative form for translating
+command options. I added this topic to my TODO list and now found
+the time to implement it.
 
-> I do not use git-gui, and I do not speak very good tcl/tk either, so
-> I won't comment on the patch itself (Cc'ed its maintainer Pat), but
-> thanks for trying to relay, anyway.
->
->> ----------------------
->>
->> For Tk 8.5 the "wordprocessor" mode allows us to get a bit fancy for merge
->> diffs and intend the tabs by one to compensate for the additional diff
->> marker at the line start.
->>
->> The code is heavily based on how gitk handles tabs.
->>
->> Signed-off-by: Michael Lutz <michi@xxxxxxxxxxxxxx>
->
-> With this, the author refuses to be contacted if/when any question
-> arises wrt the provenance of the patch, which is not a usable form
-> of a sign-off.  When you relay a change from somebody else who
-> claims that he has rights to contribute the change to the project,
-> and you have the rights to relay that change to the project, please
-> also add your own sign-off.
+I've splitted this huge patch into seven parts to make the review
+easier. I'll squash those 7 parts into one big patch before applying.
 
-Heh, I spoke too fast.  The original is at $gmane/190576 [*1*] and
-the butchering of the address is only due to the the spinics list
-archive pb158 grabbed his or her copy from.
+Ralf Thielow (7):
+  part1: l10n: de.po: use imperative form for command options
+  part2: l10n: de.po: use imperative form for command options
+  part3: l10n: de.po: use imperative form for command options
+  part4: l10n: de.po: use imperative form for command options
+  part5: l10n: de.po: use imperative form for command options
+  part6: l10n: de.po: use imperative form for command options
+  part7: l10n: de.po: use imperative form for command options
 
-So we don't need any forwarder's sign-off.  As long as the change is
-acceptable (I have no opinion on it), the original can be directly
-applied.
+ po/de.po | 1146 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 573 insertions(+), 573 deletions(-)
 
-
-[References] 
-
-*1* http://article.gmane.org/gmane.comp.version-control.git/190576/raw
+-- 
+2.1.0.368.g9f4fb5d
