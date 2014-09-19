@@ -1,92 +1,115 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH] Documentation/git-rebase.txt: discuss --fork-point
- assumption of vanilla "git rebase" in DESCRIPTION.
-Date: Thu, 18 Sep 2014 23:03:25 +0400
-Message-ID: <87r3z72wiu.fsf@osv.gnss.ru>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH 1/7] part1: l10n: de.po: use imperative form for command options
+Date: Fri, 19 Sep 2014 22:43:37 +0200
+Message-ID: <CAN0XMO+BR4Tp1EOCPe-ajNyuHpkN1B36T3rzRdw1Z_tzsZH6Dg@mail.gmail.com>
+References: <1411146770-8508-1-git-send-email-ralf.thielow@gmail.com>
+	<1411146770-8508-2-git-send-email-ralf.thielow@gmail.com>
+	<541C7FF7.1020105@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 19 22:19:47 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
+To: Phillip Sz <phillip.szelat@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 19 22:43:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XV4ef-0007KP-Qs
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 22:19:46 +0200
+	id 1XV51r-0006kj-Qe
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 22:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757864AbaISUTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2014 16:19:41 -0400
-Received: from mail.javad.com ([54.86.164.124]:47421 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757483AbaISUTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2014 16:19:40 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 862AE6186D;
-	Fri, 19 Sep 2014 20:19:39 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <sorganov@gmail.com>)
-	id 1XV4eX-0005s7-PZ; Sat, 20 Sep 2014 00:19:37 +0400
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S932287AbaISUnj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2014 16:43:39 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:42641 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932261AbaISUni convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Sep 2014 16:43:38 -0400
+Received: by mail-wi0-f174.google.com with SMTP id fb4so194191wid.13
+        for <git@vger.kernel.org>; Fri, 19 Sep 2014 13:43:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=HNc7zIV+QnDZlJHlHD541z5JuT/6nKpwXSHMwT9aXQk=;
+        b=A9xZsiLwSCaa+wleiYb7Aeo8u3esy5eAFkwOsSu41XsZ+6md2iDDl5RrmwFxAvVRH1
+         wMWqNGtTH0t7UnI34HNpvbA60BqiJZOVtKmkeLX92VBfqUBMyANIVz0T/3DUxHNNN7gh
+         /yFSZ9aBZ9IgActJpwRfriOtaf/003fokALEBgm+eZkNHAI5z/WpvokItA1PtrkHskn4
+         W+MHm+80SePfp+6B6XL51HHVk8LkbDjyTLViaqd5gxYoQo6ZrxS2RuXDvqnP4IolaZsR
+         puxkp89ZPISSvCo1RpY5anZqIlw5+sBEvByY6UbvHwlqGo0xV39ZWb24HVFee8QR31WM
+         gd8Q==
+X-Received: by 10.180.221.107 with SMTP id qd11mr517739wic.61.1411159417575;
+ Fri, 19 Sep 2014 13:43:37 -0700 (PDT)
+Received: by 10.194.173.167 with HTTP; Fri, 19 Sep 2014 13:43:37 -0700 (PDT)
+In-Reply-To: <541C7FF7.1020105@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257307>
 
-Vanilla "git rebase" defaults to --fork-point that in some cases
-makes behavior very different from "git rebase <upstream>",
-where --no-fork-point is assumed. This fact was not mentioned in
-the DESCRIPTION section of the manual page, even though the case of
-omitted <upstream> was otherwise discussed. That in turn made actual
-behavior of vanilla "git rebase" hardly discoverable.
+Hi Phillip,
 
-While we are at it, clarify the --fork-point description itself as well.
+2014-09-19 21:11 GMT+02:00 Phillip Sz <phillip.szelat@gmail.com>:
+> Hi,
+>
+>>  #: archive.c:351 builtin/archive.c:91
+>>  msgid "retrieve the archive from remote repository <repo>"
+>> -msgstr "ruft das Archiv von Remote-Repository <Repository> ab"
+>> +msgstr "Archiv von Remote-Repository <Repository> abrufen"
+>>
+>
+> "Archiv vom Remote-Repository <Repository> abrufen" sounds better to =
+me.
+>
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- Documentation/git-rebase.txt | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Thanks.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 4138554..73e1e1c 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -21,15 +21,16 @@ If <branch> is specified, 'git rebase' will perform an automatic
- it remains on the current branch.
- 
- If <upstream> is not specified, the upstream configured in
--branch.<name>.remote and branch.<name>.merge options will be used; see
--linkgit:git-config[1] for details.  If you are currently not on any
--branch or if the current branch does not have a configured upstream,
--the rebase will abort.
-+branch.<name>.remote and branch.<name>.merge options will be used (see
-+linkgit:git-config[1] for details) and the `--fork-point` option is
-+assumed.  If you are currently not on any branch or if the current
-+branch does not have a configured upstream, the rebase will abort.
- 
- All changes made by commits in the current branch but that are not
- in <upstream> are saved to a temporary area.  This is the same set
--of commits that would be shown by `git log <upstream>..HEAD` (or
--`git log HEAD`, if --root is specified).
-+of commits that would be shown by `git log <upstream>..HEAD`; or by
-+`git log <fork_point>..HEAD`, if --fork-point is either specified or
-+assumed; or by `git log HEAD`, if --root is specified.
- 
- The current branch is reset to <upstream>, or <newbase> if the
- --onto option was supplied.  This has the exact same effect as
-@@ -331,9 +332,8 @@ link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details)
- 	between `upstream` and `branch` when calculating which commits have
- 	have been introduced by `branch` (see linkgit:git-merge-base[1]).
- +
--If no non-option arguments are given on the command line, then the default is
--`--fork-point @{u}` otherwise the `upstream` argument is interpreted literally
--unless the `--fork-point` option is specified.
-+If either <upstream> or --root is given on the command line, then the
-+default is `--no-fork-point`, otherwise the default is `--fork-point`.
- 
- --ignore-whitespace::
- --whitespace=<option>::
--- 
-1.9.3
+>>  #: builtin/add.c:256
+>>  msgid "record only the fact that the path will be added later"
+>> -msgstr "speichert nur, dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt w=
+erden soll"
+>> +msgstr "nur speichern, dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt w=
+erden soll"
+>>
+>
+> "nur speichern, so dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt werden =
+soll" maybe
+> use a full sentence?
+>
+
+With the additional "so" the message doesn't sound correct to me.
+
+>>  #: builtin/apply.c:4378
+>>  msgid "instead of applying the patch, see if the patch is applicabl=
+e"
+>> @@ -2472,27 +2472,27 @@ msgstr ""
+>>  #: builtin/apply.c:4380
+>>  msgid "make sure the patch is applicable to the current index"
+>>  msgstr ""
+>> -"stellt sicher, dass der Patch in der aktuellen Staging-Area angewe=
+ndet "
+>> +"sicher stellen, dass der Patch in der aktuellen Staging-Area angew=
+endet "
+
+I think we should write it "sicherstellen".
+
+>>  "werden kann"
+>>
+>
+> "stellen Sie sicher, dass der Patch in der aktuellen Staging-Area
+> angewendet "
+> "werden kann" Someone is addressed dirctly.
+>
+
+Addressing the user this way makes the user think that she has to do
+something, but using an option tells Git to do something.
+
+Thanks,
+Ralf
+
+> Phillip
