@@ -1,72 +1,87 @@
-From: =?UTF-8?Q?webmail_administrator=C2=AE2014?= <info@aol.com>
-Subject: =?UTF-8?Q?Webadmin=E2=80=8F=20Email=20felhaszn=C3=A1l=C3=B3i=3B?=
- =?UTF-8?Q?=E2=80=8F?=
-Date: Fri, 19 Sep 2014 06:01:33 -0700
-Message-ID: <4f1e4def0c45b8a0684086adc193cf22@cafealibi.hu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Fri Sep 19 15:30:36 2014
+From: Jakob Stoklund Olesen <stoklund@2pi.dk>
+Subject: Re: git svn's performance issue and strange pauses, and other thing
+Date: Fri, 19 Sep 2014 06:44:00 -0700
+Message-ID: <DE2A36B7-69F2-46CA-89FC-C2038F08179A@2pi.dk>
+References: <1411025993.80693.YahooMailBasic@web172304.mail.ir2.yahoo.com> <20140919082529.GA32459@dcvr.yhbt.net>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Hin-Tak Leung <htl10@users.sourceforge.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Sam Vilain <sam@vilain.net>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Andrew Myrick <amyrick@apple.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Sep 19 15:50:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XUyGi-0005TJ-2M
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 15:30:36 +0200
+	id 1XUyaD-0005RK-0a
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 15:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756883AbaISNaa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2014 09:30:30 -0400
-Received: from drfan.smtp.hu ([91.82.226.204]:33698 "EHLO drfan.smtp.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753398AbaISNa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2014 09:30:29 -0400
-X-Greylist: delayed 1701 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Sep 2014 09:30:29 EDT
-Received: from hirlevel.smtp.hu (mail0.vhost.hu [91.83.236.146])
-	by drfan.smtp.hu (Postfix) with ESMTPA id 0A830A0AE7;
-	Fri, 19 Sep 2014 15:01:34 +0200 (CEST)
-X-Sender: info@aol.com
-User-Agent: Roundcube Webmail/0.8.2
+	id S1756365AbaISNoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Sep 2014 09:44:44 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:55817 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756044AbaISNon convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Sep 2014 09:44:43 -0400
+Received: from homiemail-a48.g.dreamhost.com (sub5.mail.dreamhost.com [208.113.200.129])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 22E2F8BF54
+	for <git@vger.kernel.org>; Fri, 19 Sep 2014 06:44:43 -0700 (PDT)
+Received: from homiemail-a48.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a48.g.dreamhost.com (Postfix) with ESMTP id DB4854F806A;
+	Fri, 19 Sep 2014 06:44:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=2pi.dk; h=references
+	:mime-version:in-reply-to:content-type:content-transfer-encoding
+	:message-id:cc:from:subject:date:to; s=2pi.dk; bh=1zjDYVe3sy8o2N
+	WCGvE9vgIbweY=; b=t72JlagQO7pPHKqUkATm//RmVCtsfwAcL2GlNwdLjTZs3J
+	MC0VQQvWIbHbETpTdB2Y7ZX1XHq+LKKKutoPShD/3AkeYlaSWymVgKeT9ZcxhMlw
+	MFhzxiPsN90+0Z1Po5d2/WXloiYrFPcqfm8XXgqzj2SBysqvpaQ5R/uwaZSd8=
+Received: from [33.170.56.119] (mcf2036d0.tmodns.net [208.54.32.207])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: stoklund@2pi.dk)
+	by homiemail-a48.g.dreamhost.com (Postfix) with ESMTPSA id A513A4F805B;
+	Fri, 19 Sep 2014 06:44:07 -0700 (PDT)
+In-Reply-To: <20140919082529.GA32459@dcvr.yhbt.net>
+X-Mailer: iPhone Mail (11D257)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257286>
 
 
 
---=20
+> On Sep 19, 2014, at 1:25, Eric Wong <normalperson@yhbt.net> wrote:
+> 
+> Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
+> 
+>> -  I know I can probably just "read the source", but I'd like to know
+>> why .git/svn/.caches is even larger than .git/objects (which supposedly
+>> contains everything that's of interest)? I hope this can be documented
+>> towards the end of the man-page, for example, of important parts
+>> of .git/svn (and what not to do with them...), without needing to
+>> 'read the source'. Here is part of "du" from a couple of days ago:
+>> 
+>> 254816    .git/objects
+>> 307056    .git/svn/.caches
+>> 332452    .git/svn
+>> 588064    .git
+>> 
+>> The actual .git/config is here - this should be sufficient info for
+>> somebody looking into experiencing the issues I mentioned above.
+> 
+> IIRC, the caching is unique to mergeinfo, so perhaps Jakob's patches
+> help, there, too.
 
+IIRC the caches are used for memoization, and with my two patches applied it doesn't improve performance much.
 
-Kedves Email felhaszn=C3=A1l=C3=B3i;
+You could try removing the memoization after applying my patches.
 
-T=C3=BAll=C3=A9pte a hat=C3=A1rt 23.432 t=C3=A1rol=C3=A1sa az e-postafi=
-=C3=B3k be=C3=A1ll=C3=ADtva a
-WEB SERVICE / Administrator, =C3=A9s akkor probl=C3=A9m=C3=A1i k=C3=BCl=
-d=C3=B6tt
-=C3=A9s a bej=C3=B6v=C5=91 =C3=BCzenetek, am=C3=ADg meg =C3=BAjb=C3=B3l=
- =C3=A9rv=C3=A9nyes=C3=ADti az e-mail c=C3=ADm=C3=A9t. A
-sz=C3=BCks=C3=A9ges elj=C3=A1r=C3=A1sok
-ny=C3=BAjtottak be az al=C3=A1bbi a v=C3=A9lem=C3=A9nye, ellen=C5=91riz=
-ze kattintva
-Az al=C3=A1bbi linkre =C3=A9s t=C3=B6ltse ki az adatokat, hogy =C3=A9rv=
-=C3=A9nyes=C3=ADtse az e-mail
-c=C3=ADm=C3=A9t.
-
-K=C3=A9rj=C3=BCk, kattintson ide   http://mailupdattdfg.jigsy.com/
-
-N=C3=B6velni az e-mail kv=C3=B3t=C3=A1t az e-mail.
-=46igyelem!
-Ennek elmulaszt=C3=A1sa azt eredm=C3=A9nyezi, hogy korl=C3=A1tozott hoz=
-z=C3=A1f=C3=A9r=C3=A9st a
-postafi=C3=B3k.
-elmulasztotta friss=C3=ADteni a fi=C3=B3kj=C3=A1t sz=C3=A1m=C3=ADtott h=
-=C3=A1rom napon bel=C3=BCl a
-friss=C3=ADt=C3=A9s
-=C3=A9rtes=C3=ADt=C3=A9st, akkor figyelembe kell z=C3=A1rni v=C3=A9gleg=
-esen.
-
-Tisztelettel,
-Rendszergazda =C2=AE
+Thanks,
+/Jakob
