@@ -1,115 +1,114 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 1/7] part1: l10n: de.po: use imperative form for command options
-Date: Fri, 19 Sep 2014 22:43:37 +0200
-Message-ID: <CAN0XMO+BR4Tp1EOCPe-ajNyuHpkN1B36T3rzRdw1Z_tzsZH6Dg@mail.gmail.com>
-References: <1411146770-8508-1-git-send-email-ralf.thielow@gmail.com>
-	<1411146770-8508-2-git-send-email-ralf.thielow@gmail.com>
-	<541C7FF7.1020105@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v2.1.1
+Date: Fri, 19 Sep 2014 15:53:45 -0700
+Message-ID: <xmqqbnqbmdc6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
-To: Phillip Sz <phillip.szelat@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 19 22:43:48 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Sat Sep 20 00:54:05 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XV51r-0006kj-Qe
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Sep 2014 22:43:44 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1XV73y-0007MX-O3
+	for glk-linux-kernel-3@plane.gmane.org; Sat, 20 Sep 2014 00:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932287AbaISUnj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Sep 2014 16:43:39 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:42641 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932261AbaISUni convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Sep 2014 16:43:38 -0400
-Received: by mail-wi0-f174.google.com with SMTP id fb4so194191wid.13
-        for <git@vger.kernel.org>; Fri, 19 Sep 2014 13:43:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HNc7zIV+QnDZlJHlHD541z5JuT/6nKpwXSHMwT9aXQk=;
-        b=A9xZsiLwSCaa+wleiYb7Aeo8u3esy5eAFkwOsSu41XsZ+6md2iDDl5RrmwFxAvVRH1
-         wMWqNGtTH0t7UnI34HNpvbA60BqiJZOVtKmkeLX92VBfqUBMyANIVz0T/3DUxHNNN7gh
-         /yFSZ9aBZ9IgActJpwRfriOtaf/003fokALEBgm+eZkNHAI5z/WpvokItA1PtrkHskn4
-         W+MHm+80SePfp+6B6XL51HHVk8LkbDjyTLViaqd5gxYoQo6ZrxS2RuXDvqnP4IolaZsR
-         puxkp89ZPISSvCo1RpY5anZqIlw5+sBEvByY6UbvHwlqGo0xV39ZWb24HVFee8QR31WM
-         gd8Q==
-X-Received: by 10.180.221.107 with SMTP id qd11mr517739wic.61.1411159417575;
- Fri, 19 Sep 2014 13:43:37 -0700 (PDT)
-Received: by 10.194.173.167 with HTTP; Fri, 19 Sep 2014 13:43:37 -0700 (PDT)
-In-Reply-To: <541C7FF7.1020105@gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1758198AbaISWxu (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 19 Sep 2014 18:53:50 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53995 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757977AbaISWxs (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 19 Sep 2014 18:53:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B66C33C231;
+	Fri, 19 Sep 2014 18:53:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=o
+	prlQ67DjytbDnJYaLnNKjcXFVg=; b=bVLvQBTJO5wKsM5FMFLr09VVeoDtflk3d
+	Shm/GYD+2ssYvNAEOTz+FHGRyMkl6XS7xK6WAHlRMKt1pJt6pFPILCjMJx8XRxy0
+	ttfwhrvE/+vUwuiH/ab068ondS93LlQbtelX/WjKpGQogCg9kxk7ZkoHAvqgMI3N
+	cHN+a+0ZTM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=lc3p2iYL7cnwyQavwFSpXXTWnqPPgfBgB7HAvWi4J7x58UkCJxUMV46E
+	q7qrRk2ErE7m82YImW16NEKqvAGNOzxgAEXC7bn2fSdwhs84UdNtl47kRQrs+68k
+	yJqX9YaED6xY+xjUC9B5Vb7QzE1jjqpVWsIOkYq9c9pgcaPfN7s=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id ACDD63C230;
+	Fri, 19 Sep 2014 18:53:47 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 218473C22F;
+	Fri, 19 Sep 2014 18:53:47 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D06EAF50-404F-11E4-8CC5-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257307>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257308>
 
-Hi Phillip,
+The latest maintenance release Git v2.1.1 is now available at
+the usual places.
 
-2014-09-19 21:11 GMT+02:00 Phillip Sz <phillip.szelat@gmail.com>:
-> Hi,
->
->>  #: archive.c:351 builtin/archive.c:91
->>  msgid "retrieve the archive from remote repository <repo>"
->> -msgstr "ruft das Archiv von Remote-Repository <Repository> ab"
->> +msgstr "Archiv von Remote-Repository <Repository> abrufen"
->>
->
-> "Archiv vom Remote-Repository <Repository> abrufen" sounds better to =
-me.
->
+The tarballs are found at:
 
-Thanks.
+    https://www.kernel.org/pub/software/scm/git/
 
->>  #: builtin/add.c:256
->>  msgid "record only the fact that the path will be added later"
->> -msgstr "speichert nur, dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt w=
-erden soll"
->> +msgstr "nur speichern, dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt w=
-erden soll"
->>
->
-> "nur speichern, so dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt werden =
-soll" maybe
-> use a full sentence?
->
+The following public repositories all have a copy of the 'v2.1.1'
+tag and the 'maint' branch that the tag points at:
 
-With the additional "so" the message doesn't sound correct to me.
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
->>  #: builtin/apply.c:4378
->>  msgid "instead of applying the patch, see if the patch is applicabl=
-e"
->> @@ -2472,27 +2472,27 @@ msgstr ""
->>  #: builtin/apply.c:4380
->>  msgid "make sure the patch is applicable to the current index"
->>  msgstr ""
->> -"stellt sicher, dass der Patch in der aktuellen Staging-Area angewe=
-ndet "
->> +"sicher stellen, dass der Patch in der aktuellen Staging-Area angew=
-endet "
+Git v2.1.1 Release Notes
+========================
 
-I think we should write it "sicherstellen".
+ * Git 2.0 had a regression where "git fetch" into a shallowly
+   cloned repository from a repository with bitmap object index
+   enabled did not work correctly.  This has been corrected.
 
->>  "werden kann"
->>
->
-> "stellen Sie sicher, dass der Patch in der aktuellen Staging-Area
-> angewendet "
-> "werden kann" Someone is addressed dirctly.
->
+ * Git 2.0 had a regression which broke (rarely used) "git diff-tree
+   -t".  This has been corrected.
 
-Addressing the user this way makes the user think that she has to do
-something, but using an option tells Git to do something.
+ * "git log --pretty/format=" with an empty format string did not
+   mean the more obvious "No output whatsoever" but "Use default
+   format", which was counterintuitive.  Now it means "nothing shown
+   for the log message part".
 
-Thanks,
-Ralf
+ * "git -c section.var command" and "git -c section.var= command"
+   should pass the configuration differently (the former should be a
+   boolean true, the latter should be an empty string), but they
+   didn't work that way.  Now it does.
 
-> Phillip
+ * Applying a patch not generated by Git in a subdirectory used to
+   check the whitespace breakage using the attributes for incorrect
+   paths. Also whitespace checks were performed even for paths
+   excluded via "git apply --exclude=<path>" mechanism.
+
+ * "git bundle create" with date-range specification were meant to
+   exclude tags outside the range, but it did not work correctly.
+
+ * "git add x" where x that used to be a directory has become a
+   symbolic link to a directory misbehaved.
+
+ * The prompt script checked $GIT_DIR/ref/stash file to see if there
+   is a stash, which was a no-no.
+
+ * "git checkout -m" did not switch to another branch while carrying
+   the local changes forward when a path was deleted from the index.
+
+ * With sufficiently long refnames, fast-import could have overflown
+   an on-stack buffer.
+
+ * After "pack-refs --prune" packed refs at the top-level, it failed
+   to prune them.
+
+ * "git gc --auto" triggered from "git fetch --quiet" was not quiet.
