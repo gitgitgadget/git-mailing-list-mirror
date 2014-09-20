@@ -1,155 +1,117 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] notes: accept any ref for merge
-Date: Sat, 20 Sep 2014 02:01:58 +0200
-Message-ID: <CALKQrgd3PzwgxuhrTpNCi-zuOj3PYviknpKgfPYVWP6bNS8AqQ@mail.gmail.com>
-References: <1411112385-33479-1-git-send-email-schacon@gmail.com>
-	<20140919093910.GA15891@peff.net>
-	<CALKQrgc4nZdaXM-Ooh1pP4x4nZRLexJzLyaBmrgn+qVaQGCg+g@mail.gmail.com>
-	<xmqqoaubmpvh.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] unblock and unignore SIGPIPE
+Date: Sat, 20 Sep 2014 10:42:52 +0200
+Message-ID: <541D3E0C.4030400@kdbg.org>
+References: <1411059429-23868-1-git-send-email-patrick.reynolds@github.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Scott Chacon <schacon@gmail.com>, Jeff King <peff@peff.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 20 02:02:17 2014
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Patrick Reynolds <patrick.reynolds@github.com>
+X-From: git-owner@vger.kernel.org Sat Sep 20 10:43:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XV880-0008U3-T6
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 02:02:17 +0200
+	id 1XVGGC-0003Q3-7i
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 10:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756626AbaITACK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Sep 2014 20:02:10 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:56484 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756485AbaITACJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Sep 2014 20:02:09 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1XV87p-000EfZ-Of
-	for git@vger.kernel.org; Sat, 20 Sep 2014 02:02:05 +0200
-Received: by mail-pa0-f53.google.com with SMTP id hz1so1023750pad.26
-        for <git@vger.kernel.org>; Fri, 19 Sep 2014 17:01:58 -0700 (PDT)
-X-Received: by 10.70.49.138 with SMTP id u10mr4969555pdn.6.1411171318339; Fri,
- 19 Sep 2014 17:01:58 -0700 (PDT)
-Received: by 10.70.10.5 with HTTP; Fri, 19 Sep 2014 17:01:58 -0700 (PDT)
-In-Reply-To: <xmqqoaubmpvh.fsf@gitster.dls.corp.google.com>
+	id S1751278AbaITInA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2014 04:43:00 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:14326 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751097AbaITIm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2014 04:42:57 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3j0QQy0tlxz5tlM;
+	Sat, 20 Sep 2014 10:42:49 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 324D719F43D;
+	Sat, 20 Sep 2014 10:42:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+In-Reply-To: <1411059429-23868-1-git-send-email-patrick.reynolds@github.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257311>
 
-On Fri, Sep 19, 2014 at 8:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
->> On Fri, Sep 19, 2014 at 11:39 AM, Jeff King <peff@peff.net> wrote:
->>> On Fri, Sep 19, 2014 at 09:39:45AM +0200, Scott Chacon wrote:
->>>> Currently if you try to merge notes, the notes code ensures that the
->>>> reference is under the 'refs/notes' namespace. In order to do any sort
->>>> of collaborative workflow, this doesn't work well as you can't easily
->>>> have local notes refs seperate from remote notes refs.
->>>>
->>>> This patch changes the expand_notes_ref function to check for simply a
->>>> leading refs/ instead of refs/notes to check if we're being passed an
->>>> expanded notes reference. This would allow us to set up
->>>> refs/remotes-notes or otherwise keep mergeable notes references outside
->>>> of what would be contained in the notes push refspec.
->>>
->>> I think this change affects not just "git notes merge", but all of the
->>> notes lookups (including just "git notes show")....
->> ...
->> Additionally, I suggest adding another test demonstrating your use
->> case as well. Something like setting up a small scenario for notes
->> collaboration, and walking through the various steps:
->>
->>  - Creating a couple of repos where notes are added/edited
->>  - Setting up config to allow pushing and/or fetching notes
->>  - Performing the push/fetch
->>  - Merging with the corresponding local notes ref
->
-> Is it our future direction to set up refs/remote-notes/<remote>/
-> namespace?  If so, let's not do it piecemeail in an unorganized
-> guerrilla fashion by starting with a stealth enabler with an
-> associated test.  We risk not following through and leave the
-> resulting user experience more puzzling if we go that way.
->
-> By "stealth enabler" I mean the removal of refs/notes/ restriction
-> that was originally done as a safety measure to avoid mistakes of
-> storing notes outside.  The refs/remote-notes/ future direction
-> declares that it is no longer a mistake to store notes outside
-> refs/notes/, but that does not necessarily have to mean that
-> anywhere under refs/ is fine.  It may make more sense to be explicit
-> with the code touched here to allow traditional refs/notes/ and the
-> new hierarchy only.  That way, we will still keep the "avoid
-> mistakes" safety and enable the new layout at the same time.
->
-> The most important first step for that to happen is to make sure we
-> are on the same page on that future direction.  I personally think
-> refs/remote-notes/<remote> that runs parallel to the remote tracking
-> branch hierarchy refs/remotes/<remote> is a reasonable way to do
-> this, but my words are no way final.
+Am 18.09.2014 um 18:57 schrieb Patrick Reynolds:
+> Blocked and ignored signals -- but not caught signals -- are inherited
+> across exec.  Some callers with sloppy signal-handling behavior can call
+> git with SIGPIPE blocked or ignored, even non-deterministically.  When
+> SIGPIPE is blocked or ignored, several git commands can run indefinitely,
+> ignoring EPIPE returns from write() calls, even when the process that
+> called them has gone away.  Our specific case involved a pipe of git
+> diff-tree output to a script that reads a limited amount of diff data.
+> 
+> In an ideal world, git would never be called with SIGPIPE blocked or
+> ignored.  But in the real world, several real potential callers, including
+> Perl, Apache, and Unicorn, sometimes spawn subprocesses with SIGPIPE
+> ignored.  It is easier and more productive to harden git against this
+> mistake than to clean it up in every potential parent process.
+> 
+> Signed-off-by: Patrick Reynolds <patrick.reynolds@github.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 1. Merged Junio's work from pu: moved restore_sigpipe_to_default into
+> git.c and restyled the new tests.
+> 2. Moved the new tests into t0005.  This meant switching back to `git
+> diff` as our data generator, as the sample repo in t0005 doesn't have any
+> files for `git ls-files` to output.
+> 3. Squashed.
+> 
+>  git.c              | 22 ++++++++++++++++++++++
+>  t/t0005-signals.sh | 22 ++++++++++++++++++++++
+>  2 files changed, 44 insertions(+)
+> 
+> diff --git a/git.c b/git.c
+> index 210f1ae..0f03d56 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -593,6 +593,26 @@ static int run_argv(int *argcp, const char ***argv)
+>  	return done_alias;
+>  }
+>  
+> +/*
+> + * Many parts of Git have subprograms communicate via pipe, expect the
+> + * upstream of the pipe to die with SIGPIPE and the downstream process
+> + * even knows to check and handle EPIPE correctly.  Some third-party
+> + * programs that ignore or block SIGPIPE for their own reason forget
+> + * to restore SIGPIPE handling to the default before spawning Git and
+> + * break this carefully orchestrated machinery.
+> + *
+> + * Restore the way SIGPIPE is handled to default, which is what we
+> + * expect.
+> + */
+> +static void restore_sigpipe_to_default(void)
+> +{
+> +	sigset_t unblock;
+> +
+> +	sigemptyset(&unblock);
+> +	sigaddset(&unblock, SIGPIPE);
+> +	sigprocmask(SIG_UNBLOCK, &unblock, NULL);
+> +	signal(SIGPIPE, SIG_DFL);
+> +}
 
-This has been discussed several times in the past, and - as I have
-argued before - I believe Git would benefit from a more thorough
-revamp of the ref namespace, one that would allow a straightforward
-naming of _any_ kind of remote-tracking ref (heads, tags, notes,
-whatever). The scheme I have proposed would map refs/<kind>/<name>
-from a remote repo to a remote-tracking
-refs/remotes/<remote>/<kind>/<name> in the local repo.
+This does not build on MinGW due to missing sigaddset() and
+sigprocmask(). I've a patch that adds dummies for them (but I ran out of
+time to complete it for submission). But then the test cases ...
 
-Having said that, I have clearly failed to find the time and
-motivation to follow through on this topic, and although there was
-some support for the idea, nobody else has stepped up to tackle it.
-Unfortunately, that has left "git notes" in a sorry state when it
-comes to sharing and collaboration. This has to stop. Fixing notes
-sharing is much more important than whatever lofty ideas I might
-have about how things should "ideally" be organized.
+> +test_expect_success 'a constipated git dies with SIGPIPE' '
+> +	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 )
+> +	test "$OUT" -eq 141
+> +'
+> +
+> +test_expect_success 'a constipated git dies with SIGPIPE even if parent ignores it' '
+> +	OUT=$( ((trap "" PIPE; large_git; echo $? 1>&3) | :) 3>&1 )
+> +	test "$OUT" -eq 141
+> +'
 
-Therefore, you can count me in support of organizing remote-tracking
-notes refs under refs/remote-notes/<remote>/<name>. In case of a more
-thorough redesign of the ref namespace at some point in the future,
-we will have to deal with a lot of "legacy" anyway, and adding
-refs/remote-notes/<remote> will not considerably increase that
-burden.
+... fail always because we neither get SIGPIPE (we don't have it on
+Windows) nor do we see a write error (e.g. EPIPE) when writing to the
+pipe. Should I protect these tests with !MINGW or would it be an option
+to drop these tests alltogether?
 
-> Assuming that this is we all agree to go in that direction, let's
-> make a list of things to be done to codify it, and do them.  For a
-> starter, I think these are needed, perhaps?
->
->  - This patch (or an enhancement to keep some safety)
->
->  - Documentation updates to "git notes"
->
->  - Documentation updates to Documentation/gitrepository-layout.txt
->
->  - Update to "git clone" and "git remote add" to add a fetch refspec
->    refs/notes:refs/remote-refs/<remote>/*
->
->  - New tests you suggest
-
-Sounds good to me. At least that would get us to the point where a
-simple "git fetch" will also fetch notes updates, and you can then
-choose to "git notes merge" them into your corresponding local notes
-refs.
-
-In addition to that we might want to consider streamlining things
-further by having a single command (like "git pull") that performs
-both fetching and merging. A complication here is that - unlike the
-branch realm where HEAD points to our "current" branch - there is
-not really a concept of a "current" notes ref, which could specify
-_which_ remote-notes ref to merge and/or the parameters of that
-merge. However, (as usual) I'm getting ahead of myself here. The
-points you list above go more than halfway to making notes sharing
-straightforward, and are in any case necessary prerequisites for
-whatever might follow.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-- Hannes
