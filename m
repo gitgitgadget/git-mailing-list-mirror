@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v15 03/11] trailer: read and process config information
-Date: Sat, 20 Sep 2014 15:45:06 +0200
-Message-ID: <20140920134515.18999.70218.chriscool@tuxfamily.org>
+Subject: [PATCH v15 02/11] trailer: process trailers from input message and
+ arguments
+Date: Sat, 20 Sep 2014 15:45:05 +0200
+Message-ID: <20140920134515.18999.12257.chriscool@tuxfamily.org>
 References: <20140920134048.18999.79434.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -14,239 +15,266 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Marc Branchaud <marcnarc@xiplink.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 20 15:49:23 2014
+X-From: git-owner@vger.kernel.org Sat Sep 20 15:49:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVL2M-0006vv-AT
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 15:49:18 +0200
+	id 1XVL2M-0006vv-Vy
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 15:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756115AbaITNsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756087AbaITNsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sat, 20 Sep 2014 09:48:54 -0400
-Received: from mail-2y.bbox.fr ([194.158.98.15]:63943 "EHLO mail-2y.bbox.fr"
+Received: from mail-3y.bbox.fr ([194.158.98.45]:34911 "EHLO mail-3y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753898AbaITNsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2014 09:48:37 -0400
+	id S1753879AbaITNsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2014 09:48:35 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id D33C85B;
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 169A560;
 	Sat, 20 Sep 2014 15:48:34 +0200 (CEST)
-X-git-sha1: 5dd7c8f54cbe3e68c08daa12d249d45b224bd43c 
+X-git-sha1: 76c382af5f220168d0113fae2082fba35f978713 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140920134048.18999.79434.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257322>
 
-Read the configuration to get trailer information, and then process
-it and store it in a doubly linked list.
+Implement the logic to process trailers from the input message
+and from arguments.
 
-The config information is stored in the list whose first item is
-pointed to by:
+At the beginning trailers from the input message are in their
+own "in_tok" doubly linked list, and trailers from arguments
+are in their own "arg_tok" doubly linked list.
 
-static struct trailer_item *first_conf_item;
+The lists are traversed and when an "arg_tok" should be "applied",
+it is removed from its list and inserted into the "in_tok" list.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- trailer.c | 185 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 185 insertions(+)
+ trailer.c | 210 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 210 insertions(+)
 
 diff --git a/trailer.c b/trailer.c
-index be0ad65..668dc33 100644
+index ac323b1..be0ad65 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -277,3 +277,188 @@ static void process_trailers_lists(struct trailer_item **in_tok_first,
- 					     arg_tok);
- 	}
+@@ -67,3 +67,213 @@ static int same_trailer(struct trailer_item *a, struct trailer_item *b)
+ {
+ 	return same_token(a, b) && same_value(a, b);
  }
 +
-+static int set_where(struct conf_info *item, const char *value)
++static void free_trailer_item(struct trailer_item *item)
 +{
-+	if (!strcasecmp("after", value))
-+		item->where = WHERE_AFTER;
-+	else if (!strcasecmp("before", value))
-+		item->where = WHERE_BEFORE;
-+	else if (!strcasecmp("end", value))
-+		item->where = WHERE_END;
-+	else if (!strcasecmp("start", value))
-+		item->where = WHERE_START;
-+	else
-+		return -1;
-+	return 0;
++	free(item->conf.name);
++	free(item->conf.key);
++	free(item->conf.command);
++	free((char *)item->token);
++	free((char *)item->value);
++	free(item);
 +}
 +
-+static int set_if_exists(struct conf_info *item, const char *value)
++static void update_last(struct trailer_item **last)
 +{
-+	if (!strcasecmp("addIfDifferent", value))
-+		item->if_exists = EXISTS_ADD_IF_DIFFERENT;
-+	else if (!strcasecmp("addIfDifferentNeighbor", value))
-+		item->if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
-+	else if (!strcasecmp("add", value))
-+		item->if_exists = EXISTS_ADD;
-+	else if (!strcasecmp("replace", value))
-+		item->if_exists = EXISTS_REPLACE;
-+	else if (!strcasecmp("doNothing", value))
-+		item->if_exists = EXISTS_DO_NOTHING;
-+	else
-+		return -1;
-+	return 0;
++	if (*last)
++		while ((*last)->next != NULL)
++			*last = (*last)->next;
 +}
 +
-+static int set_if_missing(struct conf_info *item, const char *value)
++static void update_first(struct trailer_item **first)
 +{
-+	if (!strcasecmp("doNothing", value))
-+		item->if_missing = MISSING_DO_NOTHING;
-+	else if (!strcasecmp("add", value))
-+		item->if_missing = MISSING_ADD;
-+	else
-+		return -1;
-+	return 0;
++	if (*first)
++		while ((*first)->previous != NULL)
++			*first = (*first)->previous;
 +}
 +
-+static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
++static void add_arg_to_input_list(struct trailer_item *on_tok,
++				  struct trailer_item *arg_tok,
++				  struct trailer_item **first,
++				  struct trailer_item **last)
 +{
-+	*dst = *src;
-+	if (src->name)
-+		dst->name = xstrdup(src->name);
-+	if (src->key)
-+		dst->key = xstrdup(src->key);
-+	if (src->command)
-+		dst->command = xstrdup(src->command);
-+}
-+
-+static struct trailer_item *get_conf_item(const char *name)
-+{
-+	struct trailer_item *item;
-+	struct trailer_item *previous;
-+
-+	/* Look up item with same name */
-+	for (previous = NULL, item = first_conf_item;
-+	     item;
-+	     previous = item, item = item->next) {
-+		if (!strcasecmp(item->conf.name, name))
-+			return item;
++	if (after_or_end(arg_tok->conf.where)) {
++		arg_tok->next = on_tok->next;
++		on_tok->next = arg_tok;
++		arg_tok->previous = on_tok;
++		if (arg_tok->next)
++			arg_tok->next->previous = arg_tok;
++		update_last(last);
++	} else {
++		arg_tok->previous = on_tok->previous;
++		on_tok->previous = arg_tok;
++		arg_tok->next = on_tok;
++		if (arg_tok->previous)
++			arg_tok->previous->next = arg_tok;
++		update_first(first);
 +	}
++}
 +
-+	/* Item does not already exists, create it */
-+	item = xcalloc(sizeof(struct trailer_item), 1);
-+	duplicate_conf(&item->conf, &default_conf_info);
-+	item->conf.name = xstrdup(name);
++static int check_if_different(struct trailer_item *in_tok,
++			      struct trailer_item *arg_tok,
++			      int check_all)
++{
++	enum action_where where = arg_tok->conf.where;
++	do {
++		if (!in_tok)
++			return 1;
++		if (same_trailer(in_tok, arg_tok))
++			return 0;
++		/*
++		 * if we want to add a trailer after another one,
++		 * we have to check those before this one
++		 */
++		in_tok = after_or_end(where) ? in_tok->previous : in_tok->next;
++	} while (check_all);
++	return 1;
++}
 +
-+	if (!previous)
-+		first_conf_item = item;
-+	else {
-+		previous->next = item;
-+		item->previous = previous;
++static void remove_from_list(struct trailer_item *item,
++			     struct trailer_item **first,
++			     struct trailer_item **last)
++{
++	struct trailer_item *next = item->next;
++	struct trailer_item *previous = item->previous;
++
++	if (next) {
++		item->next->previous = previous;
++		item->next = NULL;
++	} else if (last)
++		*last = previous;
++
++	if (previous) {
++		item->previous->next = next;
++		item->previous = NULL;
++	} else if (first)
++		*first = next;
++}
++
++static struct trailer_item *remove_first(struct trailer_item **first)
++{
++	struct trailer_item *item = *first;
++	*first = item->next;
++	if (item->next) {
++		item->next->previous = NULL;
++		item->next = NULL;
 +	}
-+
 +	return item;
 +}
 +
-+enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
-+			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
-+
-+static struct {
-+	const char *name;
-+	enum trailer_info_type type;
-+} trailer_config_items[] = {
-+	{ "key", TRAILER_KEY },
-+	{ "command", TRAILER_COMMAND },
-+	{ "where", TRAILER_WHERE },
-+	{ "ifexists", TRAILER_IF_EXISTS },
-+	{ "ifmissing", TRAILER_IF_MISSING }
-+};
-+
-+static int git_trailer_default_config(const char *conf_key, const char *value, void *cb)
++static void apply_arg_if_exists(struct trailer_item *in_tok,
++				struct trailer_item *arg_tok,
++				struct trailer_item *on_tok,
++				struct trailer_item **in_tok_first,
++				struct trailer_item **in_tok_last)
 +{
-+	const char *trailer_item, *variable_name;
++	switch (arg_tok->conf.if_exists) {
++	case EXISTS_DO_NOTHING:
++		free_trailer_item(arg_tok);
++		break;
++	case EXISTS_REPLACE:
++		add_arg_to_input_list(on_tok, arg_tok,
++				      in_tok_first, in_tok_last);
++		remove_from_list(in_tok, in_tok_first, in_tok_last);
++		free_trailer_item(in_tok);
++		break;
++	case EXISTS_ADD:
++		add_arg_to_input_list(on_tok, arg_tok,
++				      in_tok_first, in_tok_last);
++		break;
++	case EXISTS_ADD_IF_DIFFERENT:
++		if (check_if_different(in_tok, arg_tok, 1))
++			add_arg_to_input_list(on_tok, arg_tok,
++					      in_tok_first, in_tok_last);
++		else
++			free_trailer_item(arg_tok);
++		break;
++	case EXISTS_ADD_IF_DIFFERENT_NEIGHBOR:
++		if (check_if_different(on_tok, arg_tok, 0))
++			add_arg_to_input_list(on_tok, arg_tok,
++					      in_tok_first, in_tok_last);
++		else
++			free_trailer_item(arg_tok);
++		break;
++	}
++}
 +
-+	if (!skip_prefix(conf_key, "trailer.", &trailer_item))
-+		return 0;
++static void apply_arg_if_missing(struct trailer_item **in_tok_first,
++				 struct trailer_item **in_tok_last,
++				 struct trailer_item *arg_tok)
++{
++	struct trailer_item **in_tok;
++	enum action_where where;
 +
-+	variable_name = strrchr(trailer_item, '.');
-+	if (!variable_name) {
-+		if (!strcmp(trailer_item, "where")) {
-+			if (set_where(&default_conf_info, value) < 0)
-+				warning(_("unknown value '%s' for key '%s'"),
-+					value, conf_key);
-+		} else if (!strcmp(trailer_item, "ifexists")) {
-+			if (set_if_exists(&default_conf_info, value) < 0)
-+				warning(_("unknown value '%s' for key '%s'"),
-+					value, conf_key);
-+		} else if (!strcmp(trailer_item, "ifmissing")) {
-+			if (set_if_missing(&default_conf_info, value) < 0)
-+				warning(_("unknown value '%s' for key '%s'"),
-+					value, conf_key);
-+		} else if (!strcmp(trailer_item, "separators")) {
-+			separators = xstrdup(value);
++	switch (arg_tok->conf.if_missing) {
++	case MISSING_DO_NOTHING:
++		free_trailer_item(arg_tok);
++		break;
++	case MISSING_ADD:
++		where = arg_tok->conf.where;
++		in_tok = after_or_end(where) ? in_tok_last : in_tok_first;
++		if (*in_tok) {
++			add_arg_to_input_list(*in_tok, arg_tok,
++					      in_tok_first, in_tok_last);
++		} else {
++			*in_tok_first = arg_tok;
++			*in_tok_last = arg_tok;
 +		}
++		break;
++	}
++}
++
++static int find_same_and_apply_arg(struct trailer_item **in_tok_first,
++				   struct trailer_item **in_tok_last,
++				   struct trailer_item *arg_tok)
++{
++	struct trailer_item *in_tok;
++	struct trailer_item *on_tok;
++	struct trailer_item *following_tok;
++
++	enum action_where where = arg_tok->conf.where;
++	int middle = (where == WHERE_AFTER) || (where == WHERE_BEFORE);
++	int backwards = after_or_end(where);
++	struct trailer_item *start_tok = backwards ? *in_tok_last : *in_tok_first;
++
++	for (in_tok = start_tok; in_tok; in_tok = following_tok) {
++		following_tok = backwards ? in_tok->previous : in_tok->next;
++		if (!same_token(in_tok, arg_tok))
++			continue;
++		on_tok = middle ? in_tok : start_tok;
++		apply_arg_if_exists(in_tok, arg_tok, on_tok,
++				    in_tok_first, in_tok_last);
++		return 1;
 +	}
 +	return 0;
 +}
 +
-+static int git_trailer_config(const char *conf_key, const char *value, void *cb)
++static void process_trailers_lists(struct trailer_item **in_tok_first,
++				   struct trailer_item **in_tok_last,
++				   struct trailer_item **arg_tok_first)
 +{
-+	const char *trailer_item, *variable_name;
-+	struct trailer_item *item;
-+	struct conf_info *conf;
-+	char *name = NULL;
-+	enum trailer_info_type type;
-+	int i;
++	struct trailer_item *arg_tok;
++	struct trailer_item *next_arg;
 +
-+	if (!skip_prefix(conf_key, "trailer.", &trailer_item))
-+		return 0;
++	if (!*arg_tok_first)
++		return;
 +
-+	variable_name = strrchr(trailer_item, '.');
-+	if (!variable_name)
-+		return 0;
++	for (arg_tok = *arg_tok_first; arg_tok; arg_tok = next_arg) {
++		int applied = 0;
 +
-+	variable_name++;
-+	for (i = 0; i < ARRAY_SIZE(trailer_config_items); i++) {
-+		if (strcmp(trailer_config_items[i].name, variable_name))
-+			continue;
-+		name = xstrndup(trailer_item,  variable_name - trailer_item - 1);
-+		type = trailer_config_items[i].type;
-+		break;
++		next_arg = arg_tok->next;
++		remove_from_list(arg_tok, arg_tok_first, NULL);
++
++		applied = find_same_and_apply_arg(in_tok_first,
++						  in_tok_last,
++						  arg_tok);
++
++		if (!applied)
++			apply_arg_if_missing(in_tok_first,
++					     in_tok_last,
++					     arg_tok);
 +	}
-+
-+	if (!name)
-+		return 0;
-+
-+	item = get_conf_item(name);
-+	conf = &item->conf;
-+	free(name);
-+
-+	switch (type) {
-+	case TRAILER_KEY:
-+		if (conf->key)
-+			warning(_("more than one %s"), conf_key);
-+		conf->key = xstrdup(value);
-+		break;
-+	case TRAILER_COMMAND:
-+		if (conf->command)
-+			warning(_("more than one %s"), conf_key);
-+		conf->command = xstrdup(value);
-+		break;
-+	case TRAILER_WHERE:
-+		if (set_where(conf, value))
-+			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-+		break;
-+	case TRAILER_IF_EXISTS:
-+		if (set_if_exists(conf, value))
-+			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-+		break;
-+	case TRAILER_IF_MISSING:
-+		if (set_if_missing(conf, value))
-+			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-+		break;
-+	default:
-+		die("internal bug in trailer.c");
-+	}
-+	return 0;
 +}
 -- 
 2.0.3.960.g41c6e4c
