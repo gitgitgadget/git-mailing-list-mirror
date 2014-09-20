@@ -1,77 +1,99 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH 1/2] graph: simplify graph_padding_line()
-Date: Sat, 20 Sep 2014 20:29:53 +0200
-Message-ID: <541DC7A1.1000509@web.de>
+From: "James H. Fisher" <jhf@trifork.com>
+Subject: Bug/request: the empty string should be a valid git note
+Date: Sat, 20 Sep 2014 21:47:42 +0200
+Message-ID: <F9750CC0-3FAC-4B50-AB6A-BFD6A7D0BE97@trifork.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 20 20:30:25 2014
+Content-Type: text/plain; charset=Windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 20 21:57:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVPQM-0002Vj-7z
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 20:30:22 +0200
+	id 1XVQmq-0005xY-6K
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 21:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757393AbaITSaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2014 14:30:17 -0400
-Received: from mout.web.de ([212.227.15.4]:64318 "EHLO mout.web.de"
+	id S1757526AbaITT5f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2014 15:57:35 -0400
+Received: from mxout02.netic.dk ([77.243.50.218]:21191 "EHLO mxout02.netic.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757000AbaITSaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2014 14:30:16 -0400
-Received: from [192.168.178.27] ([79.253.175.32]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0Lb1nV-1YApq63nrd-00kgRz; Sat, 20 Sep 2014 20:30:11
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-X-Provags-ID: V03:K0:4Kwi3FrmB5hWdGkoba7EweJoMlAQhKk8Br6vxRh1I/a974WZaDk
- EXepG5kBF9VS77VltKWQ1mZxxku5mfuCVsR6wjFh81G//7x5Y7kmychZjAjB/N65vy652g8
- xlRl+wu60ksXilZwDYCv0fprqzJTs5qDDWKFLBNhpLD6JaV0DbI7jgbefkAp2x4uaWIm0Ca
- ifKAMecqcenH5qjjdPELQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754691AbaITT5e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Sep 2014 15:57:34 -0400
+X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Sep 2014 15:57:34 EDT
+X-IronPort-AV: E=Sophos;i="5.04,561,1406584800"; 
+   d="scan'208";a="11122252"
+Received: from mail91.interprise.dk ([77.66.16.98])
+  by mxout02.netic.dk with ESMTP/TLS/AES128-SHA; 20 Sep 2014 21:47:43 +0200
+Received: from MAIL01.interprise.dk (172.22.110.50) by MAIL91.interprise.dk
+ (172.22.200.10) with Microsoft SMTP Server (TLS) id 8.3.348.2; Sat, 20 Sep
+ 2014 21:47:42 +0200
+Received: from MAIL01.interprise.dk ([fe80::79b6:f1f5:a21d:550b]) by
+ MAIL01.interprise.dk ([fe80::79b6:f1f5:a21d:550b%11]) with mapi; Sat, 20 Sep
+ 2014 21:47:39 +0200
+Thread-Topic: Bug/request: the empty string should be a valid git note
+Thread-Index: Ac/VC7xBM4oD8ktNQTasgtrx0mizVQ==
+Accept-Language: en-US, da-DK
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, da-DK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257330>
 
-Deduplicate code common to both branches of if statements.
+In the documentation for git notes [1] I read:
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- graph.c | 17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
+    In principle, a note is a regular Git blob, and any kind of (non-)f=
+ormat is accepted.
 
-diff --git a/graph.c b/graph.c
-index dfb99f6..52605e4 100644
---- a/graph.c
-+++ b/graph.c
-@@ -1161,20 +1161,11 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
- 	 */
- 	for (i = 0; i < graph->num_columns; i++) {
- 		struct column *col = &graph->columns[i];
--		struct commit *col_commit = col->commit;
--		if (col_commit == graph->commit) {
--			strbuf_write_column(sb, col, '|');
--
--			if (graph->num_parents < 3)
--				strbuf_addch(sb, ' ');
--			else {
--				int num_spaces = ((graph->num_parents - 2) * 2);
--				strbuf_addchars(sb, ' ', num_spaces);
--			}
--		} else {
--			strbuf_write_column(sb, col, '|');
-+		strbuf_write_column(sb, col, '|');
-+		if (col->commit == graph->commit && graph->num_parents > 2)
-+			strbuf_addchars(sb, ' ', (graph->num_parents - 2) * 2);
-+		else
- 			strbuf_addch(sb, ' ');
--		}
- 	}
- 
- 	graph_pad_horizontally(graph, sb, graph->num_columns);
--- 
-2.1.1
+Then, since the empty string is a valid regular Git blob, the empty str=
+ing is also a valid git note.
+
+Therefore this behavior was unexpected for me:
+
+    > git notes --ref=3Dfoo add -m ''
+    Removing note for object 97b8860c071898d9e162678ea1035a8ced2f8b1f
+
+I was surprised to see that this behavior was deliberately introduced:
+
+    > git log -1 a0b4dfa
+    commit a0b4dfa9b35a2ebac578ea5547b041bb78557238
+    Author: Johan Herland <johan@herland.net>
+    Date:   Sat Feb 13 22:28:24 2010 +0100
+
+        Teach builtin-notes to remove empty notes
+
+        When the result of editing a note is an empty string, the assoc=
+iated note
+        entry should be deleted from the notes tree.
+
+        This allows deleting notes by invoking either "git notes -m ''"=
+ or
+        "git notes -F /dev/null".
+
+        Signed-off-by: Johan Herland <johan@herland.net>
+        Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+I don=92t understand what the motivation for this change was. Yes, it "=
+allows deleting notes" by providing the empty string, but there is a sp=
+ecific subcommand for removal of a note, `git notes remove`, which make=
+s this intention much clearer.
+
+I have specific motivation for wanting to store the empty string as a g=
+it note, as distinct from the non-existence of a note for the object. (=
+Specifically I have a tool to annotate a commit with a list of files th=
+at satisfy a certain condition. The empty string represents the empty l=
+ist, a valid value which asserts that no files satisfied the condition.=
+ I can imagine many other use cases for which the empty string is a use=
+ful git note.)
+
+Does anyone know why we have the existing behavior? Is it for "technica=
+l reasons=94 or was it actually considered desirable?
+
+James Fisher=20
+
+[1]: https://www.kernel.org/pub/software/scm/git/docs/git-notes.html
