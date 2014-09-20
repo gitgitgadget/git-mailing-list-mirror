@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v15 02/11] trailer: process trailers from input message and
- arguments
-Date: Sat, 20 Sep 2014 15:45:05 +0200
-Message-ID: <20140920134515.18999.12257.chriscool@tuxfamily.org>
+Subject: [PATCH v15 05/11] trailer: parse trailers from file or stdin
+Date: Sat, 20 Sep 2014 15:45:08 +0200
+Message-ID: <20140920134515.18999.62698.chriscool@tuxfamily.org>
 References: <20140920134048.18999.79434.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -15,266 +14,179 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Marc Branchaud <marcnarc@xiplink.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 20 15:49:22 2014
+X-From: git-owner@vger.kernel.org Sat Sep 20 15:49:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVL2M-0006vv-Vy
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 15:49:19 +0200
+	id 1XVL2Q-0006wr-5v
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 15:49:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756087AbaITNsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2014 09:48:54 -0400
-Received: from mail-3y.bbox.fr ([194.158.98.45]:34911 "EHLO mail-3y.bbox.fr"
+	id S1756039AbaITNsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2014 09:48:52 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:63956 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753879AbaITNsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2014 09:48:35 -0400
+	id S1753164AbaITNsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2014 09:48:38 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 169A560;
-	Sat, 20 Sep 2014 15:48:34 +0200 (CEST)
-X-git-sha1: 76c382af5f220168d0113fae2082fba35f978713 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 5DA5374;
+	Sat, 20 Sep 2014 15:48:36 +0200 (CEST)
+X-git-sha1: 7f5d8dca780d0b5bd22e2c3c0688f03ddb1fd0e2 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140920134048.18999.79434.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257323>
 
-Implement the logic to process trailers from the input message
-and from arguments.
-
-At the beginning trailers from the input message are in their
-own "in_tok" doubly linked list, and trailers from arguments
-are in their own "arg_tok" doubly linked list.
-
-The lists are traversed and when an "arg_tok" should be "applied",
-it is removed from its list and inserted into the "in_tok" list.
+Read trailers from a file or from stdin, parse the trailers and then
+put the result into a doubly linked list.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- trailer.c | 210 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 210 insertions(+)
+ trailer.c | 123 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 123 insertions(+)
 
 diff --git a/trailer.c b/trailer.c
-index ac323b1..be0ad65 100644
+index bf58980..c3e096f 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -67,3 +67,213 @@ static int same_trailer(struct trailer_item *a, struct trailer_item *b)
- {
+@@ -69,6 +69,14 @@ static int same_trailer(struct trailer_item *a, struct trailer_item *b)
  	return same_token(a, b) && same_value(a, b);
  }
-+
-+static void free_trailer_item(struct trailer_item *item)
+ 
++static inline int contains_only_spaces(const char *str)
 +{
-+	free(item->conf.name);
-+	free(item->conf.key);
-+	free(item->conf.command);
-+	free((char *)item->token);
-+	free((char *)item->value);
-+	free(item);
++	const char *s = str;
++	while (*s && isspace(*s))
++		s++;
++	return !*s;
 +}
 +
-+static void update_last(struct trailer_item **last)
-+{
-+	if (*last)
-+		while ((*last)->next != NULL)
-+			*last = (*last)->next;
-+}
+ static void free_trailer_item(struct trailer_item *item)
+ {
+ 	free(item->conf.name);
+@@ -587,3 +595,118 @@ static struct trailer_item *process_command_line_args(struct string_list *traile
+ 
+ 	return arg_tok_first;
+ }
 +
-+static void update_first(struct trailer_item **first)
++static struct strbuf **read_input_file(const char *file)
 +{
-+	if (*first)
-+		while ((*first)->previous != NULL)
-+			*first = (*first)->previous;
-+}
++	struct strbuf **lines;
++	struct strbuf sb = STRBUF_INIT;
 +
-+static void add_arg_to_input_list(struct trailer_item *on_tok,
-+				  struct trailer_item *arg_tok,
-+				  struct trailer_item **first,
-+				  struct trailer_item **last)
-+{
-+	if (after_or_end(arg_tok->conf.where)) {
-+		arg_tok->next = on_tok->next;
-+		on_tok->next = arg_tok;
-+		arg_tok->previous = on_tok;
-+		if (arg_tok->next)
-+			arg_tok->next->previous = arg_tok;
-+		update_last(last);
++	if (file) {
++		if (strbuf_read_file(&sb, file, 0) < 0)
++			die_errno(_("could not read input file '%s'"), file);
 +	} else {
-+		arg_tok->previous = on_tok->previous;
-+		on_tok->previous = arg_tok;
-+		arg_tok->next = on_tok;
-+		if (arg_tok->previous)
-+			arg_tok->previous->next = arg_tok;
-+		update_first(first);
++		if (strbuf_read(&sb, fileno(stdin), 0) < 0)
++			die_errno(_("could not read from stdin"));
 +	}
++
++	lines = strbuf_split(&sb, '\n');
++
++	strbuf_release(&sb);
++
++	return lines;
 +}
 +
-+static int check_if_different(struct trailer_item *in_tok,
-+			      struct trailer_item *arg_tok,
-+			      int check_all)
++/*
++ * Return the (0 based) index of the start of the patch or the line
++ * count if there is no patch in the message.
++ */
++static int find_patch_start(struct strbuf **lines, int count)
 +{
-+	enum action_where where = arg_tok->conf.where;
-+	do {
-+		if (!in_tok)
-+			return 1;
-+		if (same_trailer(in_tok, arg_tok))
-+			return 0;
-+		/*
-+		 * if we want to add a trailer after another one,
-+		 * we have to check those before this one
-+		 */
-+		in_tok = after_or_end(where) ? in_tok->previous : in_tok->next;
-+	} while (check_all);
-+	return 1;
-+}
++	int i;
 +
-+static void remove_from_list(struct trailer_item *item,
-+			     struct trailer_item **first,
-+			     struct trailer_item **last)
-+{
-+	struct trailer_item *next = item->next;
-+	struct trailer_item *previous = item->previous;
-+
-+	if (next) {
-+		item->next->previous = previous;
-+		item->next = NULL;
-+	} else if (last)
-+		*last = previous;
-+
-+	if (previous) {
-+		item->previous->next = next;
-+		item->previous = NULL;
-+	} else if (first)
-+		*first = next;
-+}
-+
-+static struct trailer_item *remove_first(struct trailer_item **first)
-+{
-+	struct trailer_item *item = *first;
-+	*first = item->next;
-+	if (item->next) {
-+		item->next->previous = NULL;
-+		item->next = NULL;
++	/* Get the start of the patch part if any */
++	for (i = 0; i < count; i++) {
++		if (starts_with(lines[i]->buf, "---"))
++			return i;
 +	}
-+	return item;
++
++	return count;
 +}
 +
-+static void apply_arg_if_exists(struct trailer_item *in_tok,
-+				struct trailer_item *arg_tok,
-+				struct trailer_item *on_tok,
-+				struct trailer_item **in_tok_first,
-+				struct trailer_item **in_tok_last)
++/*
++ * Return the (0 based) index of the first trailer line or count if
++ * there are no trailers. Trailers are searched only in the lines from
++ * index (count - 1) down to index 0.
++ */
++static int find_trailer_start(struct strbuf **lines, int count)
 +{
-+	switch (arg_tok->conf.if_exists) {
-+	case EXISTS_DO_NOTHING:
-+		free_trailer_item(arg_tok);
-+		break;
-+	case EXISTS_REPLACE:
-+		add_arg_to_input_list(on_tok, arg_tok,
-+				      in_tok_first, in_tok_last);
-+		remove_from_list(in_tok, in_tok_first, in_tok_last);
-+		free_trailer_item(in_tok);
-+		break;
-+	case EXISTS_ADD:
-+		add_arg_to_input_list(on_tok, arg_tok,
-+				      in_tok_first, in_tok_last);
-+		break;
-+	case EXISTS_ADD_IF_DIFFERENT:
-+		if (check_if_different(in_tok, arg_tok, 1))
-+			add_arg_to_input_list(on_tok, arg_tok,
-+					      in_tok_first, in_tok_last);
-+		else
-+			free_trailer_item(arg_tok);
-+		break;
-+	case EXISTS_ADD_IF_DIFFERENT_NEIGHBOR:
-+		if (check_if_different(on_tok, arg_tok, 0))
-+			add_arg_to_input_list(on_tok, arg_tok,
-+					      in_tok_first, in_tok_last);
-+		else
-+			free_trailer_item(arg_tok);
-+		break;
-+	}
-+}
++	int start, only_spaces = 1;
 +
-+static void apply_arg_if_missing(struct trailer_item **in_tok_first,
-+				 struct trailer_item **in_tok_last,
-+				 struct trailer_item *arg_tok)
-+{
-+	struct trailer_item **in_tok;
-+	enum action_where where;
-+
-+	switch (arg_tok->conf.if_missing) {
-+	case MISSING_DO_NOTHING:
-+		free_trailer_item(arg_tok);
-+		break;
-+	case MISSING_ADD:
-+		where = arg_tok->conf.where;
-+		in_tok = after_or_end(where) ? in_tok_last : in_tok_first;
-+		if (*in_tok) {
-+			add_arg_to_input_list(*in_tok, arg_tok,
-+					      in_tok_first, in_tok_last);
-+		} else {
-+			*in_tok_first = arg_tok;
-+			*in_tok_last = arg_tok;
-+		}
-+		break;
-+	}
-+}
-+
-+static int find_same_and_apply_arg(struct trailer_item **in_tok_first,
-+				   struct trailer_item **in_tok_last,
-+				   struct trailer_item *arg_tok)
-+{
-+	struct trailer_item *in_tok;
-+	struct trailer_item *on_tok;
-+	struct trailer_item *following_tok;
-+
-+	enum action_where where = arg_tok->conf.where;
-+	int middle = (where == WHERE_AFTER) || (where == WHERE_BEFORE);
-+	int backwards = after_or_end(where);
-+	struct trailer_item *start_tok = backwards ? *in_tok_last : *in_tok_first;
-+
-+	for (in_tok = start_tok; in_tok; in_tok = following_tok) {
-+		following_tok = backwards ? in_tok->previous : in_tok->next;
-+		if (!same_token(in_tok, arg_tok))
++	/*
++	 * Get the start of the trailers by looking starting from the end
++	 * for a line with only spaces before lines with one separator.
++	 */
++	for (start = count - 1; start >= 0; start--) {
++		if (lines[start]->buf[0] == comment_line_char)
 +			continue;
-+		on_tok = middle ? in_tok : start_tok;
-+		apply_arg_if_exists(in_tok, arg_tok, on_tok,
-+				    in_tok_first, in_tok_last);
-+		return 1;
++		if (contains_only_spaces(lines[start]->buf)) {
++			if (only_spaces)
++				continue;
++			return start + 1;
++		}
++		if (strcspn(lines[start]->buf, separators) < lines[start]->len) {
++			if (only_spaces)
++				only_spaces = 0;
++			continue;
++		}
++		return count;
++	}
++
++	return only_spaces ? count : 0;
++}
++
++static int has_blank_line_before(struct strbuf **lines, int start)
++{
++	for (;start >= 0; start--) {
++		if (lines[start]->buf[0] == comment_line_char)
++			continue;
++		return contains_only_spaces(lines[start]->buf);
 +	}
 +	return 0;
 +}
 +
-+static void process_trailers_lists(struct trailer_item **in_tok_first,
-+				   struct trailer_item **in_tok_last,
-+				   struct trailer_item **arg_tok_first)
++static void print_lines(struct strbuf **lines, int start, int end)
 +{
-+	struct trailer_item *arg_tok;
-+	struct trailer_item *next_arg;
++	int i;
++	for (i = start; lines[i] && i < end; i++)
++		printf("%s", lines[i]->buf);
++}
 +
-+	if (!*arg_tok_first)
-+		return;
++static int process_input_file(struct strbuf **lines,
++			      struct trailer_item **in_tok_first,
++			      struct trailer_item **in_tok_last)
++{
++	int count = 0;
++	int patch_start, trailer_start, i;
 +
-+	for (arg_tok = *arg_tok_first; arg_tok; arg_tok = next_arg) {
-+		int applied = 0;
++	/* Get the line count */
++	while (lines[count])
++		count++;
 +
-+		next_arg = arg_tok->next;
-+		remove_from_list(arg_tok, arg_tok_first, NULL);
++	patch_start = find_patch_start(lines, count);
++	trailer_start = find_trailer_start(lines, patch_start);
 +
-+		applied = find_same_and_apply_arg(in_tok_first,
-+						  in_tok_last,
-+						  arg_tok);
++	/* Print lines before the trailers as is */
++	print_lines(lines, 0, trailer_start);
 +
-+		if (!applied)
-+			apply_arg_if_missing(in_tok_first,
-+					     in_tok_last,
-+					     arg_tok);
++	if (!has_blank_line_before(lines, trailer_start - 1))
++		printf("\n");
++
++	/* Parse trailer lines */
++	for (i = trailer_start; i < patch_start; i++) {
++		struct trailer_item *new = create_trailer_item(lines[i]->buf);
++		add_trailer_item(in_tok_first, in_tok_last, new);
 +	}
++
++	return patch_start;
 +}
 -- 
 2.0.3.960.g41c6e4c
