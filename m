@@ -1,117 +1,147 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2] unblock and unignore SIGPIPE
-Date: Sat, 20 Sep 2014 10:42:52 +0200
-Message-ID: <541D3E0C.4030400@kdbg.org>
-References: <1411059429-23868-1-git-send-email-patrick.reynolds@github.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Patrick Reynolds <patrick.reynolds@github.com>
-X-From: git-owner@vger.kernel.org Sat Sep 20 10:43:16 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v15 00/11] Add interpret-trailers builtin
+Date: Sat, 20 Sep 2014 15:45:03 +0200
+Message-ID: <20140920134048.18999.79434.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 20 15:48:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVGGC-0003Q3-7i
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 10:43:16 +0200
+	id 1XVL1x-0006m9-7X
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Sep 2014 15:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbaITInA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Sep 2014 04:43:00 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:14326 "EHLO bsmtp.bon.at"
+	id S1754921AbaITNsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Sep 2014 09:48:37 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:63910 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751097AbaITIm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Sep 2014 04:42:57 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3j0QQy0tlxz5tlM;
-	Sat, 20 Sep 2014 10:42:49 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 324D719F43D;
-	Sat, 20 Sep 2014 10:42:53 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-In-Reply-To: <1411059429-23868-1-git-send-email-patrick.reynolds@github.com>
+	id S1753198AbaITNsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2014 09:48:35 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 8B7DD69;
+	Sat, 20 Sep 2014 15:48:31 +0200 (CEST)
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257312>
 
-Am 18.09.2014 um 18:57 schrieb Patrick Reynolds:
-> Blocked and ignored signals -- but not caught signals -- are inherited
-> across exec.  Some callers with sloppy signal-handling behavior can call
-> git with SIGPIPE blocked or ignored, even non-deterministically.  When
-> SIGPIPE is blocked or ignored, several git commands can run indefinitely,
-> ignoring EPIPE returns from write() calls, even when the process that
-> called them has gone away.  Our specific case involved a pipe of git
-> diff-tree output to a script that reads a limited amount of diff data.
-> 
-> In an ideal world, git would never be called with SIGPIPE blocked or
-> ignored.  But in the real world, several real potential callers, including
-> Perl, Apache, and Unicorn, sometimes spawn subprocesses with SIGPIPE
-> ignored.  It is easier and more productive to harden git against this
-> mistake than to clean it up in every potential parent process.
-> 
-> Signed-off-by: Patrick Reynolds <patrick.reynolds@github.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 1. Merged Junio's work from pu: moved restore_sigpipe_to_default into
-> git.c and restyled the new tests.
-> 2. Moved the new tests into t0005.  This meant switching back to `git
-> diff` as our data generator, as the sample repo in t0005 doesn't have any
-> files for `git ls-files` to output.
-> 3. Squashed.
-> 
->  git.c              | 22 ++++++++++++++++++++++
->  t/t0005-signals.sh | 22 ++++++++++++++++++++++
->  2 files changed, 44 insertions(+)
-> 
-> diff --git a/git.c b/git.c
-> index 210f1ae..0f03d56 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -593,6 +593,26 @@ static int run_argv(int *argcp, const char ***argv)
->  	return done_alias;
->  }
->  
-> +/*
-> + * Many parts of Git have subprograms communicate via pipe, expect the
-> + * upstream of the pipe to die with SIGPIPE and the downstream process
-> + * even knows to check and handle EPIPE correctly.  Some third-party
-> + * programs that ignore or block SIGPIPE for their own reason forget
-> + * to restore SIGPIPE handling to the default before spawning Git and
-> + * break this carefully orchestrated machinery.
-> + *
-> + * Restore the way SIGPIPE is handled to default, which is what we
-> + * expect.
-> + */
-> +static void restore_sigpipe_to_default(void)
-> +{
-> +	sigset_t unblock;
-> +
-> +	sigemptyset(&unblock);
-> +	sigaddset(&unblock, SIGPIPE);
-> +	sigprocmask(SIG_UNBLOCK, &unblock, NULL);
-> +	signal(SIGPIPE, SIG_DFL);
-> +}
+This patch series implements a new command:
 
-This does not build on MinGW due to missing sigaddset() and
-sigprocmask(). I've a patch that adds dummies for them (but I ran out of
-time to complete it for submission). But then the test cases ...
+        git interpret-trailers
 
-> +test_expect_success 'a constipated git dies with SIGPIPE' '
-> +	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 )
-> +	test "$OUT" -eq 141
-> +'
-> +
-> +test_expect_success 'a constipated git dies with SIGPIPE even if parent ignores it' '
-> +	OUT=$( ((trap "" PIPE; large_git; echo $? 1>&3) | :) 3>&1 )
-> +	test "$OUT" -eq 141
-> +'
+and an infrastructure to process trailers that can be reused,
+for example in "commit.c".
 
-... fail always because we neither get SIGPIPE (we don't have it on
-Windows) nor do we see a write error (e.g. EPIPE) when writing to the
-pipe. Should I protect these tests with !MINGW or would it be an option
-to drop these tests alltogether?
+1) Rationale
 
--- Hannes
+This command should help with RFC 822 style headers, called
+"trailers", that are found at the end of commit messages.
+
+(Note that these headers do not follow and are not intended to
+follow many rules that are in RFC 822. For example they do not
+follow the line breaking rules, the encoding rules and probably
+many other rules.)
+
+For a long time, these trailers have become a de facto standard
+way to add helpful information into commit messages.
+
+Until now git commit has only supported the well known
+"Signed-off-by: " trailer, that is used by many projects like
+the Linux kernel and Git.
+
+It is better to keep builtin/commit.c uncontaminated by any more
+hard-wired logic, like what we have for the signed-off-by line.  Any
+new things can and should be doable in hooks, and this filter would
+help writing these hooks.
+
+And that is why the design goal of the filter is to make it at least
+as powerful as the built-in logic we have for signed-off-by lines;
+that would allow us to later eject the hard-wired logic for
+signed-off-by line from the main codepath, if/when we wanted to.
+
+Alternatively, we could build a library-ish API around this filter
+code and replace the hard-wired logic for signed-off-by line with a
+call into that API, if/when we wanted to, but that requires (in
+addition to the "at least as powerful as the built-in logic") that
+the implementation of this stand-alone filter can be cleanly made
+into a reusable library, so that is a bit higher bar to cross than
+"everything can be doable with hooks" alternative.
+
+2) Current state
+
+Currently the usage string of this command is:
+
+git interpret-trailers [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+
+The following features are implemented:
+
+        - the result is printed on stdout
+        - the --trailer arguments are interpreted
+        - messages read from <file>... or stdin are interpreted
+        - the "trailer.separators" option in the config is interpreted
+        - the "trailer.where" option is interpreted
+        - the "trailer.ifexists" option is interpreted
+        - the "trailer.ifmissing" option is interpreted
+        - the "trailer.<token>.key" options are interpreted
+        - the "trailer.<token>.where" options are interpreted
+        - the "trailer.<token>.ifexist" options are interpreted
+        - the "trailer.<token>.ifmissing" options are interpreted
+        - the "trailer.<token>.command" config works
+        - $ARG can be used in commands
+        - messages can contain a patch
+        - lines in messages starting with a comment char are ignored
+        - there are 49 tests
+        - there is some documentation
+        - there are examples in the documentation
+
+3) Changes since version 14, thanks to Jeff and Junio
+
+* renamed alnum_len() to token_len_without_separator()
+  and improve comment before this function (patch 1/11
+  and 4/11)
+
+Christian Couder (11):
+  trailer: add data structures and basic functions
+  trailer: process trailers from input message and arguments
+  trailer: read and process config information
+  trailer: process command line trailer arguments
+  trailer: parse trailers from file or stdin
+  trailer: put all the processing together and print
+  trailer: add interpret-trailers command
+  trailer: add tests for "git interpret-trailers"
+  trailer: execute command from 'trailer.<name>.command'
+  trailer: add tests for commands in config file
+  Documentation: add documentation for 'git interpret-trailers'
+
+ .gitignore                               |   1 +
+ Documentation/git-interpret-trailers.txt | 313 ++++++++++++
+ Makefile                                 |   2 +
+ builtin.h                                |   1 +
+ builtin/interpret-trailers.c             |  44 ++
+ command-list.txt                         |   1 +
+ git.c                                    |   1 +
+ t/t7513-interpret-trailers.sh            | 851 ++++++++++++++++++++++++++++++
+ trailer.c                                | 852 +++++++++++++++++++++++++++++++
+ trailer.h                                |   6 +
+ 10 files changed, 2072 insertions(+)
+ create mode 100644 Documentation/git-interpret-trailers.txt
+ create mode 100644 builtin/interpret-trailers.c
+ create mode 100755 t/t7513-interpret-trailers.sh
+ create mode 100644 trailer.c
+ create mode 100644 trailer.h
+
+-- 
+2.0.3.960.g41c6e4c
