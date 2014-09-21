@@ -1,136 +1,81 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: change Email to E-Mail
-Date: Sun, 21 Sep 2014 09:45:15 +0200
-Message-ID: <CAN0XMOLP+rYJs88h=csdPrD1F+EHaOE-u=byj6vF6Ey0xoK+2g@mail.gmail.com>
-References: <1411228313-1941-1-git-send-email-phillip.szelat@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] remote: simplify match_name_with_pattern() using strbuf
+Date: Sun, 21 Sep 2014 10:23:37 +0200
+Message-ID: <541E8B09.80502@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Phillip Sz <phillip.szelat@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 21 09:45:34 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 21 10:24:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVbps-0000Cs-RA
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Sep 2014 09:45:33 +0200
+	id 1XVcRW-0006oj-LO
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Sep 2014 10:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895AbaIUHpS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Sep 2014 03:45:18 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:41847 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751792AbaIUHpR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Sep 2014 03:45:17 -0400
-Received: by mail-wi0-f169.google.com with SMTP id fb4so1349858wid.0
-        for <git@vger.kernel.org>; Sun, 21 Sep 2014 00:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=xsvECkojGAXzBnsyLLg6NnyZdL3ff/Xk5R+UfP2+SLY=;
-        b=nz86wGfAomqWyK7UO+S5Bp7HSufbrM9F4DrNLNbXrh9xKZeBY+/vzkESz26IhbsVBC
-         faM/cPVq9muECYgvzO7YOjiizZ+pAw83/fwVQ2d0behJ9Hr2vi2oFfEYLebjj/MXz084
-         kFeVwkj7VX9LQB0na6bVf6n3hMWXNIe7ZN+xbMx5o0TaQn962SsU61t33w0AIsYjCjWX
-         n16fRZFynUc0ugbdZLP8+yTm1dw4hnVWA07rQ167d3OiwVB516VpN0cVejAFjUKXmfi2
-         aj2KF9HozkoBTjohVpHJYVG/JJRArtMZZ3A7V7PyctWBPKQhwa3cy1BLmWo1u4ZccS30
-         Ofgg==
-X-Received: by 10.194.84.42 with SMTP id v10mr12538448wjy.63.1411285515933;
- Sun, 21 Sep 2014 00:45:15 -0700 (PDT)
-Received: by 10.194.173.167 with HTTP; Sun, 21 Sep 2014 00:45:15 -0700 (PDT)
-In-Reply-To: <1411228313-1941-1-git-send-email-phillip.szelat@gmail.com>
+	id S1752050AbaIUIYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Sep 2014 04:24:03 -0400
+Received: from mout.web.de ([212.227.15.3]:63452 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751792AbaIUIYA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Sep 2014 04:24:00 -0400
+Received: from [192.168.178.27] ([79.253.137.51]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LpwMZ-1XyvIw46J5-00fgtp; Sun, 21 Sep 2014 10:23:58
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+X-Provags-ID: V03:K0:lu7dhbcg4T5pBrgICKdZ0q1ExrkCjws11O3EXgC5n1Lyy7FMZAW
+ 2MVQiAdqENIn5gu8jJXIDIjAHtZnyZx3P0gsAQpCRl7bDeNg/pk0Zf53c1gtulvlUiZSYEg
+ 6IJh6Dr3Sdn2AZZcdinI/4coauzMouW2s9CA+joaTShigG2Ief7vcp9xWg2dxICx+H8fPGG
+ BvkFww+IXlpbwuawki/pA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257343>
 
-2014-09-20 17:51 GMT+02:00 Phillip Sz <phillip.szelat@gmail.com>:
-> Changes all Email to E-Mail, as this is the correct form in german.
->
+Make the code simpler and shorter by avoiding repetitive use of
+string length variables and leaving memory allocation to strbuf
+functions.
 
-Thanks!
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ remote.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-> Phillip
->
-> Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
-> ---
->  po/de.po | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/po/de.po b/po/de.po
-> index e5d2b25..c6aa69f 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -2691,7 +2691,7 @@ msgstr "Unterdr=C3=BCckt den Namen des Autors u=
-nd den Zeitstempel (Standard: aus)"
->
->  #: builtin/blame.c:2514
->  msgid "Show author email instead of name (Default: off)"
-> -msgstr "Zeigt anstatt des Namens die Email-Adresse des Autors (Stand=
-ard: aus)"
-> +msgstr "Zeigt anstatt des Namens die E-Mail-Adresse des Autors (Stan=
-dard: aus)"
->
->  #: builtin/blame.c:2515
->  msgid "Ignore whitespace differences"
-> @@ -6535,7 +6535,7 @@ msgstr "zeigt Patchformat anstatt des Standards=
- (Patch + Zusammenfassung)"
->
->  #: builtin/log.c:1217
->  msgid "Messaging"
-> -msgstr "Email-Einstellungen"
-> +msgstr "E-Mail-Einstellungen"
->
->  #: builtin/log.c:1218
->  msgid "header"
-> @@ -6543,11 +6543,11 @@ msgstr "Header"
->
->  #: builtin/log.c:1219
->  msgid "add email header"
-> -msgstr "f=C3=BCgt Email-Header hinzu"
-> +msgstr "f=C3=BCgt E-Mail-Header hinzu"
->
->  #: builtin/log.c:1220 builtin/log.c:1222
->  msgid "email"
-> -msgstr "Email"
-> +msgstr "E-Mail"
->
->  #: builtin/log.c:1220
->  msgid "add To: header"
-> @@ -6573,7 +6573,7 @@ msgstr "message-id"
->
->  #: builtin/log.c:1228
->  msgid "make first mail a reply to <message-id>"
-> -msgstr "macht aus erster Email eine Antwort zu <message-id>"
-> +msgstr "macht aus erster E-Mail eine Antwort zu <message-id>"
->
->  #: builtin/log.c:1229 builtin/log.c:1232
->  msgid "boundary"
-> @@ -9431,7 +9431,7 @@ msgstr "Unterdr=C3=BCckt Commit-Beschreibungen,=
- liefert nur Anzahl der Commits"
->
->  #: builtin/shortlog.c:234
->  msgid "Show the email address of each author"
-> -msgstr "Zeigt die Email-Adresse von jedem Autor"
-> +msgstr "Zeigt die E-Mail-Adresse von jedem Autor"
->
->  #: builtin/shortlog.c:235
->  msgid "w[,i1[,i2]]"
-> @@ -10284,7 +10284,7 @@ msgstr ""
->
->  #: git-am.sh:732
->  msgid "Patch does not have a valid e-mail address."
-> -msgstr "Patch enth=C3=A4lt keine g=C3=BCltige Email-Adresse."
-> +msgstr "Patch enth=C3=A4lt keine g=C3=BCltige E-Mail-Adresse."
->
->  #: git-am.sh:779
->  msgid "cannot be interactive without stdin connected to a terminal."
-> --
-> 2.1.0
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/remote.c b/remote.c
+index 35e62ee..ce785f8 100644
+--- a/remote.c
++++ b/remote.c
+@@ -862,21 +862,14 @@ static int match_name_with_pattern(const char *key, const char *name,
+ 	ret = !strncmp(name, key, klen) && namelen >= klen + ksuffixlen &&
+ 		!memcmp(name + namelen - ksuffixlen, kstar + 1, ksuffixlen);
+ 	if (ret && value) {
++		struct strbuf sb = STRBUF_INIT;
+ 		const char *vstar = strchr(value, '*');
+-		size_t vlen;
+-		size_t vsuffixlen;
+ 		if (!vstar)
+ 			die("Value '%s' of pattern has no '*'", value);
+-		vlen = vstar - value;
+-		vsuffixlen = strlen(vstar + 1);
+-		*result = xmalloc(vlen + vsuffixlen +
+-				  strlen(name) -
+-				  klen - ksuffixlen + 1);
+-		strncpy(*result, value, vlen);
+-		strncpy(*result + vlen,
+-			name + klen, namelen - klen - ksuffixlen);
+-		strcpy(*result + vlen + namelen - klen - ksuffixlen,
+-		       vstar + 1);
++		strbuf_add(&sb, value, vstar - value);
++		strbuf_add(&sb, name + klen, namelen - klen - ksuffixlen);
++		strbuf_addstr(&sb, vstar + 1);
++		*result = strbuf_detach(&sb, NULL);
+ 	}
+ 	return ret;
+ }
+-- 
+2.1.1
