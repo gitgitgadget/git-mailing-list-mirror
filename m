@@ -1,75 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: diff-index does not consider a removed submodule to be staged
- with --ignore-submodules
-Date: Sun, 21 Sep 2014 23:36:10 +0200
-Message-ID: <541F44CA.7080403@web.de>
-References: <541DA95A.2030407@thequod.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: Bug/request: the empty string should be a valid git note
+Date: Sun, 21 Sep 2014 16:32:51 -0700
+Message-ID: <1A2394C0-50A4-40F4-B0B9-B2EC38109083@gmail.com>
+References: <F9750CC0-3FAC-4B50-AB6A-BFD6A7D0BE97@trifork.com> <CALKQrgd9BPUTrgZvFCj_fznRG6RmfiGzW68XF++yykMguypTig@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Daniel Hahler <genml+git-2014@thequod.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 21 23:36:36 2014
+Cc: "James H. Fisher" <jhf@trifork.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Sep 22 01:33:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVoo8-0006k5-BW
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Sep 2014 23:36:36 +0200
+	id 1XVqcn-0006TB-Bg
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 01:33:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbaIUVgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2014 17:36:24 -0400
-Received: from mout.web.de ([212.227.15.14]:53555 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751313AbaIUVgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2014 17:36:24 -0400
-Received: from [192.168.178.41] ([79.211.118.222]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0Lu1Be-1YTrgT0f5C-011Tpw; Sun, 21 Sep 2014 23:36:19
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <541DA95A.2030407@thequod.de>
-X-Provags-ID: V03:K0:vksHR1nJ7OXudHPY867OkHUrCIWLc4aJSypFINkD0WHjnx5Swxl
- fnLBfqR4e9Ydm65j7nayOmEs3CkRzDNqMti9gQKcYBKMY86ZvZxbJ/3Gnal09/N3jbBrBmA
- jZjwkRnoYm8MtTrhZJXz2KwaxiROm8+Hg5U0s1AVjK+TJGZXoFvWWoK4HBc7lUQwMX0LEiB
- iPK6FPj93xvewAQ0l1VCQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752121AbaIUXc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Sep 2014 19:32:56 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:56450 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751939AbaIUXcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Sep 2014 19:32:55 -0400
+Received: by mail-pa0-f41.google.com with SMTP id ey11so3801455pad.28
+        for <git@vger.kernel.org>; Sun, 21 Sep 2014 16:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=0Zebf9+J3F3mU98fDjKZ68qJVkWPxGKy5F/4uQ0dv04=;
+        b=n/SN6q6ayq+dAZdZp/BMkDR1IehHVHC06zEjbJopqGhuni8CE1i33wHhn0cxyegoJm
+         Ug+9DSMcZbPA17fF0iWsigbUPzjG173yPae+TAvqaBy8q+VMAKPDSr/EKSFFNGa6lDRW
+         EUs34oG6qYEHf3coL/etjjtb/cYiQFacnygXkkUGi0HDfSwIO6JkQCLFDu9zn1SgVAI/
+         qUDfnwxqPyOoWhHi4NrsOgC/SwtfB76z/MTBg1ys2vMtznw3CxiDsDMrzATHWd4DKzBF
+         9bVXMOZ0R0GGFoaM4O6VAIBD8WdzofBQZzHsUVVwC1rPkepD84fS6l7bev1OL4faQx+Z
+         FiBQ==
+X-Received: by 10.68.69.38 with SMTP id b6mr18107441pbu.70.1411342374567;
+        Sun, 21 Sep 2014 16:32:54 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id n3sm7613393pdl.5.2014.09.21.16.32.53
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 21 Sep 2014 16:32:53 -0700 (PDT)
+In-Reply-To: <CALKQrgd9BPUTrgZvFCj_fznRG6RmfiGzW68XF++yykMguypTig@mail.gmail.com>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257359>
 
-Am 20.09.2014 um 18:20 schrieb Daniel Hahler:
-> After staging the removal of a submodule, diff-index does not consider this when "--ignore-submodules" is being used:
->
->      # In a repository with submodule "sm":
->      % git rm --cached sm
->      % git diff-index --cached --quiet --ignore-submodules HEAD
->      % echo $?
->      0
->      % git status
->      On branch master
->      Changes to be committed:
->        (use "git reset HEAD <file>..." to unstage)
->
->          deleted:    sm
->
-> "git status --ignore-submodules" behaves the same.
->
->>From the man page of "--ignore-submodules" it looks like the option is meant to prevent scanning of submodules itself, but in this case the main repository is affected.
+On Sep 20, 2014, at 18:44, Johan Herland wrote:
 
-Sorry, but I don't know what man page you are talking about here ...
-
-> This command is used by zsh's vcs_info module (in Functions/VCS_Info/Backends/VCS_INFO_get_data_git):
+> At least, we should fix
 >
->      if (( querystaged )) ; then
->          if ${vcs_comm[cmd]} rev-parse --quiet --verify HEAD &> /dev/null ; then
->              ${vcs_comm[cmd]} diff-index --cached --quiet --ignore-submodules HEAD 2> /dev/null
->              (( $? && $? != 128 )) && gitstaged=1
+>    git notes add -C e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 >
-> Is this a bug/oversight in Git or by design?
-> Is there a better way to detect if there are any staged changes?
+> Whether we should also change
+>
+>    git notes add -m ''
+>
+> to create an empty note, or leave it as-is, (i.e. similar in spirit to
+> "git commit -m ''"), I'll leave up to further discussion.
 
-It might be that --ignore-submodules=dirty is what you want. It will
-report changes in the committed submodule SHA-1, added and removed
-submodules but won't care about any modifications inside the submodule.
+The help for git commit has this:
+
+   --allow-empty-message
+     Like --allow-empty this command is primarily for use by
+     foreign SCM interface scripts. It allows you to create
+     a commit with an empty commit message without using
+     plumbing commands like git-commit-tree(1).
+
+Why not add the same/similar option to git notes add?
+
+So this:
+
+   git notes add --allow-empty-message -m ''
+
+creates an empty note.  (Perhaps --allow-empty-note should
+be an alias?)
+
+With your patch to allow -C e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+there's already support for it, it just needs the option
+parsing added.  :)
+
+--Kyle
