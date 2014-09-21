@@ -1,188 +1,298 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 22/32] checkout: support checking out into a new
- working directory
-Date: Sat, 20 Sep 2014 23:10:47 -0400
-Message-ID: <CAPig+cRbfxUHmxbxxXLw=WKuV3JvBPEhuT4CvrZEOhWR-fbMHQ@mail.gmail.com>
-References: <1409387642-24492-1-git-send-email-pclouds@gmail.com>
-	<1410388928-32265-1-git-send-email-pclouds@gmail.com>
-	<1410388928-32265-23-git-send-email-pclouds@gmail.com>
-	<5411B98C.1090905@xiplink.com>
-	<20140921024101.GA6275@lanh>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2] archive: support filtering paths with glob
+Date: Sun, 21 Sep 2014 10:55:06 +0700
+Message-ID: <1411271706-1151-1-git-send-email-pclouds@gmail.com>
+References: <1433062.XhRCATRB3s@al>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 21 05:11:05 2014
+Cc: peter@lekensteyn.nl,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 21 05:55:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVXYD-0005xJ-Q3
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Sep 2014 05:11:02 +0200
+	id 1XVYF6-0002JZ-DD
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Sep 2014 05:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbaIUDKt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2014 23:10:49 -0400
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:63630 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751601AbaIUDKs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Sep 2014 23:10:48 -0400
-Received: by mail-yh0-f46.google.com with SMTP id 29so412022yhl.5
-        for <git@vger.kernel.org>; Sat, 20 Sep 2014 20:10:47 -0700 (PDT)
+	id S1751855AbaIUDzO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Sep 2014 23:55:14 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:41730 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751704AbaIUDzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Sep 2014 23:55:13 -0400
+Received: by mail-pd0-f172.google.com with SMTP id y10so2346979pdj.31
+        for <git@vger.kernel.org>; Sat, 20 Sep 2014 20:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=CM6/DaXUHzpN5rB9qhvC7kfV+3fFfwGlsZE5wJjjj5k=;
-        b=M4qfW2rgCWkoUclSZZDjprkmLg9MKalWGmRoHp9UBSreeenN36sWyvsr8WYrABYbuo
-         Yam9B9YLJ6475J0ukIDcIgpxUINnNyQjxWRkv0l4HfhvlyYtmCZEEAkUF1u6m1bjbG7y
-         Hore+2OJez/9jKagVUM0nFxeAEAVP3QrJMrIbaSBt/wPJU29WD2OShWC83praEr1ADbz
-         OPcMAKNOb+/h9gwooS4TbTJUra98gLcAj1q8GBAeWzZ0zwXStc+uSBKcKhbqc0GHwo1D
-         fVvKC1HQbndJNnMS/StEPMNtmzSorjW/bvJKn1WgJV84PkiKNtBhgcI+QwHqLDyw+W7L
-         NTxQ==
-X-Received: by 10.236.63.198 with SMTP id a46mr16252678yhd.28.1411269047544;
- Sat, 20 Sep 2014 20:10:47 -0700 (PDT)
-Received: by 10.170.68.68 with HTTP; Sat, 20 Sep 2014 20:10:47 -0700 (PDT)
-In-Reply-To: <20140921024101.GA6275@lanh>
-X-Google-Sender-Auth: aMkso48-1FSYIPRSgqz2RdT1Ykc
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=9bpOnkc2GwrL8I2i4AZQanzKTkIHGjG0lmB7BYog7kg=;
+        b=zWvzMAhDQba14p5kEWaOFl258qqZor7JPn1PoiVuzVaOOJytRp40CSQBhnzLkZpw5h
+         eWX7r0WNVI+6i8ISDBTtXJb8kHsOJfU4tIv9EhIlmyOGNMf+3kq+7QTBO/GcqAa7waKQ
+         I+iTvvmJ4KKXCXg0w7if/z8Tc1pRfmQ2zG0ubeusdLlpny3FCKafkTcQsbV6EHcD8BXp
+         S8TiVaafm5ykeLLNvjZoc4TI8MX5zKwsxzqPKTiodxWEakIltFYVECZe9I70a1IBIgdA
+         IWDeGUHly17HBXD5FhnLtRhFfe+PI+zJhmL4fSqVbvaPJpSuwO62bWZxwf4BdJW07ujw
+         mbpg==
+X-Received: by 10.68.161.197 with SMTP id xu5mr45623pbb.160.1411271712465;
+        Sat, 20 Sep 2014 20:55:12 -0700 (PDT)
+Received: from lanh ([115.73.239.77])
+        by mx.google.com with ESMTPSA id pd7sm5770787pac.33.2014.09.20.20.55.09
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 20 Sep 2014 20:55:11 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 21 Sep 2014 10:55:08 +0700
+X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
+In-Reply-To: <1433062.XhRCATRB3s@al>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257339>
 
-On Sat, Sep 20, 2014 at 10:41 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Sep 11, 2014 at 11:02:36AM -0400, Marc Branchaud wrote:
->> Um, didn't you say in [1] that you'd use the text I posted in [2]?
->>
->> [1] http://article.gmane.org/gmane.comp.version-control.git/256446
->> [2] http://article.gmane.org/gmane.comp.version-control.git/256323
->
-> That's the problem with updating a bit one day and a bit another
-> day. Thanks for checking. Does this look ok?
->
-> -- 8< --
-> Subject: [PATCH] checkout: support checking out into a new working di=
-rectory
->
-> "git checkout --to" sets up a new working directory with a .git file
-> pointing to $GIT_DIR/worktrees/<id>. It then executes "git checkout"
-> again on the new worktree with the same arguments except "--to" is
-> taken out. The second checkout execution, which is not contaminated
-> with any info from the current repository, will actually check out an=
-d
-> everything that normal "git checkout" does.
->
-> Helped-by: Marc Branchaud <marcnarc@xiplink.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-check=
-out.txt
-> index 33ad2ad..c101575 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -388,6 +395,45 @@ $ git reflog -2 HEAD # or
->  $ git log -g -2 HEAD
->  ------------
->
-> +MULTIPLE WORKING TREES
-> +----------------------
-> +
-> +A git repository can support multiple working trees, allowing you to=
- check
-> +out more than one branch at a time.  With `git checkout --to` a new =
-working
-> +tree is associated with the repository.  This new working tree is ca=
-lled a
-> +"linked working tree" as opposed to the "main working tree" prepared=
- by "git
-> +init" or "git clone".  A repository has one main working tree (if it=
-'s not a
-> +bare repository) and zero or more linked working trees.
-> +
-> +Each linked working tree has a private sub-directory in the reposito=
-ry's
-> +$GIT_DIR/worktrees directory.  The private sub-directory's name is u=
-sually
-> +the base name of the linked working tree's path, possibly appended w=
-ith a
-> +number to make it unique.  For example, when `$GIT_DIR=3D/path/main/=
-=2Egit` the
-> +command `git checkout --to /path/other/test-next next` creates the l=
-inked
-> +working tree in `/path/other/test-next` and also creates a
-> +`$GIT_DIR/worktrees/test-next` directory (or `$GIT_DIR/worktrees/tes=
-t-next1`
-> +if `test-next` is already taken).
-> +
-> +Within a linked working tree, $GIT_DIR is set to point to this priva=
-te
-> +directory (e.g. `/path/main/.git/worktrees/test-next` in the example=
-) and
-> +$GIT_COMMON_DIR is set to point back to the main working tree's $GIT=
-_DIR
-> +(e.g. `/path/main/.git`). These settings are made in a `.git` file l=
-ocated at
-> +the top directory of the linked working tree.
-> +
-> +Path resolution via `git rev-parse --git-path` uses either
-> +$GIT_DIR or $GIT_COMMON_DIR depending on the path. For example, in t=
-he
-> +linked working tree `git rev-parse --git-path HEAD` returns
-> +`/path/main/.git/worktrees/test-next/HEAD` (not
-> +`/path/other/test-next/.git/HEAD` or `/path/main/.git/HEAD`) while `=
-git
-> +rev-parse --git-path refs/heads/master` uses
-> +$GIT_COMMON_DIR and returns `/path/main/.git/refs/heads/master`,
-> +since refs are shared across all working trees.
-> +
-> +See linkgit:gitrepository-layout[5] for more information. The rule o=
-f
-> +thumb is do not make any assumption about whether a path belongs to
-> +$GIT_DIR or $GIT_COMMON_DIR when you need to directly access somethi=
-ng
-> +inside $GIT_DIR. Use `git rev-parse --git-path` to get the final pat=
-h.
+This patch fixes two problems with using :(glob) (or even "*.c"
+without ":(glob)").
 
-Would it make sense for this "rule of thumb" summary to be presented
-first, and then the explanation of that rule after, rather than the
-reverse as is currently the case?
+The first one is we forgot to turn on the 'recursive' flag in struct
+pathspec. Without that, tree_entry_interesting() will not mark
+potential directories "interesting" so that it can confirm whether
+those directories have anything matching the pathspec.
 
-> diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
-> new file mode 100755
-> index 0000000..8c73b18
-> --- /dev/null
-> +++ b/t/t2025-checkout-to.sh
-> @@ -0,0 +1,63 @@
-> +test_expect_success 'checkout --to from a linked checkout' '
-> +       (
-> +               cd here &&
-> +               git checkout --to nested-here master
+The marking directories interesting has a side effect that we need to
+walk inside a directory to realize that there's nothing interested in
+there. By that time, 'archive' code has already written the (empty)
+directory down. That means lots of empty directories in the result
+archive.
 
-Broken &&-chain.
+This problem is fixed by lazily writing directories down when we know
+they are actually needed. There is a theoretical bug in this
+implementation: we can't write empty trees/directories that match that
+pathspec.
 
-> +               cd nested-here &&
-> +               git fsck
-> +       )
-> +'
-> +
-> +test_expect_success 'checkout --to a new worktree creating new branc=
-h' '
-> +       git checkout --to there -b newmaster master &&
-> +       (
-> +               cd there &&
-> +               test_cmp ../init.t init.t &&
-> +               git symbolic-ref HEAD >actual &&
-> +               echo refs/heads/newmaster >expect &&
-> +               test_cmp expect actual &&
-> +               git fsck
-> +       )
-> +'
-> +
-> +test_done
-> --
-> 2.1.0.rc0.78.gc0d8480
+path_exists() is also made stricter in order to detect non-matching
+pathspec because when this 'recursive' flag is on, we most likely
+match some directories. The easiest way is not consider any
+directories "matched".
+
+Noticed-by: Peter Wu <peter@lekensteyn.nl>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Sat, Sep 13, 2014 at 5:52 PM, Peter Wu <peter@lekensteyn.nl> wrote:
+ > By the
+ > way, the glob pattern is treated as a 'nullglob'. If you specify a g=
+lob pattern
+ > that matches nothing, an empty archive is created. Perhaps an error =
+message
+ > should be raised for that as it is unlikely that a user wants that?
+
+ If you do "git archive HEAD non-existent-path", you get an error.
+ There's no reason why glob is an exception. Fixed in this version.
+
+ archive.c           | 97 +++++++++++++++++++++++++++++++++++++++++++++=
+++++++--
+ t/t5000-tar-tree.sh | 14 ++++++++
+ 2 files changed, 108 insertions(+), 3 deletions(-)
+
+diff --git a/archive.c b/archive.c
+index 952a659..94a9981 100644
+--- a/archive.c
++++ b/archive.c
+@@ -5,6 +5,7 @@
+ #include "archive.h"
+ #include "parse-options.h"
+ #include "unpack-trees.h"
++#include "dir.h"
+=20
+ static char const * const archive_usage[] =3D {
+ 	N_("git archive [options] <tree-ish> [<path>...]"),
+@@ -98,9 +99,19 @@ static void setup_archive_check(struct git_attr_chec=
+k *check)
+ 	check[1].attr =3D attr_export_subst;
+ }
+=20
++struct directory {
++	struct directory *up;
++	unsigned char sha1[20];
++	int baselen, len;
++	unsigned mode;
++	int stage;
++	char path[FLEX_ARRAY];
++};
++
+ struct archiver_context {
+ 	struct archiver_args *args;
+ 	write_archive_entry_fn_t write_entry;
++	struct directory *bottom;
+ };
+=20
+ static int write_archive_entry(const unsigned char *sha1, const char *=
+base,
+@@ -146,6 +157,65 @@ static int write_archive_entry(const unsigned char=
+ *sha1, const char *base,
+ 	return write_entry(args, sha1, path.buf, path.len, mode);
+ }
+=20
++static void queue_directory(const unsigned char *sha1,
++		const char *base, int baselen, const char *filename,
++		unsigned mode, int stage, struct archiver_context *c)
++{
++	struct directory *d;
++	d =3D xmallocz(sizeof(*d) + baselen + 1 + strlen(filename));
++	d->up	   =3D c->bottom;
++	d->baselen =3D baselen;
++	d->mode	   =3D mode;
++	d->stage   =3D stage;
++	c->bottom  =3D d;
++	d->len =3D sprintf(d->path, "%.*s%s/", baselen, base, filename);
++	hashcpy(d->sha1, sha1);
++}
++
++static int write_directory(struct archiver_context *c)
++{
++	struct directory *d =3D c->bottom;
++	int ret;
++
++	if (!d)
++		return 0;
++	c->bottom =3D d->up;
++	d->path[d->len - 1] =3D '\0'; /* no trailing slash */
++	ret =3D
++		write_directory(c) ||
++		write_archive_entry(d->sha1, d->path, d->baselen,
++				    d->path + d->baselen, d->mode,
++				    d->stage, c) !=3D READ_TREE_RECURSIVE;
++	free(d);
++	return ret ? -1 : 0;
++}
++
++static int queue_or_write_archive_entry(const unsigned char *sha1,
++		const char *base, int baselen, const char *filename,
++		unsigned mode, int stage, void *context)
++{
++	struct archiver_context *c =3D context;
++
++	while (c->bottom &&
++	       !(baselen >=3D c->bottom->len &&
++		 !strncmp(base, c->bottom->path, c->bottom->len))) {
++		struct directory *next =3D c->bottom->up;
++		free(c->bottom);
++		c->bottom =3D next;
++	}
++
++	if (S_ISDIR(mode)) {
++		queue_directory(sha1, base, baselen, filename,
++				mode, stage, c);
++		return READ_TREE_RECURSIVE;
++	}
++
++	if (write_directory(c))
++		return -1;
++	return write_archive_entry(sha1, base, baselen, filename, mode,
++				   stage, context);
++}
++
+ int write_archive_entries(struct archiver_args *args,
+ 		write_archive_entry_fn_t write_entry)
+ {
+@@ -167,6 +237,7 @@ int write_archive_entries(struct archiver_args *arg=
+s,
+ 			return err;
+ 	}
+=20
++	memset(&context, 0, sizeof(context));
+ 	context.args =3D args;
+ 	context.write_entry =3D write_entry;
+=20
+@@ -187,9 +258,17 @@ int write_archive_entries(struct archiver_args *ar=
+gs,
+ 	}
+=20
+ 	err =3D read_tree_recursive(args->tree, "", 0, 0, &args->pathspec,
+-				  write_archive_entry, &context);
++				  args->pathspec.has_wildcard ?
++				  queue_or_write_archive_entry :
++				  write_archive_entry,
++				  &context);
+ 	if (err =3D=3D READ_TREE_RECURSIVE)
+ 		err =3D 0;
++	while (context.bottom) {
++		struct directory *next =3D context.bottom->up;
++		free(context.bottom);
++		context.bottom =3D next;
++	}
+ 	return err;
+ }
+=20
+@@ -211,7 +290,16 @@ static int reject_entry(const unsigned char *sha1,=
+ const char *base,
+ 			int baselen, const char *filename, unsigned mode,
+ 			int stage, void *context)
+ {
+-	return -1;
++	int ret =3D -1;
++	if (S_ISDIR(mode)) {
++		struct strbuf sb =3D STRBUF_INIT;
++		strbuf_addstr(&sb, base);
++		strbuf_addstr(&sb, filename);
++		if (!match_pathspec(context, sb.buf, sb.len, 0, NULL, 1))
++			ret =3D READ_TREE_RECURSIVE;
++		strbuf_release(&sb);
++	}
++	return ret;
+ }
+=20
+ static int path_exists(struct tree *tree, const char *path)
+@@ -221,7 +309,9 @@ static int path_exists(struct tree *tree, const cha=
+r *path)
+ 	int ret;
+=20
+ 	parse_pathspec(&pathspec, 0, 0, "", paths);
+-	ret =3D read_tree_recursive(tree, "", 0, 0, &pathspec, reject_entry, =
+NULL);
++	pathspec.recursive =3D 1;
++	ret =3D read_tree_recursive(tree, "", 0, 0, &pathspec,
++				  reject_entry, &pathspec);
+ 	free_pathspec(&pathspec);
+ 	return ret !=3D 0;
+ }
+@@ -237,6 +327,7 @@ static void parse_pathspec_arg(const char **pathspe=
+c,
+ 	parse_pathspec(&ar_args->pathspec, 0,
+ 		       PATHSPEC_PREFER_FULL,
+ 		       "", pathspec);
++	ar_args->pathspec.recursive =3D 1;
+ 	if (pathspec) {
+ 		while (*pathspec) {
+ 			if (**pathspec && !path_exists(ar_args->tree, *pathspec))
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 7b8babd..d01bbdc 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -305,4 +305,18 @@ test_expect_success GZIP 'remote tar.gz can be dis=
+abled' '
+ 		>remote.tar.gz
+ '
+=20
++test_expect_success 'archive and :(glob)' '
++	git archive -v HEAD -- ":(glob)**/sh" >/dev/null 2>actual &&
++	cat >expect <<EOF &&
++a/
++a/bin/
++a/bin/sh
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'catch non-matching pathspec' '
++	test_must_fail git archive -v HEAD -- "*.abc" >/dev/null
++'
++
+ test_done
+--=20
+2.1.0.rc0.78.gc0d8480
