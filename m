@@ -1,92 +1,95 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 22/32] checkout: support checking out into a new
- working directory
-Date: Sun, 21 Sep 2014 16:50:21 +0700
-Message-ID: <CACsJy8CH8mQjexFU1jO1orzajiwTXy4wJ022nq1PEY2GLUGAZA@mail.gmail.com>
-References: <1409387642-24492-1-git-send-email-pclouds@gmail.com>
- <1410388928-32265-1-git-send-email-pclouds@gmail.com> <1410388928-32265-23-git-send-email-pclouds@gmail.com>
- <5411B98C.1090905@xiplink.com> <20140921024101.GA6275@lanh> <CAPig+cRbfxUHmxbxxXLw=WKuV3JvBPEhuT4CvrZEOhWR-fbMHQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Sep 21 11:50:59 2014
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] sha1_file: don't convert off_t to size_t too early to avoid potential die()
+Date: Sun, 21 Sep 2014 12:03:26 +0200
+Message-ID: <1411293806-3087-1-git-send-email-prohaska@zib.de>
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 21 12:04:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XVdnF-0007da-SQ
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Sep 2014 11:50:58 +0200
+	id 1XVdzw-00014Y-E2
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Sep 2014 12:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750824AbaIUJux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Sep 2014 05:50:53 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:46301 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbaIUJuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Sep 2014 05:50:52 -0400
-Received: by mail-ig0-f179.google.com with SMTP id l13so1265540iga.6
-        for <git@vger.kernel.org>; Sun, 21 Sep 2014 02:50:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=HTc3KHpJSkW3IPoeESyrkUoFgwjZ5K0WWa5/CQmibLo=;
-        b=fBuk4urGcnTKjcnTznddQXVS5B74wXa9I+8jYLFBPnGk81QUb/lZVP8QFMBR/sUfaV
-         jB2Ku32loO9FHbNI7QpSNoJ9byMkOk+lZzxGCpURjQuPTgb2Rl887ZuEV0emBooEnKja
-         VcbN1YFXrbOqHpoMpzcbfpWEBoWZSMWSRNVFnUs6RcD8MIcfb1nhWC6v7MkKUX4KyHNF
-         nFjk4IWAQYpgPWwBi/Ub3w4rzXyE1tbsAu92+tsIcCsCWaJwRuMsB3YpVDaUcl3kExQD
-         i52eYYr00gTd1GFOjteWqmXx8G+dHEn6P1AG4qze862qeMhuc0CNxDkMyCPHo0X62KQi
-         BsWg==
-X-Received: by 10.42.101.77 with SMTP id d13mr10839787ico.53.1411293052077;
- Sun, 21 Sep 2014 02:50:52 -0700 (PDT)
-Received: by 10.107.131.150 with HTTP; Sun, 21 Sep 2014 02:50:21 -0700 (PDT)
-In-Reply-To: <CAPig+cRbfxUHmxbxxXLw=WKuV3JvBPEhuT4CvrZEOhWR-fbMHQ@mail.gmail.com>
+	id S1750927AbaIUKDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Sep 2014 06:03:53 -0400
+Received: from mailer.zib.de ([130.73.108.11]:46345 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750707AbaIUKDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Sep 2014 06:03:52 -0400
+Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s8LA3nJ8018554;
+	Sun, 21 Sep 2014 12:03:49 +0200 (CEST)
+Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s8LA3mPf010312;
+	Sun, 21 Sep 2014 12:03:49 +0200 (CEST)
+X-Mailer: git-send-email 2.1.0.263.gab8d730
+X-Miltered: at mailer.zib.de with ID 541EA285.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 541EA285.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 541EA285.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257349>
 
-On Sun, Sep 21, 2014 at 10:10 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> Would it make sense for this "rule of thumb" summary to be presented
-> first, and then the explanation of that rule after, rather than the
-> reverse as is currently the case?
+xsize_t() checks if an off_t argument can be safely converted to
+a size_t return value.  If the check is executed too early, it could
+fail for large files on 32-bit architectures even if the size_t code
+path is not taken.  Other paths might be able to handle the large file.
+Specifically, index_stream_convert_blob() is able to handle a large file
+if a filter is configured that returns a small result.
 
-You mean like this?
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index c101575..fd77631 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -420,6 +420,11 @@ $GIT_COMMON_DIR is set to point back to the main
-working tree's $GIT_DIR
- (e.g. `/path/main/.git`). These settings are made in a `.git` file located at
- the top directory of the linked working tree.
+This patch should be applied on top of sp/stream-clean-filter.
 
-+See linkgit:gitrepository-layout[5] for more information. The rule of
-+thumb is do not make any assumption about whether a path belongs to
-+$GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
-+inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
-+
- Path resolution via `git rev-parse --git-path` uses either
- $GIT_DIR or $GIT_COMMON_DIR depending on the path. For example, in the
- linked working tree `git rev-parse --git-path HEAD` returns
-@@ -429,11 +434,6 @@ rev-parse --git-path refs/heads/master` uses
- $GIT_COMMON_DIR and returns `/path/main/.git/refs/heads/master`,
- since refs are shared across all working trees.
+index_stream() might internally also be able to handle large files to
+some extent.  But it uses size_t for its third argument, and we must
+already die() when calling it.  It might be a good idea to convert its
+interface to use off_t and push the size checks further down the stack.
+In general, it might be good idea to carefully consider whether to use
+off_t or size_t when passing file-related sizes around.  To me it looks
+like a separate issue for a separate patch series (I have no specific
+plans to prepare one).
 
--See linkgit:gitrepository-layout[5] for more information. The rule of
--thumb is do not make any assumption about whether a path belongs to
--$GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
--inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
--
- EXAMPLES
- --------
+ sha1_file.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-
-
+diff --git a/sha1_file.c b/sha1_file.c
+index 5b0e67a..6f18c22 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3180,17 +3180,22 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
+ 	     enum object_type type, const char *path, unsigned flags)
+ {
+ 	int ret;
+-	size_t size = xsize_t(st->st_size);
+ 
++	/*
++	 * Call xsize_t() only when needed to avoid potentially unnecessary
++	 * die() for large files.
++	 */
+ 	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(path))
+ 		ret = index_stream_convert_blob(sha1, fd, path, flags);
+ 	else if (!S_ISREG(st->st_mode))
+ 		ret = index_pipe(sha1, fd, type, path, flags);
+-	else if (size <= big_file_threshold || type != OBJ_BLOB ||
++	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
+ 		 (path && would_convert_to_git(path)))
+-		ret = index_core(sha1, fd, size, type, path, flags);
++		ret = index_core(sha1, fd, xsize_t(st->st_size), type, path,
++				 flags);
+ 	else
+-		ret = index_stream(sha1, fd, size, type, path, flags);
++		ret = index_stream(sha1, fd, xsize_t(st->st_size), type, path,
++				   flags);
+ 	close(fd);
+ 	return ret;
+ }
 -- 
-Duy
+2.1.0.139.g351b19f
