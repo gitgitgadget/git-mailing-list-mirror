@@ -1,103 +1,68 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v5 09/35] lockfile.c: document the various states of lock_file
- objects
-Date: Mon, 22 Sep 2014 17:20:45 +0200
-Message-ID: <54203E4D.7030800@alum.mit.edu>
-References: <1410896036-12750-1-git-send-email-mhagger@alum.mit.edu> <1410896036-12750-10-git-send-email-mhagger@alum.mit.edu> <20140916210317.GJ29050@google.com>
+From: Javier Domingo Cansino <javierdo1@gmail.com>
+Subject: Re: Branching workflow
+Date: Mon, 22 Sep 2014 17:59:02 +0200
+Message-ID: <CALZVapmm3=zgx4xZegieSxiUOcYcz9DMHVFknA8SeeYwO5fVJQ@mail.gmail.com>
+References: <CALZVapnjN_69y0+PLFA2t8b72WDK+D4BhjDRnRPxU_9iX+_NuA@mail.gmail.com>
+ <xmqq8uw1oij6.fsf@gitster.dls.corp.google.com> <CALZVapkvVNxb-jJssZqjT-Y8sApK8O1pe3xTB8guNtx9Md2W6Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 17:27:57 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 17:59:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XW5Wt-0001OB-MB
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 17:27:56 +0200
+	id 1XW61P-0003D7-ED
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 17:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754107AbaIVP1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2014 11:27:51 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:46906 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753905AbaIVP1u (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2014 11:27:50 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Sep 2014 11:27:50 EDT
-X-AuditID: 1207440d-f797f6d000000a4a-d5-54203e50d73e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id EF.A9.02634.05E30245; Mon, 22 Sep 2014 11:20:48 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB23E6.dip0.t-ipconnect.de [93.219.35.230])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8MFKjcb026888
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 22 Sep 2014 11:20:46 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <20140916210317.GJ29050@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJKsWRmVeSWpSXmKPExsUixO6iqBtgpxBisHCDgkXXlW4mi4beK8wW
-	T+beZbZ4e3MJo8WPlh5mi38Taiw6O74yOrB77Jx1l91jwaZSj4evutg9nvXuYfS4eEnZ4/Mm
-	OY/bz7axBLBHcdskJZaUBWem5+nbJXBnzF7Wzl6wnrvi8/pLbA2MXzm6GDk5JARMJF7+/coE
-	YYtJXLi3ng3EFhK4zCgxdS1QDReQfZ5JYtbKw+wgCV4BbYl7XXcZQWwWAVWJI99WMoPYbAK6
-	Eot6msEGiQoESHzofMAIUS8ocXLmExYQW0RAQ+L5p29sIEOZBT4wSiy+NZsVJCEsECPR0XSL
-	GWLbIkaJ1zeagTo4ODgFDCT63wuC1DALqEv8mXeJGcKWl2jeOpt5AqPALCQ7ZiEpm4WkbAEj
-	8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkEjg3cH4f53MIUYBDkYlHt4F
-	TfIhQqyJZcWVuYcYJTmYlER575sqhAjxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4Q2SBsrxpiRW
-	VqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4m2yBGgWLUtNTK9Iyc0oQ0kwc
-	nCDDuaREilPzUlKLEktLMuJBsRpfDIxWkBQP0N44kHbe4oLEXKAoROspRmOOSRvf9zJxrOv8
-	1s8kxJKXn5cqJc673waoVACkNKM0D24RLAW+YhQH+luYdxfIQB5g+oSb9wpoFRPQqvvH5UFW
-	lSQipKQaGJXkDR7HrLv2d7W3E88yl//8azh5T2iWmG1Q++ddl8l4QqtLa0/Q2Qix 
+	id S1753625AbaIVP7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2014 11:59:23 -0400
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:41523 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752943AbaIVP7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2014 11:59:23 -0400
+Received: by mail-vc0-f180.google.com with SMTP id hq11so4245740vcb.39
+        for <git@vger.kernel.org>; Mon, 22 Sep 2014 08:59:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qNJ5jHA6z9wC0U3tgooyCaIjQN2HsxazTLjBD4r/SW4=;
+        b=qtBSq7DhObWXero0zTO2tNTnPSm68bwajh07pSNa4zwRbc7E5dUjULKKsmOfz6Hk8e
+         KS+O2Gh/xz7+h5dOQBOloWcGozsv3qRgr6CClwnL+ehyS9IDfFx7F8wGWNG6kjopXTBz
+         9vK1hk6tZZZqT5VIDVDxVvaevlZsmy5Z9HBHoQ68/+AsB5tXaWHiadk702Vvqq5Nju4f
+         jypY0IVqS8eRWszTRw1jh24EvE6G1WeB6YhyK+Y3vytsKpcnvaduP4ggum10eIvKViCg
+         tDg0HkOrahFhdNBJNSwvT5BaUnFUsAWYXG38rPLHcK+gKpuERepNKQ4LMYYSdt1uNHMh
+         ktuA==
+X-Received: by 10.221.59.2 with SMTP id wm2mr7810425vcb.52.1411401562326; Mon,
+ 22 Sep 2014 08:59:22 -0700 (PDT)
+Received: by 10.220.161.68 with HTTP; Mon, 22 Sep 2014 08:59:02 -0700 (PDT)
+In-Reply-To: <CALZVapkvVNxb-jJssZqjT-Y8sApK8O1pe3xTB8guNtx9Md2W6Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257367>
 
-On 09/16/2014 11:03 PM, Jonathan Nieder wrote:
-> Michael Haggerty wrote:
-> 
->> --- a/lockfile.c
->> +++ b/lockfile.c
->> @@ -4,6 +4,63 @@
->>  #include "cache.h"
->>  #include "sigchain.h"
->>
->> +/*
->> + * File write-locks as used by Git.
->> + *
->> + * When a file at $FILENAME needs to be written, it is done as
->> + * follows:
-> 
-> This overlaps a lot with the API doc, which makes me worry a little
-> about it going out of date.  Would improving the API doc help, or if
-> aspects are especially relevant here, is there a way to summarize them
-> more quickly to avoid some of the redundancy?
-> 
-> [...]
->> + * A lock_file object can be in several states:
-> 
-> Would it make sense for this information to go near the definition of
-> 'struct lock_file'?  That's where I'd start if I were looking for
-> information on what states a lock_file can be in.
+Hello!,
 
-I agree with your point about overlap. I will split the documentation
-into two parts with less redundancy:
+I have been using this workflow you suggested, and I happen to find it
+really good fitting in many projects I am.
 
-* Documentation/technical/api-lockfile.txt: How to use the API.
+I would like to seek for a little more advice. I keep rebasing all my
+work each time master branch is updated, and I would like to know if
+this is usually done or not.
 
-* lockfile.{c,h}: Internal implementation details.
+The workflow is not using emails, but each developer has his clone
+where he works, and occasionally sends work to the gerrit tool we use,
+upgrading the patch with each master update.
 
-I think the implementation details would get lost among the thousand
-things in cache.h. So instead, I will add a commit on top of the patch
-series that splits out a lockfile.h header file (which I think is a good
-idea anyway), and moves the internal documentation there. Sound good?
+I know this is a crazy workflow, and I would like to know when you
+usually consider to update the sent patch with a rebase.
 
-Michael
+Cheers,
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Javier Domingo Cansino
