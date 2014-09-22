@@ -1,112 +1,197 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH RFC] git-am: support any number of signatures
-Date: Mon, 22 Sep 2014 17:01:44 +0300
-Message-ID: <20140922140144.GA9769@redhat.com>
-References: <1402589505-27632-1-git-send-email-mst@redhat.com>
- <xmqqioo654mg.fsf@gitster.dls.corp.google.com>
- <20140613080036.GA2117@redhat.com>
- <xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
- <20140615102736.GA11798@redhat.com>
- <xmqqy4wwraoz.fsf@gitster.dls.corp.google.com>
- <20140618030903.GA19593@redhat.com>
- <CAPc5daVTZynCKMubZmreAjBh3i51wPaAA+8vSRwB9dGrrJb6FA@mail.gmail.com>
- <xmqq38f2jed3.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v5 02/35] api-lockfile: expand the documentation
+Date: Mon, 22 Sep 2014 16:13:39 +0200
+Message-ID: <54202E93.4050707@alum.mit.edu>
+References: <1410896036-12750-1-git-send-email-mhagger@alum.mit.edu> <1410896036-12750-3-git-send-email-mhagger@alum.mit.edu> <20140916202525.GB29050@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 15:58:32 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 16:13:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XW48N-0002CJ-Db
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 15:58:31 +0200
+	id 1XW4NA-00025k-5U
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 16:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753572AbaIVN61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2014 09:58:27 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:54099 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751070AbaIVN60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2014 09:58:26 -0400
-Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s8MDwL7w010165
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Mon, 22 Sep 2014 09:58:22 -0400
-Received: from redhat.com (ovpn-116-34.ams2.redhat.com [10.36.116.34])
-	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s8MDwJPG013361;
-	Mon, 22 Sep 2014 09:58:20 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq38f2jed3.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+	id S1754051AbaIVONo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2014 10:13:44 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61649 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753951AbaIVONn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Sep 2014 10:13:43 -0400
+X-AuditID: 12074413-f79ed6d000002501-9d-54202e96fe7a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 0D.58.09473.69E20245; Mon, 22 Sep 2014 10:13:42 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB23E6.dip0.t-ipconnect.de [93.219.35.230])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8MEDdbB023615
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 22 Sep 2014 10:13:40 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
+In-Reply-To: <20140916202525.GB29050@google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKKsWRmVeSWpSXmKPExsUixO6iqDtNTyHEYMkLTYuuK91MFg29V5gt
+	nsy9y2zx9uYSRosfLT3MFv8m1Fh0dnxldGD32DnrLrvHgk2lHg9fdbF7POvdw+hx8ZKyx+dN
+	ch63n21jCWCP4rZJSiwpC85Mz9O3S+DOOPNyDnvBQaWK/Yv+MzYw3pXqYuTkkBAwkTi19C4b
+	hC0mceHeeiCbi0NI4DKjxLf9nxkhnPNMEn23W8CqeAW0JVat7mAFsVkEVCUOfXjGBGKzCehK
+	LOppBrNFBQIkPnQ+YISoF5Q4OfMJC4gtIqAh8fzTN7ANzAIfGCUW35oNNkhYwEXibOMjqNUL
+	GSWObH0FNolTwEDiycvjYJuZBdQl/sy7xAxhy0tsfzuHeQKjwCwkS2YhKZuFpGwBI/MqRrnE
+	nNJc3dzEzJzi1GTd4uTEvLzUIl1zvdzMEr3UlNJNjJBoEN7BuOuk3CFGAQ5GJR7eBU3yIUKs
+	iWXFlbmHGCU5mJREeXM4FUKE+JLyUyozEosz4otKc1KLDzFKcDArifAGSQPleFMSK6tSi/Jh
+	UtIcLErivGpL1P2EBNITS1KzU1MLUotgsjIcHEoSvO26QI2CRanpqRVpmTklCGkmDk6Q4VxS
+	IsWpeSmpRYmlJRnxoHiNLwZGLEiKB2jvEpB23uKCxFygKETrKUZdjnWd3/qZhFjy8vNSpcR5
+	g0CKBECKMkrz4FbAUt8rRnGgj4V53UGqeIBpE27SK6AlTEBL7h+XB1lSkoiQkmpg9C+y33P7
+	2Kkd34POWy2a/1ToePV/Lf/DuaXbzATEBTq+G1mLPeow05PxeDEz+9XCAH2Jty/E 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257364>
 
-On Wed, Jun 18, 2014 at 10:51:04AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On 09/16/2014 10:25 PM, Jonathan Nieder wrote:
+> Michael Haggerty wrote:
 > 
-> > On Tue, Jun 17, 2014 at 8:09 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >>
-> >> OK, after looking into this for a while, I realize
-> >> this is a special property of the Signed-off-by footer.
-> >> For now I think it's reasonable to just avoid de-duplicating
-> >> other footers if any. Agree?
-> >
-> > Not really. I'd rather see "git am" hardcode as little such policy as possible.
-> > We do need to support S-o-b footer and the policy we defined for it long time
-> > ago, if only for backward compatiblity, but for any other footers,
-> > policy decision
-> > such as "dedup by default" isn't something "am" should know about.
-> 
-> By the way, "append without looking for dups" is a policy decision
-> that is as bad to have as "append with dedup".
-> 
-> I'd rather not to see "am.signoff", or any name that implies what
-> the "-s" option to the command is about for that matter, to be used
-> in futzing with the trailers other than S-o-b in any way.  As I
-> understand it, our longer term goal is to defer that task, including
-> the user-programmable policy decisions, to something like the
-> 'trailer' Christian started.
-> 
-> I suspect that it may add unnecessary work later if we overloaded
-> "signoff" with a similar feature with the change under discussion.
-> I would feel safer to see it outlined how we envision to transition
-> to a more generic 'trailer' solution later if we were to enhance
-> "am" with "am.signoff" now.
+>> Document a couple more functions and the flags argument as used by
+>> hold_lock_file_for_update() and hold_lock_file_for_append().
 > 
 > Thanks.
+> 
+> [...]
+>> --- a/Documentation/technical/api-lockfile.txt
+>> +++ b/Documentation/technical/api-lockfile.txt
+>> @@ -28,9 +28,39 @@ hold_lock_file_for_update::
+>>  	the final destination (e.g. `$GIT_DIR/index`) and a flag
+>>  	`die_on_error`.  Attempt to create a lockfile for the
+>>  	destination and return the file descriptor for writing
+>> -	to the file.  If `die_on_error` flag is true, it dies if
+>> -	a lock is already taken for the file; otherwise it
+>> -	returns a negative integer to the caller on failure.
+>> +	to the file.  The flags parameter is a combination of
+>> ++
+>> +--
+> 
+> Context: this document has structure
+> 
+> 	lockfile API
+> 	============
+> 
+> 	Explanation of purpose (nice!).
+> 
+> 	The functions
+> 	-------------
+> 
+> 	Quick descriptions of each of the four functions
+> 	`hold_lock_file_for_update`, `commit_lock_file`,
+> 	`rollback_lock_file`, `close_lock_file`.
+> 
+> 	Reminder about lifetime of the lock_file structure.
+> 
+> 	Description of cleanup convention (thou shalt either
+> 	commit or roll back; if you forget to, the atexit
+> 	handler will roll back for you).
+> 
+> 	Long warning about the harder use cases.  The above
+> 	"thou shalt" was a lie --- you can also
+> 	close_lock_file if you know what you're doing
+> 	[jn: why is that function part of the public API?].
+> 
+> What's nice about the existing structure is that you can get
+> a sense of how to use the API at a glance.  Would there be a
+> way to add this extra information while preserving that property?
+> 
+> E.g.:
+> 
+> 	lockfile API
+> 	============
+> 
+> 	Nice brief explanation of purpose ("is this the API
+> 	I want to use?"), as before.
+> 
+> 	Calling sequence
+> 	----------------
+> 
+> 	The caller:
+> 
+> 	* Allocates a variable `struct lock_file lock` in the bss
+> 	section or heap.  Because the `lock_file` structure is used
+> 	in an `atexit(3)` handler, its storage has to stay
+> 	throughout the life of the program.  It cannot be an auto
+> 	variable allocated on the stack.
+> 
+> 	* Attempts to create a lockfile by passing that variable and
+> 	the filename of the final destination (e.g. `$GIT_DIR/index`)
+> 	to `hold_lock_file_for_update` or `hold_lock_file_for_append`.
+> 	+
+> 	If the `die_on_error` flag is true, git dies if a lock is
+> 	already taken for the file.
+> 
+> 	* Writes new content for the destination file by writing to
+> 	`lock->fd`.
+> 
+> 	When finished writing, the caller can:
+> 
+> 	* Close the file descriptor and rename the lockfile to
+> 	its final destination by calling `commit_lock_file`.
+> 
+> 	* Close the file descriptor and remove the lockfile by
+> 	calling `rollback_lock_file`.
+> 
+> 	* Close the file descriptor without removing or renaming
+> 	the lockfile by calling `close_lock_file`.
+> 
+> 	If you do not call one of `commit_lock_file`,
+> 	`rollback_lock_file`, and `close_lock_file` and instead
+> 	simply `exit(3)` from the program, an `atexit(3)` handler will
+> 	close and remove the lockfile.
+> 
+> 	You should never call `close(2)` on `lock->fd` yourself~
+> 	Otherwise the ...
+> 
+> 	Error handling
+> 	--------------
+> 
+> 	Functions return 0 on success, -1 on failure.  errno is?
+> 	isn't? meaningful on error.
+> 
+> 	... description of unable_to_lock_error and unable_to_lock_die
+> 	here ...
+> 
+> 	Flags
+> 	-----
+> 
+> 	LOCK_NODEREF::
+> 
+> 		Usually symbolic links in the destination path are
+> 		resolved and the lockfile is created by adding ".lock"
+> 		to the resolved path.  If `LOCK_NODEREF` is set, then
+> 		the lockfile is created by adding ".lock" to the path
+> 		argument itself.
+> 
+> What is the user-visible effect of that flag?  When would I want
+> to pass that flag, and when wouldn't I?
+> 
+> 	LOCK_DIE_ON_ERROR::
+> 
+> 		If a lock is already taken for the file, `die()` with
+> 		an error message.  If this option is not specified,
+> 		trying to hold a lock file that is already taken will
+> 		return -1 to the caller.
+> 
+> Sensible?
+> Jonathan
 
-Hi Junio, Christian,
-it's been a while.
-I see that the work on trailers is going on.
-I tried going over the documentation but I could not figure
-out how would one implement multiple signatures using the
-trailers mechanism.
+OK, in the next reroll I will revise the documentation pretty
+thoroughly. Please let me know what you think.
 
-As a reminder, this old patchset (that I replied to) enhanced git am -s
-with an option to add different signatures depending on
-the option passed to the -s flag.
-E.g. I have
-[am "a"]
-        signoff = "Acked-by: Michael S. Tsirkin <mst@redhat.com>"
-
-[am "r"]
-        signoff = "Reviewed-by: Michael S. Tsirkin <mst@redhat.com>"
-
-[am "t"]
-        signoff = "Tested-by: Michael S. Tsirkin <mst@redhat.com>"
-
-and now:
-	git am -s art
-adds all 3 signatures when applying the patch.
-
-
-Any help will be appreciated.
+Michael
 
 -- 
-MST
+Michael Haggerty
+mhagger@alum.mit.edu
