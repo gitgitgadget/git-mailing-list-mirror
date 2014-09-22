@@ -1,99 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v15 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Mon, 22 Sep 2014 14:23:29 -0700
-Message-ID: <xmqqk34vjqni.fsf@gitster.dls.corp.google.com>
-References: <20140920134048.18999.79434.chriscool@tuxfamily.org>
-	<20140920134515.18999.58095.chriscool@tuxfamily.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] mailinfo: resolve -Wstring-plus-int warning
+Date: Mon, 22 Sep 2014 17:50:01 -0400
+Message-ID: <CAPig+cS9oa+9U3RQgaQ6iTxO0QBOATSU4b426fwcpS2GFJWDpQ@mail.gmail.com>
+References: <1411290838-45622-1-git-send-email-sunshine@sunshineco.com>
+	<xmqqoau7js6a.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Sep 22 23:23:37 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 22 23:50:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWB56-0001sz-HA
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 23:23:36 +0200
+	id 1XWBV2-0003ok-1I
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 23:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754394AbaIVVXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2014 17:23:33 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50340 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752887AbaIVVXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2014 17:23:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA7903C7D7;
-	Mon, 22 Sep 2014 17:23:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w/Pm1woHZwh096UmaTp7Psr5c60=; b=mMxPP5
-	3dTSZa+E0UnOLlyuIWCEd/xAN47EeV8m+xDTrDERrSzoRXCBEN8EdqJGJ74wIRp4
-	I3unDYR0NCfLbzNbsGUajX4f5BUlGIr5RNrjSQW+um4eKlfx2aU9Tq8QxxOQe/Gj
-	cckaVKQQLuXITn10FrYmeS2SKZ6Ku/x+WM2Rw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uVyvMWYS2k1RXyJ3Hn37BZs13gtRyO06
-	dkBy03OYZ5j24Y63+56Yo0rcE74ocqdrpzHXLdIxoB8zPe60fhodJKMmpr42mKPM
-	KhWVpbQk6tOMuL94QG6+ozGNS66MzzFB6YZ70vn7F/PWT4pByVIwkoXr0zwx9Gm+
-	MZanqL7LFys=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ABFED3C7D6;
-	Mon, 22 Sep 2014 17:23:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1EA823C7D4;
-	Mon, 22 Sep 2014 17:23:31 -0400 (EDT)
-In-Reply-To: <20140920134515.18999.58095.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Sat, 20 Sep 2014 15:45:14 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B384EF3E-429E-11E4-971C-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1754719AbaIVVuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2014 17:50:05 -0400
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:33037 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753000AbaIVVuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2014 17:50:04 -0400
+Received: by mail-yh0-f47.google.com with SMTP id t59so2328425yho.34
+        for <git@vger.kernel.org>; Mon, 22 Sep 2014 14:50:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=0TwoqRKvHqnNZdlHmSrRfmJ2/tp7v23adFekh5wbvls=;
+        b=ZG10FkIwsYCThnIX2VYFpK1BXE2R84L05bFvuSUQaFPl5ZAVxcMnhhtGUPOSytuiFp
+         pFD9vBeY0hkpA67YCPUcWaJXzqqh5N+XmJy4gH/uEWFM1pQE8VkWOY+A0JwMdUQipXgE
+         BUXa7lLpwZLKd9F6hIh8t07pmiHZYSlJh2qkNBY2vuCxC5ftTHE3XvuxMyd4NT/oGBS0
+         scPgOzBEB5eY3uFgvcevpNbeGgxRe3NN4CdtdLqS1iZsA4+m6ac6aI5sU12ljoasGrNY
+         KX5NQNnnl7VishJjj+q09b8NQieaaruADVMcc9cpVn6mqmYex7O4+vvPcLN1J+Yw9KX3
+         H9rw==
+X-Received: by 10.236.140.11 with SMTP id d11mr29358468yhj.16.1411422601785;
+ Mon, 22 Sep 2014 14:50:01 -0700 (PDT)
+Received: by 10.170.68.68 with HTTP; Mon, 22 Sep 2014 14:50:01 -0700 (PDT)
+In-Reply-To: <xmqqoau7js6a.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: bqDQXiaoz9NMAEd_cYae7HmAnUY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257387>
 
-This has quite a few "trailing whitespace" errors in the patch in
-the documentation part.  It would mean that people who try to follow
-along the examples would have difficult time deciphering where
-trailing whitespaces are necessary.
+On Mon, Sep 22, 2014 at 4:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> however, the solution in this patch allows us drop a couple strlen()s in
+>> favor of sizeof()s.
+>
+> It is actually not a very good justification when you know you care
+> about the length of the string.  A decent compiler ought to know the
+> length of a constant string can be computed at the compilation time.
 
-For example
+Indeed, which is why I mentioned this only in the commentary rather
+than the commit message; but I was also thinking of some of the
+less-than-decent compilers with which git is sometimes built.
 
-> +* Configure a commit template with some trailers with empty values,
-> +  then configure a commit-msg hook that uses 'git interpret-trailers'
-> +  to remove trailers with empty values and to add a 'git-version'
-> +  trailer:
-> ++
-> +------------
-> +$ cat >commit_template.txt <<EOF
-> +> ***subject***
-> +> 
-> +> ***message***
-> +> 
-> +> Fixes: 
-> +> Cc: 
-> ...
+> Let's at least not do that part of the change.
 
-This presents the example in the least useful way.  The leading "> "
-are coming from $PS2 so people cannot cut & paste to follow along on
-their interactive shell session, but cutting and pasting from a
-machine-readable copy of the document would be the only way to
-preserve the trailing SP on lines that begin with Fixes:, Cc: and
-friends.  On the other hand, those who type each line while
-eyeballing the documentation (because it is not cut-and-paste ready
-due to $PS2) may not spot the trailing SP on these lines.
-
-Can we think of a way to make the necessary trailing SP stand out?
+I don't have strong feelings about it.
