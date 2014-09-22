@@ -1,79 +1,99 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: How to compile Git with NDK?
-Date: Mon, 22 Sep 2014 23:22:59 +0200
-Message-ID: <54209333.7090300@gmail.com>
-References: <CAHd499C3iwpcGf+Zt+jDJfqW41P=6Uu=b8VGZKJpFZCtw56beg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v15 11/11] Documentation: add documentation for 'git interpret-trailers'
+Date: Mon, 22 Sep 2014 14:23:29 -0700
+Message-ID: <xmqqk34vjqni.fsf@gitster.dls.corp.google.com>
+References: <20140920134048.18999.79434.chriscool@tuxfamily.org>
+	<20140920134515.18999.58095.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Robert Dailey <rcdailey.lists@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 22 23:23:06 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Sep 22 23:23:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWB4b-0001Wg-Am
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 23:23:05 +0200
+	id 1XWB56-0001sz-HA
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 23:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754339AbaIVVXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2014 17:23:00 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:48817 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753128AbaIVVW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2014 17:22:59 -0400
-Received: by mail-wg0-f52.google.com with SMTP id n12so1691608wgh.23
-        for <git@vger.kernel.org>; Mon, 22 Sep 2014 14:22:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=iIv30tT7caRrWbrOQek1IOYZnvHeI4sG48FB/DsR+Gs=;
-        b=czPSQe4c4jvPk4yTWTKUo53MwYJv2o9U/ID4AGcdgV9oYvHw7gVCfZ2BfC9RF026S6
-         JPr0JpwAn9f7uUeiGyocYkndvEl5lxrl2mATsLyKHGikvsm2170UoY0zyrDAt61MCNvG
-         C916+7CcAIU4MUup7bnI8OwhxqJOGFRECKSIpJ5e+1FSnY+1n4cQQWK69ShqFsm6bwKL
-         tJZhvSof1PS37C8aImByatvO/Cmabp4m88HOJwRfq/+opCjqAtEt20U/z6IE0U3QgY4A
-         zH7ntfhibciJc1eRScyJLFPxsz2iFNjhUn9ULybiR2dyAcOO0/TdbmnNXJwnMBkRjZtT
-         omWw==
-X-Received: by 10.194.187.241 with SMTP id fv17mr23446508wjc.13.1411420978811;
-        Mon, 22 Sep 2014 14:22:58 -0700 (PDT)
-Received: from [192.168.1.7] (p5B0957B5.dip0.t-ipconnect.de. [91.9.87.181])
-        by mx.google.com with ESMTPSA id td9sm14173wic.15.2014.09.22.14.22.58
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Sep 2014 14:22:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <CAHd499C3iwpcGf+Zt+jDJfqW41P=6Uu=b8VGZKJpFZCtw56beg@mail.gmail.com>
+	id S1754394AbaIVVXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2014 17:23:33 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50340 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752887AbaIVVXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2014 17:23:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA7903C7D7;
+	Mon, 22 Sep 2014 17:23:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w/Pm1woHZwh096UmaTp7Psr5c60=; b=mMxPP5
+	3dTSZa+E0UnOLlyuIWCEd/xAN47EeV8m+xDTrDERrSzoRXCBEN8EdqJGJ74wIRp4
+	I3unDYR0NCfLbzNbsGUajX4f5BUlGIr5RNrjSQW+um4eKlfx2aU9Tq8QxxOQe/Gj
+	cckaVKQQLuXITn10FrYmeS2SKZ6Ku/x+WM2Rw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uVyvMWYS2k1RXyJ3Hn37BZs13gtRyO06
+	dkBy03OYZ5j24Y63+56Yo0rcE74ocqdrpzHXLdIxoB8zPe60fhodJKMmpr42mKPM
+	KhWVpbQk6tOMuL94QG6+ozGNS66MzzFB6YZ70vn7F/PWT4pByVIwkoXr0zwx9Gm+
+	MZanqL7LFys=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id ABFED3C7D6;
+	Mon, 22 Sep 2014 17:23:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1EA823C7D4;
+	Mon, 22 Sep 2014 17:23:31 -0400 (EDT)
+In-Reply-To: <20140920134515.18999.58095.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Sat, 20 Sep 2014 15:45:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B384EF3E-429E-11E4-971C-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257386>
 
-On 22.09.2014 21:04, Robert Dailey wrote:
-> I run the following on Ubuntu:
-> 
-> fe@BLD01:~/code/git$ autoconf
-> fe@BLD01:~/code/git$ ./configure --prefix=/home/fe/git-arm
-> --build=x86_64-linux-gnu --host=arm-linux-androideabi
-> configure: Setting lib to 'lib' (the default)
-> configure: Will try -pthread then -lpthread to enable POSIX Threads.
-> configure: CHECKS for site configuration
-> checking for arm-linux-androideabi-gcc... arm-linux-androideabi-gcc
-> checking whether the C compiler works... no
-> configure: error: in `/home/fe/code/git':
-> configure: error: C compiler cannot create executables
-> See `config.log' for more details
-> 
-> 
-> I have my NDK's prebuilt GCC 4.8 toolchain on PATH (the bin folder).
-> Can someone help me cross compile Git using Android NDK toolchain?
-> 
-> Thanks.
+This has quite a few "trailing whitespace" errors in the patch in
+the documentation part.  It would mean that people who try to follow
+along the examples would have difficult time deciphering where
+trailing whitespaces are necessary.
 
-You don't need autoconf, just type 'make' and you'll be fine.
+For example
 
-Please read the file INSTALL for installation instructions.
+> +* Configure a commit template with some trailers with empty values,
+> +  then configure a commit-msg hook that uses 'git interpret-trailers'
+> +  to remove trailers with empty values and to add a 'git-version'
+> +  trailer:
+> ++
+> +------------
+> +$ cat >commit_template.txt <<EOF
+> +> ***subject***
+> +> 
+> +> ***message***
+> +> 
+> +> Fixes: 
+> +> Cc: 
+> ...
 
-    Stefan
+This presents the example in the least useful way.  The leading "> "
+are coming from $PS2 so people cannot cut & paste to follow along on
+their interactive shell session, but cutting and pasting from a
+machine-readable copy of the document would be the only way to
+preserve the trailing SP on lines that begin with Fixes:, Cc: and
+friends.  On the other hand, those who type each line while
+eyeballing the documentation (because it is not cut-and-paste ready
+due to $PS2) may not spot the trailing SP on these lines.
+
+Can we think of a way to make the necessary trailing SP stand out?
