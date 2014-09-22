@@ -1,79 +1,79 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] mailinfo: resolve -Wstring-plus-int warning
-Date: Mon, 22 Sep 2014 17:10:08 -0400
-Message-ID: <CAPig+cTAFaG5H8rmf1jrvFwr_OOH7u19JMKDUE12UddokUmfaQ@mail.gmail.com>
-References: <1411290838-45622-1-git-send-email-sunshine@sunshineco.com>
-	<xmqqk34vlfhz.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: How to compile Git with NDK?
+Date: Mon, 22 Sep 2014 23:22:59 +0200
+Message-ID: <54209333.7090300@gmail.com>
+References: <CAHd499C3iwpcGf+Zt+jDJfqW41P=6Uu=b8VGZKJpFZCtw56beg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 22 23:10:17 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Robert Dailey <rcdailey.lists@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 22 23:23:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWAsC-00011o-Gy
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 23:10:16 +0200
+	id 1XWB4b-0001Wg-Am
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Sep 2014 23:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754937AbaIVVKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2014 17:10:10 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:62455 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754575AbaIVVKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2014 17:10:09 -0400
-Received: by mail-yk0-f177.google.com with SMTP id 9so1634844ykp.36
-        for <git@vger.kernel.org>; Mon, 22 Sep 2014 14:10:08 -0700 (PDT)
+	id S1754339AbaIVVXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2014 17:23:00 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:48817 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753128AbaIVVW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2014 17:22:59 -0400
+Received: by mail-wg0-f52.google.com with SMTP id n12so1691608wgh.23
+        for <git@vger.kernel.org>; Mon, 22 Sep 2014 14:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=PDa8BzZ5wjffCTZ6xQJUu8VH+QKRRoMTMhmncpk9AaQ=;
-        b=vBOMcmnCEyk9CsKlsw/bee4o1oZjPYwYpxdt8FdYh+sDcicpH5InF/XjBiXZSH9007
-         zv/l+8DRfyyeyxmHPRXqUY+jsSq2Rjua18mdVe7Hi5Xb3sfjlNRmYR+1g97fwh1BNN9F
-         CEknuV9nmcyGIHE1/13eVwSnsXTHT+VF5h96iN3wYULCGxUNDJlR52WvwtPkIEPUYrjY
-         UA3AVLK3TKqqyKZtCoG1m8lqwmWl8TorU4O0NuKLk/Atj6bkqi4v5486pujVjP5nE+Jn
-         wDYeEwRLMhBLh47Bc/xF5y8LIcZy2rENeOXqnhyEhSjdJYmF95olL6vngfNgrNUQf1kF
-         xpdA==
-X-Received: by 10.236.129.1 with SMTP id g1mr10770536yhi.30.1411420208113;
- Mon, 22 Sep 2014 14:10:08 -0700 (PDT)
-Received: by 10.170.68.68 with HTTP; Mon, 22 Sep 2014 14:10:08 -0700 (PDT)
-In-Reply-To: <xmqqk34vlfhz.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: 30dicr4KuvqDGqhU3lCkuB-JUjw
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=iIv30tT7caRrWbrOQek1IOYZnvHeI4sG48FB/DsR+Gs=;
+        b=czPSQe4c4jvPk4yTWTKUo53MwYJv2o9U/ID4AGcdgV9oYvHw7gVCfZ2BfC9RF026S6
+         JPr0JpwAn9f7uUeiGyocYkndvEl5lxrl2mATsLyKHGikvsm2170UoY0zyrDAt61MCNvG
+         C916+7CcAIU4MUup7bnI8OwhxqJOGFRECKSIpJ5e+1FSnY+1n4cQQWK69ShqFsm6bwKL
+         tJZhvSof1PS37C8aImByatvO/Cmabp4m88HOJwRfq/+opCjqAtEt20U/z6IE0U3QgY4A
+         zH7ntfhibciJc1eRScyJLFPxsz2iFNjhUn9ULybiR2dyAcOO0/TdbmnNXJwnMBkRjZtT
+         omWw==
+X-Received: by 10.194.187.241 with SMTP id fv17mr23446508wjc.13.1411420978811;
+        Mon, 22 Sep 2014 14:22:58 -0700 (PDT)
+Received: from [192.168.1.7] (p5B0957B5.dip0.t-ipconnect.de. [91.9.87.181])
+        by mx.google.com with ESMTPSA id td9sm14173wic.15.2014.09.22.14.22.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Sep 2014 14:22:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+In-Reply-To: <CAHd499C3iwpcGf+Zt+jDJfqW41P=6Uu=b8VGZKJpFZCtw56beg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257385>
 
-On Mon, Sep 22, 2014 at 1:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> The just-released Apple Xcode 6.0.1 has -Wstring-plus-int enabled by
->> default which complains about pointer arithmetic applied to a string
->> literal:
->>
->>     builtin/mailinfo.c:303:24: warning:
->>         adding 'long' to a string does not append to the string
->>             return !memcmp(SAMPLE + (cp - line), cp, strlen(SAMPLE) ...
->>                            ~~~~~~~^~~~~~~~~~~~~
->
-> And why is that a warning-worthy violation?
+On 22.09.2014 21:04, Robert Dailey wrote:
+> I run the following on Ubuntu:
+> 
+> fe@BLD01:~/code/git$ autoconf
+> fe@BLD01:~/code/git$ ./configure --prefix=/home/fe/git-arm
+> --build=x86_64-linux-gnu --host=arm-linux-androideabi
+> configure: Setting lib to 'lib' (the default)
+> configure: Will try -pthread then -lpthread to enable POSIX Threads.
+> configure: CHECKS for site configuration
+> checking for arm-linux-androideabi-gcc... arm-linux-androideabi-gcc
+> checking whether the C compiler works... no
+> configure: error: in `/home/fe/code/git':
+> configure: error: C compiler cannot create executables
+> See `config.log' for more details
+> 
+> 
+> I have my NDK's prebuilt GCC 4.8 toolchain on PATH (the bin folder).
+> Can someone help me cross compile Git using Android NDK toolchain?
+> 
+> Thanks.
 
-Not being privy to Apple's decision making process, I can only guess
-that it is in response to their new Swift programming language which
-they are pushing heavily on iOS (and soon Mac OS X), in which '+' is
-the string concatenation operator. For projects written in Swift and
-incorporating legacy or portable components in C, C++, or Objective-C,
-the warning may help programmer's avoid the pitfall of thinking that
-'+' is also concatenation in the C-based languages.
+You don't need autoconf, just type 'make' and you'll be fine.
 
-> Can we have them fix their compiler instead?
+Please read the file INSTALL for installation instructions.
 
-If the above supposition is correct, then it's likely that Apple
-considers this a feature, not a bug which needs to be fixed.
-
->> Resolve this issue.
->>
->> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+    Stefan
