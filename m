@@ -1,83 +1,100 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] de.po: Fixup one translation
-Date: Tue, 23 Sep 2014 04:06:42 -0400
-Message-ID: <CAPig+cTFW7gEEezkEbRTu-N88Er26OEm6FE47M8c1XSh8Q_a7g@mail.gmail.com>
-References: <1411457847-10419-1-git-send-email-stefanbeller@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] mailinfo: resolve -Wstring-plus-int warning
+Date: Tue, 23 Sep 2014 04:12:25 -0400
+Message-ID: <20140923081225.GB11104@peff.net>
+References: <1411290838-45622-1-git-send-email-sunshine@sunshineco.com>
+ <xmqqk34vlfhz.fsf@gitster.dls.corp.google.com>
+ <CAPig+cTAFaG5H8rmf1jrvFwr_OOH7u19JMKDUE12UddokUmfaQ@mail.gmail.com>
+ <20140923060407.GA23861@peff.net>
+ <CAPig+cQmbOs7Xw8wv63mLHfpG13Vo+tR7oLq-5srCcP1QQddnQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: ralf.thielow@googlemail.com, Git List <git@vger.kernel.org>
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 10:06:49 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 10:13:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWL7Y-0002Ft-S0
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 10:06:49 +0200
+	id 1XWLDa-0007xA-Dt
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 10:13:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650AbaIWIGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 04:06:46 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:37431 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754454AbaIWIGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 04:06:43 -0400
-Received: by mail-yk0-f170.google.com with SMTP id 19so1660687ykq.29
-        for <git@vger.kernel.org>; Tue, 23 Sep 2014 01:06:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=a9o6aCY1d9O4y6S7O5fvqUKSfqTgqCg0JfCrPjfGrzI=;
-        b=RK6CpWVpd+YalCEXNu9VgZ10w2pNliPK6A5Hm/ufCwIuR+qJ09SZFU4bePCLzc7Yqe
-         vaQ8sd+bNoI6aEypoTvr+z65rWGz5gFSkxAOBCEGQ8jV8ul2jscAQSGoI80eFfPsPa5T
-         PEQs9umIa7Y0cQWwf+W3vYlXtLGy1fkbUWpFyEauipdrT7duCmBk0XzlL762KWXvTFo5
-         dxZ1t4Rv/1dyz8m7CCv8oTmdV9ugXHZ+Ivsi+CTDyhWZrdrbnQR0TEWVBmPKcpyC/hD9
-         ycFGb6wCpddbrvlWbwSlOZKh7VjgwV2j+UUV2k+ULM6NDuhv87BpJDoWSi0/5y8hP7aw
-         yc5A==
-X-Received: by 10.236.42.75 with SMTP id i51mr33244835yhb.43.1411459603000;
- Tue, 23 Sep 2014 01:06:43 -0700 (PDT)
-Received: by 10.170.68.68 with HTTP; Tue, 23 Sep 2014 01:06:42 -0700 (PDT)
-In-Reply-To: <1411457847-10419-1-git-send-email-stefanbeller@gmail.com>
-X-Google-Sender-Auth: ith4PyfDYr4jDMNgxz88WvVH6hY
+	id S1754381AbaIWIMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 04:12:45 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50845 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753073AbaIWIM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 04:12:27 -0400
+Received: (qmail 6609 invoked by uid 102); 23 Sep 2014 08:12:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 03:12:28 -0500
+Received: (qmail 25367 invoked by uid 107); 23 Sep 2014 08:12:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 04:12:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Sep 2014 04:12:25 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQmbOs7Xw8wv63mLHfpG13Vo+tR7oLq-5srCcP1QQddnQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257404>
 
-On Tue, Sep 23, 2014 at 3:37 AM, Stefan Beller <stefanbeller@gmail.com> wrote:
-> English grammar with German words doesn't make it a German translation. ;)
-> We also need to fix the
+On Tue, Sep 23, 2014 at 03:52:21AM -0400, Eric Sunshine wrote:
 
-Sentence fragment.
+> > That is my reading from the warning text, too, but I have to wonder:
+> > wouldn't that mean they should be warning about pointer + pointer, not
+> > pointer + int?
+> 
+> 'pointer + pointer' is not legal C, is it? What would the result
+> represent? The compiler correctly diagnoses that case as an error
+> (without special command-line switches):
+> 
+>     error: invalid operands to binary expression
+>       ('char *' and 'char *')
+>       return "a" + "b";
+>              ~~~ ^ ~~~
 
-> Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
-> ---
->  po/de.po | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/po/de.po b/po/de.po
-> index e5d2b25..bae3723 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -3463,13 +3463,13 @@ msgid_plural ""
->  "\n"
->  "%s\n"
->  msgstr[0] ""
-> -"Warnung: Sie sind um %d Commit hinterher, nicht verbunden zu\n"
-> -"einem Ihrer Branches:\n"
-> +"Warnung: Sie sind um %d Commit hinterher, folgende Commits sind in\n"
-> +"keinem Ihrer Branches enthalten: \n"
->  "\n"
->  "%s\n"
->  msgstr[1] ""
-> -"Warnung: Sie sind um %d Commits hinterher, nicht verbunden zu\n"
-> -"einem Ihrer Branches:\n"
-> +"Warnung: Sie sind um %d Commits hinterher, folgende Commits sind in\n"
-> +"keinem Ihrer Branches enthalten: \n"
->  "\n"
->  "%s\n"
->
-> --
-> 2.1.0.238.gce1d3a9
+You're correct that it's not legal. My point was more that "pointer +
+int" is already clearly not string concatenation, because the operands
+are not two strings.
+
+I think the answer here (from the threads you linked below) is that
+people expect it to not just concatenate, but also auto-convert integers
+to strings. Yeesh.
+
+> > Also, wouldn't the same advice apply to adding to _any_ char pointer,
+> > not just a string literal?
+> 
+> Not really. Indexing into a char array via pointer arithmetic is a
+> perfectly reasonable and common idiom in C (indeed, git is peppered
+> with it), so such a warning would be pure noise.
+
+That is a good reason not to do the warning in these cases (and why I
+hope that we will not have to deal with this further). But IMHO it is
+good evidence that the warning is not well thought-out. It seems silly
+that:
+
+  x = "foo" + 1;
+
+is bad, but:
+
+  y = "foo";
+  x = y + 1;
+
+is not[1]. Saying the first one is rare does not seem like a good
+excuse; rather the existence of the second should tip you off that the
+idiom is valid and not to be complained about.
+
+Anyway, there is not much point in me complaining further about it here.
+You are not the one who introduced it. :)
+
+Thanks for digging in the history. It was interesting at least.
+
+-Peff
+
+[1] Actually, from reading the patch thread, I think the "1" needs to be
+    a non-constant integer here. But that just furthers the point: if
+    you have to neuter the warning to prevent a ton of false positives,
+    that is a good indication that you should not be warning. :)
