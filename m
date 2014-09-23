@@ -1,82 +1,162 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] mailinfo: resolve -Wstring-plus-int warning
-Date: Tue, 23 Sep 2014 03:58:11 -0400
-Message-ID: <CAPig+cRZ++QF0az2+1H1QqECqPVdK-99T=R7EN02FfReV7C6UA@mail.gmail.com>
-References: <1411290838-45622-1-git-send-email-sunshine@sunshineco.com>
-	<xmqqk34vlfhz.fsf@gitster.dls.corp.google.com>
-	<CAPig+cTAFaG5H8rmf1jrvFwr_OOH7u19JMKDUE12UddokUmfaQ@mail.gmail.com>
-	<20140923060407.GA23861@peff.net>
-	<CAPc5daUbXtNXSn8_tspvdF+SH5aeX+jVJTramtOm96Dc1wCqtg@mail.gmail.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH RFC] git-am: support any number of signatures
+Date: Tue, 23 Sep 2014 11:07:00 +0300
+Message-ID: <20140923080700.GA16527@redhat.com>
+References: <xmqqioo654mg.fsf@gitster.dls.corp.google.com>
+ <20140613080036.GA2117@redhat.com>
+ <xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
+ <20140615102736.GA11798@redhat.com>
+ <xmqqy4wwraoz.fsf@gitster.dls.corp.google.com>
+ <20140618030903.GA19593@redhat.com>
+ <CAPc5daVTZynCKMubZmreAjBh3i51wPaAA+8vSRwB9dGrrJb6FA@mail.gmail.com>
+ <xmqq38f2jed3.fsf@gitster.dls.corp.google.com>
+ <20140922140144.GA9769@redhat.com>
+ <CAP8UFD2W1r9859FgpBXqvdNLAfXoCwjpEFpTKXU6fGuC_8uvBg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 09:58:23 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 10:03:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWKzO-00032Z-4m
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 09:58:22 +0200
+	id 1XWL4h-00080Z-Fp
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 10:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754485AbaIWH6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 03:58:13 -0400
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:33989 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754457AbaIWH6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 03:58:12 -0400
-Received: by mail-yh0-f42.google.com with SMTP id b6so2550678yha.1
-        for <git@vger.kernel.org>; Tue, 23 Sep 2014 00:58:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=uqFV/LD/2wD56yina2kI+G59dLTsltZqm+L0EcB/jOc=;
-        b=hQ9L8GEBPRR9Hyi2jer/idsWTci7lrv8K1544zQ0+EeQmNA5ckpzmzrFeP+ohM5FlS
-         iyRk8Kwd1HqwVTHNvDwCcgnEtCPqSt6vMExpAg4GFi/SsQ89KiFR+2hBCuaHk44XID8U
-         +CEDMi0bb4VL1TAmIXLF/XNdUBQU3Po2NjAfq75DcrXvTs1/0rIDmnyvjv4dR9+W9dMV
-         NEwQ0NP0b2uISF/yoxbaQkzAvtRiMnVjl3QeN5GD13x4LI2Fv09t6lSlB0hEQiFCIDS7
-         2Y6VkDdU0omXTkFxLYMNEBU0uF41aU6Huj+jVVnWvf3fEewqdiDZq/T6mE5wL/G8F3yR
-         hAiQ==
-X-Received: by 10.236.82.132 with SMTP id o4mr7578630yhe.86.1411459091500;
- Tue, 23 Sep 2014 00:58:11 -0700 (PDT)
-Received: by 10.170.68.68 with HTTP; Tue, 23 Sep 2014 00:58:11 -0700 (PDT)
-In-Reply-To: <CAPc5daUbXtNXSn8_tspvdF+SH5aeX+jVJTramtOm96Dc1wCqtg@mail.gmail.com>
-X-Google-Sender-Auth: -Tod6EalEPVaHsz-8CwMLC_HqV8
+	id S1753541AbaIWIDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 04:03:47 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:14227 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751559AbaIWIDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 04:03:42 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s8N83ax5030659
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Tue, 23 Sep 2014 04:03:36 -0400
+Received: from redhat.com (dhcp-4-119.tlv.redhat.com [10.35.4.119])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s8N83YDI025621;
+	Tue, 23 Sep 2014 04:03:35 -0400
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD2W1r9859FgpBXqvdNLAfXoCwjpEFpTKXU6fGuC_8uvBg@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257401>
 
-On Tue, Sep 23, 2014 at 2:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Mon, Sep 22, 2014 at 11:04 PM, Jeff King <peff@peff.net> wrote:
->>
->> I don't mind silencing this one warning (even though I find it a little
->> ridiculous). I'm slightly concerned that more brain-damage may be coming
->> our way, but we can deal with that if it ever does.
->>
->> Like Junio, I prefer keeping strlen() rather than switching to sizeof,
->> as it is less error-prone (no need for extra "-1" dance, and it won't
->> silently do the wrong thing if the array is ever converted to a
->> pointer).
->
-> I actually do not mind losing the sample[] array too much.
->
-> The early 45 bytes or so of that array (or a string constant) is not used
-> by the code at all; I didn't want to count "From " (that's 5), 40-hex and
-> then a SP -- ah, see, it is 46 bytes and I didn't want such miscounting.
-> The only real contents that matter in that sample[] array is the tail part
-> that is meant as the magic(5) cue. I'd be OK if the code checked the
-> length of the line against a hardcoded constant and then did strcmp()
-> starting from a hardcoded offset of the string and the magic cue string,
-> and that would also avoid the warning from Eric's compiler.
+On Tue, Sep 23, 2014 at 09:45:50AM +0200, Christian Couder wrote:
+> Hi Michael,
+> 
+> On Mon, Sep 22, 2014 at 4:01 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > Hi Junio, Christian,
+> > it's been a while.
+> > I see that the work on trailers is going on.
+> > I tried going over the documentation but I could not figure
+> > out how would one implement multiple signatures using the
+> > trailers mechanism.
+> >
+> > As a reminder, this old patchset (that I replied to) enhanced git am -s
+> > with an option to add different signatures depending on
+> > the option passed to the -s flag.
+> > E.g. I have
+> > [am "a"]
+> >         signoff = "Acked-by: Michael S. Tsirkin <mst@redhat.com>"
+> >
+> > [am "r"]
+> >         signoff = "Reviewed-by: Michael S. Tsirkin <mst@redhat.com>"
+> >
+> > [am "t"]
+> >         signoff = "Tested-by: Michael S. Tsirkin <mst@redhat.com>"
+> >
+> > and now:
+> >         git am -s art
+> > adds all 3 signatures when applying the patch.
+> 
+> This is probably not as simple as you would like but it works with
+> something like:
+> 
+> $ git interpret-trailers --trailer "Acked-by: Michael S. Tsirkin
+> <mst@redhat.com>" --trailer "Reviewed-by: Michael S. Tsirkin
+> <mst@redhat.com>"  --trailer "Tested-by: Michael S. Tsirkin
+> <mst@redhat.com>" 0001-foo.patch >to_apply/0001-foo.patch
+> 
+> and then:
+> 
+> $ git am to_apply/*.patch
+> 
+> Also by using something like:
+> 
+> $ git config trailer.a.key Acked-by
+> $ git config trailer.r.key Reviewed-by
+> $ git config trailer.t.key Tested-by
 
-The -Wstring-plus-int option is "smart" enough to suppress the warning
-if the hardcoded offset falls within the bounds of the string literal,
-so this could work (but it feels a bit fragile compared to the current
-code).
+I would like multiple keys to match a specific
+letter, e.g. as a maintainer I need
+both reviewed by and signed off by when I
+apply a patch, I like applying them with
+a single "-s m".
 
-> But personally, I think the way it is coded is much easier to read,
-> and is much harder to get it wrong while maintaining it.  So...
+> the first command could be simplified to:
+> 
+> $ git interpret-trailers --trailer "a: Michael S. Tsirkin
+> <mst@redhat.com>" --trailer "r: Michael S. Tsirkin <mst@redhat.com>"
+> --trailer "t: Michael S. Tsirkin <mst@redhat.com>" 0001-foo.patch
+> >to_apply/0001-foo.patch
+> 
+> And if you use an env variable:
+> 
+> $ ME="Michael S. Tsirkin <mst@redhat.com>"
+> $ git interpret-trailers --trailer "a: $ME" --trailer "r: $ME"
+> --trailer "t: $ME" 0001-foo.patch >to_apply/0001-foo.patch
+> 
+> Maybe later we will integrate git interpret-trailers with git commit,
+> git am and other commands, so that you can do directly:
+> 
+> git am --trailer "a: $ME" --trailer "r: $ME"  --trailer "t: $ME" 0001-foo.patch
+> 
+> Maybe we wil also assign a one letter shortcut to --trailer, for
+> example "z", so that could be:
+> 
+> git am -z "a: $ME" -z "r: $ME"  -z "t: $ME" 0001-foo.patch
+
+-s could apply here, right?
+It doesn't have a parameter at the moment.
+
+> We could also allow many separators in the same -z argument as long as
+> they are separated by say "~",
+
+I think -z a -z r -z t is enough.
+
+> so you could have:
+> 
+> git am -z "a: $ME~r: $ME~t: $ME" 0001-foo.patch
+> 
+> And then we could also allow people to define default values for
+> trailers with something like:
+> 
+> $ git config trailer.a.defaultvalue "Michael S. Tsirkin <mst@redhat.com>"
+> $ git config trailer.r.defaultvalue "Michael S. Tsirkin <mst@redhat.com>"
+> $ git config trailer.t.defaultvalue "Michael S. Tsirkin <mst@redhat.com>"
+
+I'm kind of confused by the key/value concept.
+Can't I define the whole 'Acked-by: Michael S. Tsirkin <mst@redhat.com>'
+string as the key?
+
+
+> So that in the end you could have:
+> 
+> git am -z a~r~t 0001-foo.patch
+> 
+> which is very close to "git am -s art".
+> 
+> Best,
+> Christian.
+
+If I figure out the defaultvalue thing, I might
+find the time to work on git am integration.
