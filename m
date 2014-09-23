@@ -1,60 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to compile Git with NDK?
-Date: Tue, 23 Sep 2014 12:13:20 -0400
-Message-ID: <20140923161320.GC20624@peff.net>
-References: <CAHd499C3iwpcGf+Zt+jDJfqW41P=6Uu=b8VGZKJpFZCtw56beg@mail.gmail.com>
- <54209333.7090300@gmail.com>
- <CAHd499C0XJDwNa3n3bzK7hu6iRunV1d=nvbqi+2pyoB8uSzDFA@mail.gmail.com>
- <CAHd499CUrKqY26eA2QwK4EpWOjum-NBXi==E8GwtjOty3ZYYeA@mail.gmail.com>
+From: Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [RFC/PATCH] fsck: do not canonicalize modes in trees we are
+ checking
+Date: Tue, 23 Sep 2014 16:23:43 +0000
+Message-ID: <20140923162343.GA20379@debian>
+References: <20140923154751.GA19319@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 18:25:11 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 23 18:30:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWSid-0007Kw-LD
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 18:13:36 +0200
+	id 1XWSsd-0001M3-DK
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 18:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932441AbaIWQNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 12:13:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50991 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932236AbaIWQNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 12:13:23 -0400
-Received: (qmail 26968 invoked by uid 102); 23 Sep 2014 16:13:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 11:13:22 -0500
-Received: (qmail 29396 invoked by uid 107); 23 Sep 2014 16:13:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 12:13:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Sep 2014 12:13:20 -0400
+	id S1755558AbaIWQXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 12:23:51 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:40986 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755219AbaIWQXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 12:23:51 -0400
+Received: by mail-pd0-f180.google.com with SMTP id r10so6705065pdi.39
+        for <git@vger.kernel.org>; Tue, 23 Sep 2014 09:23:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=28VP8NSMBZMkm0D1uwMCWFAlh/Yk8N2jc1rNVZXpB+k=;
+        b=iZW+lkbqxnO0Hu2p9qnvsSpkIek65RZ4lKBm4s2Xg7pw1FfLtjVEs4vMFpgo73C2y+
+         7UGVof0wImJFKxVNUU03mjanYKnAb/G8L8Rh3votAFxf+SlAe8U7R7VmKWkTbP31reIK
+         N5yjgu71/0NhDhEpRmIlMqfl4gSVjAjF7cFogD/aNz5IqgFCfk/rqmR9v/xprZrX5LaI
+         EiIKyCnFz93WyvafNemJb6eADwgL6ODAoI5rwaEb7MryVimfvyNsOWDO+iiYqPlbjfcZ
+         jJgRWkBJCO1mAXpSCMDpnevmtTLgzSKI48/m8XRZT4V3q4f4B7S33nqPL7Wq7F8c6mH+
+         j/DQ==
+X-Gm-Message-State: ALoCoQkpM1dMz50jdWcLJlvZT+Tu/Fc1ufLcJJ/wpX/laP1jNzslQ1vOheGve+uxPQ9C7FwLS9sw
+X-Received: by 10.70.127.131 with SMTP id ng3mr1085952pdb.31.1411489430589;
+        Tue, 23 Sep 2014 09:23:50 -0700 (PDT)
+Received: from debian ([2600:3c01::f03c:91ff:fe73:b980])
+        by mx.google.com with ESMTPSA id ou6sm12456784pbb.88.2014.09.23.09.23.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Sep 2014 09:23:49 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CAHd499CUrKqY26eA2QwK4EpWOjum-NBXi==E8GwtjOty3ZYYeA@mail.gmail.com>
+In-Reply-To: <20140923154751.GA19319@peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257426>
 
-On Tue, Sep 23, 2014 at 07:52:32AM -0500, Robert Dailey wrote:
+On Tue, Sep 23, 2014 at 11:47:51AM -0400, Jeff King wrote:
+> As far as I can tell, fsck's mode-checking has been totally broken
+> basically forever. Which makes me a little nervous to fix it. :)
+> linux.git does have some bogus modes, but they are 100664, which is
+> specifically ignored here unless "fsck --strict" is in effect.
 
-> On Tue, Sep 23, 2014 at 7:47 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> > But if I type just 'make', I don't see how it will know where my ARM
-> > toolchain is. I'll read the INSTALL file in the meantime.
-> 
-> Sorry for top post earlier, my mistake.
-> 
-> I reviewed the INSTALL file. It doesn't mention anything regarding how
-> to setup the toolchain for the Git build. Also looks like I'll have to
-> build the library dependencies with ARM toolchain as well. Looks like
-> zlib is the only absolute required one. Is that correct?
+I'm in favor of checking the mode in fsck, at least when --strict.  
+But I would suggest we be lax (by default) about other likely-to-exist
+but strictly invalid modes to prevent peoples previously workable
+repositories from being now broken.
 
-Yes, zlib is the only absolute dependency. However, libcurl is useful if
-you want to clone http repositories.
+I have, for example, encountered 100775 in the wild, and would argue that
+like 100644, it should probably not fail unless we are in --strict mode.
 
--Peff
+Thanks-
+-ed
