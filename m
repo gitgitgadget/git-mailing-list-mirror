@@ -1,86 +1,87 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: [PATCH] de.po: Fixup one translation
-Date: Tue, 23 Sep 2014 14:54:46 +0200
-Message-ID: <1411476886-13141-1-git-send-email-stefanbeller@gmail.com>
-References: <CAN0XMO+D7dDh_Xpcgekg3fsDA9Zhh+i7Asi46G3aBpnknivNjA@mail.gmail.com>
-Cc: Stefan Beller <stefanbeller@gmail.com>
-To: sunshine@sunshineco.com, ralf.thielow@googlemail.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 23 14:54:55 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v5 20/35] api-lockfile: document edge cases
+Date: Tue, 23 Sep 2014 14:56:25 +0200
+Message-ID: <54216DF9.3020307@alum.mit.edu>
+References: <1410896036-12750-1-git-send-email-mhagger@alum.mit.edu> <1410896036-12750-21-git-send-email-mhagger@alum.mit.edu> <20140916222344.GT29050@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 14:56:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWPcL-000629-A3
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 14:54:53 +0200
+	id 1XWPdy-0007gd-6t
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 14:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755791AbaIWMyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 08:54:49 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:45289 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755607AbaIWMys (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 08:54:48 -0400
-Received: by mail-we0-f181.google.com with SMTP id w61so2619471wes.26
-        for <git@vger.kernel.org>; Tue, 23 Sep 2014 05:54:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TZB91jv32N9ESIbKNX/PKayNF88NZ/4H8NQWQpFUWxc=;
-        b=A+dm3RrdPFoIN1n54jhvADmvanzhAFhK6rJMXeNPgHCLhaOP8gcxgmXfRsX1bqjP1A
-         szZuYIyrKNNcBksrW8krvNqAaYCCI67S/c4KfnRvz+qL3UgVPDG6gK5MRGSac3fnyA7y
-         2T4Zvb+uEPXhmQARF1Oms6I2FQEulYwjDCtEAocXjjuIlDlxG1Sh7MmxFoMsT2059HTf
-         npYSmAfAdtEQMgC9Lv3PEy7n7ZU4Ysr9M9Ek2XagiyOP5ABNLN236bNqIKQ8MMgDemO2
-         AUsagXGlGOkgMI7jnVCXCkq3KxUwygIEh245XV5TF4QWA4kGD46WlTXTpdn1hf+sX4Fl
-         qVOQ==
-X-Received: by 10.194.103.200 with SMTP id fy8mr3187357wjb.123.1411476887525;
-        Tue, 23 Sep 2014 05:54:47 -0700 (PDT)
-Received: from localhost (p5B095AC8.dip0.t-ipconnect.de. [91.9.90.200])
-        by mx.google.com with ESMTPSA id cw6sm15828079wjb.18.2014.09.23.05.54.46
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 23 Sep 2014 05:54:47 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0.238.gce1d3a9
-In-Reply-To: <CAN0XMO+D7dDh_Xpcgekg3fsDA9Zhh+i7Asi46G3aBpnknivNjA@mail.gmail.com>
+	id S1754171AbaIWM4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 08:56:30 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:64302 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751307AbaIWM43 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Sep 2014 08:56:29 -0400
+X-AuditID: 12074412-f792e6d000005517-8d-54216dfca878
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id EF.49.21783.CFD61245; Tue, 23 Sep 2014 08:56:28 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB1DCD.dip0.t-ipconnect.de [93.219.29.205])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8NCuQV6020165
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 23 Sep 2014 08:56:27 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
+In-Reply-To: <20140916222344.GT29050@google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKKsWRmVeSWpSXmKPExsUixO6iqPsnVzHE4OFDfYuuK91MFg29V5gt
+	nsy9y2zx9uYSRosfLT3MFv8m1Fh0dnxldGD32DnrLrvHgk2lHg9fdbF7POvdw+hx8ZKyx+dN
+	ch63n21jCWCP4rZJSiwpC85Mz9O3S+DOePPqEVvBDM6KVQu/szUwrmTvYuTkkBAwkfi46Akb
+	hC0mceHeeiCbi0NI4DKjxJfOnywQznkmie3fzzGDVPEKaEvM2LARrINFQFVi7skLjCA2m4Cu
+	xKKeZiYQW1QgQOJD5wNGiHpBiZMzn7CA2CICGhLPP30D28As8JFRYu71k6wgCWEBe4lZZ+dD
+	bVvEKLH0+22wBKeAgcTrO11gk5gF9CR2XP/FCmHLS2x/O4d5AqPALCRLZiEpm4WkbAEj8ypG
+	ucSc0lzd3MTMnOLUZN3i5MS8vNQiXTO93MwSvdSU0k2MkGgQ2sG4/qTcIUYBDkYlHl6PNQoh
+	QqyJZcWVuYcYJTmYlER5k7MUQ4T4kvJTKjMSizPii0pzUosPMUpwMCuJ8IplAOV4UxIrq1KL
+	8mFS0hwsSuK8Pxer+wkJpCeWpGanphakFsFkZTg4lCR4DYBRLyRYlJqeWpGWmVOCkGbi4AQZ
+	ziUlUpyal5JalFhakhEPitf4YmDEgqR4gPaeygHZW1yQmAsUhWg9xajLsa7zWz+TEEtefl6q
+	lDjvLZAiAZCijNI8uBWw1PeKURzoY2HeEJBLeIBpE27SK6AlTEBL7h+XB1lSkoiQkmpgDGaQ
+	kLygefbwTj4FKUYG3dlXRdwVnT+vUr7/PP/ciqmtCbUL7XnUvj3ZuPpfgUQo57r0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257417>
 
-English grammar with German words doesn't make it a German translation. ;)
+On 09/17/2014 12:23 AM, Jonathan Nieder wrote:
+> Michael Haggerty wrote:
+> 
+>> * Document the behavior of commit_lock_file() when it fails, namely
+>>   that it rolls back the lock_file object and sets errno
+>>   appropriately.
+>>
+>> * Document the behavior of rollback_lock_file() when called for a
+>>   lock_file object that has already been committed or rolled back,
+>>   namely that it is a NOOP.
+> 
+> I think this would be easier to read in a separate error handling
+> section.  That way, when writing new code using the lockfile API,
+> I can quickly find what functions to use and quickly find out what
+> the error handling conventions are --- each use of the documentation
+> wouldn't interfere with the other.
 
-Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
----
-Here we go again without sentence fragments.
+I added a little blurb in the error handling section explaining how
+commit_lock_file() and close_lock_file() behave on failure, but I left
+the detailed information in the sections on those functions because I
+couldn't find a graceful way to put all of the information in the error
+handling sections.
 
-Thanks,
-Stefan
+If you have a concrete suggestion, as they say, "patches are welcome" :-)
 
- po/de.po | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Michael
 
-diff --git a/po/de.po b/po/de.po
-index e5d2b25..bae3723 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -3463,13 +3463,13 @@ msgid_plural ""
- "\n"
- "%s\n"
- msgstr[0] ""
--"Warnung: Sie sind um %d Commit hinterher, nicht verbunden zu\n"
--"einem Ihrer Branches:\n"
-+"Warnung: Sie sind um %d Commit hinterher, folgende Commits sind in\n"
-+"keinem Ihrer Branches enthalten: \n"
- "\n"
- "%s\n"
- msgstr[1] ""
--"Warnung: Sie sind um %d Commits hinterher, nicht verbunden zu\n"
--"einem Ihrer Branches:\n"
-+"Warnung: Sie sind um %d Commits hinterher, folgende Commits sind in\n"
-+"keinem Ihrer Branches enthalten: \n"
- "\n"
- "%s\n"
- 
 -- 
-2.1.0.238.gce1d3a9
+Michael Haggerty
+mhagger@alum.mit.edu
