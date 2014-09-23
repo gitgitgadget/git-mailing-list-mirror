@@ -1,61 +1,86 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: How to compile Git with NDK?
-Date: Tue, 23 Sep 2014 07:52:32 -0500
-Message-ID: <CAHd499CUrKqY26eA2QwK4EpWOjum-NBXi==E8GwtjOty3ZYYeA@mail.gmail.com>
-References: <CAHd499C3iwpcGf+Zt+jDJfqW41P=6Uu=b8VGZKJpFZCtw56beg@mail.gmail.com>
-	<54209333.7090300@gmail.com>
-	<CAHd499C0XJDwNa3n3bzK7hu6iRunV1d=nvbqi+2pyoB8uSzDFA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 14:52:38 2014
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: [PATCH] de.po: Fixup one translation
+Date: Tue, 23 Sep 2014 14:54:46 +0200
+Message-ID: <1411476886-13141-1-git-send-email-stefanbeller@gmail.com>
+References: <CAN0XMO+D7dDh_Xpcgekg3fsDA9Zhh+i7Asi46G3aBpnknivNjA@mail.gmail.com>
+Cc: Stefan Beller <stefanbeller@gmail.com>
+To: sunshine@sunshineco.com, ralf.thielow@googlemail.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 23 14:54:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWPa9-0003nM-Hz
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 14:52:37 +0200
+	id 1XWPcL-000629-A3
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 14:54:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753427AbaIWMwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 08:52:33 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:42796 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751592AbaIWMwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 08:52:33 -0400
-Received: by mail-vc0-f178.google.com with SMTP id lf12so3002833vcb.9
-        for <git@vger.kernel.org>; Tue, 23 Sep 2014 05:52:32 -0700 (PDT)
+	id S1755791AbaIWMyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 08:54:49 -0400
+Received: from mail-we0-f181.google.com ([74.125.82.181]:45289 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755607AbaIWMys (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 08:54:48 -0400
+Received: by mail-we0-f181.google.com with SMTP id w61so2619471wes.26
+        for <git@vger.kernel.org>; Tue, 23 Sep 2014 05:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ys/9imle0uE3pE3UDjJzO8Q3lP5sMdNvjRCtXX750Ts=;
-        b=xwgyUdfCdbun9fGRNzZuKkXDIcM23DFSGcL+6cTHdModE4f4NQlqH/3ampYHlR6d79
-         nNb5LVHtLU3pGTwwmv3LZ5wRmLAXBfR2Uu4siqfQtlRBd695giV6sVuP7lKTgzTEFKYT
-         FydZDhKM9qk2rx/FGWsDDRjssb5kcV2itdF2FGnE6x118mRl9VKyQSYMiTokEgXu6s/f
-         FQQPhddcu9ZSnLUMMtJp4fe4h30QbVcN3ECARikD9WRVw+83sr3o+7ZIs6B/bVOYTgOt
-         hwAydJp2OZstF75xhY35f79CzIrjyaLuJtrcOnibPdbGMhy+3GyrHfoGPHUREWn8Pd57
-         szqQ==
-X-Received: by 10.220.69.210 with SMTP id a18mr150490vcj.67.1411476752266;
- Tue, 23 Sep 2014 05:52:32 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.3.200 with HTTP; Tue, 23 Sep 2014 05:52:32 -0700 (PDT)
-In-Reply-To: <CAHd499C0XJDwNa3n3bzK7hu6iRunV1d=nvbqi+2pyoB8uSzDFA@mail.gmail.com>
-X-Google-Sender-Auth: lir9JCMB-pb8dQA7axp-6V0rjfw
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=TZB91jv32N9ESIbKNX/PKayNF88NZ/4H8NQWQpFUWxc=;
+        b=A+dm3RrdPFoIN1n54jhvADmvanzhAFhK6rJMXeNPgHCLhaOP8gcxgmXfRsX1bqjP1A
+         szZuYIyrKNNcBksrW8krvNqAaYCCI67S/c4KfnRvz+qL3UgVPDG6gK5MRGSac3fnyA7y
+         2T4Zvb+uEPXhmQARF1Oms6I2FQEulYwjDCtEAocXjjuIlDlxG1Sh7MmxFoMsT2059HTf
+         npYSmAfAdtEQMgC9Lv3PEy7n7ZU4Ysr9M9Ek2XagiyOP5ABNLN236bNqIKQ8MMgDemO2
+         AUsagXGlGOkgMI7jnVCXCkq3KxUwygIEh245XV5TF4QWA4kGD46WlTXTpdn1hf+sX4Fl
+         qVOQ==
+X-Received: by 10.194.103.200 with SMTP id fy8mr3187357wjb.123.1411476887525;
+        Tue, 23 Sep 2014 05:54:47 -0700 (PDT)
+Received: from localhost (p5B095AC8.dip0.t-ipconnect.de. [91.9.90.200])
+        by mx.google.com with ESMTPSA id cw6sm15828079wjb.18.2014.09.23.05.54.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Sep 2014 05:54:47 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.238.gce1d3a9
+In-Reply-To: <CAN0XMO+D7dDh_Xpcgekg3fsDA9Zhh+i7Asi46G3aBpnknivNjA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257416>
 
-On Tue, Sep 23, 2014 at 7:47 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> But if I type just 'make', I don't see how it will know where my ARM
-> toolchain is. I'll read the INSTALL file in the meantime.
+English grammar with German words doesn't make it a German translation. ;)
 
-Sorry for top post earlier, my mistake.
+Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
+---
+Here we go again without sentence fragments.
 
-I reviewed the INSTALL file. It doesn't mention anything regarding how
-to setup the toolchain for the Git build. Also looks like I'll have to
-build the library dependencies with ARM toolchain as well. Looks like
-zlib is the only absolute required one. Is that correct?
+Thanks,
+Stefan
+
+ po/de.po | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/po/de.po b/po/de.po
+index e5d2b25..bae3723 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -3463,13 +3463,13 @@ msgid_plural ""
+ "\n"
+ "%s\n"
+ msgstr[0] ""
+-"Warnung: Sie sind um %d Commit hinterher, nicht verbunden zu\n"
+-"einem Ihrer Branches:\n"
++"Warnung: Sie sind um %d Commit hinterher, folgende Commits sind in\n"
++"keinem Ihrer Branches enthalten: \n"
+ "\n"
+ "%s\n"
+ msgstr[1] ""
+-"Warnung: Sie sind um %d Commits hinterher, nicht verbunden zu\n"
+-"einem Ihrer Branches:\n"
++"Warnung: Sie sind um %d Commits hinterher, folgende Commits sind in\n"
++"keinem Ihrer Branches enthalten: \n"
+ "\n"
+ "%s\n"
+ 
+-- 
+2.1.0.238.gce1d3a9
