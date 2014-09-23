@@ -1,175 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH for-maint] apply: gitdiff_verify_name(): accept "/dev/null\r"
-Date: Tue, 23 Sep 2014 14:35:32 -0700
-Message-ID: <xmqqoau6gguz.fsf@gitster.dls.corp.google.com>
-References: <1411434583-27692-1-git-send-email-lersek@redhat.com>
-	<xmqq1tr2jhg2.fsf@gitster.dls.corp.google.com>
-	<5421CAA6.3040107@redhat.com>
-	<xmqqsijihzrb.fsf@gitster.dls.corp.google.com>
-	<5421D8C4.2080009@redhat.com>
-	<xmqqfvfihy7i.fsf@gitster.dls.corp.google.com>
-	<5421DCE3.9090500@redhat.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v3] git tag --contains: avoid stack overflow
+Date: Tue, 23 Sep 2014 23:48:58 +0200
+Message-ID: <87wq8u3t4l.fsf@igel.home>
+References: <20140417215817.GA822@sigill.intra.peff.net>
+	<20140423075325.GA7268@camelia.ucw.cz>
+	<xmqqeh0nzwq9.fsf@gitster.dls.corp.google.com>
+	<20140423191628.GA20596@sigill.intra.peff.net>
+	<xmqqk3afydq2.fsf@gitster.dls.corp.google.com>
+	<20140423205533.GA20582@sigill.intra.peff.net>
+	<xmqqfvl3ycwk.fsf@gitster.dls.corp.google.com>
+	<20140424122029.GA8168@camelia.ucw.cz>
+	<20140424122439.GB8168@camelia.ucw.cz> <871tr688a4.fsf@igel.home>
+	<20140923160552.GA20624@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, jordan.l.justen@intel.com,
-	matt.fleming@intel.com
-To: Laszlo Ersek <lersek@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 23:35:47 2014
+Cc: Stepan Kasal <kasal@ucw.cz>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org,
+	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 23 23:49:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWXkL-0000k1-SU
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 23:35:42 +0200
+	id 1XWXxO-0005r8-Ue
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 23:49:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932528AbaIWVfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 17:35:37 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61529 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932525AbaIWVfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 17:35:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 287063C15F;
-	Tue, 23 Sep 2014 17:35:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o9vKME3rF4NS54Hq1mnEcFfexhI=; b=RmNRHO
-	sge04CO6/qp8atovuTZWyYYoWW1WfkuA6PGetI88xR5SD8B7k7fVzyDT117xTZ9r
-	50PxYnbTnkssSb1GFHTPtQiza9OzNwQ/3gAnoyVzdcninkceLAAIy5koYXQHcYbq
-	XR2Hg2L8tNPqPQn7h5O5hSBgdayF6M0ARHhcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CUV8dRIwu9ITXsjb8pxrg+P8rOkXms3W
-	mmWkSFl/FwUQL59NoOkgmC7Ze3Ouy0RC3JGhwF+ChWoW7l7cIFJJ8wrLas63AyX4
-	QyyCQgetUPHkgCQHFclNetoPU2warPmJfbfWemGmL7qybU/mcWCIkacl6vOADcRS
-	xdxmwrDgpJA=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CCD573C15E;
-	Tue, 23 Sep 2014 17:35:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CE3AE3C15B;
-	Tue, 23 Sep 2014 17:35:33 -0400 (EDT)
-In-Reply-To: <5421DCE3.9090500@redhat.com> (Laszlo Ersek's message of "Tue, 23
-	Sep 2014 22:49:39 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8CAA007C-4369-11E4-B120-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1756997AbaIWVtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 17:49:06 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:53468 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756808AbaIWVtF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 17:49:05 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3j2bkh2XPXz3hj9N;
+	Tue, 23 Sep 2014 23:49:00 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3j2bkh1QLCzvh22;
+	Tue, 23 Sep 2014 23:49:00 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id 9aL7wUrjAeqe; Tue, 23 Sep 2014 23:48:58 +0200 (CEST)
+X-Auth-Info: yS4XTJ2RphYXYYSYd8QJNCKwTkC7Y3usEHbNcpaCkpzVzs+/CvUTJB+CbUhh2s4/
+Received: from igel.home (ppp-188-174-63-72.dynamic.mnet-online.de [188.174.63.72])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Tue, 23 Sep 2014 23:48:58 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 7BBDB2C4350; Tue, 23 Sep 2014 23:48:58 +0200 (CEST)
+X-Yow: I've read SEVEN MILLION books!!
+In-Reply-To: <20140923160552.GA20624@peff.net> (Jeff King's message of "Tue,
+	23 Sep 2014 12:05:52 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257446>
 
-Laszlo Ersek <lersek@redhat.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> In summary:
+> But if we do want to keep it, does bumping it to 128 (and bumping the
+> 4000 to 8000 in the test below it) work?
 
-This is not entirely correct, though.  But it suggests an avenue for
-a possible enhancement.
+It works for all architectures supported by the openSUSE build service.
 
-> - the email infrastructure turns all line terminators into CRLFs
+https://build.opensuse.org/package/show/home:AndreasSchwab:f/git
 
-Yes, but that is within MTAs and is expected to be invisible at MUA
-level.  Typically mailbox files are stored in platform's native
-format (e.g. I see LF endings in my mailbox), be it CRLF of LF.
+Andreas.
 
-The important thing to note here is that use of text/plain for
-patches, if you want to have distinction between CRLF and LF in your
-payload, is not designed to work over e-mails.
-
-> - git-am strips these by default, from source code lines and from git
->   diff header lines alike,
-
-On a platform whose native line endings are LF, the stripping may
-not even happen (i.e. "am/apply" may not see CRLF in the mailbox in
-the first place).
-
-On a platform whose mbox has CRLF, or if you "unix2dos" a mbox on a
-platform whose mbox has LF to manufacture a mbox with CRLF line
-endings, you would have an opposite issue.  Information is lost in
-MTAs while your e-mail is in transit and you cannot tell patch to
-which paths had CRLF line endings and patch to which paths had LF
-line endings.  If all files you are tracking uniformly use CRLF, you
-can assume that everything had CRLF but it is still an assumption
-and that is a special case that is not particularly interesting.
-
-Applying such a CRLF patch with your "/dev/null\r\n" patch applied
-to "am" will _add_ unwanted CR before LF to files that are meant to
-use LF line endings.
-
-Now if we accept that this issue is coming from lossy nature of
-transporting patches via e-mails, we would realize that the right
-place to solve this is not in "apply"'s parsing of structural part
-of the "diff" output (e.g. "diff --git ...", "rename from ..." or
-"--- filename"), but the payload part (i.e. " " followed by context,
-"-" followed by removed and "+" followed by added).  Removal of CR
-by "am -> mailsplit -> mailinfo -> apply" callchain is not losing
-any information, as the input does not have useful information to
-let us answer "are the lines in this path supposed to end with
-CRLF?" in the first place; "/dev/null\r" patch is barking up a wrong
-tree.
-
-Our line-endings infrastructure (e.g. core.autocrlf configuration
-variable, `eol` attribute) is all geared toward supporting cross
-platform projects in that the BCP is to use LF line endings as the
-canonical line endings for in-repository data and convert it to CRLF
-for working tree files when necessary.  We do not have direct
-support (other than declaring contents for paths as "binary" aka "no
-conversion") to use CRLF in in-repository data (and that is partly
-deliberate).
-
-But it is conceivable to enhance the attribute system to allow us to
-mark certain paths (or "all paths", which is a trivial special case)
-as using CRLF line endings in in-repository and in-working-tree.  It
-could be setting `eol` attribute to `both-crlf` or something.
-
-Then "am -> mailsplit -> mailinfo -> apply" chain could:
-
- * "mailsplit" and "mailinfo" does not have to do anything special,
-   other than stripping CR and make sure "apply" only sees LF
-   endings;
-
- * "apply" is taught a new option "--fix-mta-corruption" which
-   causes it to pay attention to the `eol` attribute set to
-   `both-crlf`, and when it reads a patch
-
-	diff --git a/one b/one
-        --- one
-        +++ one
-        @@ -4,6 +4,6 @@
-         common1
-	 common2
-        -old1
-        -old2
-        +new1
-        +new2
-         common3
-         common4
-
-   and notices that path "one" is marked as such, it pretends as if
-   the input were
-
-	diff --git a/one b/one
-        --- one
-        +++ one
-        @@ -4,6 +4,6 @@
-         common1^M
-	 common2^M
-        -old1^M
-        -old2^M
-        +new1^M
-        +new2^M
-         common3^M
-         common4^M
-
-   to compensate for possible breakage during the mail transit.
-
- * "am" is taught to pass "--fix-mta-corruption" to "apply" perhaps
-   by default.
-
-Because code paths that internally run "git am", e.g. "git rebase",
-work on data that is *not* corrupt by mta (we generate diff and
-apply ourselves), these places need to tell "am" not to use the
-"--fix-mta-corruption" when running "apply".
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
