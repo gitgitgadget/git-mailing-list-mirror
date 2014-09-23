@@ -1,78 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] git tag --contains: avoid stack overflow
-Date: Tue, 23 Sep 2014 12:05:52 -0400
-Message-ID: <20140923160552.GA20624@peff.net>
-References: <20140417215817.GA822@sigill.intra.peff.net>
- <20140423075325.GA7268@camelia.ucw.cz>
- <xmqqeh0nzwq9.fsf@gitster.dls.corp.google.com>
- <20140423191628.GA20596@sigill.intra.peff.net>
- <xmqqk3afydq2.fsf@gitster.dls.corp.google.com>
- <20140423205533.GA20582@sigill.intra.peff.net>
- <xmqqfvl3ycwk.fsf@gitster.dls.corp.google.com>
- <20140424122029.GA8168@camelia.ucw.cz>
- <20140424122439.GB8168@camelia.ucw.cz>
- <871tr688a4.fsf@igel.home>
+Subject: Re: How to compile Git with NDK?
+Date: Tue, 23 Sep 2014 12:11:07 -0400
+Message-ID: <20140923161107.GB20624@peff.net>
+References: <CAHd499C3iwpcGf+Zt+jDJfqW41P=6Uu=b8VGZKJpFZCtw56beg@mail.gmail.com>
+ <54209333.7090300@gmail.com>
+ <CAHd499C0XJDwNa3n3bzK7hu6iRunV1d=nvbqi+2pyoB8uSzDFA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Stepan Kasal <kasal@ucw.cz>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org,
-	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Sep 23 18:07:13 2014
+Cc: Stefan Beller <stefanbeller@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 18:21:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWSbI-0006sJ-G8
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 18:06:00 +0200
+	id 1XWSgQ-0004oC-5V
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 18:11:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756153AbaIWQF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 12:05:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50975 "HELO cloud.peff.net"
+	id S932351AbaIWQLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 12:11:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50983 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755873AbaIWQFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 12:05:55 -0400
-Received: (qmail 26615 invoked by uid 102); 23 Sep 2014 16:05:55 -0000
+	id S932115AbaIWQLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 12:11:10 -0400
+Received: (qmail 26871 invoked by uid 102); 23 Sep 2014 16:11:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 11:05:55 -0500
-Received: (qmail 29280 invoked by uid 107); 23 Sep 2014 16:06:20 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 11:11:09 -0500
+Received: (qmail 29353 invoked by uid 107); 23 Sep 2014 16:11:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 12:06:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Sep 2014 12:05:52 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 12:11:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Sep 2014 12:11:07 -0400
 Content-Disposition: inline
-In-Reply-To: <871tr688a4.fsf@igel.home>
+In-Reply-To: <CAHd499C0XJDwNa3n3bzK7hu6iRunV1d=nvbqi+2pyoB8uSzDFA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257424>
 
-On Sat, Sep 20, 2014 at 08:18:59PM +0200, Andreas Schwab wrote:
+On Tue, Sep 23, 2014 at 07:47:11AM -0500, Robert Dailey wrote:
 
-> Stepan Kasal <kasal@ucw.cz> writes:
-> 
-> > diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> > index 143a8ea..a911df0 100755
-> > --- a/t/t7004-tag.sh
-> > +++ b/t/t7004-tag.sh
-> > @@ -1423,4 +1423,30 @@ EOF
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > +run_with_limited_stack () {
-> > +	(ulimit -s 64 && "$@")
-> > +}
-> 
-> That is way too small.
-> 
-> https://build.opensuse.org/package/live_build_log/openSUSE:Factory:PowerPC/git/standard/ppc64le
+> But if I type just 'make', I don't see how it will know where my ARM
+> toolchain is. I'll read the INSTALL file in the meantime.
 
-Thanks for the report. I'd be OK with just giving up and dropping this
-test as too flaky and system-specific to be worth the trouble.
+It won't. If you are cross-compiling you'll have to specify CC and LD
+manually, plus a host of other settings. We usually pick pretty sane
+defaults (which is why you can get away without running autoconf), but
+they're not going to be reasonable for cross-compiling. If you do go the
+non-autoconf route, you'd probably want to try building with "make
+uname_S=whatever" to override our defaults (see config.mak.uname for an
+idea of which uname variables we look at).
 
-But if we do want to keep it, does bumping it to 128 (and bumping the
-4000 to 8000 in the test below it) work?
+In your original report:
+
+> >> fe@BLD01:~/code/git$ autoconf
+> >> fe@BLD01:~/code/git$ ./configure --prefix=/home/fe/git-arm
+> >> --build=x86_64-linux-gnu --host=arm-linux-androideabi
+> >> configure: Setting lib to 'lib' (the default)
+> >> configure: Will try -pthread then -lpthread to enable POSIX Threads.
+> >> configure: CHECKS for site configuration
+> >> checking for arm-linux-androideabi-gcc... arm-linux-androideabi-gcc
+> >> checking whether the C compiler works... no
+> >> configure: error: in `/home/fe/code/git':
+> >> configure: error: C compiler cannot create executables
+> >> See `config.log' for more details
+
+Autoconf couldn't even build a simple hello-world with the compiler you
+specified. So the first step would probably be to figure that out. What
+does config.log say?
 
 -Peff
