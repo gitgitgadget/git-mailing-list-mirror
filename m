@@ -1,65 +1,113 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] archive: support filtering paths with glob
-Date: Tue, 23 Sep 2014 06:04:31 +0700
-Message-ID: <CACsJy8CwwzOuiL1GMcK9OWZSdSqCpLzVJPyNkHocH10_1VmXSA@mail.gmail.com>
-References: <1433062.XhRCATRB3s@al> <1411271706-1151-1-git-send-email-pclouds@gmail.com>
- <xmqq4mvzlb5c.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Peter Wu <peter@lekensteyn.nl>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 01:05:10 2014
+From: Laszlo Ersek <lersek@redhat.com>
+Subject: [PATCH for-maint] apply: gitdiff_verify_name(): accept "/dev/null\r"
+Date: Tue, 23 Sep 2014 03:09:43 +0200
+Message-ID: <1411434583-27692-1-git-send-email-lersek@redhat.com>
+To: gitster@pobox.com, git@vger.kernel.org, jordan.l.justen@intel.com,
+	matt.fleming@intel.com, lersek@redhat.com
+X-From: git-owner@vger.kernel.org Tue Sep 23 03:10:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWCfN-0003W3-JL
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 01:05:09 +0200
+	id 1XWEc9-00013n-UI
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 03:09:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754831AbaIVXFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Sep 2014 19:05:03 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:52675 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754679AbaIVXFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Sep 2014 19:05:02 -0400
-Received: by mail-ig0-f178.google.com with SMTP id r10so3649586igi.17
-        for <git@vger.kernel.org>; Mon, 22 Sep 2014 16:05:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=PxIcNp3VpWOzUQqhjWHuECjd+rLAtY7wFju4mGxqHH4=;
-        b=qhFXVZe4uy6D2l+mS+IqOmvqSOTZrdoRxNz7eu0H6oT0QgHsZyuiezFtKEvT7g2sZX
-         HACRtZnK9S8BQz269kwpv8Zg/KE939n3pBf962JYAcDtetfI2nYZJhhC7Tq+JxUCPT08
-         KWnj46nhMlAl1iLa97QjLCeuPEuhOTrsX1OM+Oshf5l3o/Wv6t3vvncPBSBLcym3JAdC
-         x9Tf8yX9ZEZGnTIHBS/0mbBaumQYZeZXZ+MXiNjMPSP222y/Q8ZioqMS750zRXgyohC7
-         AOkPlS5RUlyPZ20KD5cCTZuAfu2iXEGSLiXj1zvw1OTc+CIm3LTV8A5r/BW8QSICbu4p
-         701Q==
-X-Received: by 10.50.103.106 with SMTP id fv10mr18063117igb.40.1411427101571;
- Mon, 22 Sep 2014 16:05:01 -0700 (PDT)
-Received: by 10.107.131.150 with HTTP; Mon, 22 Sep 2014 16:04:31 -0700 (PDT)
-In-Reply-To: <xmqq4mvzlb5c.fsf@gitster.dls.corp.google.com>
+	id S1753980AbaIWBJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Sep 2014 21:09:54 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:60956 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753574AbaIWBJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Sep 2014 21:09:53 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s8N19pFj032233
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Mon, 22 Sep 2014 21:09:51 -0400
+Received: from lacos-laptop-7.usersys.redhat.com (ovpn-116-28.ams2.redhat.com [10.36.116.28])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id s8N19ljb013404;
+	Mon, 22 Sep 2014 21:09:48 -0400
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257392>
 
-On Tue, Sep 23, 2014 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> When we have a/b/c and a/d/e to be written, the first round would
-> write a/ and then a/b/ with the above, and presumably elsewhere
-> somebody will write a/b/c; next time around we do need to write a/d/
-> but we wouldn't want to write a/ itself.  How is this code
-> preventing the recursion going all the way up every time to avoid
-> repeating a/?
->
-> Puzzled...
+The edk2 (EFI Development Kit II) project at
+<https://github.com/tianocore/edk2/> uses CRLF line endings.
 
-We never traverse 'a' (or any directory) twice and we only push a
-directory to the stack when we examine it. After a/b and a are written
-down and we examine 'd', 'a/d' is pushed to the stack. When we hit
-'a/d/e', we only have 'a/d' in the stack, not 'a'.
+The following small reproducer demonstrates how gitdiff_verify_name()
+breaks when it meets the usual git patches workflow in combination with
+CRLF line endings:
+
+1. Prepare the test repo:
+
+  mkdir testdir
+  cd testdir
+  git init
+  git config core.whitespace cr-at-eol
+  git config am.keepcr true
+  touch f1
+  git add f1
+  git commit -m 'initial import'
+
+2. In the contributor role, write a patch that creates a new file
+(adhering to the CRLF convention), submit it, then clean up:
+
+  git checkout -b branch1 master
+  echo 'hello world' | unix2dos >f2
+  git add f2
+  git commit -m 'add f2'
+  git format-patch master..branch1
+  git send-email 0001-add-f2.patch
+  # send it to yourself -- make sure it goes through your MTA
+  git clean -fdx
+
+3. In the reviewer / tester / maintainer role, save the patch from your
+email client to a local file. Assume that your email client does not
+corrupt the patch when saving it. (Thunderbird doesn't corrupt it, for
+example.) Once saved, try to apply the patch email to a new branch.
+
+  git checkout -b branch2 master
+  git am /path/to/the/saved/file
+
+  -> Applying: add f2
+  -> fatal: git apply: bad git-diff - expected /dev/null on line 9
+
+This happens because am.keepcr==true keeps the CRLFs intact (as it should
+in fact), but then "/dev/null\r" in the diff header trips up
+gitdiff_verify_name().
+
+Fix it by reusing the is_dev_null() helper function, which in effect
+changes the condition from
+
+  memcmp("/dev/null", line, 9) || line[9] != '\n'
+
+to
+
+  memcmp("/dev/null", line, 9) || !isspace(line[9])
+
+Signed-off-by: Laszlo Ersek <lersek@redhat.com>
+---
+
+Notes:
+    I'm not subscribed to the list; please keep me CC'd. Thanks.
+
+ builtin/apply.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 6b7c764..a9c6a08 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -955,7 +955,7 @@ static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name,
+ 	}
+ 	else {
+ 		/* expect "/dev/null" */
+-		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
++		if (!is_dev_null(line))
+ 			die(_("git apply: bad git-diff - expected /dev/null on line %d"), linenr);
+ 		return NULL;
+ 	}
 -- 
-Duy
+1.8.3.1
