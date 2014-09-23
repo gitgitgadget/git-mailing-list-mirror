@@ -1,149 +1,77 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v5 23/35] lockfile: avoid transitory invalid states
-Date: Tue, 23 Sep 2014 15:40:33 +0200
-Message-ID: <54217851.6020209@alum.mit.edu>
-References: <1410896036-12750-1-git-send-email-mhagger@alum.mit.edu> <1410896036-12750-24-git-send-email-mhagger@alum.mit.edu> <20140916224523.GW29050@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 15:40:42 2014
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: [PATCH] merge-recursive: Remove miss leading comment
+Date: Tue, 23 Sep 2014 16:55:50 +0200
+Message-ID: <1411484150-18025-1-git-send-email-stefanbeller@gmail.com>
+References: <1411332586-18275-1-git-send-email-stefanbeller@gmail.com>
+Cc: Stefan Beller <stefanbeller@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Sep 23 16:56:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWQKf-0008GK-M5
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 15:40:42 +0200
+	id 1XWRVc-0003Xp-Pe
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 16:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755762AbaIWNkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 09:40:37 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43790 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751688AbaIWNkh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Sep 2014 09:40:37 -0400
-X-AuditID: 12074413-f79ed6d000002501-ab-54217854a072
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A6.C7.09473.45871245; Tue, 23 Sep 2014 09:40:36 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB1DCD.dip0.t-ipconnect.de [93.219.29.205])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8NDeXtF022125
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 23 Sep 2014 09:40:34 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <20140916224523.GW29050@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMKsWRmVeSWpSXmKPExsUixO6iqBtSoRhicOO4kEXXlW4mi4beK8wW
-	T+beZbZ4e3MJo8WPlh5mi38Taiw6O74yOrB77Jx1l91jwaZSj4evutg9nvXuYfS4eEnZ4/Mm
-	OY/bz7axBLBHcdskJZaUBWem5+nbJXBn3H56mqXgjmTFqoP6DYyLRboYOTkkBEwkFjauZYWw
-	xSQu3FvP1sXIxSEkcJlR4uXKa+wQznkmiZ4LV9lAqngFtCWezpnI0sXIwcEioCpxeLcJSJhN
-	QFdiUU8zE4gtKhAg8aHzASNEuaDEyZlPWEBsEQENieefvoEtYBb4yCgx9/pJsM3CAu4Scxes
-	YYRYtohRYva3nWDLOAUMJN6c3gs2lVlAT2LH9V+sELa8RPPW2cwTGAVmIVkyC0nZLCRlCxiZ
-	VzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmuvlZpbopaaUbmKERILwDsZdJ+UOMQpwMCrx8Hqs
-	UQgRYk0sK67MPcQoycGkJMqbX6oYIsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEVywDKMebklhZ
-	lVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuD9XAbUKFiUmp5akZaZU4KQZuLg
-	BBnOJSVSnJqXklqUWFqSEQ+K1fhiYLSCpHiA9j4EaectLkjMBYpCtJ5i1OVY1/mtn0mIJS8/
-	L1VKnPc2SJEASFFGaR7cCljae8UoDvSxMK9JOVAVDzBlwk16BbSECWjJ/ePyIEtKEhFSUg2M
-	YpUGwp5/Fnhynrz9u+2vzo0o3YnbjPqZ+o/7FTYqREe6J3pVdwUfO6q6vij3jMv9 
+	id S932429AbaIWOzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 10:55:55 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:43406 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932414AbaIWOzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 10:55:53 -0400
+Received: by mail-wg0-f47.google.com with SMTP id y10so4793914wgg.6
+        for <git@vger.kernel.org>; Tue, 23 Sep 2014 07:55:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jUKBv8XHz89qwg8WPT4ulp1xc5wVclJ66aVEpTQ6J5Q=;
+        b=Fu41FSex/CKFrtU/LFOLDyC7gb0hXCUREWx1KbxdrCNs1Ndjhutk/kmwKhmmWJiSuP
+         mlmX6kxdP19r7DXMlCKdUmPpgj2DW6NvxrLgxBMg6Qfd2wNrGTrDEOBsx0p8z1QyVvhA
+         hO7TOLB16Jon657qM1yiRKwiakw9hi8qqW7Cu4sa9VbWa+LthguBGrzOoGaD/Taa/aDI
+         y46DlbtAY7HL4ZlMfrH7q/98J0lfACv30WsUTrfwNwPMIdhJ1Fk+JEBp2QbuSvavQNJm
+         I/uuqKTIe5pQtbNPq1YpZDSYBYBRu7xGV70ZB3uZ4Ogn6GPfkv0PSAkErQWd1pZSchvD
+         9BhA==
+X-Received: by 10.180.186.230 with SMTP id fn6mr23805843wic.44.1411484152270;
+        Tue, 23 Sep 2014 07:55:52 -0700 (PDT)
+Received: from localhost (p5B095AC8.dip0.t-ipconnect.de. [91.9.90.200])
+        by mx.google.com with ESMTPSA id hm5sm16209456wjb.2.2014.09.23.07.55.51
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Sep 2014 07:55:51 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.238.gce1d3a9
+In-Reply-To: <1411332586-18275-1-git-send-email-stefanbeller@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257420>
 
-On 09/17/2014 12:45 AM, Jonathan Nieder wrote:
-> Michael Haggerty wrote:
-> 
->> We could probably continue to use the filename field to encode the
->> state by being careful to write characters 1..N-1 of the filename
->> first, and then overwrite the NUL at filename[0] with the first
->> character of the filename, but that would be awkward and error-prone.
->>
->> So, instead of using the filename field to determine whether the
->> lock_file object is active, add a new field "lock_file::active" for
->> this purpose.
-> 
-> Nice.
-> 
-> [...]
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -576,6 +576,7 @@ extern int refresh_index(struct index_state *, unsigned int flags, const struct
->>  
->>  struct lock_file {
->>  	struct lock_file *next;
->> +	volatile sig_atomic_t active;
->>  	int fd;
->>  	pid_t owner;
->>  	char on_list;
-> [...]
->> +++ b/lockfile.c
->> @@ -27,16 +27,19 @@
-> [...]
->> @@ -189,9 +198,14 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
->>  		atexit(remove_lock_file);
->>  	}
->>  
->> +	if (lk->active)
->> +		die("BUG: lock_file(\"%s\") called with an active lock_file object",
->> +		    path);
-> 
-> The error message doesn't make it entirely obvious to me what went
-> wrong.
-> 
-> Maybe something like
-> 
-> 		die("BUG: cannot lock_file(\"%s\") on active struct lock_file",
-> 		    path);
+Commented code, which doesn't even compile, is of no use any more?
 
-This is an internal sanity check that users should never see, and if
-they do the first thing a developer will do is grep the source code for
-the error message in the bug report and then he/she will see exactly
-what went wrong. So I don't think it is very important that this error
-message be super self-explanatory.
+Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
+---
 
-But it doesn't hurt, so I'll make the change you suggest.
+To be applied on top of sb/merge-recursive-copy-paste-fix
 
-> lock_file already assumed on_list was initialized to zero but it
-> wasn't particularly obvious since everything else is blindly
-> scribbled over.  Probably worth mentioning in the API docs that
-> the lock_file should be zeroed before calling hold_lock_file_...
 
-Good point. I will document this better.
+ merge-recursive.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-> [...]
->> @@ -326,6 +341,7 @@ int commit_lock_file(struct lock_file *lk)
->>  	if (rename(lk->filename, result_file))
->>  		goto rollback;
->>  
->> +	lk->active = 0;
->>  	lk->filename[0] = 0;
-> 
-> Is it useful to set filename[0] any more?
-> 
-> It seems potentially fragile to set both, since new code can appear
-> that only sets or checks one or the other.  Would it make sense to
-> rename the filename field to make sure no new callers relying on the
-> filename[0] convention sneak in (with the new convention being that
-> the filename doesn't get cleared, to avoid problems)?
-
-I admit that nobody should be relying on filename being cleared anymore.
-And I can see your point that somebody might come to rely on this
-implementation detail. But I don't like leaving valid filenames around
-where a bug might cause them to be accessed accidentally. I would rather
-set the filename to the empty string so that any attempt to use it
-causes an immediate error message from the OS rather than accessing the
-wrong file.
-
-I will note in the lock_file docstring that client code should not rely
-on the filename being empty when in the 'unlocked' state.
-
-Michael
-
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d63524c..8ad4be8 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1686,10 +1686,6 @@ static int merge_content(struct merge_options *o,
+ static int process_entry(struct merge_options *o,
+ 			 const char *path, struct stage_data *entry)
+ {
+-	/*
+-	printf("processing entry, clean cache: %s\n", index_only ? "yes": "no");
+-	print_index_entry("\tpath: ", entry);
+-	*/
+ 	int clean_merge = 1;
+ 	int normalize = o->renormalize;
+ 	unsigned o_mode = entry->stages[1].mode;
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.1.0.238.gce1d3a9
