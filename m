@@ -1,86 +1,77 @@
-From: Chris Salzberg <csalzberg@degica.com>
-Subject: Bug in git 2.1.0 when cloning to directory with same name as repository
-Date: Tue, 23 Sep 2014 16:49:55 +0900
-Message-ID: <CAMoD=Bi41mB3QRn3JdZL-FGHs4w3C2jGpnJB-CqSndO7FMtfzA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] mailinfo: resolve -Wstring-plus-int warning
+Date: Tue, 23 Sep 2014 03:51:46 -0400
+Message-ID: <20140923075146.GA11104@peff.net>
+References: <1411290838-45622-1-git-send-email-sunshine@sunshineco.com>
+ <xmqqk34vlfhz.fsf@gitster.dls.corp.google.com>
+ <CAPig+cTAFaG5H8rmf1jrvFwr_OOH7u19JMKDUE12UddokUmfaQ@mail.gmail.com>
+ <20140923060407.GA23861@peff.net>
+ <CAPc5daUbXtNXSn8_tspvdF+SH5aeX+jVJTramtOm96Dc1wCqtg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 23 09:50:01 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 09:52:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWKrI-00042u-OP
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 09:50:01 +0200
+	id 1XWKt7-0005mF-Uc
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 09:51:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022AbaIWHt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 03:49:57 -0400
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:59420 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753080AbaIWHt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 03:49:56 -0400
-Received: by mail-wg0-f45.google.com with SMTP id x13so3366521wgg.4
-        for <git@vger.kernel.org>; Tue, 23 Sep 2014 00:49:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=MR0sa4/HlDaWhzKwe1V5cBJpEfl0EbGprYHzDozOJ00=;
-        b=MqhNDSeen1ePs3uRPJFlroZ8TJRQerKSaX84BJiu0toBbiw+HT8EFawg0ftsdojEfC
-         wKwXOGWXFTQC05kyG1dvbqJ0O6MzOLx86ZpLMDZ4jM8kclx4uxOfc8P2jVWWfB18TltV
-         YxBwXIPa1X8hq5f/mUaINJtMi5yEEf6zhRzCJZ5jl47ayOjFOJZMbblQ7XLtdZIPI0e1
-         qc2ZMYYuItp7ohNuhtg/RxVkhvjK7/95YOKVy0cOphObf9WiunDVVJbG2rSCxPqzyRrE
-         sxvgrLqZDSJmysAfj1uzTCbLsBkli1cCuBJ2IBbNiwKjF2Lvc6ZipsTnIm4x+EYwQOyQ
-         JvOw==
-X-Gm-Message-State: ALoCoQlxUXk0+JJXR8P1nVr4dX2caYuBb0dnSxIz99t4Xhtgfrvvxq05Ss5qrZ5SUfwPsfwSIuM5
-X-Received: by 10.194.232.232 with SMTP id tr8mr25974692wjc.21.1411458595071;
- Tue, 23 Sep 2014 00:49:55 -0700 (PDT)
-Received: by 10.216.150.8 with HTTP; Tue, 23 Sep 2014 00:49:55 -0700 (PDT)
+	id S1753294AbaIWHvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 03:51:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50823 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750797AbaIWHvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 03:51:49 -0400
+Received: (qmail 5759 invoked by uid 102); 23 Sep 2014 07:51:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 02:51:49 -0500
+Received: (qmail 25077 invoked by uid 107); 23 Sep 2014 07:52:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Sep 2014 03:52:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Sep 2014 03:51:46 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPc5daUbXtNXSn8_tspvdF+SH5aeX+jVJTramtOm96Dc1wCqtg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257398>
 
-I've found what looks like a bug wherein if you are using an ssh alias
-for a git remote, and that remote has a dash in its name, and you
-specify the target path as the name of the url itself, git complains
-about refs not being valid packed references.
+On Mon, Sep 22, 2014 at 11:26:14PM -0700, Junio C Hamano wrote:
 
-To reproduce, in git 2.1.0 and with a repository using ssh config and
-which has a dash in the name, e.g.:
+> On Mon, Sep 22, 2014 at 11:04 PM, Jeff King <peff@peff.net> wrote:
+> >
+> > I don't mind silencing this one warning (even though I find it a little
+> > ridiculous). I'm slightly concerned that more brain-damage may be coming
+> > our way, but we can deal with that if it ever does.
+> >
+> > Like Junio, I prefer keeping strlen() rather than switching to sizeof,
+> > as it is less error-prone (no need for extra "-1" dance, and it won't
+> > silently do the wrong thing if the array is ever converted to a
+> > pointer).
+> 
+> I actually do not mind losing the sample[] array too much.
+> 
+> The early 45 bytes or so of that array (or a string constant) is not used
+> by the code at all; I didn't want to count "From " (that's 5), 40-hex and
+> then a SP -- ah, see, it is 46 bytes and I didn't want such miscounting.
+> The only real contents that matter in that sample[] array is the tail part
+> that is meant as the magic(5) cue. I'd be OK if the code checked the
+> length of the line against a hardcoded constant and then did strcmp()
+> starting from a hardcoded offset of the string and the magic cue string,
+> and that would also avoid the warning from Eric's compiler.
+> 
+> But personally, I think the way it is coded is much easier to read,
+> and is much harder to get it wrong while maintaining it.  So...
 
-> git clone github:nixme/pry-nav "github:nixme/pry-nav"
-Cloning into 'github:nixme/pry-nav'...
-done.
-  ror: internal error: refs/remotes/origin/master is not a valid
-packed reference!
-error: internal error: refs/tags/v0.0.1 is not a valid packed reference!
-error: internal error: refs/tags/v0.0.2 is not a valid packed reference!
-error: internal error: refs/tags/v0.0.3 is not a valid packed reference!
-error: internal error: refs/tags/v0.0.4 is not a valid packed reference!
-error: internal error: refs/tags/v0.1.0 is not a valid packed reference!
-error: internal error: refs/tags/v0.2.0 is not a valid packed reference!
-error: internal error: refs/tags/v0.2.1 is not a valid packed reference!
-error: internal error: refs/tags/v0.2.2 is not a valid packed reference!
-error: internal error: refs/tags/v0.2.3 is not a valid packed reference!
-error: internal error: refs/tags/v0.2.4 is not a valid packed reference!
-error: Trying to write ref refs/heads/master with nonexistent object
-f0e17451f0bd508f408d4fdda97e3a131d11f696
-fatal: Cannot update the ref 'HEAD'
+I agree. I was going to suggest switching to a static const array
+instead of a string literal, but retaining strlen()...but I see you
+already queued that in pu. So if what is there works for Eric (I do not
+have the compiler in question to test with), that seems reasonable.
 
-The ssh config for github (not that it matters, but for completeness) is:
-
-Host github
-user git
-hostname github.com
-
-I have confirmed that if the repository url does not have a dash, this
-works as expected. I have also downgraded to 2.0.4 and found that
-again, this works as expected. Beyond this I have not narrowed the
-scope.
-
-For now, I've downgraded my version of git and so have not tested beyond this.
-
-Chris Salzberg
+-Peff
