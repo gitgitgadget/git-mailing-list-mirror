@@ -1,109 +1,152 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: BUG?: git-filter-branch removes mergetags
-Date: Tue, 23 Sep 2014 21:13:17 +0200
-Message-ID: <20140923191317.GA3755@pengutronix.de>
+From: Laszlo Ersek <lersek@redhat.com>
+Subject: Re: [PATCH for-maint] apply: gitdiff_verify_name(): accept "/dev/null\r"
+Date: Tue, 23 Sep 2014 21:31:50 +0200
+Message-ID: <5421CAA6.3040107@redhat.com>
+References: <1411434583-27692-1-git-send-email-lersek@redhat.com> <xmqq1tr2jhg2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 23 21:13:39 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jordan.l.justen@intel.com,
+	matt.fleming@intel.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 21:32:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWVWg-00054G-0R
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 21:13:26 +0200
+	id 1XWVog-0006Gk-18
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 21:32:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755528AbaIWTNU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Sep 2014 15:13:20 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:46872 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755155AbaIWTNS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 15:13:18 -0400
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0] ident=Debian-exim)
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1XWVWX-0003mr-6n
-	for git@vger.kernel.org; Tue, 23 Sep 2014 21:13:17 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1XWVWX-0003ps-4U
-	for git@vger.kernel.org; Tue, 23 Sep 2014 21:13:17 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1755231AbaIWTb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 15:31:58 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:10264 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753291AbaIWTb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 15:31:57 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s8NJVslY002243
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Tue, 23 Sep 2014 15:31:54 -0400
+Received: from lacos-laptop-7.usersys.redhat.com (ovpn-116-33.ams2.redhat.com [10.36.116.33])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id s8NJVplE030960;
+	Tue, 23 Sep 2014 15:31:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+In-Reply-To: <xmqq1tr2jhg2.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257434>
 
-Hello,
+On 09/23/14 20:54, Junio C Hamano wrote:
+> Laszlo Ersek <lersek@redhat.com> writes:
+> 
+>>   git format-patch master..branch1
+> 
+> The output from this has these (excerpt from "od -xc" output):
+> 
+> 0000360       f   2  \n  \n   d   i   f   f       -   -   g   i   t
+>            6620    0a32    640a    6669    2066    2d2d    6967    2074
+> 0000400   a   /   f   2       b   /   f   2  \n   n   e   w       f   i
+>            2f61    3266    6220    662f    0a32    656e    2077    6966
+> 0000420   l   e       m   o   d   e       1   0   0   6   4   4  \n   i
+>            656c    6d20    646f    2065    3031    3630    3434    690a
+> 0000440   n   d   e   x       0   0   0   0   0   0   0   .   .   f   3
+>            646e    7865    3020    3030    3030    3030    2e2e    3366
+> 0000460   5   d   3   e   6  \n   -   -   -       /   d   e   v   /   n
+>            6435    6533    0a36    2d2d    202d    642f    7665    6e2f
+> 0000500   u   l   l  \n   +   +   +       b   /   f   2  \n   @   @
+>            6c75    0a6c    2b2b    202b    2f62    3266    400a    2040
+> 0000520   -   0   ,   0       +   1       @   @  \n   +   h   e   l   l
+>            302d    302c    2b20    2031    4040    2b0a    6568    6c6c
+> 0000540   o       w   o   r   l   d  \r  \n   -   -      \n   2   .   1
+>            206f    6f77    6c72    0d64    2d0a    202d    320a    312e
+> 
+> The structural parts of the diff, including "--- /dev/null" line,
+> are all terminated by "\n" (as they should be), and the only CR
+> appears in the message is at the end of "+hello world" line.
 
-I just noticed that git-filter-branch doesn't preserve mergetag
-annotations in situations where it could. Here is an example (with
-linux.git):
+That's right -- until the patch email goes through an MTA that turns all
+line endings into CRLF. (Did you email the patch to yourself as
+requested in the reproducer?)
 
-	$ git checkout -b test 6cd2f85413eef8fe7bcd7c25bf55e7b055fa257c
-	$ git cat-file commit HEAD | grep mergetag
-	mergetag object 954263938706bf62d36e81b6b49f313390f2ed35
-	$ git filter-branch -f --msg-filter 'sed s/foo/bar/' HEAD^!
-	Rewrite 6cd2f85413eef8fe7bcd7c25bf55e7b055fa257c (1/1)
-	Ref 'refs/heads/test' was rewritten
-	$ diff -u <(git cat-file commit refs/original/refs/heads/test) <(git c=
-at-file commit HEAD)
-	--- /dev/fd/63	2014-09-23 21:07:49.987065017 +0200
-	+++ /dev/fd/62	2014-09-23 21:07:49.991064988 +0200
-	@@ -3,32 +3,6 @@
-	 parent 954263938706bf62d36e81b6b49f313390f2ed35
-	 author Linus Torvalds <torvalds@linux-foundation.org> 1411488823 -070=
-0
-	 committer Linus Torvalds <torvalds@linux-foundation.org> 1411488823 -=
-0700
-	-mergetag object 954263938706bf62d36e81b6b49f313390f2ed35
-	- type commit
-	- tag for-linus
-	- tagger Paolo Bonzini <pbonzini@redhat.com> 1411478481 +0200
-	-=20
-	- Another fix for 3.17 arrived at just the wrong time, after I had sen=
-t
-	- yesterday's pull request.  Normally I would have waited for
-	- some other patches to pile up, but since 3.17 might be short
-	- here it is.
-	- -----BEGIN PGP SIGNATURE-----
-	- Version: GnuPG v2.0.22 (GNU/Linux)
-	-=20
-	- iQIcBAABAgAGBQJUIXPRAAoJEBvWZb6bTYbyySEP/AkPjfNGYqwBbM8GUJ4tt4gR
-	- C+xbiO+xPr2qCwfi36DQtL0UPwJHWSq7SXaDMvSqMo22FjnFcVaGuQcGAPno/8ZA
-	- tLBe1km9HIPlEIV3vpoe8PPpj9cuZ86+YOCuPIqK5fC7l6Ops0dhCOjf88tmPVQ4
-	- yhodpJ1Lt/sPBUWb6pNfk0iWD+qSbfUWtwzv89oudEvLcLiAcPSBdbvnxVS3bmGm
-	- qbL8pvCOozK5GJbl0+cYWCoEPBP5ekqGvwvGdEBTx+4qv2S2htzUX30UA2VYy5IR
-	- jMXVrJbvSW9FXQdBgr0Q4ql6evOVjL+5LpwgRUC6tuC6r1rMP+nXyHKS35HC1i8W
-	- FYr62B/LZTm4vyDHsmsiEl43VLAcF7kmXufQT62vJg+ifeA1MAMIJra7ZDx8WbsD
-	- HDqM+CeaZrF3p4okRrktbecQdeFFyg4wOasHRTO7SETkbP7i1cS0Mp8rRbX3CnJq
-	- 0UM8STe+hViXR7uYZEbjlbGKkszDS49fstJIaNm9JPJm+S/V5/MZFelNWgPp/+kF
-	- xpQUxtoSaFnqgBXpRZ7t2Y2zGeZkMWn/P84S23/7K1TfRPCsUpgFbiY26rGW9l4v
-	- r8gz7v+V1gCzWYVRuEzolFrea6A1ik2sspzeDuZOrf+QYwMyyUdEQ/NfCm032wba
-	- CYL0V2M/dJNmZnZRPP9/
-	- =3DZkSE
-	- -----END PGP SIGNATURE-----
-	=20
-	 Merge tag 'for-linus' of git://git.kernel.org/pub/scm/virt/kvm/kvm
-	=20
-I expected the signature to not disappear such that in the example abov=
-e
-no change is introduced.
+Such CRLFs are normally transparent because git-am strips them. The
+keepcr=true setting preserves them, but not only for the source code
+lines (where it's the right thing to do): it also preserves them in the
+git diff header lines. Which is not a problem in general, *except* when
+said header line includes /dev/null.
 
-Best regards
-Uwe
+> So I do not think apply should need to loosen its sanity check and
+> take a random whitespace after the "/dev/null" as a valid "this is a
+> creation event for the path" marker (e.g. "--- /dev/null whoa"?).
+> 
+> is_dev_null() is used to in the fallback code path that parses
+> traditional patch output (e.g. GNU diff) which throws random cruft
+> (e.g. timestamp) after the /dev/null marker, e.g.
+> 
+>     $ diff -u /dev/null f2
+>     --- /dev/null   2014-09-17 18:22:57.995111003 -0700
+>     +++ f2  2014-09-23 11:37:09.000000000 -0700
+>     @@ -0,0 +1 @@
+>     +hello world
+> 
+> and we'd be hesitant to allow that kind of looseness for Git patches
+> where we know we end the line after the "/dev/null" marker.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Okay, let's say I only relax the check in question to accept "\r\n" in
+addition to the current "\n". Will you take that?
+
+>> 3. In the reviewer / tester / maintainer role, save the patch from your
+>> email client to a local file. Assume that your email client does not
+>> corrupt the patch when saving it.
+> 
+> Perhaps compare this saved file with the output from the above
+> format-patch to see where things got broken?
+> 
+> SMTP transport may be CRLF-unsafe, so I have a suspicion that it may
+> turn out that what you are trying to do might be an equilvalent of
+> 
+> 	git format-patch ... |
+>         # first lose all \r\n
+>         dos2unix | 
+> 	# then make everything \r\n
+>         unix2dos |
+>         # and apply
+>         git am
+> 
+> which is not workable in the first place.  I dunno.
+
+I agree with your analysis. It is indeed the MTA (or the MUA, not sure)
+that turns all line endings into uniform CRLFs -- it is a requirement in
+RFC 2822 / 822bis.
+
+http://cr.yp.to/docs/smtplf.html
+http://www.rfc-editor.org/rfc/rfc2822.txt
+
+> 2.3. Body
+>
+>    The body of a message is simply lines of US-ASCII characters.  The
+>    only two limitations on the body are as follows:
+>
+>    - CR and LF MUST only occur together as CRLF; they MUST NOT appear
+>      independently in the body.
+
+But why is this situation "not workable"? The same happens with *all*
+patches that people mail around, it's just not visible to them, because
+git-am strips all CRs indiscriminately.
+
+People who are forced to work with CRLF repositories don't have this
+luxury with git-am, and bump into the /dev/null problem all the time.
+
+What do you think about accepting only "/dev/null\n" and "/dev/null\r\n"?
+
+Another question I had about gitdiff_verify_name() -- what ensures there
+that the memcmp(), with the fixed size of 9 bytes, won't fall off the
+end of the line? Some of the outer caller functions verify the line
+length before their comparisons, but I don't see any length checks in
+gitdiff_verify_name() for /dev/null specifically.
+
+Thank you,
+Laszlo
