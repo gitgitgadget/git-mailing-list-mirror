@@ -1,98 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH for-maint] apply: gitdiff_verify_name(): accept "/dev/null\r"
-Date: Tue, 23 Sep 2014 13:02:00 -0700
-Message-ID: <xmqqsijihzrb.fsf@gitster.dls.corp.google.com>
+Date: Tue, 23 Sep 2014 13:17:18 -0700
+Message-ID: <xmqqoau6hz1t.fsf@gitster.dls.corp.google.com>
 References: <1411434583-27692-1-git-send-email-lersek@redhat.com>
 	<xmqq1tr2jhg2.fsf@gitster.dls.corp.google.com>
-	<5421CAA6.3040107@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, jordan.l.justen@intel.com,
 	matt.fleming@intel.com
 To: Laszlo Ersek <lersek@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 22:02:10 2014
+X-From: git-owner@vger.kernel.org Tue Sep 23 22:17:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWWHp-0001lm-Iv
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 22:02:09 +0200
+	id 1XWWWb-0000Nb-KF
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 22:17:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754283AbaIWUCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 16:02:06 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62570 "EHLO smtp.pobox.com"
+	id S1756007AbaIWURV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 16:17:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64949 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756475AbaIWUCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 16:02:03 -0400
+	id S1751790AbaIWURU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 16:17:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 680E23A429;
-	Tue, 23 Sep 2014 16:02:03 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 350E23AA8C;
+	Tue, 23 Sep 2014 16:17:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YtyesjEqyzE1QmiYD7vwN6JZHAc=; b=CKaCVN
-	kRNyicOtM4ZeNko3Rl6DeCXpF7ScLq5xFpHCrDh8YmNJGe8p+R4QYYQnbRhuDVWy
-	soF034ACMD+IK+6Q43VPBazGXwzJ5e6qZekJMUxKzyp4qg36Od5+uaps+9cpHTa5
-	5rHpBhkR6R406Cdn/+UPJkg8Ii2qcuHAG5PFw=
+	:content-type; s=sasl; bh=ZYnv+1C2kX/c+QuXKxlUnYSRI8g=; b=ZVrMwq
+	WYoHl6vaylLi46sWY0xl/0VC2yChUdDskrW+Af+qnJ0qu6bkMB/mGBD6t6AtFOmd
+	u0y7u2cIKuklsZYjHMJftHUra/ow0OMQP0j9cnV0ZrDJuxk91BhVFRybQIW2xjmN
+	IjsFGVO0COWjQziQIPR454L12lgne7tweExMc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GY2z/wQaYM/ksy1pMMBkWMVxnpl5Dg4f
-	JBTzSVpy1tzhngOa9f5kPGITgTwqSl+qJpjuChLrI8+CnB7VP5O9cVh8xtXp4bdb
-	k25fCswZ5rOGslHxuv4kUuq97UGFVZaTRWRlolVwtV9W/o3W4ifDPVqOwVb1ExFh
-	twgetPnCwOA=
+	:content-type; q=dns; s=sasl; b=s2o0uAN9Ubkbzc3ob5NYse8J6KIxYAcf
+	2qObmWO3BGYd+heFn5g+W8EFFgC2zgI2yAnZs4IcgwFSqVgWrvFfg5ppbSMxGqXu
+	VOaFEN1SnYbkDGGkI3X7L9DpjFX9phR2JgpsqzoEkPZ1uX3Zj468kkJhHvJld4Gi
+	cfcuSC5+koQ=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5EE5F3A428;
-	Tue, 23 Sep 2014 16:02:03 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2C14B3AA8B;
+	Tue, 23 Sep 2014 16:17:20 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CD3D63A425;
-	Tue, 23 Sep 2014 16:02:02 -0400 (EDT)
-In-Reply-To: <5421CAA6.3040107@redhat.com> (Laszlo Ersek's message of "Tue, 23
-	Sep 2014 21:31:50 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A023A3AA8A;
+	Tue, 23 Sep 2014 16:17:19 -0400 (EDT)
+In-Reply-To: <xmqq1tr2jhg2.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 23 Sep 2014 11:54:37 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7C3F7800-435C-11E4-9FEC-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9EB5E110-435E-11E4-A59D-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257437>
 
-Laszlo Ersek <lersek@redhat.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 09/23/14 20:54, Junio C Hamano wrote:
-> ...
->> SMTP transport may be CRLF-unsafe, so I have a suspicion that it may
->> turn out that what you are trying to do might be an equilvalent of
->> 
->> 	git format-patch ... |
->>         # first lose all \r\n
->>         dos2unix | 
->> 	# then make everything \r\n
->>         unix2dos |
->>         # and apply
->>         git am
->> 
->> which is not workable in the first place.  I dunno.
+> SMTP transport may be CRLF-unsafe, so I have a suspicion that it may
+> turn out that what you are trying to do might be an equilvalent of
 >
-> I agree with your analysis. It is indeed the MTA...
->>    - CR and LF MUST only occur together as CRLF; they MUST NOT appear
->>      independently in the body.
+> 	git format-patch ... |
+>         # first lose all \r\n
+>         dos2unix | 
+> 	# then make everything \r\n
+>         unix2dos |
+>         # and apply
+>         git am
 >
-> But why is this situation "not workable"? The same happens with *all*
-> patches that people mail around, it's just not visible to them, because
-> git-am strips all CRs indiscriminately.
+> which is not workable in the first place.  I dunno.
 
-It is not "git am" or "git apply" that "strips all CRs
-indiscriminately".  I just tried to apply 0001-add-f2 without
-letting your MTA/MUA corrupt it on "master" branch in the repository
-you prepared that patch from, i.e.
+This is a tangent, but if the problem were slightly different, I
+would be more sympathetic.  For example
 
-	git checkout master^0 ;# go back
-        git am 0001-add-f2* ;# apply that "+hello world\r\n" patch
-        git diff branch ;# nothing
+    A popular MUA, when asked to write out a message in the mbox
+    format, ends _all_ the lines in its output with CRLF, whether
+    the original was sent as LF-only or CRLF, and there is no way to
+    convince it to use LF-only.  "git apply" fails to grok such an
+    input.
 
-> Another question I had about gitdiff_verify_name() -- what ensures there
-> that the memcmp(), with the fixed size of 9 bytes,...
+could be, if the use of such an MUA is very prevalent, a common
+problem worth working around.
 
-That may be worth fixing.
+But then I would suspect that the workaround for such a case may not
+be "accept /dev/null\n and /dev/null\r\n equally".  It is likely
+that the right workaround for such a case would be to "turn all \r\n
+into \n before processing".
