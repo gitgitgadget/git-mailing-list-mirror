@@ -1,149 +1,101 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH] Documentation/git-rebase.txt: discuss --fork-point assumption of vanilla "git rebase" in DESCRIPTION.
-Date: Tue, 23 Sep 2014 13:04:23 +0400
-Message-ID: <87k34u9088.fsf@osv.gnss.ru>
-References: <87r3z72wiu.fsf@osv.gnss.ru>
-	<xmqqzjdrjvnd.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH] de.po: Fixup one translation
+Date: Tue, 23 Sep 2014 10:43:23 +0200
+Message-ID: <542132AB.9030305@gmail.com>
+References: <1411457847-10419-1-git-send-email-stefanbeller@gmail.com> <CAPig+cTFW7gEEezkEbRTu-N88Er26OEm6FE47M8c1XSh8Q_a7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 23 11:04:58 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: ralf.thielow@googlemail.com, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Sep 23 11:11:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWM1S-0002XF-4B
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 11:04:34 +0200
+	id 1XWLh3-0002Tx-Sa
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Sep 2014 10:43:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221AbaIWJE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Sep 2014 05:04:29 -0400
-Received: from mail.javad.com ([54.86.164.124]:51383 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754070AbaIWJE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Sep 2014 05:04:26 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 515B56186E;
-	Tue, 23 Sep 2014 09:04:25 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <sorganov@gmail.com>)
-	id 1XWM1H-0007sH-Ll; Tue, 23 Sep 2014 13:04:23 +0400
-In-Reply-To: <xmqqzjdrjvnd.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 22 Sep 2014 12:35:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1753411AbaIWInZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Sep 2014 04:43:25 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:43410 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751533AbaIWInX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Sep 2014 04:43:23 -0400
+Received: by mail-wi0-f172.google.com with SMTP id em10so4371462wid.11
+        for <git@vger.kernel.org>; Tue, 23 Sep 2014 01:43:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=ZxRbosPFB5D+E38cV0E/lzwTj9Lcl5HI52cBCjOFz9M=;
+        b=TKI0tIUPJhws21qfZV4WALZ72rNXuZ7A+MNHRF599+mXxtyibaaWLuGw/h5Bq5lHP9
+         VlDcVc4JBt7cTAu8DUjyV3B+IDRGQTAkSNflK7GvagTn+brHL/cGoeYvG65qcITfRFUz
+         z4qZQpc2fDCp6Jm4KKtts1+Niq+XP47Ar933jLVhLUq2tEzi/AkkFW0tt87g63is49uN
+         cB0/4h3nOPsvrVyO5gIiH4Kim9CugzgtQ7W7Fc7uM0Kgs00Dlju9Q/VWqHEnJQMLYrcx
+         Eej55WrBRefi853lLHEvsLnm21DmMa0R2purvQA26Ocoqwo6fkjvk7v6UBV7EPnOpRWB
+         NGeQ==
+X-Received: by 10.181.13.105 with SMTP id ex9mr21259996wid.58.1411461802518;
+        Tue, 23 Sep 2014 01:43:22 -0700 (PDT)
+Received: from [192.168.1.7] (p5B095AC8.dip0.t-ipconnect.de. [91.9.90.200])
+        by mx.google.com with ESMTPSA id q5sm15030359wja.49.2014.09.23.01.43.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Sep 2014 01:43:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+In-Reply-To: <CAPig+cTFW7gEEezkEbRTu-N88Er26OEm6FE47M8c1XSh8Q_a7g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257407>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 23.09.2014 10:06, Eric Sunshine wrote:
+> On Tue, Sep 23, 2014 at 3:37 AM, Stefan Beller <stefanbeller@gmail.com> wrote:
+>> English grammar with German words doesn't make it a German translation. ;)
+>> We also need to fix the
+> 
+> Sentence fragment.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> Vanilla "git rebase" defaults to --fork-point that in some cases
->> makes behavior very different from "git rebase <upstream>",
->> where --no-fork-point is assumed. This fact was not mentioned in
->> the DESCRIPTION section of the manual page, even though the case of
->> omitted <upstream> was otherwise discussed. That in turn made actual
->> behavior of vanilla "git rebase" hardly discoverable.
->>
->> While we are at it, clarify the --fork-point description itself as well.
->>
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+Yeah, originally I intended to just fix the singular form and let the
+plural form slip. But then I did both singular and plural form and
+forgot about the already started commit message.
+
+Anyways I'd assume Ralf will incorporate this patch in a larger patch
+for the German translation, so the commit message for this particular
+patch is of minor relevance.
+
+Thanks,
+Stefan
+
+> 
+>> Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
 >> ---
->>  Documentation/git-rebase.txt | 18 +++++++++---------
->>  1 file changed, 9 insertions(+), 9 deletions(-)
+>>  po/de.po | 8 ++++----
+>>  1 file changed, 4 insertions(+), 4 deletions(-)
 >>
->> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->> index 4138554..73e1e1c 100644
->> --- a/Documentation/git-rebase.txt
->> +++ b/Documentation/git-rebase.txt
->> @@ -21,15 +21,16 @@ If <branch> is specified, 'git rebase' will perform an automatic
->>  it remains on the current branch.
->>  
->>  If <upstream> is not specified, the upstream configured in
->> -branch.<name>.remote and branch.<name>.merge options will be used; see
->> -linkgit:git-config[1] for details.  If you are currently not on any
->> -branch or if the current branch does not have a configured upstream,
->> -the rebase will abort.
->> +branch.<name>.remote and branch.<name>.merge options will be used (see
->> +linkgit:git-config[1] for details) and the `--fork-point` option is
->> +assumed.  If you are currently not on any branch or if the current
->> +branch does not have a configured upstream, the rebase will abort.
->
-> OK.  When you do not tell rebase with respect to what exact _commit_
-> the operation is to be done, then we will enable --fork-point, which
-> makes perfect sense because it is clear that the user is rebasing
-> with respect to a _branch_, for which we may find a place better
-> than its current tip to rebase onto if we look at its reflog.
-
-I think you meant to say that we may find a better source to calculate
-the exact set of commits to rebase, as we still rebase onto the current
-tip. I.e., with this we select what to rebase, not where (the latter
-being handled by the --onto switch.)
-
-> It is debatable if we should do the same when the user tells us to
-> rebase with respect to a specific _branch_ by giving the 'upstream'
-> argument, but that is an entirely separate issue.  We might want to
-> do a similar command line heuristics to tell between the branch
-> switching "git checkout master" (which is an operation about a
-> branch) and head detaching "git checkout refs/heads/master^0" (which
-> is an operation about a commit) if we want to help the users by
-> auto-enabling fork-point mode.
-
-Well, IMHO "git rebase" and "git rebase @{u}" must do exactly the same
-thing. In its current state, when they have different default for
-fork-point, it's too surprising. From this POV I do like suggested
-heuristics to activate --fork-point when <upstream> (either specified or
-figured from configuration) is a branch. However, it seems that this
-would be functionally equivalent to just making the --fork-point the
-default, unconditionally, as trying to find better fork-point in a
-reflog for a non-reference will bring nothing anyway. The heuristics
-could be considered an optimization, but it would optimize very rare
-case.
-
-On the other hand, I'm afraid different defaults were chosen for
-backward compatibility?
-
->>  All changes made by commits in the current branch but that are not
->>  in <upstream> are saved to a temporary area.  This is the same set
->> -of commits that would be shown by `git log <upstream>..HEAD` (or
->> -`git log HEAD`, if --root is specified).
->> +of commits that would be shown by `git log <upstream>..HEAD`; or by
->> +`git log <fork_point>..HEAD`, if --fork-point is either specified or
->> +assumed; or by `git log HEAD`, if --root is specified.
->
-> OK.  <fork_point> is a new term this patch introduces to this
-> document.  Do we define what it is anywhere in this document, or
-> would it help the readers to add something like "... where <fork_point>
-> is computed in such and such way (see ... for details)"?
-
-Yes, it's new and is not defined, but first I didn't want to overload
-the DESCRIPTION with details, and second I don't know how it's actually
-done, as it seems that "fork_point=$(git merge-base <upstream>
-<branch>)" sometimes returns nothing, in which case fork_point is set
-back to <upstream>? If we are going to describe it, I think it should go
-to --fork-point option description.
-
-Could you please suggest the wording?
-
->
->> @@ -331,9 +332,8 @@ link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details)
->>  	between `upstream` and `branch` when calculating which commits have
->>  	have been introduced by `branch` (see linkgit:git-merge-base[1]).
->>  +
->> -If no non-option arguments are given on the command line, then the default is
->> -`--fork-point @{u}` otherwise the `upstream` argument is interpreted literally
->> -unless the `--fork-point` option is specified.
->> +If either <upstream> or --root is given on the command line, then the
->> +default is `--no-fork-point`, otherwise the default is `--fork-point`.
->
-> Good.  The original, especially the mention of "@{u}", does not make
-> any sense and updated text reads more clearly.
->
-> Thanks.
-
-BR,
--- Sergey.
+>> diff --git a/po/de.po b/po/de.po
+>> index e5d2b25..bae3723 100644
+>> --- a/po/de.po
+>> +++ b/po/de.po
+>> @@ -3463,13 +3463,13 @@ msgid_plural ""
+>>  "\n"
+>>  "%s\n"
+>>  msgstr[0] ""
+>> -"Warnung: Sie sind um %d Commit hinterher, nicht verbunden zu\n"
+>> -"einem Ihrer Branches:\n"
+>> +"Warnung: Sie sind um %d Commit hinterher, folgende Commits sind in\n"
+>> +"keinem Ihrer Branches enthalten: \n"
+>>  "\n"
+>>  "%s\n"
+>>  msgstr[1] ""
+>> -"Warnung: Sie sind um %d Commits hinterher, nicht verbunden zu\n"
+>> -"einem Ihrer Branches:\n"
+>> +"Warnung: Sie sind um %d Commits hinterher, folgende Commits sind in\n"
+>> +"keinem Ihrer Branches enthalten: \n"
+>>  "\n"
+>>  "%s\n"
+>>
+>> --
+>> 2.1.0.238.gce1d3a9
