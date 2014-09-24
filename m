@@ -1,86 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH for-maint] apply: gitdiff_verify_name(): accept "/dev/null\r"
-Date: Wed, 24 Sep 2014 10:55:05 -0700
-Message-ID: <xmqqfvfghpja.fsf@gitster.dls.corp.google.com>
-References: <1411434583-27692-1-git-send-email-lersek@redhat.com>
-	<xmqq1tr2jhg2.fsf@gitster.dls.corp.google.com>
-	<5421CAA6.3040107@redhat.com>
-	<xmqqsijihzrb.fsf@gitster.dls.corp.google.com>
-	<5421D8C4.2080009@redhat.com>
-	<xmqqfvfihy7i.fsf@gitster.dls.corp.google.com>
-	<5421DCE3.9090500@redhat.com>
-	<xmqqoau6gguz.fsf@gitster.dls.corp.google.com>
-	<5422BF6E.60603@redhat.com>
+Subject: Re: [PATCH 1/2] add macro REALLOC_ARRAY
+Date: Wed, 24 Sep 2014 10:59:29 -0700
+Message-ID: <xmqqbnq4hpby.fsf@gitster.dls.corp.google.com>
+References: <5415C89C.4090509@web.de>
+	<CAPc5daXuYVXG=b3Mjn=8oE71FqE_PRZ=XHXW_0F5uHawWwy4HQ@mail.gmail.com>
+	<541886D5.8060202@web.de> <541887F0.1050007@web.de>
+	<54227379.5010708@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jordan.l.justen@intel.com,
-	matt.fleming@intel.com
-To: Laszlo Ersek <lersek@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Sep 24 19:55:19 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Sep 24 19:59:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XWqmc-00076b-6S
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Sep 2014 19:55:18 +0200
+	id 1XWqqo-0003Ee-Fl
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Sep 2014 19:59:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752854AbaIXRzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Sep 2014 13:55:11 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53609 "EHLO smtp.pobox.com"
+	id S1751868AbaIXR7e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Sep 2014 13:59:34 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63374 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751716AbaIXRzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Sep 2014 13:55:09 -0400
+	id S1751184AbaIXR7d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Sep 2014 13:59:33 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AEA253BA35;
-	Wed, 24 Sep 2014 13:55:08 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9AB533BBCC;
+	Wed, 24 Sep 2014 13:59:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GR7B6oWC+dUuosFKOIjhurS3k4U=; b=ZEznyM
-	TJ0fX2WSvWy3xC28v7BcVC/d7pgqGwhmt11nsE1eITsYb3Hg+2o533ygCTn4ShZP
-	Wmc/EHZNmk2I/tLz/VcnOd44pw3XICiheYzBpv42r2nVu6osurpSITue90Yua31Y
-	Xhl1g0a4BN21VUn/tGzMknC1krfedAZ94lrpU=
+	:content-type:content-transfer-encoding; s=sasl; bh=1dZPG2VpKFHe
+	1+E4rqOAR7ctksU=; b=yk48hQKQbx17mM8zY7BGH9rn1AqbRZxm7BZqlxodvP/u
+	cqpgdpAx0ejnI3rb//ny6DEd8113Os1m2jl9IUxYTxKTp1USG3tIMySn8Siwrh0b
+	27irlON5BtsINPCdj6povOhVBNv+7V3KDh53IkkwSQ+fNAmSpq1nnJ+P2iEASAg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ttQ0x5zhx0OfRQhcyR8X5gVcSLiP4N0h
-	mDzN4CxVZiRLRnrGCPTdAFBtgbz+NQ1QQLX7Ida18ic95OUV9GSGqqGFVtUHTRS3
-	cb6z57qYzpX21afaXNG5y2wQ+r2Wji5vFKtdZZXk+HH/SAK4VIb0MUYhAk7H63Ee
-	n1ICgVf3OBo=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nEFM7j
+	uccZir3lVz/lHbCfUeetPl98FTSTmNVWPIpaBBQ4GeWs1ycZibJfNd7SNQRTJqRU
+	NEn5sESNs7sGGpfwhrN6uxu6u0uoBpDNYA3SEoXzJ4/oJjyLIHAMNLeBV7jcrgSS
+	T48eUYcy0R7GSoL+3EeLB9OZRYtbxCsX/aZnE=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 92C6D3BA32;
-	Wed, 24 Sep 2014 13:55:08 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A3B593BBCB;
+	Wed, 24 Sep 2014 13:59:31 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 53C8C3BA31;
-	Wed, 24 Sep 2014 13:55:07 -0400 (EDT)
-In-Reply-To: <5422BF6E.60603@redhat.com> (Laszlo Ersek's message of "Wed, 24
-	Sep 2014 14:56:14 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 113933BBC8;
+	Wed, 24 Sep 2014 13:59:30 -0400 (EDT)
+In-Reply-To: <54227379.5010708@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 24 Sep 2014 09:32:09 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EB78AB08-4413-11E4-904F-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 88A9A378-4414-11E4-ADA2-BD2DC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257463>
 
-Laszlo Ersek <lersek@redhat.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Thank you for taking the time to describe this. It does look like the
-> by-the-book solution.
+> On 09/16/2014 08:56 PM, Ren=C3=A9 Scharfe wrote:
+>> The macro ALLOC_GROW manages several aspects of dynamic memory
+>> allocations for arrays: It performs overprovisioning in order to avo=
+id
+>> reallocations in future calls, updates the allocation size variable,
+>> multiplies the item size and thus allows users to simply specify the
+>> item count, performs the reallocation and updates the array pointer.
+>>=20
+>> Sometimes this is too much.  Add the macro REALLOC_ARRAY, which only
+>> takes care of the latter three points and allows users to specfiy th=
+e
+>> number of items the array can store.  It can increase and also decre=
+ase
+>> the size.  Using the macro avoid duplicating the variable name and
+>> takes care of the item sizes automatically.
 >
-> Obviously, I can't implement it myself -- first, I have no experience
-> with the git codebase, ...
+> Is there a reason that ALLOC_GROW and REALLOC_ARRAY are defined in tw=
+o
+> separate header files (cache.h and git-compat-util.h, respectively)? =
+It
+> seems to me that they are close siblings and therefore I find it
+> surprising that they are not defined right next to each other.
 
-Oh, I wasn't expecting that anyway ;-).
+That was my initial reaction, but on the other hand, because
+REALLOC_ARRAY() should never be used on an array managed by
+ALLOC_GROW() without mucking with internal implementation details of
+what ALLOC_GROW() does yourself, there is not much reason for them
+to be listed and live together in the same place.
 
-The reason I outlined a possible approach was to ask you to sanity
-check the envisioned outcome (i.e. "if somebody made effort to
-implement it, would the end result help your workflow?") and to give
-hints to contributors who are looking for things to work on ;-)
-
-> If someone finds the time to implement and document this feature, a
-> small part of the community will be very grateful. (Not much of a
-> compensation for a corner case like this, admittedly.)
-
-Thanks.
+Listing them together might even invite confusion and mixed use by
+mistake.
