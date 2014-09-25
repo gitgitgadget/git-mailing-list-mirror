@@ -1,69 +1,98 @@
-From: Joe Perches <joe@perches.com>
-Subject: project wide: git config entry for [diff] renames=true
-Date: Thu, 25 Sep 2014 08:48:31 -0700
-Message-ID: <1411660111.4026.24.camel@joe-AO725>
-References: <Pine.LNX.4.44L0.1409241106100.1580-100000@iolanthe.rowland.org>
-	 <1411591401-5874-1-git-send-email-sojka@merica.cz>
-	 <1411591401-5874-4-git-send-email-sojka@merica.cz>
-	 <20140925150353.GA15325@kroah.com>
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH RFC] log-tree: let format-patch not indent notes
+Date: Thu, 25 Sep 2014 18:10:09 +0200
+Message-ID: <1411661409-24562-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Michal Sojka <sojka@merica.cz>, linux-usb@vger.kernel.org,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Bryan Wu <cooloney@gmail.com>, Felipe Balbi <balbi@ti.com>,
-	Linux LED Subsystem <linux-leds@vger.kernel.org>,
-	linux-kernel@vger.kernel.org, michal.vokac@comap.cz,
-	git <git@vger.kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Thu Sep 25 17:48:50 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kernel@pengutronix.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 25 18:10:30 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1XXBHl-0002G6-Ns
-	for glk-linux-kernel-3@plane.gmane.org; Thu, 25 Sep 2014 17:48:50 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XXBci-0006yd-Bh
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 18:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753655AbaIYPsh (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 25 Sep 2014 11:48:37 -0400
-Received: from smtprelay0046.hostedemail.com ([216.40.44.46]:36578 "EHLO
-	smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752600AbaIYPsg (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 25 Sep 2014 11:48:36 -0400
-Received: from filter.hostedemail.com (ff-bigip1 [10.5.19.254])
-	by smtprelay02.hostedemail.com (Postfix) with ESMTP id 0B13D12BCD9;
-	Thu, 25 Sep 2014 15:48:35 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::::::::::::::::::,RULES_HIT:41:355:379:541:988:989:1260:1261:1277:1311:1313:1314:1345:1359:1373:1437:1515:1516:1518:1534:1538:1593:1594:1711:1714:1730:1747:1777:1792:2393:2559:2562:2828:2911:3138:3139:3140:3141:3142:3350:3622:3865:3867:3868:3870:3871:3872:3873:3874:4321:4425:5007:7652:7903:10004:10400:10848:11232:11658:11914:12517:12519:12740:13019:13069:13149:13230:13311:13357:21080,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:none,Custom_rules:0:0:0
-X-HE-Tag: paper21_1073af4a2a432
-X-Filterd-Recvd-Size: 1675
-Received: from [192.168.1.155] (pool-71-103-235-196.lsanca.fios.verizon.net [71.103.235.196])
-	(Authenticated sender: joe@perches.com)
-	by omf01.hostedemail.com (Postfix) with ESMTPA;
-	Thu, 25 Sep 2014 15:48:32 +0000 (UTC)
-In-Reply-To: <20140925150353.GA15325@kroah.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1754069AbaIYQKW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2014 12:10:22 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:58317 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754063AbaIYQKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2014 12:10:21 -0400
+Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1XXBcY-0007Ne-N4; Thu, 25 Sep 2014 18:10:18 +0200
+Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.84)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1XXBcY-0006Oo-Lu; Thu, 25 Sep 2014 18:10:18 +0200
+X-Mailer: git-send-email 2.1.0
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257478>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257479>
 
-On Thu, 2014-09-25 at 17:03 +0200, Greg Kroah-Hartman wrote:
+Commit logs as shown by git-log are usually indented by four spaces so
+here it makes sense to do the same for commit notes.
 
-> In the future, please generate a git "move" diff, which makes it easier
-> to review, and prove that nothing really changed.  It also helps if the
-> file is a bit different from what you diffed against, which in my case,
-> was true.
+However when using format-patch to create a patch for submission via
+e-mail the commit log isn't indented and also the "Notes:" header isn't
+really useful. So consequently don't indent and skip the header in this
+case. This also removes the empty line between the end-of-commit marker
+and the start of the notes.
 
-Maybe it'd be possible to add 
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+This commit changes the output of format-patch (applied on this commit)=
+ from:
 
-[diff]
-	renames = true
+	...
+	case.
 
-to the .git/config file.
+	Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+	---
 
-but I don't find a mechanism to add anything to the
-.git/config and have it be pulled.
+	Notes:
+	    This commit changes the output of format-patch (applied on this co=
+mmit) from:
+
+to
+
+	...
+	case.
+
+	Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+	---
+	This commit changes the output of format-patch (applied on this commit=
+) from:
+
+which I consider to be more useful.
+
+ log-tree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index bcee7c596696..c1d73d8fecdf 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -585,7 +585,8 @@ void show_log(struct rev_info *opt)
+ 		int raw;
+ 		struct strbuf notebuf =3D STRBUF_INIT;
+=20
+-		raw =3D (opt->commit_format =3D=3D CMIT_FMT_USERFORMAT);
++		raw =3D (opt->commit_format =3D=3D CMIT_FMT_USERFORMAT) ||
++			(opt->commit_format =3D=3D CMIT_FMT_EMAIL);
+ 		format_display_notes(commit->object.sha1, &notebuf,
+ 				     get_log_output_encoding(), raw);
+ 		ctx.notes_message =3D notebuf.len
+--=20
+2.1.1.274.gb3e1830.dirty
