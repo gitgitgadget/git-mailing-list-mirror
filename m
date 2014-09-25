@@ -1,68 +1,69 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH] Receive-pack: include entire SHA1 in nonce
-Date: Thu, 25 Sep 2014 11:02:20 -0400
-Message-ID: <1411657340-62950-1-git-send-email-brian@gernhardtsoftware.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 25 17:11:52 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Joe Perches <joe@perches.com>
+Subject: project wide: git config entry for [diff] renames=true
+Date: Thu, 25 Sep 2014 08:48:31 -0700
+Message-ID: <1411660111.4026.24.camel@joe-AO725>
+References: <Pine.LNX.4.44L0.1409241106100.1580-100000@iolanthe.rowland.org>
+	 <1411591401-5874-1-git-send-email-sojka@merica.cz>
+	 <1411591401-5874-4-git-send-email-sojka@merica.cz>
+	 <20140925150353.GA15325@kroah.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Michal Sojka <sojka@merica.cz>, linux-usb@vger.kernel.org,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Bryan Wu <cooloney@gmail.com>, Felipe Balbi <balbi@ti.com>,
+	Linux LED Subsystem <linux-leds@vger.kernel.org>,
+	linux-kernel@vger.kernel.org, michal.vokac@comap.cz,
+	git <git@vger.kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+X-From: linux-kernel-owner@vger.kernel.org Thu Sep 25 17:48:50 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXAi0-0000uh-72
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 17:11:52 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1XXBHl-0002G6-Ns
+	for glk-linux-kernel-3@plane.gmane.org; Thu, 25 Sep 2014 17:48:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820AbaIYPLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2014 11:11:41 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:38371 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753313AbaIYPLk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2014 11:11:40 -0400
-X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Sep 2014 11:11:40 EDT
-Received: from localhost.localdomain (cpe-142-105-190-134.rochester.res.rr.com [142.105.190.134])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id E642016223E2;
-	Thu, 25 Sep 2014 15:02:34 +0000 (UTC)
-X-Mailer: git-send-email 2.1.1.445.gb8dfbef.dirty
-Sender: git-owner@vger.kernel.org
+	id S1753655AbaIYPsh (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 25 Sep 2014 11:48:37 -0400
+Received: from smtprelay0046.hostedemail.com ([216.40.44.46]:36578 "EHLO
+	smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752600AbaIYPsg (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 25 Sep 2014 11:48:36 -0400
+Received: from filter.hostedemail.com (ff-bigip1 [10.5.19.254])
+	by smtprelay02.hostedemail.com (Postfix) with ESMTP id 0B13D12BCD9;
+	Thu, 25 Sep 2014 15:48:35 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::::::::::::::::::,RULES_HIT:41:355:379:541:988:989:1260:1261:1277:1311:1313:1314:1345:1359:1373:1437:1515:1516:1518:1534:1538:1593:1594:1711:1714:1730:1747:1777:1792:2393:2559:2562:2828:2911:3138:3139:3140:3141:3142:3350:3622:3865:3867:3868:3870:3871:3872:3873:3874:4321:4425:5007:7652:7903:10004:10400:10848:11232:11658:11914:12517:12519:12740:13019:13069:13149:13230:13311:13357:21080,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:none,Custom_rules:0:0:0
+X-HE-Tag: paper21_1073af4a2a432
+X-Filterd-Recvd-Size: 1675
+Received: from [192.168.1.155] (pool-71-103-235-196.lsanca.fios.verizon.net [71.103.235.196])
+	(Authenticated sender: joe@perches.com)
+	by omf01.hostedemail.com (Postfix) with ESMTPA;
+	Thu, 25 Sep 2014 15:48:32 +0000 (UTC)
+In-Reply-To: <20140925150353.GA15325@kroah.com>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257477>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257478>
 
-clang gives the following warning:
+On Thu, 2014-09-25 at 17:03 +0200, Greg Kroah-Hartman wrote:
 
-builtin/receive-pack.c:327:35: error: sizeof on array function
-parameter will return size of 'unsigned char *' instead of 'unsigned
-char [20]' [-Werror,-Wsizeof-array-argument]
-        git_SHA1_Update(&ctx, out, sizeof(out));
-                                         ^
-builtin/receive-pack.c:292:37: note: declared here
-static void hmac_sha1(unsigned char out[20],
-                                    ^
----
+> In the future, please generate a git "move" diff, which makes it easier
+> to review, and prove that nothing really changed.  It also helps if the
+> file is a bit different from what you diffed against, which in my case,
+> was true.
 
- I dislike changing sizeof to a magic constant, but clang informs me that
- sizeof is doing the wrong thing.  Perhaps there's an appropriate constant
- #defined in the code somewhere?
+Maybe it'd be possible to add 
 
- builtin/receive-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[diff]
+	renames = true
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index aab3df7..92388e5 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -324,7 +324,7 @@ static void hmac_sha1(unsigned char out[20],
- 	/* RFC 2104 2. (6) & (7) */
- 	git_SHA1_Init(&ctx);
- 	git_SHA1_Update(&ctx, k_opad, sizeof(k_opad));
--	git_SHA1_Update(&ctx, out, sizeof(out));
-+	git_SHA1_Update(&ctx, out, 20);
- 	git_SHA1_Final(out, &ctx);
- }
- 
--- 
-2.1.1.445.gb8dfbef.dirty
+to the .git/config file.
+
+but I don't find a mechanism to add anything to the
+.git/config and have it be pulled.
