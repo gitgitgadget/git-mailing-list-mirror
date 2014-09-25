@@ -1,140 +1,91 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH RFC] log-tree: let format-patch not indent notes
-Date: Thu, 25 Sep 2014 20:08:32 +0200
-Message-ID: <20140925180832.GA31554@pengutronix.de>
-References: <1411661409-24562-1-git-send-email-u.kleine-koenig@pengutronix.de>
- <xmqqeguzboka.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: project wide: git config entry for [diff] renames=true
+Date: Thu, 25 Sep 2014 11:43:27 -0700
+Message-ID: <xmqq61gbbkxc.fsf@gitster.dls.corp.google.com>
+References: <Pine.LNX.4.44L0.1409241106100.1580-100000@iolanthe.rowland.org>
+	<1411591401-5874-1-git-send-email-sojka@merica.cz>
+	<1411591401-5874-4-git-send-email-sojka@merica.cz>
+	<20140925150353.GA15325@kroah.com>
+	<1411660111.4026.24.camel@joe-AO725> <20140925180005.GA11755@peff.net>
+	<1411668391.3460.2.camel@joe-AO725>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kernel@pengutronix.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 20:08:42 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Michal Sojka <sojka@merica.cz>, linux-usb@vger.kernel.org,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Bryan Wu <cooloney@gmail.com>, Felipe Balbi <balbi@ti.com>,
+	Linux LED Subsystem <linux-leds@vger.kernel.org>,
+	linux-kernel@vger.kernel.org, michal.vokac@comap.cz,
+	git <git@vger.kernel.org>
+To: Joe Perches <joe@perches.com>
+X-From: linux-leds-owner@vger.kernel.org Thu Sep 25 20:43:33 2014
+Return-path: <linux-leds-owner@vger.kernel.org>
+Envelope-to: gll-linux-leds@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXDT7-0007MP-Ka
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 20:08:41 +0200
+	(envelope-from <linux-leds-owner@vger.kernel.org>)
+	id 1XXE0r-000102-8s
+	for gll-linux-leds@plane.gmane.org; Thu, 25 Sep 2014 20:43:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813AbaIYSIi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2014 14:08:38 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:36543 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753532AbaIYSIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2014 14:08:37 -0400
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0] ident=Debian-exim)
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1XXDT0-0007Dw-60; Thu, 25 Sep 2014 20:08:34 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1XXDSy-00065c-Gn; Thu, 25 Sep 2014 20:08:32 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqqeguzboka.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
-Sender: git-owner@vger.kernel.org
+	id S1752384AbaIYSnc (ORCPT <rfc822;gll-linux-leds@m.gmane.org>);
+	Thu, 25 Sep 2014 14:43:32 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64496 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752317AbaIYSna (ORCPT <rfc822;linux-leds@vger.kernel.org>);
+	Thu, 25 Sep 2014 14:43:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 746003BF99;
+	Thu, 25 Sep 2014 14:43:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ezpe11bc5yBx2OlzWQMyFOuzyGY=; b=q42xO0
+	Zt1TNCQ9GbRK8IIQpkWuEgHS2YEu1oh3bYpd4KiOmkyFdUuZOhfIb4aaY7zfMy08
+	ZvfOxK3/sNgqfnY+cgjoO28jWcp3YvzMLwZzmZNl55ezR+HJ5trWU2zSAULendRi
+	V9vbINXWIS1BXhMDOr4Y39sm2m2Bk8vcAJvLk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=veiBmq75pEupTUQNdp6QH/vYDCWLdXKh
+	/SLjjRfmZtZXBMr0ogFinqlaf36JZs5V3CamhmPaSE8cpj3Bh6g52Nmz0a//JTL9
+	MlUPJSrY7ke2FvfRBhdIUTFdl0QzWNydpVBqQRX+qMcPb9LeVmiK5C9hIQlioLav
+	FTw4NJOeARw=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5C6EF3BF98;
+	Thu, 25 Sep 2014 14:43:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C17AA3BF97;
+	Thu, 25 Sep 2014 14:43:28 -0400 (EDT)
+In-Reply-To: <1411668391.3460.2.camel@joe-AO725> (Joe Perches's message of
+	"Thu, 25 Sep 2014 11:06:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D752EABE-44E3-11E4-98C7-D931C4D60FE0-77302942!pb-smtp0.pobox.com
+Sender: linux-leds-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257490>
+List-ID: <linux-leds.vger.kernel.org>
+X-Mailing-List: linux-leds@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257491>
 
-Hello Junio,
+Joe Perches <joe@perches.com> writes:
 
-On Thu, Sep 25, 2014 at 10:24:53AM -0700, Junio C Hamano wrote:
-> Uwe Kleine-K=F6nig  <u.kleine-koenig@pengutronix.de> writes:
-> > Commit logs as shown by git-log are usually indented by four spaces=
- so
-> > here it makes sense to do the same for commit notes.
-> >
-> > However when using format-patch to create a patch for submission vi=
-a
-> > e-mail the commit log isn't indented and also the "Notes:" header i=
-sn't
-> > really useful. So consequently don't indent and skip the header in =
-this
-> > case. This also removes the empty line between the end-of-commit ma=
-rker
-> > and the start of the notes.
-> >
-> > Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-> > ---
-> > This commit changes the output of format-patch (applied on this com=
-mit) from:
-> >
-> > 	...
-> > 	case.
-> >
-> > 	Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-> > 	---
-> >
-> > 	Notes:
-> > 	    This commit changes the output of format-patch (applied on thi=
-s commit) from:
-> >
-> > to
-> >
-> > 	...
-> > 	case.
-> >
-> > 	Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-> > 	---
-> > 	This commit changes the output of format-patch (applied on this co=
-mmit) from:
-> >
-> > which I consider to be more useful.
->=20
-> I suspect that is fairly subjective, as the current one is in that
-> form because those who wrote this feature first, reviewed, applied
-> would have considered it more useful, isn't it?
-Well, I thought when the feature to dump the notes into a patch was
-created there was exactly one way these notes were written. This was wa=
-s
-designed for git-log and so intended and with "Notes:". For
-git-format-patch it was good enough.
+> On Thu, 2014-09-25 at 14:00 -0400, Jeff King wrote:
+> ...
+>> diff.renames is probably safe, but any config-sharing mechanism would
+>> have to deal with either whitelisting, or providing some mechanism for
+>> the puller to review changes before blindly following them.
+>
+> Another mechanism might be to add a repository
+> top level .gitconfig and add whatever to that.
 
-> Because I never send out a format-patch output without looking it
-> over in an editor, I know I can easily remove it if I find the
-> "Notes:" out of place in the output, but if the "Notes:" thing
-> weren't there in the first place I may scratch my head trying to
-> figure out where to update it if the information there were stale,
-> so for that reason I'd find it more useful to have Notes: to remind
-> me where that information comes from.
-As you must explicitly request notes to be included in patches (--notes=
-)
-I think it's unusual to not know where the info comes from, doesn't it?
+That could be smaller half of an implementation detail of one of the
+two possibilities Jeff mentioned i.e. "mechanism for the puller to
+review changes before blindly following".  It gives the transfer
+part.  You still need a new mechanism to make that file that is
+tracked in the repository to be used as part of your configuration
+variable set after letting the puller to review and approve.
 
-I don't know how many people use git-notes to track their comments, but
-the first thing I do when editing patches is to remove the Notes: heade=
-r
-and s/^    // on the remaining lines. And most of the time this is the
-only thing I do and I need to touch every patch only because of
-that.
-
-> But that is just my personal preference and I am willing to be
-> persuaded either way with a better argument than "to me it looks
-> nicer".
->=20
-> As to indenting, because the material after three-dashes is meant to
-> be fed to "git apply" or "patch", I'd prefer to keep it to avoid
-> having to worry about a payload that may look like part of a patch.
-> This preference is a bit stronger than the presence/absence of
-> "Notes:".
-Ok, that's a valid concern. If we want to assert that this doesn't look
-like a patch we need to at least parse the notes and quote it somehow.
-Hmm.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+A puller who blindly trust the project could use the "include"
+mechanism from your .git/config to include a file with a well-known
+name that is tracked by the project _without_ review or approval.  I
+doubt we would recommend that in an open source setting, though.
