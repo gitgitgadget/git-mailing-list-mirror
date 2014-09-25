@@ -1,98 +1,92 @@
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH RFC] log-tree: let format-patch not indent notes
-Date: Thu, 25 Sep 2014 18:10:09 +0200
-Message-ID: <1411661409-24562-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RFC] git-am: support any number of signatures
+Date: Thu, 25 Sep 2014 09:20:42 -0700
+Message-ID: <CAPc5daUTKU1JepLuyVC1Nk6LG4AZ2TA5SEYLsTSPbPKkauzNyQ@mail.gmail.com>
+References: <1402589505-27632-1-git-send-email-mst@redhat.com>
+ <xmqqioo654mg.fsf@gitster.dls.corp.google.com> <20140613080036.GA2117@redhat.com>
+ <xmqqy4x03ecm.fsf@gitster.dls.corp.google.com> <20140615102736.GA11798@redhat.com>
+ <xmqqy4wwraoz.fsf@gitster.dls.corp.google.com> <20140618030903.GA19593@redhat.com>
+ <CAPc5daVTZynCKMubZmreAjBh3i51wPaAA+8vSRwB9dGrrJb6FA@mail.gmail.com>
+ <xmqq38f2jed3.fsf@gitster.dls.corp.google.com> <20140922140144.GA9769@redhat.com>
+ <CAP8UFD2W1r9859FgpBXqvdNLAfXoCwjpEFpTKXU6fGuC_8uvBg@mail.gmail.com>
+ <xmqqbnq6jm0s.fsf@gitster.dls.corp.google.com> <CAP8UFD0kfSBhSwu5Mb46XEHqYCE0SEsZd_3c0Sm4WzEc-NNc7w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kernel@pengutronix.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 25 18:10:30 2014
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 18:21:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXBci-0006yd-Bh
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 18:10:28 +0200
+	id 1XXBn7-0001U1-59
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 18:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754069AbaIYQKW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2014 12:10:22 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:58317 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754063AbaIYQKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2014 12:10:21 -0400
-Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1XXBcY-0007Ne-N4; Thu, 25 Sep 2014 18:10:18 +0200
-Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.84)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1XXBcY-0006Oo-Lu; Thu, 25 Sep 2014 18:10:18 +0200
-X-Mailer: git-send-email 2.1.0
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::7
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753537AbaIYQVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2014 12:21:05 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:34010 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753521AbaIYQVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2014 12:21:04 -0400
+Received: by mail-la0-f50.google.com with SMTP id el20so1253938lab.23
+        for <git@vger.kernel.org>; Thu, 25 Sep 2014 09:21:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=UYg5AVEAdVZDSKm2x6KZHqNfOJwEEqsRdDMmhWw4xOI=;
+        b=wt4YV16sIAowLqt6rjIu4sIlkIzD9k0ZvixPesNiYytpA9md5VJh6N+xBO3cIODESO
+         sbFO6V+pjk4naPbJGcOkX8lHdZ4w+PdwE/J1/Ux/FLOoxlMtPjjcAqnat3Wd06Knb7SW
+         u3sBsyYGuJnFYyd01yQNyCx/GEUjL/WcbqtqYv0zO2WSSVAY1RKIXzBESzmtSs7HR7R0
+         rZsjZyrtAEV7Ee7uYOAEKA+ukiye2pd9ph2oJsunHH8ag/8xZjN32NO9Tw4YIsbPSA00
+         aHktv652a5zgZU42Lcfa0BlEXr0KpYwOHw8Y6JTM+onFCc/1+Ep3bpZfiinMF/yLVRnA
+         9yVg==
+X-Received: by 10.152.170.227 with SMTP id ap3mr14348596lac.15.1411662062768;
+ Thu, 25 Sep 2014 09:21:02 -0700 (PDT)
+Received: by 10.112.209.35 with HTTP; Thu, 25 Sep 2014 09:20:42 -0700 (PDT)
+In-Reply-To: <CAP8UFD0kfSBhSwu5Mb46XEHqYCE0SEsZd_3c0Sm4WzEc-NNc7w@mail.gmail.com>
+X-Google-Sender-Auth: GWi90_kAzrtmHgEzqoW5-6DHAec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257480>
 
-Commit logs as shown by git-log are usually indented by four spaces so
-here it makes sense to do the same for commit notes.
+On Thu, Sep 25, 2014 at 3:04 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+>> To an existing message ends with Michael's Signed-off-by:, if his
+>> "git am --trailer arts" is called to add these three and then a
+>> Signed-off-by: from him, should it add an extra S-o-b (because his
+>> existing S-o-b will no longer be the last one after adding Acked and
+>> others), or should it refrain from doing so?  Can you express both
+>> preferences?
+>
+> The default for "trailer.where" is "end", and for "trailer.ifexists"
+> it is "addIfDifferentNeighbor".
+> That means that by default it will add the four new trailers at the end.
+>
+> If either "trailer.ifexists" or "trailer.S-o-b.ifexists" is set to
+> "addIfDifferent", then only the first 3 new trailers will be added at
+> the end. So yes you can express both preferences.
 
-However when using format-patch to create a patch for submission via
-e-mail the commit log isn't indented and also the "Notes:" header isn't
-really useful. So consequently don't indent and skip the header in this
-case. This also removes the empty line between the end-of-commit marker
-and the start of the notes.
+Suppose that the original ends with Sob, and Michael's "am" invokes
+interpret-trailers with Acked/Reviewed/Tested/Sob in this order. The first
+three are set to addifDifferent and Sob is set to addIfDifferentNeighbor,
+which would be the traditional and sensible default.
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
-This commit changes the output of format-patch (applied on this commit)=
- from:
+Now, how is addIfDifferentNeighbor interpreted? Adding the new Sob
+with this single request to add these four is done on a message that
+has the same Sob at the end (i.e. Neighbor). Does _you_ adding of
+Acked/Reviewed/Tested invalidate the Neighbor-ness and you add the
+Sob anew?
 
-	...
-	case.
+If that is what happens, it is not a workable workaround to set Sob to
+addIfDifferent only for this invocation.
 
-	Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-	---
-
-	Notes:
-	    This commit changes the output of format-patch (applied on this co=
-mmit) from:
-
-to
-
-	...
-	case.
-
-	Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-	---
-	This commit changes the output of format-patch (applied on this commit=
-) from:
-
-which I consider to be more useful.
-
- log-tree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index bcee7c596696..c1d73d8fecdf 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -585,7 +585,8 @@ void show_log(struct rev_info *opt)
- 		int raw;
- 		struct strbuf notebuf =3D STRBUF_INIT;
-=20
--		raw =3D (opt->commit_format =3D=3D CMIT_FMT_USERFORMAT);
-+		raw =3D (opt->commit_format =3D=3D CMIT_FMT_USERFORMAT) ||
-+			(opt->commit_format =3D=3D CMIT_FMT_EMAIL);
- 		format_display_notes(commit->object.sha1, &notebuf,
- 				     get_log_output_encoding(), raw);
- 		ctx.notes_message =3D notebuf.len
---=20
-2.1.1.274.gb3e1830.dirty
+Alternatively, if Neighbor-ness is evaluated first before you add A/R/T
+in response to this request, then you'd refrain from adding a duplicate
+Sob. It wasn't quite clear from your description what your design was,
+and your explanation above is not still clear, at least to me.
