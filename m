@@ -1,130 +1,61 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] de.po: Fixup one translation
-Date: Thu, 25 Sep 2014 22:20:57 +0200
-Message-ID: <20140925202057.GA27696@ralf-ubuntu>
-References: <CAN0XMO+D7dDh_Xpcgekg3fsDA9Zhh+i7Asi46G3aBpnknivNjA@mail.gmail.com>
- <1411476886-13141-1-git-send-email-stefanbeller@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/32] nd/multiple-work-trees
+Date: Thu, 25 Sep 2014 14:20:08 -0700
+Message-ID: <xmqqk34r9z3r.fsf@gitster.dls.corp.google.com>
+References: <1409387642-24492-1-git-send-email-pclouds@gmail.com>
+	<1410388928-32265-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sunshine@sunshineco.com, ralf.thielow@googlemail.com,
-	git@vger.kernel.org
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 22:21:07 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 25 23:20:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXFXG-0006Qy-G5
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 22:21:06 +0200
+	id 1XXGSf-0007ey-5Q
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 23:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbaIYUVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2014 16:21:01 -0400
-Received: from mail-we0-f173.google.com ([74.125.82.173]:52116 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751307AbaIYUVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2014 16:21:00 -0400
-Received: by mail-we0-f173.google.com with SMTP id x48so7179973wes.4
-        for <git@vger.kernel.org>; Thu, 25 Sep 2014 13:20:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=NQvZWGxTUp3LRKspWIPdZNrTKfjmPHmsgmg36OM85X4=;
-        b=p2Yn1JNGUXG5pfu//au711Dqj9+RVwN8xQk5ZR9NUnaaCGhF88BjBF2FmncbPqWe91
-         PpUKgfNxdlg5v5Mmkvb9SBprCeNiOF+dLvpVLKDUTpMNssmbU0wK/jXcV0gXCft/UIpe
-         woAH939j3qw11nD65JxyRPDZdhHzJDys7Ohs1Wf4Rw+wDfxIQv8/6nW42ghp3M0hhIBB
-         aXSOse0dRezW8aBB+Hx/MEvEkyWoVi+iths4SXY6BJiqftoVDgYT77pAYaMw8qZ6Ez6x
-         ob3YS23YKdp0sdj5TpQ3I4SSuy/rEyC7LhNyi00RlzWgZwmmeTVwzD7KKaPIhgXcIjgA
-         D2KA==
-X-Received: by 10.180.210.201 with SMTP id mw9mr42228339wic.35.1411676459202;
-        Thu, 25 Sep 2014 13:20:59 -0700 (PDT)
-Received: from localhost (dslb-178-000-162-213.178.000.pools.vodafone-ip.de. [178.0.162.213])
-        by mx.google.com with ESMTPSA id fl6sm4278241wib.21.2014.09.25.13.20.58
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 25 Sep 2014 13:20:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1411476886-13141-1-git-send-email-stefanbeller@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752414AbaIYVUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2014 17:20:18 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52523 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752350AbaIYVUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2014 17:20:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4A3D73D856;
+	Thu, 25 Sep 2014 17:20:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g1bmXBv3gZqG/vEVPsAoAd/SOQY=; b=USfl8N
+	I26N5yLg2eNAFiBjyyLiO4Ky3MH1RPgLRV1BvFMtGMM+Ao3eC85sFLpgEJqe03Q8
+	0G8OYrqbtIMBHqN0glIpkf4X99Z7OV7TrCniFXknxO1bdZ1Sp4oVI8o2hFOkPIpe
+	kJCLOnpxmCa12QubumWaSPPuKAflo2jrewOwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JnGqj8Yop5RF0Ffc55Thq20xvTopAT6B
+	kgVzcatldk+f647Gq2bMtMSIavVTMmN8bAQFL3C6Edmx6pNdxziODac5ZCRGqse1
+	vnFEYVYJW6nusiLMeGksTxCttlboKi0sOCLOtbSzGPuQJBApqdF06mvlWbYMnOkr
+	yHfumltdWBs=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F0A1E3D855;
+	Thu, 25 Sep 2014 17:20:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A51273D851;
+	Thu, 25 Sep 2014 17:20:09 -0400 (EDT)
+In-Reply-To: <1410388928-32265-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 11
+ Sep 2014 05:41:36 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BAA4C822-44F9-11E4-B6AB-D931C4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257496>
 
-Stefan Beller <stefanbeller@gmail.com> wrote:
-> English grammar with German words doesn't make it a German translation. ;)
-> 
-> Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
-> ---
-> Here we go again without sentence fragments.
-> 
-> Thanks,
-> Stefan
-> 
->  po/de.po | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/po/de.po b/po/de.po
-> index e5d2b25..bae3723 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -3463,13 +3463,13 @@ msgid_plural ""
->  "\n"
->  "%s\n"
->  msgstr[0] ""
-> -"Warnung: Sie sind um %d Commit hinterher, nicht verbunden zu\n"
-> -"einem Ihrer Branches:\n"
-> +"Warnung: Sie sind um %d Commit hinterher, folgende Commits sind in\n"
-> +"keinem Ihrer Branches enthalten: \n"
->  "\n"
->  "%s\n"
->  msgstr[1] ""
-> -"Warnung: Sie sind um %d Commits hinterher, nicht verbunden zu\n"
-> -"einem Ihrer Branches:\n"
-> +"Warnung: Sie sind um %d Commits hinterher, folgende Commits sind in\n"
-> +"keinem Ihrer Branches enthalten: \n"
->  "\n"
->  "%s\n"
->  
-
-That are two sentences. I'll queue this:
-
--- >8 --
-From: Stefan Beller <stefanbeller@gmail.com>
-Date: Tue, 23 Sep 2014 14:54:46 +0200
-Subject: [PATCH] de.po: Fixup one translation
-
-English grammar with German words doesn't make it a German translation. ;)
-
-Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/po/de.po b/po/de.po
-index e5d2b25..fe940d1 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -3463,13 +3463,13 @@ msgid_plural ""
- "\n"
- "%s\n"
- msgstr[0] ""
--"Warnung: Sie sind um %d Commit hinterher, nicht verbunden zu\n"
--"einem Ihrer Branches:\n"
-+"Warnung: Sie sind um %d Commit hinterher. Folgende Commits sind in\n"
-+"keinem Ihrer Branches enthalten:\n"
- "\n"
- "%s\n"
- msgstr[1] ""
--"Warnung: Sie sind um %d Commits hinterher, nicht verbunden zu\n"
--"einem Ihrer Branches:\n"
-+"Warnung: Sie sind um %d Commits hinterher. Folgende Commits sind in\n"
-+"keinem Ihrer Branches enthalten:\n"
- "\n"
- "%s\n"
- 
--- 
-2.1.1.446.g43bbf76
+It has been a while since the last review exchanges were seen.  Will
+it be time for v3 soon?
