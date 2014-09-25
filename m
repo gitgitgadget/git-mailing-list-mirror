@@ -1,67 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Git 1.9.0 - build on Solaris 8 -> no git-remote-http ?
-Date: Thu, 25 Sep 2014 14:18:21 +0200
-Message-ID: <vpqzjdnq4fm.fsf@anie.imag.fr>
-References: <938AB08865DF82448B10C2CD60FD0AA1012349C5EC@EEL.pcs.sopres.be>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Sebastien Toulmonde <Sebastien.Toulmonde@bisnode.com>
-X-From: git-owner@vger.kernel.org Thu Sep 25 14:18:40 2014
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH] Receive-pack: include entire SHA1 in nonce
+Date: Thu, 25 Sep 2014 11:02:20 -0400
+Message-ID: <1411657340-62950-1-git-send-email-brian@gernhardtsoftware.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 25 17:11:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XX80J-00050k-Er
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 14:18:35 +0200
+	id 1XXAi0-0000uh-72
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Sep 2014 17:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930AbaIYMSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Sep 2014 08:18:30 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42229 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751875AbaIYMS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Sep 2014 08:18:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s8PCIKko015484
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 25 Sep 2014 14:18:20 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s8PCILe4031311;
-	Thu, 25 Sep 2014 14:18:21 +0200
-In-Reply-To: <938AB08865DF82448B10C2CD60FD0AA1012349C5EC@EEL.pcs.sopres.be>
-	(Sebastien Toulmonde's message of "Thu, 25 Sep 2014 09:00:08 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 25 Sep 2014 14:18:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s8PCIKko015484
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1412252302.30793@uegYoZFhLn1/OIxhtp9ztQ
+	id S1753820AbaIYPLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Sep 2014 11:11:41 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:38371 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313AbaIYPLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Sep 2014 11:11:40 -0400
+X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Sep 2014 11:11:40 EDT
+Received: from localhost.localdomain (cpe-142-105-190-134.rochester.res.rr.com [142.105.190.134])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id E642016223E2;
+	Thu, 25 Sep 2014 15:02:34 +0000 (UTC)
+X-Mailer: git-send-email 2.1.1.445.gb8dfbef.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257477>
 
-Sebastien Toulmonde <Sebastien.Toulmonde@bisnode.com> writes:
+clang gives the following warning:
 
-> Hello all,
->
-> I'm trying to build Git from source for our end-users. Our platform
-> range from Solaris 8 to 10 (we're migrating to 11 this year).
-> Meanwhile, I'm trying to build Git from source, as there is no package
-> for Solaris 8/10 (opencsw can't be used in our environment). I've been
-> able to build it successfully, using Sun Studio and gmake 3.84. But
-> unfortunately, the build process does not compile/link any
-> git-remote-*
-> programs... Which leads me to an unusable git for use in remote
-> architecture (which is what we use).
+builtin/receive-pack.c:327:35: error: sizeof on array function
+parameter will return size of 'unsigned char *' instead of 'unsigned
+char [20]' [-Werror,-Wsizeof-array-argument]
+        git_SHA1_Update(&ctx, out, sizeof(out));
+                                         ^
+builtin/receive-pack.c:292:37: note: declared here
+static void hmac_sha1(unsigned char out[20],
+                                    ^
+---
 
-These git-remote-* have more dependencies than the core git executable.
-Probably you lack libcurl (lib or header files) or something like this?
+ I dislike changing sizeof to a magic constant, but clang informs me that
+ sizeof is doing the wrong thing.  Perhaps there's an appropriate constant
+ #defined in the code somewhere?
 
+ builtin/receive-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index aab3df7..92388e5 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -324,7 +324,7 @@ static void hmac_sha1(unsigned char out[20],
+ 	/* RFC 2104 2. (6) & (7) */
+ 	git_SHA1_Init(&ctx);
+ 	git_SHA1_Update(&ctx, k_opad, sizeof(k_opad));
+-	git_SHA1_Update(&ctx, out, sizeof(out));
++	git_SHA1_Update(&ctx, out, 20);
+ 	git_SHA1_Final(out, &ctx);
+ }
+ 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.1.1.445.gb8dfbef.dirty
