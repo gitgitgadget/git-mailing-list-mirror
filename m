@@ -1,116 +1,79 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/4] strbuf.c: keep errno in strbuf_read_file()
-Date: Fri, 26 Sep 2014 12:30:38 +0200
-Message-ID: <5425404E.7050100@alum.mit.edu>
-References: <1406285039-22469-1-git-send-email-pclouds@gmail.com> <1406285039-22469-2-git-send-email-pclouds@gmail.com>
+From: Ajay <ajay.dadgas@galaxyweblinks.in>
+Subject: bug reporting
+Date: Fri, 26 Sep 2014 19:11:35 +0530
+Message-ID: <54256D0F.4000003@galaxyweblinks.in>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 26 12:30:54 2014
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 26 15:47:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXSnb-000836-Gi
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 12:30:51 +0200
+	id 1XXVrk-0007oa-97
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 15:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755363AbaIZKaq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Sep 2014 06:30:46 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:63230 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754886AbaIZKap (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2014 06:30:45 -0400
-X-AuditID: 1207440c-f79036d000005e77-66-54254054b2a4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id FD.C5.24183.45045245; Fri, 26 Sep 2014 06:30:44 -0400 (EDT)
-Received: from [172.16.46.16] ([178.19.210.163])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8QAUd3Y014861
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 26 Sep 2014 06:30:43 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <1406285039-22469-2-git-send-email-pclouds@gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqBvioBpi8Oq6vEXXlW4mi4beK8wW
-	3VPeMjowe+ycdZfd4+IlZY/Pm+QCmKO4bZISS8qCM9Pz9O0SuDNWLj7NXrCKp+LBhKAGxqOc
-	XYycHBICJhIvnv1mgrDFJC7cW88GYgsJXGaUmDU9rIuRC8jewCQxtecOO0iCV0Bb4uLKWcwg
-	NouAqsSqhafAGtgEdCUW9TSDDRIVCJD40PmAEaJeUOLkzCcsILaIQJrE4snvwXqZBdQkDi15
-	BFYjLOAs8fTsN2aIxeUSjc0zweKcAk4SPzu+skPUq0v8mXcJqldeonnrbOYJjAKzkKyYhaRs
-	FpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0DfVyM0v0UlNKNzFCApdnB+O3dTKHGAU4
-	GJV4eBvWqIQIsSaWFVfmHmKU5GBSEuX9YqEaIsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE944R
-	UI43JbGyKrUoHyYlzcGiJM6rukTdT0ggPbEkNTs1tSC1CCYrw8GhJMFrZA/UKFiUmp5akZaZ
-	U4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K0/hiYKSCpHiA9v61A9lbXJCYCxSFaD3FaMzx4dfL
-	XiaOdZ3f+pmEWPLy81KlxHk1QTYJgJRmlObBLYKlrFeM4kB/C/PagFTxANMd3LxXQKuYgFYp
-	HVEGWVWSiJCSamBUYzRanMexvCreTbWgqn6Gq6D2bZ20S5m/DuTeFrTsnH03J+pCw0Hdzm0f
-	lRjXhpfmC6ZteT4vMT2g/aDmz2UrFwRVp+g9aMkzvBNq7NcdtMvkzHd2H7mSj3LT 
+	id S1754823AbaIZNrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2014 09:47:12 -0400
+Received: from smtp82.ord1c.emailsrvr.com ([108.166.43.82]:44055 "EHLO
+	smtp82.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754808AbaIZNrL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2014 09:47:11 -0400
+X-Greylist: delayed 332 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Sep 2014 09:47:11 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp3.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 858A9180654
+	for <git@vger.kernel.org>; Fri, 26 Sep 2014 09:41:38 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp3.relay.ord1c.emailsrvr.com (Authenticated sender: ajay.dadgas-AT-galaxyweblinks.in) with ESMTPSA id D517A18078A
+	for <git@vger.kernel.org>; Fri, 26 Sep 2014 09:41:37 -0400 (EDT)
+X-Sender-Id: ajay.dadgas@galaxyweblinks.in
+Received: from [192.168.1.3] (static-15-66-210.rpnspl.com [103.15.66.210])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:587 (trex/5.2.13);
+	Fri, 26 Sep 2014 13:41:38 GMT
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257546>
 
-On 07/25/2014 12:43 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
-:
-> This function is used to replaced some code in the next patch that
-> does this (i.e. keep the errno when read() fails)
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  strbuf.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->=20
-> diff --git a/strbuf.c b/strbuf.c
-> index 33018d8..61d685d 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -454,15 +454,18 @@ int strbuf_getwholeline_fd(struct strbuf *sb, i=
-nt fd, int term)
-> =20
->  int strbuf_read_file(struct strbuf *sb, const char *path, size_t hin=
-t)
->  {
-> -	int fd, len;
-> +	int fd, len, saved_errno;
-> =20
->  	fd =3D open(path, O_RDONLY);
->  	if (fd < 0)
->  		return -1;
->  	len =3D strbuf_read(sb, fd, hint);
-> +	saved_errno =3D errno;
->  	close(fd);
+Hello,
 
-Theoretically close() can fail, though it seems a little far-fetched
-(and also uninteresting) if it fails for a file opened read-only. But i=
-f
-it did, you would not notice the error.
+          I have faced a git bug. When I try to clone a git repo it 
+shows an error "protocol error: bad pack header".
 
-So I grepped through our code to see whether we typically bother to
-check the return value when close()ing a read-only file. And I found
-that we rarely even check its return value when *writing* to a file.
-(Many of those places are probably bugs.)
+          This is the full error message which I got while cloning git 
+project :
 
-So, carry on and forget I said anything :-)
+Clone: protocol error: bad pack header
+     $ git clone -v --progress 
+http://dev.galaxylipl.com:88/galaxygit/privatenovator.git 
+/home/lipl/privateschoolinnovator
+     Cloning into '/home/lipl/privatenovator'...
+     POST git-upload-pack (190 bytes)
+     remote: error: Could not read e9a6c4c684a5e8758026e8b0e25867c03332fe7c
+     remote: fatal: bad tree object 
+e9a6c4c684a5e8758026e8b0e25867c03332fe7c
+     remote: aborting due to possible repository corruption on the 
+remote side.
+     protocol error: bad pack header
 
-> -	if (len < 0)
-> +	if (len < 0) {
-> +		errno =3D saved_errno;
->  		return -1;
-> +	}
-> =20
->  	return len;
->  }
->=20
+I tried everything to resolve this error, I have run some commands on 
+server side like :
 
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+# git fsck
+# git-fsck --full
+# git fsck --lost-found
+# git repack
+# git gc
 
-Michael
+         But nothing worked for me and the error is still same. I tried 
+to find the corrupt file but I was unable to find.
 
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+         Please check this issue and provide me proper solution for this.
+
+Thanks & Regards,
+Ajay Dadgas
