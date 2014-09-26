@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v6 25/39] struct lock_file: declare some fields volatile
-Date: Fri, 26 Sep 2014 12:08:25 +0200
-Message-ID: <1411726119-31598-26-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v6 33/39] Extract a function commit_lock_file_to()
+Date: Fri, 26 Sep 2014 12:08:33 +0200
+Message-ID: <1411726119-31598-34-git-send-email-mhagger@alum.mit.edu>
 References: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
@@ -10,129 +10,256 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 26 12:17:14 2014
+X-From: git-owner@vger.kernel.org Fri Sep 26 12:17:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXSaO-00032m-UO
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 12:17:13 +0200
+	id 1XXSag-0003Kt-3d
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 12:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756532AbaIZKRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2014 06:17:05 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47270 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755865AbaIZKRB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2014 06:17:01 -0400
-X-AuditID: 1207440d-f797f6d000000a4a-e1-54253b5b89f5
+	id S1756537AbaIZKRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2014 06:17:14 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:56890 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755969AbaIZKRM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2014 06:17:12 -0400
+X-AuditID: 1207440f-f79156d000006a5c-a0-54253b682d4a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 8F.5E.02634.B5B35245; Fri, 26 Sep 2014 06:09:31 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A7.ED.27228.86B35245; Fri, 26 Sep 2014 06:09:44 -0400 (EDT)
 Received: from michael.berhq.github.net ([178.19.210.163])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8QA8lMA013914
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8QA8lMI013914
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 26 Sep 2014 06:09:29 -0400
+	Fri, 26 Sep 2014 06:09:42 -0400
 X-Mailer: git-send-email 2.1.0
 In-Reply-To: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmplleLIzCtJLcpLzFFi42IRYndR1I22Vg0xeDRJ0KLrSjeTRUPvFWaL
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmplleLIzCtJLcpLzFFi42IRYndR1M2wVg0x2Laew6LrSjeTRUPvFWaL
 	J3PvMlu8vbmE0eL2ivnMFj9aepgt/k2osejs+MrowOHx9/0HJo+ds+6yeyzYVOrx8FUXu8ez
-	3j2MHhcvKXt83iTncfvZNpYAjihum6TEkrLgzPQ8fbsE7ow/K2ewFDSJVvz73MrUwPhLoIuR
-	k0NCwETiwuGnrBC2mMSFe+vZuhi5OIQELjNKbJjfzArhbGKSaHsynQmkik1AV2JRTzOYLSKg
-	JjGx7RALSBGzwGImiQmHNgG1c3AIC3hILDikC1LDIqAq8ePVB0YQm1fAVWLjh1ZGiG1yEht2
-	/wezOYHijduvgdlCAi4SLesns0xg5F3AyLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdILzez
-	RC81pXQTIyQYeXcw/l8nc4hRgINRiYf3xjqVECHWxLLiytxDjJIcTEqivF8sVEOE+JLyUyoz
-	Eosz4otKc1KLDzFKcDArifDeMQLK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbB
-	ZGU4OJQkeC9aAjUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2IjvhgYHSApHqC9
-	XFYge4sLEnOBohCtpxh1OdZ1futnEmLJy89LlRLnPQKyQwCkKKM0D24FLPW8YhQH+liY9wZI
-	FQ8wbcFNegW0hAloidIRZZAlJYkIKakGRoGV7CLGN0U9NBL47n34ceFtSW+RvfBK1SdPhA7M
-	aT7iOZFR90kf09ne0z/9Ljy10fB55h51YvkZli6HnuPRc2++TUhzWL7I/828KnuX 
+	3j2MHhcvKXt83iTncfvZNpYAjihum6TEkrLgzPQ8fbsE7ox9jxvYC+Y6VMx7W9/AeNKki5GT
+	Q0LAROLtww1MELaYxIV769m6GLk4hAQuM0rsXXeSCcLZxCRxcf5WZpAqNgFdiUU9zWAdIgJq
+	EhPbDrGAFDELLGaSmHBoExtIQljASWLdsUZ2EJtFQFVi7td7jCA2r4CrxIbzS9gg1slJbNj9
+	HyzOCRRv3H4NzBYScJFoWT+ZZQIj7wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFuiZ6uZkl
+	eqkppZsYIcHIv4Oxa73MIUYBDkYlHt4b61RChFgTy4orcw8xSnIwKYnyfrFQDRHiS8pPqcxI
+	LM6ILyrNSS0+xCjBwawkwnvHCCjHm5JYWZValA+TkuZgURLnVV+i7ickkJ5YkpqdmlqQWgST
+	leHgUJLgtbICahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxUZ8MTA6QFI8QHu5
+	QNp5iwsSc4GiEK2nGHU51nV+62cSYsnLz0uVEuc9YglUJABSlFGaB7cClnpeMYoDfSzMKwIy
+	igeYtuAmvQJawgS0ROmIMsiSkkSElFQD47oL8+TtGC3cuOaeu/JcuTP349VTf6d27k1cLh3+
+	x7NThiNlarr/s/5D3yM/nU1LnnHm6sNJx+Jn3jEXCg2s33Ji9ZutJ/d4GiclthrM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257540>
 
-The function remove_lock_file_on_signal() is used as a signal handler.
-It is not realistic to make the signal handler conform strictly to the
-C standard, which is very restrictive about what a signal handler is
-allowed to do.  But let's increase the likelihood that it will work:
+commit_locked_index(), when writing to an alternate index file,
+duplicates (poorly) the code in commit_lock_file(). And anyway, it
+shouldn't have to know so much about the internal workings of lockfile
+objects. So extract a new function commit_lock_file_to() that does the
+work common to the two functions, and call it from both
+commit_lock_file() and commit_locked_index().
 
-The lock_file_list global variable and several fields from struct
-lock_file are used by the signal handler.  Declare those values
-"volatile" to (1) force the main process to write the values to RAM
-promptly, and (2) prevent updates to these fields from being reordered
-in a way that leaves an opportunity for a jump to the signal handler
-while the object is in an inconsistent state.
-
-We don't mark the filename field volatile because that would prevent
-the use of strcpy(), and it is anyway unlikely that a compiler
-re-orders a strcpy() call across other expressions.  So in practice it
-should be possible to get away without "volatile" in the "filename"
-case.
-
-Suggested-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- cache.h    | 6 +++---
- lockfile.c | 2 +-
- refs.c     | 5 +++--
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ Documentation/technical/api-lockfile.txt | 36 ++++++++++++++++------------
+ cache.h                                  |  1 +
+ lockfile.c                               | 40 +++++++++++++++++++++-----------
+ read-cache.c                             | 13 +++--------
+ 4 files changed, 51 insertions(+), 39 deletions(-)
 
+diff --git a/Documentation/technical/api-lockfile.txt b/Documentation/technical/api-lockfile.txt
+index d7882df..0b8db64 100644
+--- a/Documentation/technical/api-lockfile.txt
++++ b/Documentation/technical/api-lockfile.txt
+@@ -48,14 +48,14 @@ The caller:
+ When finished writing, the caller can:
+ 
+ * Close the file descriptor and rename the lockfile to its final
+-  destination by calling `commit_lock_file`.
++  destination by calling `commit_lock_file` or `commit_lock_file_to`.
+ 
+ * Close the file descriptor and remove the lockfile by calling
+   `rollback_lock_file`.
+ 
+ * Close the file descriptor without removing or renaming the lockfile
+-  by calling `close_lock_file`, and later call `commit_lock_file` or
+-  `rollback_lock_file`.
++  by calling `close_lock_file`, and later call `commit_lock_file`,
++  `commit_lock_file_to`, or `rollback_lock_file`.
+ 
+ At this point, the `lock_file` object must not be freed or altered,
+ because it is still registered in the `lock_file_list`. However, it
+@@ -63,20 +63,19 @@ may be reused; just pass it to another call of
+ `hold_lock_file_for_update` or `hold_lock_file_for_append`.
+ 
+ If the program exits before you have called one of `commit_lock_file`,
+-`rollback_lock_file`, or `close_lock_file`, an `atexit(3)` handler
+-will close and remove the lockfile, essentially rolling back any
+-uncommitted changes.
++`commit_lock_file_to`, `rollback_lock_file`, or `close_lock_file`, an
++`atexit(3)` handler will close and remove the lockfile, essentially
++rolling back any uncommitted changes.
+ 
+ If you need to close the file descriptor you obtained from a
+ `hold_lock_file_*` function yourself, do so by calling
+ `close_lock_file`. You should never call `close(2)` yourself!
+ Otherwise the `struct lock_file` structure would still think that the
+-file descriptor needs to be closed, and a later call to
+-`commit_lock_file` or `rollback_lock_file` or program exit would
++file descriptor needs to be closed, and a commit or rollback would
+ result in duplicate calls to `close(2)`. Worse yet, if you `close(2)`
+ and then later open another file descriptor for a completely different
+-purpose, then a call to `commit_lock_file` or `rollback_lock_file`
+-might close that unrelated file descriptor.
++purpose, then a commit or rollback might close that unrelated file
++descriptor.
+ 
+ 
+ Error handling
+@@ -99,9 +98,9 @@ unable_to_lock_die::
+ 
+ 	Emit an appropriate error message and `die()`.
+ 
+-Similarly, `commit_lock_file` and `close_lock_file` return 0 on
+-success. On failure they set `errno` appropriately, do their best to
+-roll back the lockfile, and return -1.
++Similarly, `commit_lock_file`, `commit_lock_file_to`, and
++`close_lock_file` return 0 on success. On failure they set `errno`
++appropriately, do their best to roll back the lockfile, and return -1.
+ 
+ 
+ Flags
+@@ -155,6 +154,12 @@ commit_lock_file::
+ 	`commit_lock_file` for a `lock_file` object that is not
+ 	currently locked.
+ 
++commit_lock_file_to::
++
++	Like `commit_lock_file()`, except that it takes an explicit
++	`path` argument to which the lockfile should be renamed. The
++	`path` must be on the same filesystem as the lock file.
++
+ rollback_lock_file::
+ 
+ 	Take a pointer to the `struct lock_file` initialized with an
+@@ -171,5 +176,6 @@ close_lock_file::
+ 	`hold_lock_file_for_append`, and close the file descriptor.
+ 	Return 0 upon success. On failure to `close(2)`, return a
+ 	negative value and roll back the lock file. Usually
+-	`commit_lock_file` or `rollback_lock_file` should eventually
+-	be called if `close_lock_file` succeeds.
++	`commit_lock_file`, `commit_lock_file_to`, or
++	`rollback_lock_file` should eventually be called if
++	`close_lock_file` succeeds.
 diff --git a/cache.h b/cache.h
-index 81c70c7..0e55bbe 100644
+index 433fae5..30883b3 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -575,10 +575,10 @@ extern int refresh_index(struct index_state *, unsigned int flags, const struct
- #define LOCK_SUFFIX_LEN 5
- 
- struct lock_file {
--	struct lock_file *next;
-+	struct lock_file *volatile next;
- 	volatile sig_atomic_t active;
--	int fd;
--	pid_t owner;
-+	volatile int fd;
-+	volatile pid_t owner;
- 	char on_list;
- 	char filename[PATH_MAX];
- };
+@@ -590,6 +590,7 @@ extern void unable_to_lock_message(const char *path, int err,
+ extern NORETURN void unable_to_lock_die(const char *path, int err);
+ extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+ extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
++extern int commit_lock_file_to(struct lock_file *, const char *path);
+ extern int commit_lock_file(struct lock_file *);
+ extern int reopen_lock_file(struct lock_file *);
+ extern void update_index_if_able(struct index_state *, struct lock_file *);
 diff --git a/lockfile.c b/lockfile.c
-index d35ac44..89043f5 100644
+index 56ad7e8..cf7f4d0 100644
 --- a/lockfile.c
 +++ b/lockfile.c
-@@ -55,7 +55,7 @@
-  *     on_list is set.
-  */
+@@ -43,9 +43,9 @@
+  *   Same as the previous state, except that the lockfile is closed
+  *   and fd is -1.
+  *
+- * - Unlocked (after commit_lock_file(), rollback_lock_file(), a
+- *   failed attempt to lock, or a failed close_lock_file()).  In this
+- *   state:
++ * - Unlocked (after commit_lock_file(), commit_lock_file_to(),
++ *   rollback_lock_file(), a failed attempt to lock, or a failed
++ *   close_lock_file()).  In this state:
+  *   - active is unset
+  *   - filename is empty (usually, though there are transitory
+  *     states in which this condition doesn't hold). Client code should
+@@ -284,23 +284,15 @@ int reopen_lock_file(struct lock_file *lk)
+ 	return lk->fd;
+ }
  
--static struct lock_file *lock_file_list;
-+static struct lock_file *volatile lock_file_list;
- 
- static void remove_lock_file(void)
+-int commit_lock_file(struct lock_file *lk)
++int commit_lock_file_to(struct lock_file *lk, const char *path)
  {
-diff --git a/refs.c b/refs.c
-index 4f313bc..9971ac5 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2259,15 +2259,16 @@ int commit_packed_refs(void)
- 		get_packed_ref_cache(&ref_cache);
- 	int error = 0;
- 	int save_errno = 0;
-+	int fd;
+-	static struct strbuf result_file = STRBUF_INIT;
+-	int err;
+-
+ 	if (!lk->active)
+-		die("BUG: attempt to commit unlocked object");
++		die("BUG: attempt to commit unlocked object to \"%s\"", path);
  
- 	if (!packed_ref_cache->lock)
- 		die("internal error: packed-refs not locked");
- 	write_or_die(packed_ref_cache->lock->fd,
- 		     PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER));
+ 	if (close_lock_file(lk))
+ 		return -1;
  
-+	fd = packed_ref_cache->lock->fd;
- 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
--				 0, write_packed_entry_fn,
--				 &packed_ref_cache->lock->fd);
-+				 0, write_packed_entry_fn, &fd);
- 	if (commit_lock_file(packed_ref_cache->lock)) {
- 		save_errno = errno;
- 		error = -1;
+-	/* remove ".lock": */
+-	strbuf_add(&result_file, lk->filename.buf,
+-		   lk->filename.len - LOCK_SUFFIX_LEN);
+-	err = rename(lk->filename.buf, result_file.buf);
+-	strbuf_reset(&result_file);
+-	if (err) {
++	if (rename(lk->filename.buf, path)) {
+ 		int save_errno = errno;
+ 		rollback_lock_file(lk);
+ 		errno = save_errno;
+@@ -312,6 +304,26 @@ int commit_lock_file(struct lock_file *lk)
+ 	return 0;
+ }
+ 
++int commit_lock_file(struct lock_file *lk)
++{
++	static struct strbuf result_file = STRBUF_INIT;
++	int err;
++
++	if (!lk->active)
++		die("BUG: attempt to commit unlocked object");
++
++	if (lk->filename.len <= LOCK_SUFFIX_LEN ||
++	    strcmp(lk->filename.buf + lk->filename.len - LOCK_SUFFIX_LEN, LOCK_SUFFIX))
++		die("BUG: lockfile filename corrupt");
++
++	/* remove ".lock": */
++	strbuf_add(&result_file, lk->filename.buf,
++		   lk->filename.len - LOCK_SUFFIX_LEN);
++	err = commit_lock_file_to(lk, result_file.buf);
++	strbuf_reset(&result_file);
++	return err;
++}
++
+ int hold_locked_index(struct lock_file *lk, int die_on_error)
+ {
+ 	return hold_lock_file_for_update(lk, get_index_file(),
+diff --git a/read-cache.c b/read-cache.c
+index 91bf876..e887e23 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2041,17 +2041,10 @@ void set_alternate_index_output(const char *name)
+ 
+ static int commit_locked_index(struct lock_file *lk)
+ {
+-	if (alternate_index_output) {
+-		if (close_lock_file(lk))
+-			return -1;
+-		if (rename(lk->filename.buf, alternate_index_output))
+-			return -1;
+-		lk->active = 0;
+-		strbuf_reset(&lk->filename);
+-		return 0;
+-	} else {
++	if (alternate_index_output)
++		return commit_lock_file_to(lk, alternate_index_output);
++	else
+ 		return commit_lock_file(lk);
+-	}
+ }
+ 
+ static int do_write_locked_index(struct index_state *istate, struct lock_file *lock,
 -- 
 2.1.0
