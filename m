@@ -1,173 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-quiltimport.sh: disallow fuzz
-Date: Thu, 25 Sep 2014 15:59:49 -0700
-Message-ID: <xmqq1tqz9uhm.fsf@gitster.dls.corp.google.com>
-References: <20140924213512.GA7619@logfs.org>
-	<xmqqwq8sb81e.fsf@gitster.dls.corp.google.com>
-	<20140925220831.GA14433@logfs.org>
-	<xmqq7g0r9v04.fsf@gitster.dls.corp.google.com>
+From: Sebastien Toulmonde <Sebastien.Toulmonde@bisnode.com>
+Subject: Re: Git 1.9.0 - build on Solaris 8 -> no git-remote-http ?
+Date: Fri, 26 Sep 2014 08:43:18 +0000
+Message-ID: <938AB08865DF82448B10C2CD60FD0AA1012349DC4C@EEL.pcs.sopres.be>
+References: <938AB08865DF82448B10C2CD60FD0AA1012349C5EC@EEL.pcs.sopres.be>
+ <vpqzjdnq4fm.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?Q?J=C3=B6rn?= Engel <joern@logfs.org>
-X-From: git-owner@vger.kernel.org Fri Sep 26 00:59:58 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 26 10:53:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXI0y-0007tI-57
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 00:59:56 +0200
+	id 1XXRHZ-0005pr-Qn
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 10:53:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752149AbaIYW7w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Sep 2014 18:59:52 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61420 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751981AbaIYW7v convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Sep 2014 18:59:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B43E3ECFC;
-	Thu, 25 Sep 2014 18:59:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2m+38SOukDkv
-	X6hF99orgC9nvmQ=; b=v3lidsexu0lU8d8LMuLtLxplVOZbBmdc+5LkoWx5YMXq
-	DRQqj0P6PAYbJ8ZN9/Labqcld5ceDjpCCNQi31axhvXrrScv6WwVGg1ANt48NLx0
-	C9JNBQeBspzKcYEpZXFWfUMqFxqoEnDH9ymOPTuSWvWoW2SLrv/NHZY0jQbd1Ok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=mzcwjY
-	340/F/JT9T2OJPIdPu4+EB1Us5hva3uT8Y+BrUP2yKDawRuvWOnfiGBLK4vWvUOV
-	8RSYLNfdV2SAQzeRe/4cbPzDqcX3YqIqbHSG0NRLeSLvG+HTtVwrn7FV9jQTVXpt
-	XvOE8y1aTptuBCdRo/6a6BFZjs5+z6+DGmf24=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 22CE83ECFB;
-	Thu, 25 Sep 2014 18:59:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9BAEF3ECFA;
-	Thu, 25 Sep 2014 18:59:50 -0400 (EDT)
-In-Reply-To: <xmqq7g0r9v04.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 25 Sep 2014 15:48:43 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A792EB66-4507-11E4-9BC4-D931C4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1753877AbaIZIxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Sep 2014 04:53:36 -0400
+Received: from esa4.bisnode.c3s2.iphmx.com ([68.232.139.121]:54239 "EHLO
+	esa4.bisnode.c3s2.iphmx.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753361AbaIZIxe (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2014 04:53:34 -0400
+X-Greylist: delayed 610 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Sep 2014 04:53:34 EDT
+X-IronPort-AV: E=Sophos;i="5.04,603,1406584800"; 
+   d="scan'208";a="1959393"
+Received: from postman.wegenerdm.be (HELO postman.sopres.be) ([194.78.134.90])
+  by esa4.bisnode.c3s2.iphmx.com with ESMTP; 26 Sep 2014 10:43:21 +0200
+Received: from bmix.wdmbelgium.be by postman.sopres.be; Fri, 26 Sep 2014 10:43:20 +0200 (MEST)
+Received: from EAGLE.pcs.sopres.be (EAGLE [172.16.70.241])
+	by bmix.wdmbelgium.be (8.13.1/8.13.1) with ESMTP id s8Q8hKKY020145;
+	Fri, 26 Sep 2014 10:43:20 +0200 (MEST)
+Received: from EEL.pcs.sopres.be ([::1]) by EAGLE.pcs.sopres.be
+ ([fe80::389b:5a27:371c:96f9%19]) with mapi id 14.02.0328.009; Fri, 26 Sep
+ 2014 10:43:19 +0200
+Thread-Topic: Git 1.9.0 - build on Solaris 8 -> no git-remote-http ?
+Thread-Index: AQHP2J8bRKVle0YUO0iiCBAN4VEU/JwRxIuTgAE0SYA=
+In-Reply-To: <vpqzjdnq4fm.fsf@anie.imag.fr>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101
+ Thunderbird/24.6.0
+x-originating-ip: [172.16.69.96]
+Content-ID: <CB121514441C9943B29B8BE0923747B0@bisnode.be>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257503>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Let's have it the other way around, keep the same behaviour for
-> those who run the command without the new option, while allowing
-> people who know better and are aligned with the spirit of git to
-> pass the parameter, at least for now, with a note in the
-> documentation to warn that the default may change in the future to
-> allow no fuzz, or something.
-
-Perhaps like this, with some documentation added (do we have/need
-any test???).
-
--- >8 --
-To: J=C3=B6rn Engel <joern@logfs.org>
-Date: Thu, 25 Sep 2014 18:08:31 -0400
-Subject: [PATCH] git-quiltimport.sh: allow declining fuzz with --exact =
-option
-
-git-quiltimport unconditionally passes "-C1" to "git apply",
-supposedly to roughly match the quilt default of --fuzz 2.  Allow
-users to pass --exact option to disable it, requiring the patch to
-apply without any fuzz.
-
-Also note that -C1 and fuzz=3D2 is not identical.  Most patches have
-three lines of context, so fuzz=3D2 leaves one relevant line of
-context.  But for any patches with more or less context this is not
-true.  git-apply has no option for fuzz, so any emulation will
-always be best-effort.
-
-Signed-off-by: Joern Engel <joern@logfs.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-quiltimport.txt | 12 ++++++++++++
- git-quiltimport.sh                | 17 ++++++++++++++++-
- 2 files changed, 28 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-quiltimport.txt b/Documentation/git-quil=
-timport.txt
-index a356196..109918d 100644
---- a/Documentation/git-quiltimport.txt
-+++ b/Documentation/git-quiltimport.txt
-@@ -49,6 +49,18 @@ The default for the patch directory is patches
- or the value of the $QUILT_PATCHES environment
- variable.
-=20
-+-C <number>::
-+	Pass `-C<number>` to underlying `git apply` when applying
-+	the patch, to reduce number of context lines to be matched.
-+	By default, `-C1` is passed to `git apply` to emulate the
-+	`--fuzz=3D2` behaviour of quilt (assuming the standard 3
-+	context lines).
-+
-+--exact::
-+	Do not pass any `-C<number>` option to `git apply` when
-+	applying the patch, to require context lines to fully match.
-+
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-index 167d79f..2d2c377 100755
---- a/git-quiltimport.sh
-+++ b/git-quiltimport.sh
-@@ -6,6 +6,8 @@ git quiltimport [options]
- --
- n,dry-run     dry run
- author=3D       author name and email address for patches without any
-+C=3D            minimum context (see git apply)
-+exact         allow no-fuzz
- patches=3D      path to the quilt series and patches
- "
- SUBDIRECTORY_ON=3DYes
-@@ -13,6 +15,7 @@ SUBDIRECTORY_ON=3DYes
-=20
- dry_run=3D""
- quilt_author=3D""
-+cflag=3D-C1
- while test $# !=3D 0
- do
- 	case "$1" in
-@@ -20,6 +23,18 @@ do
- 		shift
- 		quilt_author=3D"$1"
- 		;;
-+	-C)
-+		shift
-+		# ensure numerical parameter
-+		case "$1" in
-+		''|*[!0-9]*) usage;;
-+		*) ;;
-+		esac
-+		cflag=3D"-C$1"
-+		;;
-+	--exact)
-+		cflag=3D
-+		;;
- 	-n|--dry-run)
- 		dry_run=3D1
- 		;;
-@@ -130,7 +145,7 @@ do
- 	fi
-=20
- 	if [ -z "$dry_run" ] ; then
--		git apply --index -C1 ${level:+"$level"} "$tmp_patch" &&
-+		git apply --index $cflag ${level:+"$level"} "$tmp_patch" &&
- 		tree=3D$(git write-tree) &&
- 		commit=3D$( (echo "$SUBJECT"; echo; cat "$tmp_msg") | git commit-tre=
-e $tree -p $commit) &&
- 		git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4
---=20
-2.1.1-394-g5293c25
+SGVsbG8gTWF0dGhpZXUsDQoNCkkgdGhvdWdodCBjdXJsIHdhcyBpbnN0YWxsZWQgY29ycmVjdGx5
+IG9uIHRoZSBzZXJ2ZXIsIGJ1dCBhcHBhcmVudGx5IGl0IA0Kd2FzIG9ubHkgdGhlIGN1cmwgYmlu
+YXJpZXMgKG5vIGhlYWRlcnMvbGlicykuDQoNClNvIHdoYXQgSSBkaWQgKGZvciB0aGUgcmVjb3Jk
+cyk6DQoNCjEpIGNvbXBpbGUgY3VybC03LjM4LjAsIHByZWZpeCAvdXNyL2xvY2FsL2N1cmwtNy4z
+OC4wIChzbyB0aGF0IG15IHN5c3RlbSANCmN1cmwgaXMgbm90IGltcGFjdGVkKQ0KMikgY29uZmln
+dXJlIGdpdCB3aXRoOiBDQz0vb3B0L1NVTldzcHJvL2Jpbi9jYyAuL2NvbmZpZ3VyZSANCi0td2l0
+aC1jdXJsPS91c3IvbG9jYWwvY3VybC03LjM4LjAgLS13aXRob3V0LXRjbHRrIA0KLS1wcmVmaXg9
+L3Vzci9sb2NhbC9naXQtMS45LjANCg0KQW5kIG5vdywgZ2l0IGlzIG9wZXJhdGlvbmFsIChJIGRv
+bid0IG5lZWQgdGhlIGd1aSkuDQoNClRoYW5rcyBmb3IgeW91ciBoZWxwIQ0KDQpfX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCg0KU0VCQVNUSUVOIFRP
+VUxNT05ERQ0KVU5JWCBTeXN0ZW0gQWRtaW5pc3RyYXRvcg0KSW5mb3JtYXRpb24gU2VydmljZXMg
+RGVwYXJ0bWVudA0KICANCkJJU05PREUNCg0KRGlyZWN0OiArMzIgMiA1NTUgOTYgODYNCk1vYmls
+ZTogKzMyIDQ3NSA0OSA4MSA0NQ0KT2ZmaWNlIGZheDogKzMyIDIgNTIxIDIxIDk4DQpFLW1haWw6
+IHNlYmFzdGllbi50b3VsbW9uZGVAYmlzbm9kZS5jb20NCkFkZHJlc3M6IFJlc2VhcmNoZHJlZWYg
+NjUgQWxsw6llIGRlIGxhIFJlY2hlcmNoZSwgMTA3MCBCcnVzc2VscywgQmVsZ2l1bQ0Kd3d3LmJp
+c25vZGUuYmUNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fDQoNCk9uIDA5LzI1LzIwMTQgMDI6MTggUE0sIE1hdHRoaWV1IE1veSB3cm90ZToNCj4gU2Vi
+YXN0aWVuIFRvdWxtb25kZSA8U2ViYXN0aWVuLlRvdWxtb25kZUBiaXNub2RlLmNvbT4gd3JpdGVz
+Og0KPg0KPj4gSGVsbG8gYWxsLA0KPj4NCj4+IEknbSB0cnlpbmcgdG8gYnVpbGQgR2l0IGZyb20g
+c291cmNlIGZvciBvdXIgZW5kLXVzZXJzLiBPdXIgcGxhdGZvcm0NCj4+IHJhbmdlIGZyb20gU29s
+YXJpcyA4IHRvIDEwICh3ZSdyZSBtaWdyYXRpbmcgdG8gMTEgdGhpcyB5ZWFyKS4NCj4+IE1lYW53
+aGlsZSwgSSdtIHRyeWluZyB0byBidWlsZCBHaXQgZnJvbSBzb3VyY2UsIGFzIHRoZXJlIGlzIG5v
+IHBhY2thZ2UNCj4+IGZvciBTb2xhcmlzIDgvMTAgKG9wZW5jc3cgY2FuJ3QgYmUgdXNlZCBpbiBv
+dXIgZW52aXJvbm1lbnQpLiBJJ3ZlIGJlZW4NCj4+IGFibGUgdG8gYnVpbGQgaXQgc3VjY2Vzc2Z1
+bGx5LCB1c2luZyBTdW4gU3R1ZGlvIGFuZCBnbWFrZSAzLjg0LiBCdXQNCj4+IHVuZm9ydHVuYXRl
+bHksIHRoZSBidWlsZCBwcm9jZXNzIGRvZXMgbm90IGNvbXBpbGUvbGluayBhbnkNCj4+IGdpdC1y
+ZW1vdGUtKg0KPj4gcHJvZ3JhbXMuLi4gV2hpY2ggbGVhZHMgbWUgdG8gYW4gdW51c2FibGUgZ2l0
+IGZvciB1c2UgaW4gcmVtb3RlDQo+PiBhcmNoaXRlY3R1cmUgKHdoaWNoIGlzIHdoYXQgd2UgdXNl
+KS4NCj4gVGhlc2UgZ2l0LXJlbW90ZS0qIGhhdmUgbW9yZSBkZXBlbmRlbmNpZXMgdGhhbiB0aGUg
+Y29yZSBnaXQgZXhlY3V0YWJsZS4NCj4gUHJvYmFibHkgeW91IGxhY2sgbGliY3VybCAobGliIG9y
+IGhlYWRlciBmaWxlcykgb3Igc29tZXRoaW5nIGxpa2UgdGhpcz8NCj4NCgoqKioqIERJU0NMQUlN
+RVIgKioqKgoiVGhpcyBlLW1haWwgYW5kIGFueSBhdHRhY2htZW50cyB0aGVyZXRvIG1heSBjb250
+YWluIGluZm9ybWF0aW9uIHdoaWNoIGlzIGNvbmZpZGVudGlhbCBhbmQvb3IgcHJvdGVjdGVkIGJ5
+IGludGVsbGVjdHVhbCBwcm9wZXJ0eSByaWdodHMgYW5kIGFyZSBpbnRlbmRlZCBmb3IgdGhlIHNv
+bGUgdXNlIG9mIHRoZSByZWNpcGllbnQocyluYW1lZCBhYm92ZS4gQW55IHVzZSBvZiB0aGUgaW5m
+b3JtYXRpb24gY29udGFpbmVkIGhlcmVpbiAoaW5jbHVkaW5nLCBidXQgbm90IGxpbWl0ZWQgdG8s
+IHRvdGFsIG9yIHBhcnRpYWwgcmVwcm9kdWN0aW9uLCBjb21tdW5pY2F0aW9uIG9yIGRpc3RyaWJ1
+dGlvbiBpbiBhbnkgZm9ybSlieSBwZXJzb25zIG90aGVyIHRoYW4gdGhlIGRlc2lnbmF0ZWQgcmVj
+aXBpZW50KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMgZS1tYWls
+IGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgZWl0aGVyIGJ5IHRlbGVwaG9uZSBv
+ciBieSBlLW1haWwgYW5kIGRlbGV0ZSB0aGUgbWF0ZXJpYWwgZnJvbSBhbnkgY29tcHV0ZXIuIFRo
+YW5rIHlvdSBmb3IgeW91ciBjb29wZXJhdGlvbi4iCg==
