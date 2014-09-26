@@ -1,97 +1,176 @@
-From: Sebastien Toulmonde <Sebastien.Toulmonde@bisnode.com>
-Subject: Re: Git 1.9.0 - build on Solaris 8 -> no git-remote-http ?
-Date: Fri, 26 Sep 2014 08:43:18 +0000
-Message-ID: <938AB08865DF82448B10C2CD60FD0AA1012349DC4C@EEL.pcs.sopres.be>
-References: <938AB08865DF82448B10C2CD60FD0AA1012349C5EC@EEL.pcs.sopres.be>
- <vpqzjdnq4fm.fsf@anie.imag.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v6 00/39] Lockfile correctness and refactoring
+Date: Fri, 26 Sep 2014 12:08:00 +0200
+Message-ID: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 26 10:53:43 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 26 12:08:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXRHZ-0005pr-Qn
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 10:53:42 +0200
+	id 1XXSSQ-0003Mn-Dn
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Sep 2014 12:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753877AbaIZIxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Sep 2014 04:53:36 -0400
-Received: from esa4.bisnode.c3s2.iphmx.com ([68.232.139.121]:54239 "EHLO
-	esa4.bisnode.c3s2.iphmx.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753361AbaIZIxe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2014 04:53:34 -0400
-X-Greylist: delayed 610 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Sep 2014 04:53:34 EDT
-X-IronPort-AV: E=Sophos;i="5.04,603,1406584800"; 
-   d="scan'208";a="1959393"
-Received: from postman.wegenerdm.be (HELO postman.sopres.be) ([194.78.134.90])
-  by esa4.bisnode.c3s2.iphmx.com with ESMTP; 26 Sep 2014 10:43:21 +0200
-Received: from bmix.wdmbelgium.be by postman.sopres.be; Fri, 26 Sep 2014 10:43:20 +0200 (MEST)
-Received: from EAGLE.pcs.sopres.be (EAGLE [172.16.70.241])
-	by bmix.wdmbelgium.be (8.13.1/8.13.1) with ESMTP id s8Q8hKKY020145;
-	Fri, 26 Sep 2014 10:43:20 +0200 (MEST)
-Received: from EEL.pcs.sopres.be ([::1]) by EAGLE.pcs.sopres.be
- ([fe80::389b:5a27:371c:96f9%19]) with mapi id 14.02.0328.009; Fri, 26 Sep
- 2014 10:43:19 +0200
-Thread-Topic: Git 1.9.0 - build on Solaris 8 -> no git-remote-http ?
-Thread-Index: AQHP2J8bRKVle0YUO0iiCBAN4VEU/JwRxIuTgAE0SYA=
-In-Reply-To: <vpqzjdnq4fm.fsf@anie.imag.fr>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101
- Thunderbird/24.6.0
-x-originating-ip: [172.16.69.96]
-Content-ID: <CB121514441C9943B29B8BE0923747B0@bisnode.be>
+	id S1755375AbaIZKIy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Sep 2014 06:08:54 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61410 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755131AbaIZKIw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Sep 2014 06:08:52 -0400
+X-AuditID: 12074413-f79ed6d000002501-c5-54253b337905
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id EE.B9.09473.33B35245; Fri, 26 Sep 2014 06:08:51 -0400 (EDT)
+Received: from michael.berhq.github.net ([178.19.210.163])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8QA8lLj013914
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Fri, 26 Sep 2014 06:08:48 -0400
+X-Mailer: git-send-email 2.1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqGtsrRpisHqOiEXXlW4mi4beK8wW
+	T+beZbZ4e3MJo8XtFfOZLX609DBb/JtQY9HZ8ZXRgcPj7/sPTB47Z91l91iwqdTj4asudo9n
+	vXsYPS5eUvb4vEnO4/azbSwBHFHcNkmJJWXBmel5+nYJ3BmHmiczFszSrpjXfou5gXGhbBcj
+	J4eEgInE0u5DLBC2mMSFe+vZuhi5OIQELjNKnDiwiRXC2cQkMff6WVaQKjYBXYlFPc1MILaI
+	gJrExDaQbi4OZoHFTBITDm1iA0kIC9hJTDh+m7mLkYODRUBV4sRhOxCTV8BFYt9eU4hlchIb
+	dv9nBLF5BQQlTs58wgJSwiygLrF+nhBImFlAXqJ562zmCYx8s5BUzUKomoWkagEj8ypGucSc
+	0lzd3MTMnOLUZN3i5MS8vNQiXXO93MwSvdSU0k2MkDAX3sG466TcIUYBDkYlHt4b61RChFgT
+	y4orcw8xSnIwKYnyfrFQDRHiS8pPqcxILM6ILyrNSS0+xCjBwawkwnvHCCjHm5JYWZValA+T
+	kuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLgvWgJ1ChYlJqeWpGWmVOCkGbi4AQZziUl
+	Upyal5JalFhakhEPirr4YmDcgaR4gPZyWYHsLS5IzAWKQrSeYtTlWNf5rZ9JiCUvPy9VSpz3
+	CMgOAZCijNI8uBWwpPaKURzoY2HeGyBVPMCECDfpFdASJqAlSkeUQZaUJCKkpBoYU59b/vfY
+	bhj35tbPiE2XVE0FzA4U9+3coCfB4vL/ZnvxZZHH74KUEnZ/4hX2uCxRwa8pH/L3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257504>
 
-SGVsbG8gTWF0dGhpZXUsDQoNCkkgdGhvdWdodCBjdXJsIHdhcyBpbnN0YWxsZWQgY29ycmVjdGx5
-IG9uIHRoZSBzZXJ2ZXIsIGJ1dCBhcHBhcmVudGx5IGl0IA0Kd2FzIG9ubHkgdGhlIGN1cmwgYmlu
-YXJpZXMgKG5vIGhlYWRlcnMvbGlicykuDQoNClNvIHdoYXQgSSBkaWQgKGZvciB0aGUgcmVjb3Jk
-cyk6DQoNCjEpIGNvbXBpbGUgY3VybC03LjM4LjAsIHByZWZpeCAvdXNyL2xvY2FsL2N1cmwtNy4z
-OC4wIChzbyB0aGF0IG15IHN5c3RlbSANCmN1cmwgaXMgbm90IGltcGFjdGVkKQ0KMikgY29uZmln
-dXJlIGdpdCB3aXRoOiBDQz0vb3B0L1NVTldzcHJvL2Jpbi9jYyAuL2NvbmZpZ3VyZSANCi0td2l0
-aC1jdXJsPS91c3IvbG9jYWwvY3VybC03LjM4LjAgLS13aXRob3V0LXRjbHRrIA0KLS1wcmVmaXg9
-L3Vzci9sb2NhbC9naXQtMS45LjANCg0KQW5kIG5vdywgZ2l0IGlzIG9wZXJhdGlvbmFsIChJIGRv
-bid0IG5lZWQgdGhlIGd1aSkuDQoNClRoYW5rcyBmb3IgeW91ciBoZWxwIQ0KDQpfX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCg0KU0VCQVNUSUVOIFRP
-VUxNT05ERQ0KVU5JWCBTeXN0ZW0gQWRtaW5pc3RyYXRvcg0KSW5mb3JtYXRpb24gU2VydmljZXMg
-RGVwYXJ0bWVudA0KICANCkJJU05PREUNCg0KRGlyZWN0OiArMzIgMiA1NTUgOTYgODYNCk1vYmls
-ZTogKzMyIDQ3NSA0OSA4MSA0NQ0KT2ZmaWNlIGZheDogKzMyIDIgNTIxIDIxIDk4DQpFLW1haWw6
-IHNlYmFzdGllbi50b3VsbW9uZGVAYmlzbm9kZS5jb20NCkFkZHJlc3M6IFJlc2VhcmNoZHJlZWYg
-NjUgQWxsw6llIGRlIGxhIFJlY2hlcmNoZSwgMTA3MCBCcnVzc2VscywgQmVsZ2l1bQ0Kd3d3LmJp
-c25vZGUuYmUNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fDQoNCk9uIDA5LzI1LzIwMTQgMDI6MTggUE0sIE1hdHRoaWV1IE1veSB3cm90ZToNCj4gU2Vi
-YXN0aWVuIFRvdWxtb25kZSA8U2ViYXN0aWVuLlRvdWxtb25kZUBiaXNub2RlLmNvbT4gd3JpdGVz
-Og0KPg0KPj4gSGVsbG8gYWxsLA0KPj4NCj4+IEknbSB0cnlpbmcgdG8gYnVpbGQgR2l0IGZyb20g
-c291cmNlIGZvciBvdXIgZW5kLXVzZXJzLiBPdXIgcGxhdGZvcm0NCj4+IHJhbmdlIGZyb20gU29s
-YXJpcyA4IHRvIDEwICh3ZSdyZSBtaWdyYXRpbmcgdG8gMTEgdGhpcyB5ZWFyKS4NCj4+IE1lYW53
-aGlsZSwgSSdtIHRyeWluZyB0byBidWlsZCBHaXQgZnJvbSBzb3VyY2UsIGFzIHRoZXJlIGlzIG5v
-IHBhY2thZ2UNCj4+IGZvciBTb2xhcmlzIDgvMTAgKG9wZW5jc3cgY2FuJ3QgYmUgdXNlZCBpbiBv
-dXIgZW52aXJvbm1lbnQpLiBJJ3ZlIGJlZW4NCj4+IGFibGUgdG8gYnVpbGQgaXQgc3VjY2Vzc2Z1
-bGx5LCB1c2luZyBTdW4gU3R1ZGlvIGFuZCBnbWFrZSAzLjg0LiBCdXQNCj4+IHVuZm9ydHVuYXRl
-bHksIHRoZSBidWlsZCBwcm9jZXNzIGRvZXMgbm90IGNvbXBpbGUvbGluayBhbnkNCj4+IGdpdC1y
-ZW1vdGUtKg0KPj4gcHJvZ3JhbXMuLi4gV2hpY2ggbGVhZHMgbWUgdG8gYW4gdW51c2FibGUgZ2l0
-IGZvciB1c2UgaW4gcmVtb3RlDQo+PiBhcmNoaXRlY3R1cmUgKHdoaWNoIGlzIHdoYXQgd2UgdXNl
-KS4NCj4gVGhlc2UgZ2l0LXJlbW90ZS0qIGhhdmUgbW9yZSBkZXBlbmRlbmNpZXMgdGhhbiB0aGUg
-Y29yZSBnaXQgZXhlY3V0YWJsZS4NCj4gUHJvYmFibHkgeW91IGxhY2sgbGliY3VybCAobGliIG9y
-IGhlYWRlciBmaWxlcykgb3Igc29tZXRoaW5nIGxpa2UgdGhpcz8NCj4NCgoqKioqIERJU0NMQUlN
-RVIgKioqKgoiVGhpcyBlLW1haWwgYW5kIGFueSBhdHRhY2htZW50cyB0aGVyZXRvIG1heSBjb250
-YWluIGluZm9ybWF0aW9uIHdoaWNoIGlzIGNvbmZpZGVudGlhbCBhbmQvb3IgcHJvdGVjdGVkIGJ5
-IGludGVsbGVjdHVhbCBwcm9wZXJ0eSByaWdodHMgYW5kIGFyZSBpbnRlbmRlZCBmb3IgdGhlIHNv
-bGUgdXNlIG9mIHRoZSByZWNpcGllbnQocyluYW1lZCBhYm92ZS4gQW55IHVzZSBvZiB0aGUgaW5m
-b3JtYXRpb24gY29udGFpbmVkIGhlcmVpbiAoaW5jbHVkaW5nLCBidXQgbm90IGxpbWl0ZWQgdG8s
-IHRvdGFsIG9yIHBhcnRpYWwgcmVwcm9kdWN0aW9uLCBjb21tdW5pY2F0aW9uIG9yIGRpc3RyaWJ1
-dGlvbiBpbiBhbnkgZm9ybSlieSBwZXJzb25zIG90aGVyIHRoYW4gdGhlIGRlc2lnbmF0ZWQgcmVj
-aXBpZW50KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMgZS1tYWls
-IGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgZWl0aGVyIGJ5IHRlbGVwaG9uZSBv
-ciBieSBlLW1haWwgYW5kIGRlbGV0ZSB0aGUgbWF0ZXJpYWwgZnJvbSBhbnkgY29tcHV0ZXIuIFRo
-YW5rIHlvdSBmb3IgeW91ciBjb29wZXJhdGlvbi4iCg==
+Next iteration of my lockfile fixes and refactoring. Thanks to
+Jonathan Nieder and Torsten B=C3=B6gershausen for their comments about =
+v5.
+
+I believe that this series addresses all of the comments from v1 [1],
+v2 [2], v3 [3], v4 [4], and v5 [5].
+
+Changes since v4:
+
+* Revise API documentation.
+
+* Split out a separate header file for the lockfile API: lockfile.h.
+
+* Change close_lock_file() to rollback on errors and make it into a
+  NOOP if the file is already closed.
+
+* Don't set lk->on_list until the lock_file object is completely on
+  the lock_file_list.
+
+* Delete some information from the docstring in lockfile.c (now
+  lockfile.h) that is redundant with the API docs in api-lockfile.txt.
+
+* Remove the accidental extra call of git_config_clear() in
+  git_config_set_multivar_in_file() when commit_lock_file() fails.
+
+* Adjust some comments, error messages, and commit messages.
+
+* Rebase to current master.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/245609
+[2] http://thread.gmane.org/gmane.comp.version-control.git/245801
+[3] http://thread.gmane.org/gmane.comp.version-control.git/246222
+[4] http://thread.gmane.org/gmane.comp.version-control.git/256564
+[5] http://thread.gmane.org/gmane.comp.version-control.git/257159
+
+Michael Haggerty (39):
+  unable_to_lock_die(): rename function from unable_to_lock_index_die()
+  api-lockfile: revise and expand the documentation
+  close_lock_file(): exit (successfully) if file is already closed
+  rollback_lock_file(): do not clear filename redundantly
+  rollback_lock_file(): exit early if lock is not active
+  rollback_lock_file(): set fd to -1
+  lockfile: unlock file if lockfile permissions cannot be adjusted
+  hold_lock_file_for_append(): release lock on errors
+  lock_file(): always initialize and register lock_file object
+  lockfile.c: document the various states of lock_file objects
+  cache.h: define constants LOCK_SUFFIX and LOCK_SUFFIX_LEN
+  delete_ref_loose(): don't muck around in the lock_file's filename
+  prepare_index(): declare return value to be (const char *)
+  write_packed_entry_fn(): convert cb_data into a (const int *)
+  lock_file(): exit early if lockfile cannot be opened
+  remove_lock_file(): call rollback_lock_file()
+  commit_lock_file(): inline temporary variable
+  commit_lock_file(): die() if called for unlocked lockfile object
+  close_lock_file(): if close fails, roll back
+  commit_lock_file(): rollback lock file on failure to rename
+  api-lockfile: document edge cases
+  dump_marks(): remove a redundant call to rollback_lock_file()
+  git_config_set_multivar_in_file(): avoid call to rollback_lock_file()
+  lockfile: avoid transitory invalid states
+  struct lock_file: declare some fields volatile
+  try_merge_strategy(): remove redundant lock_file allocation
+  try_merge_strategy(): use a statically-allocated lock_file object
+  commit_lock_file(): use a strbuf to manage temporary space
+  Change lock_file::filename into a strbuf
+  resolve_symlink(): use a strbuf for internal scratch space
+  resolve_symlink(): take a strbuf parameter
+  trim_last_path_component(): replace last_path_elm()
+  Extract a function commit_lock_file_to()
+  Rename LOCK_NODEREF to LOCK_NO_DEREF
+  lockfile.c: rename static functions
+  get_locked_file_path(): new function
+  hold_lock_file_for_append(): restore errno before returning
+  Move read_index() definition to read-cache.c
+  lockfile.h: extract new header file for the functions in lockfile.c
+
+ Documentation/technical/api-lockfile.txt | 220 ++++++++++++++++++-----=
+-
+ builtin/add.c                            |   1 +
+ builtin/apply.c                          |   1 +
+ builtin/checkout-index.c                 |   2 +-
+ builtin/checkout.c                       |   2 +-
+ builtin/clone.c                          |   1 +
+ builtin/commit.c                         |  17 +-
+ builtin/describe.c                       |   1 +
+ builtin/diff.c                           |   1 +
+ builtin/gc.c                             |   2 +-
+ builtin/merge.c                          |  16 +-
+ builtin/mv.c                             |   2 +-
+ builtin/read-tree.c                      |   1 +
+ builtin/receive-pack.c                   |   1 +
+ builtin/reflog.c                         |   4 +-
+ builtin/reset.c                          |   1 +
+ builtin/rm.c                             |   2 +-
+ builtin/update-index.c                   |   3 +-
+ bundle.c                                 |   1 +
+ cache-tree.c                             |   1 +
+ cache.h                                  |  20 +--
+ config.c                                 |  16 +-
+ credential-store.c                       |   1 +
+ fast-import.c                            |   5 +-
+ fetch-pack.c                             |   1 +
+ lockfile.c                               | 284 +++++++++++++++++------=
+--------
+ lockfile.h                               |  84 +++++++++
+ merge-recursive.c                        |   1 +
+ merge.c                                  |   1 +
+ read-cache.c                             |  21 ++-
+ refs.c                                   |  30 ++--
+ rerere.c                                 |   1 +
+ sequencer.c                              |   1 +
+ sha1_file.c                              |   1 +
+ shallow.c                                |   7 +-
+ test-scrap-cache-tree.c                  |   1 +
+ 36 files changed, 492 insertions(+), 263 deletions(-)
+ create mode 100644 lockfile.h
+
+--=20
+2.1.0
