@@ -1,68 +1,106 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] Do not make trace.c/getnanotime an inlined function
-Date: Sun, 28 Sep 2014 21:15:29 +0200
-Message-ID: <54285E51.3090209@kdbg.org>
-References: <1411890626-28237-1-git-send-email-bdwalton@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: MinGW(-W64) compilation
+Date: Sun, 28 Sep 2014 22:55:40 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1409282255150.990@s15462909.onlinehome-server.info>
+References: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: karsten.blees@gmail.com, gitster@pobox.com, git@vger.kernel.org
-To: Ben Walton <bdwalton@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 28 21:15:52 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>, 
+    Erik Faye-Lund <kusmabite@gmail.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBCZPH74Q5YNRBZPLUGQQKGQEOLTOPHY@googlegroups.com Sun Sep 28 22:56:08 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBZPLUGQQKGQEOLTOPHY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f57.google.com ([209.85.215.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYJwl-0007Mk-M9
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 21:15:52 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbaI1TPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2014 15:15:38 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:11582 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750837AbaI1TPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2014 15:15:38 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3j5c5364SBz5tlJ;
-	Sun, 28 Sep 2014 21:15:19 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6408E19F5AF;
-	Sun, 28 Sep 2014 21:15:29 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-In-Reply-To: <1411890626-28237-1-git-send-email-bdwalton@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257612>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBZPLUGQQKGQEOLTOPHY@googlegroups.com>)
+	id 1XYLVm-0005X1-Hb
+	for gcvm-msysgit@m.gmane.org; Sun, 28 Sep 2014 22:56:06 +0200
+Received: by mail-la0-f57.google.com with SMTP id s18sf135836lam.22
+        for <gcvm-msysgit@m.gmane.org>; Sun, 28 Sep 2014 13:56:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=lkHQGh/FPEv9dMxaTBx8ex9AGucHR3KrIjPhomfnZsA=;
+        b=QpMv3ou43s1Bk0GFl2d8afOA29ohvW2MfIFyeynSPvRKx4dLHj2otimpL9WBdqxyJG
+         vVjM2fppfOSDqs8Wm0z8Pzj0gAxb3GmC9uUe2IsHH725/VB0Vfq7zGk4G3QLfZnQQCT6
+         G4GxhdNxwx90iLSgQ8sFNwZ7D5JjcfCeEc1URo3xkU4icoOctsVFpaKxXqpCwI0DjTIQ
+         f9/szjgmeMpzv1BW77RURgRbAa0uSSnwhTbNLZpkCKMe+c2lAfODipe3z8JaklQsMSRy
+         72oigOiHks+KghadFhOflZOFrsXwwRdUMkgiqDMXZ6BqUtrHaRHaxuswFa4At0l+Rgqe
+         bc7Q==
+X-Received: by 10.180.207.100 with SMTP id lv4mr200361wic.11.1411937766325;
+        Sun, 28 Sep 2014 13:56:06 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.85.41 with SMTP id e9ls388357wiz.16.gmail; Sun, 28 Sep
+ 2014 13:56:05 -0700 (PDT)
+X-Received: by 10.180.106.197 with SMTP id gw5mr1189090wib.1.1411937765472;
+        Sun, 28 Sep 2014 13:56:05 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTPS id fa3si581487lbc.0.2014.09.28.13.56.05
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 28 Sep 2014 13:56:05 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MDzGN-1XTcot3cRr-00HNKD;
+ Sun, 28 Sep 2014 22:55:40 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:Oso3viXgSGjU5NphH0ndEJW35vKTTz23IEUFj3g8qvNpDnNiL8e
+ 9DUGQx3Pi+E8KKnUFghHK/kEyovZWE5B8kdF1/skvWDZFqQMzIHREP+4Gau1XD6wQcfi88K
+ F7DEXWxIS4Xr1PIhrhRadyVAMDoYj1yVgxxEAckMGZuUBr8DkYlo7eV2xQ5b0kXpF7gomO/
+ usCkL/MGpdhV3PAgzc7RA==
+X-UI-Out-Filterresults: notjunk:1;
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257613>
 
-Am 28.09.2014 um 09:50 schrieb Ben Walton:
-> Oracle Studio compilers don't allow for static variables in functions
-> that are defined to be inline. GNU C does permit this. Let's reference
-> the C99 standard though, which doesn't allow for inline functions to
-> contain modifiable static variables.
-> 
-> Signed-off-by: Ben Walton <bdwalton@gmail.com>
-> ---
->  trace.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/trace.c b/trace.c
-> index b6f25a2..4778608 100644
-> --- a/trace.c
-> +++ b/trace.c
-> @@ -385,7 +385,7 @@ static inline uint64_t gettimeofday_nanos(void)
->   * Returns nanoseconds since the epoch (01/01/1970), for performance tracing
->   * (i.e. favoring high precision over wall clock time accuracy).
->   */
-> -inline uint64_t getnanotime(void)
-> +uint64_t getnanotime(void)
->  {
->  	static uint64_t offset;
->  	if (offset > 1) {
-> 
+Hi Marat,
 
-But then the function could stay static, no?
+On Sun, 28 Sep 2014, Marat Radchenko wrote:
 
--- Hannes
+> This patch series fixes building on modern MinGW and MinGW-W64
+> (including x86_64!).
+
+Awesome work! I'll have a look at it as soon as I can!
+
+Ciao,
+Johannes
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
