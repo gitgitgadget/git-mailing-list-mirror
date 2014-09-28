@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 22/32] checkout: support checking out into a new working directory
-Date: Sun, 28 Sep 2014 08:22:36 +0700
-Message-ID: <1411867366-3821-23-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 23/32] prune: strategies for linked checkouts
+Date: Sun, 28 Sep 2014 08:22:37 +0700
+Message-ID: <1411867366-3821-24-git-send-email-pclouds@gmail.com>
 References: <xmqqk34r9z3r.fsf@gitster.dls.corp.google.com>
  <1411867366-3821-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -10,444 +10,485 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+	<pclouds@gmail.com>, Marc Branchaud <marcnarc@xiplink.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 28 03:24:57 2014
+X-From: git-owner@vger.kernel.org Sun Sep 28 03:25:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XY3EO-0002dk-Ab
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 03:24:56 +0200
+	id 1XY3EU-0002fZ-3j
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 03:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753453AbaI1BYw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Sep 2014 21:24:52 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:36797 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753183AbaI1BYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2014 21:24:51 -0400
-Received: by mail-pd0-f182.google.com with SMTP id y10so3252937pdj.41
-        for <git@vger.kernel.org>; Sat, 27 Sep 2014 18:24:50 -0700 (PDT)
+	id S1753457AbaI1BY5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Sep 2014 21:24:57 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:53530 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183AbaI1BY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2014 21:24:57 -0400
+Received: by mail-pa0-f44.google.com with SMTP id et14so513471pad.31
+        for <git@vger.kernel.org>; Sat, 27 Sep 2014 18:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=K4O/X/ZkuFM7H1I3nhI6gmMzCyNJYapho0j8jy6V6is=;
-        b=HF1pNsBoWge3m650kUp2hqmSYaX01IWD3P/yKzPYqngrE9/mv144yDRJ5K7oVqoR/J
-         +oINIOEdWyjc3PJts0efEorWrOtAhSttqqgyp02SEkf6K6+jal6tiTdwxVZK3l0AtxGz
-         Yh0u+vYUViLZLHP+vf6kYusndcvzmYCclXsWXYylvv+xNRRexC/F5daSGEmrVSUXU0rS
-         oTf3srxR74po9+1T971JSASXV0Ibx2/nrUu2q5jkJRv7JxuvVWc5QsMbs7vK2KRmZK0n
-         QULgvp3Cw0++lZnKdLnZXOCFg3J8YvnuzhFGsj4XDFGpKsmWJwt3/6Gnse24yWEkorbp
-         XtTQ==
-X-Received: by 10.68.134.130 with SMTP id pk2mr45950403pbb.133.1411867490863;
-        Sat, 27 Sep 2014 18:24:50 -0700 (PDT)
+        bh=We/ot2KAR6XXabYZ//uL/NbIK3TO9BsC5kxj7d4SRUY=;
+        b=OTpEX9eRVwShufWyO4a9VJqfvGYuqlGoRzvaXFEbQ1HtV5Zd/TyCV/t34EieXaFb6m
+         Mt8P1LBM8S6pDielDVCxL6XQApDh5cfqSMbZyurbPrOMqhnvrDWI6ryjlbIWdTbJ5iQQ
+         VUERtJTNigHLJxFAUkupBgyACwTfDDEcgMyStFdGzyqNx7WhTCDjUeO6mj9cah2FW54l
+         yDLUGzgEskZcOXjdD5n9GE+0dbz8WFPwsDGwMbOwMcHeCJV1HP35CxmmT1rmGH8v5TM2
+         MLwImgnISU9EPPLKLyAj5JeRE0wpqiIdZvlWgMoMrT7krfJzmHVvgUkaPJ6qan7fzLaU
+         mI9A==
+X-Received: by 10.70.87.169 with SMTP id az9mr58246373pdb.63.1411867496573;
+        Sat, 27 Sep 2014 18:24:56 -0700 (PDT)
 Received: from lanh ([115.73.212.224])
-        by mx.google.com with ESMTPSA id ca3sm8500366pbb.80.2014.09.27.18.24.47
+        by mx.google.com with ESMTPSA id cz1sm8522332pdb.85.2014.09.27.18.24.53
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Sep 2014 18:24:49 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 28 Sep 2014 08:24:51 +0700
+        Sat, 27 Sep 2014 18:24:55 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 28 Sep 2014 08:24:59 +0700
 X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
 In-Reply-To: <1411867366-3821-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257582>
 
-"git checkout --to" sets up a new working directory with a .git file
-pointing to $GIT_DIR/worktrees/<id>. It then executes "git checkout"
-again on the new worktree with the same arguments except "--to" is
-taken out. The second checkout execution, which is not contaminated
-with any info from the current repository, will actually check out and
-everything that normal "git checkout" does.
+(alias R=3D$GIT_COMMON_DIR/worktrees/<id>)
+
+ - linked checkouts are supposed to keep its location in $R/gitdir up
+   to date. The use case is auto fixup after a manual checkout move.
+
+ - linked checkouts are supposed to update mtime of $R/gitdir. If
+   $R/gitdir's mtime is older than a limit, and it points to nowhere,
+   worktrees/<id> is to be pruned.
+
+ - If $R/locked exists, worktrees/<id> is not supposed to be pruned. If
+   $R/locked exists and $R/gitdir's mtime is older than a really long
+   limit, warn about old unused repo.
+
+ - "git checkout --to" is supposed to make a hard link named $R/link
+   pointing to the .git file on supported file systems to help detect
+   the user manually deleting the checkout. If $R/link exists and its
+   link count is greated than 1, the repo is kept.
 
 Helped-by: Marc Branchaud <marcnarc@xiplink.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-checkout.txt         | 46 ++++++++++++++++
- Documentation/git.txt                  |  3 +-
- Documentation/gitrepository-layout.txt |  7 +++
- builtin/checkout.c                     | 95 ++++++++++++++++++++++++++=
-+++++++-
- path.c                                 |  2 +-
- t/t2025-checkout-to.sh (new +x)        | 63 ++++++++++++++++++++++
- 6 files changed, 212 insertions(+), 4 deletions(-)
- create mode 100755 t/t2025-checkout-to.sh
+ Documentation/git-checkout.txt             | 20 +++++++
+ Documentation/git-prune.txt                |  3 +
+ Documentation/gitrepository-layout.txt     | 19 ++++++
+ builtin/checkout.c                         | 19 +++++-
+ builtin/prune.c                            | 95 ++++++++++++++++++++++=
+++++++++
+ setup.c                                    | 13 ++++
+ t/t2026-prune-linked-checkouts.sh (new +x) | 84 ++++++++++++++++++++++=
+++++
+ 7 files changed, 251 insertions(+), 2 deletions(-)
+ create mode 100755 t/t2026-prune-linked-checkouts.sh
 
 diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
 t.txt
-index 33ad2ad..c101575 100644
+index c101575..35675da 100644
 --- a/Documentation/git-checkout.txt
 +++ b/Documentation/git-checkout.txt
-@@ -225,6 +225,13 @@ This means that you can use `git checkout -p` to s=
-electively discard
- edits from your current working tree. See the ``Interactive Mode''
- section of linkgit:git-add[1] to learn how to operate the `--patch` mo=
-de.
+@@ -434,6 +434,26 @@ thumb is do not make any assumption about whether =
+a path belongs to
+ $GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
+ inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
 =20
-+--to=3D<path>::
-+	Check out a branch in a separate working directory at
-+	`<path>`. A new working directory is linked to the current
-+	repository, sharing everything except working directory
-+	specific files such as HEAD, index... See "MULTIPLE WORKING
-+	TREES" section for more information.
++When you are done with a linked working tree you can simply delete it.
++You can clean up any stale $GIT_DIR/worktrees entries via `git prune
++--worktrees` in the main or any linked working tree.
 +
- <branch>::
- 	Branch to checkout; if it refers to a branch (i.e., a name that,
- 	when prepended with "refs/heads/", is a valid ref), then that
-@@ -388,6 +395,45 @@ $ git reflog -2 HEAD # or
- $ git log -g -2 HEAD
- ------------
-=20
-+MULTIPLE WORKING TREES
-+----------------------
++If you move a linked working directory to another file system, or
++within a file system that does not support hard links, you need to run
++at least one git command inside the linked working directory
++(e.g. `git status`) in order to update its entry in $GIT_DIR/worktrees
++so that it does not get automatically removed.
 +
-+A git repository can support multiple working trees, allowing you to c=
-heck
-+out more than one branch at a time.  With `git checkout --to` a new wo=
-rking
-+tree is associated with the repository.  This new working tree is call=
-ed a
-+"linked working tree" as opposed to the "main working tree" prepared b=
-y "git
-+init" or "git clone".  A repository has one main working tree (if it's=
- not a
-+bare repository) and zero or more linked working trees.
-+
-+Each linked working tree has a private sub-directory in the repository=
-'s
-+$GIT_DIR/worktrees directory.  The private sub-directory's name is usu=
-ally
-+the base name of the linked working tree's path, possibly appended wit=
-h a
-+number to make it unique.  For example, when `$GIT_DIR=3D/path/main/.g=
-it` the
-+command `git checkout --to /path/other/test-next next` creates the lin=
-ked
-+working tree in `/path/other/test-next` and also creates a
-+`$GIT_DIR/worktrees/test-next` directory (or `$GIT_DIR/worktrees/test-=
-next1`
-+if `test-next` is already taken).
-+
-+Within a linked working tree, $GIT_DIR is set to point to this private
-+directory (e.g. `/path/main/.git/worktrees/test-next` in the example) =
-and
-+$GIT_COMMON_DIR is set to point back to the main working tree's $GIT_D=
-IR
-+(e.g. `/path/main/.git`). These settings are made in a `.git` file loc=
-ated at
-+the top directory of the linked working tree.
-+
-+Path resolution via `git rev-parse --git-path` uses either
-+$GIT_DIR or $GIT_COMMON_DIR depending on the path. For example, in the
-+linked working tree `git rev-parse --git-path HEAD` returns
-+`/path/main/.git/worktrees/test-next/HEAD` (not
-+`/path/other/test-next/.git/HEAD` or `/path/main/.git/HEAD`) while `gi=
-t
-+rev-parse --git-path refs/heads/master` uses
-+$GIT_COMMON_DIR and returns `/path/main/.git/refs/heads/master`,
-+since refs are shared across all working trees.
-+
-+See linkgit:gitrepository-layout[5] for more information. The rule of
-+thumb is do not make any assumption about whether a path belongs to
-+$GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
-+inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
++To prevent `git prune --worktrees` from deleting a $GIT_DIR/worktrees
++entry (which can be useful in some situations, such as when the
++entry's working tree is stored on a portable device), add a file named
++'locked' to the entry's directory. The file contains the reason in
++plain text. For example, if a linked working tree's `.git` file points
++to `/path/main/.git/worktrees/test-next` then a file named
++`/path/main/.git/worktrees/test-next/locked` will prevent the
++`test-next` entry from being pruned.  See
++linkgit:gitrepository-layout[5] for details.
 +
  EXAMPLES
  --------
 =20
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 176d37c..54c9fb6 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -806,7 +806,8 @@ Git so take care if using Cogito etc.
- 	If this variable is set to a path, non-worktree files that are
- 	normally in $GIT_DIR will be taken from this path
- 	instead. Worktree-specific files such as HEAD or index are
--	taken from $GIT_DIR. See linkgit:gitrepository-layout[5] for
-+	taken from $GIT_DIR. See linkgit:gitrepository-layout[5] and
-+	the section 'MULTIPLE CHECKOUT MODE' in linkgit:checkout[1]
- 	details. This variable has lower precedence than other path
- 	variables such as GIT_INDEX_FILE, GIT_OBJECT_DIRECTORY...
+diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
+index 7a493c8..1cf3bed 100644
+--- a/Documentation/git-prune.txt
++++ b/Documentation/git-prune.txt
+@@ -48,6 +48,9 @@ OPTIONS
+ --expire <time>::
+ 	Only expire loose objects older than <time>.
 =20
++--worktrees::
++	Prune dead working tree information in $GIT_DIR/worktrees.
++
+ <head>...::
+ 	In addition to objects
+ 	reachable from any of our references, keep objects
 diff --git a/Documentation/gitrepository-layout.txt b/Documentation/git=
 repository-layout.txt
-index 2dc5667..8228450 100644
+index 8228450..2b30a92 100644
 --- a/Documentation/gitrepository-layout.txt
 +++ b/Documentation/gitrepository-layout.txt
-@@ -252,6 +252,13 @@ modules::
- 	directory is ignored if $GIT_COMMON_DIR is set and
- 	"$GIT_COMMON_DIR/modules" will be used instead.
+@@ -259,6 +259,25 @@ worktrees::
+ 	$GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/worktrees" will be
+ 	used instead.
 =20
-+worktrees::
-+	Contains worktree specific information of linked
-+	checkouts. Each subdirectory contains the worktree-related
-+	part of a linked checkout. This directory is ignored if
-+	$GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/worktrees" will be
-+	used instead.
++worktrees/<id>/gitdir::
++	A text file containing the absolute path back to the .git file
++	that points to here. This is used to check if the linked
++	repository has been manually removed and there is no need to
++	keep this directory any more. mtime of this file should be
++	updated every time the linked repository is accessed.
++
++worktrees/<id>/locked::
++	If this file exists, the linked repository may be on a
++	portable device and not available. It does not mean that the
++	linked repository is gone and `worktrees/<id>` could be
++	removed. The file's content contains a reason string on why
++	the repository is locked.
++
++worktrees/<id>/link::
++	If this file exists, it is a hard link to the linked .git
++	file. It is used to detect if the linked repository is
++	manually removed.
 +
  SEE ALSO
  --------
  linkgit:git-init[1],
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 220f80e..ad10f99 100644
+index ad10f99..ab46af9 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -48,6 +48,10 @@ struct checkout_opts {
- 	const char *prefix;
- 	struct pathspec pathspec;
- 	struct tree *source_tree;
+@@ -826,7 +826,7 @@ static int prepare_linked_checkout(const struct che=
+ckout_opts *opts,
+ 	const char *path =3D opts->new_worktree, *name;
+ 	struct stat st;
+ 	struct child_process cp;
+-	int counter =3D 0, len;
++	int counter =3D 0, len, ret;
+=20
+ 	if (!new->commit)
+ 		die(_("no branch specified"));
+@@ -857,11 +857,21 @@ static int prepare_linked_checkout(const struct c=
+heckout_opts *opts,
+ 	if (mkdir(sb_repo.buf, 0777))
+ 		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
+=20
++	/*
++	 * lock the incomplete repo so prune won't delete it, unlock
++	 * after the preparation is over.
++	 */
++	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
++	write_file(sb.buf, 1, "initializing\n");
 +
-+	const char *new_worktree;
-+	const char **saved_argv;
-+	int new_worktree_mode;
- };
+ 	strbuf_addf(&sb_git, "%s/.git", path);
+ 	if (safe_create_leading_directories_const(sb_git.buf))
+ 		die_errno(_("could not create leading directories of '%s'"),
+ 			  sb_git.buf);
 =20
- static int post_checkout_hook(struct commit *old, struct commit *new,
-@@ -249,6 +253,9 @@ static int checkout_paths(const struct checkout_opt=
-s *opts,
- 		die(_("Cannot update paths and switch to branch '%s' at the same tim=
-e."),
- 		    opts->new_branch);
-=20
-+	if (opts->new_worktree)
-+		die(_("'%s' cannot be used with updating paths"), "--to");
-+
- 	if (opts->patch_mode)
- 		return run_add_interactive(revision, "--patch=3Dcheckout",
- 					   &opts->pathspec);
-@@ -484,7 +491,7 @@ static int merge_working_tree(const struct checkout=
-_opts *opts,
- 			topts.dir->flags |=3D DIR_SHOW_IGNORED;
- 			setup_standard_excludes(topts.dir);
- 		}
--		tree =3D parse_tree_indirect(old->commit ?
-+		tree =3D parse_tree_indirect(old->commit && !opts->new_worktree_mode=
- ?
- 					   old->commit->object.sha1 :
- 					   EMPTY_TREE_SHA1_BIN);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
-@@ -800,7 +807,8 @@ static int switch_branches(const struct checkout_op=
-ts *opts,
- 		return ret;
- 	}
-=20
--	if (!opts->quiet && !old.path && old.commit && new->commit !=3D old.c=
-ommit)
-+	if (!opts->quiet && !old.path && old.commit &&
-+	    new->commit !=3D old.commit && !opts->new_worktree_mode)
- 		orphaned_commit_warning(old.commit, new->commit);
-=20
- 	update_refs_for_switch(opts, &old, new);
-@@ -810,6 +818,76 @@ static int switch_branches(const struct checkout_o=
-pts *opts,
- 	return ret || writeout_error;
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
++	write_file(sb.buf, 1, "%s\n", real_path(sb_git.buf));
+ 	write_file(sb_git.buf, 1, "gitdir: %s/worktrees/%s\n",
+ 		   real_path(get_git_common_dir()), name);
+ 	/*
+@@ -870,6 +880,7 @@ static int prepare_linked_checkout(const struct che=
+ckout_opts *opts,
+ 	 * value would do because this value will be ignored and
+ 	 * replaced at the next (real) checkout.
+ 	 */
++	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
+ 	write_file(sb.buf, 1, "%s\n", sha1_to_hex(new->commit->object.sha1));
+ 	strbuf_reset(&sb);
+@@ -885,7 +896,11 @@ static int prepare_linked_checkout(const struct ch=
+eckout_opts *opts,
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.git_cmd =3D 1;
+ 	cp.argv =3D opts->saved_argv;
+-	return run_command(&cp);
++	ret =3D run_command(&cp);
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
++	unlink_or_warn(sb.buf);
++	return ret;
  }
 =20
-+static int prepare_linked_checkout(const struct checkout_opts *opts,
-+				   struct branch_info *new)
-+{
-+	struct strbuf sb_git =3D STRBUF_INIT, sb_repo =3D STRBUF_INIT;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	const char *path =3D opts->new_worktree, *name;
-+	struct stat st;
-+	struct child_process cp;
-+	int counter =3D 0, len;
-+
-+	if (!new->commit)
-+		die(_("no branch specified"));
-+	if (file_exists(path))
-+		die(_("'%s' already exists"), path);
-+
-+	len =3D strlen(path);
-+	while (len && is_dir_sep(path[len - 1]))
-+		len--;
-+
-+	for (name =3D path + len - 1; name > path; name--)
-+		if (is_dir_sep(*name)) {
-+			name++;
-+			break;
-+		}
-+	strbuf_addstr(&sb_repo,
-+		      git_path("worktrees/%.*s", (int)(path + len - name), name));
-+	len =3D sb_repo.len;
-+	if (safe_create_leading_directories_const(sb_repo.buf))
-+		die_errno(_("could not create leading directories of '%s'"),
-+			  sb_repo.buf);
-+	while (!stat(sb_repo.buf, &st)) {
-+		counter++;
-+		strbuf_setlen(&sb_repo, len);
-+		strbuf_addf(&sb_repo, "%d", counter);
-+	}
-+	name =3D strrchr(sb_repo.buf, '/') + 1;
-+	if (mkdir(sb_repo.buf, 0777))
-+		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
-+
-+	strbuf_addf(&sb_git, "%s/.git", path);
-+	if (safe_create_leading_directories_const(sb_git.buf))
-+		die_errno(_("could not create leading directories of '%s'"),
-+			  sb_git.buf);
-+
-+	write_file(sb_git.buf, 1, "gitdir: %s/worktrees/%s\n",
-+		   real_path(get_git_common_dir()), name);
-+	/*
-+	 * This is to keep resolve_ref() happy. We need a valid HEAD
-+	 * or is_git_directory() will reject the directory. Any valid
-+	 * value would do because this value will be ignored and
-+	 * replaced at the next (real) checkout.
-+	 */
-+	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
-+	write_file(sb.buf, 1, "%s\n", sha1_to_hex(new->commit->object.sha1));
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
-+	write_file(sb.buf, 1, "../..\n");
-+
-+	if (!opts->quiet)
-+		fprintf_ln(stderr, _("Enter %s (identifier %s)"), path, name);
-+
-+	setenv("GIT_CHECKOUT_NEW_WORKTREE", "1", 1);
-+	setenv(GIT_DIR_ENVIRONMENT, sb_git.buf, 1);
-+	setenv(GIT_WORK_TREE_ENVIRONMENT, path, 1);
-+	memset(&cp, 0, sizeof(cp));
-+	cp.git_cmd =3D 1;
-+	cp.argv =3D opts->saved_argv;
-+	return run_command(&cp);
-+}
-+
  static int git_checkout_config(const char *var, const char *value, voi=
 d *cb)
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 144a3bd..cf56110 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -112,6 +112,91 @@ static void prune_object_dir(const char *path)
+ 	}
+ }
+=20
++static int prune_worktree(const char *id, struct strbuf *reason)
++{
++	struct stat st;
++	char *path;
++	int fd, len;
++
++	if (!is_directory(git_path("worktrees/%s", id))) {
++		strbuf_addf(reason, _("Removing worktrees/%s: not a valid directory"=
+), id);
++		return 1;
++	}
++	if (file_exists(git_path("worktrees/%s/locked", id)))
++		return 0;
++	if (stat(git_path("worktrees/%s/gitdir", id), &st)) {
++		strbuf_addf(reason, _("Removing worktrees/%s: gitdir file does not e=
+xist"), id);
++		return 1;
++	}
++	fd =3D open(git_path("worktrees/%s/gitdir", id), O_RDONLY);
++	if (fd < 0) {
++		strbuf_addf(reason, _("Removing worktrees/%s: unable to read gitdir =
+file (%s)"),
++			    id, strerror(errno));
++		return 1;
++	}
++	len =3D st.st_size;
++	path =3D xmalloc(len + 1);
++	read_in_full(fd, path, len);
++	close(fd);
++	while (len && (path[len - 1] =3D=3D '\n' || path[len - 1] =3D=3D '\r'=
+))
++		len--;
++	if (!len) {
++		strbuf_addf(reason, _("Removing worktrees/%s: invalid gitdir file"),=
+ id);
++		free(path);
++		return 1;
++	}
++	path[len] =3D '\0';
++	if (!file_exists(path)) {
++		struct stat st_link;
++		free(path);
++		/*
++		 * the repo is moved manually and has not been
++		 * accessed since?
++		 */
++		if (!stat(git_path("worktrees/%s/link", id), &st_link) &&
++		    st_link.st_nlink > 1)
++			return 0;
++		strbuf_addf(reason, _("Removing worktrees/%s: gitdir file points to =
+non-existent location"), id);
++		return 1;
++	}
++	free(path);
++	return st.st_mtime <=3D expire;
++}
++
++static void prune_worktrees(void)
++{
++	struct strbuf reason =3D STRBUF_INIT;
++	struct strbuf path =3D STRBUF_INIT;
++	DIR *dir =3D opendir(git_path("worktrees"));
++	struct dirent *d;
++	int ret;
++	if (!dir)
++		return;
++	while ((d =3D readdir(dir)) !=3D NULL) {
++		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
++			continue;
++		strbuf_reset(&reason);
++		if (!prune_worktree(d->d_name, &reason))
++			continue;
++		if (show_only || verbose)
++			printf("%s\n", reason.buf);
++		if (show_only)
++			continue;
++		strbuf_reset(&path);
++		strbuf_addstr(&path, git_path("worktrees/%s", d->d_name));
++		ret =3D remove_dir_recursively(&path, 0);
++		if (ret < 0 && errno =3D=3D ENOTDIR)
++			ret =3D unlink(path.buf);
++		if (ret)
++			error(_("failed to remove: %s"), strerror(errno));
++	}
++	closedir(dir);
++	if (!show_only)
++		rmdir(git_path("worktrees"));
++	strbuf_release(&reason);
++	strbuf_release(&path);
++}
++
+ /*
+  * Write errors (particularly out of space) can result in
+  * failed temporary packs (and more rarely indexes and other
+@@ -138,10 +223,12 @@ int cmd_prune(int argc, const char **argv, const =
+char *prefix)
  {
- 	if (!strcmp(var, "diff.ignoresubmodules")) {
-@@ -1071,6 +1149,9 @@ static int checkout_branch(struct checkout_opts *=
-opts,
- 		die(_("Cannot switch branch to a non-commit '%s'"),
- 		    new->name);
+ 	struct rev_info revs;
+ 	struct progress *progress =3D NULL;
++	int do_prune_worktrees =3D 0;
+ 	const struct option options[] =3D {
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+ 		OPT__VERBOSE(&verbose, N_("report pruned objects")),
+ 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
++		OPT_BOOL(0, "worktrees", &do_prune_worktrees, N_("prune .git/worktre=
+es")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+ 				N_("expire objects older than <time>")),
+ 		OPT_END()
+@@ -154,6 +241,14 @@ int cmd_prune(int argc, const char **argv, const c=
+har *prefix)
+ 	init_revisions(&revs, prefix);
 =20
-+	if (opts->new_worktree)
-+		return prepare_linked_checkout(opts, new);
+ 	argc =3D parse_options(argc, argv, prefix, options, prune_usage, 0);
 +
- 	if (!new->commit && opts->new_branch) {
- 		unsigned char rev[20];
- 		int flag;
-@@ -1113,6 +1194,8 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
- 			 N_("do not limit pathspecs to sparse entries only")),
- 		OPT_HIDDEN_BOOL(0, "guess", &dwim_new_local_branch,
- 				N_("second guess 'git checkout no-such-branch'")),
-+		OPT_FILENAME(0, "to", &opts.new_worktree,
-+			   N_("check a branch out in a separate working directory")),
- 		OPT_END(),
- 	};
-=20
-@@ -1121,6 +1204,9 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
- 	opts.overwrite_ignore =3D 1;
- 	opts.prefix =3D prefix;
-=20
-+	opts.saved_argv =3D xmalloc(sizeof(const char *) * (argc + 2));
-+	memcpy(opts.saved_argv, argv, sizeof(const char *) * (argc + 1));
++	if (do_prune_worktrees) {
++		if (argc)
++			die(_("--worktrees does not take extra arguments"));
++		prune_worktrees();
++		return 0;
++	}
 +
- 	gitmodules_config();
- 	git_config(git_checkout_config, &opts);
+ 	while (argc--) {
+ 		unsigned char sha1[20];
+ 		const char *name =3D *argv++;
+diff --git a/setup.c b/setup.c
+index b99bdd3..fb61860 100644
+--- a/setup.c
++++ b/setup.c
+@@ -390,6 +390,17 @@ static int check_repository_format_gently(const ch=
+ar *gitdir, int *nongit_ok)
+ 	return ret;
+ }
 =20
-@@ -1129,6 +1215,11 @@ int cmd_checkout(int argc, const char **argv, co=
-nst char *prefix)
- 	argc =3D parse_options(argc, argv, prefix, options, checkout_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
-=20
-+	/* recursive execution from checkout_new_worktree() */
-+	opts.new_worktree_mode =3D getenv("GIT_CHECKOUT_NEW_WORKTREE") !=3D N=
-ULL;
-+	if (opts.new_worktree_mode)
-+		opts.new_worktree =3D NULL;
++static void update_linked_gitdir(const char *gitfile, const char *gitd=
+ir)
++{
++	struct strbuf path =3D STRBUF_INIT;
++	struct stat st;
 +
- 	if (conflict_style) {
- 		opts.merge =3D 1; /* implied */
- 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-diff --git a/path.c b/path.c
-index 94db501..72eca6d 100644
---- a/path.c
-+++ b/path.c
-@@ -92,7 +92,7 @@ static void replace_dir(struct strbuf *buf, int len, =
-const char *newdir)
++	strbuf_addf(&path, "%s/gitfile", gitdir);
++	if (stat(path.buf, &st) || st.st_mtime + 24 * 3600 < time(NULL))
++		write_file(path.buf, 0, "%s\n", gitfile);
++	strbuf_release(&path);
++}
++
+ /*
+  * Try to read the location of the git directory from the .git file,
+  * return path to git directory if found.
+@@ -438,6 +449,8 @@ const char *read_gitfile(const char *path)
 =20
- static const char *common_list[] =3D {
- 	"/branches", "/hooks", "/info", "/logs", "/lost-found", "/modules",
--	"/objects", "/refs", "/remotes", "/rr-cache", "/svn",
-+	"/objects", "/refs", "/remotes", "/worktrees", "/rr-cache", "/svn",
- 	"config", "gc.pid", "packed-refs", "shallow",
- 	NULL
- };
-diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
+ 	if (!is_git_directory(dir))
+ 		die("Not a git repository: %s", dir);
++
++	update_linked_gitdir(path, dir);
+ 	path =3D real_path(dir);
+=20
+ 	free(buf);
+diff --git a/t/t2026-prune-linked-checkouts.sh b/t/t2026-prune-linked-c=
+heckouts.sh
 new file mode 100755
-index 0000000..4963415
+index 0000000..3622800
 --- /dev/null
-+++ b/t/t2025-checkout-to.sh
-@@ -0,0 +1,63 @@
++++ b/t/t2026-prune-linked-checkouts.sh
+@@ -0,0 +1,84 @@
 +#!/bin/sh
 +
-+test_description=3D'test git checkout --to'
++test_description=3D'prune $GIT_DIR/worktrees'
 +
 +. ./test-lib.sh
 +
-+test_expect_success 'setup' '
-+	test_commit init
++test_expect_success 'prune --worktrees on normal repo' '
++	git prune --worktrees &&
++	test_must_fail git prune --worktrees abc
 +'
 +
-+test_expect_success 'checkout --to not updating paths' '
-+	test_must_fail git checkout --to -- init.t
++test_expect_success 'prune files inside $GIT_DIR/worktrees' '
++	mkdir .git/worktrees &&
++	: >.git/worktrees/abc &&
++	git prune --worktrees --verbose >actual &&
++	cat >expect <<EOF &&
++Removing worktrees/abc: not a valid directory
++EOF
++	test_i18ncmp expect actual &&
++	! test -f .git/worktrees/abc &&
++	! test -d .git/worktrees
 +'
 +
-+test_expect_success 'checkout --to an existing worktree' '
-+	mkdir existing &&
-+	test_must_fail git checkout --detach --to existing master
++test_expect_success 'prune directories without gitdir' '
++	mkdir -p .git/worktrees/def/abc &&
++	: >.git/worktrees/def/def &&
++	cat >expect <<EOF &&
++Removing worktrees/def: gitdir file does not exist
++EOF
++	git prune --worktrees --verbose >actual &&
++	test_i18ncmp expect actual &&
++	! test -d .git/worktrees/def &&
++	! test -d .git/worktrees
 +'
 +
-+test_expect_success 'checkout --to a new worktree' '
-+	git checkout --to here master &&
-+	(
-+		cd here &&
-+		test_cmp ../init.t init.t &&
-+		git symbolic-ref HEAD >actual &&
-+		echo refs/heads/master >expect &&
-+		test_cmp expect actual &&
-+		git fsck
-+	)
++test_expect_success POSIXPERM 'prune directories with unreadable gitdi=
+r' '
++	mkdir -p .git/worktrees/def/abc &&
++	: >.git/worktrees/def/def &&
++	: >.git/worktrees/def/gitdir &&
++	chmod u-r .git/worktrees/def/gitdir &&
++	git prune --worktrees --verbose >actual &&
++	test_i18ngrep "Removing worktrees/def: unable to read gitdir file" ac=
+tual &&
++	! test -d .git/worktrees/def &&
++	! test -d .git/worktrees
 +'
 +
-+test_expect_success 'checkout --to a new worktree from a subdir' '
-+	(
-+		mkdir sub &&
-+		cd sub &&
-+		git checkout --detach --to here master &&
-+		cd here &&
-+		test_cmp ../../init.t init.t
-+	)
++test_expect_success 'prune directories with invalid gitdir' '
++	mkdir -p .git/worktrees/def/abc &&
++	: >.git/worktrees/def/def &&
++	: >.git/worktrees/def/gitdir &&
++	git prune --worktrees --verbose >actual &&
++	test_i18ngrep "Removing worktrees/def: invalid gitdir file" actual &&
++	! test -d .git/worktrees/def &&
++	! test -d .git/worktrees
 +'
 +
-+test_expect_success 'checkout --to from a linked checkout' '
-+	(
-+		cd here &&
-+		git checkout --to nested-here master &&
-+		cd nested-here &&
-+		git fsck
-+	)
++test_expect_success 'prune directories with gitdir pointing to nowhere=
+' '
++	mkdir -p .git/worktrees/def/abc &&
++	: >.git/worktrees/def/def &&
++	echo "$TRASH_DIRECTORY"/nowhere >.git/worktrees/def/gitdir &&
++	git prune --worktrees --verbose >actual &&
++	test_i18ngrep "Removing worktrees/def: gitdir file points to non-exis=
+tent location" actual &&
++	! test -d .git/worktrees/def &&
++	! test -d .git/worktrees
 +'
 +
-+test_expect_success 'checkout --to a new worktree creating new branch'=
- '
-+	git checkout --to there -b newmaster master &&
-+	(
-+		cd there &&
-+		test_cmp ../init.t init.t &&
-+		git symbolic-ref HEAD >actual &&
-+		echo refs/heads/newmaster >expect &&
-+		test_cmp expect actual &&
-+		git fsck
-+	)
++test_expect_success 'not prune locked checkout' '
++	test_when_finished rm -r .git/worktrees
++	mkdir -p .git/worktrees/ghi &&
++	: >.git/worktrees/ghi/locked &&
++	git prune --worktrees &&
++	test -d .git/worktrees/ghi
++'
++
++test_expect_success 'not prune recent checkouts' '
++	test_when_finished rm -r .git/worktrees
++	mkdir zz &&
++	mkdir -p .git/worktrees/jlm &&
++	echo "$TRASH_DIRECTORY"/zz >.git/worktrees/jlm/gitdir &&
++	git prune --worktrees --verbose --expire=3D2.days.ago &&
++	test -d .git/worktrees/jlm
 +'
 +
 +test_done
