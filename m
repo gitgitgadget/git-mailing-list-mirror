@@ -1,94 +1,145 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH RFC] git-am: support any number of signatures
-Date: Sun, 28 Sep 2014 13:36:23 +0200 (CEST)
-Message-ID: <20140928.133623.1635797151132857721.chriscool@tuxfamily.org>
-References: <xmqqbnq6jm0s.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD0kfSBhSwu5Mb46XEHqYCE0SEsZd_3c0Sm4WzEc-NNc7w@mail.gmail.com>
-	<CAPc5daUTKU1JepLuyVC1Nk6LG4AZ2TA5SEYLsTSPbPKkauzNyQ@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] init - Honour the global core.filemode setting
+Date: Sun, 28 Sep 2014 13:52:46 +0200
+Message-ID: <5427F68E.5030003@web.de>
+References: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: christian.couder@gmail.com, mst@redhat.com, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Sep 28 13:36:42 2014
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 28 13:53:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYCmN-0006wb-1H
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 13:36:39 +0200
+	id 1XYD2K-0003im-VT
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 13:53:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbaI1Lg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2014 07:36:28 -0400
-Received: from mail-2y.bbox.fr ([194.158.98.15]:38949 "EHLO mail-2y.bbox.fr"
+	id S1752085AbaI1Lwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Sep 2014 07:52:55 -0400
+Received: from mout.web.de ([212.227.17.12]:57998 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751316AbaI1Lg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2014 07:36:27 -0400
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id AA0975B;
-	Sun, 28 Sep 2014 13:36:25 +0200 (CEST)
-In-Reply-To: <CAPc5daUTKU1JepLuyVC1Nk6LG4AZ2TA5SEYLsTSPbPKkauzNyQ@mail.gmail.com>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1751316AbaI1Lwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Sep 2014 07:52:54 -0400
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0Ma2YF-1Xq1AS0Nf5-00LovH; Sun, 28 Sep 2014 13:52:51
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>
+X-Provags-ID: V03:K0:JCvq6C7gE04jmPHbmGkrnFs8sv23dtLnc28ai1yocIJdMBWsoZG
+ 53LRGCpboSKIK+6BndAglGNolzSTt2uu5D1B3uiV0Iiy/lv/QpQICdvI77n6MPdkFPtqxhE
+ YI835lH1ck+nQQps3Z2qflycnBVJ/9Yc34bzRG//ZxpGRZjd9J5fu2N/hlxx3TwiqcpPO8P
+ CnIxdupqrfUSXFaA9/p4w==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257596>
 
-From: Junio C Hamano <gitster@pobox.com>
-> On Thu, Sep 25, 2014 at 3:04 AM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->>> To an existing message ends with Michael's Signed-off-by:, if his
->>> "git am --trailer arts" is called to add these three and then a
->>> Signed-off-by: from him, should it add an extra S-o-b (because his
->>> existing S-o-b will no longer be the last one after adding Acked and
->>> others), or should it refrain from doing so?  Can you express both
->>> preferences?
->>
->> The default for "trailer.where" is "end", and for "trailer.ifexists"
->> it is "addIfDifferentNeighbor".
->> That means that by default it will add the four new trailers at the end.
->>
->> If either "trailer.ifexists" or "trailer.S-o-b.ifexists" is set to
->> "addIfDifferent", then only the first 3 new trailers will be added at
->> the end. So yes you can express both preferences.
+On 2014-09-28 02.37, Hilco Wijbenga wrote:
+> If "~/.gitconfig" contains a "core.filemode" entry then "git init"
+> should honour that setting.
 > 
-> Suppose that the original ends with Sob, and Michael's "am" invokes
-> interpret-trailers with Acked/Reviewed/Tested/Sob in this order. The first
-> three are set to addifDifferent and Sob is set to addIfDifferentNeighbor,
-> which would be the traditional and sensible default.
+> Signed-off-by: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+> ---
+> This bit me at work where I have to work with Windows. Git on Cygwin
+> and the Eclipse Git plugin do not agree on file attributes so I had
+> set "filemode = false" in ~/.gitconfig.
+This feels strange.
+Each and every repo has a core.filemode setting.
+Or should have.
+
+Did you manage to create a repo without core.filemode in repo/.git/config ?
+And if yes, how?
+
 > 
-> Now, how is addIfDifferentNeighbor interpreted? Adding the new Sob
-> with this single request to add these four is done on a message that
-> has the same Sob at the end (i.e. Neighbor). Does _you_ adding of
-> Acked/Reviewed/Tested invalidate the Neighbor-ness and you add the
-> Sob anew?
+> A few weeks later, I did a "git init" and, some time later yet, I
+> noticed the strange behaviour of Cygwin/Eclipse again.
+I do not fully understand which "strange behaviour" you experied,
+so I need to guess.
 
-The trailers are processed in the order they appear on the command
-line. And when a trailer is processed, the input message it "sees" is
-the result from the processing of all the previous trailers on the
-command line. It is not any more the original input message.
+ This was very
+> surprising because things had been working well until then. It took
+> quite a bit of research before I realized that "git init" always sets
+> "filemode". I think "filemode" should only be set if not set already
+> in the global config (similar to log_all_ref_updates).
 
-So after Acked/Reviewed/Tested have been added, when the S-o-b at the
-end of the command line is processed, it "sees" an input message that
-has the Tested trailer at the end. That's why with
-addIfDifferentNeighbor the S-o-b will still be added at the end.
+That is part of the whole story:
+In general, "git init" probes the file system, if the executable bit
+is working as expected.
+So if you  create a Git repository under VFAT, the executable bit is not supported.
 
-> If that is what happens, it is not a workable workaround to set Sob to
-> addIfDifferent only for this invocation.
+Git will notice that, and set core.filemode = false.
 
-Setting S-o-b to addIfDifferent for this invocation would not add the
-S-o-b at the end, because another S-o-b still exists in the input
-message "seen" when the last S-o-b is processed.
+NTFS is a different story:
+Cygwin has support for the executable bit under NTFS, but Msysit does not.
+So if you "share" a Git repository between Msysgit and cygwin, it may be better
+to set core.filemode to false.
 
-> Alternatively, if Neighbor-ness is evaluated first before you add A/R/T
-> in response to this request, then you'd refrain from adding a duplicate
-> Sob. It wasn't quite clear from your description what your design was,
-> and your explanation above is not still clear, at least to me.
 
-I hope it is clearer now. Maybe I should add something in the doc to
-better explain how it works.
+There is however a problem with your patch, or 2:
 
-Thanks,
-Christian.
+When you set core.filemode = false in your ~/.gitconfig,
+another developer may have core.filemode = true in his config.
+If you manage to share the repo using a network, git will behave different
+for the 2 users.
+Solution:
+Set core.filemode for this repo alwways in the repo. (as we do today in git.git)
+
+When you run "git init" with ~/.gitconfig = true, you should
+anyway probe the file system, as it may not support file mode, and core.filemode may be false.
+
+
+So the solution that I can see is:
+(Some pseudo-code:)
+
+if (git config (global config ) == false) ||
+   (git config (~/.config ) == false) then
+  git_config_set("core.filemode", "false");
+else
+  probe the file system and set core.filemode as we do today
+fi
+
+
+> 
+> The usual caveat applies: this is my first patch. Having said that,
+> please feel free to be pedantic and strict. It's a small patch so I
+> would imagine that fixing any problems should not take long (assuming
+> it is acceptable at all, of course). I'd like to know I did it right.
+> :-)
+> 
+> AFAICT, all tests passed. Should a separate test be added for this change?
+I think yes.
+
+Under which system did you test ?
+
+Windows?
+CYWGIN ?
+MingWW/Msysgit ?
+Linux ?
+
+
+> - /* Check filemode trustability */
+> - filemode = TEST_FILEMODE;
+> - if (TEST_FILEMODE && !lstat(path, &st1)) {
+> - struct stat st2;
+> - filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+> - !lstat(path, &st2) &&
+> - st1.st_mode != st2.st_mode);
+> + /* Do not override the global filemode setting. */
+> + if (trust_executable_bit == -1) {
+> + /* Check filemode trustability */
+> + filemode = TEST_FILEMODE;
+> + if (TEST_FILEMODE && !lstat(path, &st1)) {
+> + struct stat st2;
+> + filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+> + !lstat(path, &st2) &&
+> + st1.st_mode != st2.st_mode);
+> + }
+> + git_config_set("core.filemode", filemode ? "true" : "false");
+The indentation seems to be broken ?
+(We use one TAB, for better info please see Documentation/CodingGuidelines)
+[snip]
