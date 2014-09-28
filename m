@@ -1,145 +1,116 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] init - Honour the global core.filemode setting
-Date: Sun, 28 Sep 2014 13:52:46 +0200
-Message-ID: <5427F68E.5030003@web.de>
-References: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [PATCH 01/14] MINGW: compat/mingw.h: do not attempt to
+ redefine lseek on mingw-w64
+Date: Sun, 28 Sep 2014 17:24:17 +0400
+Message-ID: <1411910670-31285-2-git-send-email-marat@slonopotamus.org>
+References: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 28 13:53:10 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: marat@slonopotamus.org,
+	msysGit <msysgit@googlegroups.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: git@vger.kernel.org
+X-From: msysgit+bncBCE7TAPITACRBYEYUCQQKGQEZOHTT6I@googlegroups.com Sun Sep 28 15:25:55 2014
+Return-path: <msysgit+bncBCE7TAPITACRBYEYUCQQKGQEZOHTT6I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f187.google.com ([209.85.212.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYD2K-0003im-VT
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 13:53:09 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085AbaI1Lwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Sep 2014 07:52:55 -0400
-Received: from mout.web.de ([212.227.17.12]:57998 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751316AbaI1Lwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Sep 2014 07:52:54 -0400
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0Ma2YF-1Xq1AS0Nf5-00LovH; Sun, 28 Sep 2014 13:52:51
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>
-X-Provags-ID: V03:K0:JCvq6C7gE04jmPHbmGkrnFs8sv23dtLnc28ai1yocIJdMBWsoZG
- 53LRGCpboSKIK+6BndAglGNolzSTt2uu5D1B3uiV0Iiy/lv/QpQICdvI77n6MPdkFPtqxhE
- YI835lH1ck+nQQps3Z2qflycnBVJ/9Yc34bzRG//ZxpGRZjd9J5fu2N/hlxx3TwiqcpPO8P
- CnIxdupqrfUSXFaA9/p4w==
-X-UI-Out-Filterresults: notjunk:1;
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257596>
+	(envelope-from <msysgit+bncBCE7TAPITACRBYEYUCQQKGQEZOHTT6I@googlegroups.com>)
+	id 1XYEU6-0000BC-4l
+	for gcvm-msysgit@m.gmane.org; Sun, 28 Sep 2014 15:25:54 +0200
+Received: by mail-wi0-f187.google.com with SMTP id q5sf135363wiv.4
+        for <gcvm-msysgit@m.gmane.org>; Sun, 28 Sep 2014 06:25:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=dick/35AQXebPswDw4/UcACGBPrpLgfv2kN5oTxpbWw=;
+        b=DM9FXkfxIfyMkVcuxN7zFRblW+I8TS+wwMrx/bDZzceKxXWXtUFRgCVJKlcL9lQqWx
+         EVL961GV+j7gi2D8/qF+HVoqouHJb8GOjDdwbYdkzlDJJCDEqgHykq3rSlo/ioBh8qWs
+         F0WS2mZcNrvD4f/0fJAfHShLEbhv5g+mB5+J/+aPA/+Hi9vz5MpvaToV7O4aAb88RXIV
+         J2bLpOjx1OJYMOVDpSuSMd6QRR3GcgrGxFzPubLLwjJOJOoDP1vDSAqz5+B2FV8sQqHT
+         Hq6Unp1dWnz7ICFaI+9YsnMY8promM22BrV9K4JURa/xKg9uDf6DdnGDRynskKE2Zt2v
+         rVSA==
+X-Received: by 10.152.19.226 with SMTP id i2mr31550lae.5.1411910753884;
+        Sun, 28 Sep 2014 06:25:53 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.21.4 with SMTP id r4ls43356lae.54.gmail; Sun, 28 Sep 2014
+ 06:25:51 -0700 (PDT)
+X-Received: by 10.152.3.134 with SMTP id c6mr318431lac.5.1411910751850;
+        Sun, 28 Sep 2014 06:25:51 -0700 (PDT)
+Received: from slonopotamus.org ([94.242.204.247])
+        by gmr-mx.google.com with ESMTPS id go4si418525wib.3.2014.09.28.06.25.51
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 28 Sep 2014 06:25:51 -0700 (PDT)
+Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
+Received: from [176.57.72.72] (helo=noblesse.home.ru)
+	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1XYETz-0000Yl-JA; Sun, 28 Sep 2014 17:25:47 +0400
+X-Mailer: git-send-email 2.1.1
+In-Reply-To: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
+X-Original-Sender: marat@slonopotamus.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: marat@slonopotamus.org does not designate permitted sender
+ hosts) smtp.mail=marat@slonopotamus.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257597>
 
-On 2014-09-28 02.37, Hilco Wijbenga wrote:
-> If "~/.gitconfig" contains a "core.filemode" entry then "git init"
-> should honour that setting.
-> 
-> Signed-off-by: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-> ---
-> This bit me at work where I have to work with Windows. Git on Cygwin
-> and the Eclipse Git plugin do not agree on file attributes so I had
-> set "filemode = false" in ~/.gitconfig.
-This feels strange.
-Each and every repo has a core.filemode setting.
-Or should have.
+Unlike MinGW, MinGW-W64 has lseek already properly defined in io.h.
 
-Did you manage to create a repo without core.filemode in repo/.git/config ?
-And if yes, how?
+Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
+Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
+---
+ compat/mingw.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> 
-> A few weeks later, I did a "git init" and, some time later yet, I
-> noticed the strange behaviour of Cygwin/Eclipse again.
-I do not fully understand which "strange behaviour" you experied,
-so I need to guess.
+diff --git a/compat/mingw.h b/compat/mingw.h
+index df0e320..ed79368 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -281,7 +281,9 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
+  * Use mingw specific stat()/lstat()/fstat() implementations on Windows.
+  */
+ #define off_t off64_t
++#ifndef lseek
+ #define lseek _lseeki64
++#endif
+ 
+ /* use struct stat with 64 bit st_size */
+ #ifdef stat
+-- 
+2.1.1
 
- This was very
-> surprising because things had been working well until then. It took
-> quite a bit of research before I realized that "git init" always sets
-> "filemode". I think "filemode" should only be set if not set already
-> in the global config (similar to log_all_ref_updates).
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-That is part of the whole story:
-In general, "git init" probes the file system, if the executable bit
-is working as expected.
-So if you  create a Git repository under VFAT, the executable bit is not supported.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Git will notice that, and set core.filemode = false.
-
-NTFS is a different story:
-Cygwin has support for the executable bit under NTFS, but Msysit does not.
-So if you "share" a Git repository between Msysgit and cygwin, it may be better
-to set core.filemode to false.
-
-
-There is however a problem with your patch, or 2:
-
-When you set core.filemode = false in your ~/.gitconfig,
-another developer may have core.filemode = true in his config.
-If you manage to share the repo using a network, git will behave different
-for the 2 users.
-Solution:
-Set core.filemode for this repo alwways in the repo. (as we do today in git.git)
-
-When you run "git init" with ~/.gitconfig = true, you should
-anyway probe the file system, as it may not support file mode, and core.filemode may be false.
-
-
-So the solution that I can see is:
-(Some pseudo-code:)
-
-if (git config (global config ) == false) ||
-   (git config (~/.config ) == false) then
-  git_config_set("core.filemode", "false");
-else
-  probe the file system and set core.filemode as we do today
-fi
-
-
-> 
-> The usual caveat applies: this is my first patch. Having said that,
-> please feel free to be pedantic and strict. It's a small patch so I
-> would imagine that fixing any problems should not take long (assuming
-> it is acceptable at all, of course). I'd like to know I did it right.
-> :-)
-> 
-> AFAICT, all tests passed. Should a separate test be added for this change?
-I think yes.
-
-Under which system did you test ?
-
-Windows?
-CYWGIN ?
-MingWW/Msysgit ?
-Linux ?
-
-
-> - /* Check filemode trustability */
-> - filemode = TEST_FILEMODE;
-> - if (TEST_FILEMODE && !lstat(path, &st1)) {
-> - struct stat st2;
-> - filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
-> - !lstat(path, &st2) &&
-> - st1.st_mode != st2.st_mode);
-> + /* Do not override the global filemode setting. */
-> + if (trust_executable_bit == -1) {
-> + /* Check filemode trustability */
-> + filemode = TEST_FILEMODE;
-> + if (TEST_FILEMODE && !lstat(path, &st1)) {
-> + struct stat st2;
-> + filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
-> + !lstat(path, &st2) &&
-> + st1.st_mode != st2.st_mode);
-> + }
-> + git_config_set("core.filemode", filemode ? "true" : "false");
-The indentation seems to be broken ?
-(We use one TAB, for better info please see Documentation/CodingGuidelines)
-[snip]
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
