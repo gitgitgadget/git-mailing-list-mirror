@@ -1,7 +1,8 @@
 From: Marat Radchenko <marat@slonopotamus.org>
-Subject: [PATCH 03/14] MINGW: compat/mingw.h: drop fork() definition
-Date: Sun, 28 Sep 2014 17:24:19 +0400
-Message-ID: <1411910670-31285-4-git-send-email-marat@slonopotamus.org>
+Subject: [PATCH 05/14] MINGW: config.mak.uname: allow using cURL for
+ non-msysGit builds
+Date: Sun, 28 Sep 2014 17:24:21 +0400
+Message-ID: <1411910670-31285-6-git-send-email-marat@slonopotamus.org>
 References: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -9,47 +10,47 @@ Cc: marat@slonopotamus.org,
 	msysGit <msysgit@googlegroups.com>,
 	Erik Faye-Lund <kusmabite@gmail.com>
 To: git@vger.kernel.org
-X-From: msysgit+bncBCE7TAPITACRBYUYUCQQKGQEU2OSEHQ@googlegroups.com Sun Sep 28 15:25:56 2014
-Return-path: <msysgit+bncBCE7TAPITACRBYUYUCQQKGQEU2OSEHQ@googlegroups.com>
+X-From: msysgit+bncBCE7TAPITACRBY4YUCQQKGQE6HGORGA@googlegroups.com Sun Sep 28 15:25:58 2014
+Return-path: <msysgit+bncBCE7TAPITACRBY4YUCQQKGQE6HGORGA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f185.google.com ([209.85.212.185])
+Received: from mail-wi0-f192.google.com ([209.85.212.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCE7TAPITACRBYUYUCQQKGQEU2OSEHQ@googlegroups.com>)
-	id 1XYEU8-0000Bq-4v
-	for gcvm-msysgit@m.gmane.org; Sun, 28 Sep 2014 15:25:56 +0200
-Received: by mail-wi0-f185.google.com with SMTP id cc10sf27927wib.12
-        for <gcvm-msysgit@m.gmane.org>; Sun, 28 Sep 2014 06:25:55 -0700 (PDT)
+	(envelope-from <msysgit+bncBCE7TAPITACRBY4YUCQQKGQE6HGORGA@googlegroups.com>)
+	id 1XYEU9-0000D3-KD
+	for gcvm-msysgit@m.gmane.org; Sun, 28 Sep 2014 15:25:57 +0200
+Received: by mail-wi0-f192.google.com with SMTP id ex7sf135606wid.29
+        for <gcvm-msysgit@m.gmane.org>; Sun, 28 Sep 2014 06:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=aWemKHR/2nfCQjjOAhUCzhRCInNVZ7PZKcQ9kPwEJA8=;
-        b=XfyRQQOPUhQ3rA3QNBMix4d56cLdVdUqyu2lwmLjiPZaONLhJwYZ95vTMzHHkGPFNS
-         nwT+59qk2YonZzESyhhARMf+gP+42QMn9OoDHHZP5xYbbWJv1cH+p7FOzO8k/mMEjsA9
-         Y5Pad9/Obj1LVVNDQQ2kIw8/JY9Im3aOLAa3JgeD4iaj0S30X0+DgCaQU/E1LNQdvEYv
-         b9Bc7izLNbhvOWAArSyKXOTCpFJ3vRejvnbu69fNp5Rfi8StwM5yG/F93FNYq9/B1ZBR
-         92ddZQDFra07YzqHmfJAvgK5Sriup5lj8qqvwGiEyhIuPH/DGdxt7+PsbYGqBs+8wqRT
-         7QOQ==
-X-Received: by 10.152.19.226 with SMTP id i2mr31558lae.5.1411910755908;
-        Sun, 28 Sep 2014 06:25:55 -0700 (PDT)
+        bh=X0V3TlCuclkvKuhux3WmqCE1/sjyeMyaOhBAyjmzr68=;
+        b=J8c+mVJs/AQO7mZeKtimVAGaAiX6UngHvTExXl1eBHPtpVShSNh6mk6EvJskdsol+y
+         QbHLGrUdnnd8ucObHoOiMDKkOo1j8s92vBZa/OMiKHmjVbgEdTPGTZkon/F8+L8NN5S8
+         pxK9W+XlIRqAGbURp4pyR0RjF8RCz5fstLNZfbMMZD+aoX2IrWUTcYpJcNi0S++Laver
+         NQKaqdndvvT9sgMc0IN7E1N6ATDtQoPRhVfKQOmGMENVnVK8B21jgAk4+nplbKJbKCvQ
+         G7IfGrZa9ex/kf2/K7gFpCCzX/YIqofvw1fcIepSBY2oZwSta5yrnP/bsOhaAs70d242
+         ltVw==
+X-Received: by 10.152.20.195 with SMTP id p3mr622000lae.1.1411910757343;
+        Sun, 28 Sep 2014 06:25:57 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.30.70 with SMTP id q6ls530536lah.62.gmail; Sun, 28 Sep
- 2014 06:25:53 -0700 (PDT)
-X-Received: by 10.112.131.33 with SMTP id oj1mr4893843lbb.7.1411910753470;
-        Sun, 28 Sep 2014 06:25:53 -0700 (PDT)
+Received: by 10.152.2.194 with SMTP id 2ls543215law.108.gmail; Sun, 28 Sep
+ 2014 06:25:55 -0700 (PDT)
+X-Received: by 10.112.131.33 with SMTP id oj1mr4893856lbb.7.1411910755180;
+        Sun, 28 Sep 2014 06:25:55 -0700 (PDT)
 Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id h1si447262wib.0.2014.09.28.06.25.53
+        by gmr-mx.google.com with ESMTPS id ca20si412033wib.3.2014.09.28.06.25.55
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Sep 2014 06:25:53 -0700 (PDT)
+        Sun, 28 Sep 2014 06:25:55 -0700 (PDT)
 Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
 Received: from [176.57.72.72] (helo=noblesse.home.ru)
 	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
 	(Exim 4.80.1)
 	(envelope-from <marat@slonopotamus.org>)
-	id 1XYEU2-0000Yl-DI; Sun, 28 Sep 2014 17:25:50 +0400
+	id 1XYEU5-0000Yl-2H; Sun, 28 Sep 2014 17:25:53 +0400
 X-Mailer: git-send-email 2.1.1
 In-Reply-To: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
 X-Original-Sender: marat@slonopotamus.org
@@ -67,30 +68,31 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257601>
 
-fork() is not used in MinGW builds but causes a compiler warning
-on x86_64 MinGW-W64: conflicting types for built-in function 'fork'
+Is it absolutely valid and possible to have cURL in generic
+MinGW environment. Building Git without cURL is still possible
+by passing NO_CURL=1
 
 Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
 Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
 ---
- compat/mingw.h | 2 --
+ config.mak.uname | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index ed79368..948a174 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -93,8 +93,6 @@ static inline int symlink(const char *oldpath, const char *newpath)
- { errno = ENOSYS; return -1; }
- static inline int fchmod(int fildes, mode_t mode)
- { errno = ENOSYS; return -1; }
--static inline pid_t fork(void)
--{ errno = ENOSYS; return -1; }
- static inline unsigned int alarm(unsigned int seconds)
- { return 0; }
- static inline int fsync(int fd)
+diff --git a/config.mak.uname b/config.mak.uname
+index 20cbdcf..324a7fc 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -531,8 +531,6 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+ 	INTERNAL_QSORT = YesPlease
+ 	HAVE_LIBCHARSET_H = YesPlease
+ 	NO_GETTEXT = YesPlease
+-else
+-	NO_CURL = YesPlease
+ endif
+ endif
+ ifeq ($(uname_S),QNX)
 -- 
 2.1.1
 
