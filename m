@@ -1,142 +1,92 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 31/32] checkout: don't require a work tree when checking out into a new one
-Date: Sun, 28 Sep 2014 08:22:45 +0700
-Message-ID: <1411867366-3821-32-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 32/32] t2025: add a test to make sure grafts is working from a linked checkout
+Date: Sun, 28 Sep 2014 08:22:46 +0700
+Message-ID: <1411867366-3821-33-git-send-email-pclouds@gmail.com>
 References: <xmqqk34r9z3r.fsf@gitster.dls.corp.google.com>
  <1411867366-3821-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 28 03:25:48 2014
+X-From: git-owner@vger.kernel.org Sun Sep 28 03:25:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XY3FB-0002sK-4o
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 03:25:45 +0200
+	id 1XY3FG-0002tQ-37
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 03:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753523AbaI1BZl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Sep 2014 21:25:41 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:61434 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753183AbaI1BZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2014 21:25:40 -0400
-Received: by mail-pd0-f170.google.com with SMTP id y13so15392235pdi.29
-        for <git@vger.kernel.org>; Sat, 27 Sep 2014 18:25:39 -0700 (PDT)
+	id S1753528AbaI1BZq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Sep 2014 21:25:46 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:47276 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183AbaI1BZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2014 21:25:45 -0400
+Received: by mail-pa0-f42.google.com with SMTP id bj1so4856292pad.15
+        for <git@vger.kernel.org>; Sat, 27 Sep 2014 18:25:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=USk8hYrskjsMTwLtWSY4DQVhjIFegx3feddr9gSGlGc=;
-        b=jRlyCtn6fFJwhkcq5oIRm6O4Y95tUbRApG0K+BS0Z1cVjzKGOU2efCD9R4KAlZSLrM
-         BUBAQE6F5Bk5Q6ZbpDi6KuaxYqK/AEvLX/Qvo8l2YRXjCxq1wKAkBmpHpKfePNIHUv4G
-         CicEooLPwIELfULglog6QTXIJ3FGSi/A1Z17c7rlMpl389fq1YdhcirYJGQZHWFxIPRq
-         T5H4Hq7rUe7E9MYk0Rg8SuR+vAEcjLOmJ4SaMlowJ4iKh29VBx/1kZ84Nn2EccxKB2MW
-         Y/qL3Angl74dPjEYdBNomTHtSPZuYav4nkNFT2x8V+9J/LDK4tmXC9871pXze5aRlcfd
-         PjYQ==
-X-Received: by 10.70.38.68 with SMTP id e4mr95245pdk.159.1411867539826;
-        Sat, 27 Sep 2014 18:25:39 -0700 (PDT)
+        bh=3YBK798PZv+gBVQzacDuIBjw4wIPfZACXbHbT/IHbh8=;
+        b=Vbpy2ZmDUe4elQYVMaYsGRiEsIyLFBfc1OHURykPJS2cINoQNy/JFVXO0LI1Y6Yu3K
+         ew5aGDC2bpJnWQeBN9K3YMuC7YzazTxDyhNkzF9RScPCqYRGj1MOv+JcEZUNYOQp4AjI
+         FS9r3vjauqVU4rEJMMoDjDaUT3q8F44aXOdodrUNlOxjIhVeEa0e5wHtT/1ZvrJPA9C8
+         Sg5dGLthmSA9s7fWEowt4Hdsqffyf1WdK7IeeT7y7f86Cdt+FuBbEn9IE+xigaTGfSI9
+         jRwD21zzlA8JF2qVPLq7Uw5suMq7ySzi7vT3IByfl/GdsMwpuL/GYccSxQSASzjexTng
+         i8qA==
+X-Received: by 10.68.94.34 with SMTP id cz2mr46021406pbb.7.1411867545235;
+        Sat, 27 Sep 2014 18:25:45 -0700 (PDT)
 Received: from lanh ([115.73.212.224])
-        by mx.google.com with ESMTPSA id g6sm2809602pdj.0.2014.09.27.18.25.36
+        by mx.google.com with ESMTPSA id rg1sm8576077pdb.14.2014.09.27.18.25.42
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Sep 2014 18:25:39 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 28 Sep 2014 08:25:42 +0700
+        Sat, 27 Sep 2014 18:25:44 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 28 Sep 2014 08:25:48 +0700
 X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
 In-Reply-To: <1411867366-3821-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257591>
 
-=46rom: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-
-=46or normal use cases, it does not make sense for 'checkout' to work o=
-n
-a bare repository, without a worktree. But "checkout --to" is an
-exception because it _creates_ a new worktree. Allow this option to
-run on bare repositories.
-
-People who check out from a bare repository should remember that
-core.logallrefupdates is off by default and it should be turned back
-on. `--to` cannot do this automatically behind the user's back because
-some user may deliberately want no reflog.
-
-=46or people interested in repository setup/discovery code,
-is_bare_repository_cfg (aka "core.bare") is unchanged by this patch,
-which means 'true' by default for bare repos. Fortunately when we get
-the repo through a linked checkout, is_bare_repository_cfg is never
-used. So all is still good.
-
-[nd: commit message]
-
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/checkout.c     |  3 +++
- git.c                  |  2 +-
- t/t2025-checkout-to.sh | 15 +++++++++++++++
- 3 files changed, 19 insertions(+), 1 deletion(-)
+ t/t2025-checkout-to.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index bd0e2d5..01d0f2f 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1364,6 +1364,9 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
- 	if (opts.new_worktree_mode)
- 		opts.new_worktree =3D NULL;
-=20
-+	if (!opts.new_worktree)
-+		setup_work_tree();
-+
- 	if (conflict_style) {
- 		opts.merge =3D 1; /* implied */
- 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-diff --git a/git.c b/git.c
-index 4076b01..6c1ac0c 100644
---- a/git.c
-+++ b/git.c
-@@ -383,7 +383,7 @@ static struct cmd_struct commands[] =3D {
- 	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
- 	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
- 	{ "check-ref-format", cmd_check_ref_format },
--	{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
-+	{ "checkout", cmd_checkout, RUN_SETUP },
- 	{ "checkout-index", cmd_checkout_index,
- 		RUN_SETUP | NEED_WORK_TREE},
- 	{ "cherry", cmd_cherry, RUN_SETUP },
 diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
-index e2db078..4bd1df4 100755
+index 4bd1df4..eddd325 100755
 --- a/t/t2025-checkout-to.sh
 +++ b/t/t2025-checkout-to.sh
-@@ -81,4 +81,19 @@ test_expect_success 'not die on re-checking out curr=
-ent branch' '
+@@ -96,4 +96,22 @@ test_expect_success 'checkout from a bare repo witho=
+ut --to' '
  	)
  '
 =20
-+test_expect_success 'checkout --to from a bare repo' '
-+	(
-+		git clone --bare . bare &&
-+		cd bare &&
-+		git checkout --to ../there2 -b bare-master master
-+	)
-+'
-+
-+test_expect_success 'checkout from a bare repo without --to' '
-+	(
-+		cd bare &&
-+		test_must_fail git checkout master
-+	)
++test_expect_success 'checkout with grafts' '
++	test_when_finished rm .git/info/grafts &&
++	test_commit abc &&
++	SHA1=3D`git rev-parse HEAD` &&
++	test_commit def &&
++	test_commit xyz &&
++	echo "`git rev-parse HEAD` $SHA1" >.git/info/grafts &&
++	cat >expected <<-\EOF &&
++	xyz
++	abc
++	EOF
++	git log --format=3D%s -2 >actual &&
++	test_cmp expected actual &&
++	git checkout --detach --to grafted master &&
++	git --git-dir=3Dgrafted/.git log --format=3D%s -2 >actual &&
++	test_cmp expected actual
 +'
 +
  test_done
