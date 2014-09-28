@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 12/32] git-sh-setup.sh: use rev-parse --git-path to get $GIT_DIR/objects
-Date: Sun, 28 Sep 2014 08:22:26 +0700
-Message-ID: <1411867366-3821-13-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 13/32] *.sh: avoid hardcoding $GIT_DIR/hooks/...
+Date: Sun, 28 Sep 2014 08:22:27 +0700
+Message-ID: <1411867366-3821-14-git-send-email-pclouds@gmail.com>
 References: <xmqqk34r9z3r.fsf@gitster.dls.corp.google.com>
  <1411867366-3821-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,73 +12,199 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 28 03:24:02 2014
+X-From: git-owner@vger.kernel.org Sun Sep 28 03:24:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XY3DU-0002Mf-LO
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 03:24:00 +0200
+	id 1XY3Db-0002OY-DR
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 03:24:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753317AbaI1BX4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Sep 2014 21:23:56 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:33293 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753183AbaI1BX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2014 21:23:56 -0400
-Received: by mail-pa0-f50.google.com with SMTP id kx10so1164149pab.37
-        for <git@vger.kernel.org>; Sat, 27 Sep 2014 18:23:55 -0700 (PDT)
+	id S1753333AbaI1BYC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Sep 2014 21:24:02 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:47403 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183AbaI1BYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2014 21:24:01 -0400
+Received: by mail-pa0-f41.google.com with SMTP id fa1so7108553pad.14
+        for <git@vger.kernel.org>; Sat, 27 Sep 2014 18:24:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=uBT7+Eb3QJ5sGmMKikLZxjjwhbj6VL+M9/BwpL7m5YY=;
-        b=oKcxyE9w5/d35h3bqdm8H4zlRfcQXaJ4JNSL0O4kN8aCMSRI4iTIlV3r/1WGE/P7V3
-         leUUpa0cH4uxOcjyguf81hfrSoDXk+dH58BAWNnXrpnyVtEd2h7jTcW8Z/RO0A38opVT
-         a+YlxZ+C/cOcR4UQTvjI3PJbdwBGCzJlf7PU1CVatXjs4iQVHBIIzmyMRwPP40Azz6Ud
-         AymYPOxOvEmeYEgy/u7Yqequ4IQnJdx322bgq6kMsVeRLAt100BWBzexpaJOyUHVYBR7
-         szEiqV0ghZsgCeceyEMB5OiQ7syAqJ9HaSL7wvD+ANqvMLzRqTIL9fZd1/b6yLJbOl3y
-         mbVQ==
-X-Received: by 10.68.202.225 with SMTP id kl1mr45729428pbc.21.1411867435568;
-        Sat, 27 Sep 2014 18:23:55 -0700 (PDT)
+        bh=eF4f5jQz8APtAj8agvBFVdLXY2PWLX+PDafeB50jvZc=;
+        b=R7Us3LDrXtgu6KruSyeeZ3i23kCTALf/uC6gNCY80wO8pAfHiQaQGWTGvSD+z8/mik
+         3LEoXd4S61NZujLGi59cFBfsiFARcs9m2cQ+Azmr4mzELdpr+tVQwXat4TxgyJ8Ie09A
+         R+MAN16Xq2O6N/TBMAxsZOlGvx2qgxPoP+BoCAe16KdUIXrT9T6qIOmIuWfCPjVKaiUg
+         z4bHK4GXVi2mbcqpSZFdE91J4HXNbP3zrf2rWgNW4SmRWtAPA1JBgGsQcMWCWEEZ2pSz
+         03D0tM+T8ovtwHmRxurcQ0wTl4GEe/fg9RH1DGcHNlU9R38XxuEMYcKPgDwsXmvLVycW
+         eCdw==
+X-Received: by 10.69.19.202 with SMTP id gw10mr46484986pbd.106.1411867440788;
+        Sat, 27 Sep 2014 18:24:00 -0700 (PDT)
 Received: from lanh ([115.73.212.224])
-        by mx.google.com with ESMTPSA id n2sm8561633pdh.30.2014.09.27.18.23.52
+        by mx.google.com with ESMTPSA id h12sm8548174pdk.48.2014.09.27.18.23.58
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Sep 2014 18:23:54 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 28 Sep 2014 08:23:58 +0700
+        Sat, 27 Sep 2014 18:24:00 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 28 Sep 2014 08:24:03 +0700
 X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
 In-Reply-To: <1411867366-3821-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257572>
 
-If $GIT_COMMON_DIR is set, $GIT_OBJECT_DIRECTORY should be
-$GIT_COMMON_DIR/objects, not $GIT_DIR/objects. Just let rev-parse
---git-path handle it.
+If $GIT_COMMON_DIR is set, it should be $GIT_COMMON_DIR/hooks/, not
+$GIT_DIR/hooks/. Just let rev-parse --git-path handle it.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-sh-setup.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-am.sh                              | 22 +++++++++++-----------
+ git-rebase--interactive.sh             |  6 +++---
+ git-rebase--merge.sh                   |  6 ++----
+ git-rebase.sh                          |  4 ++--
+ templates/hooks--applypatch-msg.sample |  4 ++--
+ templates/hooks--pre-applypatch.sample |  4 ++--
+ 6 files changed, 22 insertions(+), 24 deletions(-)
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 9447980..d3dbb2f 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -345,7 +345,7 @@ then
- 		echo >&2 "Unable to determine absolute path of git directory"
- 		exit 1
- 	}
--	: ${GIT_OBJECT_DIRECTORY=3D"$GIT_DIR/objects"}
-+	: ${GIT_OBJECT_DIRECTORY=3D"$(git rev-parse --git-path objects)"}
+diff --git a/git-am.sh b/git-am.sh
+index ee61a77..66803d1 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -810,10 +810,10 @@ To restore the original branch and stop patching =
+run \"\$cmdline --abort\"."
+ 		continue
+ 	fi
+=20
+-	if test -x "$GIT_DIR"/hooks/applypatch-msg
++	hook=3D"$(git rev-parse --git-path hooks/applypatch-msg)"
++	if test -x "$hook"
+ 	then
+-		"$GIT_DIR"/hooks/applypatch-msg "$dotest/final-commit" ||
+-		stop_here $this
++		"$hook" "$dotest/final-commit" || stop_here $this
+ 	fi
+=20
+ 	if test -f "$dotest/final-commit"
+@@ -887,9 +887,10 @@ did you forget to use 'git add'?"
+ 		stop_here_user_resolve $this
+ 	fi
+=20
+-	if test -x "$GIT_DIR"/hooks/pre-applypatch
++	hook=3D"$(git rev-parse --git-path hooks/pre-applypatch)"
++	if test -x "$hook"
+ 	then
+-		"$GIT_DIR"/hooks/pre-applypatch || stop_here $this
++		"$hook" || stop_here $this
+ 	fi
+=20
+ 	tree=3D$(git write-tree) &&
+@@ -916,18 +917,17 @@ did you forget to use 'git add'?"
+ 		echo "$(cat "$dotest/original-commit") $commit" >> "$dotest/rewritte=
+n"
+ 	fi
+=20
+-	if test -x "$GIT_DIR"/hooks/post-applypatch
+-	then
+-		"$GIT_DIR"/hooks/post-applypatch
+-	fi
++	hook=3D"$(git rev-parse --git-path hooks/post-applypatch)"
++	test -x "$hook" && "$hook"
+=20
+ 	go_next
+ done
+=20
+ if test -s "$dotest"/rewritten; then
+     git notes copy --for-rewrite=3Drebase < "$dotest"/rewritten
+-    if test -x "$GIT_DIR"/hooks/post-rewrite; then
+-	"$GIT_DIR"/hooks/post-rewrite rebase < "$dotest"/rewritten
++    hook=3D"$(git rev-parse --git-path hooks/post-rewrite)"
++    if test -x "$hook"; then
++	"$hook" rebase < "$dotest"/rewritten
+     fi
  fi
 =20
- peel_committish () {
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index b64dd28..b32f797 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -642,9 +642,9 @@ do_next () {
+ 		git notes copy --for-rewrite=3Drebase < "$rewritten_list" ||
+ 		true # we don't care if this copying failed
+ 	} &&
+-	if test -x "$GIT_DIR"/hooks/post-rewrite &&
+-		test -s "$rewritten_list"; then
+-		"$GIT_DIR"/hooks/post-rewrite rebase < "$rewritten_list"
++	hook=3D"$(git rev-parse --git-path hooks/post-rewrite)"
++	if test -x "$hook" && test -s "$rewritten_list"; then
++		"$hook" rebase < "$rewritten_list"
+ 		true # we don't care if this hook failed
+ 	fi &&
+ 	warn "Successfully rebased and updated $head_name."
+diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+index d3fb67d..2cc2a6d 100644
+--- a/git-rebase--merge.sh
++++ b/git-rebase--merge.sh
+@@ -94,10 +94,8 @@ finish_rb_merge () {
+ 	if test -s "$state_dir"/rewritten
+ 	then
+ 		git notes copy --for-rewrite=3Drebase <"$state_dir"/rewritten
+-		if test -x "$GIT_DIR"/hooks/post-rewrite
+-		then
+-			"$GIT_DIR"/hooks/post-rewrite rebase <"$state_dir"/rewritten
+-		fi
++		hook=3D"$(git rev-parse --git-path hooks/post-rewrite)"
++		test -x "$hook" && "$hook" rebase <"$state_dir"/rewritten
+ 	fi
+ 	say All done.
+ }
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 55da9db..fb935a0 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -202,9 +202,9 @@ run_specific_rebase () {
+=20
+ run_pre_rebase_hook () {
+ 	if test -z "$ok_to_skip_pre_rebase" &&
+-	   test -x "$GIT_DIR/hooks/pre-rebase"
++	   test -x "$(git rev-parse --git-path hooks/pre-rebase)"
+ 	then
+-		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} ||
++		"$(git rev-parse --git-path hooks/pre-rebase)" ${1+"$@"} ||
+ 		die "$(gettext "The pre-rebase hook refused to rebase.")"
+ 	fi
+ }
+diff --git a/templates/hooks--applypatch-msg.sample b/templates/hooks--=
+applypatch-msg.sample
+index 8b2a2fe..a5d7b84 100755
+--- a/templates/hooks--applypatch-msg.sample
++++ b/templates/hooks--applypatch-msg.sample
+@@ -10,6 +10,6 @@
+ # To enable this hook, rename this file to "applypatch-msg".
+=20
+ . git-sh-setup
+-test -x "$GIT_DIR/hooks/commit-msg" &&
+-	exec "$GIT_DIR/hooks/commit-msg" ${1+"$@"}
++commitmsg=3D"$(git rev-parse --git-path hooks/commit-msg)"
++test -x "$commitmsg" && exec "$commitmsg" ${1+"$@"}
+ :
+diff --git a/templates/hooks--pre-applypatch.sample b/templates/hooks--=
+pre-applypatch.sample
+index b1f187c..4142082 100755
+--- a/templates/hooks--pre-applypatch.sample
++++ b/templates/hooks--pre-applypatch.sample
+@@ -9,6 +9,6 @@
+ # To enable this hook, rename this file to "pre-applypatch".
+=20
+ . git-sh-setup
+-test -x "$GIT_DIR/hooks/pre-commit" &&
+-	exec "$GIT_DIR/hooks/pre-commit" ${1+"$@"}
++precommit=3D"$(git rev-parse --git-path hooks/pre-commit)"
++test -x "$precommit" && exec "$precommit" ${1+"$@"}
+ :
 --=20
 2.1.0.rc0.78.gc0d8480
