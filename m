@@ -1,8 +1,7 @@
 From: Marat Radchenko <marat@slonopotamus.org>
-Subject: [PATCH 11/14] compat/nedmalloc/malloc.c.h: fix compilation
- under MinGW-W64
-Date: Sun, 28 Sep 2014 17:24:27 +0400
-Message-ID: <1411910670-31285-12-git-send-email-marat@slonopotamus.org>
+Subject: [PATCH 12/14] Fix pointer -> integer casts on IL32P64 systems
+Date: Sun, 28 Sep 2014 17:24:28 +0400
+Message-ID: <1411910670-31285-13-git-send-email-marat@slonopotamus.org>
 References: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -10,47 +9,47 @@ Cc: marat@slonopotamus.org,
 	msysGit <msysgit@googlegroups.com>,
 	Erik Faye-Lund <kusmabite@gmail.com>
 To: git@vger.kernel.org
-X-From: msysgit+bncBCE7TAPITACRBXE2UCQQKGQENLTWXLA@googlegroups.com Sun Sep 28 15:30:07 2014
-Return-path: <msysgit+bncBCE7TAPITACRBXE2UCQQKGQENLTWXLA@googlegroups.com>
+X-From: msysgit+bncBCE7TAPITACRBX42UCQQKGQEFSABFCQ@googlegroups.com Sun Sep 28 15:30:09 2014
+Return-path: <msysgit+bncBCE7TAPITACRBX42UCQQKGQEFSABFCQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f58.google.com ([74.125.83.58])
+Received: from mail-we0-f188.google.com ([74.125.82.188])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCE7TAPITACRBXE2UCQQKGQENLTWXLA@googlegroups.com>)
-	id 1XYEY9-0001c1-0W
-	for gcvm-msysgit@m.gmane.org; Sun, 28 Sep 2014 15:30:05 +0200
-Received: by mail-ee0-f58.google.com with SMTP id b15sf594267eek.13
-        for <gcvm-msysgit@m.gmane.org>; Sun, 28 Sep 2014 06:30:04 -0700 (PDT)
+	(envelope-from <msysgit+bncBCE7TAPITACRBX42UCQQKGQEFSABFCQ@googlegroups.com>)
+	id 1XYEYC-0001dp-1t
+	for gcvm-msysgit@m.gmane.org; Sun, 28 Sep 2014 15:30:08 +0200
+Received: by mail-we0-f188.google.com with SMTP id u56sf178539wes.5
+        for <gcvm-msysgit@m.gmane.org>; Sun, 28 Sep 2014 06:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=gnj0GZ/BMghyZwtS9Z5vicnxeYie35pthG6O8IVMBWM=;
-        b=d8X5AO/2Nhon45ifrit38LB/PjRjxPmIIiUWmzadNIv1WQSm3Pc7etGUr2Q1KBGSYv
-         bEZDjL85lUJqHOIu4Q1+fz/hOG3sOBEwSpZsCTPCgmzWt1MmYeMz0BUmEAagm/QWgowW
-         L6PCia4LkuIaUcLuCUj7sZ57UWuHNUSEHTiczYs72zmFiyxiHtPTb5uuW77iipe9dEs2
-         ZZDGq93Td9JERPsToJIQZt19aZnXgToU7ohBOZQWCfMKuPzHobLtCdVw4bxtuLRJuNm4
-         c4Uc85qrvMfUdt9DGF/We+LroM4W5SOOrDxxWaRGPBC431vhjvv0a3kTKCHqa/TMysna
-         STRA==
-X-Received: by 10.180.100.106 with SMTP id ex10mr302198wib.7.1411911004768;
-        Sun, 28 Sep 2014 06:30:04 -0700 (PDT)
+        bh=g54d8BzWvKmyKzwz3ADWRcrrRSfHoCF2tfz7zfm6Pz8=;
+        b=HRHfggGO+KSeCSXKIoSGXL9WskVzJJ8Hip+E1wyqryRZtsKAY28w8JaMl4YTdOiTtP
+         1ohhizflhz5ym5CaND4S31HW0VWDACPHmnb9C6zwRBtQyEtHjh4M6Civ/1rs8e4W46C8
+         dGSo/l1kMEfjQ1sEMm3dcGfH8sQXzqtFDYX6NbSrIJZ8yPYw65YerOaVNl1tNos4dqMq
+         ntgwb8XGcPtLBY9TfbBPaJ02IvZxhCCqlkzwkHZVr6V9lphm/935WZY9Vw3Bo0E226G+
+         HoYUGmRtZ5KpEm/mDqE3t20hPVH4Jgudci/xww8J05b5dcQMmaxBnM172/p0e/Th10vA
+         bqjg==
+X-Received: by 10.180.87.162 with SMTP id az2mr64092wib.2.1411911007767;
+        Sun, 28 Sep 2014 06:30:07 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.13.209 with SMTP id j17ls367459wic.48.gmail; Sun, 28 Sep
- 2014 06:30:04 -0700 (PDT)
-X-Received: by 10.181.25.225 with SMTP id it1mr1326241wid.0.1411911004179;
-        Sun, 28 Sep 2014 06:30:04 -0700 (PDT)
+Received: by 10.180.94.98 with SMTP id db2ls338012wib.20.gmail; Sun, 28 Sep
+ 2014 06:30:07 -0700 (PDT)
+X-Received: by 10.180.24.225 with SMTP id x1mr5215712wif.2.1411911007141;
+        Sun, 28 Sep 2014 06:30:07 -0700 (PDT)
 Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id i6si429616wiy.0.2014.09.28.06.30.04
+        by gmr-mx.google.com with ESMTPS id p7si191109wiz.1.2014.09.28.06.30.07
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Sep 2014 06:30:04 -0700 (PDT)
+        Sun, 28 Sep 2014 06:30:07 -0700 (PDT)
 Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
 Received: from [176.57.72.72] (helo=noblesse.home.ru)
 	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
 	(Exim 4.80.1)
 	(envelope-from <marat@slonopotamus.org>)
-	id 1XYEUB-0000Yl-0R; Sun, 28 Sep 2014 17:25:59 +0400
+	id 1XYEUC-0000Yl-9q; Sun, 28 Sep 2014 17:26:00 +0400
 X-Mailer: git-send-email 2.1.1
 In-Reply-To: <1411910670-31285-1-git-send-email-marat@slonopotamus.org>
 X-Original-Sender: marat@slonopotamus.org
@@ -68,48 +67,166 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257611>
 
-1. Unlike MinGW, MinGW-W64 already provides _ReadWriteBarrier macro,
-   so don't try to redefine it.
+This commit touches regcomp.c and poll.c from Gnulib,
+both were fixed upstream in 2012 the same way.
 
-2. MinGW-W64 has a strange definition FORCEINLINE as
-   extern __inline__ __attribute__((__always_inline__,__gnu_inline__))
+Wrt ShellExecute, see [1].
 
-   'extern' doesn't work together with 'static', so #undef MinGW-W64
-   version of FORCEINLINE.
+[1]: http://blogs.msdn.com/b/oldnewthing/archive/2006/11/08/1035971.aspx
 
 Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
 ---
- compat/nedmalloc/malloc.c.h | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ compat/mingw.c         | 8 ++++----
+ compat/poll/poll.c     | 2 +-
+ compat/regex/regcomp.c | 4 ++--
+ compat/win32/pthread.h | 2 +-
+ compat/winansi.c       | 2 +-
+ pack-revindex.c        | 2 +-
+ sha1_file.c            | 8 ++++----
+ 7 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
-index f216a2a..a6c8cac 100644
---- a/compat/nedmalloc/malloc.c.h
-+++ b/compat/nedmalloc/malloc.c.h
-@@ -715,6 +715,10 @@ struct mallinfo {
- #endif /* HAVE_USR_INCLUDE_MALLOC_H */
- #endif /* NO_MALLINFO */
+diff --git a/compat/mingw.c b/compat/mingw.c
+index c5c37e5..27925d9 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -674,13 +674,13 @@ int pipe(int filedes[2])
+ 		errno = err_win_to_posix(GetLastError());
+ 		return -1;
+ 	}
+-	filedes[0] = _open_osfhandle((int)h[0], O_NOINHERIT);
++	filedes[0] = _open_osfhandle((intptr_t)h[0], O_NOINHERIT);
+ 	if (filedes[0] < 0) {
+ 		CloseHandle(h[0]);
+ 		CloseHandle(h[1]);
+ 		return -1;
+ 	}
+-	filedes[1] = _open_osfhandle((int)h[1], O_NOINHERIT);
++	filedes[1] = _open_osfhandle((intptr_t)h[1], O_NOINHERIT);
+ 	if (filedes[0] < 0) {
+ 		close(filedes[0]);
+ 		CloseHandle(h[1]);
+@@ -1819,7 +1819,7 @@ void mingw_open_html(const char *unixpath)
+ 			const char *, const char *, const char *, INT);
+ 	T ShellExecute;
+ 	HMODULE shell32;
+-	int r;
++	intptr_t r;
  
-+#ifdef __MINGW64_VERSION_MAJOR
-+  #undef FORCEINLINE
-+#endif
-+
- /*
-   Try to persuade compilers to inline. The most critical functions for
-   inlining are defined as macros, so these aren't used for them.
-@@ -1382,7 +1386,9 @@ LONG __cdecl _InterlockedExchange(LONG volatile *Target, LONG Value);
+ 	shell32 = LoadLibrary("shell32.dll");
+ 	if (!shell32)
+@@ -1829,7 +1829,7 @@ void mingw_open_html(const char *unixpath)
+ 		die("cannot run browser");
  
-   /*** Atomic operations ***/
-   #if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) > 40100
--    #define _ReadWriteBarrier() __sync_synchronize()
-+    #ifndef _ReadWriteBarrier
-+      #define _ReadWriteBarrier() __sync_synchronize()
-+    #endif
-   #else
-     static __inline__ __attribute__((always_inline)) long __sync_lock_test_and_set(volatile long * const Target, const long Value)
-     {
+ 	printf("Launching default browser to display HTML ...\n");
+-	r = (int)ShellExecute(NULL, "open", htmlpath, NULL, "\\", SW_SHOWNORMAL);
++	r = (intptr_t)ShellExecute(NULL, "open", htmlpath, NULL, "\\", SW_SHOWNORMAL);
+ 	FreeLibrary(shell32);
+ 	/* see the MSDN documentation referring to the result codes here */
+ 	if (r <= 32) {
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index a9b41d8..8941249 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -76,7 +76,7 @@
+ 
+ #ifdef WIN32_NATIVE
+ 
+-#define IsConsoleHandle(h) (((long) (h) & 3) == 3)
++#define IsConsoleHandle(h) (((intptr_t) (h) & 3) == 3)
+ 
+ static BOOL
+ IsSocketHandle (HANDLE h)
+diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
+index 06f3088..d8bde06 100644
+--- a/compat/regex/regcomp.c
++++ b/compat/regex/regcomp.c
+@@ -2577,7 +2577,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
+     old_tree = NULL;
+ 
+   if (elem->token.type == SUBEXP)
+-    postorder (elem, mark_opt_subexp, (void *) (long) elem->token.opr.idx);
++    postorder (elem, mark_opt_subexp, (void *) (intptr_t) elem->token.opr.idx);
+ 
+   tree = create_tree (dfa, elem, NULL, (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
+   if (BE (tree == NULL, 0))
+@@ -3806,7 +3806,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
+ static reg_errcode_t
+ mark_opt_subexp (void *extra, bin_tree_t *node)
+ {
+-  int idx = (int) (long) extra;
++  int idx = (int) (intptr_t) extra;
+   if (node->token.type == SUBEXP && node->token.opr.idx == idx)
+     node->token.opt_subexp = 1;
+ 
+diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
+index 8ad1873..6ccfb7b 100644
+--- a/compat/win32/pthread.h
++++ b/compat/win32/pthread.h
+@@ -77,7 +77,7 @@ extern pthread_t pthread_self(void);
+ 
+ static inline int pthread_exit(void *ret)
+ {
+-	ExitThread((DWORD)ret);
++	ExitThread((DWORD)(uintptr_t)ret);
+ }
+ 
+ typedef DWORD pthread_key_t;
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 0ac3297..ca4c295 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -452,7 +452,7 @@ static HANDLE duplicate_handle(HANDLE hnd)
+ 	HANDLE hresult, hproc = GetCurrentProcess();
+ 	if (!DuplicateHandle(hproc, hnd, hproc, &hresult, 0, TRUE,
+ 			DUPLICATE_SAME_ACCESS))
+-		die_lasterr("DuplicateHandle(%li) failed", (long) hnd);
++		die_lasterr("DuplicateHandle(%p) failed", hnd);
+ 	return hresult;
+ }
+ 
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 5c8376e..df02e9f 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -21,7 +21,7 @@ static int pack_revindex_hashsz;
+ 
+ static int pack_revindex_ix(struct packed_git *p)
+ {
+-	unsigned long ui = (unsigned long)p;
++	uintptr_t ui = (uintptr_t)p;
+ 	int i;
+ 
+ 	ui = ui ^ (ui >> 16); /* defeat structure alignment */
+diff --git a/sha1_file.c b/sha1_file.c
+index c08c0cb..a534fda 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1966,11 +1966,11 @@ static struct delta_base_cache_entry {
+ 	enum object_type type;
+ } delta_base_cache[MAX_DELTA_CACHE];
+ 
+-static unsigned long pack_entry_hash(struct packed_git *p, off_t base_offset)
++static uintptr_t pack_entry_hash(struct packed_git *p, off_t base_offset)
+ {
+-	unsigned long hash;
++	uintptr_t hash;
+ 
+-	hash = (unsigned long)p + (unsigned long)base_offset;
++	hash = (uintptr_t)p + base_offset;
+ 	hash += (hash >> 8) + (hash >> 16);
+ 	return hash % MAX_DELTA_CACHE;
+ }
+@@ -1978,7 +1978,7 @@ static unsigned long pack_entry_hash(struct packed_git *p, off_t base_offset)
+ static struct delta_base_cache_entry *
+ get_delta_base_cache_entry(struct packed_git *p, off_t base_offset)
+ {
+-	unsigned long hash = pack_entry_hash(p, base_offset);
++	uintptr_t hash = pack_entry_hash(p, base_offset);
+ 	return delta_base_cache + hash;
+ }
+ 
 -- 
 2.1.1
 
