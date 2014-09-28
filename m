@@ -1,73 +1,120 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] some updates from German l10n team
-Date: Sat, 27 Sep 2014 21:58:23 +0800
-Message-ID: <CANYiYbGiAg6i3TNDzQsEBss+avvm=Ai_mHFJ5fph3bzGAq7crQ@mail.gmail.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: [PATCH] init - Honour the global core.filemode setting
+Date: Sat, 27 Sep 2014 17:37:34 -0700
+Message-ID: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 27 15:58:38 2014
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 28 02:38:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XXsWD-0005lb-Pf
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Sep 2014 15:58:38 +0200
+	id 1XY2Uz-00061J-UO
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Sep 2014 02:38:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723AbaI0N6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Sep 2014 09:58:24 -0400
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:48568 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752130AbaI0N6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Sep 2014 09:58:24 -0400
-Received: by mail-qg0-f54.google.com with SMTP id a108so10107368qge.41
-        for <git@vger.kernel.org>; Sat, 27 Sep 2014 06:58:23 -0700 (PDT)
+	id S1753247AbaI1Ah4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Sep 2014 20:37:56 -0400
+Received: from mail-qa0-f51.google.com ([209.85.216.51]:47666 "EHLO
+	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751902AbaI1Ahz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Sep 2014 20:37:55 -0400
+Received: by mail-qa0-f51.google.com with SMTP id j7so7561700qaq.10
+        for <git@vger.kernel.org>; Sat, 27 Sep 2014 17:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=9rLEneUo3byPjxEzMzoKeJmYQMFsM3frVmGNjwXkZqw=;
-        b=asxnueVMGS+YUyZyiNS3hgenUnr25HYaeLlkJsb6/8BTIKsTpwRI93VcCvi4TzR1dS
-         ACFBJGLSjmaBPKCooV+hvNDYArgmokOr1jo3z+B2JzMxZFMkAY7ctj1zHzWgEiuuEVsS
-         se8Cdga41i1XHXafs9Jp2v/LA2/fr5wT6agVNe4UXa99UlfEw2DLiuCY95aeOMnVONh3
-         LlyJq0xkrzNSgufkCqRxrvFJH48kQu32M2bjKSMl+rzUEh3OyGC/iiFkUvAPbHOH0Dtb
-         82i86hqXK2zb+duxD/WomL3td7veDjElxsc+f6McoEuOpsRjAbusYSehaOUkzFQGTW5D
-         Lf1A==
-X-Received: by 10.229.140.70 with SMTP id h6mr36441228qcu.3.1411826303201;
- Sat, 27 Sep 2014 06:58:23 -0700 (PDT)
-Received: by 10.140.29.35 with HTTP; Sat, 27 Sep 2014 06:58:23 -0700 (PDT)
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=I4Uw8K4PC2pwy1uxRI9gRaguruZmP6gYliLVqyT8wXk=;
+        b=xpAeYyFRD8rPUBebFfjt3rXxANcCGBx9LKtsbCuoji2PEOii+5HWA3fs/lXgvEzyTo
+         4Mqbs1fpANhxwn38u109NrfaQBcHvJwi5T62TR/K1OhT7chPMr5m6qkPJKyRhP5Iwop6
+         /ncAABAWHUSECVd4ZgqZvsOE3yFbY6cznsUNMPYd4f4jxpEF63Mrj6QofyRw3aPJarwl
+         NXw8tIRolUjq1YcxTpz/6d1wy17wQ9IhNA5JXw4rpSjNxzfi3CxO8w44Hn3vKwrKwFmw
+         wFuJMg3hGH/DNX8j8Zdclpz7ui5GbGR8N0xZiTNzv8vJ+XPQjiRVceC2wYniriuA9saW
+         qXQA==
+X-Received: by 10.140.38.231 with SMTP id t94mr47815779qgt.3.1411864674732;
+ Sat, 27 Sep 2014 17:37:54 -0700 (PDT)
+Received: by 10.140.19.85 with HTTP; Sat, 27 Sep 2014 17:37:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257558>
 
-Hi Junio,
+If "~/.gitconfig" contains a "core.filemode" entry then "git init"
+should honour that setting.
 
-Please pull German l10n updates to the maint branch, and
-merge them back to the master branch later.
+Signed-off-by: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+---
+This bit me at work where I have to work with Windows. Git on Cygwin
+and the Eclipse Git plugin do not agree on file attributes so I had
+set "filemode = false" in ~/.gitconfig.
 
-The following changes since commit 96db324a73fdada6fbe7b63221986f8f18cc63b0:
+A few weeks later, I did a "git init" and, some time later yet, I
+noticed the strange behaviour of Cygwin/Eclipse again. This was very
+surprising because things had been working well until then. It took
+quite a bit of research before I realized that "git init" always sets
+"filemode". I think "filemode" should only be set if not set already
+in the global config (similar to log_all_ref_updates).
 
-  Merge git://github.com/git-l10n/git-po (2014-08-29 10:18:22 -0700)
+The usual caveat applies: this is my first patch. Having said that,
+please feel free to be pedantic and strict. It's a small patch so I
+would imagine that fixing any problems should not take long (assuming
+it is acceptable at all, of course). I'd like to know I did it right.
+:-)
 
-are available in the git repository at:
+AFAICT, all tests passed. Should a separate test be added for this change?
 
-  git://github.com/git-l10n/git-po maint
+(I used "git format-patch" and "git imap-send" to send this patch to
+the ML but looking below I still do not see tabs? In fact, I do not
+see any indentation.)
+ builtin/init-db.c | 19 +++++++++++--------
+ environment.c     |  2 +-
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-for you to fetch changes up to 061540fcf7a4dba5392462bc5b07d6c12d3afc61:
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 56f85e2..19cdc58 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -248,15 +248,18 @@ static int create_default_files(const char *template_path)
+  path[len] = 0;
+  strcpy(path + len, "config");
 
-  l10n: de.po: use comma before "um" (2014-09-25 20:26:27 +0200)
+- /* Check filemode trustability */
+- filemode = TEST_FILEMODE;
+- if (TEST_FILEMODE && !lstat(path, &st1)) {
+- struct stat st2;
+- filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+- !lstat(path, &st2) &&
+- st1.st_mode != st2.st_mode);
++ /* Do not override the global filemode setting. */
++ if (trust_executable_bit == -1) {
++ /* Check filemode trustability */
++ filemode = TEST_FILEMODE;
++ if (TEST_FILEMODE && !lstat(path, &st1)) {
++ struct stat st2;
++ filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
++ !lstat(path, &st2) &&
++ st1.st_mode != st2.st_mode);
++ }
++ git_config_set("core.filemode", filemode ? "true" : "false");
+  }
+- git_config_set("core.filemode", filemode ? "true" : "false");
 
-----------------------------------------------------------------
-Phillip Sz (2):
-      l10n: de.po: change Email to E-Mail
-      l10n: de.po: use comma before "um"
+  if (is_bare_repository())
+  git_config_set("core.bare", "true");
+diff --git a/environment.c b/environment.c
+index 565f652..875a498 100644
+--- a/environment.c
++++ b/environment.c
+@@ -12,7 +12,7 @@
+ #include "fmt-merge-msg.h"
+ #include "commit.h"
 
-Ralf Thielow (1):
-      po/TEAMS: add new member to German translation team
-
- po/TEAMS |   1 +
- po/de.po | 100 +++++++++++++++++++++++++++++++--------------------------------
- 2 files changed, 51 insertions(+), 50 deletions(-)
+-int trust_executable_bit = 1;
++int trust_executable_bit = -1;
+ int trust_ctime = 1;
+ int check_stat = 1;
+ int has_symlinks = 1;
+-- 
+2.1.1.dirty
