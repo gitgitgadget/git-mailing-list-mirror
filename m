@@ -1,101 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do not make trace.c/getnanotime an inlined function
-Date: Mon, 29 Sep 2014 10:48:28 -0700
-Message-ID: <xmqqa95iuxlf.fsf@gitster.dls.corp.google.com>
-References: <1411890626-28237-1-git-send-email-bdwalton@gmail.com>
-	<CACsJy8ArOU7WF4fiy5vn8zq5y6Vm5JxgTf+Tiai_WOeMSj--Ug@mail.gmail.com>
+Subject: Re: [PATCH] Ensure SHELL_PATH is the hash bang for test suite askpass helper script.
+Date: Mon, 29 Sep 2014 10:49:03 -0700
+Message-ID: <xmqq38bauxkg.fsf@gitster.dls.corp.google.com>
+References: <20140928231428.GA9061@peff.net>
+	<1411974127-5258-1-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Ben Walton <bdwalton@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 29 19:48:38 2014
+Cc: peff@peff.net, git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 29 19:49:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYf3r-0000PV-P4
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 19:48:36 +0200
+	id 1XYf4V-0000iG-BW
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 19:49:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250AbaI2Rsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2014 13:48:31 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51667 "EHLO smtp.pobox.com"
+	id S1753507AbaI2RtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2014 13:49:12 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51105 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750791AbaI2Rsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2014 13:48:31 -0400
+	id S1752926AbaI2RtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2014 13:49:11 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 49B933D025;
-	Mon, 29 Sep 2014 13:48:30 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9B5FD3D04A;
+	Mon, 29 Sep 2014 13:49:10 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=JxaFcey12XgIU7cJfsJ6C1EdWWU=; b=QciG6jdHMbgZ7zRXYhP5
-	Quhg1M426ZWAx0uNGUwshTrVXAqNmTnIhHVx4i0CvTo2tjNltL0X2C5bNuZ7AaD6
-	qe320OZLpVTXc0riOThwWcEyfL85WOllelOTRoHZOyxk2YBBHxrJhbiu6RCl74gn
-	BioklpNomPRU+NUeKcJkMRc=
+	 s=sasl; bh=0pG9zG3kSbMzXpJmXVcfaq5l4+M=; b=QksUfegX92Z68LsfiGCc
+	9xBtMcbs0Skbe+H+07wqYcpMJ/qqRPY6TDyhUQ/dJIZZV6xS5kPrs87YK7VAm3Lo
+	gr+JKGG04hE/YiPpFxu2NEh6huGPXQdGRcF9CwF67ZEXnw3deUl9VOTPJHggvqUz
+	bvmadKXwXXQbuHeSPVonu8c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=QCNSs9AWjTq0wdhcDxyYeqP5EIAUNHuc4RLQUb9PE1Xi8g
-	aYixTy4zn8qdEsz/65c4KdqIG+j1Q6dElCu4eJBNC6UaC7xNdpY3GsCteIPeU61C
-	GO5LbPscqJjzO3hSS6+Vdb6YbOhkRoJmqh4Gw9CTvGL2z12ohAEOHxuoTLQkE=
+	 q=dns; s=sasl; b=hOS6TsFuWlazGt8TYlzAkwhX4BlgutJ5FNvBL0VpW4QY7D
+	Aobz6rptLQYBR4g+JZGtrxSI+p1Fc17mYgrADwymMsjDFKRSnzGU/zuEOOb1MPlA
+	/G/AyQTHZbp33Q6kfVSTgzdxTBmyjAocPYJyYyZJNEeJCC40EIMfiHWzKbnJM=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4043B3D024;
-	Mon, 29 Sep 2014 13:48:30 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8CEEA3D049;
+	Mon, 29 Sep 2014 13:49:10 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B51E03D023;
-	Mon, 29 Sep 2014 13:48:29 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EE6183D048;
+	Mon, 29 Sep 2014 13:49:04 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D28C05CC-4800-11E4-AEA4-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: EA86DFEE-4800-11E4-848E-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257633>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Ben Walton <bdwalton@gmail.com> writes:
 
-> On Sun, Sep 28, 2014 at 2:50 PM, Ben Walton <bdwalton@gmail.com> wrote:
->> Oracle Studio compilers don't allow for static variables in functions
->> that are defined to be inline. GNU C does permit this. Let's reference
->> the C99 standard though, which doesn't allow for inline functions to
->> contain modifiable static variables.
->>
->> Signed-off-by: Ben Walton <bdwalton@gmail.com>
->> ---
->>  trace.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/trace.c b/trace.c
->> index b6f25a2..4778608 100644
->> --- a/trace.c
->> +++ b/trace.c
->> @@ -385,7 +385,7 @@ static inline uint64_t gettimeofday_nanos(void)
->>   * Returns nanoseconds since the epoch (01/01/1970), for performance tracing
->>   * (i.e. favoring high precision over wall clock time accuracy).
->>   */
->> -inline uint64_t getnanotime(void)
->> +uint64_t getnanotime(void)
->>  {
->>         static uint64_t offset;
+> The askpass script that is created for use by the test suite should
+> use SHELL_PATH for its hash bang instead of /bin/sh. Commit 5a4352024
+> introduced the use of idioms not supported in some legacy /bin/sh
+> implementations.
 >
-> Would moving this offset outside getnanotime() work?
+> Use write_script to ensure this happens automatically. This lets us
+> remove the chmod step as well, since write_script handles that.
+>
+> Signed-off-by: Ben Walton <bdwalton@gmail.com>
+> ---
 
-I am not sure what the definition of "work" is.
+I'll leave out the "some legacy shells we do not support want to use
+`command`" from the justification of this change.  Use of the
+write_script helper is the right thing to do---$SHELL_PATH points at
+the shell the user told us s/he wants to use, and that is a reason
+enough for this change.  The reason why the user wants to use that
+shell is immaterial.
 
-The function computes the difference between the returned value from
-gettimeofday(2) and a custom highres_nanos() just once and returns
-the value it got from gettimeofday the first time, and then for
-subsequent calls massages the returned value from highres_nanos() to
-be consistent with the value returned from gettimeofday using the
-offset it computed in the first call.
+Thanks.
 
-If we have two copies of this function, two independent probes to
-these pair of underlying functions will be made to compute their
-offsets.  With perfect pair of clocks that may not matter, but it
-just feels wrong to me.
 
-Besides, I wonder what happens if the computed offset happen to be
-1, which is used as a sentinel.
+>  t/lib-credential.sh | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/t/lib-credential.sh b/t/lib-credential.sh
+> index 9e7d796..d8e41f7 100755
+> --- a/t/lib-credential.sh
+> +++ b/t/lib-credential.sh
+> @@ -278,12 +278,10 @@ helper_test_timeout() {
+>  	'
+>  }
+>  
+> -cat >askpass <<\EOF
+> -#!/bin/sh
+> +write_script askpass <<\EOF
+>  echo >&2 askpass: $*
+>  what=$(echo $1 | cut -d" " -f1 | tr A-Z a-z | tr -cd a-z)
+>  echo "askpass-$what"
+>  EOF
+> -chmod +x askpass
+>  GIT_ASKPASS="$PWD/askpass"
+>  export GIT_ASKPASS
