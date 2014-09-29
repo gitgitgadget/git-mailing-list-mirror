@@ -1,138 +1,75 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 12/14] Fix pointer -> integer casts on IL32P64 systems
-Date: Mon, 29 Sep 2014 22:43:41 +0200
-Message-ID: <5429C47D.3050903@kdbg.org>
-References: <1411910670-31285-1-git-send-email-marat@slonopotamus.org> <1411910670-31285-13-git-send-email-marat@slonopotamus.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: `git log relative_path_to_object` does not respect the
+ --work-tree path
+Date: Mon, 29 Sep 2014 13:56:12 -0700
+Message-ID: <20140929205612.GQ1175@google.com>
+References: <CABj5xzc0bVfyzR5PD5K3STSvdvWEOYeMkayB=GTfKbfij+G5Zw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>, 
- Erik Faye-Lund <kusmabite@gmail.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBCJYV6HBKQIP5CFHUECRUBD2UHXZM@googlegroups.com Mon Sep 29 22:43:47 2014
-Return-path: <msysgit+bncBCJYV6HBKQIP5CFHUECRUBD2UHXZM@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f184.google.com ([209.85.217.184])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Roberto Eduardo Decurnex Gorosito <decurnex.roberto@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 29 22:56:25 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIP5CFHUECRUBD2UHXZM@googlegroups.com>)
-	id 1XYhnM-0007BH-6W
-	for gcvm-msysgit@m.gmane.org; Mon, 29 Sep 2014 22:43:44 +0200
-Received: by mail-lb0-f184.google.com with SMTP id p9sf292686lbv.11
-        for <gcvm-msysgit@m.gmane.org>; Mon, 29 Sep 2014 13:43:43 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XYhzc-0007CL-6Z
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 22:56:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754659AbaI2U4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2014 16:56:18 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:53170 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754602AbaI2U4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2014 16:56:15 -0400
+Received: by mail-pd0-f173.google.com with SMTP id g10so497837pdj.18
+        for <git@vger.kernel.org>; Mon, 29 Sep 2014 13:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=wsi8lZvEofM5TMjRoMGUYa8JiOf/eWyf6L7pcJQrH9M=;
-        b=ZKcI/+7ZUEKnkB5kF3jsNJI1DF97QcUo2G/WJ9WuXvDm3OvzlpwrqZ58In+oxnKVQ8
-         jlcxcdAp066ce7F/DKwAcr3w97c1i2r8yxlxSfJWCkJhEVHm86yBJt6TmHgiQ7kXi5sW
-         6NFHJlVPQkLHO0eKKpT0jT0qmLmrRdxOoUiNFjqKIeV6pzUQoFQpXv+ru43EuPepwWVY
-         52S3uz9TWuCo1PZZNU3UOLUTdijyQ67E3OaRIpYWNvMT4oJ9ZQ+U4PZjCY3VaxK5Cpb5
-         JgYa7qPDOpiZuIHcGxUpMLeKb76Hqc8Dwv1UKt4t5lJAEAjL0cl+IwHyD4G7JNcISMOS
-         ByEA==
-X-Received: by 10.152.36.193 with SMTP id s1mr91100laj.0.1412023423940;
-        Mon, 29 Sep 2014 13:43:43 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.36.133 with SMTP id q5ls669016laj.80.gmail; Mon, 29 Sep
- 2014 13:43:42 -0700 (PDT)
-X-Received: by 10.152.26.225 with SMTP id o1mr1564133lag.4.1412023422441;
-        Mon, 29 Sep 2014 13:43:42 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp3.bon.at. [213.33.87.17])
-        by gmr-mx.google.com with ESMTPS id h1si674936wib.0.2014.09.29.13.43.42
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Sep 2014 13:43:42 -0700 (PDT)
-Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.17;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3j6G0Q4rhkz5tlF;
-	Mon, 29 Sep 2014 22:43:34 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 479C019F5C3;
-	Mon, 29 Sep 2014 22:43:41 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-In-Reply-To: <1411910670-31285-13-git-send-email-marat@slonopotamus.org>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257639>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Et/fIMscBz7ZCKM1/w4VLsYpsJ/Jlcac9uW5GRohvx0=;
+        b=gJRT4BqaNv/hXgOxY/S/1IppK/r7kBQDuAuI+qWjnD3wFwkStVQfuM/dntVuOEhptB
+         dxyfG5q40krJ72ZN8gwc5qgTzzuWF2RApovn1QoBj+pGcmyl8Op+8Ens2m7pAbWC1/+t
+         MFtIsM6/qsnyg+iY78cY+dVpH7nfmJsnUicwLxmujJt5daNlwfGMqtMsGqDiPSUKtv3K
+         QlFL7Ywn2MsW/6qz6GsRR4dy1M+84qKtOMzpkOwQrNWyoG1QCBFFNCp9Tik8PQeDAwdR
+         scXq9bIhInf06bkXjV+4UOaryFoIsmdNtGmUnZ56CzOJw1ImUDA9X47ePW9UuqpN443d
+         tv0Q==
+X-Received: by 10.66.141.77 with SMTP id rm13mr52434949pab.91.1412024175052;
+        Mon, 29 Sep 2014 13:56:15 -0700 (PDT)
+Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
+        by mx.google.com with ESMTPSA id wi10sm13103875pbc.95.2014.09.29.13.56.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 29 Sep 2014 13:56:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CABj5xzc0bVfyzR5PD5K3STSvdvWEOYeMkayB=GTfKbfij+G5Zw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257640>
 
-Am 28.09.2014 um 15:24 schrieb Marat Radchenko:
-> This commit touches regcomp.c and poll.c from Gnulib,
-> both were fixed upstream in 2012 the same way.
-> 
-> Wrt ShellExecute, see [1].
-> 
-> [1]: http://blogs.msdn.com/b/oldnewthing/archive/2006/11/08/1035971.aspx
+Hi Roberto,
 
-Please do not force readers to visit a web site; provide at least a summary.
+Roberto Eduardo Decurnex Gorosito wrote:
 
-> 
-> Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
-> ---
+> When passing objects to the `git log`, by just naming them or using
+> the `--objects` option, relative paths are evaluated using the current
+> working directory instead of the current working tree path.
 
-> diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-> index 06f3088..d8bde06 100644
-> --- a/compat/regex/regcomp.c
-> +++ b/compat/regex/regcomp.c
-> @@ -2577,7 +2577,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
->      old_tree = NULL;
->  
->    if (elem->token.type == SUBEXP)
-> -    postorder (elem, mark_opt_subexp, (void *) (long) elem->token.opr.idx);
-> +    postorder (elem, mark_opt_subexp, (void *) (intptr_t) elem->token.opr.idx);
->  
->    tree = create_tree (dfa, elem, NULL, (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
->    if (BE (tree == NULL, 0))
-> @@ -3806,7 +3806,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
->  static reg_errcode_t
->  mark_opt_subexp (void *extra, bin_tree_t *node)
->  {
-> -  int idx = (int) (long) extra;
-> +  int idx = (int) (intptr_t) extra;
->    if (node->token.type == SUBEXP && node->token.opr.idx == idx)
->      node->token.opt_subexp = 1;
->  
+Why should they be relative to the worktree root?  When you use
+relative paths within a worktree, they are not relative to the
+worktree root.  For example, the following works within a clone of
+git.git:
 
-This breaks with
+	$ cd Documentation
+	$ git log git.txt
 
-In file included from compat/regex/regex.c:77:
-compat/regex/regcomp.c: In function 'parse_dup_op':
-compat/regex/regcomp.c:2580: error: 'intptr_t' undeclared (first use in
-this function)
+You might be looking for 'git -C <directory>', which chdirs to the
+named directory so paths are relative to there.
 
-when compiled using the msysgit environment.
-
--- Hannes
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Hope that helps,
+Jonathan
