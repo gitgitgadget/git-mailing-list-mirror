@@ -1,99 +1,84 @@
-From: Roberto Eduardo Decurnex Gorosito <decurnex.roberto@gmail.com>
-Subject: Re: `git log relative_path_to_object` does not respect the
- --work-tree path
-Date: Mon, 29 Sep 2014 15:11:00 -0300
-Message-ID: <CABj5xzdk38_W93kQAiS191XMp826endMdL9c5heCbLo9AZwA9w@mail.gmail.com>
-References: <CABj5xzc0bVfyzR5PD5K3STSvdvWEOYeMkayB=GTfKbfij+G5Zw@mail.gmail.com>
- <xmqqy4t2ti75.fsf@gitster.dls.corp.google.com>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH v2] Documentation/git-rebase.txt: discuss --fork-point assumption of vanilla "git rebase" in DESCRIPTION.
+Date: Tue, 30 Sep 2014 00:17:48 +0400
+Message-ID: <8738ba5ggj.fsf@osv.gnss.ru>
+References: <87r3z72wiu.fsf@osv.gnss.ru> <87k34mn0ht.fsf@osv.gnss.ru>
+	<xmqq7g0m75qk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 29 20:11:28 2014
+X-From: git-owner@vger.kernel.org Mon Sep 29 22:18:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYfPz-0004uS-EU
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 20:11:27 +0200
+	id 1XYhOO-0007xS-36
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 22:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754897AbaI2SLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2014 14:11:23 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:50036 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536AbaI2SLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2014 14:11:22 -0400
-Received: by mail-lb0-f181.google.com with SMTP id n15so4024767lbi.26
-        for <git@vger.kernel.org>; Mon, 29 Sep 2014 11:11:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+1h0IMR0V/e6bh4LXA3ZO8io1U+46O+kKdleeDI0dj4=;
-        b=UUXWb1rAUYmUj1aJ6o/fDsltui5wk5SX7EfxxEq74IRhquZ9Rzn9DkKc0w/2S0Cr9G
-         BxDKXoUbcOYfM3zrYtU9DDRRwE1rW2/mfY4ih0UvTuYeT/mbjMQi1az7Asm0byBwRQd+
-         FK+T6WlWsINcj0Veq3kK5nzjHX+mjnJClc4HNUC9nu9t5TUZyczA1R5GdtIpgVaGpwdP
-         EwEJgSvyMfpxZJprWaA6JjLkxRwRPm80rdGCIPxU1r5ufo3zaviisNQXukxuX/nfB66W
-         Pqk6G3QDscFrtLOl7GWPWGNriY/U5RbPT6dyGisdB/HaJNfiyHv8D+Lc0GMg0vONFkCc
-         tgqA==
-X-Received: by 10.112.16.129 with SMTP id g1mr38701366lbd.19.1412014280430;
- Mon, 29 Sep 2014 11:11:20 -0700 (PDT)
-Received: by 10.25.42.131 with HTTP; Mon, 29 Sep 2014 11:11:00 -0700 (PDT)
-In-Reply-To: <xmqqy4t2ti75.fsf@gitster.dls.corp.google.com>
+	id S1752418AbaI2URw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2014 16:17:52 -0400
+Received: from mail.javad.com ([54.86.164.124]:40269 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751551AbaI2URv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2014 16:17:51 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id 6E2DA61861;
+	Mon, 29 Sep 2014 20:17:50 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1XYhOG-0005yO-IP; Tue, 30 Sep 2014 00:17:48 +0400
+In-Reply-To: <xmqq7g0m75qk.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 29 Sep 2014 09:26:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257637>
 
-Sorry, I left the --git-dir out of the example. I do set the --git-dir
-(and $GIT_DIR sometimes) too.
+Junio C Hamano <gitster@pobox.com> writes:
+> Sergey Organov <sorganov@gmail.com> writes:
+>
 
-It gives the same results. That's why I feels like it shouldn't be
-working as it is.
+[...]
 
-In this specific case (log with object filter) the environment config
-is completely ignored.
+>> As asked by Junio C Hamano <gitster@pobox.com>, the newly introduced
+>> 'fork_point' term has been described.
+>>
+>
+> I suspect "will be used as a fallback" might be easier to understand
+> what is going on instead of "will be used instead", but other than
+> that, the new explanation of what fork-point is is a very welcome
+> update, I think.
 
-On Mon, Sep 29, 2014 at 3:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Roberto Eduardo Decurnex Gorosito <decurnex.roberto@gmail.com>
-> writes:
+Yeah, sure. Wasn't satisfied with the wording myself.
+
+[...]
+
+> The patch failed to apply
+
+Sorry about it.
+
+> Applying: Documentation/git-rebase.txt: discuss --fork-point assumption of vanilla "git rebase" in DESCRIPTION.
+> fatal: corrupt patch at line 38
+
+I rather get:
+
+$ git apply x.patch
+x.patch:38: trailing whitespace.
+	introduced by <branch>. 
+warning: 1 line adds whitespace errors.
+
+I've used 'git format-patch' to prepare the patch. Shouldn't it warn
+about such things? Or what should I do to avoid such problems in the
+future? 
+
 >
->> ~/path$ git --work-tree=~/path/to_repo log README.md
->
-> This does not seem to specify GIT_DIR explicitly (either with the
-> $GIT_DIR environment variable or the --git-dir option), so I would
-> assume that you are sitting in a directory that has ".git/"
-> subdirectory or a subdirectory of such a directory, but that ".git/"
-> is not a real repository that controls the working tree you have at
-> the ~/path/to_repo directory.
->
-> The --work-tree option and $GIT_WORK_TREE environment were primarily
-> invented to solve this problem:
->
->     When a user gives $GIT_DIR or --git-dir to disable the
->     repository discovery (i.e. trying to see if the current
->     directory has ".git/" that looks like a repository, and if not
->     try the parent directory until we find one), traditionally we
->     assumed that the current directory is the top-level of the
->     corresponding working tree.  This makes it cumbersome to work
->     inside a subdirectory, and by allowing $GIT_WORK_TREE or
->     --work-tree to specify the top-level of the working tree,
->     working from a subdirectory of a working tree becomes usable
->     again.
->
-> That is why it does not mix very well with repository discovery
-> (i.e.  letting Git crawl upward from the current directory to find a
-> directory with ".git/").  It is unclear if the auto-discovered
-> ".git" is the one to be be consulted for the "log" operation you
-> asked, or the other repository you have at ~/path/to_repo/.git (or
-> one of its parent directories, e.g. ~/path/.git).  I _think_ the
-> current implementation randomly chose to use the auto-discovered
-> one, but it may have been better to forbid and always require both
-> --git-dir and --work-tree to be given to avoid confusion.
->
->
->
->
->
+> but the fix-up is trivial, so no need to resend.
+
+Thanks.
+
+-- 
+Sergey.
