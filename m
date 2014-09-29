@@ -1,64 +1,76 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Code changes in merge commits
-Date: Mon, 29 Sep 2014 19:29:59 +0700
-Message-ID: <CACsJy8BFKrgssx+787KOspPRZ7wQfT_187VsgeztOUOXaSEx_Q@mail.gmail.com>
-References: <CAHQ6N+p1GqQfTs0H-4ij_QfkWQGfTUbWBzMC4E7LCEynPT78kA@mail.gmail.com>
- <CAHQ6N+rJDtq_vtfotM+GXLdN_P==oTqGbFZ97ZQea9+mcoRBog@mail.gmail.com> <vpq8ul2pu9n.fsf@anie.imag.fr>
+Subject: Re: [PATCH] Do not make trace.c/getnanotime an inlined function
+Date: Mon, 29 Sep 2014 19:44:20 +0700
+Message-ID: <CACsJy8ArOU7WF4fiy5vn8zq5y6Vm5JxgTf+Tiai_WOeMSj--Ug@mail.gmail.com>
+References: <1411890626-28237-1-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 29 14:30:40 2014
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 29 14:44:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYa6B-0004tx-Ij
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 14:30:39 +0200
+	id 1XYaJz-0002tz-Im
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Sep 2014 14:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbaI2Mab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Sep 2014 08:30:31 -0400
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:37493 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751786AbaI2Maa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Sep 2014 08:30:30 -0400
-Received: by mail-yh0-f50.google.com with SMTP id z6so910436yhz.23
-        for <git@vger.kernel.org>; Mon, 29 Sep 2014 05:30:30 -0700 (PDT)
+	id S1754218AbaI2Mov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Sep 2014 08:44:51 -0400
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:65223 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753762AbaI2Mov (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Sep 2014 08:44:51 -0400
+Received: by mail-yh0-f47.google.com with SMTP id 29so1626164yhl.34
+        for <git@vger.kernel.org>; Mon, 29 Sep 2014 05:44:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=ZLLemSXe9ShzuwLPdxMdaArIVGb8llLkP9bZa+8Glns=;
-        b=eBVY8Uw2geo1/xULY4Z1xmM1eJ3kmFLxf1HoiCoogiUcZTaX9VGeA5eIXbE4XhBP49
-         dazBTC4O7brsr9GnscRm/2KXCjsVLQ4bnUQ+prItkJjo48sKnbNct+t4r1MseElUtkDQ
-         AWf5kpeO9U2mVop7KBcWHhpyQ9Px949vDrR58RHKsYWhFv3KaOIiDOaRWZ+4E+Fx4RVz
-         zth1XI9H0lqyEOoJBCPMTZUNG1sPuOJ+CVgcsj2CEQT7VBqPwiiazUn1rFguNHdDMZ44
-         YHOfCjulafDGrvqJaSGDfIlWMk2DfUv31qp4U8Mx3Z7BsO9t6r2r2Bk+8rdG62S5Aas5
-         bIaw==
-X-Received: by 10.236.227.162 with SMTP id d32mr2329174yhq.100.1411993829933;
- Mon, 29 Sep 2014 05:30:29 -0700 (PDT)
-Received: by 10.170.62.136 with HTTP; Mon, 29 Sep 2014 05:29:59 -0700 (PDT)
-In-Reply-To: <vpq8ul2pu9n.fsf@anie.imag.fr>
+        bh=r+3lOysKf2TC+IyqEW1F7tQ5YpXsnZ0dvRM6M5NF4F4=;
+        b=R/J+PcSbx8EL3P/A4th3gH8sHlb1JC/utwwoCPOlCmMR8CbB9PM5j7Xu9J9cupM8h2
+         U8XgKQU71m/Rq4y2q1IPVJSKW2brYf05idsCHPjWEfhpMFvCx4cG8Uv+XZulCNUzPeOM
+         hrsXm/bQo8kzJ2uhkYjcb14U8WEMTT+cgZ/VBMJUHdl9xt367Idw+V/v46LFJOQNXgrs
+         UXGKd4YQGySKq7/sbJFO6mAS18CbYH3MKc1kdD+KVKPJ6tuhL4LjKEvj/5H4Gs7t9utN
+         mgDv1Z8lo2OWblHR6uXYIyEGNjWW36wcSvG38i5VWowMPTQYgsaHat2pWhXrpvrDb51T
+         m2gA==
+X-Received: by 10.236.160.100 with SMTP id t64mr54875473yhk.7.1411994690318;
+ Mon, 29 Sep 2014 05:44:50 -0700 (PDT)
+Received: by 10.170.62.136 with HTTP; Mon, 29 Sep 2014 05:44:20 -0700 (PDT)
+In-Reply-To: <1411890626-28237-1-git-send-email-bdwalton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257624>
 
-On Mon, Sep 29, 2014 at 5:59 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->> Ideally I'd like to see all the code changes to a code base just with
->> "git log -p".
+On Sun, Sep 28, 2014 at 2:50 PM, Ben Walton <bdwalton@gmail.com> wrote:
+> Oracle Studio compilers don't allow for static variables in functions
+> that are defined to be inline. GNU C does permit this. Let's reference
+> the C99 standard though, which doesn't allow for inline functions to
+> contain modifiable static variables.
 >
-> What I'd love to see with "git log -p" is the diff between a trivial
-> merge (possibly including conflict markers) and the actual merge commit.
-> That would imply that "git log" would redo the merge before computing
-> the diff (rather heavyweight :-( ), but an empty diff would mean "no
-> change other than merge", and if any, we would see the conflict
-> resolution or additional changes in the diff.
+> Signed-off-by: Ben Walton <bdwalton@gmail.com>
+> ---
+>  trace.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/trace.c b/trace.c
+> index b6f25a2..4778608 100644
+> --- a/trace.c
+> +++ b/trace.c
+> @@ -385,7 +385,7 @@ static inline uint64_t gettimeofday_nanos(void)
+>   * Returns nanoseconds since the epoch (01/01/1970), for performance tracing
+>   * (i.e. favoring high precision over wall clock time accuracy).
+>   */
+> -inline uint64_t getnanotime(void)
+> +uint64_t getnanotime(void)
+>  {
+>         static uint64_t offset;
 
-Topic tr/remerge-diff in 'pu'? I think --remerge-diff works with
-git-log, but I'm not sure.
+Would moving this offset outside getnanotime() work?
 -- 
 Duy
