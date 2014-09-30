@@ -1,111 +1,122 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH] docs/git-mailinfo: Mention the manual separator (---)
-Date: Tue, 30 Sep 2014 14:48:46 -0700
-Message-ID: <20140930214846.GK3770@odin.tremily.us>
-References: <28b04f1c17f2cc2fe252948bc0b7bb10df24b489.1411571629.git.wking@tremily.us>
- <xmqqiok4rew5.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-prompt.sh: shorter equal upstream branch name
+Date: Tue, 30 Sep 2014 15:29:19 -0700
+Message-ID: <xmqqbnpwrbcw.fsf@gitster.dls.corp.google.com>
+References: <1412091370-11727-1-git-send-email-jcarsique@nuxeo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tKy6e3LXpfmanBFM"
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 23:49:01 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>,
+	"Eduardo R. D'Avila" <erdavila@gmail.com>,
+	Richard Hansen <rhansen@bbn.com>
+To: Julien Carsique <julien.carsique@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 01 00:29:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZ5Hz-0000hq-1j
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 23:48:55 +0200
+	id 1XZ5vD-0007ZU-Uh
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 00:29:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999AbaI3Vsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 17:48:51 -0400
-Received: from resqmta-po-11v.sys.comcast.net ([96.114.154.170]:44530 "EHLO
-	resqmta-po-11v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752965AbaI3Vss (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2014 17:48:48 -0400
-Received: from resomta-po-06v.sys.comcast.net ([96.114.154.230])
-	by resqmta-po-11v.sys.comcast.net with comcast
-	id xZoh1o00B4yXVJQ01ZonFk; Tue, 30 Sep 2014 21:48:47 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by resomta-po-06v.sys.comcast.net with comcast
-	id xZom1o00L152l3L01Zompp; Tue, 30 Sep 2014 21:48:47 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 55A7613DF174; Tue, 30 Sep 2014 14:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1412113726; bh=UprEAt0RAzqo1+KmWSMPTrPu8Dw7D9DQjJjddooeugc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Am/B2AbfKLNDVIFzHyiiAQG1vEdk7zXwRu41Bdrx9bGYa/EVZP8VXme8fxZ69mob1
-	 grt2xZrilmz2KLgezh7xCfudCCWCo1nW0icK9fsBeed9tvUuq+yMYc5DruJP6UTaGz
-	 a3ZIVHms2swY6Y0C7hezh4V5f4uzg75bjM7epQ5k=
-Content-Disposition: inline
-In-Reply-To: <xmqqiok4rew5.fsf@gitster.dls.corp.google.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1412113727;
-	bh=VCObjagsmOvJVOa7NKfx9IrWX21seeIZkob1eLxtIuY=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=nPHcU7grWUDJBH7Z9z41wkpepY5ZeTzbriuwSybLG8Eg//mP8/AlmtLt0KHMQOgmX
-	 EY7bFLjncNH6P858qi5c/Kj00cWfCdu54bRPqN//6Wo7fIwyoMuwp4muCbM6pbBEit
-	 RgaMaDavroJFWhs5Jz5UR7tFKnhbyVZtXn49Ulw20yk+pI2d7LpIw9u7xKUIBWTYr7
-	 XLGzBt9Sk94qQIbhUBYJrYXqgilfEwjocXRCra/hTzI91GwRJvM/7k7ewL3FfI9H2z
-	 fKdqEY/LhfiATHrrwc7B6Mj5w83choosPtKYBELa87EbYTwKMmIxD8rJqxPmcOdfj3
-	 UCZpqv+V6tDWQ==
+	id S1752632AbaI3W3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 18:29:24 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51612 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750846AbaI3W3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2014 18:29:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F5023FC7D;
+	Tue, 30 Sep 2014 18:29:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=4IaDxB0AkTd5uamQtt6i1gcXc9Y=; b=kXbqcypOGr+uAo66PIc+
+	96xv1OANTeoA/4tvMBhSdJeEUzy7AmhG4ygImBzInrTWL780aeuDFRpPe9lkNDH1
+	pHR7zyiXzFzM84S6qQUGLS0rcE94IDo569/zyRL+O2wFTS1f8GZ6bOd7/ovGrNQQ
+	8wj2dpVEV7knFIlnHBMvPhg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=hwgI9s+flngFvYE3gHwLFydlnVAYDgU4+P8DIzRo8YEmyG
+	FH5eT7DFJm1qvdUJSgrcC41taIuavjOF5CAUQjiXmNgOopteqA0NlEg3Ihyapp4v
+	czpGTrKBDLxJC9lA3FKmHZXJ8eORvThfp3Jn/+Qwj/LFwMqz9Cfkh4TUdC1Tc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 758933FC7C;
+	Tue, 30 Sep 2014 18:29:21 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DAF7E3FC7B;
+	Tue, 30 Sep 2014 18:29:20 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 39123E38-48F1-11E4-8884-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257686>
 
+Julien Carsique <julien.carsique@gmail.com> writes:
 
---tKy6e3LXpfmanBFM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: Julien Carsique <julien.carsique@gmail.com>
+>
+> When using the "name" option of GIT_PS1_SHOWUPSTREAM to show the upstream
+> abbrev name, if the upstream name is the same as the local name, then some
+> space could be saved in the prompt. This is especially needed on long branch
+> names.
+>
+> Replace the upstream name with the sign '=' if equal to the local one.
+> Example:    [master * u= origin/=]$
+> instead of: [master * u= origin/master]$
+>
+> Signed-off-by: Julien Carsique <julien.carsique@gmail.com>
+> ---
+>  contrib/completion/git-prompt.sh | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index c5473dc..a9aba20 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -209,6 +209,13 @@ __git_ps1_show_upstream ()
+>  		if [[ -n "$count" && -n "$name" ]]; then
+>  			__git_ps1_upstream_name=$(git rev-parse \
+>  				--abbrev-ref "$upstream" 2>/dev/null)
+> +
+> +			__head=${b##refs/heads/}
+> +			if [ "$__head" = "${__git_ps1_upstream_name##*/}" ]; then
 
-On Tue, Sep 30, 2014 at 02:12:58PM -0700, Junio C Hamano wrote:
-> If we are extending the documentation on "---", =E2=80=A6
+When you are on your "xyz" branch that was forked off of
+"refs/remote/origin/xyz/xyz", $__git_ps1_upstream_name would be
+"origin/xyz/xyz" and $__head is "xyz" at this point.  The latter
+matches the former after stripping */ maximally from its front
+(i.e. "xyz").  It is unclear if you really want to make these two
+match, but as long as you correctly abbreviate you would not lose
+information, I would imagine.  I am guessing that you would want to
+see "origin/xyz/=" in such a case, and if you started your "xyz" off
+of "origin/abc/xyz", you would want "origin/abc/=".
 
-Ah, I see that the --- are actually mentioned already in the
-DISCUSSION section of git-am(1) since 2499857b (git-am documentation:
-describe what is taken from where, 2007-03-24).  I expected the docs
-to be either in git-mailinfo(1) (since the code added by f0658cf2
-(restrict the patch filtering, 2007-03-12) is in mailinfo) or to match
-a grep for '---'.  Maybe we should drop this patch in favor of notes
-in git-mailinfo(1) and git-format-patch(1) pointing folks at the
-DISCUSSION section in git-am(1) and a more easily grepable =E2=80=9Cthree
-dashes ('---')" in gi-am(1)?
+> +				__git_ps1_upstream_name=${__git_ps1_upstream_name/$__head/=}
 
-Cheers,
-Trevor
+Now, what does ${__git_ps1_upstream_name/$__head/=} give us?
+This should not do regexp substitution in the first place, I would
+think.  You made sure $__head is the tail-matching substring of the
+longer variable, so you chop that many bytes off of the latter.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+Is this new feature something everybody should want unconditionally,
+or are there valid reasons why some people may not want to see this
+abbreviation happen (even if the implementation were not buggy)?
 
---tKy6e3LXpfmanBFM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+> +			fi
+> +			unset __head
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Unlike __git_ps1_upstream_name, this __head does not have to be
+visible outside this function.  Wouldn't it be better to declare it
+as local (this is bash prompt and we can afford to step outside
+POSIX) and there is no need to "unset" after use if you did so, no?
 
-iQIcBAEBAgAGBQJUKyU7AAoJEG8/JgBt8ol8an4P/0saJM834othoBhnpre6qj5a
-HPPlGpVeMyWnTdVh2LYHoRjWX9s8/mjPQfi0hoK4nUEAAJ7b/sC7TPY/UaS7edfm
-jvgXmDzW1EcVCFzNTa0txewc/yYFoAdXHpnfZiAkvAo+E0Flxt98YcA2kCh8nFtN
-z5vsVBkDkgmG5kGVKc3+rr2LAwmIm6WQu2cB7Gmls1CzShzgddGvjFdA3x0GEW31
-CbTqR1rHdmZ/6fE3BGU8oWci+kd3LdNUlwkKnsLMkMTWcrwd9GqUvnvvUANQ5MRs
-oTlM7KoXKMj5xRYWOLqQPQTYXbr7n7u9wNLOoa4ltd0UCrErRpvJZmhUjp0TojIk
-x42mqOGIRqvLJRHI6nH5Em4VgiBSynQy45LqVv4QiJNjnrYBdHsSCKJwODsAXJ7v
-J38aJg3+GXsNQTQGI1sx3c40xroTZyld9R/RkiCyba3TagX8hVWj6vTtBELrapo+
-T2o1C3CKuUIci34lLrGh5RKJM8esQfQbdRxwyUcal7QzUwQwVyIU28eeFYSv+46C
-7UOFlKeFcWKM0fzF0ROISBqpZJQy10xoW5pHgqhTqVhBJdy13ux0yCzJESl7fHrd
-KLDY+ZFQQiWDtEdCip15qpf9kG/dPgJPseRFY21rR7Od1P6Fkd+TghZkpmU7MMrd
-TqUKm9oRUZXoJjJhSDEB
-=5Ft9
------END PGP SIGNATURE-----
-
---tKy6e3LXpfmanBFM--
+>  			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+>  				p="$p \${__git_ps1_upstream_name}"
+>  			else
