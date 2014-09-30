@@ -1,116 +1,91 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v6 27/39] try_merge_strategy(): use a statically-allocated
- lock_file object
-Date: Tue, 30 Sep 2014 16:04:03 +0200
-Message-ID: <542AB853.5000303@alum.mit.edu>
-References: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu>	<1411726119-31598-28-git-send-email-mhagger@alum.mit.edu> <xmqqh9zu8ax5.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 16:04:25 2014
+From: Julien Carsique <julien.carsique@gmail.com>
+Subject: [PATCH] git-prompt.sh: shorter equal upstream branch name
+Date: Tue, 30 Sep 2014 17:36:10 +0200
+Message-ID: <1412091370-11727-1-git-send-email-jcarsique@nuxeo.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>,
+	"Eduardo R. D'Avila" <erdavila@gmail.com>,
+	Richard Hansen <rhansen@bbn.com>,
+	Julien Carsique <julien.carsique@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 30 17:37:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYy2Q-0004DD-Q3
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 16:04:23 +0200
+	id 1XYzUS-0005K3-Rn
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 17:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbaI3OER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 10:04:17 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:48477 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751629AbaI3OEQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2014 10:04:16 -0400
-X-AuditID: 12074411-f79d86d000006a97-31-542ab856cee1
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 78.22.27287.658BA245; Tue, 30 Sep 2014 10:04:06 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC9741E.dip0.t-ipconnect.de [79.201.116.30])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8UE43Pg003580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 30 Sep 2014 10:04:04 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <xmqqh9zu8ax5.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsUixO6iqBu2QyvEYMpbGYuuK91MFg29V5gt
-	nsy9y2zx9uYSRosfLT3MFv8m1Fh0dnxldGD32DnrLrvHgk2lHg9fdbF7POvdw+hx8ZKyx+dN
-	ch63n21jCWCP4rZJSiwpC85Mz9O3S+DOWHx8L3vBVf6K5unfWBoYL/N0MXJySAiYSNz/tJIF
-	whaTuHBvPVsXIxeHkMBlRolDDdOYIZzzTBLPp19lBKniFdCWuLK7iRnEZhFQlXgzfQ0biM0m
-	oCuxqKeZCcQWFQiQ+ND5AKpeUOLkzCdgG0QE1CQmth1iARnKLPCFUeLuvHtgzcICiRITzt5g
-	hdi2llHi26IlrCAJTgFrieOdO8GKmAXUJf7Mu8QMYctLNG+dzTyBUWAWkiWzkJTNQlK2gJF5
-	FaNcYk5prm5uYmZOcWqybnFyYl5eapGuqV5uZoleakrpJkZINAjuYJxxUu4QowAHoxIPb4Ki
-	VogQa2JZcWXuIUZJDiYlUd6ulUAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrwztwPleFMSK6tS
-	i/JhUtIcLErivHxL1P2EBNITS1KzU1MLUotgsjIcHEoSvOIgjYJFqempFWmZOSUIaSYOTpDh
-	XFIixal5KalFiaUlGfGgeI0vBkYsSIoHaK8/2N7igsRcoChE6ylGY45JG9/3MnGs6/zWzyTE
-	kpeflyolzntqG1CpAEhpRmke3CJYGnzFKA70tzBvCMhAHmAKhZv3CmgVE9CqtA3qIKtKEhFS
-	Ug2MU7f4MmxNkJSblf5fuE5HOuDk7F+p1tsDlZjiLjw1qrh+/FVygfqxYDnXZzEd 
+	id S1751042AbaI3PhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 11:37:16 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:46114 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751895AbaI3PhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2014 11:37:06 -0400
+Received: by mail-wg0-f42.google.com with SMTP id z12so4837030wgg.1
+        for <git@vger.kernel.org>; Tue, 30 Sep 2014 08:37:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=eDbzwwsWgCe9c57lvygIBg+rb9Lgk7u7/+SStTGcJlI=;
+        b=W6CkdxJzzmuYjYk1rZsmIjAKT0R4M5dYTML6vV/0cDGxeIAjIahJuXvng7leWs2RZD
+         4Hc2nDxZsSEZIxRVnKBRI9IfLJRXaam2FHjp5WABYuV8F3qOhYTOK/iHSmnwIH/uo2d0
+         OgKUEVDKD9UbBp4ZqkBVEmQqX3/4YT49GI6Z7vv9jLDirXqGjgMWjbZdPIsfmfCV4ORP
+         FuLxBjFzLCN04yyiKf7oRFGnmtmbkHymq23E2Ylsb/lciVSszIsXudSUNyNENudQyI2X
+         OuUO88sR+AUyRZGvY8QCRfRGXru4rj8SiXLGQTTNNboTJ89O0Il4R3a9+GUd9BUD1CEO
+         SPkw==
+X-Received: by 10.180.207.104 with SMTP id lv8mr6779638wic.35.1412091425232;
+        Tue, 30 Sep 2014 08:37:05 -0700 (PDT)
+Received: from nocebo.in.nuxeo.com ([176.57.246.10])
+        by mx.google.com with ESMTPSA id g6sm19608007wjf.13.2014.09.30.08.36.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 30 Sep 2014 08:36:58 -0700 (PDT)
+X-Google-Original-From: Julien Carsique <jcarsique@nuxeo.com>
+X-Mailer: git-send-email 2.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257671>
 
-On 09/26/2014 09:00 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> Even the one lockfile object needn't be allocated each time the
->> function is called.  Instead, define one statically-allocated
->> lock_file object and reuse it for every call.
->>
->> Suggested-by: Jeff King <peff@peff.net>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->> ...
->> -	hold_locked_index(lock, 1);
->> +	hold_locked_index(&lock, 1);
->>  	refresh_cache(REFRESH_QUIET);
->>  	if (active_cache_changed &&
->> -	    write_locked_index(&the_index, lock, COMMIT_LOCK))
->> +	    write_locked_index(&the_index, &lock, COMMIT_LOCK))
-> 
-> I wondered if the next step would be to lose the "lock" parameter
-> from {hold,write}_locked_index() and have them work on a
-> process-global lock, but that would not work well.
-> 
-> The reason why this patch works is because we are only working with
-> a single destination (i.e. $GIT_INDEX_FILE typically .git/index),
-> right?
-> 
-> Interesting.
+From: Julien Carsique <julien.carsique@gmail.com>
 
-Ummm, this patch wasn't supposed to be interesting. If it is then maybe
-I made a mistake...
+When using the "name" option of GIT_PS1_SHOWUPSTREAM to show the upstream
+abbrev name, if the upstream name is the same as the local name, then some
+space could be saved in the prompt. This is especially needed on long branch
+names.
 
-My reasoning was that after the lock is acquired, it is released
-unconditionally before the function exits. Therefore, it should be no
-problem to reuse it each time the function is called.
+Replace the upstream name with the sign '=' if equal to the local one.
+Example:    [master * u= origin/=]$
+instead of: [master * u= origin/master]$
 
-Of course, one gap in this argument is the possibility that this
-function calls itself recursively. The fact that it calls
-merge_recursive() should have alerted me to this possibility. So let me
-check...
+Signed-off-by: Julien Carsique <julien.carsique@gmail.com>
+---
+ contrib/completion/git-prompt.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-* try_merge_strategy() is only called by cmd_merge()
-* cmd_merge() is only called by the command dispatcher
-
-So I don't see a way for this function to call itself recursively within
-a single process.
-
-A second possible gap in this argument would be if this function can be
-called from multiple threads. But hardly any of our code is thread-safe,
-so I hardly think that is likely.
-
-What am I missing?
-
-Michael
-
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index c5473dc..a9aba20 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -209,6 +209,13 @@ __git_ps1_show_upstream ()
+ 		if [[ -n "$count" && -n "$name" ]]; then
+ 			__git_ps1_upstream_name=$(git rev-parse \
+ 				--abbrev-ref "$upstream" 2>/dev/null)
++
++			__head=${b##refs/heads/}
++			if [ "$__head" = "${__git_ps1_upstream_name##*/}" ]; then
++				__git_ps1_upstream_name=${__git_ps1_upstream_name/$__head/=}
++			fi
++			unset __head
++
+ 			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+ 				p="$p \${__git_ps1_upstream_name}"
+ 			else
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.1.0
