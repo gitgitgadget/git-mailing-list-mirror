@@ -1,88 +1,125 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 02/39] api-lockfile: revise and expand the documentation
-Date: Tue, 30 Sep 2014 10:47:54 -0700
-Message-ID: <xmqqoatxrodx.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v6 27/39] try_merge_strategy(): use a statically-allocated lock_file object
+Date: Tue, 30 Sep 2014 11:08:47 -0700
+Message-ID: <xmqqiok5rnf4.fsf@gitster.dls.corp.google.com>
 References: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu>
-	<1411726119-31598-3-git-send-email-mhagger@alum.mit.edu>
-	<xmqq8ul6869o.fsf@gitster.dls.corp.google.com>
-	<542AB323.4080402@alum.mit.edu> <20140930161543.GA10581@peff.net>
+	<1411726119-31598-28-git-send-email-mhagger@alum.mit.edu>
+	<xmqqh9zu8ax5.fsf@gitster.dls.corp.google.com>
+	<542AB853.5000303@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Johannes Sixt <j6t@kdbg.org>,
+Cc: Johannes Sixt <j6t@kdbg.org>,
 	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
 	Ronnie Sahlberg <sahlberg@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 30 19:48:02 2014
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 30 20:08:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZ1Wr-0001mI-4b
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 19:48:01 +0200
+	id 1XZ1r5-0002hV-4S
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 20:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbaI3Rr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 13:47:57 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61862 "EHLO smtp.pobox.com"
+	id S1751914AbaI3SIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 14:08:51 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61759 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751952AbaI3Rr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2014 13:47:56 -0400
+	id S1751331AbaI3SIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2014 14:08:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3561A3F582;
-	Tue, 30 Sep 2014 13:47:56 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD1443FB2F;
+	Tue, 30 Sep 2014 14:08:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5FPsBqrIJzW1vPQP2lQTiRLvECI=; b=NZzDNc
-	DbWUdl66i8IjLLLgJBUdA9Z8PK7sKho5eYLcoPLHXI8cZGD6OZbSUiPOteq0Qb+X
-	IDBrDtJ/tIBlazH60Fjh+6+3vJWZArzCf+QtvRd6JrPB9BP7iGEsK82OZW12UuoW
-	0RDvw6F+iSnPQqGya7ZXJxCnBZBel8rjvJQcc=
+	:content-type; s=sasl; bh=KC/mta4dS6ABTWI2cN0mjViNDWY=; b=MeTtc6
+	YYeKSkRIK0OytKf38xbcGR6/Mt8NupevQgPN8qPCHa6iF7b4JF7laF2LBJvb8n1M
+	769Zqim1kxkU8cW+dq0Qv+7gMsfj83gOK15IsCCM1Jr/B8J/qaL1J7Co0phZTaIC
+	w6dJ6E3CQNsj9dYL2ftfYLBLiOEHBWZ7bReqw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GHzAYDLegqxQe/kNi8vNZ2kX8UdudXiu
-	dn3PZn4ZObywe0JZbWG85IazGma0YPLhp2UAwL4UWpQW26T1TLKrcT7r/GRmObAQ
-	T1mZzO8Tst1C2YZUJZqRWIOuw3ZS+V9jd/7dtvK/5PdS5JzgSrdMlx+dV4+VsKCz
-	1ejB3eY7jYg=
+	:content-type; q=dns; s=sasl; b=KGXARVN+NQ+yzgvCzLpbYaDEzaULXAe2
+	neNYkk0DPCQmS2v3gOwo7TmBVTt92PvTP5ZHFO5Y1eN51lw8/qnj76jOONfxhEOm
+	lRQVMBzd/XpvRjGY3XrfSIgl7yBQNKO20KDVZejlGJ955u611pEAY8DRL4Bp6qmw
+	JNdj2ZlrQtc=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2A26C3F581;
-	Tue, 30 Sep 2014 13:47:56 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A1F3D3FB2E;
+	Tue, 30 Sep 2014 14:08:49 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 905AB3F57F;
-	Tue, 30 Sep 2014 13:47:55 -0400 (EDT)
-In-Reply-To: <20140930161543.GA10581@peff.net> (Jeff King's message of "Tue,
-	30 Sep 2014 12:15:43 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1CCED3FB2D;
+	Tue, 30 Sep 2014 14:08:49 -0400 (EDT)
+In-Reply-To: <542AB853.5000303@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 30 Sep 2014 16:04:03 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E8A4E846-48C9-11E4-A970-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: D3CDB18E-48CC-11E4-AB05-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257677>
 
-Jeff King <peff@peff.net> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> On Tue, Sep 30, 2014 at 03:41:55PM +0200, Michael Haggerty wrote:
+> On 09/26/2014 09:00 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>>> Even the one lockfile object needn't be allocated each time the
+>>> function is called.  Instead, define one statically-allocated
+>>> lock_file object and reuse it for every call.
+>>>
+>>> Suggested-by: Jeff King <peff@peff.net>
+>>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>>> ---
+>>> ...
+>>> -	hold_locked_index(lock, 1);
+>>> +	hold_locked_index(&lock, 1);
+>>>  	refresh_cache(REFRESH_QUIET);
+>>>  	if (active_cache_changed &&
+>>> -	    write_locked_index(&the_index, lock, COMMIT_LOCK))
+>>> +	    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+>> 
+>> I wondered if the next step would be to lose the "lock" parameter
+>> from {hold,write}_locked_index() and have them work on a
+>> process-global lock, but that would not work well.
+>> 
+>> The reason why this patch works is because we are only working with
+>> a single destination (i.e. $GIT_INDEX_FILE typically .git/index),
+>> right?
+>> 
+>> Interesting.
 >
->> I didn't fix it because IMO the correct fix is to add a stdio-oriented
->> entry point to the lockfile API, and teach the lockfile code to handle
->> closing the FILE correctly when necessary.
->
-> I think so, too, after our discussion[1] surrounding 9540ce5 (refs: write
-> packed_refs file using stdio, 2014-09-10).
+> Ummm, this patch wasn't supposed to be interesting. If it is then maybe
+> I made a mistake...
 
-Yeah, but we already write packed-refs via stdio, so the stdio
-oriented lockfile API entry points can no longer be just on the
-mythical todo list but needs to become reality before we can merge
-this topic sanely.
+Well, Interesting is very different from Questionable.
 
->> But I didn't want to add even more changes to this patch series, so I am
->> working on this as a separate patch series. I hope to submit it soon.
->
-> Yay.
+This lock can never have multiple active instances, as you
+mentioned.
 
-Yay.
+We didn't have to change this for so long since the function was
+written; that probably is because this sequence:
 
-Thanks.
+	lock = hold_lock();
+        use(lock);
+        commit(lock); /* or rollback(lock) */
+
+is so obviously natural to callers of the API, and commit/rollback
+looks very much like a declaration that we are done with the object
+and its resource can be freed.
+
+This change makes sense because the API does not actually allow us
+to free the resource held to use this lock, so reducing the number
+of "struct lock_file" ever used during the life of the program makes
+difference, especially when you use many, even when not many of them
+you need to hold at the same time.
+
+Which was counter-intuitive to me, and the realization did not hit
+me until I thought about it, which made it an "Interesting" change.
+
+It may at the same be suggesting that "once in the lockfile subsystem,
+the resource becomes reclaimable" may be something we would want to
+fix, though.
