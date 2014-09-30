@@ -1,95 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-prompt.sh: shorter equal upstream branch name
-Date: Tue, 30 Sep 2014 15:35:26 -0700
-Message-ID: <xmqq7g0krb2p.fsf@gitster.dls.corp.google.com>
-References: <1412091370-11727-1-git-send-email-jcarsique@nuxeo.com>
-	<542B1623.2070109@bbn.com>
+Subject: Re: [PATCH] docs/git-mailinfo: Mention the manual separator (---)
+Date: Tue, 30 Sep 2014 15:37:46 -0700
+Message-ID: <xmqq38b8rayt.fsf@gitster.dls.corp.google.com>
+References: <28b04f1c17f2cc2fe252948bc0b7bb10df24b489.1411571629.git.wking@tremily.us>
+	<xmqqiok4rew5.fsf@gitster.dls.corp.google.com>
+	<20140930214846.GK3770@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Julien Carsique <julien.carsique@gmail.com>, git@vger.kernel.org,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	"Eduardo R. D'Avila" <erdavila@gmail.com>
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Wed Oct 01 00:35:35 2014
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: Git <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Wed Oct 01 00:37:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZ619-0001Bt-Bu
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 00:35:35 +0200
+	id 1XZ63N-0001wH-0X
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 00:37:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751159AbaI3Wfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 18:35:31 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51184 "EHLO smtp.pobox.com"
+	id S1751992AbaI3Wht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 18:37:49 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59928 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750978AbaI3Wfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2014 18:35:30 -0400
+	id S1751837AbaI3Whs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2014 18:37:48 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC2283FDBD;
-	Tue, 30 Sep 2014 18:35:29 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E722B3FE2D;
+	Tue, 30 Sep 2014 18:37:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gvYHMvSyJVFSHJDW0PZW/dbexTk=; b=YT6R0a
-	q/f+0zIQNH7wwSDlF18xC/6PtBSHiyJeWoK6w6aB9L8L8jALbexqRneD2r6flHS1
-	dqbkqS/voz7TylN3MjBljW83T4kKcvvZV9moc0vnqAlsYE74WIwVSAEo50OL36rc
-	qJX7vZtkGxxPOws41OZj+ynSsWGhksQlKRQ7I=
+	:content-type; s=sasl; bh=81eHUeijvkyvz0r+2an6cKBotSE=; b=oWeaWb
+	HIGZhWML95TWS8hUcBGeR8bbrUr/tRubjR8NSmzrL0j3NdW/g6SEw50RhEnx5R1l
+	8EdNhWbe3Q2mBdtLDopJoGhzpUqHa4QHvb6/igscRi3FbVBOMQhwwITkzv9QiuQ7
+	nMA4j1wKsag5oAP4u/W5UI5uSfzCpTq3CDdrY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jIJ0rg7U5xlkWlCvh6t9mNM8bh1jSp6+
-	ANTNuZ4fXenN4b9/d/JplN1VZwshViWrUX5YAFZB3JbVjLszQ3COpFqsMJ0LEfOH
-	kGXQaazJj5a8jqfdgTcTIsrBA0fs/8QVP9cGR0iqWKUxcjX4t8M91xfQYGT9SL23
-	3nM4d3G8ldw=
+	:content-type; q=dns; s=sasl; b=RpTGQH4rEdWuxlxWlazY+Os14W+XIVy7
+	5EZsGZBMmCBRz6+E2CwnMa+QHddPi49OAu2JWm0Um8nkq6XLhIR9Z3HpgdkXR062
+	laBI6T+/eNjtGJaGUoJN1yYpNMG4CCDjg9eqw7Xfk0l7hEvOqs4Tw1kUHps5jk9c
+	fjf3gClT1Es=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5ED4D3FDBA;
-	Tue, 30 Sep 2014 18:35:29 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DCB753FE2C;
+	Tue, 30 Sep 2014 18:37:47 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 15D5D3FDB8;
-	Tue, 30 Sep 2014 18:35:28 -0400 (EDT)
-In-Reply-To: <542B1623.2070109@bbn.com> (Richard Hansen's message of "Tue, 30
-	Sep 2014 16:44:19 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 60DD23FE2B;
+	Tue, 30 Sep 2014 18:37:47 -0400 (EDT)
+In-Reply-To: <20140930214846.GK3770@odin.tremily.us> (W. Trevor King's message
+	of "Tue, 30 Sep 2014 14:48:46 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 13F486D2-48F2-11E4-9726-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 66ED5C88-48F2-11E4-AD06-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257688>
 
-Richard Hansen <rhansen@bbn.com> writes:
+"W. Trevor King" <wking@tremily.us> writes:
 
-> Additional cases could be added to handle git-svn if needed.
+> ...  Maybe we should drop this patch in favor of notes
+> in git-mailinfo(1) and git-format-patch(1) pointing folks at the
+> DISCUSSION section in git-am(1) and a more easily grepable “three
+> dashes ('---')" in gi-am(1)?
 
-Thanks for a review (everything I omitted above looked good to me).
+I am all for dropping new changes and expecially duplicates ;-)
 
->> +				__git_ps1_upstream_name=${__git_ps1_upstream_name/$__head/=}
->
->   * This could break if ${__head} contains any pattern-special
->     characters.
+Because I would be a bad judge for suggesting the place that a new
+reader likely expects to find relevant information, as I am not a
+new reader who does not know where to start looking, I'll let others
+figure out where the best places to add enhancements to are.
 
-... but I do not think refnames can have *, ? and such so it may not
-be relevant ;-).
-
->   * While this syntax works in both Bash and Zsh (assuming no
->     pattern-special characters), my preference is to stick to POSIX[1]
->     when possible.
-
-Nah.  The existing script is full of bash-isms like local you
-suggested to add (and other constructs like shell arrays and [[ ]]
-tests, I suspect), and there is no hope to "fix" them to stick to
-the bare-minimum POSIX, and there is no need to do so (isn't this
-bash-prompt script after all?)
-
->   * I don't think the CodingGuidelines explicitly prohibit long lines
->     for shell code, and this file already contains plenty of long
->     lines, but I really dislike lines longer than 80 characters.
-
-Yes, I dislike overlong lines, too.  But I also dislike lines that
-are artificially chopped into
-shorter pieces without
-good reason ;-).
+Thanks.
