@@ -1,135 +1,111 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH] git-prompt.sh: shorter equal upstream branch name
-Date: Tue, 30 Sep 2014 16:44:19 -0400
-Message-ID: <542B1623.2070109@bbn.com>
-References: <1412091370-11727-1-git-send-email-jcarsique@nuxeo.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH] docs/git-mailinfo: Mention the manual separator (---)
+Date: Tue, 30 Sep 2014 14:48:46 -0700
+Message-ID: <20140930214846.GK3770@odin.tremily.us>
+References: <28b04f1c17f2cc2fe252948bc0b7bb10df24b489.1411571629.git.wking@tremily.us>
+ <xmqqiok4rew5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8BIT
-Cc: =?windows-1252?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	"Eduardo R. D'Avila" <erdavila@gmail.com>
-To: Julien Carsique <julien.carsique@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 30 23:28:37 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tKy6e3LXpfmanBFM"
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 23:49:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZ4yK-0000V8-K0
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 23:28:36 +0200
+	id 1XZ5Hz-0000hq-1j
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 23:48:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbaI3V2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 17:28:32 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:22142 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751306AbaI3V2b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2014 17:28:31 -0400
-X-Greylist: delayed 2645 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Sep 2014 17:28:31 EDT
-Received: from socket.bbn.com ([192.1.120.102]:60256)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1XZ4HU-0005i0-G1; Tue, 30 Sep 2014 16:44:20 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 32ED04070E
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <1412091370-11727-1-git-send-email-jcarsique@nuxeo.com>
+	id S1752999AbaI3Vsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 17:48:51 -0400
+Received: from resqmta-po-11v.sys.comcast.net ([96.114.154.170]:44530 "EHLO
+	resqmta-po-11v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752965AbaI3Vss (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2014 17:48:48 -0400
+Received: from resomta-po-06v.sys.comcast.net ([96.114.154.230])
+	by resqmta-po-11v.sys.comcast.net with comcast
+	id xZoh1o00B4yXVJQ01ZonFk; Tue, 30 Sep 2014 21:48:47 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by resomta-po-06v.sys.comcast.net with comcast
+	id xZom1o00L152l3L01Zompp; Tue, 30 Sep 2014 21:48:47 +0000
+Received: by odin.tremily.us (Postfix, from userid 1000)
+	id 55A7613DF174; Tue, 30 Sep 2014 14:48:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1412113726; bh=UprEAt0RAzqo1+KmWSMPTrPu8Dw7D9DQjJjddooeugc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Am/B2AbfKLNDVIFzHyiiAQG1vEdk7zXwRu41Bdrx9bGYa/EVZP8VXme8fxZ69mob1
+	 grt2xZrilmz2KLgezh7xCfudCCWCo1nW0icK9fsBeed9tvUuq+yMYc5DruJP6UTaGz
+	 a3ZIVHms2swY6Y0C7hezh4V5f4uzg75bjM7epQ5k=
+Content-Disposition: inline
+In-Reply-To: <xmqqiok4rew5.fsf@gitster.dls.corp.google.com>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.23 (2014-03-12)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1412113727;
+	bh=VCObjagsmOvJVOa7NKfx9IrWX21seeIZkob1eLxtIuY=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=nPHcU7grWUDJBH7Z9z41wkpepY5ZeTzbriuwSybLG8Eg//mP8/AlmtLt0KHMQOgmX
+	 EY7bFLjncNH6P858qi5c/Kj00cWfCdu54bRPqN//6Wo7fIwyoMuwp4muCbM6pbBEit
+	 RgaMaDavroJFWhs5Jz5UR7tFKnhbyVZtXn49Ulw20yk+pI2d7LpIw9u7xKUIBWTYr7
+	 XLGzBt9Sk94qQIbhUBYJrYXqgilfEwjocXRCra/hTzI91GwRJvM/7k7ewL3FfI9H2z
+	 fKdqEY/LhfiATHrrwc7B6Mj5w83choosPtKYBELa87EbYTwKMmIxD8rJqxPmcOdfj3
+	 UCZpqv+V6tDWQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257685>
 
-On 2014-09-30 11:36, Julien Carsique wrote:
-> From: Julien Carsique <julien.carsique@gmail.com>
-> 
-> When using the "name" option of GIT_PS1_SHOWUPSTREAM to show the upstream
-> abbrev name, if the upstream name is the same as the local name, then some
-> space could be saved in the prompt. This is especially needed on long branch
-> names.
-> 
-> Replace the upstream name with the sign '=' if equal to the local one.
-> Example:    [master * u= origin/=]$
-> instead of: [master * u= origin/master]$
 
-Seems like a good idea to me.
+--tKy6e3LXpfmanBFM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Signed-off-by: Julien Carsique <julien.carsique@gmail.com>
-> ---
->  contrib/completion/git-prompt.sh | 7 +++++++
->  1 file changed, 7 insertions(+)
+On Tue, Sep 30, 2014 at 02:12:58PM -0700, Junio C Hamano wrote:
+> If we are extending the documentation on "---", =E2=80=A6
 
-Please add some new tests in t/9903-bash-prompt.sh.  In particular:
-  * upstream ref in refs/heads
-  * upstream is git-svn
-  * branch names containing slashes
+Ah, I see that the --- are actually mentioned already in the
+DISCUSSION section of git-am(1) since 2499857b (git-am documentation:
+describe what is taken from where, 2007-03-24).  I expected the docs
+to be either in git-mailinfo(1) (since the code added by f0658cf2
+(restrict the patch filtering, 2007-03-12) is in mailinfo) or to match
+a grep for '---'.  Maybe we should drop this patch in favor of notes
+in git-mailinfo(1) and git-format-patch(1) pointing folks at the
+DISCUSSION section in git-am(1) and a more easily grepable =E2=80=9Cthree
+dashes ('---')" in gi-am(1)?
 
-> 
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index c5473dc..a9aba20 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -209,6 +209,13 @@ __git_ps1_show_upstream ()
->  		if [[ -n "$count" && -n "$name" ]]; then
->  			__git_ps1_upstream_name=$(git rev-parse \
->  				--abbrev-ref "$upstream" 2>/dev/null)
-> +
-> +			__head=${b##refs/heads/}
+Cheers,
+Trevor
 
-To avoid colliding with other stuff, this variable should either be
-local or prefixed with '__git_ps1'.
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
-> +			if [ "$__head" = "${__git_ps1_upstream_name##*/}" ]; then
+--tKy6e3LXpfmanBFM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
-This comparison breaks on branches containing a slash (e.g., foo/bar).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-Also, how does this interact with git-svn?  (I don't use git-svn so I'm
-not very familiar with how it manages refs.)
+iQIcBAEBAgAGBQJUKyU7AAoJEG8/JgBt8ol8an4P/0saJM834othoBhnpre6qj5a
+HPPlGpVeMyWnTdVh2LYHoRjWX9s8/mjPQfi0hoK4nUEAAJ7b/sC7TPY/UaS7edfm
+jvgXmDzW1EcVCFzNTa0txewc/yYFoAdXHpnfZiAkvAo+E0Flxt98YcA2kCh8nFtN
+z5vsVBkDkgmG5kGVKc3+rr2LAwmIm6WQu2cB7Gmls1CzShzgddGvjFdA3x0GEW31
+CbTqR1rHdmZ/6fE3BGU8oWci+kd3LdNUlwkKnsLMkMTWcrwd9GqUvnvvUANQ5MRs
+oTlM7KoXKMj5xRYWOLqQPQTYXbr7n7u9wNLOoa4ltd0UCrErRpvJZmhUjp0TojIk
+x42mqOGIRqvLJRHI6nH5Em4VgiBSynQy45LqVv4QiJNjnrYBdHsSCKJwODsAXJ7v
+J38aJg3+GXsNQTQGI1sx3c40xroTZyld9R/RkiCyba3TagX8hVWj6vTtBELrapo+
+T2o1C3CKuUIci34lLrGh5RKJM8esQfQbdRxwyUcal7QzUwQwVyIU28eeFYSv+46C
+7UOFlKeFcWKM0fzF0ROISBqpZJQy10xoW5pHgqhTqVhBJdy13ux0yCzJESl7fHrd
+KLDY+ZFQQiWDtEdCip15qpf9kG/dPgJPseRFY21rR7Od1P6Fkd+TghZkpmU7MMrd
+TqUKm9oRUZXoJjJhSDEB
+=5Ft9
+-----END PGP SIGNATURE-----
 
-Assuming remote names can't contain a slash (which I think is true), a
-safer approach might be parse the full ref and special-case refs/remotes:
-
-    __git_ps1_upstream_name=$(git rev-parse \
-        --abbrev-ref "${upstream}" 2>/dev/null)
-    local tmp
-    tmp=$(git rev-parse --symbolic-full-name "${upstream}" 2>/dev/null)
-    case ${tmp} in
-    refs/remotes/*)
-        # todo: can ${b} be something other than refs/heads/* here?
-        [ "${__git_ps1_upstream_name#*/}" != "${b#refs/heads/}" ] \
-            || __git_ps1_upstream_name=${__git_ps1_upstream_name%%/*}/\=
-        ;;
-    esac
-
-Additional cases could be added to handle git-svn if needed.
-
-> +				__git_ps1_upstream_name=${__git_ps1_upstream_name/$__head/=}
-
-  * This could break if ${__head} contains any pattern-special
-    characters.
-
-  * While this syntax works in both Bash and Zsh (assuming no
-    pattern-special characters), my preference is to stick to POSIX[1]
-    when possible.  For example, assuming the upstream name is
-    always in refs/remotes (which is not true, but this is an example)
-    and remote names can't contain a '/', you could do this:
-
-        __git_ps1_upstream_name=${__git_ps1_upstream_name%%/*}/\=
-
-  * I don't think the CodingGuidelines explicitly prohibit long lines
-    for shell code, and this file already contains plenty of long
-    lines, but I really dislike lines longer than 80 characters.
-
-[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
-
-> +			fi
-> +			unset __head
-> +
->  			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
->  				p="$p \${__git_ps1_upstream_name}"
->  			else
-
--Richard
+--tKy6e3LXpfmanBFM--
