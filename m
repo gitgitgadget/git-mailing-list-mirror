@@ -1,102 +1,110 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v6 00/39] Lockfile correctness and refactoring
-Date: Tue, 30 Sep 2014 11:55:57 +0200
-Message-ID: <542A7E2D.6030305@alum.mit.edu>
-References: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu> <xmqqwq8q8hsa.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4] MinGW(-W64) compilation
+Date: Tue, 30 Sep 2014 17:10:03 +0700
+Message-ID: <CACsJy8CTJUZxxxQqPJTNzt7YTZJZgfoNjhkb2Z--jJZjyMDYaQ@mail.gmail.com>
+References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	=?windows-1252?Q?Torsten_B=F6gershaus?= =?windows-1252?Q?en?= 
-	<tboegi@web.de>, Jeff King <peff@peff.net>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 30 11:56:20 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBC2ZN5PHQUMBBGMDVKQQKGQEX5SHFIA@googlegroups.com Tue Sep 30 12:10:35 2014
+Return-path: <msysgit+bncBC2ZN5PHQUMBBGMDVKQQKGQEX5SHFIA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ig0-f190.google.com ([209.85.213.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XYuAN-0004rc-RJ
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 11:56:20 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbaI3J4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 05:56:16 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:46206 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750978AbaI3J4P (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2014 05:56:15 -0400
-X-AuditID: 1207440d-f797f6d000000a4a-9c-542a7e311004
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 1A.CD.02634.13E7A245; Tue, 30 Sep 2014 05:56:01 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC9741E.dip0.t-ipconnect.de [79.201.116.30])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8U9tvSO025561
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 30 Sep 2014 05:55:59 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <xmqqwq8q8hsa.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsUixO6iqGtYpxViMGmGkEXXlW4mi4beK8wW
-	T+beZbZ4e3MJo8WPlh5mi38Taiw6O74yOrB77Jx1l91jwaZSj4evutg9nvXuYfS4eEnZ4/Mm
-	OY/bz7axBLBHcdskJZaUBWem5+nbJXBnPNhxgrWgka/iwNf5TA2ME7i7GDk5JARMJFb/WskK
-	YYtJXLi3nq2LkYtDSOAyo8STb58YIZzzTBJft3xlBqniFdCWeHeyB6yDRUBVounUTkYQm01A
-	V2JRTzMTiC0qECDxofMBI0S9oMTJmU9YQGwRATWJiW2HWECGMgt0Mklsa3rLBpIQFnCSePZy
-	KlizkECxxP1fD9lBbE4Ba4ldrZvBapgF9CR2XP/FCmHLSzRvnc08gVFgFpIds5CUzUJStoCR
-	eRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrpFebmaJXmpK6SZGSCzw7mD8v07mEKMAB6MSD2+C
-	olaIEGtiWXFl7iFGSQ4mJVHeXwVAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8PFlAOd6UxMqq
-	1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBO/nGqBGwaLU9NSKtMycEoQ0Ewcn
-	yHAuKZHi1LyU1KLE0pKMeFC0xhcD4xUkxQO0N7oWZG9xQWIuUBSi9RSjLse6zm/9TEIsefl5
-	qVLivA4gRQIgRRmleXArYInvFaM40MfCvDYgVTzApAk36RXQEiagJWkb1EGWlCQipKQaGIuW
-	T3GdNPdVu4GA4Nc/94zct0Sl9rCoee6ukGj3ip20yMW/PnQCS4B2h1LiRfuPlyX4 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257663>
+	(envelope-from <msysgit+bncBC2ZN5PHQUMBBGMDVKQQKGQEX5SHFIA@googlegroups.com>)
+	id 1XYuOA-0002XV-QF
+	for gcvm-msysgit@m.gmane.org; Tue, 30 Sep 2014 12:10:34 +0200
+Received: by mail-ig0-f190.google.com with SMTP id h3sf866507igd.7
+        for <gcvm-msysgit@m.gmane.org>; Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=IAR+8f19JYjr81RI4LWcGqsxA8doPiQkZ+j5XRDO5lQ=;
+        b=T5ZMQ/1fCpwxK1LBkjmqxkRdy2Z38fSn6yXB15K1hDPN0kJ6Z3LPM4+6G9skiArmEz
+         DNLBuNjUS+0s85ZKBCL1QCmlL2YOq25zOM7RxrEP7cgIasvDQBJpSOl7P/5/L714UOTS
+         kD1YedjA0g/RhtD16OWUXHDnYNouQfmhAJnButbRolL0MZFkQ0BnuZ8s3H9mLu9omggG
+         AmDlt11OYVupW9SOr7cRopvUhN4pgYIvCiHRo41IYJ88P8z22WGehqOzH/zFnDDaRJAk
+         QyPfjXNqrJNZbI68ZsyLIEpcrTHHX9t9Pa2iLbBxbm+oQsPmrOvXWUTLTw2M/tWIu9xz
+         q0/Q==
+X-Received: by 10.50.119.73 with SMTP id ks9mr72867igb.12.1412071833931;
+        Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.66.179 with SMTP id g19ls2790626igt.28.canary; Tue, 30 Sep
+ 2014 03:10:33 -0700 (PDT)
+X-Received: by 10.43.69.18 with SMTP id ya18mr42293820icb.0.1412071833436;
+        Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
+Received: from mail-yh0-x22a.google.com (mail-yh0-x22a.google.com [2607:f8b0:4002:c01::22a])
+        by gmr-mx.google.com with ESMTPS id e24si860871yhe.3.2014.09.30.03.10.33
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4002:c01::22a as permitted sender) client-ip=2607:f8b0:4002:c01::22a;
+Received: by mail-yh0-f42.google.com with SMTP id t59so1294998yho.1
+        for <msysgit@googlegroups.com>; Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
+X-Received: by 10.236.10.66 with SMTP id 42mr64631868yhu.68.1412071833331;
+ Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
+Received: by 10.170.62.136 with HTTP; Tue, 30 Sep 2014 03:10:03 -0700 (PDT)
+In-Reply-To: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
+X-Original-Sender: pclouds@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4002:c01::22a
+ as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257664>
 
-On 09/26/2014 06:31 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> * Rebase to current master.
-> 
-> When you say this, could you be a bit more descriptive?  Has the
-> series updated to use something new that appeared on 'master' since
-> the last series was posted and needed to be rebased?  Or did you
-> just made sure that the series applied on top of the current master
-> still works, even though you have been running "rebase -i" on the
-> same fork point since the previous round?
-> 
-> If the former, naming what it now uses i.e. "rebased to current
-> master, to redo PATCH x,y,z using the new X recently graduated"
-> would be helpful.
-> 
-> If the latter, well, not rebasing is preferrable if the changes are
-> still viable on the previous fork point, to be absolutely honest.
+On Tue, Sep 30, 2014 at 2:02 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
+> This patch series fixes building on modern MinGW and MinGW-W64 (including x86_64!).
+>
+> *Compilation* tested on:
+>  - MSVC
+>  - msysGit environment (twice)
+>  - Linux cross-toolchain i686-pc-mingw32
 
-I have always routinely rebased my series to the current master each
-time I reroll them. I thought that was helpful. Thanks for the info that
-you prefer that I not do it. In the future I will only rebase to master
-if I see that there would be nontrivial conflicts or if I would like to
-take advantage of something that has graduated.
+Thanks. I always wanted to do this but never got around to clean up
+and submit. There's a problem with include order in Makefile. I don't
+want to specify CROSS_COMPILE or CC=mingw32-gcc from command line any
+time I make a build, so I put all those in config.mak. But because
+this file is included after config.mak.uname, all the default settings
+for MINGW is ignored.
 
-I've always tried to mention when the rebases were nontrivial. In this
-case it was unproblematic.
-
-
-As an aside, I've always found it wishy-washy to talk about "current
-master" and "fork points" and stuff when (AFAIK) format-patch-generated
-emails don't mention the fork point. So unless my cover letter specifies
-the fork point as an unambiguous commit name, there is no basis *anyway*
-to expect that you will apply the patch series in the same context that
-I developed it.
-
-Another victim of the format-patch information shredder :-(
-
-Cheers,
-Michael
+I'm not sure if we can move config.mak up before config.mak.uname. If
+we can't I'm ok with including a new file (config.mak.pre or
+something) before config.mak.uname. That would make "make" (no
+arguments) work for me.
+-- 
+Duy
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
