@@ -1,182 +1,98 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: [PATCH 10/14] Makefile: introduce CROSS_COMPILE variable
-Date: Tue, 30 Sep 2014 11:02:39 +0400
-Message-ID: <1412060563-22041-11-git-send-email-marat@slonopotamus.org>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Do not make trace.c/getnanotime an inlined function
+Date: Tue, 30 Sep 2014 16:25:44 +0700
+Message-ID: <CACsJy8Cnx=KQ02MT354Ly=o04=smbOhnrgCXLNa_tAtOPGmSdA@mail.gmail.com>
+References: <1411890626-28237-1-git-send-email-bdwalton@gmail.com>
+ <CACsJy8ArOU7WF4fiy5vn8zq5y6Vm5JxgTf+Tiai_WOeMSj--Ug@mail.gmail.com> <xmqqa95iuxlf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: marat@slonopotamus.org,
-	msysGit <msysgit@googlegroups.com>
-To: git@vger.kernel.org
-X-From: msysgit+bncBCE7TAPITACRB65QVGQQKGQE2WQTOCI@googlegroups.com Tue Sep 30 09:15:13 2014
-Return-path: <msysgit+bncBCE7TAPITACRB65QVGQQKGQE2WQTOCI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f187.google.com ([209.85.217.187])
+Content-Type: text/plain; charset=UTF-8
+Cc: Ben Walton <bdwalton@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 11:26:21 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCE7TAPITACRB65QVGQQKGQE2WQTOCI@googlegroups.com>)
-	id 1XYreO-0004ou-Ma
-	for gcvm-msysgit@m.gmane.org; Tue, 30 Sep 2014 09:15:08 +0200
-Received: by mail-lb0-f187.google.com with SMTP id w7sf219847lbi.24
-        for <gcvm-msysgit@m.gmane.org>; Tue, 30 Sep 2014 00:15:08 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XYthM-0000EC-2U
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 11:26:20 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755304AbaI3J0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 05:26:16 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:49026 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752075AbaI3J0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2014 05:26:15 -0400
+Received: by mail-yk0-f179.google.com with SMTP id 142so5835783ykq.10
+        for <git@vger.kernel.org>; Tue, 30 Sep 2014 02:26:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=zrLBmVdBwmFEvuzinbe0GszY7Peg5E3ro7HfNXCLPKA=;
-        b=g8wW5cGcZSrbPzvHzeGpFCZICDYrRWnZYDfd/9+r3QMBQTbtjpN8+K7ddK6xc1m1RF
-         Z86kuPtF3MHOZf6ASeLwctaBWTWOf4yWDTrTJ2J1ThEDsTjGUKAwg3fWNoYmc3T2Bh/J
-         ZEwQqbj5zrAGbapH8Of//OATo6nITwJcl6D5XSOW2dBv/O0qul3nJIl4A/dbqnDIJchi
-         7CGRREthu2BEBZ137IUFM1st/9XLNcrRhUGnNj1GcuatCkNgoli1hOmKFR+9PtOmHN1Z
-         ULuzn5J5gClN/o4NAT500nk7h5vh7PfV59lGOkooE4SPza1OBxA3LqcQcLv7OzdDtv/2
-         22Rg==
-X-Received: by 10.152.5.37 with SMTP id p5mr2526lap.31.1412061308542;
-        Tue, 30 Sep 2014 00:15:08 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.5.226 with SMTP id v2ls3788lav.50.gmail; Tue, 30 Sep 2014
- 00:15:06 -0700 (PDT)
-X-Received: by 10.152.29.130 with SMTP id k2mr5762328lah.3.1412061306687;
-        Tue, 30 Sep 2014 00:15:06 -0700 (PDT)
-Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id n6si743858wiv.0.2014.09.30.00.15.06
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Sep 2014 00:15:06 -0700 (PDT)
-Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
-Received: from [185.6.245.138] (helo=radchenko-d-lnx.mail.msk)
-	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.80.1)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1XYrSq-0004X0-Dd; Tue, 30 Sep 2014 11:03:12 +0400
-X-Mailer: git-send-email 2.1.1
-In-Reply-To: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
-X-Original-Sender: marat@slonopotamus.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: marat@slonopotamus.org does not designate permitted sender
- hosts) smtp.mail=marat@slonopotamus.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257661>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+06Q4+jHJYjSn7FyAcXh1v7s/6s0gI7qi+I4gOaLHXQ=;
+        b=ROCgh1fYAWy9nNPxcRAM3VBcHCAI1wswnvVcUhSO5q5fFCocAq02ULOI/tyxocqMbK
+         2DLs9kmETg8M5ST1JoJvDo0nblfZPGetRujKIx4FspnHBW/N538cV/ovjEfVXb4gSEnK
+         l2mbDJWK1DFV5tcYAm1ILP0TYY33GNES9+tEeFHcGl/10RY7fRy3sfRlNKJPsiJnL+qP
+         h5WoeDZhhRMgDpS+pb/2YH6DAkFaIAFAMVLoFQxxAiHjEVuhjJ/36WSatc3gwGOXTMcd
+         c1PfeeDeMvPByW6WqidEROP7zZ1YxozYdL4u5H+aB2rI66riCHViG0JXsOKjjQQBylsB
+         oclw==
+X-Received: by 10.236.10.66 with SMTP id 42mr64274421yhu.68.1412069174794;
+ Tue, 30 Sep 2014 02:26:14 -0700 (PDT)
+Received: by 10.170.62.136 with HTTP; Tue, 30 Sep 2014 02:25:44 -0700 (PDT)
+In-Reply-To: <xmqqa95iuxlf.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257662>
 
-To ease cross-compilation process, introduce a single variable
-with the prefix to all compiler-related executables.
+On Tue, Sep 30, 2014 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> On Sun, Sep 28, 2014 at 2:50 PM, Ben Walton <bdwalton@gmail.com> wrote:
+>>> Oracle Studio compilers don't allow for static variables in functions
+>>> that are defined to be inline. GNU C does permit this. Let's reference
+>>> the C99 standard though, which doesn't allow for inline functions to
+>>> contain modifiable static variables.
+>>>
+>>> Signed-off-by: Ben Walton <bdwalton@gmail.com>
+>>> ---
+>>>  trace.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/trace.c b/trace.c
+>>> index b6f25a2..4778608 100644
+>>> --- a/trace.c
+>>> +++ b/trace.c
+>>> @@ -385,7 +385,7 @@ static inline uint64_t gettimeofday_nanos(void)
+>>>   * Returns nanoseconds since the epoch (01/01/1970), for performance tracing
+>>>   * (i.e. favoring high precision over wall clock time accuracy).
+>>>   */
+>>> -inline uint64_t getnanotime(void)
+>>> +uint64_t getnanotime(void)
+>>>  {
+>>>         static uint64_t offset;
+>>
+>> Would moving this offset outside getnanotime() work?
+>
+> I am not sure what the definition of "work" is.
+>
+> The function computes the difference between the returned value from
+> gettimeofday(2) and a custom highres_nanos() just once and returns
+> the value it got from gettimeofday the first time, and then for
+> subsequent calls massages the returned value from highres_nanos() to
+> be consistent with the value returned from gettimeofday using the
+> offset it computed in the first call.
+>
+> If we have two copies of this function, two independent probes to
+> these pair of underlying functions will be made to compute their
+> offsets.
 
-Define CROSS_COMPILE=foo- if your compiler and binary utilities
-are foo-cc, foo-ar, foo-strip, etc.  More specific variables
-override this, so if you set CC=gcc CROSS_COMPILE=ia64-linux-gnu-
-then the compiler will be 'gcc', not 'ia64-linux-gnu-gcc'.
-
-Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
----
- Makefile         | 19 +++++++++++++------
- config.mak.uname |  2 +-
- 2 files changed, 14 insertions(+), 7 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index f34a2d4..c412996 100644
---- a/Makefile
-+++ b/Makefile
-@@ -339,6 +339,11 @@ all::
- # return NULL when it receives a bogus time_t.
- #
- # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime in librt.
-+#
-+# Define CROSS_COMPILE=foo- if your compiler and binary utilities
-+# are foo-cc, foo-ar, foo-strip, etc.  More specific variables
-+# override this, so if you set CC=gcc CROSS_COMPILE=ia64-linux-gnu-
-+# then the compiler will be 'gcc', not 'ia64-linux-gnu-gcc'.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -350,7 +355,6 @@ CFLAGS = -g -O2 -Wall
- LDFLAGS =
- ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
--STRIP ?= strip
- 
- # Among the variables below, these:
- #   gitexecdir
-@@ -390,8 +394,12 @@ htmldir_relative = $(patsubst $(prefix)/%,%,$(htmldir))
- 
- export prefix bindir sharedir sysconfdir gitwebdir localedir
- 
--CC = cc
--AR = ar
-+AR = $(CROSS_COMPILE)ar
-+CC = $(CROSS_COMPILE)cc
-+GCOV = $(CROSS_COMPILE)gcov
-+RC = $(CROSS_COMPILE)windres
-+STRIP = $(CROSS_COMPILE)strip
-+
- RM = rm -f
- DIFF = diff
- TAR = tar
-@@ -404,13 +412,12 @@ XGETTEXT = xgettext
- MSGFMT = msgfmt
- PTHREAD_LIBS = -lpthread
- PTHREAD_CFLAGS =
--GCOV = gcov
- 
- export TCL_PATH TCLTK_PATH
- 
- SPARSE_FLAGS =
- 
--
-+RCFLAGS =
- 
- ### --- END CONFIGURATION SECTION ---
- 
-@@ -1669,7 +1676,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
- 	mv $@+ $@
- 
- git.res: git.rc GIT-VERSION-FILE
--	$(QUIET_RC)$(RC) \
-+	$(QUIET_RC)$(RC) $(RCFLAGS) \
- 	  $(join -DMAJOR= -DMINOR=, $(wordlist 1,2,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
- 	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" $< -o $@
- 
-diff --git a/config.mak.uname b/config.mak.uname
-index f79c0e0..9f7037e 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -523,7 +523,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	EXTLIBS += -lws2_32
- 	GITLIBS += git.res
- 	PTHREAD_LIBS =
--	RC = windres -O coff
-+	RCFLAGS += -O coff
- 	NATIVE_CRLF = YesPlease
- 	X = .exe
- 	SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
+Hmm.. no. Even if the function is inlined in multiple places, inline
+code still points to the same "offset" variable. So the
+gettimeofday_nanos()/highres_nanos() pair should only be called once.
+Tested with gcc.
 -- 
-2.1.1
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Duy
