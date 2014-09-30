@@ -1,110 +1,204 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4] MinGW(-W64) compilation
-Date: Tue, 30 Sep 2014 17:10:03 +0700
-Message-ID: <CACsJy8CTJUZxxxQqPJTNzt7YTZJZgfoNjhkb2Z--jJZjyMDYaQ@mail.gmail.com>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v6 02/39] api-lockfile: revise and expand the documentation
+Date: Tue, 30 Sep 2014 12:53:04 +0200
+Message-ID: <542A8B90.50507@alum.mit.edu>
+References: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu>	<1411726119-31598-3-git-send-email-mhagger@alum.mit.edu> <xmqqlhp68c69.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBC2ZN5PHQUMBBGMDVKQQKGQEX5SHFIA@googlegroups.com Tue Sep 30 12:10:35 2014
-Return-path: <msysgit+bncBC2ZN5PHQUMBBGMDVKQQKGQEX5SHFIA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ig0-f190.google.com ([209.85.213.190])
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	=?windows-1252?Q?Torsten_B=F6gershaus?= =?windows-1252?Q?en?= 
+	<tboegi@web.de>, Jeff King <peff@peff.net>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 30 12:53:16 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBGMDVKQQKGQEX5SHFIA@googlegroups.com>)
-	id 1XYuOA-0002XV-QF
-	for gcvm-msysgit@m.gmane.org; Tue, 30 Sep 2014 12:10:34 +0200
-Received: by mail-ig0-f190.google.com with SMTP id h3sf866507igd.7
-        for <gcvm-msysgit@m.gmane.org>; Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=IAR+8f19JYjr81RI4LWcGqsxA8doPiQkZ+j5XRDO5lQ=;
-        b=T5ZMQ/1fCpwxK1LBkjmqxkRdy2Z38fSn6yXB15K1hDPN0kJ6Z3LPM4+6G9skiArmEz
-         DNLBuNjUS+0s85ZKBCL1QCmlL2YOq25zOM7RxrEP7cgIasvDQBJpSOl7P/5/L714UOTS
-         kD1YedjA0g/RhtD16OWUXHDnYNouQfmhAJnButbRolL0MZFkQ0BnuZ8s3H9mLu9omggG
-         AmDlt11OYVupW9SOr7cRopvUhN4pgYIvCiHRo41IYJ88P8z22WGehqOzH/zFnDDaRJAk
-         QyPfjXNqrJNZbI68ZsyLIEpcrTHHX9t9Pa2iLbBxbm+oQsPmrOvXWUTLTw2M/tWIu9xz
-         q0/Q==
-X-Received: by 10.50.119.73 with SMTP id ks9mr72867igb.12.1412071833931;
-        Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.66.179 with SMTP id g19ls2790626igt.28.canary; Tue, 30 Sep
- 2014 03:10:33 -0700 (PDT)
-X-Received: by 10.43.69.18 with SMTP id ya18mr42293820icb.0.1412071833436;
-        Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
-Received: from mail-yh0-x22a.google.com (mail-yh0-x22a.google.com [2607:f8b0:4002:c01::22a])
-        by gmr-mx.google.com with ESMTPS id e24si860871yhe.3.2014.09.30.03.10.33
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4002:c01::22a as permitted sender) client-ip=2607:f8b0:4002:c01::22a;
-Received: by mail-yh0-f42.google.com with SMTP id t59so1294998yho.1
-        for <msysgit@googlegroups.com>; Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
-X-Received: by 10.236.10.66 with SMTP id 42mr64631868yhu.68.1412071833331;
- Tue, 30 Sep 2014 03:10:33 -0700 (PDT)
-Received: by 10.170.62.136 with HTTP; Tue, 30 Sep 2014 03:10:03 -0700 (PDT)
-In-Reply-To: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4002:c01::22a
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257664>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XYv3T-0002Bv-FQ
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 12:53:15 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751128AbaI3KxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 06:53:12 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:57055 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750833AbaI3KxK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2014 06:53:10 -0400
+X-AuditID: 12074412-f792e6d000005517-52-542a8b938d29
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 5D.A8.21783.39B8A245; Tue, 30 Sep 2014 06:53:07 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC9741E.dip0.t-ipconnect.de [79.201.116.30])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s8UAr5f1027757
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 30 Sep 2014 06:53:06 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
+In-Reply-To: <xmqqlhp68c69.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsUixO6iqDu5WyvE4McfK4uuK91MFg29V5gt
+	nsy9y2zx9uYSRosfLT3MFv8m1Fh0dnxldGD32DnrLrvHgk2lHg9fdbF7POvdw+hx8ZKyx+dN
+	ch63n21jCWCP4rZJSiwpC85Mz9O3S+DOeLtqNnNBq07Fx0dvGBsYZyp3MXJySAiYSJw7cIYZ
+	whaTuHBvPVsXIxeHkMBlRok9+5ZAOeeZJC7+2swEUsUroCmxafJ7NhCbRUBV4vG8+WDdbAK6
+	Eot6msFqRAUCJD50PmCEqBeUODnzCQuILSKgJjGx7RALyFBmgU4miW1Nb8EGCQv4S5xasQ+s
+	QUhgDaPEsclhIDangLXEmT/NYM3MAnoSO67/YoWw5SWat85mnsAoMAvJjllIymYhKVvAyLyK
+	US4xpzRXNzcxM6c4NVm3ODkxLy+1SNdMLzezRC81pXQTIyQWhHYwrj8pd4hRgINRiYc3QVEr
+	RIg1say4MvcQoyQHk5Ior2MXUIgvKT+lMiOxOCO+qDQntfgQowQHs5II79d6oBxvSmJlVWpR
+	PkxKmoNFSZz352J1PyGB9MSS1OzU1ILUIpisDAeHkgTvVZChgkWp6akVaZk5JQhpJg5OkOFc
+	UiLFqXkpqUWJpSUZ8aBojS8GxitIigdo7zqQdt7igsRcoChE6ylGXY51nd/6mYRY8vLzUqXE
+	eW90AhUJgBRllObBrYAlvleM4kAfC/O+BBnFA0yacJNeAS1hAlqStkEdZElJIkJKqoFRKmx1
+	0bPi/ru/l3zcuGoFPzfbJX6nJ5vn6Qft1ZblUra+v+nZ49C9VYuL+lY3yezY+dHv 
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257665>
 
-On Tue, Sep 30, 2014 at 2:02 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
-> This patch series fixes building on modern MinGW and MinGW-W64 (including x86_64!).
->
-> *Compilation* tested on:
->  - MSVC
->  - msysGit environment (twice)
->  - Linux cross-toolchain i686-pc-mingw32
+On 09/26/2014 08:33 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Document a couple more functions and the flags argument as used by
+>> hold_lock_file_for_update() and hold_lock_file_for_append().
+>> Reorganize the document to make it more accessible.
+>>
+>> Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  Documentation/technical/api-lockfile.txt | 199 ++++++++++++++++++++++---------
+>>  1 file changed, 145 insertions(+), 54 deletions(-)
+> 
+> Nicely done.
+> 
+>> +* Mutual exclusion and atomic file updates. When we want to change a
+>> +  file, we create a lockfile `<filename>.lock`, write the new file
+>> +  contents into it, and then rename the lockfile to its final
+>> +  destination `<filename>`. We create the `<filename>.lock` file with
+>> +  `O_CREAT|O_EXCL` so that we can notice and fail if somebody else has
+>> +  already locked the file.
+> 
+> 
+> You may want to say
+> 
+> 	then atomically rename the lockfile to its final destination
+> 	to commit the changes and unlock the file.
+> 
+> here; that way, your mention of "commit" in the next paragraph would
+> become easier to understand.
 
-Thanks. I always wanted to do this but never got around to clean up
-and submit. There's a problem with include order in Makefile. I don't
-want to specify CROSS_COMPILE or CC=mingw32-gcc from command line any
-time I make a build, so I put all those in config.mak. But because
-this file is included after config.mak.uname, all the default settings
-for MINGW is ignored.
+Good; will change.
 
-I'm not sure if we can move config.mak up before config.mak.uname. If
-we can't I'm ok with including a new file (config.mak.pre or
-something) before config.mak.uname. That would make "make" (no
-arguments) work for me.
+>> [...]
+>> +Calling sequence
+>> +----------------
+>> +
+>> +The caller:
+>> +
+>> +* Allocates a variable `struct lock_file lock` in the bss section or
+>> +  heap, initialized to zeros. It cannot be an auto variable allocated
+>> +  on the stack. Because the `lock_file` structure is used in an
+>> +  `atexit(3)` handler, its storage has to stay throughout the life of
+>> +  the program, even after the file changes have been committed or
+>> +  rolled back.
+> 
+> It is easier to read if you pushed the second sentence (which is a
+> rephrase of the first one) and third sentence (which explains why
+> the second sentence is true) out of line as a side-note, I think, or
+> probably remove them from here (see below).
+
+I was being repetitive because I didn't want the docs to depend on the
+user remembering what the "bss" section is (which, technically, is also
+not part of the C standard). I think a better way would be to just not
+mention "bss section" at all and reword the rest. Maybe something like
+
+  The caller:
+
+  * Allocates a variable `struct lock_file lock`, initialized to zeros.
+    Because the `lock_file` structure is used in an `atexit(3)` handler,
+    its storage has to remain valid throughout the life of the program;
+    e.g., it should be a static variable or space allocated on the heap.
+
+Better?
+
+>> +* Attempts to create a lockfile by passing that variable and the path
+>> +  of the final destination (e.g. `$GIT_DIR/index`) to
+>> +  `hold_lock_file_for_update` or `hold_lock_file_for_append`.
+>> +
+>> +* Writes new content for the destination file by writing to the file
+>> +  descriptor returned by those functions (also available via
+>> +  `lock->fd`).
+>> +
+>> +When finished writing, the caller can:
+>> +
+>> +* Close the file descriptor and rename the lockfile to its final
+>> +  destination by calling `commit_lock_file`.
+>> +
+>> +* Close the file descriptor and remove the lockfile by calling
+>> +  `rollback_lock_file`.
+>> +
+>> +* Close the file descriptor without removing or renaming the lockfile
+>> +  by calling `close_lock_file`, and later call `commit_lock_file` or
+>> +  `rollback_lock_file`.
+>> +
+>> +At this point, the `lock_file` object must not be freed or altered,
+>> +because it is still registered in the `lock_file_list`. However, it
+>> +may be reused; just pass it to another call of
+>> +`hold_lock_file_for_update` or `hold_lock_file_for_append`.
+> 
+> It feels a bit conflicting between "must not be freed or ALTERED"
+> and "it may be REUSED".  Drop "or altered" to reduce confusion?  And
+> this repeats the third sentence I suggested to remove from the first
+> paragraph (above 'see below' refers here).
+
+The purpose of "or altered" is to make sure that users don't imagine
+that they should memset() the structure to zeros or something before
+reusing it (especially since the "caller" instructions earlier say that
+the object should be "initialized to zeros").
+
+Would it help if I change
+
+    s/altered/altered by the caller/
+
+?
+
+I will also drop "because it is still registered in the `lock_file_list`".
+
+> Is it allowed to tell the name of this lock_file to other people and
+> let them read from it?  The answer is yes but it is not obvious from
+> this description.
+> 
+> Also mention how the above interact with reopen_lock_file() here?
+
+I'll take a stab at it, though TBH I haven't really studied the use case
+for reopen_lock_file(). You might be better able to provide insight into
+this topic.
+
+>> +If the program exits before you have called one of `commit_lock_file`,
+>> +`rollback_lock_file`, or `close_lock_file`, an `atexit(3)` handler
+>> +will close and remove the lockfile, essentially rolling back any
+>> +uncommitted changes.
+> 
+> s/essentially //;
+
+Done.
+
+>> +Error handling
+>> +--------------
+>> +
+>> +The `hold_lock_file_*` functions return a file descriptor on success
+>> +or -1 on failure (unless `LOCK_DIE_ON_ERROR` is used; see below). On
+>> +errors, `errno` describes the reason for failure. Errors can be
+>> +handled by passing `errno` to one of the following helper functions:
+> 
+> s/handled by/reported by/; probably.  None of these will help you
+> "handle" errors in the sense to (attempt to) recover from it.
+
+Done.
+
+Thanks for your suggestions!
+Michael
+
 -- 
-Duy
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Michael Haggerty
+mhagger@alum.mit.edu
