@@ -1,72 +1,133 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Sep 2014, #09; Tue, 30)
-Date: Tue, 30 Sep 2014 14:09:09 -0700
-Message-ID: <xmqqppecrf2i.fsf@gitster.dls.corp.google.com>
-References: <xmqq38b8svrd.fsf@gitster.dls.corp.google.com>
-	<20140930204704.GI3770@odin.tremily.us>
+Subject: Re: [PATCH] docs/git-mailinfo: Mention the manual separator (---)
+Date: Tue, 30 Sep 2014 14:12:58 -0700
+Message-ID: <xmqqiok4rew5.fsf@gitster.dls.corp.google.com>
+References: <28b04f1c17f2cc2fe252948bc0b7bb10df24b489.1411571629.git.wking@tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
+Cc: Git <git@vger.kernel.org>
 To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Sep 30 23:09:21 2014
+X-From: git-owner@vger.kernel.org Tue Sep 30 23:13:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZ4fe-0001TN-Oz
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 23:09:19 +0200
+	id 1XZ4jL-0002td-U4
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Sep 2014 23:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751408AbaI3VJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 17:09:14 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51228 "EHLO smtp.pobox.com"
+	id S1750939AbaI3VND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Sep 2014 17:13:03 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57207 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751143AbaI3VJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2014 17:09:13 -0400
+	id S1750760AbaI3VNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Sep 2014 17:13:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 341763FAA1;
-	Tue, 30 Sep 2014 17:09:12 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7DE003FB7F;
+	Tue, 30 Sep 2014 17:13:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QnwGW+XAl9nKgA2DqNxWK1IGhHk=; b=HU20R+
-	+Z+w+tDd5Doz7lwwd2x073HE1eRyvK3bARPqTPH7DOCvBFgia2SHs57lSBguNzc4
-	00vf6PW13e19Cd7yxn46GgHnzQtkaHzrYKExiWYlvbrl0jDMox3zjZ2bOpiSeJ9D
-	zqT6T2I1jgfLzhaugm0dL4DyG6V1MRNQtxKzg=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=zLua9BpdHMn/wo7sXfXf2sy1138=; b=RHgKzZkh+TAO1J7sZuAG
+	P7Yxqlug1gzxD/8RgJimpdMylRrlT0G5APxh1vkrGsonKgudmtNncXrLkLBNTyT+
+	Iy2q3jno79+ioe6NbVI5pXzePke2E7EzjiQqDVUcDp22X6h1vw0i6meMlcE5riZP
+	IUL9GQ1+luynN4taBtQ089Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uP1/HJgLBF/A/DuIL/3FC6QobJ0MlIT/
-	RO2zNz0y87QBrcLQDIq2mNbOFv1MEULOA2DK3vuzL9PxMEjxqEA4zyJfEMOk0JtC
-	2LseXyWyUpDL/ArC5z17kzjG1p6JbQDd/mjM00oL5f0zYv6eaTftl5+9qR00CT+N
-	jhMP1nPq6EA=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=hmvdMpgYuvcQdjEx1fVJndXb11Ahb/662E4dFHM0uxDo+K
+	WOVYBZUxAcZFRB8WxSpIF03jL3HCLHyw4av36h36m8ZIqRgSwMmTYe63GFW9HGAT
+	3p0UUWKS63K8AROhKl37mY0Y5atvUK2rQLYD7ox7nYy6gmNXP4eblj+NPvg1s=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D5E953FAA0;
-	Tue, 30 Sep 2014 17:09:11 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 700153FB7B;
+	Tue, 30 Sep 2014 17:13:00 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 30EB13FA9A;
-	Tue, 30 Sep 2014 17:09:11 -0400 (EDT)
-In-Reply-To: <20140930204704.GI3770@odin.tremily.us> (W. Trevor King's message
-	of "Tue, 30 Sep 2014 13:47:05 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CDC183FB7A;
+	Tue, 30 Sep 2014 17:12:59 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 063A0474-48E6-11E4-A477-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 8E81F83C-48E6-11E4-8C8A-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257683>
 
 "W. Trevor King" <wking@tremily.us> writes:
 
-> On Tue, Sep 30, 2014 at 01:23:18PM -0700, Junio C Hamano wrote:
->> Here are the topics that have been cooking.
+> And explain how it interacts with the scissors setting.
 >
-> It looks like my boring git-mailinfo doc patch [1] fell through the
-> cracks here ;).  Or maybe it's just cooking a bit longer before
-> getting queued?
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
+> The three-dash limit comes from f0658cf2 (restrict the patch
+> filtering, 2007-03-12), but I couldn't find any associated
+> documentation.  Since the effect is so similar to the scissors line, I
+> thought about adding the information to the --scissors entry.  The
+> manual separator is really independent from the scissors though, so I
+> settled on explaining both separators in the DESCRIPTION.
+>
+> This patch is against 'maint'.
+>
+>  Documentation/git-mailinfo.txt | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+>
+> diff --git a/Documentation/git-mailinfo.txt b/Documentation/git-mailinfo.txt
+> index 164a3c6..6c6c527 100644
+> --- a/Documentation/git-mailinfo.txt
+> +++ b/Documentation/git-mailinfo.txt
+> @@ -21,6 +21,29 @@ written out to the standard output to be used by 'git am'
+>  to create a commit.  It is usually not necessary to use this
+>  command directly.  See linkgit:git-am[1] instead.
+>  
+> +The commit message extracted from the e-mail depends on the scissors
+> +setting (see '--[no-]scissors' in the OPTIONS section). ...
 
-Nobody is cooking it as far as I remember.  Did I see any discussion
-on it?
+It encourages a wrong way to look at it to phrase it like this.
 
-I looked at the new text and I find it fairly objectionable.
-A review in a separate message will follow.
+The scissors marker is not about commit log message alone, as you
+can have in-body headers like From: and Subject: to override them
+after the marker, and also in-body headers before the scissors are
+ignored (it is not even "We read From: from the part before the
+scissors but then let it be overriden with another From: after the
+scissors" ).  The right way to look at it is this: "The scissors
+line will cause everything before it discarded and Git pretends as
+if the body of the message begins after it".
+
+If we are extending the documentation on "---", it should also
+mention the caveats, namely, it is encouraged to indent the extra
+message by a SP or something to make sure that it is not mistaken as
+part of the patch.  I suspect that this omission from this patch
+stems from "content after the separator is discarded", which is not
+the case.  Content after the separator is fed to "git apply" as a
+patch.  "apply" may "discard" non-patch and the end result may be
+that the garbage disappears, but that is not the primary reason why
+it does not appear in the resulting log message.  If anything, "---"
+separates between the log part from patch part.
+
+The second example concentrates too heavily on log message which
+makes it a not-very-good addition as-is.
+
+> +Besides the
+> +scissors option (which discards content before the scissors), you can
+> +also use '---' as a separator (which discards content after the
+> +separator).  For example, without scissors you can have a body like
+> +this:
+> +
+> +------------
+> +Your commit message.
+> +---
+> +Comments that aren't part of the commit message.
+> +------------
+> +
+> +With scissors, you can have a body like this:
+> +
+> +------------
+> +Comments that aren't part of the commit message.
+> +--->8---
+> +Your commit message.
+> +---
+> +More comments that aren't part of the commit message.
+> +------------
+> +
+>  
+>  OPTIONS
+>  -------
