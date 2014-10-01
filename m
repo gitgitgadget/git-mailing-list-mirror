@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v7 18/38] close_lock_file(): if close fails, roll back
-Date: Wed,  1 Oct 2014 12:28:22 +0200
-Message-ID: <1412159322-2622-19-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v7 19/38] commit_lock_file(): rollback lock file on failure to rename
+Date: Wed,  1 Oct 2014 12:28:23 +0200
+Message-ID: <1412159322-2622-20-git-send-email-mhagger@alum.mit.edu>
 References: <1412159322-2622-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
@@ -10,138 +10,77 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 01 12:30:51 2014
+X-From: git-owner@vger.kernel.org Wed Oct 01 12:30:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZHBK-0003EM-8c
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 12:30:50 +0200
+	id 1XZHBK-0003EM-P0
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 12:30:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615AbaJAK3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 06:29:23 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:53417 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751361AbaJAK3V (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 06:29:21 -0400
-X-AuditID: 12074411-f79d86d000006a97-16-542bd7804ed7
+	id S1751825AbaJAKaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 06:30:46 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:47487 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751602AbaJAK3X (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 06:29:23 -0400
+X-AuditID: 1207440c-f79036d000005e77-52-542bd782665a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 50.AE.27287.087DB245; Wed,  1 Oct 2014 06:29:20 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 8E.58.24183.287DB245; Wed,  1 Oct 2014 06:29:22 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB1FCB.dip0.t-ipconnect.de [93.219.31.203])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s91ASk6H026827
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s91ASk6I026827
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 1 Oct 2014 06:29:19 -0400
+	Wed, 1 Oct 2014 06:29:20 -0400
 X-Mailer: git-send-email 2.1.0
 In-Reply-To: <1412159322-2622-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42IRYndR1G24rh1isOeyukXXlW4mi4beK8wW
-	T+beZbZ4e3MJo8XtFfOZLX609DBb/JtQY9HZ8ZXRgcPj7/sPTB47Z91l91iwqdTj4asudo9n
-	vXsYPS5eUvb4vEnO4/azbSwBHFHcNkmJJWXBmel5+nYJ3BlrT8xmKlgrXTH5yH2WBsZmsS5G
-	Tg4JAROJiRtXsULYYhIX7q1n62Lk4hASuMwosX3bKyjnOJPEyQfPGUGq2AR0JRb1NDOB2CIC
-	ahIT2w6xgBQxCyxmkphwaBMbSEJYwE2i4ckqsCIWAVWJ7YvXgdm8Ai4S7z/9YIRYJyexYfd/
-	MJsTKL78cjMLiC0k4Cyx485XpgmMvAsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zrq5WaW
-	6KWmlG5ihISj4A7GGSflDjEKcDAq8fAqJGiHCLEmlhVX5h5ilORgUhLlXXQJKMSXlJ9SmZFY
-	nBFfVJqTWnyIUYKDWUmEN/sAUI43JbGyKrUoHyYlzcGiJM7Lt0TdT0ggPbEkNTs1tSC1CCYr
-	w8GhJMHLcA2oUbAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQkIx4UHfHFwPgASfEA7XUG
-	aectLkjMBYpCtJ5i1OVY1/mtn0mIJS8/L1VKnDcTpEgApCijNA9uBSz5vGIUB/pYmDccpIoH
-	mLjgJr0CWsIEtCR5DdiSkkSElFQDY8WcnQdzz8Td+xp83FbO4c69hqnvUh6Y7E3aNt2b0Xnf
-	X5OPXwIkZuRIPlX/tvl/c0uAQ2mWweXK3BRf5gtPD2QbdSySu/0kYYHC4gM5wd+u 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42IRYndR1G26rh1i0HJf1KLrSjeTRUPvFWaL
+	J3PvMlu8vbmE0eL2ivnMFj9aepgt/k2osejs+MrowOHx9/0HJo+ds+6yeyzYVOrx8FUXu8ez
+	3j2MHhcvKXt83iTncfvZNpYAjihum6TEkrLgzPQ8fbsE7oyPPdMZC86yVdz88Y2lgXEZaxcj
+	J4eEgInEvZbbLBC2mMSFe+vZuhi5OIQELjNKXH18hRnCOc4k8X/Ha2aQKjYBXYlFPc1MILaI
+	gJrExLZDLCBFzAKLmSQmHNoE1M7BISwQKnHtiSJIDYuAqsSDNe/BtvEKuEjcevgcarOcxIbd
+	/xlBbE6g+PLLzWBXCAk4S+y485VpAiPvAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5
+	mSV6qSmlmxghwcizg/HbOplDjAIcjEo8vAoJ2iFCrIllxZW5hxglOZiURHkXXQIK8SXlp1Rm
+	JBZnxBeV5qQWH2KU4GBWEuHNPgCU401JrKxKLcqHSUlzsCiJ86ouUfcTEkhPLEnNTk0tSC2C
+	ycpwcChJ8DJcA2oULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB8VGfDEwOkBSPEB7
+	nUHaeYsLEnOBohCtpxiNOVqa3vYycazr/NbPJMSSl5+XKiXOG3oVqFQApDSjNA9uESwNvWIU
+	B/pbmDccZCAPMIXBzXsFtIoJaFXyGrBVJYkIKakGxujZT4JNTr6c4fRZV6/BbFt/tn2F4GHO
+	9c8VvdvY5ZZoerUyTVy4q+n0tUUJTmVhL/1/8wff3FP0a+HioD3n/3GHhKZcOal7 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257730>
 
-If closing an open lockfile fails, then we cannot be sure of the
-contents of the lockfile, so there is nothing sensible to do but
-delete it. This change also insures that the lock_file object is left
-in a defined state in this error path (namely, unlocked).
-
-The only caller that is ultimately affected by this change is
-try_merge_strategy() -> write_locked_index(), which can call
-close_lock_file() via various execution paths. This caller uses a
-static lock_file object which previously could have been reused after
-a failed close_lock_file() even though it was still in locked state.
-This change causes the lock_file object to be unlocked on failure,
-thus fixing this error-handling path.
+If rename() fails, call rollback_lock_file() to delete the lock file
+(in case it is still present) and reset the filename field to the
+empty string so that the lockfile object is left in a valid state.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- Documentation/technical/api-lockfile.txt |  7 ++++---
- lockfile.c                               | 28 ++++++++++++++++++----------
- 2 files changed, 22 insertions(+), 13 deletions(-)
+ lockfile.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/technical/api-lockfile.txt b/Documentation/technical/api-lockfile.txt
-index 6538610..d3bf940 100644
---- a/Documentation/technical/api-lockfile.txt
-+++ b/Documentation/technical/api-lockfile.txt
-@@ -162,9 +162,10 @@ close_lock_file::
- 	Take a pointer to the `struct lock_file` initialized with an
- 	earlier call to `hold_lock_file_for_update` or
- 	`hold_lock_file_for_append`, and close the file descriptor.
--	Return 0 upon success or a negative value on failure to
--	close(2). Usually `commit_lock_file` or `rollback_lock_file`
--	should be called after `close_lock_file`.
-+	Return 0 upon success. On failure to `close(2)`, return a
-+	negative value and rollback the lock file. Usually
-+	`commit_lock_file` or `rollback_lock_file` should eventually
-+	be called if `close_lock_file` succeeds.
- 
- reopen_lock_file::
- 
 diff --git a/lockfile.c b/lockfile.c
-index c897dd8..1d18c67 100644
+index 1d18c67..728ce49 100644
 --- a/lockfile.c
 +++ b/lockfile.c
-@@ -37,13 +37,14 @@
-  *   lockfile, and owner holds the PID of the process that locked the
-  *   file.
-  *
-- * - Locked, lockfile closed (after close_lock_file()).  Same as the
-- *   previous state, except that the lockfile is closed and fd is -1.
-+ * - Locked, lockfile closed (after successful close_lock_file()).
-+ *   Same as the previous state, except that the lockfile is closed
-+ *   and fd is -1.
-  *
-- * - Unlocked (after commit_lock_file(), rollback_lock_file(), or a
-- *   failed attempt to lock).  In this state, filename[0] == '\0' and
-- *   fd is -1.  The object is left registered in the lock_file_list,
-- *   and on_list is set.
-+ * - Unlocked (after commit_lock_file(), rollback_lock_file(), a
-+ *   failed attempt to lock, or a failed close_lock_file()). In this
-+ *   state, filename[0] == '\0' and fd is -1. The object is left
-+ *   registered in the lock_file_list, and on_list is set.
-  */
+@@ -318,8 +318,13 @@ int commit_lock_file(struct lock_file *lk)
+ 	/* remove ".lock": */
+ 	result_file[strlen(result_file) - LOCK_SUFFIX_LEN] = 0;
  
- static struct lock_file *lock_file_list;
-@@ -284,7 +285,13 @@ int close_lock_file(struct lock_file *lk)
- 		return 0;
- 
- 	lk->fd = -1;
--	return close(fd);
-+	if (close(fd)) {
+-	if (rename(lk->filename, result_file))
++	if (rename(lk->filename, result_file)) {
 +		int save_errno = errno;
 +		rollback_lock_file(lk);
 +		errno = save_errno;
-+		return -1;
+ 		return -1;
 +	}
-+	return 0;
- }
- 
- int reopen_lock_file(struct lock_file *lk)
-@@ -330,7 +337,8 @@ void rollback_lock_file(struct lock_file *lk)
- 	if (!lk->filename[0])
- 		return;
- 
--	close_lock_file(lk);
--	unlink_or_warn(lk->filename);
--	lk->filename[0] = 0;
-+	if (!close_lock_file(lk)) {
-+		unlink_or_warn(lk->filename);
-+		lk->filename[0] = 0;
-+	}
++
+ 	lk->filename[0] = 0;
+ 	return 0;
  }
 -- 
 2.1.0
