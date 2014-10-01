@@ -1,7 +1,8 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH v2 1/2] sha1-array: add test-sha1-array and basic tests
-Date: Wed, 01 Oct 2014 17:00:33 +0200
-Message-ID: <542C1711.6080609@web.de>
+Subject: [PATCH v2 2/2] sha1-lookup: handle duplicates in sha1_pos()
+Date: Wed, 01 Oct 2014 17:02:37 +0200
+Message-ID: <542C178D.6070302@web.de>
+References: <542C1711.6080609@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
@@ -9,195 +10,93 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 01 17:01:36 2014
+X-From: git-owner@vger.kernel.org Wed Oct 01 17:03:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZLPK-0005ck-Ta
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 17:01:35 +0200
+	id 1XZLRK-0006ec-3z
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 17:03:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751972AbaJAPBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 11:01:30 -0400
-Received: from mout.web.de ([212.227.15.3]:52158 "EHLO mout.web.de"
+	id S1751345AbaJAPDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 11:03:34 -0400
+Received: from mout.web.de ([212.227.15.4]:59130 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751879AbaJAPBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 11:01:30 -0400
-Received: from [192.168.178.27] ([79.250.168.13]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MDxWR-1XSUKP2iq7-00HRWp; Wed, 01 Oct 2014 17:01:26
+	id S1751214AbaJAPDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2014 11:03:33 -0400
+Received: from [192.168.178.27] ([79.250.168.13]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LhNaa-1Y4IU649Vg-00mabq; Wed, 01 Oct 2014 17:03:31
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-X-Provags-ID: V03:K0:oazocAZngO7i/f7uKbwtj9+uDU6vPqlGogPTG2FEHMCtX2Cwqti
- lIpx10GVct0X+JvV0qw2MvdHP2B1vRE60d7PNbQoof19e38MyyUXTdB57Is+RRTnZeQ3gKM
- Rl9d8KkB3u57gMoujUGs5KJ03pas68c3hE/o7ZniscYBm44+2zetXAsqterA257kR36pzL0
- 9iDP63M6P7MylStKzqsCw==
+In-Reply-To: <542C1711.6080609@web.de>
+X-Provags-ID: V03:K0:KBKNTg7YpC+dK6snLATAFLHsvq/GJ8GYuYDyVfK7gG+xJXP1EWY
+ BIAlBHkiN7hvnXftFIYSoJXl+bX0mR+/N/zmaQkZWunU22tnT6W03orVt1Db9lILwycDQ9g
+ jOPeL+UYXfHXRto7xChS1ztiGeH76uT1ffXCm+sYFTcsLBLtoi8IA79+OqneHA3sufr42Mq
+ E65PTz79uqkXeEAn45Hhw==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257754>
 
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+If the first 18 bytes of the SHA1's of all entries are the same then
+sha1_pos() dies and reports that the lower and upper limits of the
+binary search were the same that this wasn't supposed to happen.  This
+is wrong because the remaining two bytes could still differ.
+
+Furthermore: It wouldn't be a problem if they actually were the same,
+i.e. if all entries have the same SHA1.  The code already handles
+duplicates just fine.  Simply remove the erroneous check.
+
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
-Added a test for looking up a non-existing entry in an array that
-contains duplicates, as suggested by Jeff.  Changed echo20() to add
-a space after the prefix as needed, as suggested by Eric.
+ sha1-lookup.c         |  2 --
+ t/t0064-sha1-array.sh | 20 ++++++++++++++++++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
- .gitignore            |  1 +
- Makefile              |  1 +
- t/t0064-sha1-array.sh | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++
- test-sha1-array.c     | 34 +++++++++++++++++++++++
- 4 files changed, 110 insertions(+)
- create mode 100755 t/t0064-sha1-array.sh
- create mode 100644 test-sha1-array.c
-
-diff --git a/.gitignore b/.gitignore
-index 5bfb234..9ec40fa 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -199,6 +199,7 @@
- /test-revision-walking
- /test-run-command
- /test-sha1
-+/test-sha1-array
- /test-sigchain
- /test-string-list
- /test-subprocess
-diff --git a/Makefile b/Makefile
-index f34a2d4..356feb5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -568,6 +568,7 @@ TEST_PROGRAMS_NEED_X += test-revision-walking
- TEST_PROGRAMS_NEED_X += test-run-command
- TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
- TEST_PROGRAMS_NEED_X += test-sha1
-+TEST_PROGRAMS_NEED_X += test-sha1-array
- TEST_PROGRAMS_NEED_X += test-sigchain
- TEST_PROGRAMS_NEED_X += test-string-list
- TEST_PROGRAMS_NEED_X += test-subprocess
+diff --git a/sha1-lookup.c b/sha1-lookup.c
+index 2dd8515..5f06921 100644
+--- a/sha1-lookup.c
++++ b/sha1-lookup.c
+@@ -84,8 +84,6 @@ int sha1_pos(const unsigned char *sha1, void *table, size_t nr,
+ 				die("BUG: assertion failed in binary search");
+ 			}
+ 		}
+-		if (18 <= ofs)
+-			die("cannot happen -- lo and hi are identical");
+ 	}
+ 
+ 	do {
 diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
-new file mode 100755
-index 0000000..3f26e11
---- /dev/null
+index 3f26e11..dbbe2e9 100755
+--- a/t/t0064-sha1-array.sh
 +++ b/t/t0064-sha1-array.sh
-@@ -0,0 +1,74 @@
-+#!/bin/sh
-+
-+test_description='basic tests for the SHA1 array implementation'
-+. ./test-lib.sh
-+
-+echo20() {
-+	prefix="${1:+$1 }"
-+	shift
-+	while test $# -gt 0
-+	do
-+		echo "$prefix$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1"
-+		shift
-+	done
-+}
-+
-+test_expect_success 'ordered enumeration' '
-+	echo20 "" 44 55 88 aa >expect &&
+@@ -71,4 +71,24 @@ test_expect_success 'lookup non-existing entry with duplicates' '
+ 	test "$n" -lt 0
+ '
+ 
++test_expect_success 'lookup with almost duplicate values' '
 +	{
-+		echo20 append 88 44 aa 55 &&
-+		echo for_each_unique
-+	} | test-sha1-array >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ordered enumeration with duplicate suppression' '
-+	echo20 "" 44 55 88 aa >expect &&
-+	{
-+		echo20 append 88 44 aa 55 &&
-+		echo20 append 88 44 aa 55 &&
-+		echo for_each_unique
-+	} | test-sha1-array >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'lookup' '
-+	{
-+		echo20 append 88 44 aa 55 &&
++		echo "append 5555555555555555555555555555555555555555" &&
++		echo "append 555555555555555555555555555555555555555f" &&
 +		echo20 lookup 55
 +	} | test-sha1-array >actual &&
 +	n=$(cat actual) &&
-+	test "$n" -eq 1
++	test "$n" -eq 0
 +'
 +
-+test_expect_success 'lookup non-existing entry' '
++test_expect_success 'lookup with single duplicate value' '
 +	{
-+		echo20 append 88 44 aa 55 &&
-+		echo20 lookup 33
-+	} | test-sha1-array >actual &&
-+	n=$(cat actual) &&
-+	test "$n" -lt 0
-+'
-+
-+test_expect_success 'lookup with duplicates' '
-+	{
-+		echo20 append 88 44 aa 55 &&
-+		echo20 append 88 44 aa 55 &&
++		echo20 append 55 55 &&
 +		echo20 lookup 55
 +	} | test-sha1-array >actual &&
 +	n=$(cat actual) &&
-+	test "$n" -ge 2 &&
-+	test "$n" -le 3
++	test "$n" -ge 0 &&
++	test "$n" -le 1
 +'
 +
-+test_expect_success 'lookup non-existing entry with duplicates' '
-+	{
-+		echo20 append 88 44 aa 55 &&
-+		echo20 append 88 44 aa 55 &&
-+		echo20 lookup 66
-+	} | test-sha1-array >actual &&
-+	n=$(cat actual) &&
-+	test "$n" -lt 0
-+'
-+
-+test_done
-diff --git a/test-sha1-array.c b/test-sha1-array.c
-new file mode 100644
-index 0000000..ddc491e
---- /dev/null
-+++ b/test-sha1-array.c
-@@ -0,0 +1,34 @@
-+#include "cache.h"
-+#include "sha1-array.h"
-+
-+static void print_sha1(const unsigned char sha1[20], void *data)
-+{
-+	puts(sha1_to_hex(sha1));
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	struct sha1_array array = SHA1_ARRAY_INIT;
-+	struct strbuf line = STRBUF_INIT;
-+
-+	while (strbuf_getline(&line, stdin, '\n') != EOF) {
-+		const char *arg;
-+		unsigned char sha1[20];
-+
-+		if (skip_prefix(line.buf, "append ", &arg)) {
-+			if (get_sha1_hex(arg, sha1))
-+				die("not a hexadecimal SHA1: %s", arg);
-+			sha1_array_append(&array, sha1);
-+		} else if (skip_prefix(line.buf, "lookup ", &arg)) {
-+			if (get_sha1_hex(arg, sha1))
-+				die("not a hexadecimal SHA1: %s", arg);
-+			printf("%d\n", sha1_array_lookup(&array, sha1));
-+		} else if (!strcmp(line.buf, "clear"))
-+			sha1_array_clear(&array);
-+		else if (!strcmp(line.buf, "for_each_unique"))
-+			sha1_array_for_each_unique(&array, print_sha1, NULL);
-+		else
-+			die("unknown command: %s", line.buf);
-+	}
-+	return 0;
-+}
+ test_done
 -- 
 2.1.2
