@@ -1,74 +1,213 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] docs/git-mailinfo: Mention the manual separator (---)
-Date: Tue, 30 Sep 2014 15:37:46 -0700
-Message-ID: <xmqq38b8rayt.fsf@gitster.dls.corp.google.com>
-References: <28b04f1c17f2cc2fe252948bc0b7bb10df24b489.1411571629.git.wking@tremily.us>
-	<xmqqiok4rew5.fsf@gitster.dls.corp.google.com>
-	<20140930214846.GK3770@odin.tremily.us>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: [PATCH] init - Honour the global core.filemode setting
+Date: Tue, 30 Sep 2014 18:55:16 -0700
+Message-ID: <CAE1pOi1dAO7XFZtrgZyNm-eLVKQx=KpeejbGmF8khCofAppDLg@mail.gmail.com>
+References: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>
+ <5427F68E.5030003@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Git <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Wed Oct 01 00:37:53 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 01 03:55:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZ63N-0001wH-0X
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 00:37:53 +0200
+	id 1XZ98q-0007N2-9S
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 03:55:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbaI3Wht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Sep 2014 18:37:49 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59928 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751837AbaI3Whs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Sep 2014 18:37:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E722B3FE2D;
-	Tue, 30 Sep 2014 18:37:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=81eHUeijvkyvz0r+2an6cKBotSE=; b=oWeaWb
-	HIGZhWML95TWS8hUcBGeR8bbrUr/tRubjR8NSmzrL0j3NdW/g6SEw50RhEnx5R1l
-	8EdNhWbe3Q2mBdtLDopJoGhzpUqHa4QHvb6/igscRi3FbVBOMQhwwITkzv9QiuQ7
-	nMA4j1wKsag5oAP4u/W5UI5uSfzCpTq3CDdrY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RpTGQH4rEdWuxlxWlazY+Os14W+XIVy7
-	5EZsGZBMmCBRz6+E2CwnMa+QHddPi49OAu2JWm0Um8nkq6XLhIR9Z3HpgdkXR062
-	laBI6T+/eNjtGJaGUoJN1yYpNMG4CCDjg9eqw7Xfk0l7hEvOqs4Tw1kUHps5jk9c
-	fjf3gClT1Es=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DCB753FE2C;
-	Tue, 30 Sep 2014 18:37:47 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 60DD23FE2B;
-	Tue, 30 Sep 2014 18:37:47 -0400 (EDT)
-In-Reply-To: <20140930214846.GK3770@odin.tremily.us> (W. Trevor King's message
-	of "Tue, 30 Sep 2014 14:48:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 66ED5C88-48F2-11E4-AD06-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1751042AbaJABzk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Sep 2014 21:55:40 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:65353 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780AbaJABzi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Sep 2014 21:55:38 -0400
+Received: by mail-lb0-f175.google.com with SMTP id u10so103116lbd.6
+        for <git@vger.kernel.org>; Tue, 30 Sep 2014 18:55:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=oHoTNbwKgB16ax5nH+TS9Yj+QIaC9PmQ6Nie9Hu9nt0=;
+        b=e+6nJIsXNN0tcwZ67lQtNhh7YfReu2AxwYkIY0mGrc8Df8yj/lEWyLdKwFwdSTwsWI
+         sjPrItfAeZn2RuHtZUZMuFXLptoohzxFNWv5iLXUvASbpv3SVHdsj1IR5OnvU+H5BHTs
+         hKGnc9Kz4hWyp4Pi7GzDeHFbeJURWih0ANwPKS8xHkl/z8XaFKet8x7SPlRQu2CY1MLN
+         hWRhgm6I8P6RjBNvUlAO4g9q6irtLBavawvTsN3eNu/XcP0dB1R1rXlElek0XhugmRl4
+         GsQPN6rg+xxPQXJ5ioI0RU5XZLh5RUqmD/OTT6FfNYoD8xsqiFe1J41bntO+UvuTomr7
+         1AWw==
+X-Received: by 10.112.63.104 with SMTP id f8mr14965261lbs.91.1412128537170;
+ Tue, 30 Sep 2014 18:55:37 -0700 (PDT)
+Received: by 10.112.197.37 with HTTP; Tue, 30 Sep 2014 18:55:16 -0700 (PDT)
+In-Reply-To: <5427F68E.5030003@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257689>
 
-"W. Trevor King" <wking@tremily.us> writes:
+Hi Torsten,
 
-> ...  Maybe we should drop this patch in favor of notes
-> in git-mailinfo(1) and git-format-patch(1) pointing folks at the
-> DISCUSSION section in git-am(1) and a more easily grepable “three
-> dashes ('---')" in gi-am(1)?
+Thank you for taking the time to review my patch.
 
-I am all for dropping new changes and expecially duplicates ;-)
+On 28 September 2014 04:52, Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+> On 2014-09-28 02.37, Hilco Wijbenga wrote:
+>> If "~/.gitconfig" contains a "core.filemode" entry then "git init"
+>> should honour that setting.
+>>
+>> Signed-off-by: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+>> ---
+>> This bit me at work where I have to work with Windows. Git on Cygwin
+>> and the Eclipse Git plugin do not agree on file attributes so I had
+>> set "filemode =3D false" in ~/.gitconfig.
+> This feels strange.
+> Each and every repo has a core.filemode setting.
+> Or should have.
+>
+> Did you manage to create a repo without core.filemode in repo/.git/co=
+nfig ?
+> And if yes, how?
 
-Because I would be a bad judge for suggesting the place that a new
-reader likely expects to find relevant information, as I am not a
-new reader who does not know where to start looking, I'll let others
-figure out where the best places to add enhancements to are.
+Perhaps I completely misunderstand the meaning of core.filemode but I
+thought it determined whether Git cared about changes in file
+properties? So this is client OS related and independent of the repo?
 
-Thanks.
+>> A few weeks later, I did a "git init" and, some time later yet, I
+>> noticed the strange behaviour of Cygwin/Eclipse again.
+> I do not fully understand which "strange behaviour" you experied,
+> so I need to guess.
+
+The problem is simply that Eclipse's Git sees changes that Cygwin's
+Git does not. It's some sort of unfortunate consequence of trying to
+pretend to be Linux on Windows, I guess. The only way to get them to
+agree was to set core.filemode to false. Now you might rightly argue
+that Eclipse and/or Windows and/or Cygwin should be fixed but that's a
+much bigger undertaking than simply setting an existing Git property.
+:-)
+
+>  This was very
+>> surprising because things had been working well until then. It took
+>> quite a bit of research before I realized that "git init" always set=
+s
+>> "filemode". I think "filemode" should only be set if not set already
+>> in the global config (similar to log_all_ref_updates).
+>
+> That is part of the whole story:
+> In general, "git init" probes the file system, if the executable bit
+> is working as expected.
+> So if you  create a Git repository under VFAT, the executable bit is =
+not supported.
+>
+> Git will notice that, and set core.filemode =3D false.
+>
+> NTFS is a different story:
+> Cygwin has support for the executable bit under NTFS, but Msysit does=
+ not.
+
+Agreed. That is what I concluded from the code.
+
+> So if you "share" a Git repository between Msysgit and cygwin, it may=
+ be better
+> to set core.filemode to false.
+
+Possibly. I would argue that that is up to the individual developer.
+
+> There is however a problem with your patch, or 2:
+>
+> When you set core.filemode =3D false in your ~/.gitconfig,
+> another developer may have core.filemode =3D true in his config.
+> If you manage to share the repo using a network, git will behave diff=
+erent
+> for the 2 users.
+
+Isn't that what everything in ~/gitconfig is for? So that I can set
+attributes appropriate to my working environment? Besides, that is
+already the case if developer A uses a VFAT system and developer B
+uses NTFS or JFS or EXTn or ..., right? (As you also indicated above.)
+
+> Solution:
+> Set core.filemode for this repo alwways in the repo. (as we do today =
+in git.git)
+
+I suppose you could set it to false, yes. But then it affects
+everybody, that seems like going for the lowest common denominator?
+
+> When you run "git init" with ~/.gitconfig =3D true, you should
+> anyway probe the file system, as it may not support file mode, and co=
+re.filemode may be false.
+>
+>
+> So the solution that I can see is:
+> (Some pseudo-code:)
+>
+> if (git config (global config ) =3D=3D false) ||
+>    (git config (~/.config ) =3D=3D false) then
+>   git_config_set("core.filemode", "false");
+> else
+>   probe the file system and set core.filemode as we do today
+> fi
+
+Yeah, I actually considered that (well, something less complete,
+actually :-) ) but decided to go for the simpler approach that I
+showed. My assumption is that the developer working with the repo
+knows what he is doing. It seems wrong for Git to override that
+decision. Then again, I don't really see any advantage in setting
+core.filemode to true when working with, say, a VFAT filesystem, so
+ignoring it in that case might be okay. Would such a setup do active
+damage, though?
+
+>> The usual caveat applies: this is my first patch. Having said that,
+>> please feel free to be pedantic and strict. It's a small patch so I
+>> would imagine that fixing any problems should not take long (assumin=
+g
+>> it is acceptable at all, of course). I'd like to know I did it right=
+=2E
+>> :-)
+>>
+>> AFAICT, all tests passed. Should a separate test be added for this c=
+hange?
+> I think yes.
+
+Okay, I'll have to figure out how to do that.
+
+> Under which system did you test ?
+>
+> Windows?
+> CYWGIN ?
+> MingWW/Msysgit ?
+> Linux ?
+
+Only Linux. I don't really run Windows at home.
+
+>> - /* Check filemode trustability */
+>> - filemode =3D TEST_FILEMODE;
+>> - if (TEST_FILEMODE && !lstat(path, &st1)) {
+>> - struct stat st2;
+>> - filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+>> - !lstat(path, &st2) &&
+>> - st1.st_mode !=3D st2.st_mode);
+>> + /* Do not override the global filemode setting. */
+>> + if (trust_executable_bit =3D=3D -1) {
+>> + /* Check filemode trustability */
+>> + filemode =3D TEST_FILEMODE;
+>> + if (TEST_FILEMODE && !lstat(path, &st1)) {
+>> + struct stat st2;
+>> + filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+>> + !lstat(path, &st2) &&
+>> + st1.st_mode !=3D st2.st_mode);
+>> + }
+>> + git_config_set("core.filemode", filemode ? "true" : "false");
+> The indentation seems to be broken ?
+> (We use one TAB, for better info please see Documentation/CodingGuide=
+lines)
+> [snip]
+
+I did. :-) I followed an online tutorial geared to Google mail to
+basically run git format-patch | git imap-send but the end result did
+not have the tabs that I have in the code. I'll have to research it a
+bit more then.
+
+Cheers,
+Hilco
