@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/3] dump_marks(): reimplement using fdopen_lock_file()
-Date: Wed,  1 Oct 2014 13:14:48 +0200
-Message-ID: <1412162089-3233-3-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 3/3] commit_packed_refs(): reimplement using fdopen_lock_file()
+Date: Wed,  1 Oct 2014 13:14:49 +0200
+Message-ID: <1412162089-3233-4-git-send-email-mhagger@alum.mit.edu>
 References: <1412162089-3233-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
@@ -10,104 +10,76 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 01 13:15:09 2014
+X-From: git-owner@vger.kernel.org Wed Oct 01 13:15:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZHsB-0005XU-OP
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 13:15:08 +0200
+	id 1XZHsC-0005XU-Qd
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 13:15:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751195AbaJALPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 07:15:00 -0400
+	id S1751296AbaJALPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 07:15:03 -0400
 Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:58431 "EHLO
 	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751092AbaJALO7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 07:14:59 -0400
-X-AuditID: 1207440e-f79da6d0000002fc-f7-542be23293ad
+	by vger.kernel.org with ESMTP id S1751092AbaJALPA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 07:15:00 -0400
+X-AuditID: 1207440e-f79da6d0000002fc-fb-542be234fd78
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 66.DA.00764.232EB245; Wed,  1 Oct 2014 07:14:58 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id F6.DA.00764.432EB245; Wed,  1 Oct 2014 07:15:00 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB1FCB.dip0.t-ipconnect.de [93.219.31.203])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s91BEp6l028682
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s91BEp6m028682
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 1 Oct 2014 07:14:56 -0400
+	Wed, 1 Oct 2014 07:14:58 -0400
 X-Mailer: git-send-email 2.1.0
 In-Reply-To: <1412162089-3233-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmplleLIzCtJLcpLzFFi42IRYndR1DV6pB1i8P6AhEXXlW4mi4beK8wW
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupileLIzCtJLcpLzFFi42IRYndR1DV5pB1isGINp0XXlW4mi4beK8wW
 	T+beZbZ4e3MJo8XtFfOZLX609DBb/JtQY9HZ8ZXRgcPj7/sPTB47Z91l91iwqdTj4asudo9n
-	vXsYPS5eUvb4vEnO4/azbSwBHFHcNkmJJWXBmel5+nYJ3BmPDl1hLrjKU3F63gXWBsZuri5G
-	Tg4JAROJO31rmCBsMYkL99azdTFycQgJXGaUOPGrnwnCOc4kManlLlgVm4CuxKKeZjBbREBN
-	YmLbIRaQImaBxUwSEw5tYgNJCAu4SzyY/YoRxGYRUJX429LNAmLzCjhLfJx3gBVinZzEht3/
-	gWo4ODgFXCRmXeEECQsBleyY94lpAiPvAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6xnq5
-	mSV6qSmlmxghwci3g7F9vcwhRgEORiUeXoUE7RAh1sSy4srcQ4ySHExKoryOD4BCfEn5KZUZ
-	icUZ8UWlOanFhxglOJiVRHizDwDleFMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotg
-	sjIcHEoSvLwPgRoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQbERXwyMDpAUD9Be
-	IZB23uKCxFygKETrKUZdjnWd3/qZhFjy8vNSpcR5Q0AOFwApyijNg1sBSz2vGMWBPhbmVQMZ
-	xQNMW3CTXgEtYQJakrwGbElJIkJKqoFx04ZQobq44znBCVVWidXmbwtqPSefatbZ7nb3YOY+
-	be0mxqD61isCjIt3HeOf8sTrziHRytPPJq5eI9e/93j5lsb6hfdXx9QWsh8wjX5y 
+	vXsYPS5eUvb4vEnO4/azbSwBHFHcNkmJJWXBmel5+nYJ3BnTH3UwFrxkq5jVsYO9gfEKaxcj
+	J4eEgInExttrmSBsMYkL99azdTFycQgJXGaUuLFhKxOEc5xJYum53SwgVWwCuhKLeprBOkQE
+	1CQmth1iASliFljMJDHh0CY2kISwgL9E95njzCA2i4CqRM+9nUBxDg5eAWeJtuP1ENvkJDbs
+	/s8IEuYUcJGYdYUTJCwEVLFj3iemCYy8CxgZVjHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGuvl
+	ZpbopaaUbmKEhCLfDsb29TKHGAU4GJV4eBUStEOEWBPLiitzDzFKcjApifI6PgAK8SXlp1Rm
+	JBZnxBeV5qQWH2KU4GBWEuHNPgCU401JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2C
+	ycpwcChJ8PI+BGoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB0VGfDEwNkBSPEB7
+	hUDaeYsLEnOBohCtpxiNOVqa3vYycazr/NbPJMSSl5+XKiXOGwJyvgBIaUZpHtwiWBJ6xSgO
+	9LcwrxrIQB5gAoOb9wpoFRPQquQ1YKtKEhFSUg2Mmdr/fzNKSTkVmHzgOZ0mHXRzn28/X+HM
+	jFQJjn/BAV7i+93+h676/ze3vvwQmyVPtGzoxIL2dSu9uRWkNn1fGfn/+Pv35z45 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257742>
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- fast-import.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ refs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index deadc33..fee7906 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1794,20 +1794,18 @@ static void dump_marks_helper(FILE *f,
- static void dump_marks(void)
- {
- 	static struct lock_file mark_lock;
--	int mark_fd;
- 	FILE *f;
+diff --git a/refs.c b/refs.c
+index 1d73f1d..a77458f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2309,16 +2309,13 @@ int commit_packed_refs(void)
+ 	if (!packed_ref_cache->lock)
+ 		die("internal error: packed-refs not locked");
  
- 	if (!export_marks_file)
- 		return;
+-	out = fdopen(packed_ref_cache->lock->fd, "w");
++	out = fdopen_lock_file(packed_ref_cache->lock, "w");
+ 	if (!out)
+ 		die_errno("unable to fdopen packed-refs descriptor");
  
--	mark_fd = hold_lock_file_for_update(&mark_lock, export_marks_file, 0);
--	if (mark_fd < 0) {
-+	if (hold_lock_file_for_update(&mark_lock, export_marks_file, 0) < 0) {
- 		failure |= error("Unable to write marks file %s: %s",
- 			export_marks_file, strerror(errno));
- 		return;
- 	}
+ 	fprintf_or_die(out, "%s", PACKED_REFS_HEADER);
+ 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
+ 				 0, write_packed_entry_fn, out);
+-	if (fclose(out))
+-		die_errno("write error");
+-	packed_ref_cache->lock->fd = -1;
  
--	f = fdopen(mark_fd, "w");
-+	f = fdopen_lock_file(&mark_lock, "w");
- 	if (!f) {
- 		int saved_errno = errno;
- 		rollback_lock_file(&mark_lock);
-@@ -1816,22 +1814,7 @@ static void dump_marks(void)
- 		return;
- 	}
- 
--	/*
--	 * Since the lock file was fdopen()'ed, it should not be close()'ed.
--	 * Assign -1 to the lock file descriptor so that commit_lock_file()
--	 * won't try to close() it.
--	 */
--	mark_lock.fd = -1;
--
- 	dump_marks_helper(f, 0, marks);
--	if (ferror(f) || fclose(f)) {
--		int saved_errno = errno;
--		rollback_lock_file(&mark_lock);
--		failure |= error("Unable to write marks file %s: %s",
--			export_marks_file, strerror(saved_errno));
--		return;
--	}
--
- 	if (commit_lock_file(&mark_lock)) {
- 		failure |= error("Unable to commit marks file %s: %s",
- 			export_marks_file, strerror(errno));
+ 	if (commit_lock_file(packed_ref_cache->lock)) {
+ 		save_errno = errno;
 -- 
 2.1.0
