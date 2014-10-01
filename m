@@ -1,101 +1,93 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH 2/2] sha1-lookup: fix handling of duplicates in sha1_pos()
-Date: Wed, 01 Oct 2014 11:43:21 +0200
-Message-ID: <542BCCB9.4050908@web.de>
-References: <542BCBFC.5000509@web.de>
+Subject: [PATCH 1/3] daemon: handle gethostbyname() error
+Date: Wed, 01 Oct 2014 12:16:17 +0200
+Message-ID: <542BD471.3000308@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 01 11:44:34 2014
+X-From: git-owner@vger.kernel.org Wed Oct 01 12:17:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZGSX-0008PQ-Ha
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 11:44:33 +0200
+	id 1XZGyF-000679-4c
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 12:17:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266AbaJAJoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 05:44:23 -0400
-Received: from mout.web.de ([212.227.15.4]:55282 "EHLO mout.web.de"
+	id S1751123AbaJAKRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 06:17:15 -0400
+Received: from mout.web.de ([212.227.15.4]:55970 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750846AbaJAJoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 05:44:20 -0400
+	id S1750782AbaJAKRO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2014 06:17:14 -0400
 Received: from [192.168.178.27] ([79.250.168.13]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M57ni-1YSbtg3X5y-00zHNq; Wed, 01 Oct 2014 11:44:15
+ with ESMTPSA (Nemesis) id 0MLP9u-1XYj0J2I7O-000YNV; Wed, 01 Oct 2014 12:17:09
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <542BCBFC.5000509@web.de>
-X-Provags-ID: V03:K0:GiCalbQOwsjD2pPZnTQBLLWriDdRh6+HMwo5RCtx6jx895qeusT
- JbIZ59wGAZxTl+EuwhTrlHlEaHruYWwABndMxy8HXw+toZaXpfUkYQ7v3dmB91VnP1t5CXp
- t+yB0z+J3UIZR2BeldfjYxaSFELULwsNWKyH9aNspr7Cl6Y19by3Me5ZU7Mwxc6E+Ut7cyr
- OkUGQTn2HfM1FFp8CLKrg==
+X-Provags-ID: V03:K0:m6MUfLXR1rkjcvBSMqiWdgiA6QmKBZVfyMplt+z/P61C+tpU15x
+ TlzkZIMLv5agY/xxPn8XtDi2Wyx76qkh1qRsPT5852CdvgcJNNpoS7Hzhge9GtmXN5WHMSs
+ EtjSxDNlW8ylbVhUz1G5Ag1a1nIdXSJPMDqTB+l7lrBf2eE8E8cPQ2azduhgEiWPfEsjjWw
+ FtCZRtD4GwDMcPjAoAFOA==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257696>
 
-If the first 18 bytes of the SHA1's of all entries are the same then
-sha1_pos() dies and reports that the lower and upper limits of the
-binary search were the same that this wasn't supposed to happen.  This
-is wrong because the remaining two bytes could still differ.
-
-Furthermore: It wouldn't be a problem if they actually were the same,
-i.e. if all entries have the same SHA1.  The code already handles
-duplicates just fine otherwise.  Simply remove the erroneous check.
+If the user-supplied hostname can't be found then we should not use it.
+We already avoid doing that in the non-NO_IPV6 case by checking if the
+return value of getaddrinfo() is zero (success).  Do the same in the
+NO_IPV6 case and make sure the return value of gethostbyname() isn't
+NULL before dereferencing this pointer.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- sha1-lookup.c         |  2 --
- t/t0064-sha1-array.sh | 20 ++++++++++++++++++++
- 2 files changed, 20 insertions(+), 2 deletions(-)
+Most lines are just re-indented, not actually changed.
 
-diff --git a/sha1-lookup.c b/sha1-lookup.c
-index 2dd8515..5f06921 100644
---- a/sha1-lookup.c
-+++ b/sha1-lookup.c
-@@ -84,8 +84,6 @@ int sha1_pos(const unsigned char *sha1, void *table, size_t nr,
- 				die("BUG: assertion failed in binary search");
- 			}
- 		}
--		if (18 <= ofs)
--			die("cannot happen -- lo and hi are identical");
+ daemon.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index 4dcfff9..a6f467e 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -553,20 +553,21 @@ static void parse_host_arg(char *extra_args, int buflen)
+ 		static char addrbuf[HOST_NAME_MAX + 1];
+ 
+ 		hent = gethostbyname(hostname);
++		if (hent) {
++			ap = hent->h_addr_list;
++			memset(&sa, 0, sizeof sa);
++			sa.sin_family = hent->h_addrtype;
++			sa.sin_port = htons(0);
++			memcpy(&sa.sin_addr, *ap, hent->h_length);
++
++			inet_ntop(hent->h_addrtype, &sa.sin_addr,
++				  addrbuf, sizeof(addrbuf));
+ 
+-		ap = hent->h_addr_list;
+-		memset(&sa, 0, sizeof sa);
+-		sa.sin_family = hent->h_addrtype;
+-		sa.sin_port = htons(0);
+-		memcpy(&sa.sin_addr, *ap, hent->h_length);
+-
+-		inet_ntop(hent->h_addrtype, &sa.sin_addr,
+-			  addrbuf, sizeof(addrbuf));
+-
+-		free(canon_hostname);
+-		canon_hostname = xstrdup(hent->h_name);
+-		free(ip_address);
+-		ip_address = xstrdup(addrbuf);
++			free(canon_hostname);
++			canon_hostname = xstrdup(hent->h_name);
++			free(ip_address);
++			ip_address = xstrdup(addrbuf);
++		}
+ #endif
  	}
- 
- 	do {
-diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
-index bd68789..3fcb8d8 100755
---- a/t/t0064-sha1-array.sh
-+++ b/t/t0064-sha1-array.sh
-@@ -61,4 +61,24 @@ test_expect_success 'lookup with duplicates' '
- 	test "$n" -le 3
- '
- 
-+test_expect_success 'lookup with almost duplicate values' '
-+	{
-+		echo "append 5555555555555555555555555555555555555555" &&
-+		echo "append 555555555555555555555555555555555555555f" &&
-+		echo20 "lookup " 55
-+	} | test-sha1-array >actual &&
-+	n=$(cat actual) &&
-+	test "$n" -eq 0
-+'
-+
-+test_expect_success 'lookup with single duplicate value' '
-+	{
-+		echo20 "append " 55 55 &&
-+		echo20 "lookup " 55
-+	} | test-sha1-array >actual &&
-+	n=$(cat actual) &&
-+	test "$n" -ge 0 &&
-+	test "$n" -le 1
-+'
-+
- test_done
+ }
 -- 
 2.1.2
