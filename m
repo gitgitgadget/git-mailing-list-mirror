@@ -1,68 +1,87 @@
-From: James Hancock <james@bookstobrains.com>
-Subject: Can you git clone -partial? I am looking to make a mobile app and it
- would be nice to have.
-Date: Thu, 2 Oct 2014 00:51:58 +0800
-Message-ID: <CAOHoyPr3E9U3XPEjmrSNkT0okHcRN2H7OKyrt-Ar3WMMDL=4vw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] init - Honour the global core.filemode setting
+Date: Wed, 01 Oct 2014 10:10:44 -0700
+Message-ID: <xmqqy4szpvfv.fsf@gitster.dls.corp.google.com>
+References: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>
+	<5427F68E.5030003@web.de>
+	<CAE1pOi1dAO7XFZtrgZyNm-eLVKQx=KpeejbGmF8khCofAppDLg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 01 18:52:06 2014
+Content-Type: text/plain
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Users <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 01 19:10:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZN8H-0005Qp-PK
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 18:52:06 +0200
+	id 1XZNQW-00065n-MX
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 19:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbaJAQwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 12:52:02 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:37219 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751724AbaJAQwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 12:52:00 -0400
-Received: by mail-lb0-f170.google.com with SMTP id u10so717480lbd.29
-        for <git@vger.kernel.org>; Wed, 01 Oct 2014 09:51:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=oz4ZcqE4r7zPo6ah9yIeKCpUljaOdwcKNUY8mkEjbao=;
-        b=HNAZB2n3caxaRepsCoa4XlpN8CeLSxqmeT0NW6Y2imyJ7cnePzYRTHOkjIT7wiFg+p
-         AT6q0YyDini3FR4ngwijrD8adst6WZ9YvGDW6SHlrRWvENxQThf7bYlT77ZdYSx9dT6m
-         vKt2Y3mJzmUmkgZxy3jDhALcfK+eFbSCT9WU9bfL4VkXMrcAK5jL92AAIg5L7Y7gXFxl
-         L37CCBJ/OIE66kE2DjfHz9xSzgIGu1EfmUoHJ+RWguY4QwX3HA+UFcXQ1mAuecyOyfb3
-         clJx7/YrmhXtkc5ni3KjH8ht98uMi2p6rili9Brz4vBQx08y1O139KnycOcUHRgmKl+J
-         6txw==
-X-Gm-Message-State: ALoCoQkBDHew0Kr3MbQdtbhnHEP9r0B79sS06oWOAIpv2tkxEiXWSeABSvSpnZUhpQWUbmrYGatV
-X-Received: by 10.152.8.168 with SMTP id s8mr35210715laa.3.1412182318825; Wed,
- 01 Oct 2014 09:51:58 -0700 (PDT)
-Received: by 10.25.30.10 with HTTP; Wed, 1 Oct 2014 09:51:58 -0700 (PDT)
-X-Originating-IP: [58.115.134.159]
+	id S1752225AbaJARKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 13:10:52 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62459 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752115AbaJARKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2014 13:10:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D47CF3D115;
+	Wed,  1 Oct 2014 13:10:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Sg+yf5i3UFVGaLCrIjpUporNlfo=; b=k44aBg
+	6UM/1B/B+Jcpim0uUzJCV8tazqJhshwqjIVwGeQWF9fiO+7KT3ahUnJZ7jNqtdKy
+	adN4kQUlB9z/ZV06hW5Gc9G+KczX/tQ1LX4RtuzQCN15S+M38VGVFB58VKALivDa
+	OOPVOUVWgMGjtvpfZIFNvrHGFwWEz6JdMngpM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qH0lhZVIImvXdXxuoDiS21wt1zQaikVN
+	MJz4OqmG5/3+C9EoN6ceeiIOT4QbOci5Ekd1N/RfdU/vpQf44ra98liavb6uwjJV
+	o2ZGp2EYIiHii0NnvCYxSPXcjZYWKHXx/H4QUV4T7Hg0VxIRVwVWSholwqr1MgSo
+	z456a5Nq1wg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7D3823D114;
+	Wed,  1 Oct 2014 13:10:49 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 53A523D113;
+	Wed,  1 Oct 2014 13:10:47 -0400 (EDT)
+In-Reply-To: <CAE1pOi1dAO7XFZtrgZyNm-eLVKQx=KpeejbGmF8khCofAppDLg@mail.gmail.com>
+	(Hilco Wijbenga's message of "Tue, 30 Sep 2014 18:55:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E2E14282-498D-11E4-A058-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257759>
 
-i am thinking about developing an app and I want to integrate it with
-git but I only want to store a portion of the file on disk. It is
-going to be in a mobile enviornment and I want to just get one file or
-a small group of files.
+Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 
-I read that you can clone and then only look at one peice but is it
-possible just to clone one peice? And if not what would it take? Maybe
-this is a feature people would like to have. Just hypothetically, what
-would need to happen?
+> Perhaps I completely misunderstand the meaning of core.filemode but I
+> thought it determined whether Git cared about changes in file
+> properties?
 
-Either
-git clonepartial /repo /file/or/folder/in/repo
-Or
-Git clone -partial /repo /file/or/folder/in/repo
+By setting it to "false", you tell Git that the filesystem you
+placed the repository does not correctly represent the filemode
+(especially the executable bit).
 
-I guess you would need to keep the projects .git in order to maintain
-consistency, or would you? I'm going to do some more research about
-what .git does exactly.
+"core.fileMode" in "git config --help" reads:
 
-Cheers,
-James
+       core.fileMode
+           If false, the executable bit differences between the
+           index and the working tree are ignored; useful on broken
+           filesystems like FAT. See git-update- index(1).
+
+           The default is true, except git-clone(1) or git-init(1)
+           will probe and set core.fileMode false if appropriate
+           when the repository is created.
+
+Maybe our documentation is not clear enough.  A contribution from
+somebody new to Git we would appreciate would be to point out which
+part of these sentences are unclear; that way, people can work on
+improving its phrasing.
+
+Thanks.
