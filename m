@@ -1,98 +1,186 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v6 02/39] api-lockfile: revise and expand the documentation
-Date: Wed, 01 Oct 2014 10:11:36 +0200
-Message-ID: <542BB738.9080100@alum.mit.edu>
-References: <1411726119-31598-1-git-send-email-mhagger@alum.mit.edu>	<1411726119-31598-3-git-send-email-mhagger@alum.mit.edu>	<xmqq8ul6869o.fsf@gitster.dls.corp.google.com>	<542AB323.4080402@alum.mit.edu> <20140930161543.GA10581@peff.net> <xmqqoatxrodx.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH 1/2] sha1-array: add test-sha1-array and basic tests
+Date: Wed, 01 Oct 2014 11:40:12 +0200
+Message-ID: <542BCBFC.5000509@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	=?windows-1252?Q?Torsten_B=F6gershaus?= =?windows-1252?Q?en?= 
-	<tboegi@web.de>, Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 01 10:12:03 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 01 11:41:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZF10-0005ne-QO
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 10:12:03 +0200
+	id 1XZGPQ-00072X-OT
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 11:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053AbaJAIL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 04:11:58 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:65069 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750944AbaJAILz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 04:11:55 -0400
-X-AuditID: 12074413-f79ed6d000002501-56-542bb73b9584
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id D9.7B.09473.B37BB245; Wed,  1 Oct 2014 04:11:39 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB1FCB.dip0.t-ipconnect.de [93.219.31.203])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s918BavI021601
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 1 Oct 2014 04:11:37 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <xmqqoatxrodx.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMKsWRmVeSWpSXmKPExsUixO6iqGu9XTvE4NEPC4uuK91MFg29V5gt
-	nsy9y2zx9uYSRosfLT3MFv8m1Fh0dnxldGD32DnrLrvHgk2lHg9fdbF7POvdw+hx8ZKyx+dN
-	ch63n21jCWCP4rZJSiwpC85Mz9O3S+DO+HbgGHNBF3fFjA/dTA2Mdzm6GDk5JARMJN6sP8wO
-	YYtJXLi3nq2LkYtDSOAyo8SVeQvYIZxzTBI7N61hA6niFdCW+PN9JwuIzSKgKjFvwX9mEJtN
-	QFdiUU8zE4gtKhAg8aHzASNEvaDEyZlPwOpFBBwlTjy4zgoylFngHaPE0j0TwVYLC/hLnFqx
-	D6xBSGAuk8SdJXxdjBwcnALWEj8u6IGEmQX0JHZc/8UKYctLNG+dzTyBUWAWkhWzkJTNQlK2
-	gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGuuV5uZoleakrpJkZIJAjvYNx1Uu4QowAHoxIP
-	r0KCdogQa2JZcWXuIUZJDiYlUV6urUAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrwTK4ByvCmJ
-	lVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJXo5tQI2CRanpqRVpmTklCGkm
-	Dk6Q4VxSIsWpeSmpRYmlJRnxoFiNLwZGK0iKB2ivGEg7b3FBYi5QFKL1FKMux7rOb/1MQix5
-	+XmpUuK8jCBFAiBFGaV5cCtgae8VozjQx8K8miBVPMCUCTfpFdASJqAlyWvAlpQkIqSkGhjl
-	hJ8uvaSeG/343qw3L07EeSS1pt2/znMs9MjtI0+VI2WXPhd2T/ryRKDjL7OlZ8wW 
+	id S1751148AbaJAJlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 05:41:17 -0400
+Received: from mout.web.de ([212.227.15.4]:62877 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751100AbaJAJlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2014 05:41:16 -0400
+Received: from [192.168.178.27] ([79.250.168.13]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MCvVz-1XPg153Afb-009i2k; Wed, 01 Oct 2014 11:41:04
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+X-Provags-ID: V03:K0:4kaXLIT3RWR+NA80B0KpfH6D5z3dayVv9qbQeCsnmkDo4UaBgrd
+ X/F+qZ6uE019VXX3tu3YnTAuY2WOt++14CRRn0XHb7Adb7n6pc3q7W7ZSEvYdz4ZjXSrWml
+ R3hddGrbllmg7FqWC/UC+PXOuOb5ftP6Vnt1ybo3BFc+t2Wrwunv2ae1wB8irVJgO9x955d
+ VlkT0Bfvpc6MGk1r5bfOQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257694>
 
-On 09/30/2014 07:47 PM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> On Tue, Sep 30, 2014 at 03:41:55PM +0200, Michael Haggerty wrote:
->>
->>> I didn't fix it because IMO the correct fix is to add a stdio-oriented
->>> entry point to the lockfile API, and teach the lockfile code to handle
->>> closing the FILE correctly when necessary.
->>
->> I think so, too, after our discussion[1] surrounding 9540ce5 (refs: write
->> packed_refs file using stdio, 2014-09-10).
-> 
-> Yeah, but we already write packed-refs via stdio, so the stdio
-> oriented lockfile API entry points can no longer be just on the
-> mythical todo list but needs to become reality before we can merge
-> this topic sanely.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ .gitignore            |  1 +
+ Makefile              |  1 +
+ t/t0064-sha1-array.sh | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ test-sha1-array.c     | 34 +++++++++++++++++++++++++++
+ 4 files changed, 100 insertions(+)
+ create mode 100755 t/t0064-sha1-array.sh
+ create mode 100644 test-sha1-array.c
 
-That's not the fault of this topic, which just moves the text of the
-"rule" to a different place in the file. And neither is it the fault of
-Peff's change to write packed-refs via stdio. It is the fault of
-
-  60b9004 Use atomic updates to the fast-import mark file (2007-03-08)
-
-which also fdopen()ed then fclose()d a lock_file::fd, and of
-
-  0c0478c Document lockfile API (2008-01-16)
-
-which documented the "rule" that had already been broken.
-
->>> But I didn't want to add even more changes to this patch series, so I am
->>> working on this as a separate patch series. I hope to submit it soon.
->>
->> Yay.
-> 
-> Yay.
-
-Michael
-
+diff --git a/.gitignore b/.gitignore
+index 5bfb234..9ec40fa 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -199,6 +199,7 @@
+ /test-revision-walking
+ /test-run-command
+ /test-sha1
++/test-sha1-array
+ /test-sigchain
+ /test-string-list
+ /test-subprocess
+diff --git a/Makefile b/Makefile
+index f34a2d4..356feb5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -568,6 +568,7 @@ TEST_PROGRAMS_NEED_X += test-revision-walking
+ TEST_PROGRAMS_NEED_X += test-run-command
+ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
+ TEST_PROGRAMS_NEED_X += test-sha1
++TEST_PROGRAMS_NEED_X += test-sha1-array
+ TEST_PROGRAMS_NEED_X += test-sigchain
+ TEST_PROGRAMS_NEED_X += test-string-list
+ TEST_PROGRAMS_NEED_X += test-subprocess
+diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
+new file mode 100755
+index 0000000..bd68789
+--- /dev/null
++++ b/t/t0064-sha1-array.sh
+@@ -0,0 +1,64 @@
++#!/bin/sh
++
++test_description='basic tests for the SHA1 array implementation'
++. ./test-lib.sh
++
++echo20() {
++	prefix="$1"
++	shift
++	while test $# -gt 0
++	do
++		echo "$prefix$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1"
++		shift
++	done
++}
++
++test_expect_success 'ordered enumeration' '
++	echo20 "" 44 55 88 aa >expect &&
++	{
++		echo20 "append " 88 44 aa 55 &&
++		echo for_each_unique
++	} | test-sha1-array >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'ordered enumeration with duplicate suppression' '
++	echo20 "" 44 55 88 aa >expect &&
++	{
++		echo20 "append " 88 44 aa 55 &&
++		echo20 "append " 88 44 aa 55 &&
++		echo for_each_unique
++	} | test-sha1-array >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'lookup' '
++	{
++		echo20 "append " 88 44 aa 55 &&
++		echo20 "lookup " 55
++	} | test-sha1-array >actual &&
++	n=$(cat actual) &&
++	test "$n" -eq 1
++'
++
++test_expect_success 'lookup non-existing entry' '
++	{
++		echo20 "append " 88 44 aa 55 &&
++		echo20 "lookup " 33
++	} | test-sha1-array >actual &&
++	n=$(cat actual) &&
++	test "$n" -lt 0
++'
++
++test_expect_success 'lookup with duplicates' '
++	{
++		echo20 "append " 88 44 aa 55 &&
++		echo20 "append " 88 44 aa 55 &&
++		echo20 "lookup " 55
++	} | test-sha1-array >actual &&
++	n=$(cat actual) &&
++	test "$n" -ge 2 &&
++	test "$n" -le 3
++'
++
++test_done
+diff --git a/test-sha1-array.c b/test-sha1-array.c
+new file mode 100644
+index 0000000..ddc491e
+--- /dev/null
++++ b/test-sha1-array.c
+@@ -0,0 +1,34 @@
++#include "cache.h"
++#include "sha1-array.h"
++
++static void print_sha1(const unsigned char sha1[20], void *data)
++{
++	puts(sha1_to_hex(sha1));
++}
++
++int main(int argc, char **argv)
++{
++	struct sha1_array array = SHA1_ARRAY_INIT;
++	struct strbuf line = STRBUF_INIT;
++
++	while (strbuf_getline(&line, stdin, '\n') != EOF) {
++		const char *arg;
++		unsigned char sha1[20];
++
++		if (skip_prefix(line.buf, "append ", &arg)) {
++			if (get_sha1_hex(arg, sha1))
++				die("not a hexadecimal SHA1: %s", arg);
++			sha1_array_append(&array, sha1);
++		} else if (skip_prefix(line.buf, "lookup ", &arg)) {
++			if (get_sha1_hex(arg, sha1))
++				die("not a hexadecimal SHA1: %s", arg);
++			printf("%d\n", sha1_array_lookup(&array, sha1));
++		} else if (!strcmp(line.buf, "clear"))
++			sha1_array_clear(&array);
++		else if (!strcmp(line.buf, "for_each_unique"))
++			sha1_array_for_each_unique(&array, print_sha1, NULL);
++		else
++			die("unknown command: %s", line.buf);
++	}
++	return 0;
++}
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.1.2
