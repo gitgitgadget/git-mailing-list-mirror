@@ -1,123 +1,104 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH 2/2] sha1-lookup: fix handling of duplicates in sha1_pos()
-Date: Wed, 01 Oct 2014 13:10:12 +0200
-Message-ID: <542BE114.9070300@web.de>
-References: <542BCBFC.5000509@web.de> <542BCCB9.4050908@web.de> <20141001105006.GB10332@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 01 13:11:30 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/3] Support stdio access to lockfiles
+Date: Wed,  1 Oct 2014 13:14:46 +0200
+Message-ID: <1412162089-3233-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 01 13:15:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZHoe-0003ue-1T
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 13:11:28 +0200
+	id 1XZHs6-0005Ts-NJ
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 13:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbaJALLY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Oct 2014 07:11:24 -0400
-Received: from mout.web.de ([212.227.15.4]:58446 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716AbaJALLX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 07:11:23 -0400
-Received: from [192.168.178.27] ([79.250.168.13]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MgwSG-1XvEVv1JGi-00M5di; Wed, 01 Oct 2014 13:11:07
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <20141001105006.GB10332@peff.net>
-X-Provags-ID: V03:K0:uU5kexUUEV4H01C0mML8zqea+yIxPhRR1ESH8OAKK+1aBNLCxih
- Hj/9CUBMStPnwo/Z6G41tc2qry+Q8pozOin5DC1A2nrGhFrrhx7So7R+RbAIm9KDDfRxgO/
- iI7rnX0krgz6RW0HbnIK0VNRdO7Rz/Q8yyi0ri50ytGuRVlLP0vFObyn2Y6KnRxKwIX3Osz
- Fy3KX9BxMMce9G9LpGatw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751131AbaJALO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 07:14:58 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:62829 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751092AbaJALO5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 07:14:57 -0400
+X-AuditID: 12074412-f792e6d000005517-7f-542be22ffb28
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id A2.FA.21783.F22EB245; Wed,  1 Oct 2014 07:14:55 -0400 (EDT)
+Received: from michael.fritz.box (p5DDB1FCB.dip0.t-ipconnect.de [93.219.31.203])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s91BEp6j028682
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 1 Oct 2014 07:14:53 -0400
+X-Mailer: git-send-email 2.1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqKv/SDvE4MRzdouuK91MFg29V5gt
+	nsy9y2zx9uYSRovbK+YzW/xo6WG2+DehxqKz4yujA4fH3/cfmDx2zrrL7rFgU6nHw1dd7B7P
+	evcwely8pOzxeZOcx+1n21gCOKK4bZISS8qCM9Pz9O0SuDMW7D7OWvBPsGJx73P2BsZ5fF2M
+	nBwSAiYSP898YoWwxSQu3FvP1sXIxSEkcJlR4sm2uVDOcSaJifdegFWxCehKLOppZgKxRQTU
+	JCa2HWIBKWIWWMwkMeHQJjaQhLCAmcTqlnlgDSwCqhJfvp9hAbF5BZwldh+6yg6xTk5iw+7/
+	jBMYuRcwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXTy80s0UtNKd3ECAkvoR2M60/KHWIU
+	4GBU4uFVSNAOEWJNLCuuzD3EKMnBpCTK6/gAKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEN/sA
+	UI43JbGyKrUoHyYlzcGiJM77c7G6n5BAemJJanZqakFqEUxWhoNDSYKX9yFQo2BRanpqRVpm
+	TglCmomDE2Q4l5RIcWpeSmpRYmlJRjwo2OOLgeEOkuIB2isE0s5bXJCYCxSFaD3FqMuxrvNb
+	P5MQS15+XqqUOK87SJEASFFGaR7cClgyecUoDvSxMO9zkPd4gIkIbtIroCVMQEuS14AtKUlE
+	SEk1MM49Z38v+7rj1eVtnx/v8/z1W2rzx7JJHEbLZ09ZssqHj7X1SO523YJ5G/+kHFa/xxjR
+	+PVuI4toUsGNC/ovrrHK79pwiP/UpImPtOel3pq4S3BZl4clm+3uO1Z2EXO3blL4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257740>
 
-Am 01.10.2014 um 12:50 schrieb Jeff King:
-> On Wed, Oct 01, 2014 at 11:43:21AM +0200, Ren=C3=A9 Scharfe wrote:
->
->> If the first 18 bytes of the SHA1's of all entries are the same then
->> sha1_pos() dies and reports that the lower and upper limits of the
->> binary search were the same that this wasn't supposed to happen.  Th=
-is
->> is wrong because the remaining two bytes could still differ.
->>
->> Furthermore: It wouldn't be a problem if they actually were the same=
-,
->> i.e. if all entries have the same SHA1.  The code already handles
->> duplicates just fine otherwise.  Simply remove the erroneous check.
->
-> Yeah, I agree that assertion is just wrong.
->
-> Regarding duplicates: in sha1_entry_pos, we had to handle the "not
-> found" case specially, because we may have found the left-hand or
-> right-hand side of a run of duplicates, and we want to return the
-> correct slot where the new item would go (see the comment added by
-> 171bdac). I think we don't have to deal with that here, because we ar=
-e
-> just dealing with the initial "mi" selection. The actual binary searc=
-h
-> is plain-vanilla, which handles that case just fine.
->
-> I wonder if it is worth adding a test (you test only that "not found"
-> produces a negative index, but not which index). Like:
+This series applies on top of the series "Lockfile correctness and
+refactoring" (Junio's branch mh/lockfile).
 
-api-sha1-array.txt says about sha1_array_lookup: "If not found, returns=
-=20
-a negative integer", and that's what the test checks.
+There are already two callers that write to lockfiles using stdio. But
+they currently need intimate knowledge of the lockfile implementation
+to work correctly; for example, they have to call fclose() themselves
+and set lk->fd to -1 to prevent the file from being closed again. This
+is awkward and error-prone.
 
-I actually like that the value is not specified for that case because n=
-o=20
-existing caller actually uses it and it leaves room to implement the=20
-function e.g. using bsearch(3).
+So provide official API support for stdio-based access to lockfiles.
+Add a new function fdopen_lock_file(), which returns a (FILE *)
+associated with an open lockfile, and teach close_lock_file() (and
+therefore also commit_lock_file(), rollback_lock_file(), etc.) to use
+fclose() instead of close() on lockfiles for which fdopen_lock_file()
+has been called.
 
-I agree that adding a "lookup non-existing entry with duplicates" test=20
-would make t0064 more complete, though.
+...except in the signal handler, where calling fclose() is not
+permitted. In the signal handler call close() on any still-open
+lockfiles regardless of whether they have been fdopen()ed. Since the
+very next step is to delete the file, this should be OK.
 
-> diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
-> index 3fcb8d8..7781129 100755
-> --- a/t/t0064-sha1-array.sh
-> +++ b/t/t0064-sha1-array.sh
-> @@ -42,12 +42,12 @@ test_expect_success 'lookup' '
->   '
->
->   test_expect_success 'lookup non-existing entry' '
-> +	echo -1 >expect &&
->   	{
->   		echo20 "append " 88 44 aa 55 &&
->   		echo20 "lookup " 33
->   	} | test-sha1-array >actual &&
-> -	n=3D$(cat actual) &&
-> -	test "$n" -lt 0
-> +	test_cmp expect actual
->   '
->
->   test_expect_success 'lookup with duplicates' '
-> @@ -61,6 +61,17 @@ test_expect_success 'lookup with duplicates' '
->   	test "$n" -le 3
->   '
->
-> +test_expect_success 'lookup non-existing entry with duplicates' '
-> +	echo -5 >expect &&
-> +	{
-> +		echo20 "append " 88 44 aa 55 &&
-> +		echo20 "append " 88 44 aa 55 &&
-> +		echo20 "lookup " 66
-> +	} | test-sha1-array >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +
->   test_expect_success 'lookup with almost duplicate values' '
->   	{
->   		echo "append 5555555555555555555555555555555555555555" &&
->
+The second and third patches rewrite the two callers who currently
+fdopen() lockfiles to use the new function. I didn't look around for
+other lockfile users that might be simplified and/or sped up by
+converting them to use stdio; probably there are some.
+
+This improvement was initially discussed when the second fdopen()
+callsite was added [1] and also when discussing inconsistencies
+between the documentation and real life in the context of the
+mh/lockfile patch series [2].
+
+Michael
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/256729/focus=256734
+[2] http://thread.gmane.org/gmane.comp.version-control.git/257504/focus=257553
+
+Michael Haggerty (3):
+  fdopen_lock_file(): access a lockfile using stdio
+  dump_marks(): reimplement using fdopen_lock_file()
+  commit_packed_refs(): reimplement using fdopen_lock_file()
+
+ Documentation/technical/api-lockfile.txt | 34 +++++++++++++++--------
+ fast-import.c                            | 21 ++-------------
+ lockfile.c                               | 46 ++++++++++++++++++++++++++++----
+ lockfile.h                               |  4 +++
+ refs.c                                   |  5 +---
+ 5 files changed, 71 insertions(+), 39 deletions(-)
+
+-- 
+2.1.0
