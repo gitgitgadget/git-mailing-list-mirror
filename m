@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v7 03/38] close_lock_file(): exit (successfully) if file is already closed
-Date: Wed,  1 Oct 2014 12:28:07 +0200
-Message-ID: <1412159322-2622-4-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v7 02/38] api-lockfile: revise and expand the documentation
+Date: Wed,  1 Oct 2014 12:28:06 +0200
+Message-ID: <1412159322-2622-3-git-send-email-mhagger@alum.mit.edu>
 References: <1412159322-2622-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
@@ -10,93 +10,304 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 01 12:29:05 2014
+X-From: git-owner@vger.kernel.org Wed Oct 01 12:29:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZH9c-0002Pg-RK
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 12:29:05 +0200
+	id 1XZH9c-0002Pg-00
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 12:29:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbaJAK27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 06:28:59 -0400
+	id S1751295AbaJAK25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 06:28:57 -0400
 Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:58224 "EHLO
 	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751246AbaJAK25 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 06:28:57 -0400
-X-AuditID: 1207440e-f79da6d0000002fc-97-542bd767a20e
+	by vger.kernel.org with ESMTP id S1750944AbaJAK24 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Oct 2014 06:28:56 -0400
+X-AuditID: 1207440e-f79da6d0000002fc-94-542bd765c22c
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id B1.F9.00764.767DB245; Wed,  1 Oct 2014 06:28:55 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 21.F9.00764.567DB245; Wed,  1 Oct 2014 06:28:53 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB1FCB.dip0.t-ipconnect.de [93.219.31.203])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s91ASk62026827
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s91ASk61026827
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 1 Oct 2014 06:28:53 -0400
+	Wed, 1 Oct 2014 06:28:52 -0400
 X-Mailer: git-send-email 2.1.0
 In-Reply-To: <1412159322-2622-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphleLIzCtJLcpLzFFi42IRYndR1E2/rh1icLyTy6LrSjeTRUPvFWaL
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42IRYndR1E29rh1icLtPxqLrSjeTRUPvFWaL
 	J3PvMlu8vbmE0eL2ivnMFj9aepgt/k2osejs+MrowOHx9/0HJo+ds+6yeyzYVOrx8FUXu8ez
-	3j2MHhcvKXt83iTncfvZNpYAjihum6TEkrLgzPQ8fbsE7ozzS/6yFEzkqvjx4QRrA+MMji5G
-	Tg4JAROJn8d/sELYYhIX7q1n62Lk4hASuMwoMffpKjaQhJDAcSaJG7f8QWw2AV2JRT3NTCC2
-	iICaxMS2QywgDcwCi5kkJhzaBNYgLBAlMWvjF2YQm0VAVeLdkj6gBg4OXgFniRf3tCGWyUls
-	2P2fEcTmFHCRWH65mQVil7PEjjtfmSYw8i5gZFjFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGus
-	l5tZopeaUrqJERKKfDsY29fLHGIU4GBU4uFVSNAOEWJNLCuuzD3EKMnBpCTKu+gSUIgvKT+l
-	MiOxOCO+qDQntfgQowQHs5IIb/YBoBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFq
-	EUxWhoNDSYKX4RpQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoMuKLgbEBkuIB
-	2usM0s5bXJCYCxSFaD3FqMuxrvNbP5MQS15+XqqUOG8mSJEASFFGaR7cCljiecUoDvSxMK80
-	SBUPMGnBTXoFtIQJaEnyGrAlJYkIKakGRqZmkYps350P5z+xYir83jxF0mhZ+0k5D/vortt2
-	e/+HJX9bP9F5h1uUYp6EkKToMkG/P2dFfjcLyEr6szhuEant53cObrLV+ME8ZVVv 
+	3j2MHhcvKXt83iTncfvZNpYAjihum6TEkrLgzPQ8fbsE7oyOHddZC96EVHxrOcLawLjWtYuR
+	k0NCwERi8eXbTBC2mMSFe+vZuhi5OIQELjNKHDxyGMo5ziTRPvMpK0gVm4CuxKKeZrAOEQE1
+	iYlth1hAipgFFjNJTDi0iQ0kISzgLTH371awIhYBVYnfn/eBNfMKOEvsO7iKEWKdnMSG3f/B
+	bE4BF4nll5tZQGwhoJodd74yTWDkXcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11gvN7NE
+	LzWldBMjJBz5djC2r5c5xCjAwajEw6uQoB0ixJpYVlyZe4hRkoNJSZR30SWgEF9SfkplRmJx
+	RnxRaU5q8SFGCQ5mJRHe7ANAOd6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwM
+	B4eSBC/DNaBGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFB0xBcD4wMkxQO01xmk
+	nbe4IDEXKArReopRl2Nd57d+JiGWvPy8VClx3kyQIgGQoozSPLgVsOTzilEc6GNhXmmQKh5g
+	4oKb9ApoCRPQkuQ1YEtKEhFSUg2MXJMfz1xgHmyWtux32d/CPR2G84VW72IT3X/FPvfzq7jM
+	0rW3Z84X23n+RcLmsvXtn36s7m9b9o/b9f4JWwvvCPZVQpplB1+6u6zY+eT4V689 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257701>
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+Document a couple more functions and the flags argument as used by
+hold_lock_file_for_update() and hold_lock_file_for_append().
+Reorganize the document to make it more accessible.
+
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Helped-by: Junio Hamano <gitster@pobox.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- lockfile.c   | 6 +++++-
- read-cache.c | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ Documentation/technical/api-lockfile.txt | 221 +++++++++++++++++++++++--------
+ 1 file changed, 167 insertions(+), 54 deletions(-)
 
-diff --git a/lockfile.c b/lockfile.c
-index f1ce154..d02c3bf 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -233,6 +233,10 @@ int hold_lock_file_for_append(struct lock_file *lk, const char *path, int flags)
- int close_lock_file(struct lock_file *lk)
- {
- 	int fd = lk->fd;
+diff --git a/Documentation/technical/api-lockfile.txt b/Documentation/technical/api-lockfile.txt
+index dd89404..99830f3 100644
+--- a/Documentation/technical/api-lockfile.txt
++++ b/Documentation/technical/api-lockfile.txt
+@@ -3,20 +3,125 @@ lockfile API
+ 
+ The lockfile API serves two purposes:
+ 
+-* Mutual exclusion.  When we write out a new index file, first
+-  we create a new file `$GIT_DIR/index.lock`, write the new
+-  contents into it, and rename it to the final destination
+-  `$GIT_DIR/index`.  We try to create the `$GIT_DIR/index.lock`
+-  file with O_EXCL so that we can notice and fail when somebody
+-  else is already trying to update the index file.
+-
+-* Automatic cruft removal.  After we create the "lock" file, we
+-  may decide to `die()`, and we would want to make sure that we
+-  remove the file that has not been committed to its final
+-  destination.  This is done by remembering the lockfiles we
+-  created in a linked list and cleaning them up from an
+-  `atexit(3)` handler.  Outstanding lockfiles are also removed
+-  when the program dies on a signal.
++* Mutual exclusion and atomic file updates. When we want to change a
++  file, we create a lockfile `<filename>.lock`, write the new file
++  contents into it, and then rename the lockfile to its final
++  destination `<filename>`. We create the `<filename>.lock` file with
++  `O_CREAT|O_EXCL` so that we can notice and fail if somebody else has
++  already locked the file, then atomically rename the lockfile to its
++  final destination to commit the changes and unlock the file.
 +
-+	if (fd < 0)
-+		return 0;
++* Automatic cruft removal. If the program exits after we lock a file
++  but before the changes have been committed, we want to make sure
++  that we remove the lockfile. This is done by remembering the
++  lockfiles we have created in a linked list and setting up an
++  `atexit(3)` handler and a signal handler that clean up the
++  lockfiles. This mechanism ensures that outstanding lockfiles are
++  cleaned up if the program exits (including when `die()` is called)
++  or if the program dies on a signal.
 +
- 	lk->fd = -1;
- 	return close(fd);
- }
-@@ -251,7 +255,7 @@ int commit_lock_file(struct lock_file *lk)
- {
- 	char result_file[PATH_MAX];
- 	size_t i;
--	if (lk->fd >= 0 && close_lock_file(lk))
-+	if (close_lock_file(lk))
- 		return -1;
- 	strcpy(result_file, lk->filename);
- 	i = strlen(result_file) - 5; /* .lock */
-diff --git a/read-cache.c b/read-cache.c
-index 2fc1182..5ffb1d7 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2042,7 +2042,7 @@ void set_alternate_index_output(const char *name)
- static int commit_locked_index(struct lock_file *lk)
- {
- 	if (alternate_index_output) {
--		if (lk->fd >= 0 && close_lock_file(lk))
-+		if (close_lock_file(lk))
- 			return -1;
- 		if (rename(lk->filename, alternate_index_output))
- 			return -1;
++Please note that lockfiles only block other writers. Readers do not
++block, but they are guaranteed to see either the old contents of the
++file or the new contents of the file (assuming that the filesystem
++implements `rename(2)` atomically).
++
++
++Calling sequence
++----------------
++
++The caller:
++
++* Allocates a `struct lock_file` either as a static variable or on the
++  heap, initialized to zeros. Once you use the structure to call the
++  `hold_lock_file_*` family of functions, it belongs to the lockfile
++  subsystem and its storage must remain valid throughout the life of
++  the program (i.e. you cannot use an on-stack variable to hold this
++  structure).
++
++* Attempts to create a lockfile by passing that variable and the path
++  of the final destination (e.g. `$GIT_DIR/index`) to
++  `hold_lock_file_for_update` or `hold_lock_file_for_append`.
++
++* Writes new content for the destination file by writing to the file
++  descriptor returned by those functions (also available via
++  `lock->fd`).
++
++When finished writing, the caller can:
++
++* Close the file descriptor and rename the lockfile to its final
++  destination by calling `commit_lock_file`.
++
++* Close the file descriptor and remove the lockfile by calling
++  `rollback_lock_file`.
++
++* Close the file descriptor without removing or renaming the lockfile
++  by calling `close_lock_file`, and later call `commit_lock_file`,
++  `rollback_lock_file`, or `reopen_lock_file`.
++
++Even after the lockfile is committed or rolled back, the `lock_file`
++object must not be freed or altered by the caller. However, it may be
++reused; just pass it to another call of `hold_lock_file_for_update` or
++`hold_lock_file_for_append`.
++
++If the program exits before you have called one of `commit_lock_file`,
++`rollback_lock_file`, or `close_lock_file`, an `atexit(3)` handler
++will close and remove the lockfile, rolling back any uncommitted
++changes.
++
++If you need to close the file descriptor you obtained from a
++`hold_lock_file_*` function yourself, do so by calling
++`close_lock_file`. You should never call `close(2)` yourself!
++Otherwise the `struct lock_file` structure would still think that the
++file descriptor needs to be closed, and a later call to
++`commit_lock_file` or `rollback_lock_file` or program exit would
++result in duplicate calls to `close(2)`. Worse yet, if you `close(2)`
++and then later open another file descriptor for a completely different
++purpose, then a call to `commit_lock_file` or `rollback_lock_file`
++might close that unrelated file descriptor.
++
++
++Error handling
++--------------
++
++The `hold_lock_file_*` functions return a file descriptor on success
++or -1 on failure (unless `LOCK_DIE_ON_ERROR` is used; see below). On
++errors, `errno` describes the reason for failure. Errors can be
++reported by passing `errno` to one of the following helper functions:
++
++unable_to_lock_message::
++
++	Append an appropriate error message to a `strbuf`.
++
++unable_to_lock_error::
++
++	Emit an appropriate error message using `error()`.
++
++unable_to_lock_die::
++
++	Emit an appropriate error message and `die()`.
++
++
++Flags
++-----
++
++The following flags can be passed to `hold_lock_file_for_update` or
++`hold_lock_file_for_append`:
++
++LOCK_NODEREF::
++
++	Usually symbolic links in the destination path are resolved
++	and the lockfile is created by adding ".lock" to the resolved
++	path. If `LOCK_NODEREF` is set, then the lockfile is created
++	by adding ".lock" to the path argument itself. This option is
++	used, for example, when locking a symbolic reference, which
++	for backwards-compatibility reasons can be a symbolic link
++	containing the name of the referred-to-reference.
++
++LOCK_DIE_ON_ERROR::
++
++	If a lock is already taken for the file, `die()` with an error
++	message. If this option is not specified, trying to lock a
++	file that is already locked returns -1 to the caller.
+ 
+ 
+ The functions
+@@ -24,51 +129,59 @@ The functions
+ 
+ hold_lock_file_for_update::
+ 
+-	Take a pointer to `struct lock_file`, the filename of
+-	the final destination (e.g. `$GIT_DIR/index`) and a flag
+-	`die_on_error`.  Attempt to create a lockfile for the
+-	destination and return the file descriptor for writing
+-	to the file.  If `die_on_error` flag is true, it dies if
+-	a lock is already taken for the file; otherwise it
+-	returns a negative integer to the caller on failure.
++	Take a pointer to `struct lock_file`, the path of the file to
++	be locked (e.g. `$GIT_DIR/index`) and a flags argument (see
++	above). Attempt to create a lockfile for the destination and
++	return the file descriptor for writing to the file.
++
++hold_lock_file_for_append::
++
++	Like `hold_lock_file_for_update`, but before returning copy
++	the existing contents of the file (if any) to the lockfile and
++	position its write pointer at the end of the file.
+ 
+ commit_lock_file::
+ 
+-	Take a pointer to the `struct lock_file` initialized
+-	with an earlier call to `hold_lock_file_for_update()`,
+-	close the file descriptor and rename the lockfile to its
+-	final destination.  Returns 0 upon success, a negative
+-	value on failure to close(2) or rename(2).
++	Take a pointer to the `struct lock_file` initialized with an
++	earlier call to `hold_lock_file_for_update` or
++	`hold_lock_file_for_append`, close the file descriptor and
++	rename the lockfile to its final destination. Return 0 upon
++	success or a negative value on failure to `close(2)` or
++	`rename(2)`.
+ 
+ rollback_lock_file::
+ 
+-	Take a pointer to the `struct lock_file` initialized
+-	with an earlier call to `hold_lock_file_for_update()`,
+-	close the file descriptor and remove the lockfile.
++	Take a pointer to the `struct lock_file` initialized with an
++	earlier call to `hold_lock_file_for_update` or
++	`hold_lock_file_for_append`, close the file descriptor and
++	remove the lockfile.
+ 
+ close_lock_file::
+-	Take a pointer to the `struct lock_file` initialized
+-	with an earlier call to `hold_lock_file_for_update()`,
+-	and close the file descriptor.  Returns 0 upon success,
+-	a negative value on failure to close(2).
+-
+-Because the structure is used in an `atexit(3)` handler, its
+-storage has to stay throughout the life of the program.  It
+-cannot be an auto variable allocated on the stack.
+-
+-Call `commit_lock_file()` or `rollback_lock_file()` when you are
+-done writing to the file descriptor.  If you do not call either
+-and simply `exit(3)` from the program, an `atexit(3)` handler
+-will close and remove the lockfile.
+-
+-If you need to close the file descriptor you obtained from
+-`hold_lock_file_for_update` function yourself, do so by calling
+-`close_lock_file()`.  You should never call `close(2)` yourself!
+-Otherwise the `struct
+-lock_file` structure still remembers that the file descriptor
+-needs to be closed, and a later call to `commit_lock_file()` or
+-`rollback_lock_file()` will result in duplicate calls to
+-`close(2)`.  Worse yet, if you `close(2)`, open another file
+-descriptor for completely different purpose, and then call
+-`commit_lock_file()` or `rollback_lock_file()`, they may close
+-that unrelated file descriptor.
++
++	Take a pointer to the `struct lock_file` initialized with an
++	earlier call to `hold_lock_file_for_update` or
++	`hold_lock_file_for_append`, and close the file descriptor.
++	Return 0 upon success or a negative value on failure to
++	close(2). Usually `commit_lock_file` or `rollback_lock_file`
++	should be called after `close_lock_file`.
++
++reopen_lock_file::
++
++	Re-open a lockfile that has been closed (using
++	`close_lock_file`) but not yet committed or rolled back. This
++	can be used to implement a sequence of operations like the
++	following:
++
++	* Lock file.
++
++	* Write new contents to lockfile, then `close_lock_file` to
++	  cause the contents to be written to disk.
++
++	* Pass the name of the lockfile to another program to allow it
++	  (and nobody else) to inspect the contents you wrote, while
++	  still holding the lock yourself.
++
++	* `reopen_lock_file` to reopen the lockfile. Make further
++	  updates to the contents.
++
++	* `commit_lock_file` to make the final version permanent.
 -- 
 2.1.0
