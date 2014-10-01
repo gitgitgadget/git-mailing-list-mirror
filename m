@@ -1,84 +1,203 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] sha1-array: add test-sha1-array and basic tests
-Date: Wed, 1 Oct 2014 10:23:36 -0400
-Message-ID: <20141001142336.GA19992@peff.net>
-References: <542BCBFC.5000509@web.de>
- <CAPig+cQxXccnQCwr7oVfccAQn3sTUpv=b=qHEX1H7abng--=0A@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH v2 1/2] sha1-array: add test-sha1-array and basic tests
+Date: Wed, 01 Oct 2014 17:00:33 +0200
+Message-ID: <542C1711.6080609@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Oct 01 16:23:42 2014
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 01 17:01:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZKof-0004ae-Ko
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 16:23:41 +0200
+	id 1XZLPK-0005ck-Ta
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Oct 2014 17:01:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbaJAOXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 10:23:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53695 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751330AbaJAOXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 10:23:37 -0400
-Received: (qmail 26228 invoked by uid 102); 1 Oct 2014 14:23:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Oct 2014 09:23:37 -0500
-Received: (qmail 27170 invoked by uid 107); 1 Oct 2014 14:23:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Oct 2014 10:23:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Oct 2014 10:23:36 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQxXccnQCwr7oVfccAQn3sTUpv=b=qHEX1H7abng--=0A@mail.gmail.com>
+	id S1751972AbaJAPBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 11:01:30 -0400
+Received: from mout.web.de ([212.227.15.3]:52158 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751879AbaJAPBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2014 11:01:30 -0400
+Received: from [192.168.178.27] ([79.250.168.13]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0MDxWR-1XSUKP2iq7-00HRWp; Wed, 01 Oct 2014 17:01:26
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+X-Provags-ID: V03:K0:oazocAZngO7i/f7uKbwtj9+uDU6vPqlGogPTG2FEHMCtX2Cwqti
+ lIpx10GVct0X+JvV0qw2MvdHP2B1vRE60d7PNbQoof19e38MyyUXTdB57Is+RRTnZeQ3gKM
+ Rl9d8KkB3u57gMoujUGs5KJ03pas68c3hE/o7ZniscYBm44+2zetXAsqterA257kR36pzL0
+ 9iDP63M6P7MylStKzqsCw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257753>
 
-On Wed, Oct 01, 2014 at 10:11:04AM -0400, Eric Sunshine wrote:
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+Added a test for looking up a non-existing entry in an array that
+contains duplicates, as suggested by Jeff.  Changed echo20() to add
+a space after the prefix as needed, as suggested by Eric.
 
-> > +echo20() {
-> > +       prefix="$1"
-> > +       shift
-> > +       while test $# -gt 0
-> > +       do
-> > +               echo "$prefix$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1"
-> 
-> Each caller of echo20() manually includes a space at the end of
-> $prefix. Would it make sense to instead have echo20() do this on
-> behalf of the caller?
-> 
->     echo "$prefix $1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1"
+ .gitignore            |  1 +
+ Makefile              |  1 +
+ t/t0064-sha1-array.sh | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ test-sha1-array.c     | 34 +++++++++++++++++++++++
+ 4 files changed, 110 insertions(+)
+ create mode 100755 t/t0064-sha1-array.sh
+ create mode 100644 test-sha1-array.c
 
-Not always. For example:
-
-> > +test_expect_success 'ordered enumeration' '
-> > +       echo20 "" 44 55 88 aa >expect &&
-
-This does not.
-
-> > +       {
-> > +               echo20 "append " 88 44 aa 55 &&
-> 
-> Which would slightly reduce the burden on the caller and make it read
-> (very slightly) nicer:
-> 
->     echo20 append 88 44 aa 55 &&
-
-I agree that is more readable. But you'd have to make echo20 more like:
-
-  if test -n "$1"; then
-          prefix="$1 "
-  else
-          prefix=""
-  fi
-
-which is not too bad.
-
--Peff
+diff --git a/.gitignore b/.gitignore
+index 5bfb234..9ec40fa 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -199,6 +199,7 @@
+ /test-revision-walking
+ /test-run-command
+ /test-sha1
++/test-sha1-array
+ /test-sigchain
+ /test-string-list
+ /test-subprocess
+diff --git a/Makefile b/Makefile
+index f34a2d4..356feb5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -568,6 +568,7 @@ TEST_PROGRAMS_NEED_X += test-revision-walking
+ TEST_PROGRAMS_NEED_X += test-run-command
+ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
+ TEST_PROGRAMS_NEED_X += test-sha1
++TEST_PROGRAMS_NEED_X += test-sha1-array
+ TEST_PROGRAMS_NEED_X += test-sigchain
+ TEST_PROGRAMS_NEED_X += test-string-list
+ TEST_PROGRAMS_NEED_X += test-subprocess
+diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
+new file mode 100755
+index 0000000..3f26e11
+--- /dev/null
++++ b/t/t0064-sha1-array.sh
+@@ -0,0 +1,74 @@
++#!/bin/sh
++
++test_description='basic tests for the SHA1 array implementation'
++. ./test-lib.sh
++
++echo20() {
++	prefix="${1:+$1 }"
++	shift
++	while test $# -gt 0
++	do
++		echo "$prefix$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1"
++		shift
++	done
++}
++
++test_expect_success 'ordered enumeration' '
++	echo20 "" 44 55 88 aa >expect &&
++	{
++		echo20 append 88 44 aa 55 &&
++		echo for_each_unique
++	} | test-sha1-array >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'ordered enumeration with duplicate suppression' '
++	echo20 "" 44 55 88 aa >expect &&
++	{
++		echo20 append 88 44 aa 55 &&
++		echo20 append 88 44 aa 55 &&
++		echo for_each_unique
++	} | test-sha1-array >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'lookup' '
++	{
++		echo20 append 88 44 aa 55 &&
++		echo20 lookup 55
++	} | test-sha1-array >actual &&
++	n=$(cat actual) &&
++	test "$n" -eq 1
++'
++
++test_expect_success 'lookup non-existing entry' '
++	{
++		echo20 append 88 44 aa 55 &&
++		echo20 lookup 33
++	} | test-sha1-array >actual &&
++	n=$(cat actual) &&
++	test "$n" -lt 0
++'
++
++test_expect_success 'lookup with duplicates' '
++	{
++		echo20 append 88 44 aa 55 &&
++		echo20 append 88 44 aa 55 &&
++		echo20 lookup 55
++	} | test-sha1-array >actual &&
++	n=$(cat actual) &&
++	test "$n" -ge 2 &&
++	test "$n" -le 3
++'
++
++test_expect_success 'lookup non-existing entry with duplicates' '
++	{
++		echo20 append 88 44 aa 55 &&
++		echo20 append 88 44 aa 55 &&
++		echo20 lookup 66
++	} | test-sha1-array >actual &&
++	n=$(cat actual) &&
++	test "$n" -lt 0
++'
++
++test_done
+diff --git a/test-sha1-array.c b/test-sha1-array.c
+new file mode 100644
+index 0000000..ddc491e
+--- /dev/null
++++ b/test-sha1-array.c
+@@ -0,0 +1,34 @@
++#include "cache.h"
++#include "sha1-array.h"
++
++static void print_sha1(const unsigned char sha1[20], void *data)
++{
++	puts(sha1_to_hex(sha1));
++}
++
++int main(int argc, char **argv)
++{
++	struct sha1_array array = SHA1_ARRAY_INIT;
++	struct strbuf line = STRBUF_INIT;
++
++	while (strbuf_getline(&line, stdin, '\n') != EOF) {
++		const char *arg;
++		unsigned char sha1[20];
++
++		if (skip_prefix(line.buf, "append ", &arg)) {
++			if (get_sha1_hex(arg, sha1))
++				die("not a hexadecimal SHA1: %s", arg);
++			sha1_array_append(&array, sha1);
++		} else if (skip_prefix(line.buf, "lookup ", &arg)) {
++			if (get_sha1_hex(arg, sha1))
++				die("not a hexadecimal SHA1: %s", arg);
++			printf("%d\n", sha1_array_lookup(&array, sha1));
++		} else if (!strcmp(line.buf, "clear"))
++			sha1_array_clear(&array);
++		else if (!strcmp(line.buf, "for_each_unique"))
++			sha1_array_for_each_unique(&array, print_sha1, NULL);
++		else
++			die("unknown command: %s", line.buf);
++	}
++	return 0;
++}
+-- 
+2.1.2
