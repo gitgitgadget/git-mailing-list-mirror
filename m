@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 20/24] for-each-ref.c: improve message before aborting on
- broken ref
-Date: Wed, 1 Oct 2014 19:30:57 -0700
-Message-ID: <20141002023057.GM1175@google.com>
+Subject: [PATCH 21/24] remote rm/prune: print a message when writing
+ packed-refs fails
+Date: Wed, 1 Oct 2014 19:32:17 -0700
+Message-ID: <20141002023217.GN1175@google.com>
 References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
  <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
  <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
@@ -15,41 +15,41 @@ Content-Type: text/plain; charset=us-ascii
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 04:31:08 2014
+X-From: git-owner@vger.kernel.org Thu Oct 02 04:32:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZWAc-0001tX-1y
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 04:31:06 +0200
+	id 1XZWCC-0002NI-4D
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 04:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751066AbaJBCbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 22:31:01 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:38312 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868AbaJBCbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 22:31:00 -0400
-Received: by mail-pd0-f180.google.com with SMTP id fp1so1236672pdb.25
-        for <git@vger.kernel.org>; Wed, 01 Oct 2014 19:31:00 -0700 (PDT)
+	id S1751493AbaJBCci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 22:32:38 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:49079 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751159AbaJBCcU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2014 22:32:20 -0400
+Received: by mail-pa0-f49.google.com with SMTP id hz1so1391868pad.22
+        for <git@vger.kernel.org>; Wed, 01 Oct 2014 19:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5N7jpebm5tL3hN/XSsiGoMRQafs0njDFfNKpWlr6hxA=;
-        b=OEuSwi6nfJuIc7bCGXVTtdhoiahOsrUWRj/p6STsHG5wFfSIhwoFRhLDCQGJTdh/ee
-         w5DM6dOrgP06gDeIneT4rIfJd3yPf3RSVxxGivdzpVKqcs8/VKcfUfOBPDJvyyu9ycj+
-         DsTdk8IyNBf8TIOu9JQWt388f+4EvCSSZ0Mdf91p02wtzY5MA8bQounSAzWrq9XPv/FE
-         VPEhbn5rs72WXjvocXzUWv84nt/OmV+JR60/4sSXEaFM8SH4rP5sFt3o9yQdhSFNTlgN
-         +C4icWFKNOcAB4rqA5r00Dqe+0qgubZ8o6aPseO8WVXjOQgkbkvIOfywJanMSHdKxCdB
-         +WrA==
-X-Received: by 10.68.68.131 with SMTP id w3mr45833834pbt.93.1412217060411;
-        Wed, 01 Oct 2014 19:31:00 -0700 (PDT)
+        bh=cmMg/+Dl9jNwHTR4xG2VoGTwxeVNccxQjHh+sIsxnEo=;
+        b=n67Mn1hMCDaQrDvAts8FEfSHS5r+8wzfBSWil2ZYtFlxsAW8BISLzG6L9GVxTFyJZ+
+         gfPIHn5tsjPBb0F5s3YkIsQbbdKycSVLSFqd8if7ISNU5d+v8ZhfF0IR7IK9NfF/LP5A
+         44dDmFgR0XOvkt9x/K1n/QAHwTOz1aJXzkb9Cluie2utQnzsQkpG8oSbuKSKw/0zKcZb
+         wVpOjxOOEgOJdoqNgtKHg3nKupeW2Z7tVS/R6p1YrK6bXB2fvE2PzogciuFmqzsXJZFL
+         tm+fS1QseGeoY2snKBYXQ5EUbzOZ7o9b1JCCZIpNOQ2QpNkggjov7yve1m4v6FOljFZx
+         k8JQ==
+X-Received: by 10.66.252.170 with SMTP id zt10mr22197577pac.111.1412217139914;
+        Wed, 01 Oct 2014 19:32:19 -0700 (PDT)
 Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id ro7sm2178979pab.25.2014.10.01.19.30.59
+        by mx.google.com with ESMTPSA id uj7sm2208769pac.4.2014.10.01.19.32.18
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 01 Oct 2014 19:30:59 -0700 (PDT)
+        Wed, 01 Oct 2014 19:32:19 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20141002014817.GS1175@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -57,36 +57,74 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257792>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Fri, 5 Sep 2014 14:35:17 -0700
+Date: Thu, 11 Sep 2014 08:42:57 -0700
 
-Print a warning message for any badly named refs we find in the repo.
+Until v2.1.0-rc0~22^2~11 (refs.c: add an err argument to
+repack_without_refs, 2014-06-20), repack_without_refs forgot to
+provide an error message when commit_packed_refs fails.  Even today,
+it only provides a message for callers that pass a non-NULL err
+parameter.  Internal callers in refs.c pass non-NULL err but
+"git remote" does not.
+
+That means that "git remote rm" and "git remote prune" can fail
+without printing a message about why.  Fix them by passing in a
+non-NULL err parameter and printing the returned message.
+
+This is the last caller to a ref handling function passing err ==
+NULL.  A later patch can drop support for err == NULL, avoiding such
+problems in the future.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-As before.
+Since v21:
+- s/without/about/ in the commit message
 
- builtin/for-each-ref.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ builtin/remote.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 20949b7..a88d681 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -853,6 +853,11 @@ static int grab_single_ref(const char *refname, const unsigned char *sha1, int f
- 	struct refinfo *ref;
- 	int cnt;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index c7f82f4..8517cfa 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -750,13 +750,16 @@ static int mv(int argc, const char **argv)
  
-+	if (flag & REF_BAD_NAME) {
-+		  warning("ignoring ref with broken name %s", refname);
-+		  return 0;
-+	}
-+
- 	if (*cb->grab_pattern) {
- 		const char **pattern;
- 		int namelen = strlen(refname);
+ static int remove_branches(struct string_list *branches)
+ {
++	struct strbuf err = STRBUF_INIT;
+ 	const char **branch_names;
+ 	int i, result = 0;
+ 
+ 	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
+ 	for (i = 0; i < branches->nr; i++)
+ 		branch_names[i] = branches->items[i].string;
+-	result |= repack_without_refs(branch_names, branches->nr, NULL);
++	if (repack_without_refs(branch_names, branches->nr, &err))
++		result |= error("%s", err.buf);
++	strbuf_release(&err);
+ 	free(branch_names);
+ 
+ 	for (i = 0; i < branches->nr; i++) {
+@@ -1333,9 +1336,13 @@ static int prune_remote(const char *remote, int dry_run)
+ 		delete_refs = xmalloc(states.stale.nr * sizeof(*delete_refs));
+ 		for (i = 0; i < states.stale.nr; i++)
+ 			delete_refs[i] = states.stale.items[i].util;
+-		if (!dry_run)
+-			result |= repack_without_refs(delete_refs,
+-						      states.stale.nr, NULL);
++		if (!dry_run) {
++			struct strbuf err = STRBUF_INIT;
++			if (repack_without_refs(delete_refs, states.stale.nr,
++						&err))
++				result |= error("%s", err.buf);
++			strbuf_release(&err);
++		}
+ 		free(delete_refs);
+ 	}
+ 
 -- 
 2.1.0.rc2.206.gedb03e5
