@@ -1,7 +1,7 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH/RFC 2/5] make git_config_with_options() to use a configset
-Date: Thu,  2 Oct 2014 06:24:49 -0700
-Message-ID: <1412256292-4286-3-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH/RFC 1/5] config.c : move configset_iter() to an appropriate position
+Date: Thu,  2 Oct 2014 06:24:48 -0700
+Message-ID: <1412256292-4286-2-git-send-email-tanayabh@gmail.com>
 References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
@@ -12,109 +12,107 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZgOS-0006Nc-13
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 15:26:04 +0200
+	id 1XZgOR-0006Nc-H2
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 15:26:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752924AbaJBN0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2014 09:26:00 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:46324 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619AbaJBNZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2014 09:25:58 -0400
-Received: by mail-pa0-f49.google.com with SMTP id hz1so2416544pad.36
-        for <git@vger.kernel.org>; Thu, 02 Oct 2014 06:25:58 -0700 (PDT)
+	id S1752904AbaJBNZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2014 09:25:57 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:55598 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619AbaJBNZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2014 09:25:55 -0400
+Received: by mail-pa0-f42.google.com with SMTP id bj1so2379142pad.15
+        for <git@vger.kernel.org>; Thu, 02 Oct 2014 06:25:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hcrtKQ3wr6ZvCFcCUn0i8NhZLfUsJGKfVf65u89f6SY=;
-        b=XYRq0tuDIEma8OWR3QgyD1R0ZdtKEI7vsqPBKzkCHZIJP50K4RoGAXz7MzPBoSSjGS
-         3ayqyAuTM5tAIFOGUnqUOGwZU8rhLz5++D3ANn7l2+LtDY0/sGQ6mzgmhqWFIvTT6s01
-         lyfV9v2PwSAzWEcgD7w5Cj6C0OfOFOBV2v+n7e5ZTNiBbrTmZkCPPpP0tbQDdN67iV3c
-         /3pNFwo7+tnWfCH13Y+71E4gipQrfw+u2a1oIHzBe2ooX6rD17SpH87fZk6wJkjpYUNw
-         JD3GrXJmCg3v3M9KiADLj05aEAmg8+9G4zri5cSylxGYJfuUd5NgatNKuFtjwSfkH9ZN
-         zxgg==
-X-Received: by 10.68.65.71 with SMTP id v7mr53090291pbs.6.1412256358468;
-        Thu, 02 Oct 2014 06:25:58 -0700 (PDT)
+        bh=k7RpN1FPQH7FZ10/7PLEtwrdSpe1gdW5JaszZNyJsyQ=;
+        b=mX/nsMuRVjl6hTjPLRU8r/MDX6bODgARE1217p0Xw50YUSiJs5MMmMA72DCDHTCxNv
+         fUW1KTtPVoAS74l4dx1wkDxIuWRd5T0jwSJVv60CDxpZcWt734ckx+XH+ZtZs91X42oi
+         ybJWjYP2F7ofUh+x0I9q0mUtrpBEqoVIu8rcU/9zmt1kmvoZ3Vcx+/5dAq/kr0f/MiYu
+         dl+wt7VHnmauWaIpx6HTyQtcDAxQcGaaD0g4qDqdRY1SjZBsD3JOGHe1EU9DKyhO1PpK
+         sqJsqpbi1OnoRdeZG+tkrTJGU7J2NENV9ly5/M0H8rNhmR5OvOf7hiqJx+7ctkFkMYga
+         x/0Q==
+X-Received: by 10.66.220.230 with SMTP id pz6mr2203205pac.145.1412256355253;
+        Thu, 02 Oct 2014 06:25:55 -0700 (PDT)
 Received: from localhost.localdomain ([182.67.148.232])
-        by mx.google.com with ESMTPSA id qp9sm3612065pbc.31.2014.10.02.06.25.55
+        by mx.google.com with ESMTPSA id qp9sm3612065pbc.31.2014.10.02.06.25.49
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 02 Oct 2014 06:25:58 -0700 (PDT)
+        Thu, 02 Oct 2014 06:25:54 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
 In-Reply-To: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257802>
 
-Make git_config_with_options() to use a configset to feed values
-in the callback function. This change gives us the power to filter
-variables we feed to the callback using custom constraints.
-
-A slight behaviour change, git_config_int() loses the ability to
-print the file name of the invalid variable while dying.
+Move configset_iter() to an appropriate position where it
+can be called by git_config_*() family without putting
+a forward declaration for it. 
 
 Helped-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- config.c               | 21 +++++++++++++++++++--
- t/t1300-repo-config.sh |  2 +-
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ config.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/config.c b/config.c
-index cb474b2..09cf009 100644
+index a677eb6..cb474b2 100644
 --- a/config.c
 +++ b/config.c
-@@ -1214,7 +1214,7 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 	return ret == 0 ? found : ret;
+@@ -1150,6 +1150,25 @@ int git_config_system(void)
+ 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
  }
  
--int git_config_with_options(config_fn_t fn, void *data,
-+static int git_config_with_options_raw(config_fn_t fn, void *data,
- 			    struct git_config_source *config_source,
- 			    int respect_includes)
- {
-@@ -1247,9 +1247,26 @@ int git_config_with_options(config_fn_t fn, void *data,
- 	return ret;
- }
- 
-+static int config_set_callback(const char *key, const char *value, void *cb);
-+
-+int git_config_with_options(config_fn_t fn, void *data,
-+			    struct git_config_source *config_source,
-+			    int respect_includes)
++static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
 +{
-+	int ret;
-+	struct config_set options_config;
-+	git_configset_init(&options_config);
-+	ret = git_config_with_options_raw(config_set_callback, &options_config,
-+					  config_source, respect_includes);
-+	if (ret >= 0)
-+		configset_iter(&options_config, fn, data);
-+	git_configset_clear(&options_config);
-+	return ret;
++	int i, value_index;
++	struct string_list *values;
++	struct config_set_element *entry;
++	struct configset_list *list = &cs->list;
++	struct key_value_info *kv_info;
++
++	for (i = 0; i < list->nr; i++) {
++		entry = list->items[i].e;
++		value_index = list->items[i].value_index;
++		values = &entry->value_list;
++		if (fn(entry->key, values->items[value_index].string, data) < 0) {
++			kv_info = values->items[value_index].util;
++			git_die_config_linenr(entry->key, kv_info->filename, kv_info->linenr);
++		}
++	}
 +}
 +
- static void git_config_raw(config_fn_t fn, void *data)
+ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
  {
--	if (git_config_with_options(fn, data, NULL, 1) < 0)
-+	if (git_config_with_options_raw(fn, data, NULL, 1) < 0)
- 		/*
- 		 * git_config_with_options() normally returns only
- 		 * positive values, as most errors are fatal, and
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 938fc8b..ce5ea01 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -678,7 +678,7 @@ test_expect_success 'invalid unit' '
- 	git config aninvalid.unit >actual &&
- 	test_cmp expect actual &&
- 	cat >expect <<-\EOF
--	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in .git/config: invalid unit
-+	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'': invalid unit
- 	EOF
- 	test_must_fail git config --int --get aninvalid.unit 2>actual &&
- 	test_i18ncmp expect actual
+ 	int ret = 0, found = 0;
+@@ -1245,25 +1264,6 @@ static void git_config_raw(config_fn_t fn, void *data)
+ 		die(_("unknown error occured while reading the configuration files"));
+ }
+ 
+-static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+-{
+-	int i, value_index;
+-	struct string_list *values;
+-	struct config_set_element *entry;
+-	struct configset_list *list = &cs->list;
+-	struct key_value_info *kv_info;
+-
+-	for (i = 0; i < list->nr; i++) {
+-		entry = list->items[i].e;
+-		value_index = list->items[i].value_index;
+-		values = &entry->value_list;
+-		if (fn(entry->key, values->items[value_index].string, data) < 0) {
+-			kv_info = values->items[value_index].util;
+-			git_die_config_linenr(entry->key, kv_info->filename, kv_info->linenr);
+-		}
+-	}
+-}
+-
+ static void git_config_check_init(void);
+ 
+ void git_config(config_fn_t fn, void *data)
 -- 
 1.9.0.GIT
