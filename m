@@ -1,187 +1,90 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: Failing tests in t0027-autocrlf.sh under msysgit/git-win-sdk
-Date: Thu, 02 Oct 2014 16:14:21 +0200
-Message-ID: <542D5DBD.9090506@virtuell-zuhause.de>
-References: <542D4769.60503@virtuell-zuhause.de> <542D563A.8070306@web.de>
+From: Dan Johnson <computerdruid@gmail.com>
+Subject: Re: Can I fetch an arbitrary commit by sha1?
+Date: Thu, 2 Oct 2014 10:22:50 -0400
+Message-ID: <CAPBPrnsA4KxNximtKXcC37kuwBHK0Esytdm4nsgLHkrJSg3Ufw@mail.gmail.com>
+References: <CAENte7htO13s91UJFNzW4aBhsGxE=LpnvaZfce+vqQU5+a-cYg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git-win-sdk@googlegroups.com
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 02 16:14:35 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Christian Halstrick <christian.halstrick@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 02 16:23:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZh9N-0001RB-VH
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 16:14:34 +0200
+	id 1XZhHX-0005H4-P9
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 16:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687AbaJBOOa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Oct 2014 10:14:30 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:42703 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752171AbaJBOO3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Oct 2014 10:14:29 -0400
-Received: from p5ddc25b7.dip0.t-ipconnect.de ([93.220.37.183] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XZh9H-0006lk-L5; Thu, 02 Oct 2014 16:14:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <542D563A.8070306@web.de>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1412259269;5ba6a8c1;
+	id S1753470AbaJBOWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2014 10:22:53 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:42534 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313AbaJBOWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2014 10:22:51 -0400
+Received: by mail-wg0-f45.google.com with SMTP id m15so3332191wgh.4
+        for <git@vger.kernel.org>; Thu, 02 Oct 2014 07:22:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=laQTKF6nDuDRPDYOqBxPo4bmf4JcKZvzewg5O0+aBww=;
+        b=REkpRtuxKNvqqcQg+Rtvz9OARdG4k/6FMnphMBp1td48l6iliHVrp8RuLjkK47nVz+
+         VLFy7NiiJ6kRMaKD+rMxi0jmb2L4b0OH07ly0KN8z5i3ZxOzT+SY44HkU+iHJyQG5S+H
+         U1bKgZoA9IPLbjlE9Sing+6tutLEJ1ooKd1lsk+u2UFXq7rWnY6Nm78uraEivQs99JEm
+         M8S3OLQn9FP3Rrg7VIZnKQfshuwwbyq79AYQJ7pddBMQ1aNOviU/2goBpAY4gBbjMJbD
+         VZDdNnbAdd0HaAaD+KoDChHIWzZ1HvbuiUljgqATlWbbVY9xlc+U8q2JbAtFKW/KYYXV
+         z8LA==
+X-Received: by 10.194.94.196 with SMTP id de4mr75323401wjb.86.1412259770251;
+ Thu, 02 Oct 2014 07:22:50 -0700 (PDT)
+Received: by 10.194.125.229 with HTTP; Thu, 2 Oct 2014 07:22:50 -0700 (PDT)
+In-Reply-To: <CAENte7htO13s91UJFNzW4aBhsGxE=LpnvaZfce+vqQU5+a-cYg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257809>
 
-Am 02.10.2014 um 15:42 schrieb Torsten B=C3=B6gershausen:
-> On 2014-10-02 14.39, Thomas Braun wrote:
->> Hi,
->>
->> I've enabled EXPENSIVE and ran the git test suite under msysgit/git-=
-win-sdk with
->> git version 2.1.0.9753.g360f311.dirty.
->>
->> Now I have some failing tests in t0027-autocrlf.sh in the MINGW only=
- section which puzzle me.
->>
->> The offending test sets are
->>
->> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
->> index 72dd3e8..90c4cd1 100755
->> --- a/t/t0027-auto-crlf.sh
->> +++ b/t/t0027-auto-crlf.sh
->> @@ -245,18 +245,18 @@ if test_have_prereq MINGW
->>  then
->>  check_files_in_ws ""      false ""        LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->>  check_files_in_ws ""      true  ""        CRLF  CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->> -check_files_in_ws ""      false "auto"    LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->> +# check_files_in_ws ""      false "auto"    LF    CRLF  CRLF_mix_LF=
-  LF_mix_CR    CRLF_nul # first broken
->=20
->>  check_files_in_ws ""      true  "auto"    CRLF  CRLF  CRLF         =
-LF_mix_CR    CRLF_nul
->> -check_files_in_ws ""      false "text"    LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->> +# check_files_in_ws ""      false "text"    LF    CRLF  CRLF_mix_LF=
-  LF_mix_CR    CRLF_nul # broken
->>  check_files_in_ws ""      true  "text"    CRLF  CRLF  CRLF         =
-CRLF_mix_CR  CRLF_nul
->>  check_files_in_ws ""      false "-text"   LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->>  check_files_in_ws ""      true  "-text"   LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->> =20
->>  check_files_in_ws native  false ""        LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->>  check_files_in_ws native  true  ""        CRLF  CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->> -check_files_in_ws native  false "auto"    LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->> +# check_files_in_ws native  false "auto"    LF    CRLF  CRLF_mix_LF=
-  LF_mix_CR    CRLF_nul # broken
->>  check_files_in_ws native  true  "auto"    CRLF  CRLF  CRLF         =
-LF_mix_CR    CRLF_nul
->> -check_files_in_ws native  false "text"    LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->> +# check_files_in_ws native  false "text"    LF    CRLF  CRLF_mix_LF=
-  LF_mix_CR    CRLF_nul # broken
->>  check_files_in_ws native  true  "text"    CRLF  CRLF  CRLF         =
-CRLF_mix_CR  CRLF_nul
->>  check_files_in_ws native  false "-text"   LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->>  check_files_in_ws native  true  "-text"   LF    CRLF  CRLF_mix_LF  =
-LF_mix_CR    CRLF_nul
->>
->> I tried with NATIVE_CRLF =3D YesPlease but 117 failed too.
->>
->> First question, under what MINGW system do these tests pass?
->> Second question any hints how to tackle this?
->=20
->>
->> The first failing test is
->> not ok 117 - checkout core.eol=3D core.autocrlf=3Dfalse gitattribute=
-s=3Dauto file=3DLF
->> #
->> #                       compare_ws_file eol__crlf_false_attr_auto_ L=
-=46    crlf_false_attr__LF.txt
->> #
->>
->>
->> where I have in the trash directory
->>
->> $ diff -Nur *expect* *actual*
->> --- LF.expect   2014-10-02 12:15:17 +0000
->> +++ eol__crlf_false_attr_auto_.actual.crlf_false_attr__LF.txt   2014=
--10-02 12:15
->=20
-> First things first:
-> We have a file with LF in the repo, and check it out.
->=20
-> Read it like this:
-> "eol__crlf_false_attr_auto_.actual"
->                  ^ *.txt auto in .gitconfig  =20
->       ^
->       core.autocrlf is false=20
->   ^
->   core.eol is unset
+On Thu, Oct 2, 2014 at 9:57 AM, Christian Halstrick
+<christian.halstrick@gmail.com> wrote:
+> I always though during fetch I have to specify a refspec and that a
+> sha1 would not be accepted as a ref. Firing some like 'git fetch
+> origin <sha1>' should be forbidden. But in fact I see that such a
+> fetch command succeeds if you already have that object in your local
+> repo.
+>
+> My question: is it allowed to fetch sha1's? Shouldn't fetch fail if you try it?
+>
+> See here:
+>
+>> git clone -q https://github.com/chalstrick/dondalfi.git
+>> cd dondalfi
+>> git ls-remote
+> From https://github.com/chalstrick/dondalfi.git
+> ce08dcc41104383f3cca2b95bd41e9054a957f5b HEAD
+> af00f4c39bcc8dc29ed8f59a47066d5993c279e4 refs/foo/b1
+> ...
+>> git show af00f4c39bcc8dc29ed8f59a47066d5993c279e4
+> fatal: bad object af00f4c39bcc8dc29ed8f59a47066d5993c279e4
+>> git fetch origin af00f4c39bcc8dc29ed8f59a47066d5993c279e4
+> error: no such remote ref af00f4c39bcc8dc29ed8f59a47066d5993c279e4
+>> git fetch origin refs/foo/b1
+> remote: Counting objects: 3, done.
+> remote: Compressing objects: 100% (2/2), done.
+> remote: Total 3 (delta 0), reused 0 (delta 0)
+> Unpacking objects: 100% (3/3), done.
+> From https://github.com/chalstrick/dondalfi
+>  * branch            refs/foo/b1 -> FETCH_HEAD
+>> git fetch origin af00f4c39bcc8dc29ed8f59a47066d5993c279e4
+> From https://github.com/chalstrick/dondalfi
+>  * branch            af00f4c39bcc8dc29ed8f59a47066d5993c279e4 -> FETCH_HEAD
 
-Thanks for the explanation.
+My understanding is that you are allowed to ask for a SHA1, but most
+git servers refuse the request. But if you already have the SHA
+locally, then git doesn't neet to bother asking the server for it, so
+there's no request to be refused.
 
-> The file is expected to have LF in the working tree, but has CRLF
->=20
->> :17 +0000
->> @@ -1,3 +1,3 @@
->> -0000000   l   i   n   e   1  \n   l   i   n   e   2  \n   l   i   n=
-   e
->> -0000020   3
->> -0000021
->> +0000000   l   i   n   e   1  \r  \n   l   i   n   e   2  \r  \n   l=
-   i
->> +0000020   n   e   3
->> +0000023
->>
->> Reading convert.h tells me that for undefined NATIVE_CRLF the native=
- EOL is LF.
->> Which looks like the test is correct.
->>
->> Thomas
->>
-> Which version of t0027 do you have:
-> The latest version in git.git is this one,
-> and "should pass" (but I may have missed something)
->=20
-> commit f6975a6b119128de1c5a89e6cd64f75ed1de2177
-> Author: Torsten B=C3=B6gershausen <tboegi@web.de>
-> Date:   Sat Aug 16 22:16:58 2014 +0200
->=20
->     t0027: Tests for core.eol=3Dnative, eol=3Dlf, eol=3Dcrlf
->    =20
->     Add test cases for core.eol "native" and "" (unset).
->     (MINGW uses CRLF, all other systems LF as native line endings)
->    =20
->     Add test cases for the attributes "eol=3Dlf" and "eol=3Dcrlf"
->    =20
->     Other minor changes:
->     - Use the more portable 'tr' instead of 'od -c' to convert '\n' i=
-nto 'Q'
->       and '\0' into 'N'
->     - Style fixes for shell functions according to the coding guide l=
-ines
->     - Replace "txtbin" with "attr"
->    =20
->     Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+But it's been a while for me since I did any git development, so it's
+possible I missed something.
 
-Correct guess! I've been testing the original version 343151dc (t0027:
-combinations of core.autocrlf, core.eol and text, 2014-07-08).
-f6975a6 of t0027-autocrlf.sh passes now completely.
-
-Thanks for the quick reply.
-
-Thomas
+-Dan
