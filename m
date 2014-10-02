@@ -1,120 +1,101 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 24/24] ref_transaction_commit: bail out on failure to remove
- a ref
-Date: Wed, 1 Oct 2014 19:35:10 -0700
-Message-ID: <20141002023510.GQ1175@google.com>
-References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
- <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
- <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
- <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
- <20140820231723.GF20185@google.com>
- <20140911030318.GD18279@google.com>
- <20141002014817.GS1175@google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/3] fdopen_lock_file(): access a lockfile using stdio
+Date: Thu, 02 Oct 2014 11:29:22 +0200
+Message-ID: <542D1AF2.8050508@web.de>
+References: <1412162089-3233-1-git-send-email-mhagger@alum.mit.edu> <1412162089-3233-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 04:35:21 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	=?windows-1252?Q?Torsten_B=F6gershaus?= =?windows-1252?Q?en?= 
+	<tboegi@web.de>, Jeff King <peff@peff.net>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 02 11:29:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZWEi-0003Bt-1N
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 04:35:20 +0200
+	id 1XZchd-0005Ui-VU
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 11:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752038AbaJBCfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 22:35:14 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:62284 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbaJBCfN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 22:35:13 -0400
-Received: by mail-pa0-f43.google.com with SMTP id lf10so1369687pab.16
-        for <git@vger.kernel.org>; Wed, 01 Oct 2014 19:35:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=LLmvUkPLgyV60elobxh2x3A/YLQ9Xb8Lt3lzFox9GTY=;
-        b=shs7vPgwqJjagMqddvgkXtajl8YyhUnhvRB8bG0nx3NOZk65gpboG8SUtNtJWslW2S
-         bEw7swYrk1egnDaqHXj6rmbC4A0fnlbElPzGUX/+yAzLNSeGXjPANwCzI8zZlSiNKNoP
-         +aofWyzr3zldACpNnPD8V/3cidut/+Ul7IBecw4rzZVEpPX43hBpwF1deSQ7gpCK1Vw1
-         m+1Yo2QhMCIykKEiJ5LhD72gbsOx8zVIwisPeovDwWllmhztRQX15cbIeaRvV1ursGub
-         O9kCS/agLjTwXJX4lRqajyIXWs8YfiUnRxiIkPP13X8Cqfbr7XOf6IuHaFeERUSX1pxI
-         41/w==
-X-Received: by 10.68.217.137 with SMTP id oy9mr24031050pbc.4.1412217312781;
-        Wed, 01 Oct 2014 19:35:12 -0700 (PDT)
-Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id bo17sm2133692pdb.57.2014.10.01.19.35.11
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 01 Oct 2014 19:35:12 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20141002014817.GS1175@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751346AbaJBJ3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2014 05:29:33 -0400
+Received: from mout.web.de ([212.227.15.14]:56866 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750919AbaJBJ3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2014 05:29:32 -0400
+Received: from billy.local ([78.72.74.102]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MVcvn-1XjsTX3EtD-00YyFR; Thu, 02 Oct 2014 11:29:28
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <1412162089-3233-2-git-send-email-mhagger@alum.mit.edu>
+X-Provags-ID: V03:K0:/XML/1fbtpOJCJ0WtvaWDqObjDyWVSrO1ZIvCPIkW0cHSYRoTUv
+ pRsn+c8M623SAlRwWTF3xULSZMpKHO24vsCzzqG9agRf6FwiqMHcBP5uUXAK5zgkGJnLesj
+ ayCmufM9zpyZYR/l090av8OWFrUzXW7KhhagzlZi+npB2ouRC5dvXjvGerZbl8BJA1009/F
+ xgpfDlpV1RMFCvvZS5zOA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257796>
 
-Date: Thu, 28 Aug 2014 17:01:35 -0700
 
-When removal of a loose or packed ref fails, bail out instead of
-trying to finish the transaction.  This way, a single error message
-can be printed (instead of multiple messages being concatenated by
-mistake) and the operator can try to solve the underlying problem
-before there is a chance to muck things up even more.
+On 01.10.14 13:14, Michael Haggerty wrote:
+[]
+Nice done, small comments inline
+> diff --git a/lockfile.c b/lockfile.c
+> index d27e61c..e046027 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -7,20 +7,29 @@
+>  
+>  static struct lock_file *volatile lock_file_list;
+>  
+> -static void remove_lock_files(void)
+> +static void remove_lock_files(int skip_fclose)
+Even if the motivation to skip is clear now and here,
+I would consider to do it the other way around,
+and actively order the fclose():
 
-In particular, when git fails to remove a ref, git goes on to try to
-delete the reflog.  Exiting early lets us keep the reflog.
+static void remove_lock_files(int call_fclose)
 
-When git succeeds in deleting a ref A and fails to remove a ref B, it
-goes on to try to delete both reflogs.  It would be better to just
-remove the reflog for A, but that would be a more invasive change.
-Failing early means we keep both reflogs, which puts the operator in a
-good position to understand the problem and recover.
 
-A long term goal is to avoid these problems altogether and roll back
-the transaction on failure.  That kind of transactionality will have
-to wait for a later series (the plan for which is to make all
-destructive work happen in a single update of the packed-refs file).
+>  {
+>  	pid_t me = getpid();
+>  
+>  	while (lock_file_list) {
+> -		if (lock_file_list->owner == me)
+> +		if (lock_file_list->owner == me) {
+> +			/* fclose() is not safe to call in a signal handler */
+> +			if (skip_fclose)
+> +				lock_file_list->fp = NULL;
+>  			rollback_lock_file(lock_file_list);
+> +		}
+>  		lock_file_list = lock_file_list->next;
+>  	}
+>  }
+>  
+> +static void remove_lock_files_on_exit(void)
+> +{
+> +	remove_lock_files(0);
+What does "0" mean ?
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Reviewed-by: Ronnie Sahlberg <sahlberg@google.com>
----
-That's the end of the series.  Thanks for reading.
+remove_lock_files(LK_DO_FCLOSE) ?
 
- refs.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> +}
+> +
+>  static void remove_lock_files_on_signal(int signo)
+>  {
+> -	remove_lock_files();
+> +	remove_lock_files(1);
+And what does this "1" mean ?
 
-diff --git a/refs.c b/refs.c
-index e13f843..d9d327d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3753,16 +3753,20 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		struct ref_update *update = updates[i];
- 
- 		if (update->lock) {
--			if (delete_ref_loose(update->lock, update->type, err))
-+			if (delete_ref_loose(update->lock, update->type, err)) {
- 				ret = TRANSACTION_GENERIC_ERROR;
-+				goto cleanup;
-+			}
- 
- 			if (!(update->flags & REF_ISPRUNING))
- 				delnames[delnum++] = update->lock->ref_name;
- 		}
- 	}
- 
--	if (repack_without_refs(delnames, delnum, err))
-+	if (repack_without_refs(delnames, delnum, err)) {
- 		ret = TRANSACTION_GENERIC_ERROR;
-+		goto cleanup;
-+	}
- 	for (i = 0; i < delnum; i++)
- 		unlink_or_warn(git_path("logs/%s", delnames[i]));
- 	clear_loose_ref_cache(&ref_cache);
--- 
-2.1.0.rc2.206.gedb03e5
+remove_lock_files(LK_SKIP_FCLOSE) ?
+
+We can even have an emum, or use #define
+>
