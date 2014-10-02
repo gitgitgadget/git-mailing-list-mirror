@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 03/24] wrapper.c: add a new function unlink_or_msg
-Date: Wed, 1 Oct 2014 18:55:45 -0700
-Message-ID: <20141002015545.GV1175@google.com>
+Subject: [PATCH 04/24] refs.c: add an err argument to delete_ref_loose
+Date: Wed, 1 Oct 2014 18:58:19 -0700
+Message-ID: <20141002015819.GW1175@google.com>
 References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
  <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
  <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
@@ -14,41 +14,41 @@ Content-Type: text/plain; charset=us-ascii
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 03:55:55 2014
+X-From: git-owner@vger.kernel.org Thu Oct 02 03:58:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZVcW-0005NY-Ur
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 03:55:53 +0200
+	id 1XZVf1-0006Cg-P2
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 03:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753634AbaJBBzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Oct 2014 21:55:49 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:64495 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549AbaJBBzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Oct 2014 21:55:48 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kq14so1298384pab.12
-        for <git@vger.kernel.org>; Wed, 01 Oct 2014 18:55:48 -0700 (PDT)
+	id S1754064AbaJBB6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Oct 2014 21:58:24 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:39954 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754041AbaJBB6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Oct 2014 21:58:23 -0400
+Received: by mail-pd0-f180.google.com with SMTP id fp1so1195660pdb.11
+        for <git@vger.kernel.org>; Wed, 01 Oct 2014 18:58:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=uuoZIvMyO7kchM3Rop1GfPZyRijxI6ErCjuwuOOaRg8=;
-        b=fIfngbOlS6JKZEmeim8VbT61hnkfxpimzAX2i3zIkU5JwA0D6/8AzRo7rxSejGSY9+
-         tTmmqHNkbsaEN4RXEXzOd+MPz7TF+kquXrZuqo6ADfP41lzy8OKfIGr7+HDF+IKSQQ49
-         AOFsNA3gJJdWJ+7i/NzWMk+tBvmdmZje81Ne3P+E1R4nnkgfKjQU6GaDlsSmYHqvBNsy
-         K6UTCm1UmnRXbk9ONdLtazPok7llYWgSVJ/i7MN1u3Mxhs/XCzXISYuFkLi11z3VwIJl
-         NqJ/Zqrpezo6dzUN1upf0TL76I2LOvJUMYlKQeB3fCLFh7UFvBMR9Zb7f1ymgnRpgTjA
-         4uhA==
-X-Received: by 10.70.88.78 with SMTP id be14mr34573488pdb.152.1412214948278;
-        Wed, 01 Oct 2014 18:55:48 -0700 (PDT)
+        bh=IbwtiHdAqnic9bxOYotTbAUlYyWnUOnELLy7P2/V1lA=;
+        b=eqSc5JY20fowV0kURoJqSL+6vvzCDUwt2yMVyC694XjyqgXn5JFeUNeMHQKO85nnYT
+         Z7DY4tZAYJ7/XcgshAl6jyFE0Li4oGwMDYYV9t2YxIkfh2CG8vOnDmH2lk9GDBOutftw
+         DyDyX6nGogmlRKcGEsiA21JGmPGfy+d3dln/fDlil0TjCy+JT9Dew6aWQHrj7lHr8lcd
+         eVFIbip6U+n6n1rQRjhBytAK2wUuVaqJClL5GRYI6S7zdHN0dFEZJFgIwPHHVzV33izp
+         bTmhRMnkLgQB+43GaRiphM6HmxCkGxFxTMIHJ3GqzbEM6I/Q9xB0A0LQej0noolNl8IF
+         ns3Q==
+X-Received: by 10.66.161.232 with SMTP id xv8mr81705078pab.81.1412215103047;
+        Wed, 01 Oct 2014 18:58:23 -0700 (PDT)
 Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
-        by mx.google.com with ESMTPSA id ri9sm2148486pbc.5.2014.10.01.18.55.47
+        by mx.google.com with ESMTPSA id ns9sm2056648pbb.70.2014.10.01.18.58.21
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 01 Oct 2014 18:55:47 -0700 (PDT)
+        Wed, 01 Oct 2014 18:58:21 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20141002014817.GS1175@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -56,76 +56,60 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257775>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Wed, 16 Jul 2014 11:20:36 -0700
+Date: Thu, 15 May 2014 08:25:23 -0700
 
-This behaves like unlink_or_warn except that on failure it writes the message
-to its 'err' argument, which the caller can display in an appropriate way or
-ignore.
+Add an err argument to delete_loose_ref so that we can pass a descriptive
+error string back to the caller. Pass the err argument from transaction
+commit to this function so that transaction users will have a nice error
+string if the transaction failed due to delete_ref_loose.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-As before.
+Changes since v21:
+- s/delete_loose_ref/delete_ref_loose/ once in commit message (but
+  the other one still needs fixing)
 
- git-compat-util.h |  9 +++++++++
- wrapper.c         | 14 ++++++++++++++
- 2 files changed, 23 insertions(+)
+ refs.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 611e77b..5ee140c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -307,6 +307,8 @@ extern char *gitbasename(char *);
- 
- #include "wildmatch.h"
- 
-+struct strbuf;
-+
- /* General helper functions */
- extern void vreportf(const char *prefix, const char *err, va_list params);
- extern void vwritef(int fd, const char *prefix, const char *err, va_list params);
-@@ -710,6 +712,13 @@ void git_qsort(void *base, size_t nmemb, size_t size,
-  * not exist.
-  */
- int unlink_or_warn(const char *path);
-+ /*
-+  * Tries to unlink file.  Returns 0 if unlink succeeded
-+  * or the file already didn't exist.  Returns -1 and
-+  * appends a message to err suitable for
-+  * 'error("%s", err->buf)' on error.
-+  */
-+int unlink_or_msg(const char *file, struct strbuf *err);
- /*
-  * Preserves errno, prints a message, but gives no warning for ENOENT.
-  * Returns 0 on success which includes trying to remove a directory that does
-diff --git a/wrapper.c b/wrapper.c
-index c9605cd..ec7a08b 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -438,6 +438,20 @@ static int warn_if_unremovable(const char *op, const char *file, int rc)
- 	return rc;
+diff --git a/refs.c b/refs.c
+index d0565b1..5609622 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2548,16 +2548,16 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 	return ret;
  }
  
-+int unlink_or_msg(const char *file, struct strbuf *err)
-+{
-+	int rc = unlink(file);
-+
-+	assert(err);
-+
-+	if (!rc || errno == ENOENT)
-+		return 0;
-+
-+	strbuf_addf(err, "unable to unlink %s: %s",
-+		    file, strerror(errno));
-+	return -1;
-+}
-+
- int unlink_or_warn(const char *file)
+-static int delete_ref_loose(struct ref_lock *lock, int flag)
++static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
  {
- 	return warn_if_unremovable("unlink", file, unlink(file));
+ 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+ 		/* loose */
+-		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
++		int res, i = strlen(lock->lk->filename) - 5; /* .lock */
+ 
+ 		lock->lk->filename[i] = 0;
+-		err = unlink_or_warn(lock->lk->filename);
++		res = unlink_or_msg(lock->lk->filename, err);
+ 		lock->lk->filename[i] = '.';
+-		if (err)
++		if (res)
+ 			return 1;
+ 	}
+ 	return 0;
+@@ -3604,7 +3604,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 
+ 		if (update->lock) {
+-			ret |= delete_ref_loose(update->lock, update->type);
++			ret |= delete_ref_loose(update->lock, update->type,
++						err);
+ 			if (!(update->flags & REF_ISPRUNING))
+ 				delnames[delnum++] = update->lock->ref_name;
+ 		}
 -- 
 2.1.0.rc2.206.gedb03e5
