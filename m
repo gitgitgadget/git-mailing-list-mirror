@@ -1,76 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Tanay Abhra <tanayabh@gmail.com>
 Subject: Re: [PATCH/RFC 5/5] add tests for checking the behaviour of "unset.variable"
-Date: Thu, 02 Oct 2014 13:09:37 -0700
-Message-ID: <xmqqr3yqmdxa.fsf@gitster.dls.corp.google.com>
-References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
-	<1412256292-4286-6-git-send-email-tanayabh@gmail.com>
+Date: Fri, 03 Oct 2014 01:48:06 +0530
+Message-ID: <542DB2FE.609@gmail.com>
+References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>	<1412256292-4286-6-git-send-email-tanayabh@gmail.com> <xmqqr3yqmdxa.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 02 22:09:48 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 02 22:18:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZmh6-000495-ST
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 22:09:45 +0200
+	id 1XZmpL-0007mM-Kp
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Oct 2014 22:18:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880AbaJBUJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2014 16:09:40 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50208 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751334AbaJBUJk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2014 16:09:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B84140A0B;
-	Thu,  2 Oct 2014 16:09:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ilF0Pl+Laa4Aq3lQLmKAiQNcEDA=; b=huVsOu
-	8xK0aeOCNvuGH54Y9E9Gos+Zn5aIPZiInnkFNBo12kqXK8K7RYQoz8G+x3DLocuH
-	GuVSWiBoAovAsOE9eO5gFyVgoe1e1Srji2GkLpOBUb2DbKw4IAi65bYa3pgpMp0V
-	qUrVmyXXiBfRT9UoGZeL9xskpj8eueJ9hg4WE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gcNFlmbYsTmG2jrLzAOoGjO/unq72I/A
-	Z+JQvDUfI7gdp0auVef8Q2yPLx94QZqig38hgK/U+KanJfEWAIRenZUCUfiDjS1Z
-	l2EO0GhKlNFfV/j82WFGyYJmyfP9+T/IBVlQD0NQtaCDveRv4h3IDGXvdUS7Zv5b
-	9CnnhCyAOx8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 71EE640A0A;
-	Thu,  2 Oct 2014 16:09:39 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EC1B240A08;
-	Thu,  2 Oct 2014 16:09:38 -0400 (EDT)
-In-Reply-To: <1412256292-4286-6-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Thu, 2 Oct 2014 06:24:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 09D6175E-4A70-11E4-A07F-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1751917AbaJBUSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Oct 2014 16:18:11 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:53963 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751334AbaJBUSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Oct 2014 16:18:10 -0400
+Received: by mail-pa0-f41.google.com with SMTP id eu11so3458888pac.14
+        for <git@vger.kernel.org>; Thu, 02 Oct 2014 13:18:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Yoxsri84Au1HszMzjXcVgwCk4B3BGa2KpqioIW2bhJY=;
+        b=ZBoutYEYl6o3gdGbc1Sk4ickicGG2c41wobXAUAfjU00LepYsyyAeL+ctX//m0x/Sw
+         8ffDI6mf5Ht9/H2ELXEHXyqCD9IM7Grk8wxnERHkuOB4hXUkyXoGd2kZLyJGGvJigm1Q
+         UAIpPVWsfhDW6ImrrUVoYjvRrJ20YO+zxREeSqFpAhK8ksLF1N+z0uNuP915hWLeXFod
+         9Q+vDQRclnrHU+wdKi/75K3+B8Fmkw08hZpZRP2AP9FaWCbB1JtMv8xNWAL/utcLtDeQ
+         DcwnFKBWfaQKigK98v/IMIWedRs1/nxEHfk1Wyq3mKti5y3/rPP44GEKqVgTN+7WZsGp
+         ucdA==
+X-Received: by 10.66.145.133 with SMTP id su5mr1590433pab.11.1412281089801;
+        Thu, 02 Oct 2014 13:18:09 -0700 (PDT)
+Received: from [127.0.0.1] ([223.176.236.129])
+        by mx.google.com with ESMTPSA id nx6sm1319017pab.46.2014.10.02.13.18.07
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 02 Oct 2014 13:18:09 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqr3yqmdxa.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257822>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+On 10/3/2014 1:39 AM, Junio C Hamano wrote:
+> Tanay Abhra <tanayabh@gmail.com> writes:
+> 
+>> +test_expect_success 'document how unset.variable will behave in shell scripts' '
+>> +	rm -f .git/config &&
+>> +	cat >expect <<-\EOF &&
+>> +	EOF
+>> +	git config foo.bar boz1 &&
+>> +	git config --add foo.bar boz2 &&
+>> +	git config unset.variable foo.bar &&
+>> +	git config --add foo.bar boz3 &&
+>> +	test_must_fail git config --get-all foo.bar >actual &&
+> 
+> You make foo.bar a multi-valued one, then you unset it, so I would
+> imagine that the value given after that, 'boz3', would be the only
+> value foo.bar has.  Why should --get-all fail?
+>
+> I am having a hard time imagining how this behaviour can make any
+> sense.
+> 
 
-> +test_expect_success 'document how unset.variable will behave in shell scripts' '
-> +	rm -f .git/config &&
-> +	cat >expect <<-\EOF &&
-> +	EOF
-> +	git config foo.bar boz1 &&
-> +	git config --add foo.bar boz2 &&
-> +	git config unset.variable foo.bar &&
-> +	git config --add foo.bar boz3 &&
-> +	test_must_fail git config --get-all foo.bar >actual &&
+git config -add appends the value to a existing header, after these
+two commands have executed the config file would look like,
 
-You make foo.bar a multi-valued one, then you unset it, so I would
-imagine that the value given after that, 'boz3', would be the only
-value foo.bar has.  Why should --get-all fail?
+git config foo.bar boz1 &&
+git config --add foo.bar boz2 &&
 
-I am having a hard time imagining how this behaviour can make any
-sense.
+[foo]
+	bar = boz1
+	bar = boz2
+
+After git config unset.variable foo.bar,
+
+[foo]
+	bar = boz1
+	bar = boz2
+[unset]
+	variable = foo.bar
+
+Now the tricky part, git config --add foo.bar boz3 append to the
+existing header,
+
+[foo]
+	bar = boz1
+	bar = boz2
+	bar = boz3
+[unset]
+	variable = foo.bar
+
+Since unset.variable unsets all previous set values in parsing order,
+git config --get-all foo.bar gives us nothing in result.
