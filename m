@@ -1,230 +1,275 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/16] write_sha1_file: freshen existing objects
-Date: Fri, 03 Oct 2014 14:29:58 -0700
-Message-ID: <xmqq61g0lu3t.fsf@gitster.dls.corp.google.com>
-References: <20141003202045.GA15205@peff.net>
-	<20141003204110.GP16293@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v22.5 09/24] refs.c: pass a list of names to skip to
+ is_refname_available
+Date: Fri, 3 Oct 2014 14:39:00 -0700
+Message-ID: <20141003213900.GT1175@google.com>
+References: <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+ <20140820231723.GF20185@google.com>
+ <20140911030318.GD18279@google.com>
+ <20141002014817.GS1175@google.com>
+ <20141002020332.GB1175@google.com>
+ <xmqq61g2nuud.fsf@gitster.dls.corp.google.com>
+ <20141003185128.GS1175@google.com>
+ <xmqqoattkm87.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 03 23:30:09 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 23:39:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XaAQT-0001to-1L
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 23:30:09 +0200
+	id 1XaAZD-0005qP-KR
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 23:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750981AbaJCVaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 17:30:04 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52103 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750850AbaJCVaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 17:30:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CD5D40A5D;
-	Fri,  3 Oct 2014 17:30:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=v6FiRh49aLslDbEr5101rsMNk3k=; b=LBUGUl
-	yybPjy3o6A+zSLZegZ9Pj0tixTl0sLrhlb7JbHVSeZ4HHXbiCnY1ViXjVto8Csnz
-	HdB5AUimL4m6EYDZlRPMnvDiXyJIrlDJGG3AURsDsGYH2tgUt26NV7629fAQx76L
-	haJyYQzVw4+H8tFOvlK6RseBpiBiwyophA8D4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ADVEBrb5gFfXQL/pGro0/qx6W5KadUlY
-	N7hNNt1cFbmumQXw9fRsMUUB8vWaWDOK0JVH6wwVZjeE0uYXlMefwdf7Cj1xWqZw
-	X6KMnYYqPy4YrPi22jR6UbeKOmsKmqbiZW7jwOskDghI6H0Hls8qUVVdLCqpww0C
-	GbvYP3ElD8U=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5954240A5B;
-	Fri,  3 Oct 2014 17:30:02 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3529340A59;
-	Fri,  3 Oct 2014 17:30:00 -0400 (EDT)
-In-Reply-To: <20141003204110.GP16293@peff.net> (Jeff King's message of "Fri, 3
-	Oct 2014 16:41:10 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6E0C5416-4B44-11E4-B781-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1755236AbaJCVjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 17:39:07 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:58102 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751347AbaJCVjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 17:39:05 -0400
+Received: by mail-pa0-f52.google.com with SMTP id fb1so2160373pad.11
+        for <git@vger.kernel.org>; Fri, 03 Oct 2014 14:39:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=2DTiDhD46R/TZOp1AVPU5uem+wAPYii5uAjyXTuY9Q0=;
+        b=BPOlpAFvocEhwCLhBobDuPI1omGUFI35T1rMGUyuUcpHhw3GICEH+A+XtufaTD+OGY
+         i9XzGjrWlOZkl+7kr4ndPqhJqF+wOM3WMNdh73XVt3w88eQJ4e80v0+fzmPHjWQR0qL9
+         iqO3CXXlXcPVZkIcImrKwe+VYZxww4iDGtaMGSCX5gTW9dPcZqUnDEsGBoYTOjrCtVl4
+         x6bVpMoiq2LsAv5zhE4h+VaFQ04tXaN3lCm8zn0aqLwk7GALBGlb5nAc+8ECIfQ0sv7D
+         3gSTM/wNbLvN7UM1061UkuMnGpjMUrjvnBq/9qbMyQJcJEIbkf6eXx2pZ4acJmUeEfJB
+         kHGw==
+X-Received: by 10.66.160.167 with SMTP id xl7mr9314459pab.97.1412372344275;
+        Fri, 03 Oct 2014 14:39:04 -0700 (PDT)
+Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
+        by mx.google.com with ESMTPSA id k5sm1940175pdk.38.2014.10.03.14.39.03
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 03 Oct 2014 14:39:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqoattkm87.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257871>
 
-Jeff King <peff@peff.net> writes:
+From: Ronnie Sahlberg <sahlberg@google.com>
+Date: Thu, 1 May 2014 11:16:07 -0700
 
-> When we try to write a loose object file, we first check
-> whether that object already exists. If so, we skip the
-> write as an optimization. However, this can interfere with
-> prune's strategy of using mtimes to mark files in progress.
+commit 23acf975d74825789112a3a7ba97dbbdc76904f4 upstream.
+
+Change is_refname_available to take a list of strings to exclude when
+checking for conflicts instead of just one single name. We can already
+exclude a single name for the sake of renames. This generalizes that support.
+
+ref_transaction_commit already tracks a set of refs that are being deleted
+in an array.  This array is then used to exclude refs from being written to
+the packed-refs file.  At some stage we will want to change this array to a
+struct string_list and then we can pass it to is_refname_available via the
+call to lock_ref_sha1_basic.  That will allow us to perform transactions
+that perform multiple renames as long as there are no conflicts within the
+starting or ending state.
+
+For example, that would allow a single transaction that contains two
+renames that are both individually conflicting:
+
+   m -> n/n
+   n -> m/m
+
+No functional change intended yet.
+
+Change-Id: I8c68f0a47eef25759d572436ba683cb7b1ccb7eb
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+
+>> Thanks for the heads up.  (I hadn't realized the ref-transaction-1 was
+>> part of 'master' --- yay!)  Rebased and reworked:
+>> https://code-review.googlesource.com/1027
 >
-> For example, if a branch contains a particular tree object
-> and is deleted, that tree object may become unreachable, and
-> have an old mtime. If a new operation then tries to write
-> the same tree, this ends up as a noop; we notice we
-> already have the object and do nothing. A prune running
-> simultaneously with this operation will see the object as
-> old, and may delete it.
->
-> We can solve this by "freshening" objects that we avoid
-> writing by updating their mtime. The algorithm for doing so
-> is essentially the same as that of has_sha1_file. Therefore
-> we provide a new (static) interface "check_and_freshen",
-> which finds and optionally freshens the object. It's trivial
-> to implement freshening and simple checking by tweaking a
-> single parameter.
+> Heh, I was sort of expecting that heavy-weight contributors that
+> throw many and/or large patch series would at least be paying
+> attention to "What's cooking" reports.
 
-An old referent by a recent unreachable may be in pack.  Is it
-expected that the same pack will have many similar old objects (in
-other words, is it worth trying to optimize check-and-freshen by
-bypassing access() and utime(), perhaps by keeping a "freshened in
-this process already" flag in struct packed_git)?
+That's fair.  I don't pay enough attention to the 'graduated' section.
 
-Could check-and-freshen-nonlocal() ever be called with freshen set
-to true?  Should it be?  In other words, should we be mucking with
-objects in other people's repositories with utime()?
+> Will take a look over there (I really hate having to context switch
+> only to review this series, though).
 
-Other than these two minor questions, I am happy with this patch.
+Here's a copy to save a trip.
 
-Thanks.
+ refs.c | 50 ++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 18 deletions(-)
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  sha1_file.c                | 51 +++++++++++++++++++++++++++++++++++++++-------
->  t/t6501-freshen-objects.sh | 27 ++++++++++++++++++++++++
->  2 files changed, 71 insertions(+), 7 deletions(-)
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index d017289..d263b38 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -442,27 +442,53 @@ void prepare_alt_odb(void)
->  	read_info_alternates(get_object_directory(), 0);
->  }
->  
-> -static int has_loose_object_local(const unsigned char *sha1)
-> +static int freshen_file(const char *fn)
->  {
-> -	return !access(sha1_file_name(sha1), F_OK);
-> +	struct utimbuf t;
-> +	t.actime = t.modtime = time(NULL);
-> +	return utime(fn, &t);
->  }
->  
-> -int has_loose_object_nonlocal(const unsigned char *sha1)
-> +static int check_and_freshen_file(const char *fn, int freshen)
-> +{
-> +	if (access(fn, F_OK))
-> +		return 0;
-> +	if (freshen && freshen_file(fn))
-> +		return 0;
-> +	return 1;
-> +}
-> +
-> +static int check_and_freshen_local(const unsigned char *sha1, int freshen)
-> +{
-> +	return check_and_freshen_file(sha1_file_name(sha1), freshen);
-> +}
-> +
-> +static int check_and_freshen_nonlocal(const unsigned char *sha1, int freshen)
->  {
->  	struct alternate_object_database *alt;
->  	prepare_alt_odb();
->  	for (alt = alt_odb_list; alt; alt = alt->next) {
->  		fill_sha1_path(alt->name, sha1);
-> -		if (!access(alt->base, F_OK))
-> +		if (check_and_freshen_file(alt->base, freshen))
->  			return 1;
->  	}
->  	return 0;
->  }
->  
-> +static int check_and_freshen(const unsigned char *sha1, int freshen)
-> +{
-> +	return check_and_freshen_local(sha1, freshen) ||
-> +	       check_and_freshen_nonlocal(sha1, freshen);
-> +}
-> +
-> +int has_loose_object_nonlocal(const unsigned char *sha1)
-> +{
-> +	return check_and_freshen_nonlocal(sha1, 0);
-> +}
-> +
->  static int has_loose_object(const unsigned char *sha1)
->  {
-> -	return has_loose_object_local(sha1) ||
-> -	       has_loose_object_nonlocal(sha1);
-> +	return check_and_freshen(sha1, 0);
->  }
->  
->  static unsigned int pack_used_ctr;
-> @@ -2949,6 +2975,17 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
->  	return move_temp_to_file(tmp_file, filename);
->  }
->  
-> +static int freshen_loose_object(const unsigned char *sha1)
-> +{
-> +	return check_and_freshen(sha1, 1);
-> +}
-> +
-> +static int freshen_packed_object(const unsigned char *sha1)
-> +{
-> +	struct pack_entry e;
-> +	return find_pack_entry(sha1, &e) && freshen_file(e.p->pack_name);
-> +}
-> +
->  int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
->  {
->  	unsigned char sha1[20];
-> @@ -2961,7 +2998,7 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
->  	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
->  	if (returnsha1)
->  		hashcpy(returnsha1, sha1);
-> -	if (has_sha1_file(sha1))
-> +	if (freshen_loose_object(sha1) || freshen_packed_object(sha1))
->  		return 0;
->  	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
->  }
-> diff --git a/t/t6501-freshen-objects.sh b/t/t6501-freshen-objects.sh
-> index e25c47d..157f3f9 100755
-> --- a/t/t6501-freshen-objects.sh
-> +++ b/t/t6501-freshen-objects.sh
-> @@ -100,6 +100,33 @@ for repack in '' true; do
->  	test_expect_success "repository passes fsck ($title)" '
->  		git fsck
->  	'
-> +
-> +	test_expect_success "abandon objects again ($title)" '
-> +		git reset --hard HEAD^ &&
-> +		find .git/objects -type f |
-> +		xargs test-chmtime -v -86400
-> +	'
-> +
-> +	test_expect_success "start writing new commit with same tree ($title)" '
-> +		tree=$(
-> +			GIT_INDEX_FILE=index.tmp &&
-> +			export GIT_INDEX_FILE &&
-> +			git read-tree HEAD &&
-> +			add abandon &&
-> +			add unrelated &&
-> +			git write-tree
-> +		)
-> +	'
-> +
-> +	test_expect_success "simultaneous gc ($title)" '
-> +		git gc --prune=12.hours.ago
-> +	'
-> +
-> +	# tree should have been refreshed by write-tree
-> +	test_expect_success "finish writing out commit ($title)" '
-> +		commit=$(echo foo | git commit-tree -p HEAD $tree) &&
-> +		git update-ref HEAD $commit
-> +	'
->  done
->  
->  test_done
+diff --git a/refs.c b/refs.c
+index 83b2c77..05e42a7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -785,13 +785,13 @@ static void prime_ref_dir(struct ref_dir *dir)
+ 	}
+ }
+ 
+-static int entry_matches(struct ref_entry *entry, const char *refname)
++static int entry_matches(struct ref_entry *entry, const struct string_list *list)
+ {
+-	return refname && !strcmp(entry->name, refname);
++	return list && string_list_has_string(list, entry->name);
+ }
+ 
+ struct nonmatching_ref_data {
+-	const char *skip;
++	const struct string_list *skip;
+ 	struct ref_entry *found;
+ };
+ 
+@@ -815,16 +815,19 @@ static void report_refname_conflict(struct ref_entry *entry,
+ /*
+  * Return true iff a reference named refname could be created without
+  * conflicting with the name of an existing reference in dir.  If
+- * oldrefname is non-NULL, ignore potential conflicts with oldrefname
+- * (e.g., because oldrefname is scheduled for deletion in the same
++ * skip is non-NULL, ignore potential conflicts with refs in skip
++ * (e.g., because they are scheduled for deletion in the same
+  * operation).
+  *
+  * Two reference names conflict if one of them exactly matches the
+  * leading components of the other; e.g., "foo/bar" conflicts with
+  * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
+  * "foo/barbados".
++ *
++ * skip must be sorted.
+  */
+-static int is_refname_available(const char *refname, const char *oldrefname,
++static int is_refname_available(const char *refname,
++				const struct string_list *skip,
+ 				struct ref_dir *dir)
+ {
+ 	const char *slash;
+@@ -838,12 +841,12 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+ 		 * looking for a conflict with a leaf entry.
+ 		 *
+ 		 * If we find one, we still must make sure it is
+-		 * not "oldrefname".
++		 * not in "skip".
+ 		 */
+ 		pos = search_ref_dir(dir, refname, slash - refname);
+ 		if (pos >= 0) {
+ 			struct ref_entry *entry = dir->entries[pos];
+-			if (entry_matches(entry, oldrefname))
++			if (entry_matches(entry, skip))
+ 				return 1;
+ 			report_refname_conflict(entry, refname);
+ 			return 0;
+@@ -876,13 +879,13 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+ 		/*
+ 		 * We found a directory named "refname". It is a
+ 		 * problem iff it contains any ref that is not
+-		 * "oldrefname".
++		 * in "skip".
+ 		 */
+ 		struct ref_entry *entry = dir->entries[pos];
+ 		struct ref_dir *dir = get_ref_dir(entry);
+ 		struct nonmatching_ref_data data;
+ 
+-		data.skip = oldrefname;
++		data.skip = skip;
+ 		sort_ref_dir(dir);
+ 		if (!do_for_each_entry_in_dir(dir, 0, nonmatching_ref_fn, &data))
+ 			return 1;
+@@ -2137,6 +2140,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+  */
+ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 					    const unsigned char *old_sha1,
++					    const struct string_list *skip,
+ 					    int flags, int *type_p)
+ {
+ 	char *ref_file;
+@@ -2186,7 +2190,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	 * name is a proper prefix of our refname.
+ 	 */
+ 	if (missing &&
+-	     !is_refname_available(refname, NULL, get_packed_refs(&ref_cache))) {
++	     !is_refname_available(refname, skip, get_packed_refs(&ref_cache))) {
+ 		last_errno = ENOTDIR;
+ 		goto error_return;
+ 	}
+@@ -2244,7 +2248,7 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 					 const unsigned char *old_sha1,
+ 					 int flags, int *type_p)
+ {
+-	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
++	return lock_ref_sha1_basic(refname, old_sha1, NULL, flags, type_p);
+ }
+ 
+ /*
+@@ -2690,6 +2694,18 @@ static int rename_tmp_log(const char *newrefname)
+ 	return 0;
+ }
+ 
++static int rename_ref_available(const char *oldname, const char *newname)
++{
++	struct string_list skip = STRING_LIST_INIT_NODUP;
++	int ret;
++
++	string_list_insert(&skip, oldname);
++	ret = is_refname_available(newname, &skip, get_packed_refs(&ref_cache))
++	    && is_refname_available(newname, &skip, get_loose_refs(&ref_cache));
++	string_list_clear(&skip, 0);
++	return ret;
++}
++
+ int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
+ {
+ 	unsigned char sha1[20], orig_sha1[20];
+@@ -2709,10 +2725,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (!symref)
+ 		return error("refname %s not found", oldrefname);
+ 
+-	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(&ref_cache)))
+-		return 1;
+-
+-	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(&ref_cache)))
++	if (!rename_ref_available(oldrefname, newrefname))
+ 		return 1;
+ 
+ 	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
+@@ -2742,7 +2755,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 
+ 	logmoved = log;
+ 
+-	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(newrefname, NULL, NULL, 0, NULL);
+ 	if (!lock) {
+ 		error("unable to lock %s for update", newrefname);
+ 		goto rollback;
+@@ -2757,7 +2770,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	return 0;
+ 
+  rollback:
+-	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(oldrefname, NULL, NULL, 0, NULL);
+ 	if (!lock) {
+ 		error("unable to lock %s for rollback", oldrefname);
+ 		goto rollbacklog;
+@@ -3636,6 +3649,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 						   (update->have_old ?
+ 						    update->old_sha1 :
+ 						    NULL),
++						   NULL,
+ 						   update->flags,
+ 						   &update->type);
+ 		if (!update->lock) {
+-- 
+2.1.0.rc2.206.gedb03e5
