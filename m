@@ -1,64 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/2] config: Add safe-include directive
-Date: Thu, 2 Oct 2014 22:34:28 -0700
-Message-ID: <CAPc5daVYwLMiZzk5Dmm4v4etUhxjw3-ZjWvKEmc=RJ_mh9LFDA@mail.gmail.com>
-References: <xmqqy4t7a5vx.fsf@gitster.dls.corp.google.com> <1412300254-11281-1-git-send-email-rv@rasmusvillemoes.dk>
- <1412300254-11281-2-git-send-email-rv@rasmusvillemoes.dk> <CAPc5daV_txE9NrwvH5VWhXK+UmE7Avy8R2QaZaX0SsTC_+TU-A@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC 5/5] add tests for checking the behaviour of "unset.variable"
+Date: Fri, 03 Oct 2014 09:01:27 +0200
+Message-ID: <vpqeguptz5k.fsf@anie.imag.fr>
+References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
+	<1412256292-4286-6-git-send-email-tanayabh@gmail.com>
+	<xmqqr3yqmdxa.fsf@gitster.dls.corp.google.com>
+	<542DB2FE.609@gmail.com>
+	<xmqqmw9emdax.fsf@gitster.dls.corp.google.com>
+	<542DB711.9040503@gmail.com>
+	<xmqqiok2m494.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Joe Perches <joe@perches.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Rasmus Villemoes <rv@rasmusvillemoes.dk>
-X-From: git-owner@vger.kernel.org Fri Oct 03 07:34:56 2014
+Content-Type: text/plain
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 09:01:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZvW2-0003sf-Bi
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 07:34:54 +0200
+	id 1XZwsB-0006Tl-HC
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 09:01:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbaJCFeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 01:34:50 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:35891 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750814AbaJCFet (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 01:34:49 -0400
-Received: by mail-lb0-f176.google.com with SMTP id p9so412274lbv.21
-        for <git@vger.kernel.org>; Thu, 02 Oct 2014 22:34:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=IxrChoTzCQDy+K//CRxZ1XDGsnk9CeGU7dVl+5MxLM4=;
-        b=KHcf03jN5OGjw6rUMi5XhiAMji9sA35NclNQIDHsJ7U3Zy7Tkklb+2PolcfX/dWwAb
-         F6JZwyf875jIr70n3G9Ewswh8dbWOQi2sRMHpimhn2oLlE9gcAAUtLJPFeGlwaHaNB8M
-         +RKam4fhDkC/E4xklpezhx/S2HXIjKxDYAmtlkRXDbC4jMsHIsRmp20X/Kz9HN/udEPF
-         v6UrUMZ57pL69RexOmCUM/sgu5L6Uj9WOScpdBV6FMaQo/uAvh06E4OU3D0czWLpq93m
-         FJZSijGa0LogAk9dgjcwDwb9lQmat0/iVBVJNkTeUJNc3A/wx4V+0V2BxWA/XhDLTrL0
-         p0IA==
-X-Received: by 10.152.88.43 with SMTP id bd11mr3254363lab.62.1412314488139;
- Thu, 02 Oct 2014 22:34:48 -0700 (PDT)
-Received: by 10.112.209.35 with HTTP; Thu, 2 Oct 2014 22:34:28 -0700 (PDT)
-In-Reply-To: <CAPc5daV_txE9NrwvH5VWhXK+UmE7Avy8R2QaZaX0SsTC_+TU-A@mail.gmail.com>
-X-Google-Sender-Auth: qV4KAMQadxOplmtf8AXW8DNEtFM
+	id S1750773AbaJCHBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 03:01:41 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44378 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750731AbaJCHBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 03:01:40 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s9371RVg005412
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 3 Oct 2014 09:01:27 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s9371Rwa020867;
+	Fri, 3 Oct 2014 09:01:27 +0200
+In-Reply-To: <xmqqiok2m494.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 02 Oct 2014 16:38:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 Oct 2014 09:01:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s9371RVg005412
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1412924489.76117@zhRkZX7Q3Mad6/y1V2WfVA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257833>
 
-On Thu, Oct 2, 2014 at 10:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Thu, Oct 2, 2014 at 6:37 PM, Rasmus Villemoes <rv@rasmusvillemoes.dk> wrote:
->> This adds a variant of the include directive, where only certain
->> config variables in the included files are honoured. The set of
->> honoured variables consists of those the user has mentioned in a
->> safe-include.whitelist directive, along with a small set of git.git
->> blessed ones.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Another design decision we would need to make is if it should be
-allowed for a safe-included file to use safe-include directive to
-include other files. Offhand I do not think of a reason we absolutely
-need to support it, but there may be an interesting workflow enabled
-if we did so. I dunno.
+> Tanay Abhra <tanayabh@gmail.com> writes:
+>
+>> I can think of two solutions, one leave it as it is and advertise it to be
+>> explicitly typed in the config files at the appropriate position or to change
+>> the behavior of unset.variable to unset all matching variables in that file,
+>> before and after. We could also change git config --add to append at the end
+>> of the file regardless the variable exists or not. Which course of action
+>> do you think would be best?
+>
+> Off the top of my head, from an end-user's point of view, something
+> like this would give a behaviour that is at least understandable:
+>
+>  (1) forbid "git config" command line from touching "unset.var", as
+>      there is no way for a user to control where a new unset.var
+>      goes.  And
+
+Well, the normal use-case for unset.variable is to put it in a local
+config file, to unset a variable set in another, lower-priority file.
+
+This common use-case works with the command-line "git config", and it
+would be a pity to forbid the common use-case because of a particular,
+unusual case.
+
+>  (2) When adding or appending section.var (it may also apply to
+>      removing one--you need to think about it deeper), ignore
+>      everything that comes before the last appearance of "unset.var"
+>      that unsets the "section.var" variable.
+
+That would probably be the best option from a user's point of view, but
+I'd say the implementation complexity is not worth the trouble.
+
+> Alternatively, if the syntax to unset a "section.var" were not
+>
+> 	[unset]
+>         	variable = section.var
+>
+> but rather
+>
+> 	[section]
+> 		! variable
+>
+> or soemthing, then the current "find the section and append at the
+> end" code may work as-is.
+
+But that would break backward compatibility rather badly: old git's
+would stop working completely in repositories using this syntax.
+
+Well, perhaps we can also consider that this is acceptable: just don't
+use the feature for a few years if you care about backward
+compatibility.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
