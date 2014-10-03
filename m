@@ -1,73 +1,211 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 06/16] reachable: clear pending array after walking it
-Date: Fri, 3 Oct 2014 16:24:28 -0400
-Message-ID: <20141003202428.GF16293@peff.net>
+Subject: [PATCH 07/16] t5304: use test_path_is_* instead of "test -f"
+Date: Fri, 3 Oct 2014 16:25:13 -0400
+Message-ID: <20141003202512.GG16293@peff.net>
 References: <20141003202045.GA15205@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 03 22:24:36 2014
+X-From: git-owner@vger.kernel.org Fri Oct 03 22:25:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xa9P0-0007kS-Is
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 22:24:34 +0200
+	id 1Xa9Pk-00085x-J9
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 22:25:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751673AbaJCUYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 16:24:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54829 "HELO cloud.peff.net"
+	id S1751356AbaJCUZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 16:25:16 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54833 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750944AbaJCUYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 16:24:30 -0400
-Received: (qmail 2821 invoked by uid 102); 3 Oct 2014 20:24:30 -0000
+	id S1750925AbaJCUZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 16:25:15 -0400
+Received: (qmail 2882 invoked by uid 102); 3 Oct 2014 20:25:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 15:24:30 -0500
-Received: (qmail 15007 invoked by uid 107); 3 Oct 2014 20:24:29 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 15:25:15 -0500
+Received: (qmail 15030 invoked by uid 107); 3 Oct 2014 20:25:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 16:24:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Oct 2014 16:24:28 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 16:25:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Oct 2014 16:25:13 -0400
 Content-Disposition: inline
 In-Reply-To: <20141003202045.GA15205@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257857>
 
-We add a number of objects to our "pending" array, and then
-process it with a combination of get_revision and walking
-the pending array ourselves (to catch any non-commits). The
-commits in the pending array are cleaned up automatically by
-prepare_revision_walk, but we essentially leak any other
-objects (they are technically still reachable from rev_info,
-but no callers ever look at them or bother to clean them
-up).
-
-This is not a huge deal in practice, as the number of
-non-commits tends to be small. However, a future patch will
-broaden this considerably. Let's call object_array_clear to
-free the memory.
+This is slightly more robust (checking "! test -f" would not
+notice a directory of the same name, though that is not
+likely to happen here). It also makes debugging easier, as
+the test script will output a message on failure.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- reachable.c | 2 ++
- 1 file changed, 2 insertions(+)
+This patch is totally optional. I did it while debugging t5304 (strange
+how badly prune works when you accidentally invert the mtime check!)
+and figured it might be worth keeping as a cleanup.
 
-diff --git a/reachable.c b/reachable.c
-index 6f6835b..d99bd31 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -131,6 +131,8 @@ static void walk_commit_list(struct rev_info *revs,
- 		}
- 		die("unknown pending object %s (%s)", sha1_to_hex(obj->sha1), name);
- 	}
-+
-+	object_array_clear(&revs->pending);
+ t/t5304-prune.sh | 46 +++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
+
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 01c6a3f..b0ffb05 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -14,7 +14,7 @@ add_blob() {
+ 	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
+ 	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
+ 	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	test-chmtime =+0 $BLOB_FILE
  }
  
- static int add_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+@@ -35,9 +35,9 @@ test_expect_success 'prune stale packs' '
+ 	: > .git/objects/tmp_2.pack &&
+ 	test-chmtime =-86501 .git/objects/tmp_1.pack &&
+ 	git prune --expire 1.day &&
+-	test -f $orig_pack &&
+-	test -f .git/objects/tmp_2.pack &&
+-	! test -f .git/objects/tmp_1.pack
++	test_path_is_file $orig_pack &&
++	test_path_is_file .git/objects/tmp_2.pack &&
++	test_path_is_missing .git/objects/tmp_1.pack
+ 
+ '
+ 
+@@ -46,11 +46,11 @@ test_expect_success 'prune --expire' '
+ 	add_blob &&
+ 	git prune --expire=1.hour.ago &&
+ 	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	test-chmtime =-86500 $BLOB_FILE &&
+ 	git prune --expire 1.day &&
+ 	test $before = $(git count-objects | sed "s/ .*//") &&
+-	! test -f $BLOB_FILE
++	test_path_is_missing $BLOB_FILE
+ 
+ '
+ 
+@@ -60,11 +60,11 @@ test_expect_success 'gc: implicit prune --expire' '
+ 	test-chmtime =-$((2*$week-30)) $BLOB_FILE &&
+ 	git gc &&
+ 	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	test-chmtime =-$((2*$week+1)) $BLOB_FILE &&
+ 	git gc &&
+ 	test $before = $(git count-objects | sed "s/ .*//") &&
+-	! test -f $BLOB_FILE
++	test_path_is_missing $BLOB_FILE
+ 
+ '
+ 
+@@ -110,7 +110,7 @@ test_expect_success 'prune: do not prune detached HEAD with no reflog' '
+ 	git commit --allow-empty -m "detached commit" &&
+ 	# verify that there is no reflogs
+ 	# (should be removed and disabled by previous test)
+-	test ! -e .git/logs &&
++	test_path_is_missing .git/logs &&
+ 	git prune -n >prune_actual &&
+ 	: >prune_expected &&
+ 	test_cmp prune_actual prune_expected
+@@ -145,7 +145,7 @@ test_expect_success 'gc --no-prune' '
+ 	git config gc.pruneExpire 2.days.ago &&
+ 	git gc --no-prune &&
+ 	test 1 = $(git count-objects | sed "s/ .*//") &&
+-	test -f $BLOB_FILE
++	test_path_is_file $BLOB_FILE
+ 
+ '
+ 
+@@ -153,10 +153,10 @@ test_expect_success 'gc respects gc.pruneExpire' '
+ 
+ 	git config gc.pruneExpire 5002.days.ago &&
+ 	git gc &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	git config gc.pruneExpire 5000.days.ago &&
+ 	git gc &&
+-	test ! -f $BLOB_FILE
++	test_path_is_missing $BLOB_FILE
+ 
+ '
+ 
+@@ -165,9 +165,9 @@ test_expect_success 'gc --prune=<date>' '
+ 	add_blob &&
+ 	test-chmtime =-$((5001*$day)) $BLOB_FILE &&
+ 	git gc --prune=5002.days.ago &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	git gc --prune=5000.days.ago &&
+-	test ! -f $BLOB_FILE
++	test_path_is_missing $BLOB_FILE
+ 
+ '
+ 
+@@ -175,9 +175,9 @@ test_expect_success 'gc --prune=never' '
+ 
+ 	add_blob &&
+ 	git gc --prune=never &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	git gc --prune=now &&
+-	test ! -f $BLOB_FILE
++	test_path_is_missing $BLOB_FILE
+ 
+ '
+ 
+@@ -186,10 +186,10 @@ test_expect_success 'gc respects gc.pruneExpire=never' '
+ 	git config gc.pruneExpire never &&
+ 	add_blob &&
+ 	git gc &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	git config gc.pruneExpire now &&
+ 	git gc &&
+-	test ! -f $BLOB_FILE
++	test_path_is_missing $BLOB_FILE
+ 
+ '
+ 
+@@ -197,9 +197,9 @@ test_expect_success 'prune --expire=never' '
+ 
+ 	add_blob &&
+ 	git prune --expire=never &&
+-	test -f $BLOB_FILE &&
++	test_path_is_file $BLOB_FILE &&
+ 	git prune &&
+-	test ! -f $BLOB_FILE
++	test_path_is_missing $BLOB_FILE
+ 
+ '
+ 
+@@ -210,10 +210,10 @@ test_expect_success 'gc: prune old objects after local clone' '
+ 	(
+ 		cd aclone &&
+ 		test 1 = $(git count-objects | sed "s/ .*//") &&
+-		test -f $BLOB_FILE &&
++		test_path_is_file $BLOB_FILE &&
+ 		git gc --prune &&
+ 		test 0 = $(git count-objects | sed "s/ .*//") &&
+-		! test -f $BLOB_FILE
++		test_path_is_missing $BLOB_FILE
+ 	)
+ '
+ 
+@@ -250,7 +250,7 @@ test_expect_success 'prune .git/shallow' '
+ 	grep $SHA1 .git/shallow &&
+ 	grep $SHA1 out &&
+ 	git prune &&
+-	! test -f .git/shallow
++	test_path_is_missing .git/shallow
+ '
+ 
+ test_done
 -- 
 2.1.1.566.gdb1f904
