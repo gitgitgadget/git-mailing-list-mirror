@@ -1,82 +1,116 @@
-From: Stefan Monnier <monnier@iro.umontreal.ca>
-Subject: Feature request: Tracking info for remote branches
-Date: Fri, 03 Oct 2014 10:32:32 -0400
-Message-ID: <jwvy4sxqm1a.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] init - Honour the global core.filemode setting
+Date: Fri, 03 Oct 2014 18:54:16 +0200
+Message-ID: <542ED4B8.40603@web.de>
+References: <CAE1pOi0zhnUNNdHsrq+4H_6LiFnr-qoY-owrcJquy6dyG+Mk4g@mail.gmail.com>	<5427F68E.5030003@web.de>	<CAE1pOi1dAO7XFZtrgZyNm-eLVKQx=KpeejbGmF8khCofAppDLg@mail.gmail.com>	<xmqqy4szpvfv.fsf@gitster.dls.corp.google.com>	<542D33E1.6080709@web.de> <xmqqzjdeo16d.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 03 16:32:53 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Oct 03 18:54:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xa3ue-0008IF-J0
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 16:32:52 +0200
+	id 1Xa67h-0005Ml-0U
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 18:54:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753288AbaJCOcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 10:32:48 -0400
-Received: from plane.gmane.org ([80.91.229.3]:48203 "EHLO plane.gmane.org"
+	id S1754028AbaJCQyZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Oct 2014 12:54:25 -0400
+Received: from mout.web.de ([212.227.17.11]:51172 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752632AbaJCOcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 10:32:47 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Xa3uX-0008FJ-TL
-	for git@vger.kernel.org; Fri, 03 Oct 2014 16:32:45 +0200
-Received: from 69-196-168-232.dsl.teksavvy.com ([69.196.168.232])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 03 Oct 2014 16:32:45 +0200
-Received: from monnier by 69-196-168-232.dsl.teksavvy.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 03 Oct 2014 16:32:45 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 69-196-168-232.dsl.teksavvy.com
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
-Cancel-Lock: sha1:S8rjkL9y5YvksSygaLVuP011+Uc=
+	id S1753828AbaJCQyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 12:54:24 -0400
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MQepd-1XfqM831ET-00Tynd; Fri, 03 Oct 2014 18:54:17
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <xmqqzjdeo16d.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:jBJPTCMmW//BXbjDmxaiYNVxL/EiOiS1PHgAK1ltXgQgYuvAJi4
+ lHh57dOrtesVDcZ9qeA56PMkWcCIU8ScggrsGiATAguKwTRXemL5XgTvPPhJ0fCRO0cE0X+
+ ZKG9GYugrtnUw9It+3UYVDkxTlYmZwWj3J6MZekjyIBZqDa1aCdRkdPwAYAMoqLlaSqTBRH
+ Dmj0S6BB4V0uwWYQh3yoA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257840>
 
-I really like the way Git officializes the relation between branches via
-the notion of "tracking".  I can see which local branch tracks which
-remote branch easily, and that's very helpful.
+On 2014-10-02 19.02, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> On 2014-10-01 19.10, Junio C Hamano wrote:
+>>> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>>>
+>>>> Perhaps I completely misunderstand the meaning of core.filemode bu=
+t I
+>>>> thought it determined whether Git cared about changes in file
+>>>> properties?
+>>>
+>>> By setting it to "false", you tell Git that the filesystem you
+>>> placed the repository does not correctly represent the filemode
+>>> (especially the executable bit).
+>>>
+>>> "core.fileMode" in "git config --help" reads:
+>>>
+>>>        core.fileMode
+>>>            If false, the executable bit differences between the
+>>>            index and the working tree are ignored; useful on broken
+>>>            filesystems like FAT. See git-update- index(1).
+>>
+>> Out of my head: Could the following be a starting point:
+>>
+>>         core.fileMode
+>>             If false, the executable bit differences between the
+>>             index and the working tree are ignored.
+>>             This may be usefull when visiting a cygwin repo with a n=
+on-cygwin
+>>             Git client. (should we mention msysgit ? should we menti=
+on JGit/EGit ?)
+>=20
+> Between these two sentences, there may still be the same cognitive
+> gap that may have lead to the original confusion.
+>=20
+> The first sentence says what happens, as it should.
+>=20
+> But it is not directly clear what makes the executable bit differ
+> and when it is a useful thing to ignore the differences, so the
+> second sentence that says "This may be useful" does not give the
+> reader very much.
+>=20
+Clearly a major improvement.
 
-But when I find a Git repository on the Web, I often have no idea about
-the relationship between its branches, all I have instead is the
-branches's names, which is often not sufficient.
+Does this (still) include the original line
+"See linkgit:git-update-index[1]"
 
-Let's take for example https://bitbucket.org/emiliolopez/linux.git.
-Among its branches I see "sunxi-codec" and "sunxi-codec-v0".
+which helps the user to add *.sh files "executable" to the index, even =
+if
+core.filemode is false ?
+One minor improvement below.
 
-The repository name gives me a hint that these are really
-branches of the Linux kernel (rather than, say, branches of Emacs).
-And the branches's names gice me a hint that these are related to
-support for sunxi (aka Allwinner SoCs) and more specifically support
-for codecs.  I know from out-of-band info that these are for audio
-codecs.
-
-But I don't know if these branches track linux-next, sunxi-devel, or
-some other branch.  I can manually try to find out, by comparing the
-distance to each one of those branches.  But:
-- it's costly.
-- it can only be done manually, because a script wouldn't know that
-  linux-next and sunxi-devel are better candidate branches than, say,
-  emacs-24.
-- as a consequence, front ends (bitbucket, cgit, gitweb, younameit)
-  can't show this information.
-
-So, I'd like to suggest that Git be changed so that the branch tracking
-information is also maintained and made available for remote branches.
-E.g. when you push a branch, the info about which is the corresponding
-target branch (if any) be also pushed to the remote repository along
-with the actual new commits.  Similarly, when cloning a remote
-repository, that information should be copied locally so you can ask Git
-about the relationship between those remote branches you just downloaded.
-
-
-        Stefan
+> Here is my attempt.
+>=20
+> 	Tells Git if the executable bit of files in the working tree
+> 	is to be honored.
+>=20
+> 	Some filesystems lose the executable bit when a file that is
+> 	marked as executable is checked out, or checks out an
+> 	non-executable file with executable bit on.  "git init" and
+> 	"git clone" probe the filesystem to see if it records
+> 	executable bit correctly when they create a new repository
+> 	and this variable is automatically set as necessary.
+>=20
+>         A repository, however, may be on a filesystem that records
+>         the filemode correctly, and this variable is set to 'true'
+>         when created, but later may be made accessible from another
+>         environment that loses the filemode (e.g. exporting ext4 via
+>         CIFS mount, visiting a Cygwin managed repository with
+>         MsysGit).  In such a case, it may be necessary to set this
+>         variable to 'false'.
+          ^^^^^^^^=20
