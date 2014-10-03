@@ -1,114 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 05/16] clean up name allocation in prepare_revision_walk
-Date: Fri, 3 Oct 2014 16:23:56 -0400
-Message-ID: <20141003202356.GE16293@peff.net>
+Subject: [PATCH 06/16] reachable: clear pending array after walking it
+Date: Fri, 3 Oct 2014 16:24:28 -0400
+Message-ID: <20141003202428.GF16293@peff.net>
 References: <20141003202045.GA15205@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 03 22:24:03 2014
+X-From: git-owner@vger.kernel.org Fri Oct 03 22:24:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xa9OV-0007Vz-0W
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 22:24:03 +0200
+	id 1Xa9P0-0007kS-Is
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 22:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364AbaJCUX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 16:23:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54823 "HELO cloud.peff.net"
+	id S1751673AbaJCUYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 16:24:31 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54829 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750944AbaJCUX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 16:23:58 -0400
-Received: (qmail 2813 invoked by uid 102); 3 Oct 2014 20:23:58 -0000
+	id S1750944AbaJCUYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 16:24:30 -0400
+Received: (qmail 2821 invoked by uid 102); 3 Oct 2014 20:24:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 15:23:58 -0500
-Received: (qmail 14988 invoked by uid 107); 3 Oct 2014 20:23:58 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 15:24:30 -0500
+Received: (qmail 15007 invoked by uid 107); 3 Oct 2014 20:24:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 16:23:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Oct 2014 16:23:56 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 16:24:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Oct 2014 16:24:28 -0400
 Content-Disposition: inline
 In-Reply-To: <20141003202045.GA15205@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257856>
 
-When we enter prepare_revision_walk, we have zero or more
-entries in our "pending" array. We disconnect that array
-from the rev_info, and then process each entry:
+We add a number of objects to our "pending" array, and then
+process it with a combination of get_revision and walking
+the pending array ourselves (to catch any non-commits). The
+commits in the pending array are cleaned up automatically by
+prepare_revision_walk, but we essentially leak any other
+objects (they are technically still reachable from rev_info,
+but no callers ever look at them or bother to clean them
+up).
 
-  1. If the entry is a commit and the --source option is in
-     effect, we keep a pointer to the object name.
-
-  2. Otherwise, we re-add the item to the pending list with
-     a blank name.
-
-We then throw away the old array by freeing the array
-itself, but do not touch the "name" field of each entry. For
-any items of type (2), we leak the memory associated with
-the name. This commit fixes that by calling object_array_clear,
-which handles the cleanup for us.
-
-That breaks (1), though, because it depends on the memory
-pointed to by the name to last forever. We can solve that by
-making a copy of the name. This is slightly less efficient,
-but it shouldn't matter in practice, as we do it only for
-the tip commits of the traversal.
+This is not a huge deal in practice, as the number of
+non-commits tends to be small. However, a future patch will
+broaden this considerably. Let's call object_array_clear to
+free the memory.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- revision.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ reachable.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/revision.c b/revision.c
-index e498b7c..01cc276 100644
---- a/revision.c
-+++ b/revision.c
-@@ -300,7 +300,7 @@ static struct commit *handle_commit(struct rev_info *revs,
- 			revs->limited = 1;
+diff --git a/reachable.c b/reachable.c
+index 6f6835b..d99bd31 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -131,6 +131,8 @@ static void walk_commit_list(struct rev_info *revs,
  		}
- 		if (revs->show_source && !commit->util)
--			commit->util = (void *) name;
-+			commit->util = xstrdup(name);
- 		return commit;
+ 		die("unknown pending object %s (%s)", sha1_to_hex(obj->sha1), name);
  	}
++
++	object_array_clear(&revs->pending);
+ }
  
-@@ -2656,15 +2656,16 @@ void reset_revision_walk(void)
- 
- int prepare_revision_walk(struct rev_info *revs)
- {
--	int nr = revs->pending.nr;
--	struct object_array_entry *e, *list;
-+	int i;
-+	struct object_array old_pending;
- 	struct commit_list **next = &revs->commits;
- 
--	e = list = revs->pending.objects;
-+	memcpy(&old_pending, &revs->pending, sizeof(old_pending));
- 	revs->pending.nr = 0;
- 	revs->pending.alloc = 0;
- 	revs->pending.objects = NULL;
--	while (--nr >= 0) {
-+	for (i = 0; i < old_pending.nr; i++) {
-+		struct object_array_entry *e = old_pending.objects + i;
- 		struct commit *commit = handle_commit(revs, e->item, e->name);
- 		if (commit) {
- 			if (!(commit->object.flags & SEEN)) {
-@@ -2672,10 +2673,9 @@ int prepare_revision_walk(struct rev_info *revs)
- 				next = commit_list_append(commit, next);
- 			}
- 		}
--		e++;
- 	}
- 	if (!revs->leak_pending)
--		free(list);
-+		object_array_clear(&old_pending);
- 
- 	/* Signal whether we need per-parent treesame decoration */
- 	if (revs->simplify_merges ||
+ static int add_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
 -- 
 2.1.1.566.gdb1f904
