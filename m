@@ -1,93 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [TOY PATCH]: rebase: Add --show-files option
-Date: Fri, 03 Oct 2014 12:11:18 -0700
-Message-ID: <xmqqiok1klyh.fsf@gitster.dls.corp.google.com>
-References: <CAEY4ZpN4HEo-Csf1UjpGX4YLKWRrywinUemeZFZdVg=ZtTsaqA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC 5/5] add tests for checking the behaviour of "unset.variable"
+Date: Fri, 03 Oct 2014 21:49:28 +0200
+Message-ID: <vpq4mvlgchj.fsf@anie.imag.fr>
+References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
+	<1412256292-4286-6-git-send-email-tanayabh@gmail.com>
+	<xmqqr3yqmdxa.fsf@gitster.dls.corp.google.com>
+	<542DB2FE.609@gmail.com>
+	<xmqqmw9emdax.fsf@gitster.dls.corp.google.com>
+	<542DB711.9040503@gmail.com>
+	<xmqqiok2m494.fsf@gitster.dls.corp.google.com>
+	<vpqeguptz5k.fsf@anie.imag.fr>
+	<xmqq1tqpm2na.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 03 21:11:30 2014
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 21:49:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xa8GH-0003H6-Jk
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 21:11:29 +0200
+	id 1Xa8rG-0001Du-PN
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 21:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751922AbaJCTLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 15:11:21 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57567 "EHLO smtp.pobox.com"
+	id S1751372AbaJCTti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 15:49:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34232 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751404AbaJCTLU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 15:11:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 51CD83F263;
-	Fri,  3 Oct 2014 15:11:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1zpGtzGosA3elYZT5IAu7Njh1JE=; b=ApKFKA
-	8ICVn/jj9K+VV+Ht5bGDsbwZzw5D3tjINmdwaKYAVas4Sm9or+NAykCRM0YFc9Pv
-	UKWVJ66BuNUyz/YzeSVlC8eoeoB6Zj3byahZvqqXzGSc+bRu8cvZ3Ags48Wo22ML
-	+aMo1cltjPR3rGla5kV0mEkCZKhW8LKoHkIdc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LjmZmsy7F/BZZNqsspt4xtGd8JIuOZHB
-	Y1EmlLEZ8DyvwueOYUT4gsz91IbD+mPes8Za4tG/UeYwN4MNDEPgDY/aDK0VpKmq
-	RsdWTnEMT8ABJ0XJmJf25g4Nw19oNR32uco6H6vAvKGjJ0Wm5XioATFmr2NGSYyI
-	eKANRKxtUWw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 493943F262;
-	Fri,  3 Oct 2014 15:11:20 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8AA13F261;
-	Fri,  3 Oct 2014 15:11:19 -0400 (EDT)
-In-Reply-To: <CAEY4ZpN4HEo-Csf1UjpGX4YLKWRrywinUemeZFZdVg=ZtTsaqA@mail.gmail.com>
-	(Nazri Ramliy's message of "Fri, 3 Oct 2014 12:42:14 +0800")
+	id S1751334AbaJCTti (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 15:49:38 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s93JnRt2011447
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 3 Oct 2014 21:49:27 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s93JnS5g031897;
+	Fri, 3 Oct 2014 21:49:28 +0200
+In-Reply-To: <xmqq1tqpm2na.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 03 Oct 2014 11:25:29 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0E98DCC4-4B31-11E4-A281-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 Oct 2014 21:49:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s93JnRt2011447
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1412970571.42316@J1kit8DtItQ8TiQmYPbMbQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257848>
 
-Nazri Ramliy <ayiehere@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> When rebasing these upwards of 40+ commits, it is helpful if the
-> rebase instruction sheet shows me the actual files that the commits
-> affect so I made this patch (sorry I couldn't attach it inline since
-> gmail eats all the tabs) that adds the "--show-files" option to
-> git-rebase to achieve something to this effect:
+> The "git config [--add] section.var value" UI, [...] finds the "var = value"
+> definition at the end (or adds a "section" at the end and then adds
+> [...]
 >
-> pick 996fa59 Remove autoconf submodule
->      # :100644 100644 cfc8a25... 28ddb02... M   .gitmodules
->      # :160000 000000 0263a9f... 0000000... D   autoconf
-> ... more pick lines
-> pick 4c5070f Remove automake submodule
->      # :100644 100644 28ddb02... f907328... M   .gitmodules
->      # :160000 000000 9042530... 0000000... D   automake
+> It is fine for single-valued ones that follow "the last one wins"
+> semantics; "git config" would add the new definition at the end and
+> that definition will win.
+
+Not always.
+
+git config foo.bar old-value
+git config unset.variable foo.bar
+git config foo.bar new-value
+
+One could expect the new value to be taken into account, but it is not.
+
+>> Well, the normal use-case for unset.variable is to put it in a local
+>> config file, to unset a variable set in another, lower-priority file.
 >
-> Having the list of files shown below each commit, indented to reduce
-> cluttering the "pick" instruction, really does help in deciding the
-> reorder and squash candidates.
+> I agree that is one major use case.
+>
+>> This common use-case works with the command-line "git config", and it
+>> would be a pity to forbid the common use-case because of a particular,
+>> unusual case.
+>
+> Either you are being incoherent or I am not reading you right.  If
+> you said "If this common use-case worked with the command-line 'git
+> config', it would be nice, but it would be a pity because it does
+> not", I would understand.
 
-Sounds like a good idea to give helpful information in a comment
-form to the insn sheet.
+I think you missed the "another" in my sentence above. The normal
+use-case is to have foo.bar and unset.variable=foo.bar in different
+files. In this case, you do not care about the position in file.
 
-Other than two minor points:
+> in a repository whose .git/config does not have any unset.variable,
+> you will add that _at the end_, which would undo what you did in
+> your configuration file, not just what came before yours.  Even if
+> you ignore more exotic cases, the command line is *not* working.
 
- - If I were doing this, I would have used "diff-tree --stat
-   --summary" instead of "show --raw".  You can tell
-   deletion/addition by paying attention to 0's and also mode
-   changes, but the information density of --raw for human
-   consumption is rather low.
+If my sysadmin has set foo.bar=boz in /etc/gitconfig, I can use
 
- - Regardless of the above, I am not sure if dumping listing of 100+
-   paths modified would really help, and it might make sense to cap
-   the number of paths displayed for each change.
+  git config [--global] unset.variable foo.bar
 
-I didn't look at your implementation at all, though.
+and it does work. Always.
+
+Playing with the order of variables in-file is essentially useless OTOH
+except for the include case you mentionned (if I want to unset a
+variable in a file, I'll just delete or comment out the variable and I
+don't need unset.variable).
+
+Really, I don't see the point in making any complex plans to support the
+useless part of the unset.variable feature. The reason it was designed
+for already works, and $EDITOR does the job for other cases.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
