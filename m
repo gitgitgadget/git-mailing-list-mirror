@@ -1,214 +1,153 @@
-From: Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: [RFC/PATCH 1/2] config: Add safe-include directive
-Date: Fri,  3 Oct 2014 03:37:33 +0200
-Message-ID: <1412300254-11281-2-git-send-email-rv@rasmusvillemoes.dk>
-References: <xmqqy4t7a5vx.fsf@gitster.dls.corp.google.com>
- <1412300254-11281-1-git-send-email-rv@rasmusvillemoes.dk>
-Cc: Jeff King <peff@peff.net>, Joe Perches <joe@perches.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rasmus Villemoes <rv@rasmusvillemoes.dk>
-To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 03 03:38:10 2014
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: [TOY PATCH]: rebase: Add --show-files option
+Date: Fri, 3 Oct 2014 12:42:14 +0800
+Message-ID: <CAEY4ZpN4HEo-Csf1UjpGX4YLKWRrywinUemeZFZdVg=ZtTsaqA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary=001a1135ea7265d5bd05047d5b61
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 03 06:42:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XZrot-00016E-T2
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 03:38:08 +0200
+	id 1XZuhA-0005Dq-Uf
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 06:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458AbaJCBh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Oct 2014 21:37:59 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:57395 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752042AbaJCBh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Oct 2014 21:37:56 -0400
-Received: by mail-lb0-f182.google.com with SMTP id z11so221185lbi.27
-        for <git@vger.kernel.org>; Thu, 02 Oct 2014 18:37:55 -0700 (PDT)
+	id S1750831AbaJCEmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 00:42:16 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:38616 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750730AbaJCEmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 00:42:16 -0400
+Received: by mail-lb0-f170.google.com with SMTP id u10so367713lbd.29
+        for <git@vger.kernel.org>; Thu, 02 Oct 2014 21:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gBAxK9nZW6Fm3dP39XF243icL4pPmo1Mhew/HOyjlBo=;
-        b=i8wMT40AqXPErNh+ti0jw9xBt83HqmsA2nVC5Qxiy1iJzGZMkstJdFEjiyyyQQNEwW
-         X/ZWLasaj1pUWXlutsVPPRwYQkaI9iZSFBbX31JIKDE+eTYH3+5YGLbr5kj+naD2CyIX
-         ahu4B0fYnTrbPsgku0qqCBLJW4hM2+hZ/Wkow=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=gBAxK9nZW6Fm3dP39XF243icL4pPmo1Mhew/HOyjlBo=;
-        b=ekhQWwJZIz9Ywdv7YxV7DGow+RE8uFHc/zV+Zn/wyC4Knfoz5Wn/D50FAQXFqgczR+
-         nTk33JSBdXvNvO1YJdYstp3gm+Cqaz1mUf9CJVFc86J2n4sYBuNy8jZAJQ9jn+U1U237
-         25nOHo36V0/tyr9gGZcZyT2iUtNLkXz92ymhPq/8Ej5nH10iex9ixKu/U+CROvIGewBN
-         NsdVftHYejzdjcsF4/sToRQVatIRCAUnysv5tvih6iONf0ia7XdprFMS3nW+v/os3BNF
-         fNwKcOB6l6v4pGCxSXloAOJshFsPG0cvlM5y9I21PuuxXvzpVmK1+N8P4E8/InXStDST
-         dI0A==
-X-Gm-Message-State: ALoCoQklWHIStFRVmKL3fLFOGpYP4jrr6/GPUwvKOWjG41LH4sA2gxWIF/qwSPmTK/fjboWKPF/7
-X-Received: by 10.153.7.73 with SMTP id da9mr892603lad.56.1412300275106;
-        Thu, 02 Oct 2014 18:37:55 -0700 (PDT)
-Received: from spencer.imf.au.dk ([130.225.20.51])
-        by mx.google.com with ESMTPSA id v7sm2126751lbp.44.2014.10.02.18.37.54
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Oct 2014 18:37:54 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4
-In-Reply-To: <1412300254-11281-1-git-send-email-rv@rasmusvillemoes.dk>
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=+7456VvWcF4MmonAG+RLham9Wu8nG9S4ofQQlai6Ks8=;
+        b=dIqB8Lkd+IYJ9mTbYVQtDcDxW/AckGf/zmDDMTU6eGqM0hGFHwzvrkAV3zpXo9I8MG
+         egYC3x85WaY5TneXxQnfEj4WrrXqtQuoGnm1dQC3HBNJSuzFFt02fGRpLYKSaf+1HYNY
+         olgc6KVxkELq/boaJ5l6XlqAwh6p3KH1hAJMwPk3cJGei9GJ9y0R0WCL2x3PW+O9Eng6
+         vDyEFLZP4aVTcc63WpvHEfPRuEA1WivMUUMVgLfTxpyYhvXTizJXN/rPtp9I/8o2a+m3
+         gpHfLP7Upyo+Bdf3XKoB8893M5+rJkC4MsYO8XFE7g4zr8hfxx1QpTfo0pWdGb1AkS9/
+         jLVg==
+X-Received: by 10.112.9.234 with SMTP id d10mr553536lbb.98.1412311334368; Thu,
+ 02 Oct 2014 21:42:14 -0700 (PDT)
+Received: by 10.112.13.35 with HTTP; Thu, 2 Oct 2014 21:42:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257830>
 
-This adds a variant of the include directive, where only certain
-config variables in the included files are honoured. The set of
-honoured variables consists of those the user has mentioned in a
-safe-include.whitelist directive, along with a small set of git.git
-blessed ones.
+--001a1135ea7265d5bd05047d5b61
+Content-Type: text/plain; charset=UTF-8
 
-This can, for example, be used by a project to supply a set of
-suggested configuration variables, such as "diff.renames = true". The
-project would provide these in e.g project.gitconfig, and the user then
-has to explicitly opt-in by putting
+Hi,
 
-[safe-include]
-    path = ../project.gitconfig
+When working on a "new feature branch" that touches a lot of files I
+tend to make commits that affect only single files, and for very small
+changes. Since at this stage I'm experimentating a lot - trying out
+ideas, etc. - the commits tend to grow a lot (could be 50-70
+individual commits, each modifying one or two files), and I don't
+think much about the commit message beside making a one-liner that
+explains only the gist.
 
-into .git/config, possibly preceding the path directive with a
-whitelist directive.
+Most of the times I include the filename in the commit message to help
+me identify which commits should be squashed together later.
 
-The problem with simply using the ordinary include directive for this
-purpose is that certain configuration variables (e.g. diff.external)
-can allow arbitrary programs to be run.
+Only when the feature seems to be functional that I git rebase the
+commits in order to shape the history into its final, proper form.
 
-Older versions of git do not understand the safe-include directives,
-so they will effectively just ignore them.
+When rebasing these upwards of 40+ commits, it is helpful if the
+rebase instruction sheet shows me the actual files that the commits
+affect so I made this patch (sorry I couldn't attach it inline since
+gmail eats all the tabs) that adds the "--show-files" option to
+git-rebase to achieve something to this effect:
 
-Obviously, we must ignore safe-include.whitelist directives when we
-are processing a safe-included file.
+pick 996fa59 Remove autoconf submodule
+     # :100644 100644 cfc8a25... 28ddb02... M   .gitmodules
+     # :160000 000000 0263a9f... 0000000... D   autoconf
+... more pick lines
+pick 4c5070f Remove automake submodule
+     # :100644 100644 28ddb02... f907328... M   .gitmodules
+     # :160000 000000 9042530... 0000000... D   automake
 
-Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
----
- config.c | 91 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 88 insertions(+), 3 deletions(-)
+Having the list of files shown below each commit, indented to reduce
+cluttering the "pick" instruction, really does help in deciding the
+reorder and squash candidates.
 
-diff --git a/config.c b/config.c
-index a677eb6..764cda1 100644
---- a/config.c
-+++ b/config.c
-@@ -11,6 +11,7 @@
- #include "quote.h"
- #include "hashmap.h"
- #include "string-list.h"
-+#include "wildmatch.h"
- 
- struct config_source {
- 	struct config_source *prev;
-@@ -39,6 +40,79 @@ static struct config_source *cf;
- 
- static int zlib_compression_seen;
- 
-+struct safe_var {
-+	struct safe_var *next;
-+	const char *pattern;
-+	int blacklisted;
-+};
-+
-+static int safe_include_depth;
-+static struct safe_var *safe_var_head;
-+
-+static const char *builtin_safe_patterns[] = {
-+	"diff.renames",
-+};
-+
-+static int config_name_is_safe(const char *var)
-+{
-+	struct safe_var *sv;
-+	unsigned i;
-+
-+	for (sv = safe_var_head; sv; sv = sv->next) {
-+		/* Handle malformed patterns? */
-+		if (wildmatch(sv->pattern, var, WM_CASEFOLD, NULL) == WM_MATCH)
-+			return !sv->blacklisted;
-+	}
-+	for (i = 0; i < ARRAY_SIZE(builtin_safe_patterns); ++i) {
-+		if (wildmatch(builtin_safe_patterns[i], var, WM_CASEFOLD, NULL) == WM_MATCH)
-+			return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static void config_add_safe_pattern(const char *p)
-+{
-+	struct safe_var *sv;
-+	int blacklist = 0;
-+
-+	if (*p == '!') {
-+		blacklist = 1;
-+		++p;
-+	}
-+	if (!*p)
-+		return;
-+	sv = xmalloc(sizeof(*sv));
-+	sv->pattern = xstrdup(p);
-+	sv->blacklisted = blacklist;
-+	sv->next = safe_var_head;
-+	safe_var_head = sv;
-+}
-+
-+static void config_add_safe_names(const char *value)
-+{
-+	char *patterns = xstrdup(value);
-+	char *p, *save;
-+
-+	/*
-+	 * This allows giving multiple patterns in a single line, e.g.
-+	 *
-+	 *     whitelist = !* foo.bar squirrel.*
-+	 *
-+	 * to override the builtin list of safe vars and only declare
-+	 * foo.bar and the squirrel section safe. But it has the
-+	 * obvious drawback that one cannot match subsection names
-+	 * containing whitespace. The alternative is that the above
-+	 * would have to be written on three separate whitelist lines.
-+	 */
-+	for (p = strtok_r(patterns, " \t", &save); p; p = strtok_r(NULL, " \t", &save)) {
-+		config_add_safe_pattern(p);
-+	}
-+
-+	free(patterns);
-+}
-+
-+
- /*
-  * Default config_set that contains key-value pairs from the usual set of config
-  * config files (i.e repo specific .git/config, user wide ~/.gitconfig, XDG
-@@ -142,12 +216,23 @@ int git_config_include(const char *var, const char *value, void *data)
- 	 * Pass along all values, including "include" directives; this makes it
- 	 * possible to query information on the includes themselves.
- 	 */
--	ret = inc->fn(var, value, inc->data);
--	if (ret < 0)
--		return ret;
-+	if (safe_include_depth == 0 || config_name_is_safe(var)) {
-+		ret = inc->fn(var, value, inc->data);
-+		if (ret < 0)
-+			return ret;
-+	}
- 
- 	if (!strcmp(var, "include.path"))
- 		ret = handle_path_include(value, inc);
-+	else if (safe_include_depth == 0
-+		 && !strcmp(var, "safe-include.whitelist")) {
-+		config_add_safe_names(value);
-+	}
-+	else if (!strcmp(var, "safe-include.path")) {
-+		safe_include_depth++;
-+		ret = handle_path_include(value, inc);
-+		safe_include_depth--;
-+	}
- 	return ret;
- }
- 
--- 
-2.0.4
+The files list came from this:
+
+  git show --raw $sha1|awk '/^:/ {print " '"${comment_char}"'\t"$0}'
+
+Thoughts?
+
+nazri
+
+--001a1135ea7265d5bd05047d5b61
+Content-Type: text/x-patch; charset=US-ASCII; 
+	name="0001-rebase-Add-show-files-option.patch"
+Content-Disposition: attachment; 
+	filename="0001-rebase-Add-show-files-option.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_i0t1m3uv0
+
+RnJvbSA0ODI2ODc1YzE0NTU0ZDRmYTUwOThkZGY5NDk5YzMzY2I3YjkwMDFiIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBOYXpyaSBSYW1saXkgPGF5aWVoZXJlQGdtYWlsLmNvbT4KRGF0
+ZTogRnJpLCAzIE9jdCAyMDE0IDA5OjU5OjM4ICswODAwClN1YmplY3Q6IFtQQVRDSF0gcmViYXNl
+OiBBZGQgLS1zaG93LWZpbGVzIG9wdGlvbgoKLS0tCiBEb2N1bWVudGF0aW9uL2dpdC1yZWJhc2Uu
+dHh0IHwgIDggKysrKysrKysKIGdpdC1yZWJhc2UtLWludGVyYWN0aXZlLnNoICAgfCAxMyArKysr
+KysrKysrKysrCiBnaXQtcmViYXNlLnNoICAgICAgICAgICAgICAgIHwgIDUgKysrKysKIDMgZmls
+ZXMgY2hhbmdlZCwgMjYgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24v
+Z2l0LXJlYmFzZS50eHQgYi9Eb2N1bWVudGF0aW9uL2dpdC1yZWJhc2UudHh0CmluZGV4IGYxNDEw
+MGEuLjQ5OTZiYzQgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LXJlYmFzZS50eHQKKysr
+IGIvRG9jdW1lbnRhdGlvbi9naXQtcmViYXNlLnR4dApAQCAtMzgzLDYgKzM4MywxNCBAQCBJZiBg
+LS1hdXRvc3F1YXNoYCBpcyB1c2VkLCAiZXhlYyIgbGluZXMgd2lsbCBub3QgYmUgYXBwZW5kZWQg
+Zm9yCiB0aGUgaW50ZXJtZWRpYXRlIGNvbW1pdHMsIGFuZCB3aWxsIG9ubHkgYXBwZWFyIGF0IHRo
+ZSBlbmQgb2YgZWFjaAogc3F1YXNoL2ZpeHVwIHNlcmllcy4KIAorLUY6OgorLS1zaG93LWZpbGVz
+OjoKKwlBcHBlbmQgdGhlIGxpc3Qgb2YgYWZmZWN0ZWQgZmlsZXMgYWZ0ZXIgZWFjaCBsaW5lIGNy
+ZWF0aW5nIGEgY29tbWl0IGluCisJdGhlIGhpc3RvcnkuCisrCitUaGlzIG9wdGlvbiBjYW4gb25s
+eSBiZSB1c2VkIHdpdGggdGhlIGAtLWludGVyYWN0aXZlYCBvcHRpb24KKyhzZWUgSU5URVJBQ1RJ
+VkUgTU9ERSBiZWxvdykuCisKIC0tcm9vdDo6CiAJUmViYXNlIGFsbCBjb21taXRzIHJlYWNoYWJs
+ZSBmcm9tIDxicmFuY2g+LCBpbnN0ZWFkIG9mCiAJbGltaXRpbmcgdGhlbSB3aXRoIGFuIDx1cHN0
+cmVhbT4uICBUaGlzIGFsbG93cyB5b3UgdG8gcmViYXNlCmRpZmYgLS1naXQgYS9naXQtcmViYXNl
+LS1pbnRlcmFjdGl2ZS5zaCBiL2dpdC1yZWJhc2UtLWludGVyYWN0aXZlLnNoCmluZGV4IGI2NGRk
+MjguLjMyYjQyNjYgMTAwNjQ0Ci0tLSBhL2dpdC1yZWJhc2UtLWludGVyYWN0aXZlLnNoCisrKyBi
+L2dpdC1yZWJhc2UtLWludGVyYWN0aXZlLnNoCkBAIC04MjAsNiArODIwLDExIEBAIGFkZF9leGVj
+X2NvbW1hbmRzICgpIHsKIAltdiAiJDEubmV3IiAiJDEiCiB9CiAKK3ByaW50X2FmZmVjdGVkX2Zp
+bGVzICgpIHsKKwljb21taXRfc2hhMT0iJDEiCisJZ2l0IHNob3cgLS1yYXcgJGNvbW1pdF9zaGEx
+fGF3ayAnL146LyB7cHJpbnQgIiAgICAgJyIke2NvbW1lbnRfY2hhcn0iJyAiJDB9JworfQorCiAj
+IFRoZSB3aG9sZSBjb250ZW50cyBvZiB0aGlzIGZpbGUgaXMgcnVuIGJ5IGRvdC1zb3VyY2luZyBp
+dCBmcm9tCiAjIGluc2lkZSBhIHNoZWxsIGZ1bmN0aW9uLiAgSXQgdXNlZCB0byBiZSB0aGF0ICJy
+ZXR1cm4icyB3ZSBzZWUKICMgYmVsb3cgd2VyZSBub3QgaW5zaWRlIGFueSBmdW5jdGlvbiwgYW5k
+IGV4cGVjdGVkIHRvIHJldHVybgpAQCAtOTc4LDYgKzk4MywxMCBAQCBkbwogCWlmIHRlc3QgdCAh
+PSAiJHByZXNlcnZlX21lcmdlcyIKIAl0aGVuCiAJCXByaW50ZiAnJXNcbicgIiR7Y29tbWVudF9v
+dXR9cGljayAkc2hvcnRzaGExICRyZXN0IiA+PiIkdG9kbyIKKwkJaWYgdGVzdCAtbiAiJHNob3df
+ZmlsZXMiCisJCXRoZW4KKwkJCXByaW50X2FmZmVjdGVkX2ZpbGVzICRzaG9ydHNoYTEgPj4gIiR0
+b2RvIgorCQlmaQogCWVsc2UKIAkJc2hhMT0kKGdpdCByZXYtcGFyc2UgJHNob3J0c2hhMSkKIAkJ
+aWYgdGVzdCAteiAiJHJlYmFzZV9yb290IgpAQCAtOTk3LDYgKzEwMDYsMTAgQEAgZG8KIAkJdGhl
+bgogCQkJdG91Y2ggIiRyZXdyaXR0ZW4iLyRzaGExCiAJCQlwcmludGYgJyVzXG4nICIke2NvbW1l
+bnRfb3V0fXBpY2sgJHNob3J0c2hhMSAkcmVzdCIgPj4iJHRvZG8iCisJCQlpZiB0ZXN0IC1uICIk
+c2hvd19maWxlcyIKKwkJCXRoZW4KKwkJCQlwcmludF9hZmZlY3RlZF9maWxlcyAkc2hhMSA+PiAi
+JHRvZG8iCisJCQlmaQogCQlmaQogCWZpCiBkb25lCmRpZmYgLS1naXQgYS9naXQtcmViYXNlLnNo
+IGIvZ2l0LXJlYmFzZS5zaAppbmRleCA1NWRhOWRiLi40OTY4YjJjIDEwMDc1NQotLS0gYS9naXQt
+cmViYXNlLnNoCisrKyBiL2dpdC1yZWJhc2Uuc2gKQEAgLTI0LDYgKzI0LDcgQEAgbSxtZXJnZSEg
+ICAgICAgICAgIHVzZSBtZXJnaW5nIHN0cmF0ZWdpZXMgdG8gcmViYXNlCiBpLGludGVyYWN0aXZl
+ISAgICAgbGV0IHRoZSB1c2VyIGVkaXQgdGhlIGxpc3Qgb2YgY29tbWl0cyB0byByZWJhc2UKIHgs
+ZXhlYz0hICAgICAgICAgICBhZGQgZXhlYyBsaW5lcyBhZnRlciBlYWNoIGNvbW1pdCBvZiB0aGUg
+ZWRpdGFibGUgbGlzdAogayxrZWVwLWVtcHR5CSAgIHByZXNlcnZlIGVtcHR5IGNvbW1pdHMgZHVy
+aW5nIHJlYmFzZQorRixzaG93LWZpbGVzICAgICAgIFNob3cgZmlsZXMgYWZmZWN0ZWQgYnkgZWFj
+aCBsaXN0IG9mIGNvbW1pdCB0byByZWJhc2UKIGYsZm9yY2UtcmViYXNlISAgICBmb3JjZSByZWJh
+c2UgZXZlbiBpZiBicmFuY2ggaXMgdXAgdG8gZGF0ZQogWCxzdHJhdGVneS1vcHRpb249ISBwYXNz
+IHRoZSBhcmd1bWVudCB0aHJvdWdoIHRvIHRoZSBtZXJnZSBzdHJhdGVneQogc3RhdCEgICAgICAg
+ICAgICAgIGRpc3BsYXkgYSBkaWZmc3RhdCBvZiB3aGF0IGNoYW5nZWQgdXBzdHJlYW0KQEAgLTg4
+LDYgKzg5LDcgQEAgYXV0b3NxdWFzaD0KIGtlZXBfZW1wdHk9CiB0ZXN0ICIkKGdpdCBjb25maWcg
+LS1ib29sIHJlYmFzZS5hdXRvc3F1YXNoKSIgPSAidHJ1ZSIgJiYgYXV0b3NxdWFzaD10CiBncGdf
+c2lnbl9vcHQ9CitzaG93X2ZpbGVzPQogCiByZWFkX2Jhc2ljX3N0YXRlICgpIHsKIAl0ZXN0IC1m
+ICIkc3RhdGVfZGlyL2hlYWQtbmFtZSIgJiYKQEAgLTMzNiw2ICszMzgsOSBAQCBkbwogCS0tZ3Bn
+LXNpZ249KikKIAkJZ3BnX3NpZ25fb3B0PSItUyR7MSMtLWdwZy1zaWduPX0iCiAJCTs7CisJIC0t
+c2hvdy1maWxlc3wtRikKKwkJc2hvd19maWxlcz10CisJCTs7CiAJLS0pCiAJCXNoaWZ0CiAJCWJy
+ZWFrCi0tIAoyLjEuMC4yNDQuZzU3OTY0NjcuZGlydHkKCg==
+--001a1135ea7265d5bd05047d5b61--
