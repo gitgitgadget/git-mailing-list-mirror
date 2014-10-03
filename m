@@ -1,78 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 5/5] add tests for checking the behaviour of "unset.variable"
-Date: Fri, 03 Oct 2014 11:48:51 -0700
-Message-ID: <xmqqwq8hkmzw.fsf@gitster.dls.corp.google.com>
-References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
-	<1412256292-4286-6-git-send-email-tanayabh@gmail.com>
-	<xmqqr3yqmdxa.fsf@gitster.dls.corp.google.com>
-	<542DB2FE.609@gmail.com>
-	<xmqqmw9emdax.fsf@gitster.dls.corp.google.com>
-	<542DB711.9040503@gmail.com>
-	<xmqqiok2m494.fsf@gitster.dls.corp.google.com>
-	<vpqeguptz5k.fsf@anie.imag.fr>
-	<xmqq1tqpm2na.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 09/24] refs.c: pass a list of names to skip to
+ is_refname_available
+Date: Fri, 3 Oct 2014 11:51:28 -0700
+Message-ID: <20141003185128.GS1175@google.com>
+References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+ <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
+ <CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
+ <CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
+ <20140820231723.GF20185@google.com>
+ <20140911030318.GD18279@google.com>
+ <20141002014817.GS1175@google.com>
+ <20141002020332.GB1175@google.com>
+ <xmqq61g2nuud.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Oct 03 20:49:10 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 03 20:51:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xa7uf-0002hv-0s
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 20:49:09 +0200
+	id 1Xa7x1-0003eM-UX
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 20:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753233AbaJCStF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 14:49:05 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60103 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751573AbaJCStC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 14:49:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EC3403FB71;
-	Fri,  3 Oct 2014 14:49:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Eyc5DDax5h+Pdi9Y3xg1JXiz/Nc=; b=K1677N
-	zMOPm7kGaDgRPDb0Nlz5xDIQytEz6dseTcX+6nNoVtNXNQwgEbqZKRSXpJ7fO+wu
-	Vv0ImDN+YuulAm9gtHFaLyMFxa+Bl1e0/FTaPtOmZ0QnyleOJCNNg78Pr2xFzTdc
-	MBtB26SlvWXuKgo3kTUfWhCQIs6T11P+oGmdY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hqjfQqNLPd798cMG9bWJWHEjgp91cRo+
-	HHeAapUNMHOlAwzY6WOulNEpdbBnrgtLzL/hFqRL7tZzEgTNuxKHodSlPWkuKbNa
-	vN/UGzJ8PDfiqqUIt5kHxvmPsP0xwMFFqHtMfCRMMfrxsVb9bRh9S+dcndKCKf+S
-	XN8fqNCn6Lo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E2A5C3FB70;
-	Fri,  3 Oct 2014 14:49:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 47F1A3FB58;
-	Fri,  3 Oct 2014 14:48:53 -0400 (EDT)
-In-Reply-To: <xmqq1tqpm2na.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 03 Oct 2014 11:25:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EC01271E-4B2D-11E4-B9EE-9E3FC4D60FE0-77302942!pb-smtp0.pobox.com
+	id S1753537AbaJCSvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 14:51:32 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:58407 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751404AbaJCSvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 14:51:31 -0400
+Received: by mail-pd0-f169.google.com with SMTP id w10so57395pde.14
+        for <git@vger.kernel.org>; Fri, 03 Oct 2014 11:51:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0Uzd3vPU42alTKz3lmKlP7lU0er/LBzFApKTbhiK4L8=;
+        b=yM03KVUrnDBnwixjvebV+CYD5/nE1MVvz2VAAd4n5g5xgnUwGmCz0J8xgyewqZHg52
+         qZXsULYMYSiJhvDxcU8Ib/kAGV/dBlKeHUcKjvr+0lvHLYH95YlypJ0rZWxuwwKkH6c4
+         F8Adzok0UFddGa/8H0YmPWIJoNRKhesq3tmaCMiyMDLjb5tPANtIxggCbsc4Ii7AVVJw
+         xQ0uIlSnxU8pF498WdLgBO1PsTj6KLSMkHOr6lOHTa8vkDg8FYkP9y8Ca7CJv27zwFLm
+         YdSxYVI5NaSdyMcGNHbYanriYeJ1TbjtRssfOBTYULft/I109ic4lAiso+ipFbT1fDbO
+         n7TQ==
+X-Received: by 10.70.134.98 with SMTP id pj2mr2571637pdb.65.1412362291161;
+        Fri, 03 Oct 2014 11:51:31 -0700 (PDT)
+Received: from google.com (aiede.mtv.corp.google.com [172.27.69.120])
+        by mx.google.com with ESMTPSA id po6sm6984706pbb.56.2014.10.03.11.51.30
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 03 Oct 2014 11:51:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqq61g2nuud.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257844>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> That is why I said "unset.variable" is unworkable with existing "git
-> config" command line.  Always appending at the end is usable for
-> ordinary variables, but for unset.variable, it is most likely the
-> least useful thing to do.  You can explain "among 47 different
-> things it could do, we chose to do the most useless thing, because
-> that is _consistent_ with how the ordinary variables are placed in
-> the cofiguration file" in the documentation but it forgets to
-> question if unset.variable should be treated the same way as
-> ordinary variables in the first place.
+>> diff --git a/refs.c b/refs.c
+>> index f124c2b..6820c93 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -801,14 +801,16 @@ static int names_conflict(const char *refname1, const char *refname2)
+>> 
+>>  struct name_conflict_cb {
+>>  	const char *refname;
+>> -	const char *oldrefname;
+>>  	const char *conflicting_refname;
+>> +	struct string_list *skiplist;
+>>  };
+>
+> As cbe73331 (refs: speed up is_refname_available, 2014-09-10)
+> touches the same area and is now in 'master', the logic around here
+> in this series needs to be reworked.
 
-This is a tangent, but the above also applies to the "include.path".
+Thanks for the heads up.  (I hadn't realized the ref-transaction-1 was
+part of 'master' --- yay!)  Rebased and reworked:
+https://code-review.googlesource.com/1027
+
+I'll give a week or so for review comments on this version of the
+series and then post a hopefully final version.
