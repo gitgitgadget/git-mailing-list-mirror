@@ -1,285 +1,392 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 19/24] refs.c: allow listing and deleting badly named refs
-Date: Fri, 3 Oct 2014 13:32:43 -0700
-Message-ID: <CAL=YDWmV89jwWqru5dgxCKpx-JYCrH=vYVLT_yPqsT9Ep9Qa8Q@mail.gmail.com>
-References: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
-	<CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
-	<CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
-	<CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
-	<20140820231723.GF20185@google.com>
-	<20140911030318.GD18279@google.com>
-	<20141002014817.GS1175@google.com>
-	<20141002022819.GL1175@google.com>
-	<xmqqa95envxa.fsf@gitster.dls.corp.google.com>
-	<CAL=YDW=N1+XS+U=Vs0Sba0UqdN7+HRg5CTdZB28h5Ts3_yusYg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 13/16] prune: keep objects reachable from recent objects
+Date: Fri, 3 Oct 2014 16:39:31 -0400
+Message-ID: <20141003203931.GM16293@peff.net>
+References: <20141003202045.GA15205@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 03 22:32:50 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 03 22:39:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xa9Wz-0002fw-1a
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 22:32:49 +0200
+	id 1Xa9dg-0005tz-5N
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Oct 2014 22:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752167AbaJCUcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Oct 2014 16:32:45 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:37366 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884AbaJCUco (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Oct 2014 16:32:44 -0400
-Received: by mail-vc0-f178.google.com with SMTP id hq12so1203428vcb.9
-        for <git@vger.kernel.org>; Fri, 03 Oct 2014 13:32:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=iru0nArMd0cYupI8lghmXn+dImeNqX5KzYkqAldyJkg=;
-        b=Zu5gltqNKVi52HbGF1FohuDzhuhOMrOR1xeSBNPpizI6FlP/H9i825h+EiXInbV08h
-         rXVur3g15LWzH/X0dEY+Bk1w0lpAmdvTGV3nV1wAbOj81JYAOAC+mGZtYkp/eZAivIIe
-         zsQ4bReXInnRVzSMQh9AaOg0JMdB/wpzTA2sw4MPo0EQVlXxri72AE1PHqFCKta/xeWH
-         SDpYVEFY4IN+s8ArBMuAR8CA3ZU3fsxjLdfpxTGng55wultLXplV8g9FOAx128nZRsh7
-         nQiaE3o1KyEIn7kjTjj+XhDKQWc7Zf3LOujOqnuum0R5ac0sV3tF3blZy6Rk9D0flW5Y
-         5h+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=iru0nArMd0cYupI8lghmXn+dImeNqX5KzYkqAldyJkg=;
-        b=cZZ2zT1XIrT/cno4cPcBQFkvJnbeY65DQ7QXuD9l6utMVxyGkSdDdALflQGtHdi5fs
-         DriM6JOZqViYUxxMeUd/9eaNmSGYSxNWpHYNC+UhDpdUc8I3wUxtEF+7Ztub3iUFJ8rD
-         nt6UFPC1K/e2k7TkeGjVdnm0IagZZJK/oquKsbVZtYDvi/gi2tHxGppeQVHMCkhzuSiQ
-         11U6JbnQn/o6nw5a/oSag63c2EVjlNd0ATz9xi0dfOS8zyWrfH2ElezASfLhXrAd02VT
-         IwUOuW1NLgJorwjuCu00fpyukDyV5YV+nNINWMlHn7u5hNiUCVU5cgmjPRJ6clyd7kSi
-         /j1Q==
-X-Gm-Message-State: ALoCoQkwua0rdOShgOKl2/I2XkV92f/Yic7DV7FeXfTV8tztDF1dvIQz4NW/Z+GP8X+4JIto7tE9
-X-Received: by 10.52.165.97 with SMTP id yx1mr4811576vdb.15.1412368363707;
- Fri, 03 Oct 2014 13:32:43 -0700 (PDT)
-Received: by 10.52.76.167 with HTTP; Fri, 3 Oct 2014 13:32:43 -0700 (PDT)
-In-Reply-To: <CAL=YDW=N1+XS+U=Vs0Sba0UqdN7+HRg5CTdZB28h5Ts3_yusYg@mail.gmail.com>
+	id S1752327AbaJCUjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Oct 2014 16:39:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54868 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750944AbaJCUje (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Oct 2014 16:39:34 -0400
+Received: (qmail 3553 invoked by uid 102); 3 Oct 2014 20:39:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 15:39:33 -0500
+Received: (qmail 15242 invoked by uid 107); 3 Oct 2014 20:39:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Oct 2014 16:39:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Oct 2014 16:39:31 -0400
+Content-Disposition: inline
+In-Reply-To: <20141003202045.GA15205@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257865>
 
-On Fri, Oct 3, 2014 at 1:25 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> On Thu, Oct 2, 2014 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->>
->>> From: Ronnie Sahlberg <sahlberg@google.com>
->>> ...
->>> In resolving functions, refuse to resolve refs that don't pass the
->>> check-ref-format(1) check unless the new RESOLVE_REF_ALLOW_BAD_NAME
->>> flag is passed.  Even with RESOLVE_REF_ALLOW_BAD_NAME, refuse to
->>> resolve refs that escape the refs/ directory and do not match the
->>> pattern [A-Z_]* (think "HEAD" and "MERGE_HEAD").
->>>
->>> In locking functions, refuse to act on badly named refs unless they
->>> are being deleted and either are in the refs/ directory or match [A-Z_]*.
->>>
->>> Just like other invalid refs, flag resolved, badly named refs with the
->>> REF_ISBROKEN flag, treat them as resolving to null_sha1, and skip them
->>> in all iteration functions except for for_each_rawref.
->>>
->>> Flag badly named refs with a REF_BAD_NAME flag to make it easier for
->>> future callers to notice and handle them specially.
->>>
->>> In the transaction API, refuse to create or update badly named refs,
->>> but allow deleting them (unless they escape refs/ and don't match
->>> [A-Z_]*).
->>>
->>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->>
->> Thanks.  We originally threw all the different kind of breakages
->> into ISBROKEN, but a ref can have a malformed name or can contain a
->> bad/non value and allowing us to tell them apart is a good direction
->> to go.
->>
->>> diff --git a/cache.h b/cache.h
->>> index 5ca7f2b..0c0ac60 100644
->>> --- a/cache.h
->>> +++ b/cache.h
->>> @@ -978,16 +978,26 @@ extern int read_ref(const char *refname, unsigned char *sha1);
->>>   * If flags is non-NULL, set the value that it points to the
->>>   * combination of REF_ISPACKED (if the reference was found among the
->>>   * packed references), REF_ISSYMREF (if the initial reference was a
->>> - * symbolic reference) and REF_ISBROKEN (if the ref is malformed).
->>> + * symbolic reference), REF_BAD_NAME (if the reference name is ill
->>> + * formed --- see RESOLVE_REF_ALLOW_BAD_NAME below), and REF_ISBROKEN
->>> + * (if the ref is malformed).
->>
->> You want to define "is malformed" here.
->>
->> The original defines REF_ISBROKEN as "malformed" because
->>
->>  (1) resolve_ref_unsafe() uses get_sha1_hex() and read_loose_refs()
->>      uses read_ref_full(), both to catch "malformed values" stored;
->>
->>  (2) resolve_ref_unsafe() uses check_refname_format() and catches
->>      "malformed names" stored as a symref target.
->>
->> I _think_ you are introducing ALLOW_BAD_NAME to allow add the third
->> class ".git/refs/remotes/origin/mal..formed..name".  I do not know
->> if they should be the same class as a symref with a good name
->> ".git/refs/remotes/origin/HEAD" that points at a bad name
->> "mal..formed..name", which is (2) above).  Perhaps not.  (2) is
->> still above what is stored in the ref, and the ref in question may
->> or may not have a well-formed name, which is orthogonal.
->>
->> So probably you left only the "value stored in the ref is malformed"
->> (in other words, "we expected to find 40-hex object name but didn't
->> find one") case for REF_ISBROKEN?
->
-> I updated cache.h to try to clarify it better.
-> The intention here is to expand the use of REF_ISBROKEN.
->
-> For all cases  REF_ISBROKEN will be set. This includes both "the sha1
-> value is bad" as well as "a name is bad".
->
-> For those cases where a name is bad then REF_BAD_NAME is also set. Bad
-> names are when either the ref itself has a bad name or when a bad name
-> is encountered while resolving a chain of symbilic refs.
->
->
-> I.e.  REF_BAD_NAME is a special case of broken ref. All REF_BAD_NAME
-> refs are also REF_ISBROKEN but not the reverse.
+Our current strategy with prune is that an object falls into
+one of three categories:
 
-Let me add some rationale why REF_BAD_NAME and REF_ISBROKEN are
-notorthogonal properties.
+  1. Reachable (from ref tips, reflogs, index, etc).
 
-I think almost all callers of these APIs are only concerned about "is
-the ref good or bad" and they today only check REF_ISBROKEN.
-I think that is a reasonable API and it allows the majority of callers
-to just "check this single flag".
-(The alternative would be to keep all callers in sync and use a set of
-flags for all "bad conditions".)
+  2. Not reachable, but recent (based on the --expire time
+     and the file's mtime).
 
-A very small subset of callers are actually interested in knowing why
-the ref was bad, and in particular if the ref was bad due to a name
-component.
-Those callers, that are aware that there are different types of
-ISBROKEN can then inspect the REF_BAD_NAME flag in order to decide
-"is the ref broken due to the ref name?".
+  3. Not reachable and not recent.
 
+We keep objects from (1) and (2), but prune objects in (3).
+The point of (2) is that these objects may be part of an
+in-progress operation that has not yet updated any refs.
 
-This is why I made REF_BAD_NAME a special case of REF_ISBROKEN.
+However, it is not always the case that objects for an
+in-progress operation will have a recent mtime. For example,
+the object database may have an old copy of a blob (from an
+abandoned operation, a branch that was deleted, etc). If we
+create a new tree that points to it, a simultaneous prune
+will leave our tree, but delete the blob. Referencing that
+tree with a commit will then work (we check that the tree is
+in the object database, but not that all of its referred
+objects are), as will mentioning the commit in a ref. But
+the resulting repo is corrupt; we are missing the blob
+reachable from a ref.
 
+One way to solve this is to be more thorough when
+referencing a sha1: make sure that not only do we have that
+sha1, but that we have the objects it refers to, and so
+forth recursively. The problem is that this is very
+expensive.  Creating a parent link would require traversing
+the entire object graph down to the roots.
 
+Instead, this patch pushes the extra work onto prune, which
+runs less frequently (and has to look at the whole object
+graph anyway). It creates a new category of objects: objects
+which are not recent, but which are reachable from a recent
+object. We do not prune these objects, just like the
+reachable and recent ones.
 
->
->
->>
->> Do we want to separate "value is not 40-hex" and "a symref points at
->> a malformed refname" as separate "malformed value" errors?
->>
->>> + * RESOLVE_REF_ALLOW_BAD_NAME allows resolving refs even when their
->>> + * name is invalid according to git-check-ref-format(1).  If the name
->>> + * is bad then the value stored in sha1 will be null_sha1 and the
->>> + * REF_ISBROKEN and REF_BAD_NAME flags will be set.
->>
->> Viewed with that light, I am not sure if a badly named ref should
->> yield null_sha1[] (REF_ISBROKEN, which I am assuming is about a
->> value that is badly formatted and cannot be read, should keep
->> yielding it as before).  Wouldn't it make it harder for the user if
->> you give null_sha1[] back to somebody who is trying to recover by
->> reading "refs/heads/mal..formed", creating "refs/heads/sensible" to
->> point at the same value and then removing the former?
->>
->> Note that I am not saying we should give back the parsed value at
->> this step in the series.  Perhaps there are some existing callers
->> that do not check for ISBROKEN flag and instead says "null_sha1[]
->> ref is to be rejected/ignored", in which case they may need to be
->> corrected before that happens.  Or there may be some reason I
->> overlooked that makes it not so useful if we returned the object
->> name stored in a ref whose name is malformed.  Just wondering.
->
-> The reason for these malformed refs resolving to null_sha1 is exactly
-> that. There may be callers that do not check ISBROKEN, so all those
-> callers need to be carefully audited before we start returning
-> potentially valid non null_sha1 here.
-> Right now I only want to do the minimal changes needed to open up only
-> those few paths I need to in order to allow the refs to be deleted.
-> For the delete case, returning the null_sha1 is sufficient.
->
->
-> Now, IF we add support to "rename a bad-ref-name to a good-ref-name",
-> then for that case we would need to start allowing resolve_ref_unsafe
-> to actually return the sha1 for the ref.
-> And that would require that we do those changes and audits. Given how
-> rare this should be, I am not convinced we need "rename bad to good"
-> at this point and would thus prefer to hold off adding that.
->
-> Thus, returning the object name is not so useful for the problem I try
-> to solve at this stage, namely "make delete work".
->
->
->>
->>> @@ -272,6 +272,37 @@ static struct ref_dir *get_ref_dir(struct ref_entry *entry)
->>>       return dir;
->>>  }
->>>
->>> +static int escapes_cwd(const char *path) {
->>> +     char *buf;
->>> +     int result;
->>> +
->>> +     if (is_absolute_path(path))
->>> +             return 1;
->>> +     buf = xmalloc(strlen(path) + 1);
->>> +     result = !!normalize_path_copy(buf, path);
->>> +     free(buf);
->>> +     return result;
->>> +}
->>
->> I think this function is misnamed for two reasons.
->>
->>  - It does not have anything to do with cwd; it does not make any
->>    difference to the outcome of this function given the same input,
->>    if 'pwd' says "/u/jc/git" or "/u/jc/git/Documentation", no?
->>
->>  - Even if this had something to do with cwd, I would expect a
->>    function whose name is escapes_cwd("/u/jc/git/Documentation") to
->>    yield false when 'pwd' says "/u/jc/git", but the implementation
->>    unconditionally rejects absolute path.  In the context of the
->>    (sole) caller of this function, which deals with a refname "refs/...",
->>    it makes no sense to see an absolute path, but that does not have
->>    anything to do with "does this path escape cwd?", no?
->>
->
-> Agree.
-> I removed this function completely and just inline the !normalize_path_copy()
-> checks to make sure that refs/* paths remain within refs/.
->
->
->>> +/*
->>> + * Check if a refname is safe.
->>> + * For refs that start with "refs/" we consider it safe as long as the rest
->>> + * of the path components does not allow it to escape from this directory.
->>> + * For all other refs we only consider them safe iff they only contain
->>> + * upper case characters and '_'.
->>> + */
->>
->> I presume that the exception is to accomodate for "HEAD", "ORIG_HEAD",
->> "MERGE_HEAD" and friends, but you probably do not want the readers to
->> guess.
->>
->
-> I updated the commend to highlight that this is for "HEAD" and friends.
->
->>> +static int refname_is_safe(const char *refname)
->>> +{
->>> +     if (starts_with(refname, "refs/"))
->>> +             return !escapes_cwd(refname + strlen("refs/"));
->>> +     while (*refname) {
->>> +             if (!isupper(*refname) && *refname != '_')
->>> +                     return 0;
->>> +             refname++;
->>> +     }
->>> +     return 1;
->>> +}
+This lets us avoid the recursive check above, because if we
+have an object, even if it is unreachable, we should have
+its referent:
+
+  - if we are creating new objects, then we cannot create
+    the parent object without having the child
+
+  - and if we are pruning objects, will not prune the child
+    if we are keeping the parent
+
+The big exception would be if one were to write the object
+in a way that avoided referential integrity (e.g., using
+hash-object). But if you are in the habit of doing that, you
+deserve what you get.
+
+Naively, the simplest way to implement this would be to add
+all recent objects as tips to the reachability traversal.
+However, this does not perform well. In a recently-packed
+repository, all reachable objects will also be recent, and
+therefore we have to consider each object twice (both as a
+tip, and when we reach it in the traversal). I tested this,
+and it added about 10s to a 30s prune on linux.git. This
+patch instead performs the normal reachability traversal
+first, then follows up with a second traversal for recent
+objects, skipping any that have already been marked.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I put the mark-recent code into mark_reachable_objects here,
+but it does not technically have to be there. It reuses the
+same rev_info object (which is convenient), but the SEEN
+flags from the first traversal are marked on the global
+commit objects themselves. So we could break it out into a
+separate function.
+
+However, we'd have to refactor the progress reporting; the
+numbers are kept internally to mark_reachable, and we would
+want to continue them for the second traversal (though I
+suppose you could start a second progress meter with
+"Checking recent objects" or something if you wanted).
+
+ builtin/prune.c            |   2 +-
+ builtin/reflog.c           |   2 +-
+ reachable.c                | 111 +++++++++++++++++++++++++++++++++++++++++++++
+ reachable.h                |   3 +-
+ t/t6501-freshen-objects.sh |  88 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 203 insertions(+), 3 deletions(-)
+ create mode 100755 t/t6501-freshen-objects.sh
+
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 8286680..a965574 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -135,7 +135,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 	if (show_progress)
+ 		progress = start_progress_delay(_("Checking connectivity"), 0, 0, 2);
+ 
+-	mark_reachable_objects(&revs, 1, progress);
++	mark_reachable_objects(&revs, 1, expire, progress);
+ 	stop_progress(&progress);
+ 	for_each_loose_file_in_objdir(get_object_directory(), prune_object,
+ 				      prune_cruft, prune_subdir, NULL);
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index e8a8fb1..80bddc2 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -649,7 +649,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		init_revisions(&cb.revs, prefix);
+ 		if (cb.verbose)
+ 			printf("Marking reachable objects...");
+-		mark_reachable_objects(&cb.revs, 0, NULL);
++		mark_reachable_objects(&cb.revs, 0, 0, NULL);
+ 		if (cb.verbose)
+ 			putchar('\n');
+ 	}
+diff --git a/reachable.c b/reachable.c
+index d99bd31..f443265 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -212,7 +212,109 @@ static void add_cache_refs(struct rev_info *revs)
+ 		add_cache_tree(active_cache_tree, revs);
+ }
+ 
++struct recent_data {
++	struct rev_info *revs;
++	unsigned long timestamp;
++};
++
++static void add_recent_object(const unsigned char *sha1,
++			      unsigned long mtime,
++			      struct recent_data *data)
++{
++	struct object *obj;
++	enum object_type type;
++
++	if (mtime <= data->timestamp)
++		return;
++
++	/*
++	 * We do not want to call parse_object here, because
++	 * inflating blobs and trees could be very expensive.
++	 * However, we do need to know the correct type for
++	 * later processing, and the revision machinery expects
++	 * commits and tags to have been parsed.
++	 */
++	type = sha1_object_info(sha1, NULL);
++	if (type < 0)
++		die("unable to get object info for %s", sha1_to_hex(sha1));
++
++	switch (type) {
++	case OBJ_TAG:
++	case OBJ_COMMIT:
++		obj = parse_object_or_die(sha1, NULL);
++		break;
++	case OBJ_TREE:
++		obj = (struct object *)lookup_tree(sha1);
++		break;
++	case OBJ_BLOB:
++		obj = (struct object *)lookup_blob(sha1);
++		break;
++	default:
++		die("unknown object type for %s: %s",
++		    sha1_to_hex(sha1), typename(type));
++	}
++
++	if (!obj)
++		die("unable to lookup %s", sha1_to_hex(sha1));
++
++	add_pending_object(data->revs, obj, "");
++}
++
++static int add_recent_loose(const unsigned char *sha1,
++			    const char *path, void *data)
++{
++	struct stat st;
++	struct object *obj = lookup_object(sha1);
++
++	if (obj && obj->flags & SEEN)
++		return 0;
++
++	if (stat(path, &st) < 0) {
++		/*
++		 * It's OK if an object went away during our iteration; this
++		 * could be due to a simultaneous repack. But anything else
++		 * we should abort, since we might then fail to mark objects
++		 * which should not be pruned.
++		 */
++		if (errno == ENOENT)
++			return 0;
++		return error("unable to stat %s: %s",
++			     sha1_to_hex(sha1), strerror(errno));
++	}
++
++	add_recent_object(sha1, st.st_mtime, data);
++	return 0;
++}
++
++static int add_recent_packed(const unsigned char *sha1,
++			     struct packed_git *p, uint32_t pos,
++			     void *data)
++{
++	struct object *obj = lookup_object(sha1);
++
++	if (obj && obj->flags & SEEN)
++		return 0;
++	add_recent_object(sha1, p->mtime, data);
++	return 0;
++}
++
++static int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
++						  unsigned long timestamp)
++{
++	struct recent_data data;
++	int r;
++
++	data.revs = revs;
++	data.timestamp = timestamp;
++
++	r = for_each_loose_object(add_recent_loose, &data);
++	if (r)
++		return r;
++	return for_each_packed_object(add_recent_packed, &data);
++}
++
+ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
++			    unsigned long mark_recent,
+ 			    struct progress *progress)
+ {
+ 	struct connectivity_progress cp;
+@@ -248,5 +350,14 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	if (prepare_revision_walk(revs))
+ 		die("revision walk setup failed");
+ 	walk_commit_list(revs, &cp);
++
++	if (mark_recent) {
++		if (add_unseen_recent_objects_to_traversal(revs, mark_recent))
++			die("unable to mark recent objects");
++		if (prepare_revision_walk(revs))
++			die("revision walk setup failed");
++		walk_commit_list(revs, &cp);
++	}
++
+ 	display_progress(cp.progress, cp.count);
+ }
+diff --git a/reachable.h b/reachable.h
+index 5d082ad..141fe30 100644
+--- a/reachable.h
++++ b/reachable.h
+@@ -2,6 +2,7 @@
+ #define REACHEABLE_H
+ 
+ struct progress;
+-extern void mark_reachable_objects(struct rev_info *revs, int mark_reflog, struct progress *);
++extern void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
++				   unsigned long mark_recent, struct progress *);
+ 
+ #endif
+diff --git a/t/t6501-freshen-objects.sh b/t/t6501-freshen-objects.sh
+new file mode 100755
+index 0000000..de941c2
+--- /dev/null
++++ b/t/t6501-freshen-objects.sh
+@@ -0,0 +1,88 @@
++#!/bin/sh
++#
++# This test covers the handling of objects which might have old
++# mtimes in the filesystem (because they were used previously)
++# and are just now becoming referenced again.
++#
++# We're going to do two things that are a little bit "fake" to
++# help make our simulation easier:
++#
++#   1. We'll turn off reflogs. You can still run into
++#      problems with reflogs on, but your objects
++#      don't get pruned until both the reflog expiration
++#      has passed on their references, _and_ they are out
++#      of prune's expiration period. Dropping reflogs
++#      means we only have to deal with one variable in our tests,
++#      but the results generalize.
++#
++#   2. We'll use a temporary index file to create our
++#      works-in-progress. Most workflows would mention
++#      referenced objects in the index, which prune takes
++#      into account. However, many operations don't. For
++#      example, a partial commit with "git commit foo"
++#      will use a temporary index. Or they may not need
++#      an index at all (e.g., creating a new commit
++#      to refer to an existing tree).
++
++test_description='check pruning of dependent objects'
++. ./test-lib.sh
++
++# We care about reachability, so we do not want to use
++# the normal test_commit, which creates extra tags.
++add () {
++	echo "$1" >"$1" &&
++	git add "$1"
++}
++commit () {
++	test_tick &&
++	add "$1" &&
++	git commit -m "$1"
++}
++
++test_expect_success 'disable reflogs' '
++	git config core.logallrefupdates false &&
++	rm -rf .git/logs
++'
++
++test_expect_success 'setup basic history' '
++	commit base
++'
++
++test_expect_success 'create and abandon some objects' '
++	git checkout -b experiment &&
++	commit abandon &&
++	git checkout master &&
++	git branch -D experiment
++'
++
++test_expect_success 'simulate time passing' '
++	find .git/objects -type f |
++	xargs test-chmtime -v -86400
++'
++
++test_expect_success 'start writing new commit with old blob' '
++	tree=$(
++		GIT_INDEX_FILE=index.tmp &&
++		export GIT_INDEX_FILE &&
++		git read-tree HEAD &&
++		add unrelated &&
++		add abandon &&
++		git write-tree
++	)
++'
++
++test_expect_success 'simultaneous gc' '
++	git gc --prune=12.hours.ago
++'
++
++test_expect_success 'finish writing out commit' '
++	commit=$(echo foo | git commit-tree -p HEAD $tree) &&
++	git update-ref HEAD $commit
++'
++
++# "abandon" blob should have been rescued by reference from new tree
++test_expect_success 'repository passes fsck' '
++	git fsck
++'
++
++test_done
+-- 
+2.1.1.566.gdb1f904
