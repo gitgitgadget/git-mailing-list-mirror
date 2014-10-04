@@ -1,67 +1,74 @@
-From: Wieland Hoffmann <themineo@gmail.com>
-Subject: [PATCH] git-tag.txt: Add a missing hyphen to `-s`
-Date: Sat,  4 Oct 2014 18:27:16 +0200
-Message-ID: <1412440036-20067-1-git-send-email-themineo@gmail.com>
-Cc: Wieland Hoffmann <themineo@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 04 18:28:30 2014
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Submodules and GIT_ALTERNATE_OBJECT_DIRECTORIES
+Date: Sat, 04 Oct 2014 20:03:51 +0200
+Message-ID: <54303687.5020006@web.de>
+References: <878ul19r5y.fsf@steelpick.2x.cz> <542E85B5.3020101@web.de> <87tx3l4ban.fsf@steelpick.2x.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Vokac Michal <michal.vokac@comap.cz>
+To: Michal Sojka <sojkam1@fel.cvut.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 04 20:04:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XaSC5-00030Z-Qb
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Oct 2014 18:28:30 +0200
+	id 1XaTgY-00083Z-Ig
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Oct 2014 20:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbaJDQ2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Oct 2014 12:28:24 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:34505 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751165AbaJDQ2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Oct 2014 12:28:06 -0400
-Received: by mail-wg0-f47.google.com with SMTP id x13so3591315wgg.6
-        for <git@vger.kernel.org>; Sat, 04 Oct 2014 09:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=eEdrlaXzrDXkd6I6dPCNHyfRNpYaLrCHZADwzZeiIkA=;
-        b=OpA61TonvYm9Amv49zXahuEXc06z6CeYlTipPJRpxDk8ar7aZEZ98ZBjw0Mc/bH21L
-         DWCgeDiqnd0GyhFBbIjNy0RfjfRm6P4XD4eunF8k989/WSMPD7WMWHm8ubCq5me8184p
-         cHcDtmNcvME/VvQV0jkF0Ry2VBmOE5n8WBi1Q2QyO8uzFy+CCuFwkOKMY+7UhscjB88y
-         tbyEfYBjkDlerltg/bwko2ciUrpnW24JVPcP6NjiHVfwqeRQ+59yA5WyfwJbOM+foOwR
-         OrK+W8KJv82AUHDO3wpgYLFxJLe4bMd4qo9GrQxce5DPUIG8rsTE3022OkkmX66ezLjQ
-         OO6Q==
-X-Received: by 10.181.9.73 with SMTP id dq9mr6827316wid.40.1412440084504;
-        Sat, 04 Oct 2014 09:28:04 -0700 (PDT)
-Received: from localhost.localdomain (pD9FDCAF4.dip0.t-ipconnect.de. [217.253.202.244])
-        by mx.google.com with ESMTPSA id u8sm5410802wia.24.2014.10.04.09.28.03
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 04 Oct 2014 09:28:04 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2
+	id S1751454AbaJDSD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Oct 2014 14:03:58 -0400
+Received: from mout.web.de ([212.227.17.12]:63830 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750928AbaJDSD5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Oct 2014 14:03:57 -0400
+Received: from [192.168.178.41] ([79.211.125.194]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MKJ7S-1Xc7Zt0WZC-001fV5; Sat, 04 Oct 2014 20:03:55
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <87tx3l4ban.fsf@steelpick.2x.cz>
+X-Provags-ID: V03:K0:XqmeWFLMjNHc2xqtgT7/DkU9NS+S9sdn94s7X8923Tr2ufW4iOf
+ vmvMdU0lV1WfFE3PZ2h+FNdt+b14EqrGjlVD/97Exbj+xK92X0c/kZemMsMdfgYZl86Vbb5
+ 5vRq3XoFXACbd482DNSXKqlXGpyhTnFjlzscwg1PbAkZHQF48KPCflzbMkwk9C/CUFAB7To
+ Tc9wBmnwhFEJN5VJLbPNw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257890>
 
-Signed-off-by: Wieland Hoffmann <themineo@gmail.com>
----
- Documentation/git-tag.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Am 03.10.2014 um 13:56 schrieb Michal Sojka:
+> On Fri, Oct 03 2014, Jens Lehmann wrote:
+>> Am 30.09.2014 um 15:25 schrieb Michal Sojka:
+>>> I'd like to shorten the time needed by our continuous integration (CI)
+>>> tool to clone the source repositories. Currently the full clone takes
+>>> about 10 minutes (even from local server). Our main repository has
+>>> several submodules so the CI tool runs "git submodule update --init". My
+>>> idea was to use GIT_ALTERNATE_OBJECT_DIRECTORIES to cache objects from
+>>> several submodule repositories locally. However, this does not work
+>>> because GIT_ALTERNATE_OBJECT_DIRECTORIES is considered local to the
+>>> super-project and is not propagated to the "git clone" for submodules
+>>> (git-submodule.sh calls clear_local_git_env).
+>>   >
+>>> My question is why is GIT_ALTERNATE_OBJECT_DIRECTORIES considered local
+>>> to the repository? If I could modify the command-line I would use the
+>>> "git submodule update" with the --reference option, which is propagated
+>>> to clones of all submodules. Letting GIT_ALTERNATE_OBJECT_DIRECTORIES
+>>> propagate to the submodules should have the same effect as --reference
+>>> option. So why it is not propagated?
+>>
+>> Because then it would /always/ propagate? So while that would have the
+>> same effect as using the --reference option, not using the --reference
+>> option would behave differently, no?
+>
+> That's a good reason, thanks. Fortunately, I found a way how to add
+> --reference to the submodule update command issued by the CI tool
+> (Bamboo). Instead of calling git directly, the CI tool calls my "git"
+> script, which modifies the command line in case of "submodule update"
+> and then calls the real git.
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 3209083..e953ba4 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -42,7 +42,7 @@ committer identity for the current user is used to find the
- GnuPG key for signing. 	The configuration variable `gpg.program`
- is used to specify custom GnuPG binary.
- 
--Tag objects (created with `-a`, `s`, or `-u`) are called "annotated"
-+Tag objects (created with `-a`, `-s`, or `-u`) are called "annotated"
- tags; they contain a creation date, the tagger name and e-mail, a
- tagging message, and an optional GnuPG signature. Whereas a
- "lightweight" tag is simply a name for an object (usually a commit
--- 
-2.1.2
+Good to hear that! In the CI tool we use at $dayjob (Jenkins) we do
+not use the automatic submodule update provided by the Git plugin
+but call submodule update in the shell execution before building it.
