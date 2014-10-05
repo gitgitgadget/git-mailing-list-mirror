@@ -1,188 +1,99 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 12/16] sha1_file: add for_each iterators for loose and
- packed objects
-Date: Sun, 05 Oct 2014 11:47:39 +0100
-Message-ID: <543121CB.8090909@ramsay1.demon.co.uk>
-References: <20141003202045.GA15205@peff.net> <20141003203219.GL16293@peff.net> <5430FE0A.4010806@web.de>
+From: Alberto Scotto <scotto.alberto.86@gmail.com>
+Subject: [bug] [UX] `stash save --untracked` produces a stash that *looks* empty
+Date: Sun, 5 Oct 2014 18:28:45 +0100
+Message-ID: <CACsY31pSeijqGC4Rw=q+qAGHJQ+bNibindVReYoZZACvYL7O+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>
-To: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 05 12:47:59 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 05 19:29:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XajM5-0005tK-Nv
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Oct 2014 12:47:58 +0200
+	id 1XapcN-0006xj-W2
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Oct 2014 19:29:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751265AbaJEKro convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Oct 2014 06:47:44 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:49867 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751152AbaJEKrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Oct 2014 06:47:43 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 9057540141F;
-	Sun,  5 Oct 2014 11:47:38 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 41B684013CA;
-	Sun,  5 Oct 2014 11:47:38 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
-	Sun,  5 Oct 2014 11:47:37 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <5430FE0A.4010806@web.de>
-X-MDF-HostID: 19
+	id S1751782AbaJER3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Oct 2014 13:29:08 -0400
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:63041 "EHLO
+	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751711AbaJER3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Oct 2014 13:29:06 -0400
+Received: by mail-oi0-f46.google.com with SMTP id h136so2720708oig.33
+        for <git@vger.kernel.org>; Sun, 05 Oct 2014 10:29:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=VjAxvHhmqmPZxWRNtNTAcZhu90B9LTsdzBjXDkM0H/U=;
+        b=ALFICoaNQlqG1NOsfPB3my/X0wNu16j8fLi87Yvda01Ppr/v+Xvd9WuyBe+jRnrSBf
+         1OqId2pudul+QL5vUiQb1Gr3FQV45RZL2FLf1RLQ9prZYA61e55ttZgnXHii6xGEGwfp
+         bqewssHBadswJ6FH8P86wClnTwlyVdfzY7zuoX0AYQfB8QUNOd0dqsWKv5tdLcDA1rT7
+         +A+ROP8IxTAZusJNFuQS4Os55q/PgSzqRXjajRx5VcX9/U0DTUzE+C6pk/SKtmKx+w4e
+         ZAjLZHL/pwKulOXcAmXyW/fCPM5RWmwPdlny/yFI54yZGgmqmpFp5xtOX81y19OpdIOw
+         n0XA==
+X-Received: by 10.182.63.105 with SMTP id f9mr4108498obs.59.1412530145850;
+ Sun, 05 Oct 2014 10:29:05 -0700 (PDT)
+Received: by 10.76.103.141 with HTTP; Sun, 5 Oct 2014 10:28:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257900>
 
-On 05/10/14 09:15, Ren=C3=A9 Scharfe wrote:
-> Am 03.10.2014 um 22:32 schrieb Jeff King:
->> We typically iterate over the reachable objects in a
->> repository by starting at the tips and walking the graph.
->> There's no easy way to iterate over all of the objects,
->> including unreachable ones. Let's provide a way of doing so.
->>
->> Signed-off-by: Jeff King <peff@peff.net>
->> ---
->>   cache.h     | 11 +++++++++++
->>   sha1_file.c | 62 +++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++++++
->>   2 files changed, 73 insertions(+)
->>
->> diff --git a/cache.h b/cache.h
->> index 7abe7f6..3826b4b 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -1270,6 +1270,17 @@ int for_each_loose_file_in_objdir(const char =
-*path,
->>                     each_loose_subdir_fn subdir_cb,
->>                     void *data);
->>
->> +/*
->> + * Iterate over loose and packed objects in both the local
->> + * repository and any alternates repositories.
->> + */
->> +typedef int each_packed_object_fn(const unsigned char *sha1,
->> +                  struct packed_git *pack,
->> +                  uint32_t pos,
->> +                  void *data);
->> +extern int for_each_loose_object(each_loose_object_fn, void *);
->> +extern int for_each_packed_object(each_packed_object_fn, void *);
->> +
->>   struct object_info {
->>       /* Request */
->>       enum object_type *typep;
->> diff --git a/sha1_file.c b/sha1_file.c
->> index 9fdad47..d017289 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -3313,3 +3313,65 @@ int for_each_loose_file_in_objdir(const char =
-*path,
->>       strbuf_release(&buf);
->>       return r;
->>   }
->> +
->> +struct loose_alt_odb_data {
->> +    each_loose_object_fn *cb;
->> +    void *data;
->> +};
->> +
->> +static int loose_from_alt_odb(struct alternate_object_database *alt=
-,
->> +                  void *vdata)
->> +{
->> +    struct loose_alt_odb_data *data =3D vdata;
->> +    return for_each_loose_file_in_objdir(alt->base,
->> +                         data->cb, NULL, NULL,
->> +                         data->data);
->> +}
->> +
->> +int for_each_loose_object(each_loose_object_fn cb, void *data)
->> +{
->> +    struct loose_alt_odb_data alt;
->> +    int r;
->> +
->> +    r =3D for_each_loose_file_in_objdir(get_object_directory(),
->> +                      cb, NULL, NULL, data);
->> +    if (r)
->> +        return r;
->> +
->> +    alt.cb =3D cb;
->> +    alt.data =3D data;
->> +    return foreach_alt_odb(loose_from_alt_odb, &alt);
->> +}
->> +
->> +int for_each_object_in_pack(struct packed_git *p, each_packed_objec=
-t_fn cb, void *data)
->=20
-> Should this one be declared static?  It seems to be used only in sha1=
-_file.c.
+Hi all,
 
-Heh, I was just about to make the same observation myself (with include=
-d patch).
+I've just found that:
+- given you have an empty staging area
+- and you have only untracked files in your working dir
+- when you do `git stash --untracked`
+- then `git stash show` gives you an empty output => stash looks empty
 
-I could imagine this function being useful elsewhere, but until it gain=
-s some
-more external callers I think it should remain static (so it doesn't ca=
-use a
-sparse warning), rather than add an extern declaration to cache.h (whic=
-h would
-also suppress sparse).
+My first thought was "oh god, my files are lost!"
+Second thought: "Jeez I found a bug in git! cool!"
+Then I found that actually `git stash apply` restores the apparently lost
+files
+So I think it's a UX issue.
+It cost me a few lost files already, as I thought "an empty stash? uhm..
+can't remember what/when I stashed.. whatever.. let's just delete it and
+clean up a little bit this mess of stashes".
 
-ATB,
-Ramsay Jones
 
->=20
->> +{
->> +    uint32_t i;
->> +    int r =3D 0;
->> +
->> +    for (i =3D 0; i < p->num_objects; i++) {
->> +        const unsigned char *sha1 =3D nth_packed_object_sha1(p, i);
->> +
->> +        if (!sha1)
->> +            return error("unable to get sha1 of object %u in %s",
->> +                     i, p->pack_name);
->> +
->> +        r =3D cb(sha1, p, i, data);
->> +        if (r)
->> +            break;
->> +    }
->> +    return r;
->> +}
->> +
->> +int for_each_packed_object(each_packed_object_fn cb, void *data)
->> +{
->> +    struct packed_git *p;
->> +    int r =3D 0;
->> +
->> +    prepare_packed_git();
->> +    for (p =3D packed_git; p; p =3D p->next) {
->> +        r =3D for_each_object_in_pack(p, cb, data);
->> +        if (r)
->> +            break;
->> +    }
->> +    return 0;
->> +}
->=20
-> Perhaps return r instead here?
->=20
-> Ren=C3=A9
->=20
->=20
-> --=20
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> .
->=20
+Here are the reproducible steps:
+
+   1. create new fresh git repo in $REPO_DIR
+   2. create a couple of files/dirs and commit
+   3. edit src/MyClass.java and commit
+   4. create dir src/new-dir with one file inside
+   5. edit file.txt and stage it
+   6. stash => stashes staged changes; only untracked files are left
+   7. stash -u => stashes untracked changes => working dir is clean
+   8. stash list
+   9. git stash show -p => empty output
+   10. git stash apply (restore stashed untracked files)
+
+
+I made a bash script that runs through those steps.
+Please check it out.
+https://gist.github.com/alb-i986/a4002f1ac50ce355278e
+
+Envs:
+
+   - Mac OSX 10.9.5
+   - Darwin 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17 19:50:11 PDT
+      2014; root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64
+      - git version 1.9.3 (Apple Git-50)
+      - GNU bash, version 3.2.51(1)-release (x86_64-apple-darwin13)
+   - Ubuntu precise <-
+   https://github.com/alb-i986/vagrantfiles/tree/master/basic
+      - Linux precise64 3.2.0-23-generic #36-Ubuntu SMP Tue Apr 10 20:39:51
+      UTC 2012 x86_64 x86_64 x86_64 GNU/Linux
+      - git version 1.7.9.5
+      - GNU bash, version 4.2.24(1)-release (x86_64-pc-linux-gnu)
+
+
+Thank you
+
+
+Alberto Scotto
+http://alb-i986.me
