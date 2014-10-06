@@ -1,80 +1,116 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH/RFC 5/5] add tests for checking the behaviour of "unset.variable"
-Date: Tue, 07 Oct 2014 01:13:36 +0530
-Message-ID: <5432F0E8.7020705@gmail.com>
-References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com> <1412256292-4286-6-git-send-email-tanayabh@gmail.com> <xmqqr3yqmdxa.fsf@gitster.dls.corp.google.com> <542DB2FE.609@gmail.com> <xmqqmw9emdax.fsf@gitster.dls.corp.google.com> <542DB711.9040503@gmail.com> <xmqqiok2m494.fsf@gitster.dls.corp.google.com> <vpqeguptz5k.fsf@anie.imag.fr> <xmqq1tqpm2na.fsf@gitster.dls.corp.google.com> <vpq4mvlgchj.fsf@anie.imag.fr> <xmqqeguolxow.fsf@gitster.dls.corp.google.com> <5432E67B.8070604@gmail.com> <CAPc5daXa_Maz3nTr4s=fxxL9FYs8VbndqX-2R_iwo4KRHCKQhA@mail.gmail.com>
+From: Hin-Tak Leung <htl10@users.sourceforge.net>
+Subject: Re: git svn's performance issue and strange pauses, and other thing
+Date: Tue, 7 Oct 2014 00:51:32 +0100
+Message-ID: <1412639492.85440.YahooMailBasic@web172306.mail.ir2.yahoo.com>
+Reply-To: htl10@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 06 21:43:46 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, stoklund@2pi.dk, sam@vilain.net,
+	stevenrwalter@gmail.com, waste.manager@gmx.de, amyrick@apple.com
+To: normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Tue Oct 07 01:51:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbECA-0006Vn-3f
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Oct 2014 21:43:46 +0200
+	id 1XbI42-0006k7-To
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 01:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720AbaJFTnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Oct 2014 15:43:42 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:38568 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991AbaJFTnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Oct 2014 15:43:41 -0400
-Received: by mail-pa0-f52.google.com with SMTP id fb1so5750802pad.25
-        for <git@vger.kernel.org>; Mon, 06 Oct 2014 12:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=xYSKim99W0BZuxn+U4835MNPQHINLrCIe/VlDzHe7ew=;
-        b=gC88uN2TfydjWAh1de25G/R7ZCiWuiil1CWnABVqsSsMsfm13hKE/dv2qrAdc/QIQk
-         PTKCM7eFA//3pn8Stg3l/AgKziYsIvm/cxk6uwVEbfDXCN+WCWrfBc76nb1zAX2z1jRZ
-         7yC24wJdm6OcbXq+Ojor8prGO2y9Ymt8mfAVu2h6IKsyCn6l+8YtU8wfhOU9pJhopWtE
-         EItTCXu0UYZez2fBzqXpVBLEyHZSyi9xn3Ke57awHy+UIALtqdXUejZyDDUrRXH7T2np
-         ba/9jsSg/k+PlmPJROgW8uaFkD/ORl+xFdA6bR/JJU6JJcX69mPRu+ATgjDUsDN3yUfI
-         TxSg==
-X-Received: by 10.70.36.79 with SMTP id o15mr3400783pdj.6.1412624621518;
-        Mon, 06 Oct 2014 12:43:41 -0700 (PDT)
-Received: from [127.0.0.1] ([223.176.254.133])
-        by mx.google.com with ESMTPSA id fs10sm11814785pdb.82.2014.10.06.12.43.39
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 06 Oct 2014 12:43:40 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CAPc5daXa_Maz3nTr4s=fxxL9FYs8VbndqX-2R_iwo4KRHCKQhA@mail.gmail.com>
+	id S1752215AbaJFXvf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Oct 2014 19:51:35 -0400
+Received: from nm20-vm5.bullet.mail.ir2.yahoo.com ([212.82.96.247]:37044 "EHLO
+	nm20-vm5.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751213AbaJFXve convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Oct 2014 19:51:34 -0400
+Received: from [212.82.98.52] by nm20.bullet.mail.ir2.yahoo.com with NNFMP; 06 Oct 2014 23:51:32 -0000
+Received: from [212.82.98.88] by tm5.bullet.mail.ir2.yahoo.com with NNFMP; 06 Oct 2014 23:51:32 -0000
+Received: from [127.0.0.1] by omp1025.mail.ir2.yahoo.com with NNFMP; 06 Oct 2014 23:51:32 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 667678.6104.bm@omp1025.mail.ir2.yahoo.com
+Received: (qmail 87739 invoked by uid 60001); 6 Oct 2014 23:51:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1412639492; bh=RRRc1mUbwnGd+yRi4F/1wVu0p+DMxaK6rDgAz6vUKzE=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=KAM8wjQWHUv99sVCaoS4xRX+lHxCcE/ClTDbfWmzyFMt3qHTmlfu6+VjA7j1CERdPG0ngJ4qy6LcAo88Oo9iBoYrMM4Rtd9q7eqzMBWEmBHznzI4ZEdkLqX3P5DJybYooc5a1AuEIxfYYNf6oXpNGbU+pmtaq2GHQFEO2YehiGY=
+X-YMail-OSG: uvzJKA4VM1lr4AKxYGmrTPs_vtKaX8K3n7BofCgTP_2roUJ
+ OGoNbzFThQC9rL8cyd_Tuk0X3CU5DIii7VqzbKFPnicme6i1nBjZ3e_KHlvz
+ EXcNi2mfVZqTK0R3YUGLZydwdX_PUmKQfhWDBrQ9MI0IwWGpgdhfUMV2BeRM
+ Heog2a9t5lLe09IhWctf5S8ynQyzGX4tYq.OJOcvezJpziQcJXhptOOsVHr_
+ LSjddNskJdvNcb6wMOo3KkZIFjN6J0eyg08i7fOgfBo0.KMFLxq0Tx5D5hw0
+ FibcEMwpYXOVkFrX.61E5g81QquHuEIQOyTj3rUzPlV.tuRS2px9Px2xra6u
+ eXCTPj4zpavjnzcFDjfD0YgO1H2sPr.o.CKDSfw.sS.b6cWT3yMSLptfJ0_1
+ Y7F7v6qHO92A1VdT7zl4Fl.TBbHcfuvpFMDgy1BEIDQzRX9SLVjKnUGedZTA
+ _s1d_Ut11pmQB0X.LxGrWB2jUZl0fdXyxK80e5j0NtqcM0gepEj.iLP3uRwe
+ Yi4dDrVb9jKxtCnf7aJorx.YuxtFKafyTRmfjzMhsnMAEK6WXADo4Klc4KjI
+ er4dfwvvXkPagFnmrhI7OIhwKqrpIaZ5RooxRD6ffsr7lPR62U88BmHejYYL
+ 4jXL8N7yNoQ--
+Received: from [86.30.137.134] by web172306.mail.ir2.yahoo.com via HTTP; Tue, 07 Oct 2014 00:51:32 BST
+X-Rocket-MIMEInfo: 002.001,LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpPbiBTdW4sIE9jdCA1LCAyMDE0IDAyOjAyIEJTVCBFcmljIFdvbmcgd3JvdGU6DQoNCj5FcmljIFdvbmcgPG5vcm1hbHBlcnNvbkB5aGJ0Lm5ldD4gd3JvdGU6DQo.PiBKYWtvYiBzZW50IHNvbWUgcGF0Y2hlcyBhIGZldyBtb250aHMgYWdvIHdoaWNoIHNlZW0gdG8gYWRkcmVzcyB0aGUNCj4.IGlzc3VlLsKgIFVuZm9ydHVuYXRlbHkgd2UgZm9yZ290IGFib3V0IHRoZW0gOngNCj4NCj5IaW4tVGFrOiBoYXZlIHlvdSB0cmllZCBKYWtvYidzIHBhdGNoZXMBMAEBAQE-
+X-RocketYMMF: hintak_leung
+X-Mailer: YahooMailClassic/799 YahooMailWebService/0.8.203.696
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257918>
 
-On 10/7/2014 12:58 AM, Junio C Hamano wrote:
-> 
-> The point is to prevent"git config --add foo.baz anothervalue" starting from
-> 
-> --- --- ---
-> [foo]
->   bar = some
-> [unset] variable = foo.baz
-> --- --- ---
-> 
-> from adding foo.baz next to existing foo.bar. We would want to end up with
-> 
-> --- --- ---
-> [foo]
->   bar = some
-> [unset] variable = foo.baz
-> [foo]
->   baz = anothervalue
-> --- --- ---
-> 
-> So "When dealing with foo.baz, ignore everything above the last unset.variable
-> that unsets foo.baz" is what I meant (and I think that is how I wrote).
+------------------------------
+On Sun, Oct 5, 2014 02:02 BST Eric Wong wrote:
+
+>Eric Wong <normalperson@yhbt.net> wrote:
+>> Jakob sent some patches a few months ago which seem to address the
+>> issue.=A0 Unfortunately we forgot about them :x
 >
+>Hin-Tak: have you tried Jakob's patches?=A0 I've taken another look,
+>signed-off and pushed to my master.
+>
+>> Can you take a look at the following two "mergeinfo-speedups"
+>> in my repo?=A0 (git://bogomips.org/git-svn)
+>>=20
+>> Jakob Stoklund Olesen (2):
+>>=A0 =A0 =A0=A0=A0git-svn: only look at the new parts of svn:mergeinfo
+>>=A0 =A0 =A0=A0=A0git-svn: only look at the root path for svn:mergeinf=
+o
+>>=20
+>> Also downloadable here:
+>>=20
+>> http://bogomips.org/git-svn.git/patch?id=3D9b258e721b30785357535
+>> http://bogomips.org/git-svn.git/patch?id=3D73409a2145e93b436d74a
+>>=20
+>> Can you please give them a try?
 
+Apologies - I applied them on top of 2.1.0 earlier today, and the svn r=
+epo just
+hasn't been changed much recently to show any interesting behavior
+with 'git svn fetch --all', so I thought about whether I should wait to=
+ report. Then
+I changed my mind, and decided what the hell, let's clone the whole
+thing again :-). So I made a new directory, run 'git init', just copy
+=2Egit/config from the old reop and am doing 'git svn fetch --all' in t=
+he new empty
+directory again.
 
-Yes, that was what I inferred too, I should have worded it more carefully, thanks.
+So far it seems to be good. But I am only at revision 35700-ish at the =
+moment,
+and the whole thing is 66700-ish. Oh, I forgot to mention that the stra=
+nge
+pauses seem to be followed by messages like these:
+
+W:svn cherry-pick ignored (/branches/R-2-12-branch:52939,54476,55265) -=
+ missing 492 commit(s) (eg 9bf20dca6a8b05dff28e6486b1613f10825972c9)
+W:svn cherry-pick ignored (/branches/R-2-13-branch:55265,55432) - missi=
+ng 231 commit(s) (eg 9290cf6ce2d7f6cca168cf326eed6e9fe760895f)
+W:svn cherry-pick ignored (/branches/R-2-15-branch:58894,59717) - missi=
+ng 405 commit(s) (eg ed84a373b33f728949edf3371829fc3414c343a8)
+W:svn cherry-pick ignored (/branches/R-3-0-branch:62497) - missing 154 =
+commit(s) (eg 9e4742d201771c9658417c2d2f83838e550e3162)
+W:svn cherry-pick ignored (/trunk:
+
+So presumably I'd only see interesting behavior when there are a number=
+ of branches.
+It seems the first branches are around revision 48000-ish, so I might h=
+ave
+to wait a bit.
+
+So far, the new clone hasn't created ".git/svn/.caches/" yet; and memor=
+y consumption seems
+okay also.
