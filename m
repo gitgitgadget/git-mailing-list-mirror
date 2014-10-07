@@ -1,207 +1,106 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH RFC] git-am: support any number of signatures
-Date: Wed, 8 Oct 2014 00:33:29 +0300
-Message-ID: <20141007213329.GB14632@redhat.com>
-References: <xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
- <20140615102736.GA11798@redhat.com>
- <xmqqy4wwraoz.fsf@gitster.dls.corp.google.com>
- <20140618030903.GA19593@redhat.com>
- <CAPc5daVTZynCKMubZmreAjBh3i51wPaAA+8vSRwB9dGrrJb6FA@mail.gmail.com>
- <xmqq38f2jed3.fsf@gitster.dls.corp.google.com>
- <20140922140144.GA9769@redhat.com>
- <CAP8UFD2W1r9859FgpBXqvdNLAfXoCwjpEFpTKXU6fGuC_8uvBg@mail.gmail.com>
- <20140923080700.GA16527@redhat.com>
- <CAP8UFD2FV2pvR4+N0fDLtentA_oWwYGRZ6rPtshi=TOAvXaRLA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-merge: mutually match SYNOPSIS and "usage".
+Date: Tue, 07 Oct 2014 14:31:31 -0700
+Message-ID: <xmqq1tqjefd8.fsf@gitster.dls.corp.google.com>
+References: <87wq8cnla9.fsf@osv.gnss.ru>
+	<xmqq4mvfg24e.fsf@gitster.dls.corp.google.com>
+	<87bnpnsjrw.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 23:30:11 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Sergey Organov <sorganov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 23:31:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbcKg-0003DY-94
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 23:30:10 +0200
+	id 1XbcM6-0003oc-CG
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 23:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755092AbaJGVaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 17:30:04 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:7639 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753306AbaJGVaC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 17:30:02 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s97LTvjp017996
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Tue, 7 Oct 2014 17:29:57 -0400
-Received: from redhat.com (ovpn-116-74.ams2.redhat.com [10.36.116.74])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s97LTtg6029909;
-	Tue, 7 Oct 2014 17:29:56 -0400
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD2FV2pvR4+N0fDLtentA_oWwYGRZ6rPtshi=TOAvXaRLA@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1753695AbaJGVbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 17:31:34 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65283 "EHLO sasl.smtp.pobox.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752858AbaJGVbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 17:31:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 226FD149F2;
+	Tue,  7 Oct 2014 17:31:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fDAZf0Udq2XeMPIsWpZp/NtjXkg=; b=sHzADl
+	N5N8OnBWu2Km8awhsaaFZ9mnSwZfvc9J+W5hAhxw8Tfr5cfgc8gLRuncmEvWaSbL
+	hEtGvmBisIZTryQxWzwfR6qwZUOjUV1m6bFOioBELhvmkOv1wTcUR3iyuD8vWKgt
+	Pls631obxSTSdU/6CAUS5F1ikFU3cFWZWaTwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RIXTi3e5pyafnJI1QWGDmfJ+DXJcyezQ
+	5+UGBz3bp7+KTsT0cJMTRumDaWSv2arfwHYyoN1S+mZey1APE5jGhJAWw+397Ttt
+	uY21R9G5buuEFET6AurWedQSRIQbRdm7QTxZjP6+Ed30sClJ19Z7euineLdoQlHp
+	s4uDdz7u8PA=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18760149F1;
+	Tue,  7 Oct 2014 17:31:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 959FD149EF;
+	Tue,  7 Oct 2014 17:31:32 -0400 (EDT)
+In-Reply-To: <87bnpnsjrw.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+	08 Oct 2014 00:32:35 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4EA9B30C-4E69-11E4-935B-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 24, 2014 at 12:00:40PM +0200, Christian Couder wrote:
-> On Tue, Sep 23, 2014 at 10:07 AM, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > On Tue, Sep 23, 2014 at 09:45:50AM +0200, Christian Couder wrote:
-> >> This is probably not as simple as you would like but it works with
-> >> something like:
-> >>
-> >> $ git interpret-trailers --trailer "Acked-by: Michael S. Tsirkin
-> >> <mst@redhat.com>" --trailer "Reviewed-by: Michael S. Tsirkin
-> >> <mst@redhat.com>"  --trailer "Tested-by: Michael S. Tsirkin
-> >> <mst@redhat.com>" 0001-foo.patch >to_apply/0001-foo.patch
-> >>
-> >> and then:
-> >>
-> >> $ git am to_apply/*.patch
-> >>
-> >> Also by using something like:
-> >>
-> >> $ git config trailer.a.key Acked-by
-> >> $ git config trailer.r.key Reviewed-by
-> >> $ git config trailer.t.key Tested-by
-> >
-> > I would like multiple keys to match a specific
-> > letter, e.g. as a maintainer I need
-> > both reviewed by and signed off by when I
-> > apply a patch, I like applying them with
-> > a single "-s m".
-> 
-> That's different from what you implemented in your patch.
-> And franckly I think that for this kind of specific use cases, you
-> could create your own aliases, either Git aliases or just shell
-> aliases.
-> 
-> For example if we implement default values and make git am call git
-> interpret-trailers, a shell alias could simply be:
-> 
-> alias gamsm='git am --trailer r --trailer s'
-> 
-> I use "git log --oneline --decorate --graph" very often, so I made my
-> own alias for it, and I suppose a lot of other people have done so.
-> 
-> The number of people who will use trailers will probably be much
-> smaller than the number of people using git log, so if we don't make
-> shortcuts for "git log --oneline --decorate --graph", I see no ground
-> to ask for a specific shortcut that adds both a reviewed by and a
-> signed off by.
+Sergey Organov <sorganov@gmail.com> writes:
 
-I've been thinking: how about a generic ability to add option shortcuts
-for commands in .config?
-For example:
+> Junio C Hamano <gitster@pobox.com> writes:
+> ...
+> I was looking at the merge.c code, and that's how it seems to work. You
+> can get new semantics without -m, and you can't get old semantics with
+> -m, isn't it? It looks like the set of descriptions I produced is
+> formally correct.
 
-[am "-z"]
-	command = "--trailer foobar"
+The thing is, with "-m <msg>" we will never fall into the
+traditional syntax, hence "git merge -m <msg> <msg> HEAD <commit>"
+appear to be allowed with "git merge [options] <msg> HEAD
+<commit>...", but it is not.
 
-would replace any -z in git am command line with --trailer foobar.
+And the inverse is not true (an obvious example is "git merge
+$branch", even though it does not have "-m <msg>" it uses the modern
+& common.
 
+So the updated SYNOPSIS is not really helping.
 
-Does this sound useful?
+>> In other words, I agree with your motivation to call for attention
+>> that the command behaves differently with and without "-m", but I do
+>> not think that part of the change in this patch achieves it well.
+>
+> Any particular suggestion?
 
+I was going to suggest "explain how the traditional syntax is
+triggered in the DESCRIPTION section", but it turns out that we
+already do that.
 
-> >> the first command could be simplified to:
-> >>
-> >> $ git interpret-trailers --trailer "a: Michael S. Tsirkin
-> >> <mst@redhat.com>" --trailer "r: Michael S. Tsirkin <mst@redhat.com>"
-> >> --trailer "t: Michael S. Tsirkin <mst@redhat.com>" 0001-foo.patch
-> >> >to_apply/0001-foo.patch
-> >>
-> >> And if you use an env variable:
-> >>
-> >> $ ME="Michael S. Tsirkin <mst@redhat.com>"
-> >> $ git interpret-trailers --trailer "a: $ME" --trailer "r: $ME"
-> >> --trailer "t: $ME" 0001-foo.patch >to_apply/0001-foo.patch
-> >>
-> >> Maybe later we will integrate git interpret-trailers with git commit,
-> >> git am and other commands, so that you can do directly:
-> >>
-> >> git am --trailer "a: $ME" --trailer "r: $ME"  --trailer "t: $ME" 0001-foo.patch
-> >>
-> >> Maybe we wil also assign a one letter shortcut to --trailer, for
-> >> example "z", so that could be:
-> >>
-> >> git am -z "a: $ME" -z "r: $ME"  -z "t: $ME" 0001-foo.patch
-> >
-> > -s could apply here, right?
-> 
-> I don't know what we will do with -s. Maybe if we use -z, we don't need -s.
-> 
-> > It doesn't have a parameter at the moment.
-> 
-> We will have to discuss that kind of thing when we make it possible
-> for git commit, git am and maybe other commands to accept trailers
-> arguments and pass them to git interpret-trailers.
-> 
-> In his email Junio seems to say that we don't need a shortcut like -z,
-> we could only have --trailer.
-> And I think that it is indeed sound to at least wait a little before
-> using up one shortcut like -z in many commands.
-> 
-> >> We could also allow many separators in the same -z argument as long as
-> >> they are separated by say "~",
-> >
-> > I think -z a -z r -z t is enough.
-> 
-> Great! I think you will likely have at least "--trailer a --trailer r
-> --trailer t", but I don't think it is too bad as you can use aliases
-> to make it shorter to type.
-> 
-> >> so you could have:
-> >>
-> >> git am -z "a: $ME~r: $ME~t: $ME" 0001-foo.patch
-> >>
-> >> And then we could also allow people to define default values for
-> >> trailers with something like:
-> >>
-> >> $ git config trailer.a.defaultvalue "Michael S. Tsirkin <mst@redhat.com>"
-> >> $ git config trailer.r.defaultvalue "Michael S. Tsirkin <mst@redhat.com>"
-> >> $ git config trailer.t.defaultvalue "Michael S. Tsirkin <mst@redhat.com>"
-> >
-> > I'm kind of confused by the key/value concept.
-> 
-> A "defaultvalue" would be the value used when no value is passed.
-> The "key" is just what we will use in the first part of the trailer
-> (the part before the separator).
-> 
-> For example with the above "defaultvalue" and "key", "--trailer a:
-> Junio <gitster@pobox.com>" would add:
-> 
-> Acked-by: Junio <gitster@pobox.com>
-> 
-> while "--trailer a" would add:
-> 
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> 
-> > Can't I define the whole 'Acked-by: Michael S. Tsirkin <mst@redhat.com>'
-> > string as the key?
-> 
-> The whole 'Acked-by: Michael S. Tsirkin <mst@redhat.com>' is a full
-> trailer, not a "key".
-> 
-> And it is not possible right now to define a full trailer. Maybe we
-> could find a way to make it possible, but a default value and a way to
-> have a small nickname for the token (like "a" for "Acked-by") should
-> get people quite far. And then for very specific use cases, it may be
-> better to use aliases anyway.
-> 
-> >> So that in the end you could have:
-> >>
-> >> git am -z a~r~t 0001-foo.patch
-> >>
-> >> which is very close to "git am -s art".
-> >
-> > If I figure out the defaultvalue thing, I might
-> > find the time to work on git am integration.
-> 
-> That would be great!
-> 
-> Thanks,
-> Christian.
+      The second syntax (<msg> HEAD <commit>...) is supported for
+      historical reasons. Do not use it from the command line or in
+      new scripts. It is the same as git merge -m <msg> <commit>....
+
+Strictly speaking, I think it is not qute "the same"---I recall
+vaguely that it broke tests if you replace the traditional-style
+invocation in 'git pull' with the -m <msg> syntax, but I do not have
+details handy; you may want to try it out if you are interested.
+
+So I would think
+
+	SYNOPSIS
+        	git merge [options] <commit>...
+		git merge [options] <msg> HEAD <commit>...
+                git merge --abort
+
+should be sufficient, possibly with some clarification on "The
+second syntax" paragraph in the DESCRIPTION section.
