@@ -1,75 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] git-merge: implement --ff-only-merge option.
-Date: Tue, 07 Oct 2014 13:27:30 -0700
-Message-ID: <xmqqegujeibx.fsf@gitster.dls.corp.google.com>
-References: <1412699710-3480-1-git-send-email-sorganov@gmail.com>
-	<xmqqzjd7enet.fsf@gitster.dls.corp.google.com>
-	<87fvezsk5k.fsf@osv.gnss.ru>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH] git-merge: mutually match SYNOPSIS and "usage".
+Date: Wed, 08 Oct 2014 00:32:35 +0400
+Message-ID: <87bnpnsjrw.fsf@osv.gnss.ru>
+References: <87wq8cnla9.fsf@osv.gnss.ru>
+	<xmqq4mvfg24e.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sergey Organov <sorganov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 22:27:38 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 22:32:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbbM9-0001nZ-Pk
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 22:27:38 +0200
+	id 1XbbR4-00043a-EW
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 22:32:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754371AbaJGU1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 16:27:34 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64507 "EHLO sasl.smtp.pobox.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753180AbaJGU1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 16:27:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51CB714ED0;
-	Tue,  7 Oct 2014 16:27:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kkCyEV1dHGQd93J1udpkjtDMZOY=; b=BlilEU
-	HhA6bmFLQSBH+0qLMvk4SBmmuclviztYk4pfwtOVJtLh+Ysisk4TjqnCahRGHViN
-	8k1nOVeWjNwmCOXtki3sG5Dh9M1VXfSrkDgT7bc82iU/J9f8DwQsqawUx7kRbvy/
-	mIcwSXMBk4+5hzKbi9OpgV8+I91Geera/PgxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eSdDiY4XBNM9Hil8TWbzBFvI3AVgaTdZ
-	1H6U4Vn7PLSjZs60BkQshEcMBGukZ+LZoGo8nIhBY7Y5gJxlLcKU5TVPfH5fPIOP
-	HjfCa4wfBD7R1x7N6Q1BwGbv8FRLsM6z85x/+QxIJKqvO95mOunZ0o+i+1cHKkbX
-	qOmB2dK3dXQ=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 487DE14ECF;
-	Tue,  7 Oct 2014 16:27:32 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7CC714ECD;
-	Tue,  7 Oct 2014 16:27:31 -0400 (EDT)
-In-Reply-To: <87fvezsk5k.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
-	08 Oct 2014 00:24:23 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5D5491B4-4E60-11E4-BAE0-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1752691AbaJGUci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 16:32:38 -0400
+Received: from mail.javad.com ([54.86.164.124]:44803 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750865AbaJGUch (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 16:32:37 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id 29F4E61878;
+	Tue,  7 Oct 2014 20:32:37 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1XbbQx-0005kn-Ee; Wed, 08 Oct 2014 00:32:35 +0400
+In-Reply-To: <xmqq4mvfg24e.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 07 Oct 2014 11:34:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257958>
 
-Sergey Organov <sorganov@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Why would it be useful to limit the history to a shape where all
->> merges are the ones that could have been fast-forwarded?
+> Sergey Organov <sorganov@gmail.com> writes:
 >
-> Except by true merge, how else can I express with git that 'n'
-> consequitive commits constitute single logical change (being originally
-> some topic branch)?
+>> SYNOPSIS section of the git-merge manual page had outdated explicit
+>> list of options.
+>>
+>> "usage" returned by 'git merge -h' didn't have "-m <msg>" that is one
+>> of essential distinctions between obsolete invocation form and the
+>> recent one.
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>
+> Please do not do two unrelated things in a single change.
 
-You are justifying --no-ff, aren't you?
+Well, I thought they are related, sorry.
 
-> Moreover, as topic branches are usually rebased before merge anyway,
-> why shouldn't I have simple capability to enforce it?
+> It may be a clear and very welcome improvement to change from
+> "explicitly list only often used options" to "just say [options] and
+> have the list of options and their descriptions".
 
-Because rebasing immediately before is considered a bad manner,
-i.e. encouraging a wrong workflow?
+OK, noticed.
+
+> I am not sure about the other change to single out "-m <msg>",
+> especially marking it as optional by enclosing it inside "[-m
+> <msg>]", makes much sense, as that is still not very easily
+> distinguishable from "git merge [options] [<commit>...]".
+
+I was looking at the merge.c code, and that's how it seems to work. You
+can get new semantics without -m, and you can't get old semantics with
+-m, isn't it? It looks like the set of descriptions I produced is
+formally correct.
+
+> In other words, I agree with your motivation to call for attention
+> that the command behaves differently with and without "-m", but I do
+> not think that part of the change in this patch achieves it well.
+
+Any particular suggestion?
+
+Thanks.
+
+-- 
+Sergey.
