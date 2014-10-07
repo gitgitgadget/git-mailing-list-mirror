@@ -1,305 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use skip_prefix() to avoid more magic numbers
-Date: Tue, 07 Oct 2014 12:47:21 -0700
-Message-ID: <xmqqmw97ek6u.fsf@gitster.dls.corp.google.com>
-References: <5430427A.5080800@web.de> <20141005224919.GA19998@google.com>
-	<20141006011827.GA11027@peff.net>
-	<xmqqtx3fg31w.fsf@gitster.dls.corp.google.com>
-	<20141007191656.GB32374@peff.net> <20141007193309.GA22179@peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v4] MinGW(-W64) compilation
+Date: Tue, 07 Oct 2014 21:57:45 +0200
+Message-ID: <543445B9.508@kdbg.org>
+References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>	<20141006051707.GA23305@seldon> <5432E45A.8000208@kdbg.org> <xmqqvbnvemak.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 07 21:47:30 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Marat Radchenko <marat@slonopotamus.org>, 
+ msysGit <msysgit@googlegroups.com>,
+ git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCJYV6HBKQIL3C6RUECRUBDW3CIB6@googlegroups.com Tue Oct 07 21:57:52 2014
+Return-path: <msysgit+bncBCJYV6HBKQIL3C6RUECRUBDW3CIB6@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f184.google.com ([209.85.212.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbajJ-0008T3-9N
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 21:47:29 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbaJGTrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 15:47:25 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61459 "EHLO sasl.smtp.pobox.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752933AbaJGTrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 15:47:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CEF4413FFF;
-	Tue,  7 Oct 2014 15:47:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E9sKvAqzDKrCNESp/hG3ByDeSDk=; b=t0ePEg
-	+XHv00EUD4g4NwU0oo2gWgZXfqHaptnmSYX9I3sggGKCq9l9vsMe5K5x+08E/b1u
-	T2NofIXzKd02kMxGtGi7HTAe0DB4Q6x+0IGVF6brPP2QnMVgARgncYtIrfEfek1G
-	g4dNaX5YLfLRdR591ObkyNc/7OelnWjkkx9uA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qfkCv02wHf6UNl2+FkKJDAfImTRxLhBH
-	fjdyWKtLT2Hbxf0j0e+wNE4NCdsKA8oOiszFHWMs4bw/jC4neezabCdCl+0c8Mro
-	AYzqn2CroKjqPw4Kt4Rk6Lv32mTfPIQV/BeAU0ZMj645IVbk/3oGDsC6GEosHdOz
-	yzaOY3eVaro=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C500113FFE;
-	Tue,  7 Oct 2014 15:47:23 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21C6B13FFC;
-	Tue,  7 Oct 2014 15:47:23 -0400 (EDT)
-In-Reply-To: <20141007193309.GA22179@peff.net> (Jeff King's message of "Tue, 7
-	Oct 2014 15:33:09 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C1B00AD6-4E5A-11E4-AB8A-855A93717476-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257951>
+	(envelope-from <msysgit+bncBCJYV6HBKQIL3C6RUECRUBDW3CIB6@googlegroups.com>)
+	id 1XbatK-0004fk-DD
+	for gcvm-msysgit@m.gmane.org; Tue, 07 Oct 2014 21:57:50 +0200
+Received: by mail-wi0-f184.google.com with SMTP id cc10sf486242wib.1
+        for <gcvm-msysgit@m.gmane.org>; Tue, 07 Oct 2014 12:57:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=qotY/EcqIN4klH/2utdu/keq9CP4mYKJ3hQFMyb26g8=;
+        b=GDgBoPIAZJDGDirEPz8t0To+XfFKhHUwzTCdlZ5Q5C3mziTxBcOyLFtFu1gbRLM09k
+         XiktLWvDt9GdyA8xrQQ47bqkXGbiMN+BHZHRDa3P43rJMP3BSi8SSdGmPpxpbcR4Eg2W
+         WdrqBN9Prn7UYwT17yTC3sHfnyZZl9YCnnQq32zglt8MDnLH/gda7fQDZEjN2K2l8UJd
+         qL65oGTMzqcD/9Plluadnq9tp4SOQW0fxO+F8KVCG5pDTzHI+bYDrhcyXHrw+UL+iivy
+         zdK62eqGDqsfZzHvvZtYaeYAfUloLH5O/eEbRbOICni8ygu5CbsZJkousSzU1/ZSuSbM
+         Hkfg==
+X-Received: by 10.152.87.13 with SMTP id t13mr27905laz.37.1412711870125;
+        Tue, 07 Oct 2014 12:57:50 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.42.212 with SMTP id q20ls742597lal.22.gmail; Tue, 07 Oct
+ 2014 12:57:48 -0700 (PDT)
+X-Received: by 10.152.26.225 with SMTP id o1mr885208lag.4.1412711868440;
+        Tue, 07 Oct 2014 12:57:48 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp1.bon.at. [213.33.87.15])
+        by gmr-mx.google.com with ESMTPS id ed3si775028wib.1.2014.10.07.12.57.48
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Oct 2014 12:57:48 -0700 (PDT)
+Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.15;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jC8bf48syz5tlD;
+	Tue,  7 Oct 2014 21:57:34 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 928E119F361;
+	Tue,  7 Oct 2014 21:57:45 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+In-Reply-To: <xmqqvbnvemak.fsf@gitster.dls.corp.google.com>
+X-Original-Sender: j6t@kdbg.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257952>
 
-Jeff King <peff@peff.net> writes:
+Am 07.10.2014 um 21:01 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> Am 06.10.2014 um 07:17 schrieb Marat Radchenko:
+>>> On Tue, Sep 30, 2014 at 11:02:29AM +0400, Marat Radchenko wrote:
+>>>> This patch series fixes building on modern MinGW and MinGW-W64 (including x86_64!).
+>>>
+>>> Junio, ping?
+>>>
+>>
+>> Sorry, I forgot to report that this updated series works now for me.
+>>
+>> The patches all look reasonable. I don't have an opinion on the
+>> restriction that MSVC < 2010 can't be used anymore (path 08/14).
+> 
+> So, is that an Ack, or would you prefer to cook this first in
+> msysgit tree and then feed the result as part of "This series is to
+> shrink the difference between the mainline and msysgit" later?
 
-> Subject: color_parse: do not mention variable name in error message
-> ...
-> I think the two-line errors are kind of ugly. It does match how
-> config_error_nonbool works, which also propagates its errors, and looks
-> like:
->
->   $ git -c color.branch.plain branch
->   error: Missing value for 'color.branch.plain'
->   fatal: unable to parse 'color.branch.plain' from command-line config
->
-> We could instead make color_parse silently return -1, and leave it up to
-> the caller to complain (and probably add die_bad_color_config() or
-> similar to avoid repetition in the config callers).
+At this time, it's really just a "works for me" report, because I didn't
+look carefully at each patch. I may do that at some time later.
 
-Yeah, in the longer term we would want to do something like that to
-fix both nonbool and this one, but for now this should help avoid
-confusion.
+If someone from the msysgit crew (I don't count myself to it) could
+report "works for us, too", then the series could go into your tree
+right away, in my opinion.
 
-Thanks for a nice analysis, write-up and patch.
+-- Hannes
 
->
->  builtin/branch.c       |  3 +--
->  builtin/clean.c        |  3 +--
->  builtin/commit.c       |  3 +--
->  builtin/config.c       |  9 ++++++---
->  builtin/for-each-ref.c |  6 ++++--
->  color.c                | 13 ++++++-------
->  color.h                |  4 ++--
->  diff.c                 |  3 +--
->  grep.c                 |  2 +-
->  log-tree.c             |  3 +--
->  pretty.c               |  5 ++---
->  11 files changed, 26 insertions(+), 28 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 2c97141..35c786d 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -93,8 +93,7 @@ static int git_branch_config(const char *var, const char *value, void *cb)
->  			return 0;
->  		if (!value)
->  			return config_error_nonbool(var);
-> -		color_parse(value, var, branch_colors[slot]);
-> -		return 0;
-> +		return color_parse(value, branch_colors[slot]);
->  	}
->  	return git_color_default_config(var, value, cb);
->  }
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index 3beeea6..a7e7b0b 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -116,8 +116,7 @@ static int git_clean_config(const char *var, const char *value, void *cb)
->  			return 0;
->  		if (!value)
->  			return config_error_nonbool(var);
-> -		color_parse(value, var, clean_colors[slot]);
-> -		return 0;
-> +		return color_parse(value, clean_colors[slot]);
->  	}
->  
->  	if (!strcmp(var, "clean.requireforce")) {
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index c45613a..407566d 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1328,8 +1328,7 @@ static int git_status_config(const char *k, const char *v, void *cb)
->  			return 0;
->  		if (!v)
->  			return config_error_nonbool(k);
-> -		color_parse(v, k, s->color_palette[slot]);
-> -		return 0;
-> +		return color_parse(v, s->color_palette[slot]);
->  	}
->  	if (!strcmp(k, "status.relativepaths")) {
->  		s->relative_paths = git_config_bool(k, v);
-> diff --git a/builtin/config.c b/builtin/config.c
-> index 37305e9..8cc2604 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -296,7 +296,8 @@ static int git_get_color_config(const char *var, const char *value, void *cb)
->  	if (!strcmp(var, get_color_slot)) {
->  		if (!value)
->  			config_error_nonbool(var);
-> -		color_parse(value, var, parsed_color);
-> +		if (color_parse(value, parsed_color) < 0)
-> +			return -1;
->  		get_color_found = 1;
->  	}
->  	return 0;
-> @@ -309,8 +310,10 @@ static void get_color(const char *def_color)
->  	git_config_with_options(git_get_color_config, NULL,
->  				&given_config_source, respect_includes);
->  
-> -	if (!get_color_found && def_color)
-> -		color_parse(def_color, "command line", parsed_color);
-> +	if (!get_color_found && def_color) {
-> +		if (color_parse(def_color, parsed_color) < 0)
-> +			die(_("unable to parse default color value"));
-> +	}
->  
->  	fputs(parsed_color, stdout);
->  }
-> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> index fda0f04..7ee86b3 100644
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -671,7 +671,8 @@ static void populate_value(struct refinfo *ref)
->  		} else if (starts_with(name, "color:")) {
->  			char color[COLOR_MAXLEN] = "";
->  
-> -			color_parse(name + 6, "--format", color);
-> +			if (color_parse(name + 6, color) < 0)
-> +				die(_("unable to parse format"));
->  			v->s = xstrdup(color);
->  			continue;
->  		} else if (!strcmp(name, "flag")) {
-> @@ -1004,7 +1005,8 @@ static void show_ref(struct refinfo *info, const char *format, int quote_style)
->  		struct atom_value resetv;
->  		char color[COLOR_MAXLEN] = "";
->  
-> -		color_parse("reset", "--format", color);
-> +		if (color_parse("reset", color) < 0)
-> +			die("BUG: couldn't parse 'reset' as a color");
->  		resetv.s = color;
->  		print_value(&resetv, quote_style);
->  	}
-> diff --git a/color.c b/color.c
-> index f672885..7941e93 100644
-> --- a/color.c
-> +++ b/color.c
-> @@ -60,13 +60,12 @@ static int parse_attr(const char *name, int len)
->  	return -1;
->  }
->  
-> -void color_parse(const char *value, const char *var, char *dst)
-> +int color_parse(const char *value, char *dst)
->  {
-> -	color_parse_mem(value, strlen(value), var, dst);
-> +	return color_parse_mem(value, strlen(value), dst);
->  }
->  
-> -void color_parse_mem(const char *value, int value_len, const char *var,
-> -		char *dst)
-> +int color_parse_mem(const char *value, int value_len, char *dst)
->  {
->  	const char *ptr = value;
->  	int len = value_len;
-> @@ -76,7 +75,7 @@ void color_parse_mem(const char *value, int value_len, const char *var,
->  
->  	if (!strncasecmp(value, "reset", len)) {
->  		strcpy(dst, GIT_COLOR_RESET);
-> -		return;
-> +		return 0;
->  	}
->  
->  	/* [fg [bg]] [attr]... */
-> @@ -153,9 +152,9 @@ void color_parse_mem(const char *value, int value_len, const char *var,
->  		*dst++ = 'm';
->  	}
->  	*dst = 0;
-> -	return;
-> +	return 0;
->  bad:
-> -	die("bad color value '%.*s' for variable '%s'", value_len, value, var);
-> +	return error(_("invalid color value: %.*s"), value_len, value);
->  }
->  
->  int git_config_colorbool(const char *var, const char *value)
-> diff --git a/color.h b/color.h
-> index 9a8495b..f5beab1 100644
-> --- a/color.h
-> +++ b/color.h
-> @@ -77,8 +77,8 @@ int git_color_default_config(const char *var, const char *value, void *cb);
->  
->  int git_config_colorbool(const char *var, const char *value);
->  int want_color(int var);
-> -void color_parse(const char *value, const char *var, char *dst);
-> -void color_parse_mem(const char *value, int len, const char *var, char *dst);
-> +int color_parse(const char *value, char *dst);
-> +int color_parse_mem(const char *value, int len, char *dst);
->  __attribute__((format (printf, 3, 4)))
->  int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
->  __attribute__((format (printf, 3, 4)))
-> diff --git a/diff.c b/diff.c
-> index d7a5c81..d1bd534 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -248,8 +248,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
->  			return 0;
->  		if (!value)
->  			return config_error_nonbool(var);
-> -		color_parse(value, var, diff_colors[slot]);
-> -		return 0;
-> +		return color_parse(value, diff_colors[slot]);
->  	}
->  
->  	/* like GNU diff's --suppress-blank-empty option  */
-> diff --git a/grep.c b/grep.c
-> index 99217dc..4dc31ea 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -111,7 +111,7 @@ int grep_config(const char *var, const char *value, void *cb)
->  	if (color) {
->  		if (!value)
->  			return config_error_nonbool(var);
-> -		color_parse(value, var, color);
-> +		return color_parse(value, color);
->  	}
->  	return 0;
->  }
-> diff --git a/log-tree.c b/log-tree.c
-> index 877d976..7844f33 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -63,8 +63,7 @@ int parse_decorate_color_config(const char *var, const char *slot_name, const ch
->  		return 0;
->  	if (!value)
->  		return config_error_nonbool(var);
-> -	color_parse(value, var, decoration_colors[slot]);
-> -	return 0;
-> +	return color_parse(value, decoration_colors[slot]);
->  }
->  
->  /*
-> diff --git a/pretty.c b/pretty.c
-> index 31f2ede..59de1dc 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -963,9 +963,8 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
->  				return end - placeholder + 1;
->  			begin += 5;
->  		}
-> -		color_parse_mem(begin,
-> -				end - begin,
-> -				"--pretty format", color);
-> +		if (color_parse_mem(begin, end - begin, color) < 0)
-> +			die(_("unable to parse --pretty format"));
->  		strbuf_addstr(sb, color);
->  		return end - placeholder + 1;
->  	}
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
