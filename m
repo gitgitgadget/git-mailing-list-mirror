@@ -1,99 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Can I fetch an arbitrary commit by sha1?
-Date: Tue, 07 Oct 2014 09:52:33 -0700
-Message-ID: <xmqqwq8bizzi.fsf@gitster.dls.corp.google.com>
-References: <CAENte7htO13s91UJFNzW4aBhsGxE=LpnvaZfce+vqQU5+a-cYg@mail.gmail.com>
-	<CAPBPrnsA4KxNximtKXcC37kuwBHK0Esytdm4nsgLHkrJSg3Ufw@mail.gmail.com>
-	<20141002161006.GB2505@peff.net>
-	<CACh33FpWPuyJRryf6hzbAkqWJMwzz1mLLDDRxEQ0niT2CznTRg@mail.gmail.com>
-	<CACsJy8B0dbE0C3M0PO-EfaZ_bSxwGJSFVejEGFzjHSOZKOc+Jw@mail.gmail.com>
-	<20141007131257.GA24348@lanh>
+Subject: Re: [PATCH 08/16] t5304: use helper to report failure of "test foo = bar"
+Date: Tue, 07 Oct 2014 10:29:59 -0700
+Message-ID: <xmqqsiiziy94.fsf@gitster.dls.corp.google.com>
+References: <20141003202045.GA15205@peff.net>
+	<20141003202743.GH16293@peff.net> <5433E8CB.1050005@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Patrick Donnelly <batrick@batbytes.com>, Jeff King <peff@peff.net>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Git <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 18:52:53 2014
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 07 19:30:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbY09-00038V-8k
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 18:52:41 +0200
+	id 1XbYaU-0004Wr-2h
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 19:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754599AbaJGQwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 12:52:37 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60770 "EHLO sasl.smtp.pobox.com"
+	id S1754786AbaJGRaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 13:30:07 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57367 "EHLO sasl.smtp.pobox.com"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753881AbaJGQwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 12:52:36 -0400
+	id S1754548AbaJGRaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 13:30:04 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A1D6D145C5;
-	Tue,  7 Oct 2014 12:52:35 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D44151332E;
+	Tue,  7 Oct 2014 13:30:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tzNDfo0wg+FEFd/HRTIeLoqkI+w=; b=XoBlxb
-	2JuNesm5/OyI3PXqTBGJu7G64EQxGwPEj/FYK94iRSvb05jtBvRxaDUk012AcjN4
-	/+dbb/jmaX47R5EqDP9N8WPJVX3i4bPOIgFI8Oyq1ml2M3zJoA5Id2wyKRU3svvh
-	67IYuPjnmIVrZglIk5eZUpy7z6sv5yJ7EgfRY=
+	:content-type; s=sasl; bh=5HDi+JnwUihRSy8l/Q4PHDt2HKI=; b=g7QTy7
+	QKgOvaW6DEbuH2tpOOr3fNQdURr89ycq1420D0ylvf7n6t/2qjh19A4pfhvHAYme
+	W4FkT1LflxmpdEimThT/vNFQKrAa+d3JsPVpMZvaLkBcQzPz9tf25bHr4crGTobr
+	Esz+drbIhTu1dKdhZURmr0SGDWQa84WJHFfi4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i05jdEjWVEXnfihAGOdiXJ1QXDy4/F2G
-	uIAc5BCR9myicJ2oy/9RRyMZ7fST2D0HaC0m3Avh6TFcFYHOFiF9n3Y70aTTzoI/
-	9vAx0M4rLPRge78/AAEtXtvnSnp4xNI2nu7hfPOhxvr8492WwBhT0gj5FPkjBq+O
-	l5Cet/bEkhY=
+	:content-type; q=dns; s=sasl; b=MW/+sM10ce0I/c2YCXqS9a9f6Ilm6v+w
+	qhA/4+1nbRI9LjAUfNK+UsIk2Kej1xYpv7+eQ7FdbX7KjxCCBBnxUaDCMtEGpADw
+	txv2r1J5OCCDvpMng0zWHI5dWoD3A+YPe0rtaevBuIbYH9cvwWx7/zjTp6ukyVDT
+	4hvHdYtfZfc=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 98100145C4;
-	Tue,  7 Oct 2014 12:52:35 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C79FF1332D;
+	Tue,  7 Oct 2014 13:30:02 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 00230145C3;
-	Tue,  7 Oct 2014 12:52:34 -0400 (EDT)
-In-Reply-To: <20141007131257.GA24348@lanh> (Duy Nguyen's message of "Tue, 7
-	Oct 2014 20:12:57 +0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3AC521332B;
+	Tue,  7 Oct 2014 13:30:02 -0400 (EDT)
+In-Reply-To: <5433E8CB.1050005@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 07 Oct 2014 15:21:15 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 565396A8-4E42-11E4-809B-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 91BA770C-4E47-11E4-A31F-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257934>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Hmm.. Junio already did most of the work in 051e400 (helping
-> smart-http/stateless-rpc fetch race - 2011-08-05), so all we need to
-> do is enable uploadpack.allowtipsha1inwant and apply this patch
+> I don't like the three-argument version of test_eq. Wouldn't using a
+> comparison operator other than "=" would be very confusing, given that
+> "eq" is in the name of the function? It also doesn't look like you use
+> this feature.
 
-Not that patch, I would think.
-
-I would understand "if !stateless_rpc and !allowtipsha1 then it is
-an error", though.
-
-> -- 8< --
-> diff --git a/upload-pack.c b/upload-pack.c
-> index c789ec0..493f8ee 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -454,10 +454,6 @@ static void check_non_tip(void)
->  	char namebuf[42]; /* ^ + SHA-1 + LF */
->  	int i;
->  
-> -	/* In the normal in-process case non-tip request can never happen */
-> -	if (!stateless_rpc)
-> -		goto error;
-> -
->  	cmd.argv = argv;
->  	cmd.git_cmd = 1;
->  	cmd.no_stderr = 1;
-> -- 8< --
+> An alternative direction to go would be to specialize the function for
+> equality testing and delegate to test_cmp to get better output for
+> failures, but optimized to avoid excess process creation in the happy path:
 >
-> If we already let smart-http do this, I don't see any harm in letting
-> git protocol do the same (even though it's the the original reason why
-> this code exists).
-> --
-> Duy
+> test_eq () {
+> 	if test "$1" != "$2"
+> 	then
+> 		printf "%s" "$1" >expect &&
+> 		printf "%s" "$2" >actual &&
+> 		test_cmp expect actual
+> 	fi
+> }
+>
+> (but using properly-created temporary file names).
+
+I agree that it would be a good idea to use a randomly generated
+temporary filename that does not collide, as long as we make sure
+not to leave cruft in the working tree of the test and we leave the
+file there when the test script is run under "-i" or "-d" option.
+
+The above superficially looks nice; "! test_eq a b" would give
+useless output under "-v", and "test_ne a b" needs to be added if
+you go that route, though.
+
+Anyway, with the version posted, you cannot do "! test_eq a b",
+either but with "test_eq a b !=", you do not have to.
+
+	Side note. Yes, now I looked at it again, I agree that the
+	three-arg form is awkwards in at least two ways.  The
+	operator, if we are to take one, should be infix, and the
+	name "eq" no longer matches what it does when it is given an
+	operator.
+
+The function is similar to test_cmp which takes two files but takes
+two strings, so "test_cmp_str" or something perhaps (we already have
+test_cmp_rev to compare two revisions, and the suggested name
+follows that pattern)?
