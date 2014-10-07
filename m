@@ -1,89 +1,96 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: Re: Colors in __git_ps1
-Date: Tue, 07 Oct 2014 20:46:31 +0200
-Message-ID: <54343507.4010600@xs4all.nl>
-References: <CAPWNY8UN+RfDXFgjC0DOtjXhZf7noPp6vtv70bwwPAoh0azgnQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use skip_prefix() to avoid more magic numbers
+Date: Tue, 07 Oct 2014 11:21:58 -0700
+Message-ID: <xmqqfvezg2pl.fsf@gitster.dls.corp.google.com>
+References: <5430427A.5080800@web.de> <20141005224919.GA19998@google.com>
+	<20141006011827.GA11027@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?TWFudGFzIE1pa3VsxJduYXM=?= <grawity@gmail.com>,
-	"Eduardo R. D'Avila" <erdavila@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 20:46:43 2014
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 07 20:22:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbZmT-0001YQ-3Z
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 20:46:41 +0200
+	id 1XbZOh-00006B-JT
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 20:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755161AbaJGSqg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Oct 2014 14:46:36 -0400
-Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:1566 "EHLO
-	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755158AbaJGSqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 14:46:35 -0400
-Received: from localhost.localdomain (simaj.xs4all.nl [80.100.201.97])
-	(authenticated bits=0)
-	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id s97IkVG9066095;
-	Tue, 7 Oct 2014 20:46:32 +0200 (CEST)
-	(envelope-from s.oosthoek@xs4all.nl)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <CAPWNY8UN+RfDXFgjC0DOtjXhZf7noPp6vtv70bwwPAoh0azgnQ@mail.gmail.com>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1754657AbaJGSWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 14:22:03 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63672 "EHLO sasl.smtp.pobox.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753857AbaJGSWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 14:22:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0834D13B15;
+	Tue,  7 Oct 2014 14:22:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x5VGuYWUj4iqt5oLtxUjYXwfLpo=; b=kX7bpx
+	QwO2UAY1fGCceM8T2eIVFrxsA0BU+fyAMVEPPjbuUwrH+LqJ5Pl47YPJitipm1XE
+	sawo4YADnQiauE89+xMnZNI6eoNtT/IWZNPA6+sos+CptYlV43q2F1H55xhnbK0G
+	QEXjkE4cSrH1zwo5okAEWL+8BWw+6T7EuFQ7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D+3jTBlQfiGAs91UrL3AL9A91xN5Gdmc
+	HFeGnj9MLlH37LkrqSqOqIhy8RS1Uc+zX09X3anvoKK+TTvjR+h+WJWLptuAbtGi
+	bp7nqjMOnJpsqKi4TnEqemmHZhguzuh3SLMfTxr/cDh/pDVDhslNHI80MpFeW54S
+	ISWEAmy8Mmc=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C454B13B12;
+	Tue,  7 Oct 2014 14:22:00 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E06C13B11;
+	Tue,  7 Oct 2014 14:22:00 -0400 (EDT)
+In-Reply-To: <20141006011827.GA11027@peff.net> (Jeff King's message of "Sun, 5
+	Oct 2014 21:18:28 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D437F5BC-4E4E-11E4-8BF7-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257940>
 
-Dear Mantas,
+Jeff King <peff@peff.net> writes:
 
-On 07/10/14 18:18, Mantas Mikul=C4=97nas wrote:
-> There was a question in #git recently on why __git_ps1 from
-> git-prompt.sh does not allow colors in "$PS1 mode".
+> On Sun, Oct 05, 2014 at 03:49:19PM -0700, Jonathan Nieder wrote:
 >
->  From what I see, commit 1bfc51ac8141 talks about the need for \[ and
-> \] assignments in $PS1, and commit cf4cac4cfc13 says that PS1 mode
-> turns off color support since \[ and \] won't work; as I understand
-> it, this is because bash will output literal "\[" if __git_ps1 tries
-> to echo it.
+>> > --- a/builtin/branch.c
+>> > +++ b/builtin/branch.c
+>> > @@ -81,14 +81,16 @@ static int parse_branch_color_slot(const char *var, int ofs)
+>> >  
+>> >  static int git_branch_config(const char *var, const char *value, void *cb)
+>> >  {
+>> > +	const char *slot_name;
+>> > +
+>> >  	if (starts_with(var, "column."))
+>> >  		return git_column_config(var, value, "branch", &colopts);
+>> >  	if (!strcmp(var, "color.branch")) {
+>> >  		branch_use_color = git_config_colorbool(var, value);
+>> >  		return 0;
+>> >  	}
+>> > -	if (starts_with(var, "color.branch.")) {
+>> > -		int slot = parse_branch_color_slot(var, 13);
+>> > +	if (skip_prefix(var, "color.branch.", &slot_name)) {
+>> > +		int slot = parse_branch_color_slot(var, slot_name - var);
+>> 
+>> I wonder why the separate var and offset parameters exist in the first
+>> place.  Wouldn't taking a single const char * so the old code could use
+>> 'var + 13' instead of 'var, 13' have worked?
 >
-> Internally, \[ and \] are translated by bash into 0x01 and 0x02 befor=
-e
-> passing the final string to readline. So there *is* a way to achieve
-> the same effect in "PS1 mode" =E2=80=93 __git_ps1 just needs to echo =
-\001 and
-> \002 before & after the color codes, and readline will interpret them
-> correctly when calculating the prompt width. For example, echo
-> $'foo\001\e[1m\002bar'.
+> I think this is in the same boat as parse_diff_color_slot, which I fixed
+> in 9e1a5eb (parse_diff_color_slot: drop ofs parameter, 2014-06-18). The
+> short of it is that the function used to want both the full name and the
+> slot name, but now needs only the latter.
 >
-> Might be worth considering, even if $PS1 mode is inferior to
-> $PROMPT_COMMAND mode for other reasons.
->
+> The fix you proposed below is along the same line, and looks good to me
+> (and grepping for 'var *+ *ofs' shows only the two sites you found, so
+> hopefully that is the last of it).
 
-I would actually prefer the PS1=3D'$(__git_ps)' like way, as it is more=
-=20
-generic and intuitive when you know generic Bourne shell ways.
-
-The reason to go for PROMPT_COMMAND was that it appears to be the only=20
-way to set the PS1 prompt and let bash keep track of the length of the=20
-prompt properly. This is needed to allow browsing the bash history with=
-=20
-long(er than width of the terminal) command lines without the terminal=20
-getting messed up.
-And I'm still not sure PROMPT_COMMAND mode fixes this properly, but it=20
-passed the tests where command substitution mode failed.
-
-IMHO the way colours are now implemented could very well be considered =
-a=20
-workaround for a bug in bash. Only I'm not skilled enough (or have=20
-enough time) to get to the bottom of it...
-
-I hope this answers your question.
-
-Cheers
-
-Simon
+builtin/commit.c::parse_status_slot() has the same construct.
