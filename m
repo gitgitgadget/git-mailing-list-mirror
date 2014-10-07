@@ -1,119 +1,90 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v4] MinGW(-W64) compilation
-Date: Tue, 07 Oct 2014 21:57:45 +0200
-Message-ID: <543445B9.508@kdbg.org>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>	<20141006051707.GA23305@seldon> <5432E45A.8000208@kdbg.org> <xmqqvbnvemak.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-prompt.sh: shorter equal upstream branch name
+Date: Tue, 07 Oct 2014 13:10:30 -0700
+Message-ID: <xmqqiojvej49.fsf@gitster.dls.corp.google.com>
+References: <1412091370-11727-1-git-send-email-jcarsique@nuxeo.com>
+	<542B1623.2070109@bbn.com>
+	<xmqq7g0krb2p.fsf@gitster.dls.corp.google.com>
+	<542B7AF8.6080501@bbn.com>
+	<xmqqppebptmj.fsf@gitster.dls.corp.google.com>
+	<54340D63.8030507@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Marat Radchenko <marat@slonopotamus.org>, 
- msysGit <msysgit@googlegroups.com>,
- git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCJYV6HBKQIL3C6RUECRUBDW3CIB6@googlegroups.com Tue Oct 07 21:57:52 2014
-Return-path: <msysgit+bncBCJYV6HBKQIL3C6RUECRUBDW3CIB6@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+Content-Type: text/plain
+Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>,
+	"Eduardo R. D'Avila" <erdavila@gmail.com>
+To: Julien Carsique <julien.carsique@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 22:10:45 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIL3C6RUECRUBDW3CIB6@googlegroups.com>)
-	id 1XbatK-0004fk-DD
-	for gcvm-msysgit@m.gmane.org; Tue, 07 Oct 2014 21:57:50 +0200
-Received: by mail-wi0-f184.google.com with SMTP id cc10sf486242wib.1
-        for <gcvm-msysgit@m.gmane.org>; Tue, 07 Oct 2014 12:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=qotY/EcqIN4klH/2utdu/keq9CP4mYKJ3hQFMyb26g8=;
-        b=GDgBoPIAZJDGDirEPz8t0To+XfFKhHUwzTCdlZ5Q5C3mziTxBcOyLFtFu1gbRLM09k
-         XiktLWvDt9GdyA8xrQQ47bqkXGbiMN+BHZHRDa3P43rJMP3BSi8SSdGmPpxpbcR4Eg2W
-         WdrqBN9Prn7UYwT17yTC3sHfnyZZl9YCnnQq32zglt8MDnLH/gda7fQDZEjN2K2l8UJd
-         qL65oGTMzqcD/9Plluadnq9tp4SOQW0fxO+F8KVCG5pDTzHI+bYDrhcyXHrw+UL+iivy
-         zdK62eqGDqsfZzHvvZtYaeYAfUloLH5O/eEbRbOICni8ygu5CbsZJkousSzU1/ZSuSbM
-         Hkfg==
-X-Received: by 10.152.87.13 with SMTP id t13mr27905laz.37.1412711870125;
-        Tue, 07 Oct 2014 12:57:50 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.42.212 with SMTP id q20ls742597lal.22.gmail; Tue, 07 Oct
- 2014 12:57:48 -0700 (PDT)
-X-Received: by 10.152.26.225 with SMTP id o1mr885208lag.4.1412711868440;
-        Tue, 07 Oct 2014 12:57:48 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp1.bon.at. [213.33.87.15])
-        by gmr-mx.google.com with ESMTPS id ed3si775028wib.1.2014.10.07.12.57.48
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Oct 2014 12:57:48 -0700 (PDT)
-Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.15;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jC8bf48syz5tlD;
-	Tue,  7 Oct 2014 21:57:34 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 928E119F361;
-	Tue,  7 Oct 2014 21:57:45 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-In-Reply-To: <xmqqvbnvemak.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257952>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Xbb5o-0002AM-FQ
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 22:10:44 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754777AbaJGUKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 16:10:34 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54347 "EHLO sasl.smtp.pobox.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753645AbaJGUKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 16:10:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00C8614891;
+	Tue,  7 Oct 2014 16:10:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4jx/QEA8rPmrQHq4a+KDRDM1KO0=; b=XSdUUo
+	lalDjEsgPkjqV7expcArizoOS0gbitpyCNvGXc0+mRNmcSkPNiZAYmmeUpA5KTxA
+	1zGXdjtVJ6VnsQNJN5gYh9jS3GJa6FLzS+5TPiE2srfE/5rhLdMeGDrHerwd4C+R
+	hmq4U32/dFXjpO4kL4hoq0GQra4U2+oVh7KBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YaMN2mVbEDIgetG2FEgAh+jrh0I/xEpA
+	AMNSyr3s0yCmtNvUxpC31d2FWCYjbrM1jwSv3/VW95r2bZm9ufbuWKWeo4q3BLJR
+	PU9Yj0wavTp6tb8Db9m+VIloMGiWAUT8qO0b4FQJQcwGNcRlBEDHVDZNcy/xuPgv
+	vzb/+xXlWcc=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E83B114890;
+	Tue,  7 Oct 2014 16:10:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 53C411488F;
+	Tue,  7 Oct 2014 16:10:31 -0400 (EDT)
+In-Reply-To: <54340D63.8030507@gmail.com> (Julien Carsique's message of "Tue,
+	07 Oct 2014 17:57:23 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FD295F56-4E5D-11E4-AD5F-855A93717476-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257954>
 
-Am 07.10.2014 um 21:01 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Am 06.10.2014 um 07:17 schrieb Marat Radchenko:
->>> On Tue, Sep 30, 2014 at 11:02:29AM +0400, Marat Radchenko wrote:
->>>> This patch series fixes building on modern MinGW and MinGW-W64 (including x86_64!).
->>>
->>> Junio, ping?
->>>
->>
->> Sorry, I forgot to report that this updated series works now for me.
->>
->> The patches all look reasonable. I don't have an opinion on the
->> restriction that MSVC < 2010 can't be used anymore (path 08/14).
-> 
-> So, is that an Ack, or would you prefer to cook this first in
-> msysgit tree and then feed the result as part of "This series is to
-> shrink the difference between the mainline and msysgit" later?
+Julien Carsique <julien.carsique@gmail.com> writes:
 
-At this time, it's really just a "works for me" report, because I didn't
-look carefully at each patch. I may do that at some time later.
+> Hi,
+>
+> Thank you both for your feedback!
+> I'm looking at applying your requests:
+> - add tests,
+> - variable renaming,
+> - use of local,
+> - fix multiple issues on string parsing
+> - avoid useless bash-isms? Did you agree on the ones I should remove?
+>
+> I'll send an updated patch asap. Tell me if I forgot something.
 
-If someone from the msysgit crew (I don't count myself to it) could
-report "works for us, too", then the series could go into your tree
-right away, in my opinion.
+I just re-read the comments in the thread, and a few things look
+missing:
 
--- Hannes
+ - git-svn?
+ - conditionally enable this feature?
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+Other than that the above list looks like a fairly good one.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Thanks.
