@@ -1,179 +1,99 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: [RFC/PATCH] git-merge: implement --ff-only-merge option.
-Date: Tue,  7 Oct 2014 20:35:10 +0400
-Message-ID: <1412699710-3480-1-git-send-email-sorganov@gmail.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 07 18:45:30 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Can I fetch an arbitrary commit by sha1?
+Date: Tue, 07 Oct 2014 09:52:33 -0700
+Message-ID: <xmqqwq8bizzi.fsf@gitster.dls.corp.google.com>
+References: <CAENte7htO13s91UJFNzW4aBhsGxE=LpnvaZfce+vqQU5+a-cYg@mail.gmail.com>
+	<CAPBPrnsA4KxNximtKXcC37kuwBHK0Esytdm4nsgLHkrJSg3Ufw@mail.gmail.com>
+	<20141002161006.GB2505@peff.net>
+	<CACh33FpWPuyJRryf6hzbAkqWJMwzz1mLLDDRxEQ0niT2CznTRg@mail.gmail.com>
+	<CACsJy8B0dbE0C3M0PO-EfaZ_bSxwGJSFVejEGFzjHSOZKOc+Jw@mail.gmail.com>
+	<20141007131257.GA24348@lanh>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Patrick Donnelly <batrick@batbytes.com>, Jeff King <peff@peff.net>,
+	Dan Johnson <computerdruid@gmail.com>,
+	Christian Halstrick <christian.halstrick@gmail.com>,
+	Git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 18:52:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbXst-0003rB-V4
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 18:45:12 +0200
+	id 1XbY09-00038V-8k
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 18:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753723AbaJGQpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 12:45:06 -0400
-Received: from mail.javad.com ([54.86.164.124]:42350 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751300AbaJGQpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 12:45:05 -0400
-X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Oct 2014 12:45:04 EDT
-Received: from localhost6.localdomain6 (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id A80CC61878;
-	Tue,  7 Oct 2014 16:35:12 +0000 (UTC)
-Received: from localhost6.localdomain6 (localhost.localdomain [127.0.0.1])
-	by localhost6.localdomain6 (8.14.4/8.14.4) with ESMTP id s97GZAte003523;
-	Tue, 7 Oct 2014 20:35:10 +0400
-Received: (from osv@localhost)
-	by localhost6.localdomain6 (8.14.4/8.14.4/Submit) id s97GZA3O003519;
-	Tue, 7 Oct 2014 20:35:10 +0400
-X-Mailer: git-send-email 1.9.3
+	id S1754599AbaJGQwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 12:52:37 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60770 "EHLO sasl.smtp.pobox.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753881AbaJGQwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 12:52:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A1D6D145C5;
+	Tue,  7 Oct 2014 12:52:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tzNDfo0wg+FEFd/HRTIeLoqkI+w=; b=XoBlxb
+	2JuNesm5/OyI3PXqTBGJu7G64EQxGwPEj/FYK94iRSvb05jtBvRxaDUk012AcjN4
+	/+dbb/jmaX47R5EqDP9N8WPJVX3i4bPOIgFI8Oyq1ml2M3zJoA5Id2wyKRU3svvh
+	67IYuPjnmIVrZglIk5eZUpy7z6sv5yJ7EgfRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i05jdEjWVEXnfihAGOdiXJ1QXDy4/F2G
+	uIAc5BCR9myicJ2oy/9RRyMZ7fST2D0HaC0m3Avh6TFcFYHOFiF9n3Y70aTTzoI/
+	9vAx0M4rLPRge78/AAEtXtvnSnp4xNI2nu7hfPOhxvr8492WwBhT0gj5FPkjBq+O
+	l5Cet/bEkhY=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 98100145C4;
+	Tue,  7 Oct 2014 12:52:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 00230145C3;
+	Tue,  7 Oct 2014 12:52:34 -0400 (EDT)
+In-Reply-To: <20141007131257.GA24348@lanh> (Duy Nguyen's message of "Tue, 7
+	Oct 2014 20:12:57 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 565396A8-4E42-11E4-809B-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257933>
 
-This option allows to create merge commit when fast-forward is
-possible, and abort otherwise. I.e. it's equivalent to --ff-only,
-except that it finally creates merge commit instead of
-fast-forwarding.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-One may also consider this option to be equivalent to --no-ff with
-additional check that the command without --no-ff  would indeed result
-in fast-forward.
+> Hmm.. Junio already did most of the work in 051e400 (helping
+> smart-http/stateless-rpc fetch race - 2011-08-05), so all we need to
+> do is enable uploadpack.allowtipsha1inwant and apply this patch
 
-Useful to incorporate topic branch as single merge commit, ensuring
-the left-side of the merge has no changes (our-diff-empty-merge).
+Not that patch, I would think.
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- builtin/merge.c | 39 ++++++++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+I would understand "if !stateless_rpc and !allowtipsha1 then it is
+an error", though.
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index dff043d..39d0f1e 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -79,7 +79,8 @@ static const char *pull_twohead, *pull_octopus;
- enum ff_type {
- 	FF_NO,
- 	FF_ALLOW,
--	FF_ONLY
-+	FF_ONLY,
-+	FF_ONLY_MERGE
- };
- 
- static enum ff_type fast_forward = FF_ALLOW;
-@@ -206,6 +207,9 @@ static struct option builtin_merge_options[] = {
- 	{ OPTION_SET_INT, 0, "ff-only", &fast_forward, NULL,
- 		N_("abort if fast-forward is not possible"),
- 		PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, FF_ONLY },
-+	{ OPTION_SET_INT, 0, "ff-only-merge", &fast_forward, NULL,
-+		N_("create merge commit when fast-forward is possible, abort otherwise"),
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, FF_ONLY_MERGE },
- 	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
- 	OPT_BOOL(0, "verify-signatures", &verify_signatures,
- 		N_("Verify that the named commit has a valid GPG signature")),
-@@ -591,6 +595,8 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 			fast_forward = boolval ? FF_ALLOW : FF_NO;
- 		} else if (v && !strcmp(v, "only")) {
- 			fast_forward = FF_ONLY;
-+		} else if (v && !strcmp(v, "merge")) {
-+			fast_forward = FF_ONLY_MERGE;
- 		} /* do not barf on values from future versions of git */
- 		return 0;
- 	} else if (!strcmp(k, "merge.defaulttoupstream")) {
-@@ -866,7 +872,7 @@ static int finish_automerge(struct commit *head,
- 
- 	free_commit_list(common);
- 	parents = remoteheads;
--	if (!head_subsumed || fast_forward == FF_NO)
-+	if (!head_subsumed || (fast_forward == FF_NO || fast_forward == FF_ONLY_MERGE))
- 		commit_list_insert(head, &parents);
- 	strbuf_addch(&merge_msg, '\n');
- 	prepare_to_commit(remoteheads);
-@@ -1162,6 +1168,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	if (squash) {
- 		if (fast_forward == FF_NO)
- 			die(_("You cannot combine --squash with --no-ff."));
-+		if (fast_forward == FF_ONLY_MERGE)
-+			die(_("You cannot combine --squash with --ff-only-merge."));
- 		option_commit = 0;
- 	}
- 
-@@ -1206,7 +1214,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 				"empty head"));
- 		if (squash)
- 			die(_("Squash commit into empty head not supported yet"));
--		if (fast_forward == FF_NO)
-+		if (fast_forward == FF_NO || fast_forward == FF_ONLY_MERGE)
- 			die(_("Non-fast-forward commit does not make sense into "
- 			    "an empty head"));
- 		remoteheads = collect_parents(head_commit, &head_subsumed, argc, argv);
-@@ -1292,6 +1300,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		setenv(buf.buf, merge_remote_util(commit)->name, 1);
- 		strbuf_reset(&buf);
- 		if (fast_forward != FF_ONLY &&
-+		    fast_forward != FF_ONLY_MERGE &&
- 		    merge_remote_util(commit) &&
- 		    merge_remote_util(commit)->obj &&
- 		    merge_remote_util(commit)->obj->type == OBJ_TAG)
-@@ -1312,7 +1321,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 
- 	for (i = 0; i < use_strategies_nr; i++) {
- 		if (use_strategies[i]->attr & NO_FAST_FORWARD)
--			fast_forward = FF_NO;
-+			if(fast_forward != FF_ONLY_MERGE)
-+				fast_forward = FF_NO;
- 		if (use_strategies[i]->attr & NO_TRIVIAL)
- 			allow_trivial = 0;
- 	}
-@@ -1342,9 +1352,19 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		 */
- 		finish_up_to_date("Already up-to-date.");
- 		goto done;
--	} else if (fast_forward != FF_NO && !remoteheads->next &&
--			!common->next &&
--			!hashcmp(common->item->object.sha1, head_commit->object.sha1)) {
-+	} else if (fast_forward != FF_NO &&
-+		   !remoteheads->next &&
-+		   !common->next &&
-+		   !hashcmp(common->item->object.sha1, head_commit->object.sha1)) {
-+
-+		if (fast_forward == FF_ONLY_MERGE) {
-+			/*
-+			 * We are going to fast-forward, but options force us to create
-+			 * merge commit instead.
-+			 */
-+			goto commit;
-+		}
-+
- 		/* Again the most common case of merging one remote. */
- 		struct strbuf msg = STRBUF_INIT;
- 		struct commit *commit;
-@@ -1389,7 +1409,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		 * only one common.
- 		 */
- 		refresh_cache(REFRESH_QUIET);
--		if (allow_trivial && fast_forward != FF_ONLY) {
-+		if (allow_trivial && fast_forward != FF_ONLY && fast_forward != FF_ONLY_MERGE) {
- 			/* See if it is really trivial. */
- 			git_committer_info(IDENT_STRICT);
- 			printf(_("Trying really trivial in-index merge...\n"));
-@@ -1430,9 +1450,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (fast_forward == FF_ONLY)
-+	if (fast_forward == FF_ONLY || fast_forward == FF_ONLY_MERGE)
- 		die(_("Not possible to fast-forward, aborting."));
- 
-+commit:	
- 	/* We are going to make a new commit. */
- 	git_committer_info(IDENT_STRICT);
- 
--- 
-1.9.3
+> -- 8< --
+> diff --git a/upload-pack.c b/upload-pack.c
+> index c789ec0..493f8ee 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -454,10 +454,6 @@ static void check_non_tip(void)
+>  	char namebuf[42]; /* ^ + SHA-1 + LF */
+>  	int i;
+>  
+> -	/* In the normal in-process case non-tip request can never happen */
+> -	if (!stateless_rpc)
+> -		goto error;
+> -
+>  	cmd.argv = argv;
+>  	cmd.git_cmd = 1;
+>  	cmd.no_stderr = 1;
+> -- 8< --
+>
+> If we already let smart-http do this, I don't see any harm in letting
+> git protocol do the same (even though it's the the original reason why
+> this code exists).
+> --
+> Duy
