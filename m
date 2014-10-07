@@ -1,61 +1,71 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: let git grep consider sub projects
-Date: Tue, 7 Oct 2014 10:29:14 +0200
-Message-ID: <20141007082914.GA2729@aepfle.de>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC 0/5] add "unset.variable" for unsetting previously
+ set variables
+Date: Tue, 07 Oct 2014 13:17:23 +0200
+Message-ID: <5433CBC3.5010202@gmail.com>
+References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com> <xmqqvbo2meg5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 07 10:29:25 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>,
+	Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 13:17:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbQ96-0007aR-Nw
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 10:29:25 +0200
+	id 1XbSlq-0002eC-B1
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 13:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753262AbaJGI3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 04:29:21 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.219]:33507 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752758AbaJGI3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 04:29:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1412670555; l=495;
-	s=domk; d=aepfle.de;
-	h=Content-Disposition:Content-Type:MIME-Version:Subject:To:From:Date;
-	bh=ByRMeU5syUl48e2zX87EGbZpZLI=;
-	b=p1Sv1WPh3RlF7OMnlWnS8vyWJ1GjBPJ3rHHe02LNCo2Fjb4DsJsQIh6m3gR7cLLX0Vz
-	NulX+o1GtNs1YWuYdFs90DdDE3PQ2wdD1wTWz/RUgfer5YTskWgUuZNGezu3Duau2z9Xr
-	P2OBE3T/LQQTFE1qxfgnlrWn3MonwdNcBu4=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfstVolSR8Cl8fNabDQrlSrQo8jPq2gOVbkBPuE3yQ==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:11b7:1201:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 35.9 AUTH)
-	with ESMTPSA id N009b1q978TFrNM
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	for <git@vger.kernel.org>;
-	Tue, 7 Oct 2014 10:29:15 +0200 (CEST)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id D15095016D; Tue,  7 Oct 2014 10:29:14 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S1753657AbaJGLRa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Oct 2014 07:17:30 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:36518 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753622AbaJGLR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 07:17:29 -0400
+Received: by mail-la0-f50.google.com with SMTP id s18so6070515lam.23
+        for <git@vger.kernel.org>; Tue, 07 Oct 2014 04:17:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=rqTuIPg2zsZ2q9Pm7tBGPaRycRDSuNjyJFwAmlJY8Lk=;
+        b=ZHFVOamDgjuFwF5ajHrCEKsA6qWc0F0cbUEzIrSSBHIjw1nTwuP0+Q/d+B8ONqd/0c
+         LDUaFDfOlBtoewid/zAW3BXEJxUmAmYtpa4sMxcd29SD076m8ZyV7E0btOersrfF0mkz
+         xkRD0w9/Xq2Rob+rig1cm7y/T7Q++k0cqw6F+F+v4JgqEZ3bt7IwuORspjT0LSUQCH67
+         g+WcVai43nUZMQPktCIYeBw/dhevchbxygs/EAWRRiakqzpu9GvVW2DLhpIsv5hj4ic5
+         EvutIyfIOLSVr2XkYQZY5EFTD+RmjpBjZVpyI1HNSwj45cN0TBE6UEKW1ffYrH5Lnf6Q
+         /IYg==
+X-Received: by 10.112.130.41 with SMTP id ob9mr3201356lbb.12.1412680647286;
+        Tue, 07 Oct 2014 04:17:27 -0700 (PDT)
+Received: from [192.168.130.235] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id 1sm6620060lao.36.2014.10.07.04.17.25
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 07 Oct 2014 04:17:26 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <xmqqvbo2meg5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257921>
 
+Junio C Hamano wrote:
 
-How can I teach 'git grep $string' to also consider subprojects?
+>   - "[config] safe =3D section.variable" will list variables that can
+>     be included with the config.safeInclude mechanism.  Any variable
+>     that is not marked as config.safe that appears in the file
+>     included by the config.safeInclude mechanism will be ignored.
 
-The build system of xen.git clones 4 other trees into a directory in its
-source tree during build. It would be nice if my 'git grep' searches
-also in these cloned subdirs. Somehow there must be some knowledge
-because 'git clean -dfx' leaves them alone, while 'git clean -dffx'
-wipes everything.
+Why user must know which variables are safe, why it cannot be left to=20
+Git to know which configuration variables can call external scripts?
 
-Olaf
-
-PS: Sometimes I miss a 'git clean -dfx --also-sub-repos' useful to
-really clean everything before starting over.
+--=20
+Jakub Nar=C4=99bski
