@@ -1,84 +1,89 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH] git-merge: mutually match SYNOPSIS and "usage".
-Date: Wed, 08 Oct 2014 00:32:35 +0400
-Message-ID: <87bnpnsjrw.fsf@osv.gnss.ru>
-References: <87wq8cnla9.fsf@osv.gnss.ru>
-	<xmqq4mvfg24e.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 08/16] t5304: use helper to report failure of "test foo = bar"
+Date: Tue, 07 Oct 2014 13:35:15 -0700
+Message-ID: <xmqqa957ehz0.fsf@gitster.dls.corp.google.com>
+References: <20141003202045.GA15205@peff.net>
+	<20141003202743.GH16293@peff.net> <5433E8CB.1050005@alum.mit.edu>
+	<xmqqsiiziy94.fsf@gitster.dls.corp.google.com>
+	<20141007201805.GA22703@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 22:32:43 2014
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 07 22:35:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbbR4-00043a-EW
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 22:32:42 +0200
+	id 1XbbTh-00056Z-56
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 22:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691AbaJGUci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 16:32:38 -0400
-Received: from mail.javad.com ([54.86.164.124]:44803 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750865AbaJGUch (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 16:32:37 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 29F4E61878;
-	Tue,  7 Oct 2014 20:32:37 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <sorganov@gmail.com>)
-	id 1XbbQx-0005kn-Ee; Wed, 08 Oct 2014 00:32:35 +0400
-In-Reply-To: <xmqq4mvfg24e.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 07 Oct 2014 11:34:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1755006AbaJGUfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 16:35:20 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62212 "EHLO sasl.smtp.pobox.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754307AbaJGUfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 16:35:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 438A113209;
+	Tue,  7 Oct 2014 16:35:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9jQDluhAqgMZTevq7oPymIaqfjk=; b=Rl/Nvs
+	CP43vjU7QbJlCNOK46IpAQ6W2bNpNPqU8FmW3W9ejBvX29jNVap3CqD5ngKIlGoV
+	nrKi/lw5mGFtj8LjeanBwriWKj4tjvzzoETePN6za/YRbX4xUDrYcHbZ6ICYHdlU
+	kYSwRsIx9oCR7Jxj+MqBmwjcnC/YDUUBgv9vo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y17GcTag04J76TeupPMeRlQwZQQkROB/
+	4IjrQ0Esu79hoapZquo36YSSpZdxL9Ei287RKAWaV7PFqkKX3aI/08ZLMSdL/iJO
+	1S8KnXwnK0Evn+ft809sTUiHdRan6FKJqACKr1yXNqZSnBTVzdA7Mf0cH7kix/jq
+	4XrJMWGjNhA=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A34213208;
+	Tue,  7 Oct 2014 16:35:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BDE2A13207;
+	Tue,  7 Oct 2014 16:35:16 -0400 (EDT)
+In-Reply-To: <20141007201805.GA22703@peff.net> (Jeff King's message of "Tue, 7
+	Oct 2014 16:18:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7281EFFE-4E61-11E4-84A2-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257959>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+> On Tue, Oct 07, 2014 at 10:29:59AM -0700, Junio C Hamano wrote:
+> ...
+>> The function is similar to test_cmp which takes two files but takes
+>> two strings, so "test_cmp_str" or something perhaps (we already have
+>> test_cmp_rev to compare two revisions, and the suggested name
+>> follows that pattern)?
 >
->> SYNOPSIS section of the git-merge manual page had outdated explicit
->> list of options.
->>
->> "usage" returned by 'git merge -h' didn't have "-m <msg>" that is one
->> of essential distinctions between obsolete invocation form and the
->> recent one.
->>
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
->> ---
+> Based on your responses, I'm leaning towards:
 >
-> Please do not do two unrelated things in a single change.
+>   test_cmp_str() {
+> 	test "$@" && return 0
+> 	echo >&2 "command failed: test $*"
+> 	return 1
+>   }
+>
+> since the point is really just to print _something_ when the test fails
+> (any quoting or whitespace may be wrong, of course, but that's OK; it's
+> for human consumption, and is just a hint).
 
-Well, I thought they are related, sorry.
+Yeah, if we are going to reduce it down to the above implementation,
+intereseting things like "test -f $frotz" will become possible and
+"cmp-str" stops making sense.  It really is about "We run test and
+expect it to yield true.  Report the failure a bit more prominently
+under the '-v' option to help us debug".
 
-> It may be a clear and very welcome improvement to change from
-> "explicitly list only often used options" to "just say [options] and
-> have the list of options and their descriptions".
-
-OK, noticed.
-
-> I am not sure about the other change to single out "-m <msg>",
-> especially marking it as optional by enclosing it inside "[-m
-> <msg>]", makes much sense, as that is still not very easily
-> distinguishable from "git merge [options] [<commit>...]".
-
-I was looking at the merge.c code, and that's how it seems to work. You
-can get new semantics without -m, and you can't get old semantics with
--m, isn't it? It looks like the set of descriptions I produced is
-formally correct.
-
-> In other words, I agree with your motivation to call for attention
-> that the command behaves differently with and without "-m", but I do
-> not think that part of the change in this patch achieves it well.
-
-Any particular suggestion?
-
-Thanks.
-
--- 
-Sergey.
+So among the ones you listed, test_verbose may be the least silly, I
+would think.
