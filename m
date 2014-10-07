@@ -1,87 +1,332 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v22.5 09/24] refs.c: pass a list of names to skip to is_refname_available
-Date: Tue, 07 Oct 2014 12:26:14 -0700
-Message-ID: <xmqqr3yjel61.fsf@gitster.dls.corp.google.com>
-References: <CAL=YDWnd=GNycrPO-5yq+a_g569fZDOmzpat+AWrXd+5+bXDQA@mail.gmail.com>
-	<CAL=YDWka47hV2TMcwcY1hm+RhbiD6HD=_ED4zB84zX5e5ABf4Q@mail.gmail.com>
-	<CAL=YDWm9VaKUBRAmmybHzOBhAg_VvNc0KMG0W_uTA02YYzQrzA@mail.gmail.com>
-	<20140820231723.GF20185@google.com>
-	<20140911030318.GD18279@google.com> <20141002014817.GS1175@google.com>
-	<20141002020332.GB1175@google.com>
-	<xmqq61g2nuud.fsf@gitster.dls.corp.google.com>
-	<20141003185128.GS1175@google.com>
-	<xmqqoattkm87.fsf@gitster.dls.corp.google.com>
-	<20141003213900.GT1175@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] use skip_prefix() to avoid more magic numbers
+Date: Tue, 7 Oct 2014 15:33:09 -0400
+Message-ID: <20141007193309.GA22179@peff.net>
+References: <5430427A.5080800@web.de>
+ <20141005224919.GA19998@google.com>
+ <20141006011827.GA11027@peff.net>
+ <xmqqtx3fg31w.fsf@gitster.dls.corp.google.com>
+ <20141007191656.GB32374@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 21:26:26 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 07 21:33:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbaOr-00066d-RB
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 21:26:22 +0200
+	id 1XbaVZ-00016W-0M
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 21:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbaJGT0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 15:26:17 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53600 "EHLO sasl.smtp.pobox.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932075AbaJGT0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Oct 2014 15:26:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 44E1B1367A;
-	Tue,  7 Oct 2014 15:26:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Omb7v1XrrfYgOF5NMLdLMuLf92I=; b=H5SSY5
-	rcVt36L4JC3ZiFei7Gygfom4TNCFQ2P7yZ0VxiClazFuiBslCgzp/4585HfzV9JL
-	cHHiNLlkugHA+8SCYSMmYZoqPoWZjW7GCX3HRun/NlRHYJPN2tZ997KgwSo5lrV1
-	N7Rnkfanw8iOn5pcVujK22LEXWJdYLc6Vr+bo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Sr3dIVPOs2BvjuO5hT056QUnxMSYIQz9
-	Yt7M+F0PLgvtba0OmcmFaCBaldERyg6WakZkHvOMQUFRbH8gvIlgU9gxlOz6d9Og
-	4ZXLboII5dY639KTYdo3rUKuVgWRFqdDpDqRs7ArEkDG3Gt9XGC9zgdb58HD+Jtd
-	Og96SDjXbBU=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3BC7613679;
-	Tue,  7 Oct 2014 15:26:16 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B96A013678;
-	Tue,  7 Oct 2014 15:26:15 -0400 (EDT)
-In-Reply-To: <20141003213900.GT1175@google.com> (Jonathan Nieder's message of
-	"Fri, 3 Oct 2014 14:39:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CE45B122-4E57-11E4-BAEA-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1755231AbaJGTdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 15:33:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55881 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755174AbaJGTdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 15:33:12 -0400
+Received: (qmail 30338 invoked by uid 102); 7 Oct 2014 19:33:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Oct 2014 14:33:12 -0500
+Received: (qmail 8682 invoked by uid 107); 7 Oct 2014 19:33:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Oct 2014 15:33:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Oct 2014 15:33:09 -0400
+Content-Disposition: inline
+In-Reply-To: <20141007191656.GB32374@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257949>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tue, Oct 07, 2014 at 03:16:56PM -0400, Jeff King wrote:
 
->> Will take a look over there (I really hate having to context switch
->> only to review this series, though).
->
-> Here's a copy to save a trip.
+> Actually, parse_decorate_color_config is slightly odd in that it takes
+> the variable and the slot_name after this patch. That's because it
+> passes the full variable name to color_parse, which does still die() on
+> error. Perhaps it should be converted to return an error, too.
 
-The patch itself looks fine, but Gerrit really needs a way to convey
-"these changes make a single topic and here is the tip" somehow.  It
-could be that there is and it is not well advertised, but the end
-result is I visit the URL,
+Actually, this doesn't let us get rid of the "var" in
+parse_decorate_color_config, because it also wants to call
+config_error_nonbool. However, while looking at this, I did notice that
+some of the error messages generated by color_parse are a bit ugly, and
+came up with the patch below (on top of what I just sent, but it could
+be separate).
 
-  https://code-review.googlesource.com/#/q/project:git+topic:ref-transaction
+-- >8 --
+Subject: color_parse: do not mention variable name in error message
 
-pick and view a few patches at random to view the changes in pretty
-side-by-side diff output (which by itself is fine), check "Download"
-to see the fetch URL, when it is followed it often gives me only an
-early half of the topic, get confused and scratch my head, give up
-and abandon and the whole time doing so ends up being wasted.
+Originally the color-parsing function was used only for
+config variables. It made sense to pass the variable name so
+that the die() message could be something like:
+
+  $ git -c color.branch.plain=bogus branch
+  fatal: bad color value 'bogus' for variable 'color.branch.plain'
+
+These days we call it in other contexts, and the resulting
+error messages are a little confusing:
+
+  $ git log --pretty='%C(bogus)'
+  fatal: bad color value 'bogus' for variable '--pretty format'
+
+  $ git config --get-color foo.bar bogus
+  fatal: bad color value 'bogus' for variable 'command line'
+
+This patch teaches color_parse to complain only about the
+value, and then return an error code. Config callers can
+then propagate that up to the config parser, which mentions
+the variable name. Other callers can provide a custom
+message. After this patch these three cases now look like:
+
+  $ git -c color.branch.plain=bogus branch
+  error: invalid color value: bogus
+  fatal: unable to parse 'color.branch.plain' from command-line config
+
+  $ git log --pretty='%C(bogus)'
+  error: invalid color value: bogus
+  fatal: unable to parse --pretty format
+
+  $ git config --get-color foo.bar bogus
+  error: invalid color value: bogus
+  fatal: unable to parse default color value
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I think the two-line errors are kind of ugly. It does match how
+config_error_nonbool works, which also propagates its errors, and looks
+like:
+
+  $ git -c color.branch.plain branch
+  error: Missing value for 'color.branch.plain'
+  fatal: unable to parse 'color.branch.plain' from command-line config
+
+We could instead make color_parse silently return -1, and leave it up to
+the caller to complain (and probably add die_bad_color_config() or
+similar to avoid repetition in the config callers).
+
+ builtin/branch.c       |  3 +--
+ builtin/clean.c        |  3 +--
+ builtin/commit.c       |  3 +--
+ builtin/config.c       |  9 ++++++---
+ builtin/for-each-ref.c |  6 ++++--
+ color.c                | 13 ++++++-------
+ color.h                |  4 ++--
+ diff.c                 |  3 +--
+ grep.c                 |  2 +-
+ log-tree.c             |  3 +--
+ pretty.c               |  5 ++---
+ 11 files changed, 26 insertions(+), 28 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 2c97141..35c786d 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -93,8 +93,7 @@ static int git_branch_config(const char *var, const char *value, void *cb)
+ 			return 0;
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		color_parse(value, var, branch_colors[slot]);
+-		return 0;
++		return color_parse(value, branch_colors[slot]);
+ 	}
+ 	return git_color_default_config(var, value, cb);
+ }
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 3beeea6..a7e7b0b 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -116,8 +116,7 @@ static int git_clean_config(const char *var, const char *value, void *cb)
+ 			return 0;
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		color_parse(value, var, clean_colors[slot]);
+-		return 0;
++		return color_parse(value, clean_colors[slot]);
+ 	}
+ 
+ 	if (!strcmp(var, "clean.requireforce")) {
+diff --git a/builtin/commit.c b/builtin/commit.c
+index c45613a..407566d 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1328,8 +1328,7 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 			return 0;
+ 		if (!v)
+ 			return config_error_nonbool(k);
+-		color_parse(v, k, s->color_palette[slot]);
+-		return 0;
++		return color_parse(v, s->color_palette[slot]);
+ 	}
+ 	if (!strcmp(k, "status.relativepaths")) {
+ 		s->relative_paths = git_config_bool(k, v);
+diff --git a/builtin/config.c b/builtin/config.c
+index 37305e9..8cc2604 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -296,7 +296,8 @@ static int git_get_color_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, get_color_slot)) {
+ 		if (!value)
+ 			config_error_nonbool(var);
+-		color_parse(value, var, parsed_color);
++		if (color_parse(value, parsed_color) < 0)
++			return -1;
+ 		get_color_found = 1;
+ 	}
+ 	return 0;
+@@ -309,8 +310,10 @@ static void get_color(const char *def_color)
+ 	git_config_with_options(git_get_color_config, NULL,
+ 				&given_config_source, respect_includes);
+ 
+-	if (!get_color_found && def_color)
+-		color_parse(def_color, "command line", parsed_color);
++	if (!get_color_found && def_color) {
++		if (color_parse(def_color, parsed_color) < 0)
++			die(_("unable to parse default color value"));
++	}
+ 
+ 	fputs(parsed_color, stdout);
+ }
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index fda0f04..7ee86b3 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -671,7 +671,8 @@ static void populate_value(struct refinfo *ref)
+ 		} else if (starts_with(name, "color:")) {
+ 			char color[COLOR_MAXLEN] = "";
+ 
+-			color_parse(name + 6, "--format", color);
++			if (color_parse(name + 6, color) < 0)
++				die(_("unable to parse format"));
+ 			v->s = xstrdup(color);
+ 			continue;
+ 		} else if (!strcmp(name, "flag")) {
+@@ -1004,7 +1005,8 @@ static void show_ref(struct refinfo *info, const char *format, int quote_style)
+ 		struct atom_value resetv;
+ 		char color[COLOR_MAXLEN] = "";
+ 
+-		color_parse("reset", "--format", color);
++		if (color_parse("reset", color) < 0)
++			die("BUG: couldn't parse 'reset' as a color");
+ 		resetv.s = color;
+ 		print_value(&resetv, quote_style);
+ 	}
+diff --git a/color.c b/color.c
+index f672885..7941e93 100644
+--- a/color.c
++++ b/color.c
+@@ -60,13 +60,12 @@ static int parse_attr(const char *name, int len)
+ 	return -1;
+ }
+ 
+-void color_parse(const char *value, const char *var, char *dst)
++int color_parse(const char *value, char *dst)
+ {
+-	color_parse_mem(value, strlen(value), var, dst);
++	return color_parse_mem(value, strlen(value), dst);
+ }
+ 
+-void color_parse_mem(const char *value, int value_len, const char *var,
+-		char *dst)
++int color_parse_mem(const char *value, int value_len, char *dst)
+ {
+ 	const char *ptr = value;
+ 	int len = value_len;
+@@ -76,7 +75,7 @@ void color_parse_mem(const char *value, int value_len, const char *var,
+ 
+ 	if (!strncasecmp(value, "reset", len)) {
+ 		strcpy(dst, GIT_COLOR_RESET);
+-		return;
++		return 0;
+ 	}
+ 
+ 	/* [fg [bg]] [attr]... */
+@@ -153,9 +152,9 @@ void color_parse_mem(const char *value, int value_len, const char *var,
+ 		*dst++ = 'm';
+ 	}
+ 	*dst = 0;
+-	return;
++	return 0;
+ bad:
+-	die("bad color value '%.*s' for variable '%s'", value_len, value, var);
++	return error(_("invalid color value: %.*s"), value_len, value);
+ }
+ 
+ int git_config_colorbool(const char *var, const char *value)
+diff --git a/color.h b/color.h
+index 9a8495b..f5beab1 100644
+--- a/color.h
++++ b/color.h
+@@ -77,8 +77,8 @@ int git_color_default_config(const char *var, const char *value, void *cb);
+ 
+ int git_config_colorbool(const char *var, const char *value);
+ int want_color(int var);
+-void color_parse(const char *value, const char *var, char *dst);
+-void color_parse_mem(const char *value, int len, const char *var, char *dst);
++int color_parse(const char *value, char *dst);
++int color_parse_mem(const char *value, int len, char *dst);
+ __attribute__((format (printf, 3, 4)))
+ int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
+ __attribute__((format (printf, 3, 4)))
+diff --git a/diff.c b/diff.c
+index d7a5c81..d1bd534 100644
+--- a/diff.c
++++ b/diff.c
+@@ -248,8 +248,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 			return 0;
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		color_parse(value, var, diff_colors[slot]);
+-		return 0;
++		return color_parse(value, diff_colors[slot]);
+ 	}
+ 
+ 	/* like GNU diff's --suppress-blank-empty option  */
+diff --git a/grep.c b/grep.c
+index 99217dc..4dc31ea 100644
+--- a/grep.c
++++ b/grep.c
+@@ -111,7 +111,7 @@ int grep_config(const char *var, const char *value, void *cb)
+ 	if (color) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		color_parse(value, var, color);
++		return color_parse(value, color);
+ 	}
+ 	return 0;
+ }
+diff --git a/log-tree.c b/log-tree.c
+index 877d976..7844f33 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -63,8 +63,7 @@ int parse_decorate_color_config(const char *var, const char *slot_name, const ch
+ 		return 0;
+ 	if (!value)
+ 		return config_error_nonbool(var);
+-	color_parse(value, var, decoration_colors[slot]);
+-	return 0;
++	return color_parse(value, decoration_colors[slot]);
+ }
+ 
+ /*
+diff --git a/pretty.c b/pretty.c
+index 31f2ede..59de1dc 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -963,9 +963,8 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 				return end - placeholder + 1;
+ 			begin += 5;
+ 		}
+-		color_parse_mem(begin,
+-				end - begin,
+-				"--pretty format", color);
++		if (color_parse_mem(begin, end - begin, color) < 0)
++			die(_("unable to parse --pretty format"));
+ 		strbuf_addstr(sb, color);
+ 		return end - placeholder + 1;
+ 	}
+-- 
+2.1.1.566.gdb1f904
