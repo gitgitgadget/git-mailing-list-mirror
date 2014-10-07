@@ -1,107 +1,305 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH] git-prompt.sh: shorter equal upstream branch name
-Date: Tue, 07 Oct 2014 15:42:57 -0400
-Message-ID: <54344241.60703@bbn.com>
-References: <1412091370-11727-1-git-send-email-jcarsique@nuxeo.com>	<542B1623.2070109@bbn.com>	<xmqq7g0krb2p.fsf@gitster.dls.corp.google.com>	<542B7AF8.6080501@bbn.com> <xmqqppebptmj.fsf@gitster.dls.corp.google.com> <54340D63.8030507@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use skip_prefix() to avoid more magic numbers
+Date: Tue, 07 Oct 2014 12:47:21 -0700
+Message-ID: <xmqqmw97ek6u.fsf@gitster.dls.corp.google.com>
+References: <5430427A.5080800@web.de> <20141005224919.GA19998@google.com>
+	<20141006011827.GA11027@peff.net>
+	<xmqqtx3fg31w.fsf@gitster.dls.corp.google.com>
+	<20141007191656.GB32374@peff.net> <20141007193309.GA22179@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org,
-	=?windows-1252?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	"Eduardo R. D'Avila" <erdavila@gmail.com>
-To: Julien Carsique <julien.carsique@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 07 21:43:14 2014
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 07 21:47:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbafC-0006CS-7d
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 21:43:14 +0200
+	id 1XbajJ-0008T3-9N
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Oct 2014 21:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754907AbaJGTnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Oct 2014 15:43:09 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:16539 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932308AbaJGTnE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Oct 2014 15:43:04 -0400
-Received: from socket.bbn.com ([192.1.120.102]:60591)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Xbaev-0009ge-Nx; Tue, 07 Oct 2014 15:42:57 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 7723640367
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <54340D63.8030507@gmail.com>
+	id S932116AbaJGTrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 15:47:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61459 "EHLO sasl.smtp.pobox.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752933AbaJGTrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 15:47:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CEF4413FFF;
+	Tue,  7 Oct 2014 15:47:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=E9sKvAqzDKrCNESp/hG3ByDeSDk=; b=t0ePEg
+	+XHv00EUD4g4NwU0oo2gWgZXfqHaptnmSYX9I3sggGKCq9l9vsMe5K5x+08E/b1u
+	T2NofIXzKd02kMxGtGi7HTAe0DB4Q6x+0IGVF6brPP2QnMVgARgncYtIrfEfek1G
+	g4dNaX5YLfLRdR591ObkyNc/7OelnWjkkx9uA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qfkCv02wHf6UNl2+FkKJDAfImTRxLhBH
+	fjdyWKtLT2Hbxf0j0e+wNE4NCdsKA8oOiszFHWMs4bw/jC4neezabCdCl+0c8Mro
+	AYzqn2CroKjqPw4Kt4Rk6Lv32mTfPIQV/BeAU0ZMj645IVbk/3oGDsC6GEosHdOz
+	yzaOY3eVaro=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C500113FFE;
+	Tue,  7 Oct 2014 15:47:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21C6B13FFC;
+	Tue,  7 Oct 2014 15:47:23 -0400 (EDT)
+In-Reply-To: <20141007193309.GA22179@peff.net> (Jeff King's message of "Tue, 7
+	Oct 2014 15:33:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C1B00AD6-4E5A-11E4-AB8A-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/257951>
 
-On 2014-10-07 11:57, Julien Carsique wrote:
-> Hi,
-> 
-> Thank you both for your feedback!
-> I'm looking at applying your requests:
-> - add tests,
-> - variable renaming,
-> - use of local,
-> - fix multiple issues on string parsing
-> - avoid useless bash-isms? Did you agree on the ones I should remove?
+Jeff King <peff@peff.net> writes:
 
-I'm guessing the structure of your code will change somewhat when you
-address the other issues, so I think it may be premature to discuss
-specific Bashisms right now.  (There aren't any particular Bashisms that
-I think should always be avoided -- I just want people to ponder whether
-a particular use of a Bashism is truly preferable to a POSIX-conformant
-alternative.)
+> Subject: color_parse: do not mention variable name in error message
+> ...
+> I think the two-line errors are kind of ugly. It does match how
+> config_error_nonbool works, which also propagates its errors, and looks
+> like:
+>
+>   $ git -c color.branch.plain branch
+>   error: Missing value for 'color.branch.plain'
+>   fatal: unable to parse 'color.branch.plain' from command-line config
+>
+> We could instead make color_parse silently return -1, and leave it up to
+> the caller to complain (and probably add die_bad_color_config() or
+> similar to avoid repetition in the config callers).
 
-Write the code in the way you think is best, and if I see a good way to
-convert a Bashism to POSIX I'll let you know.  And feel free to ignore
-me -- I'm a member of the Church of POSIX Conformance while Junio is
-much more grounded in reality.  :)
+Yeah, in the longer term we would want to do something like that to
+fix both nonbool and this one, but for now this should help avoid
+confusion.
 
-> 
-> I'll send an updated patch asap. Tell me if I forgot something.
+Thanks for a nice analysis, write-up and patch.
 
-Your list looks complete to me.  Thank you for contributing!
-
--Richard
-
-
-> 
-> Regards,
-> Julien
-> 
-> On 01/10/2014 19:49, Junio C Hamano wrote:
->> Richard Hansen <rhansen@bbn.com> writes:
->>
->>>> and there is no hope to "fix" them to stick to
->>>> the bare-minimum POSIX,
->>> I don't think it'd be hard to convert it to pure POSIX if there was a
->>> desire to do so.
->> Not necessarily; if you make it so slow to be usable as a prompt
->> script, that is not a "conversion".  Bash-isms in the script is
->> allowed for a reason, unfortunately.
->>
->>> It would be unwise to go to great lengths to avoid Bashisms, but I think
->>> it would be smart to use POSIX syntax when it is easy to do so.  
->> In general, I agree with you. People who know only bash tend to
->> overuse bash-isms where they are not necessary, leaving an
->> unreadable mess.
->>
->> For the specific purpose of Julien's "if the tail part of this
->> string matches the other string, replace that with an equal sign",
->> ${parameter/pattern/string} is a wrong bash-ism to use.  But the
->> right solution to count the length of the other string and take a
->> substring of this string from its beginning would require other
->> bash-isms ${#parameter} and ${parameter:offset:length}.
->>
->> And that's fine.
-> 
-> 
+>
+>  builtin/branch.c       |  3 +--
+>  builtin/clean.c        |  3 +--
+>  builtin/commit.c       |  3 +--
+>  builtin/config.c       |  9 ++++++---
+>  builtin/for-each-ref.c |  6 ++++--
+>  color.c                | 13 ++++++-------
+>  color.h                |  4 ++--
+>  diff.c                 |  3 +--
+>  grep.c                 |  2 +-
+>  log-tree.c             |  3 +--
+>  pretty.c               |  5 ++---
+>  11 files changed, 26 insertions(+), 28 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 2c97141..35c786d 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -93,8 +93,7 @@ static int git_branch_config(const char *var, const char *value, void *cb)
+>  			return 0;
+>  		if (!value)
+>  			return config_error_nonbool(var);
+> -		color_parse(value, var, branch_colors[slot]);
+> -		return 0;
+> +		return color_parse(value, branch_colors[slot]);
+>  	}
+>  	return git_color_default_config(var, value, cb);
+>  }
+> diff --git a/builtin/clean.c b/builtin/clean.c
+> index 3beeea6..a7e7b0b 100644
+> --- a/builtin/clean.c
+> +++ b/builtin/clean.c
+> @@ -116,8 +116,7 @@ static int git_clean_config(const char *var, const char *value, void *cb)
+>  			return 0;
+>  		if (!value)
+>  			return config_error_nonbool(var);
+> -		color_parse(value, var, clean_colors[slot]);
+> -		return 0;
+> +		return color_parse(value, clean_colors[slot]);
+>  	}
+>  
+>  	if (!strcmp(var, "clean.requireforce")) {
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index c45613a..407566d 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1328,8 +1328,7 @@ static int git_status_config(const char *k, const char *v, void *cb)
+>  			return 0;
+>  		if (!v)
+>  			return config_error_nonbool(k);
+> -		color_parse(v, k, s->color_palette[slot]);
+> -		return 0;
+> +		return color_parse(v, s->color_palette[slot]);
+>  	}
+>  	if (!strcmp(k, "status.relativepaths")) {
+>  		s->relative_paths = git_config_bool(k, v);
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 37305e9..8cc2604 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -296,7 +296,8 @@ static int git_get_color_config(const char *var, const char *value, void *cb)
+>  	if (!strcmp(var, get_color_slot)) {
+>  		if (!value)
+>  			config_error_nonbool(var);
+> -		color_parse(value, var, parsed_color);
+> +		if (color_parse(value, parsed_color) < 0)
+> +			return -1;
+>  		get_color_found = 1;
+>  	}
+>  	return 0;
+> @@ -309,8 +310,10 @@ static void get_color(const char *def_color)
+>  	git_config_with_options(git_get_color_config, NULL,
+>  				&given_config_source, respect_includes);
+>  
+> -	if (!get_color_found && def_color)
+> -		color_parse(def_color, "command line", parsed_color);
+> +	if (!get_color_found && def_color) {
+> +		if (color_parse(def_color, parsed_color) < 0)
+> +			die(_("unable to parse default color value"));
+> +	}
+>  
+>  	fputs(parsed_color, stdout);
+>  }
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index fda0f04..7ee86b3 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -671,7 +671,8 @@ static void populate_value(struct refinfo *ref)
+>  		} else if (starts_with(name, "color:")) {
+>  			char color[COLOR_MAXLEN] = "";
+>  
+> -			color_parse(name + 6, "--format", color);
+> +			if (color_parse(name + 6, color) < 0)
+> +				die(_("unable to parse format"));
+>  			v->s = xstrdup(color);
+>  			continue;
+>  		} else if (!strcmp(name, "flag")) {
+> @@ -1004,7 +1005,8 @@ static void show_ref(struct refinfo *info, const char *format, int quote_style)
+>  		struct atom_value resetv;
+>  		char color[COLOR_MAXLEN] = "";
+>  
+> -		color_parse("reset", "--format", color);
+> +		if (color_parse("reset", color) < 0)
+> +			die("BUG: couldn't parse 'reset' as a color");
+>  		resetv.s = color;
+>  		print_value(&resetv, quote_style);
+>  	}
+> diff --git a/color.c b/color.c
+> index f672885..7941e93 100644
+> --- a/color.c
+> +++ b/color.c
+> @@ -60,13 +60,12 @@ static int parse_attr(const char *name, int len)
+>  	return -1;
+>  }
+>  
+> -void color_parse(const char *value, const char *var, char *dst)
+> +int color_parse(const char *value, char *dst)
+>  {
+> -	color_parse_mem(value, strlen(value), var, dst);
+> +	return color_parse_mem(value, strlen(value), dst);
+>  }
+>  
+> -void color_parse_mem(const char *value, int value_len, const char *var,
+> -		char *dst)
+> +int color_parse_mem(const char *value, int value_len, char *dst)
+>  {
+>  	const char *ptr = value;
+>  	int len = value_len;
+> @@ -76,7 +75,7 @@ void color_parse_mem(const char *value, int value_len, const char *var,
+>  
+>  	if (!strncasecmp(value, "reset", len)) {
+>  		strcpy(dst, GIT_COLOR_RESET);
+> -		return;
+> +		return 0;
+>  	}
+>  
+>  	/* [fg [bg]] [attr]... */
+> @@ -153,9 +152,9 @@ void color_parse_mem(const char *value, int value_len, const char *var,
+>  		*dst++ = 'm';
+>  	}
+>  	*dst = 0;
+> -	return;
+> +	return 0;
+>  bad:
+> -	die("bad color value '%.*s' for variable '%s'", value_len, value, var);
+> +	return error(_("invalid color value: %.*s"), value_len, value);
+>  }
+>  
+>  int git_config_colorbool(const char *var, const char *value)
+> diff --git a/color.h b/color.h
+> index 9a8495b..f5beab1 100644
+> --- a/color.h
+> +++ b/color.h
+> @@ -77,8 +77,8 @@ int git_color_default_config(const char *var, const char *value, void *cb);
+>  
+>  int git_config_colorbool(const char *var, const char *value);
+>  int want_color(int var);
+> -void color_parse(const char *value, const char *var, char *dst);
+> -void color_parse_mem(const char *value, int len, const char *var, char *dst);
+> +int color_parse(const char *value, char *dst);
+> +int color_parse_mem(const char *value, int len, char *dst);
+>  __attribute__((format (printf, 3, 4)))
+>  int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
+>  __attribute__((format (printf, 3, 4)))
+> diff --git a/diff.c b/diff.c
+> index d7a5c81..d1bd534 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -248,8 +248,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+>  			return 0;
+>  		if (!value)
+>  			return config_error_nonbool(var);
+> -		color_parse(value, var, diff_colors[slot]);
+> -		return 0;
+> +		return color_parse(value, diff_colors[slot]);
+>  	}
+>  
+>  	/* like GNU diff's --suppress-blank-empty option  */
+> diff --git a/grep.c b/grep.c
+> index 99217dc..4dc31ea 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -111,7 +111,7 @@ int grep_config(const char *var, const char *value, void *cb)
+>  	if (color) {
+>  		if (!value)
+>  			return config_error_nonbool(var);
+> -		color_parse(value, var, color);
+> +		return color_parse(value, color);
+>  	}
+>  	return 0;
+>  }
+> diff --git a/log-tree.c b/log-tree.c
+> index 877d976..7844f33 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -63,8 +63,7 @@ int parse_decorate_color_config(const char *var, const char *slot_name, const ch
+>  		return 0;
+>  	if (!value)
+>  		return config_error_nonbool(var);
+> -	color_parse(value, var, decoration_colors[slot]);
+> -	return 0;
+> +	return color_parse(value, decoration_colors[slot]);
+>  }
+>  
+>  /*
+> diff --git a/pretty.c b/pretty.c
+> index 31f2ede..59de1dc 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -963,9 +963,8 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+>  				return end - placeholder + 1;
+>  			begin += 5;
+>  		}
+> -		color_parse_mem(begin,
+> -				end - begin,
+> -				"--pretty format", color);
+> +		if (color_parse_mem(begin, end - begin, color) < 0)
+> +			die(_("unable to parse --pretty format"));
+>  		strbuf_addstr(sb, color);
+>  		return end - placeholder + 1;
+>  	}
