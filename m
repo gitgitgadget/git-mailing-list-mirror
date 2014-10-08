@@ -1,131 +1,92 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Can I fetch an arbitrary commit by sha1?
-Date: Wed, 8 Oct 2014 20:30:29 +0700
-Message-ID: <20141008133029.GA23010@lanh>
-References: <CAENte7htO13s91UJFNzW4aBhsGxE=LpnvaZfce+vqQU5+a-cYg@mail.gmail.com>
- <CAPBPrnsA4KxNximtKXcC37kuwBHK0Esytdm4nsgLHkrJSg3Ufw@mail.gmail.com>
- <20141002161006.GB2505@peff.net>
- <CACh33FpWPuyJRryf6hzbAkqWJMwzz1mLLDDRxEQ0niT2CznTRg@mail.gmail.com>
- <CACsJy8B0dbE0C3M0PO-EfaZ_bSxwGJSFVejEGFzjHSOZKOc+Jw@mail.gmail.com>
- <20141007131257.GA24348@lanh>
- <xmqqwq8bizzi.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] [PATCH v4] MinGW(-W64) compilation
+Date: Wed, 8 Oct 2014 15:58:17 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1410081553320.990@s15462909.onlinehome-server.info>
+References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org> <alpine.DEB.1.00.1410081139330.990@s15462909.onlinehome-server.info> <20141008105901.GA9433@seldon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Patrick Donnelly <batrick@batbytes.com>, Jeff King <peff@peff.net>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 08 15:30:27 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	msysGit <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Wed Oct 08 15:58:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbrJx-0005IH-KY
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 15:30:25 +0200
+	id 1Xbrl7-0001Zo-Sw
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 15:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756546AbaJHNaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 09:30:22 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:55164 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756509AbaJHNaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 09:30:20 -0400
-Received: by mail-pa0-f49.google.com with SMTP id hz1so9069423pad.36
-        for <git@vger.kernel.org>; Wed, 08 Oct 2014 06:30:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZQhMPULZUd9rndVcrrK7aS5u6rh2lA2R5W81Ly7lMq8=;
-        b=h9K7mbvltHIzj10MJnADrNBDjzr7w/DmMArk1JQ3BnH4zfSyX/Kt2EsU7JUF1cbvDV
-         lDiOvgyvI3OdDk4vkot0tZ0f4vetOT2vFW11MEsjKtKy2S+FXNvC+KVX5G7epXKsGosQ
-         ECm3Fn90ECIbz0V0bLrk7vciKaCgpNumBpML5x0ewxiiD+c9Vmt3kKwa/r2NYEh2v82f
-         +0sg75y3j9SOfz2vG5GeMnKj+8JePn4rODO2hpdLUKhWlm1gD3tz5EFzz2cr+ggewhuE
-         bEAjk2THN+nyLPdQKOZLq05FPacO5v4fWY2YTRaVuUEjd0pdWXmdU979CbHfwqALSCz8
-         hgjQ==
-X-Received: by 10.66.250.227 with SMTP id zf3mr9333533pac.135.1412775019636;
-        Wed, 08 Oct 2014 06:30:19 -0700 (PDT)
-Received: from lanh ([115.73.214.17])
-        by mx.google.com with ESMTPSA id iq3sm26337pbb.71.2014.10.08.06.30.15
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Oct 2014 06:30:18 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 08 Oct 2014 20:30:29 +0700
-Content-Disposition: inline
-In-Reply-To: <xmqqwq8bizzi.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756293AbaJHN6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 09:58:23 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62902 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755848AbaJHN6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 09:58:22 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MPZuP-1XXD3L2gMb-004khX;
+ Wed, 08 Oct 2014 15:58:18 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20141008105901.GA9433@seldon>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:AWbxrAW7eFJ84fuwWuYK0M+tQlpr/fDDgCeNSHRQjhyds8dM40K
+ jkamJ+QTY72vEsdN5REdxdBGSZPZ8C3g0mqBiguM1aq5JHAGiFxDxz+2XifwjfkhipSBb6c
+ 9YeXz+vB9eI5tDSVp0k+hu65OXsjVTPGwy7OUGrJ8KJXCxIJLUWqLXmZuOL1zWiFiHC8ykQ
+ u/J1gAzehjLDhnCy8t6Cg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 07, 2014 at 09:52:33AM -0700, Junio C Hamano wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > Hmm.. Junio already did most of the work in 051e400 (helping
-> > smart-http/stateless-rpc fetch race - 2011-08-05), so all we need to
-> > do is enable uploadpack.allowtipsha1inwant and apply this patch
-> 
-> Not that patch, I would think.
-> 
-> I would understand "if !stateless_rpc and !allowtipsha1 then it is
-> an error", though.
+Hi Marat,
 
-Fair enough. It seems to work, technically, using the patch below. But
-I think people would rather have support from "git clone" and "git
-clone --branch" can't deal with SHA-1 this way yet. And --branch might
-be a bad place to enable this..
+On Wed, 8 Oct 2014, Marat Radchenko wrote:
 
-So it needs more work. Any help is appreciated, as I still need to
-finish my untracked cache series first and re-evaluate watchman series
-before git 3.0 is released.
+> On Wed, Oct 08, 2014 at 11:40:17AM +0200, Johannes Schindelin wrote:
+> > To make it easier to review and substantially easier to work on this patch
+> > series with Git, I opened a pull request on GitHub:
+> >
+> >       https://github.com/msysgit/git/pull/264
+> >
+> 
+> 1. I fail to see how using a tool that doesn't send emails about review
+>    comments is *easier* than just sending emails.
 
--- 8< --
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 67e0ab3..bdc121e 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1277,4 +1277,22 @@ EOF
- 	git push --no-thin --receive-pack="$rcvpck" no-thin/.git refs/heads/master:refs/heads/foo
- '
- 
-+test_expect_success 'shallow fetch reachable SHA1 (but not a ref)' '
-+	mk_empty testrepo &&
-+	(
-+		cd testrepo &&
-+		test_commit foo &&
-+		test_commit bar
-+	) &&
-+	SHA1=`git --git-dir=testrepo/.git rev-parse HEAD^` &&
-+	git init shallow &&
-+	(
-+		cd shallow &&
-+		test_must_fail git fetch --depth=1 ../testrepo/.git $SHA1 &&
-+		git --git-dir=../testrepo/.git config uploadpack.allowtipsha1inwant true &&
-+		git fetch --depth=1 ../testrepo/.git $SHA1 &&
-+		git cat-file commit $SHA1 >/dev/null
-+	)
-+'
-+
- test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index c789ec0..4a9a656 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -454,8 +454,12 @@ static void check_non_tip(void)
- 	char namebuf[42]; /* ^ + SHA-1 + LF */
- 	int i;
- 
--	/* In the normal in-process case non-tip request can never happen */
--	if (!stateless_rpc)
-+	/*
-+	 * In the normal in-process case without
-+	 * uploadpack.allowtipsha1inwant, non-tip requests can never
-+	 * happen
-+	 */
-+	if (!stateless_rpc && !allow_tip_sha1_in_want)
- 		goto error;
- 
- 	cmd.argv = argv;
--- 8< --
+You probably missed how I commented on exact lines without you having to
+guess from the quoted context what part of your patches I am talking
+about.
+
+You probably also missed the fact that comments on rewritten commits
+automatically drop out of sight, decluttering the set of comments and
+making it obvious which comments have not been addressed yet.
+
+And finally, you probably also missed the fact that the official Git fork
+for Windows was asked to review your patches because Junio defers
+Windows-specific stuff to us. And as you refused to work against our
+integration branches (yes, we have two, because we are working towards
+switching to a more sustainable development environment, something you
+already mocked successfully), we had to rebase your work onto two
+branches, which is also substantially easier to do using GitHub rather
+than via mails.
+
+But I get it: you want to roll your own thing and not help us review it
+let alone make use of it. That's fine, we'll manage.
+
+> 2. Please, do not hijack patchset discussion by moving it from git@ ML to 
+>    GitHub comments.
+
+I mistook your work on Git and the fact that you have an account on GitHub
+for your willingness to collaborate on this effectively. My mistake, I
+apologize!
+
+> 3. And I repeat, my goal is to push this stuff in git.git,
+>    not in msysgit.git, not in git-for-windows.git, not in msys2.git, not in other
+>    4k+ forks on GitHub.
+
+Yes, your objection is noted.
+
+Junio, we'll take it from here, don't worry.
+
+Ciao,
+Johannes
