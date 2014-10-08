@@ -1,139 +1,109 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/14] MINGW: config.mak.uname: auto-detect
- MinGW build from compiler
-Date: Wed, 08 Oct 2014 12:26:52 -0700
-Message-ID: <xmqqoatm8irn.fsf@gitster.dls.corp.google.com>
-References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
-	<1412791267-13356-15-git-send-email-marat@slonopotamus.org>
+Subject: Re: [PATCH/RFC 0/5] add "unset.variable" for unsetting previously set variables
+Date: Wed, 08 Oct 2014 12:52:24 -0700
+Message-ID: <xmqqk34a8hl3.fsf@gitster.dls.corp.google.com>
+References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
+	<xmqqvbo2meg5.fsf@gitster.dls.corp.google.com>
+	<5433CBC3.5010202@gmail.com>
+	<xmqq1tqjkexe.fsf@gitster.dls.corp.google.com>
+	<vpqzjd7kta6.fsf@anie.imag.fr>
+	<xmqqy4sqbi12.fsf@gitster.dls.corp.google.com>
+	<vpq61fujtlk.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org,  msysGit <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBCG77UMM3EJRB7U722QQKGQEAGPONEY@googlegroups.com Wed Oct 08 21:26:56 2014
-Return-path: <msysgit+bncBCG77UMM3EJRB7U722QQKGQEAGPONEY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f192.google.com ([209.85.220.192])
+Content-Type: text/plain
+Cc: Rasmus Villemoes <rv@rasmusvillemoes.dk>,
+	Jakub =?utf-8?Q?Nar=C4=99bs?= =?utf-8?Q?ki?= <jnareb@gmail.com>,
+	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Oct 08 21:52:32 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRB7U722QQKGQEAGPONEY@googlegroups.com>)
-	id 1Xbwsy-0002gU-2E
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 21:26:56 +0200
-Received: by mail-vc0-f192.google.com with SMTP id hq11sf1602629vcb.19
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 12:26:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=V3xqxXJqnPLtJtfKgZgJh8TOsl2hrLmWKqoadcLMNsg=;
-        b=u5ul8+Kd6G1ZF+JxRmJ1afL6oo7xY/BSJo5GmW48AcmZsLa8TMQ+mwLywEhLSMFw04
-         FlvUANHyFQOGviN9sa1OJTLJJSj19v87u1WZG5GIlONJKTUFzwauZBHj0/Y7d7mh3nvs
-         nXMMqINsjRmc9Ztn1kLqYJ8m+vjZquKPsEgJlX2EVktrPYABMPv8HT1v/jZ6e+lB0KRg
-         x0RXUFBOltCYzKbLVnAreaifQTTqUBVPgb/R20OCEvwfbjNIS/Y9ZTaw7gAxSKGbMwGo
-         PMnbT79JsEvsCYTonf3Yeek1T1RFd/G2Sb5ZzEyU7D6Q/CZRPQITXy3VbaaSHmMO2kh8
-         5Bbw==
-X-Received: by 10.182.130.133 with SMTP id oe5mr80496obb.9.1412796415284;
-        Wed, 08 Oct 2014 12:26:55 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.80.130 with SMTP id r2ls1306944obx.80.gmail; Wed, 08 Oct
- 2014 12:26:54 -0700 (PDT)
-X-Received: by 10.182.251.135 with SMTP id zk7mr8088828obc.14.1412796414793;
-        Wed, 08 Oct 2014 12:26:54 -0700 (PDT)
-Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id h8si1319052igq.0.2014.10.08.12.26.54
-        for <msysgit@googlegroups.com>;
-        Wed, 08 Oct 2014 12:26:54 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XbxHk-0005Qy-67
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 21:52:32 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754806AbaJHTw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 15:52:28 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56363 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753513AbaJHTw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 15:52:27 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C83114859;
-	Wed,  8 Oct 2014 15:26:54 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 734A6140B6;
+	Wed,  8 Oct 2014 15:52:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DhsWTtfRAoQZ8zs889Cw74NAfA8=; b=mXgzWB
+	g65gEGGJMQ6XHrbcrLV26GSwcgLRI9AoqcrfBMQvcmF/iqt4l8Dn+2RQI0HzS/i8
+	sxojcs+VaK5YTCz4kzB3Dz4lFqCkfczvKrDgnuRlMTNoLqs8tdxXAukbGsrgDKBI
+	8RQCZyhZm7wVMmBtY60AKpWykf4tnW6xENUSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cEGjqNDhxa10ASZLZ7LyMSMyHLTvRtTZ
+	mdaVD/bsEAnmKVOhVwrYbTt5jQMs3FiDS/ZzqgzbHjG7Gw0CQ4kEvJuMgWLB7kvm
+	RB8YcbfpR3kw/0J9fZMUJqoXnLfmsoKBeBdGYnMQldUbnnLxG0WoX0EPglCTiCp1
+	AMhZ1GIrU/8=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 10BB014858;
-	Wed,  8 Oct 2014 15:26:54 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 676F6140B5;
+	Wed,  8 Oct 2014 15:52:26 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8D84E14857;
-	Wed,  8 Oct 2014 15:26:53 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE314140B4;
+	Wed,  8 Oct 2014 15:52:25 -0400 (EDT)
+In-Reply-To: <vpq61fujtlk.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	08 Oct 2014 20:37:27 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0F3958C2-4F21-11E4-AB0A-855A93717476-77302942!pb-smtp1.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+X-Pobox-Relay-ID: A0912932-4F24-11E4-BE77-855A93717476-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-Marat Radchenko <marat@slonopotamus.org> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> When crosscompiling, one cannot rely on `uname` from host system.
-
-That may well be true, but is that limited to cross-compiling to
-mingw?   Would it be generally true for any cross compilation,
-wouldn't it?
-
-What I am wondering is if it is a better solution to make it easier
-to allow somebody who is cross compiling to express "Mr.  Makefile,
-we know better than you and want you to do a MINGW build for us
-without checking with `uname -?` yourself", i.e.
-
-	$ make uname_O=MINGW uname_S=MINGW
-
-which would hopefully allow cross-compilation into other
-environments, not just MINGW.
-
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
-> ---
->  config.mak.uname | 5 +++++
->  1 file changed, 5 insertions(+)
+>> I do not offhand think of a good example of an variable that we may
+>> want to allow overriding but still want to limit its values myself.
 >
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 9f7037e..182da50 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -14,6 +14,11 @@ ifdef MSVC
->  	uname_O := Windows
->  endif
->  
-> +ifneq (,$(findstring mingw,$(CC_MACH)))
-> +	uname_S := MINGW
-> +	uname_O := MINGW
-> +endif
-> +
->  # We choose to avoid "if .. else if .. else .. endif endif"
->  # because maintaining the nesting to match is a pain.  If
->  # we had "elif" things would have been much nicer...
-> -- 
-> 2.1.1
+> I just thought of a semi-realistic use-case : diff.*.{command,textconv}.
 >
-> -- 
+> One may want to allow per-project sets of diff drivers, but these
+> variables contain actual commands, so clearly we can't allow any
+> value for these variables.
+>
+> "semi-realistic" only because I never needed a per-project diff driver,
+> I have my per-user preference and I'm happy with it.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+This may open another aspect of the discussion, actually.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+The whole reason why the actualy diff.*.command and textconv
+commands are defined in .git/config while the filetype label is
+assigned by in-tree .gitattributes is because these commands are
+platform dependant.  So textconv on Linux, BSD and Windows may want
+to be different commands, and the project that ships an in-tree
+.gitconfig to be safe-included may want to not "set" the variable to
+one specific value, but stop at offering a suggestion, i.e. "there
+are these possibilities, perhaps you may want to pick one of them?"
+without actually making the choice for the user.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+And on the receiving side (i.e. [config "safe"] in .git/config), it
+is unlikely that you would list textconv choices that are plausible
+on different platforms.  Rather, you would say "I would want this
+value to be set on textconv and not others".
+
+But at that point, if you have to be that informed to set up the
+[config "safe"] to list allowed values, I wonder why a user chooses
+to do so and safe-include in-tree .gitconfig, instead of explicitly
+setting her preferred textconv in .git/config herself, without
+bothering to include anything.
+
+> Anyway, the feature does not seem vital to me, but if someone comes up
+> with a clever way to keep room for it in the namespace, that would be
+> cool.
+
+Yes.
