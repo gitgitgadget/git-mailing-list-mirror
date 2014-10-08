@@ -1,97 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 03/16] object_array: factor out slopbuf-freeing logic
-Date: Wed, 8 Oct 2014 04:55:06 -0400
-Message-ID: <20141008085506.GA16314@peff.net>
-References: <20141003202045.GA15205@peff.net>
- <20141003202222.GC16293@peff.net>
- <5433CDC2.6000908@alum.mit.edu>
- <20141008073658.GC25250@peff.net>
- <5434F863.5080303@alum.mit.edu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: [PATCH v4] MinGW(-W64) compilation
+Date: Wed, 8 Oct 2014 10:59:57 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1410081055320.990@s15462909.onlinehome-server.info>
+References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org> <543472A0.3020401@virtuell-zuhause.de> <20141008045330.GA5672@seldon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 08 10:55:19 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>, git@vger.kernel.org, 
+    msysGit <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBCZPH74Q5YNRBGP22OQQKGQET4QWBFQ@googlegroups.com Wed Oct 08 11:00:11 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBGP22OQQKGQET4QWBFQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pd0-f190.google.com ([209.85.192.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xbn1i-0003Xu-2v
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 10:55:18 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192AbaJHIzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 04:55:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56131 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752640AbaJHIzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 04:55:09 -0400
-Received: (qmail 8189 invoked by uid 102); 8 Oct 2014 08:55:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Oct 2014 03:55:09 -0500
-Received: (qmail 13221 invoked by uid 107); 8 Oct 2014 08:55:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Oct 2014 04:55:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Oct 2014 04:55:06 -0400
-Content-Disposition: inline
-In-Reply-To: <5434F863.5080303@alum.mit.edu>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBGP22OQQKGQET4QWBFQ@googlegroups.com>)
+	id 1Xbn6R-0001u3-G0
+	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 11:00:11 +0200
+Received: by mail-pd0-f190.google.com with SMTP id g10sf1161372pdj.27
+        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 02:00:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=sbbK9vXxXPZ4CLxCc9U+90T4ZKLXuLNc31f7GkP01Qo=;
+        b=o5FXEVbqESyNu16Sx2wpEXvLtpWgvo1eKkVbyl6vVtw2R1xjZMVQMuiaRpBw4I6JFN
+         7soT6NTdGJmQn1+png9KqOK6eABm9FkJI9tyiJ89lJDinzlt4UC3xGNwGzV1dJKtALiP
+         Ypbl8JYWzOgf5i/oMUaz0gg/7YXtC8JvNK5UkeU6nQrs/++hRhWSSWxPST+n2tHOVrzg
+         SiycKvLhDVZjF6rOukcA0Ad6cOb5H7wwgn9yOPS9pJajKnE8zRbu2Be2n5CuGUsp0Tze
+         PdCOTkWrwL8h9nl8LVWwPbrKTkLJ+ocfkl1U0lL6oPY4ExM2nUCLtth4Iy7Cbzmgj2q1
+         gOPw==
+X-Received: by 10.50.119.73 with SMTP id ks9mr125847igb.12.1412758810391;
+        Wed, 08 Oct 2014 02:00:10 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.79.227 with SMTP id m3ls3537370igx.3.canary; Wed, 08 Oct
+ 2014 02:00:09 -0700 (PDT)
+X-Received: by 10.68.175.65 with SMTP id by1mr5864359pbc.0.1412758809723;
+        Wed, 08 Oct 2014 02:00:09 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.22])
+        by gmr-mx.google.com with ESMTPS id wa5si2504851pab.2.2014.10.08.02.00.09
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Oct 2014 02:00:09 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.22 as permitted sender) client-ip=212.227.17.22;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MDR21-1XPtwZ0NrB-00GpLj;
+ Wed, 08 Oct 2014 10:59:58 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20141008045330.GA5672@seldon>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:rVWW5Hdf2X5K1ZUlktEtyiJTOvblkTZyywCBeKs7jG96kCObSK8
+ y6hFXvBNQDAuozTG63DweKfraqaXOJSYt3AKxQhrF+DFgO5KPbrd9ZbQLPkDOIrKlxLqZWe
+ ALBukX7RsIeZ7uuA32bOxZ2U4I0PbR4QDdOUXpeZzxAqqHGqguHaeYora7DnHGE51189/VZ
+ WqW6NRHEwnxWuVgkxNf9A==
+X-UI-Out-Filterresults: notjunk:1;
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.22 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-On Wed, Oct 08, 2014 at 10:40:03AM +0200, Michael Haggerty wrote:
+Hi Marat,
 
-> > The intent of this function is freeing memory, not clearing it for sane
-> > reuse.  I think I'd be more in favor of a comment clarifying that. It is
-> > a static function used only internally by the object-array code.
+On Wed, 8 Oct 2014, Marat Radchenko wrote:
+
+> On Wed, Oct 08, 2014 at 01:09:20AM +0200, Thomas Braun wrote:
+>
+> > I wanted to verify that on msysgit but some patches fail to apply
+> > cleanly. Did you also had to tweak the patches?
+> > If yes, are these tweaked patches still available somewhere?
 > 
-> I guess the name reminded me of strbuf_release(), which returns the
-> strbuf to its newly-initialized state (contrary to what api-strbuf.txt
-> says, I just noticed). You're right that your function does no such
-> thing, so it is self-consistent for it not to set ent->name to NULL.
+> msysgit != git-for-windows, as msysgit folks say.
 
-Yeah, I had the same thought while writing it (and ended up with the
-same analysis you do below).
+That's not what msysgit folks say (they say that msysgit is the
+development environment to build Git for Windows [*1*]), and Thomas is
+well aware of the situation because he is a busy contributor on the
+Windows side.
 
-> Functions *_clear() and clear_*():
+> I tested my patches by applying them to git.git/master and building
+> inside msysgit.
 
-I think these ones very clearly are about reinitializing to empty (and
-it looks like we follow that rule, which is good).
+So the idea would be to rebase from git/git/master onto
+msysgit/git/master. Did you do that yet?
 
-If we were designing it now, I think strbuf_release() should probably be
-called strbuf_clear(). Or maybe that would be too confusing, as it might
-imply it is the same thing as strbuf_reset(). Yeesh. Naming is hard.
+Ciao,
+Johannes
 
-> Functions *_free() and free_*():
-> 
-> * Almost all of these free their arguments plus anything that their
-> arguments point at.
+Footnote *1*: msysgit is about to be phased out. As soon as
+https://github.com/git-for-windows/sdk is able to produce a Git for
+Windows installer (it already able to build Git and pass the test suite),
+we will switch to the new development environment and mark msysgit as
+obsolete, keeping it around only for reference.
 
-Yes, that's the rule I think we try to follow.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-> * Confusingly, free_ref_list() and free_pathspec() don't free their
-> arguments, but rather only the things that their arguments points at.
-> (Perhaps they should be renamed.)
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Yeah, I would almost say free_pathspec should be called clear_pathspec.
-Except it _only_ NULLs the array. It leaves "nr" set, which means that
-anybody looking at it will still dereference a bogus pointer (but at
-least it's NULL and not freed memory!).
-
-The free_ref_list() function is on my todo list to get rid of as part of
-the for-each-ref/branch/tag merger I'd like to do. But somehow that
-keeps slipping further down my todo list rather than actually getting
-finished. :(
-
-> So while three out of four *_release() functions completely reinitialize
-> their arguments, there is one that doesn't. And I couldn't find enough
-> other functions that just free referenced memory without reinitializing
-> their whole argument to establish a naming pattern. So I guess your
-> function name is OK too.
-
-I'm open to suggestions for totally new names for this concept (free
-associated memory, do not reinitialize, but do not free the passed
-pointer). But in the absence of one, I think release() is the least-bad.
-
--Peff
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
