@@ -1,94 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: ignore chpwd_functions when cding
-Date: Wed, 08 Oct 2014 11:12:41 -0700
-Message-ID: <xmqqh9zebfc6.fsf@gitster.dls.corp.google.com>
-References: <1412740394-34061-1-git-send-email-bt@brandonturner.net>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [PATCH 14/14] MINGW: config.mak.uname: auto-detect MinGW
+ build from compiler
+Date: Wed,  8 Oct 2014 22:01:07 +0400
+Message-ID: <1412791267-13356-15-git-send-email-marat@slonopotamus.org>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Brandon Turner <bt@brandonturner.net>
-X-From: git-owner@vger.kernel.org Wed Oct 08 20:12:52 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: marat@slonopotamus.org,
+	msysGit <msysgit@googlegroups.com>
+To: git@vger.kernel.org
+X-From: msysgit+bncBCE7TAPITACRBH762WQQKGQEGUUZ54I@googlegroups.com Wed Oct 08 20:14:56 2014
+Return-path: <msysgit+bncBCE7TAPITACRBH762WQQKGQEGUUZ54I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f185.google.com ([209.85.217.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbvjF-0000HC-0R
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 20:12:49 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754252AbaJHSMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 14:12:45 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55368 "EHLO sasl.smtp.pobox.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753800AbaJHSMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 14:12:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BF8E312EF4;
-	Wed,  8 Oct 2014 14:12:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QArPSmrYgLn2BKkyVTeTVg2xfJU=; b=kzJJla
-	sQKxP05dz9oAtcbCwEmBIkz5vAoduCKRvaBmeUfZkCTNla9S55mKBlulUJiDazup
-	x5m47g1q0yQqZQj9FHEaP6XC+1ENp3ZUQxGwJh80nDpfSMBTH06O37y/et9/XSKp
-	DSBiCDcJkayldsplt2flX8VOL1V1kQddnRyOw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U2Afk7fogpaqE1LLOxxg8Zqfu6WkJbLJ
-	i3BIPnAjA/B/4QLoi5eVPVVWbsTFH/Nt78ZIZjs+0haO50AB9Jko1pYgGgM6qJng
-	2hal/DZvugnDSVEgZUI21rLusHRNQa1jrDQZFqD+ZXbbU7NvpTJoa0H6Y2omPPi/
-	OGbwiOmWAJI=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B6F7412EF3;
-	Wed,  8 Oct 2014 14:12:43 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 09BB312EEE;
-	Wed,  8 Oct 2014 14:12:42 -0400 (EDT)
-In-Reply-To: <1412740394-34061-1-git-send-email-bt@brandonturner.net> (Brandon
-	Turner's message of "Tue, 7 Oct 2014 22:53:14 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B27F5C12-4F16-11E4-9886-855A93717476-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+	(envelope-from <msysgit+bncBCE7TAPITACRBH762WQQKGQEGUUZ54I@googlegroups.com>)
+	id 1XbvlH-0001Kk-Si
+	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 20:14:55 +0200
+Received: by mail-lb0-f185.google.com with SMTP id u10sf818981lbd.22
+        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 11:14:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=dYtcQObGy84xVK2waYQWNrprbK/X+N3sBNKedgm1mws=;
+        b=KAL3sDijvllokpkNJrIADuzGr4DdZRIOKhZ9DK15D6W10VKIXvB1pGzAZd9eRjp7mX
+         PLEsz+z1tBP74f/QWGmPfGhCFqfIoRrFcfTId+4p9OnRP93CviRQrcbih7M5YPa0i+KI
+         Qh4n1HrQ40yfYH6Gmcqgpl/zxeA8r+0+uQRJJ2SKV3Jk82ThmV+emiGkcZjBrJfBlFtw
+         WGD1Ef3ux9OUSe56zq0jY+53p95iIMq/qR6v6niAJ53jd75UzJkgyAimNnaVlJOpLZR5
+         6fHVO0IDuh1Xb2PhmIdWcAaf9p7qzL2m5z1IxdZzeVo1+nM5fp30zc7s/UWGfdH5dTKo
+         NOyw==
+X-Received: by 10.180.91.49 with SMTP id cb17mr71743wib.14.1412792095688;
+        Wed, 08 Oct 2014 11:14:55 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.86.132 with SMTP id p4ls138080wiz.23.gmail; Wed, 08 Oct
+ 2014 11:14:55 -0700 (PDT)
+X-Received: by 10.180.85.8 with SMTP id d8mr1803453wiz.0.1412792095042;
+        Wed, 08 Oct 2014 11:14:55 -0700 (PDT)
+Received: from slonopotamus.org ([94.242.204.247])
+        by gmr-mx.google.com with ESMTPS id us10si125695lbc.1.2014.10.08.11.14.54
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Oct 2014 11:14:54 -0700 (PDT)
+Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
+Received: from [176.57.72.72] (helo=noblesse.home.ru)
+	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1XbvYJ-0003Rz-8V; Wed, 08 Oct 2014 22:01:31 +0400
+X-Mailer: git-send-email 2.1.1
+In-Reply-To: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
+X-Original-Sender: marat@slonopotamus.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: marat@slonopotamus.org does not designate permitted sender
+ hosts) smtp.mail=marat@slonopotamus.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-Brandon Turner <bt@brandonturner.net> writes:
+When crosscompiling, one cannot rely on `uname` from host system.
 
-> Software, such as RVM (ruby version manager), may set chpwd functions
-> that result in an endless loop when cding.  chpwd functions should be
-> ignored.
->
-> Signed-off-by: Brandon Turner <bt@brandonturner.net>
-> ---
+Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
+---
+ config.mak.uname | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Can you mention that this is abomination limited only to zsh
-somewhere in the log message?  Or does bash share the same glitch?
+diff --git a/config.mak.uname b/config.mak.uname
+index 9f7037e..182da50 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -14,6 +14,11 @@ ifdef MSVC
+ 	uname_O := Windows
+ endif
+ 
++ifneq (,$(findstring mingw,$(CC_MACH)))
++	uname_S := MINGW
++	uname_O := MINGW
++endif
++
+ # We choose to avoid "if .. else if .. else .. endif endif"
+ # because maintaining the nesting to match is a pain.  If
+ # we had "elif" things would have been much nicer...
+-- 
+2.1.1
 
-If this is limited to zsh, I wonder if we can take advantage of the
-fact that we have git-completion.bash and git-completion.zsh to
-avoid contaminating shared part of the code.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Thanks.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-> For an example of this bug, see:
-> https://github.com/wayneeseguin/rvm/issues/3076
->
->  contrib/completion/git-completion.bash | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 06bf262..996de31 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -283,7 +283,8 @@ __git_ls_files_helper ()
->  {
->  	(
->  		test -n "${CDPATH+set}" && unset CDPATH
-> -		cd "$1"
-> +		(( ${#chpwd_functions} )) && chpwd_functions=()
-> +		builtin cd "$1"
->  		if [ "$2" == "--committable" ]; then
->  			git diff-index --name-only --relative HEAD
->  		else
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
