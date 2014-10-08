@@ -1,99 +1,129 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [BUG?] `config branch.autosetuprebase true` breaks `rev-parse
- --is-inside-work-tree`
-Date: Thu, 09 Oct 2014 00:34:16 +0530
-Message-ID: <54358AB0.3060002@gmail.com>
-References: <CAD77+gTuqbZimEK-=gXY8o4wFqOicFvnQ5MnV6Fq1npuckwYFQ@mail.gmail.com> <xmqqppe2bh1p.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Richard Hartmann <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 08 21:04:34 2014
+From: Jess Austin <jess.austin@gmail.com>
+Subject: [PATCH] git-prompt.sh: Omit prompt for ignored directories
+Date: Wed,  8 Oct 2014 14:04:00 -0500
+Message-ID: <1412795040-19267-1-git-send-email-jess.austin@gmail.com>
+Cc: Jess Austin <jess.austin@gmail.com>, szeder@ira.uka.de,
+	rhansen@bbn.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 08 21:04:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbwXI-0007w9-HL
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 21:04:32 +0200
+	id 1XbwXP-0007zL-6S
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 21:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753164AbaJHTE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 15:04:28 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:52004 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752521AbaJHTE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 15:04:27 -0400
-Received: by mail-pd0-f181.google.com with SMTP id z10so7223854pdj.26
-        for <git@vger.kernel.org>; Wed, 08 Oct 2014 12:04:27 -0700 (PDT)
+	id S1753868AbaJHTEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 15:04:32 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:64592 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753273AbaJHTEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 15:04:31 -0400
+Received: by mail-ig0-f169.google.com with SMTP id uq10so10494411igb.0
+        for <git@vger.kernel.org>; Wed, 08 Oct 2014 12:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=5YuUYTRUAFcZA3u96ljoo6+Bqx0EGedhxcJqF5eT7rM=;
-        b=Iwvi3O0JWKG2eK0JUvWKr6gji2lXPGjp0edpG5bC5o8RwWvVP8o17ChhhMud/eqOgb
-         MoPl9VUsKuHoSIFGDgag5vFIi1xW+u3TGTEyOJP4ygr09Z+lJu0ouEYxxxZSrAZa8qV7
-         C7DdyA3pgEu0PQpazk/njoI/NIB2Z5r2Iw30J7Cowismaxyw2xPvgd7rNifuizQnEjDJ
-         iHHnv29olh0l0Xlg35nvdFAVP1OKvo1iXYCtp4X7GWLEtZAdHgBVPmntjFAn3Jhy4pl9
-         XfzUegvP5ZUuP7mhu8aZwS89zmJ+CUGqLiicaxvm0D+TZb8AOzVYTrtTp+JUewVGuIbZ
-         2eoQ==
-X-Received: by 10.70.32.33 with SMTP id f1mr13686857pdi.23.1412795067628;
-        Wed, 08 Oct 2014 12:04:27 -0700 (PDT)
-Received: from [127.0.0.1] ([106.211.91.111])
-        by mx.google.com with ESMTPSA id n2sm701677pdh.30.2014.10.08.12.04.24
+        h=from:to:cc:subject:date:message-id;
+        bh=n7TCPLrVqnfTf6n6LeSidnNta3otcV3eEpJU0UcCB5Q=;
+        b=iKJTxxISV7w2M7EHBIbEjdCbAwzeg+wMyZTE4HTdVV43+WceyBdIEhGvH2rX5lSZws
+         rYhJ+Wnn9IiNwbvjqTa18kBgoigM+1FUZS5B3tigLsvGYm6JbG/ytyzQkVPwlfIrNSNk
+         dkLndG0tl4EKxsp5DgKDyHfpB9Rz84vGnx+H0S69bQRf4cMEk4I9SMEdzM31qX9sMo8a
+         5kBzNLX8gbUS6pKmiE3GjPvCmM8Ftj8lQbora07vGyqi60a8jlwlKECRkq34nWTdhnyn
+         5O0A0YLlcW9/sZT9cC14qTM6jGKlermOIqfpA1xIVnphjXJ4/KVJiqLHZyFgyWlvxc7j
+         8ayA==
+X-Received: by 10.50.67.109 with SMTP id m13mr19574310igt.39.1412795070554;
+        Wed, 08 Oct 2014 12:04:30 -0700 (PDT)
+Received: from localhost.localdomain (66-128-122-45.static.stls.mo.charter.com. [66.128.122.45])
+        by mx.google.com with ESMTPSA id p10sm1955271igx.2.2014.10.08.12.04.28
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 08 Oct 2014 12:04:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqppe2bh1p.fsf@gitster.dls.corp.google.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 08 Oct 2014 12:04:29 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/8/2014 11:05 PM, Junio C Hamano wrote:
-> Richard Hartmann <richih.mailinglist@gmail.com> writes:
-> 
->> So this is not a real bug report, more of a "is this intended this way?"
->> richih@titanium  ~/git_test % git rev-parse --is-inside-work-tree
->> error: Malformed value for branch.autosetuprebase
->> fatal: bad config file line 8 in .git/config
->> richih@titanium  ~/git_test % cat .git/config
->> ...
->> [branch]
->> autosetuprebase = true
-> 
-> It does not seem to be limited to rev-parse but having a malformed
-> configuration for that variable would break everything Git, which
-> certainly is not how it is supposed to work.  It also seems that the
-> breakage dates back very far into the past (I checked 1.7.0 and it
-> seems to be broken the same way).
-> 
-> The same breakage exists for branch.autosetupmerge, I think, e.g.
-> 
-> 	[branch]
->                 autosetupmerge = garbage
-> 
-> In config.c, git_default_branch_config() must be corrected to set
-> git_branch_track and autorebase to BRANCH_TRACK_MALFORMED and
-> AUTOREBASE_MALFORMED and the users of these two variables must be
-> fixed to deal with the "malformed in the configuration" cases, I
-> think.  The error should happen only in the codepath where we need
-> the value, and no other places.
+Introduce a new environmental variable, GIT_PS1_OMITIGNORED, which
+tells __git_ps1 to display nothing when the current directory is
+set (e.g. via .gitignore) to be ignored by git. In the absence of
+GIT_PS1_OMITIGNORED this change has no effect.
 
-Supporting Junio's claim, there is a function called git_default_config()
-which checks and sets a whole load of config values which may or maynot
-be relevant to the codepath that called it. (branch.autosetuprebase is a
-part of it) So an error may occur printing a seemingly unrelated config value
-as the malformed variable as happened in your case.
+Many people manage e.g. dotfiles in their home directory with git.
+This causes the prompt generated by __git_ps1 to refer to that "top
+level" repo while working in any descendant directory. That can be
+distracting, so this patch helps one shut off that noise.
 
-There are currently 72 callers of git_default_config() in the codebase,
-so a malformed config value breaks most of git commands. The only path
-to correct this behavior would be either correct the config variable in
-the file or we could decouple the huge monolithic function that
-git_default_config() has become and use the git_config_get_value() in the
-code paths that really need them. This part is doable, albeit slowly. All
-the config variables in git_default_config() can be rewritten using the
-new non callback based functions easily as demonstrated in an earlier
-RFC patch.
+Signed-off-by: Jess Austin <jess.austin@gmail.com>
+---
+ contrib/completion/git-prompt.sh |  9 +++++++++
+ t/t9903-bash-prompt.sh           | 21 +++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index c5473dc..6a26cb4 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -84,6 +84,10 @@
+ # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+ # the colored output of "git status -sb" and are available only when
+ # using __git_ps1 for PROMPT_COMMAND or precmd.
++#
++# If you would like __git_ps1 to do nothing in the case when the current
++# directory is set up to be ignored by git, then set GIT_PS1_OMITIGNORED
++# to a nonempty value.
+ 
+ # check whether printf supports -v
+ __git_printf_supports_v=
+@@ -501,6 +505,11 @@ __git_ps1 ()
+ 	local f="$w$i$s$u"
+ 	local gitstring="$c$b${f:+$z$f}$r$p"
+ 
++	if [ -n "$(git check-ignore .)" ] && [ -n "${GIT_PS1_OMITIGNORED}" ]
++	then
++		printf_format=""
++	fi
++
+ 	if [ $pcmode = yes ]; then
+ 		if [ "${__git_printf_supports_v-}" != yes ]; then
+ 			gitstring=$(printf -- "$printf_format" "$gitstring")
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 9150984..55bcb6b 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -35,6 +35,8 @@ test_expect_success 'setup for prompt tests' '
+ 	git commit -m "another b2" file &&
+ 	echo 000 >file &&
+ 	git commit -m "yet another b2" file &&
++	mkdir ignored_dir &&
++	echo "ignored_dir/" >> .gitignore &&
+ 	git checkout master
+ '
+ 
+@@ -588,4 +590,23 @@ test_expect_success 'prompt - zsh color pc mode' '
+ 	test_cmp expected "$actual"
+ '
+ 
++test_expect_success 'prompt - prompt omitted in ignored directory' '
++	printf "" >expected &&
++	(
++		cd ignored_dir &&
++		GIT_PS1_OMITIGNORED=y &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success 'prompt - prompt not omitted without GIT_PS1_OMITIGNORED' '
++	printf " (master)" >expected &&
++	(
++		cd ignored_dir &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
+ test_done
+-- 
+1.9.1
