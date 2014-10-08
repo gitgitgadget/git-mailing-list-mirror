@@ -1,182 +1,130 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/16] t5304: use helper to report failure of "test foo =
- bar"
-Date: Tue, 7 Oct 2014 21:13:04 -0400
-Message-ID: <20141008011304.GA26864@peff.net>
-References: <xmqq61fveg1j.fsf@gitster.dls.corp.google.com>
- <20141007212941.GA24508@peff.net>
- <xmqqiojvczrd.fsf@gitster.dls.corp.google.com>
- <54346663.7090006@alum.mit.edu>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: configure names for temporary files
+Date: Wed, 8 Oct 2014 01:22:30 -0700
+Message-ID: <20141008082228.GA78852@gmail.com>
+References: <CALpL35mjtg9ge321Vz_kS1wzbYz+z9H5R3L8FcpVSNO3AtZzVA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 08 10:20:02 2014
+Cc: git@vger.kernel.org
+To: Sergio Ferrero <sferrero@ensoftcorp.com>
+X-From: git-owner@vger.kernel.org Wed Oct 08 10:22:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XbmTY-0000SJ-5G
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 10:20:00 +0200
+	id 1XbmVT-0002uk-4x
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 10:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754726AbaJHITy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 04:19:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56110 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754520AbaJHITs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 04:19:48 -0400
-Received: (qmail 5127 invoked by uid 102); 8 Oct 2014 08:19:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 08 Oct 2014 03:19:49 -0500
-Received: (qmail 10910 invoked by uid 107); 8 Oct 2014 01:13:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Oct 2014 21:13:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Oct 2014 21:13:04 -0400
+	id S1754786AbaJHIVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 04:21:54 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:43773 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753639AbaJHIVw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 04:21:52 -0400
+Received: by mail-pd0-f177.google.com with SMTP id v10so6490182pde.36
+        for <git@vger.kernel.org>; Wed, 08 Oct 2014 01:21:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ht6ao21HErNIzvApEjpt9bzj74Jv2vt1vTc6FdAViIc=;
+        b=f/q44t2pMu13rQMsBpy6HgjD+39G9TDz3zLE7wFcLFJyAMKWxOXjI2yt3oFERbhSIh
+         VK3TI0bov0uz/eSP0fqD5s1GLkCB1N2YomVROP34EAH2N26aA/ED87wZkChrvl7sUy0i
+         jn5brHd/dbs1phKYsBrcL76rag3dNp9NRz4S1KwD/NygJDjAG797Ztq8/60mAyM/haPS
+         HZ+bZ9iw1v45CzY2qZQQO+gyO2MUeD5brLmd84l+3jXZjOspFdPAaDDlaalX4QtBqy9m
+         vL43PK6rEt/6s6uGQl3CoGGyPEBDbh5y1VeSCHYaak8umBNkvOUxFWquGs0yDk9FHmIm
+         cvXg==
+X-Received: by 10.68.231.228 with SMTP id tj4mr2734832pbc.126.1412756511831;
+        Wed, 08 Oct 2014 01:21:51 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id m2sm11050023pdl.14.2014.10.08.01.21.50
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 08 Oct 2014 01:21:50 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <54346663.7090006@alum.mit.edu>
+In-Reply-To: <CALpL35mjtg9ge321Vz_kS1wzbYz+z9H5R3L8FcpVSNO3AtZzVA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 08, 2014 at 12:17:07AM +0200, Michael Haggerty wrote:
-
-> On 10/07/2014 11:53 PM, Junio C Hamano wrote:
-> > Hmph, your 'test' in that name is a generic verb "we check that...",
-> > which I think aligns better with the other test_foo functions.  When
-> > I suggested 'test_verbose', 'test' in that name was specifically
-> > meant to refer to the 'test' command.
-
-I actually meant "test" as a namespace to indicate it is part of the
-test suite (just like "test_seq" is not testing anything). I think that
-is why the names are so silly. We are using the "test" command in our
-"test" suite to "test" some conditions.
-
-> I like "verbose_test $foo = $bar" because it puts the word "test" next
-> to the condition, where the built-in command "test" would otherwise be.
+On Tue, Oct 07, 2014 at 11:33:16AM -0300, Sergio Ferrero wrote:
+> Hello,
 > 
-> We could even define a command
+> I'd like to configure git with a specific merge tool to merge Simulink
+> model files.
+> I have followed the steps to configure the merge tool successfully.
 > 
-> 	verbose () {
-> 		"$@" && return 0
-> 		echo >&2 "command failed: $*"
-> 		return 1
-> 	}
+> I typed the following on Git Bash:
 > 
-> and use it like
+>    git config --system mergetool.<merge_tool_name>.cmd '"<merge_tool_path>"
+> -base "$BASE" -local "$LOCAL" -remote "$REMOTE" -merged "$MERGED"'
 > 
-> 	verbose test $foo = $bar
+> where:
+> 
+>    - <merge_tool_name> is the name of the specific merge tool
+>    - <merge_tool_path> is the full path to the .exe file for the merge tool
+>    - the merge tool accepts the -base, -local, -remote and -merged arguments
+> 
+> 
+> Then, after a merge detects conflicts on a Simulink model, I run the
+> following command on the Git Bash:
+> 
+>    git mergetool -t <merge_tool_name> <model_name>.mdl
+> 
+> 
+> This command properly launches the GUI of the merge tool, however it
+> indicates that provided file names are invalid. They are of the form:
+> <model_name>.mdl.<revision>.#.mdl,
+> where <revision> is either LOCAL, REMOTE or BASE and # is a number.
+> 
+> The merge tool needs to open the model in MATLAB and MATLAB does not allow
+> opening models with '.' in their names.
+> 
+> Thus, is there a way to configure Git so that temporary models are of the
+> form <model_name>_mdl_<revision>_#.mdl instead of <
+> model_name>.mdl.<revision>.#.mdl?
 
-I kind of like this. It is easy to see which shell command is being
-invoked, and it would extend naturally to other silent commands.
+No such option exists.
 
-> Somehow I feel like I'm reinventing something that must already exist...
+In theory you could come up with a way to make this configurable.
+A configuration variable could define a file pattern, for example.
 
-Yes, we're basically reinventing "set -x" here, with the caveat that we
-only _really_ care about showing failed commands. The problem with "set
--x" is that it also wants to apply itself to the test harness itself, so
-you end up with a lot of cruft.
+The downside is making it configurable means supporting some
+micro-format and the implementation would probably be ugly and
+require eval. I don't think it needs to be configurable.
 
-Below is my best attempt at keeping the cruft to a minimum. Here's
-sample output using "-v" (the commands are all supplied by dummy
-aliases):
+Right now the code flow is roughly:
 
-    expecting success: 
-            do_some_thing &&
-            test "$(inspect_some_thing)" = "expected" &&
-            do_some_other_thing
-    
-    + do_some_thing
-    + echo doing some thing...
-    doing some thing...
-    + inspect_some_thing
-    + echo foo
-    + test foo = expected
-    + eval_ret=1
-    + set +x
-    not ok 1 - experiment with set -x
+	MERGED=foo/bar.baz
 
-It's not _too_ bad, because we turn on "set -x" for just the test eval
-(mostly). But the rough edges are:
+	ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
+	BACKUP="./$MERGED.BACKUP.$ext"
+	LOCAL="./$MERGED.LOCAL.$ext"
+	REMOTE="./$MERGED.REMOTE.$ext"
+	BASE="./$MERGED.BASE.$ext"
 
-  1. We are stuck with the "eval_ret = 1; set +x" cleanup at the end. I
-     don't think there's any way around that without a subshell, and
-     many tests will not work in a subshell (they set environment
-     variables they expect to persist).
+This results in a path that looks like:
 
-  2. There's nothing highlighting the failed code. You just have to know
-     that it was the last thing before the eval_ret call. We can set PS4
-     to show $?, or even do something complicated like:
+	./foo/bar.baz.BASE.81001.baz
 
-       PS4='+ $(test $? = 0 || say_color error "^^^ failure; ")'
+I think we can do better by default.
+A more conservative result would something like:
 
-     though note that running commands via PS4 works in bash, but
-     causes dash to go into an infinite loop. :)
+	./foo/bar_BASE_81001.baz
 
-     But even with that, the output is still not great.
+Consequently, matlab (and perhaps other overly-picky tools) are
+more likely to accept this path since it fits into their
+windows-esque worldview where filenames can have at most 1 dot.
 
-  3. The "-x" continues into any shell functions, which are hard to
-     read. For example, notice above that we walked into the
-     "do_some_thing" function and showed its implementation. Now imagine
-     doing that for complicated test_* helpers.
+You should also email matlab support and kindly ask them to fix
+their buggy software! ;-P foo.bar.baz is a perfectly valid
+filename.
 
-So it's not great. The upside is that it Just Works everywhere without
-even having to modify the tests themselves. I admit I have sometimes
-used "sh -x" to debug a test script, but it is usually a giant pain due
-to the verbosity of the harness code. The patch below cuts out _most_ of
-that because at least we just use it during the eval, but I'm still not
-sure it's a good default for "-v" (we could add it as "-vv" or
-something, though, if others find it useful).
-
----
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 82095e3..af51868 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -517,10 +517,30 @@ maybe_setup_valgrind () {
- 	fi
- }
- 
-+# This is a separate function because some tests use
-+# "return" to end a test_expect_success block early
-+# (and we want to make sure we do our "set +x" cleanup).
-+test_eval_inner_2 () {
-+	# We do the "set -x" inside the eval because we
-+	# want to keep it as close to the actual test
-+	# commands as possible to avoid harness cruft.
-+	eval "set -x; $*"
-+}
-+
-+# All of the "set +x" cleanup has to happen inside
-+# here, because the output is redirected (otherwise
-+# we leak "set -x" lines to stderr in non-verbose mode.
-+test_eval_inner_1 () {
-+	test_eval_inner_2 "$@"
-+	eval_ret=$?
-+	set +x
-+	return $eval_ret
-+}
-+
-+# This wrapper exists just to keep the I/O redirect
-+# factored out into a single place.
- test_eval_ () {
--	# This is a separate function because some tests use
--	# "return" to end a test_expect_success block early.
--	eval </dev/null >&3 2>&4 "$*"
-+	test_eval_inner_1 "$@" </dev/null >&3 2>&4
- }
- 
- test_run_ () {
-@@ -531,7 +551,10 @@ test_run_ () {
- 	eval_ret=$?
- 	teardown_malloc_check
- 
--	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
-+	# We avoid running a straight ":" because it is a noop, and it
-+	# pollutes our "set -x" output.
-+	if test -z "$immediate" || test $eval_ret = 0 ||
-+	   test -n "$expecting_failure" && test "$test_cleanup" != ":"
- 	then
- 		setup_malloc_check
- 		test_eval_ "$test_cleanup"
+In any case, it might be worth adjusting mergetool to use a more
+conservative path (underscores instead of dots) since there
+doesn't seem to be much downside to doing so.
+-- 
+David
