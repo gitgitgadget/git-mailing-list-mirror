@@ -1,102 +1,82 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [PATCH v4] MinGW(-W64) compilation
-Date: Wed, 08 Oct 2014 01:09:20 +0200
-Message-ID: <543472A0.3020401@virtuell-zuhause.de>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysGit <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-X-From: msysgit+bncBCL7JHHTPAIKRZORUECRUBELYQVQ2@googlegroups.com Wed Oct 08 01:09:31 2014
-Return-path: <msysgit+bncBCL7JHHTPAIKRZORUECRUBELYQVQ2@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+From: Brandon Turner <bt@brandonturner.net>
+Subject: [PATCH] completion: ignore chpwd_functions when cding
+Date: Tue,  7 Oct 2014 22:53:14 -0500
+Message-ID: <1412740394-34061-1-git-send-email-bt@brandonturner.net>
+Cc: Brandon Turner <bt@brandonturner.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 08 05:53:28 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCL7JHHTPAIKRZORUECRUBELYQVQ2@googlegroups.com>)
-	id 1Xbdsn-0005k2-EW
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 01:09:29 +0200
-Received: by mail-wi0-f190.google.com with SMTP id ho1sf545296wib.27
-        for <gcvm-msysgit@m.gmane.org>; Tue, 07 Oct 2014 16:09:29 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XbiJb-0006HO-Ka
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 05:53:27 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754361AbaJHDxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Oct 2014 23:53:23 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:33370 "EHLO
+	mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754122AbaJHDxW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Oct 2014 23:53:22 -0400
+Received: by mail-oi0-f50.google.com with SMTP id i138so6242102oig.37
+        for <git@vger.kernel.org>; Tue, 07 Oct 2014 20:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=dd1qad+Cw41IrCMfEB9ZFD2MRn18an0dgnJ3xJQ4+1A=;
-        b=Fw+MCsGMGn/IhNjw1OOKCPv8QdLFL9+H0mjcUbuPtDOK6DOCRTzMuC0UDFlq4/cacW
-         rI+4zhmEmmENpzU9VTUEzkUns1L/sV5eMMEBuJ8bsNSVs2x7K0gwoHRrm/8UTO26s19i
-         0jSeZMj9SyGWN6OW7/096cGh2HJj8lFAvJ9Xy/H3wtUtSfYaPGmBUt9LmTGXqN+kSJjG
-         cW1MM/yPj/tSxj5IXvnb8g9TiG/+9IetmKcL73Lcc3xGEcuzsSEKjyXf2fITJEXbGkgW
-         wVNVp0krIARjxMd9iPxMdlqenGyJ+8muiXD0ixCOTPrqFxZHIGX7zbRTLnA6zOKGvlTz
-         33Dg==
-X-Received: by 10.180.98.167 with SMTP id ej7mr41245wib.15.1412723369166;
-        Tue, 07 Oct 2014 16:09:29 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.87.1 with SMTP id t1ls820213wiz.13.canary; Tue, 07 Oct
- 2014 16:09:28 -0700 (PDT)
-X-Received: by 10.180.82.74 with SMTP id g10mr4623906wiy.0.1412723368172;
-        Tue, 07 Oct 2014 16:09:28 -0700 (PDT)
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [2a01:488:42::50ed:84a3])
-        by gmr-mx.google.com with ESMTPS id us10si2161864lbc.1.2014.10.07.16.09.27
-        for <msysgit@googlegroups.com>
+        d=brandonturner.net; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=EBKb3Ku/6I8e3CP06VkXmKxhrHZPin3Qoki9Gyrt9NU=;
+        b=gCEOJNKqVPrRl8RS5zIul9TsUFq3nKPTeOt2R9abHw3zidvz8qzQ99jjkCJeWgw8+Z
+         uwkH0zTFNmkOkQN1QNXnu9+xAbPRoI2IYthgPZaO8abAr4brX5gMhkjPVfxWXzx72jN9
+         itUw47cH68A9CutPuGmaEYToFIgBp1/Z0RaSY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=EBKb3Ku/6I8e3CP06VkXmKxhrHZPin3Qoki9Gyrt9NU=;
+        b=IXLmsCgWkXHtLbFjVuIKIPcMLHCj7R+UK/kvxCXuQ5uI2F3yE6reMITQg30mfEw8EU
+         7SiYcUBESiUmgLgsE1xk4D4VFqD6GWnYg6MT+rl3Jyh5g4oHrEC/H5TGtngF7rY0uAT1
+         bHP7Ttqwf24ZsOuvN2sOGpfVJFCK2s7m0tgE8M6NWo46Tri5gvaViEqsCL+/6t5nkji2
+         3SIX15uH7cthMWPMRuJczQHtIHU4WF/ydCapf7BG6oQKjK3IeDKCt4tjCADZTUZZECAc
+         afZRdjM5rxfs2SAPhJn55urTAcqr9dWPhe0QyXKtuZ3/DTjtiJgyyZSarTTd140AGG+O
+         wgKg==
+X-Gm-Message-State: ALoCoQl8IYYuEQ30oqHtHpztyHXT5+6N74vodCWKjEj7W2VMm0WOhFS7++8hkDgN9iT4dAqG+V0H
+X-Received: by 10.60.220.169 with SMTP id px9mr8837611oec.67.1412740401662;
+        Tue, 07 Oct 2014 20:53:21 -0700 (PDT)
+Received: from aus-mac-1035.bltweb.net (172-2-69-149.lightspeed.austtx.sbcglobal.net. [172.2.69.149])
+        by mx.google.com with ESMTPSA id cq6sm13270298oeb.5.2014.10.07.20.53.21
+        for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 07 Oct 2014 16:09:28 -0700 (PDT)
-Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:84a3;
-Received: from p5ddc1944.dip0.t-ipconnect.de ([93.220.25.68] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1Xbdsj-00044b-OO; Wed, 08 Oct 2014 01:09:25 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1412723368;ad24809d;
-X-Original-Sender: thomas.braun@virtuell-zuhause.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
- sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+        Tue, 07 Oct 2014 20:53:21 -0700 (PDT)
+X-Mailer: git-send-email 2.1.2
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-Am 30.09.2014 um 09:02 schrieb Marat Radchenko:
-> This patch series fixes building on modern MinGW and MinGW-W64 (including x86_64!).
-> 
-> *Compilation* tested on:
->  - MSVC
->  - msysGit environment (twice)
+Software, such as RVM (ruby version manager), may set chpwd functions
+that result in an endless loop when cding.  chpwd functions should be
+ignored.
 
-Hi Marat,
+Signed-off-by: Brandon Turner <bt@brandonturner.net>
+---
+For an example of this bug, see:
+https://github.com/wayneeseguin/rvm/issues/3076
 
-I wanted to verify that on msysgit but some patches fail to apply
-cleanly. Did you also had to tweak the patches?
-If yes, are these tweaked patches still available somewhere?
+ contrib/completion/git-completion.bash | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Thomas
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 06bf262..996de31 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -283,7 +283,8 @@ __git_ls_files_helper ()
+ {
+ 	(
+ 		test -n "${CDPATH+set}" && unset CDPATH
+-		cd "$1"
++		(( ${#chpwd_functions} )) && chpwd_functions=()
++		builtin cd "$1"
+ 		if [ "$2" == "--committable" ]; then
+ 			git diff-index --name-only --relative HEAD
+ 		else
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+2.1.2
