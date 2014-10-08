@@ -1,106 +1,89 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: [PATCH v4] MinGW(-W64) compilation
-Date: Wed, 8 Oct 2014 14:59:01 +0400
-Message-ID: <20141008105901.GA9433@seldon>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
- <alpine.DEB.1.00.1410081139330.990@s15462909.onlinehome-server.info>
+From: Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: [BUG?] `config branch.autosetuprebase true` breaks `rev-parse --is-inside-work-tree`
+Date: Wed, 8 Oct 2014 13:22:33 +0200
+Message-ID: <CAD77+gTuqbZimEK-=gXY8o4wFqOicFvnQ5MnV6Fq1npuckwYFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
-	marat@slonopotamus.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBCE7TAPITACRBAFS2SQQKGQEDOVD74I@googlegroups.com Wed Oct 08 12:59:14 2014
-Return-path: <msysgit+bncBCE7TAPITACRBAFS2SQQKGQEDOVD74I@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f185.google.com ([209.85.217.185])
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 08 13:23:00 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCE7TAPITACRBAFS2SQQKGQEDOVD74I@googlegroups.com>)
-	id 1Xboxd-0004jO-SJ
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 12:59:13 +0200
-Received: by mail-lb0-f185.google.com with SMTP id u10sf745830lbd.22
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 03:59:13 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XbpKd-0008KC-LC
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 13:22:59 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756102AbaJHLWz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 07:22:55 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:48963 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755931AbaJHLWy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 07:22:54 -0400
+Received: by mail-wi0-f174.google.com with SMTP id cc10so10291349wib.7
+        for <git@vger.kernel.org>; Wed, 08 Oct 2014 04:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=ak4PEFTNQhBjNRkA49qCvAHwI1Z8PTSgh16pwo+UqrA=;
-        b=wphnz63uLmeFXaUueO5zZZ3nFFsHAW4LErEH9dVNiGbzzaw3L4XV/KpP4o2zvN46R5
-         RPVor5cGubdy53okzSaHalG0W65mvT9Cx7u6vDBLJj7mxtJNN7zbiBDhrh2Uh+BnpVLA
-         4dwQIotuKx5zdsd4lxOswysSIZ9aQMDjrsYQsRwBiMrkx5sIFmfAQu025MGyHMH3/xwo
-         KWe55imAQV+QWyrRDRreAKLkY68zv8/AZ1Nc3pwhNp5B0XVRv6PmHWQxw7fCYZH70chC
-         R4J+JoJ6M8bNbX/TzQWaRs46ZDI40AtGWYTV8tq0qln0TennwVGv8FORdp5FyK0e2RWH
-         5XyA==
-X-Received: by 10.152.203.200 with SMTP id ks8mr12840lac.8.1412765953600;
-        Wed, 08 Oct 2014 03:59:13 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.43.103 with SMTP id v7ls48413lal.32.gmail; Wed, 08 Oct
- 2014 03:59:11 -0700 (PDT)
-X-Received: by 10.152.1.136 with SMTP id 8mr332728lam.5.1412765951695;
-        Wed, 08 Oct 2014 03:59:11 -0700 (PDT)
-Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id go4si66894wib.3.2014.10.08.03.59.11
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Oct 2014 03:59:11 -0700 (PDT)
-Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
-Received: from marat by slonopotamus.org with local (Exim 4.80.1)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1XboxR-0002lD-GJ; Wed, 08 Oct 2014 14:59:02 +0400
-In-Reply-To: <alpine.DEB.1.00.1410081139330.990@s15462909.onlinehome-server.info>
-User-Agent: Mutt/1.5.22 (2013-10-16)
-X-Original-Sender: marat@slonopotamus.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: marat@slonopotamus.org does not designate permitted sender
- hosts) smtp.mail=marat@slonopotamus.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Content-Disposition: inline
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Z4EclySN3lOzcyE7A0Gd+FoqqMCzP+38+Tarm/InHVU=;
+        b=tJlGuLVlqB35+t4y/c3HNTQM819LEQHNWuz3VNWjGlsZ7T+z4iMnKaoAesVdn8CGcc
+         0EB3KVSBTr6HVhBXm1K7qqyot6GEZYOJ7+61Ucy0f/CeoFuEex6EN6R6jOejfkD7kGHa
+         j5xvxvBscXVx5ygBxOYX3jzaHpXw+JZWhZYYassGynvq/FcI2PPsI2myFErQPGHD8Vj4
+         /LWb1GVW+OjIuDgYAs3PJfRbMv/Zrog9+hXyiy6CSYHvxasW9LBYB4Gf6TfSW6IwUClO
+         IQVscoycR33GH4BevB99JFpjcJw+YHkDpBlUbuKIP/g8EA2bk56URSpM0zQqrFBJYuGk
+         0aug==
+X-Received: by 10.180.76.209 with SMTP id m17mr10598807wiw.78.1412767373908;
+ Wed, 08 Oct 2014 04:22:53 -0700 (PDT)
+Received: by 10.194.5.197 with HTTP; Wed, 8 Oct 2014 04:22:33 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 08, 2014 at 11:40:17AM +0200, Johannes Schindelin wrote:
-> To make it easier to review and substantially easier to work on this patch
-> series with Git, I opened a pull request on GitHub:
->
->       https://github.com/msysgit/git/pull/264
->
+Dear all,
 
-1. I fail to see how using a tool that doesn't send emails about review
-   comments is *easier* than just sending emails.
+I am not sure if this is an actual bug or just a corner case that's
+not worth to be fixed.
 
-2. Please, do not hijack patchset discussion by moving it from git@ ML to 
-   GitHub comments.
+This was not tested with HEAD or even 2.1.2, but 2.1.1.
 
-3. And I repeat, my goal is to push this stuff in git.git,
-   not in msysgit.git, not in git-for-windows.git, not in msys2.git, not in other
-   4k+ forks on GitHub.
+Notwithstanding if the setting is correct, shouldn't rev-parse be
+resilient enough to at least be able to tell if we're in a work tree?
+I understand why `git status` and the like would need to parse the
+full config, but determining if you're in a work tree should be
+possible in most if not all cases.
+Unless detached work trees get you into a situation where you really
+need to parse the whole config...
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+So this is not a real bug report, more of a "is this intended this way?"
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+As you can see, my custom prompt (via vcs_info in Zsh) breaks due to
+that which is how I noticed.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+
+richih@titanium  ~ % mkdir git_test
+richih@titanium  ~ % cd git_test
+richih@titanium  ~/git_test % git init
+Initialized empty Git repository in /home/richih/git_test/.git/
+richih@titanium (git)-[master] ~/git_test % git rev-parse --is-inside-work-tree
+true
+richih@titanium (git)-[master] ~/git_test % git config
+branch.autosetuprebase true
+richih@titanium  ~/git_test % git rev-parse --is-inside-work-tree
+error: Malformed value for branch.autosetuprebase
+fatal: bad config file line 8 in .git/config
+richih@titanium  ~/git_test % cat .git/config
+[core]
+repositoryformatversion = 0
+filemode = true
+bare = false
+logallrefupdates = true
+[branch]
+autosetuprebase = true
+richih@titanium  ~/git_test % git --version
+git version 2.1.1
+richih@titanium  ~/git_test %
+
+
+Thanks,
+Richard
