@@ -1,55 +1,55 @@
 From: Marat Radchenko <marat@slonopotamus.org>
-Subject: [PATCH 07/14] Fix BASIC_LDFLAGS and COMPAT_CFLAGS for 64bit MinGW-w64
-Date: Wed,  8 Oct 2014 22:01:00 +0400
-Message-ID: <1412791267-13356-8-git-send-email-marat@slonopotamus.org>
+Subject: [PATCH 05/14] MINGW: config.mak.uname: allow using cURL for
+ non-msysGit builds
+Date: Wed,  8 Oct 2014 22:00:58 +0400
+Message-ID: <1412791267-13356-6-git-send-email-marat@slonopotamus.org>
 References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: marat@slonopotamus.org,
-	msysGit <msysgit@googlegroups.com>,
-	Ray Donnelly <mingw.android@gmail.com>
+	msysGit <msysgit@googlegroups.com>
 To: git@vger.kernel.org
-X-From: msysgit+bncBCE7TAPITACRB5PX2WQQKGQEJS2EOAI@googlegroups.com Wed Oct 08 20:01:27 2014
-Return-path: <msysgit+bncBCE7TAPITACRB5PX2WQQKGQEJS2EOAI@googlegroups.com>
+X-From: msysgit+bncBCE7TAPITACRB4PX2WQQKGQENXYKY2I@googlegroups.com Wed Oct 08 20:01:22 2014
+Return-path: <msysgit+bncBCE7TAPITACRB4PX2WQQKGQENXYKY2I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f57.google.com ([74.125.82.57])
+Received: from mail-wg0-f56.google.com ([74.125.82.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCE7TAPITACRB5PX2WQQKGQEJS2EOAI@googlegroups.com>)
-	id 1XbvYE-0003Zy-Rv
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 20:01:26 +0200
-Received: by mail-wg0-f57.google.com with SMTP id a1sf818177wgh.22
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 11:01:26 -0700 (PDT)
+	(envelope-from <msysgit+bncBCE7TAPITACRB4PX2WQQKGQENXYKY2I@googlegroups.com>)
+	id 1XbvYA-0003WR-B4
+	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 20:01:22 +0200
+Received: by mail-wg0-f56.google.com with SMTP id y10sf783144wgg.1
+        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 11:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=ZuLoIAuMpbiwe37m517MEPJYKxEaQjh4Xtwnvp0nEtc=;
-        b=HrNpOVAm/f9pHpFa7uFHf95nyX9oyOmSKV0IDFwC9EltyV78qtipFlCgx41JhMnhhd
-         wPUjM7tIrIHrgSC8CnDjjDyOL6C2KuxeZr3efxF4LdeNyCRjiUVhBO/8RqMuar15Ayx5
-         Wg2C/mNwzQqvqyszkjkYx8hxh/G4wrXJrWIWe+uHF4sdpsY7VNaZaq32xeCRZZMb4sUE
-         ho4RnwX7yqbAwLeAe1CpKVEEYgbj7Na7TMBqlxHCOjr2ym3P6ADa9edJnv70GkRzhXVT
-         wiXXs0lRNpgpd/tL7FW7RWx517vO5OzML7LVLBgEnn4wW/DAC3DhRXDoOqNoRQlJ8vHt
-         uWqg==
-X-Received: by 10.152.29.98 with SMTP id j2mr6117lah.41.1412791286458;
-        Wed, 08 Oct 2014 11:01:26 -0700 (PDT)
+        bh=X0V3TlCuclkvKuhux3WmqCE1/sjyeMyaOhBAyjmzr68=;
+        b=WJUYxSc88CJHcyNUVN7cloN94y1d/y7l/RxPEB2HY6uasj3nZL/eZdmfUULdBndv0w
+         5aSuzP2VYElkWzx7OgrF8KUUtYTLf0WsGgmCcz89Zdz3MGPyJkGQCz/N1UgW6UY/06E6
+         le2OKsZ+nDPcNcx6xT3TmIrhTXdiHwDeIhV9L+yiD6A28R0GvRghYYomdjauO2rRb0vF
+         gnUAKLlJSluiGqOi0PgsSjellVstlFSgj4FUM55y86WR6x20gxbj+zDWbMBmnLKxBycG
+         2BUxklEMaDIZfd7e4/xGVzcW+BSBjFGsgED5DDzb09OV2ZsEPZET++m5Qg2rr3BgjaOR
+         jXgA==
+X-Received: by 10.180.228.74 with SMTP id sg10mr72366wic.4.1412791282089;
+        Wed, 08 Oct 2014 11:01:22 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.10.173 with SMTP id j13ls88179lab.82.gmail; Wed, 08 Oct
- 2014 11:01:24 -0700 (PDT)
-X-Received: by 10.112.140.199 with SMTP id ri7mr566896lbb.17.1412791284917;
-        Wed, 08 Oct 2014 11:01:24 -0700 (PDT)
+Received: by 10.180.88.170 with SMTP id bh10ls139125wib.19.gmail; Wed, 08 Oct
+ 2014 11:01:21 -0700 (PDT)
+X-Received: by 10.180.160.169 with SMTP id xl9mr4740006wib.7.1412791281512;
+        Wed, 08 Oct 2014 11:01:21 -0700 (PDT)
 Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id f9si578333wib.2.2014.10.08.11.01.24
+        by gmr-mx.google.com with ESMTPS id ed3si931426wib.1.2014.10.08.11.01.21
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Oct 2014 11:01:24 -0700 (PDT)
+        Wed, 08 Oct 2014 11:01:21 -0700 (PDT)
 Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
 Received: from [176.57.72.72] (helo=noblesse.home.ru)
 	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
 	(Exim 4.80.1)
 	(envelope-from <marat@slonopotamus.org>)
-	id 1XbvY9-0003Rz-GD; Wed, 08 Oct 2014 22:01:21 +0400
+	id 1XbvY7-0003Rz-1t; Wed, 08 Oct 2014 22:01:19 +0400
 X-Mailer: git-send-email 2.1.1
 In-Reply-To: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
 X-Original-Sender: marat@slonopotamus.org
@@ -68,44 +68,29 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-From: Ray Donnelly <mingw.android@gmail.com>
+Is it absolutely valid and possible to have cURL in generic
+MinGW environment. Building Git without cURL is still possible
+by passing NO_CURL=1
 
-Signed-off-by: Ray Donnelly <mingw.android@gmail.com>
 Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
+Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
 ---
- config.mak.uname | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ config.mak.uname | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/config.mak.uname b/config.mak.uname
-index 324a7fc..4470a928 100644
+index 20cbdcf..324a7fc 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -6,6 +6,7 @@ uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
- uname_R := $(shell sh -c 'uname -r 2>/dev/null || echo not')
- uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
- uname_V := $(shell sh -c 'uname -v 2>/dev/null || echo not')
-+CC_MACH := $(shell sh -c '$(CC) -dumpmachine 2>/dev/null || echo not')
- 
- ifdef MSVC
- 	# avoid the MingW and Cygwin configuration sections
-@@ -509,12 +510,15 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	DEFAULT_HELP_FORMAT = html
- 	NO_D_INO_IN_DIRENT = YesPlease
--	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
-+	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/win32
-+	ifneq (,$(findstring i686,$(CC_MACH)))
-+		COMPAT_CFLAGS += -D_USE_32BIT_TIME_T
-+		BASIC_LDFLAGS += -Wl,--large-address-aware
-+	endif
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
- 		compat/win32/dirent.o
--	BASIC_LDFLAGS += -Wl,--large-address-aware
- 	EXTLIBS += -lws2_32
- 	GITLIBS += git.res
- 	PTHREAD_LIBS =
+@@ -531,8 +531,6 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+ 	INTERNAL_QSORT = YesPlease
+ 	HAVE_LIBCHARSET_H = YesPlease
+ 	NO_GETTEXT = YesPlease
+-else
+-	NO_CURL = YesPlease
+ endif
+ endif
+ ifeq ($(uname_S),QNX)
 -- 
 2.1.1
 
