@@ -1,93 +1,109 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool: use more conservative temporary filenames
-Date: Wed,  8 Oct 2014 01:56:02 -0700
-Message-ID: <1412758562-25402-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Sergio Ferrero <sferrero@ensoftcorp.com>,
-	Charles Bailey <charles@hashpling.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 08 11:03:49 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [bug] [UX] `stash save --untracked` produces a stash that *looks*
+ empty
+Date: Wed, 08 Oct 2014 14:50:14 +0530
+Message-ID: <543501CE.5040705@gmail.com>
+References: <CACsY31pSeijqGC4Rw=q+qAGHJQ+bNibindVReYoZZACvYL7O+A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 08 11:20:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xbn9v-0006uu-6N
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 11:03:49 +0200
+	id 1XbnPz-0004pb-VK
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 11:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755587AbaJHJDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 05:03:21 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:51433 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754307AbaJHIzX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 04:55:23 -0400
-Received: by mail-pa0-f41.google.com with SMTP id eu11so8830963pac.0
-        for <git@vger.kernel.org>; Wed, 08 Oct 2014 01:55:22 -0700 (PDT)
+	id S1754796AbaJHJUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 05:20:20 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:61658 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754434AbaJHJUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 05:20:18 -0400
+Received: by mail-pd0-f172.google.com with SMTP id ft15so6602700pdb.31
+        for <git@vger.kernel.org>; Wed, 08 Oct 2014 02:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=QRKP4/nY2AyCE8r4pv/oU+CHPLBTrlwOosNkiLQ9ra0=;
-        b=Z0DrqoIfvjiAssrJYfmUpIGJ8ixbSvDdpsibtnwvLpwLMUlxcccia+EurdCVHX7yzc
-         1jKp6r6yrG3cQD0hRKzrDvqHxUzqu9+P7id4McVKX72KgEOs3qbpopyFd1rYtXxqPypb
-         iyWGSyk1rIhhyk7pModv0qyHpOiiVmPBrJAsNA5sT/u2DbFHFG5rPxsrfOjZEcqYrnHs
-         5vWeP+J6uo7+EjE5bb8FQ/bEMvECNcDVusKfJ0lITbWn7AOjUnD2HK5Mn5pnEkTBRMan
-         /xYB9Sh1/sq4m06LAqfz8mFg7yOPAaxdX3+lSXVWOaqe6DR5kM+sfheVBmO9NmEoQOpL
-         RPDw==
-X-Received: by 10.68.233.68 with SMTP id tu4mr8906690pbc.65.1412758522869;
-        Wed, 08 Oct 2014 01:55:22 -0700 (PDT)
-Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id fr7sm15826523pdb.79.2014.10.08.01.55.21
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 08 Oct 2014 01:55:22 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2.337.gd0cf3c1
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=7yuOZAX9jhKCVW9jGvEco7c0gakWckInZu7gUlS/lEU=;
+        b=ywYGv2FWylh5oWNxVv9NiBueuep23ealmT2/z5Lj9Or40Sq48yeipC/fE+jk7ahTWX
+         UAPBHIA+mm8utc3ODrbyvNlsydjqcSWMzhC0QWRQp7Qh4wPjxHeWoNaDUSH6nHwgY6jJ
+         iC0m/FhclNZf4xW9si/FF5F0MbFkZPgfYJN5fHA6hRQjjEenrU6AwhLtWCiEtkEZhSKI
+         jnCtkqKJLA58gl/5mQ/T4L2wzAa/SXKQ3lVyIOGNJVQOauXIxT6Uj9yeFxXu5CaeFUJf
+         I1ilWZYMjlUmCUhYBHELURv861PuAzZNCcKNcVd2teS9Qm7pcgke0shVOTR7TtR+46FQ
+         ypDg==
+X-Received: by 10.70.34.197 with SMTP id b5mr9240429pdj.83.1412760018145;
+        Wed, 08 Oct 2014 02:20:18 -0700 (PDT)
+Received: from [127.0.0.1] ([223.225.25.45])
+        by mx.google.com with ESMTPSA id uu17sm18377768pab.43.2014.10.08.02.20.16
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 08 Oct 2014 02:20:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CACsY31pSeijqGC4Rw=q+qAGHJQ+bNibindVReYoZZACvYL7O+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Avoid filenames with multiple dots so that overly-picky tools do
-not misinterpret their extension.
+On 10/5/2014 10:58 PM, Alberto Scotto wrote:
+> Hi all,
+> 
+> I've just found that:
+> - given you have an empty staging area
+> - and you have only untracked files in your working dir
+> - when you do `git stash --untracked`
+> - then `git stash show` gives you an empty output => stash looks empty
+> 
+> My first thought was "oh god, my files are lost!"
+> Second thought: "Jeez I found a bug in git! cool!"
+> Then I found that actually `git stash apply` restores the apparently lost
+> files
+> So I think it's a UX issue.
+> It cost me a few lost files already, as I thought "an empty stash? uhm..
+> can't remember what/when I stashed.. whatever.. let's just delete it and
+> clean up a little bit this mess of stashes".
+> 
+> 
+> Here are the reproducible steps:
+> 
+>    1. create new fresh git repo in $REPO_DIR
+>    2. create a couple of files/dirs and commit
+>    3. edit src/MyClass.java and commit
+>    4. create dir src/new-dir with one file inside
+>    5. edit file.txt and stage it
+>    6. stash => stashes staged changes; only untracked files are left
+>    7. stash -u => stashes untracked changes => working dir is clean
+>    8. stash list
+>    9. git stash show -p => empty output
+>    10. git stash apply (restore stashed untracked files)
 
-Previously, foo/bar.ext in the worktree would result in e.g.
+Hi,
 
-	foo/bar.ext.BASE.1234.ext
+I think problem lies with  show_stash() which just shows the
+diff between working tree and the base tree, it ignores the
+untracked files. A quick and dirty fix can be to just show
+the diff between the untracked files and a NULL commit.
+Here's the patch, it works all right but can be implemented
+much better. I will try to find a better approach tomorrow.
 
-This can be improved by having only a single .ext and using
-underscore instead of dot so that the extension cannot be
-misinterpreted.  The resulting path becomes:
+diff --git a/git-stash.sh b/git-stash.sh
+index d4cf818..7088584 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -304,6 +304,8 @@ show_stash () {
+        assert_stash_like "$@"
 
-	foo/bar_BASE_1234.ext
+        git diff ${FLAGS:---stat} $b_commit $w_commit
++       empty_tree=$(git hash-object -t tree /dev/null)
++       git diff ${FLAGS:---stat} ${empty_tree} $u_commit
+ }
 
-Suggested-by: Sergio Ferrero <sferrero@ensoftcorp.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- git-mergetool.sh | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ #
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 9a046b7..1f33051 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -228,11 +228,15 @@ merge_file () {
- 		return 1
- 	fi
- 
--	ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
--	BACKUP="./$MERGED.BACKUP.$ext"
--	LOCAL="./$MERGED.LOCAL.$ext"
--	REMOTE="./$MERGED.REMOTE.$ext"
--	BASE="./$MERGED.BASE.$ext"
-+	ext=$(expr "$MERGED" : '.*\(\.[^/]*\)$')
-+	base=$(basename "$MERGED" "$ext")
-+	dir=$(dirname "$MERGED")
-+	suffix="$$""$ext"
-+
-+	BACKUP="$dir/$base"_BACKUP_"$suffix"
-+	BASE="$dir/$base"_BASE_"$suffix"
-+	LOCAL="$dir/$base"_LOCAL_"$suffix"
-+	REMOTE="$dir/$base"_REMOTE_"$suffix"
- 
- 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
- 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
--- 
-2.1.2.337.gd0cf3c1
+Cheers,
+Tanay
