@@ -1,107 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4] MinGW(-W64) compilation
-Date: Wed, 8 Oct 2014 11:40:17 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1410081139330.990@s15462909.onlinehome-server.info>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: [RFC/PATCH] git-merge: implement --ff-only-merge option.
+Date: Wed, 08 Oct 2014 14:02:41 +0400
+Message-ID: <87mw96g9q6.fsf@osv.gnss.ru>
+References: <1412699710-3480-1-git-send-email-sorganov@gmail.com>
+	<xmqqzjd7enet.fsf@gitster.dls.corp.google.com>
+	<87fvezsk5k.fsf@osv.gnss.ru>
+	<xmqqegujeibx.fsf@gitster.dls.corp.google.com>
+	<87a957obm6.fsf@osv.gnss.ru>
+	<xmqqwq8bd0hw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBCZPH74Q5YNRBGUN2SQQKGQEQMGC5JA@googlegroups.com Wed Oct 08 11:40:45 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBGUN2SQQKGQEQMGC5JA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f188.google.com ([209.85.217.188])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 08 12:02:51 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBGUN2SQQKGQEQMGC5JA@googlegroups.com>)
-	id 1Xbnjf-0007U8-V9
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 11:40:44 +0200
-Received: by mail-lb0-f188.google.com with SMTP id 10sf738212lbg.25
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 02:40:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=V8hXW0DdEiVit3lSXpWNgombtjeD9lQM0Cg4zWD1R4k=;
-        b=YRv9h12uLU+Sr2vfblLTmo/vrmDixxHGL04dNy7sRDztK4QEZZtn7TURYyovVF7Hra
-         PFlP7xWiQTL6CT5Dq7uQDJti5hPfOi0BT+qVpKLO/MDzVrkOwJIaL8d1cQhuVljCBzL0
-         4stbKCvcC4QGOiG2nn3cwa90XJyD6vbT2tGRm5XQQgXY7/Royxad1IfExTxwMvnw/Uva
-         f5M2VM1InKzgvT98LB2iI2tO7ckcNhiJm+V11FlM0aNRYAEzDLG1E6Av6L66LbrRnSPd
-         Jx0MmJl8Au+VKIebpxr8XxbOzmb+jD7TBrQMeSonPd6cnnI8qJWYmJdFx0tFIfVooNNx
-         MkRQ==
-X-Received: by 10.152.234.44 with SMTP id ub12mr11458lac.9.1412761243731;
-        Wed, 08 Oct 2014 02:40:43 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.7.169 with SMTP id k9ls37183laa.91.gmail; Wed, 08 Oct 2014
- 02:40:42 -0700 (PDT)
-X-Received: by 10.112.190.40 with SMTP id gn8mr278579lbc.10.1412761242373;
-        Wed, 08 Oct 2014 02:40:42 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
-        by gmr-mx.google.com with ESMTPS id us10si2328692lbc.1.2014.10.08.02.40.42
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Oct 2014 02:40:42 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LviG8-1YGlDR33vw-017TR8;
- Wed, 08 Oct 2014 11:40:17 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:H4LTv3KTssI+vOCBrZhg1+jYa3LGEXc/nvnoCxsXVdRKKuAXhJa
- eHYzvUmQP545Se1GTMR+jJ/TDKE5R8cm8nXaa2LMCQAw7ZCCIbUXlfj0HcULaegVK0dLZ1y
- fyeZqfPkVKCvwOGJHjESGtcSNQNn5IYgvar8/WHKrRdrLrgBoVdciESF6Y2XCMInfClSodd
- crdmnYVrLGMxgSTDLC4og==
-X-UI-Out-Filterresults: notjunk:1;
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Xbo53-0005bW-Ft
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 12:02:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755487AbaJHKCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 06:02:45 -0400
+Received: from mail.javad.com ([54.86.164.124]:52869 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754805AbaJHKCo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 06:02:44 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id BD58361865;
+	Wed,  8 Oct 2014 10:02:42 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1Xbo4v-00065H-2u; Wed, 08 Oct 2014 14:02:41 +0400
+In-Reply-To: <xmqqwq8bd0hw.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 07 Oct 2014 14:38:03 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Tue, 30 Sep 2014, Marat Radchenko wrote:
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>>> Because rebasing immediately before is considered a bad manner,
+>>> i.e. encouraging a wrong workflow?
+>>
+>> Why? What is wrong about it?
+>
+> Searching the kernel archive for messages that talks about "rebase"
+> and "pull-request" from Linus would tell us why it is frowned upon
+> in a prominent early adopter project of Git.
 
-> This patch series fixes building on modern MinGW and MinGW-W64
-> (including x86_64!).
+I don't argue it's wrong for work-flows used for Linux kernel.
 
-To make it easier to review and substantially easier to work on this patch
-series with Git, I opened a pull request on GitHub:
+Even in general, once pull-request is issued, it's bad idea to rebase
+your work, as you've already published your history.
 
-	https://github.com/msysgit/git/pull/264
+I don't see how it is relevant to my proposal though. It was bad idea in
+general to rewrite published history before this patch, it still is with
+this patch, and the patch itself doesn't encourage anybody to rebase
+published history as it is about true merge, not about rebase.
 
-Ciao,
-Johannes
+> You destroy what you have been testing and replace it with an untested
+> one. If you merge, and if the result of the merge is broken, at least
+> you would have something that used to work at its second parent (i.e.
+> the tip of your topic).
+
+This seems to apply to rebasing in general. I have nothing against
+work-flows that don't routinely use rebasing, but there are other
+work-flows around as well. 
+
+In my workflows, I do test the result of rebase, and I'd simply revert
+the rebase if the result appears to be broken. When the result is OK, I
+do the final merge. If it is perfectly trivial merge, it needs no
+testing at all as it doesn't change content. It's this latter condition
+that my suggested new option for "git merge" tries to ensure.
+
+Hopefully we are not going into arguing whose work flow is better.
+
+>> Please also notice that I don't try to impose this on anybody who does
+>> consider it wrong workflow.
+>
+> I know ;-).  I didn't say anything about "imposing", did I?
+>
+> Having an option to make it easy to do something undesirable gives
+> people an excuse to say "See Git has this option to let me do that
+> easily, it is an officially sanctioned and encouraged workflow".
+
+Whatever you can do "easily" with my patch, you can do "easily" with
+--no-ff right now, except that with my option instead of --no-ff, you
+won't get non-trivial merges you didn't intend.
+
+So I rather see the message of my proposal as: provided you rebase your
+(topic) branches anyway, you can use this feature to keep essential
+information in the history and avoid complications of non-trivial
+merges.
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Sergey.
