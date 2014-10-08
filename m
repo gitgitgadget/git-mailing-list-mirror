@@ -1,23 +1,23 @@
 From: Marat Radchenko <marat@slonopotamus.org>
-Subject: [PATCH 01/14] MINGW: compat/mingw.h: do not attempt to
- redefine lseek on mingw-w64
-Date: Wed,  8 Oct 2014 22:00:54 +0400
-Message-ID: <1412791267-13356-2-git-send-email-marat@slonopotamus.org>
+Subject: [PATCH 02/14] MSVC: config.mak.uname: drop
+ -D__USE_MINGW_ACCESS from CFLAGS
+Date: Wed,  8 Oct 2014 22:00:55 +0400
+Message-ID: <1412791267-13356-3-git-send-email-marat@slonopotamus.org>
 References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: marat@slonopotamus.org,
 	msysGit <msysgit@googlegroups.com>
 To: git@vger.kernel.org
-X-From: msysgit+bncBCE7TAPITACRB3PX2WQQKGQEQD462LA@googlegroups.com Wed Oct 08 20:01:19 2014
-Return-path: <msysgit+bncBCE7TAPITACRB3PX2WQQKGQEQD462LA@googlegroups.com>
+X-From: msysgit+bncBCE7TAPITACRB37X2WQQKGQEMICCUVA@googlegroups.com Wed Oct 08 20:01:20 2014
+Return-path: <msysgit+bncBCE7TAPITACRB37X2WQQKGQEMICCUVA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f189.google.com ([209.85.212.189])
+Received: from mail-ee0-f57.google.com ([74.125.83.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCE7TAPITACRB3PX2WQQKGQEQD462LA@googlegroups.com>)
-	id 1XbvY7-0003Tr-Az
+	(envelope-from <msysgit+bncBCE7TAPITACRB37X2WQQKGQEMICCUVA@googlegroups.com>)
+	id 1XbvY7-0003UK-K5
 	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 20:01:19 +0200
-Received: by mail-wi0-f189.google.com with SMTP id ex7sf628657wid.26
+Received: by mail-ee0-f57.google.com with SMTP id c41sf845054eek.2
         for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 11:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -25,31 +25,31 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=sEZMTYvCSlfI9HEidFMZNgkHEUEvFybiMmcMCXALExc=;
-        b=NG3sm0p4EbVMLGcSzlA6hA07SJ8sR9MocTpyG8hVy/dKqWuARMBHuy2OUHA8Mmc0ff
-         V1q1s/8kCCCJsKVLQIGqOa1YjClffTKmf/pknTOhHN9tO2jnjr3Ad6949vRzakS3k9Pa
-         OsenfoGqdEWIoQJ4EmvVAI4tjE9a8dK/BsRiapjLVpsqLRti8Uq5CHt5PsOZayeZZepO
-         PKOSVCtAV/Vqj0BgFWUML4voRKA5IU1g39M+PcQjV79I/oySafgvhBTxPwEs9y0wb7HN
-         2ffhCDggEczB7yRei/A6do5QI7B8qe7homAcWUKKYRz2jMV8nNhUnXfxFIbGTGspmCwb
-         2k7Q==
-X-Received: by 10.152.30.1 with SMTP id o1mr19905lah.38.1412791279080;
+        bh=jPGRf0ZTYyUquq6F2Dp3g8Qj6zQo8il8ttrOVx40Lr8=;
+        b=RpMGzwPrkqo2ghKjonoZ9a9lvV0ES7/26WTgK+y4cOJXHl4amC1ZBly+xxLt54xKrr
+         8IBTz0e6YxvcDcuzYauqP8iRt1WVNex6b2wpjk8pwON4hS6KZzvkyXoHWnZHvpW+fW/c
+         Hz3Ld82VN71X+D4yvzQ3oPU+J3+jCqei62KBIUsBCfK1gs6PIQUzymXD0PXAzlHaUuVG
+         WgIV0c0XrOrvYujenDicB0OuW9qsIFr3WkRqrtUTVgKz9Ay5drs/cG9LclzVlp8FWUKx
+         rbOk/SOnpO2ZJvyCxEcWG7CWwMbyAlTWgB/C0jgxXYKVBBnAw7mib9/+wmnW/cswhKv2
+         jxJA==
+X-Received: by 10.180.98.167 with SMTP id ej7mr72438wib.15.1412791279336;
         Wed, 08 Oct 2014 11:01:19 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.26.130 with SMTP id l2ls84561lag.45.gmail; Wed, 08 Oct
- 2014 11:01:17 -0700 (PDT)
-X-Received: by 10.112.137.230 with SMTP id ql6mr579029lbb.13.1412791277405;
-        Wed, 08 Oct 2014 11:01:17 -0700 (PDT)
+Received: by 10.180.101.136 with SMTP id fg8ls965613wib.6.canary; Wed, 08 Oct
+ 2014 11:01:18 -0700 (PDT)
+X-Received: by 10.180.82.74 with SMTP id g10mr5433162wiy.0.1412791278743;
+        Wed, 08 Oct 2014 11:01:18 -0700 (PDT)
 Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id ca20si924877wib.3.2014.10.08.11.01.17
+        by gmr-mx.google.com with ESMTPS id dz10si129241wib.0.2014.10.08.11.01.18
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Oct 2014 11:01:17 -0700 (PDT)
+        Wed, 08 Oct 2014 11:01:18 -0700 (PDT)
 Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
 Received: from [176.57.72.72] (helo=noblesse.home.ru)
 	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
 	(Exim 4.80.1)
 	(envelope-from <marat@slonopotamus.org>)
-	id 1XbvY0-0003Rz-DE; Wed, 08 Oct 2014 22:01:12 +0400
+	id 1XbvY1-0003Rz-OM; Wed, 08 Oct 2014 22:01:15 +0400
 X-Mailer: git-send-email 2.1.1
 In-Reply-To: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
 X-Original-Sender: marat@slonopotamus.org
@@ -68,28 +68,28 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-Unlike MinGW, MinGW-W64 has lseek already properly defined in io.h.
+-D__USE_MINGW_ACCESS only affects MinGW and does nothing when
+MSVC is used.
 
 Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
 Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
 ---
- compat/mingw.h | 2 ++
- 1 file changed, 2 insertions(+)
+ config.mak.uname | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 5e499cf..36a47cb 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -286,7 +286,9 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
-  * Use mingw specific stat()/lstat()/fstat() implementations on Windows.
-  */
- #define off_t off64_t
-+#ifndef lseek
- #define lseek _lseeki64
-+#endif
- 
- /* use struct stat with 64 bit st_size */
- #ifdef stat
+diff --git a/config.mak.uname b/config.mak.uname
+index a2f380f..20cbdcf 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -368,7 +368,7 @@ ifeq ($(uname_S),Windows)
+ 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/dirent.o
+-	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
++	COMPAT_CFLAGS = -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+ 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE
+ 	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib invalidcontinue.obj
+ 	PTHREAD_LIBS =
 -- 
 2.1.1
 
