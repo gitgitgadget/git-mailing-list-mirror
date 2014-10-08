@@ -1,92 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [msysGit] [PATCH v4] MinGW(-W64) compilation
-Date: Wed, 8 Oct 2014 15:58:17 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1410081553320.990@s15462909.onlinehome-server.info>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org> <alpine.DEB.1.00.1410081139330.990@s15462909.onlinehome-server.info> <20141008105901.GA9433@seldon>
+From: Adrian Stern <adrian.stern@unchained.ch>
+Subject: Vendor-Branch setup
+Date: Wed, 8 Oct 2014 16:07:39 +0200
+Message-ID: <CAOHZ5L4aAT0vYfJ4g=5NmED9=nWyHS1ATf+15Y060uiz=CtkRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	msysGit <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Wed Oct 08 15:58:32 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 08 16:07:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xbrl7-0001Zo-Sw
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 15:58:30 +0200
+	id 1Xbru4-00063Z-Rb
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 16:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756293AbaJHN6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 09:58:23 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62902 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755848AbaJHN6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 09:58:22 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MPZuP-1XXD3L2gMb-004khX;
- Wed, 08 Oct 2014 15:58:18 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <20141008105901.GA9433@seldon>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:AWbxrAW7eFJ84fuwWuYK0M+tQlpr/fDDgCeNSHRQjhyds8dM40K
- jkamJ+QTY72vEsdN5REdxdBGSZPZ8C3g0mqBiguM1aq5JHAGiFxDxz+2XifwjfkhipSBb6c
- 9YeXz+vB9eI5tDSVp0k+hu65OXsjVTPGwy7OUGrJ8KJXCxIJLUWqLXmZuOL1zWiFiHC8ykQ
- u/J1gAzehjLDhnCy8t6Cg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754839AbaJHOHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 10:07:41 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:49665 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753293AbaJHOHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 10:07:40 -0400
+Received: by mail-ig0-f175.google.com with SMTP id uq10so7431592igb.8
+        for <git@vger.kernel.org>; Wed, 08 Oct 2014 07:07:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=xBo+vRBQPZK8LPQ+NWiHMYqVcBOhyJzYbRQbmpRP0AY=;
+        b=carwkJxZ/+h3RgegHQVCdo/IrjTdX+HCCpzNmrgLW7OROEmbvrDJDGXefCS2adSlwa
+         FlpUCjlP8qHI8HeX0IO8gJGZv2wn82mrnHhL0mjiaKI3zt8QjbrchdJ0g7Eic3vYmjGE
+         bRpoz1jTVnMrwPmH5t8uIDukLcjNKXrkjgtzwUd92+zU+a26eFWtynahLPaGIqjDqIXV
+         Sj1L5rI3Q4a5wRH/g8b7jNzIH0PQeqh/l0iB0Om2s5ICRjEYANO90plIqrlPke1F5IgV
+         6WKqMULMDLfhPpXjcsiL/axdbR9/L8G/u0KU1nXb0F2ZqlhWescVOWv/RZQQ6+KTx32z
+         iCiw==
+X-Gm-Message-State: ALoCoQkNigJO67NtCNZoy4hfMC5RU1QNqvYdiQ/JvM1RMWRPOxYw3I559cQXck/lfWMMHw28o9Qm
+X-Received: by 10.50.143.73 with SMTP id sc9mr17175596igb.29.1412777259871;
+ Wed, 08 Oct 2014 07:07:39 -0700 (PDT)
+Received: by 10.42.198.6 with HTTP; Wed, 8 Oct 2014 07:07:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Marat,
+Hi
 
-On Wed, 8 Oct 2014, Marat Radchenko wrote:
+I have a Vendro-Branch setup where i store the official code in my own
+repository. Next to that i have a Delta-Branch where i store only the
+changed files different to the Vendor-Branch.
 
-> On Wed, Oct 08, 2014 at 11:40:17AM +0200, Johannes Schindelin wrote:
-> > To make it easier to review and substantially easier to work on this patch
-> > series with Git, I opened a pull request on GitHub:
-> >
-> >       https://github.com/msysgit/git/pull/264
-> >
-> 
-> 1. I fail to see how using a tool that doesn't send emails about review
->    comments is *easier* than just sending emails.
+I have two problems with this setup:
 
-You probably missed how I commented on exact lines without you having to
-guess from the quoted context what part of your patches I am talking
-about.
+1)
+When updating the Vendor-Branch (File A, B, C), the file A which is
+also present in the Delta-Branch, is not automatically updated in
+Delta. I cannot merge Vendor into Delta because thousands of other
+files would be added thus destroying the purpos of the Delta branch.
+Checking out Delta after updating Vendor will load the file from
+Delta. Can't i just merge the files already present in Delta from
+Vendor to Delta?
 
-You probably also missed the fact that comments on rewritten commits
-automatically drop out of sight, decluttering the set of comments and
-making it obvious which comments have not been addressed yet.
+2)
+After upgrading Vendor and merging Delta to Vendor older files in
+Delta get ignored and not Merged. File A for example is newer in
+Vendor, but i need the changes from Delta. -X theirs does not work
+eigther. What i want is the merge-window.
 
-And finally, you probably also missed the fact that the official Git fork
-for Windows was asked to review your patches because Junio defers
-Windows-specific stuff to us. And as you refused to work against our
-integration branches (yes, we have two, because we are working towards
-switching to a more sustainable development environment, something you
-already mocked successfully), we had to rebase your work onto two
-branches, which is also substantially easier to do using GitHub rather
-than via mails.
+Merge Strategy "theirs" does not work. I get "Already up-to-date" each time.
 
-But I get it: you want to roll your own thing and not help us review it
-let alone make use of it. That's fine, we'll manage.
+Any sugestions how i could get this to work? Or maybe there is a more
+logical setup?
 
-> 2. Please, do not hijack patchset discussion by moving it from git@ ML to 
->    GitHub comments.
+Regards,
 
-I mistook your work on Git and the fact that you have an account on GitHub
-for your willingness to collaborate on this effectively. My mistake, I
-apologize!
+Adrian Stern
+unchained - web solutions
 
-> 3. And I repeat, my goal is to push this stuff in git.git,
->    not in msysgit.git, not in git-for-windows.git, not in msys2.git, not in other
->    4k+ forks on GitHub.
-
-Yes, your objection is noted.
-
-Junio, we'll take it from here, don't worry.
-
-Ciao,
-Johannes
+adrian.stern@unchained.ch
++41 79 292 83 47
