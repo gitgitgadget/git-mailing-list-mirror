@@ -1,156 +1,76 @@
-From: Jess Austin <jess.austin@gmail.com>
-Subject: Fwd: [PATCH] git-prompt.sh: Omit prompt for ignored directories
-Date: Wed, 8 Oct 2014 16:37:23 -0500
-Message-ID: <CANp8Xb9MUbQCVZRNYibFBibzTFF=56BqNFFC1G2iTF7WGBNi7g@mail.gmail.com>
-References: <1412795040-19267-1-git-send-email-jess.austin@gmail.com>
-	<5435A8A7.2030008@bbn.com>
-	<CANp8Xb8ETG-ZFCqrOk=f-RbxtRxehBmAR1O5ozLH80zimWq_Gw@mail.gmail.com>
+From: Brandon Turner <bt@brandonturner.net>
+Subject: Re: [PATCH] completion: ignore chpwd_functions when cding
+Date: Wed, 8 Oct 2014 16:50:16 -0500
+Message-ID: <CAMUzdXkQcbwhmJRYog+X_9B_cdWv6FkTrVFT__Dsw2k+qKN0=g@mail.gmail.com>
+References: <1412740394-34061-1-git-send-email-bt@brandonturner.net>
+	<xmqqh9zebfc6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, szeder@ira.uka.de
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Wed Oct 08 23:43:51 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 08 23:50:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xbz1O-0001uM-FW
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 23:43:46 +0200
+	id 1Xbz8J-0004h8-3z
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 23:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194AbaJHVh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 17:37:26 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:41181 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751223AbaJHVhY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 17:37:24 -0400
-Received: by mail-la0-f42.google.com with SMTP id mk6so9509725lab.29
-        for <git@vger.kernel.org>; Wed, 08 Oct 2014 14:37:23 -0700 (PDT)
+	id S932232AbaJHVuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 17:50:18 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:36041 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932133AbaJHVuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 17:50:17 -0400
+Received: by mail-ig0-f179.google.com with SMTP id h18so456082igc.12
+        for <git@vger.kernel.org>; Wed, 08 Oct 2014 14:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=brandonturner.net; s=google;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=RO6mEmqSwlQcx/BvWHRjlwzSvTl7CFQK62Uq8qBFpOg=;
-        b=ODCDItJ3urPeduXa6LWvzvIjy2CWLDqBEuRwHYebkCKwMfeteDqNVuwGfMZw2JT2AA
-         0/syJyQ/Bcoq1a0cRVmV8wQLQo1M3s7nysFlJ8lnlhViEpLQUIf/XKFLSW1O3j9SYa5o
-         lAQMis/sL/+Usf1mT5uB1tJHhLer8Ra9o4WIKZ+oVqCaK3EhtbDZjRTMm28jPijtesVT
-         F24wz0PWoXMf82GRv2U6H9hssYTUZNiSs6pVy6Spdho/E1it6KwRMBlg8OPl9KDbs/tE
-         amzBTnEaz8iP7zVlHvlF5+OjWRDTCFxjbtXPu/SYS6O8+B9Dpuyd22xRrkMJGsqSgWPP
-         4obA==
-X-Received: by 10.152.115.229 with SMTP id jr5mr14351934lab.7.1412804243194;
- Wed, 08 Oct 2014 14:37:23 -0700 (PDT)
-Received: by 10.25.15.164 with HTTP; Wed, 8 Oct 2014 14:37:23 -0700 (PDT)
-In-Reply-To: <CANp8Xb8ETG-ZFCqrOk=f-RbxtRxehBmAR1O5ozLH80zimWq_Gw@mail.gmail.com>
+        bh=yR904qsrSt3BblJNa1CZcUvLQS7ABX1HGzQQoHszlnk=;
+        b=HOOBJ+MFdwzThlKcGnaNagzj/q4rvgTY61t/ORMFgMAl3ePaHmJHOMUd/Wlk0KQehP
+         VqjWfh9APk80XCyr8LKbxVBeArKWp7aw1tZXFfKb5IxaXOJbJl8kPVccliL8i44Cjr81
+         xjQu3VB35ZsKfa4odsXS5LTTTXBHTo1wVWrco=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=yR904qsrSt3BblJNa1CZcUvLQS7ABX1HGzQQoHszlnk=;
+        b=WhZKMXzbthTbZMULwmr5EX+VpOBaThrqnuXQd3k7kWtjwgLsXA1kGlRx3A/+nVNsb8
+         zbUJyF54srkbdgeBS5vs1F0BqNBFPf4FYnAuJFzFw2pxpSUXVCj53yXVwEM3lSvCaWG1
+         UVpJFJBTLEhDHBDuDld6PLFZWQvHdoBV3Qcrfymeqo23KEBxa96wbnxWte1+MdTdQf78
+         fL2baEPLpELDz64msjsv0KoSehfGzjFKkYcq0yzEj4A8qcXwOKxMPqdmsFwNhVZH0bNu
+         1XgLLX7BC7wKt41LEZeoisMSojIyV51w09Ticz5PeHY1BTCbJSz4JAjv+0V8S66TsMjO
+         HA3g==
+X-Gm-Message-State: ALoCoQkBzTunHMUOitQYdYqSJXA+B1ZK6I+NmBO3QlBFk/Q9PWz23YyEpsF4n2LCHXobKhXBtgBs
+X-Received: by 10.50.43.193 with SMTP id y1mr889815igl.32.1412805016833; Wed,
+ 08 Oct 2014 14:50:16 -0700 (PDT)
+Received: by 10.64.230.66 with HTTP; Wed, 8 Oct 2014 14:50:16 -0700 (PDT)
+X-Originating-IP: [128.177.65.10]
+In-Reply-To: <xmqqh9zebfc6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 8, 2014 at 4:12 PM, Richard Hansen <rhansen@bbn.com> wrote:
+On Wed, Oct 8, 2014 at 1:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On 2014-10-08 15:04, Jess Austin wrote:
-> > Introduce a new environmental variable, GIT_PS1_OMITIGNORED, which
-> > tells __git_ps1 to display nothing when the current directory is
-> > set (e.g. via .gitignore) to be ignored by git. In the absence of
-> > GIT_PS1_OMITIGNORED this change has no effect.
-> >
-> > Many people manage e.g. dotfiles in their home directory with git.
-> > This causes the prompt generated by __git_ps1 to refer to that "top
-> > level" repo while working in any descendant directory. That can be
-> > distracting, so this patch helps one shut off that noise.
 >
-> Interesting idea, though I would prefer this to be configurable on a
-> per-repository basis.  (I wouldn't want to hide the prompt in any
-> repository besides my home repository.)
-
-Sorry my description was unclear. Let's say you have a repo in "~",
-and another in "~/projects/foo". Also, the file "~/.gitignore" has the line
-"projects/" in it. In this case, you'd see repo info in your prompt while
-in "~" or in "~/projects/foo", but not if you were in "~/projects". In that
-sense, the prompt is not distracting you with the status of the top-level
-repo when you're not looking at anything in that repo.
-
+> Can you mention that this is abomination limited only to zsh
+> somewhere in the log message?  Or does bash share the same glitch?
 >
-> I'm not a big fan of the name "OMITIGNORED" (it's not immediately
-> obvious what this means), but I can't think of anything better off the
-> top of my head...
+> If this is limited to zsh, I wonder if we can take advantage of the
+> fact that we have git-completion.bash and git-completion.zsh to
+> avoid contaminating shared part of the code.
 
-I'm definitely open to suggestions.
+I'm going to submit two versions of the patch:
+v2 - addresses the log message, but the patch still applies to bash
+and zsh
+v3 - moves the change to git-completion.zsh as an override, bash is
+unaffected
 
-cheers,
-Jess
-
-ps. sorry for the html before
-
-> > Signed-off-by: Jess Austin <jess.austin@gmail.com>
-> > ---
-> >  contrib/completion/git-prompt.sh |  9 +++++++++
-> >  t/t9903-bash-prompt.sh           | 21 +++++++++++++++++++++
-> >  2 files changed, 30 insertions(+)
-> >
-> > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> > index c5473dc..6a26cb4 100644
-> > --- a/contrib/completion/git-prompt.sh
-> > +++ b/contrib/completion/git-prompt.sh
-> > @@ -84,6 +84,10 @@
-> >  # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
-> >  # the colored output of "git status -sb" and are available only when
-> >  # using __git_ps1 for PROMPT_COMMAND or precmd.
-> > +#
-> > +# If you would like __git_ps1 to do nothing in the case when the current
-> > +# directory is set up to be ignored by git, then set GIT_PS1_OMITIGNORED
-> > +# to a nonempty value.
-> >
-> >  # check whether printf supports -v
-> >  __git_printf_supports_v=
-> > @@ -501,6 +505,11 @@ __git_ps1 ()
-> >       local f="$w$i$s$u"
-> >       local gitstring="$c$b${f:+$z$f}$r$p"
-> >
-> > +     if [ -n "$(git check-ignore .)" ] && [ -n "${GIT_PS1_OMITIGNORED}" ]
-> > +     then
-> > +             printf_format=""
-> > +     fi
-> > +
-> >       if [ $pcmode = yes ]; then
-> >               if [ "${__git_printf_supports_v-}" != yes ]; then
-> >                       gitstring=$(printf -- "$printf_format" "$gitstring")
-> > diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-> > index 9150984..55bcb6b 100755
-> > --- a/t/t9903-bash-prompt.sh
-> > +++ b/t/t9903-bash-prompt.sh
-> > @@ -35,6 +35,8 @@ test_expect_success 'setup for prompt tests' '
-> >       git commit -m "another b2" file &&
-> >       echo 000 >file &&
-> >       git commit -m "yet another b2" file &&
-> > +     mkdir ignored_dir &&
-> > +     echo "ignored_dir/" >> .gitignore &&
-> >       git checkout master
-> >  '
-> >
-> > @@ -588,4 +590,23 @@ test_expect_success 'prompt - zsh color pc mode' '
-> >       test_cmp expected "$actual"
-> >  '
-> >
-> > +test_expect_success 'prompt - prompt omitted in ignored directory' '
-> > +     printf "" >expected &&
-> > +     (
-> > +             cd ignored_dir &&
-> > +             GIT_PS1_OMITIGNORED=y &&
-> > +             __git_ps1 >"$actual"
-> > +     ) &&
-> > +     test_cmp expected "$actual"
-> > +'
-> > +
-> > +test_expect_success 'prompt - prompt not omitted without GIT_PS1_OMITIGNORED' '
-> > +     printf " (master)" >expected &&
-> > +     (
-> > +             cd ignored_dir &&
-> > +             __git_ps1 >"$actual"
-> > +     ) &&
-> > +     test_cmp expected "$actual"
-> > +'
-> > +
-> >  test_done
-> >
->
+>From my testing, bash is unaffected, so v3 would be an ok fix.  Since
+we cannot control what functions users add to chpwd_functions, v2 might
+make more sense.
