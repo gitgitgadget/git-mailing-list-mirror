@@ -1,8 +1,7 @@
 From: Marat Radchenko <marat@slonopotamus.org>
-Subject: [PATCH 02/14] MSVC: config.mak.uname: drop
- -D__USE_MINGW_ACCESS from CFLAGS
-Date: Wed,  8 Oct 2014 22:00:55 +0400
-Message-ID: <1412791267-13356-3-git-send-email-marat@slonopotamus.org>
+Subject: [PATCH 03/14] MINGW: compat/mingw.h: drop fork() definition
+Date: Wed,  8 Oct 2014 22:00:56 +0400
+Message-ID: <1412791267-13356-4-git-send-email-marat@slonopotamus.org>
 References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -12,35 +11,35 @@ To: git@vger.kernel.org
 X-From: msysgit+bncBCE7TAPITACRB37X2WQQKGQEMICCUVA@googlegroups.com Wed Oct 08 20:01:20 2014
 Return-path: <msysgit+bncBCE7TAPITACRB37X2WQQKGQEMICCUVA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f57.google.com ([74.125.83.57])
+Received: from mail-wg0-f58.google.com ([74.125.82.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBCE7TAPITACRB37X2WQQKGQEMICCUVA@googlegroups.com>)
-	id 1XbvY7-0003UK-K5
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 20:01:19 +0200
-Received: by mail-ee0-f57.google.com with SMTP id c41sf845054eek.2
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 11:01:19 -0700 (PDT)
+	id 1XbvY8-0003VP-HI
+	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 20:01:20 +0200
+Received: by mail-wg0-f58.google.com with SMTP id l18sf841853wgh.13
+        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 11:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=jPGRf0ZTYyUquq6F2Dp3g8Qj6zQo8il8ttrOVx40Lr8=;
-        b=RpMGzwPrkqo2ghKjonoZ9a9lvV0ES7/26WTgK+y4cOJXHl4amC1ZBly+xxLt54xKrr
-         8IBTz0e6YxvcDcuzYauqP8iRt1WVNex6b2wpjk8pwON4hS6KZzvkyXoHWnZHvpW+fW/c
-         Hz3Ld82VN71X+D4yvzQ3oPU+J3+jCqei62KBIUsBCfK1gs6PIQUzymXD0PXAzlHaUuVG
-         WgIV0c0XrOrvYujenDicB0OuW9qsIFr3WkRqrtUTVgKz9Ay5drs/cG9LclzVlp8FWUKx
-         rbOk/SOnpO2ZJvyCxEcWG7CWwMbyAlTWgB/C0jgxXYKVBBnAw7mib9/+wmnW/cswhKv2
-         jxJA==
-X-Received: by 10.180.98.167 with SMTP id ej7mr72438wib.15.1412791279336;
-        Wed, 08 Oct 2014 11:01:19 -0700 (PDT)
+        bh=emUhJL53ATbP1ppfUBUTS0gZfCnTQczzkkZQiMGuKds=;
+        b=PpXqRxiM6eV9E8N+osDS0I8xRoLO1y8emS8wRBO6/NaSCDhf9zTgHh7j5eV5hQE3+R
+         1QpIqOJdUDpKsGCL1c8W0leIZD1TKt6ppv1xmiwBIlc6oUGQHwqXuBchOLvlSs7HmoQv
+         yg9I0omZgjA90379FLb/STFhObR0h0phOjx3Hj05888wKBoegcsfBO90ydP1LgwBvF8c
+         AqL6UTJMMXpCdt9KgXgCeJ9r3idJ1dVq0BPrMcXSoswkMwSuctHArFuFpjINt0uzqnsJ
+         a5JGX3uKs2UqaraONi4S5JFwKuTBPQCU3oToSSezNYurv8yJfvb+90IiAwAM3PdwoJ9e
+         6rAw==
+X-Received: by 10.152.9.228 with SMTP id d4mr23358lab.27.1412791280258;
+        Wed, 08 Oct 2014 11:01:20 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.101.136 with SMTP id fg8ls965613wib.6.canary; Wed, 08 Oct
+Received: by 10.152.234.233 with SMTP id uh9ls84651lac.70.gmail; Wed, 08 Oct
  2014 11:01:18 -0700 (PDT)
-X-Received: by 10.180.82.74 with SMTP id g10mr5433162wiy.0.1412791278743;
+X-Received: by 10.152.29.130 with SMTP id k2mr1825812lah.3.1412791278895;
         Wed, 08 Oct 2014 11:01:18 -0700 (PDT)
 Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id dz10si129241wib.0.2014.10.08.11.01.18
+        by gmr-mx.google.com with ESMTPS id ca20si924884wib.3.2014.10.08.11.01.18
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 08 Oct 2014 11:01:18 -0700 (PDT)
@@ -49,7 +48,7 @@ Received: from [176.57.72.72] (helo=noblesse.home.ru)
 	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
 	(Exim 4.80.1)
 	(envelope-from <marat@slonopotamus.org>)
-	id 1XbvY1-0003Rz-OM; Wed, 08 Oct 2014 22:01:15 +0400
+	id 1XbvY5-0003Rz-2K; Wed, 08 Oct 2014 22:01:17 +0400
 X-Mailer: git-send-email 2.1.1
 In-Reply-To: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
 X-Original-Sender: marat@slonopotamus.org
@@ -68,28 +67,28 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
--D__USE_MINGW_ACCESS only affects MinGW and does nothing when
-MSVC is used.
+fork() is not used in MinGW builds but causes a compiler warning
+on x86_64 MinGW-W64: conflicting types for built-in function 'fork'
 
 Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
 Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
 ---
- config.mak.uname | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ compat/mingw.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index a2f380f..20cbdcf 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -368,7 +368,7 @@ ifeq ($(uname_S),Windows)
- 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
- 		compat/win32/dirent.o
--	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
-+	COMPAT_CFLAGS = -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
- 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE
- 	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib invalidcontinue.obj
- 	PTHREAD_LIBS =
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 36a47cb..1ddd663 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -92,8 +92,6 @@ static inline int symlink(const char *oldpath, const char *newpath)
+ { errno = ENOSYS; return -1; }
+ static inline int fchmod(int fildes, mode_t mode)
+ { errno = ENOSYS; return -1; }
+-static inline pid_t fork(void)
+-{ errno = ENOSYS; return -1; }
+ static inline unsigned int alarm(unsigned int seconds)
+ { return 0; }
+ static inline int fsync(int fd)
 -- 
 2.1.1
 
