@@ -1,23 +1,22 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re: [PATCH v4] MinGW(-W64) compilation
-Date: Wed, 8 Oct 2014 11:35:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1410081129401.990@s15462909.onlinehome-server.info>
-References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org> <543472A0.3020401@virtuell-zuhause.de>
+Subject: Re: [PATCH v4] MinGW(-W64) compilation
+Date: Wed, 8 Oct 2014 11:40:17 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1410081139330.990@s15462909.onlinehome-server.info>
+References: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org, 
-    msysGit <msysgit@googlegroups.com>
-To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-X-From: msysgit+bncBCZPH74Q5YNRBUMK2SQQKGQEAZRYMPA@googlegroups.com Wed Oct 08 11:35:17 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBUMK2SQQKGQEAZRYMPA@googlegroups.com>
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBCZPH74Q5YNRBGUN2SQQKGQEQMGC5JA@googlegroups.com Wed Oct 08 11:40:45 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBGUN2SQQKGQEQMGC5JA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f55.google.com ([209.85.215.55])
+Received: from mail-lb0-f188.google.com ([209.85.217.188])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBUMK2SQQKGQEAZRYMPA@googlegroups.com>)
-	id 1XbneN-0008S2-Ll
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 11:35:15 +0200
-Received: by mail-la0-f55.google.com with SMTP id hz20sf764980lab.10
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 02:35:15 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBGUN2SQQKGQEQMGC5JA@googlegroups.com>)
+	id 1Xbnjf-0007U8-V9
+	for gcvm-msysgit@m.gmane.org; Wed, 08 Oct 2014 11:40:44 +0200
+Received: by mail-lb0-f188.google.com with SMTP id 10sf738212lbg.25
+        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 02:40:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=date:from:to:cc:subject:in-reply-to:message-id:references
@@ -25,40 +24,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=i1CZFJYWz6rO+wuYO63kCccwE1uTc+asgwhh1vuwc5E=;
-        b=pmppol7W/T0DVBIQdzG1DAX0ywztLLAmMKX/XgydI/hQHxf9ytsFd3hY79SAyqRaId
-         r3s0yiPbk3LdnLHRAVeX+mzngto5cMrFwVL8a+yMOfI7PxD+Tws3CbrtqFbbZMvUg67O
-         LUt2kcRMDudMuuhEZAJ/4Ztj2e0A9EQ7CaGgNv0opjLSegTY/9ATFpA+kI50RSTVS/FK
-         a3yGSLlZzuJgXOi5b1QJUBM95s0atEDuZlCQGGryqySl7zjAXKYk+90qAHE+iy5Kmo/d
-         63sYpte7rTdIHGffZ6xJ2nKaJMK3aQe0dHvGMrbqmhc/bcop+vKtg4t62K8/aStmAazY
-         Wuzg==
-X-Received: by 10.152.42.194 with SMTP id q2mr7559lal.10.1412760915408;
-        Wed, 08 Oct 2014 02:35:15 -0700 (PDT)
+        bh=V8hXW0DdEiVit3lSXpWNgombtjeD9lQM0Cg4zWD1R4k=;
+        b=YRv9h12uLU+Sr2vfblLTmo/vrmDixxHGL04dNy7sRDztK4QEZZtn7TURYyovVF7Hra
+         PFlP7xWiQTL6CT5Dq7uQDJti5hPfOi0BT+qVpKLO/MDzVrkOwJIaL8d1cQhuVljCBzL0
+         4stbKCvcC4QGOiG2nn3cwa90XJyD6vbT2tGRm5XQQgXY7/Royxad1IfExTxwMvnw/Uva
+         f5M2VM1InKzgvT98LB2iI2tO7ckcNhiJm+V11FlM0aNRYAEzDLG1E6Av6L66LbrRnSPd
+         Jx0MmJl8Au+VKIebpxr8XxbOzmb+jD7TBrQMeSonPd6cnnI8qJWYmJdFx0tFIfVooNNx
+         MkRQ==
+X-Received: by 10.152.234.44 with SMTP id ub12mr11458lac.9.1412761243731;
+        Wed, 08 Oct 2014 02:40:43 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.10.72 with SMTP id g8ls40657lab.23.gmail; Wed, 08 Oct 2014
- 02:35:13 -0700 (PDT)
-X-Received: by 10.112.198.226 with SMTP id jf2mr1415070lbc.1.1412760913484;
-        Wed, 08 Oct 2014 02:35:13 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.19])
-        by gmr-mx.google.com with ESMTPS id us10si2327057lbc.1.2014.10.08.02.35.13
+Received: by 10.152.7.169 with SMTP id k9ls37183laa.91.gmail; Wed, 08 Oct 2014
+ 02:40:42 -0700 (PDT)
+X-Received: by 10.112.190.40 with SMTP id gn8mr278579lbc.10.1412761242373;
+        Wed, 08 Oct 2014 02:40:42 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTPS id us10si2328692lbc.1.2014.10.08.02.40.42
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Oct 2014 02:35:13 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.19 as permitted sender) client-ip=212.227.15.19;
+        Wed, 08 Oct 2014 02:40:42 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0Md3Eg-1Xu1Ft3bus-00IARE;
- Wed, 08 Oct 2014 11:35:11 +0200
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LviG8-1YGlDR33vw-017TR8;
+ Wed, 08 Oct 2014 11:40:17 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <543472A0.3020401@virtuell-zuhause.de>
+In-Reply-To: <1412060563-22041-1-git-send-email-marat@slonopotamus.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:zEi+7bM+G4dwP/2/TCYG9gQnwUcsSCZGvWjm5WDM+c+xMr/qx87
- lACtNj887iBhaKRCSjIX06tZj0ltpSbYIooiSDcSxv8mP2Nz31CQ/mcS59B6k8Jj++vhXhC
- 8i42HT821m4qTD6YPxf39wwky9gmdneczlTT0hFs1hzarabFCegoRehMW4q+RpGzLc87puM
- q2Dqom/NJAoi6o2ykG/iA==
+X-Provags-ID: V03:K0:H4LTv3KTssI+vOCBrZhg1+jYa3LGEXc/nvnoCxsXVdRKKuAXhJa
+ eHYzvUmQP545Se1GTMR+jJ/TDKE5R8cm8nXaa2LMCQAw7ZCCIbUXlfj0HcULaegVK0dLZ1y
+ fyeZqfPkVKCvwOGJHjESGtcSNQNn5IYgvar8/WHKrRdrLrgBoVdciESF6Y2XCMInfClSodd
+ crdmnYVrLGMxgSTDLC4og==
 X-UI-Out-Filterresults: notjunk:1;
 X-Original-Sender: johannes.schindelin@gmx.de
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.19 as
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
  permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -72,25 +71,20 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-Hi Thomas,
+Hi all,
 
-On Wed, 8 Oct 2014, Thomas Braun wrote:
+On Tue, 30 Sep 2014, Marat Radchenko wrote:
 
-> I wanted to verify that on msysgit but some patches fail to apply
-> cleanly. Did you also had to tweak the patches?
+> This patch series fixes building on modern MinGW and MinGW-W64
+> (including x86_64!).
 
-I applied the patches to git-for-windows/git's master, manually fixing
-three of them, and pushed the result to the 'w64' branch in my fork.
-Please find them here:
+To make it easier to review and substantially easier to work on this patch
+series with Git, I opened a pull request on GitHub:
 
-	https://github.com/dscho/git/compare/git-for-windows:master...w64
-
-and rebased onto msysgit's master:
-
-	https://github.com/dscho/git/compare/msysgit:master...w64-msysgit
+	https://github.com/msysgit/git/pull/264
 
 Ciao,
-Dscho
+Johannes
 
 -- 
 -- 
