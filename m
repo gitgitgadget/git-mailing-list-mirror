@@ -1,75 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-archive doesn't support --date= option for %ad & %cd
- format:<string>'s
-Date: Thu, 9 Oct 2014 15:24:28 -0400
-Message-ID: <20141009192428.GB415@peff.net>
-References: <CAMsgyKaHoZtAidWKD_YTggt_Xo0J7krFKHr2eFeg3XJ6H0bBXQ@mail.gmail.com>
+From: Ray Donnelly <mingw.android@gmail.com>
+Subject: Re: [msysGit] [PATCH 07/14] Fix BASIC_LDFLAGS and COMPAT_CFLAGS for
+ 64bit MinGW-w64
+Date: Thu, 9 Oct 2014 20:25:42 +0100
+Message-ID: <CAOYw7dsNQZNYZRz1c7RM0+CuOtzTXMH-2zWJR5MbM_kH9eZ1Eg@mail.gmail.com>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
+	<1412791267-13356-8-git-send-email-marat@slonopotamus.org>
+	<alpine.DEB.1.00.1410092115100.990@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Derek Moore <derek.p.moore@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 21:24:35 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org,
+	gitster@pobox.com, msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 09 21:25:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcJKE-0002Lt-KW
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 21:24:35 +0200
+	id 1XcJLU-0002uN-VH
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 21:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115AbaJITYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2014 15:24:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56904 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751170AbaJITYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2014 15:24:30 -0400
-Received: (qmail 766 invoked by uid 102); 9 Oct 2014 19:24:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Oct 2014 14:24:30 -0500
-Received: (qmail 27258 invoked by uid 107); 9 Oct 2014 19:24:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Oct 2014 15:24:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Oct 2014 15:24:28 -0400
-Content-Disposition: inline
-In-Reply-To: <CAMsgyKaHoZtAidWKD_YTggt_Xo0J7krFKHr2eFeg3XJ6H0bBXQ@mail.gmail.com>
+	id S1752770AbaJITZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2014 15:25:47 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:46244 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752618AbaJITZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2014 15:25:44 -0400
+Received: by mail-wi0-f177.google.com with SMTP id fb4so2822650wid.16
+        for <git@vger.kernel.org>; Thu, 09 Oct 2014 12:25:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PYryr6JP/wOWqEQmW8wVyEeJkswSS8/pQn4n7GygBOA=;
+        b=eoco3uWfXUDoredDlA+XqnT8Uu2/WoCmH2II/U27jc4nMiI4HtJbA+zYNfEiCrTG3I
+         LTt+4fv5h+xg4BY+8VK19H/VebsCGjJMq4Hj1YuipWuzWSP63+n4MyeiHmoq+ukB4PjZ
+         6pNbG43oc+rZfGS5DGP5ObSCwbxmt9vAwChHnqv1yg3e499RqFuQpXeIiJ7MJvLK8ix8
+         s92LUPkMuWrqCcpoy4bXwxnAYPWkB+6OOdkRy+kHayShfuOfS1HfIgHoLJJk2wVOIUwx
+         DE/yM3qzYTIRJJw2QjVHbidPne/F3B2M93H7h0NKPm6MOT2biQoqEFhvhn8/1xWjtvw3
+         3P7A==
+X-Received: by 10.194.77.195 with SMTP id u3mr6346167wjw.115.1412882742210;
+ Thu, 09 Oct 2014 12:25:42 -0700 (PDT)
+Received: by 10.217.160.9 with HTTP; Thu, 9 Oct 2014 12:25:42 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1410092115100.990@s15462909.onlinehome-server.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 09, 2014 at 11:19:36AM -0500, Derek Moore wrote:
+On Thu, Oct 9, 2014 at 8:22 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 8 Oct 2014, Marat Radchenko wrote:
+>
+>> +CC_MACH := $(shell sh -c '$(CC) -dumpmachine 2>/dev/null || echo not')
+>
+> There is a rather huge problem with that. The latest mingw-w64 release,
+> 4.9.1, does not do what you expect here: while '.../mingw32/bin/gcc -m32
+> -o 32.exe test.c' and '.../mingw32/bin/gcc -m64 -o 64.exe test.c' work
+> fine, producing i686 and x86_64 executables respectively,
+> '.../mingw32/bin/gcc -dumpmachine' prints i686-w64-mingw32 *always*, even
+> when specifying the -m64 option.
+>
+> So unfortunately, the test introduced by this patch (intended to figure
+> out whether the build targets i686, and skip a compiler and a linker
+> option otherwise) is incorrect.
 
-> PRETTY FORMATS' format:<string> documentation says, "%ad: author date
-> (format respects --date= option)", and similarly for %cd.
-> 
-> But git-archive does not support the --date= option for changing the
-> date format in $Format:%ad$ or $Format:%cd$ substitution strings.
+Which release are you talking about? Can you point me to the tarball please?
 
-Correct. You can use %ai, %aD, etc to pick a format. But...
-
-> Relatedly, I want a short RFC date, not a short ISO date, but there is
-> only --date=short, which is ISO.
-
-If you start adding new formats, we are likely going to run out of
-reasonably-memorable letters.
-
-We've discussed something like "%ad(rfc822)" in the past, and I even had
-a patch:
-
-  http://article.gmane.org/gmane.comp.version-control.git/168512
-
-but it got bogged down in a discussion on potentially expanding the
-placeholder syntax to something more regular (probably
-"%(authordate:rfc822"), like for-each-ref does. That's from 2011, and I
-doubt anybody is working on it now.
-
-> Would introducing --date=shortrfc and --date=shortiso be feasable,
-> with --date=short aliasing to --date=shortiso. With a shortrfc, I
-> could recreate SVN $Date$'s, which would be equivalent to $Format:%ai
-> (%ad)$ when used with "git archive --date=shortrfc".
-
-I don't see a big problem with that. But I wonder if we would do better
-to introduce arbitrary strftime-like formatting, so we do not have to
-keep adding new formats.
-
--Peff
+>
+> Ciao,
+> Johannes
