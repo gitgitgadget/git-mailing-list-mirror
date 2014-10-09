@@ -1,107 +1,98 @@
-From: Brandon Turner <bt@brandonturner.net>
-Subject: [PATCH v4] completion: ignore chpwd_functions when cding on zsh
-Date: Thu,  9 Oct 2014 14:01:38 -0500
-Message-ID: <1412881298-64117-1-git-send-email-bt@brandonturner.net>
-References: <xmqqlhop6rmj.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1] rebase -m: Use empty tree base for parentless commits
+Date: Thu, 09 Oct 2014 12:05:05 -0700
+Message-ID: <xmqq1tqh6p3y.fsf@gitster.dls.corp.google.com>
+References: <5434312E.6040407@redhat.com>
+	<bf0e177fbaac91f8c55526729e580fade9f0f395.1412879523.git.bafain@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Brandon Turner <bt@brandonturner.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 21:02:30 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 09 21:05:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcIyq-0008Fq-4B
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 21:02:28 +0200
+	id 1XcJ1W-0001Kb-BK
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 21:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637AbaJITCX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Oct 2014 15:02:23 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:54915 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045AbaJITCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2014 15:02:22 -0400
-Received: by mail-pa0-f52.google.com with SMTP id fb1so267161pad.25
-        for <git@vger.kernel.org>; Thu, 09 Oct 2014 12:02:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brandonturner.net; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=wF0r1IOn2b3zTNTsPkPeiQ5SBQhXr5jXyqFmSDlNJUc=;
-        b=VsZTIEQgHsBv6rRRzL46Q9NkIGmh4bmFOslvF9HsBZW9sQRcntL9im+8hgSdG8V7Jq
-         5lIlwVgeKoSDYC2YXdvOzIs/QwMzJsJjXn66ed6EiSUv2Hmy65qw48FvHjKeLwsCfsdz
-         OHitaBxIvHasaxpenuO4LBLvRJGaoidy0v8uM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=wF0r1IOn2b3zTNTsPkPeiQ5SBQhXr5jXyqFmSDlNJUc=;
-        b=ft9gyODHh8t3ZnImX5JxCUXc5ViFtQ5+F6FgzhX7/xMxAq6NDVU4Th8WUilsgex/5Z
-         BblhttQT79sUJLF0jj9idZKdHgllgEnMm89nWV6TuxnCmlAhhTCgvqpsoCE2oq9oaJEt
-         NUdzYe0UC1fWCu6X8IFa8c0HtPWoq332nk6cw9so/m9o5dTryHMi1ICS8QweM5iyuaOr
-         ZwdWxCAfeCI2LfZ2UpudNjR24s5xG4T9xS74dB/QMm++IphEmjn/dcPvEpGpw6E0eFhM
-         q7R+mb09NxxXBKd5oirloUMI9RbljZTacxx2yFoKfAW/tpcFYNvu4NbZTe8QgpWNP702
-         YVBw==
-X-Gm-Message-State: ALoCoQmsC0/79muKlzEBCi6i/FwCcjOzdFwXAV+CuXDZl0xazjmoV6j0CwzQQ6LK+zMqJRAWaLEb
-X-Received: by 10.66.157.73 with SMTP id wk9mr1435863pab.101.1412881341906;
-        Thu, 09 Oct 2014 12:02:21 -0700 (PDT)
-Received: from aus-mac-1035.aus.rapid7.com ([128.177.65.10])
-        by mx.google.com with ESMTPSA id c8sm1340979pat.6.2014.10.09.12.02.20
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 09 Oct 2014 12:02:21 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2
-In-Reply-To: <xmqqlhop6rmj.fsf@gitster.dls.corp.google.com>
+	id S1751146AbaJITFL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2014 15:05:11 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53818 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751065AbaJITFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2014 15:05:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 528471497E;
+	Thu,  9 Oct 2014 15:05:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/6eCZ8V1h3U+7uqL7k2w9rCzzBc=; b=qv6xz0
+	1JgbnsgvB/R/4VBcDCmn++uNGK4wVWrnzKI//Nt1bRmi0vl3XG3JPbEbnXWBFJM8
+	JlL9p2qTOJzakGO4fPCFAJ5PFSag4Tgc0Gu1+GbqtvoBrlhIULWHDffEpD0bIqsh
+	UKsIE6QhMHe8C/OkJqtNXOdkhwZJhiOGpdKL0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tcwSNbrE3Ezxanoyauwt2EQHi6GGc6sx
+	870LbqCTijDPDJxeNtC8p0kbJ2025BjadiW3hVpcrdLZphDryvAuRjHo8ozBshM/
+	To8AnUb3gW0NLBunLARpvBHKloOJMMSn88JMygFSPp8qkDWNTWlbbIEudhFRWSbX
+	wqBpbk5gQe8=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 49CA01497D;
+	Thu,  9 Oct 2014 15:05:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 042891497C;
+	Thu,  9 Oct 2014 15:05:06 -0400 (EDT)
+In-Reply-To: <bf0e177fbaac91f8c55526729e580fade9f0f395.1412879523.git.bafain@gmail.com>
+	(Fabian Ruch's message of "Thu, 9 Oct 2014 20:50:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2EDDA8CE-4FE7-11E4-9F45-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Software, such as RVM (ruby version manager), may set chpwd functions
-that result in an endless loop when cding.  chpwd functions should be
-ignored.
+Fabian Ruch <bafain@gmail.com> writes:
 
-As I've only seen this so far on ZSH, I'm applying this change only to
-the git-completion.zsh overrides.
+> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+> index d3fb67d..3f754ae 100644
+> --- a/git-rebase--merge.sh
+> +++ b/git-rebase--merge.sh
+> @@ -67,7 +67,13 @@ call_merge () {
+>  		GIT_MERGE_VERBOSITY=1 && export GIT_MERGE_VERBOSITY
+>  	fi
+>  	test -z "$strategy" && strategy=recursive
+> -	eval 'git-merge-$strategy' $strategy_opts '"$cmt^" -- "$hd" "$cmt"'
+> +	base=$(git rev-list --parents -1 $cmt | cut -d ' ' -s -f 2 -)
+> +	if test -z "$base"
+> +	then
+> +		# the empty tree sha1
+> +		base=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+> +	fi
+> +	eval 'git-merge-$strategy' $strategy_opts '"$base" -- "$hd" "$cmt"'
 
-Signed-off-by: Brandon Turner <bt@brandonturner.net>
----
-As =C3=98ystein pointed out, on zsh we can use "cd -q" to ignore
-chpwd_functions.
+This looks wrong.
 
-Junio - from my testing, unsetting CDPATH is sufficient on zsh.
+The interface to "git-merge-$strategy" is designed in such a way
+that each strategy should be capable of taking _no_ base at all.
 
- contrib/completion/git-completion.zsh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+See how unquoted $common is given to git-merge-$strategy in
+contrib/examples/git-merge.sh, i.e.
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion=
-/git-completion.zsh
-index 9f6f0fa..04ed348 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -93,6 +93,20 @@ __gitcomp_file ()
- 	compadd -Q -p "${2-}" -f -- ${=3D1} && _ret=3D0
- }
-=20
-+__git_ls_files_helper ()
-+{
-+	(
-+		test -n "${CDPATH+set}" && unset CDPATH
-+		cd -q "$1"
-+		if [ "$2" =3D=3D "--committable" ]; then
-+			git diff-index --name-only --relative HEAD
-+		else
-+			# NOTE: $2 is not quoted in order to support multiple options
-+			git ls-files --exclude-standard $2
-+		fi
-+	) 2>/dev/null
-+}
-+
- __git_zsh_bash_func ()
- {
- 	emulate -L ksh
---=20
-2.1.2
+    eval 'git-merge-$strategy '"$xopt"' $common -- "$head_arg" "$@"'
+
+where common comes from
+
+	common=$(git merge-base ...)
+
+which would be empty when you are looking at disjoint histories.
+
+Also rev-list piped to cut is too ugly to live in our codebase X-<.
+
+Wouldn't it be sufficient to do something like this instead?
+
+	eval 'git-merge-$strategy' $strategy_opts \
+        	$(git rev-parse --quiet --verify "$cmt^") -- "$hd" "$cmt"
