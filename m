@@ -1,104 +1,129 @@
-From: Derek Moore <derek.p.moore@gmail.com>
-Subject: Re: DOCBOOK2X_TEXI in Documentation/Makefile invalid on some distributions
-Date: Thu, 9 Oct 2014 14:40:38 -0500
-Message-ID: <CAMsgyKZfH8dphGOmGpYx2PWMARaRT13z0xZfoWSL6UspwHFzuw@mail.gmail.com>
-References: <CAMsgyKb-ffkfqRhG-dUkwpnKOcA=3CrZqT57qcqTr+9zm_v2Jw@mail.gmail.com>
-	<20141009193504.GD415@peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 07/14] Fix BASIC_LDFLAGS and COMPAT_CFLAGS for
+ 64bit MinGW-w64
+Date: Thu, 9 Oct 2014 21:47:18 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1410092146310.990@s15462909.onlinehome-server.info>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-8-git-send-email-marat@slonopotamus.org> <alpine.DEB.1.00.1410092115100.990@s15462909.onlinehome-server.info>
+ <CAOYw7dsNQZNYZRz1c7RM0+CuOtzTXMH-2zWJR5MbM_kH9eZ1Eg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 09 21:40:45 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org, 
+    gitster@pobox.com, msysGit <msysgit@googlegroups.com>
+To: Ray Donnelly <mingw.android@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBSWM3OQQKGQEG65YK5Q@googlegroups.com Thu Oct 09 21:47:24 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBSWM3OQQKGQEG65YK5Q@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f57.google.com ([209.85.215.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcJZr-0001cf-Ma
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 21:40:44 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751191AbaJITkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2014 15:40:40 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:64939 "EHLO
-	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751127AbaJITkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2014 15:40:39 -0400
-Received: by mail-oi0-f45.google.com with SMTP id i138so4340178oig.32
-        for <git@vger.kernel.org>; Thu, 09 Oct 2014 12:40:38 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBSWM3OQQKGQEG65YK5Q@googlegroups.com>)
+	id 1XcJgJ-0004am-I1
+	for gcvm-msysgit@m.gmane.org; Thu, 09 Oct 2014 21:47:23 +0200
+Received: by mail-la0-f57.google.com with SMTP id mc6sf175771lab.12
+        for <gcvm-msysgit@m.gmane.org>; Thu, 09 Oct 2014 12:47:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=j6yZC+SE7ZVjdIEyz/jwxAU1SxZS901lijl7We/hxw0=;
-        b=glM9BJQj2gJsIGaBV25jf0r+JBp5b4kwq/TZSIkAKKH+2VR4EA0R5BZnAULTfXxjyQ
-         I+4qmDfwAjpYW0H8+YHfeqzXr8xkv7rndhW7dyA0SBS8pbDUUItb2/jeLPsKpQ1GdxwI
-         K9PGQvnd5b9A7ar1B3bo8uNhhbzC3Dok0QRU2Y5tBQGvluwADIb+zf0ng23tIWWlvDkZ
-         pVlV7W/eXx/S6z/dcOwqr595IxyM9fcPu31EJwPRf63M7eYnbfDxSHfv31I2Ff8fT0KX
-         4IjJ4HRe0QeCi7JHdgKo1VrgVJ1F57S9JUk1zzdcK1/4N7BOIPBERJCaWnCqT1V1h//j
-         Yt+A==
-X-Received: by 10.202.207.79 with SMTP id f76mr256542oig.46.1412883638904;
- Thu, 09 Oct 2014 12:40:38 -0700 (PDT)
-Received: by 10.76.33.68 with HTTP; Thu, 9 Oct 2014 12:40:38 -0700 (PDT)
-In-Reply-To: <20141009193504.GD415@peff.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=7EhmYlvtV6SASeGqCj8Z2eGmcjN6Mq1RtfP2mD6EmS4=;
+        b=X5iWoRH0O6OCCq+emiRzgeWrr4IhBDDi0t7Hb9q/uMWdlJYXCHFJFNeB8a+O6tu9DQ
+         aIl4s6LonrrfTBRhENybBLmMXvHOUo672D2m7XSXRD711ju0030tNKOCacvJ7YR3C++W
+         m4CMhsscSTFmGP/UyrHWt6BN1wqL8Du79MRCjKh44UM9PwOx7MSdsDmOZ24CPbU27oQU
+         ZmRPqia/5MbNC2Asyi/J3rCF3BNViWV6O7sCI66wJ4l+4KB+PkjRFfPkglM+H59O0Ti+
+         DRxKQ6C8Iqn/7AJTQ/ZBTUo78oybnLcXhdGF3GKBunaLfGuP+qdOjPOsNJZGCaeLPOD1
+         BE9w==
+X-Received: by 10.180.221.102 with SMTP id qd6mr3946wic.10.1412884043365;
+        Thu, 09 Oct 2014 12:47:23 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.211.42 with SMTP id mz10ls11409wic.35.gmail; Thu, 09 Oct
+ 2014 12:47:22 -0700 (PDT)
+X-Received: by 10.180.160.169 with SMTP id xl9mr68396wib.7.1412884042513;
+        Thu, 09 Oct 2014 12:47:22 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id us10si661945lbc.1.2014.10.09.12.47.22
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Oct 2014 12:47:22 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0M0h9K-1YTSX30hCw-00uoiz;
+ Thu, 09 Oct 2014 21:47:19 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAOYw7dsNQZNYZRz1c7RM0+CuOtzTXMH-2zWJR5MbM_kH9eZ1Eg@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:lgW5l5MUsXZknJeqvFsiy8S8hVahsfnqjyUwFCbNx+TwklMKwX9
+ eMkeURn/H0GxgDxxBCu6/ednklZIXcIJmH2DhtHrJJnFxzyWBBA9pnW5uQpQCLvzowTyjhM
+ 30784fhQAS5KtNb+JeKDvp0RUIpBzq7KDBBylIZV3lgI+vRsSogpHQFXMbCtymhgkAa+ead
+ Vv396UL0jp97Zkgojb/9g==
+X-UI-Out-Filterresults: notjunk:1;
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-:) Wasn't proposing a patch, that's for sure, was just evincing the
-change that worked for me.
+Hi Ray,
 
-I agree INSTALL instructions should be fixed up and/or the
-DOCBOOK2X_TEXI should be conditionally assigned in a sane manner.
+On Thu, 9 Oct 2014, Ray Donnelly wrote:
 
-I'd first want to inspect upstream docbook2X build process and Fedora
-docbook2X RPM .spec, to see which name is canonical and how you guys
-came up with "docbook2x-texi".
+> On Thu, Oct 9, 2014 at 8:22 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Wed, 8 Oct 2014, Marat Radchenko wrote:
+> >
+> >> +CC_MACH := $(shell sh -c '$(CC) -dumpmachine 2>/dev/null || echo not')
+> >
+> > There is a rather huge problem with that. The latest mingw-w64
+> > release, 4.9.1, does not do what you expect here: while
+> > '.../mingw32/bin/gcc -m32 -o 32.exe test.c' and '.../mingw32/bin/gcc
+> > -m64 -o 64.exe test.c' work fine, producing i686 and x86_64
+> > executables respectively, '.../mingw32/bin/gcc -dumpmachine' prints
+> > i686-w64-mingw32 *always*, even when specifying the -m64 option.
+> >
+> > So unfortunately, the test introduced by this patch (intended to
+> > figure out whether the build targets i686, and skip a compiler and a
+> > linker option otherwise) is incorrect.
+> 
+> Which release are you talking about? Can you point me to the tarball
+> please?
 
-Seems there are now plenty of opportunities for me get my name in
-git's AUTHORS list. ;)
+Certainly:
 
+http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.9.1/threads-win32/sjlj/
 
-On Thu, Oct 9, 2014 at 2:35 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Oct 09, 2014 at 12:53:33PM -0500, Derek Moore wrote:
->
->> Following the INSTALL doc, I was building git with:
->>
->> make prefix=/usr/local all doc info
->
-> I wonder if it is actually sane to recommend building "info" for
-> newcomers in INSTALL. I do not know if many of the list regulars do so
-> (I certainly do not), or if it is part of anybody's testing regimen.
->
->> $ git diff
->> diff --git a/Documentation/Makefile b/Documentation/Makefile
->> index cea0e7a..0e6c70a 100644
->> --- a/Documentation/Makefile
->> +++ b/Documentation/Makefile
->> @@ -107,7 +107,7 @@ HTML_REPO = ../../git-htmldocs
->>
->>  MAKEINFO = makeinfo
->>  INSTALL_INFO = install-info
->> -DOCBOOK2X_TEXI = docbook2x-texi
->> +DOCBOOK2X_TEXI = db2x_docbook2texi
->>  DBLATEX = dblatex
->>  ASCIIDOC_DBLATEX_DIR = /etc/asciidoc/dblatex
->>  ifndef PERL_PATH
->
-> I don't think we would want to take a patch like this, as it is still
-> called docbook2x-texi at least on Debian.
->
-> You can override variables with:
->
->   make DOCBOOK2X_TEXI=db2x_docbook2texi ...
->
-> or if you want to use it for multiple make invocations:
->
->   echo DOCBOOK2_TEXI=db2x_docbook2texi >config.mak
->
-> If we want a patch to make this Just Work out of the box on Fedora, I'd
-> suggest looking at config.mak.uname (though I am not sure if there is
-> enough information there currently to determine Fedora versus another
-> distro), and/or a patch to configure.ac to detect which name we have.
->
-> -Peff
+(rev1, not rev0)
+
+Ciao,
+Johannes
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
