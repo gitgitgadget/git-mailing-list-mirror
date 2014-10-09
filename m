@@ -1,91 +1,97 @@
-From: Brandon Turner <bt@brandonturner.net>
-Subject: [PATCH v2] completion: ignore chpwd_functions when cding
-Date: Wed,  8 Oct 2014 16:49:47 -0500
-Message-ID: <1412804988-56858-1-git-send-email-bt@brandonturner.net>
-References: <xmqqh9zebfc6.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org, Brandon Turner <bt@brandonturner.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 08 23:51:40 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 01/14] MINGW: compat/mingw.h: do not attempt to
+ redefine lseek on mingw-w64
+Date: Thu, 9 Oct 2014 03:01:34 +0200
+Message-ID: <CABPQNSZXLSfvAOYfER2KYHedityyA+OEo4C5sfu-8K1KkL1R7g@mail.gmail.com>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-2-git-send-email-marat@slonopotamus.org>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBDR53PPJ7YHRBFV526QQKGQEUSN7M7I@googlegroups.com Thu Oct 09 03:02:18 2014
+Return-path: <msysgit+bncBDR53PPJ7YHRBFV526QQKGQEUSN7M7I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qg0-f55.google.com ([209.85.192.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xbz8x-0004yI-3B
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Oct 2014 23:51:35 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250AbaJHVu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Oct 2014 17:50:58 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:47225 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932133AbaJHVu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Oct 2014 17:50:57 -0400
-Received: by mail-pa0-f50.google.com with SMTP id kx10so9728032pab.37
-        for <git@vger.kernel.org>; Wed, 08 Oct 2014 14:50:57 -0700 (PDT)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBFV526QQKGQEUSN7M7I@googlegroups.com>)
+	id 1Xc27U-0007UZ-BC
+	for gcvm-msysgit@m.gmane.org; Thu, 09 Oct 2014 03:02:16 +0200
+Received: by mail-qg0-f55.google.com with SMTP id q108sf45949qgd.20
+        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 18:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brandonturner.net; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Geg844L0/eJFi4WZ4+T+/LbjN1K011LhN9wlLQqucHo=;
-        b=LF3NASctE0SWTTfqePJvVSdOgq0GMyUwlFHb3x7YacAzIKp4l6ruyMs0P6tJlYDmzl
-         0004nnP98jI9Jjpp+/7JaaZdWdkhNLSPmpBSRcoHdmmM0lbz73r77bC10NowBRHX24Te
-         NheJf6NTvWSTRYy500MvRguAcTqFpw71z4ytQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Geg844L0/eJFi4WZ4+T+/LbjN1K011LhN9wlLQqucHo=;
-        b=bc/ZEjTtzhD2pSk7pOe26oxB7ev2RBZ3oiIA6Gp2rymcYeQEyD7+32QfFly+MnIYCY
-         8DJsNoF64evXoq7ZEAvDFJpmG+ceLge7PUP4iPvAukROYEzRMSX7vimzh5nkbkXRo8pY
-         ZgLpOebsjqUrwMETjVj2OMD4c6plYATBKNtyNIkCnXRs0Tm6Zk3Ndi7vU4Wv+MdyclMR
-         Eeabf4v8sU6jiPNts0XHhAE/kx+pkanFKweG7F6e100g/4sIB350dVikWx2AMdb6dix7
-         OLLDbYJWQ8ghPkMPNG6OFBX7nl9+wxXwD4phzmzWA760+gIZWYO0OqWfmLV/BD+41UZC
-         z2bQ==
-X-Gm-Message-State: ALoCoQk+QVzscH9gMGtudGky8zU+fs132lCW340omo4xw0/HXoXJVsTbs1j6FuW2O6i0bdGb3OIW
-X-Received: by 10.66.66.75 with SMTP id d11mr14080951pat.85.1412805057363;
-        Wed, 08 Oct 2014 14:50:57 -0700 (PDT)
-Received: from aus-mac-1035.aus.rapid7.com ([128.177.65.10])
-        by mx.google.com with ESMTPSA id k5sm886980pdk.38.2014.10.08.14.50.56
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 08 Oct 2014 14:50:56 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2
-In-Reply-To: <xmqqh9zebfc6.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+        d=googlegroups.com; s=20120806;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=gqJHKNXogR6pkYfco2Ad1KldAou9+CmjspGV6ccTTso=;
+        b=c5G52NKwDDo1W3dsM9RkiU6/fgTnnh2DEGkbkxoY6JUr2Z3YRAmk1AG/6wyUaZWZp5
+         XuGznJboAnCj1uWfcQZEIE8K0sPrGbpcktzvUF1AoWvoQ5HkId3Na81BRhH3WjfJa/fy
+         Ep9nsJfq7OhKthPGTW1Q1CZTVpi9st5NbRnX0Ar22qWbD/Vho+I3GPUW9Sb0Clb9jX6n
+         PqI3jhlVVfPyDXPrO0uEB/Dc5V0MRYfRj1kyV7mn9P7gnmdx3HMB8UGs6O9ZX4fqQUyu
+         rGpiwJHveZ+9nxPUymUnGWqQjveTr18HNK9QPt3VDbHREreJb1LaR4ZIoP7Fu0NtBuTG
+         Uoaw==
+X-Received: by 10.50.142.104 with SMTP id rv8mr371643igb.11.1412816535589;
+        Wed, 08 Oct 2014 18:02:15 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.51.16.66 with SMTP id fu2ls4154594igd.0.canary; Wed, 08 Oct
+ 2014 18:02:14 -0700 (PDT)
+X-Received: by 10.50.138.167 with SMTP id qr7mr1296477igb.6.1412816534653;
+        Wed, 08 Oct 2014 18:02:14 -0700 (PDT)
+Received: from mail-ig0-x231.google.com (mail-ig0-x231.google.com [2607:f8b0:4001:c05::231])
+        by gmr-mx.google.com with ESMTPS id nt9si299483igb.1.2014.10.08.18.02.14
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 08 Oct 2014 18:02:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::231 as permitted sender) client-ip=2607:f8b0:4001:c05::231;
+Received: by mail-ig0-x231.google.com with SMTP id a13so1154793igq.16
+        for <msysgit@googlegroups.com>; Wed, 08 Oct 2014 18:02:14 -0700 (PDT)
+X-Received: by 10.42.180.5 with SMTP id bs5mr2164919icb.70.1412816534558; Wed,
+ 08 Oct 2014 18:02:14 -0700 (PDT)
+Received: by 10.64.123.5 with HTTP; Wed, 8 Oct 2014 18:01:34 -0700 (PDT)
+In-Reply-To: <1412791267-13356-2-git-send-email-marat@slonopotamus.org>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::231
+ as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-Software, such as RVM (ruby version manager), may set chpwd functions
-that result in an endless loop when cding.  chpwd functions should be
-ignored.
+On Wed, Oct 8, 2014 at 8:00 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
+> Unlike MinGW, MinGW-W64 has lseek already properly defined in io.h.
+>
+> Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
+> Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
 
-I have only noticed the RVM bug on ZSH, bash seems unaffected.  However
-this change seems safe to apply to both bash and zsh as we cannot
-control what functions users add to chpwd_functions.
+I spell my name with a K, "Erik Faye-Lund".
 
-Signed-off-by: Brandon Turner <bt@brandonturner.net>
----
-This addresses Junio's request to update the log message.  The patch
-still applies to bash and zsh.
-
-For more information on the RVM bug, see:
-https://github.com/wayneeseguin/rvm/issues/3076
- contrib/completion/git-completion.bash | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 06bf262..996de31 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -283,7 +283,8 @@ __git_ls_files_helper ()
- {
- 	(
- 		test -n "${CDPATH+set}" && unset CDPATH
--		cd "$1"
-+		(( ${#chpwd_functions} )) && chpwd_functions=()
-+		builtin cd "$1"
- 		if [ "$2" == "--committable" ]; then
- 			git diff-index --name-only --relative HEAD
- 		else
 -- 
-2.1.2
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
