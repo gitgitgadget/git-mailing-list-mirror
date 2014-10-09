@@ -1,89 +1,130 @@
-From: Adrian Stern <adrian.stern@unchained.ch>
-Subject: Re: cannot checkout svn repository
-Date: Thu, 9 Oct 2014 15:49:49 +0200
-Message-ID: <CAOHZ5L4VOZEnudHOKr3=1N0H1CvSSBud-0cjc6378cGRkm-Vow@mail.gmail.com>
-References: <CAOHZ5L7qcfiQAu2puD-Nv=k4etGNtKCPukSgm1UpSDGBcnPmTw@mail.gmail.com>
-	<CAOHZ5L5YAww1NMVv83Hifev6NG6Yoy7h8D8+RpF+N-m__FQktg@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: [PATCH 14/14] MINGW: config.mak.uname: auto-detect
+ MinGW build from compiler
+Date: Thu, 9 Oct 2014 17:49:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1410091747090.990@s15462909.onlinehome-server.info>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-15-git-send-email-marat@slonopotamus.org> <xmqqoatm8irn.fsf@gitster.dls.corp.google.com> <20141009050318.GA17479@seldon> <xmqqzjd57l32.fsf@gitster.dls.corp.google.com>
+ <alpine.DEB.1.00.1410090936381.990@s15462909.onlinehome-server.info> <CAPc5daUo+Fw2Oh3LK+0HJCmtVjicYk62qiQ2v8h8pitYHAZL3w@mail.gmail.com> <alpine.DEB.1.00.1410091213440.990@s15462909.onlinehome-server.info>
+ <CAPc5daWdkz16RnORjtjw+oP3PO043Y57wAMm3TxC6L5GBJz8uQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 09 15:49:56 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, marat@slonopotamus.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCZPH74Q5YNRBKO53KQQKGQE5NM4HOI@googlegroups.com Thu Oct 09 17:50:03 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBKO53KQQKGQE5NM4HOI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vc0-f192.google.com ([209.85.220.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcE6N-0002Tv-GE
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 15:49:55 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755094AbaJINtv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Oct 2014 09:49:51 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:59207 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752153AbaJINtu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Oct 2014 09:49:50 -0400
-Received: by mail-ig0-f177.google.com with SMTP id a13so4157645igq.16
-        for <git@vger.kernel.org>; Thu, 09 Oct 2014 06:49:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=lFj3sqDD3VMbXQrZO/YtnBu53i2Z4X0Q+l3mSxthfVs=;
-        b=Z3CM7p6E2lYJs9TX+P3GuM1bPRYYsqalSTy4eyEqauoCOjY+rPJ8BSRwqyUT/iFZHk
-         aaLtM0jZZVGWMWxzj/2HbMdEdJ6IGgQVc1ngh8WZ4SjgKa5mJeanWapEhMvooiKpuC1i
-         twY4NxwBqjHMV8YdImdzwVavppI6IUOUB1oXoza5TqGnyAmXHe9DZu3QtoKTPIAp5Y7k
-         wtT0XBAZTGwOkxil3kkS2S198oYwmyqVlQc+g/XIqLNtXtk8+IIyTj58YpLeo8GRNJTW
-         S3S2PJDnvDS6mI35EYZznma+0gIwJMrPr4m8qh0BisLamNlNIz2H7JyQyPpfKYMea6T4
-         uRKA==
-X-Gm-Message-State: ALoCoQligSe0b4csfqAnK2hklG7/XnwFnuDfcwN42xj5uBALDku38IhRXHgdF+s9tzTfi8LVO5tI
-X-Received: by 10.43.6.200 with SMTP id ol8mr8146382icb.39.1412862589639; Thu,
- 09 Oct 2014 06:49:49 -0700 (PDT)
-Received: by 10.42.198.6 with HTTP; Thu, 9 Oct 2014 06:49:49 -0700 (PDT)
-In-Reply-To: <CAOHZ5L5YAww1NMVv83Hifev6NG6Yoy7h8D8+RpF+N-m__FQktg@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBKO53KQQKGQE5NM4HOI@googlegroups.com>)
+	id 1XcFyd-00082K-6G
+	for gcvm-msysgit@m.gmane.org; Thu, 09 Oct 2014 17:50:03 +0200
+Received: by mail-vc0-f192.google.com with SMTP id hq11sf445133vcb.19
+        for <gcvm-msysgit@m.gmane.org>; Thu, 09 Oct 2014 08:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=Tgu+SdpcABgBPn6YbJ7+GYCvgzRc2Mv3Km0kbdX9e9A=;
+        b=q6rCmfBIhqJmDJUva4thUyWpvtDK+cppBtCf/sNhdlHzceMPusXkcb4EJAaCeT7xOB
+         cXEiTZwt/DHa5pDdyavnv60VrspTYT7/jbFwO5HeTIj41V82Kjxxa0LNn/QT5GrX6AJp
+         zPod6EysB0+r0k7ppQOQzC65ljwhGQt+2U+CXmh9WamQfE2meusv5xfTs82PQjbhBtSe
+         X55t9UlNguXk5ACaSZFjKZFP9APVtqnw9nBtOjXDyg78eYAqIrhAZhaGFiDmdJGRiu6F
+         uDQdWMtsv2hRdVafpd0NafhLxf05jeM9AbbaNaZet44nuybdgmISCvfviPc+8S1N1dJN
+         5YtQ==
+X-Received: by 10.50.13.4 with SMTP id d4mr55468igc.16.1412869802413;
+        Thu, 09 Oct 2014 08:50:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.17.71 with SMTP id m7ls926823igd.5.gmail; Thu, 09 Oct 2014
+ 08:50:01 -0700 (PDT)
+X-Received: by 10.70.128.129 with SMTP id no1mr3508pdb.2.1412869801481;
+        Thu, 09 Oct 2014 08:50:01 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id hz7si1738169igb.2.2014.10.09.08.50.01
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Oct 2014 08:50:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LqzIJ-1Y6eql0smR-00eaui;
+ Thu, 09 Oct 2014 17:49:56 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAPc5daWdkz16RnORjtjw+oP3PO043Y57wAMm3TxC6L5GBJz8uQ@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:4TkcceFyquyfW70CrHA+3IQhTJUq5aKA/0sMSYVdZTAvhb+4L+b
+ BVsPOlaanEPpAvJyt/6j7wYZwr5DNeSOL2TXv0cBCo9M/cEAUqxPBFGc6EJ3OfrLjRpoLoi
+ otGv4GfhDjLrkeFwyaH0s1vxUCW98XcR710de2uJP9CgZYDrvX369o4HIWKClRNNzr9JhUy
+ 1N4BajJZQXco3ZFT0gldg==
+X-UI-Out-Filterresults: notjunk:1;
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-Well. after about 15 to 30 minutes it began to download the repository
-finishing with "error: bad file descriptor" on git-svn. It checked r1
-to r500000+ with took some time.
-The unit-tests where successful so i think the broken pipe was not an
-issue in the end.
-Sorry for disturbing you.
+Hi Junio,
 
+On Thu, 9 Oct 2014, Junio C Hamano wrote:
 
-=46reundliche Gr=C3=BCsse
+> I didn't mean multiple uses of ?= for the same variable. I meant
+> multiple uses of (references to) the variable. I.e. wouldn't FOO and
+> BAR behave differently below?
+> 
+> FOO := $(shell random)
+> BAR = $(shell random)
+> all::
+>    echo $(FOO) and $(BAR)
+>    echo twice $(FOO) and $(BAR)
 
-Adrian Stern
-unchained - web solutions
+You're correct, of course, my mistake. I just tested with this:
 
-adrian.stern@unchained.ch
-+41 79 292 83 47
+	R ?= $(shell echo $$RANDOM)
 
+	all:
+		echo The values of $(R), $(R) and $(R)
 
-On Thu, Oct 9, 2014 at 3:21 PM, Adrian Stern <adrian.stern@unchained.ch=
-> wrote:
-> Hi
->
-> I'm unable to checkout this subversion repository with git. Can
-> somebody help me?
->
-> svn co http://svn.apache.org/repos/asf/ofbiz/branches/release13.07 of=
-biz.13.07
->
-> Yes i can clone it with SVN and add it to git. But this disturbes the
-> workflow and causes problems when someone commits to this branch whic=
-h
-> should be a read-only mirror only.
->
-> Works fine with svn, git svn clone however does not work.
->
-> Regards,
->
-> Adrian Stern
-> unchained - web solutions
->
-> adrian.stern@unchained.ch
-> +41 79 292 83 47
+and of course a "make" yields three different numbers. Sorry for missing
+that.
+
+So what we should do is something like
+
+	ifeq ($(uname_S),)
+		uname_S := $(shell uname -s)
+	endif
+
+even if repeating that pattern is kind of ugly...
+
+Thanks for correcting my mistake,
+Dscho
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
