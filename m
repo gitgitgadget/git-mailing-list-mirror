@@ -1,73 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use skip_prefix() to avoid more magic numbers
-Date: Thu, 09 Oct 2014 13:12:08 -0700
-Message-ID: <xmqqsiix57fr.fsf@gitster.dls.corp.google.com>
-References: <5430427A.5080800@web.de>
-	<xmqqd2a3g2mf.fsf@gitster.dls.corp.google.com>
-	<5436EAB5.2070809@web.de>
+Subject: Re: [PATCH v1] rebase -m: Use empty tree base for parentless commits
+Date: Thu, 09 Oct 2014 13:18:42 -0700
+Message-ID: <xmqqoatl574t.fsf@gitster.dls.corp.google.com>
+References: <5434312E.6040407@redhat.com>
+	<bf0e177fbaac91f8c55526729e580fade9f0f395.1412879523.git.bafain@gmail.com>
+	<xmqq1tqh6p3y.fsf@gitster.dls.corp.google.com>
+	<5436E83A.7070603@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Thu Oct 09 22:12:16 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 09 22:18:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcK4N-0001fZ-Qu
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 22:12:16 +0200
+	id 1XcKAk-0004as-EF
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 22:18:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751064AbaJIUMM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Oct 2014 16:12:12 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56125 "EHLO
+	id S1751208AbaJIUSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2014 16:18:47 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61332 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751024AbaJIUML convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Oct 2014 16:12:11 -0400
+	with ESMTP id S1751060AbaJIUSp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2014 16:18:45 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B591F13CE0;
-	Thu,  9 Oct 2014 16:12:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E0BBC13F17;
+	Thu,  9 Oct 2014 16:18:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ae6lViECE+1F
-	zmxpG+zXTt0b0CQ=; b=tN+T/DRZFychJ8twunF1upPXR2wfkbkBSxKPXkuShbAt
-	yipOgDEM3A8+OyT5MkqtZyqQBgGSgjAohTIleBDP2MacUHVNawrbw41e8wmp5rcF
-	nDfiWadorvjt2vQN2TmqF1Be3g+y3Kw+pckE5fXeJELQ2EgVu5NC3iJmOcWkQeo=
+	:content-type; s=sasl; bh=kxFUgF1WdBqM7eMIjxzSgj8+xs8=; b=S7aOFY
+	K104mFCf4IJiHNZedyuS4Z35e1A0ftbZ4ZbEVaMOK24gn80fe9zFotNiGi0F+oTg
+	V97sxYJH07mlfcf6sfU0F1xIXlT8CI0ClisDG7Vg0Bym3iAZTrSk6NdmMbp+EkQ1
+	GZyhU609r7NwEBgS/HIRF4oZ0EvE2kEuJFsFc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dX4D5H
-	w3EdkAcMOtN+Zl/x9uh00D1MhKSHaCsR1aeRGhOwNSwfMyk6NomqyAdbGabFMPR4
-	VlYOuTsAmpb2E9ITnlEOQHzrWh4hCn/cBunMMvLtO9fTi0YT0pJsBweOnHSJnR+5
-	pjJWM5Sro+vfvByNauQw+xCvXw6+A7JQI9Y4g=
+	:content-type; q=dns; s=sasl; b=CCm3yuxKoIQMrIkB3fZ/dw0jsWAGA0am
+	/jPFgqRl1fub36LQ2rZRCqKn15oDAEd9Q6DCXn5OM6YO3oT9S2c7xItkmDgfeDwO
+	lQtvm3GfGUQUR0hhPhnvlewU2nnSgLmtQhFSyaF46567tVelCMsSdVZp9nmOldkh
+	19up/o2Z/iE=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA32313CDF;
-	Thu,  9 Oct 2014 16:12:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D80FD13F16;
+	Thu,  9 Oct 2014 16:18:43 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2A26113CDE;
-	Thu,  9 Oct 2014 16:12:09 -0400 (EDT)
-In-Reply-To: <5436EAB5.2070809@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
- message of "Thu, 09
-	Oct 2014 22:06:13 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 61D4013F15;
+	Thu,  9 Oct 2014 16:18:43 -0400 (EDT)
+In-Reply-To: <5436E83A.7070603@gmail.com> (Fabian Ruch's message of "Thu, 09
+	Oct 2014 21:55:38 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8C422590-4FF0-11E4-AC5D-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 773C134E-4FF1-11E4-AE2B-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Fabian Ruch <bafain@gmail.com> writes:
 
-> I didn't think much about the performance implications.  skip_prefix(=
-)
-> doesn't call strlen(3), though.
+>> The interface to "git-merge-$strategy" is designed in such a way
+>> that each strategy should be capable of taking _no_ base at all.
+>
+> The merge strategies "resolve" and "octopus" seem to refuse to run if no
+> base is specified. The former silently exits if no bases are given and
+> the latter dies saying "Unable to find common commit".
 
-Ah, OK.
+That just means these two strategies are not prepared to do a merge
+without base (yet).  It does not automatically give license to the
+caller to pass a random tree as if it is the merge base the user
+wanted to use.
 
-> The code handles millions of ref strings per second before and after
-> the change, and with the change it's faster.  I hope the results are
-> reproducible and make it easier to say goodbye to pfxlen. :)
+For "resolve", I think it is OK for it to detect that the caller did
+not give a common ancestor tree and use an empty tree when merging
+(which is what merge-recursive ends up doing internally).
 
-;-)
+I am not offhand sure if the same is sensible for "octopus", though.
