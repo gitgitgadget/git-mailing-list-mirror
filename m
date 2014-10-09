@@ -1,84 +1,121 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH] git-prompt.sh: Omit prompt for ignored directories
-Date: Thu, 09 Oct 2014 01:37:52 -0400
-Message-ID: <54361F30.8020603@bbn.com>
-References: <1412795040-19267-1-git-send-email-jess.austin@gmail.com>	<5435A8A7.2030008@bbn.com>	<CANp8Xb8ETG-ZFCqrOk=f-RbxtRxehBmAR1O5ozLH80zimWq_Gw@mail.gmail.com> <CANp8Xb9MUbQCVZRNYibFBibzTFF=56BqNFFC1G2iTF7WGBNi7g@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: [PATCH 13/14] git-compat-util.h: fix integer
+ overflow on IL32P64 systems
+Date: Thu, 9 Oct 2014 08:08:31 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1410090751270.990@s15462909.onlinehome-server.info>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-14-git-send-email-marat@slonopotamus.org> <xmqqioju9xiz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, szeder@ira.uka.de
-To: Jess Austin <jess.austin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 07:38:06 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org, 
+    msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCZPH74Q5YNRBZOM3CQQKGQENIFMFDQ@googlegroups.com Thu Oct 09 08:08:39 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBZOM3CQQKGQENIFMFDQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f192.google.com ([209.85.217.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xc6QL-0005tA-T3
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 07:38:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbaJIFh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2014 01:37:58 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:19278 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750705AbaJIFh5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Oct 2014 01:37:57 -0400
-Received: from socket.bbn.com ([192.1.120.102]:60693)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Xc6QE-000CLl-TB; Thu, 09 Oct 2014 01:37:54 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 87BD54089A
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <CANp8Xb9MUbQCVZRNYibFBibzTFF=56BqNFFC1G2iTF7WGBNi7g@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBZOM3CQQKGQENIFMFDQ@googlegroups.com>)
+	id 1Xc6tx-0007Ja-Mo
+	for gcvm-msysgit@m.gmane.org; Thu, 09 Oct 2014 08:08:37 +0200
+Received: by mail-lb0-f192.google.com with SMTP id n15sf42836lbi.19
+        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 23:08:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=ZWDKaNf2bRwPN4NhRCPnKWj9CUqAyYlMhTfsUNNtfHY=;
+        b=tryVGlu+s0XPFufYQSTkL5KX68RmmhsAvocOiYslONEwm6nGdfSv64j2fPzLKN1Qyk
+         oZEjj2Exv/GC2qVw3GlCLD9R428X0XhabLOj7IuDAvtLQJPKXEAnyWwOJ7OKeNIx6DvU
+         lBOUJgH3XU+KC++C7S3H7Ec2yTbvOzlCnSGQA4vREt6V6ILJ8MWz0hXSRu5lwBB+161e
+         hjCJRV16ZyyNM7mJVXMtVOL5+N8iEv03YsqDDiY41Be/tuKmSbYZnQyNibqAWndd+nb8
+         P2U/YtZI0tY9weZe0v/YJ3usjOq28tjzAyDv36VcDB9S5RdK0nhN9e9pMPDd2aY6t24Z
+         NvTQ==
+X-Received: by 10.180.9.114 with SMTP id y18mr14096wia.21.1412834917509;
+        Wed, 08 Oct 2014 23:08:37 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.20.116 with SMTP id m20ls206152wie.0.gmail; Wed, 08 Oct
+ 2014 23:08:36 -0700 (PDT)
+X-Received: by 10.180.188.145 with SMTP id ga17mr370515wic.3.1412834916817;
+        Wed, 08 Oct 2014 23:08:36 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id us10si324513lbc.1.2014.10.08.23.08.36
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Oct 2014 23:08:36 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LZhoi-1Y3iTk14uK-00lT3i;
+ Thu, 09 Oct 2014 08:08:32 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqioju9xiz.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:+1rz9KM49r0lzr+cIcBT5EgQuBWpJJZVHfX/5xzvgU9nsKRmPoT
+ kHOiRk+AOL13OxxiIWMb5NiNq8FWyhCBr8l3IKoAnx0Jsg3KUg8FqfGaVS5ixk2uG7LsUBF
+ 5LnuLoy1liqBQSXTWBIP0+92ZjLgSPqGLInN/tESzXUv88NSAde2U8g6vARKNldRcilx6i1
+ zY+QkPcYyKRk+gb3pYECA==
+X-UI-Out-Filterresults: notjunk:1;
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-On 2014-10-08 17:37, Jess Austin wrote:
-> On Wed, Oct 8, 2014 at 4:12 PM, Richard Hansen <rhansen@bbn.com> wrote:
->> On 2014-10-08 15:04, Jess Austin wrote:
->>> Introduce a new environmental variable, GIT_PS1_OMITIGNORED, which
->>> tells __git_ps1 to display nothing when the current directory is
->>> set (e.g. via .gitignore) to be ignored by git. In the absence of
->>> GIT_PS1_OMITIGNORED this change has no effect.
->>>
->>> Many people manage e.g. dotfiles in their home directory with git.
->>> This causes the prompt generated by __git_ps1 to refer to that "top
->>> level" repo while working in any descendant directory. That can be
->>> distracting, so this patch helps one shut off that noise.
->>
->> Interesting idea, though I would prefer this to be configurable on a
->> per-repository basis.  (I wouldn't want to hide the prompt in any
->> repository besides my home repository.)
+Hi Junio,
+
+On Wed, 8 Oct 2014, Junio C Hamano wrote:
+
+> Marat Radchenko <marat@slonopotamus.org> writes:
 > 
-> Sorry my description was unclear. Let's say you have a repo in "~",
-> and another in "~/projects/foo". Also, the file "~/.gitignore" has the line
-> "projects/" in it. In this case, you'd see repo info in your prompt while
-> in "~" or in "~/projects/foo", but not if you were in "~/projects". In that
-> sense, the prompt is not distracting you with the status of the top-level
-> repo when you're not looking at anything in that repo.
+> >  #define DEFAULT_PACKED_GIT_LIMIT \
+> > -	((1024L * 1024L) * (sizeof(void*) >= 8 ? 8192 : 256))
+> > +	((size_t)(1024L * 1024L) * (sizeof(void*) >= 8 ? 8192 : 256))
+> 
+> 1024 * 1024 * 8192 overflows 32-bit unsigned, but is size_t always
+> large enough?  Just checking.
 
-I understand; I was concerned about this case:
+The diff is a bit misleading as to what it *actually* changes. It *just*
+casts the result to size_t. The arithmetic is performed with longs (thanks
+to the "l" in 1024l) and it only overflows 32 bit iff the sizeof() test
+verifies that we're at least on 64 bit -- this arithmetic operation is the
+same as before the patch. I was fooled by the diff myself (adding another
+parenthesis just to add the cast would probably have helped, though).
 
-$ PS1='\n\w$(__git_ps1 " (%s)")\n\$ '
+IMHO this is a good demonstration how a commit message that goes slightly
+beyond the necessary can help tons of time by avoiding to let every
+reviewer/reader go through the exact same steps of puzzlement.
 
-/home/rhansen/projects (dotfiles)
-$ GIT_PS1_OMITIGNORED=y
+Ciao,
+Dscho
 
-/home/rhansen/projects              <-- Git prompt goes away as desired
-$ cd foo
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-/home/rhansen/projects/foo (master) <-- Git prompt back as expected
-$ echo ignored/ >>.gitignore && mkdir -p ignored && cd ignored
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-/home/rhansen/projects/foo/ignored  <-- I want the Git prompt here
-$
-
-In other words:  If I were to use this feature, I'd want to be able to
-hide the prompt when I'm in an ignored directory in my dotfiles work
-tree, but show the prompt when I'm in an ignored directory in any other
-work tree.
-
--Richard
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
