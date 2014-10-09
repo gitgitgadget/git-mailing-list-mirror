@@ -1,65 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-archive doesn't support --date= option for %ad & %cd
- format:<string>'s
-Date: Thu, 9 Oct 2014 15:27:43 -0400
-Message-ID: <20141009192742.GC415@peff.net>
+From: Derek Moore <derek.p.moore@gmail.com>
+Subject: Re: git-archive doesn't support --date= option for %ad & %cd format:<string>'s
+Date: Thu, 9 Oct 2014 14:30:08 -0500
+Message-ID: <CAMsgyKZWiPwGLEx=_s6UYMmMzEj-gFWngKgudQhjge2v2avfeg@mail.gmail.com>
 References: <CAMsgyKaHoZtAidWKD_YTggt_Xo0J7krFKHr2eFeg3XJ6H0bBXQ@mail.gmail.com>
- <20141009192428.GB415@peff.net>
+	<20141009192428.GB415@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Derek Moore <derek.p.moore@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 21:27:54 2014
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 09 21:30:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcJNM-0003qK-Q1
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 21:27:49 +0200
+	id 1XcJQD-0005PH-CH
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 21:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbaJIT1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Oct 2014 15:27:46 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56913 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751191AbaJIT1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Oct 2014 15:27:44 -0400
-Received: (qmail 913 invoked by uid 102); 9 Oct 2014 19:27:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Oct 2014 14:27:44 -0500
-Received: (qmail 27323 invoked by uid 107); 9 Oct 2014 19:27:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Oct 2014 15:27:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Oct 2014 15:27:43 -0400
-Content-Disposition: inline
+	id S1752144AbaJITaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Oct 2014 15:30:14 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:62528 "EHLO
+	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752125AbaJITaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2014 15:30:10 -0400
+Received: by mail-oi0-f42.google.com with SMTP id a141so4327505oig.1
+        for <git@vger.kernel.org>; Thu, 09 Oct 2014 12:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2MtkrLU9nE/bbSJwO15oZK5JV55eFPOEklrcuki2X2w=;
+        b=uqtMQg9cSilV7uS8OovQqmxDf9gWfMzydorCrzLCZeTWtd8NXcUbPQau4BSW1FX4BE
+         i7z7gieU23+q+tNxO6ix4f3hH3wLEZHXj0Kjej3O5yMK4yAJ6fGBf4xoM/OQFyw/Ml13
+         7e5IHPpBdUvGa49oJypD6GYwqLgk/z891PwtCoA90Yv3Ba+lZOntLf+2Kggs95rbSnj9
+         s9yYhfGt6idHEC1cGB5mfJsBgdnDm4Ek0u90msTIpL+xT1CywfLpvB2o8qS8gqoBo6aO
+         rrZ+/Vh68gI2XM1AXyUpxPMiUpaPwIMvFySyDpY6H3Y1q+u9ysNpMy9QjChvCN56gn40
+         x/Fg==
+X-Received: by 10.60.102.100 with SMTP id fn4mr234590oeb.30.1412883008532;
+ Thu, 09 Oct 2014 12:30:08 -0700 (PDT)
+Received: by 10.76.33.68 with HTTP; Thu, 9 Oct 2014 12:30:08 -0700 (PDT)
 In-Reply-To: <20141009192428.GB415@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 09, 2014 at 03:24:28PM -0400, Jeff King wrote:
+> I don't see a big problem with that. But I wonder if we would do better
+> to introduce arbitrary strftime-like formatting, so we do not have to
+> keep adding new formats.
 
-> On Thu, Oct 09, 2014 at 11:19:36AM -0500, Derek Moore wrote:
-> 
-> > PRETTY FORMATS' format:<string> documentation says, "%ad: author date
-> > (format respects --date= option)", and similarly for %cd.
-> > 
-> > But git-archive does not support the --date= option for changing the
-> > date format in $Format:%ad$ or $Format:%cd$ substitution strings.
-> 
-> Correct. You can use %ai, %aD, etc to pick a format. But...
-> 
-> > Relatedly, I want a short RFC date, not a short ISO date, but there is
-> > only --date=short, which is ISO.
-> 
-> If you start adding new formats, we are likely going to run out of
-> reasonably-memorable letters.
-> [...]
+My thoughts exactly...
 
-I meant to add in here: ...so an external "--date" option does not seem
-like that bad an idea. I think calling it "--date" is probably a
-mistake, but something like "--subst-date-format" or something might
-make more sense.
+This list seems to be a prove-yourself-with-patches sorta place. If I
+can find the time, I'll try attacking this also in some manner.
 
--Peff
+Thanks again,
+
+Derek
