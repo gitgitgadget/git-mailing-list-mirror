@@ -1,97 +1,125 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 01/14] MINGW: compat/mingw.h: do not attempt to
- redefine lseek on mingw-w64
-Date: Thu, 9 Oct 2014 03:01:34 +0200
-Message-ID: <CABPQNSZXLSfvAOYfER2KYHedityyA+OEo4C5sfu-8K1KkL1R7g@mail.gmail.com>
-References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-2-git-send-email-marat@slonopotamus.org>
-Reply-To: kusmabite@gmail.com
+From: Alexandre Erwin Ittner <alexandre@ittner.com.br>
+Subject: [PATCH] gitweb: add HTML ids for categories and projects
+Date: Wed, 8 Oct 2014 23:16:31 -0300
+Message-ID: <20141008231631.8466676f4f808cb919c677e4@ittner.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBDR53PPJ7YHRBFV526QQKGQEUSN7M7I@googlegroups.com Thu Oct 09 03:02:18 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBFV526QQKGQEUSN7M7I@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qg0-f55.google.com ([209.85.192.55])
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 09 04:16:58 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBFV526QQKGQEUSN7M7I@googlegroups.com>)
-	id 1Xc27U-0007UZ-BC
-	for gcvm-msysgit@m.gmane.org; Thu, 09 Oct 2014 03:02:16 +0200
-Received: by mail-qg0-f55.google.com with SMTP id q108sf45949qgd.20
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Oct 2014 18:02:15 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Xc3Hm-0005Ut-2J
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 04:16:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751191AbaJICQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Oct 2014 22:16:51 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:55719 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750705AbaJICQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Oct 2014 22:16:50 -0400
+Received: by mail-qg0-f46.google.com with SMTP id z60so247973qgd.33
+        for <git@vger.kernel.org>; Wed, 08 Oct 2014 19:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=gqJHKNXogR6pkYfco2Ad1KldAou9+CmjspGV6ccTTso=;
-        b=c5G52NKwDDo1W3dsM9RkiU6/fgTnnh2DEGkbkxoY6JUr2Z3YRAmk1AG/6wyUaZWZp5
-         XuGznJboAnCj1uWfcQZEIE8K0sPrGbpcktzvUF1AoWvoQ5HkId3Na81BRhH3WjfJa/fy
-         Ep9nsJfq7OhKthPGTW1Q1CZTVpi9st5NbRnX0Ar22qWbD/Vho+I3GPUW9Sb0Clb9jX6n
-         PqI3jhlVVfPyDXPrO0uEB/Dc5V0MRYfRj1kyV7mn9P7gnmdx3HMB8UGs6O9ZX4fqQUyu
-         rGpiwJHveZ+9nxPUymUnGWqQjveTr18HNK9QPt3VDbHREreJb1LaR4ZIoP7Fu0NtBuTG
-         Uoaw==
-X-Received: by 10.50.142.104 with SMTP id rv8mr371643igb.11.1412816535589;
-        Wed, 08 Oct 2014 18:02:15 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.51.16.66 with SMTP id fu2ls4154594igd.0.canary; Wed, 08 Oct
- 2014 18:02:14 -0700 (PDT)
-X-Received: by 10.50.138.167 with SMTP id qr7mr1296477igb.6.1412816534653;
-        Wed, 08 Oct 2014 18:02:14 -0700 (PDT)
-Received: from mail-ig0-x231.google.com (mail-ig0-x231.google.com [2607:f8b0:4001:c05::231])
-        by gmr-mx.google.com with ESMTPS id nt9si299483igb.1.2014.10.08.18.02.14
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 08 Oct 2014 18:02:14 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::231 as permitted sender) client-ip=2607:f8b0:4001:c05::231;
-Received: by mail-ig0-x231.google.com with SMTP id a13so1154793igq.16
-        for <msysgit@googlegroups.com>; Wed, 08 Oct 2014 18:02:14 -0700 (PDT)
-X-Received: by 10.42.180.5 with SMTP id bs5mr2164919icb.70.1412816534558; Wed,
- 08 Oct 2014 18:02:14 -0700 (PDT)
-Received: by 10.64.123.5 with HTTP; Wed, 8 Oct 2014 18:01:34 -0700 (PDT)
-In-Reply-To: <1412791267-13356-2-git-send-email-marat@slonopotamus.org>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::231
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+        d=ittner.com.br; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=DlxAB2ta0mYw6EaXnQbCqb/IQbJninc6bWsH5FtdBR4=;
+        b=NtSyfQGf1GvFh99bWACQlKctKymnlq+R0+OItnQ38En+unBA29+wIG1KfJacZW/BJ1
+         uXuzSXmzXu0AnHK1Jy4HdLaP8SWp2+Q9YBdy9Ea6MixjWsbMgzIGcHtHKBh/1C+e9X+o
+         wcgw0EZqPj7oB868Loua5B7pnDecArXkyGIRk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=DlxAB2ta0mYw6EaXnQbCqb/IQbJninc6bWsH5FtdBR4=;
+        b=F1UaHftzqaSv05pYZM4qjGntcQRi5juD5XIOcFtZg2G7u4+fMSUlITkKGmeFNE7CpA
+         BrexchdhR18Z4DbAMkIwIYkT4inM3+b6IdjLgB9tsA2+x5jF0cpm3wKW918nH/aqFWUz
+         XZjmiU0UdeNzS20W2kwA4MFphwTFZWQ2NWAPm+nb7XrpNcQV7pIbEeqGHMQeNPn6rugj
+         AEwwiFuYhJ1UYOAiX3Jx3XdFrXd5EDvalYkyZcrpecF+/cZmUEneMMsmlA4n8WlZbU8r
+         0JAYC6vc5z1ItDdoTbLQYHgoV2i+W+66LTZlWI9cexbUdzCRl9NY23B4ykMz1GXq0g1v
+         RFdA==
+X-Gm-Message-State: ALoCoQlsZ/KdIDI639L1Qx0qV1/i/6jpQNwbQy2uTBCzrfHUZ2GXGrKTVVTPu8mOwMhilyTt+Vh7
+X-Received: by 10.224.32.70 with SMTP id b6mr18865168qad.14.1412821009338;
+        Wed, 08 Oct 2014 19:16:49 -0700 (PDT)
+Received: from elendil (179.176.236.117.dynamic.adsl.gvt.net.br. [179.176.236.117])
+        by mx.google.com with ESMTPSA id y9sm1350184qaf.15.2014.10.08.19.16.47
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 08 Oct 2014 19:16:48 -0700 (PDT)
+X-Mailer: Sylpheed 3.4.0beta4 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 8, 2014 at 8:00 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
-> Unlike MinGW, MinGW-W64 has lseek already properly defined in io.h.
->
-> Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
-> Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
+Add the attribute "id" to category headers and project rows in the
+web interface. These ids are intended to work as anchors, allowing
+links with the fragment component pointing to a given category, which
+may be useful when dealing with long project lists.
 
-I spell my name with a K, "Erik Faye-Lund".
+IDs are generated from the category name and project paths prefixed
+with "category-" and "project-", respectively, so links may follow
+the format http://example.com/gitweb/#category-drivers. Spaces are
+replaced by an "-" and special characters are escaped but, to ensure
+uniqueness, no other changes are made.
 
+Signed-off-by: Alexandre Erwin Ittner <alexandre@ittner.com.br>
+---
+ gitweb/gitweb.perl |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a9f57d6..07f03b1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1718,6 +1718,19 @@ sub project_in_list {
+ 	return @list && scalar(grep { $_->{'path'} eq $project } @list);
+ }
+ 
++
++# Make a XHTML entity ID from the given string(s).
++# All arguments are concatenated with an "-", spaces are replaced by "-",
++# and other characters are escaped so the name can be used within a XML
++# attribute.
++# Eg. make_xhtml_id("project", "foo.git")   -->  "project-foo.git"
++sub make_xhtml_id {
++	my $id = join("-", @_);
++	$id =~ s/\s/-/g;
++	return esc_attr($id);
++}
++
++
+ ## ----------------------------------------------------------------------
+ ## HTML aware string manipulation
+ 
+@@ -5681,11 +5694,12 @@ sub git_project_list_rows {
+ 	my $alternate = 1;
+ 	for (my $i = $from; $i <= $to; $i++) {
+ 		my $pr = $projlist->[$i];
++		my $pr_id = make_xhtml_id("project", $pr->{'path'});
+ 
+ 		if ($alternate) {
+-			print "<tr class=\"dark\">\n";
++			print "<tr id=\"$pr_id\" class=\"dark\">\n";
+ 		} else {
+-			print "<tr class=\"light\">\n";
++			print "<tr id=\"$pr_id\" class=\"light\">\n";
+ 		}
+ 		$alternate ^= 1;
+ 
+@@ -5802,7 +5816,8 @@ sub git_project_list_body {
+ 				if ($check_forks) {
+ 					print "<td></td>\n";
+ 				}
+-				print "<td class=\"category\" colspan=\"5\">".esc_html($cat)."</td>\n";
++				my $cat_id = make_xhtml_id("category", $cat);
++				print "<td id=\"$cat_id\" class=\"category\" colspan=\"5\">".esc_html($cat)."</td>\n";
+ 				print "</tr>\n";
+ 			}
+ 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+1.7.9.5
