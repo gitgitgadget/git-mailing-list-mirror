@@ -1,66 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re: [PATCH 14/14] MINGW: config.mak.uname: auto-detect
- MinGW build from compiler
-Date: Thu, 9 Oct 2014 09:04:50 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1410090848380.990@s15462909.onlinehome-server.info>
-References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-15-git-send-email-marat@slonopotamus.org> <xmqqoatm8irn.fsf@gitster.dls.corp.google.com> <20141009050318.GA17479@seldon>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 13/14] git-compat-util.h: fix integer overflow
+ on IL32P64 systems
+Date: Thu, 09 Oct 2014 00:31:07 -0700
+Message-ID: <xmqq4mvd8zt0.fsf@gitster.dls.corp.google.com>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
+	<1412791267-13356-14-git-send-email-marat@slonopotamus.org>
+	<xmqqioju9xiz.fsf@gitster.dls.corp.google.com>
+	<xmqqfvey8h4t.fsf@gitster.dls.corp.google.com>
+	<20141009050540.GB17479@seldon>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-    msysGit <msysgit@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org,  msysGit <msysgit@googlegroups.com>
 To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBCZPH74Q5YNRBJPH3CQQKGQEFZFOA3Y@googlegroups.com Thu Oct 09 09:05:13 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBJPH3CQQKGQEFZFOA3Y@googlegroups.com>
+X-From: msysgit+bncBCG77UMM3EJRBPXT3CQQKGQEIJRJP7I@googlegroups.com Thu Oct 09 09:31:13 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBPXT3CQQKGQEIJRJP7I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
 Received: from mail-ig0-f186.google.com ([209.85.213.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBJPH3CQQKGQEFZFOA3Y@googlegroups.com>)
-	id 1Xc7mh-00010k-AU
-	for gcvm-msysgit@m.gmane.org; Thu, 09 Oct 2014 09:05:11 +0200
-Received: by mail-ig0-f186.google.com with SMTP id uq10sf226532igb.13
-        for <gcvm-msysgit@m.gmane.org>; Thu, 09 Oct 2014 00:05:10 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBPXT3CQQKGQEIJRJP7I@googlegroups.com>)
+	id 1Xc8Br-00028s-BK
+	for gcvm-msysgit@m.gmane.org; Thu, 09 Oct 2014 09:31:11 +0200
+Received: by mail-ig0-f186.google.com with SMTP id uq10sf239288igb.13
+        for <gcvm-msysgit@m.gmane.org>; Thu, 09 Oct 2014 00:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=QXC+tDq1WxKtrLx2NuWVfrgaiGi7J16WAiTE5uNmmQg=;
-        b=NjLC3Fpd/2G3B8cLu0ETRDdz4pzekPhavJAmQVwdXUJrCtVHWFFA3VL9hG6915O2Sa
-         ey1uZprdl15wEUrkuxES3phfeMpI6VJ1uA6eT1BuyfVgCq5sO0/0jFh8KgGStpHqbuyk
-         +thiLOrflvFCTRgE3SJaPpgnh3Jb5QrFfSNWSHGXp/ub9KNFzNjqRwULaOSKyQ0kXthO
-         KrSd3RgWhTIcyM482A6qRV41A/98nn06pfly8kzX/NLtpnmZtPyTnaiHTK03P9+Xjh8J
-         LYtDVUdrmCMg/sMZZzY3CYDy+kcNlO7z4q3nYkVKiEuEAHtVf+UI3Fp2JqNUGLrl5NjH
-         6jjA==
-X-Received: by 10.140.95.113 with SMTP id h104mr1329qge.36.1412838310315;
-        Thu, 09 Oct 2014 00:05:10 -0700 (PDT)
+        bh=PEiQKf4JpYOVQpSI6x20bXXpH0JfdSfJ8V7OVIaeIY0=;
+        b=vL++qaNZNdZGatZNC+YLjueuziQs8HTYLeYP5dGPKYEVMOPCe/24XZSHzgHeB52Yip
+         HwvokCi9n99nqw+WeuC5+qrdx1ao81WBAOwu6sP7+L6DLaCE8ZYWS9PQgilBA9CJoR7S
+         J9phdEmmLJpwQSlENfI7ZUcE9Vq60hnX4XU4m/obmqH0Gy11Id6IdEbEHKZAaQsUh+KW
+         8o6h1fiGDt488HG3OcqoeTz/xRQSLqq2EJNIRQywyOmm5FHUSiq5ggCwzMaYUrTEiHCD
+         cA9ed9bUcHBzgzWCa/q33kkAQmti522xKpiQdQnR54EEymvcK4C6wYk9RmkB8pSKg16Y
+         Ae1A==
+X-Received: by 10.140.105.71 with SMTP id b65mr93835qgf.15.1412839870459;
+        Thu, 09 Oct 2014 00:31:10 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.42.165 with SMTP id c34ls189567qga.8.gmail; Thu, 09 Oct
- 2014 00:05:09 -0700 (PDT)
-X-Received: by 10.236.24.225 with SMTP id x61mr10789723yhx.43.1412838309698;
-        Thu, 09 Oct 2014 00:05:09 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
-        by gmr-mx.google.com with ESMTPS id tr5si25361igb.1.2014.10.09.00.05.08
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Oct 2014 00:05:09 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0Mhdex-1Xp65Q3BgJ-00Mrjt;
- Thu, 09 Oct 2014 09:04:51 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <20141009050318.GA17479@seldon>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:kEyqCM/umFsKIJf2LxMVvuH6QvxqpnwnYi8kWEPL6+eJFUHUF3h
- slYCxsE04g6u00Gz6Oix5/Pz/nN9BcFTnkdej4Ah1/Hd9UvX6Dd+BsDfjZVEcC1FBEdcPM7
- KG8oe9fC9hVC3PSlzONTiBs6s+zY9skvZQku5756Opd3fTGx+z1ytR/CiGEqtU08nUMjJ5z
- 4WtbycGbuYQxZQOkVKm4w==
-X-UI-Out-Filterresults: notjunk:1;
-X-Original-Sender: johannes.schindelin@gmx.de
+Received: by 10.140.23.72 with SMTP id 66ls185823qgo.54.gmail; Thu, 09 Oct
+ 2014 00:31:10 -0700 (PDT)
+X-Received: by 10.236.179.102 with SMTP id g66mr9440876yhm.23.1412839870010;
+        Thu, 09 Oct 2014 00:31:10 -0700 (PDT)
+Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id z1si571578qci.3.2014.10.09.00.31.09
+        for <msysgit@googlegroups.com>;
+        Thu, 09 Oct 2014 00:31:09 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8722611C78;
+	Thu,  9 Oct 2014 03:31:09 -0400 (EDT)
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DA6A11C77;
+	Thu,  9 Oct 2014 03:31:09 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE33E11C76;
+	Thu,  9 Oct 2014 03:31:08 -0400 (EDT)
+In-Reply-To: <20141009050540.GB17479@seldon> (Marat Radchenko's message of
+	"Thu, 9 Oct 2014 09:05:41 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3CA894B6-4F86-11E4-8725-855A93717476-77302942!pb-smtp1.pobox.com
+X-Original-Sender: gitster@pobox.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -73,77 +79,40 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-Hi Marat,
+Marat Radchenko <marat@slonopotamus.org> writes:
 
-On Thu, 9 Oct 2014, Marat Radchenko wrote:
+> On Wed, Oct 08, 2014 at 01:02:10PM -0700, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> > Marat Radchenko <marat@slonopotamus.org> writes:
+>> >
+>> >> Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
+>> >> ---
+>> >>  git-compat-util.h | 2 +-
+>> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> >>
+>> >> diff --git a/git-compat-util.h b/git-compat-util.h
+>> >> index b338277..101c9d7 100644
+>> >> --- a/git-compat-util.h
+>> >> +++ b/git-compat-util.h
+>> >> @@ -474,7 +474,7 @@ extern int git_munmap(void *start, size_t length);
+>> >>  #endif
+>> >>  
+>> >>  #define DEFAULT_PACKED_GIT_LIMIT \
+>> >> -	((1024L * 1024L) * (sizeof(void*) >= 8 ? 8192 : 256))
+>> >> +	((size_t)(1024L * 1024L) * (sizeof(void*) >= 8 ? 8192 : 256))
+>> >
+>> > 1024 * 1024 * 8192 overflows 32-bit unsigned, but is size_t always
+>> > large enough?  Just checking.
+>> 
+>> Heh, I was being silly.  This gives the default value for a variable
+>> whose type is size_t, so it would better fit.  So please throw 13 in
+>> the list of changes I found sensible in the other message.
+>
+> Is it an Acked-by?
 
-> On Wed, Oct 08, 2014 at 12:26:52PM -0700, Junio C Hamano wrote:
-> > Marat Radchenko <marat@slonopotamus.org> writes:
-> > 
-> > > When crosscompiling, one cannot rely on `uname` from host system.
-> > 
-> > That may well be true, but is that limited to cross-compiling to
-> > mingw?   Would it be generally true for any cross compilation,
-> > wouldn't it?
-> > 
-> > What I am wondering is if it is a better solution to make it easier
-> > to allow somebody who is cross compiling to express "Mr.  Makefile,
-> > we know better than you and want you to do a MINGW build for us
-> > without checking with `uname -?` yourself", i.e.
-> > 
-> > 	$ make uname_O=MINGW uname_S=MINGW
-> > 
-> > which would hopefully allow cross-compilation into other
-> > environments, not just MINGW.
-> 
-> So, do you really want this patch to be changed from 5-liner into
-> a full-blow system detection rewrite based on `cc -dumpmachine`
-> instead of `uname`?
-
-Junio's responsibility as a maintainer is to keep this project afloat for
-a broader audience than this patch series tries to reach. Keeping that in
-mind, a patch that fixes a broad issue (in this case, cross-compiling)
-*just* for one small use case (in this case, cross-compiling for Windows
-using MinGW) might need a very good argument to convince the maintainer
-that a broader solution is either not achievable or so much more
-complicated that it is completely outside of the scope of this patch
-series.
-
-FWIW this is *exactly* what I pointed out here:
-
-	https://github.com/dscho/git/commit/e31124d4e8ba4e48181306198648cdfe73ff9c30#comments
-	Hmm. This is a very narrow solution to the underlying problem.
-	Just think about cross-compiling for e.g. MacOSX. The solution
-	presented in this commit works for MinGW, only for MinGW, and for
-	MinGW alone. The commit message needs to do a much better job to
-	make that clear.
-
-And Junio actually pointed out that a broader solution is neither
-impossible nor complex: Junio hinted at the use of the conditional
-assignment "FOO ?= bar":
-
-	https://www.gnu.org/software/make/manual/make.html#index-_003f_003d
-
-IMHO it would make tons of sense to replace the := assignments in
-https://github.com/dscho/git/blob/e31124d4e8ba4e48181306198648cdfe73ff9c30/config.mak.uname#L3-L8
-by ?= assignments.
-
-Of course it is very obvious where the idea for the patch we are
-discussing here comes from: the current config.mak.uname has this:
-
-	ifdef MSVC
-		# avoid the MingW and Cygwin configuration sections
-		uname_S := Windows
-		uname_O := Windows
-	endif
-
-This could be cleaned up in the same run: to be assigned *before* the
-conditional assignments of uname_S. Likewise, the MINGW-specific part
-should be done by searching for "mingw" in CROSS_COMPILE, also before the
-block of the uname_* variable assignments.
-
-Ciao,
-Johannes
+Not really.  It just shows that the change needs to be explained
+well in the proposed log message.
 
 -- 
 -- 
