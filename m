@@ -1,108 +1,258 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] completion: ignore chpwd_functions when cding on zsh
-Date: Thu, 09 Oct 2014 13:01:00 -0700
-Message-ID: <xmqqwq8957yb.fsf@gitster.dls.corp.google.com>
-References: <xmqqlhop6rmj.fsf@gitster.dls.corp.google.com>
-	<1412881298-64117-1-git-send-email-bt@brandonturner.net>
-	<loom.20141009T214418-680@post.gmane.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH] use skip_prefix() to avoid more magic numbers
+Date: Thu, 09 Oct 2014 22:06:13 +0200
+Message-ID: <5436EAB5.2070809@web.de>
+References: <5430427A.5080800@web.de> <xmqqd2a3g2mf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 09 22:01:16 2014
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 09 22:08:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcJtj-0003LZ-CU
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 22:01:15 +0200
+	id 1XcK0K-0007xx-8H
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Oct 2014 22:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994AbaJIUBL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Oct 2014 16:01:11 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62212 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751971AbaJIUBJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Oct 2014 16:01:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 896571399F;
-	Thu,  9 Oct 2014 16:01:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=U2UgSL/wgTJC
-	Pzs93YKP0yvl7dA=; b=a/lNJ9M90z9erfy+0lCxYsLo5VHdqQBk/qLm6R1U3ywP
-	Aci/bsfzM9H88tnXSx+CEcfjjAkKLo9Ctff6mqPSSIR9l9mokOejiLfEI13ZUTVm
-	ZVUxHl39ztRqmPGXbop2qmGIDsJsNRLmSq79Xmor41P7336cf++xoasdiVTStu4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=r218ou
-	cWpcOPgWQ2fOirPpF1EYPKsqREHtVLI0HwmUgV7fFa9ntDQOIopGIP7QzUAWhSwp
-	I70y7aw8vM3FfPZPSiyW63DvOTBDPMhN6TV8OLH2n/dt1ze3RaIvDb289jehqtGt
-	RP2GKVW7tLo8sob/cT54CRoJTIWF6RjvJ4qUU=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 81EA61399E;
-	Thu,  9 Oct 2014 16:01:02 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6CD21399A;
-	Thu,  9 Oct 2014 16:01:01 -0400 (EDT)
-In-Reply-To: <loom.20141009T214418-680@post.gmane.org> (=?utf-8?Q?=22?=
- =?utf-8?Q?=C3=98ystein?= Walle"'s
-	message of "Thu, 9 Oct 2014 19:47:08 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FE84C6C8-4FEE-11E4-B0D5-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1755619AbaJIUHu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Oct 2014 16:07:50 -0400
+Received: from mout.web.de ([212.227.17.12]:62714 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751340AbaJIUHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Oct 2014 16:07:48 -0400
+Received: from [192.168.178.27] ([79.253.137.147]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LuLt5-1YIhmi3exL-011gB8; Thu, 09 Oct 2014 22:07:44
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <xmqqd2a3g2mf.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:+48n0565bGzmeNgZ+h4tHs6wfOCAk24ww/+XWHLhgMJFMEgNen6
+ a3bTxZHrdXb2FjwKy+lEHm+EW32xk7D6zGmD640qyaXz1bBulpK+Gbc6Mavjz3cS68HWIiE
+ yziiLRJ9B25qYXzd1kIoJM9DIUOA0KEYZHl0kQBQyG7JfHN9Ng489FeF2h/RAGn4BTPmZKc
+ O/HGKfgGwd+XsrkBXsthg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=98ystein Walle <oystwa@gmail.com> writes:
+Am 07.10.2014 um 20:23 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+>> @@ -335,20 +337,18 @@ static int append_ref(const char *refname, con=
+st unsigned char *sha1, int flags,
+>>   	static struct {
+>>   		int kind;
+>>   		const char *prefix;
+>> -		int pfxlen;
+>>   	} ref_kind[] =3D {
+>> -		{ REF_LOCAL_BRANCH, "refs/heads/", 11 },
+>> -		{ REF_REMOTE_BRANCH, "refs/remotes/", 13 },
+>> +		{ REF_LOCAL_BRANCH, "refs/heads/" },
+>> +		{ REF_REMOTE_BRANCH, "refs/remotes/" },
+>>   	};
+>>  =20
+>>   	/* Detect kind */
+>>   	for (i =3D 0; i < ARRAY_SIZE(ref_kind); i++) {
+>>   		prefix =3D ref_kind[i].prefix;
+>> -		if (strncmp(refname, prefix, ref_kind[i].pfxlen))
+>> -			continue;
+>> -		kind =3D ref_kind[i].kind;
+>> -		refname +=3D ref_kind[i].pfxlen;
+>> -		break;
+>> +		if (skip_prefix(refname, prefix, &refname)) {
+>> +			kind =3D ref_kind[i].kind;
+>> +			break;
+>> +		}
+>=20
+> This certainly makes it easier to read.
+>=20
+> I suspect that the original was done as a (possibly premature)
+> optimization to avoid having to do strlen(3) on a variable that
+> points at constant strings for each and every ref we iterate with
+> for_each_rawref(), and it is somewhat sad to see it lost because
+> skip_prefix() assumes that the caller never knows the length of the
+> prefix, though.
 
-> BUT: Over a year ago Git learned the -C argument. Couldn't we use tha=
-t
-> here? That way we would not have to unset CDPATH and can get rid of t=
-he
-> subshell and cd -q. If we allow the other functions to use several
-> arguments to pass options with we can get rid of the whole seperation
-> between bash and zsh altogether.
+I didn't think much about the performance implications.  skip_prefix()
+doesn't call strlen(3), though.  Your reply made me curious.  The
+synthetic test program below can be used to call the old and the new
+code numerous times.  I called it like this:
 
-Wow, that is an excellent suggestion.  It would look like the
-attached, right?
+    for a in strncmp skip_prefix
+    do
+        for b in refs/heads/x refs/remotes/y refs/of/the/third/kind
+        do
+            time ./test-prefix $a $b
+        done
+    done
 
-By stepping away further and further from the originally proposed
-solution and trying to identify the real problem that needs to be
-solved, you reached a better solution ;-).
+And got the following results:
 
- contrib/completion/git-completion.bash | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+100000000x strncmp for refs/heads/x, which is a local branch
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 5ea5b82..f22de9d 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -281,16 +281,12 @@ __gitcomp_file ()
- # argument, and using the options specified in the second argument.
- __git_ls_files_helper ()
- {
--	(
--		test -n "${CDPATH+set}" && unset CDPATH
--		cd "$1"
--		if [ "$2" =3D=3D "--committable" ]; then
--			git diff-index --name-only --relative HEAD
--		else
--			# NOTE: $2 is not quoted in order to support multiple options
--			git ls-files --exclude-standard $2
--		fi
--	) 2>/dev/null
-+	if [ "$2" =3D=3D "--committable" ]; then
-+		git -C "$1" diff-index --name-only --relative HEAD
-+	else
-+		# NOTE: $2 is not quoted in order to support multiple options
-+		git -C "$1" ls-files --exclude-standard $2
-+	fi 2>/dev/null
- }
-=20
-=20
+real    0m2.423s
+user    0m2.420s
+sys     0m0.000s
+100000000x strncmp for refs/remotes/y, which is a remote branch
+
+real    0m4.331s
+user    0m4.328s
+sys     0m0.000s
+100000000x strncmp for refs/of/the/third/kind, which is no branch
+
+real    0m3.878s
+user    0m3.872s
+sys     0m0.000s
+100000000x skip_prefix for refs/heads/x, which is a local branch
+
+real    0m0.891s
+user    0m0.888s
+sys     0m0.000s
+100000000x skip_prefix for refs/remotes/y, which is a remote branch
+
+real    0m1.345s
+user    0m1.340s
+sys     0m0.000s
+100000000x skip_prefix for refs/of/the/third/kind, which is no branch
+
+real    0m1.080s
+user    0m1.076s
+sys     0m0.000s
+
+
+The code handles millions of ref strings per second before and after
+the change, and with the change it's faster.  I hope the results are
+reproducible and make it easier to say goodbye to pfxlen. :)
+
+Ren=C3=A9
+
+---
+ .gitignore    |  1 +
+ Makefile      |  1 +
+ test-prefix.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 3 files changed, 89 insertions(+)
+ create mode 100644 test-prefix.c
+
+diff --git a/.gitignore b/.gitignore
+index 5bfb234..8416c5e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -193,6 +193,7 @@
+ /test-mktemp
+ /test-parse-options
+ /test-path-utils
++/test-prefix
+ /test-prio-queue
+ /test-read-cache
+ /test-regex
+diff --git a/Makefile b/Makefile
+index f34a2d4..c09b59e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -561,6 +561,7 @@ TEST_PROGRAMS_NEED_X +=3D test-mergesort
+ TEST_PROGRAMS_NEED_X +=3D test-mktemp
+ TEST_PROGRAMS_NEED_X +=3D test-parse-options
+ TEST_PROGRAMS_NEED_X +=3D test-path-utils
++TEST_PROGRAMS_NEED_X +=3D test-prefix
+ TEST_PROGRAMS_NEED_X +=3D test-prio-queue
+ TEST_PROGRAMS_NEED_X +=3D test-read-cache
+ TEST_PROGRAMS_NEED_X +=3D test-regex
+diff --git a/test-prefix.c b/test-prefix.c
+new file mode 100644
+index 0000000..ddc63af
+--- /dev/null
++++ b/test-prefix.c
+@@ -0,0 +1,87 @@
++#include "cache.h"
++
++#define ROUNDS 100000000
++
++#define REF_LOCAL_BRANCH    0x01
++#define REF_REMOTE_BRANCH   0x02
++
++static int test_skip_prefix(const char *refname)
++{
++	int kind, i;
++	const char *prefix;
++	static struct {
++		int kind;
++		const char *prefix;
++	} ref_kind[] =3D {
++		{ REF_LOCAL_BRANCH, "refs/heads/" },
++		{ REF_REMOTE_BRANCH, "refs/remotes/" },
++	};
++
++	for (i =3D 0; i < ARRAY_SIZE(ref_kind); i++) {
++		prefix =3D ref_kind[i].prefix;
++		if (skip_prefix(refname, prefix, &refname)) {
++			kind =3D ref_kind[i].kind;
++			break;
++		}
++	}
++	if (ARRAY_SIZE(ref_kind) <=3D i)
++		return 0;
++	return kind;
++}
++
++static int test_strncmp(const char *refname)
++{
++	int kind, i;
++	const char *prefix;
++	static struct {
++		int kind;
++		const char *prefix;
++		int pfxlen;
++	} ref_kind[] =3D {
++		{ REF_LOCAL_BRANCH, "refs/heads/", 11 },
++		{ REF_REMOTE_BRANCH, "refs/remotes/", 13 },
++	};
++
++	for (i =3D 0; i < ARRAY_SIZE(ref_kind); i++) {
++		prefix =3D ref_kind[i].prefix;
++		if (strncmp(refname, prefix, ref_kind[i].pfxlen))
++			continue;
++		kind =3D ref_kind[i].kind;
++		refname +=3D ref_kind[i].pfxlen;
++		break;
++	}
++	if (ARRAY_SIZE(ref_kind) <=3D i)
++		return 0;
++	return kind;
++}
++
++int main(int argc, char **argv)
++{
++	if (argc =3D=3D 3) {
++		int (*fn)(const char *) =3D NULL;
++		printf("%dx %s for %s, which is ", ROUNDS, argv[1], argv[2]);
++		if (!strcmp(argv[1], "skip_prefix"))
++			fn =3D test_skip_prefix;
++		if (!strcmp(argv[1], "strncmp"))
++			fn =3D test_strncmp;
++		if (fn) {
++			int i, kind =3D 0;
++			for (i =3D 0; i < ROUNDS; i++)
++				kind |=3D fn(argv[2]);
++			switch (kind) {
++			case 0:
++				puts("no branch");
++				break;
++			case REF_LOCAL_BRANCH:
++				puts("a local branch");
++				break;
++			case REF_REMOTE_BRANCH:
++				puts("a remote branch");
++				break;
++			default:
++				puts("invalid");
++			}
++		}
++	}
++	return 0;
++}
+--=20
+2.1.2
