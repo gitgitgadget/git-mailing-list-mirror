@@ -1,132 +1,78 @@
-From: Johannes Sixt <j6t@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2] mergetool: use more conservative temporary filenames
-Date: Fri, 10 Oct 2014 21:54:29 +0200
-Message-ID: <54383975.9080803@kdbg.org>
-References: <1412929187-57936-1-git-send-email-davvid@gmail.com> <5437C0CC.7030102@gmail.com> <20141010184834.GB78117@gmail.com>
+Date: Fri, 10 Oct 2014 14:16:43 -0700
+Message-ID: <xmqq38av62x0.fsf@gitster.dls.corp.google.com>
+References: <1412929187-57936-1-git-send-email-davvid@gmail.com>
+	<5437C0CC.7030102@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
 	Sergio Ferrero <sferrero@ensoftcorp.com>,
 	Charles Bailey <charles@hashpling.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 10 21:54:46 2014
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 10 23:16:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcgGz-0005qt-CV
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 21:54:45 +0200
+	id 1XchYW-0004eM-4p
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 23:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871AbaJJTyf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Oct 2014 15:54:35 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:17508 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751703AbaJJTyf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2014 15:54:35 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jF0NM21yrz5tlC;
-	Fri, 10 Oct 2014 21:54:11 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id B996719F48A;
-	Fri, 10 Oct 2014 21:54:30 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
-In-Reply-To: <20141010184834.GB78117@gmail.com>
+	id S1751866AbaJJVQw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Oct 2014 17:16:52 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65433 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751605AbaJJVQv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Oct 2014 17:16:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B64714014;
+	Fri, 10 Oct 2014 17:16:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=NIvpG6KYYOG/
+	oHeOt0rSg6TVfJE=; b=Iga3tNAO1C1FjwvwP37HFFtTYhSCQhd0Kv30GkEqHO0p
+	VjTWYY+vP6cHzLXoRXwu7cd/ev7K10DNxualz2LsaivsFbmSo73vX5QpGtks+b6S
+	6N2nrjHXENPDeb6jRutg1sQPNw082PKDf96khMexs1MUQp3il5qVlkej5Zr5g7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vdurha
+	dqWOzTg0tiUOUTo9F9rdxuabxmQfkywwhIVcD6eZJP7k+3FNR7vgxQKJThi2qnxN
+	JT72Xj8dAVx+OXjoi3zb0iRKWOeLGmoqI5f0nd0tJdjUjJQFeLTUJ2v9BsARbGII
+	fEHhZ6YJlBW7rYFGlWWrBG3RdqypAo9CHLbo4=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2196714013;
+	Fri, 10 Oct 2014 17:16:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9BABD1400F;
+	Fri, 10 Oct 2014 17:16:44 -0400 (EDT)
+In-Reply-To: <5437C0CC.7030102@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
+ =?utf-8?Q?=22's?= message of "Fri,
+	10 Oct 2014 13:19:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BCA13898-50C2-11E4-AB0B-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.10.2014 um 20:48 schrieb David Aguilar:
-> On Fri, Oct 10, 2014 at 01:19:40PM +0200, Jakub Nar=C4=99bski wrote:
->> David Aguilar wrote:
->>> Avoid filenames with multiple dots so that overly-picky tools do
->>> not misinterpret their extension.
->>>
->>> Previously, foo/bar.ext in the worktree would result in e.g.
->>>
->>> 	./foo/bar.ext.BASE.1234.ext
->>>
->>> This can be improved by having only a single .ext and using
->>> underscore instead of dot so that the extension cannot be
->>> misinterpreted.  The resulting path becomes:
->>>
->>> 	./foo/bar_BASE_1234.ext
->>>
->>> Suggested-by: Sergio Ferrero <sferrero@ensoftcorp.com>
->>> Helped-by: Junio C Hamano <gitster@pobox.com>
->>> Signed-off-by: David Aguilar <davvid@gmail.com>
->>> ---
->>
->>> +	if BASE=3D$(expr "$MERGED" : '\(.*\)\.[^/]*$')
->>> +	then
->>> +		ext=3D$(expr "$MERGED" : '.*\(\.[^/]*\)$')
->>> +	else
->>> +		BASE=3D$MERGED
->>> +		ext=3D
->>> +	fi
->>
->> Why use expr and not POSIX shell parameter substitution?
->>
->> BASE=3D${MERGED%.*}
->> ext=3D.${MERGED##*.}
->>
->> Or something like that...
->=20
-> Thanks for the sug.
->=20
-> My POSIX shell parameter expansion-fu is not super advanced, but
-> if you can help me rework it I'd be happy to reroll.
->=20
-> It does seem simple and robust with expr, though.  Extending the
-> parameter expansion approach to work in all cases may end up
-> with more complexity than with the expr method, it seems.
->=20
-> Here are the use cases:
->=20
-> 	$ MERGED=3Dfoo.bar.baz && echo ${MERGED%.*} ${MERGED##*.}
-> 	foo.bar baz
->=20
-> Good.
->=20
-> 	$ MERGED=3Dfoo && echo ${MERGED%.*} ${MERGED##*.}
-> 	foo foo
->=20
-> Bad.
-> There's no extension and the substitution doesn't handle it.
->=20
-> 	$ MERGED=3Dfoo.bar/baz && echo ${MERGED%.*} ${MERGED##*.}
-> 	foo bar/baz
->=20
-> Bad.
-> There's no extension but the substitution thinks the parent directory=
-'s
-> extension-less name is the basename, and thinks that bar/baz is the e=
-xtension.
->=20
-> I am curious to know whether there's a nice and elegant way to do it
-> with shell expansions.  Let me know what you think.
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-It's not exactly elegant to do it:
+> Why use expr and not POSIX shell parameter substitution?
+>
+> BASE=3D${MERGED%.*}
+> ext=3D.${MERGED##*.}
+>
+> Or something like that...
 
-=46irst, you extract the last path part:
+Because they are insufficient.  See David's illustrations for how.
 
-	file=3D${MERGED##*/}
-
-Then the directory including the trailing slash:
-
-	dir=3D${MERGED%"$file"}
-
-Then the basename without an extension:
-
-	base=3D${file%.*}
-
-=46inally the extension including the dot:
-
-	ext=3D${file#"$base"}
-
-Beware of empty $base and $dir (e.g., for files named .gitignore or so)
-
--- Hannes
+Parameter expansion (e.g. ${parameter%word}) is fine for the
+simplest cases (e.g. you know there is .c suffix to the $string and
+want to strip it out) but not sufficient for other cases (e.g. you
+may not even know if there is any suffix).  You can deconstruct your
+regexps manually and use conditional if/else/fi if you are unable to
+use expr, but I do not see how it buys us anything.
