@@ -1,35 +1,35 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] t5304: use helper to report failure of "test foo = bar"
-Date: Fri, 10 Oct 2014 02:11:14 -0400
-Message-ID: <20141010061114.GB15277@peff.net>
+Subject: [PATCH 3/3] test-lib.sh: support -x option for shell-tracing
+Date: Fri, 10 Oct 2014 02:13:56 -0400
+Message-ID: <20141010061355.GC15277@peff.net>
 References: <20141010060636.GA15057@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 10 08:11:20 2014
+X-From: git-owner@vger.kernel.org Fri Oct 10 08:14:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcTQ8-00078N-BJ
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 08:11:20 +0200
+	id 1XcTSj-00080b-OG
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 08:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbaJJGLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2014 02:11:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57075 "HELO cloud.peff.net"
+	id S1751324AbaJJGN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2014 02:13:58 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57082 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750905AbaJJGLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2014 02:11:15 -0400
-Received: (qmail 28333 invoked by uid 102); 10 Oct 2014 06:11:16 -0000
+	id S1750905AbaJJGN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2014 02:13:57 -0400
+Received: (qmail 28427 invoked by uid 102); 10 Oct 2014 06:13:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 01:11:16 -0500
-Received: (qmail 30676 invoked by uid 107); 10 Oct 2014 06:11:17 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 01:13:57 -0500
+Received: (qmail 30694 invoked by uid 107); 10 Oct 2014 06:13:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 02:11:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Oct 2014 02:11:14 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 02:13:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Oct 2014 02:13:56 -0400
 Content-Disposition: inline
 In-Reply-To: <20141010060636.GA15057@peff.net>
 Sender: git-owner@vger.kernel.org
@@ -37,120 +37,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For small outputs, we sometimes use:
+Usually running a test under "-v" makes it clear which
+command is failing. However, sometimes it can be useful to
+also see a complete trace of the shell commands being run in
+the test. You can do so without any support from the test
+suite by running "sh -x tXXXX-foo.sh". However, this
+produces quite a large bit of output, as we see a trace of
+the entire test suite.
 
-  test "$(some_cmd)" = "something we expect"
+This patch instead introduces a "-x" option to the test
+scripts (i.e., "./tXXXX-foo.sh -x"). When enabled, this
+turns on "set -x" only for the tests themselves. This can
+still be a bit verbose, but should keep things to a more
+manageable level. You can even use "--verbose-only" to see
+the trace only for a specific test.
 
-instead of a full test_cmp. The downside of this is that
-when it fails, there is no output at all from the script.
-Let's introduce a small helper to make tests easier to
-debug.
+The implementation is a little invasive. We turn on the "set
+-x" inside the "eval" of the test code. This lets the eval
+itself avoid being reported in the trace (which would be
+long, and redundant with the verbose listing we already
+showed). And then after the eval runs, we do some trickery
+with stderr to avoid showing the "set +x" to the user.
+
+We also show traces for test_cleanup functions (since they
+can impact the test outcome, too). However, we do avoid
+running the noop ":" cleanup (the default if the test does
+not use test_cleanup at all), as it creates unnecessary
+noise in the "set -x" output.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I kind of like the elegance of this, but I'd also be OK with dropping
-it. The solution from the third patch does the same thing. And while the
-output isn't quite as nice, it magically works for all existing tests,
-without having to convert them to use verbose().
+Having finally figured out how to drop the "set +x" from the output, I
+have noticed that I kind of liked the "test_eval_ret=$?" part of the
+trace (which is now gone, too), because it pretty explicitly tells you
+that the last traced command failed. But now that it has been silenced,
+there's no reason we couldn't add back in our own output to make it more
+clear.
 
-I wondered if there was any problem with defining a function with the
-same name as a variable ($verbose). A few weeks ago, I would have said
-they were completely different namespaces, but after seeing the
-shellshock vulnerability I am not so sure. :) This seems to work fine
-in bash and dash, but maybe there is some more obscure shell that would
-not like it?
+ t/README      |  4 ++++
+ t/test-lib.sh | 34 ++++++++++++++++++++++++++++++----
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
-Technically this function is the opposite of test_must_fail. We could
-call it test_must_succeed, but that is a little wordy for my taste (I
-actually considered calling it just v() if we are going to use it a
-lot, but that may be going too far).
-
- t/t5304-prune.sh        | 16 ++++++++--------
- t/test-lib-functions.sh |  9 +++++++++
- 2 files changed, 17 insertions(+), 8 deletions(-)
-
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index b0ffb05..e32e46d 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -13,7 +13,7 @@ add_blob() {
- 	before=$(git count-objects | sed "s/ .*//") &&
- 	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
- 	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
--	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	verbose test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_file $BLOB_FILE &&
- 	test-chmtime =+0 $BLOB_FILE
- }
-@@ -45,11 +45,11 @@ test_expect_success 'prune --expire' '
+diff --git a/t/README b/t/README
+index 52c77ae..38cb078 100644
+--- a/t/README
++++ b/t/README
+@@ -82,6 +82,10 @@ appropriately before running "make".
+ 	numbers matching <pattern>.  The number matched against is
+ 	simply the running count of the test within the file.
  
- 	add_blob &&
- 	git prune --expire=1.hour.ago &&
--	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	verbose test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_file $BLOB_FILE &&
- 	test-chmtime =-86500 $BLOB_FILE &&
- 	git prune --expire 1.day &&
--	test $before = $(git count-objects | sed "s/ .*//") &&
-+	verbose test $before = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_missing $BLOB_FILE
++-x::
++	Turn on shell tracing (i.e., `set -x`) during the tests
++	themselves. Implies `--verbose`.
++
+ -d::
+ --debug::
+ 	This may help the person who is developing a new test.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 82095e3..a60ec75 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -187,6 +187,8 @@ export _x05 _x40 _z40 LF
+ 	) &&
+ 	color=t
  
- '
-@@ -59,11 +59,11 @@ test_expect_success 'gc: implicit prune --expire' '
- 	add_blob &&
- 	test-chmtime =-$((2*$week-30)) $BLOB_FILE &&
- 	git gc &&
--	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	verbose test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_file $BLOB_FILE &&
- 	test-chmtime =-$((2*$week+1)) $BLOB_FILE &&
- 	git gc &&
--	test $before = $(git count-objects | sed "s/ .*//") &&
-+	verbose test $before = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_missing $BLOB_FILE
- 
- '
-@@ -144,7 +144,7 @@ test_expect_success 'gc --no-prune' '
- 	test-chmtime =-$((5001*$day)) $BLOB_FILE &&
- 	git config gc.pruneExpire 2.days.ago &&
- 	git gc --no-prune &&
--	test 1 = $(git count-objects | sed "s/ .*//") &&
-+	verbose test 1 = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_file $BLOB_FILE
- 
- '
-@@ -209,10 +209,10 @@ test_expect_success 'gc: prune old objects after local clone' '
- 	git clone --no-hardlinks . aclone &&
- 	(
- 		cd aclone &&
--		test 1 = $(git count-objects | sed "s/ .*//") &&
-+		verbose test 1 = $(git count-objects | sed "s/ .*//") &&
- 		test_path_is_file $BLOB_FILE &&
- 		git gc --prune &&
--		test 0 = $(git count-objects | sed "s/ .*//") &&
-+		verbose test 0 = $(git count-objects | sed "s/ .*//") &&
- 		test_path_is_missing $BLOB_FILE
- 	)
- '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index dafd6ad..b7957b8 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -634,6 +634,15 @@ test_cmp_bin() {
- 	cmp "$@"
++test_eval_start_=
++test_eval_end_=
+ while test "$#" -ne 0
+ do
+ 	case "$1" in
+@@ -233,6 +235,11 @@ do
+ 	--root=*)
+ 		root=$(expr "z$1" : 'z[^=]*=\(.*\)')
+ 		shift ;;
++	-x)
++		test_eval_start_='set -x'
++		test_eval_end_='set +x'
++		verbose=t
++		shift ;;
+ 	*)
+ 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
+ 	esac
+@@ -517,10 +524,28 @@ maybe_setup_valgrind () {
+ 	fi
  }
  
-+# Call any command "$@" but be more verbose about its
-+# failure. This is handy for commands like "test" which do
-+# not output anything when they fail.
-+verbose () {
-+	"$@" && return 0
-+	echo >&2 "command failed: $(git rev-parse --sq-quote "$@")"
-+	return 1
++# This is a separate function because some tests use
++# "return" to end a test_expect_success block early
++# (and we want to make sure we run any $test_eval_end_).
++test_eval_inner_ () {
++	eval "$test_eval_start_ $*"
 +}
 +
- # Check if the file expected to be empty is indeed empty, and barfs
- # otherwise.
+ test_eval_ () {
+-	# This is a separate function because some tests use
+-	# "return" to end a test_expect_success block early.
+-	eval </dev/null >&3 2>&4 "$*"
++	# We run this block with stderr redirected to avoid extra cruft
++	# during a "-x" trace. Once in "set -x" mode, we cannot prevent
++	# the shell from printing the "set +x" to turn it off (nor the saving
++	# of $? before that). But we can make sure that the output goes to
++	# /dev/null.
++	#
++	# The test itself is run with stderr put back to &4 (so either to
++	# /dev/null, or to the original stderr if --verbose was used).
++	{
++		test_eval_inner_ "$@" </dev/null >&3 2>&4
++		test_eval_ret_=$?
++		$test_eval_end_
++	} 2>/dev/null
++	return $test_eval_ret_
+ }
  
+ test_run_ () {
+@@ -531,7 +556,8 @@ test_run_ () {
+ 	eval_ret=$?
+ 	teardown_malloc_check
+ 
+-	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
++	if test -z "$immediate" || test $eval_ret = 0 ||
++	   test -n "$expecting_failure" && test "$test_cleanup" != ":"
+ 	then
+ 		setup_malloc_check
+ 		test_eval_ "$test_cleanup"
 -- 
 2.1.2.596.g7379948
