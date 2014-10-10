@@ -1,59 +1,60 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: msysgit works on wine
-Date: Fri, 10 Oct 2014 14:02:52 +0200
-Message-ID: <5437CAEC.1020902@virtuell-zuhause.de>
+Date: Fri, 10 Oct 2014 19:04:52 +0700
+Message-ID: <CACsJy8DJ6SwHujLNx9fj2WazJk2E6HOhfpL60AY3QtMDx7200A@mail.gmail.com>
 References: <CACsJy8BAv9Bv_jFgW3L3+WYQMUOwRCFQ0sdAxWWwC_TnzesBBQ@mail.gmail.com>
+ <5437CAEC.1020902@virtuell-zuhause.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Duy Nguyen <pclouds@gmail.com>, 
- Git Mailing List <git@vger.kernel.org>,
- msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCL7JHHTPAIPPFO7UECRUBATOVITQ@googlegroups.com Fri Oct 10 14:03:10 2014
-Return-path: <msysgit+bncBCL7JHHTPAIPPFO7UECRUBATOVITQ@googlegroups.com>
+Cc: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+X-From: msysgit+bncBC2ZN5PHQUMBBAUX36QQKGQEK54MVBI@googlegroups.com Fri Oct 10 14:05:25 2014
+Return-path: <msysgit+bncBC2ZN5PHQUMBBAUX36QQKGQEK54MVBI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+Received: from mail-yk0-f186.google.com ([209.85.160.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCL7JHHTPAIPPFO7UECRUBATOVITQ@googlegroups.com>)
-	id 1XcYuX-00048k-Bh
-	for gcvm-msysgit@m.gmane.org; Fri, 10 Oct 2014 14:03:05 +0200
-Received: by mail-wi0-f190.google.com with SMTP id ho1sf136573wib.17
-        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Oct 2014 05:03:05 -0700 (PDT)
+	(envelope-from <msysgit+bncBC2ZN5PHQUMBBAUX36QQKGQEK54MVBI@googlegroups.com>)
+	id 1XcYwl-0005Vf-L4
+	for gcvm-msysgit@m.gmane.org; Fri, 10 Oct 2014 14:05:23 +0200
+Received: by mail-yk0-f186.google.com with SMTP id 19sf730676ykq.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Oct 2014 05:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=TGgbN1DalnBHHrQKL4Wzt2KW/xCvfkjwKKA1DItS3tg=;
-        b=NGoerQrIPJuOLmRFawX8iX83J5t/IggrPtSQEukDLcrMXYRSbeQ+AO6WLg+1OAr6rj
-         9CIjUaGrOMwV/Q3YFuiroSLoP3QVEPMCnOz7KO9Uo3F6fLAh5JCtzS3NYoERLaBQeOsH
-         X7Nm7Al7w8YdM/jUF2iPeTBVmUzspQ3qtJmbt0WxbPqZak5JBw7bJ4XiwQVQuAY04fL6
-         3O3ncbPN0BIHSxGEY1dpD1SblKEXYODRWiyZtYe+KjG59ZGU6TuQlefYhOqQg34YQdDw
-         qQE5dyl6tzkmdh0SsAfY1s35yusgVa/9m2CLDkGZPmw8ZI0r3hUXjD1W/8tk2g19ZLMZ
-         OLpQ==
-X-Received: by 10.152.28.66 with SMTP id z2mr74580lag.3.1412942584524;
-        Fri, 10 Oct 2014 05:03:04 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=LuLNA7eTyg9stlJzfymdSGsIQpcM8Hx0JXMz4s6TBto=;
+        b=hOpRr6Dgi/3cZ523etBHXfhUrN9qQ7/1K8pJ1ny5HMS7KHd5C6B2R+6CezRaAh39Eo
+         vQI9muAZK9M6b0Igh3A2O22uDzD8cIZNveyoXYS+beoielcDw+bDS8CNNT7P2oMbJW4U
+         dqM5hOUCsbEDdbe9hWVph3MJ1Sll3jAJv+c+48ynVibwlqF5wF9VnHasoXUDp9aImXyN
+         HhAbJi8KpqgVBwXzLYLFlkKxfJU2slwA7jZv4BVR4lpYtpEVOXQLO9z9WkslcR+rLmxH
+         rPMPONj0vLrT7u2Hm8otyiNyRgnIXoNCx3/ZC9U9KUdPqYWBxa0x8wco1AvKKCLOlWKB
+         IX8w==
+X-Received: by 10.140.20.246 with SMTP id 109mr71759qgj.0.1412942722739;
+        Fri, 10 Oct 2014 05:05:22 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.197.68 with SMTP id is4ls288004lac.6.gmail; Fri, 10 Oct
- 2014 05:03:02 -0700 (PDT)
-X-Received: by 10.112.52.165 with SMTP id u5mr533613lbo.12.1412942582628;
-        Fri, 10 Oct 2014 05:03:02 -0700 (PDT)
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [2a01:488:42::50ed:84a3])
-        by gmr-mx.google.com with ESMTPS id rb5si280160lbb.0.2014.10.10.05.02.59
+Received: by 10.140.18.193 with SMTP id 59ls760998qgf.7.gmail; Fri, 10 Oct
+ 2014 05:05:22 -0700 (PDT)
+X-Received: by 10.236.25.99 with SMTP id y63mr2693177yhy.50.1412942722242;
+        Fri, 10 Oct 2014 05:05:22 -0700 (PDT)
+Received: from mail-ig0-x22f.google.com (mail-ig0-x22f.google.com [2607:f8b0:4001:c05::22f])
+        by gmr-mx.google.com with ESMTPS id nt9si188123igb.1.2014.10.10.05.05.22
         for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 10 Oct 2014 05:02:59 -0700 (PDT)
-Received-SPF: temperror (google.com: error in processing during lookup of thomas.braun@virtuell-zuhause.de: DNS timeout) client-ip=2a01:488:42::50ed:84a3;
-Received: from p3ee2fddc.dip0.t-ipconnect.de ([62.226.253.220] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XcYuP-000447-RU; Fri, 10 Oct 2014 14:02:57 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <CACsJy8BAv9Bv_jFgW3L3+WYQMUOwRCFQ0sdAxWWwC_TnzesBBQ@mail.gmail.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1412942579;1a95d142;
-X-Original-Sender: thomas.braun@virtuell-zuhause.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=temperror
- (google.com: error in processing during lookup of thomas.braun@virtuell-zuhause.de:
- DNS timeout) smtp.mail=thomas.braun@virtuell-zuhause.de
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 10 Oct 2014 05:05:22 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::22f as permitted sender) client-ip=2607:f8b0:4001:c05::22f;
+Received: by mail-ig0-x22f.google.com with SMTP id uq10so2397675igb.2
+        for <msysgit@googlegroups.com>; Fri, 10 Oct 2014 05:05:22 -0700 (PDT)
+X-Received: by 10.42.20.84 with SMTP id f20mr15379166icb.48.1412942722136;
+ Fri, 10 Oct 2014 05:05:22 -0700 (PDT)
+Received: by 10.107.131.1 with HTTP; Fri, 10 Oct 2014 05:04:52 -0700 (PDT)
+In-Reply-To: <5437CAEC.1020902@virtuell-zuhause.de>
+X-Original-Sender: pclouds@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::22f
+ as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -66,24 +67,18 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-Am 10.10.2014 um 13:58 schrieb Duy Nguyen:
-> Just wanted to share that with at least wine 1.7.23 I can install
-> msysgit using the netboot method, clone and build git ok. I had to do
-> this to make gcc works actually, but it's probably no big deal
-> 
-> $ mkdir -p ~/.wine/drive_c/usr/libexec/gcc/mingw32 -p
-> $ cp ~/.wine/drive_c/msysgit/mingw/bin/as.exe
-> ~/.wine/drive_c/usr/libexec/gcc/mingw32/
-> $ cp ~/.wine/drive_c/msysgit/mingw/bin/ld.exe
-> ~/.wine/drive_c/usr/libexec/gcc/mingw32/
-> 
-> This may open a door for many people like me, who are interested in
-> Windows support, but don't own a Windows license (and probably don't
-> want to dual boot anyway). Of course tricky stuff would require real
-> Windows, but this would help with most "standard" windows stuff.
+On Fri, Oct 10, 2014 at 7:02 PM, Thomas Braun
+<thomas.braun@virtuell-zuhause.de> wrote:
+> Are you compiling git.git or msysgit.git?
 
-Are you compiling git.git or msysgit.git?
-And how about the test suite?
+git.git
+
+> And how about the test suite?
+
+running right now, fingers crossed.. kinda slow, not sure if it's wine
+or it's the msys thing.
+-- 
+Duy
 
 -- 
 -- 
