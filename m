@@ -1,93 +1,101 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v2] mergetool: use more conservative temporary filenames
-Date: Fri, 10 Oct 2014 13:19:40 +0200
-Message-ID: <5437C0CC.7030102@gmail.com>
-References: <1412929187-57936-1-git-send-email-davvid@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: msysgit works on wine
+Date: Fri, 10 Oct 2014 18:58:48 +0700
+Message-ID: <CACsJy8BAv9Bv_jFgW3L3+WYQMUOwRCFQ0sdAxWWwC_TnzesBBQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Sergio Ferrero <sferrero@ensoftcorp.com>,
-	Charles Bailey <charles@hashpling.org>
-To: David Aguilar <davvid@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 10 13:20:26 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+X-From: msysgit+bncBC2ZN5PHQUMBBFUU36QQKGQEI3XP3MY@googlegroups.com Fri Oct 10 13:59:26 2014
+Return-path: <msysgit+bncBC2ZN5PHQUMBBFUU36QQKGQEI3XP3MY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f58.google.com ([209.85.216.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcYFA-0006pG-Sz
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 13:20:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754884AbaJJLUL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Oct 2014 07:20:11 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:64229 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754286AbaJJLT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2014 07:19:59 -0400
-Received: by mail-lb0-f171.google.com with SMTP id z12so2844781lbi.16
-        for <git@vger.kernel.org>; Fri, 10 Oct 2014 04:19:58 -0700 (PDT)
+	(envelope-from <msysgit+bncBC2ZN5PHQUMBBFUU36QQKGQEI3XP3MY@googlegroups.com>)
+	id 1XcYqu-0001ug-Hs
+	for gcvm-msysgit@m.gmane.org; Fri, 10 Oct 2014 13:59:20 +0200
+Received: by mail-qa0-f58.google.com with SMTP id dc16sf418015qab.13
+        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Oct 2014 04:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=DSmTW0xr71176NXY+VrvlY3b3qPxy7coUJ5HGOMjBLM=;
-        b=ufbVioNL0uuWUmonlW0tS+HB1lYuDY+5Pi8QU65xlKTbGwhhaiEa9/A5BwBvLQICgx
-         7QAknlGy1vDnTrhXQMKX6+n8YsgFkoWA8+yAokNZR2DlzTRHjYGJq0aoP5HayIawVGPM
-         O9ZFqXpxhdn7w54d4OixOmgVjOU/BnyROFsX8tp1mLxkEFtr7H5mLHsLk0ufzp1IbCjr
-         eUKa0L74Gk1QZ7a8mX6goegWJtw+LggXcIBDe9IwrHTeUdfTETLjBjGPRtdRKRF3DEC/
-         JccbheMCp9/FO7E70GSOmdcFlsjR/EwZv6Hw9qKj+IWMhfkalTq+f6LHdGBz4o2NcZ62
-         /mSg==
-X-Received: by 10.112.204.197 with SMTP id la5mr4000241lbc.2.1412939997387;
-        Fri, 10 Oct 2014 04:19:57 -0700 (PDT)
-Received: from [192.168.130.235] ([158.75.2.130])
-        by mx.google.com with ESMTPSA id lk5sm181568lac.45.2014.10.10.04.19.55
-        for <multiple recipients>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:date:message-id:subject:to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=r/bZnGeL0f/kd43GSzpbQmRN+CMvCTftzy4iq9UQQnE=;
+        b=J7rhy9GI2U8qZx7SwJovB/seQL2kEk3K8HwiDvEsaWrP9Ru4jgTyJGHa87IxqNfHL0
+         MoP/V9HFKvurt64xFVzMLsvJEQH10Itq/1Hg9cbolaUS8U0lB3WoBfT93SDevMpm9ZWj
+         0iTA0V6dGcudn5iZiIpaHlKUZjIV5lUQVDrHCoFSPfdWFp79sUllPx8hkRmMDUMhDF5f
+         olqTBYWRNpOkAQrvgDahrdsEAAPxqQQ5z5IYDRIlCHodHHgQCswqUn5YABePd/j537c2
+         Se9FPIDSnMRsuNJRa71QrNtGx6OuDlcTnI5GptXEd+kODnoJFf928f/jjDsTxi5spFNC
+         SqBQ==
+X-Received: by 10.50.17.104 with SMTP id n8mr63161igd.12.1412942359011;
+        Fri, 10 Oct 2014 04:59:19 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.111.131 with SMTP id ii3ls486118igb.32.canary; Fri, 10 Oct
+ 2014 04:59:18 -0700 (PDT)
+X-Received: by 10.50.25.41 with SMTP id z9mr2830341igf.2.1412942358539;
+        Fri, 10 Oct 2014 04:59:18 -0700 (PDT)
+Received: from mail-ig0-x22c.google.com (mail-ig0-x22c.google.com [2607:f8b0:4001:c05::22c])
+        by gmr-mx.google.com with ESMTPS id nt9si187099igb.1.2014.10.10.04.59.18
+        for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 10 Oct 2014 04:19:56 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1412929187-57936-1-git-send-email-davvid@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+        Fri, 10 Oct 2014 04:59:18 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::22c as permitted sender) client-ip=2607:f8b0:4001:c05::22c;
+Received: by mail-ig0-x22c.google.com with SMTP id r2so2368647igi.5
+        for <msysgit@googlegroups.com>; Fri, 10 Oct 2014 04:59:18 -0700 (PDT)
+X-Received: by 10.50.43.233 with SMTP id z9mr5885384igl.41.1412942358449; Fri,
+ 10 Oct 2014 04:59:18 -0700 (PDT)
+Received: by 10.107.131.1 with HTTP; Fri, 10 Oct 2014 04:58:48 -0700 (PDT)
+X-Original-Sender: pclouds@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::22c
+ as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-David Aguilar wrote:
-> Avoid filenames with multiple dots so that overly-picky tools do
-> not misinterpret their extension.
->
-> Previously, foo/bar.ext in the worktree would result in e.g.
->
-> 	./foo/bar.ext.BASE.1234.ext
->
-> This can be improved by having only a single .ext and using
-> underscore instead of dot so that the extension cannot be
-> misinterpreted.  The resulting path becomes:
->
-> 	./foo/bar_BASE_1234.ext
->
-> Suggested-by: Sergio Ferrero <sferrero@ensoftcorp.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
+Just wanted to share that with at least wine 1.7.23 I can install
+msysgit using the netboot method, clone and build git ok. I had to do
+this to make gcc works actually, but it's probably no big deal
 
-> +	if BASE=3D$(expr "$MERGED" : '\(.*\)\.[^/]*$')
-> +	then
-> +		ext=3D$(expr "$MERGED" : '.*\(\.[^/]*\)$')
-> +	else
-> +		BASE=3D$MERGED
-> +		ext=3D
-> +	fi
+$ mkdir -p ~/.wine/drive_c/usr/libexec/gcc/mingw32 -p
+$ cp ~/.wine/drive_c/msysgit/mingw/bin/as.exe
+~/.wine/drive_c/usr/libexec/gcc/mingw32/
+$ cp ~/.wine/drive_c/msysgit/mingw/bin/ld.exe
+~/.wine/drive_c/usr/libexec/gcc/mingw32/
 
-Why use expr and not POSIX shell parameter substitution?
+This may open a door for many people like me, who are interested in
+Windows support, but don't own a Windows license (and probably don't
+want to dual boot anyway). Of course tricky stuff would require real
+Windows, but this would help with most "standard" windows stuff.
+-- 
+Duy
 
-BASE=3D${MERGED%.*}
-ext=3D.${MERGED##*.}
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Or something like that...
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
---=20
-Jakub Nar=C4=99bski
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
