@@ -1,209 +1,134 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 3/3] test-lib.sh: support -x option for shell-tracing
-Date: Fri, 10 Oct 2014 02:47:27 -0400
-Message-ID: <20141010064727.GC17481@peff.net>
-References: <20141010062722.GB17481@peff.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetool: use more conservative temporary filenames
+Date: Fri, 10 Oct 2014 01:10:36 -0700
+Message-ID: <20141010081034.GA44749@gmail.com>
+References: <1412758562-25402-1-git-send-email-davvid@gmail.com>
+ <xmqq8ukp6qgf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 10 08:47:43 2014
+Cc: git@vger.kernel.org, Sergio Ferrero <sferrero@ensoftcorp.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 10 10:10:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XcTzK-0003Qg-Fe
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 08:47:42 +0200
+	id 1XcVHu-0005fm-4i
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 10:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751174AbaJJGr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2014 02:47:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57103 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750905AbaJJGr2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Oct 2014 02:47:28 -0400
-Received: (qmail 29861 invoked by uid 102); 10 Oct 2014 06:47:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 01:47:28 -0500
-Received: (qmail 30835 invoked by uid 107); 10 Oct 2014 06:47:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 02:47:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Oct 2014 02:47:27 -0400
+	id S1751779AbaJJIKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2014 04:10:46 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:53617 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694AbaJJIKg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2014 04:10:36 -0400
+Received: by mail-pa0-f45.google.com with SMTP id rd3so1303104pab.32
+        for <git@vger.kernel.org>; Fri, 10 Oct 2014 01:10:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=hDqZ0pR4qw3G2dS7IXb+YmpeZWmvYHg9gaFXgSSe4PQ=;
+        b=LpJ1SImQrGaJeg4pF/A8TJBDfOOsb9S7MMvurhu06SfFrLpHJM3rZLJk2zN+JjmiOF
+         MIUBcD5AKa5I5XVkqoiRTc/WYksCtWW2k5F+iEdWbNyGvKcXdUYEGF+xRiZrSkW3Y1h2
+         FHURNIjy18CHv3z1Zyu6S3pWLqHASAcV4PkGRTqUX7RG1hsnxbUKn3sGQdef9kMaztip
+         RXHyQeLsS+qS5SyAkrfSQCuzCkIdcsWWMITV/0hoKirh1ranjT+Eb4gaT9O1BPboJRM/
+         gssadEOEmMAXU8XJyZhSdzgzLDzd4id81htVujfqA5DhUjQwUXfx2tSmGxe9BBM8caMe
+         qY6g==
+X-Received: by 10.67.14.69 with SMTP id fe5mr3358105pad.73.1412928634755;
+        Fri, 10 Oct 2014 01:10:34 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id sb2sm2659563pbc.24.2014.10.10.01.10.33
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 10 Oct 2014 01:10:34 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20141010062722.GB17481@peff.net>
- <20141010062156.GA17481@peff.net>
+In-Reply-To: <xmqq8ukp6qgf.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 10, 2014 at 02:21:56AM -0400, Jeff King wrote:
+On Thu, Oct 09, 2014 at 11:36:00AM -0700, Junio C Hamano wrote:
+> David Aguilar <davvid@gmail.com> writes:
+> 
+> > Avoid filenames with multiple dots so that overly-picky tools do
+> > not misinterpret their extension.
+> >
+> > Previously, foo/bar.ext in the worktree would result in e.g.
+> >
+> > 	foo/bar.ext.BASE.1234.ext
+> >
+> > This can be improved by having only a single .ext and using
+> > underscore instead of dot so that the extension cannot be
+> > misinterpreted.  The resulting path becomes:
+> >
+> > 	foo/bar_BASE_1234.ext
+> >
+> > Suggested-by: Sergio Ferrero <sferrero@ensoftcorp.com>
+> > Signed-off-by: David Aguilar <davvid@gmail.com>
+> > ---
+> >  git-mergetool.sh | 14 +++++++++-----
+> >  1 file changed, 9 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/git-mergetool.sh b/git-mergetool.sh
+> > index 9a046b7..1f33051 100755
+> > --- a/git-mergetool.sh
+> > +++ b/git-mergetool.sh
+> > @@ -228,11 +228,15 @@ merge_file () {
+> >  		return 1
+> >  	fi
+> >  
+> > -	ext="$$$(expr "$MERGED" : '.*\(\.[^/]*\)$')"
+> > -	BACKUP="./$MERGED.BACKUP.$ext"
+> > -	LOCAL="./$MERGED.LOCAL.$ext"
+> > -	REMOTE="./$MERGED.REMOTE.$ext"
+> > -	BASE="./$MERGED.BASE.$ext"
+> > +	ext=$(expr "$MERGED" : '.*\(\.[^/]*\)$')
+> > +	base=$(basename "$MERGED" "$ext")
+> > +	dir=$(dirname "$MERGED")
+> > +	suffix="$$""$ext"
+> > +
+> > +	BACKUP="$dir/$base"_BACKUP_"$suffix"
+> > +	BASE="$dir/$base"_BASE_"$suffix"
+> > +	LOCAL="$dir/$base"_LOCAL_"$suffix"
+> > +	REMOTE="$dir/$base"_REMOTE_"$suffix"
+> 
+> We used to feed "./foo/bar.ext.BASE.1234.ext"; with this patch we
+> feed "foo/bar_BASE_1234.ext".  
+> 
+> It does make this particular example look prettier, but is the
+> droppage of "./" intentional and is free of unintended ill side
+> effects?
+> 
+> We avoid "local" and bash-isms, so I'd prefer to see us not to
+> introduce new temporary variables unnecessarily.  I think we can at
+> least do without basename/dirname in this case, perhaps like so:
+> 
+> 	if BASE=$(expr "$MERGED" : '\(.*\)\.[^/]*$')
+>         then
+>         	ext=$(expr "$MERGED" : '.*\(\.[^/]*\)$')
+> 	else
+>         	ext= BASE=$MERGED
+> 	fi
+>         BACKUP="${BASE}_BACKUP_$$$ext"
+>         LOCAL="${BASE}_LOCAL_$$$ext"
+>         REMOTE="${BASE}_REMOTE_$$$ext"
+>         BASE="${BASE}_BASE_$$$ext"
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index a60ec75..81ceb23 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -237,7 +237,11 @@ do
->  		shift ;;
->  	-x)
->  		test_eval_start_='set -x'
-> -		test_eval_end_='set +x'
-> +		test_eval_end_='
-> +			set +x
-> +			test "$test_eval_ret_" = 0 ||
-> +			  say_color error >&4 "last command exited with \$?=$?"
+Clever ;-)
 
-That should be \$?=$test_eval_ret_, of course. The patch below fixes it.
+> But I do not have very strong opinion either way.  I just didn't
+> want to have to think about the leading "./" ;-)
 
-> I think we can probably do away with this excessive use of eval, and
-> just keep a boolean flag for "is -x in effect" and check it inside
-> test_eval_. Originally I was trying to keep the number of executed
-> commands down, because everything until the "set +x" ran (including
-> checks for an "is -x in effect" flag) was shown to the user. But since
-> that is no longer the case, we can be less stingy with the conditionals.
+When I first wrote this I thought, "$(dirname foo) == '.', so it should
+be okay", but it slipped my mind that $(dirname foo/bar) != "./foo" --
+I like this new version better.
 
-The patch below does so. The result is much cleaner.
-
-> Hmph. I had originally intended to make this "set -x;" with a semicolon,
-> to keep it split from $*. But I forgot to, and much to my surprise, all
-> of the tests still passed.
-
-And by "all" I mean "all of the handful that I ran with -x". Of course
-the bug does not show up when "-x" is not in use, which it was not when
-I ran "make test". *forehead palm*
-
-Trying to run the whole test suite with "-x" does fail. Some tests
-invoke shell functions and redirect their stderr. The "set -x" will
-pollute that output. There's not much we can do; it's sort of inherent
-in "set -x" (and it only seems to affect about 25 of the scripts, so I
-think it's still a useful tool to have). I've added a warning to the
-README.
-
-Rerolled patch is below. Sorry for all the emails. I'll stop looking at
-it now to give you guys a chance to find any remaining mistakes. ;)
-
--- >8 --
-Subject: test-lib.sh: support -x option for shell-tracing
-
-Usually running a test under "-v" makes it clear which
-command is failing. However, sometimes it can be useful to
-also see a complete trace of the shell commands being run in
-the test. You can do so without any support from the test
-suite by running "sh -x tXXXX-foo.sh". However, this
-produces quite a large bit of output, as we see a trace of
-the entire test suite.
-
-This patch instead introduces a "-x" option to the test
-scripts (i.e., "./tXXXX-foo.sh -x"). When enabled, this
-turns on "set -x" only for the tests themselves. This can
-still be a bit verbose, but should keep things to a more
-manageable level. You can even use "--verbose-only" to see
-the trace only for a specific test.
-
-The implementation is a little invasive. We turn on the "set
--x" inside the "eval" of the test code. This lets the eval
-itself avoid being reported in the trace (which would be
-long, and redundant with the verbose listing we already
-showed). And then after the eval runs, we do some trickery
-with stderr to avoid showing the "set +x" to the user.
-
-We also show traces for test_cleanup functions (since they
-can impact the test outcome, too). However, we do avoid
-running the noop ":" cleanup (the default if the test does
-not use test_cleanup at all), as it creates unnecessary
-noise in the "set -x" output.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/README      |  6 ++++++
- t/test-lib.sh | 42 ++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 44 insertions(+), 4 deletions(-)
-
-diff --git a/t/README b/t/README
-index 52c77ae..9952261 100644
---- a/t/README
-+++ b/t/README
-@@ -82,6 +82,12 @@ appropriately before running "make".
- 	numbers matching <pattern>.  The number matched against is
- 	simply the running count of the test within the file.
- 
-+-x::
-+	Turn on shell tracing (i.e., `set -x`) during the tests
-+	themselves. Implies `--verbose`. Note that this can cause
-+	failures in some tests which redirect and test the
-+	output of shell functions. Use with caution.
-+
- -d::
- --debug::
- 	This may help the person who is developing a new test.
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 82095e3..4dab575 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -233,6 +233,10 @@ do
- 	--root=*)
- 		root=$(expr "z$1" : 'z[^=]*=\(.*\)')
- 		shift ;;
-+	-x)
-+		trace=t
-+		verbose=t
-+		shift ;;
- 	*)
- 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
- 	esac
-@@ -517,10 +521,39 @@ maybe_setup_valgrind () {
- 	fi
- }
- 
-+# This is a separate function because some tests use
-+# "return" to end a test_expect_success block early
-+# (and we want to make sure we run any cleanup like
-+# "set +x").
-+test_eval_inner_ () {
-+	eval "
-+		test \"$trace\" = t && set -x
-+		$*
-+	"
-+}
-+
- test_eval_ () {
--	# This is a separate function because some tests use
--	# "return" to end a test_expect_success block early.
--	eval </dev/null >&3 2>&4 "$*"
-+	# We run this block with stderr redirected to avoid extra cruft
-+	# during a "-x" trace. Once in "set -x" mode, we cannot prevent
-+	# the shell from printing the "set +x" to turn it off (nor the saving
-+	# of $? before that). But we can make sure that the output goes to
-+	# /dev/null.
-+	#
-+	# The test itself is run with stderr put back to &4 (so either to
-+	# /dev/null, or to the original stderr if --verbose was used).
-+	{
-+		test_eval_inner_ "$@" </dev/null >&3 2>&4
-+		test_eval_ret_=$?
-+		if test "$trace" = t
-+		then
-+			set +x
-+			if test "$test_eval_ret_" != 0
-+			then
-+				say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
-+			fi
-+		fi
-+	} 2>/dev/null
-+	return $test_eval_ret_
- }
- 
- test_run_ () {
-@@ -531,7 +564,8 @@ test_run_ () {
- 	eval_ret=$?
- 	teardown_malloc_check
- 
--	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
-+	if test -z "$immediate" || test $eval_ret = 0 ||
-+	   test -n "$expecting_failure" && test "$test_cleanup" != ":"
- 	then
- 		setup_malloc_check
- 		test_eval_ "$test_cleanup"
+The leading ./ shoudln't make a difference but I also don't want
+to have to think about it either.  I'll have a v2 patch shortly.
 -- 
-2.1.2.596.g7379948
+David
