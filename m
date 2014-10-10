@@ -1,65 +1,60 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v4 2/3] doc: Makefile regularise OBSOLETE_HTML list building
-Date: Fri, 10 Oct 2014 22:25:36 +0100
-Message-ID: <1412976337-2476-3-git-send-email-philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/3] Make 'git help everyday' work
+Date: Fri, 10 Oct 2014 16:15:30 -0700
+Message-ID: <xmqqtx3b4iul.fsf@gitster.dls.corp.google.com>
 References: <1412976337-2476-1-git-send-email-philipoakley@iee.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: GitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 10 23:25:58 2014
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: GitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sat Oct 11 01:15:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XchhG-00007J-5U
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 23:25:58 +0200
+	id 1XcjPW-0001gH-Mv
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Oct 2014 01:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267AbaJJVZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Oct 2014 17:25:44 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:56140 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755260AbaJJVZn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Oct 2014 17:25:43 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: An4KAHBOOFRZ8YyOPGdsb2JhbABggw6BK4I2hQeBd8k6BAICgQQXAQEFAQEBATg5hAQBBVYjEAhJOQoUBhOIQr9uAQEBByKPYGQHhEsFqieNLTwvgQaBRAEBAQ
-X-IPAS-Result: An4KAHBOOFRZ8YyOPGdsb2JhbABggw6BK4I2hQeBd8k6BAICgQQXAQEFAQEBATg5hAQBBVYjEAhJOQoUBhOIQr9uAQEBByKPYGQHhEsFqieNLTwvgQaBRAEBAQ
-X-IronPort-AV: E=Sophos;i="5.04,694,1406588400"; 
-   d="scan'208";a="648230644"
-Received: from host-89-241-140-142.as13285.net (HELO localhost) ([89.241.140.142])
-  by out1.ip06ir2.opaltelecom.net with ESMTP; 10 Oct 2014 22:25:41 +0100
-X-Mailer: git-send-email 1.9.4.msysgit.0
-In-Reply-To: <1412976337-2476-1-git-send-email-philipoakley@iee.org>
+	id S1751850AbaJJXPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2014 19:15:34 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61809 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750810AbaJJXPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2014 19:15:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1AE6715BC0;
+	Fri, 10 Oct 2014 19:15:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/+AI3Le6VgUo/ZE+o0vkqYEL1lo=; b=qKGz/R
+	XX/aS3YNPBr4+Gzs1HzgxsBXA13dLuo+pTpGihw2yUzhwBBnUNoosmlEuynk8NJV
+	XHx0kpHyXwzrlQx/ws++3u+Bm/xtHShGd4p2hbBH3jfsMt/GvkIXV6kUktRGPGs1
+	7cpw2lxuK/B6S5c8G93qEqI7qnbtAYAO3WWsY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R9lYo4BozHv4wYWrWycXM8wRR3iLdPix
+	byOqacKEiL6ZF50VdkxKWgKjr2wUr3aJtF41LF3zDIi76Cnl7oZPSrQoiGOzwzTO
+	KVVaHFnDJ5gJM9o1bEfe9PdcXts9FvhA4EGO7FxqCbPBw/3U+eP0aK8DhGMYzmXY
+	pczywmGLgeY=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CF8515BBF;
+	Fri, 10 Oct 2014 19:15:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C7CD15BBE;
+	Fri, 10 Oct 2014 19:15:31 -0400 (EDT)
+In-Reply-To: <1412976337-2476-1-git-send-email-philipoakley@iee.org> (Philip
+	Oakley's message of "Fri, 10 Oct 2014 22:25:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 549CDAA2-50D3-11E4-B1D3-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
- Documentation/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Thanks.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index cea0e7a..3b56714 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -5,6 +5,7 @@ MAN7_TXT =
- TECH_DOCS =
- ARTICLES =
- SP_ARTICLES =
-+OBSOLETE_HTML =
- 
- MAN1_TXT += $(filter-out \
- 		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
-@@ -37,7 +38,7 @@ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
- MAN_XML = $(patsubst %.txt,%.xml,$(MAN_TXT))
- MAN_HTML = $(patsubst %.txt,%.html,$(MAN_TXT))
- 
--OBSOLETE_HTML = git-remote-helpers.html
-+OBSOLETE_HTML += git-remote-helpers.html
- DOC_HTML = $(MAN_HTML) $(OBSOLETE_HTML)
- 
- ARTICLES += howto-index
--- 
-1.9.4.msysgit.0
+Looked alright from a cursory read; I tweaked s/10/-10/ where you
+gave examples of limiting output from "git log" before queuing.
