@@ -1,56 +1,59 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: msysgit works on wine
-Date: Fri, 10 Oct 2014 18:58:48 +0700
-Message-ID: <CACsJy8BAv9Bv_jFgW3L3+WYQMUOwRCFQ0sdAxWWwC_TnzesBBQ@mail.gmail.com>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: msysgit works on wine
+Date: Fri, 10 Oct 2014 14:02:52 +0200
+Message-ID: <5437CAEC.1020902@virtuell-zuhause.de>
+References: <CACsJy8BAv9Bv_jFgW3L3+WYQMUOwRCFQ0sdAxWWwC_TnzesBBQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBC2ZN5PHQUMBBFUU36QQKGQEI3XP3MY@googlegroups.com Fri Oct 10 13:59:26 2014
-Return-path: <msysgit+bncBC2ZN5PHQUMBBFUU36QQKGQEI3XP3MY@googlegroups.com>
+To: Duy Nguyen <pclouds@gmail.com>, 
+ Git Mailing List <git@vger.kernel.org>,
+ msysGit <msysgit@googlegroups.com>
+X-From: msysgit+bncBCL7JHHTPAIPPFO7UECRUBATOVITQ@googlegroups.com Fri Oct 10 14:03:10 2014
+Return-path: <msysgit+bncBCL7JHHTPAIPPFO7UECRUBATOVITQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qa0-f58.google.com ([209.85.216.58])
+Received: from mail-wi0-f190.google.com ([209.85.212.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBFUU36QQKGQEI3XP3MY@googlegroups.com>)
-	id 1XcYqu-0001ug-Hs
-	for gcvm-msysgit@m.gmane.org; Fri, 10 Oct 2014 13:59:20 +0200
-Received: by mail-qa0-f58.google.com with SMTP id dc16sf418015qab.13
-        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Oct 2014 04:59:19 -0700 (PDT)
+	(envelope-from <msysgit+bncBCL7JHHTPAIPPFO7UECRUBATOVITQ@googlegroups.com>)
+	id 1XcYuX-00048k-Bh
+	for gcvm-msysgit@m.gmane.org; Fri, 10 Oct 2014 14:03:05 +0200
+Received: by mail-wi0-f190.google.com with SMTP id ho1sf136573wib.17
+        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Oct 2014 05:03:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:date:message-id:subject:to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=r/bZnGeL0f/kd43GSzpbQmRN+CMvCTftzy4iq9UQQnE=;
-        b=J7rhy9GI2U8qZx7SwJovB/seQL2kEk3K8HwiDvEsaWrP9Ru4jgTyJGHa87IxqNfHL0
-         MoP/V9HFKvurt64xFVzMLsvJEQH10Itq/1Hg9cbolaUS8U0lB3WoBfT93SDevMpm9ZWj
-         0iTA0V6dGcudn5iZiIpaHlKUZjIV5lUQVDrHCoFSPfdWFp79sUllPx8hkRmMDUMhDF5f
-         olqTBYWRNpOkAQrvgDahrdsEAAPxqQQ5z5IYDRIlCHodHHgQCswqUn5YABePd/j537c2
-         Se9FPIDSnMRsuNJRa71QrNtGx6OuDlcTnI5GptXEd+kODnoJFf928f/jjDsTxi5spFNC
-         SqBQ==
-X-Received: by 10.50.17.104 with SMTP id n8mr63161igd.12.1412942359011;
-        Fri, 10 Oct 2014 04:59:19 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=TGgbN1DalnBHHrQKL4Wzt2KW/xCvfkjwKKA1DItS3tg=;
+        b=NGoerQrIPJuOLmRFawX8iX83J5t/IggrPtSQEukDLcrMXYRSbeQ+AO6WLg+1OAr6rj
+         9CIjUaGrOMwV/Q3YFuiroSLoP3QVEPMCnOz7KO9Uo3F6fLAh5JCtzS3NYoERLaBQeOsH
+         X7Nm7Al7w8YdM/jUF2iPeTBVmUzspQ3qtJmbt0WxbPqZak5JBw7bJ4XiwQVQuAY04fL6
+         3O3ncbPN0BIHSxGEY1dpD1SblKEXYODRWiyZtYe+KjG59ZGU6TuQlefYhOqQg34YQdDw
+         qQE5dyl6tzkmdh0SsAfY1s35yusgVa/9m2CLDkGZPmw8ZI0r3hUXjD1W/8tk2g19ZLMZ
+         OLpQ==
+X-Received: by 10.152.28.66 with SMTP id z2mr74580lag.3.1412942584524;
+        Fri, 10 Oct 2014 05:03:04 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.111.131 with SMTP id ii3ls486118igb.32.canary; Fri, 10 Oct
- 2014 04:59:18 -0700 (PDT)
-X-Received: by 10.50.25.41 with SMTP id z9mr2830341igf.2.1412942358539;
-        Fri, 10 Oct 2014 04:59:18 -0700 (PDT)
-Received: from mail-ig0-x22c.google.com (mail-ig0-x22c.google.com [2607:f8b0:4001:c05::22c])
-        by gmr-mx.google.com with ESMTPS id nt9si187099igb.1.2014.10.10.04.59.18
+Received: by 10.152.197.68 with SMTP id is4ls288004lac.6.gmail; Fri, 10 Oct
+ 2014 05:03:02 -0700 (PDT)
+X-Received: by 10.112.52.165 with SMTP id u5mr533613lbo.12.1412942582628;
+        Fri, 10 Oct 2014 05:03:02 -0700 (PDT)
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [2a01:488:42::50ed:84a3])
+        by gmr-mx.google.com with ESMTPS id rb5si280160lbb.0.2014.10.10.05.02.59
         for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 10 Oct 2014 04:59:18 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::22c as permitted sender) client-ip=2607:f8b0:4001:c05::22c;
-Received: by mail-ig0-x22c.google.com with SMTP id r2so2368647igi.5
-        for <msysgit@googlegroups.com>; Fri, 10 Oct 2014 04:59:18 -0700 (PDT)
-X-Received: by 10.50.43.233 with SMTP id z9mr5885384igl.41.1412942358449; Fri,
- 10 Oct 2014 04:59:18 -0700 (PDT)
-Received: by 10.107.131.1 with HTTP; Fri, 10 Oct 2014 04:58:48 -0700 (PDT)
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::22c
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 10 Oct 2014 05:02:59 -0700 (PDT)
+Received-SPF: temperror (google.com: error in processing during lookup of thomas.braun@virtuell-zuhause.de: DNS timeout) client-ip=2a01:488:42::50ed:84a3;
+Received: from p3ee2fddc.dip0.t-ipconnect.de ([62.226.253.220] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1XcYuP-000447-RU; Fri, 10 Oct 2014 14:02:57 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <CACsJy8BAv9Bv_jFgW3L3+WYQMUOwRCFQ0sdAxWWwC_TnzesBBQ@mail.gmail.com>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1412942579;1a95d142;
+X-Original-Sender: thomas.braun@virtuell-zuhause.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=temperror
+ (google.com: error in processing during lookup of thomas.braun@virtuell-zuhause.de:
+ DNS timeout) smtp.mail=thomas.braun@virtuell-zuhause.de
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -63,22 +66,24 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-Just wanted to share that with at least wine 1.7.23 I can install
-msysgit using the netboot method, clone and build git ok. I had to do
-this to make gcc works actually, but it's probably no big deal
+Am 10.10.2014 um 13:58 schrieb Duy Nguyen:
+> Just wanted to share that with at least wine 1.7.23 I can install
+> msysgit using the netboot method, clone and build git ok. I had to do
+> this to make gcc works actually, but it's probably no big deal
+> 
+> $ mkdir -p ~/.wine/drive_c/usr/libexec/gcc/mingw32 -p
+> $ cp ~/.wine/drive_c/msysgit/mingw/bin/as.exe
+> ~/.wine/drive_c/usr/libexec/gcc/mingw32/
+> $ cp ~/.wine/drive_c/msysgit/mingw/bin/ld.exe
+> ~/.wine/drive_c/usr/libexec/gcc/mingw32/
+> 
+> This may open a door for many people like me, who are interested in
+> Windows support, but don't own a Windows license (and probably don't
+> want to dual boot anyway). Of course tricky stuff would require real
+> Windows, but this would help with most "standard" windows stuff.
 
-$ mkdir -p ~/.wine/drive_c/usr/libexec/gcc/mingw32 -p
-$ cp ~/.wine/drive_c/msysgit/mingw/bin/as.exe
-~/.wine/drive_c/usr/libexec/gcc/mingw32/
-$ cp ~/.wine/drive_c/msysgit/mingw/bin/ld.exe
-~/.wine/drive_c/usr/libexec/gcc/mingw32/
-
-This may open a door for many people like me, who are interested in
-Windows support, but don't own a Windows license (and probably don't
-want to dual boot anyway). Of course tricky stuff would require real
-Windows, but this would help with most "standard" windows stuff.
--- 
-Duy
+Are you compiling git.git or msysgit.git?
+And how about the test suite?
 
 -- 
 -- 
