@@ -1,199 +1,209 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 07/14] Fix BASIC_LDFLAGS and COMPAT_CFLAGS for
- 64bit MinGW-w64
-Date: Fri, 10 Oct 2014 08:38:09 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1410100809450.990@s15462909.onlinehome-server.info>
-References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-8-git-send-email-marat@slonopotamus.org> <alpine.DEB.1.00.1410092115100.990@s15462909.onlinehome-server.info> <CAOYw7dsNQZNYZRz1c7RM0+CuOtzTXMH-2zWJR5MbM_kH9eZ1Eg@mail.gmail.com>
- <alpine.DEB.1.00.1410092146310.990@s15462909.onlinehome-server.info> <CAOYw7dtouon0EXYQPnvpc7ZMARKwaureNTK6ZL+aByknpPG-9A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v2 3/3] test-lib.sh: support -x option for shell-tracing
+Date: Fri, 10 Oct 2014 02:47:27 -0400
+Message-ID: <20141010064727.GC17481@peff.net>
+References: <20141010062722.GB17481@peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org, 
-    gitster@pobox.com, msysGit <msysgit@googlegroups.com>
-To: Ray Donnelly <mingw.android@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRB3X53WQQKGQEJEAWPTI@googlegroups.com Fri Oct 10 08:38:40 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRB3X53WQQKGQEJEAWPTI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 10 08:47:43 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRB3X53WQQKGQEJEAWPTI@googlegroups.com>)
-	id 1XcTqZ-0000Cq-Sy
-	for gcvm-msysgit@m.gmane.org; Fri, 10 Oct 2014 08:38:39 +0200
-Received: by mail-wi0-f190.google.com with SMTP id ho1sf80320wib.27
-        for <gcvm-msysgit@m.gmane.org>; Thu, 09 Oct 2014 23:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=02GqRZops4ZrJR4YdUFVG7tEr5ULYjYjfAYcRNCNTWo=;
-        b=Y7b74Akza80UU2H9SL/9ILZMpVsN0Ci9kP1N1kuhdCrqXTzUavpcJIc1sTyTV/wRLS
-         MhpCGJ4zDgSZJqI6qdFqY2JOKBcMogGGbZrAd50ajHcV2GbeAple0oVI/d6quXLihkCD
-         ssm9sVnQfbJ1lTrsBAv+7M+Yl5VhhQM+l6gxYfPBxM0k9tU1CJDGK+YoWzs3+I0mUUiG
-         yhlhtQJkXufWag7ErGK8YsiqOKaTFwxdNDrWHsKJdskhkBEpIBwPxhJm6paScUx6nz8T
-         czE4r7mz1jeW5fnOUCsEhX8FNFlVEWWuKWcux/MX9Nq2QGGSppZSb50hYpz73vNtNVOh
-         nJDA==
-X-Received: by 10.152.18.137 with SMTP id w9mr5625lad.7.1412923119591;
-        Thu, 09 Oct 2014 23:38:39 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.206.72 with SMTP id lm8ls246763lac.9.gmail; Thu, 09 Oct
- 2014 23:38:37 -0700 (PDT)
-X-Received: by 10.112.145.136 with SMTP id su8mr515556lbb.9.1412923117801;
-        Thu, 09 Oct 2014 23:38:37 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.18])
-        by gmr-mx.google.com with ESMTPS id us10si157286lbc.1.2014.10.09.23.38.37
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Oct 2014 23:38:37 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as permitted sender) client-ip=212.227.15.18;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MbPLI-1XsuEH431Q-00IpFu;
- Fri, 10 Oct 2014 08:38:10 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CAOYw7dtouon0EXYQPnvpc7ZMARKwaureNTK6ZL+aByknpPG-9A@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:ASr2KZwnW9ywDRUyzx5J3rv0CwKNkd5EyXBry8KITYcJ0vR49uI
- 36odq7VYH97XOXPR2fzK5Fqi4LBilTnkDhOKmggpa93nUhvTwJEn2Dh5UXdeBxiBfjWP9/T
- 5WhAmzz00REnruNEMlOlXciDQw/whiSZClgm0sAWmEpv184+15HbAO8akzB98q4ng9LYHYh
- sFMABaPKpXL48YaB1TUQg==
-X-UI-Out-Filterresults: notjunk:1;
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XcTzK-0003Qg-Fe
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 08:47:42 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751174AbaJJGr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2014 02:47:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57103 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750905AbaJJGr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2014 02:47:28 -0400
+Received: (qmail 29861 invoked by uid 102); 10 Oct 2014 06:47:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 01:47:28 -0500
+Received: (qmail 30835 invoked by uid 107); 10 Oct 2014 06:47:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 10 Oct 2014 02:47:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Oct 2014 02:47:27 -0400
+Content-Disposition: inline
+In-Reply-To: <20141010062722.GB17481@peff.net>
+ <20141010062156.GA17481@peff.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-Hi Ray,
+On Fri, Oct 10, 2014 at 02:21:56AM -0400, Jeff King wrote:
 
-On Fri, 10 Oct 2014, Ray Donnelly wrote:
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index a60ec75..81ceb23 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -237,7 +237,11 @@ do
+>  		shift ;;
+>  	-x)
+>  		test_eval_start_='set -x'
+> -		test_eval_end_='set +x'
+> +		test_eval_end_='
+> +			set +x
+> +			test "$test_eval_ret_" = 0 ||
+> +			  say_color error >&4 "last command exited with \$?=$?"
 
-> On Thu, Oct 9, 2014 at 8:47 PM, Johannes Schindelin <
-> Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Thu, 9 Oct 2014, Ray Donnelly wrote:
-> >
-> >> On Thu, Oct 9, 2014 at 8:22 PM, Johannes Schindelin
-> >> <Johannes.Schindelin@gmx.de> wrote:
-> >> >
-> >> > On Wed, 8 Oct 2014, Marat Radchenko wrote:
-> >> >
-> >> >> +CC_MACH :=3D $(shell sh -c '$(CC) -dumpmachine 2>/dev/null || echo
-> not')
-> >> >
-> >> > There is a rather huge problem with that. The latest mingw-w64
-> >> > release, 4.9.1, does not do what you expect here: while
-> >> > '.../mingw32/bin/gcc -m32 -o 32.exe test.c' and
-> >> > '.../mingw32/bin/gcc -m64 -o 64.exe test.c' work fine, producing
-> >> > i686 and x86_64 executables respectively, '.../mingw32/bin/gcc
-> >> > -dumpmachine' prints i686-w64-mingw32 *always*, even when
-> >> > specifying the -m64 option.
-> >> >
-> >> > So unfortunately, the test introduced by this patch (intended to
-> >> > figure out whether the build targets i686, and skip a compiler and
-> >> > a linker option otherwise) is incorrect.
-> >>
-> >> Which release are you talking about? Can you point me to the tarball
-> >> please?
-> >
-> http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%2=
-0Win32/Personal%20Builds/mingw-builds/4.9.1/threads-win32/sjlj/
-> >
-> > (rev1, not rev0)
->=20
-> I guess I can add passing in CFLAGS also to try to catch that case.
+That should be \$?=$test_eval_ret_, of course. The patch below fixes it.
 
-Well, my tests say that the CFLAGS do *not* change the behavior of
--dumpmachine. IOW `i686-w64-mingw32-gcc -m64 -dumpmachine` *still* spits
-out i686-w64-mingw32. Even if the -m64 flag would cause the compiler to
-generate 64-bit binaries.
+> I think we can probably do away with this excessive use of eval, and
+> just keep a boolean flag for "is -x in effect" and check it inside
+> test_eval_. Originally I was trying to keep the number of executed
+> commands down, because everything until the "set +x" ran (including
+> checks for an "is -x in effect" flag) was shown to the user. But since
+> that is no longer the case, we can be less stingy with the conditionals.
 
-> I've added support to build using your branch to MSYS2's MINGW-packages
-> git-git package in case anyone wants to help out:
->=20
-> https://github.com/Alexpux/MINGW-packages/tree/master/mingw-w64-git-git
+The patch below does so. The result is much cleaner.
 
-Interesting.
+> Hmph. I had originally intended to make this "set -x;" with a semicolon,
+> to keep it split from $*. But I forgot to, and much to my surprise, all
+> of the tests still passed.
 
-With Git for Windows, we aim to become waaaaay more standards-compliant by
-providing Git as a regular mingw-get'able package. To this end, we use
-mgwport recipes to build the required packages.
+And by "all" I mean "all of the handful that I ran with -x". Of course
+the bug does not show up when "-x" is not in use, which it was not when
+I ran "make test". *forehead palm*
 
-It looks as if the PKGBUILD system is similar, but *just* incompatible
-enough with mgwport to prevent code sharing. Is this fixable?
+Trying to run the whole test suite with "-x" does fail. Some tests
+invoke shell functions and redirect their stderr. The "set -x" will
+pollute that output. There's not much we can do; it's sort of inherent
+in "set -x" (and it only seems to affect about 25 of the scripts, so I
+think it's still a useful tool to have). I've added a warning to the
+README.
 
-> Change _based_on_dscho_w64_msysgit=3Dno to =3Dyes. Note also that some mo=
-re
-> patches are needed before we can build, and I think more are needed.
-> Using plain msysGit (I.e. =3Dno) and 15 patches we are able to build a
-> somewhat functional git.
+Rerolled patch is below. Sorry for all the emails. I'll stop looking at
+it now to give you guys a chance to find any remaining mistakes. ;)
 
-So here is my plan, please let me know whether you think we can compromise
-on a strategy that benefits both of us:
+-- >8 --
+Subject: test-lib.sh: support -x option for shell-tracing
 
-Since I want mingw-get'able packages =E2=80=93 also for 64-bit =E2=80=93 I =
-would like to
-keep the CPU architecture dependent parts as contained as possible and use
-only one package system for both. Likewise, I would really prefer to have
-a single development environment for both architectures, and the Git for
-Windows SDK is really coming along nicely, thanks to the tremendous
-efforts put in by Thomas Braun and Sebastian Schuberth.
+Usually running a test under "-v" makes it clear which
+command is failing. However, sometimes it can be useful to
+also see a complete trace of the shell commands being run in
+the test. You can do so without any support from the test
+suite by running "sh -x tXXXX-foo.sh". However, this
+produces quite a large bit of output, as we see a trace of
+the entire test suite.
 
-I am planning, therefore, to provide the MinGW-w64 compiler as an add-on
-package that needs to be installed in order to build 64-bit stuff.
+This patch instead introduces a "-x" option to the test
+scripts (i.e., "./tXXXX-foo.sh -x"). When enabled, this
+turns on "set -x" only for the tests themselves. This can
+still be a bit verbose, but should keep things to a more
+manageable level. You can even use "--verbose-only" to see
+the trace only for a specific test.
 
-At this stage, it is actually *more* than a plan: I already have a package
-to install 7za =E2=80=93 required to unpack MinGW-w64 pre-built packages =
-=E2=80=93 and the
-script to package mingw-w64 is in the process of being fleshed out.
+The implementation is a little invasive. We turn on the "set
+-x" inside the "eval" of the test code. This lets the eval
+itself avoid being reported in the trace (which would be
+long, and redundant with the verbose listing we already
+showed). And then after the eval runs, we do some trickery
+with stderr to avoid showing the "set +x" to the user.
 
-With this compiler, and the 'w64' branch from https://github.com/dscho/git
-=E2=80=93 intended to be merged into https://github.com/git-for-windows/git=
- =E2=80=93 the
-following command-line produces 64-bit Git:
+We also show traces for test_cleanup functions (since they
+can impact the test outcome, too). However, we do avoid
+running the noop ":" cleanup (the default if the test does
+not use test_cleanup at all), as it creates unnecessary
+noise in the "set -x" output.
 
-	PATH=3D/path/to/unpacked/mingw-w64/mingw64/bin/:$PATH \
-	make \
-		CROSS_COMPILE=3Dx86_64-w64-mingw32- CC=3D'$(CROSS_COMPILE)gcc' \
-		AR=3Dar RC=3Dwindres \
-		NO_ICONV=3D1 NO_OPENSSL=3D1 NO_CURL=3D1 NEEDS_LIBICONV=3D USE_LIBPCRE=3D
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/README      |  6 ++++++
+ t/test-lib.sh | 42 ++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 44 insertions(+), 4 deletions(-)
 
-The test suite passes so far (still running, at the time of writing it is
-going through t3404).
-
-Ciao,
-Johannes
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+diff --git a/t/README b/t/README
+index 52c77ae..9952261 100644
+--- a/t/README
++++ b/t/README
+@@ -82,6 +82,12 @@ appropriately before running "make".
+ 	numbers matching <pattern>.  The number matched against is
+ 	simply the running count of the test within the file.
+ 
++-x::
++	Turn on shell tracing (i.e., `set -x`) during the tests
++	themselves. Implies `--verbose`. Note that this can cause
++	failures in some tests which redirect and test the
++	output of shell functions. Use with caution.
++
+ -d::
+ --debug::
+ 	This may help the person who is developing a new test.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 82095e3..4dab575 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -233,6 +233,10 @@ do
+ 	--root=*)
+ 		root=$(expr "z$1" : 'z[^=]*=\(.*\)')
+ 		shift ;;
++	-x)
++		trace=t
++		verbose=t
++		shift ;;
+ 	*)
+ 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
+ 	esac
+@@ -517,10 +521,39 @@ maybe_setup_valgrind () {
+ 	fi
+ }
+ 
++# This is a separate function because some tests use
++# "return" to end a test_expect_success block early
++# (and we want to make sure we run any cleanup like
++# "set +x").
++test_eval_inner_ () {
++	eval "
++		test \"$trace\" = t && set -x
++		$*
++	"
++}
++
+ test_eval_ () {
+-	# This is a separate function because some tests use
+-	# "return" to end a test_expect_success block early.
+-	eval </dev/null >&3 2>&4 "$*"
++	# We run this block with stderr redirected to avoid extra cruft
++	# during a "-x" trace. Once in "set -x" mode, we cannot prevent
++	# the shell from printing the "set +x" to turn it off (nor the saving
++	# of $? before that). But we can make sure that the output goes to
++	# /dev/null.
++	#
++	# The test itself is run with stderr put back to &4 (so either to
++	# /dev/null, or to the original stderr if --verbose was used).
++	{
++		test_eval_inner_ "$@" </dev/null >&3 2>&4
++		test_eval_ret_=$?
++		if test "$trace" = t
++		then
++			set +x
++			if test "$test_eval_ret_" != 0
++			then
++				say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
++			fi
++		fi
++	} 2>/dev/null
++	return $test_eval_ret_
+ }
+ 
+ test_run_ () {
+@@ -531,7 +564,8 @@ test_run_ () {
+ 	eval_ret=$?
+ 	teardown_malloc_check
+ 
+-	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
++	if test -z "$immediate" || test $eval_ret = 0 ||
++	   test -n "$expecting_failure" && test "$test_cleanup" != ":"
+ 	then
+ 		setup_malloc_check
+ 		test_eval_ "$test_cleanup"
+-- 
+2.1.2.596.g7379948
