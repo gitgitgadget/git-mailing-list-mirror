@@ -1,78 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] mergetool: use more conservative temporary filenames
-Date: Fri, 10 Oct 2014 14:16:43 -0700
-Message-ID: <xmqq38av62x0.fsf@gitster.dls.corp.google.com>
-References: <1412929187-57936-1-git-send-email-davvid@gmail.com>
-	<5437C0CC.7030102@gmail.com>
+Subject: Re: bug with partial commit and pre-commit hook updating the index
+Date: Fri, 10 Oct 2014 14:18:29 -0700
+Message-ID: <xmqqy4sn4o9m.fsf@gitster.dls.corp.google.com>
+References: <20141010171834.GB21355@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	Sergio Ferrero <sferrero@ensoftcorp.com>,
-	Charles Bailey <charles@hashpling.org>
-To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 10 23:16:56 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Fri Oct 10 23:18:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XchYW-0004eM-4p
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 23:16:56 +0200
+	id 1Xcha8-0005LN-FD
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Oct 2014 23:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751866AbaJJVQw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Oct 2014 17:16:52 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65433 "EHLO
+	id S1754746AbaJJVSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Oct 2014 17:18:32 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51717 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751605AbaJJVQv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Oct 2014 17:16:51 -0400
+	with ESMTP id S1751797AbaJJVSc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Oct 2014 17:18:32 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B64714014;
-	Fri, 10 Oct 2014 17:16:45 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A65514079;
+	Fri, 10 Oct 2014 17:18:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=NIvpG6KYYOG/
-	oHeOt0rSg6TVfJE=; b=Iga3tNAO1C1FjwvwP37HFFtTYhSCQhd0Kv30GkEqHO0p
-	VjTWYY+vP6cHzLXoRXwu7cd/ev7K10DNxualz2LsaivsFbmSo73vX5QpGtks+b6S
-	6N2nrjHXENPDeb6jRutg1sQPNw082PKDf96khMexs1MUQp3il5qVlkej5Zr5g7M=
+	:content-type; s=sasl; bh=qKpf/Ur2JW+BsH0Gnkmcl8siSGk=; b=CjKqxN
+	mdY78hOaFZOg+RewAfyNcwNRZ1rPAUl6wjb72IDzKTlb4eluoLIv5ecngD6mab41
+	rNnddKCTsVfxIDGpyffl5iLoQdy7zw985G/onKleNeDAKRM/4XAKEhiEmJGWhGlV
+	GojMfTovG6PMCoanqivf5+WHkjqu/NJiJwfe0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vdurha
-	dqWOzTg0tiUOUTo9F9rdxuabxmQfkywwhIVcD6eZJP7k+3FNR7vgxQKJThi2qnxN
-	JT72Xj8dAVx+OXjoi3zb0iRKWOeLGmoqI5f0nd0tJdjUjJQFeLTUJ2v9BsARbGII
-	fEHhZ6YJlBW7rYFGlWWrBG3RdqypAo9CHLbo4=
+	:content-type; q=dns; s=sasl; b=etKzqTZOE/MKN8UlWrN2IGpgpY5hrXXo
+	OklMhrUUN8ojKe157UOZ941KPTQu75v7V9Z6rMU4hiaXTBb2o6UHwfZr9gceKPdj
+	V5QU3B6aO59JyMmeCAHu9q+QiCnOH6Ca+7Ik2qN2VHAQDFvYzj7YU+SlILnvfCUm
+	K+rLDxTkZVc=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2196714013;
-	Fri, 10 Oct 2014 17:16:45 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 716FC14078;
+	Fri, 10 Oct 2014 17:18:31 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9BABD1400F;
-	Fri, 10 Oct 2014 17:16:44 -0400 (EDT)
-In-Reply-To: <5437C0CC.7030102@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
- =?utf-8?Q?=22's?= message of "Fri,
-	10 Oct 2014 13:19:40 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EBA4414076;
+	Fri, 10 Oct 2014 17:18:30 -0400 (EDT)
+In-Reply-To: <20141010171834.GB21355@kitenet.net> (Joey Hess's message of
+	"Fri, 10 Oct 2014 13:18:34 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BCA13898-50C2-11E4-AB0B-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FC00AEEC-50C2-11E4-9E32-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+Joey Hess <joey@kitenet.net> writes:
 
-> Why use expr and not POSIX shell parameter substitution?
+> I have found many uses for the feature that lets a pre-commit hook stage
+> changes in the index that will be included in the commit. But now I seem
+> to have found a bug in the support for that, involving partial commits.
 >
-> BASE=3D${MERGED%.*}
-> ext=3D.${MERGED##*.}
->
-> Or something like that...
+> It seems that, after a partial commit in which the pre-commit hook
+> stages a modification of a file, the index is is left without that
+> staged change. This only occurs with "git commit $file", not "git commit -a".
 
-Because they are insufficient.  See David's illustrations for how.
-
-Parameter expansion (e.g. ${parameter%word}) is fine for the
-simplest cases (e.g. you know there is .c suffix to the $string and
-want to strip it out) but not sufficient for other cases (e.g. you
-may not even know if there is any suffix).  You can deconstruct your
-regexps manually and use conditional if/else/fi if you are unable to
-use expr, but I do not see how it buys us anything.
+Aren't pre-* hooks about verifications?  Who told you that you are
+allowed to muck with the index there?
