@@ -1,159 +1,142 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] git-completion.bash - avoid excruciatingly slow ref completion on Cygwin
-Date: Sat, 11 Oct 2014 11:51:13 -0400
-Message-ID: <1413042673-24052-1-git-send-email-mlevedahl@gmail.com>
-Cc: Mark Levedahl <mlevedahl@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 11 17:51:35 2014
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] mergetool: add an option for writing to a temporary directory
+Date: Sat, 11 Oct 2014 10:04:45 -0700
+Message-ID: <1413047085-12398-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, Charles Bailey <charles@hashpling.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 11 19:04:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xcyx9-00009e-Jl
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Oct 2014 17:51:31 +0200
+	id 1Xd064-0001RY-4H
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Oct 2014 19:04:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752503AbaJKPv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Oct 2014 11:51:28 -0400
-Received: from mail-qc0-f169.google.com ([209.85.216.169]:59430 "EHLO
-	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751758AbaJKPv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2014 11:51:27 -0400
-Received: by mail-qc0-f169.google.com with SMTP id o8so3352298qcw.28
-        for <git@vger.kernel.org>; Sat, 11 Oct 2014 08:51:26 -0700 (PDT)
+	id S1751033AbaJKREo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2014 13:04:44 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:52383 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750834AbaJKREn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2014 13:04:43 -0400
+Received: by mail-pa0-f51.google.com with SMTP id lj1so3482417pab.24
+        for <git@vger.kernel.org>; Sat, 11 Oct 2014 10:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=aF6V+lmvqlCTBfBHWqWfHms0msdA4kvJc2P77Khzngs=;
-        b=f5fb3F198Yx3Z28QoHJxhQrcYUD+wgX6l8kYKZl53ZDexLkXVZ4j0TPZJH23a0ErIn
-         SGJ48ZgbPsH7q33IY4iEOrNmiQWg9eglxxpFbTLSAlp0AccSQ1TZCEuXPP4VSYwquyTy
-         w/ogAlc6JjpcWOFAk7IusL84RlbJFDk/0dIuJXzWn0ce3ODWCUPmUc7n5EPdDob0UmBG
-         nSzG1BwAtdXwB1cVVMOd1NG+ksxjnMX6sPCIppYRRsVjdcfdeQBNiLSL9Vg4lllkfPz5
-         9wCSmYUmft/7hxu3+Lm9pdBOUAVEWYySp/udSHc7Sa/41F1NbpHyOoMUQbrOTIdWAvCY
-         gXOA==
-X-Received: by 10.224.38.6 with SMTP id z6mr22002628qad.4.1413042686458;
-        Sat, 11 Oct 2014 08:51:26 -0700 (PDT)
-Received: from marklaptop.lan (pool-173-73-114-83.washdc.fios.verizon.net. [173.73.114.83])
-        by mx.google.com with ESMTPSA id o10sm7766750qar.13.2014.10.11.08.51.24
+        bh=nfw0BW7TwpGoi959N8qp3T9KqJIrYaGlbFeAP13qdJ8=;
+        b=gRN1a8weqcxF8/D2yXYnGaA6/cGT3R9cjEf5oqbM+82QTHoe+yrxO20fQfLhFofM96
+         Ptb5Vs9podDVN9rf9KQMwTiiBXv4rn+u5Ds/Sr3xxCve1pQqk/+Y/WMChfzWhee2J+uQ
+         kqzsfYywKlbDZfxpI8+n+kEBEmT5ac1dKrMGkoNRkojdO6WxTPVvg3+2zbz0dcg+DCN9
+         5/T64Bk4IuGf7Mb/1H6RvpdHHB9lf/swVGQbptGx9dR1xFlZ0v3etoFJMNhp34sV7GlL
+         Vk4Ly7KCKDPaDqqyMQ7aPURH92oJeBdPikrE1ytAAbewAQwDbxPdSUyQUQT0VGh9dMra
+         HRHg==
+X-Received: by 10.70.118.9 with SMTP id ki9mr13063364pdb.104.1413047083386;
+        Sat, 11 Oct 2014 10:04:43 -0700 (PDT)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id wi6sm6692145pac.47.2014.10.11.10.04.41
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 11 Oct 2014 08:51:25 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2.2.0.14
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 11 Oct 2014 10:04:42 -0700 (PDT)
+X-Mailer: git-send-email 2.1.2.379.gc4e1e0c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-$git checkout <tab> was taking about 3.5 seconds to respond on one
-repository having four remotes with about 100 total refs (measured on
-Cygwin).  All of the time was being claimed in "git for-each-ref" to do
-its work.  This working directory was created using git-new-workdir, and
-thus .git/refs and .git/packed-refs are both symlinks.  for-each-ref
-operates in a way that causes the .git/refs symlink to be resolved
-multiple times for each ref in the repository, and Cygwin is especially
-slow in such operations.
+Teach mergetool to write files in a temporary directory when
+'mergetool.writeToTemp' is true.
 
-Patching refs.c to avoid repeatedly dereferencing the symlink reduced
-execution time from about 3.5 seconds to about 1.1 seconds (but no
-improvement on Linux), while an alternate approach of replacing the
-ref-list expansion with a shell pipeline provides a larger improvement on
-Cygwin and also improves Linux.  So, the shell pipeline approach is
-provided here.
+This is helpful for tools such as Eclipse which cannot cope with
+multiple copies of the same file in the worktree.
 
-Relevant timing results using the same repository on both Linux and
-Cygwin:
-
-On Cygwin:
-
-$ time git for-each-ref --format="%(refname:short)" refs
-
-real    0m3.523s
-user    0m0.436s
-sys     0m2.733s
-
-$ time (cd "$GIT_DIR" ; cat packed-refs ; find refs/ -type f) \
-	2>/dev/null | sed -ne 's@^.*refs/@refs/@p' | sort | uniq
-
-real    0m0.503s
-user    0m0.307s
-sys     0m0.139s
-
-On Linux (essentially the same hardware):
-
-$ time git for-each-ref --format="%(refname:short)" refs
-
-real    0m0.020s
-user    0m0.006s
-sys     0m0.014s
-
-$ time (cd "$GIT_DIR" ; cat packed-refs ; find refs/ -type f) \
-	2>/dev/null | sed -ne 's@^.*refs/@refs/@p' | sort | uniq
-
-real    0m0.012s
-user    0m0.006s
-sys     0m0.005s
-
-So, this is a win even on Linux, but more importantly it makes use of
-tab completion tolerable on Cygwin when symlinks are involved.
-
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+Suggested-by: Charles Bailey <charles@hashpling.org>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- contrib/completion/git-completion.bash | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+This patch is dependent on my previous mergetool patches:
+"use more conservative temporary..." and the subsequent --tool-help
+series.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 965778e..62d976e 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -319,8 +319,9 @@ __git_heads ()
- {
- 	local dir="$(__gitdir)"
- 	if [ -d "$dir" ]; then
--		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
--			refs/heads
-+		(cd "$dir" ; cat packed-refs ; find refs/heads -type f) 2>/dev/null |
-+			sed -ne 's@^.*refs/heads/@@p' |
-+			sort -u
- 		return
- 	fi
+ Documentation/config.txt |  6 ++++++
+ git-mergetool.sh         | 35 +++++++++++++++++++++++++++++++----
+ 2 files changed, 37 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 04a1e2f..be6cf35 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1768,6 +1768,12 @@ mergetool.keepTemporaries::
+ 	preserved, otherwise they will be removed after the tool has
+ 	exited. Defaults to `false`.
+ 
++mergetool.writeToTemp::
++	Git writes temporary 'BASE', 'LOCAL', and 'REMOTE' versions of
++	conflicting files in the worktree by default.  Git will attempt
++	to use a temporary directory for these files when set `true`.
++	Defaults to `false`.
++
+ mergetool.prompt::
+ 	Prompt before each invocation of the merge resolution program.
+ 
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 10782b8..2b788c5 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -37,6 +37,19 @@ base_present () {
+ 	test -n "$base_mode"
  }
-@@ -329,8 +330,9 @@ __git_tags ()
- {
- 	local dir="$(__gitdir)"
- 	if [ -d "$dir" ]; then
--		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
--			refs/tags
-+		(cd "$dir" ; cat packed-refs ; find refs/tags -type f) 2>/dev/null |
-+			sed -ne 's@^.*refs/tags/@@p' |
-+			sort -u
- 		return
+ 
++mergetool_tmpdir_init () {
++	if test "$(git config --bool mergetool.writeToTemp)" != true
++	then
++		MERGETOOL_TMPDIR=.
++		return 0
++	fi
++	if MERGETOOL_TMPDIR=$(mktemp -d -t "git-mergetool-XXXXXX" 2>/dev/null)
++	then
++		return 0
++	fi
++	die "error: mktemp is needed when 'mergetool.writeToTemp' is true"
++}
++
+ cleanup_temp_files () {
+ 	if test "$1" = --save-backup
+ 	then
+@@ -46,6 +59,10 @@ cleanup_temp_files () {
+ 	else
+ 		rm -f -- "$LOCAL" "$REMOTE" "$BASE" "$BACKUP"
  	fi
++	if test "$MERGETOOL_TMPDIR" != "."
++	then
++		rmdir "$MERGETOOL_TMPDIR"
++	fi
  }
-@@ -348,17 +350,21 @@ __git_refs ()
- 			format="refname"
- 			refs="${cur%/*}"
- 			track=""
-+			(cd "$dir" ; cat packed-refs ; find refs/ -type f) 2>/dev/null |
-+				sed -ne 's@^.*refs/@refs/@p' |
-+				sort -u
-+				return
- 			;;
- 		*)
- 			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD; do
- 				if [ -e "$dir/$i" ]; then echo $i; fi
- 			done
--			format="refname:short"
--			refs="refs/tags refs/heads refs/remotes"
-+			(cd "$dir" ; cat packed-refs ; find refs/ -type f) 2>/dev/null |
-+				sed -rne 's@^.*refs/(heads|remotes|tags)/@@p' |
-+				sort -u
-+				return
- 			;;
- 		esac
--		git --git-dir="$dir" for-each-ref --format="%($format)" \
--			$refs
- 		if [ -n "$track" ]; then
- 			# employ the heuristic used by git checkout
- 			# Try to find a remote branch that matches the completion word
+ 
+ describe_file () {
+@@ -235,10 +252,20 @@ merge_file () {
+ 		BASE=$MERGED
+ 		ext=
+ 	fi
+-	BACKUP="./${BASE}_BACKUP_$$$ext"
+-	LOCAL="./${BASE}_LOCAL_$$$ext"
+-	REMOTE="./${BASE}_REMOTE_$$$ext"
+-	BASE="./${BASE}_BASE_$$$ext"
++
++	mergetool_tmpdir_init
++
++	if test "$MERGETOOL_TMPDIR" != "."
++	then
++		# If we're using a temporary directory then write to the
++		# top-level of that directory.
++		BASE=${BASE##*/}
++	fi
++
++	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
++	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
++	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
++	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
+ 
+ 	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+ 	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
 -- 
-2.1.2.2.0.14
+2.1.2.379.gc4e1e0c
