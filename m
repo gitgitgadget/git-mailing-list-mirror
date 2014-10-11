@@ -1,133 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 07/14] Fix BASIC_LDFLAGS and COMPAT_CFLAGS for
- 64bit MinGW-w64
-Date: Sat, 11 Oct 2014 13:12:31 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1410111310530.990@s15462909.onlinehome-server.info>
-References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org> <1412791267-13356-8-git-send-email-marat@slonopotamus.org> <alpine.DEB.1.00.1410092115100.990@s15462909.onlinehome-server.info> <CAOYw7dsNQZNYZRz1c7RM0+CuOtzTXMH-2zWJR5MbM_kH9eZ1Eg@mail.gmail.com>
- <alpine.DEB.1.00.1410092146310.990@s15462909.onlinehome-server.info> <CAOYw7dtouon0EXYQPnvpc7ZMARKwaureNTK6ZL+aByknpPG-9A@mail.gmail.com> <alpine.DEB.1.00.1410100809450.990@s15462909.onlinehome-server.info>
- <alpine.DEB.1.00.1410101252240.990@s15462909.onlinehome-server.info>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org, 
-    gitster@pobox.com, msysGit <msysgit@googlegroups.com>
-To: Ray Donnelly <mingw.android@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRBP5B4SQQKGQEAO47WZY@googlegroups.com Sat Oct 11 13:13:04 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBP5B4SQQKGQEAO47WZY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f191.google.com ([209.85.216.191])
+From: Etienne Buira <etienne.buira@gmail.com>
+Subject: [PATCH 1/2] fix compilation with --disable-pthreads
+Date: Sat, 11 Oct 2014 16:42:07 +0200
+Message-ID: <d2df2f619967ea7ba9625868b9c77d79a1190665.1413038338.git.etienne.buira@gmail.com>
+Cc: Etienne Buira <etienne.buira@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 11 16:45:34 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBP5B4SQQKGQEAO47WZY@googlegroups.com>)
-	id 1Xcubg-0000h1-8V
-	for gcvm-msysgit@m.gmane.org; Sat, 11 Oct 2014 13:13:04 +0200
-Received: by mail-qc0-f191.google.com with SMTP id c9sf667825qcz.18
-        for <gcvm-msysgit@m.gmane.org>; Sat, 11 Oct 2014 04:13:03 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XcxvI-0007Hb-Lw
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Oct 2014 16:45:33 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752359AbaJKOpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2014 10:45:10 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:46069 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752268AbaJKOpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2014 10:45:09 -0400
+Received: by mail-wi0-f180.google.com with SMTP id em10so4334320wid.1
+        for <git@vger.kernel.org>; Sat, 11 Oct 2014 07:45:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=A8Ve9mwPukXujlmxKfgUwl24vnRX1975PAaQIqKlEHs=;
-        b=kOyfbCWzJq8wgfh4k1cQV08T6uIbC7z7R2ftJOUFTePFpasteMqhf1v36Ea+gLFofX
-         HBFaBIDssBtuycRTrygOLW4xYQ6OeYhYXDx6ujz25ppl/LNRuE9isPHKrzqS+bUiILYD
-         ghcrkrv+p/Mjp2PzdhPsOm0TEXgiG1QPCE3Wnz1Ac5MXafJLV+3RNxfPiu0z93ZqxU+t
-         i4fNX1y8Scm4EAy9AZ04NZICwMGHOM+7eKmSEdACg1gv0DpyH3PQBK+/Esfidwdamibc
-         Wjo23LOhqPiIgGDEhPw+bYAJH2fgcHOVT7I4MyPj5/o0w1fzvzM8uOUjimyyzOZOtPWt
-         DjXg==
-X-Received: by 10.140.106.163 with SMTP id e32mr13611qgf.7.1413025983514;
-        Sat, 11 Oct 2014 04:13:03 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.40.232 with SMTP id x95ls1186507qgx.76.gmail; Sat, 11 Oct
- 2014 04:13:03 -0700 (PDT)
-X-Received: by 10.236.222.166 with SMTP id t36mr2602793yhp.24.1413025983061;
-        Sat, 11 Oct 2014 04:13:03 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.20])
-        by gmr-mx.google.com with ESMTPS id fl6si825066qcb.0.2014.10.11.04.13.02
-        for <msysgit@googlegroups.com>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=h/BrtH3LQ+ttOwT0wjF4+mZ6J3qWhB/A/FYDQt2kI5U=;
+        b=M2FOvuRo4tsXZx0Knhmsm8jKcRhL7pRqdInIrXusnKCal5jeuCE6OSe0X946wGzkjX
+         twA1mStmm447iQvyzFAaAL1mdLDNIZwRhTpn5Nm3piq5XkLUwk0ACyugZEWUbLA42/eF
+         rKS1P59MIGJTrYbT6IVWJrZbWlkY0O4676HFe1JrGEorpQpAYQpYPkBOI5TBZKBDADoH
+         r33ZWnYvhNy+dshIcszTu16X8ynRKCK3yI4Mt3caQj7aC4ZRzvO054P/BDntLlq9zdH1
+         WVH0NaH92LGP17wWh63tf7DyICp9LCPZ7yad7OzWx8yn7HISeYlAc0h0EaIIhZ8f8XHJ
+         EIpw==
+X-Received: by 10.194.59.201 with SMTP id b9mr2258530wjr.103.1413038707411;
+        Sat, 11 Oct 2014 07:45:07 -0700 (PDT)
+Received: from localhost.localdomain (sbr22-2-88-185-151-243.fbx.proxad.net. [88.185.151.243])
+        by mx.google.com with ESMTPSA id wc7sm3440004wjc.8.2014.10.11.07.45.06
+        for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 11 Oct 2014 04:13:03 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as permitted sender) client-ip=212.227.17.20;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MUTSJ-1Xm5oZ2Boh-00RHmy;
- Sat, 11 Oct 2014 13:12:32 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <alpine.DEB.1.00.1410101252240.990@s15462909.onlinehome-server.info>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:YHSW3GZwK/JHx+7Hka8WRjCZtSBtuWLbakpQwOk0rn+5xNqn1EH
- ZbdxLFiwzp3KZR0ZensAsXPlDByUbMa5cBLZhQWh0qsWP72sExtJ81CWhsF6mPWumBHAfLV
- uC/W2UagFv/B7kKettQC8F9VAPfiAgaJ9suqm/gu6YmojZPd4Xj+H8ud/vxuVCALlcG/MKP
- 5sVSIwh0k7+20cw3yf82Q==
-X-UI-Out-Filterresults: notjunk:1;
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+        Sat, 11 Oct 2014 07:45:06 -0700 (PDT)
+X-Mailer: git-send-email 1.8.5.5
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Signed-off-by: Etienne Buira <etienne.buira@gmail.com>
+---
+ builtin/index-pack.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-On Fri, 10 Oct 2014, Johannes Schindelin wrote:
-
-> On Fri, 10 Oct 2014, Johannes Schindelin wrote:
->=20
-> > With this [mingw-w64] compiler, and the 'w64' branch from
-> > https://github.com/dscho/git =E2=80=93 intended to be merged into
-> > https://github.com/git-for-windows/git =E2=80=93 the following command-=
-line
-> > produces 64-bit Git:
-> >=20
-> > 	PATH=3D/path/to/unpacked/mingw-w64/mingw64/bin/:$PATH \
-> > 	make \
-> > 		CROSS_COMPILE=3Dx86_64-w64-mingw32- CC=3D'$(CROSS_COMPILE)gcc' \
-> > 		AR=3Dar RC=3Dwindres \
-> > 		NO_ICONV=3D1 NO_OPENSSL=3D1 NO_CURL=3D1 NEEDS_LIBICONV=3D USE_LIBPCRE=
-=3D
-> >=20
-> > The test suite passes so far (still running, at the time of writing it =
-is
-> > going through t3404).
-> [...]
->=20
-> So I fear we have still a ways to go before Git works as a 64-bit Windows
-> binary...
-
-It seems to be not *all* that bad: only t3900, t3901, t4041, t4205, t4210,
-t5100, t6006 and t7102 display test failures.
-
-Ciao,
-Dscho
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index eebf1a8..0f88f4b 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -185,6 +185,9 @@ static void cleanup_thread(void)
+ #define deepest_delta_lock()
+ #define deepest_delta_unlock()
+ 
++#define type_cas_lock()
++#define type_cas_unlock()
++
+ #endif
+ 
+ 
+-- 
+1.8.5.5
