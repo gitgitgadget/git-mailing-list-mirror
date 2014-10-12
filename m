@@ -1,133 +1,302 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/3] fdopen_lock_file(): access a lockfile using stdio
-Date: Sun, 12 Oct 2014 08:17:19 +0200
-Message-ID: <543A1CEF.7020700@alum.mit.edu>
-References: <1412162089-3233-1-git-send-email-mhagger@alum.mit.edu> <1412162089-3233-2-git-send-email-mhagger@alum.mit.edu> <542D1AF2.8050508@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 12 08:17:44 2014
+From: Etienne Buira <etienne.buira@gmail.com>
+Subject: [PATCH v2] Handle atexit list internaly fo unthreaded builds
+Date: Sun, 12 Oct 2014 11:09:34 +0200
+Message-ID: <1413104974-3861-1-git-send-email-etienne.buira@gmail.com>
+References: <1413039218-12139-1-git-send-email-etienne.buira@gmail.com>
+Cc: Etienne Buira <etienne.buira@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 12 11:10:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdCTP-0007Z1-9f
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Oct 2014 08:17:43 +0200
+	id 1XdFA9-0002OL-30
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Oct 2014 11:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750826AbaJLGR3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Oct 2014 02:17:29 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:56155 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750802AbaJLGR3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Oct 2014 02:17:29 -0400
-X-AuditID: 12074413-f79bb6d000001e81-ce-543a1cf3c2c4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 50.82.07809.3FC1A345; Sun, 12 Oct 2014 02:17:24 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97371.dip0.t-ipconnect.de [79.201.115.113])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s9C6HKM8012321
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 12 Oct 2014 02:17:21 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
-In-Reply-To: <542D1AF2.8050508@web.de>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOKsWRmVeSWpSXmKPExsUixO6iqPtFxirEoPURk0XXlW4mi4beK8wW
-	T+beZbZ4e3MJo8WPlh5mi38Taiw6O74yOrB77Jx1l91jwaZSj4evutg9nvXuYfS4eEnZ4/Mm
-	OY/bz7axBLBHcdskJZaUBWem5+nbJXBn3O+7y1qwULBi6ZvZjA2M13m7GDk4JARMJBp3Z3Yx
-	cgKZYhIX7q1n62Lk4hASuMwocXbqPCYI5wKTRM//0+wgVbwC2hIrJ3SzgtgsAqoSa7fdYwKx
-	2QR0JRb1NIPZogIBEh86HzBC1AtKnJz5hAXEFhHIkvj26QtYL7PAekaJBVf4QWxhAS+Jhgkt
-	zBDLpjJKnFj4G2wZp4CaROfFVmaIBj2JHdd/QTXLSzRvnc08gVFgFpIds5CUzUJStoCReRWj
-	XGJOaa5ubmJmTnFqsm5xcmJeXmqRrrlebmaJXmpK6SZGSCQI72DcdVLuEKMAB6MSD6/Ef8sQ
-	IdbEsuLK3EOMkhxMSqK8tS+AQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4TYStQoR4UxIrq1KL
-	8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8WdJAjYJFqempFWmZOSUIaSYOTpDh
-	XFIixal5KalFiaUlGfGgWI0vBkYrSIoHaG8vSDtvcUFiLlAUovUUo6KUOO8ikIQASCKjNA9u
-	LCy9vWIUB/pSmPefFFAVDzA1wnW/AhrMBDT4aJc5yOCSRISUVAOj9mWNb7tss2YkrV+6Z0lQ
-	T9unvxrvjxveM4uQDE94pP9j6YYkwcQv666uL/Sdzst5a+6LL6ZMVeWxc6YGmJW2 
+	id S1751088AbaJLJJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Oct 2014 05:09:56 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:50659 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbaJLJJz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Oct 2014 05:09:55 -0400
+Received: by mail-wi0-f180.google.com with SMTP id em10so5238563wid.1
+        for <git@vger.kernel.org>; Sun, 12 Oct 2014 02:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=n6I+88DxPdGJvy08OZh3OooGHIJ1QtZE+Jyii0j9BsY=;
+        b=FUmXuqL3TuvrBBAwu4UeQLE0w8aeWfG+9y4UwTyEgRbecL7lR22/Ui+rG6kPMw90GH
+         T/VDpJPPWNAWccA/qGAWlFiawRm333VFiaLp4/opUICvsyxwjSWjVPRyBL+7VUxAsL0f
+         yYNWL1hMgMT5QZz7ZvEtV1fL/naLHS1rt594mvqw/hOhblfbGxzhZjk7xe1dmNer7tWE
+         FgJxtcqYTV1hwL3rEZKiGrZbB4a27dr+5rT9Cr/eFFcL2g50dOP4MwDFvjptthlx/RXG
+         NkdZTF7kTyF6OvNbbAKZr8bTsys148Trg7Bv3TgHNWSacUYtxtdrvoPQfJZIJx7C5lch
+         QzyQ==
+X-Received: by 10.194.142.209 with SMTP id ry17mr14905362wjb.57.1413104993719;
+        Sun, 12 Oct 2014 02:09:53 -0700 (PDT)
+Received: from localhost.localdomain (sbr22-2-88-185-151-243.fbx.proxad.net. [88.185.151.243])
+        by mx.google.com with ESMTPSA id bc5sm10679998wjb.14.2014.10.12.02.09.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 12 Oct 2014 02:09:53 -0700 (PDT)
+X-Mailer: git-send-email 2.0.4
+In-Reply-To: <1413039218-12139-1-git-send-email-etienne.buira@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, I see I never responded to this email.
+Replace atexit()s calls with cmd_atexit that is atexit() on threaded
+builds, but handles the callbacks list internally for unthreaded builds.
 
-On 10/02/2014 11:29 AM, Torsten B=F6gershausen wrote:
-> On 01.10.14 13:14, Michael Haggerty wrote:
-> []
-> Nice done, small comments inline
->> diff --git a/lockfile.c b/lockfile.c
->> index d27e61c..e046027 100644
->> --- a/lockfile.c
->> +++ b/lockfile.c
->> @@ -7,20 +7,29 @@
->> =20
->>  static struct lock_file *volatile lock_file_list;
->> =20
->> -static void remove_lock_files(void)
->> +static void remove_lock_files(int skip_fclose)
-> Even if the motivation to skip is clear now and here,
-> I would consider to do it the other way around,
-> and actively order the fclose():
->=20
-> static void remove_lock_files(int call_fclose)
+This is needed because on unthreaded builds, asyncs inherits parent's
+atexit() list, that gets run as soon as the async exit()s (and again at
+the end of the parent process). That led to remove temporary and lock
+files too early.
 
-I don't think inverting the logic will help the reader remember the
-motivation for skipping the call to fclose(). I think this way was
-clearer because skipping the call to fclose() is the "unusual" case; it
-has to actively sabotage the fclose() that would otherwise take place i=
-n
-rollback_lock_file(). Also, "call_fclose" slightly implies that fclose(=
-)
-will be called for the lockfiles, whereas in fact it will only be calle=
-d
-for the lockfiles for which fdopen_lock_file() has been called.
+Fixes test 5537 (temporary shallow file vanished before unpack-objects
+could open it)
 
->>  {
->>  	pid_t me =3D getpid();
->> =20
->>  	while (lock_file_list) {
->> -		if (lock_file_list->owner =3D=3D me)
->> +		if (lock_file_list->owner =3D=3D me) {
->> +			/* fclose() is not safe to call in a signal handler */
->> +			if (skip_fclose)
->> +				lock_file_list->fp =3D NULL;
->>  			rollback_lock_file(lock_file_list);
->> +		}
->>  		lock_file_list =3D lock_file_list->next;
->>  	}
->>  }
->> =20
->> +static void remove_lock_files_on_exit(void)
->> +{
->> +	remove_lock_files(0);
-> What does "0" mean ?
->=20
-> remove_lock_files(LK_DO_FCLOSE) ?
->=20
->> +}
->> +
->>  static void remove_lock_files_on_signal(int signo)
->>  {
->> -	remove_lock_files();
->> +	remove_lock_files(1);
-> And what does this "1" mean ?
->=20
-> remove_lock_files(LK_SKIP_FCLOSE) ?
->=20
-> We can even have an emum, or use #define
+V2: remove an obvious mistake
 
-Meh. These are private functions, all defined within a few lines of eac=
-h
-other. I think that an enum would be overkill here when a "boolean"
-suffices.
+Signed-off-by: Etienne Buira <etienne.buira@gmail.com>
+---
+ builtin/clone.c |  7 +------
+ builtin/fetch.c |  2 +-
+ builtin/gc.c    |  2 +-
+ diff.c          |  2 +-
+ lockfile.c      |  2 +-
+ pager.c         |  2 +-
+ read-cache.c    |  2 +-
+ run-command.c   | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+ shallow.c       |  7 ++-----
+ trace.c         |  2 +-
+ 10 files changed, 54 insertions(+), 19 deletions(-)
 
-Michael
-
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
+diff --git a/builtin/clone.c b/builtin/clone.c
+index bbd169c..2992ac0 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -390,7 +390,6 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+ 
+ static const char *junk_work_tree;
+ static const char *junk_git_dir;
+-static pid_t junk_pid;
+ static enum {
+ 	JUNK_LEAVE_NONE,
+ 	JUNK_LEAVE_REPO,
+@@ -417,8 +416,6 @@ static void remove_junk(void)
+ 		break;
+ 	}
+ 
+-	if (getpid() != junk_pid)
+-		return;
+ 	if (junk_git_dir) {
+ 		strbuf_addstr(&sb, junk_git_dir);
+ 		remove_dir_recursively(&sb, 0);
+@@ -758,8 +755,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct refspec *refspec;
+ 	const char *fetch_pattern;
+ 
+-	junk_pid = getpid();
+-
+ 	packet_trace_identity("clone");
+ 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
+ 			     builtin_clone_usage, 0);
+@@ -843,7 +838,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		set_git_work_tree(work_tree);
+ 	}
+ 	junk_git_dir = git_dir;
+-	atexit(remove_junk);
++	cmd_atexit(remove_junk);
+ 	sigchain_push_common(remove_junk_on_signal);
+ 
+ 	if (safe_create_leading_directories_const(git_dir) < 0)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 159fb7e..1e44d58 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1095,7 +1095,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ 	}
+ 
+ 	sigchain_push_common(unlock_pack_on_signal);
+-	atexit(unlock_pack);
++	cmd_atexit(unlock_pack);
+ 	refspec = parse_fetch_refspec(ref_nr, refs);
+ 	exit_code = do_fetch(gtransport, refspec, ref_nr);
+ 	free_refspec(ref_nr, refspec);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 8d219d8..cf2defa 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -254,7 +254,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+ 
+ 	pidfile = git_pathdup("gc.pid");
+ 	sigchain_push_common(remove_pidfile_on_signal);
+-	atexit(remove_pidfile);
++	cmd_atexit(remove_pidfile);
+ 
+ 	return NULL;
+ }
+diff --git a/diff.c b/diff.c
+index 867f034..9c6ef9a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2833,7 +2833,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 	}
+ 
+ 	if (!remove_tempfile_installed) {
+-		atexit(remove_tempfile);
++		cmd_atexit(remove_tempfile);
+ 		sigchain_push_common(remove_tempfile_on_signal);
+ 		remove_tempfile_installed = 1;
+ 	}
+diff --git a/lockfile.c b/lockfile.c
+index 2564a7f..ad0d1e2 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -141,7 +141,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	if (0 <= lk->fd) {
+ 		if (!lock_file_list) {
+ 			sigchain_push_common(remove_lock_file_on_signal);
+-			atexit(remove_lock_file);
++			cmd_atexit(remove_lock_file);
+ 		}
+ 		lk->owner = getpid();
+ 		if (!lk->on_list) {
+diff --git a/pager.c b/pager.c
+index 8b5cbc5..09ab2fa 100644
+--- a/pager.c
++++ b/pager.c
+@@ -102,7 +102,7 @@ void setup_pager(void)
+ 
+ 	/* this makes sure that the parent terminates after the pager */
+ 	sigchain_push_common(wait_for_pager_signal);
+-	atexit(wait_for_pager);
++	cmd_atexit(wait_for_pager);
+ }
+ 
+ int pager_in_use(void)
+diff --git a/read-cache.c b/read-cache.c
+index 6f0057f..8b10c92 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2104,7 +2104,7 @@ static int write_shared_index(struct index_state *istate,
+ 		return do_write_locked_index(istate, lock, flags);
+ 	}
+ 	if (!installed_handler) {
+-		atexit(remove_temporary_sharedindex);
++		cmd_atexit(remove_temporary_sharedindex);
+ 		sigchain_push_common(remove_temporary_sharedindex_on_signal);
+ 	}
+ 	move_cache_to_base_index(istate);
+diff --git a/run-command.c b/run-command.c
+index 35a3ebf..a8a6374 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -45,7 +45,7 @@ static void mark_child_for_cleanup(pid_t pid)
+ 	children_to_clean = p;
+ 
+ 	if (!installed_child_cleanup_handler) {
+-		atexit(cleanup_children_on_exit);
++		cmd_atexit(cleanup_children_on_exit);
+ 		sigchain_push_common(cleanup_children_on_signal);
+ 		installed_child_cleanup_handler = 1;
+ 	}
+@@ -624,6 +624,48 @@ static int async_die_is_recursing(void)
+ 	return ret != NULL;
+ }
+ 
++int cmd_atexit(void (*handler)(void))
++{
++	return atexit(handler);
++}
++
++#else
++
++static struct {
++	void (**handlers)(void);
++	size_t nr;
++	size_t alloc;
++} cmd_atexit_hdlrs;
++
++static int cmd_atexit_installed;
++
++static void cmd_atexit_dispatch()
++{
++	size_t i;
++
++	for (i=cmd_atexit_hdlrs.nr ; i ; i--)
++		cmd_atexit_hdlrs.handlers[i-1]();
++}
++
++static void cmd_atexit_clear()
++{
++	free(cmd_atexit_hdlrs.handlers);
++	memset(&cmd_atexit_hdlrs, 0, sizeof(cmd_atexit_hdlrs));
++	cmd_atexit_installed = 0;
++}
++
++int cmd_atexit(void (*handler)(void))
++{
++	ALLOC_GROW(cmd_atexit_hdlrs.handlers, cmd_atexit_hdlrs.nr + 1, cmd_atexit_hdlrs.alloc);
++	cmd_atexit_hdlrs.handlers[cmd_atexit_hdlrs.nr++] = handler;
++	if (!cmd_atexit_installed) {
++		if (atexit(&cmd_atexit_dispatch))
++			return -1;
++		cmd_atexit_installed = 1;
++	}
++	return 0;
++}
++
+ #endif
+ 
+ int start_async(struct async *async)
+@@ -682,6 +724,7 @@ int start_async(struct async *async)
+ 			close(fdin[1]);
+ 		if (need_out)
+ 			close(fdout[0]);
++		cmd_atexit_clear();
+ 		exit(!!async->proc(proc_in, proc_out, async->data));
+ 	}
+ 
+diff --git a/shallow.c b/shallow.c
+index de07709..881580b 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -226,7 +226,6 @@ static void remove_temporary_shallow_on_signal(int signo)
+ 
+ const char *setup_temporary_shallow(const struct sha1_array *extra)
+ {
+-	static int installed_handler;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int fd;
+ 
+@@ -237,10 +236,8 @@ const char *setup_temporary_shallow(const struct sha1_array *extra)
+ 		strbuf_addstr(&temporary_shallow, git_path("shallow_XXXXXX"));
+ 		fd = xmkstemp(temporary_shallow.buf);
+ 
+-		if (!installed_handler) {
+-			atexit(remove_temporary_shallow);
+-			sigchain_push_common(remove_temporary_shallow_on_signal);
+-		}
++		cmd_atexit(remove_temporary_shallow);
++		sigchain_push_common(remove_temporary_shallow_on_signal);
+ 
+ 		if (write_in_full(fd, sb.buf, sb.len) != sb.len)
+ 			die_errno("failed to write to %s",
+diff --git a/trace.c b/trace.c
+index e583dc6..36c5076 100644
+--- a/trace.c
++++ b/trace.c
+@@ -420,7 +420,7 @@ void trace_command_performance(const char **argv)
+ 		return;
+ 
+ 	if (!command_start_time)
+-		atexit(print_command_performance_atexit);
++		cmd_atexit(print_command_performance_atexit);
+ 
+ 	strbuf_reset(&command_line);
+ 	sq_quote_argv(&command_line, argv, 0);
+-- 
+2.0.4
