@@ -1,55 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] receive-pack: plug minor memory leak in unpack()
-Date: Sat, 11 Oct 2014 21:53:21 -0400
-Message-ID: <20141012015321.GA15272@peff.net>
-References: <54390DC0.8060302@web.de>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: $GIT_DIR/info/exclude fails to negate a pattern defined by core.excludesfile
+Date: Sat, 11 Oct 2014 22:58:19 -0400
+Message-ID: <CAD03jn4md9YJZ3fFWmvjiO2KSztc-02QpznXO3LJeiZDz8YhrQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Sun Oct 12 03:53:45 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 12 05:55:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xd8Ls-0004FV-CY
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Oct 2014 03:53:44 +0200
+	id 1XdAFQ-0005fY-R0
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Oct 2014 05:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbaJLBx0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Oct 2014 21:53:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57585 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751631AbaJLBxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Oct 2014 21:53:25 -0400
-Received: (qmail 8472 invoked by uid 102); 12 Oct 2014 01:53:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 11 Oct 2014 20:53:25 -0500
-Received: (qmail 12950 invoked by uid 107); 12 Oct 2014 01:53:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 11 Oct 2014 21:53:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 11 Oct 2014 21:53:21 -0400
-Content-Disposition: inline
-In-Reply-To: <54390DC0.8060302@web.de>
+	id S1752394AbaJLDyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Oct 2014 23:54:52 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:47423 "EHLO
+	mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752331AbaJLDyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Oct 2014 23:54:52 -0400
+Received: by mail-oi0-f66.google.com with SMTP id a141so4271891oig.9
+        for <git@vger.kernel.org>; Sat, 11 Oct 2014 20:54:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=reFStDIohfLECo9D6A6jRJotoEOeudQf7uVcDLZZl8c=;
+        b=d77NZzCvlAX9EPM0gYyv4OXMIF406mCbLX55dI0ooK+h2Ul3o0hItnh+CKtOT2lkGI
+         rgi34pvYWO4PXg4Wk8l+lwNVQm+JuitAGujCxbY9Lyv0ltALQMHhZZzAi6qvLPJIeVGc
+         t/pcVD8iAGtsSg1vTKH64JGPjoVLgLxSv0Sv0WEsD3Qyou4jEsAPxk72wAIKacO6wNM8
+         HICYky1TtVloQVbdtmL8q2HUdyFCPxBZLBtIduVAwUBAX4YIfRc7enJxGScjdiEU9QDy
+         TT7snUw9Qmg/E7xOaHrgguWayTDTal1DepQwPYpGznZtR2cV2k/Npl/2RXI3VlkLieLs
+         jf9w==
+X-Received: by 10.202.11.72 with SMTP id 69mr12975475oil.40.1413082699086;
+ Sat, 11 Oct 2014 19:58:19 -0700 (PDT)
+Received: by 10.76.33.66 with HTTP; Sat, 11 Oct 2014 19:58:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 11, 2014 at 01:00:16PM +0200, Ren=C3=A9 Scharfe wrote:
+I have the pattern `*.out` defined in my `core.excludesfile`.
+According to the documentation[1], patterns defined in
+`$GIT_DIR/info/exclude` take precedence over `core.excludesfile`, so
+for one particular project that needs to track some `.out` files, I
+created `$GIT_DIR/info/exclude` with just one pattern: `!*.out`.
 
-> The argv_array used in unpack() is never freed.  Instead of adding
-> explicit calls to argv_array_clear() use the args member of struct
-> child_process and let run_command() and friends clean up for us.
+Yet for some reason, `git status` still fails to report newly created
+`.out` files for that project. Am I misunderstanding the
+documentation?
 
-Looks good. I notice that the recently added prepare_push_cert_sha1 use=
-s
-an argv_array to create the child_process.env, and we leak the result. =
-I
-wonder if run-command should provide a managed env array similar to the
-"args" array.
+Thanks, D.
 
--Peff
+[1] http://jk.gs/gitignore.html
