@@ -1,193 +1,133 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH 4/4] path: implement common_dir handling in git_path_submodule()
-Date: Sun, 12 Oct 2014 08:13:11 +0300
-Message-ID: <1413090791-14428-5-git-send-email-max@max630.net>
-References: <1413090791-14428-1-git-send-email-max@max630.net>
-Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>
-To: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 12 07:14:14 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 1/3] fdopen_lock_file(): access a lockfile using stdio
+Date: Sun, 12 Oct 2014 08:17:19 +0200
+Message-ID: <543A1CEF.7020700@alum.mit.edu>
+References: <1412162089-3233-1-git-send-email-mhagger@alum.mit.edu> <1412162089-3233-2-git-send-email-mhagger@alum.mit.edu> <542D1AF2.8050508@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 12 08:17:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdBTw-0006wx-Pv
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Oct 2014 07:14:13 +0200
+	id 1XdCTP-0007Z1-9f
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Oct 2014 08:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbaJLFOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Oct 2014 01:14:07 -0400
-Received: from p3plsmtpa09-01.prod.phx3.secureserver.net ([173.201.193.230]:40290
-	"EHLO p3plsmtpa09-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750848AbaJLFN7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Oct 2014 01:13:59 -0400
-Received: from wheezy.pp.htv.fi ([82.181.81.240])
-	by p3plsmtpa09-01.prod.phx3.secureserver.net with 
-	id 25Dj1p00F5B68XE015DxVF; Sat, 11 Oct 2014 22:13:59 -0700
-X-Mailer: git-send-email 2.0.1.1697.g73c6810
-In-Reply-To: <1413090791-14428-1-git-send-email-max@max630.net>
+	id S1750826AbaJLGR3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Oct 2014 02:17:29 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:56155 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750802AbaJLGR3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Oct 2014 02:17:29 -0400
+X-AuditID: 12074413-f79bb6d000001e81-ce-543a1cf3c2c4
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 50.82.07809.3FC1A345; Sun, 12 Oct 2014 02:17:24 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97371.dip0.t-ipconnect.de [79.201.115.113])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s9C6HKM8012321
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 12 Oct 2014 02:17:21 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
+In-Reply-To: <542D1AF2.8050508@web.de>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOKsWRmVeSWpSXmKPExsUixO6iqPtFxirEoPURk0XXlW4mi4beK8wW
+	T+beZbZ4e3MJo8WPlh5mi38Taiw6O74yOrB77Jx1l91jwaZSj4evutg9nvXuYfS4eEnZ4/Mm
+	OY/bz7axBLBHcdskJZaUBWem5+nbJXBn3O+7y1qwULBi6ZvZjA2M13m7GDk4JARMJBp3Z3Yx
+	cgKZYhIX7q1n62Lk4hASuMwocXbqPCYI5wKTRM//0+wgVbwC2hIrJ3SzgtgsAqoSa7fdYwKx
+	2QR0JRb1NIPZogIBEh86HzBC1AtKnJz5hAXEFhHIkvj26QtYL7PAekaJBVf4QWxhAS+Jhgkt
+	zBDLpjJKnFj4G2wZp4CaROfFVmaIBj2JHdd/QTXLSzRvnc08gVFgFpIds5CUzUJStoCReRWj
+	XGJOaa5ubmJmTnFqsm5xcmJeXmqRrrlebmaJXmpK6SZGSCQI72DcdVLuEKMAB6MSD6/Ef8sQ
+	IdbEsuLK3EOMkhxMSqK8tS+AQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4TYStQoR4UxIrq1KL
+	8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8WdJAjYJFqempFWmZOSUIaSYOTpDh
+	XFIixal5KalFiaUlGfGgWI0vBkYrSIoHaG8vSDtvcUFiLlAUovUUo6KUOO8ikIQASCKjNA9u
+	LCy9vWIUB/pSmPefFFAVDzA1wnW/AhrMBDT4aJc5yOCSRISUVAOj9mWNb7tss2YkrV+6Z0lQ
+	T9unvxrvjxveM4uQDE94pP9j6YYkwcQv666uL/Sdzst5a+6LL6ZMVeWxc6YGmJW2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently git_path_submodule() does not handle submodules being a linked
-checkout. The visible result is that "git diff --submodule" fails to
-report changes in the submodule.
+Sorry, I see I never responded to this email.
 
-Perform the same resolution as with parent repository, but ignore the
-GIT_COMMON_DIR environment variable, because it would mean common
-directory for the parent repository and does not make sense for
-submodule.
+On 10/02/2014 11:29 AM, Torsten B=F6gershausen wrote:
+> On 01.10.14 13:14, Michael Haggerty wrote:
+> []
+> Nice done, small comments inline
+>> diff --git a/lockfile.c b/lockfile.c
+>> index d27e61c..e046027 100644
+>> --- a/lockfile.c
+>> +++ b/lockfile.c
+>> @@ -7,20 +7,29 @@
+>> =20
+>>  static struct lock_file *volatile lock_file_list;
+>> =20
+>> -static void remove_lock_files(void)
+>> +static void remove_lock_files(int skip_fclose)
+> Even if the motivation to skip is clear now and here,
+> I would consider to do it the other way around,
+> and actively order the fclose():
+>=20
+> static void remove_lock_files(int call_fclose)
 
-Also add test for functionality which uses this call.
+I don't think inverting the logic will help the reader remember the
+motivation for skipping the call to fclose(). I think this way was
+clearer because skipping the call to fclose() is the "unusual" case; it
+has to actively sabotage the fclose() that would otherwise take place i=
+n
+rollback_lock_file(). Also, "call_fclose" slightly implies that fclose(=
+)
+will be called for the lockfiles, whereas in fact it will only be calle=
+d
+for the lockfiles for which fdopen_lock_file() has been called.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
- cache.h                          |  1 +
- path.c                           | 24 ++++++++++++++++++++----
- setup.c                          | 17 ++++++++++++-----
- t/t7410-submodule-checkout-to.sh | 12 ++++++++++++
- 4 files changed, 45 insertions(+), 9 deletions(-)
+>>  {
+>>  	pid_t me =3D getpid();
+>> =20
+>>  	while (lock_file_list) {
+>> -		if (lock_file_list->owner =3D=3D me)
+>> +		if (lock_file_list->owner =3D=3D me) {
+>> +			/* fclose() is not safe to call in a signal handler */
+>> +			if (skip_fclose)
+>> +				lock_file_list->fp =3D NULL;
+>>  			rollback_lock_file(lock_file_list);
+>> +		}
+>>  		lock_file_list =3D lock_file_list->next;
+>>  	}
+>>  }
+>> =20
+>> +static void remove_lock_files_on_exit(void)
+>> +{
+>> +	remove_lock_files(0);
+> What does "0" mean ?
+>=20
+> remove_lock_files(LK_DO_FCLOSE) ?
+>=20
+>> +}
+>> +
+>>  static void remove_lock_files_on_signal(int signo)
+>>  {
+>> -	remove_lock_files();
+>> +	remove_lock_files(1);
+> And what does this "1" mean ?
+>=20
+> remove_lock_files(LK_SKIP_FCLOSE) ?
+>=20
+> We can even have an emum, or use #define
 
-diff --git a/cache.h b/cache.h
-index ab3adb6..09821df 100644
---- a/cache.h
-+++ b/cache.h
-@@ -437,6 +437,7 @@ extern char *get_object_directory(void);
- extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
-+extern int get_common_dir_noenv(struct strbuf *sb, const char *gitdir);
- extern int get_common_dir(struct strbuf *sb, const char *gitdir);
- extern const char *get_git_namespace(void);
- extern const char *strip_namespace(const char *namespaced_ref);
-diff --git a/path.c b/path.c
-index a5c51a3..78f718f 100644
---- a/path.c
-+++ b/path.c
-@@ -98,7 +98,7 @@ static const char *common_list[] = {
- 	NULL
- };
- 
--static void update_common_dir(struct strbuf *buf, int git_dir_len)
-+static void update_common_dir(struct strbuf *buf, int git_dir_len, const char* common_dir)
- {
- 	char *base = buf->buf + git_dir_len;
- 	const char **p;
-@@ -115,12 +115,17 @@ static void update_common_dir(struct strbuf *buf, int git_dir_len)
- 			path++;
- 			is_dir = 1;
- 		}
-+
-+		if (!common_dir) {
-+			common_dir = get_git_common_dir();
-+		}
-+
- 		if (is_dir && dir_prefix(base, path)) {
--			replace_dir(buf, git_dir_len, get_git_common_dir());
-+			replace_dir(buf, git_dir_len, common_dir);
- 			return;
- 		}
- 		if (!is_dir && !strcmp(base, path)) {
--			replace_dir(buf, git_dir_len, get_git_common_dir());
-+			replace_dir(buf, git_dir_len, common_dir);
- 			return;
- 		}
- 	}
-@@ -160,7 +165,7 @@ static void adjust_git_path(struct strbuf *buf, int git_dir_len)
- 	else if (git_db_env && dir_prefix(base, "objects"))
- 		replace_dir(buf, git_dir_len + 7, get_object_directory());
- 	else if (git_common_dir_env)
--		update_common_dir(buf, git_dir_len);
-+		update_common_dir(buf, git_dir_len, NULL);
- }
- 
- static void do_git_path(struct strbuf *buf, const char *fmt, va_list args)
-@@ -256,6 +261,8 @@ const char *git_path_submodule(const char *path, const char *fmt, ...)
- {
- 	struct strbuf *buf = get_pathname();
- 	const char *git_dir;
-+	struct strbuf git_submodule_common_dir = STRBUF_INIT;
-+	struct strbuf git_submodule_dir = STRBUF_INIT;
- 	va_list args;
- 
- 	strbuf_addstr(buf, path);
-@@ -269,11 +276,20 @@ const char *git_path_submodule(const char *path, const char *fmt, ...)
- 		strbuf_addstr(buf, git_dir);
- 	}
- 	strbuf_addch(buf, '/');
-+	strbuf_addstr(&git_submodule_dir, buf->buf);
- 
- 	va_start(args, fmt);
- 	strbuf_vaddf(buf, fmt, args);
- 	va_end(args);
-+
-+	if (get_common_dir_noenv(&git_submodule_common_dir, git_submodule_dir.buf)) {
-+		update_common_dir(buf, git_submodule_dir.len, git_submodule_common_dir.buf);
-+	}
-+
- 	strbuf_cleanup_path(buf);
-+
-+	strbuf_release(&git_submodule_dir);
-+	strbuf_release(&git_submodule_common_dir);
- 	return buf->buf;
- }
- 
-diff --git a/setup.c b/setup.c
-index fb61860..ffda622 100644
---- a/setup.c
-+++ b/setup.c
-@@ -226,14 +226,21 @@ void verify_non_filename(const char *prefix, const char *arg)
- 
- int get_common_dir(struct strbuf *sb, const char *gitdir)
- {
-+	const char *git_env_common_dir = getenv(GIT_COMMON_DIR_ENVIRONMENT);
-+	if (git_env_common_dir) {
-+		strbuf_addstr(sb, git_env_common_dir);
-+		return 1;
-+	} else {
-+		return get_common_dir_noenv(sb, gitdir);
-+	}
-+}
-+
-+int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
-+{
- 	struct strbuf data = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
--	const char *git_common_dir = getenv(GIT_COMMON_DIR_ENVIRONMENT);
- 	int ret = 0;
--	if (git_common_dir) {
--		strbuf_addstr(sb, git_common_dir);
--		return 1;
--	}
-+
- 	strbuf_addf(&path, "%s/commondir", gitdir);
- 	if (file_exists(path.buf)) {
- 		if (strbuf_read_file(&data, path.buf, 0) <= 0)
-diff --git a/t/t7410-submodule-checkout-to.sh b/t/t7410-submodule-checkout-to.sh
-index 8f30aed..153f5c5 100755
---- a/t/t7410-submodule-checkout-to.sh
-+++ b/t/t7410-submodule-checkout-to.sh
-@@ -47,4 +47,16 @@ test_expect_success 'checkout main and initialize independed clones' \
- test_expect_success 'can see submodule diffs after independed cloning' \
-     '(cd fully_cloned_submodule/main && git diff --submodule master"^!" | grep "file1 updated")'
- 
-+test_expect_success 'checkout sub manually' \
-+    'mkdir linked_submodule &&
-+    (cd clone/main &&
-+	git checkout --to "$base_path/linked_submodule/main" "$rev1_hash_main") &&
-+    (cd clone/main/sub &&
-+	git checkout --to "$base_path/linked_submodule/main/sub" "$rev1_hash_sub") &&
-+    mkdir clone/main/.git/worktrees/main/modules &&
-+	echo "gitdir: ../../modules/sub/worktrees/sub" > clone/main/.git/worktrees/main/modules/sub'
-+
-+test_expect_success 'can see submodule diffs after manual checkout of linked submodule' \
-+    '(cd linked_submodule/main && git diff --submodule master"^!" | grep "file1 updated")'
-+
- test_done
--- 
-2.0.1.1697.g73c6810
+Meh. These are private functions, all defined within a few lines of eac=
+h
+other. I think that an enum would be overkill here when a "boolean"
+suffices.
+
+Michael
+
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
