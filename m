@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v16 07/11] trailer: add interpret-trailers command
-Date: Mon, 13 Oct 2014 20:16:29 +0200
-Message-ID: <20141013181634.27329.63113.chriscool@tuxfamily.org>
+Subject: [PATCH v16 05/11] trailer: parse trailers from file or stdin
+Date: Mon, 13 Oct 2014 20:16:27 +0200
+Message-ID: <20141013181634.27329.98098.chriscool@tuxfamily.org>
 References: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -15,25 +15,25 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Marc Branchaud <marcnarc@xiplink.com>,
 	Michael S Tsirkin <mst@redhat.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:20:12 2014
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:20:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdkE0-0007Sj-4K
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:20:04 +0200
+	id 1XdkEE-0007iK-22
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871AbaJMST6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 14:19:58 -0400
-Received: from [194.158.98.15] ([194.158.98.15]:33986 "EHLO mail-2y.bbox.fr"
+	id S1754803AbaJMSUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:20:13 -0400
+Received: from [194.158.98.14] ([194.158.98.14]:45346 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754715AbaJMSTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 14:19:35 -0400
+	id S1754769AbaJMSTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:19:32 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 786E715E;
-	Mon, 13 Oct 2014 20:19:12 +0200 (CEST)
-X-git-sha1: b8bfc190e28afb82b784ea2ab26b5071ab64efbd 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id DC8276D;
+	Mon, 13 Oct 2014 20:19:10 +0200 (CEST)
+X-git-sha1: ea0b7cfad443745995746264a8a756c8f23aaae2 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
@@ -41,118 +41,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch adds the "git interpret-trailers" command.
-This command uses the previously added process_trailers()
-function in trailer.c.
+Read trailers from a file or from stdin, parse the trailers and then
+put the result into a doubly linked list.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .gitignore                   |  1 +
- Makefile                     |  1 +
- builtin.h                    |  1 +
- builtin/interpret-trailers.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- git.c                        |  1 +
- 5 files changed, 48 insertions(+)
- create mode 100644 builtin/interpret-trailers.c
+ trailer.c | 123 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 123 insertions(+)
 
-diff --git a/.gitignore b/.gitignore
-index cf0d191..85593de 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -74,6 +74,7 @@
- /git-index-pack
- /git-init
- /git-init-db
-+/git-interpret-trailers
- /git-instaweb
- /git-log
- /git-ls-files
-diff --git a/Makefile b/Makefile
-index ef82972..0b06ae0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -953,6 +953,7 @@ BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
-+BUILTIN_OBJS += builtin/interpret-trailers.o
- BUILTIN_OBJS += builtin/log.o
- BUILTIN_OBJS += builtin/ls-files.o
- BUILTIN_OBJS += builtin/ls-remote.o
-diff --git a/builtin.h b/builtin.h
-index 5d91f31..b87df70 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -73,6 +73,7 @@ extern int cmd_hash_object(int argc, const char **argv, const char *prefix);
- extern int cmd_help(int argc, const char **argv, const char *prefix);
- extern int cmd_index_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_init_db(int argc, const char **argv, const char *prefix);
-+extern int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
- extern int cmd_log(int argc, const char **argv, const char *prefix);
- extern int cmd_log_reflog(int argc, const char **argv, const char *prefix);
- extern int cmd_ls_files(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-new file mode 100644
-index 0000000..46838d2
---- /dev/null
-+++ b/builtin/interpret-trailers.c
-@@ -0,0 +1,44 @@
-+/*
-+ * Builtin "git interpret-trailers"
-+ *
-+ * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-+ *
-+ */
-+
-+#include "cache.h"
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "string-list.h"
-+#include "trailer.h"
-+
-+static const char * const git_interpret_trailers_usage[] = {
-+	N_("git interpret-trailers [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]"),
-+	NULL
-+};
-+
-+int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+diff --git a/trailer.c b/trailer.c
+index b5666b3..4f0de3b 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -69,6 +69,14 @@ static int same_trailer(struct trailer_item *a, struct trailer_item *b)
+ 	return same_token(a, b) && same_value(a, b);
+ }
+ 
++static inline int contains_only_spaces(const char *str)
 +{
-+	int trim_empty = 0;
-+	struct string_list trailers = STRING_LIST_INIT_DUP;
++	const char *s = str;
++	while (*s && isspace(*s))
++		s++;
++	return !*s;
++}
 +
-+	struct option options[] = {
-+		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
-+		OPT_STRING_LIST(0, "trailer", &trailers, N_("trailer"),
-+				N_("trailer(s) to add")),
-+		OPT_END()
-+	};
+ static void free_trailer_item(struct trailer_item *item)
+ {
+ 	free(item->conf.name);
+@@ -574,3 +582,118 @@ static struct trailer_item *process_command_line_args(struct string_list *traile
+ 
+ 	return arg_tok_first;
+ }
 +
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_interpret_trailers_usage, 0);
++static struct strbuf **read_input_file(const char *file)
++{
++	struct strbuf **lines;
++	struct strbuf sb = STRBUF_INIT;
 +
-+	if (argc) {
-+		int i;
-+		for (i = 0; i < argc; i++)
-+			process_trailers(argv[i], trim_empty, &trailers);
-+	} else
-+		process_trailers(NULL, trim_empty, &trailers);
++	if (file) {
++		if (strbuf_read_file(&sb, file, 0) < 0)
++			die_errno(_("could not read input file '%s'"), file);
++	} else {
++		if (strbuf_read(&sb, fileno(stdin), 0) < 0)
++			die_errno(_("could not read from stdin"));
++	}
 +
-+	string_list_clear(&trailers, 0);
++	lines = strbuf_split(&sb, '\n');
 +
++	strbuf_release(&sb);
++
++	return lines;
++}
++
++/*
++ * Return the (0 based) index of the start of the patch or the line
++ * count if there is no patch in the message.
++ */
++static int find_patch_start(struct strbuf **lines, int count)
++{
++	int i;
++
++	/* Get the start of the patch part if any */
++	for (i = 0; i < count; i++) {
++		if (starts_with(lines[i]->buf, "---"))
++			return i;
++	}
++
++	return count;
++}
++
++/*
++ * Return the (0 based) index of the first trailer line or count if
++ * there are no trailers. Trailers are searched only in the lines from
++ * index (count - 1) down to index 0.
++ */
++static int find_trailer_start(struct strbuf **lines, int count)
++{
++	int start, only_spaces = 1;
++
++	/*
++	 * Get the start of the trailers by looking starting from the end
++	 * for a line with only spaces before lines with one separator.
++	 */
++	for (start = count - 1; start >= 0; start--) {
++		if (lines[start]->buf[0] == comment_line_char)
++			continue;
++		if (contains_only_spaces(lines[start]->buf)) {
++			if (only_spaces)
++				continue;
++			return start + 1;
++		}
++		if (strcspn(lines[start]->buf, separators) < lines[start]->len) {
++			if (only_spaces)
++				only_spaces = 0;
++			continue;
++		}
++		return count;
++	}
++
++	return only_spaces ? count : 0;
++}
++
++static int has_blank_line_before(struct strbuf **lines, int start)
++{
++	for (;start >= 0; start--) {
++		if (lines[start]->buf[0] == comment_line_char)
++			continue;
++		return contains_only_spaces(lines[start]->buf);
++	}
 +	return 0;
 +}
-diff --git a/git.c b/git.c
-index 5ebb32f..e327a90 100644
---- a/git.c
-+++ b/git.c
-@@ -417,6 +417,7 @@ static struct cmd_struct commands[] = {
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
- 	{ "init", cmd_init_db, NO_SETUP },
- 	{ "init-db", cmd_init_db, NO_SETUP },
-+	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP },
- 	{ "log", cmd_log, RUN_SETUP },
- 	{ "ls-files", cmd_ls_files, RUN_SETUP },
- 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
++
++static void print_lines(struct strbuf **lines, int start, int end)
++{
++	int i;
++	for (i = start; lines[i] && i < end; i++)
++		printf("%s", lines[i]->buf);
++}
++
++static int process_input_file(struct strbuf **lines,
++			      struct trailer_item **in_tok_first,
++			      struct trailer_item **in_tok_last)
++{
++	int count = 0;
++	int patch_start, trailer_start, i;
++
++	/* Get the line count */
++	while (lines[count])
++		count++;
++
++	patch_start = find_patch_start(lines, count);
++	trailer_start = find_trailer_start(lines, patch_start);
++
++	/* Print lines before the trailers as is */
++	print_lines(lines, 0, trailer_start);
++
++	if (!has_blank_line_before(lines, trailer_start - 1))
++		printf("\n");
++
++	/* Parse trailer lines */
++	for (i = trailer_start; i < patch_start; i++) {
++		struct trailer_item *new = create_trailer_item(lines[i]->buf);
++		add_trailer_item(in_tok_first, in_tok_last, new);
++	}
++
++	return patch_start;
++}
 -- 
 2.1.0.rc0.248.gb91fdbc
