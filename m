@@ -1,86 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] test-lib.sh: support -x option for shell-tracing
-Date: Mon, 13 Oct 2014 11:43:32 -0700
-Message-ID: <xmqq8ukj4xpn.fsf@gitster.dls.corp.google.com>
-References: <20141010062722.GB17481@peff.net>
-	<20141010064727.GC17481@peff.net>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: Re: [PATCH v1] rebase -m: Use empty tree base for parentless commits
+Date: Mon, 13 Oct 2014 20:43:51 +0200
+Message-ID: <543C1D67.80501@gmail.com>
+References: <5434312E.6040407@redhat.com>	<bf0e177fbaac91f8c55526729e580fade9f0f395.1412879523.git.bafain@gmail.com> <xmqq1tqh6p3y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:43:49 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:44:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xdkay-0003Bp-BH
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:43:48 +0200
+	id 1XdkbA-0003I0-Qc
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140AbaJMSng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 14:43:36 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60107 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753797AbaJMSnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 14:43:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A0E23150B9;
-	Mon, 13 Oct 2014 14:43:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pfmCHmLW/ZxESgALu+dylNh2m2c=; b=bc5Q0A
-	ZlPFVDxBZR/QbDRygd4B9E/jm3ewBbNXvGejvQGCZo382WjJvqDPThFbsd0Nw0FU
-	owaOcmDC5cla+NXJzHq0/baNcoEnzLRb/i/mYEmIhv03bntw2c9e9PwmwHont745
-	oqNQWetr0uIoGQCXX+d1vO+cBbUr2wE/1j9sM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tk+iZmyMiqIWcXa5uyjlZdjYJ+xmtrEG
-	DmS+FMAhOelkT6lKzY374NZO7AoS3mwRT/FXnEhRFghJ2vHALHOjubcPL3ZJwtKo
-	JgrtYHe2BruXPdS5cBo6fh7lZYDtK5PAzwQHUHLIThnlVcYFI0CS9Yy0azGf4O3B
-	F/PqmrSCbS8=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 98AFB150B8;
-	Mon, 13 Oct 2014 14:43:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F0C6150B7;
-	Mon, 13 Oct 2014 14:43:34 -0400 (EDT)
-In-Reply-To: <20141010064727.GC17481@peff.net> (Jeff King's message of "Fri,
-	10 Oct 2014 02:47:27 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D5E550A8-5308-11E4-8824-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1754336AbaJMSn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:43:57 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:33152 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753797AbaJMSn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:43:56 -0400
+Received: by mail-la0-f42.google.com with SMTP id mk6so7256472lab.29
+        for <git@vger.kernel.org>; Mon, 13 Oct 2014 11:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=KS/N7yZtFv4i6dXqRRwxWYA828Iry06No+WNhrW1eHI=;
+        b=TiAsdzcOPxKdanb9QT5giS7bfKIlq2gz3t6PvezG3ev29mBVCvjChOdrXsBQVeNC1z
+         dOwsJYEX7hJ89qo3YNt1Px9zYi4lXiEQz4fJRL0UAphB0HplbbDkSsAfH+pZqkdImMEw
+         3VomLCTzLW/oJgPHfWzImt2OhGqFanRV9JmAwAYgGoyJ5NxO0r5Ks+YF+pbwX3Aogn6h
+         4rC8VdNDmPJBLAbIIedYGSbTdrUxGACN8mqyWUe1dyE1IZ5HOYhtyNy1RvVNZAyZyGmS
+         R5ys/OQKLJOFfUigRv4ip7L/WKm4nYYK8ZJacejZgmy4A9RCmtmsJ49UGYqzDNNxW3Rb
+         bQXw==
+X-Received: by 10.152.161.231 with SMTP id xv7mr301218lab.43.1413225835013;
+        Mon, 13 Oct 2014 11:43:55 -0700 (PDT)
+Received: from client.googlemail.com (putty.olf.sgsnet.se. [46.239.119.252])
+        by mx.google.com with ESMTPSA id v7sm4809342lbp.44.2014.10.13.11.43.53
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Oct 2014 11:43:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <xmqq1tqh6p3y.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
->> Hmph. I had originally intended to make this "set -x;" with a semicolon,
->> to keep it split from $*. But I forgot to, and much to my surprise, all
->> of the tests still passed.
+Junio C Hamano writes:
+> Fabian Ruch <bafain@gmail.com> writes:
+>> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+>> index d3fb67d..3f754ae 100644
+>> --- a/git-rebase--merge.sh
+>> +++ b/git-rebase--merge.sh
+>> @@ -67,7 +67,13 @@ call_merge () {
+>>  		GIT_MERGE_VERBOSITY=1 && export GIT_MERGE_VERBOSITY
+>>  	fi
+>>  	test -z "$strategy" && strategy=recursive
+>> -	eval 'git-merge-$strategy' $strategy_opts '"$cmt^" -- "$hd" "$cmt"'
+>> +	base=$(git rev-list --parents -1 $cmt | cut -d ' ' -s -f 2 -)
+>> +	if test -z "$base"
+>> +	then
+>> +		# the empty tree sha1
+>> +		base=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>> +	fi
+>> +	eval 'git-merge-$strategy' $strategy_opts '"$base" -- "$hd" "$cmt"'
+> 
+> This looks wrong.
+> 
+> The interface to "git-merge-$strategy" is designed in such a way
+> that each strategy should be capable of taking _no_ base at all.
 
-Yup, I was wondering why you posted a version without the semicolon,
-which looked obviously bogus, as I've never seen you post an
-untested thing without marking as such.
+Ok, but doesn't this use of the git-merge-$strategy interface (as shown
+in the example below) apply only to the case where one wants to merge
+two histories by creating a merge commit? When a merge commit is being
+created, the documentation states that git-merge abstracts from the
+commit history considering the _total change_ since a merge base on each
+branch.
 
-> +	# The test itself is run with stderr put back to &4 (so either to
-> +	# /dev/null, or to the original stderr if --verbose was used).
-> +	{
-> +		test_eval_inner_ "$@" </dev/null >&3 2>&4
-> +		test_eval_ret_=$?
-> +		if test "$trace" = t
-> +		then
-> +			set +x
-> +			if test "$test_eval_ret_" != 0
-> +			then
-> +				say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
-> +			fi
-> +		fi
-> +	} 2>/dev/null
+In contrast, here (i.e., in the case of git-rebase--merge) we care about
+how the changes introduced by the _individual commits_ are applied.
+Therefore, don't we want to be explicit about the "base" and tell
+git-merge-$strategy exactly which changes it should merge into the
+current head?
 
-Hmph, that is a clever way to squelch output from set+x (and
-everything that runs after the eval returns) I never thought of.
+The codebase has always been doing this both for git-rebase--merge and
+git-cherry-pick. What leads to the reported bug is that the latter
+covers the case where the commit object has no parents but the former
+doesn't. Root commits are handled by git-cherry-pick (and should be by
+git-rebase--merge) using an explicit "base" for the same reason why
+$cmt^ is given.
 
-Nice.
+> See how unquoted $common is given to git-merge-$strategy in
+> contrib/examples/git-merge.sh, i.e.
+> 
+>     eval 'git-merge-$strategy '"$xopt"' $common -- "$head_arg" "$@"'
+> 
+> where common comes from
+> 
+> 	common=$(git merge-base ...)
+> 
+> which would be empty when you are looking at disjoint histories.
+
+If there are still objections to the patch because of the magic number
+and the cut, it might be worth considering an implementation of
+git-rebase--merge using git-cherry-pick's merge strategy option.
+
+   Fabian
