@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v16 05/11] trailer: parse trailers from file or stdin
-Date: Mon, 13 Oct 2014 20:16:27 +0200
-Message-ID: <20141013181634.27329.98098.chriscool@tuxfamily.org>
+Subject: [PATCH v16 06/11] trailer: put all the processing together and print
+Date: Mon, 13 Oct 2014 20:16:28 +0200
+Message-ID: <20141013181634.27329.50950.chriscool@tuxfamily.org>
 References: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -15,25 +15,25 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Marc Branchaud <marcnarc@xiplink.com>,
 	Michael S Tsirkin <mst@redhat.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:20:25 2014
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:20:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdkEE-0007iK-22
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:20:18 +0200
+	id 1XdkEJ-0007jJ-2m
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754803AbaJMSUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 14:20:13 -0400
-Received: from [194.158.98.14] ([194.158.98.14]:45346 "EHLO mail-1y.bbox.fr"
+	id S1754606AbaJMSUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:20:11 -0400
+Received: from [194.158.98.15] ([194.158.98.15]:33963 "EHLO mail-2y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754769AbaJMSTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 14:19:32 -0400
+	id S1754782AbaJMSTd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:19:33 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id DC8276D;
-	Mon, 13 Oct 2014 20:19:10 +0200 (CEST)
-X-git-sha1: ea0b7cfad443745995746264a8a756c8f23aaae2 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id A87C5145;
+	Mon, 13 Oct 2014 20:19:11 +0200 (CEST)
+X-git-sha1: 073b95b00542ed227c8c33175b9b16e1c23c32ea 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
@@ -41,152 +41,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Read trailers from a file or from stdin, parse the trailers and then
-put the result into a doubly linked list.
+This patch adds the process_trailers() function that
+calls all the previously added processing functions
+and then prints the results on the standard output.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- trailer.c | 123 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 123 insertions(+)
+ trailer.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ trailer.h |  6 ++++++
+ 2 files changed, 75 insertions(+)
+ create mode 100644 trailer.h
 
 diff --git a/trailer.c b/trailer.c
-index b5666b3..4f0de3b 100644
+index 4f0de3b..b0be0d7 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -69,6 +69,14 @@ static int same_trailer(struct trailer_item *a, struct trailer_item *b)
- 	return same_token(a, b) && same_value(a, b);
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "string-list.h"
++#include "trailer.h"
+ /*
+  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+  */
+@@ -87,6 +88,35 @@ static void free_trailer_item(struct trailer_item *item)
+ 	free(item);
  }
  
-+static inline int contains_only_spaces(const char *str)
++static char last_non_space_char(const char *s)
 +{
-+	const char *s = str;
-+	while (*s && isspace(*s))
-+		s++;
-+	return !*s;
++	int i;
++	for (i = strlen(s) - 1; i >= 0; i--)
++		if (!isspace(s[i]))
++			return s[i];
++	return '\0';
 +}
 +
- static void free_trailer_item(struct trailer_item *item)
++static void print_tok_val(const char *tok, const char *val)
++{
++	char c = last_non_space_char(tok);
++	if (!c)
++		return;
++	if (strchr(separators, c))
++		printf("%s%s\n", tok, val);
++	else
++		printf("%s%c %s\n", tok, separators[0], val);
++}
++
++static void print_all(struct trailer_item *first, int trim_empty)
++{
++	struct trailer_item *item;
++	for (item = first; item; item = item->next) {
++		if (!trim_empty || strlen(item->value) > 0)
++			print_tok_val(item->token, item->value);
++	}
++}
++
+ static void update_last(struct trailer_item **last)
  {
- 	free(item->conf.name);
-@@ -574,3 +582,118 @@ static struct trailer_item *process_command_line_args(struct string_list *traile
+ 	if (*last)
+@@ -697,3 +727,42 @@ static int process_input_file(struct strbuf **lines,
  
- 	return arg_tok_first;
+ 	return patch_start;
  }
 +
-+static struct strbuf **read_input_file(const char *file)
++static void free_all(struct trailer_item **first)
 +{
++	while (*first) {
++		struct trailer_item *item = remove_first(first);
++		free_trailer_item(item);
++	}
++}
++
++void process_trailers(const char *file, int trim_empty, struct string_list *trailers)
++{
++	struct trailer_item *in_tok_first = NULL;
++	struct trailer_item *in_tok_last = NULL;
++	struct trailer_item *arg_tok_first;
 +	struct strbuf **lines;
-+	struct strbuf sb = STRBUF_INIT;
++	int patch_start;
 +
-+	if (file) {
-+		if (strbuf_read_file(&sb, file, 0) < 0)
-+			die_errno(_("could not read input file '%s'"), file);
-+	} else {
-+		if (strbuf_read(&sb, fileno(stdin), 0) < 0)
-+			die_errno(_("could not read from stdin"));
-+	}
++	/* Default config must be setup first */
++	git_config(git_trailer_default_config, NULL);
++	git_config(git_trailer_config, NULL);
 +
-+	lines = strbuf_split(&sb, '\n');
++	lines = read_input_file(file);
 +
-+	strbuf_release(&sb);
++	/* Print the lines before the trailers */
++	patch_start = process_input_file(lines, &in_tok_first, &in_tok_last);
 +
-+	return lines;
++	arg_tok_first = process_command_line_args(trailers);
++
++	process_trailers_lists(&in_tok_first, &in_tok_last, &arg_tok_first);
++
++	print_all(in_tok_first, trim_empty);
++
++	free_all(&in_tok_first);
++
++	/* Print the lines after the trailers as is */
++	print_lines(lines, patch_start, INT_MAX);
++
++	strbuf_list_free(lines);
 +}
+diff --git a/trailer.h b/trailer.h
+new file mode 100644
+index 0000000..8eb25d5
+--- /dev/null
++++ b/trailer.h
+@@ -0,0 +1,6 @@
++#ifndef TRAILER_H
++#define TRAILER_H
 +
-+/*
-+ * Return the (0 based) index of the start of the patch or the line
-+ * count if there is no patch in the message.
-+ */
-+static int find_patch_start(struct strbuf **lines, int count)
-+{
-+	int i;
++void process_trailers(const char *file, int trim_empty, struct string_list *trailers);
 +
-+	/* Get the start of the patch part if any */
-+	for (i = 0; i < count; i++) {
-+		if (starts_with(lines[i]->buf, "---"))
-+			return i;
-+	}
-+
-+	return count;
-+}
-+
-+/*
-+ * Return the (0 based) index of the first trailer line or count if
-+ * there are no trailers. Trailers are searched only in the lines from
-+ * index (count - 1) down to index 0.
-+ */
-+static int find_trailer_start(struct strbuf **lines, int count)
-+{
-+	int start, only_spaces = 1;
-+
-+	/*
-+	 * Get the start of the trailers by looking starting from the end
-+	 * for a line with only spaces before lines with one separator.
-+	 */
-+	for (start = count - 1; start >= 0; start--) {
-+		if (lines[start]->buf[0] == comment_line_char)
-+			continue;
-+		if (contains_only_spaces(lines[start]->buf)) {
-+			if (only_spaces)
-+				continue;
-+			return start + 1;
-+		}
-+		if (strcspn(lines[start]->buf, separators) < lines[start]->len) {
-+			if (only_spaces)
-+				only_spaces = 0;
-+			continue;
-+		}
-+		return count;
-+	}
-+
-+	return only_spaces ? count : 0;
-+}
-+
-+static int has_blank_line_before(struct strbuf **lines, int start)
-+{
-+	for (;start >= 0; start--) {
-+		if (lines[start]->buf[0] == comment_line_char)
-+			continue;
-+		return contains_only_spaces(lines[start]->buf);
-+	}
-+	return 0;
-+}
-+
-+static void print_lines(struct strbuf **lines, int start, int end)
-+{
-+	int i;
-+	for (i = start; lines[i] && i < end; i++)
-+		printf("%s", lines[i]->buf);
-+}
-+
-+static int process_input_file(struct strbuf **lines,
-+			      struct trailer_item **in_tok_first,
-+			      struct trailer_item **in_tok_last)
-+{
-+	int count = 0;
-+	int patch_start, trailer_start, i;
-+
-+	/* Get the line count */
-+	while (lines[count])
-+		count++;
-+
-+	patch_start = find_patch_start(lines, count);
-+	trailer_start = find_trailer_start(lines, patch_start);
-+
-+	/* Print lines before the trailers as is */
-+	print_lines(lines, 0, trailer_start);
-+
-+	if (!has_blank_line_before(lines, trailer_start - 1))
-+		printf("\n");
-+
-+	/* Parse trailer lines */
-+	for (i = trailer_start; i < patch_start; i++) {
-+		struct trailer_item *new = create_trailer_item(lines[i]->buf);
-+		add_trailer_item(in_tok_first, in_tok_last, new);
-+	}
-+
-+	return patch_start;
-+}
++#endif /* TRAILER_H */
 -- 
 2.1.0.rc0.248.gb91fdbc
