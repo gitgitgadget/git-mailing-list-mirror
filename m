@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v16 03/11] trailer: read and process config information
-Date: Mon, 13 Oct 2014 20:16:25 +0200
-Message-ID: <20141013181634.27329.11450.chriscool@tuxfamily.org>
+Subject: [PATCH v16 10/11] trailer: add tests for commands in config file
+Date: Mon, 13 Oct 2014 20:16:32 +0200
+Message-ID: <20141013181634.27329.7814.chriscool@tuxfamily.org>
 References: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -15,25 +15,25 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Marc Branchaud <marcnarc@xiplink.com>,
 	Michael S Tsirkin <mst@redhat.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:19:44 2014
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:19:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdkDf-0007MM-B4
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:19:43 +0200
+	id 1XdkDj-0007MM-6w
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:19:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754834AbaJMSTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 14:19:34 -0400
-Received: from [194.158.98.14] ([194.158.98.14]:45312 "EHLO mail-1y.bbox.fr"
+	id S1754857AbaJMSTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:19:38 -0400
+Received: from [194.158.98.14] ([194.158.98.14]:45385 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754790AbaJMSTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 14:19:30 -0400
+	id S1754140AbaJMSTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:19:36 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 368664A;
-	Mon, 13 Oct 2014 20:19:05 +0200 (CEST)
-X-git-sha1: 5dd7c8f54cbe3e68c08daa12d249d45b224bd43c 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 230343A;
+	Mon, 13 Oct 2014 20:19:15 +0200 (CEST)
+X-git-sha1: 93ade30abbc42a10f5b4aea4afcbc1230dbf6dff 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
@@ -41,212 +41,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Read the configuration to get trailer information, and then process
-it and store it in a doubly linked list.
-
-The config information is stored in the list whose first item is
-pointed to by:
-
-static struct trailer_item *first_conf_item;
+And add a few other tests for some special cases.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- trailer.c | 185 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 185 insertions(+)
+ t/t7513-interpret-trailers.sh | 125 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 125 insertions(+)
 
-diff --git a/trailer.c b/trailer.c
-index be0ad65..668dc33 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -277,3 +277,188 @@ static void process_trailers_lists(struct trailer_item **in_tok_first,
- 					     arg_tok);
- 	}
- }
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index ad36cf8..fee41e8 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -735,4 +735,129 @@ test_expect_success 'default "where" is now "after"' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'with simple command' '
++	git config trailer.sign.key "Signed-off-by: " &&
++	git config trailer.sign.where "after" &&
++	git config trailer.sign.ifExists "addIfDifferentNeighbor" &&
++	git config trailer.sign.command "echo \"A U Thor <author@example.com>\"" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Fixes: Z
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Signed-off-by: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer "review:" --trailer "fix=22" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
 +
-+static int set_where(struct conf_info *item, const char *value)
-+{
-+	if (!strcasecmp("after", value))
-+		item->where = WHERE_AFTER;
-+	else if (!strcasecmp("before", value))
-+		item->where = WHERE_BEFORE;
-+	else if (!strcasecmp("end", value))
-+		item->where = WHERE_END;
-+	else if (!strcasecmp("start", value))
-+		item->where = WHERE_START;
-+	else
-+		return -1;
-+	return 0;
-+}
++test_expect_success 'with command using commiter information' '
++	git config trailer.sign.ifExists "addIfDifferent" &&
++	git config trailer.sign.command "echo \"\$GIT_COMMITTER_NAME <\$GIT_COMMITTER_EMAIL>\"" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Fixes: Z
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Signed-off-by: C O Mitter <committer@example.com>
++	EOF
++	git interpret-trailers --trailer "review:" --trailer "fix=22" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
 +
-+static int set_if_exists(struct conf_info *item, const char *value)
-+{
-+	if (!strcasecmp("addIfDifferent", value))
-+		item->if_exists = EXISTS_ADD_IF_DIFFERENT;
-+	else if (!strcasecmp("addIfDifferentNeighbor", value))
-+		item->if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
-+	else if (!strcasecmp("add", value))
-+		item->if_exists = EXISTS_ADD;
-+	else if (!strcasecmp("replace", value))
-+		item->if_exists = EXISTS_REPLACE;
-+	else if (!strcasecmp("doNothing", value))
-+		item->if_exists = EXISTS_DO_NOTHING;
-+	else
-+		return -1;
-+	return 0;
-+}
++test_expect_success 'with command using author information' '
++	git config trailer.sign.key "Signed-off-by: " &&
++	git config trailer.sign.where "after" &&
++	git config trailer.sign.ifExists "addIfDifferentNeighbor" &&
++	git config trailer.sign.command "echo \"\$GIT_AUTHOR_NAME <\$GIT_AUTHOR_EMAIL>\"" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Fixes: Z
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Signed-off-by: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer "review:" --trailer "fix=22" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
 +
-+static int set_if_missing(struct conf_info *item, const char *value)
-+{
-+	if (!strcasecmp("doNothing", value))
-+		item->if_missing = MISSING_DO_NOTHING;
-+	else if (!strcasecmp("add", value))
-+		item->if_missing = MISSING_ADD;
-+	else
-+		return -1;
-+	return 0;
-+}
++test_expect_success 'setup a commit' '
++	echo "Content of the first commit." > a.txt &&
++	git add a.txt &&
++	git commit -m "Add file a.txt"
++'
 +
-+static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
-+{
-+	*dst = *src;
-+	if (src->name)
-+		dst->name = xstrdup(src->name);
-+	if (src->key)
-+		dst->key = xstrdup(src->key);
-+	if (src->command)
-+		dst->command = xstrdup(src->command);
-+}
++test_expect_success 'with command using $ARG' '
++	git config trailer.fix.ifExists "replace" &&
++	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG" &&
++	FIXED=$(git log -1 --oneline --format="%h (%s)" --abbrev-commit --abbrev=14 HEAD) &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-EOF &&
++		Fixes: $FIXED
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Signed-off-by: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
 +
-+static struct trailer_item *get_conf_item(const char *name)
-+{
-+	struct trailer_item *item;
-+	struct trailer_item *previous;
++test_expect_success 'with failing command using $ARG' '
++	git config trailer.fix.ifExists "replace" &&
++	git config trailer.fix.command "false \$ARG" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-EOF &&
++		Fixes: Z
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Signed-off-by: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
 +
-+	/* Look up item with same name */
-+	for (previous = NULL, item = first_conf_item;
-+	     item;
-+	     previous = item, item = item->next) {
-+		if (!strcasecmp(item->conf.name, name))
-+			return item;
-+	}
++test_expect_success 'with empty tokens' '
++	git config --unset trailer.fix.command &&
++	cat >expected <<-EOF &&
 +
-+	/* Item does not already exists, create it */
-+	item = xcalloc(sizeof(struct trailer_item), 1);
-+	duplicate_conf(&item->conf, &default_conf_info);
-+	item->conf.name = xstrdup(name);
++		Signed-off-by: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer ":" --trailer ":test" >actual <<-EOF &&
++	EOF
++	test_cmp expected actual
++'
 +
-+	if (!previous)
-+		first_conf_item = item;
-+	else {
-+		previous->next = item;
-+		item->previous = previous;
-+	}
++test_expect_success 'with command but no key' '
++	git config --unset trailer.sign.key &&
++	cat >expected <<-EOF &&
 +
-+	return item;
-+}
++		sign: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers >actual <<-EOF &&
++	EOF
++	test_cmp expected actual
++'
 +
-+enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
-+			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
++test_expect_success 'with no command and no key' '
++	git config --unset trailer.review.key &&
++	cat >expected <<-EOF &&
 +
-+static struct {
-+	const char *name;
-+	enum trailer_info_type type;
-+} trailer_config_items[] = {
-+	{ "key", TRAILER_KEY },
-+	{ "command", TRAILER_COMMAND },
-+	{ "where", TRAILER_WHERE },
-+	{ "ifexists", TRAILER_IF_EXISTS },
-+	{ "ifmissing", TRAILER_IF_MISSING }
-+};
++		review: Junio
++		sign: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer "review:Junio" >actual <<-EOF &&
++	EOF
++	test_cmp expected actual
++'
 +
-+static int git_trailer_default_config(const char *conf_key, const char *value, void *cb)
-+{
-+	const char *trailer_item, *variable_name;
-+
-+	if (!skip_prefix(conf_key, "trailer.", &trailer_item))
-+		return 0;
-+
-+	variable_name = strrchr(trailer_item, '.');
-+	if (!variable_name) {
-+		if (!strcmp(trailer_item, "where")) {
-+			if (set_where(&default_conf_info, value) < 0)
-+				warning(_("unknown value '%s' for key '%s'"),
-+					value, conf_key);
-+		} else if (!strcmp(trailer_item, "ifexists")) {
-+			if (set_if_exists(&default_conf_info, value) < 0)
-+				warning(_("unknown value '%s' for key '%s'"),
-+					value, conf_key);
-+		} else if (!strcmp(trailer_item, "ifmissing")) {
-+			if (set_if_missing(&default_conf_info, value) < 0)
-+				warning(_("unknown value '%s' for key '%s'"),
-+					value, conf_key);
-+		} else if (!strcmp(trailer_item, "separators")) {
-+			separators = xstrdup(value);
-+		}
-+	}
-+	return 0;
-+}
-+
-+static int git_trailer_config(const char *conf_key, const char *value, void *cb)
-+{
-+	const char *trailer_item, *variable_name;
-+	struct trailer_item *item;
-+	struct conf_info *conf;
-+	char *name = NULL;
-+	enum trailer_info_type type;
-+	int i;
-+
-+	if (!skip_prefix(conf_key, "trailer.", &trailer_item))
-+		return 0;
-+
-+	variable_name = strrchr(trailer_item, '.');
-+	if (!variable_name)
-+		return 0;
-+
-+	variable_name++;
-+	for (i = 0; i < ARRAY_SIZE(trailer_config_items); i++) {
-+		if (strcmp(trailer_config_items[i].name, variable_name))
-+			continue;
-+		name = xstrndup(trailer_item,  variable_name - trailer_item - 1);
-+		type = trailer_config_items[i].type;
-+		break;
-+	}
-+
-+	if (!name)
-+		return 0;
-+
-+	item = get_conf_item(name);
-+	conf = &item->conf;
-+	free(name);
-+
-+	switch (type) {
-+	case TRAILER_KEY:
-+		if (conf->key)
-+			warning(_("more than one %s"), conf_key);
-+		conf->key = xstrdup(value);
-+		break;
-+	case TRAILER_COMMAND:
-+		if (conf->command)
-+			warning(_("more than one %s"), conf_key);
-+		conf->command = xstrdup(value);
-+		break;
-+	case TRAILER_WHERE:
-+		if (set_where(conf, value))
-+			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-+		break;
-+	case TRAILER_IF_EXISTS:
-+		if (set_if_exists(conf, value))
-+			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-+		break;
-+	case TRAILER_IF_MISSING:
-+		if (set_if_missing(conf, value))
-+			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-+		break;
-+	default:
-+		die("internal bug in trailer.c");
-+	}
-+	return 0;
-+}
+ test_done
 -- 
 2.1.0.rc0.248.gb91fdbc
