@@ -1,104 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/3] t5304: use helper to report failure of "test foo =
- bar"
-Date: Mon, 13 Oct 2014 09:10:22 -0700
-Message-ID: <20141013161022.GA20520@google.com>
-References: <20141010060636.GA15057@peff.net>
- <20141010061114.GB15277@peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v3] Handle atexit list internaly for unthreaded builds
+Date: Mon, 13 Oct 2014 18:37:22 +0200
+Message-ID: <87bnpg9b99.fsf@igel.home>
+References: <CACsJy8CbhS=dv3fHvyTv0b-jazh3XS+nswmz_0AsLeHqko794g@mail.gmail.com>
+	<1413213552-13769-1-git-send-email-etienne.buira@gmail.com>
+	<eb384a98a5c5642c4d3ccf0cf4b74b62e268e100.1413213400.git.etienne.buira@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 13 18:10:39 2014
+Content-Type: text/plain
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Etienne Buira <etienne.buira@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 13 18:37:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdiCg-0003ah-Dc
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 18:10:34 +0200
+	id 1Xdick-0002LH-9L
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 18:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754387AbaJMQKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 12:10:30 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:51881 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753972AbaJMQK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 12:10:29 -0400
-Received: by mail-pa0-f44.google.com with SMTP id et14so6090438pad.17
-        for <git@vger.kernel.org>; Mon, 13 Oct 2014 09:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=UYRjIaWeq5LbJUBp+GPwzr7TmuhAZaj739NjmG/ElbE=;
-        b=qR5st+mRsif/dC1HDpiTkS33vPzndcqYUcXgLOYKoMHoZWGlSgt8tQ/C6arJdDnsZX
-         4t9DeJdZi1PkcSoqXbXvYlMIf700D7p2QzCLEPB1u7r+IW+4ben93bsix+jshJg8ylZ8
-         h15Vc/gGE/U79nIEiq3vc++3IhvLwJ2CVHg2zNs0qDUK+Hycdr1hUI1733g9aGgCJxZj
-         +rJiR3zo7pHTTK2H+wVwkCWHk9P/fVrhsMTX1RTdLaNJvfYie/JJEAD99beWc/POQYo3
-         DHVF7RJy5BLW9iAXE6mlRZgbIETfaTqIk7AEfzV3eYghlfxb3/n4uI1yZDEgm9bQE5mZ
-         BLSA==
-X-Received: by 10.66.193.4 with SMTP id hk4mr24478535pac.12.1413216629345;
-        Mon, 13 Oct 2014 09:10:29 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:8888:f50:ddbf:ae59])
-        by mx.google.com with ESMTPSA id e4sm2902564pdp.37.2014.10.13.09.10.28
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 Oct 2014 09:10:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20141010061114.GB15277@peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754224AbaJMQh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 12:37:26 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:53647 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753747AbaJMQhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 12:37:25 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3jGlsv2xGwz3hj6s;
+	Mon, 13 Oct 2014 18:37:23 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3jGlsv2G8Mzvh1p;
+	Mon, 13 Oct 2014 18:37:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id 53PE1K-MHExs; Mon, 13 Oct 2014 18:37:22 +0200 (CEST)
+X-Auth-Info: w4oIOhYflRkvwBEdtkZcc0EQrCr+msMkBqTprU16bd2F9tN1EwmId6ONaBB+K9KO
+Received: from igel.home (ppp-188-174-148-125.dynamic.mnet-online.de [188.174.148.125])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon, 13 Oct 2014 18:37:22 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 31AFF2C2584; Mon, 13 Oct 2014 18:37:22 +0200 (CEST)
+X-Yow: I have nostalgia for the late Sixties!  In 1969 I left my laundry with
+ a hippie!!  During an unauthorized Tupperware party it was chopped &
+ diced!
+In-Reply-To: <eb384a98a5c5642c4d3ccf0cf4b74b62e268e100.1413213400.git.etienne.buira@gmail.com>
+	(Etienne Buira's message of "Mon, 13 Oct 2014 17:19:12 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.94 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Etienne Buira <etienne.buira@gmail.com> writes:
 
-> For small outputs, we sometimes use:
->
->   test "$(some_cmd)" = "something we expect"
->
-> instead of a full test_cmp. The downside of this is that
-> when it fails, there is no output at all from the script.
+> +#define tmp_atexit atexit
 
-There's another downside to that construct: it loses the exit
-status from some_cmd.
+> +#define atexit tmp_atexit
+> +#undef tmp_atexit
 
-[...]
-> --- a/t/t5304-prune.sh
-> +++ b/t/t5304-prune.sh
-> @@ -13,7 +13,7 @@ add_blob() {
->  	before=$(git count-objects | sed "s/ .*//") &&
->  	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
->  	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-> -	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-> +	verbose test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
+What is this supposed to do?
 
-So ideally this would be something like:
+Andreas.
 
-	git count-objects >output &&
-	verbose test "$((1 + $before))" = "$(sed "s/ .*//" output)" &&
-
-[...]
-> @@ -45,11 +45,11 @@ test_expect_success 'prune --expire' '
->  
->  	add_blob &&
->  	git prune --expire=1.hour.ago &&
-> -	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-> +	verbose test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-
-and likewise elsewhere in the file.
-
-Alternatively, maybe there could be a helper in the same spirit as
-test_cmp_rev?
-
-	test_object_count () {
-		git count-objects >output &&
-		sed "s/ .*//" output >count &&
-		printf "%s\n" "$1" >expect &&
-		test_cmp expect count
-	}
-
-My two cents,
-Jonathan
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
