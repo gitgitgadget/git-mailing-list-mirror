@@ -1,8 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v16 09/11] trailer: execute command from
- 'trailer.<name>.command'
-Date: Mon, 13 Oct 2014 20:16:31 +0200
-Message-ID: <20141013181634.27329.34485.chriscool@tuxfamily.org>
+Subject: [PATCH v16 11/11] Documentation: add documentation for 'git
+ interpret-trailers'
+Date: Mon, 13 Oct 2014 20:16:33 +0200
+Message-ID: <20141013181634.27329.40376.chriscool@tuxfamily.org>
 References: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -16,25 +16,25 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Marc Branchaud <marcnarc@xiplink.com>,
 	Michael S Tsirkin <mst@redhat.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:19:51 2014
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:19:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdkDg-0007MM-GH
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:19:44 +0200
+	id 1XdkDr-0007Sj-Hy
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754860AbaJMSTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 14:19:39 -0400
-Received: from [194.158.98.15] ([194.158.98.15]:34001 "EHLO mail-2y.bbox.fr"
+	id S1754870AbaJMSTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:19:45 -0400
+Received: from [194.158.98.45] ([194.158.98.45]:52555 "EHLO mail-3y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754835AbaJMSTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 14:19:36 -0400
+	id S1754796AbaJMSTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:19:38 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 508E315D;
-	Mon, 13 Oct 2014 20:19:14 +0200 (CEST)
-X-git-sha1: dccccf40352d99847b74d95e80fb4dc7f8317fc0 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id DE5096C;
+	Mon, 13 Oct 2014 20:19:15 +0200 (CEST)
+X-git-sha1: 8ae4f16729c8ffa07a564b21c1311a81ccce1ccd 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
@@ -42,176 +42,347 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let the user specify a command that will give on its standard output
-the value to use for the specified trailer.
+While at it add git-interpret-trailers to "command-list.txt".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- trailer.c | 85 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 84 insertions(+), 1 deletion(-)
+ Documentation/git-interpret-trailers.txt | 314 +++++++++++++++++++++++++++++++
+ command-list.txt                         |   1 +
+ 2 files changed, 315 insertions(+)
+ create mode 100644 Documentation/git-interpret-trailers.txt
 
-diff --git a/trailer.c b/trailer.c
-index b0be0d7..8514566 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,5 +1,7 @@
- #include "cache.h"
- #include "string-list.h"
-+#include "run-command.h"
-+#include "string-list.h"
- #include "trailer.h"
- /*
-  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-@@ -33,6 +35,8 @@ static struct trailer_item *first_conf_item;
- 
- static char *separators = ":";
- 
-+#define TRAILER_ARG_STRING "$ARG"
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+new file mode 100644
+index 0000000..81fac3d
+--- /dev/null
++++ b/Documentation/git-interpret-trailers.txt
+@@ -0,0 +1,314 @@
++git-interpret-trailers(1)
++=========================
 +
- static int after_or_end(enum action_where where)
- {
- 	return (where == WHERE_AFTER) || (where == WHERE_END);
-@@ -78,6 +82,13 @@ static inline int contains_only_spaces(const char *str)
- 	return !*s;
- }
- 
-+static inline void strbuf_replace(struct strbuf *sb, const char *a, const char *b)
-+{
-+	const char *ptr = strstr(sb->buf, a);
-+	if (ptr)
-+		strbuf_splice(sb, ptr - sb->buf, strlen(a), b, strlen(b));
-+}
++NAME
++----
++git-interpret-trailers - help add stuctured information into commit messages
 +
- static void free_trailer_item(struct trailer_item *item)
- {
- 	free(item->conf.name);
-@@ -203,6 +214,63 @@ static struct trailer_item *remove_first(struct trailer_item **first)
- 	return item;
- }
- 
-+static int read_from_command(struct child_process *cp, struct strbuf *buf)
-+{
-+	if (run_command(cp))
-+		return error("running trailer command '%s' failed", cp->argv[0]);
-+	if (strbuf_read(buf, cp->out, 1024) < 1)
-+		return error("reading from trailer command '%s' failed", cp->argv[0]);
-+	strbuf_trim(buf);
-+	return 0;
-+}
++SYNOPSIS
++--------
++[verse]
++'git interpret-trailers' [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
 +
-+static const char *apply_command(const char *command, const char *arg)
-+{
-+	struct strbuf cmd = STRBUF_INIT;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct child_process cp;
-+	const char *argv[] = {NULL, NULL};
-+	const char *result;
++DESCRIPTION
++-----------
++Help adding 'trailers' lines, that look similar to RFC 822 e-mail
++headers, at the end of the otherwise free-form part of a commit
++message.
 +
-+	strbuf_addstr(&cmd, command);
-+	if (arg)
-+		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
++This command reads some patches or commit messages from either the
++<file> arguments or the standard input if no <file> is specified. Then
++this command applies the arguments passed using the `--trailer`
++option, if any, to the commit message part of each input file. The
++result is emitted on the standard output.
 +
-+	argv[0] = cmd.buf;
-+	memset(&cp, 0, sizeof(cp));
-+	cp.argv = argv;
-+	cp.env = local_repo_env;
-+	cp.no_stdin = 1;
-+	cp.out = -1;
-+	cp.use_shell = 1;
++Some configuration variables control the way the `--trailer` arguments
++are applied to each commit message and the way any existing trailer in
++the commit message is changed. They also make it possible to
++automatically add some trailers.
 +
-+	if (read_from_command(&cp, &buf)) {
-+		strbuf_release(&buf);
-+		result = xstrdup("");
-+	} else
-+		result = strbuf_detach(&buf, NULL);
++By default, a '<token>=<value>' or '<token>:<value>' argument given
++using `--trailer` will be appended after the existing trailers only if
++the last trailer has a different (<token>, <value>) pair (or if there
++is no existing trailer). The <token> and <value> parts will be trimmed
++to remove starting and trailing whitespace, and the resulting trimmed
++<token> and <value> will appear in the message like this:
 +
-+	strbuf_release(&cmd);
-+	return result;
-+}
++------------------------------------------------
++token: value
++------------------------------------------------
 +
-+static void apply_item_command(struct trailer_item *in_tok, struct trailer_item *arg_tok)
-+{
-+	if (arg_tok->conf.command) {
-+		const char *arg;
-+		if (arg_tok->value && arg_tok->value[0]) {
-+			arg = arg_tok->value;
-+		} else {
-+			if (in_tok && in_tok->value)
-+				arg = xstrdup(in_tok->value);
-+			else
-+				arg = xstrdup("");
-+		}
-+		arg_tok->value = apply_command(arg_tok->conf.command, arg);
-+		free((char *)arg);
-+	}
-+}
++This means that the trimmed <token> and <value> will be separated by
++`': '` (one colon followed by one space).
 +
- static void apply_arg_if_exists(struct trailer_item *in_tok,
- 				struct trailer_item *arg_tok,
- 				struct trailer_item *on_tok,
-@@ -214,16 +282,19 @@ static void apply_arg_if_exists(struct trailer_item *in_tok,
- 		free_trailer_item(arg_tok);
- 		break;
- 	case EXISTS_REPLACE:
-+		apply_item_command(in_tok, arg_tok);
- 		add_arg_to_input_list(on_tok, arg_tok,
- 				      in_tok_first, in_tok_last);
- 		remove_from_list(in_tok, in_tok_first, in_tok_last);
- 		free_trailer_item(in_tok);
- 		break;
- 	case EXISTS_ADD:
-+		apply_item_command(in_tok, arg_tok);
- 		add_arg_to_input_list(on_tok, arg_tok,
- 				      in_tok_first, in_tok_last);
- 		break;
- 	case EXISTS_ADD_IF_DIFFERENT:
-+		apply_item_command(in_tok, arg_tok);
- 		if (check_if_different(in_tok, arg_tok, 1))
- 			add_arg_to_input_list(on_tok, arg_tok,
- 					      in_tok_first, in_tok_last);
-@@ -231,6 +302,7 @@ static void apply_arg_if_exists(struct trailer_item *in_tok,
- 			free_trailer_item(arg_tok);
- 		break;
- 	case EXISTS_ADD_IF_DIFFERENT_NEIGHBOR:
-+		apply_item_command(in_tok, arg_tok);
- 		if (check_if_different(on_tok, arg_tok, 0))
- 			add_arg_to_input_list(on_tok, arg_tok,
- 					      in_tok_first, in_tok_last);
-@@ -254,6 +326,7 @@ static void apply_arg_if_missing(struct trailer_item **in_tok_first,
- 	case MISSING_ADD:
- 		where = arg_tok->conf.where;
- 		in_tok = after_or_end(where) ? in_tok_last : in_tok_first;
-+		apply_item_command(NULL, arg_tok);
- 		if (*in_tok) {
- 			add_arg_to_input_list(*in_tok, arg_tok,
- 					      in_tok_first, in_tok_last);
-@@ -537,7 +610,7 @@ static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
- 					     char *tok, char *val)
- {
- 	struct trailer_item *new = xcalloc(sizeof(*new), 1);
--	new->value = val;
-+	new->value = val ? val : xstrdup("");
- 
- 	if (conf_item) {
- 		duplicate_conf(&new->conf, &conf_item->conf);
-@@ -604,7 +677,17 @@ static struct trailer_item *process_command_line_args(struct string_list *traile
- 	struct trailer_item *arg_tok_first = NULL;
- 	struct trailer_item *arg_tok_last = NULL;
- 	struct string_list_item *tr;
-+	struct trailer_item *item;
++By default the new trailer will appear at the end of all the existing
++trailers. If there is no existing trailer, the new trailer will appear
++after the commit message part of the ouput, and, if there is no line
++with only spaces at the end of the commit message part, one blank line
++will be added before the new trailer.
 +
-+	/* Add a trailer item for each configured trailer with a command */
-+	for (item = first_conf_item; item; item = item->next) {
-+		if (item->conf.command) {
-+			struct trailer_item *new = new_trailer_item(item, NULL, NULL);
-+			add_trailer_item(&arg_tok_first, &arg_tok_last, new);
-+		}
-+	}
- 
-+	/* Add a trailer item for each trailer on the command line */
- 	for_each_string_list_item(tr, trailers) {
- 		struct trailer_item *new = create_trailer_item(tr->string);
- 		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
++Existing trailers are extracted from the input message by looking for
++a group of one or more lines that contain a colon (by default), where
++the group is preceded by one or more empty (or whitespace-only) lines.
++The group must either be at the end of the message or be the last
++non-whitespace lines before a line that starts with '---'. Such three
++minus signs start the patch part of the message.
++
++When reading trailers, there can be whitespaces before and after the
++token, the separator and the value. There can also be whitespaces
++indide the token and the value.
++
++Note that 'trailers' do not follow and are not intended to follow many
++rules for RFC 822 headers. For example they do not follow the line
++folding rules, the encoding rules and probably many other rules.
++
++OPTIONS
++-------
++--trim-empty::
++	If the <value> part of any trailer contains only whitespace,
++	the whole trailer will be removed from the resulting message.
++	This apply to existing trailers as well as new trailers.
++
++--trailer <token>[(=|:)<value>]::
++	Specify a (<token>, <value>) pair that should be applied as a
++	trailer to the input messages. See the description of this
++	command.
++
++CONFIGURATION VARIABLES
++-----------------------
++
++trailer.separators::
++	This option tells which characters are recognized as trailer
++	separators. By default only ':' is recognized as a trailer
++	separator, except that '=' is always accepted on the command
++	line for compatibility with other git commands.
+++
++The first character given by this option will be the default character
++used when another separator is not specified in the config for this
++trailer.
+++
++For example, if the value for this option is "%=$", then only lines
++using the format '<token><sep><value>' with <sep> containing '%', '='
++or '$' and then spaces will be considered trailers. And '%' will be
++the default separator used, so by default trailers will appear like:
++'<token>% <value>' (one percent sign and one space will appear between
++the token and the value).
++
++trailer.where::
++	This option tells where a new trailer will be added.
+++
++This can be `end`, which is the default, `start`, `after` or `before`.
+++
++If it is `end`, then each new trailer will appear at the end of the
++existing trailers.
+++
++If it is `start`, then each new trailer will appear at the start,
++instead of the end, of the existing trailers.
+++
++If it is `after`, then each new trailer will appear just after the
++last trailer with the same <token>.
+++
++If it is `before`, then each new trailer will appear just before the
++first trailer with the same <token>.
++
++trailer.ifexists::
++	This option makes it possible to choose what action will be
++	performed when there is already at least one trailer with the
++	same <token> in the message.
+++
++The valid values for this option are: `addIfDifferentNeighbor` (this
++is the default), `addIfDifferent`, `add`, `overwrite` or `doNothing`.
+++
++With `addIfDifferentNeighbor`, a new trailer will be added only if no
++trailer with the same (<token>, <value>) pair is above or below the line
++where the new trailer will be added.
+++
++With `addIfDifferent`, a new trailer will be added only if no trailer
++with the same (<token>, <value>) pair is already in the message.
+++
++With `add`, a new trailer will be added, even if some trailers with
++the same (<token>, <value>) pair are already in the message.
+++
++With `replace`, an existing trailer with the same <token> will be
++deleted and the new trailer will be added. The deleted trailer will be
++the closest one (with the same <token>) to the place where the new one
++will be added.
+++
++With `doNothing`, nothing will be done; that is no new trailer will be
++added if there is already one with the same <token> in the message.
++
++trailer.ifmissing::
++	This option makes it possible to choose what action will be
++	performed when there is not yet any trailer with the same
++	<token> in the message.
+++
++The valid values for this option are: `add` (this is the default) and
++`doNothing`.
+++
++With `add`, a new trailer will be added.
+++
++With `doNothing`, nothing will be done.
++
++trailer.<token>.key::
++	This `key` will be used instead of <token> in the trailer. At
++	the end of this key, a separator can appear and then some
++	space characters. By default the only valid separator is ':',
++	but this can be changed using the `trailer.separators` config
++	variable.
+++
++If there is a separator, then the key will be used instead of both the
++<token> and the default separator when adding the trailer.
++
++trailer.<token>.where::
++	This option takes the same values as the 'trailer.where'
++	configuration variable and it overrides what is specified by
++	that option for trailers with the specified <token>.
++
++trailer.<token>.ifexist::
++	This option takes the same values as the 'trailer.ifexist'
++	configuration variable and it overrides what is specified by
++	that option for trailers with the specified <token>.
++
++trailer.<token>.ifmissing::
++	This option takes the same values as the 'trailer.ifmissing'
++	configuration variable and it overrides what is specified by
++	that option for trailers with the specified <token>.
++
++trailer.<token>.command::
++	This option can be used to specify a shell command that will
++	be called to automatically add or modify a trailer with the
++	specified <token>.
+++
++When this option is specified, the behavior is as if a special
++'<token>=<value>' argument were added at the beginning of the command
++line, where <value> is taken to be the standard output of the
++specified command with any leading and trailing whitespace trimmed
++off.
+++
++If the command contains the `$ARG` string, this string will be
++replaced with the <value> part of an existing trailer with the same
++<token>, if any, before the command is launched.
+++
++If some '<token>=<value>' arguments are also passed on the command
++line, when a 'trailer.<token>.command' is configured, the command will
++also be executed for each of these arguments. And the <value> part of
++these arguments, if any, will be used to replace the `$ARG` string in
++the command.
++
++EXAMPLES
++--------
++
++* Configure a 'sign' trailer with a 'Signed-off-by' key, and then
++  add two of these trailers to a message:
+++
++------------
++$ git config trailer.sign.key "Signed-off-by"
++$ cat msg.txt
++subject
++
++message
++$ cat msg.txt | git interpret-trailers --trailer 'sign: Alice <alice@example.com>' --trailer 'sign: Bob <bob@example.com>'
++subject
++
++message
++
++Signed-off-by: Alice <alice@example.com>
++Signed-off-by: Bob <bob@example.com>
++------------
++
++* Extract the last commit as a patch, and add a 'Cc' and a
++  'Reviewed-by' trailer to it:
+++
++------------
++$ git format-patch -1
++0001-foo.patch
++$ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Reviewed-by: Bob <bob@example.com>' 0001-foo.patch >0001-bar.patch
++------------
++
++* Configure a 'sign' trailer with a command to automatically add a
++  'Signed-off-by: ' with the author information only if there is no
++  'Signed-off-by: ' already, and show how it works:
+++
++------------
++$ git config trailer.sign.key "Signed-off-by: "
++$ git config trailer.sign.ifmissing add
++$ git config trailer.sign.ifexists doNothing
++$ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
++$ git interpret-trailers <<EOF
++> EOF
++
++Signed-off-by: Bob <bob@example.com>
++$ git interpret-trailers <<EOF
++> Signed-off-by: Alice <alice@example.com>
++> EOF
++
++Signed-off-by: Alice <alice@example.com>
++------------
++
++* Configure a 'fix' trailer with a key that contains a '#' and no
++  space after this character, and show how it works:
+++
++------------
++$ git config trailer.separators ":#"
++$ git config trailer.fix.key "Fix #"
++$ echo "subject" | git interpret-trailers --trailer fix=42
++subject
++
++Fix #42
++------------
++
++* Configure a 'see' trailer with a command to show the subject of a
++  commit that is related, and show how it works:
+++
++------------
++$ git config trailer.see.key "See-also: "
++$ git config trailer.see.ifExists "replace"
++$ git config trailer.see.ifMissing "doNothing"
++$ git config trailer.see.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG"
++$ git interpret-trailers <<EOF
++> subject
++> 
++> message
++> 
++> see: HEAD~2
++> EOF
++subject
++
++message
++
++See-also: fe3187489d69c4 (subject of related commit)
++------------
++
++* Configure a commit template with some trailers with empty values
++  (using sed to show and keep the trailing spaces at the end of the
++  trailers), then configure a commit-msg hook that uses
++  'git interpret-trailers' to remove trailers with empty values and
++  to add a 'git-version' trailer:
+++
++------------
++$ sed -e 's/ Z$/ /' >commit_template.txt <<EOF
++> ***subject***
++> 
++> ***message***
++> 
++> Fixes: Z
++> Cc: Z
++> Reviewed-by: Z
++> Signed-off-by: Z
++> EOF
++$ git config commit.template commit_template.txt
++$ cat >.git/hooks/commit-msg <<EOF
++> #!/bin/sh
++> git interpret-trailers --trim-empty --trailer "git-version: \$(git describe)" "\$1" > "\$1.new"
++> mv "\$1.new" "\$1"
++> EOF
++$ chmod +x .git/hooks/commit-msg
++------------
++
++SEE ALSO
++--------
++linkgit:git-commit[1], linkgit:git-format-patch[1], linkgit:git-config[1]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/command-list.txt b/command-list.txt
+index a3ff0c9..f1eae08 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -62,6 +62,7 @@ git-imap-send                           foreignscminterface
+ git-index-pack                          plumbingmanipulators
+ git-init                                mainporcelain common
+ git-instaweb                            ancillaryinterrogators
++git-interpret-trailers                  purehelpers
+ gitk                                    mainporcelain
+ git-log                                 mainporcelain common
+ git-ls-files                            plumbinginterrogators
 -- 
 2.1.0.rc0.248.gb91fdbc
