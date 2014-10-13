@@ -1,82 +1,280 @@
-From: "Crabtree, Andrew" <andrew.crabtree@hp.com>
-Subject: RE: Performance Issues with Git Rebase
-Date: Mon, 13 Oct 2014 17:52:00 +0000
-Message-ID: <B82B660D4887C042850326C2BC65FE035D56CD63@G4W3227.americas.hpqcorp.net>
-References: <B82B660D4887C042850326C2BC65FE035D56CA14@G4W3227.americas.hpqcorp.net>
- <xmqqlhoj51bi.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v16 02/11] trailer: process trailers from input message and
+ arguments
+Date: Mon, 13 Oct 2014 20:16:24 +0200
+Message-ID: <20141013181634.27329.84638.chriscool@tuxfamily.org>
+References: <20141013181428.27329.86081.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Michael S Tsirkin <mst@redhat.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 19:53:11 2014
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:19:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xdjnz-0001La-1h
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 19:53:11 +0200
+	id 1XdkDV-0005nh-Hm
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:19:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559AbaJMRxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 13:53:06 -0400
-Received: from g4t3427.houston.hp.com ([15.201.208.55]:14509 "EHLO
-	g4t3427.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754532AbaJMRxE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Oct 2014 13:53:04 -0400
-Received: from G4W6310.americas.hpqcorp.net (g4w6310.houston.hp.com [16.210.26.217])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by g4t3427.houston.hp.com (Postfix) with ESMTPS id D50546A;
-	Mon, 13 Oct 2014 17:53:03 +0000 (UTC)
-Received: from G4W6303.americas.hpqcorp.net (16.210.26.228) by
- G4W6310.americas.hpqcorp.net (16.210.26.217) with Microsoft SMTP Server (TLS)
- id 14.3.169.1; Mon, 13 Oct 2014 17:52:00 +0000
-Received: from G4W3227.americas.hpqcorp.net ([169.254.8.47]) by
- G4W6303.americas.hpqcorp.net ([16.210.26.228]) with mapi id 14.03.0169.001;
- Mon, 13 Oct 2014 17:52:00 +0000
-Thread-Topic: Performance Issues with Git Rebase
-Thread-Index: Ac/luPkE0ej5ZSZWTB2ZiCVGSSGHAABUcAySAACj81A=
-In-Reply-To: <xmqqlhoj51bi.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [16.210.192.239]
+	id S1754774AbaJMST3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:19:29 -0400
+Received: from [194.158.98.15] ([194.158.98.15]:33936 "EHLO mail-2y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754140AbaJMST3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:19:29 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id EDBEF164;
+	Mon, 13 Oct 2014 20:19:03 +0200 (CEST)
+X-git-sha1: 76c382af5f220168d0113fae2082fba35f978713 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20141013181428.27329.86081.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ah gotcha.  That makes sense.
+Implement the logic to process trailers from the input message
+and from arguments.
 
-Default behavior is to do a patch-id check on all of them which is exactly what you would normally want to happen, and suppressing that speeds things up considerably at the risk of attempting to re-apply an already existing patch.
+At the beginning trailers from the input message are in their
+own "in_tok" doubly linked list, and trailers from arguments
+are in their own "arg_tok" doubly linked list.
 
-Thanks much for the explanation.   Perhaps I'll add a progress indicator since my organization will be doing a significant number of these types of rebases in the near future.
+The lists are traversed and when an "arg_tok" should be "applied",
+it is removed from its list and inserted into the "in_tok" list.
 
-Regards,
--Andrew
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ trailer.c | 210 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 210 insertions(+)
 
-
-
-
-> -----Original Message-----
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Monday, October 13, 2014 10:26 AM
-> To: Crabtree, Andrew
-> Cc: git@vger.kernel.org
-> Subject: Re: Performance Issues with Git Rebase
-> 
-> "Crabtree, Andrew" <andrew.crabtree@hp.com> writes:
-> 
-> > I'm getting the same output with both the triple and double dot for my
-> > specific case, but I have no idea if that change makes sense for all
-> > cases or not.  Any guidance?
-> 
-> The difference only matters if any of your 4 patches have been sent
-> to your upstream and accepted and appear among the 4665 changes they
-> have.
-> 
-> The --cherry-pick option is about cross checking the combinations of
-> 4 x 4665 and filter out matching ones (if any).
-> 
+diff --git a/trailer.c b/trailer.c
+index ac323b1..be0ad65 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -67,3 +67,213 @@ static int same_trailer(struct trailer_item *a, struct trailer_item *b)
+ {
+ 	return same_token(a, b) && same_value(a, b);
+ }
++
++static void free_trailer_item(struct trailer_item *item)
++{
++	free(item->conf.name);
++	free(item->conf.key);
++	free(item->conf.command);
++	free((char *)item->token);
++	free((char *)item->value);
++	free(item);
++}
++
++static void update_last(struct trailer_item **last)
++{
++	if (*last)
++		while ((*last)->next != NULL)
++			*last = (*last)->next;
++}
++
++static void update_first(struct trailer_item **first)
++{
++	if (*first)
++		while ((*first)->previous != NULL)
++			*first = (*first)->previous;
++}
++
++static void add_arg_to_input_list(struct trailer_item *on_tok,
++				  struct trailer_item *arg_tok,
++				  struct trailer_item **first,
++				  struct trailer_item **last)
++{
++	if (after_or_end(arg_tok->conf.where)) {
++		arg_tok->next = on_tok->next;
++		on_tok->next = arg_tok;
++		arg_tok->previous = on_tok;
++		if (arg_tok->next)
++			arg_tok->next->previous = arg_tok;
++		update_last(last);
++	} else {
++		arg_tok->previous = on_tok->previous;
++		on_tok->previous = arg_tok;
++		arg_tok->next = on_tok;
++		if (arg_tok->previous)
++			arg_tok->previous->next = arg_tok;
++		update_first(first);
++	}
++}
++
++static int check_if_different(struct trailer_item *in_tok,
++			      struct trailer_item *arg_tok,
++			      int check_all)
++{
++	enum action_where where = arg_tok->conf.where;
++	do {
++		if (!in_tok)
++			return 1;
++		if (same_trailer(in_tok, arg_tok))
++			return 0;
++		/*
++		 * if we want to add a trailer after another one,
++		 * we have to check those before this one
++		 */
++		in_tok = after_or_end(where) ? in_tok->previous : in_tok->next;
++	} while (check_all);
++	return 1;
++}
++
++static void remove_from_list(struct trailer_item *item,
++			     struct trailer_item **first,
++			     struct trailer_item **last)
++{
++	struct trailer_item *next = item->next;
++	struct trailer_item *previous = item->previous;
++
++	if (next) {
++		item->next->previous = previous;
++		item->next = NULL;
++	} else if (last)
++		*last = previous;
++
++	if (previous) {
++		item->previous->next = next;
++		item->previous = NULL;
++	} else if (first)
++		*first = next;
++}
++
++static struct trailer_item *remove_first(struct trailer_item **first)
++{
++	struct trailer_item *item = *first;
++	*first = item->next;
++	if (item->next) {
++		item->next->previous = NULL;
++		item->next = NULL;
++	}
++	return item;
++}
++
++static void apply_arg_if_exists(struct trailer_item *in_tok,
++				struct trailer_item *arg_tok,
++				struct trailer_item *on_tok,
++				struct trailer_item **in_tok_first,
++				struct trailer_item **in_tok_last)
++{
++	switch (arg_tok->conf.if_exists) {
++	case EXISTS_DO_NOTHING:
++		free_trailer_item(arg_tok);
++		break;
++	case EXISTS_REPLACE:
++		add_arg_to_input_list(on_tok, arg_tok,
++				      in_tok_first, in_tok_last);
++		remove_from_list(in_tok, in_tok_first, in_tok_last);
++		free_trailer_item(in_tok);
++		break;
++	case EXISTS_ADD:
++		add_arg_to_input_list(on_tok, arg_tok,
++				      in_tok_first, in_tok_last);
++		break;
++	case EXISTS_ADD_IF_DIFFERENT:
++		if (check_if_different(in_tok, arg_tok, 1))
++			add_arg_to_input_list(on_tok, arg_tok,
++					      in_tok_first, in_tok_last);
++		else
++			free_trailer_item(arg_tok);
++		break;
++	case EXISTS_ADD_IF_DIFFERENT_NEIGHBOR:
++		if (check_if_different(on_tok, arg_tok, 0))
++			add_arg_to_input_list(on_tok, arg_tok,
++					      in_tok_first, in_tok_last);
++		else
++			free_trailer_item(arg_tok);
++		break;
++	}
++}
++
++static void apply_arg_if_missing(struct trailer_item **in_tok_first,
++				 struct trailer_item **in_tok_last,
++				 struct trailer_item *arg_tok)
++{
++	struct trailer_item **in_tok;
++	enum action_where where;
++
++	switch (arg_tok->conf.if_missing) {
++	case MISSING_DO_NOTHING:
++		free_trailer_item(arg_tok);
++		break;
++	case MISSING_ADD:
++		where = arg_tok->conf.where;
++		in_tok = after_or_end(where) ? in_tok_last : in_tok_first;
++		if (*in_tok) {
++			add_arg_to_input_list(*in_tok, arg_tok,
++					      in_tok_first, in_tok_last);
++		} else {
++			*in_tok_first = arg_tok;
++			*in_tok_last = arg_tok;
++		}
++		break;
++	}
++}
++
++static int find_same_and_apply_arg(struct trailer_item **in_tok_first,
++				   struct trailer_item **in_tok_last,
++				   struct trailer_item *arg_tok)
++{
++	struct trailer_item *in_tok;
++	struct trailer_item *on_tok;
++	struct trailer_item *following_tok;
++
++	enum action_where where = arg_tok->conf.where;
++	int middle = (where == WHERE_AFTER) || (where == WHERE_BEFORE);
++	int backwards = after_or_end(where);
++	struct trailer_item *start_tok = backwards ? *in_tok_last : *in_tok_first;
++
++	for (in_tok = start_tok; in_tok; in_tok = following_tok) {
++		following_tok = backwards ? in_tok->previous : in_tok->next;
++		if (!same_token(in_tok, arg_tok))
++			continue;
++		on_tok = middle ? in_tok : start_tok;
++		apply_arg_if_exists(in_tok, arg_tok, on_tok,
++				    in_tok_first, in_tok_last);
++		return 1;
++	}
++	return 0;
++}
++
++static void process_trailers_lists(struct trailer_item **in_tok_first,
++				   struct trailer_item **in_tok_last,
++				   struct trailer_item **arg_tok_first)
++{
++	struct trailer_item *arg_tok;
++	struct trailer_item *next_arg;
++
++	if (!*arg_tok_first)
++		return;
++
++	for (arg_tok = *arg_tok_first; arg_tok; arg_tok = next_arg) {
++		int applied = 0;
++
++		next_arg = arg_tok->next;
++		remove_from_list(arg_tok, arg_tok_first, NULL);
++
++		applied = find_same_and_apply_arg(in_tok_first,
++						  in_tok_last,
++						  arg_tok);
++
++		if (!applied)
++			apply_arg_if_missing(in_tok_first,
++					     in_tok_last,
++					     arg_tok);
++	}
++}
+-- 
+2.1.0.rc0.248.gb91fdbc
