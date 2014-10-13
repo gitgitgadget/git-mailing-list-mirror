@@ -1,159 +1,88 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v16 06/11] trailer: put all the processing together and print
-Date: Mon, 13 Oct 2014 20:16:28 +0200
-Message-ID: <20141013181634.27329.50950.chriscool@tuxfamily.org>
-References: <20141013181428.27329.86081.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Michael S Tsirkin <mst@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:20:28 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 0/5] add "unset.variable" for unsetting previously set variables
+Date: Mon, 13 Oct 2014 11:21:50 -0700
+Message-ID: <xmqqh9z74ypt.fsf@gitster.dls.corp.google.com>
+References: <1412256292-4286-1-git-send-email-tanayabh@gmail.com>
+	<xmqqvbo2meg5.fsf@gitster.dls.corp.google.com>
+	<5433CBC3.5010202@gmail.com>
+	<xmqq1tqjkexe.fsf@gitster.dls.corp.google.com>
+	<vpqzjd7kta6.fsf@anie.imag.fr>
+	<xmqqy4sqbi12.fsf@gitster.dls.corp.google.com>
+	<vpq61fujtlk.fsf@anie.imag.fr>
+	<xmqqk34a8hl3.fsf@gitster.dls.corp.google.com>
+	<20141010081107.GA8355@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Rasmus Villemoes <rv@rasmusvillemoes.dk>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:22:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdkEJ-0007jJ-2m
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:20:23 +0200
+	id 1XdkFv-0000O4-2O
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606AbaJMSUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 14:20:11 -0400
-Received: from [194.158.98.15] ([194.158.98.15]:33963 "EHLO mail-2y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754782AbaJMSTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 14:19:33 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id A87C5145;
-	Mon, 13 Oct 2014 20:19:11 +0200 (CEST)
-X-git-sha1: 073b95b00542ed227c8c33175b9b16e1c23c32ea 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20141013181428.27329.86081.chriscool@tuxfamily.org>
+	id S1754437AbaJMSV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:21:59 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59006 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752453AbaJMSV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:21:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 941BD1496C;
+	Mon, 13 Oct 2014 14:21:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bb89mF2Pkv6UPdMGDQXsV3U+EXU=; b=nxEMLt
+	3QXz0GJTk3G4a7XLK+3fvxswRHfk+hyyMgNFpXK9mhxDoNmqfJhVexxkKL8hSBzd
+	HmAVmjtFXATYTBOMOOo3DfzLS8XvbXAmxvjZM9lFmEEMlFl+C/Px+iR8OVba4Vis
+	m+YxtXJ5J88Fj7cHBj9wt/CWLa40wRY4HihJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hUR5ZUsryHWZM++/j1Qz5BJnOaqHsxdi
+	9pmuc11PhzGaIAtgbC4S4JCeuJTJvbizjVeA7yPs4ruUOQ30uP3TcwV6vEea04hj
+	mRvqQwT6kmU021vQNcBS4sXVbHntQ12fZDIMFMXA2j28cUsfWm10LwgEKleHyqU5
+	L4W67MlsCAM=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AD621496B;
+	Mon, 13 Oct 2014 14:21:53 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 086BC14969;
+	Mon, 13 Oct 2014 14:21:52 -0400 (EDT)
+In-Reply-To: <20141010081107.GA8355@peff.net> (Jeff King's message of "Fri, 10
+	Oct 2014 04:11:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CE626D14-5305-11E4-B0AA-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch adds the process_trailers() function that
-calls all the previously added processing functions
-and then prints the results on the standard output.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- trailer.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- trailer.h |  6 ++++++
- 2 files changed, 75 insertions(+)
- create mode 100644 trailer.h
+> ... Which makes me wonder if safe-include is really helping that
+> much versus a project shipping a shell script that munges the repository
+> config. The latter is less safe (you are, after all, running code, but
+> you would at least have the chance to examine it), but is way more
+> flexible. And the safety is comparable to running "make" on a cloned
+> project.
+>
+> I dunno. I do not have anything against the safe-include idea, but each
+> time it comes up, I think we are often left guessing about exactly which
+> config options projects would want to set, and to what values.
 
-diff --git a/trailer.c b/trailer.c
-index 4f0de3b..b0be0d7 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "string-list.h"
-+#include "trailer.h"
- /*
-  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-  */
-@@ -87,6 +88,35 @@ static void free_trailer_item(struct trailer_item *item)
- 	free(item);
- }
- 
-+static char last_non_space_char(const char *s)
-+{
-+	int i;
-+	for (i = strlen(s) - 1; i >= 0; i--)
-+		if (!isspace(s[i]))
-+			return s[i];
-+	return '\0';
-+}
-+
-+static void print_tok_val(const char *tok, const char *val)
-+{
-+	char c = last_non_space_char(tok);
-+	if (!c)
-+		return;
-+	if (strchr(separators, c))
-+		printf("%s%s\n", tok, val);
-+	else
-+		printf("%s%c %s\n", tok, separators[0], val);
-+}
-+
-+static void print_all(struct trailer_item *first, int trim_empty)
-+{
-+	struct trailer_item *item;
-+	for (item = first; item; item = item->next) {
-+		if (!trim_empty || strlen(item->value) > 0)
-+			print_tok_val(item->token, item->value);
-+	}
-+}
-+
- static void update_last(struct trailer_item **last)
- {
- 	if (*last)
-@@ -697,3 +727,42 @@ static int process_input_file(struct strbuf **lines,
- 
- 	return patch_start;
- }
-+
-+static void free_all(struct trailer_item **first)
-+{
-+	while (*first) {
-+		struct trailer_item *item = remove_first(first);
-+		free_trailer_item(item);
-+	}
-+}
-+
-+void process_trailers(const char *file, int trim_empty, struct string_list *trailers)
-+{
-+	struct trailer_item *in_tok_first = NULL;
-+	struct trailer_item *in_tok_last = NULL;
-+	struct trailer_item *arg_tok_first;
-+	struct strbuf **lines;
-+	int patch_start;
-+
-+	/* Default config must be setup first */
-+	git_config(git_trailer_default_config, NULL);
-+	git_config(git_trailer_config, NULL);
-+
-+	lines = read_input_file(file);
-+
-+	/* Print the lines before the trailers */
-+	patch_start = process_input_file(lines, &in_tok_first, &in_tok_last);
-+
-+	arg_tok_first = process_command_line_args(trailers);
-+
-+	process_trailers_lists(&in_tok_first, &in_tok_last, &arg_tok_first);
-+
-+	print_all(in_tok_first, trim_empty);
-+
-+	free_all(&in_tok_first);
-+
-+	/* Print the lines after the trailers as is */
-+	print_lines(lines, patch_start, INT_MAX);
-+
-+	strbuf_list_free(lines);
-+}
-diff --git a/trailer.h b/trailer.h
-new file mode 100644
-index 0000000..8eb25d5
---- /dev/null
-+++ b/trailer.h
-@@ -0,0 +1,6 @@
-+#ifndef TRAILER_H
-+#define TRAILER_H
-+
-+void process_trailers(const char *file, int trim_empty, struct string_list *trailers);
-+
-+#endif /* TRAILER_H */
--- 
-2.1.0.rc0.248.gb91fdbc
+I tend to agree.  Every time somebody says "a project wants to give
+its participants suggested settings", we seem to tell them to ship
+an instruction to their participants, either in BUILDING or setup.sh
+or whatever.  It certainly is simpler and more flexible.
+
+The only real difference it might make is an attempt to push to an
+unattended place and automatically making the changes to take effect,
+aka "push to deploy", which is not what we encourage anyway, so...
