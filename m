@@ -1,114 +1,55 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [PATCH v1] rebase -m: Use empty tree base for parentless commits
-Date: Mon, 13 Oct 2014 20:43:51 +0200
-Message-ID: <543C1D67.80501@gmail.com>
-References: <5434312E.6040407@redhat.com>	<bf0e177fbaac91f8c55526729e580fade9f0f395.1412879523.git.bafain@gmail.com> <xmqq1tqh6p3y.fsf@gitster.dls.corp.google.com>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Smart HTTP
+Date: Mon, 13 Oct 2014 22:58:22 +0400
+Message-ID: <20141013225822.47d4deb70751eeb4915f69d6@domain007.com>
+References: <em4fcc6297-a9c0-4bcf-b7da-6afb6cbe5f80@mesh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 13 20:44:01 2014
+Cc: git@vger.kernel.org
+To: "John Norris" <john@norricorp.f9.co.uk>
+X-From: git-owner@vger.kernel.org Mon Oct 13 20:58:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdkbA-0003I0-Qc
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:44:01 +0200
+	id 1XdkpL-0001oI-As
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Oct 2014 20:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336AbaJMSn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 14:43:57 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:33152 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753797AbaJMSn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 14:43:56 -0400
-Received: by mail-la0-f42.google.com with SMTP id mk6so7256472lab.29
-        for <git@vger.kernel.org>; Mon, 13 Oct 2014 11:43:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=KS/N7yZtFv4i6dXqRRwxWYA828Iry06No+WNhrW1eHI=;
-        b=TiAsdzcOPxKdanb9QT5giS7bfKIlq2gz3t6PvezG3ev29mBVCvjChOdrXsBQVeNC1z
-         dOwsJYEX7hJ89qo3YNt1Px9zYi4lXiEQz4fJRL0UAphB0HplbbDkSsAfH+pZqkdImMEw
-         3VomLCTzLW/oJgPHfWzImt2OhGqFanRV9JmAwAYgGoyJ5NxO0r5Ks+YF+pbwX3Aogn6h
-         4rC8VdNDmPJBLAbIIedYGSbTdrUxGACN8mqyWUe1dyE1IZ5HOYhtyNy1RvVNZAyZyGmS
-         R5ys/OQKLJOFfUigRv4ip7L/WKm4nYYK8ZJacejZgmy4A9RCmtmsJ49UGYqzDNNxW3Rb
-         bQXw==
-X-Received: by 10.152.161.231 with SMTP id xv7mr301218lab.43.1413225835013;
-        Mon, 13 Oct 2014 11:43:55 -0700 (PDT)
-Received: from client.googlemail.com (putty.olf.sgsnet.se. [46.239.119.252])
-        by mx.google.com with ESMTPSA id v7sm4809342lbp.44.2014.10.13.11.43.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Oct 2014 11:43:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <xmqq1tqh6p3y.fsf@gitster.dls.corp.google.com>
+	id S1754585AbaJMS6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 14:58:31 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:60944 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754326AbaJMS6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 14:58:30 -0400
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id s9DIwM5H014569;
+	Mon, 13 Oct 2014 22:58:23 +0400
+In-Reply-To: <em4fcc6297-a9c0-4bcf-b7da-6afb6cbe5f80@mesh>
+X-Mailer: Sylpheed 3.2.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, 13 Oct 2014 17:29:05 +0000
+"John Norris" <john@norricorp.f9.co.uk> wrote:
 
-Junio C Hamano writes:
-> Fabian Ruch <bafain@gmail.com> writes:
->> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
->> index d3fb67d..3f754ae 100644
->> --- a/git-rebase--merge.sh
->> +++ b/git-rebase--merge.sh
->> @@ -67,7 +67,13 @@ call_merge () {
->>  		GIT_MERGE_VERBOSITY=1 && export GIT_MERGE_VERBOSITY
->>  	fi
->>  	test -z "$strategy" && strategy=recursive
->> -	eval 'git-merge-$strategy' $strategy_opts '"$cmt^" -- "$hd" "$cmt"'
->> +	base=$(git rev-list --parents -1 $cmt | cut -d ' ' -s -f 2 -)
->> +	if test -z "$base"
->> +	then
->> +		# the empty tree sha1
->> +		base=4b825dc642cb6eb9a060e54bf8d69288fbee4904
->> +	fi
->> +	eval 'git-merge-$strategy' $strategy_opts '"$base" -- "$hd" "$cmt"'
-> 
-> This looks wrong.
-> 
-> The interface to "git-merge-$strategy" is designed in such a way
-> that each strategy should be capable of taking _no_ base at all.
+> I guess this comment is aimed at Scott Chacon.
+> I have read your blog post on Smart HTTP 
+> (http://git-scm.com/blog/2010/03/04/smart-http.html) and wondered if 
+> there is any documentation that compares in terms of thoroughness
+> with your sections in the book on using SSH, which does explain the
+> basics so that "anyone" can get it working.
+> I have tried setting up authenticated pull and push with HTTP (not 
+> HTTPS) and Apache never asks for authentication during a pull and 
+> refuses a push with a 403 error.
 
-Ok, but doesn't this use of the git-merge-$strategy interface (as shown
-in the example below) apply only to the case where one wants to merge
-two histories by creating a merge commit? When a merge commit is being
-created, the documentation states that git-merge abstracts from the
-commit history considering the _total change_ since a merge base on each
-branch.
+Looks like a sort-of followup to this discussion [1].
 
-In contrast, here (i.e., in the case of git-rebase--merge) we care about
-how the changes introduced by the _individual commits_ are applied.
-Therefore, don't we want to be explicit about the "base" and tell
-git-merge-$strategy exactly which changes it should merge into the
-current head?
+(John, being a good netizen, you should have included the link to that
+discussion yourself, to put your uh comment in context and may be
+actually get some useful responses.)
 
-The codebase has always been doing this both for git-rebase--merge and
-git-cherry-pick. What leads to the reported bug is that the latter
-covers the case where the commit object has no parents but the former
-doesn't. Root commits are handled by git-cherry-pick (and should be by
-git-rebase--merge) using an explicit "base" for the same reason why
-$cmt^ is given.
-
-> See how unquoted $common is given to git-merge-$strategy in
-> contrib/examples/git-merge.sh, i.e.
-> 
->     eval 'git-merge-$strategy '"$xopt"' $common -- "$head_arg" "$@"'
-> 
-> where common comes from
-> 
-> 	common=$(git merge-base ...)
-> 
-> which would be empty when you are looking at disjoint histories.
-
-If there are still objections to the patch because of the magic number
-and the cut, it might be worth considering an implementation of
-git-rebase--merge using git-cherry-pick's merge strategy option.
-
-   Fabian
+1. https://groups.google.com/d/topic/git-users/zcXYY1Le_F4/discussion
