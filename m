@@ -1,77 +1,74 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH] remote.c - Make remote definition require a url
-Date: Mon, 13 Oct 2014 21:05:47 -0400
-Message-ID: <543C76EB.1000103@gmail.com>
-References: <1413040849-20056-1-git-send-email-mlevedahl@gmail.com> <xmqqppdv51lv.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Initialise hash variable to prevent compiler warnings
+Date: Mon, 13 Oct 2014 18:13:31 -0700
+Message-ID: <CAPc5daWmHe-EbgO-wjy9UsodTFERa1vpz-SEDF-UM_eLm7CuCw@mail.gmail.com>
+References: <1413211041-28732-1-git-send-email-felipe@paradoxo.org>
+ <xmqq38ar3f1o.fsf@gitster.dls.corp.google.com> <CANxchRS1mGapb77hc9Ywqj_-8UeexSAWK4UK9y9M76pvoN-Yeg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 03:05:56 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Felipe Franciosi <felipe@paradoxo.org>
+X-From: git-owner@vger.kernel.org Tue Oct 14 03:13:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdqYl-00062O-K4
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 03:05:56 +0200
+	id 1XdqgX-0000D5-Td
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 03:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145AbaJNBFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 21:05:52 -0400
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:63999 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752985AbaJNBFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 21:05:51 -0400
-Received: by mail-qg0-f45.google.com with SMTP id q107so7552399qgd.4
-        for <git@vger.kernel.org>; Mon, 13 Oct 2014 18:05:50 -0700 (PDT)
+	id S1754137AbaJNBNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 21:13:53 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:34428 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753946AbaJNBNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 21:13:52 -0400
+Received: by mail-lb0-f173.google.com with SMTP id 10so7319556lbg.4
+        for <git@vger.kernel.org>; Mon, 13 Oct 2014 18:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=D43IixDR/bFPCKvlRPzvLMPy+q1w7o/tLWPOfY80NJE=;
-        b=FaAoyIC2piFm2F5dQlBB4tF6I2lMY0rTgMFng7eenGseAmq7eZwJfLNak5Tzr7Kjib
-         Dy12rjUpn9wa5Jtuakc0gXjGZSN/I69kdXIhqRaW6xZ3R/O3HEEBSSfqmgufhayqri/s
-         Nt2TreOukFRotJ68BPe9N+/F8tIM7fk/LBjl0qqAENQ1/ea+E6kDsWgBF1yEcsk0egBv
-         YUkFKDFiRGhj+4SgSFfqlewL1hC3bdJ9GuHfLwusOxjqVBgXe7tODMEr0dUSYWmuQaBQ
-         WYArFsJfRfalwP27WqVbSBA06wX8pXfIo3AQa+SL15alCYXYEBudbnjrbSCQ3sVc+Dq1
-         Lm9w==
-X-Received: by 10.224.90.3 with SMTP id g3mr3756762qam.90.1413248750551;
-        Mon, 13 Oct 2014 18:05:50 -0700 (PDT)
-Received: from marklaptop.lan (pool-173-73-114-83.washdc.fios.verizon.net. [173.73.114.83])
-        by mx.google.com with ESMTPSA id q6sm14273685qas.16.2014.10.13.18.05.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Oct 2014 18:05:49 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <xmqqppdv51lv.fsf@gitster.dls.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=bHObKCksFVhepjGnGN3ns4VcDfRbYTHMVlKBskHBkGI=;
+        b=NIFxtiaQJQ0h4zpFBGB7zW9JHEcmWI8R3EAJzoerO+wVI0WOviw1otshZNE3VYm8v/
+         YHvrpfqZJJleMF/JUaTFpsBpwwNYfCk7H/9tHswbKBg7pJkzasMg3WMwp4xqXtqoPRKO
+         7mozuYmmzXch69LfIk2TZEp816RFlLj6rwUPUrN9s4zRX8hU7PCmPjYPT7V2Yv6Pfk97
+         l4cMuQco78OM+iUtvYIQXA2EfogpOnkZI9Lo8YBPJowsN3DxJwJ6lkSkcnEOYS4CVpq4
+         s4fi+S9dqgiRq3rS+V9sLBU9jx6N1wil6tsm5I7n2lVIVLBu5VM/fgQlYw/th14P0Xku
+         RSbg==
+X-Received: by 10.112.47.132 with SMTP id d4mr1922492lbn.64.1413249231188;
+ Mon, 13 Oct 2014 18:13:51 -0700 (PDT)
+Received: by 10.112.209.35 with HTTP; Mon, 13 Oct 2014 18:13:31 -0700 (PDT)
+In-Reply-To: <CANxchRS1mGapb77hc9Ywqj_-8UeexSAWK4UK9y9M76pvoN-Yeg@mail.gmail.com>
+X-Google-Sender-Auth: ZTd5_XmsDXWDlU1lFzfXxak7C5U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/13/2014 01:19 PM, Junio C Hamano wrote:
-> Mark Levedahl <mlevedahl@gmail.com> writes:
+On Mon, Oct 13, 2014 at 2:53 PM, Felipe Franciosi <felipe@paradoxo.org> wrote:
 >
->> Some options may be configured globally for a remote (e.g, tagopt).
-> Or some remotes may have only pushurl and not url.  "git remote"
-> output for me has a few such remotes but wouldn't this patch break
-> it?
+> On Mon, Oct 13, 2014 at 9:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> FNV/I/IDIV10/0 covers all the possibilities of (method & 3), I would
+>> have to say that the compiler needs to be fixed.
+>>
+>> Or insert "default:" just before "case HASH_METHOD_0:" line?
+>>
+>> I dunno.
 >
-> If a caller that walks the list of remotes misbehaves only because
-> it assumes that r->url always is always valid, isn't that assumption
-> what needs to be fixed?  for_each_remote() should be kept as a way
-> to enumerate all the [remote "foo"], I would think.
+> Hmm... The "default:" would work, but is it really that bad to initialise a
+> local variable in this case?
 >
->
->
->
-As long as the rule is that for_each_remote will enumerate every remote 
-that has anything defined at all, even if only in the global config 
-outside of a user's control, I'm not really sure how to tell whether the 
-missing url / pushurl / whatever is intentional, or a misconfiguration, 
-so having the code complain that it didn't find what it wanted (the 
-current condition) is probably no worse than the alternatives. Patch 
-withdrawn.
+> In any case, the compilation warning is annoying. Do you prefer the default
+> or the initialisation?
 
-Mark
+If I really had to choose between the two, adding a useless initialization
+would be the less harmful choice. Adding a meaningless "default:" robs
+another chance from the compilers to diagnose a future breakage we
+might add (namely, we may extend methods and forget to write a
+corresponding case arm for the new method value, which a smart
+compiler can and do diagnose as a switch that does not handle
+all the possible values.
+
+Thanks.
