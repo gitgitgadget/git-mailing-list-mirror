@@ -1,98 +1,212 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
-Date: Tue, 14 Oct 2014 10:26:42 -0700
-Message-ID: <xmqqoatezhnx.fsf@gitster.dls.corp.google.com>
-References: <1413090791-14428-1-git-send-email-max@max630.net>
-	<CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
-	<543D58D9.5060606@web.de>
+Subject: [PATCH] pass config slots as pointers instead of offsets
+Date: Tue, 14 Oct 2014 10:43:41 -0700
+Message-ID: <xmqqk342zgvm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>, Max Kirillov <max@max630.net>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Oct 14 19:26:58 2014
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 19:43:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe5s7-0004fb-Ri
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 19:26:56 +0200
+	id 1Xe68V-0005GW-En
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 19:43:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753866AbaJNR0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 13:26:52 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62135 "EHLO
+	id S1754166AbaJNRnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 13:43:47 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57590 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751076AbaJNR0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 13:26:51 -0400
+	with ESMTP id S1752580AbaJNRnq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 13:43:46 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B02F014D12;
-	Tue, 14 Oct 2014 13:26:44 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9913615201;
+	Tue, 14 Oct 2014 13:43:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z5kXtlvSQhwLq8uOPv22E9L/6tY=; b=BUOB7X
-	yue1FYs7EswPY7TN/94RiC9urija6B8M+OFNAc2rDb1U5FbuOsHGIdfYpG2i6XTf
-	f0gjRiOUdypYW2P6Nc5nV2XftEPdYtt0dhTccg38aTCS/eGB0VNElN9QU5pvKEZB
-	/afMSfxgaJz0psG+CK+L37WWv1VTJaA9Wd7U4=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=F
+	4ZuWKyqUE1tPTVxwJCE8bts0eQ=; b=fhBOBo/c/b6fwa3kWynkTlGVUSfCmeQOY
+	J1u9Ya1ddnBm+TqDXoAhva4zvv2OkdB7ftPnIBQ6zttvrXoHlT92n+imN4VdSI6c
+	zFJyDgz7T6BpSs/bCHJIKNS+nKG43BvCmGRPbuXIRbrDCHG0GOq0Q/90BuxE70RF
+	y5AGYReUrk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bDRWdYvgv9h5Dv2BUBph1KIa9oi2EvAT
-	TG1WUwNi/nv+KBfH2cPlevhOyh5UhC3j0YbpNXT6pXG1BX5dhjM1jirCO9Ppxz8R
-	Ovbqltu8C3f41TPPMCDFvIJUC0SUAil1bTcJTazB6sy+wPHUrTTviBC+S1yhYFJ/
-	XvoAybsX7Xw=
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=O77St41PuypMp+3sp3iNn3+ha/ikfDpCf4e3zphbwky5H6gJZmtTyAxr
+	iu7WX1pLMvtFhmQ4dYEQB4Gpvu4ptZQY2JlmpOevFEM4cAkvfrLYkowdcmDEfB60
+	n0ujttF3ovc92m97qObGHNrBlQyaGCc+ntnXSlPg8aJ9MrK5jaY=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A6B0814D11;
-	Tue, 14 Oct 2014 13:26:44 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FB5115200;
+	Tue, 14 Oct 2014 13:43:45 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 15B7D14D0F;
-	Tue, 14 Oct 2014 13:26:44 -0400 (EDT)
-In-Reply-To: <543D58D9.5060606@web.de> (Jens Lehmann's message of "Tue, 14 Oct
-	2014 19:09:45 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E562151FF;
+	Tue, 14 Oct 2014 13:43:43 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 448E9DF2-53C7-11E4-9938-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A423382A-53C9-11E4-8032-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+From: Jonathan Nieder <jrnieder@gmail.com>
+Date: Tue, 7 Oct 2014 15:16:57 -0400
 
-> But I can't see how that can work by just sharing the modules directory
-> tree, as that contains work tree related files - e.g. the index - for
-> each submodule. AFAICS sharing them between work trees will work only
-> if the content of the modules directory is partly present in GIT_DIR -
-> for work tree related files - and only the common stuff is taken from
-> GIT_COMMON_DIR (Or did I just miss the magic that already does that?).
+Many config-parsing helpers, like parse_branch_color_slot,
+take the name of a config variable and an offset to the
+"slot" name (e.g., "color.branch.plain" is passed along with
+"13" to effectively pass "plain"). This is leftover from the
+time that these functions would die() on error, and would
+want the full variable name for error reporting.
 
-The first time I saw the patch 3/4 in this series, my reaction was
-"Huh, why should the repository data and branch tips be separated
-out into multiple independent copies for the same module?  Do we
-force users to synchronise between these copies?  It does not make
-any sense at all."
+These days they do not use the full variable name at all.
+Passing a single pointer to the slot name is more natural,
+and lets us more easily adjust the callers to use skip_prefix
+to avoid manually writing offset numbers.
 
-But that was until I read your message ;-) You are right that the
-index and HEAD are dependent to a particular working tree that is
-checked out.  There may be other things that logically are per-
-working tree.
+This is effectively a continuation of 9e1a5eb, which did the
+same for parse_diff_color_slot. This patch covers all of the
+remaining similar constructs.
 
-And multiple-worktree _is_ about keeping the same repository and
-history data (i.e. object database, refs, rerere database, reflogs
-for refs/*) only once, while allowing multiple working trees attached
-to that single copy.
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-So it appears to me that to create a checkout-to copy of a
-superproject with a submodule, a checkout-to copy of the
-superproject would have a submodule, which is a checkout-to copy of
-the submodule in the superproject.
+ * Can we have your Sign-off (and a quick eyeballing again), please?
 
-> And I didn't try to wrap my head around recursive submodules yet ...
->
-> Until that problem is solved it looks wrong to pass GIT_COMMON_DIR into
-> submodule recursion, I believe GIT_COMMON_DIR should be added to the
-> local_repo_env array (and even if it is passed on later, we might have
-> to append "/modules/<submodule_name>" to make it point to the correct
-> location).
+ builtin/branch.c | 16 ++++++++--------
+ builtin/commit.c | 19 +++++++++----------
+ builtin/log.c    |  2 +-
+ log-tree.c       |  4 ++--
+ log-tree.h       |  2 +-
+ 5 files changed, 21 insertions(+), 22 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0591b22..b2e1895c 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -62,19 +62,19 @@ static unsigned char merge_filter_ref[20];
+ static struct string_list output = STRING_LIST_INIT_DUP;
+ static unsigned int colopts;
+ 
+-static int parse_branch_color_slot(const char *var, int ofs)
++static int parse_branch_color_slot(const char *slot)
+ {
+-	if (!strcasecmp(var+ofs, "plain"))
++	if (!strcasecmp(slot, "plain"))
+ 		return BRANCH_COLOR_PLAIN;
+-	if (!strcasecmp(var+ofs, "reset"))
++	if (!strcasecmp(slot, "reset"))
+ 		return BRANCH_COLOR_RESET;
+-	if (!strcasecmp(var+ofs, "remote"))
++	if (!strcasecmp(slot, "remote"))
+ 		return BRANCH_COLOR_REMOTE;
+-	if (!strcasecmp(var+ofs, "local"))
++	if (!strcasecmp(slot, "local"))
+ 		return BRANCH_COLOR_LOCAL;
+-	if (!strcasecmp(var+ofs, "current"))
++	if (!strcasecmp(slot, "current"))
+ 		return BRANCH_COLOR_CURRENT;
+-	if (!strcasecmp(var+ofs, "upstream"))
++	if (!strcasecmp(slot, "upstream"))
+ 		return BRANCH_COLOR_UPSTREAM;
+ 	return -1;
+ }
+@@ -88,7 +88,7 @@ static int git_branch_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 	if (starts_with(var, "color.branch.")) {
+-		int slot = parse_branch_color_slot(var, 13);
++		int slot = parse_branch_color_slot(var + 13);
+ 		if (slot < 0)
+ 			return 0;
+ 		if (!value)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 5ed6036..5a8a29e 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1238,22 +1238,21 @@ static int dry_run_commit(int argc, const char **argv, const char *prefix,
+ 	return commitable ? 0 : 1;
+ }
+ 
+-static int parse_status_slot(const char *var, int offset)
++static int parse_status_slot(const char *slot)
+ {
+-	if (!strcasecmp(var+offset, "header"))
++	if (!strcasecmp(slot, "header"))
+ 		return WT_STATUS_HEADER;
+-	if (!strcasecmp(var+offset, "branch"))
++	if (!strcasecmp(slot, "branch"))
+ 		return WT_STATUS_ONBRANCH;
+-	if (!strcasecmp(var+offset, "updated")
+-		|| !strcasecmp(var+offset, "added"))
++	if (!strcasecmp(slot, "updated") || !strcasecmp(slot, "added"))
+ 		return WT_STATUS_UPDATED;
+-	if (!strcasecmp(var+offset, "changed"))
++	if (!strcasecmp(slot, "changed"))
+ 		return WT_STATUS_CHANGED;
+-	if (!strcasecmp(var+offset, "untracked"))
++	if (!strcasecmp(slot, "untracked"))
+ 		return WT_STATUS_UNTRACKED;
+-	if (!strcasecmp(var+offset, "nobranch"))
++	if (!strcasecmp(slot, "nobranch"))
+ 		return WT_STATUS_NOBRANCH;
+-	if (!strcasecmp(var+offset, "unmerged"))
++	if (!strcasecmp(slot, "unmerged"))
+ 		return WT_STATUS_UNMERGED;
+ 	return -1;
+ }
+@@ -1291,7 +1290,7 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 		return 0;
+ 	}
+ 	if (starts_with(k, "status.color.") || starts_with(k, "color.status.")) {
+-		int slot = parse_status_slot(k, 13);
++		int slot = parse_status_slot(k + 13);
+ 		if (slot < 0)
+ 			return 0;
+ 		if (!v)
+diff --git a/builtin/log.c b/builtin/log.c
+index 4389722..4c5fc4b 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -389,7 +389,7 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 	if (starts_with(var, "color.decorate."))
+-		return parse_decorate_color_config(var, 15, value);
++		return parse_decorate_color_config(var, var + 15, value);
+ 	if (!strcmp(var, "log.mailmap")) {
+ 		use_mailmap_config = git_config_bool(var, value);
+ 		return 0;
+diff --git a/log-tree.c b/log-tree.c
+index 95e9b1d..479b1d2 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -66,9 +66,9 @@ static int parse_decorate_color_slot(const char *slot)
+ 	return -1;
+ }
+ 
+-int parse_decorate_color_config(const char *var, const int ofs, const char *value)
++int parse_decorate_color_config(const char *var, const char *slot_name, const char *value)
+ {
+-	int slot = parse_decorate_color_slot(var + ofs);
++	int slot = parse_decorate_color_slot(slot_name);
+ 	if (slot < 0)
+ 		return 0;
+ 	if (!value)
+diff --git a/log-tree.h b/log-tree.h
+index d6ecd4d..8cbefac 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -7,7 +7,7 @@ struct log_info {
+ 	struct commit *commit, *parent;
+ };
+ 
+-int parse_decorate_color_config(const char *var, const int ofs, const char *value);
++int parse_decorate_color_config(const char *var, const char *slot_name, const char *value);
+ void init_log_tree_opt(struct rev_info *);
+ int log_tree_diff_flush(struct rev_info *);
+ int log_tree_commit(struct rev_info *, struct commit *);
+-- 
+2.1.2-487-ga3682c8
