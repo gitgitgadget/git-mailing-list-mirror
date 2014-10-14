@@ -1,62 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] pass config slots as pointers instead of offsets
-Date: Tue, 14 Oct 2014 10:46:30 -0700
-Message-ID: <20141014174630.GC32245@google.com>
-References: <xmqqk342zgvm.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] [kernel] completion: silence "fatal: Not a git repository" error
+Date: Tue, 14 Oct 2014 11:29:41 -0700
+Message-ID: <xmqqfveqzeqy.fsf@gitster.dls.corp.google.com>
+References: <1413283785-505-1-git-send-email-john@szakmeister.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 19:46:42 2014
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Tue Oct 14 20:29:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe6BF-00073L-LN
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 19:46:42 +0200
+	id 1Xe6r0-0006jU-Kt
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 20:29:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755416AbaJNRqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 13:46:37 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:50753 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755369AbaJNRqg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 13:46:36 -0400
-Received: by mail-pa0-f46.google.com with SMTP id fa1so8299977pad.33
-        for <git@vger.kernel.org>; Tue, 14 Oct 2014 10:46:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=TGHOC5MxikfsNQVo4ugo7wRjnlTThmZ88gTAXV+6PgU=;
-        b=1IbNz8Jl0Xt7vyYbodouwaCsyOD4u9YjT2EvabQH7TmDWTo7YlQ5MhLlbvZ9QGyowP
-         +1WTjNDDc1pFK9TiCB0fLW9FkHVoVVaxDOo3BtzoNAz5wqZUpvJW47fl65+CKTpDZ8xj
-         Zh5sLfAjlNudK5s7O5AvTP+oLbWROqExivILKq0wFYfV5rlKfPWXtBnIIkreuRGACIK5
-         zXEtJZwrS39GT0SQvT48wCE4lgrw/7LExUhKUMjiUEXhGqfC1ZwZdGXv21SNV+n7QeqF
-         2rFnbMCKB2ip1qrnZP4DZS2dFtRBLtZ0Exgn4eHsMsY7uLQIw/UWS07F7MKNglJtUvOD
-         t0qg==
-X-Received: by 10.68.234.103 with SMTP id ud7mr6907912pbc.46.1413308795929;
-        Tue, 14 Oct 2014 10:46:35 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:c60:55d9:7b8c:4ce4])
-        by mx.google.com with ESMTPSA id ve10sm14749848pbc.65.2014.10.14.10.46.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 14 Oct 2014 10:46:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqk342zgvm.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755392AbaJNS3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 14:29:46 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59076 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755357AbaJNS3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 14:29:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E809F15F1F;
+	Tue, 14 Oct 2014 14:29:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g6zoNodgCpC2jEKg3wc4c+2R7tw=; b=qfDYYr
+	4784scAxb1+d8yEbtCjYs/qr/q+z5OVPEjmU3dq8M1l5m/BOXXBygxk4GsE4NMFQ
+	Gw8VN9vC90xUrxbXqRekywJFmYRNuUatHuRBR5IdIqJ7jyYHzgV8qR3lYK4DBjYT
+	ZhpVbQtKsubpuzmR8ZeRm/IUHWW2cJL6bazGc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U3Rxn33m/K7ko1RnX63S78ruA9x2eqUb
+	/44/l4J+8ZPecpPQ61RNCMTxutJel7/fOmkDdkLKIGuVG3w1dTE585LUXLobq5Pl
+	K6fbwdJrgI79wLpQttt9oh6Zf+hoCK08IobAeB+hvzag4S85xaLxuoNyuR5Bm7X9
+	XqzMnD99rj8=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE98E15F1D;
+	Tue, 14 Oct 2014 14:29:43 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 61F4F15F1C;
+	Tue, 14 Oct 2014 14:29:43 -0400 (EDT)
+In-Reply-To: <1413283785-505-1-git-send-email-john@szakmeister.net> (John
+	Szakmeister's message of "Tue, 14 Oct 2014 06:49:45 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 11280D46-53D0-11E4-8824-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+John Szakmeister <john@szakmeister.net> writes:
 
->  builtin/branch.c | 16 ++++++++--------
->  builtin/commit.c | 19 +++++++++----------
->  builtin/log.c    |  2 +-
->  log-tree.c       |  4 ++--
->  log-tree.h       |  2 +-
->  5 files changed, 21 insertions(+), 22 deletions(-)
+> It is possible that a user is trying to run a git command and fail to realize
+> that they are not in a git repository or working tree.  When trying to complete
+> an operation, __git_refs would fall to a degenerate case and attempt to use
+> "git for-each-ref", which would emit the error.
+>
+> Let's fix this by shunting the error message coming from "git for-each-ref".
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Hmph, do you mean this one?
+
+    $ cd /var/tmp ;# not a git repository
+    $ git checkout <TAB>
+
+->
+
+    $ git checkout fatal: Not a git repository (or any of the parent directories): .git
+    HEAD 
+
+I agree it is ugly, but would it be an improvement for the end user,
+who did not realize that she was not in a directory where "git checkout"
+makes sense, not to tell her that she is not in a git repository in
+some way?
