@@ -1,129 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking summary snapshot
-Date: Mon, 13 Oct 2014 16:29:23 -0700
-Message-ID: <xmqqzjczzgz0.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 0/4] Allow building Git with Asciidoctor
+Date: Tue, 14 Oct 2014 00:34:51 +0000
+Message-ID: <20141014003451.GA7041@vauxhall.crustytoothpaste.net>
+References: <1413070656-241955-1-git-send-email-sandals@crustytoothpaste.net>
+ <xmqqtx371z44.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 14 01:29:44 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 02:35:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xdp3c-0007df-MN
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 01:29:41 +0200
+	id 1Xdq5I-00039G-S1
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 02:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581AbaJMX31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 19:29:27 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58807 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752554AbaJMX30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 19:29:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F56D16385;
-	Mon, 13 Oct 2014 19:29:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=u
-	7tvQ1jMVTMxIxcOzEckXqMyzls=; b=AkfmGb0m60OTEXeOQvavIybO/mTBYtwof
-	0448SbQCwrwqk9bWT6j6Y6+0giW3/0OaiUBCc0HvA/89tfnSgTd/1Z7jwj2Gml58
-	/17GVwAbIzx05Ce1OidvYCIy/hOBrXFOabN6gYgYn3KMNc9bXFk6o6pX9ugYZ5Bf
-	V/zBM5fMfQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=LvC
-	sVlZMytWgP32kqS+2pT+A44IQvCbAgk0aez/l359+YLuTrY8a2PcjRVmNYDKzRsj
-	ou5O5BpvuW9Wuh9SZhpVQOQv6N5hJDTL7YbUYHNJ5hf0BzouSuQ0YioykAQeKqpb
-	CSGPq8oUBgckv/P5YS8YSFIaJNLnD9fND4kEmXcA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96A9E16384;
-	Mon, 13 Oct 2014 19:29:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1753907AbaJNAfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 20:35:08 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49257 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753837AbaJNAfH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Oct 2014 20:35:07 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D03916383;
-	Mon, 13 Oct 2014 19:29:25 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C4AE90B0-5330-11E4-9C52-855A93717476-77302942!pb-smtp1.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 24B082808F;
+	Tue, 14 Oct 2014 00:34:57 +0000 (UTC)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <xmqqtx371z44.fsf@gitster.dls.corp.google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.17-rc5-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I do not want to do too many "What's cooking" report, so here is
-just a summary of the status of various topics.  Hopefully I'll do
-the real one later this week after a few more integrations.
 
-Thanks.
+--ReaqsoxgOBHFXBhH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Oct 13, 2014 at 01:41:31PM -0700, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > The second two patches implement some basic support for building with
+> > Asciidoctor.  The first of these moves some items into variables due to
+> > some differences between the AsciiDoc and Asciidoctor command lines.
+> > The user can then override these values when invoking make.
+> >
+> > The final patch adds support for the linkgit macro.  Asciidoctor uses
+> > Ruby extensions to implement macro support, unlike AsciiDoc, which uses
+> > a configuration file.
+>=20
+> What I do not understand is that 3/4 lets you drop inclusion of
+> asciidoc.conf which contains a lot more than just linkgit:
+> definition.
 
-$ Meta/cook -w
-Expecting a reroll.
- - jk/makefile                                                  02-05         #16
- - bg/rebase-off-of-previous-branch                             04-16          #1
- - jk/tag-contains                                              06-30          #8
- - jk/prune-mtime                                               10-04         #18
+Asciidoctor just doesn't understand the -f argument, so trying to pass
+it is going to fail.  For Asciidoctor, you're going to want to do
+something like "-I. -rasciidoctor/extensions -rextensions" there
+instead.
 
-Expecting an Ack/Sign-off or update from Jonathan on the bottom one.
- - jn/parse-config-slot                                         10-07          #2
+As for the rest of the asciidoc.conf file, the DocBook manpage header
+declarations are implemented automatically by Asciidoctor after my
+recent patches.  The paragraph hacks do not appear to be necessary with
+Asciidoctor, so they've been omitted.
 
-Expecting the final reroll.
- - rs/ref-transaction                                           09-10         #19
+That leaves the attributes.  All but litdd are built-in to Asciidoctor,
+and I can reroll with a modification to extensions.rb that implements
+that one.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Stalled
- - jc/graph-post-root-gap                                       12-30          #3
- - jn/gitweb-utf8-in-links                                      05-27          #1
- - ss/userdiff-update-csharp-java                               06-02          #2
- - hv/submodule-config                                          06-30          #4
- - jk/pack-bitmap                                               08-04          #1
- - jt/timer-settime                                             08-29          #6
+--ReaqsoxgOBHFXBhH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Undecided
- - nd/multiple-work-trees                                       09-27         #32
- - da/mergetool-tool-help                                       10-13          #4
- - eb/no-pthreads                                               10-13          #2
- - cc/interpret-trailers                                        10-13         #11
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Waiting for a reroll ($gmane/256591).
- - tr/remerge-diff                                              09-08          #8
+iQIcBAEBCgAGBQJUPG+rAAoJEL9TXYEfUvaLAvIQAJju+BdmAI1S26zRBjesWfgg
+oyBv8HaA96ynxwfq1UpU2SAkS64NXta8MwynKueO4AoIcBIMAtMk4r+2mVANVc9M
+3HGyLuXLjB31uNTAKVmaAVKmvRf+2EBe1jrn0RmqnkoDhAWHTAr7BaBR3TwAia/V
+gh5R62umBVVTxIbRQ7fetWn7NTmOpTJN9Jgu4BEaIoSoUmeAG7wuT1yl5tmUUpAk
++XKQwDos4KKDiP9hl+e3I/ohKfrc2u5WMq9al0wWkxuvFQwytaf1gdtm0b9mtYWd
+YALf2ntsbWq8xOlnGsKJ40BR/DKjpiapw8g2dDoScEc5sx9JXHAn9croKvL3TjLW
+3nuiQ84SmvK9GUztRGMy5gUmlQfwRNr7jVLYnXDp6c6UXO3kXijboOSlz2Zw+VTZ
+tPR+URWRTpjF7Hrb1BNc5EbkWDGB0p6lULH387dhH0Pulvr8kquCGJVfOQTRgf4N
+YvCUT5ffP4LH8ksQcqsogwCfzGaylzYPit3xqYbJmlAyVX4zh8q38I1QvMKuilFC
+i1SCMKxYTB1zFC91y7ROyElqmnA4yBcvRZdIWmxtRCH1O2W7o5J1jIDVQV1nZvSG
+lKwclMIXi5qvQJ7gwNA+AcyTyyRGiWOCIlk2BQOVrnOE+CIuWf5EuH06CoBPPhcj
+850LzUI3+8oCUw6NyMu1
+=aDBE
+-----END PGP SIGNATURE-----
 
-Waiting for a reroll.
- - rb/merge-prepare-commit-msg-hook                             01-10          #4
- - ab/add-interactive-show-diff-func-name                       05-12          #2
-
-Waiting for an Ack.
- - je/quiltimport-no-fuzz                                       09-26          #2
-
-Waiting for the final step to lift the hard-limit before sending it out.
- - jc/show-branch                                               03-24          #5
-
-Will hold.
- - tg/perf-lib-test-perf-cleanup                                09-19          #2
-
-Will merge to 'master'.
- + da/include-compat-util-first-in-c                            09-15/10-07    #1
- + so/rebase-doc-fork-point                                     09-29/10-07    #1
- + dt/cache-tree-repair                                         09-30/10-07    #1
- + rs/daemon-fixes                                              10-01/10-07    #3
- + da/completion-show-signature                                 10-07/10-07    #1
- + sk/tag-contains-wo-recursion                                 09-23/10-08    #1
- + mh/lockfile-stdio                                            10-01/10-08    #3
- + rs/sha1-array-test                                           10-01/10-08    #2
- + mh/lockfile                                                  10-01/10-08   #38
- + rs/mailsplit                                                 10-07/10-08    #1
- + rs/more-uses-of-skip-prefix                                  10-07/10-08    #1
- + rs/plug-leak-in-bundle                                       10-07/10-08    #1
- + bc/asciidoc-pretty-formats-fix                               10-08/10-13    #1
- + po/everyday-doc                                              10-10/10-13    #3
-
-Will merge to 'next'.
- - bw/trace-no-inline-getnanotime                               09-29          #1
- - jc/completion-no-chdir                                       10-09          #1
- - bc/asciidoc                                                  10-13          #2
- - jk/test-shell-trace                                          10-13          #3
- - rs/receive-pack-argv-leak-fix                                10-13          #1
- - ta/config-set                                                10-13          #1
- - da/mergetool-temporary-filename                              10-13          #2
-
-Will perhaps drop.
- - mt/patch-id-stable                                           06-10          #1
- - jc/push-cert-hmac-optim                                      09-25          #2
+--ReaqsoxgOBHFXBhH--
