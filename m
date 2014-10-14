@@ -1,73 +1,79 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
-Date: Tue, 14 Oct 2014 21:34:31 +0300
-Message-ID: <20141014183431.GA8157@wheezy.local>
-References: <1413090791-14428-1-git-send-email-max@max630.net>
- <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
- <543D58D9.5060606@web.de>
- <xmqqoatezhnx.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] git-prompt.sh: Hide prompt for ignored pwd
+Date: Tue, 14 Oct 2014 20:47:51 +0200
+Message-ID: <543D6FD7.3090306@kdbg.org>
+References: <1412795040-19267-1-git-send-email-jess.austin@gmail.com> <5435A8A7.2030008@bbn.com>  <CANp8Xb8ETG-ZFCqrOk=f-RbxtRxehBmAR1O5ozLH80zimWq_Gw@mail.gmail.com>  <CANp8Xb9MUbQCVZRNYibFBibzTFF=56BqNFFC1G2iTF7WGBNi7g@mail.gmail.com>  <54361F30.8020603@bbn.com> <CANp8Xb_kdpzYjWZxoWFtT+UWwMPpFD0znkoEKVpdukGf61Preg@mail.gmail.com>  <5437078B.6020307@bbn.com> <1413253924-8065-1-git-send-email-jess.austin@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 20:36:00 2014
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
+To: Jess Austin <jess.austin@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 20:47:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe6ww-0001js-30
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 20:35:58 +0200
+	id 1Xe78Z-0000Kh-GA
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 20:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755339AbaJNSfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 14:35:51 -0400
-Received: from p3plsmtpa08-07.prod.phx3.secureserver.net ([173.201.193.108]:35830
-	"EHLO p3plsmtpa08-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753866AbaJNSfu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2014 14:35:50 -0400
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa08-07.prod.phx3.secureserver.net with 
-	id 36bc1p0075B68XE016biKt; Tue, 14 Oct 2014 11:35:46 -0700
-Content-Disposition: inline
-In-Reply-To: <xmqqoatezhnx.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754278AbaJNSr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 14:47:56 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:14494 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753413AbaJNSrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 14:47:55 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jHQjb3pvBz5tlD;
+	Tue, 14 Oct 2014 20:47:31 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 933DC19F5CD;
+	Tue, 14 Oct 2014 20:47:51 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+In-Reply-To: <1413253924-8065-1-git-send-email-jess.austin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 14, 2014 at 10:26:42AM -0700, Junio C Hamano wrote:
-> And multiple-worktree _is_ about keeping the same repository and
-> history data (i.e. object database, refs, rerere database, reflogs for
-> refs/*) only once, while allowing multiple working trees attached to
-> that single copy.
-> 
-> So it appears to me that to create a checkout-to copy of a
-> superproject with a submodule, a checkout-to copy of the superproject
-> would have a submodule, which is a checkout-to copy of the submodule
-> in the superproject.
+Am 14.10.2014 um 04:32 schrieb Jess Austin:
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index c5473dc..d7559ff 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -84,6 +84,11 @@
+>  # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+>  # the colored output of "git status -sb" and are available only when
+>  # using __git_ps1 for PROMPT_COMMAND or precmd.
+> +#
+> +# If you would like __git_ps1 to do nothing in the case when the current
+> +# directory is set up to be ignored by git, then set
+> +# GIT_PS1_HIDE_ON_IGNORED_PWD to a nonempty value, or set
+> +# bash.hideOnIgnoredPwd to true in the repository configuration.
+>  
+>  # check whether printf supports -v
+>  __git_printf_supports_v=
+> @@ -501,6 +506,13 @@ __git_ps1 ()
+>  	local f="$w$i$s$u"
+>  	local gitstring="$c$b${f:+$z$f}$r$p"
+>  
+> +	if [ -n "$(git check-ignore .)" ] &&
+> +	   ( [ -n "${GIT_PS1_HIDE_ON_IGNORED_PWD}" ] ||
+> +	     [ "$(git config --bool bash.hideOnIgnoredPwd)" = "true" ] )
 
-That's right, this linking should be more implicit.
+Ahem, no. Please do not punish users who are not interested in the new
+feature with two new processes every time __git_ps() is run. Think of
+Windows where fork() is really, *really* expensive.
 
-But here are a lot of nuances. For example, it makes sense to have a
-superproject checkout without submodules being initialized (so that they
-don't waste space and machine time for working tree, which often is more
-than repository data). And it may happen so that this checkout is the
-master repository for superproject checkouts. But this should not
-prevent users from using initialized submodules in other checkouts.
+BTW, you can write '{ foo || bar; }' to bracket a || chain without a
+sub-process.
 
-Then, a checkout copy of a submodule can be standalone (for example, git
-and git-html-docs are submodules of msysgit). Or, it can even belong to
-some other superproject. And in that cases they still should be able to
-be linked.
+> +	then
+> +		printf_format=""
+> +	fi
+> +
+>  	if [ $pcmode = yes ]; then
+>  		if [ "${__git_printf_supports_v-}" != yes ]; then
+>  			gitstring=$(printf -- "$printf_format" "$gitstring")
 
-Considering all above, and also the thing that I am quite new to
-submodules (but have to use them currently), I did not intend to create
-any new UI, only to make backend handle the already existing linked
-checkouts, which can be made manually.
-
--- 
-Max
+-- Hannes
