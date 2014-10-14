@@ -1,62 +1,116 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH RFC] git-am: support any number of signatures
-Date: Tue, 14 Oct 2014 07:29:11 +0200 (CEST)
-Message-ID: <20141014.072911.995931063273261216.chriscool@tuxfamily.org>
-References: <CAP8UFD1ATE-CtqXJyd7qDw-34RJ3ZQibHo6BSi+42hkaPNzz5w@mail.gmail.com>
-	<CAP8UFD0Fx455GiM8EphkG=-vswR-GOD169EOgf2gJsGzTHS=SA@mail.gmail.com>
-	<xmqqlhoj1v82.fsf@gitster.dls.corp.google.com>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: Re: [PATCH 07/14] Fix BASIC_LDFLAGS and COMPAT_CFLAGS for
+ 64bit MinGW-w64
+Date: Tue, 14 Oct 2014 11:08:22 +0400
+Message-ID: <20141014070822.GA15460@seldon>
+References: <1412791267-13356-1-git-send-email-marat@slonopotamus.org>
+ <1412791267-13356-8-git-send-email-marat@slonopotamus.org>
+ <alpine.DEB.1.00.1410092115100.990@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: christian.couder@gmail.com, mst@redhat.com, git@vger.kernel.org,
-	peff@peff.net, mhagger@alum.mit.edu
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Oct 14 07:29:41 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	msysGit <msysgit@googlegroups.com>,
+	Ray Donnelly <mingw.android@gmail.com>, marat@slonopotamus.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBCE7TAPITACRB34X6OQQKGQETM7ZXHA@googlegroups.com Tue Oct 14 09:08:32 2014
+Return-path: <msysgit+bncBCE7TAPITACRB34X6OQQKGQETM7ZXHA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f56.google.com ([74.125.82.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xdufy-0007xz-Uk
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 07:29:39 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753520AbaJNF3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 01:29:34 -0400
-Received: from [194.158.98.14] ([194.158.98.14]:41855 "EHLO mail-1y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752444AbaJNF3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 01:29:34 -0400
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 53A6269;
-	Tue, 14 Oct 2014 07:29:12 +0200 (CEST)
-In-Reply-To: <xmqqlhoj1v82.fsf@gitster.dls.corp.google.com>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+	(envelope-from <msysgit+bncBCE7TAPITACRB34X6OQQKGQETM7ZXHA@googlegroups.com>)
+	id 1XdwDg-0005HQ-L2
+	for gcvm-msysgit@m.gmane.org; Tue, 14 Oct 2014 09:08:32 +0200
+Received: by mail-wg0-f56.google.com with SMTP id y10sf851664wgg.11
+        for <gcvm-msysgit@m.gmane.org>; Tue, 14 Oct 2014 00:08:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=AyLcQ/npa/U17vR/VKydAoQTyNQhYMx8C960uze+S9s=;
+        b=rCA9gDmFYdSbshWseG+E5awMNaZI9HPu8bV8M8+5+I5bphLYA/8zpw/gmmDFGeybKm
+         je7elVdJ6lKBkdAG6LAK2Z+zf0rNs4FgpsuB8C9WSgFS8DOyszHc6UEfbpVhCn5f3+87
+         yRuBR7U4Vs1+Vokg8xhcV6wwOTamWl4m0sUzNrkZN2mNoCLKHHx3QfeIF7kkdyL5izZI
+         lBhptnpFS9UM3vxd8hyDaCB5y/Qmiso+itQcaOUqdkt61yvryBw1RF2AQkfQwAzDmv++
+         +fqnazy6/F3f+d72Vfi8JJ31I0eU8Vto1eNqg/RsAv7JnhXpbrGRo3MxuY/mVYXE5g8C
+         Yxzg==
+X-Received: by 10.180.99.10 with SMTP id em10mr26385wib.20.1413270512155;
+        Tue, 14 Oct 2014 00:08:32 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.10.131 with SMTP id i3ls587151wib.5.gmail; Tue, 14 Oct
+ 2014 00:08:31 -0700 (PDT)
+X-Received: by 10.180.105.74 with SMTP id gk10mr940808wib.0.1413270511314;
+        Tue, 14 Oct 2014 00:08:31 -0700 (PDT)
+Received: from slonopotamus.org ([94.242.204.247])
+        by gmr-mx.google.com with ESMTPS id rb5si993438lbb.0.2014.10.14.00.08.31
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Oct 2014 00:08:31 -0700 (PDT)
+Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
+Received: from marat by slonopotamus.org with local (Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1XdwDX-00042b-1t; Tue, 14 Oct 2014 11:08:23 +0400
+In-Reply-To: <alpine.DEB.1.00.1410092115100.990@s15462909.onlinehome-server.info>
+User-Agent: Mutt/1.5.22 (2013-10-16)
+X-Original-Sender: marat@slonopotamus.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: marat@slonopotamus.org does not designate permitted sender
+ hosts) smtp.mail=marat@slonopotamus.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Content-Disposition: inline
 
-From: Junio C Hamano <gitster@pobox.com>
->
-> Christian Couder <christian.couder@gmail.com> writes:
+On Thu, Oct 09, 2014 at 09:22:19PM +0200, Johannes Schindelin wrote:
+> Hi,
 > 
->> On Sun, Oct 12, 2014 at 11:36 AM, Christian Couder
->> <christian.couder@gmail.com> wrote:
->>>
->>> With v16 you can easily choose if you want to have the S-o-b in the
->>> output or not, when there is already one, ...
->>
->> By the way, I sent v16 just before the above email, but the series
->> still hasn't hit the mailing list.
->> Did some of you guys in cc receive something?
+> On Wed, 8 Oct 2014, Marat Radchenko wrote:
 > 
-> I see them and picked them up to replace.
+> > +CC_MACH := $(shell sh -c '$(CC) -dumpmachine 2>/dev/null || echo not')
+> 
+> There is a rather huge problem with that. The latest mingw-w64 release,
+> 4.9.1, does not do what you expect here: while '.../mingw32/bin/gcc -m32
+> -o 32.exe test.c' and '.../mingw32/bin/gcc -m64 -o 64.exe test.c' work
+> fine, producing i686 and x86_64 executables respectively,
+> '.../mingw32/bin/gcc -dumpmachine' prints i686-w64-mingw32 *always*, even
+> when specifying the -m64 option.
+> 
+> So unfortunately, the test introduced by this patch (intended to figure
+> out whether the build targets i686, and skip a compiler and a linker
+> option otherwise) is incorrect.
 
-Thanks!
- 
-> Are these now ready for 'next'?
+According to [1], it is by design. For now, I suggest using separate
+gcc binaries for 32/64, without messing with -m32. Of course we can
+fallback to `./configure` that will determine bitness by compiling something.
 
-Yeah, I think so.
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52096#c1
 
-Thanks,
-Christian.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
