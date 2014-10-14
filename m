@@ -1,95 +1,59 @@
-From: Felipe Franciosi <felipe@paradoxo.org>
-Subject: Re: [PATCH] Initialise hash variable to prevent compiler warnings
-Date: Tue, 14 Oct 2014 12:44:17 +0100
-Message-ID: <CANxchRQ=kR4N5s5S8eSJy2de__BydWDgowCNb6QQW6JZyvQAMw@mail.gmail.com>
-References: <1413211041-28732-1-git-send-email-felipe@paradoxo.org>
-	<xmqq38ar3f1o.fsf@gitster.dls.corp.google.com>
-	<CANxchRS1mGapb77hc9Ywqj_-8UeexSAWK4UK9y9M76pvoN-Yeg@mail.gmail.com>
-	<CAPc5daWmHe-EbgO-wjy9UsodTFERa1vpz-SEDF-UM_eLm7CuCw@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
+Date: Tue, 14 Oct 2014 19:17:54 +0700
+Message-ID: <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
+References: <1413090791-14428-1-git-send-email-max@max630.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 13:44:23 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Tue Oct 14 14:18:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe0Wc-0006XY-SX
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 13:44:23 +0200
+	id 1Xe13f-0008Aj-Px
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 14:18:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755148AbaJNLoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 07:44:18 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:52139 "EHLO
-	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754846AbaJNLoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 07:44:17 -0400
-Received: by mail-oi0-f49.google.com with SMTP id a3so15824338oib.8
-        for <git@vger.kernel.org>; Tue, 14 Oct 2014 04:44:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Ng7DNU9oGx7N2UpkpF7lyCHXgatJ+Lwe3BH+9RK5gkY=;
-        b=XwM3OoidJBgtpVkTwKxlEn/q9V14j2S7chg9+uz6mUErA7rmu9yhe33+AqRU24jvtm
-         inOFueVMomazHK4aKlfbrvg3RkdXmaNVNf+DzlpAWKIShuv4UiMNpMcxGfSbt+ruvd8h
-         vrWzGn8UlFTc9kgW04N7EwyZh7pCR7ZlqLO3tPcmAW+QvxBZaJOh6wlYD6jN60cyi141
-         Y/dOSrNC5rMnRedCaMYT1iyxTtwvZMP57TM2pHEhoATg4++/A9cWudUkNIbquoIoC25W
-         vPbl8w3+pKihAASoeCIm7fMzlb+ZPiUmeUV+cmBwYicoIGRjy6pUHdmf6d0OuKWJZxjN
-         gI5A==
-X-Gm-Message-State: ALoCoQkn5yr6qN06/lTiN0G/lLNz1u7QT+ngbGSwztYBk6OLIFQSDxOefRAIGlNyyUB3pgqRegJk
-X-Received: by 10.202.1.80 with SMTP id 77mr3936884oib.31.1413287057156; Tue,
- 14 Oct 2014 04:44:17 -0700 (PDT)
-Received: by 10.182.250.201 with HTTP; Tue, 14 Oct 2014 04:44:17 -0700 (PDT)
-X-Originating-IP: [185.25.64.249]
-In-Reply-To: <CAPc5daWmHe-EbgO-wjy9UsodTFERa1vpz-SEDF-UM_eLm7CuCw@mail.gmail.com>
+	id S932249AbaJNMS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 08:18:28 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:60978 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932177AbaJNMS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 08:18:27 -0400
+Received: by mail-ig0-f172.google.com with SMTP id r2so14194902igi.17
+        for <git@vger.kernel.org>; Tue, 14 Oct 2014 05:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7zftxho8uEDLFVGZQLa8/08sOOula69EF1lGESHRgg8=;
+        b=CZQMXiVgaBZjfBvSHIm+jQ/YCTB48JzYBamQOaPrrK1buyUoKUaJGRizlR3iywunhl
+         fwtZTp17iJh59R7gaHizY5TIFS6qlSWrQz2JYyJOHFpMtz3u/eW8YMN4vr4auXNjfEqR
+         0WRWzp2dHynVByVG7GqC7U1ysg+yVwkl8mDWmd6URe9y9Fz2AVdhNWStSPO/XR8bXeCR
+         SRZcNcMPVtgbor3GTr7u/+szEDyUygn/iqG469SynmMe5roONBAc+Pnw6rs3eHcnrt0U
+         GTNMXeV/OW0ZVjOcfczDwfcQfC7UBe3ZTpJDtNzDyc32cDdP2fYpsQFWudkbg5y2f0h9
+         qVfA==
+X-Received: by 10.50.85.101 with SMTP id g5mr6504326igz.40.1413289104583; Tue,
+ 14 Oct 2014 05:18:24 -0700 (PDT)
+Received: by 10.107.131.1 with HTTP; Tue, 14 Oct 2014 05:17:54 -0700 (PDT)
+In-Reply-To: <1413090791-14428-1-git-send-email-max@max630.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 14, 2014 at 2:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Mon, Oct 13, 2014 at 2:53 PM, Felipe Franciosi <felipe@paradoxo.org> wrote:
->>
->> On Mon, Oct 13, 2014 at 9:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> FNV/I/IDIV10/0 covers all the possibilities of (method & 3), I would
->>> have to say that the compiler needs to be fixed.
->>>
->>> Or insert "default:" just before "case HASH_METHOD_0:" line?
->>>
->>> I dunno.
->>
->> Hmm... The "default:" would work, but is it really that bad to initialise a
->> local variable in this case?
->>
->> In any case, the compilation warning is annoying. Do you prefer the default
->> or the initialisation?
->
-> If I really had to choose between the two, adding a useless initialization
-> would be the less harmful choice. Adding a meaningless "default:" robs
-> another chance from the compilers to diagnose a future breakage we
-> might add (namely, we may extend methods and forget to write a
-> corresponding case arm for the new method value, which a smart
-> compiler can and do diagnose as a switch that does not handle
-> all the possible values.
->
-> Thanks.
+On Sun, Oct 12, 2014 at 12:13 PM, Max Kirillov <max@max630.net> wrote:
+> These are fixes of issues with submodules with use of multiple working
+> trees.
 
-I see your point; the code is correct today because it covers all
-cases. Nevertheless, some versions of gcc (the one I used was 4.1.2
-from CentOS 5.10 -- haven't tested others) might generate an annoying
-warning.
-
-Noting that, I also like my code to compile as cleanly as possible in
-all environments that it might be used. Being a bit defensive in that
-sense and initialising local variables is what I would do. On top of
-that (and putting the compiler flaw aside for a moment), having it
-sensibly initialised is another way of protecting the code against
-errors introduced in the future.
-
-What do you think?
-
-Cheers,
-F.
+I think the patches look fine from the nd/multiple-work-trees writer's
+perspective. I know too little about submodules to judge if this is
+the right way and not that way..
+-- 
+Duy
