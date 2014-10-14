@@ -1,74 +1,175 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Initialise hash variable to prevent compiler warnings
-Date: Mon, 13 Oct 2014 18:13:31 -0700
-Message-ID: <CAPc5daWmHe-EbgO-wjy9UsodTFERa1vpz-SEDF-UM_eLm7CuCw@mail.gmail.com>
-References: <1413211041-28732-1-git-send-email-felipe@paradoxo.org>
- <xmqq38ar3f1o.fsf@gitster.dls.corp.google.com> <CANxchRS1mGapb77hc9Ywqj_-8UeexSAWK4UK9y9M76pvoN-Yeg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Felipe Franciosi <felipe@paradoxo.org>
-X-From: git-owner@vger.kernel.org Tue Oct 14 03:13:58 2014
+From: Jess Austin <jess.austin@gmail.com>
+Subject: [PATCH] git-prompt.sh: Hide prompt for ignored pwd
+Date: Mon, 13 Oct 2014 21:32:04 -0500
+Message-ID: <1413253924-8065-1-git-send-email-jess.austin@gmail.com>
+References: <1412795040-19267-1-git-send-email-jess.austin@gmail.com> <5435A8A7.2030008@bbn.com>  <CANp8Xb8ETG-ZFCqrOk=f-RbxtRxehBmAR1O5ozLH80zimWq_Gw@mail.gmail.com>  <CANp8Xb9MUbQCVZRNYibFBibzTFF=56BqNFFC1G2iTF7WGBNi7g@mail.gmail.com>  <54361F30.8020603@bbn.com> <CANp8Xb_kdpzYjWZxoWFtT+UWwMPpFD0znkoEKVpdukGf61Preg@mail.gmail.com>  <5437078B.6020307@bbn.com>
+Cc: Jess Austin <jess.austin@gmail.com>, git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 04:32:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XdqgX-0000D5-Td
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 03:13:58 +0200
+	id 1Xdruf-0004NE-7Z
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 04:32:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbaJNBNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Oct 2014 21:13:53 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:34428 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753946AbaJNBNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Oct 2014 21:13:52 -0400
-Received: by mail-lb0-f173.google.com with SMTP id 10so7319556lbg.4
-        for <git@vger.kernel.org>; Mon, 13 Oct 2014 18:13:51 -0700 (PDT)
+	id S1754579AbaJNCcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Oct 2014 22:32:33 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:37584 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754556AbaJNCcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Oct 2014 22:32:32 -0400
+Received: by mail-ig0-f176.google.com with SMTP id hn15so12802597igb.15
+        for <git@vger.kernel.org>; Mon, 13 Oct 2014 19:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=bHObKCksFVhepjGnGN3ns4VcDfRbYTHMVlKBskHBkGI=;
-        b=NIFxtiaQJQ0h4zpFBGB7zW9JHEcmWI8R3EAJzoerO+wVI0WOviw1otshZNE3VYm8v/
-         YHvrpfqZJJleMF/JUaTFpsBpwwNYfCk7H/9tHswbKBg7pJkzasMg3WMwp4xqXtqoPRKO
-         7mozuYmmzXch69LfIk2TZEp816RFlLj6rwUPUrN9s4zRX8hU7PCmPjYPT7V2Yv6Pfk97
-         l4cMuQco78OM+iUtvYIQXA2EfogpOnkZI9Lo8YBPJowsN3DxJwJ6lkSkcnEOYS4CVpq4
-         s4fi+S9dqgiRq3rS+V9sLBU9jx6N1wil6tsm5I7n2lVIVLBu5VM/fgQlYw/th14P0Xku
-         RSbg==
-X-Received: by 10.112.47.132 with SMTP id d4mr1922492lbn.64.1413249231188;
- Mon, 13 Oct 2014 18:13:51 -0700 (PDT)
-Received: by 10.112.209.35 with HTTP; Mon, 13 Oct 2014 18:13:31 -0700 (PDT)
-In-Reply-To: <CANxchRS1mGapb77hc9Ywqj_-8UeexSAWK4UK9y9M76pvoN-Yeg@mail.gmail.com>
-X-Google-Sender-Auth: ZTd5_XmsDXWDlU1lFzfXxak7C5U
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=zr1XOay7koSPWQ7X988afATy/VNjcjRC4/PhH6jHROc=;
+        b=a9cyr0fDq/lZ9iKhxYjSaCjV5Ls+3BoFITqoJBjppBSq0KZ4eCGmS9okdGWofP2LAq
+         MN5tqXFY1sGsSKiaap8Z/T7KhMbYfnAkzLl/ZYM11ivufW5/j3riSJ4hTgBOL4V4sVXW
+         l8eyEdff9a2xwNecGbnV/R8Vmnsz8CzLLFHjXy/2KuFz3neoenTQTwvG9qI1lUOlLC+N
+         rAhqN0gs8KONVYTfFlKMbjav8VB2vaknKAr99cHZ0luvmn3AtySgmcwJ91bAHPEGa4Ub
+         GKEBMGSSMDq7jwjvgCXPRGtxQwyXYw9Jjy2OVE50QtsdvpMIu46JBI1Odo0cNl2yCENB
+         lQIg==
+X-Received: by 10.42.37.138 with SMTP id y10mr2360201icd.26.1413253951634;
+        Mon, 13 Oct 2014 19:32:31 -0700 (PDT)
+Received: from localhost.localdomain (66-128-122-45.static.stls.mo.charter.com. [66.128.122.45])
+        by mx.google.com with ESMTPSA id an1sm10453093igc.8.2014.10.13.19.32.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 13 Oct 2014 19:32:30 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <5437078B.6020307@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 13, 2014 at 2:53 PM, Felipe Franciosi <felipe@paradoxo.org> wrote:
->
-> On Mon, Oct 13, 2014 at 9:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> FNV/I/IDIV10/0 covers all the possibilities of (method & 3), I would
->> have to say that the compiler needs to be fixed.
->>
->> Or insert "default:" just before "case HASH_METHOD_0:" line?
->>
->> I dunno.
->
-> Hmm... The "default:" would work, but is it really that bad to initialise a
-> local variable in this case?
->
-> In any case, the compilation warning is annoying. Do you prefer the default
-> or the initialisation?
+Set __git_ps1 to display nothing when present working directory is
+ignored, triggered by either the new environmental variable
+GIT_PS1_HIDE_ON_IGNORED_PWD or the new repository configuration
+variable bash.hideOnIgnoredPwd (or both). In the absence of these
+settings this change has no effect.
 
-If I really had to choose between the two, adding a useless initialization
-would be the less harmful choice. Adding a meaningless "default:" robs
-another chance from the compilers to diagnose a future breakage we
-might add (namely, we may extend methods and forget to write a
-corresponding case arm for the new method value, which a smart
-compiler can and do diagnose as a switch that does not handle
-all the possible values.
+Many people manage e.g. dotfiles in their home directory with git.
+This causes the prompt generated by __git_ps1 to refer to that "top
+level" repo while working in any descendant directory. That can be
+distracting, so this patch helps one shut off that noise.
 
-Thanks.
+Signed-off-by: Jess Austin <jess.austin@gmail.com>
+---
+On Thu, Oct 9, 2014 at 5:09 PM, Richard Hansen <rhansen@bbn.com> wrote:
+> On 2014-10-09 06:27, Jess Austin wrote:
+>> Would you want this configured in each repo (i.e. via a line in ".git/config"),
+>> or would you prefer something global so that it only need be set in one
+>> place? I'm not sure how the latter technique would work, so if that seems
+>> better please advise on how to go about that.
+>
+> A 'git config' variable is fine.  The bash.showDirtyState,
+> bash.showUntrackedFiles, and bash.showUpstream config variables seem
+> like good examples to follow.
+
+I think this is what you meant. I changed the name of the envvar. Now the
+variables are GIT_PS1_HIDE_ON_IGNORED_PWD and bash.hideOnIgnoredPwd. I
+admit these are still kind of unwieldy, but maybe now they're more descriptive?
+
+Please advise!
+
+cheers,
+Jess
+
+ contrib/completion/git-prompt.sh | 12 ++++++++++++
+ t/t9903-bash-prompt.sh           | 42 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index c5473dc..d7559ff 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -84,6 +84,11 @@
+ # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+ # the colored output of "git status -sb" and are available only when
+ # using __git_ps1 for PROMPT_COMMAND or precmd.
++#
++# If you would like __git_ps1 to do nothing in the case when the current
++# directory is set up to be ignored by git, then set
++# GIT_PS1_HIDE_ON_IGNORED_PWD to a nonempty value, or set
++# bash.hideOnIgnoredPwd to true in the repository configuration.
+ 
+ # check whether printf supports -v
+ __git_printf_supports_v=
+@@ -501,6 +506,13 @@ __git_ps1 ()
+ 	local f="$w$i$s$u"
+ 	local gitstring="$c$b${f:+$z$f}$r$p"
+ 
++	if [ -n "$(git check-ignore .)" ] &&
++	   ( [ -n "${GIT_PS1_HIDE_ON_IGNORED_PWD}" ] ||
++	     [ "$(git config --bool bash.hideOnIgnoredPwd)" = "true" ] )
++	then
++		printf_format=""
++	fi
++
+ 	if [ $pcmode = yes ]; then
+ 		if [ "${__git_printf_supports_v-}" != yes ]; then
+ 			gitstring=$(printf -- "$printf_format" "$gitstring")
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 9150984..a8ef8a3 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -35,6 +35,8 @@ test_expect_success 'setup for prompt tests' '
+ 	git commit -m "another b2" file &&
+ 	echo 000 >file &&
+ 	git commit -m "yet another b2" file &&
++	mkdir ignored_dir &&
++	echo "ignored_dir/" >> .gitignore &&
+ 	git checkout master
+ '
+ 
+@@ -588,4 +590,44 @@ test_expect_success 'prompt - zsh color pc mode' '
+ 	test_cmp expected "$actual"
+ '
+ 
++test_expect_success 'prompt - hide on ignored pwd - shell variable unset with config disabled' '
++	printf " (master)" >expected &&
++	(
++		cd ignored_dir &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success 'prompt - hide on ignored pwd - shell variable unset with config enabled' '
++	printf "" >expected &&
++	test_config bash.hideOnIgnoredPwd true &&
++	(
++		cd ignored_dir &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success 'prompt - hide on ignored pwd - shell variable set with config disabled' '
++	printf "" >expected &&
++	(
++		cd ignored_dir &&
++		GIT_PS1_HIDE_ON_IGNORED_PWD=y &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success 'prompt - hide on ignored pwd - shell variable set with config enabled' '
++	printf "" >expected &&
++	test_config bash.hideOnIgnoredPwd true &&
++	(
++		cd ignored_dir &&
++		GIT_PS1_HIDE_ON_IGNORED_PWD=y &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
+ test_done
+-- 
+1.9.1
