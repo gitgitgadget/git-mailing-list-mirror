@@ -1,103 +1,205 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
-Date: Tue, 14 Oct 2014 21:51:22 +0200
-Message-ID: <543D7EBA.4040206@web.de>
-References: <1413090791-14428-1-git-send-email-max@max630.net> <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com> <543D58D9.5060606@web.de> <xmqqoatezhnx.fsf@gitster.dls.corp.google.com> <20141014183431.GA8157@wheezy.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] clone: --dissociate option to mark that reference is only temporary
+Date: Tue, 14 Oct 2014 12:57:07 -0700
+Message-ID: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Max Kirillov <max@max630.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 21:51:43 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 14 21:57:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe88D-0000sM-IH
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 21:51:41 +0200
+	id 1Xe8Dd-00040F-C6
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 21:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755384AbaJNTvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 15:51:33 -0400
-Received: from mout.web.de ([212.227.17.11]:53296 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754278AbaJNTvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 15:51:33 -0400
-Received: from [192.168.178.41] ([79.193.79.239]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MXYS2-1XhqxM2xuA-00WThW; Tue, 14 Oct 2014 21:51:26
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <20141014183431.GA8157@wheezy.local>
-X-Provags-ID: V03:K0:+/povHj1sIcU4CqHe+aiq6i2Cf5gbYp1YfGx/hjbZkYQaCYbBHZ
- 4ysuuPigEiqvpM0R4KHR5vYHaWCRnWmOEEuKyAS0DbvtF2g6AdUSuyW0tq0DEWV6xgA+Mc3
- lxaIPiDNuyPldkTLOk+5Xns4XL1WMeRhTEn2oJbGI5x9UiAx4AFbxtU2Zh9pgnJtkUujGv9
- s8j4a/ZitLnTg186iB2oA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1755536AbaJNT5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 15:57:12 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58294 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754278AbaJNT5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 15:57:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BF62149D2;
+	Tue, 14 Oct 2014 15:57:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=q
+	RezY98HPqFfNqVpM75U9jsCG18=; b=uKn4cUpDwIQPx0b+6ojSrd8KS6oidOorh
+	p/qaIYZ9NEhDFSnIP3U+pCOLQH0V0nji8VJQJcAHaBYd0V47Ul9ST8RKSM6FpoaK
+	xkW9SPK6NCU4SmeZwi2rBMQ2fPbkesNh5HGGy879FoqJWHYdbzvuBjdpmuXjwnRw
+	eC7gOX3yCc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=WBD
+	SLT4sQWO//zJf6TIrzuWSAOGXPvhtUP/1IxdG+Mmd91Z2WUMTIvu7poMH4N6otXo
+	aB7zkF+vppvRcf5+DkT36xAPWKWV1Zo7m4V378AfQpT48gwl7QSnntZ8+fixJtSz
+	8VMIj76JjoIaREcw9UFQtf1N8wLrSnDHcYjX57iw=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 03A87149D1;
+	Tue, 14 Oct 2014 15:57:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58609149CF;
+	Tue, 14 Oct 2014 15:57:09 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 47FE215A-53DC-11E4-8222-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 14.10.2014 um 20:34 schrieb Max Kirillov:
-> On Tue, Oct 14, 2014 at 10:26:42AM -0700, Junio C Hamano wrote:
->> And multiple-worktree _is_ about keeping the same repository and
->> history data (i.e. object database, refs, rerere database, reflogs for
->> refs/*) only once, while allowing multiple working trees attached to
->> that single copy.
->>
->> So it appears to me that to create a checkout-to copy of a
->> superproject with a submodule, a checkout-to copy of the superproject
->> would have a submodule, which is a checkout-to copy of the submodule
->> in the superproject.
->
-> That's right, this linking should be more implicit.
+While use of the --reference option to borrow objects from an
+existing local repository of the same project is an effective way to
+reduce traffic when cloning a project over the network, it makes the
+resulting "borrowing" repository dependent on the "borrowed"
+repository.  After running
 
-Yep. And for the submodule of a submodule too ... ;-)
+	git clone --reference=P $URL Q
 
-> But here are a lot of nuances. For example, it makes sense to have a
-> superproject checkout without submodules being initialized (so that they
-> don't waste space and machine time for working tree, which often is more
-> than repository data).
+the resulting repository Q will be broken if the borrowed repository
+P disappears.
 
-Hmm, I'm not sure if this is a problem. If the GIT_COMMON_DIR does have
-the submodule repo but it isn't initialized locally, we shouldn't have a
-problem (except for wasting some disk space if not a single checkout-to
-superproject initializes this submodule). And if GIT_COMMON_DIR does not
-have the submodule repo yet, wouldn't it be cloned the moment we init
-the submodule in the checkout-to? Or would that need extra functionality?
+The way to allow the borrowed repository to be removed is to repack
+the borrowing repository (i.e. run "git repack -a -d" in Q); while
+power users may know it very well, it is not easily discoverable.
 
- > And it may happen so that this checkout is the
-> master repository for superproject checkouts. But this should not
-> prevent users from using initialized submodules in other checkouts.
+Teach a new "--dissociate" option to "git clone" to run this
+repacking for the user.
 
-I could live with the restriction that submodule's GIT_COMMON_DIRs always
-live in their checkout-to superproject's GIT_COMMON_DIR. This would still
-be an improvement for CI servers that have multiple clones of a super-
-project, as they would all share their submodule common dirs at least
-per superproject.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> Then, a checkout copy of a submodule can be standalone (for example, git
-> and git-html-docs are submodules of msysgit). Or, it can even belong to
-> some other superproject. And in that cases they still should be able to
-> be linked.
+ * This comes from
+   http://thread.gmane.org/gmane.comp.version-control.git/243918/focus=245397
+   which is one of the low-hanging entries in the leftover-bits list
+   http://git-blame.blogspot.com/p/leftover-bits.html
 
-Maybe such configurations would have to be handled manually to achieve
-maximum savings. At least I could live with that.
+   Yes, I must have been really bored to do this ;-)
 
-> Considering all above, and also the thing that I am quite new to
-> submodules (but have to use them currently), I did not intend to create
-> any new UI, only to make backend handle the already existing linked
-> checkouts, which can be made manually.
+ Documentation/git-clone.txt | 11 +++++++++--
+ builtin/clone.c             | 25 +++++++++++++++++++++++++
+ t/t5700-clone-reference.sh  | 17 +++++++++++++++++
+ 3 files changed, 51 insertions(+), 2 deletions(-)
 
-Maybe the way to go is to restrict GIT_COMMON_DIR to superprojects and
-have a distinct GIT_COMMON_MODULES_DIR? We could even set that to the
-same location for all submodules of different superprojects to achieve
-minimum disk footprint (assuming they all have different names across
-all superprojects and recursion levels).
-
-Hmm, so I tend towards adding GIT_COMMON_DIR to local_repo_env until
-we figured out how to handle this. Without that I fear bad things will
-happen, at least for a superproject with multiple checkout-to work trees
-where the same submodule is initialized more than once ...
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 0363d00..f1f2a3f 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git clone' [--template=<template_directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--separate-git-dir <git dir>]
++	  [--dissociate] [--separate-git-dir <git dir>]
+ 	  [--depth <depth>] [--[no-]single-branch]
+ 	  [--recursive | --recurse-submodules] [--] <repository>
+ 	  [<directory>]
+@@ -98,7 +98,14 @@ objects from the source repository into a pack in the cloned repository.
+ 	require fewer objects to be copied from the repository
+ 	being cloned, reducing network and local storage costs.
+ +
+-*NOTE*: see the NOTE for the `--shared` option.
++*NOTE*: see the NOTE for the `--shared` option, and also the
++`--dissociate` option.
++
++--dissociate::
++	Borrow the objects from reference repositories specified
++	with the `--reference` options only to reduce network
++	transfer and stop borrowing from them after a clone is made
++	by making necessary local copies of borrowed objects.
+ 
+ --quiet::
+ -q::
+diff --git a/builtin/clone.c b/builtin/clone.c
+index bbd169c..780fbd5 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -48,6 +48,7 @@ static int option_verbosity;
+ static int option_progress = -1;
+ static struct string_list option_config;
+ static struct string_list option_reference;
++static int option_dissociate;
+ 
+ static int opt_parse_reference(const struct option *opt, const char *arg, int unset)
+ {
+@@ -93,6 +94,8 @@ static struct option builtin_clone_options[] = {
+ 		    N_("create a shallow clone of that depth")),
+ 	OPT_BOOL(0, "single-branch", &option_single_branch,
+ 		    N_("clone only one branch, HEAD or --branch")),
++	OPT_BOOL(0, "dissociate", &option_dissociate,
++		 N_("use --reference only while cloning")),
+ 	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 		   N_("separate git dir from working tree")),
+ 	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
+@@ -736,6 +739,21 @@ static void write_refspec_config(const char* src_ref_prefix,
+ 	strbuf_release(&value);
+ }
+ 
++static void dissociate_from_references(void)
++{
++	struct child_process cmd;
++
++	memset(&cmd, 0, sizeof(cmd));
++	argv_array_pushl(&cmd.args, "repack", "-a", "-d", NULL);
++	cmd.git_cmd = 1;
++	cmd.out = -1;
++	cmd.no_stdin = 1;
++	if (run_command(&cmd))
++		die(_("cannot repack to clean up"));
++	if (unlink(git_path("objects/info/alternates")) && errno != ENOENT)
++		die_errno(_("cannot unlink temporary alternates file"));
++}
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle = 0, is_local;
+@@ -883,6 +901,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 	if (option_reference.nr)
+ 		setup_reference();
++	else if (option_dissociate) {
++		warning(_("--dissociate given, but there is no --reference"));
++		option_dissociate = 0;
++	}
+ 
+ 	fetch_pattern = value.buf;
+ 	refspec = parse_fetch_refspec(1, &fetch_pattern);
+@@ -996,6 +1018,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	transport_unlock_pack(transport);
+ 	transport_disconnect(transport);
+ 
++	if (option_dissociate)
++		dissociate_from_references();
++
+ 	junk_mode = JUNK_LEAVE_REPO;
+ 	err = checkout();
+ 
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index 6537911..3e783fc 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -198,4 +198,21 @@ test_expect_success 'clone using repo pointed at by gitfile as reference' '
+ 	test_cmp expected "$base_dir/O/.git/objects/info/alternates"
+ '
+ 
++test_expect_success 'clone and dissociate from reference' '
++	git init P &&
++	(
++		cd P &&	test_commit one
++	) &&
++	git clone P Q &&
++	(
++		cd Q && test_commit two
++	) &&
++	git clone --no-local --reference=P Q R &&
++	git clone --no-local --reference=P --dissociate Q S &&
++	# removing the reference P would corrupt R but not S
++	rm -fr P &&
++	test_must_fail git -C R fsck &&
++	git -C S fsck
++'
++
+ test_done
+-- 
+2.1.2-488-g6ab273f
