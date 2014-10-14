@@ -1,96 +1,201 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH] [kernel] completion: silence "fatal: Not a git
- repository" error
-Date: Tue, 14 Oct 2014 15:18:17 -0400
-Message-ID: <CAEBDL5V_Mzxwc4fnybg9=fmeotGV91XerzTccHMWLV79bE+mVA@mail.gmail.com>
-References: <1413283785-505-1-git-send-email-john@szakmeister.net>
-	<xmqqfveqzeqy.fsf@gitster.dls.corp.google.com>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH] git-prompt.sh: Hide prompt for ignored pwd
+Date: Tue, 14 Oct 2014 15:21:48 -0400
+Message-ID: <543D77CC.8060803@bbn.com>
+References: <1412795040-19267-1-git-send-email-jess.austin@gmail.com> <5435A8A7.2030008@bbn.com>  <CANp8Xb8ETG-ZFCqrOk=f-RbxtRxehBmAR1O5ozLH80zimWq_Gw@mail.gmail.com>  <CANp8Xb9MUbQCVZRNYibFBibzTFF=56BqNFFC1G2iTF7WGBNi7g@mail.gmail.com>  <54361F30.8020603@bbn.com> <CANp8Xb_kdpzYjWZxoWFtT+UWwMPpFD0znkoEKVpdukGf61Preg@mail.gmail.com>  <5437078B.6020307@bbn.com> <1413253924-8065-1-git-send-email-jess.austin@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 21:18:26 2014
+To: Jess Austin <jess.austin@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 21:21:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe7bz-0008U6-As
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 21:18:23 +0200
+	id 1Xe7fQ-0001zD-Fb
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 21:21:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755357AbaJNTST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 15:18:19 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:59189 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754166AbaJNTST (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 15:18:19 -0400
-Received: by mail-la0-f42.google.com with SMTP id gf13so443206lab.29
-        for <git@vger.kernel.org>; Tue, 14 Oct 2014 12:18:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=B0fX/5gTkG2XBeJQFDeaii7H/CZ5mkVN8ng9MsFQezg=;
-        b=Ut79GxTYx4PnUUIDrt3S2c7g+aiMBl/Enm+VXk6QbfyIKMqMDCpc2MZBjyJprZTowr
-         xk/VeN6zP7Mha4V6KMRoO9FRIxSR/d6he8dBblOGH/s0dzF+tt7ZhqgxNV/7owT6AFxq
-         IjE9BzNlTOY7PS8RMsuk/HLsVdK/5Hnn42RLJVLFBF2XO1k6GIn5iewgT22jxjRiVFjF
-         jb2HW+JscDSWqhfZyLhSVAOWg/YpOyJCfMdOgXz97cWClADvDh2/YIzAcKWIYbKOSqAt
-         BhIwyG0OjUd24Opdpl9KG+edIOa451epnuW9b/4oZJd+52YoibN6t8y/4oMjO1DLegxq
-         eiFg==
-X-Received: by 10.152.216.167 with SMTP id or7mr5148656lac.93.1413314297204;
- Tue, 14 Oct 2014 12:18:17 -0700 (PDT)
-Received: by 10.25.138.132 with HTTP; Tue, 14 Oct 2014 12:18:17 -0700 (PDT)
-In-Reply-To: <xmqqfveqzeqy.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: g8qPERoi6eLdgAge09ibfJwrc5Q
+	id S1755440AbaJNTVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 15:21:52 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:59557 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754705AbaJNTVv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2014 15:21:51 -0400
+Received: from socket.bbn.com ([192.1.120.102]:51972)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1Xe7fX-0005nk-Mq; Tue, 14 Oct 2014 15:22:03 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 3ACE7408B1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <1413253924-8065-1-git-send-email-jess.austin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 14, 2014 at 2:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> John Szakmeister <john@szakmeister.net> writes:
->
->> It is possible that a user is trying to run a git command and fail to realize
->> that they are not in a git repository or working tree.  When trying to complete
->> an operation, __git_refs would fall to a degenerate case and attempt to use
->> "git for-each-ref", which would emit the error.
+On 2014-10-13 22:32, Jess Austin wrote:
+> Set __git_ps1 to display nothing when present working directory is
+> ignored, triggered by either the new environmental variable
+> GIT_PS1_HIDE_ON_IGNORED_PWD or the new repository configuration
+> variable bash.hideOnIgnoredPwd (or both). In the absence of these
+> settings this change has no effect.
+> 
+> Many people manage e.g. dotfiles in their home directory with git.
+> This causes the prompt generated by __git_ps1 to refer to that "top
+> level" repo while working in any descendant directory. That can be
+> distracting, so this patch helps one shut off that noise.
+> 
+> Signed-off-by: Jess Austin <jess.austin@gmail.com>
+> ---
+> On Thu, Oct 9, 2014 at 5:09 PM, Richard Hansen <rhansen@bbn.com> wrote:
+>> On 2014-10-09 06:27, Jess Austin wrote:
+>>> Would you want this configured in each repo (i.e. via a line in ".git/config"),
+>>> or would you prefer something global so that it only need be set in one
+>>> place? I'm not sure how the latter technique would work, so if that seems
+>>> better please advise on how to go about that.
 >>
->> Let's fix this by shunting the error message coming from "git for-each-ref".
->
-> Hmph, do you mean this one?
->
->     $ cd /var/tmp ;# not a git repository
->     $ git checkout <TAB>
->
-> ->
->
->     $ git checkout fatal: Not a git repository (or any of the parent directories): .git
->     HEAD
->
-> I agree it is ugly, but would it be an improvement for the end user,
-> who did not realize that she was not in a directory where "git checkout"
-> makes sense, not to tell her that she is not in a git repository in
-> some way?
+>> A 'git config' variable is fine.  The bash.showDirtyState,
+>> bash.showUntrackedFiles, and bash.showUpstream config variables seem
+>> like good examples to follow.
+> 
+> I think this is what you meant. I changed the name of the envvar. Now the
+> variables are GIT_PS1_HIDE_ON_IGNORED_PWD and bash.hideOnIgnoredPwd. I
+> admit these are still kind of unwieldy, but maybe now they're more descriptive?
 
-I had thought about that too, but I think--for me--it comes down to two things:
+I do prefer the new names.  They are long, but how often will someone
+have to type it?  In this case it's better to be descriptive than to be
+short.  (I wonder if adding two letters would improve readability
+further:  GIT_PS1_HIDE_WHEN_PWD_IGNORED and bash.hideWhenPwdIgnored.)
 
-1) We're not intentionally trying to inform the user anywhere else
-that they are not in a git repo.  We simply fail to complete anything,
-which I think is an established behavior.
-2) It mingles with the stuff already on the command line, making it
-confusing to know what you typed.  Then you end up ctrl-c'ing your way
-out of it and starting over--which is the frustrating part.
+To avoid scaring people who might not want this feature enabled, I
+recommend changing the subject line to something like this:
 
-For me, I thought it better to just be more well-behaved.  I've also
-run across this issue when I legitimately wanted to do something--I
-wish I could remember what it was--with a remote repo and didn't
-happen to be in a git working tree.  It was frustrating to see this
-error message then too, for the same reason as above.  I use tab
-completion quite extensively, so spitting things like this out making
-it difficult to move forward is a problem.
+    git-prompt.sh: Option to hide prompt for ignored pwd
 
-Would it be better to check that "$dir" is non-empty and then provide
-the extra bits of information?  We could then avoid giving the user
-anything in that case.
+> 
+> Please advise!
+> 
+> cheers,
+> Jess
+> 
+>  contrib/completion/git-prompt.sh | 12 ++++++++++++
+>  t/t9903-bash-prompt.sh           | 42 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 54 insertions(+)
+> 
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index c5473dc..d7559ff 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -84,6 +84,11 @@
+>  # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+>  # the colored output of "git status -sb" and are available only when
+>  # using __git_ps1 for PROMPT_COMMAND or precmd.
+> +#
+> +# If you would like __git_ps1 to do nothing in the case when the current
+> +# directory is set up to be ignored by git, then set
+> +# GIT_PS1_HIDE_ON_IGNORED_PWD to a nonempty value, or set
+> +# bash.hideOnIgnoredPwd to true in the repository configuration.
 
--John
+As mentioned in my previous email, I would prefer the code to follow the
+behavior of the other config variables (the environment variable has to
+be set *and* the config variable has to be non-false).
+
+>  
+>  # check whether printf supports -v
+>  __git_printf_supports_v=
+> @@ -501,6 +506,13 @@ __git_ps1 ()
+>  	local f="$w$i$s$u"
+>  	local gitstring="$c$b${f:+$z$f}$r$p"
+>  
+> +	if [ -n "$(git check-ignore .)" ] &&
+
+Rather than:
+
+    [ -n "$(git check-ignore .)" ]
+
+I would prefer:
+
+    git check-ignore -q .
+
+For example:
+
+    if [ -n "${GIT_PS1_HIDE_ON_IGNORED_PWD}" ] &&
+       [ "$(git config --bool bash.hideOnIgnoredPwd)" != "false" ] &&
+       git check-ignore -q .
+    then
+            ...
+
+-Richard
+
+
+> +	   ( [ -n "${GIT_PS1_HIDE_ON_IGNORED_PWD}" ] ||
+> +	     [ "$(git config --bool bash.hideOnIgnoredPwd)" = "true" ] )
+> +	then
+> +		printf_format=""
+> +	fi
+> +
+>  	if [ $pcmode = yes ]; then
+>  		if [ "${__git_printf_supports_v-}" != yes ]; then
+>  			gitstring=$(printf -- "$printf_format" "$gitstring")
+> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+> index 9150984..a8ef8a3 100755
+> --- a/t/t9903-bash-prompt.sh
+> +++ b/t/t9903-bash-prompt.sh
+> @@ -35,6 +35,8 @@ test_expect_success 'setup for prompt tests' '
+>  	git commit -m "another b2" file &&
+>  	echo 000 >file &&
+>  	git commit -m "yet another b2" file &&
+> +	mkdir ignored_dir &&
+> +	echo "ignored_dir/" >> .gitignore &&
+>  	git checkout master
+>  '
+>  
+> @@ -588,4 +590,44 @@ test_expect_success 'prompt - zsh color pc mode' '
+>  	test_cmp expected "$actual"
+>  '
+>  
+> +test_expect_success 'prompt - hide on ignored pwd - shell variable unset with config disabled' '
+> +	printf " (master)" >expected &&
+> +	(
+> +		cd ignored_dir &&
+> +		__git_ps1 >"$actual"
+> +	) &&
+> +	test_cmp expected "$actual"
+> +'
+> +
+> +test_expect_success 'prompt - hide on ignored pwd - shell variable unset with config enabled' '
+> +	printf "" >expected &&
+> +	test_config bash.hideOnIgnoredPwd true &&
+> +	(
+> +		cd ignored_dir &&
+> +		__git_ps1 >"$actual"
+> +	) &&
+> +	test_cmp expected "$actual"
+> +'
+> +
+> +test_expect_success 'prompt - hide on ignored pwd - shell variable set with config disabled' '
+> +	printf "" >expected &&
+> +	(
+> +		cd ignored_dir &&
+> +		GIT_PS1_HIDE_ON_IGNORED_PWD=y &&
+> +		__git_ps1 >"$actual"
+> +	) &&
+> +	test_cmp expected "$actual"
+> +'
+> +
+> +test_expect_success 'prompt - hide on ignored pwd - shell variable set with config enabled' '
+> +	printf "" >expected &&
+> +	test_config bash.hideOnIgnoredPwd true &&
+> +	(
+> +		cd ignored_dir &&
+> +		GIT_PS1_HIDE_ON_IGNORED_PWD=y &&
+> +		__git_ps1 >"$actual"
+> +	) &&
+> +	test_cmp expected "$actual"
+> +'
+> +
+>  test_done
+> 
