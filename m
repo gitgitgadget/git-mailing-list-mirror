@@ -1,205 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] clone: --dissociate option to mark that reference is only temporary
-Date: Tue, 14 Oct 2014 12:57:07 -0700
-Message-ID: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
+Date: Tue, 14 Oct 2014 23:31:14 +0300
+Message-ID: <20141014203114.GB8157@wheezy.local>
+References: <1413090791-14428-1-git-send-email-max@max630.net>
+ <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
+ <543D58D9.5060606@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 14 21:57:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 22:32:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe8Dd-00040F-C6
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 21:57:17 +0200
+	id 1Xe8lz-0006Ed-Sz
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 22:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536AbaJNT5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 15:57:12 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58294 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754278AbaJNT5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 15:57:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BF62149D2;
-	Tue, 14 Oct 2014 15:57:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=q
-	RezY98HPqFfNqVpM75U9jsCG18=; b=uKn4cUpDwIQPx0b+6ojSrd8KS6oidOorh
-	p/qaIYZ9NEhDFSnIP3U+pCOLQH0V0nji8VJQJcAHaBYd0V47Ul9ST8RKSM6FpoaK
-	xkW9SPK6NCU4SmeZwi2rBMQ2fPbkesNh5HGGy879FoqJWHYdbzvuBjdpmuXjwnRw
-	eC7gOX3yCc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=WBD
-	SLT4sQWO//zJf6TIrzuWSAOGXPvhtUP/1IxdG+Mmd91Z2WUMTIvu7poMH4N6otXo
-	aB7zkF+vppvRcf5+DkT36xAPWKWV1Zo7m4V378AfQpT48gwl7QSnntZ8+fixJtSz
-	8VMIj76JjoIaREcw9UFQtf1N8wLrSnDHcYjX57iw=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 03A87149D1;
-	Tue, 14 Oct 2014 15:57:10 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58609149CF;
-	Tue, 14 Oct 2014 15:57:09 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 47FE215A-53DC-11E4-8222-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1755520AbaJNUco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 16:32:44 -0400
+Received: from p3plsmtpa12-07.prod.phx3.secureserver.net ([68.178.252.236]:55502
+	"EHLO p3plsmtpa12-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755405AbaJNUcS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2014 16:32:18 -0400
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa12-07.prod.phx3.secureserver.net with 
+	id 38Y81p00A5B68XE018YBUE; Tue, 14 Oct 2014 13:32:18 -0700
+Content-Disposition: inline
+In-Reply-To: <543D58D9.5060606@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While use of the --reference option to borrow objects from an
-existing local repository of the same project is an effective way to
-reduce traffic when cloning a project over the network, it makes the
-resulting "borrowing" repository dependent on the "borrowed"
-repository.  After running
-
-	git clone --reference=P $URL Q
-
-the resulting repository Q will be broken if the borrowed repository
-P disappears.
-
-The way to allow the borrowed repository to be removed is to repack
-the borrowing repository (i.e. run "git repack -a -d" in Q); while
-power users may know it very well, it is not easily discoverable.
-
-Teach a new "--dissociate" option to "git clone" to run this
-repacking for the user.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * This comes from
-   http://thread.gmane.org/gmane.comp.version-control.git/243918/focus=245397
-   which is one of the low-hanging entries in the leftover-bits list
-   http://git-blame.blogspot.com/p/leftover-bits.html
-
-   Yes, I must have been really bored to do this ;-)
-
- Documentation/git-clone.txt | 11 +++++++++--
- builtin/clone.c             | 25 +++++++++++++++++++++++++
- t/t5700-clone-reference.sh  | 17 +++++++++++++++++
- 3 files changed, 51 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 0363d00..f1f2a3f 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git clone' [--template=<template_directory>]
- 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
- 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
--	  [--separate-git-dir <git dir>]
-+	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch]
- 	  [--recursive | --recurse-submodules] [--] <repository>
- 	  [<directory>]
-@@ -98,7 +98,14 @@ objects from the source repository into a pack in the cloned repository.
- 	require fewer objects to be copied from the repository
- 	being cloned, reducing network and local storage costs.
- +
--*NOTE*: see the NOTE for the `--shared` option.
-+*NOTE*: see the NOTE for the `--shared` option, and also the
-+`--dissociate` option.
-+
-+--dissociate::
-+	Borrow the objects from reference repositories specified
-+	with the `--reference` options only to reduce network
-+	transfer and stop borrowing from them after a clone is made
-+	by making necessary local copies of borrowed objects.
+On Tue, Oct 14, 2014 at 07:09:45PM +0200, Jens Lehmann wrote:
+> Until that problem is solved it looks wrong to pass
+> GIT_COMMON_DIR into submodule recursion, I believe
+> GIT_COMMON_DIR should be added to the local_repo_env array
+> (and even if it is passed on later, we might have to
+> append "/modules/<submodule_name>" to make it point to the
+> correct location).
  
- --quiet::
- -q::
-diff --git a/builtin/clone.c b/builtin/clone.c
-index bbd169c..780fbd5 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -48,6 +48,7 @@ static int option_verbosity;
- static int option_progress = -1;
- static struct string_list option_config;
- static struct string_list option_reference;
-+static int option_dissociate;
- 
- static int opt_parse_reference(const struct option *opt, const char *arg, int unset)
- {
-@@ -93,6 +94,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("create a shallow clone of that depth")),
- 	OPT_BOOL(0, "single-branch", &option_single_branch,
- 		    N_("clone only one branch, HEAD or --branch")),
-+	OPT_BOOL(0, "dissociate", &option_dissociate,
-+		 N_("use --reference only while cloning")),
- 	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
- 		   N_("separate git dir from working tree")),
- 	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
-@@ -736,6 +739,21 @@ static void write_refspec_config(const char* src_ref_prefix,
- 	strbuf_release(&value);
- }
- 
-+static void dissociate_from_references(void)
-+{
-+	struct child_process cmd;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	argv_array_pushl(&cmd.args, "repack", "-a", "-d", NULL);
-+	cmd.git_cmd = 1;
-+	cmd.out = -1;
-+	cmd.no_stdin = 1;
-+	if (run_command(&cmd))
-+		die(_("cannot repack to clean up"));
-+	if (unlink(git_path("objects/info/alternates")) && errno != ENOENT)
-+		die_errno(_("cannot unlink temporary alternates file"));
-+}
-+
- int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0, is_local;
-@@ -883,6 +901,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 	if (option_reference.nr)
- 		setup_reference();
-+	else if (option_dissociate) {
-+		warning(_("--dissociate given, but there is no --reference"));
-+		option_dissociate = 0;
-+	}
- 
- 	fetch_pattern = value.buf;
- 	refspec = parse_fetch_refspec(1, &fetch_pattern);
-@@ -996,6 +1018,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	transport_unlock_pack(transport);
- 	transport_disconnect(transport);
- 
-+	if (option_dissociate)
-+		dissociate_from_references();
-+
- 	junk_mode = JUNK_LEAVE_REPO;
- 	err = checkout();
- 
-diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
-index 6537911..3e783fc 100755
---- a/t/t5700-clone-reference.sh
-+++ b/t/t5700-clone-reference.sh
-@@ -198,4 +198,21 @@ test_expect_success 'clone using repo pointed at by gitfile as reference' '
- 	test_cmp expected "$base_dir/O/.git/objects/info/alternates"
- '
- 
-+test_expect_success 'clone and dissociate from reference' '
-+	git init P &&
-+	(
-+		cd P &&	test_commit one
-+	) &&
-+	git clone P Q &&
-+	(
-+		cd Q && test_commit two
-+	) &&
-+	git clone --no-local --reference=P Q R &&
-+	git clone --no-local --reference=P --dissociate Q S &&
-+	# removing the reference P would corrupt R but not S
-+	rm -fr P &&
-+	test_must_fail git -C R fsck &&
-+	git -C S fsck
-+'
-+
- test_done
--- 
-2.1.2-488-g6ab273f
+Actually, why there should be an _environment_ variable
+GIT_COMMON_DIR at all? I mean, gitdir is resolved to some
+directory (through link or environment), and it contains the
+shared data directly or referes to it with the commondir
+link. In which case anyone would want to override that
+location?
+
+I searched though tests but they don't cover this.
