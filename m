@@ -1,98 +1,96 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH] git-prompt.sh: Hide prompt for ignored pwd
-Date: Tue, 14 Oct 2014 15:08:07 -0400
-Message-ID: <543D7497.2020001@bbn.com>
-References: <1412795040-19267-1-git-send-email-jess.austin@gmail.com> <5435A8A7.2030008@bbn.com>  <CANp8Xb8ETG-ZFCqrOk=f-RbxtRxehBmAR1O5ozLH80zimWq_Gw@mail.gmail.com>  <CANp8Xb9MUbQCVZRNYibFBibzTFF=56BqNFFC1G2iTF7WGBNi7g@mail.gmail.com>  <54361F30.8020603@bbn.com> <CANp8Xb_kdpzYjWZxoWFtT+UWwMPpFD0znkoEKVpdukGf61Preg@mail.gmail.com>  <5437078B.6020307@bbn.com> <1413253924-8065-1-git-send-email-jess.austin@gmail.com> <543D6FD7.3090306@kdbg.org>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: [PATCH] [kernel] completion: silence "fatal: Not a git
+ repository" error
+Date: Tue, 14 Oct 2014 15:18:17 -0400
+Message-ID: <CAEBDL5V_Mzxwc4fnybg9=fmeotGV91XerzTccHMWLV79bE+mVA@mail.gmail.com>
+References: <1413283785-505-1-git-send-email-john@szakmeister.net>
+	<xmqqfveqzeqy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>, Jess Austin <jess.austin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 14 21:08:16 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 14 21:18:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xe7SB-00036e-GN
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 21:08:15 +0200
+	id 1Xe7bz-0008U6-As
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Oct 2014 21:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705AbaJNTIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 15:08:11 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:10069 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753866AbaJNTIK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Oct 2014 15:08:10 -0400
-Received: from socket.bbn.com ([192.1.120.102]:51970)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Xe7SJ-0005fe-1P; Tue, 14 Oct 2014 15:08:23 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 809BC408B1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <543D6FD7.3090306@kdbg.org>
+	id S1755357AbaJNTST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 15:18:19 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:59189 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754166AbaJNTST (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 15:18:19 -0400
+Received: by mail-la0-f42.google.com with SMTP id gf13so443206lab.29
+        for <git@vger.kernel.org>; Tue, 14 Oct 2014 12:18:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=B0fX/5gTkG2XBeJQFDeaii7H/CZ5mkVN8ng9MsFQezg=;
+        b=Ut79GxTYx4PnUUIDrt3S2c7g+aiMBl/Enm+VXk6QbfyIKMqMDCpc2MZBjyJprZTowr
+         xk/VeN6zP7Mha4V6KMRoO9FRIxSR/d6he8dBblOGH/s0dzF+tt7ZhqgxNV/7owT6AFxq
+         IjE9BzNlTOY7PS8RMsuk/HLsVdK/5Hnn42RLJVLFBF2XO1k6GIn5iewgT22jxjRiVFjF
+         jb2HW+JscDSWqhfZyLhSVAOWg/YpOyJCfMdOgXz97cWClADvDh2/YIzAcKWIYbKOSqAt
+         BhIwyG0OjUd24Opdpl9KG+edIOa451epnuW9b/4oZJd+52YoibN6t8y/4oMjO1DLegxq
+         eiFg==
+X-Received: by 10.152.216.167 with SMTP id or7mr5148656lac.93.1413314297204;
+ Tue, 14 Oct 2014 12:18:17 -0700 (PDT)
+Received: by 10.25.138.132 with HTTP; Tue, 14 Oct 2014 12:18:17 -0700 (PDT)
+In-Reply-To: <xmqqfveqzeqy.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: g8qPERoi6eLdgAge09ibfJwrc5Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2014-10-14 14:47, Johannes Sixt wrote:
-> Am 14.10.2014 um 04:32 schrieb Jess Austin:
->> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
->> index c5473dc..d7559ff 100644
->> --- a/contrib/completion/git-prompt.sh
->> +++ b/contrib/completion/git-prompt.sh
->> @@ -84,6 +84,11 @@
->>  # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
->>  # the colored output of "git status -sb" and are available only when
->>  # using __git_ps1 for PROMPT_COMMAND or precmd.
->> +#
->> +# If you would like __git_ps1 to do nothing in the case when the current
->> +# directory is set up to be ignored by git, then set
->> +# GIT_PS1_HIDE_ON_IGNORED_PWD to a nonempty value, or set
->> +# bash.hideOnIgnoredPwd to true in the repository configuration.
->>  
->>  # check whether printf supports -v
->>  __git_printf_supports_v=
->> @@ -501,6 +506,13 @@ __git_ps1 ()
->>  	local f="$w$i$s$u"
->>  	local gitstring="$c$b${f:+$z$f}$r$p"
->>  
->> +	if [ -n "$(git check-ignore .)" ] &&
->> +	   ( [ -n "${GIT_PS1_HIDE_ON_IGNORED_PWD}" ] ||
->> +	     [ "$(git config --bool bash.hideOnIgnoredPwd)" = "true" ] )
-> 
-> Ahem, no. Please do not punish users who are not interested in the new
-> feature with two new processes every time __git_ps() is run. Think of
-> Windows where fork() is really, *really* expensive.
+On Tue, Oct 14, 2014 at 2:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> John Szakmeister <john@szakmeister.net> writes:
+>
+>> It is possible that a user is trying to run a git command and fail to realize
+>> that they are not in a git repository or working tree.  When trying to complete
+>> an operation, __git_refs would fall to a degenerate case and attempt to use
+>> "git for-each-ref", which would emit the error.
+>>
+>> Let's fix this by shunting the error message coming from "git for-each-ref".
+>
+> Hmph, do you mean this one?
+>
+>     $ cd /var/tmp ;# not a git repository
+>     $ git checkout <TAB>
+>
+> ->
+>
+>     $ git checkout fatal: Not a git repository (or any of the parent directories): .git
+>     HEAD
+>
+> I agree it is ugly, but would it be an improvement for the end user,
+> who did not realize that she was not in a directory where "git checkout"
+> makes sense, not to tell her that she is not in a git repository in
+> some way?
 
-Is this why bash.showDirtyState and friends aren't checked unless the
-corresponding environment variable is set to a non-empty value?
+I had thought about that too, but I think--for me--it comes down to two things:
 
-Regardless, it would be nice if the behavior matched the other bash.*
-variables (only check the bash.* variable if the corresponding
-environment variable is set, and default to true).  The following should
-fix it:
+1) We're not intentionally trying to inform the user anywhere else
+that they are not in a git repo.  We simply fail to complete anything,
+which I think is an established behavior.
+2) It mingles with the stuff already on the command line, making it
+confusing to know what you typed.  Then you end up ctrl-c'ing your way
+out of it and starting over--which is the frustrating part.
 
-    if [ -n "${GIT_PS1_HIDE_ON_IGNORED_PWD}" ] &&
-       [ "$(git config --bool bash.hideOnIgnoredPwd)" != "false" ] &&
-       [ "$(git check-ignore .)" ]
-    then
-            ...
+For me, I thought it better to just be more well-behaved.  I've also
+run across this issue when I legitimately wanted to do something--I
+wish I could remember what it was--with a remote repo and didn't
+happen to be in a git working tree.  It was frustrating to see this
+error message then too, for the same reason as above.  I use tab
+completion quite extensively, so spitting things like this out making
+it difficult to move forward is a problem.
 
--Richard
+Would it be better to check that "$dir" is non-empty and then provide
+the extra bits of information?  We could then avoid giving the user
+anything in that case.
 
-> 
-> BTW, you can write '{ foo || bar; }' to bracket a || chain without a
-> sub-process.
-> 
->> +	then
->> +		printf_format=""
->> +	fi
->> +
->>  	if [ $pcmode = yes ]; then
->>  		if [ "${__git_printf_supports_v-}" != yes ]; then
->>  			gitstring=$(printf -- "$printf_format" "$gitstring")
-> 
-> -- Hannes
-> 
+-John
