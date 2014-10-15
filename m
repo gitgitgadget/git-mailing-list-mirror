@@ -1,91 +1,100 @@
-From: Nicholas Chmielewski <nicholas.chmielewski@ennova.com.au>
-Subject: Re: Expected bug with reset --hard
-Date: Wed, 15 Oct 2014 15:47:51 +1000
-Message-ID: <CAEemfuUNEEkgaX+ek0N1_801Zu=g6AizABmzAakpkosx93A_eQ@mail.gmail.com>
-References: <CAEemfuW5k+2r7TpetUK8dh5vLZBR4-Kc1JgYJhG-RPpoQTRQ3Q@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v3 2/3] mergetool: don't require a work tree for
+ --tool-help
+Date: Tue, 14 Oct 2014 23:35:11 -0700
+Message-ID: <20141015063509.GB14751@gmail.com>
+References: <1413016778-94829-1-git-send-email-davvid@gmail.com>
+ <1413016778-94829-2-git-send-email-davvid@gmail.com>
+ <xmqqsiir3hlk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 15 07:47:59 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Charles Bailey <charles@hashpling.org>,
+	Charles Bailey <cbailey32@bloomberg.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 08:35:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeHRF-0007Ka-5e
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 07:47:57 +0200
+	id 1XeIAi-0003Dp-Vo
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 08:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751025AbaJOFrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 01:47:53 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:62828 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774AbaJOFrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 01:47:52 -0400
-Received: by mail-qg0-f53.google.com with SMTP id q107so391009qgd.26
-        for <git@vger.kernel.org>; Tue, 14 Oct 2014 22:47:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=4ES0T3n+OGTrEoKCe5pX/Vuj+kSalmd11m+qiybA5KM=;
-        b=CufpWH2kgUoUkKDkicyK3UY88tewxsKX0P/TpSNH3B1S+YlkKpl9XWGyjbr0R9TBF4
-         nv8Y39zB382ptqchXTFex/OKEY24B5RdT3Xn41BxsOtziNPi9xjO4KSnOUV76YSWAKlt
-         pSDbBgdM3d4w7LqyUfuoPi1TWYjYMUqLe23gQ9jEIr1ijGshcdXaglZZR8I/ozwaTvbo
-         UG/YWCscSA2m13NE8vhnr3QIoWcX4M31ksGlcMYaT5m0NNej1nvBvLqLNUQwpVUkqiRc
-         etYNQ6W3t9VaorawXzYv2h6cKU6y2jTH7Ve1m4Wj5fD+syb056lBAPp2V+NB/0n+Dy+Q
-         oSWw==
-X-Gm-Message-State: ALoCoQmFjyuJP+RNkS06zB9V67SDsOxdBKWNVDphZigBWcpkJotY/OyWZFedsekAoj/kGGV2CamA
-X-Received: by 10.224.131.8 with SMTP id v8mr16991905qas.6.1413352072036; Tue,
- 14 Oct 2014 22:47:52 -0700 (PDT)
-Received: by 10.140.94.172 with HTTP; Tue, 14 Oct 2014 22:47:51 -0700 (PDT)
-X-Originating-IP: [150.101.176.147]
-In-Reply-To: <CAEemfuW5k+2r7TpetUK8dh5vLZBR4-Kc1JgYJhG-RPpoQTRQ3Q@mail.gmail.com>
+	id S1751309AbaJOGex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 02:34:53 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:64950 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751183AbaJOGev (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 02:34:51 -0400
+Received: by mail-pd0-f177.google.com with SMTP id v10so682999pde.36
+        for <git@vger.kernel.org>; Tue, 14 Oct 2014 23:34:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Qp84LQqZPWG2pevbW61uOb9XP0mFuA0DFDgPh7OJXqg=;
+        b=Qva2mRvYABn5hhxLSrtIvXCwIK8nzHYr67oK7J82lfwPVQRA7VqS930z+/5rzqw0a8
+         PZLX1OkulhJVvRr2uosT/Bhtyz5TrPXwU7rvp9PtOY5RlRl2IzLXcQGLCCrl2SToAV6J
+         2dwel4uPMWfE7hjrwolscyxt4PbDpb+uYf/DO16aIQbGDyf3WGDozwX8f1h/3ZninhmP
+         o3kRlZp50qJQF57+A2Z3lTFaT5h9HIwezN0YFJB/DeTWWQpLcoVMvBCLx56Vw0P9x9Dm
+         JTpo/wQwmPDpxoBHC3z3Pf535+/E1bN8nwP6PgxOH0Z5pPVGJiovEyBWPAAcWDPbA4m4
+         wWIg==
+X-Received: by 10.66.251.194 with SMTP id zm2mr10144666pac.33.1413354891381;
+        Tue, 14 Oct 2014 23:34:51 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id ft12sm16051396pdb.43.2014.10.14.23.34.48
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 14 Oct 2014 23:34:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqsiir3hlk.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'd like to rescind my bug report.
+On Mon, Oct 13, 2014 at 12:16:55PM -0700, Junio C Hamano wrote:
+> David Aguilar <davvid@gmail.com> writes:
+> 
+> > From: Charles Bailey <cbailey32@bloomberg.net>
+> >
+> > Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
+> > Signed-off-by: David Aguilar <davvid@gmail.com>
+> > ---
+> > Changes since v2:
+> >
+> > This now uses the new git_dir_init function.
+> >
+> >  git-mergetool.sh | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/git-mergetool.sh b/git-mergetool.sh
+> > index 96a61ba..cddb533 100755
+> > --- a/git-mergetool.sh
+> > +++ b/git-mergetool.sh
+> > @@ -10,11 +10,11 @@
+> >  
+> >  USAGE='[--tool=tool] [--tool-help] [-y|--no-prompt|--prompt] [file to merge] ...'
+> >  SUBDIRECTORY_OK=Yes
+> > +NONGIT_OK=Yes
+> >  OPTIONS_SPEC=
+> >  TOOL_MODE=merge
+> >  . git-sh-setup
+> >  . git-mergetool--lib
+> > -require_work_tree
+> >  
+> >  # Returns true if the mode reflects a symlink
+> >  is_symlink () {
+> > @@ -378,6 +378,9 @@ prompt_after_failed_merge () {
+> >  	done
+> >  }
+> >  
+> > +require_work_tree
+> > +git_dir_init
+> 
+> This is somewhat curious.  Shouldn't the order of these swapped?
 
-
-A bit more further investigation revealed that git was detecting the
-file with changes as jquery.datatables.js but the file in my directory
-was reported as being named jquery.dataTables.js .
-
-I'm currently working on OS X 10.9, and this issue is probably related
-more to the case-preservation of the file system rather than git
-itself.
-
-On 15 October 2014 14:34, Nicholas Chmielewski
-<nicholas.chmielewski@ennova.com.au> wrote:
-> git version 1.9.1 & version 2.1.2
->
-> I had some changes in a tracked file that I wanted to discard.
-> Instead of using checkout, I instead used `git reset --hard HEAD` to reset.
->
-> Git returned the message `HEAD is now at <sha> <commit-message>`
-> I then went `git status` and it showed me that I still have changes to commit
->
-> I expected there to be no changes in my working directory as a result of
-> doing a `git reset --hard`
->
-> I did a little more fiddling around and still yielded the same results.
->
-> - `$ touch file.md`
-> - `$ git add file.md`
-> - `$ git commit -m 'empty file'`
-> - `$ echo 'text' > file.md`
->
-> At this point git reported that I had uncommited changes for both file.md and
-> the troublesome file in question (jquery.datatables.js)
->
-> `$ git reset --hard HEAD`
->
-> Git now no longer reports and untracked changes for file.md but still
-> for jquery.datatables.js
->
-> `$ git reset --hard HEAD~1`
->
-> Git still reports untracked changes for jquery.datatables.js
->
-> I have included a copy of the diff of the jquery.datatables.js
+Yes.  I'll send a replacement patch for 2/3 only.
+-- 
+David
