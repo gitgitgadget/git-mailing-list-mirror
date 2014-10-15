@@ -1,54 +1,81 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [PATCH 0/4] Allow building Git with Asciidoctor
-Date: Wed, 15 Oct 2014 13:24:22 +0200
-Message-ID: <543E5966.80400@virtuell-zuhause.de>
-References: <1413070656-241955-1-git-send-email-sandals@crustytoothpaste.net> <20141014095119.GC16686@peff.net>
+From: Tommaso Colombo <tommaso.colombo@outlook.com>
+Subject: [PATCH] git-svn: merge: fix rooturl/branchurl match check
+Date: Wed, 15 Oct 2014 14:39:01 +0200
+Message-ID: <BLU437-SMTP152A16338E427B250EB601FBAA0@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Wed Oct 15 13:24:33 2014
+Content-Type: text/plain
+Cc: Tommaso Colombo <zibo86@hotmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 15 14:44:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeMgy-0006jr-Oo
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 13:24:33 +0200
+	id 1XeNwG-0005pV-VP
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 14:44:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbaJOLY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 07:24:29 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:59143 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751928AbaJOLY2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 07:24:28 -0400
-Received: from p5ddc1cb8.dip0.t-ipconnect.de ([93.220.28.184] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XeMgr-0006I5-OJ; Wed, 15 Oct 2014 13:24:25 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <20141014095119.GC16686@peff.net>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1413372268;0fb1164c;
+	id S1752285AbaJOMoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 08:44:21 -0400
+Received: from blu004-omc3s19.hotmail.com ([65.55.116.94]:50353 "EHLO
+	BLU004-OMC3S19.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751928AbaJOMoU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 08:44:20 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Oct 2014 08:44:20 EDT
+Received: from BLU437-SMTP15 ([65.55.116.72]) by BLU004-OMC3S19.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.22751);
+	 Wed, 15 Oct 2014 05:39:20 -0700
+X-TMN: [NpSTaiDUlp4KL/dai4bn/z+VihdwRUTk]
+X-Originating-Email: [tommaso.colombo@outlook.com]
+X-Mailer: git-send-email 2.1.2.443.g670a3c1.dirty
+X-OriginalArrivalTime: 15 Oct 2014 12:39:18.0754 (UTC) FILETIME=[09A32C20:01CFE875]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 14.10.2014 um 11:51 schrieb Jeff King:
-> What's the status on AsciiDoc versus AsciiDoctor? The latter seems more
-> actively developed these days, but perhaps that is just my perception.
-> The incompatibilities seem fairly minimal (if those first two patches
-> are the extent of it, I have no problem at all trying to remain
-> compatible with both). Would it ever make sense to switch to AsciiDoctor
-> as our official command-line build program? I know it is supposed to be
-> much faster (though a lot of the slowness in our build chain is due to
-> docbook, not asciidoc itself).
+When populating svn:mergeinfo, git-svn merge checks if the merge parent
+of the merged branch is under the same root as the git-svn repository.
+This was implemented comparing $gs->repos_root with the return value of
+of cmt_metadata for the merge parent. However, the first may contain a
+username, whereas the second does not. In this case the comparison
+fails.
 
-Just recently we added the AsciiDoc toolchain to our git-for-windows/sdk
-(formerly known as msysgit). So I'm not really fond of switching now to
-something different again.
+Remove the username from $gs->repos_root before performing the
+comparison.
+---
+ git-svn.perl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Remaining compatible with both would therefore be my choice.
-
-Thomas
+diff --git a/git-svn.perl b/git-svn.perl
+index b6e2186..0a5a5ff 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -707,7 +707,8 @@ sub populate_merge_info {
+ 		my $all_parents_ok = 1;
+ 		my $aggregate_mergeinfo = '';
+ 		my $rooturl = $gs->repos_root;
+-		my ($target_branch) = $gs->full_pushurl =~ /^\Q$rooturl\E(.*)/;
++		Git::SVN::remove_username($rooturl);
++		my $target_branch = $gs->path;
+ 
+ 		if (defined($rewritten_parent)) {
+ 			# Replace first parent with newly-rewritten version
+@@ -729,7 +730,7 @@ sub populate_merge_info {
+ 			}
+ 			my $branchpath = $1;
+ 
+-			my $ra = Git::SVN::Ra->new($branchurl);
++			my $ra = Git::SVN::Ra->new(add_path_to_url($gs->repos_root, $branchpath));
+ 			my (undef, undef, $props) =
+ 				$ra->get_dir(canonicalize_path("."), $svnrev);
+ 			my $par_mergeinfo = $props->{'svn:mergeinfo'};
+@@ -921,6 +922,7 @@ sub cmd_dcommit {
+ 		# information from different SVN repos, and paths
+ 		# which are not underneath this repository root.
+ 		my $rooturl = $gs->repos_root;
++		Git::SVN::remove_username($rooturl);
+ 		foreach my $d (@$linear_refs) {
+ 			my %parentshash;
+ 			read_commit_parents(\%parentshash, $d);
+-- 
+2.1.2.443.g670a3c1.dirty
