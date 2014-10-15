@@ -1,98 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
-Date: Wed, 15 Oct 2014 10:09:59 -0700
-Message-ID: <xmqq1tq9xnrs.fsf@gitster.dls.corp.google.com>
-References: <1413090791-14428-1-git-send-email-max@max630.net>
-	<CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
-	<543D58D9.5060606@web.de> <20141014203114.GB8157@wheezy.local>
-	<CACsJy8AmBr2YTJkVw4BDD95RVE91EEBtEyakOpb77NDXaVBzJA@mail.gmail.com>
+Subject: Re: [PATCH] clone: --dissociate option to mark that reference is only temporary
+Date: Wed, 15 Oct 2014 10:29:24 -0700
+Message-ID: <xmqqwq81w8az.fsf@gitster.dls.corp.google.com>
+References: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>
+	<543E85FA.6050404@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Max Kirillov <max@max630.net>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 19:10:13 2014
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 19:29:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeS5U-0007j5-Rt
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 19:10:13 +0200
+	id 1XeSOO-0003AP-5H
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 19:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbaJORKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 13:10:07 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61354 "EHLO
+	id S1750870AbaJOR3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 13:29:33 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58256 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750880AbaJORKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 13:10:05 -0400
+	with ESMTP id S1750758AbaJOR3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 13:29:32 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 60CF4145AD;
-	Wed, 15 Oct 2014 13:10:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AFF3C14B57;
+	Wed, 15 Oct 2014 13:29:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=js6/IIuCENJQMbWlqReCIzMLYSE=; b=jGnFI5
-	T6Zyp7lLH86vmwEWQWnfgBNszit9rvaS0Q2ZTaGw2BZCzAyrLyql0t+V4VRu2gsi
-	V9IujPp5V5n+c6bQbdEuX1vjum98SShb2ADK5FE2ahkj7f71gyqOr1PqaufscA0q
-	v5LJzx6ngMzeaaNkREm3X1uG15d8aBFvCCTcY=
+	:content-type; s=sasl; bh=CloWOXOBheE/7sWWceuv+lbge4c=; b=mdkExT
+	K+IXbprpEpDwYxQOY4f6tBcSwLPVMLdu2VWEIG2gp57+byuFp4RM/o8r9Zg7y74y
+	A5r40EL++uF+vyLN7RfG1dR+jyV+EnbFFPlbc5DevvDhibKZi1f+EaJSjj4UQhTs
+	+QZ3F6KeliATo7V65trT7KBMthfBYbCg5n4lk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eEpeiZuFQCIprZmUG2PN12zFSRU35u/j
-	O6M/uhbbFc70e7atD3S0TkrpOQmudBL5YOK2naWRP6BKTxi/lQ0d62kFlE+3rj7C
-	AhjlpT7prxYql3Ho8zbMhVELgqfrWwviU1URhGa9cVQe3XN5RsAyJhUVU2AEzt5r
-	hmxP+8RWP8E=
+	:content-type; q=dns; s=sasl; b=QhlcF+REAcS0+x3xDPg28sxtYubFzfDR
+	/q4ygImY0jqwXhekR1loQ8TvAjSCQfnAns5Ug7LCqvl47RclZbABxflbi5mdr9fq
+	pJkOTQDYZlinM/Z2pkRZPYFXZ2p2ny1V3Y+XaV6CYMEKDsdOUwtxncrOKrwrsCvb
+	hX+mPymFnK8=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 546BE145AC;
-	Wed, 15 Oct 2014 13:10:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A732F14B56;
+	Wed, 15 Oct 2014 13:29:26 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E5E4145A8;
-	Wed, 15 Oct 2014 13:10:01 -0400 (EDT)
-In-Reply-To: <CACsJy8AmBr2YTJkVw4BDD95RVE91EEBtEyakOpb77NDXaVBzJA@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 15 Oct 2014 20:08:33 +0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2937F14B55;
+	Wed, 15 Oct 2014 13:29:26 -0400 (EDT)
+In-Reply-To: <543E85FA.6050404@xiplink.com> (Marc Branchaud's message of "Wed,
+	15 Oct 2014 10:34:34 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1932E952-548E-11E4-B8DA-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CF87E174-5490-11E4-96DE-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-> On Wed, Oct 15, 2014 at 3:31 AM, Max Kirillov <max@max630.net> wrote:
->> On Tue, Oct 14, 2014 at 07:09:45PM +0200, Jens Lehmann wrote:
->>> Until that problem is solved it looks wrong to pass
->>> GIT_COMMON_DIR into submodule recursion, I believe
->>> GIT_COMMON_DIR should be added to the local_repo_env array
->>> (and even if it is passed on later, we might have to
->>> append "/modules/<submodule_name>" to make it point to the
->>> correct location).
->>
->> Actually, why there should be an _environment_ variable
->> GIT_COMMON_DIR at all? I mean, gitdir is resolved to some
->> directory (through link or environment), and it contains the
->> shared data directly or referes to it with the commondir
->> link. In which case anyone would want to override that
->> location?
+> I think things would be more understandable if the option was "--dissociate
+> <repository>" and was an explicit alternative to --reference:
+> 	[[--reference | --dissociate] <repository>]
 >
-> It's how the implementation was built up. First I split the repo in
-> two and I need something to point the new/shared part.
-> $GIT_DIR/worktrees comes later to glue them up. Keeping it an
-> environment variable gives us a possibility to glue things up in a
-> different way than using $GIT_DIR/worktrees. Of course the odds of
-> anybody doing that are probably small or even near zero.
->
-> Still consuming the rest of this thread. Thanks all for working on the
-> submodule support for this.
+> I'm still not liking the name "--dissociate" though.  The original suggestion
+> of "--borrow" is better.  Perhaps "--library" or "--local-cache"?  I dunno...
 
-Hmph.  I was hoping that the multiple-work-trees topic was ready for
-'next' by now, but we may want to wait to see how the interaction
-with submodule plays out to have another chance of a clean reroll
-before it happens.  This is a topic with large impact and is quite
-intrusive code-wise, even though the intrusive parts are cleanly
-done.  So we'd want to take more time to unleash it to the general
-public than more usual small scale topics, anyway.
+I was not thinking when I originally started the topic with
+"--borrow", until I realized that it would not make much sense,
+primarily because we allow multiple references.
 
-Thanks.
+What should this command line do, and how would you implement such a
+behaviour?
+
+    $ git clone \
+        --reference=/local/pool/linux.git \
+        --borrow=../my/neighbour/linux-hack.git \
+        git://git.kernel.org/...../linux.git
+
+With "do the usual --reference thing, but then dissociate the result
+from referents" option, there is no ambiguity and that is why I did
+not go with the "--borrow" option suggested in the original thread.
+
+> So now I'm wondering if the implementation would be more efficient as an
+> extension of the --local operation.  That is, instead of a post-clone repack,
+> do a --local clone first followed by a simple "git fetch" from the source repo.
+
+The network overhead may be comparable to the "--reference"
+optimization, but if your "clone --local" ends up copying (instead
+of hard-linking), the initial cost to copy locally would be a pure
+extra price over "clone --reference and then --dissociate".  If the
+local clone uses hard-linking, it would be cheaper, but it still
+costs more than dropping an entry into .git/objects/info/alternates,
+I would imagine.  You will pay with your scheme the same cost to run
+"repack -a -d", which is paid by "--dissociate" at the end of clone,
+eventually at the first "gc", so there is no efficiency advantage,
+either.
+
+The above is my knee-jerk assessment without any measuring, though.
