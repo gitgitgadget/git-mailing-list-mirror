@@ -1,60 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v23 0/25] rs/ref-transaction ("Use ref transactions", part 3)
-Date: Wed, 15 Oct 2014 14:36:20 -0700
-Message-ID: <xmqqk341uiaz.fsf@gitster.dls.corp.google.com>
-References: <20141015004522.GD32245@google.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] clone: --dissociate option to mark that reference is
+ only temporary
+Date: Wed, 15 Oct 2014 17:44:36 -0400
+Message-ID: <543EEAC4.8070204@xiplink.com>
+References: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>	<543E85FA.6050404@xiplink.com>	<xmqqwq81w8az.fsf@gitster.dls.corp.google.com>	<543EDE6A.7040500@xiplink.com> <xmqqsiipuifi.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 23:36:29 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 23:44:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeWFA-0004JR-57
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 23:36:28 +0200
+	id 1XeWN4-0000U6-Tc
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 23:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751287AbaJOVgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 17:36:24 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55426 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750809AbaJOVgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 17:36:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 498F515952;
-	Wed, 15 Oct 2014 17:36:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DMZYt9IzpNS8pKNx1wyx/j15L9U=; b=re/kMz
-	CjL7vVuU0d4iXrROiE4mYm3ejBsvIEnuKViayZVpkscXFYwr5FN7SDutEk7/0hwF
-	zrIY/OFaQ8zR/yIZho1cXTL3XHY9OG6ycZJRw4YxorbCCn5Cv/ezQNSbiueniLHF
-	8s6nPAErgS887SStNkn/vKdwfx5wiAR/pAz7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I37tmU/CMPhI7MwVNvqFead8rp/w7bu0
-	E+XtWaJb3SoMRV9ve9V1MqVp7DMP9drkPysg/X3rYBuyhBsfuFFA9WIDMAm5BRo0
-	gdLKVO8EJ39MjmiUBv8ydD73CpspNKNXO9LoyG2FyxWo8WYRtoy3T2OrCnp1mmWe
-	sfS/racV1+g=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 402BA15951;
-	Wed, 15 Oct 2014 17:36:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B34811594F;
-	Wed, 15 Oct 2014 17:36:21 -0400 (EDT)
-In-Reply-To: <20141015004522.GD32245@google.com> (Jonathan Nieder's message of
-	"Tue, 14 Oct 2014 17:45:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4E4BDE62-54B3-11E4-BAE6-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1751059AbaJOVoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 17:44:34 -0400
+Received: from smtp66.ord1c.emailsrvr.com ([108.166.43.66]:56293 "EHLO
+	smtp66.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750792AbaJOVoe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 17:44:34 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp17.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 6CB60180495;
+	Wed, 15 Oct 2014 17:44:33 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp17.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 363381809BC;
+	Wed, 15 Oct 2014 17:44:33 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.2.13);
+	Wed, 15 Oct 2014 21:44:33 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+In-Reply-To: <xmqqsiipuifi.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks; queued.
+On 14-10-15 05:33 PM, Junio C Hamano wrote:
+> Marc Branchaud <marcnarc@xiplink.com> writes:
+> 
+>> On 14-10-15 01:29 PM, Junio C Hamano wrote:
+>>
+>>>     $ git clone \
+>>>         --reference=/local/pool/linux.git \
+>>>         --borrow=../my/neighbour/linux-hack.git \
+>>>         git://git.kernel.org/...../linux.git
+>>>
+>>> With "do the usual --reference thing, but then dissociate the result
+>>> from referents" option, there is no ambiguity and that is why I did
+>>> not go with the "--borrow" option suggested in the original thread.
+>>
+>> I had not considered this case.  My limited imagination has a hard time
+>> coming up with a scenario where more than one --reference (or
+>> In this example, the --borrow seems
+>> useless.  How would clone decide that it even needed objects from the
+>> neighbour repo?  None of the refs on gko need any of the neighbour's unique
+>> objects.
+> 
+> A probable scenario might go like this.
+> 
+>     The company-wide pool is designed for everybody's use and will
+>     stay, even if it lags behind because it fetches every other day,
+>     so it is safe to keep referring to via alternates.  My neighbour
+>     is following the linux-next repository and has changes that are
+>     meant to land "in the future" to the mainline, but it can
+>     disappear without notice so I cannot afford to depend on its
+>     presense forever.
+> 
+> Under that particular scenario, what should happen is fairly clear;
+> we want to dissociate from neibour's immediately after clone is
+> done, while being still dependent on the shared pool.
 
-Hopefully we can merge to 'next' and go incremental.
+Yes, but we're cloning gko, not the neighbour.  Doesn't that mean that the
+clone operation won't know about any of the neighbour's refs?  In order to
+get any of the neighbour's refs (and its unique objects) you have to either
+clone the neighbour directly or (post-clone) fetch from it, no?
+
+		M.
