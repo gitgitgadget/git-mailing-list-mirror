@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 05/11] refs.c: refactor resolve_ref_unsafe() to use strbuf internally
-Date: Wed, 15 Oct 2014 17:06:17 +0200
-Message-ID: <1413385583-4872-6-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 09/11] refs.c: rewrite resolve_gitlink_ref() to use parse_ref()
+Date: Wed, 15 Oct 2014 17:06:21 +0200
+Message-ID: <1413385583-4872-10-git-send-email-mhagger@alum.mit.edu>
 References: <1413385583-4872-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,44 +11,44 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 17:06:53 2014
+X-From: git-owner@vger.kernel.org Wed Oct 15 17:06:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeQA9-0002Oj-4f
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 17:06:53 +0200
+	id 1XeQAA-0002Oj-VA
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 17:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751813AbaJOPGo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2014 11:06:44 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:53580 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751581AbaJOPGj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 11:06:39 -0400
-X-AuditID: 1207440f-f79ea6d000004f72-4a-543e8d7e05e4
+	id S1751845AbaJOPGt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2014 11:06:49 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:53747 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751824AbaJOPGs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 11:06:48 -0400
+X-AuditID: 1207440c-f79036d000002d32-62-543e8d83496a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 1C.CB.20338.E7D8E345; Wed, 15 Oct 2014 11:06:38 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 88.FA.11570.38D8E345; Wed, 15 Oct 2014 11:06:44 -0400 (EDT)
 Received: from michael.fritz.box (p4FC96250.dip0.t-ipconnect.de [79.201.98.80])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s9FF6SNX020034
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s9FF6SNb020034
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 15 Oct 2014 11:06:37 -0400
+	Wed, 15 Oct 2014 11:06:42 -0400
 X-Mailer: git-send-email 2.1.1
 In-Reply-To: <1413385583-4872-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsUixO6iqFvXaxdi8KNV0aLrSjeTRUPvFWaL
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsUixO6iqNvSaxdi0H+TxaLrSjeTRUPvFWaL
 	2yvmM1t0T3nLaPFvQo3FmTeNjA5sHn/ff2Dy2DnrLrvHgk2lHhcvKXssfuDl8XmTXABbFLdN
-	UmJJWXBmep6+XQJ3xvt204L3lhVTW1QaGJfodDFyckgImEjMWrWVCcIWk7hwbz1bFyMXh5DA
-	ZUaJL9N/MUM4x5kktm9sZwOpYhPQlVjU08wEkhARaGCUOPRqIVgLs8AiRon2VVeYQaqEBSIk
-	fjw6BGazCKhKTPv5ihXE5hVwljjd/ocVYp+cxN7Jq1lAbE4BF4lfL7cxgthCQDULlk5mgagX
-	lDg58wmQzQG0QF1i/TwhkDCzgLxE89bZzBMYBWYhqZqFUDULSdUCRuZVjHKJOaW5urmJmTnF
-	qcm6xcmJeXmpRbomermZJXqpKaWbGCHhzr+DsWu9zCFGAQ5GJR5ezgO2IUKsiWXFlbmHGCU5
-	mJREeRf02IUI8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuGdnwCU401JrKxKLcqHSUlzsCiJ86ov
-	UfcTEkhPLEnNTk0tSC2CycpwcChJ8O4DGSpYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFha
-	khEPitP4YmCkgqR4gPaCtfMWFyTmAkUhWk8xKkqJ82aBJARAEhmleXBjYUnsFaM40JfCvD0g
-	VTzABAjX/QpoMBPQ4ImhtiCDSxIRUlINjNP4pQOv3VKy/FBVOtfT2qFO660db8PenaWH017x
-	s7uYibIcWWHMJL3pd8jv/gUiex7+X8Xwp4fl/vT3C7qMVfINA17veFt/dFc1S+ba 
+	UmJJWXBmep6+XQJ3xsV7iQXnRCu6Hjxnb2CcKdjFyMkhIWAicfLdPzYIW0ziwr31QDYXh5DA
+	ZUaJWy8fsEI4x5kkHiz4zQJSxSagK7Gop5kJJCEi0MAocejVQrAWZoFFjBLtq64wdzFycAgL
+	BEm8O6EO0sAioCox/fxTdhCbV8BF4srJ24wQ6+Qk9k5eDTaUEyj+6+U2sLiQgLPEgqWTWSDq
+	BSVOznzCAjKSWUBdYv08IZAws4C8RPPW2cwTGAVmIamahVA1C0nVAkbmVYxyiTmlubq5iZk5
+	xanJusXJiXl5qUW6hnq5mSV6qSmlmxgh4c6zg/HbOplDjAIcjEo8vBv22oYIsSaWFVfmHmKU
+	5GBSEuVd0GMXIsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd34CUI43JbGyKrUoHyYlzcGiJM6r
+	ukTdT0ggPbEkNTs1tSC1CCYrw8GhJMFbCzJUsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSix
+	tCQjHhSn8cXASAVJ8QDtbQJp5y0uSMwFikK0nmJUlBLnzQJJCIAkMkrz4MbCktgrRnGgL4V5
+	e0CqeIAJEK77FdBgJqDBE0NtQQaXJCKkpBoYi47Pf3DLWuXuTGb+u7u6VouFJfy3E/7h4D5r
+	1Y5dC//Of6izWGVhxFSzTWprkjz8Tr9nPd34mN/Y6i/HOWlxtWOOS+o2npo+8UTs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,260 +56,110 @@ X-Mailing-List: git@vger.kernel.org
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-In the beginning, we had resolve_ref() that returns a buffer owned by
-this function. Then we started to move away from that direction because
-the buffer could be overwritten by the next resolve_ref() call and
-introduced two new functions: resolve_ref_unsafe() and resolve_refdup()=
-=2E
-The static buffer is still kept internally.
-
-This patch makes the core of resolve_ref use a strbuf instead of static
-buffer. Which makes resolve_refdup() more efficient (no need to copy
-from the static buffer to a new buffer). It also removes the (random?)
-256 char limit. In future, resolve_ref() could be used directly without
-going through resolve_refdup() wrapper.
-
-A minor bonus. resolve_ref(dup) are now more thread-friendly (although =
-I'm
-not 100% sure if they are thread-safe yet).
+resolve_gitlink_ref_recursive() did about the same thing as
+parse_ref(), but didn't know as many tricks. It also had another
+random limit of 128 bytes for symrefs. So base resolve_gitlink_ref()
+on parse_ref() instead.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- cache.h |   1 +
- refs.c  | 115 +++++++++++++++++++++++++++++++++++++-------------------=
+ refs.c | 69 ++++++++++++++++++++++++++--------------------------------=
 --------
- 2 files changed, 67 insertions(+), 49 deletions(-)
+ 1 file changed, 27 insertions(+), 42 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 3e6a914..e36084d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1004,6 +1004,7 @@ extern int read_ref(const char *refname, unsigned=
- char *sha1);
-  */
- extern const char *resolve_ref_unsafe(const char *ref, unsigned char *=
-sha1, int reading, int *flag);
- extern char *resolve_refdup(const char *ref, unsigned char *sha1, int =
-reading, int *flag);
-+extern int resolve_ref(const char *refname, struct strbuf *result, uns=
-igned char *sha1, int reading, int *flag);
-=20
- extern int dwim_ref(const char *str, int len, unsigned char *sha1, cha=
-r **ref);
- extern int dwim_log(const char *str, int len, unsigned char *sha1, cha=
-r **ref);
 diff --git a/refs.c b/refs.c
-index 020ee3f..29ea7e0 100644
+index e1aa6a4..a7c8abd 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1397,34 +1397,41 @@ static int handle_missing_loose_ref(const char =
-*refname,
- 	}
+@@ -1299,48 +1299,11 @@ static int resolve_gitlink_packed_ref(struct re=
+f_cache *refs,
+ 	return 0;
  }
 =20
--/* This function needs to return a meaningful errno on failure */
--const char *resolve_ref_unsafe(const char *refname, unsigned char *sha=
-1, int reading, int *flag)
-+/*
-+ * 'result' content will be destroyed. Its value may be undefined if
-+ * resolve_ref returns -1.
-+ *
-+ * This function needs to return a meaningful errno on failure
-+ */
-+int resolve_ref(const char *refname, struct strbuf *result,
-+		unsigned char *sha1, int reading, int *flag)
+-static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
+-					 const char *refname, unsigned char *sha1,
+-					 int recursion)
+-{
+-	int fd, len;
+-	char buffer[128], *p;
+-	char *path;
+-
+-	if (recursion > MAXDEPTH)
+-		return -1;
+-	path =3D *refs->name
+-		? git_path_submodule(refs->name, "%s", refname)
+-		: git_path("%s", refname);
+-	fd =3D open(path, O_RDONLY);
+-	if (fd < 0)
+-		return resolve_gitlink_packed_ref(refs, refname, sha1);
+-
+-	len =3D read(fd, buffer, sizeof(buffer)-1);
+-	close(fd);
+-	if (len < 0)
+-		return -1;
+-	while (len && isspace(buffer[len-1]))
+-		len--;
+-	buffer[len] =3D 0;
+-
+-	/* Was it a detached head or an old-fashioned symlink? */
+-	if (!get_sha1_hex(buffer, sha1))
+-		return 0;
+-
+-	/* Symref? */
+-	if (strncmp(buffer, "ref:", 4))
+-		return -1;
+-	p =3D buffer + 4;
+-	while (isspace(*p))
+-		p++;
+-
+-	return resolve_gitlink_ref_recursive(refs, p, sha1, recursion+1);
+-}
+-
+ int resolve_gitlink_ref(const char *path, const char *refname, unsigne=
+d char *sha1)
  {
-+	struct strbuf buffer =3D STRBUF_INIT;
- 	int depth =3D MAXDEPTH;
--	ssize_t len;
--	char buffer[256];
--	static char refname_buffer[256];
-+	int ret =3D -1;
+-	int len =3D strlen(path), retval;
++	struct strbuf result =3D STRBUF_INIT;
++	int len =3D strlen(path), parseval, ret;
++	int depth =3D MAXDEPTH;
+ 	char *submodule;
+ 	struct ref_cache *refs;
 =20
- 	if (flag)
- 		*flag =3D 0;
+@@ -1352,8 +1315,30 @@ int resolve_gitlink_ref(const char *path, const =
+char *refname, unsigned char *sh
+ 	refs =3D get_ref_cache(submodule);
+ 	free(submodule);
 =20
- 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 		errno =3D EINVAL;
--		return NULL;
-+		return -1;
- 	}
-=20
-+	strbuf_reset(result);
-+	strbuf_addstr(result, refname);
+-	retval =3D resolve_gitlink_ref_recursive(refs, refname, sha1, 0);
+-	return retval;
++	strbuf_addstr(&result, refname);
++	do {
++		if (--depth < 0) {
++			errno =3D ELOOP;
++			ret =3D -1;
++			goto out;
++		}
++		path =3D *refs->name
++			? git_path_submodule(refs->name, "%s", result.buf)
++			: git_path("%s", result.buf);
++		parseval =3D parse_ref(path, &result, sha1, NULL);
++	} while (!parseval);
 +
- 	for (;;) {
- 		char path[PATH_MAX];
- 		struct stat st;
- 		const char *buf;
--		int fd;
-=20
- 		if (--depth < 0) {
- 			errno =3D ELOOP;
--			return NULL;
-+			break;
- 		}
-=20
--		git_snpath(path, sizeof(path), "%s", refname);
-+		git_snpath(path, sizeof(path), "%s", result->buf);
-=20
- 		/*
- 		 * We might have to loop back here to avoid a race
-@@ -1437,30 +1444,26 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 		 */
- 	stat_ref:
- 		if (lstat(path, &st) < 0) {
--			if (errno =3D=3D ENOENT) {
--				if (handle_missing_loose_ref(refname, sha1,
--							     reading, flag))
--					return NULL;
--				return refname;
--			} else
--				return NULL;
-+			if (errno =3D=3D ENOENT)
-+				ret =3D handle_missing_loose_ref(result->buf, sha1,
-+							       reading, flag);
-+			break;
- 		}
-=20
- 		/* Follow "normalized" - ie "refs/.." symlinks by hand */
- 		if (S_ISLNK(st.st_mode)) {
--			len =3D readlink(path, buffer, sizeof(buffer)-1);
--			if (len < 0) {
-+			/* no need to reset buffer, strbuf_readlink does that */
-+			if (strbuf_readlink(&buffer, path, 256) < 0) {
- 				if (errno =3D=3D ENOENT || errno =3D=3D EINVAL)
- 					/* inconsistent with lstat; retry */
- 					goto stat_ref;
- 				else
--					return NULL;
-+					break;
- 			}
--			buffer[len] =3D 0;
--			if (starts_with(buffer, "refs/") &&
--					!check_refname_format(buffer, 0)) {
--				strcpy(refname_buffer, buffer);
--				refname =3D refname_buffer;
-+			if (starts_with(buffer.buf, "refs/") &&
-+			    !check_refname_format(buffer.buf, 0)) {
-+				strbuf_reset(result);
-+				strbuf_addbuf(result, &buffer);
- 				if (flag)
- 					*flag |=3D REF_ISSYMREF;
- 				continue;
-@@ -1470,34 +1473,24 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 		/* Is it a directory? */
- 		if (S_ISDIR(st.st_mode)) {
- 			errno =3D EISDIR;
--			return NULL;
-+			break;
- 		}
-=20
- 		/*
- 		 * Anything else, just open it and try to use it as
- 		 * a ref
- 		 */
--		fd =3D open(path, O_RDONLY);
--		if (fd < 0) {
-+		strbuf_reset(&buffer);
-+		if (strbuf_read_file(&buffer, path, 256) < 0) {
- 			if (errno =3D=3D ENOENT)
- 				/* inconsistent with lstat; retry */
- 				goto stat_ref;
- 			else
--				return NULL;
--		}
--		len =3D read_in_full(fd, buffer, sizeof(buffer)-1);
--		if (len < 0) {
--			int save_errno =3D errno;
--			close(fd);
--			errno =3D save_errno;
--			return NULL;
-+				break;
- 		}
--		close(fd);
--		while (len && isspace(buffer[len-1]))
--			len--;
--		buffer[len] =3D '\0';
-+		strbuf_rtrim(&buffer);
-=20
--		if (skip_prefix(buffer, "ref:", &buf)) {
-+		if (skip_prefix(buffer.buf, "ref:", &buf)) {
- 			/* It is a symbolic ref */
- 			if (flag)
- 				*flag |=3D REF_ISSYMREF;
-@@ -1507,9 +1500,10 @@ const char *resolve_ref_unsafe(const char *refna=
-me, unsigned char *sha1, int rea
- 				if (flag)
- 					*flag |=3D REF_ISBROKEN;
- 				errno =3D EINVAL;
--				return NULL;
-+				break;
- 			}
--			refname =3D strcpy(refname_buffer, buf);
-+			strbuf_reset(result);
-+			strbuf_add(result, buf, buffer.buf + buffer.len - buf);
- 			continue;
- 		}
-=20
-@@ -1517,21 +1511,44 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 		 * It must be a normal ref. Please note that
- 		 * FETCH_HEAD has a second line containing other data.
- 		 */
--		if (get_sha1_hex(buffer, sha1) ||
--		    (buffer[40] !=3D '\0' && !isspace(buffer[40]))) {
-+		if (get_sha1_hex(buffer.buf, sha1) ||
-+		    (buffer.buf[40] !=3D '\0' && !isspace(buffer.buf[40]))) {
- 			if (flag)
- 				*flag |=3D REF_ISBROKEN;
- 			errno =3D EINVAL;
--			return NULL;
--		}
--		return refname;
-+		} else
-+			ret =3D 0;
-+		break;
- 	}
-+	strbuf_release(&buffer);
-+	return ret;
-+}
-+
-+const char *resolve_ref_unsafe(const char *refname, unsigned char *sha=
-1, int reading, int *flag)
-+{
-+	static struct strbuf buf =3D STRBUF_INIT;
-+
-+	if (!resolve_ref(refname, &buf, sha1, reading, flag))
-+		/*
-+		 * Please note: true to the "unsafe" name of this
-+		 * function, we return a pointer to our internal
-+		 * memory here rather than passing ownership to the
-+		 * caller by calling strbuf_detach():
-+		 */
-+		return buf.buf;
-+	else
-+		return NULL;
- }
-=20
- char *resolve_refdup(const char *ref, unsigned char *sha1, int reading=
-, int *flag)
- {
--	const char *ret =3D resolve_ref_unsafe(ref, sha1, reading, flag);
--	return ret ? xstrdup(ret) : NULL;
-+	struct strbuf buf =3D STRBUF_INIT;
-+	if (!resolve_ref(ref, &buf, sha1, reading, flag))
-+		return strbuf_detach(&buf, NULL);
-+	else {
-+		strbuf_release(&buf);
-+		return NULL;
++	if (parseval =3D=3D 1) {
++		ret =3D 0;
++	} else if (parseval =3D=3D -2) {
++		ret =3D resolve_gitlink_packed_ref(refs, result.buf, sha1) ? -1 : 0;
++	} else {
++		ret =3D -1;
 +	}
++
++out:
++	strbuf_release(&result);
++	return ret;
  }
 =20
- /* The argument to filter_refs */
+ /*
 --=20
 2.1.1
