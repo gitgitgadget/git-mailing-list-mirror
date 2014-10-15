@@ -1,100 +1,194 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] clone: --dissociate option to mark that reference is
- only temporary
-Date: Wed, 15 Oct 2014 16:51:54 -0400
-Message-ID: <543EDE6A.7040500@xiplink.com>
-References: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>	<543E85FA.6050404@xiplink.com> <xmqqwq81w8az.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] t7610-mergetool: prefer test_config over git config
+Date: Wed, 15 Oct 2014 14:08:11 -0700
+Message-ID: <xmqqwq81ujlw.fsf@gitster.dls.corp.google.com>
+References: <1413362121-17361-1-git-send-email-davvid@gmail.com>
+	<1413362121-17361-2-git-send-email-davvid@gmail.com>
+	<1413362121-17361-3-git-send-email-davvid@gmail.com>
+	<1413362121-17361-4-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 22:52:00 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Charles Bailey <charles@hashpling.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 23:08:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeVY4-00016w-LY
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 22:51:57 +0200
+	id 1XeVnu-0003G0-4j
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 23:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751058AbaJOUvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 16:51:53 -0400
-Received: from smtp106.ord1c.emailsrvr.com ([108.166.43.106]:49533 "EHLO
-	smtp106.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750762AbaJOUvw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 16:51:52 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp22.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 5D6D818081F;
-	Wed, 15 Oct 2014 16:51:51 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp22.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 26B16180A1D;
-	Wed, 15 Oct 2014 16:51:51 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.2.13);
-	Wed, 15 Oct 2014 20:51:51 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <xmqqwq81w8az.fsf@gitster.dls.corp.google.com>
+	id S1751160AbaJOVIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 17:08:14 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56777 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750776AbaJOVIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 17:08:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF2A71507C;
+	Wed, 15 Oct 2014 17:08:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s83IAaOMwaDWjolMq8ypEb2jA4s=; b=ukrhLH
+	QTrIh+QjC2r4kgqvAQ96i6hNOcopxLmTH1b0s+zUzTk26Tr6d5id1UhoncY1xKYI
+	o3yonflVjtXzdvTKwAOEZ+/rd0mogMsrtrZMvJwvUZviqEQrp7cWjsxBuNzCwAwW
+	GnBgYRu9VtI9W6yK6yQJl22fG/lU7phl36Oig=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xXwY8DHRPTczxuR5cKbnh0uXO1nAkfQJ
+	Q8V2bP/zT25ZQIu6mZgA1Khj4zupQnQ4HfUJBwl2n8TMbfdveWquQ1SUn+zUzzr5
+	qxFslTIspw3BS6pbbyxoTwRc2puDP1/XFZY5/Cj9CcK6qyH6KFpqN2QXu+yajhFO
+	HVj1Rd52B/k=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D51C41507B;
+	Wed, 15 Oct 2014 17:08:12 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F1B01507A;
+	Wed, 15 Oct 2014 17:08:12 -0400 (EDT)
+In-Reply-To: <1413362121-17361-4-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Wed, 15 Oct 2014 01:35:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5F4AD35C-54AF-11E4-80A5-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14-10-15 01:29 PM, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> I think things would be more understandable if the option was "--dissociate
->> <repository>" and was an explicit alternative to --reference:
->> 	[[--reference | --dissociate] <repository>]
->>
->> I'm still not liking the name "--dissociate" though.  The original suggestion
->> of "--borrow" is better.  Perhaps "--library" or "--local-cache"?  I dunno...
-> 
-> I was not thinking when I originally started the topic with
-> "--borrow", until I realized that it would not make much sense,
-> primarily because we allow multiple references.
+David Aguilar <davvid@gmail.com> writes:
 
-I hadn't realized that was possible.  There's no indication in the man page
-that multiple --references are allowed (or forbidden, for that matter).
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
 
-> What should this command line do, and how would you implement such a
-> behaviour?
-> 
->     $ git clone \
->         --reference=/local/pool/linux.git \
->         --borrow=../my/neighbour/linux-hack.git \
->         git://git.kernel.org/...../linux.git
-> 
-> With "do the usual --reference thing, but then dissociate the result
-> from referents" option, there is no ambiguity and that is why I did
-> not go with the "--borrow" option suggested in the original thread.
+The reason why this change favours "test_config" over "git config"
+is not described here, but if we think about that, some of the
+changes in this may become questionable.
 
-I had not considered this case.  My limited imagination has a hard time
-coming up with a scenario where more than one --reference (or
---borrow/--dissociate) would make sense.  In this example, the --borrow seems
-useless.  How would clone decide that it even needed objects from the
-neighbour repo?  None of the refs on gko need any of the neighbour's unique
-objects.  (I get the feeling I don't understand how clone works...)
+> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+> index 1a15e06..7eeb207 100755
+> --- a/t/t7610-mergetool.sh
+> +++ b/t/t7610-mergetool.sh
+> @@ -14,7 +14,7 @@ Testing basic merge tool invocation'
+>  # running mergetool
+>  
+>  test_expect_success 'setup' '
+> -	git config rerere.enabled true &&
+> +	test_config rerere.enabled true &&
+>  	echo master >file1 &&
+>  	echo master spaced >"spaced name" &&
+>  	echo master file11 >file11 &&
 
->> So now I'm wondering if the implementation would be more efficient as an
->> extension of the --local operation.  That is, instead of a post-clone repack,
->> do a --local clone first followed by a simple "git fetch" from the source repo.
-> 
-> The network overhead may be comparable to the "--reference"
-> optimization, but if your "clone --local" ends up copying (instead
-> of hard-linking), the initial cost to copy locally would be a pure
-> extra price over "clone --reference and then --dissociate".  If the
-> local clone uses hard-linking, it would be cheaper, but it still
-> costs more than dropping an entry into .git/objects/info/alternates,
-> I would imagine.  You will pay with your scheme the same cost to run
-> "repack -a -d", which is paid by "--dissociate" at the end of clone,
-> eventually at the first "gc", so there is no efficiency advantage,
-> either.
-> 
-> The above is my knee-jerk assessment without any measuring, though.
+This one does not have corresponding "git config" to remove the
+configuration when the setup is done, so this changes the
+behaviour.  The remainder of the tests will run without
+rerere.enabled set.
 
-That makes sense to me, at least.  I agree with your assessment.
+If this change does not make a difference, perhaps we do not even
+need to set rerere.enabled here in the first place?
 
-		M.
+But do later tests perform merges that can potentially be affected
+by the setting of rerere.enabled?  If so, this change can break
+them.  If this change does not break existing tests, I would say
+this is a good change that anticipates that we may add more tests in
+the future that work in subdir and that makes sure to leave subdir
+in a predictable state for them.
+
+> @@ -112,7 +112,7 @@ test_expect_success 'custom mergetool' '
+>  '
+>  
+>  test_expect_success 'mergetool crlf' '
+> -	git config core.autocrlf true &&
+> +	test_config core.autocrlf true &&
+>  	git checkout -b test2 branch1 &&
+>  	test_must_fail git merge master >/dev/null 2>&1 &&
+>  	( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
+> @@ -129,7 +129,7 @@ test_expect_success 'mergetool crlf' '
+>  	git submodule update -N &&
+>  	test "$(cat submod/bar)" = "master submodule" &&
+>  	git commit -m "branch1 resolved with mergetool - autocrlf" &&
+> -	git config core.autocrlf false &&
+> +	test_config core.autocrlf false &&
+>  	git reset --hard
+>  '
+
+This one wants to set core.autocrlf to true while it runs, and then
+wants to reset to the original.  When the test fails in the middle,
+however, we may abort this test and move on to the next one, while
+leaving core.autcrlf still set to "true", which may break later
+tests, hence use of test_config to ensure that the setting is
+reverted at the end of the test is the right thing to do.
+
+So the hunk #112 is correct, but the hunk #129 is questionable and
+even misleading.
+
+> @@ -176,7 +176,7 @@ test_expect_success 'mergetool skips autoresolved' '
+>  test_expect_success 'mergetool merges all from subdir' '
+>  	(
+>  		cd subdir &&
+> -		git config rerere.enabled false &&
+> +		test_config rerere.enabled false &&
+>  		test_must_fail git merge master &&
+>  		( yes "r" | git mergetool ../submod ) &&
+>  		( yes "d" "d" | git mergetool --no-prompt ) &&
+
+Same comment as the one for hunk #14 applies here.  In principle,
+this change will make this test more isolated and is a good thing.
+
+> @@ -190,7 +190,7 @@ test_expect_success 'mergetool merges all from subdir' '
+>  '
+>  
+>  test_expect_success 'mergetool skips resolved paths when rerere is active' '
+> -	git config rerere.enabled true &&
+> +	test_config rerere.enabled true &&
+>  	rm -rf .git/rr-cache &&
+>  	git checkout -b test5 branch1 &&
+>  	git submodule update -N &&
+
+Ditto.
+
+> @@ -204,7 +204,7 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
+>  '
+>  
+>  test_expect_success 'conflicted stash sets up rerere'  '
+> -	git config rerere.enabled true &&
+> +	test_config rerere.enabled true &&
+>  	git checkout stash1 &&
+>  	echo "Conflicting stash content" >file11 &&
+>  	git stash &&
+
+Ditto.
+
+> @@ -232,7 +232,7 @@ test_expect_success 'conflicted stash sets up rerere'  '
+>  
+>  test_expect_success 'mergetool takes partial path' '
+>  	git reset --hard &&
+> -	git config rerere.enabled false &&
+> +	test_config rerere.enabled false &&
+>  	git checkout -b test12 branch1 &&
+>  	git submodule update -N &&
+>  	test_must_fail git merge master &&
+
+Ditto.
+
+> @@ -505,14 +505,12 @@ test_expect_success 'file with no base' '
+>  
+>  test_expect_success 'custom commands override built-ins' '
+>  	git checkout -b test14 branch1 &&
+> -	git config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+> -	git config mergetool.defaults.trustExitCode true &&
+> +	test_config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+> +	test_config mergetool.defaults.trustExitCode true &&
+>  	test_must_fail git merge master &&
+>  	git mergetool --no-prompt --tool defaults -- both &&
+>  	echo master both added >expected &&
+>  	test_cmp both expected &&
+> -	git config --unset mergetool.defaults.cmd &&
+> -	git config --unset mergetool.defaults.trustExitCode &&
+>  	git reset --hard master >/dev/null 2>&1
+>  '
+
+This one is good; with test_config, you do not have to do the
+unsetting yourself.
