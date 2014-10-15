@@ -1,98 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: --dissociate option to mark that reference is only temporary
-Date: Wed, 15 Oct 2014 10:29:24 -0700
-Message-ID: <xmqqwq81w8az.fsf@gitster.dls.corp.google.com>
-References: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>
-	<543E85FA.6050404@xiplink.com>
+Subject: Re: [PATCH 0/4] Allow building Git with Asciidoctor
+Date: Wed, 15 Oct 2014 10:43:33 -0700
+Message-ID: <xmqqsiipw7ne.fsf@gitster.dls.corp.google.com>
+References: <1413070656-241955-1-git-send-email-sandals@crustytoothpaste.net>
+	<20141014095119.GC16686@peff.net>
+	<xmqqsiiqziik.fsf@gitster.dls.corp.google.com>
+	<20141015011754.GA131351@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 19:29:47 2014
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Wed Oct 15 19:43:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeSOO-0003AP-5H
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 19:29:44 +0200
+	id 1XeSc5-0004QT-Px
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 19:43:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750870AbaJOR3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 13:29:33 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58256 "EHLO
+	id S1750848AbaJORnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 13:43:40 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54754 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750758AbaJOR3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 13:29:32 -0400
+	with ESMTP id S1751279AbaJORng (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 13:43:36 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AFF3C14B57;
-	Wed, 15 Oct 2014 13:29:26 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8455814FA4;
+	Wed, 15 Oct 2014 13:43:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CloWOXOBheE/7sWWceuv+lbge4c=; b=mdkExT
-	K+IXbprpEpDwYxQOY4f6tBcSwLPVMLdu2VWEIG2gp57+byuFp4RM/o8r9Zg7y74y
-	A5r40EL++uF+vyLN7RfG1dR+jyV+EnbFFPlbc5DevvDhibKZi1f+EaJSjj4UQhTs
-	+QZ3F6KeliATo7V65trT7KBMthfBYbCg5n4lk=
+	:content-type; s=sasl; bh=eEolL4f0UpmBWBShmBAGvib5c6g=; b=w+UA2N
+	EuvhZSjrS9Uvs+w5CpvJEjutugorU4Zc/AjcN5QB5cFSMwkCxD7YoyXysFMLrbnj
+	xH4EZfcwbck2CfFMZ4Wm/GSKSXY6SgxYVzIwoxLBjEOdYYgbuCNL4NH3IWi5oHeN
+	Ep0me3+kxgDuDAnfDwtcEHTEte0lkAtcTOkcs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QhlcF+REAcS0+x3xDPg28sxtYubFzfDR
-	/q4ygImY0jqwXhekR1loQ8TvAjSCQfnAns5Ug7LCqvl47RclZbABxflbi5mdr9fq
-	pJkOTQDYZlinM/Z2pkRZPYFXZ2p2ny1V3Y+XaV6CYMEKDsdOUwtxncrOKrwrsCvb
-	hX+mPymFnK8=
+	:content-type; q=dns; s=sasl; b=WHs3CoZNQAwm5bBXAyRKv+Iqdt+OfwGn
+	TbKzjMRGWk08/9xGTjNavMb9Oz5siHxaqcpkk3NLziZshpzL+S91sBulpCcadycM
+	ZZWg9GUa/CiAv+mTawETkDWedqO+5aBS14piQqX8n7McpN+Ut6SN0izgmGT4N2Sw
+	bo6oAaiKQ+k=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A732F14B56;
-	Wed, 15 Oct 2014 13:29:26 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AA2314FA3;
+	Wed, 15 Oct 2014 13:43:35 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2937F14B55;
-	Wed, 15 Oct 2014 13:29:26 -0400 (EDT)
-In-Reply-To: <543E85FA.6050404@xiplink.com> (Marc Branchaud's message of "Wed,
-	15 Oct 2014 10:34:34 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ED72014FA0;
+	Wed, 15 Oct 2014 13:43:34 -0400 (EDT)
+In-Reply-To: <20141015011754.GA131351@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 15 Oct 2014 01:17:54 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CF87E174-5490-11E4-96DE-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C975D06E-5492-11E4-AAF5-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> I think things would be more understandable if the option was "--dissociate
-> <repository>" and was an explicit alternative to --reference:
-> 	[[--reference | --dissociate] <repository>]
+> On Tue, Oct 14, 2014 at 10:08:19AM -0700, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > On Sat, Oct 11, 2014 at 11:37:32PM +0000, brian m. carlson wrote:
+>> >
+>> > Specifically I'm not excited about getting into a state where we have to
+>> > maintain both an asciidoc.conf file _and_ ruby extensions for
+>> > asciidoctor. I don't mind if somebody wants to step up and keep the
+>> > asciidoctor bits in sync with the asciidoc.conf, but I feel like one of
+>> > them needs to be considered the "master".
+>> 
+>> I do not mind to have the machinery to run AsciiDoctor too much in
+>> my tree.  It may make it easier for those who use it to spot places
+>> in *.txt that need (in)compatibility workarounds between the two
+>> formatters than keeping it outside.
 >
-> I'm still not liking the name "--dissociate" though.  The original suggestion
-> of "--borrow" is better.  Perhaps "--library" or "--local-cache"?  I dunno...
+> Alternately, I'm happy to be responsible for maintaining the
+> extensions.rb file.
 
-I was not thinking when I originally started the topic with
-"--borrow", until I realized that it would not make much sense,
-primarily because we allow multiple references.
+Let's see how well the patches 3 and 4 work for other people with
+AsciiDoctor and then decide to go in that direction.
 
-What should this command line do, and how would you implement such a
-behaviour?
+I do not forsee that changes to allow our *.txt to be used with
+AsciiDoctor interfere with what GitHub folks do with their own
+documentation toolchain, but I am not sure how the AsciiDoctor
+specific alternative build infrastructure we would eventually ship
+would interact with them---maybe they are not affected at all, or
+maybe they can even take advantage of it.
 
-    $ git clone \
-        --reference=/local/pool/linux.git \
-        --borrow=../my/neighbour/linux-hack.git \
-        git://git.kernel.org/...../linux.git
-
-With "do the usual --reference thing, but then dissociate the result
-from referents" option, there is no ambiguity and that is why I did
-not go with the "--borrow" option suggested in the original thread.
-
-> So now I'm wondering if the implementation would be more efficient as an
-> extension of the --local operation.  That is, instead of a post-clone repack,
-> do a --local clone first followed by a simple "git fetch" from the source repo.
-
-The network overhead may be comparable to the "--reference"
-optimization, but if your "clone --local" ends up copying (instead
-of hard-linking), the initial cost to copy locally would be a pure
-extra price over "clone --reference and then --dissociate".  If the
-local clone uses hard-linking, it would be cheaper, but it still
-costs more than dropping an entry into .git/objects/info/alternates,
-I would imagine.  You will pay with your scheme the same cost to run
-"repack -a -d", which is paid by "--dissociate" at the end of clone,
-eventually at the first "gc", so there is no efficiency advantage,
-either.
-
-The above is my knee-jerk assessment without any measuring, though.
+Thanks.
