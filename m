@@ -1,88 +1,86 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] mergetool: add an option for writing to a temporary
- directory
-Date: Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
-Message-ID: <293924028.621540.1413401411270.JavaMail.zimbra@dewire.com>
-References: <1413047085-12398-1-git-send-email-davvid@gmail.com> <xmqqk3433h8m.fsf@gitster.dls.corp.google.com> <20141015063848.GC14751@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Custom hunk-header with ignore case setting
+Date: Wed, 15 Oct 2014 12:35:56 -0700
+Message-ID: <xmqqd29tw2g3.fsf@gitster.dls.corp.google.com>
+References: <543E6E23.5030708@virtuell-zuhause.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Charles Bailey <charles@hashpling.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 21:35:55 2014
+Content-Type: text/plain
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+X-From: git-owner@vger.kernel.org Wed Oct 15 21:36:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeUMV-0005DP-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 21:35:55 +0200
+	id 1XeUMd-0005HU-Ry
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 21:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbaJOTfv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2014 15:35:51 -0400
-Received: from zimbra.dewire.com ([83.140.172.131]:58285 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751106AbaJOTfu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 15:35:50 -0400
-X-Greylist: delayed 334 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Oct 2014 15:35:50 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id 21114815E0;
-	Wed, 15 Oct 2014 21:30:15 +0200 (CEST)
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id TXFgzoYO9QM4; Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id 9FE3B81686;
-	Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id RRdbEVfMg6OK; Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
-Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
-	by zimbra.dewire.com (Postfix) with ESMTP id 6FB36815E0;
-	Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
-In-Reply-To: <20141015063848.GC14751@gmail.com>
-X-Originating-IP: [78.69.107.197]
-X-Mailer: Zimbra 8.0.7_GA_6020 (ZimbraWebClient - FF32 (Mac)/8.0.7_GA_6020)
-Thread-Topic: mergetool: add an option for writing to a temporary directory
-Thread-Index: 1AskutzFRN/1k2JioGvUBFCfjE5gDw==
+	id S1751395AbaJOTf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 15:35:59 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51119 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751106AbaJOTf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 15:35:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BF3BD151E0;
+	Wed, 15 Oct 2014 15:35:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zsiJ+2IE/DNg8a5t3KNAo189JyQ=; b=tNoDln
+	SLOrvvt8Fr3HyuoBh6kj3V7Z2LDeNPQggbWsaRyFh9AVwWqKqb/3VHNScbfv4Gpx
+	FHjZR531mKJxazNLTDveOKxArLSHDhKwvR06wgj/p8wYVGdgl+58ld/uTtwvnGJi
+	YBlJ1ec1QaoXoNTTY+L1JGFgjbERQU4dE73Wo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mFzgQh3F/rzq/R/UyJr96rRy5uQaFSQm
+	exfKyZcR7JhmaE216ZR2n0zeNTIFvQCc+VFkMDsp5wojChr/2otACCQUdc/05Lns
+	Om0N6wQxIz9vbZ2giT4JPwN1qGStEQXhzDDH7GAw9Go93+0tyH4vy0ILKA9vsyOn
+	oXjclx50Tn0=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B5CDF151DF;
+	Wed, 15 Oct 2014 15:35:57 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 41EB1151DC;
+	Wed, 15 Oct 2014 15:35:57 -0400 (EDT)
+In-Reply-To: <543E6E23.5030708@virtuell-zuhause.de> (Thomas Braun's message of
+	"Wed, 15 Oct 2014 14:52:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7C2E5FD2-54A2-11E4-B353-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
 
+> I've seen that the builtin diff patterns in userdiff.c can be
+> specified ignoring case using the IPATTERN macro.
+>
+> One of the possible solutions would be to patch userdiff.c
+> (patch courtesy of Johannes Schindelin):
+>
+> -- snip --
+> diff --git a/userdiff.c b/userdiff.c
+> index fad52d6..f089e50 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -228,6 +228,9 @@ int userdiff_config(const char *k, const char *v)
+>  		return parse_funcname(&drv->funcname, k, v, 0);
+>  	if (!strcmp(type, "xfuncname"))
+>  		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
+> +	if (!strcmp(type, "ixfuncname"))
+> +		return parse_funcname(&drv->funcname, k, v,
+> +				REG_EXTENDED | REG_ICASE);
+>  	if (!strcmp(type, "binary"))
+>  		return parse_tristate(&drv->binary, k, v);
+>  	if (!strcmp(type, "command"))
 
------ Ursprungligt meddelande -----
-> Fr=C3=A5n: "David Aguilar" <davvid@gmail.com>
-> Till: "Junio C Hamano" <gitster@pobox.com>
-> Kopia: "Robin Rosenberg" <robin.rosenberg@dewire.com>, git@vger.kerne=
-l.org, "Charles Bailey" <charles@hashpling.org>
-> Skickat: onsdag, 15 okt 2014 8:38:49
-> =C3=84mne: Re: [PATCH] mergetool: add an option for writing to a temp=
-orary directory
->=20
-> On Mon, Oct 13, 2014 at 12:24:41PM -0700, Junio C Hamano wrote:
-> > David Aguilar <davvid@gmail.com> writes:
-> >=20
-> > > Teach mergetool to write files in a temporary directory when
-> > > 'mergetool.writeToTemp' is true.
-> > >
-> > > This is helpful for tools such as Eclipse which cannot cope with
-> > > multiple copies of the same file in the worktree.
-> >=20
-> > With this can we drop the "change the temporary file name" patch by
-> > Robin Rosenberg?
-> >=20
-> > http://thread.gmane.org/gmane.comp.version-control.git/255457/focus=
-=3D255599
-> >=20
-> > Message-Id: <1408607240-11369-1-git-send-email-robin.rosenberg@dewi=
-re.com>
->=20
-> I would think so but I'm biased ;-)
+I am not sure if we care deeply about supporting case insensitive
+payload in the first place, but the above change, unlike other
+possibilities, adds only small burden to the end users' cognitive
+load, and it looks like a sensible way to go forward.
 
-The new patch solves my problem.
-
--- robin
+Thanks.
