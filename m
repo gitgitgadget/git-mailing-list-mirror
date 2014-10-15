@@ -1,142 +1,132 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH 2/2] contacts: Add a Makefile to generate docs and install
-Date: Wed, 15 Oct 2014 20:50:18 +0200
-Message-ID: <543EC1EA.8040300@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
+Date: Wed, 15 Oct 2014 20:57:20 +0200
+Message-ID: <543EC390.4000709@web.de>
+References: <1413090791-14428-1-git-send-email-max@max630.net> <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com> <543D58D9.5060606@web.de> <xmqqoatezhnx.fsf@gitster.dls.corp.google.com> <20141014183431.GA8157@wheezy.local> <543D7EBA.4040206@web.de> <20141014221509.GA10580@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 15 20:55:13 2014
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Wed Oct 15 20:57:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeTj6-0007Mu-Qr
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 20:55:13 +0200
+	id 1XeTlR-0000Id-FC
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 20:57:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490AbaJOSzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 14:55:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:52907 "EHLO plane.gmane.org"
+	id S1751809AbaJOS5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 14:57:34 -0400
+Received: from mout.web.de ([212.227.15.4]:50560 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751033AbaJOSzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 14:55:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1XeTix-0007Hd-NP
-	for git@vger.kernel.org; Wed, 15 Oct 2014 20:55:03 +0200
-Received: from p4ff44b8f.dip0.t-ipconnect.de ([79.244.75.143])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Oct 2014 20:55:03 +0200
-Received: from sschuberth by p4ff44b8f.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Oct 2014 20:55:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p4ff44b8f.dip0.t-ipconnect.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1751309AbaJOS5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 14:57:33 -0400
+Received: from [192.168.178.41] ([79.211.107.135]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0Lwq4m-1YFjLQ0Lm4-016T8v; Wed, 15 Oct 2014 20:57:24
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <20141014221509.GA10580@wheezy.local>
+X-Provags-ID: V03:K0:p2mibICTkmyh1/iU+STq+KV4t4UGcPHaf2NRB2Q9BIl3xHmnQyv
+ tSTTmoEkwhnfFaLjtHiCKQAyOgGuVbdqjv+ggnsQby/mmpODWaee6sjRi0UcWCg0rLgca/R
+ UakqqUSAkeiNeJjJbsK7zLGg8KP6nVefgvQW9iOvzD4z3yvE1vwx1S7QeccZ2zKl4usCm7i
+ FZIqzAaexw5AIz4SYiH+w==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Also add a gitignore file for generated files.
+Am 15.10.2014 um 00:15 schrieb Max Kirillov:
+> On Tue, Oct 14, 2014 at 09:51:22PM +0200, Jens Lehmann wrote:
+>> Am 14.10.2014 um 20:34 schrieb Max Kirillov:
+>>> But here are a lot of nuances. For example, it makes
+>>> sense to have a superproject checkout without submodules
+>>> being initialized (so that they don't waste space and
+>>> machine time for working tree, which often is more than
+>>> repository data).
+>>
+>> Hmm, I'm not sure if this is a problem. If the
+>> GIT_COMMON_DIR does have the submodule repo but it isn't
+>> initialized locally, we shouldn't have a problem (except
+>> for wasting some disk space if not a single checkout-to
+>> superproject initializes this submodule).
+>
+> If initially a repository is clone without submodules, it
+> will not have anything in the GIT_COMMON_DIR.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- contrib/contacts/.gitignore |  3 ++
- contrib/contacts/Makefile   | 71 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 74 insertions(+)
- create mode 100644 contrib/contacts/.gitignore
- create mode 100644 contrib/contacts/Makefile
+Ok.
 
-diff --git a/contrib/contacts/.gitignore b/contrib/contacts/.gitignore
-new file mode 100644
-index 0000000..bc9ae70
---- /dev/null
-+++ b/contrib/contacts/.gitignore
-@@ -0,0 +1,3 @@
-+git-contacts.1
-+git-contacts.html
-+git-contacts.xml
-diff --git a/contrib/contacts/Makefile b/contrib/contacts/Makefile
-new file mode 100644
-index 0000000..a2990f0
---- /dev/null
-+++ b/contrib/contacts/Makefile
-@@ -0,0 +1,71 @@
-+# The default target of this Makefile is...
-+all::
-+
-+-include ../../config.mak.autogen
-+-include ../../config.mak
-+
-+prefix ?= /usr/local
-+gitexecdir ?= $(prefix)/libexec/git-core
-+mandir ?= $(prefix)/share/man
-+man1dir ?= $(mandir)/man1
-+htmldir ?= $(prefix)/share/doc/git-doc
-+
-+../../GIT-VERSION-FILE: FORCE
-+	$(MAKE) -C ../../ GIT-VERSION-FILE
-+
-+-include ../../GIT-VERSION-FILE
-+
-+# this should be set to a 'standard' bsd-type install program
-+INSTALL  ?= install
-+RM       ?= rm -f
-+
-+ASCIIDOC = asciidoc
-+XMLTO    = xmlto
-+
-+ifndef SHELL_PATH
-+	SHELL_PATH = /bin/sh
-+endif
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+
-+ASCIIDOC_CONF = ../../Documentation/asciidoc.conf
-+MANPAGE_XSL   = ../../Documentation/manpage-normal.xsl
-+
-+GIT_CONTACTS := git-contacts
-+
-+GIT_CONTACTS_DOC := git-contacts.1
-+GIT_CONTACTS_XML := git-contacts.xml
-+GIT_CONTACTS_TXT := git-contacts.txt
-+GIT_CONTACTS_HTML := git-contacts.html
-+
-+doc: $(GIT_CONTACTS_DOC) $(GIT_CONTACTS_HTML)
-+
-+install: $(GIT_CONTACTS)
-+	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
-+	$(INSTALL) -m 755 $(GIT_CONTACTS) $(DESTDIR)$(gitexecdir)
-+
-+install-doc: install-man install-html
-+
-+install-man: $(GIT_CONTACTS_DOC)
-+	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
-+	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
-+
-+install-html: $(GIT_CONTACTS_HTML)
-+	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
-+	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
-+
-+$(GIT_CONTACTS_DOC): $(GIT_CONTACTS_XML)
-+	$(XMLTO) -m $(MANPAGE_XSL) man $^
-+
-+$(GIT_CONTACTS_XML): $(GIT_CONTACTS_TXT)
-+	$(ASCIIDOC) -b docbook -d manpage -f $(ASCIIDOC_CONF) \
-+		-agit_version=$(GIT_VERSION) $^
-+
-+$(GIT_CONTACTS_HTML): $(GIT_CONTACTS_TXT)
-+	$(ASCIIDOC) -b xhtml11 -d manpage -f $(ASCIIDOC_CONF) \
-+		-agit_version=$(GIT_VERSION) $^
-+
-+clean:
-+	$(RM) $(GIT_CONTACTS)
-+	$(RM) *.xml *.html *.1
-+
-+.PHONY: FORCE
--- 
-1.9.4.msysgit.2
+>> And if GIT_COMMON_DIR does not have the submodule repo
+>> yet, wouldn't it be cloned the moment we init the
+>> submodule in the checkout-to? Or would that need extra
+>> functionality?
+>
+> I cannot say I like this. Network operations should be
+> caused only by clone and submodules.
+
+Sure (and please add fetch to the list ;-). Maybe I confused
+you by saying "init" when I meant the "submodule update" run
+after initializing the submodule?
+
+> I think the logic can be simple: it a submodule is not
+> checked-out in the repository "checkout --to" is called
+> from, then it is not checked-out to the new one also. If it
+> is, then checkout calls itself recursively in the submodule
+> and works like being run in standalone repository.
+
+But when I later decide to populate the submodule in a
+"checkout --to" work tree, should it automagically also
+use the central storage, creating the modules/<name>
+directory there if it doesn't exist yet? I think that'd
+make sense to avoid having the work tree layout depend
+on the order commands were ran in. And imagine new
+submodules, they should not be handled differently from
+those already present.
+
+>>> Then, a checkout copy of a submodule can be standalone
+>>> (for example, git and git-html-docs are submodules of
+>>> msysgit). Or, it can even belong to some other
+>>> superproject. And in that cases they still should be able
+>>> to be linked.
+>>
+>> Maybe such configurations would have to be handled
+>> manually to achieve maximum savings. At least I could live
+>> with that.
+>
+> To make manual handling of the cases, and to skip
+> checking-out a module.
+>
+> I would think about the following interface:
+>
+> $ git checkout --to ... - does not checkout submodules,
+> creates empty directory.
+
+This is what checkout should always do (at least until it
+learns --recurse-submodules, then it would populate the
+submodule directories).
+
+> $ git checkout --recursive --to ... - if a submodule is
+> checked-out in source repository, recursed there and run
+> "checkout --recursive" again. If a submodule is not
+> checked-out, does not checkout it, creates an empty
+> directory.
+
+Hmm, I believe that when the user requests recursion
+explicitly it should always be checked out, no matter in
+what state the GIT_COMMON_DIR is in. Otherwise we'll see
+problems when a new submodule shows up and is populated
+depending on the point in time the "checkout --to" was
+done ... not good.
+
+> By the way, I have found your branch
+> recursive_submodule_checkout. Would you like to revive it?
+> Then it can be done with the same option.
+
+No need to revive it, I'm currently working on that branch
+whenever I find some time (but I'll still need some time
+before I can post the next iteration).
