@@ -1,36 +1,35 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 06/25] reachable: use traverse_commit_list instead of
- custom walk
-Date: Wed, 15 Oct 2014 18:37:28 -0400
-Message-ID: <20141015223728.GF25630@peff.net>
+Subject: [PATCH v2 07/25] reachable: reuse revision.c "add all reflogs" code
+Date: Wed, 15 Oct 2014 18:38:31 -0400
+Message-ID: <20141015223831.GG25630@peff.net>
 References: <20141015223244.GA25368@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 16 00:37:36 2014
+X-From: git-owner@vger.kernel.org Thu Oct 16 00:38:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeXCJ-0005am-IO
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 00:37:36 +0200
+	id 1XeXDK-0006I3-4P
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 00:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178AbaJOWhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 18:37:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58939 "HELO cloud.peff.net"
+	id S1750966AbaJOWie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 18:38:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58945 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750870AbaJOWhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 18:37:31 -0400
-Received: (qmail 2227 invoked by uid 102); 15 Oct 2014 22:37:31 -0000
+	id S1750721AbaJOWid (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 18:38:33 -0400
+Received: (qmail 2286 invoked by uid 102); 15 Oct 2014 22:38:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 17:37:31 -0500
-Received: (qmail 27947 invoked by uid 107); 15 Oct 2014 22:37:30 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 17:38:33 -0500
+Received: (qmail 27967 invoked by uid 107); 15 Oct 2014 22:38:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 18:37:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Oct 2014 18:37:28 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 18:38:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Oct 2014 18:38:31 -0400
 Content-Disposition: inline
 In-Reply-To: <20141015223244.GA25368@peff.net>
 Sender: git-owner@vger.kernel.org
@@ -38,186 +37,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To find the set of reachable objects, we add a bunch of
-possible sources to our rev_info, call prepare_revision_walk,
-and then launch into a custom walker that handles each
-object top. This is a subset of what traverse_commit_list
-does, so we can just reuse that code (it can also handle
-more complex cases like UNINTERESTING commits and pathspecs,
-but we don't use those features).
+We want to add all reflog entries as tips for finding
+reachable objects. The revision machinery can already do
+this (to support "rev-list --reflog"); we can reuse that
+code.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I was concerned this would be slower because traverse_commit_list is
-more featureful. To my surprise, it was consistently about 3-4% faster!
-The major difference is that traverse_commit_list will hit all of the
-commits first, and then the trees. For reachability that doesn't matter
-either way, but I suspect the new way has slightly better cache
-locality, leading to the minor speedup.
+This one is not strictly necessary, but it seems like a nice cleanup.
+Note that the big difference in the revision.c code is that it will
+print a warning for broken reflogs, but I think that's fine (and perhaps
+even desirable) here.
 
- reachable.c | 130 ++++++++----------------------------------------------------
- 1 file changed, 17 insertions(+), 113 deletions(-)
+ reachable.c | 24 +-----------------------
+ revision.c  |  4 ++--
+ revision.h  |  1 +
+ 3 files changed, 4 insertions(+), 25 deletions(-)
 
 diff --git a/reachable.c b/reachable.c
-index 6f6835b..02bf6c2 100644
+index 02bf6c2..4e68cfa 100644
 --- a/reachable.c
 +++ b/reachable.c
-@@ -8,6 +8,7 @@
- #include "reachable.h"
- #include "cache-tree.h"
- #include "progress.h"
-+#include "list-objects.h"
- 
- struct connectivity_progress {
- 	struct progress *progress;
-@@ -21,118 +22,6 @@ static void update_progress(struct connectivity_progress *cp)
+@@ -22,22 +22,6 @@ static void update_progress(struct connectivity_progress *cp)
  		display_progress(cp->progress, cp->count);
  }
  
--static void process_blob(struct blob *blob,
--			 struct object_array *p,
--			 struct name_path *path,
--			 const char *name,
--			 struct connectivity_progress *cp)
+-static int add_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+-		const char *email, unsigned long timestamp, int tz,
+-		const char *message, void *cb_data)
 -{
--	struct object *obj = &blob->object;
+-	struct object *object;
+-	struct rev_info *revs = (struct rev_info *)cb_data;
 -
--	if (!blob)
--		die("bad blob object");
--	if (obj->flags & SEEN)
--		return;
--	obj->flags |= SEEN;
--	update_progress(cp);
--	/* Nothing to do, really .. The blob lookup was the important part */
+-	object = parse_object(osha1);
+-	if (object)
+-		add_pending_object(revs, object, "");
+-	object = parse_object(nsha1);
+-	if (object)
+-		add_pending_object(revs, object, "");
+-	return 0;
 -}
 -
--static void process_gitlink(const unsigned char *sha1,
--			    struct object_array *p,
--			    struct name_path *path,
--			    const char *name)
--{
--	/* I don't think we want to recurse into this, really. */
--}
--
--static void process_tree(struct tree *tree,
--			 struct object_array *p,
--			 struct name_path *path,
--			 const char *name,
--			 struct connectivity_progress *cp)
--{
--	struct object *obj = &tree->object;
--	struct tree_desc desc;
--	struct name_entry entry;
--	struct name_path me;
--
--	if (!tree)
--		die("bad tree object");
--	if (obj->flags & SEEN)
--		return;
--	obj->flags |= SEEN;
--	update_progress(cp);
--	if (parse_tree(tree) < 0)
--		die("bad tree object %s", sha1_to_hex(obj->sha1));
--	add_object(obj, p, path, name);
--	me.up = path;
--	me.elem = name;
--	me.elem_len = strlen(name);
--
--	init_tree_desc(&desc, tree->buffer, tree->size);
--
--	while (tree_entry(&desc, &entry)) {
--		if (S_ISDIR(entry.mode))
--			process_tree(lookup_tree(entry.sha1), p, &me, entry.path, cp);
--		else if (S_ISGITLINK(entry.mode))
--			process_gitlink(entry.sha1, p, &me, entry.path);
--		else
--			process_blob(lookup_blob(entry.sha1), p, &me, entry.path, cp);
--	}
--	free_tree_buffer(tree);
--}
--
--static void process_tag(struct tag *tag, struct object_array *p,
--			const char *name, struct connectivity_progress *cp)
--{
--	struct object *obj = &tag->object;
--
--	if (obj->flags & SEEN)
--		return;
--	obj->flags |= SEEN;
--	update_progress(cp);
--
--	if (parse_tag(tag) < 0)
--		die("bad tag object %s", sha1_to_hex(obj->sha1));
--	if (tag->tagged)
--		add_object(tag->tagged, p, NULL, name);
--}
--
--static void walk_commit_list(struct rev_info *revs,
--			     struct connectivity_progress *cp)
--{
--	int i;
--	struct commit *commit;
--	struct object_array objects = OBJECT_ARRAY_INIT;
--
--	/* Walk all commits, process their trees */
--	while ((commit = get_revision(revs)) != NULL) {
--		process_tree(commit->tree, &objects, NULL, "", cp);
--		update_progress(cp);
--	}
--
--	/* Then walk all the pending objects, recursively processing them too */
--	for (i = 0; i < revs->pending.nr; i++) {
--		struct object_array_entry *pending = revs->pending.objects + i;
--		struct object *obj = pending->item;
--		const char *name = pending->name;
--		if (obj->type == OBJ_TAG) {
--			process_tag((struct tag *) obj, &objects, name, cp);
--			continue;
--		}
--		if (obj->type == OBJ_TREE) {
--			process_tree((struct tree *)obj, &objects, NULL, name, cp);
--			continue;
--		}
--		if (obj->type == OBJ_BLOB) {
--			process_blob((struct blob *)obj, &objects, NULL, name, cp);
--			continue;
--		}
--		die("unknown pending object %s (%s)", sha1_to_hex(obj->sha1), name);
--	}
--}
--
- static int add_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
-@@ -210,6 +99,21 @@ static void add_cache_refs(struct rev_info *revs)
- 		add_cache_tree(active_cache_tree, revs);
+ static int add_one_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+ {
+ 	struct object *object = parse_object_or_die(sha1, path);
+@@ -48,12 +32,6 @@ static int add_one_ref(const char *path, const unsigned char *sha1, int flag, vo
+ 	return 0;
  }
  
-+/*
-+ * The traversal will have already marked us as SEEN, so we
-+ * only need to handle any progress reporting here.
-+ */
-+static void mark_object(struct object *obj, const struct name_path *path,
-+			const char *name, void *data)
-+{
-+	update_progress(data);
-+}
-+
-+static void mark_commit(struct commit *c, void *data)
-+{
-+	mark_object(&c->object, NULL, NULL, data);
-+}
-+
- void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 			    struct progress *progress)
+-static int add_one_reflog(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+-{
+-	for_each_reflog_ent(path, add_one_reflog_ent, cb_data);
+-	return 0;
+-}
+-
+ static void add_one_tree(const unsigned char *sha1, struct rev_info *revs)
  {
-@@ -245,6 +149,6 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	 */
- 	if (prepare_revision_walk(revs))
- 		die("revision walk setup failed");
--	walk_commit_list(revs, &cp);
-+	traverse_commit_list(revs, mark_commit, mark_object, &cp);
- 	display_progress(cp.progress, cp.count);
+ 	struct tree *tree = lookup_tree(sha1);
+@@ -138,7 +116,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 
+ 	/* Add all reflog info */
+ 	if (mark_reflog)
+-		for_each_reflog(add_one_reflog, revs);
++		add_reflogs_to_pending(revs, 0);
+ 
+ 	cp.progress = progress;
+ 	cp.count = 0;
+diff --git a/revision.c b/revision.c
+index 01cc276..b8e02e2 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1275,7 +1275,7 @@ static int handle_one_reflog(const char *path, const unsigned char *sha1, int fl
+ 	return 0;
  }
+ 
+-static void handle_reflog(struct rev_info *revs, unsigned flags)
++void add_reflogs_to_pending(struct rev_info *revs, unsigned flags)
+ {
+ 	struct all_refs_cb cb;
+ 	cb.all_revs = revs;
+@@ -2061,7 +2061,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 		for_each_glob_ref_in(handle_one_ref, arg + 10, "refs/remotes/", &cb);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--reflog")) {
+-		handle_reflog(revs, *flags);
++		add_reflogs_to_pending(revs, *flags);
+ 	} else if (!strcmp(arg, "--not")) {
+ 		*flags ^= UNINTERESTING | BOTTOM;
+ 	} else if (!strcmp(arg, "--no-walk")) {
+diff --git a/revision.h b/revision.h
+index a620530..e644044 100644
+--- a/revision.h
++++ b/revision.h
+@@ -276,6 +276,7 @@ extern void add_pending_sha1(struct rev_info *revs,
+ 			     unsigned int flags);
+ 
+ extern void add_head_to_pending(struct rev_info *);
++extern void add_reflogs_to_pending(struct rev_info *, unsigned int flags);
+ 
+ enum commit_action {
+ 	commit_ignore,
 -- 
 2.1.2.596.g7379948
