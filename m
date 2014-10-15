@@ -1,96 +1,98 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 04/11] resolve_ref_unsafe(): use skip_prefix() to skip over "ref:"
-Date: Wed, 15 Oct 2014 17:06:16 +0200
-Message-ID: <1413385583-4872-5-git-send-email-mhagger@alum.mit.edu>
-References: <1413385583-4872-1-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
+Date: Wed, 15 Oct 2014 10:09:59 -0700
+Message-ID: <xmqq1tq9xnrs.fsf@gitster.dls.corp.google.com>
+References: <1413090791-14428-1-git-send-email-max@max630.net>
+	<CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
+	<543D58D9.5060606@web.de> <20141014203114.GB8157@wheezy.local>
+	<CACsJy8AmBr2YTJkVw4BDD95RVE91EEBtEyakOpb77NDXaVBzJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 17:07:18 2014
+Content-Type: text/plain
+Cc: Max Kirillov <max@max630.net>, Heiko Voigt <hvoigt@hvoigt.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 19:10:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeQAX-0002gO-U3
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 17:07:18 +0200
+	id 1XeS5U-0007j5-Rt
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 19:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868AbaJOPHL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2014 11:07:11 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:52145 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751515AbaJOPGj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 11:06:39 -0400
-X-AuditID: 12074413-f79bb6d000001e81-66-543e8d7dfb7f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 43.DF.07809.D7D8E345; Wed, 15 Oct 2014 11:06:37 -0400 (EDT)
-Received: from michael.fritz.box (p4FC96250.dip0.t-ipconnect.de [79.201.98.80])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s9FF6SNW020034
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 15 Oct 2014 11:06:35 -0400
-X-Mailer: git-send-email 2.1.1
-In-Reply-To: <1413385583-4872-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqFvbaxdicGk9p0XXlW4mi4beK8wW
-	t1fMZ7bonvKW0eLfhBqLM28aGR3YPP6+/8DksXPWXXaPBZtKPS5eUvZY/MDL4/MmuQC2KG6b
-	pMSSsuDM9Dx9uwTujA8Lv7IWTOKo2PX0E3MD4zy2LkZODgkBE4nN144wQ9hiEhfurQeLCwlc
-	ZpR49Ne5i5ELyD7OJNGz8jMLSIJNQFdiUU8zE0hCRKCBUeLQq4VsIA6zwCJGifZVV8BGCQuE
-	Sjx8upYJxGYRUJXY1LwZbCyvgLPEvavrGSHWyUnsnbwabCqngIvEr5fbGCFWO0ssWDqZBaJe
-	UOLkzCdANgfQAnWJ9fOEQMLMAvISzVtnM09gFJiFpGoWQtUsJFULGJlXMcol5pTm6uYmZuYU
-	pybrFicn5uWlFuma6+VmluilppRuYoQEvPAOxl0n5Q4xCnAwKvHwbthrGyLEmlhWXJl7iFGS
-	g0lJlDepxy5EiC8pP6UyI7E4I76oNCe1+BCjBAezkgjv/ASgHG9KYmVValE+TEqag0VJnFdt
-	ibqfkEB6YklqdmpqQWoRTFaGg0NJgtceZKhgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJp
-	SUY8KFLji4GxCpLiAdrrCdLOW1yQmAsUhWg9xagoJc77rhsoIQCSyCjNgxsLS2OvGMWBvhTm
-	DQNp5wGmQLjuV0CDmYAGTwy1BRlckoiQkgJGede5kO23c2L2zt9dsL1BnzHguuxzO0axCTt1
-	C2YFefVr9HvellW+yR7w773vqpeLwzXabe956Ji9UxU2y5G64fqbW1/BkTW3/2X6 
+	id S1751476AbaJORKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 13:10:07 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61354 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750880AbaJORKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 13:10:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 60CF4145AD;
+	Wed, 15 Oct 2014 13:10:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=js6/IIuCENJQMbWlqReCIzMLYSE=; b=jGnFI5
+	T6Zyp7lLH86vmwEWQWnfgBNszit9rvaS0Q2ZTaGw2BZCzAyrLyql0t+V4VRu2gsi
+	V9IujPp5V5n+c6bQbdEuX1vjum98SShb2ADK5FE2ahkj7f71gyqOr1PqaufscA0q
+	v5LJzx6ngMzeaaNkREm3X1uG15d8aBFvCCTcY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eEpeiZuFQCIprZmUG2PN12zFSRU35u/j
+	O6M/uhbbFc70e7atD3S0TkrpOQmudBL5YOK2naWRP6BKTxi/lQ0d62kFlE+3rj7C
+	AhjlpT7prxYql3Ho8zbMhVELgqfrWwviU1URhGa9cVQe3XN5RsAyJhUVU2AEzt5r
+	hmxP+8RWP8E=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 546BE145AC;
+	Wed, 15 Oct 2014 13:10:02 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E5E4145A8;
+	Wed, 15 Oct 2014 13:10:01 -0400 (EDT)
+In-Reply-To: <CACsJy8AmBr2YTJkVw4BDD95RVE91EEBtEyakOpb77NDXaVBzJA@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 15 Oct 2014 20:08:33 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1932E952-548E-11E4-B8DA-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Duy Nguyen <pclouds@gmail.com> writes:
 
-This requires buf to be declared (const char *), which is how it is
-used anyway.
+> On Wed, Oct 15, 2014 at 3:31 AM, Max Kirillov <max@max630.net> wrote:
+>> On Tue, Oct 14, 2014 at 07:09:45PM +0200, Jens Lehmann wrote:
+>>> Until that problem is solved it looks wrong to pass
+>>> GIT_COMMON_DIR into submodule recursion, I believe
+>>> GIT_COMMON_DIR should be added to the local_repo_env array
+>>> (and even if it is passed on later, we might have to
+>>> append "/modules/<submodule_name>" to make it point to the
+>>> correct location).
+>>
+>> Actually, why there should be an _environment_ variable
+>> GIT_COMMON_DIR at all? I mean, gitdir is resolved to some
+>> directory (through link or environment), and it contains the
+>> shared data directly or referes to it with the commondir
+>> link. In which case anyone would want to override that
+>> location?
+>
+> It's how the implementation was built up. First I split the repo in
+> two and I need something to point the new/shared part.
+> $GIT_DIR/worktrees comes later to glue them up. Keeping it an
+> environment variable gives us a possibility to glue things up in a
+> different way than using $GIT_DIR/worktrees. Of course the odds of
+> anybody doing that are probably small or even near zero.
+>
+> Still consuming the rest of this thread. Thanks all for working on the
+> submodule support for this.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Hmph.  I was hoping that the multiple-work-trees topic was ready for
+'next' by now, but we may want to wait to see how the interaction
+with submodule plays out to have another chance of a clean reroll
+before it happens.  This is a topic with large impact and is quite
+intrusive code-wise, even though the intrusive parts are cleanly
+done.  So we'd want to take more time to unleash it to the general
+public than more usual small scale topics, anyway.
 
-diff --git a/refs.c b/refs.c
-index 771941b..020ee3f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1416,7 +1416,7 @@ const char *resolve_ref_unsafe(const char *refnam=
-e, unsigned char *sha1, int rea
- 	for (;;) {
- 		char path[PATH_MAX];
- 		struct stat st;
--		char *buf;
-+		const char *buf;
- 		int fd;
-=20
- 		if (--depth < 0) {
-@@ -1497,11 +1497,10 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 			len--;
- 		buffer[len] =3D '\0';
-=20
--		if (starts_with(buffer, "ref:")) {
-+		if (skip_prefix(buffer, "ref:", &buf)) {
- 			/* It is a symbolic ref */
- 			if (flag)
- 				*flag |=3D REF_ISSYMREF;
--			buf =3D buffer + 4;
- 			while (isspace(*buf))
- 				buf++;
- 			if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
---=20
-2.1.1
+Thanks.
