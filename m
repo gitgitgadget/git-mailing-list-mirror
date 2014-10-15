@@ -1,91 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Allow building Git with Asciidoctor
-Date: Wed, 15 Oct 2014 10:43:33 -0700
-Message-ID: <xmqqsiipw7ne.fsf@gitster.dls.corp.google.com>
-References: <1413070656-241955-1-git-send-email-sandals@crustytoothpaste.net>
-	<20141014095119.GC16686@peff.net>
-	<xmqqsiiqziik.fsf@gitster.dls.corp.google.com>
-	<20141015011754.GA131351@vauxhall.crustytoothpaste.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH 1/2] subtree: Add an install-html target
+Date: Wed, 15 Oct 2014 20:49:28 +0200
+Message-ID: <543EC1B8.4050009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Wed Oct 15 19:43:55 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 15 20:49:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeSc5-0004QT-Px
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 19:43:54 +0200
+	id 1XeTdt-00040M-2h
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 20:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750848AbaJORnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 13:43:40 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54754 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751279AbaJORng (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 13:43:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8455814FA4;
-	Wed, 15 Oct 2014 13:43:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eEolL4f0UpmBWBShmBAGvib5c6g=; b=w+UA2N
-	EuvhZSjrS9Uvs+w5CpvJEjutugorU4Zc/AjcN5QB5cFSMwkCxD7YoyXysFMLrbnj
-	xH4EZfcwbck2CfFMZ4Wm/GSKSXY6SgxYVzIwoxLBjEOdYYgbuCNL4NH3IWi5oHeN
-	Ep0me3+kxgDuDAnfDwtcEHTEte0lkAtcTOkcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WHs3CoZNQAwm5bBXAyRKv+Iqdt+OfwGn
-	TbKzjMRGWk08/9xGTjNavMb9Oz5siHxaqcpkk3NLziZshpzL+S91sBulpCcadycM
-	ZZWg9GUa/CiAv+mTawETkDWedqO+5aBS14piQqX8n7McpN+Ut6SN0izgmGT4N2Sw
-	bo6oAaiKQ+k=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AA2314FA3;
-	Wed, 15 Oct 2014 13:43:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ED72014FA0;
-	Wed, 15 Oct 2014 13:43:34 -0400 (EDT)
-In-Reply-To: <20141015011754.GA131351@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 15 Oct 2014 01:17:54 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C975D06E-5492-11E4-AAF5-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1751287AbaJOStp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 14:49:45 -0400
+Received: from plane.gmane.org ([80.91.229.3]:51694 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751184AbaJOSto (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 14:49:44 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1XeTdm-0003vh-Ug
+	for git@vger.kernel.org; Wed, 15 Oct 2014 20:49:42 +0200
+Received: from p4ff44b8f.dip0.t-ipconnect.de ([79.244.75.143])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Oct 2014 20:49:42 +0200
+Received: from sschuberth by p4ff44b8f.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Oct 2014 20:49:42 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p4ff44b8f.dip0.t-ipconnect.de
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Also adjust ignore rules accordingly.
 
-> On Tue, Oct 14, 2014 at 10:08:19AM -0700, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->> 
->> > On Sat, Oct 11, 2014 at 11:37:32PM +0000, brian m. carlson wrote:
->> >
->> > Specifically I'm not excited about getting into a state where we have to
->> > maintain both an asciidoc.conf file _and_ ruby extensions for
->> > asciidoctor. I don't mind if somebody wants to step up and keep the
->> > asciidoctor bits in sync with the asciidoc.conf, but I feel like one of
->> > them needs to be considered the "master".
->> 
->> I do not mind to have the machinery to run AsciiDoctor too much in
->> my tree.  It may make it easier for those who use it to spot places
->> in *.txt that need (in)compatibility workarounds between the two
->> formatters than keeping it outside.
->
-> Alternately, I'm happy to be responsible for maintaining the
-> extensions.rb file.
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ contrib/subtree/.gitignore | 3 ++-
+ contrib/subtree/Makefile   | 9 +++++++--
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-Let's see how well the patches 3 and 4 work for other people with
-AsciiDoctor and then decide to go in that direction.
-
-I do not forsee that changes to allow our *.txt to be used with
-AsciiDoctor interfere with what GitHub folks do with their own
-documentation toolchain, but I am not sure how the AsciiDoctor
-specific alternative build infrastructure we would eventually ship
-would interact with them---maybe they are not affected at all, or
-maybe they can even take advantage of it.
-
-Thanks.
+diff --git a/contrib/subtree/.gitignore b/contrib/subtree/.gitignore
+index 91360a3..0b9381a 100644
+--- a/contrib/subtree/.gitignore
++++ b/contrib/subtree/.gitignore
+@@ -1,6 +1,7 @@
+ *~
+ git-subtree
+-git-subtree.xml
+ git-subtree.1
++git-subtree.html
++git-subtree.xml
+ mainline
+ subproj
+diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
+index c2bd703..3071baf 100644
+--- a/contrib/subtree/Makefile
++++ b/contrib/subtree/Makefile
+@@ -5,9 +5,10 @@ all::
+ -include ../../config.mak
+ 
+ prefix ?= /usr/local
+-mandir ?= $(prefix)/share/man
+ gitexecdir ?= $(prefix)/libexec/git-core
++mandir ?= $(prefix)/share/man
+ man1dir ?= $(mandir)/man1
++htmldir ?= $(prefix)/share/doc/git-doc
+ 
+ ../../GIT-VERSION-FILE: FORCE
+ 	$(MAKE) -C ../../ GIT-VERSION-FILE
+@@ -49,12 +50,16 @@ install: $(GIT_SUBTREE)
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+ 	$(INSTALL) -m 755 $(GIT_SUBTREE) $(DESTDIR)$(gitexecdir)
+ 
+-install-doc: install-man
++install-doc: install-man install-html
+ 
+ install-man: $(GIT_SUBTREE_DOC)
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
+ 	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
+ 
++install-html: $(GIT_SUBTREE_HTML)
++	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
++	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
++
+ $(GIT_SUBTREE_DOC): $(GIT_SUBTREE_XML)
+ 	$(XMLTO) -m $(MANPAGE_XSL) man $^
+ 
+-- 
+1.9.4.msysgit.2
