@@ -1,81 +1,75 @@
-From: Tommaso Colombo <tommaso.colombo@outlook.com>
-Subject: [PATCH] git-svn: merge: fix rooturl/branchurl match check
-Date: Wed, 15 Oct 2014 14:39:01 +0200
-Message-ID: <BLU437-SMTP152A16338E427B250EB601FBAA0@phx.gbl>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Custom hunk-header with ignore case setting
+Date: Wed, 15 Oct 2014 14:52:51 +0200
+Message-ID: <543E6E23.5030708@virtuell-zuhause.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Tommaso Colombo <zibo86@hotmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 15 14:44:29 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 15 14:53:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeNwG-0005pV-VP
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 14:44:25 +0200
+	id 1XeO4a-0003ON-2l
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 14:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbaJOMoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 08:44:21 -0400
-Received: from blu004-omc3s19.hotmail.com ([65.55.116.94]:50353 "EHLO
-	BLU004-OMC3S19.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751928AbaJOMoU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 08:44:20 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Oct 2014 08:44:20 EDT
-Received: from BLU437-SMTP15 ([65.55.116.72]) by BLU004-OMC3S19.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.22751);
-	 Wed, 15 Oct 2014 05:39:20 -0700
-X-TMN: [NpSTaiDUlp4KL/dai4bn/z+VihdwRUTk]
-X-Originating-Email: [tommaso.colombo@outlook.com]
-X-Mailer: git-send-email 2.1.2.443.g670a3c1.dirty
-X-OriginalArrivalTime: 15 Oct 2014 12:39:18.0754 (UTC) FILETIME=[09A32C20:01CFE875]
+	id S1752607AbaJOMw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 08:52:56 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:49492 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751584AbaJOMw4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 08:52:56 -0400
+Received: from p5ddc1cb8.dip0.t-ipconnect.de ([93.220.28.184] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1XeO4U-0000wv-9s; Wed, 15 Oct 2014 14:52:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1413377575;1973b026;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When populating svn:mergeinfo, git-svn merge checks if the merge parent
-of the merged branch is under the same root as the git-svn repository.
-This was implemented comparing $gs->repos_root with the return value of
-of cmt_metadata for the merge parent. However, the first may contain a
-username, whereas the second does not. In this case the comparison
-fails.
+Hi,
 
-Remove the username from $gs->repos_root before performing the
-comparison.
----
- git-svn.perl | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+I'm working with a proprietary programming language which ignores case.
+I now started to write a custom version of
+diff.*.xfuncname and it is kind of ugly to always spell out all cases like
+[Ff][Uu][Nn][cC][Tt][Ii][oO][Nn].
 
-diff --git a/git-svn.perl b/git-svn.perl
-index b6e2186..0a5a5ff 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -707,7 +707,8 @@ sub populate_merge_info {
- 		my $all_parents_ok = 1;
- 		my $aggregate_mergeinfo = '';
- 		my $rooturl = $gs->repos_root;
--		my ($target_branch) = $gs->full_pushurl =~ /^\Q$rooturl\E(.*)/;
-+		Git::SVN::remove_username($rooturl);
-+		my $target_branch = $gs->path;
- 
- 		if (defined($rewritten_parent)) {
- 			# Replace first parent with newly-rewritten version
-@@ -729,7 +730,7 @@ sub populate_merge_info {
- 			}
- 			my $branchpath = $1;
- 
--			my $ra = Git::SVN::Ra->new($branchurl);
-+			my $ra = Git::SVN::Ra->new(add_path_to_url($gs->repos_root, $branchpath));
- 			my (undef, undef, $props) =
- 				$ra->get_dir(canonicalize_path("."), $svnrev);
- 			my $par_mergeinfo = $props->{'svn:mergeinfo'};
-@@ -921,6 +922,7 @@ sub cmd_dcommit {
- 		# information from different SVN repos, and paths
- 		# which are not underneath this repository root.
- 		my $rooturl = $gs->repos_root;
-+		Git::SVN::remove_username($rooturl);
- 		foreach my $d (@$linear_refs) {
- 			my %parentshash;
- 			read_commit_parents(\%parentshash, $d);
--- 
-2.1.2.443.g670a3c1.dirty
+I've seen that the builtin diff patterns in userdiff.c can be specified ignoring case using the IPATTERN macro.
+
+One of the possible solutions would be to patch userdiff.c
+(patch courtesy of Johannes Schindelin):
+
+-- snip --
+diff --git a/userdiff.c b/userdiff.c
+index fad52d6..f089e50 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -228,6 +228,9 @@ int userdiff_config(const char *k, const char *v)
+ 		return parse_funcname(&drv->funcname, k, v, 0);
+ 	if (!strcmp(type, "xfuncname"))
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
++	if (!strcmp(type, "ixfuncname"))
++		return parse_funcname(&drv->funcname, k, v,
++				REG_EXTENDED | REG_ICASE);
+ 	if (!strcmp(type, "binary"))
+ 		return parse_tristate(&drv->binary, k, v);
+ 	if (!strcmp(type, "command"))
+-- snap -
+
+With a patch like that I would, of course, supply documentation and tests.
+
+Is that something worth a try from my side?
+
+An alternative solution would be to add something like pxfuncname which
+understands PCREs which we we already support in git grep.
+
+And yet another alternative would be that I send a patch enhancing userdiff.c
+with a reasonable pattern for the programming language. But its community,
+and especially intersected with git users, is not that large.
+
+Thanks,
+Thomas
