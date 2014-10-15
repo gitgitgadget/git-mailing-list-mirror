@@ -1,132 +1,82 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
-Date: Wed, 15 Oct 2014 20:57:20 +0200
-Message-ID: <543EC390.4000709@web.de>
-References: <1413090791-14428-1-git-send-email-max@max630.net> <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com> <543D58D9.5060606@web.de> <xmqqoatezhnx.fsf@gitster.dls.corp.google.com> <20141014183431.GA8157@wheezy.local> <543D7EBA.4040206@web.de> <20141014221509.GA10580@wheezy.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mergetools/meld: do not rely on the output of `meld --help`
+Date: Wed, 15 Oct 2014 12:04:27 -0700
+Message-ID: <xmqqoatdw3wk.fsf@gitster.dls.corp.google.com>
+References: <1413361848-16923-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Wed Oct 15 20:57:39 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Andrey Novoseltsev <novoselt@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 21:04:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeTlR-0000Id-FC
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 20:57:37 +0200
+	id 1XeTsB-0004cD-PE
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 21:04:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbaJOS5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 14:57:34 -0400
-Received: from mout.web.de ([212.227.15.4]:50560 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751309AbaJOS5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 14:57:33 -0400
-Received: from [192.168.178.41] ([79.211.107.135]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0Lwq4m-1YFjLQ0Lm4-016T8v; Wed, 15 Oct 2014 20:57:24
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <20141014221509.GA10580@wheezy.local>
-X-Provags-ID: V03:K0:p2mibICTkmyh1/iU+STq+KV4t4UGcPHaf2NRB2Q9BIl3xHmnQyv
- tSTTmoEkwhnfFaLjtHiCKQAyOgGuVbdqjv+ggnsQby/mmpODWaee6sjRi0UcWCg0rLgca/R
- UakqqUSAkeiNeJjJbsK7zLGg8KP6nVefgvQW9iOvzD4z3yvE1vwx1S7QeccZ2zKl4usCm7i
- FZIqzAaexw5AIz4SYiH+w==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751923AbaJOTEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 15:04:31 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50258 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751633AbaJOTEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 15:04:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9385014806;
+	Wed, 15 Oct 2014 15:04:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zRMX63kX1AriGFeqRGirs46f7q4=; b=kJEXeT
+	NWN0U9OJgp2tkY2alyXcLbSpee7/lQiTEolY/nfFzlmZthdgq1hjfN9l3Nd/8RlR
+	r85vXAnlnCb34/kZ12YgifBhnEoEACFnj0NKjBphMBP6O9jWas8VEl8BPYLCtBGs
+	IpmPJKv2voDB+wvsFIUb4f4+4qGtO823PJwZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x7PEXDwS3wZl/x5dqFNKXc9S7mrGbTT2
+	2xA8u/xKHM3goNJehaSo/WE/89UVZeGEGtCtKqMajoNNInvtylrV7Z4dUZRaC+Ac
+	11RAZSLGMZh9ITyHme0C4VljlmCObGLJ61VjIdIHU/F3oNTqAVcLPOBqcTlvgZt0
+	2bKd816hwuk=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AEF614804;
+	Wed, 15 Oct 2014 15:04:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EA79214802;
+	Wed, 15 Oct 2014 15:04:28 -0400 (EDT)
+In-Reply-To: <1413361848-16923-1-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Wed, 15 Oct 2014 01:30:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 16A939BA-549E-11E4-ADC2-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.10.2014 um 00:15 schrieb Max Kirillov:
-> On Tue, Oct 14, 2014 at 09:51:22PM +0200, Jens Lehmann wrote:
->> Am 14.10.2014 um 20:34 schrieb Max Kirillov:
->>> But here are a lot of nuances. For example, it makes
->>> sense to have a superproject checkout without submodules
->>> being initialized (so that they don't waste space and
->>> machine time for working tree, which often is more than
->>> repository data).
->>
->> Hmm, I'm not sure if this is a problem. If the
->> GIT_COMMON_DIR does have the submodule repo but it isn't
->> initialized locally, we shouldn't have a problem (except
->> for wasting some disk space if not a single checkout-to
->> superproject initializes this submodule).
+David Aguilar <davvid@gmail.com> writes:
+
+> We cannot rely on the output of `meld --help` when determining
+> whether or not meld understands the --output option.
 >
-> If initially a repository is clone without submodules, it
-> will not have anything in the GIT_COMMON_DIR.
+> Newer versions of meld print a generic help message that does not
+> mention --output even though it is supported.
 
-Ok.
+This obviously breaks those who have happily been using their
+installed version of meld that understands and shows --output in the
+help text.  Is that a minority that is rapidly diminishing?
 
->> And if GIT_COMMON_DIR does not have the submodule repo
->> yet, wouldn't it be cloned the moment we init the
->> submodule in the checkout-to? Or would that need extra
->> functionality?
->
-> I cannot say I like this. Network operations should be
-> caused only by clone and submodules.
+I would understand it if the change were
 
-Sure (and please add fetch to the list ;-). Maybe I confused
-you by saying "init" when I meant the "submodule update" run
-after initializing the submodule?
+ - a configuration tells us to use or not use --output; when it is
+   set, then we do not try auto-detect by reading --help output
 
-> I think the logic can be simple: it a submodule is not
-> checked-out in the repository "checkout --to" is called
-> from, then it is not checked-out to the new one also. If it
-> is, then checkout calls itself recursively in the submodule
-> and works like being run in standalone repository.
+ - when that new configuration is not set, we keep the current code
+   to read --help output, which may fail for recent meld but that is
+   not a regression.
 
-But when I later decide to populate the submodule in a
-"checkout --to" work tree, should it automagically also
-use the central storage, creating the modules/<name>
-directory there if it doesn't exist yet? I think that'd
-make sense to avoid having the work tree layout depend
-on the order commands were ran in. And imagine new
-submodules, they should not be handled differently from
-those already present.
-
->>> Then, a checkout copy of a submodule can be standalone
->>> (for example, git and git-html-docs are submodules of
->>> msysgit). Or, it can even belong to some other
->>> superproject. And in that cases they still should be able
->>> to be linked.
->>
->> Maybe such configurations would have to be handled
->> manually to achieve maximum savings. At least I could live
->> with that.
->
-> To make manual handling of the cases, and to skip
-> checking-out a module.
->
-> I would think about the following interface:
->
-> $ git checkout --to ... - does not checkout submodules,
-> creates empty directory.
-
-This is what checkout should always do (at least until it
-learns --recurse-submodules, then it would populate the
-submodule directories).
-
-> $ git checkout --recursive --to ... - if a submodule is
-> checked-out in source repository, recursed there and run
-> "checkout --recursive" again. If a submodule is not
-> checked-out, does not checkout it, creates an empty
-> directory.
-
-Hmm, I believe that when the user requests recursion
-explicitly it should always be checked out, no matter in
-what state the GIT_COMMON_DIR is in. Otherwise we'll see
-problems when a new submodule shows up and is populated
-depending on the point in time the "checkout --to" was
-done ... not good.
-
-> By the way, I have found your branch
-> recursive_submodule_checkout. Would you like to revive it?
-> Then it can be done with the same option.
-
-No need to revive it, I'm currently working on that branch
-whenever I find some time (but I'll still need some time
-before I can post the next iteration).
+When versions of meld that support --output but do not mention it in
+their --help text are overwhelming majority, we would want to flip
+the fallback codepath from "read --help and decide" to "assume that
+--output can be used", but I do not know if now is the time to do
+so.
