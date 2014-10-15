@@ -1,87 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: --dissociate option to mark that reference is only temporary
-Date: Wed, 15 Oct 2014 14:33:59 -0700
-Message-ID: <xmqqoatduiew.fsf@gitster.dls.corp.google.com>
-References: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>
-	<543ECE88.7050703@kdbg.org>
+Subject: Re: [PATCH v23 0/25] rs/ref-transaction ("Use ref transactions", part 3)
+Date: Wed, 15 Oct 2014 14:36:20 -0700
+Message-ID: <xmqqk341uiaz.fsf@gitster.dls.corp.google.com>
+References: <20141015004522.GD32245@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Oct 15 23:34:10 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 15 23:36:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeWCu-0002QN-4E
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 23:34:08 +0200
+	id 1XeWFA-0004JR-57
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 23:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbaJOVeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 17:34:03 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60157 "EHLO
+	id S1751287AbaJOVgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 17:36:24 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55426 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750721AbaJOVeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 17:34:01 -0400
+	with ESMTP id S1750809AbaJOVgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 17:36:24 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F83C1588F;
-	Wed, 15 Oct 2014 17:34:01 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 498F515952;
+	Wed, 15 Oct 2014 17:36:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=60SB6jMyp8Gyn90UNiXCKj3F5Mc=; b=VOpO9b
-	yFlRnSil9FaxDhemTjDqxbkPg9Oh1ZHbk0hZfBBezuCm1y0XznU8mvoO69HTaUxn
-	bB1Htx1ltMHmjpo2dRVsFRStCkt8va3qXISQGWzUp5Z1KRCXPX6W7LIZqxnNGaqN
-	4sJEOjrgns+OSFHLxvrf+Lncs7iJeBF98/GwQ=
+	:content-type; s=sasl; bh=DMZYt9IzpNS8pKNx1wyx/j15L9U=; b=re/kMz
+	CjL7vVuU0d4iXrROiE4mYm3ejBsvIEnuKViayZVpkscXFYwr5FN7SDutEk7/0hwF
+	zrIY/OFaQ8zR/yIZho1cXTL3XHY9OG6ycZJRw4YxorbCCn5Cv/ezQNSbiueniLHF
+	8s6nPAErgS887SStNkn/vKdwfx5wiAR/pAz7c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ep8LKirafRQyEIplr3mz4SXcOTP5Mep3
-	cnj4YGlrLQ0gjiO43eMeCh8Bh+WIuRTg48AI8qYB32OV0j/QGQ1MMR6c3aaJIPyR
-	nX2+CcOhj/Kgg2vYBdWWUGd1Z3+STtVmtKqmKcqmfhfp17vyMcuBF/ub5vG3Rc0V
-	o+jbQwgQ5FM=
+	:content-type; q=dns; s=sasl; b=I37tmU/CMPhI7MwVNvqFead8rp/w7bu0
+	E+XtWaJb3SoMRV9ve9V1MqVp7DMP9drkPysg/X3rYBuyhBsfuFFA9WIDMAm5BRo0
+	gdLKVO8EJ39MjmiUBv8ydD73CpspNKNXO9LoyG2FyxWo8WYRtoy3T2OrCnp1mmWe
+	sfS/racV1+g=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 784B21588E;
-	Wed, 15 Oct 2014 17:34:01 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 402BA15951;
+	Wed, 15 Oct 2014 17:36:22 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0087A1588B;
-	Wed, 15 Oct 2014 17:34:00 -0400 (EDT)
-In-Reply-To: <543ECE88.7050703@kdbg.org> (Johannes Sixt's message of "Wed, 15
-	Oct 2014 21:44:08 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B34811594F;
+	Wed, 15 Oct 2014 17:36:21 -0400 (EDT)
+In-Reply-To: <20141015004522.GD32245@google.com> (Jonathan Nieder's message of
+	"Tue, 14 Oct 2014 17:45:23 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FA6AA562-54B2-11E4-9612-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4E4BDE62-54B3-11E4-BAE6-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Thanks; queued.
 
-> Unless you have a secret plan, you can do it even shorter with our
-> helpers:
-
-Thanks.  No there isn't a secret plan.  It was just me being rusty.
-
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 8649090..81efb07 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -743,14 +743,9 @@ static void write_refspec_config(const char *src_ref_prefix,
->  
->  static void dissociate_from_references(void)
->  {
-> -	struct child_process cmd;
-> -
-> -	memset(&cmd, 0, sizeof(cmd));
-> -	argv_array_pushl(&cmd.args, "repack", "-a", "-d", NULL);
-> -	cmd.git_cmd = 1;
-> -	cmd.out = -1;
-> -	cmd.no_stdin = 1;
-> -	if (run_command(&cmd))
-> +	static const char* argv[] = { "repack", "-a", "-d", NULL };
-> +
-> +	if (run_command_v_opt(argv, RUN_GIT_CMD|RUN_COMMAND_NO_STDIN))
->  		die(_("cannot repack to clean up"));
->  	if (unlink(git_path("objects/info/alternates")) && errno != ENOENT)
->  		die_errno(_("cannot unlink temporary alternates file"));
+Hopefully we can merge to 'next' and go incremental.
