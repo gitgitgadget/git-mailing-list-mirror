@@ -1,48 +1,48 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 04/25] wrapper.c: add a new function unlink_or_msg
-Date: Tue, 14 Oct 2014 17:47:37 -0700
-Message-ID: <20141015004737.GH32245@google.com>
+Subject: [PATCH 05/25] refs.c: add an err argument to delete_ref_loose
+Date: Tue, 14 Oct 2014 17:47:56 -0700
+Message-ID: <20141015004756.GI32245@google.com>
 References: <20141015004522.GD32245@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 15 02:47:46 2014
+X-From: git-owner@vger.kernel.org Wed Oct 15 02:48:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeCkj-0008Mm-Gk
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 02:47:45 +0200
+	id 1XeCl3-00007V-EY
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 02:48:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932656AbaJOArm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 20:47:42 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:60553 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932269AbaJOArl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 20:47:41 -0400
-Received: by mail-pd0-f180.google.com with SMTP id fp1so212741pdb.25
-        for <git@vger.kernel.org>; Tue, 14 Oct 2014 17:47:40 -0700 (PDT)
+	id S932659AbaJOAsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 20:48:00 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:59101 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932269AbaJOAsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 20:48:00 -0400
+Received: by mail-pd0-f178.google.com with SMTP id y10so226606pdj.9
+        for <git@vger.kernel.org>; Tue, 14 Oct 2014 17:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=NXqnhwgKMIGw198cEJxZCVy/0/4/1QpwOEJb2QuzMUc=;
-        b=IEgp22b9Ll53RBU5e3NtbEXpR2wIFN93f31CuhSwnxsbTpx+7ISmFN0/crL+aPdOd8
-         kJbuRlwVxrOWQKa4aj4yHNsY4i+TWD6b1JwSeQkIIKei0w0NKJJPHTg+g3b73INRdAls
-         dqrgwaHQ5sSx9qS+pO3mQxGGgYNiA9OKridtl1Tu71Vem0YsToBQFf+ckFj4u68E74nt
-         HHgR7EYvR/lKvuU7S/vH18tGS9xmILMFhosKycD7V/4AyIoIMin6btwpXEW/VzmwT+eq
-         T7SzXryjvtIEAaaJWknAr2AqTW5puFJC7J8gTzEw5VOTs+wTOt301XOLkJEtugv14s4t
-         DR8g==
-X-Received: by 10.70.48.138 with SMTP id l10mr7357727pdn.139.1413334060855;
-        Tue, 14 Oct 2014 17:47:40 -0700 (PDT)
+        bh=ht+3k1IZdjkdqSkGy3PEpDrieKavV9C3yXwNhR4es0E=;
+        b=QX1dhSUrrz/tb7zxPRi6onI3XJmVQ1fPD75Ow+i/UEU9RaujpXMuhCm/nfAVlPh/fG
+         b6LepSnVWeNCUYc5G3J5VPU7tDkrpnZUtfhq3f+6jdgN06Y7uJgSQzZNgnkAP8Jjz032
+         mowv0eRxCw0PnnDBu1Yy5M5c+Pu+IjANUShIp0y1UXGo2lj/vsr5jKG8+v42xju1Djkf
+         KfB2DncRQqlSAnn6z3pXJy1puTLTP++EskVhxX8L2vwzCZ8py1LxuCgBuA/q4X5nCaxn
+         h+HcQPjIrrpAxzkaET2ZCI0Kz10LuF+ixRWamzKdQFC18NedvI15uAUQsEcF4/BVvHx6
+         URjQ==
+X-Received: by 10.68.134.230 with SMTP id pn6mr8946487pbb.88.1413334079644;
+        Tue, 14 Oct 2014 17:47:59 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:c43b:1934:40ef:9a07])
-        by mx.google.com with ESMTPSA id m2sm15348576pdf.48.2014.10.14.17.47.39
+        by mx.google.com with ESMTPSA id ty8sm15489020pab.26.2014.10.14.17.47.58
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 14 Oct 2014 17:47:40 -0700 (PDT)
+        Tue, 14 Oct 2014 17:47:58 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20141015004522.GD32245@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -52,71 +52,53 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Wed, 16 Jul 2014 11:20:36 -0700
+Date: Thu, 15 May 2014 08:25:23 -0700
 
-This behaves like unlink_or_warn except that on failure it writes the message
-to its 'err' argument, which the caller can display in an appropriate way or
-ignore.
+Add an err argument to delete_ref_loose so that we can pass a descriptive
+error string back to the caller. Pass the err argument from transaction
+commit to this function so that transaction users will have a nice error
+string if the transaction failed due to delete_ref_loose.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- git-compat-util.h |  9 +++++++++
- wrapper.c         | 14 ++++++++++++++
- 2 files changed, 23 insertions(+)
+ refs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index d67592f..59ecf21 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -326,6 +326,8 @@ static inline char *git_find_last_dir_sep(const char *path)
- 
- #include "wildmatch.h"
- 
-+struct strbuf;
-+
- /* General helper functions */
- extern void vreportf(const char *prefix, const char *err, va_list params);
- extern void vwritef(int fd, const char *prefix, const char *err, va_list params);
-@@ -781,6 +783,13 @@ void git_qsort(void *base, size_t nmemb, size_t size,
-  * not exist.
-  */
- int unlink_or_warn(const char *path);
-+ /*
-+  * Tries to unlink file.  Returns 0 if unlink succeeded
-+  * or the file already didn't exist.  Returns -1 and
-+  * appends a message to err suitable for
-+  * 'error("%s", err->buf)' on error.
-+  */
-+int unlink_or_msg(const char *file, struct strbuf *err);
- /*
-  * Preserves errno, prints a message, but gives no warning for ENOENT.
-  * Returns 0 on success, which includes trying to remove a directory that does
-diff --git a/wrapper.c b/wrapper.c
-index 8d4be66..007ec0d 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -475,6 +475,20 @@ static int warn_if_unremovable(const char *op, const char *file, int rc)
- 	return rc;
+diff --git a/refs.c b/refs.c
+index 4f2564d..430857b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2597,7 +2597,7 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 	return ret;
  }
  
-+int unlink_or_msg(const char *file, struct strbuf *err)
-+{
-+	int rc = unlink(file);
-+
-+	assert(err);
-+
-+	if (!rc || errno == ENOENT)
-+		return 0;
-+
-+	strbuf_addf(err, "unable to unlink %s: %s",
-+		    file, strerror(errno));
-+	return -1;
-+}
-+
- int unlink_or_warn(const char *file)
+-static int delete_ref_loose(struct ref_lock *lock, int flag)
++static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
  {
- 	return warn_if_unremovable("unlink", file, unlink(file));
+ 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+ 		/*
+@@ -2605,9 +2605,9 @@ static int delete_ref_loose(struct ref_lock *lock, int flag)
+ 		 * lockfile name, minus ".lock":
+ 		 */
+ 		char *loose_filename = get_locked_file_path(lock->lk);
+-		int err = unlink_or_warn(loose_filename);
++		int res = unlink_or_msg(loose_filename, err);
+ 		free(loose_filename);
+-		if (err)
++		if (res)
+ 			return 1;
+ 	}
+ 	return 0;
+@@ -3658,7 +3658,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 
+ 		if (update->lock) {
+-			ret |= delete_ref_loose(update->lock, update->type);
++			ret |= delete_ref_loose(update->lock, update->type,
++						err);
+ 			if (!(update->flags & REF_ISPRUNING))
+ 				delnames[delnum++] = update->lock->ref_name;
+ 		}
 -- 
 2.1.0.rc2.206.gedb03e5
