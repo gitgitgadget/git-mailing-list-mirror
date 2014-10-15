@@ -1,110 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetools/meld: do not rely on the output of `meld --help`
-Date: Wed, 15 Oct 2014 12:18:54 -0700
-Message-ID: <xmqqh9z5w38h.fsf@gitster.dls.corp.google.com>
-References: <1413361848-16923-1-git-send-email-davvid@gmail.com>
-	<xmqqoatdw3wk.fsf@gitster.dls.corp.google.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] mergetool: add an option for writing to a temporary
+ directory
+Date: Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
+Message-ID: <293924028.621540.1413401411270.JavaMail.zimbra@dewire.com>
+References: <1413047085-12398-1-git-send-email-davvid@gmail.com> <xmqqk3433h8m.fsf@gitster.dls.corp.google.com> <20141015063848.GC14751@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Andrey Novoseltsev <novoselt@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Charles Bailey <charles@hashpling.org>
 To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 15 21:19:01 2014
+X-From: git-owner@vger.kernel.org Wed Oct 15 21:35:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeU68-0004AZ-UL
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 21:19:01 +0200
+	id 1XeUMV-0005DP-4y
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 21:35:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750887AbaJOTS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 15:18:57 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65073 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750775AbaJOTS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 15:18:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E7D0414C7D;
-	Wed, 15 Oct 2014 15:18:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QrI5QvFGH/IUCjGeLXRX8690PtY=; b=E6a+jg
-	AVr0+S4++6uRNIYb1Iqi2Y/sr4+8qLfdrceQquuS4iiKknUbggVsZn5RZMn8kGh1
-	wa+DQnvpbcrTmSB3m5ujPeeRXWUzU5XUsS/XpvLC4IHSJKh3y5Qwok8mEflSXoL/
-	A5zB8k/cKPF5HS0utC7xSOK4N5mQHKDqFUTS8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ix+x66Dp8VSgPSL0CTmuQtw5+JnVZOef
-	bewgr5E3RwdiojTbTuuLNAuvwvDuD0aMfu/zGGTWWXRuTiwR964rMp6jMPMDmhIX
-	y0cRXhTe0oi8tycMXBcXfoSMyzKFq0p5ANxqVbyhlnA5PlPawc1q7VU2LmqlnWiQ
-	bK0K3jVO+IQ=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF1F714C7C;
-	Wed, 15 Oct 2014 15:18:55 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A0F714C7B;
-	Wed, 15 Oct 2014 15:18:55 -0400 (EDT)
-In-Reply-To: <xmqqoatdw3wk.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 15 Oct 2014 12:04:27 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1B1EAA5A-54A0-11E4-9FB7-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1751301AbaJOTfv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Oct 2014 15:35:51 -0400
+Received: from zimbra.dewire.com ([83.140.172.131]:58285 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751106AbaJOTfu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Oct 2014 15:35:50 -0400
+X-Greylist: delayed 334 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Oct 2014 15:35:50 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 21114815E0;
+	Wed, 15 Oct 2014 21:30:15 +0200 (CEST)
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id TXFgzoYO9QM4; Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 9FE3B81686;
+	Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id RRdbEVfMg6OK; Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
+Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
+	by zimbra.dewire.com (Postfix) with ESMTP id 6FB36815E0;
+	Wed, 15 Oct 2014 21:30:11 +0200 (CEST)
+In-Reply-To: <20141015063848.GC14751@gmail.com>
+X-Originating-IP: [78.69.107.197]
+X-Mailer: Zimbra 8.0.7_GA_6020 (ZimbraWebClient - FF32 (Mac)/8.0.7_GA_6020)
+Thread-Topic: mergetool: add an option for writing to a temporary directory
+Thread-Index: 1AskutzFRN/1k2JioGvUBFCfjE5gDw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> This obviously breaks those who have happily been using their
-> installed version of meld that understands and shows --output in the
-> help text.  Is that a minority that is rapidly diminishing?
->
-> I would understand it if the change were
->
->  - a configuration tells us to use or not use --output; when it is
->    set, then we do not try auto-detect by reading --help output
->
->  - when that new configuration is not set, we keep the current code
->    to read --help output, which may fail for recent meld but that is
->    not a regression.
->
-> When versions of meld that support --output but do not mention it in
-> their --help text are overwhelming majority, we would want to flip
-> the fallback codepath from "read --help and decide" to "assume that
-> --output can be used", but I do not know if now is the time to do
-> so.
 
-In other words, I am wondering if a milder fix would be along this
-line of change instead.  Older versions seem to list --output
-explicitly, and we assume newer ones including the one reported by
-Andrey begin their output like so:
+----- Ursprungligt meddelande -----
+> Fr=C3=A5n: "David Aguilar" <davvid@gmail.com>
+> Till: "Junio C Hamano" <gitster@pobox.com>
+> Kopia: "Robin Rosenberg" <robin.rosenberg@dewire.com>, git@vger.kerne=
+l.org, "Charles Bailey" <charles@hashpling.org>
+> Skickat: onsdag, 15 okt 2014 8:38:49
+> =C3=84mne: Re: [PATCH] mergetool: add an option for writing to a temp=
+orary directory
+>=20
+> On Mon, Oct 13, 2014 at 12:24:41PM -0700, Junio C Hamano wrote:
+> > David Aguilar <davvid@gmail.com> writes:
+> >=20
+> > > Teach mergetool to write files in a temporary directory when
+> > > 'mergetool.writeToTemp' is true.
+> > >
+> > > This is helpful for tools such as Eclipse which cannot cope with
+> > > multiple copies of the same file in the worktree.
+> >=20
+> > With this can we drop the "change the temporary file name" patch by
+> > Robin Rosenberg?
+> >=20
+> > http://thread.gmane.org/gmane.comp.version-control.git/255457/focus=
+=3D255599
+> >=20
+> > Message-Id: <1408607240-11369-1-git-send-email-robin.rosenberg@dewi=
+re.com>
+>=20
+> I would think so but I'm biased ;-)
 
-    $ meld --help
-    Usage:
-      meld [OPTION...]
+The new patch solves my problem.
 
-hence we catch either of these patterns.
-
- mergetools/meld | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/mergetools/meld b/mergetools/meld
-index cb672a5..b6169c9 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -23,8 +23,12 @@ check_meld_for_output_version () {
- 	meld_path="$(git config mergetool.meld.path)"
- 	meld_path="${meld_path:-meld}"
- 
--	if "$meld_path" --help 2>&1 | grep -e --output >/dev/null
-+	if meld_has_output_option="$(git config --bool mergetool.meld.hasOutput)"
- 	then
-+		: use whatever is configured
-+	elif "$meld_path" --help 2>&1 | grep -e '--output=' -e '\[OPTION\.\.\.\]' /dev/null
-+	then
-+		: old ones explicitly listed --output and new ones just say OPTION...
- 		meld_has_output_option=true
- 	else
- 		meld_has_output_option=false
+-- robin
