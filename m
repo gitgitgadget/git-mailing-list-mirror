@@ -1,36 +1,36 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 18/25] make add_object_array_with_context interface more
- sane
-Date: Wed, 15 Oct 2014 18:42:57 -0400
-Message-ID: <20141015224256.GR25630@peff.net>
+Subject: [PATCH v2 19/25] traverse_commit_list: support pending blobs/trees
+ with paths
+Date: Wed, 15 Oct 2014 18:43:19 -0400
+Message-ID: <20141015224318.GS25630@peff.net>
 References: <20141015223244.GA25368@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 16 00:43:05 2014
+X-From: git-owner@vger.kernel.org Thu Oct 16 00:43:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeXHc-0000bQ-Mp
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 00:43:05 +0200
+	id 1XeXHx-0000nY-8Z
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 00:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751408AbaJOWnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Oct 2014 18:43:00 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59004 "HELO cloud.peff.net"
+	id S1751420AbaJOWnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Oct 2014 18:43:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59010 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750809AbaJOWm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Oct 2014 18:42:59 -0400
-Received: (qmail 2583 invoked by uid 102); 15 Oct 2014 22:42:59 -0000
+	id S1751227AbaJOWnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Oct 2014 18:43:21 -0400
+Received: (qmail 2630 invoked by uid 102); 15 Oct 2014 22:43:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 17:42:59 -0500
-Received: (qmail 28188 invoked by uid 107); 15 Oct 2014 22:42:58 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 17:43:21 -0500
+Received: (qmail 28206 invoked by uid 107); 15 Oct 2014 22:43:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 18:42:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Oct 2014 18:42:57 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Oct 2014 18:43:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Oct 2014 18:43:19 -0400
 Content-Disposition: inline
 In-Reply-To: <20141015223244.GA25368@peff.net>
 Sender: git-owner@vger.kernel.org
@@ -38,152 +38,161 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When you resolve a sha1, you can optionally keep any context
-found during the resolution, including the path and mode of
-a tree entry (e.g., when looking up "HEAD:subdir/file.c").
+When we call traverse_commit_list, we may have trees and
+blobs in the pending array. As we process these, we pass the
+"name" field from the pending entry as the path of the
+object within the tree (which then becomes the root path if
+we recurse into subtrees).
 
-The add_object_array_with_context function lets you then
-attach that context to an entry in a list. Unfortunately,
-the interface for doing so is horrible. The object_context
-structure is large and most object_array users do not use
-it. Therefore we keep a pointer to the structure to avoid
-burdening other users too much. But that means when we do
-use it that we must allocate the struct ourselves. And the
-struct contains a fixed PATH_MAX-sized buffer, which makes
-this wholly unsuitable for any large arrays.
+When we set up the traversal in prepare_revision_walk,
+though, the "name" field of any pending trees and blobs is
+likely to be the ref at which we found the object. We would
+not want to make this part of the path (e.g., doing so would
+make "git rev-list --objects v2.6.11-tree" in linux.git show
+paths like "v2.6.11-tree/Makefile", which is nonsensical).
+Therefore prepare_revision_walk sets the name field of each
+pending tree and blobs to the empty string.
 
-We can observe that there is only a single user of the
-"with_context" variant: builtin/grep.c. And in that use
-case, the only element we care about is the path. We can
-therefore store only the path as a pointer (the context's
-mode field was redundant with the object_array_entry itself,
-and nobody actually cared about the surrounding tree). This
-still requires a strdup of the pathname, but at least we are
-only consuming the minimum amount of memory for each string.
+However, this leaves no room for a caller who does know the
+correct path of a pending object to propagate that
+information to the revision walker. We can fix this by
+making two related changes:
 
-We can also handle the copying ourselves in
-add_object_array_*, and free it as appropriate in
-object_array_release_entry.
+  1. Use the "path" field as the path instead of the "name"
+     field in traverse_commit_list. If the path is not set,
+     default to "" (which is what we always ended up with in
+     the current code, because of prepare_revision_walk).
+
+  2. In prepare_revision_walk, make a complete copy of the
+     entry. This makes the path field available to the
+     walker (if there is one), solving our problem.
+     Leaving the name field intact is now OK, as we do not
+     use it as a path due to point (1) above (and we can use
+     it to make more meaningful error messages if we want).
+     We also make the original "mode" field available to the
+     walker, though it does not actually use it.
+
+Note that we still re-add the pending objects and free the
+old ones (so we may strdup the path and name only to free
+the old ones). This could be made more efficient by simply
+copying the object_array entries that we are keeping.
+However, that would require more restructuring of the code,
+and is not done here.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/grep.c |  8 ++++----
- object.c       | 23 +++++++++--------------
- object.h       |  4 ++--
- 3 files changed, 15 insertions(+), 20 deletions(-)
+ list-objects.c |  7 +++++--
+ revision.c     | 30 +++++++++++++++++++++++-------
+ 2 files changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index c86a142..4063882 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -456,10 +456,10 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- }
- 
- static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
--		       struct object *obj, const char *name, struct object_context *oc)
-+		       struct object *obj, const char *name, const char *path)
- {
- 	if (obj->type == OBJ_BLOB)
--		return grep_sha1(opt, obj->sha1, name, 0, oc ? oc->path : NULL);
-+		return grep_sha1(opt, obj->sha1, name, 0, path);
- 	if (obj->type == OBJ_COMMIT || obj->type == OBJ_TREE) {
- 		struct tree_desc tree;
- 		void *data;
-@@ -501,7 +501,7 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
- 	for (i = 0; i < nr; i++) {
- 		struct object *real_obj;
- 		real_obj = deref_tag(list->objects[i].item, NULL, 0);
--		if (grep_object(opt, pathspec, real_obj, list->objects[i].name, list->objects[i].context)) {
-+		if (grep_object(opt, pathspec, real_obj, list->objects[i].name, list->objects[i].path)) {
- 			hit = 1;
- 			if (opt->status_only)
- 				break;
-@@ -821,7 +821,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			struct object *object = parse_object_or_die(sha1, arg);
- 			if (!seen_dashdash)
- 				verify_non_filename(prefix, arg);
--			add_object_array_with_context(object, arg, &list, xmemdupz(&oc, sizeof(struct object_context)));
-+			add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
+diff --git a/list-objects.c b/list-objects.c
+index fad6808..2910bec 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -208,6 +208,7 @@ void traverse_commit_list(struct rev_info *revs,
+ 		struct object_array_entry *pending = revs->pending.objects + i;
+ 		struct object *obj = pending->item;
+ 		const char *name = pending->name;
++		const char *path = pending->path;
+ 		if (obj->flags & (UNINTERESTING | SEEN))
+ 			continue;
+ 		if (obj->type == OBJ_TAG) {
+@@ -215,14 +216,16 @@ void traverse_commit_list(struct rev_info *revs,
+ 			show_object(obj, NULL, name, data);
  			continue;
  		}
- 		if (!strcmp(arg, "--")) {
-diff --git a/object.c b/object.c
-index 6aeb1bb..df86bdd 100644
---- a/object.c
-+++ b/object.c
-@@ -307,10 +307,9 @@ int object_list_contains(struct object_list *list, struct object *obj)
-  */
- static char object_array_slopbuf[1];
- 
--static void add_object_array_with_mode_context(struct object *obj, const char *name,
--					       struct object_array *array,
--					       unsigned mode,
--					       struct object_context *context)
-+void add_object_array_with_path(struct object *obj, const char *name,
-+				struct object_array *array,
-+				unsigned mode, const char *path)
- {
- 	unsigned nr = array->nr;
- 	unsigned alloc = array->alloc;
-@@ -333,7 +332,10 @@ static void add_object_array_with_mode_context(struct object *obj, const char *n
- 	else
- 		entry->name = xstrdup(name);
- 	entry->mode = mode;
--	entry->context = context;
-+	if (path)
-+		entry->path = xstrdup(path);
-+	else
-+		entry->path = NULL;
- 	array->nr = ++nr;
++		if (!path)
++			path = "";
+ 		if (obj->type == OBJ_TREE) {
+ 			process_tree(revs, (struct tree *)obj, show_object,
+-				     NULL, &base, name, data);
++				     NULL, &base, path, data);
+ 			continue;
+ 		}
+ 		if (obj->type == OBJ_BLOB) {
+ 			process_blob(revs, (struct blob *)obj, show_object,
+-				     NULL, name, data);
++				     NULL, path, data);
+ 			continue;
+ 		}
+ 		die("unknown pending object %s (%s)",
+diff --git a/revision.c b/revision.c
+index b8e02e2..9a0f99a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -198,9 +198,10 @@ void mark_parents_uninteresting(struct commit *commit)
+ 	}
  }
  
-@@ -344,15 +346,7 @@ void add_object_array(struct object *obj, const char *name, struct object_array
- 
- void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode)
+-static void add_pending_object_with_mode(struct rev_info *revs,
++static void add_pending_object_with_path(struct rev_info *revs,
+ 					 struct object *obj,
+-					 const char *name, unsigned mode)
++					 const char *name, unsigned mode,
++					 const char *path)
  {
--	add_object_array_with_mode_context(obj, name, array, mode, NULL);
--}
--
--void add_object_array_with_context(struct object *obj, const char *name, struct object_array *array, struct object_context *context)
--{
--	if (context)
--		add_object_array_with_mode_context(obj, name, array, context->mode, context);
--	else
--		add_object_array_with_mode_context(obj, name, array, S_IFINVALID, context);
-+	add_object_array_with_path(obj, name, array, mode, NULL);
+ 	if (!obj)
+ 		return;
+@@ -220,7 +221,20 @@ static void add_pending_object_with_mode(struct rev_info *revs,
+ 		if (st)
+ 			return;
+ 	}
+-	add_object_array_with_mode(obj, name, &revs->pending, mode);
++	add_object_array_with_path(obj, name, &revs->pending, mode, path);
++}
++
++static void add_pending_object_with_mode(struct rev_info *revs,
++					 struct object *obj,
++					 const char *name, unsigned mode)
++{
++	add_pending_object_with_path(revs, obj, name, mode, NULL);
++}
++
++static void add_pending_object_from_entry(struct rev_info *revs,
++					  struct object_array_entry *e)
++{
++	add_pending_object_with_path(revs, e->item, e->name, e->mode, e->path);
  }
  
- /*
-@@ -363,6 +357,7 @@ static void object_array_release_entry(struct object_array_entry *ent)
- {
- 	if (ent->name != object_array_slopbuf)
- 		free(ent->name);
-+	free(ent->path);
+ void add_pending_object(struct rev_info *revs,
+@@ -265,8 +279,10 @@ void add_pending_sha1(struct rev_info *revs, const char *name,
  }
  
- void object_array_filter(struct object_array *array,
-diff --git a/object.h b/object.h
-index 2a755a2..e5178a5 100644
---- a/object.h
-+++ b/object.h
-@@ -18,8 +18,8 @@ struct object_array {
- 		 * empty string.
- 		 */
- 		char *name;
-+		char *path;
- 		unsigned mode;
--		struct object_context *context;
- 	} *objects;
- };
+ static struct commit *handle_commit(struct rev_info *revs,
+-				    struct object *object, const char *name)
++				    struct object_array_entry *entry)
+ {
++	struct object *object = entry->item;
++	const char *name = entry->name;
+ 	unsigned long flags = object->flags;
  
-@@ -115,7 +115,7 @@ int object_list_contains(struct object_list *list, struct object *obj);
- /* Object array handling .. */
- void add_object_array(struct object *obj, const char *name, struct object_array *array);
- void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode);
--void add_object_array_with_context(struct object *obj, const char *name, struct object_array *array, struct object_context *context);
-+void add_object_array_with_path(struct object *obj, const char *name, struct object_array *array, unsigned mode, const char *path);
+ 	/*
+@@ -316,7 +332,7 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 			mark_tree_contents_uninteresting(tree);
+ 			return NULL;
+ 		}
+-		add_pending_object(revs, object, "");
++		add_pending_object_from_entry(revs, entry);
+ 		return NULL;
+ 	}
  
- typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
- 
+@@ -328,7 +344,7 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 			return NULL;
+ 		if (flags & UNINTERESTING)
+ 			return NULL;
+-		add_pending_object(revs, object, "");
++		add_pending_object_from_entry(revs, entry);
+ 		return NULL;
+ 	}
+ 	die("%s is unknown object", name);
+@@ -2666,7 +2682,7 @@ int prepare_revision_walk(struct rev_info *revs)
+ 	revs->pending.objects = NULL;
+ 	for (i = 0; i < old_pending.nr; i++) {
+ 		struct object_array_entry *e = old_pending.objects + i;
+-		struct commit *commit = handle_commit(revs, e->item, e->name);
++		struct commit *commit = handle_commit(revs, e);
+ 		if (commit) {
+ 			if (!(commit->object.flags & SEEN)) {
+ 				commit->object.flags |= SEEN;
 -- 
 2.1.2.596.g7379948
