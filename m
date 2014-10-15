@@ -1,49 +1,48 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 22/25] remote rm/prune: print a message when writing
- packed-refs fails
-Date: Tue, 14 Oct 2014 17:54:48 -0700
-Message-ID: <20141015005448.GZ32245@google.com>
+Subject: [PATCH 23/25] refs.c: do not permit err == NULL
+Date: Tue, 14 Oct 2014 17:55:06 -0700
+Message-ID: <20141015005506.GA32245@google.com>
 References: <20141015004522.GD32245@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 15 02:54:55 2014
+X-From: git-owner@vger.kernel.org Wed Oct 15 02:55:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeCrf-0004Ns-5N
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 02:54:55 +0200
+	id 1XeCs0-0004Zr-LH
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Oct 2014 02:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932681AbaJOAyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Oct 2014 20:54:51 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:46614 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932479AbaJOAyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Oct 2014 20:54:51 -0400
-Received: by mail-pd0-f177.google.com with SMTP id v10so230863pde.8
-        for <git@vger.kernel.org>; Tue, 14 Oct 2014 17:54:50 -0700 (PDT)
+	id S932685AbaJOAzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Oct 2014 20:55:10 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:56854 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932479AbaJOAzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Oct 2014 20:55:09 -0400
+Received: by mail-pa0-f49.google.com with SMTP id hz1so234723pad.22
+        for <git@vger.kernel.org>; Tue, 14 Oct 2014 17:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=B43Kat9Y5MSYC8TFwCHbuCCo+JneC6KcWD0eVsYGbnk=;
-        b=giyqsDsNoRbw233X5SDjuvMU/k1XToP0t60oDGn7DYtee14pAwhHpiJoZS+2e8zu5f
-         rsd2LLYOWC+dQ0ouxNFEL5j4VIIPH1e4ElM7O9PxfNszknkoZH4Bd5gtmqXEaazEGjgi
-         M1FC79FbhcIvbmgFtjin/cXEEUEXt3BoX5rSNnnfGdc5rrHJDkO/ZXvDWxitKFfUcWRD
-         /AvifiP6nYrpc5/wZCxcvreJO27qvjjMJDee5Rbz/daL4SyzB5A8M0ZEdmFSdZwTbRKu
-         dTrmJ4gpbCrlz69jrkUFLkG+7QDK4K6tnohUla740JRDJlE9eDNDQ6Z1C1kJvXbsJ0hD
-         Xbcw==
-X-Received: by 10.68.234.103 with SMTP id ud7mr8991459pbc.46.1413334490776;
-        Tue, 14 Oct 2014 17:54:50 -0700 (PDT)
+        bh=O4VrcVny9JqxP2Sv0QRaApX3YxeG+kBnANh/ARgRmcM=;
+        b=s9w/PKIVfiSmSEyJ0/pTt+qow18hn26KOvGMG7j0yh61Zp3POZn5ONHkuhU0C2xGkr
+         4tHIsRZeQBwqk6/gwSF79+H2VynCskee781rIbmtSNzuO0s8cEtmi9c6rf1CvxRVPtYI
+         lVZahVaNxzxcijvBEGwqap0ZrcRKzIsMtzKcshRBnGMTFIPq9FJ7WihqkHN+/ImbA8Jt
+         ydOxMBpT9UMy0amD10DhX66p/Vo5UVPx73zygFooe7RKuSoqxh+RwJ12cTipoeuAKzLH
+         X+c3WzNV8nvhOaiEXrwiwiORgZhA/aKb014d/U+0I63nwq7aal0n6eDOGAu2ouH6FB4l
+         OAPQ==
+X-Received: by 10.66.184.167 with SMTP id ev7mr8700767pac.40.1413334508850;
+        Tue, 14 Oct 2014 17:55:08 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:c43b:1934:40ef:9a07])
-        by mx.google.com with ESMTPSA id z15sm15407630pdi.6.2014.10.14.17.54.49
+        by mx.google.com with ESMTPSA id j11sm15325276pdk.76.2014.10.14.17.55.07
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 14 Oct 2014 17:54:50 -0700 (PDT)
+        Tue, 14 Oct 2014 17:55:08 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20141015004522.GD32245@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -52,69 +51,159 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ronnie Sahlberg <sahlberg@google.com>
-Date: Thu, 11 Sep 2014 08:42:57 -0700
+Date: Thu, 28 Aug 2014 16:42:37 -0700
 
-Until v2.1.0-rc0~22^2~11 (refs.c: add an err argument to
-repack_without_refs, 2014-06-20), repack_without_refs forgot to
-provide an error message when commit_packed_refs fails.  Even today,
-it only provides a message for callers that pass a non-NULL err
-parameter.  Internal callers in refs.c pass non-NULL err but
-"git remote" does not.
+Some functions that take a strbuf argument to append an error treat
+!err as an indication that the message should be suppressed (e.g.,
+ref_update_reject_duplicates).  Others write the message to stderr on
+!err (e.g., repack_without_refs).  Others crash (e.g.,
+ref_transaction_update).
 
-That means that "git remote rm" and "git remote prune" can fail
-without printing a message about why.  Fix them by passing in a
-non-NULL err parameter and printing the returned message.
+Some of these behaviors are for historical reasons and others were
+accidents.  Luckily no callers pass err == NULL any more.  Simplify
+by consistently requiring the strbuf argument.
 
-This is the last caller to a ref handling function passing err ==
-NULL.  A later patch can drop support for err == NULL, avoiding such
-problems in the future.
-
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+Reviewed-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/remote.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ refs.c | 46 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 27 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 42a533a..7f28f92 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -749,13 +749,16 @@ static int mv(int argc, const char **argv)
+diff --git a/refs.c b/refs.c
+index e7000f2..097fb4b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2646,6 +2646,8 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 	struct string_list_item *ref_to_delete;
+ 	int i, ret, removed = 0;
  
- static int remove_branches(struct string_list *branches)
- {
-+	struct strbuf err = STRBUF_INIT;
- 	const char **branch_names;
- 	int i, result = 0;
++	assert(err);
++
+ 	/* Look for a packed ref */
+ 	for (i = 0; i < n; i++)
+ 		if (get_packed_ref(refnames[i]))
+@@ -2656,13 +2658,8 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 		return 0; /* no refname exists in packed refs */
  
- 	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
- 	for (i = 0; i < branches->nr; i++)
- 		branch_names[i] = branches->items[i].string;
--	result |= repack_without_refs(branch_names, branches->nr, NULL);
-+	if (repack_without_refs(branch_names, branches->nr, &err))
-+		result |= error("%s", err.buf);
-+	strbuf_release(&err);
- 	free(branch_names);
- 
- 	for (i = 0; i < branches->nr; i++) {
-@@ -1332,9 +1335,13 @@ static int prune_remote(const char *remote, int dry_run)
- 		delete_refs = xmalloc(states.stale.nr * sizeof(*delete_refs));
- 		for (i = 0; i < states.stale.nr; i++)
- 			delete_refs[i] = states.stale.items[i].util;
--		if (!dry_run)
--			result |= repack_without_refs(delete_refs,
--						      states.stale.nr, NULL);
-+		if (!dry_run) {
-+			struct strbuf err = STRBUF_INIT;
-+			if (repack_without_refs(delete_refs, states.stale.nr,
-+						&err))
-+				result |= error("%s", err.buf);
-+			strbuf_release(&err);
-+		}
- 		free(delete_refs);
+ 	if (lock_packed_refs(0)) {
+-		if (err) {
+-			unable_to_lock_message(git_path("packed-refs"), errno,
+-					       err);
+-			return -1;
+-		}
+-		unable_to_lock_error(git_path("packed-refs"), errno);
+-		return error("cannot delete '%s' from packed refs", refnames[i]);
++		unable_to_lock_message(git_path("packed-refs"), errno, err);
++		return -1;
  	}
+ 	packed = get_packed_refs(&ref_cache);
  
+@@ -2688,7 +2685,7 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 
+ 	/* Write what remains */
+ 	ret = commit_packed_refs();
+-	if (ret && err)
++	if (ret)
+ 		strbuf_addf(err, "unable to overwrite old ref-pack file: %s",
+ 			    strerror(errno));
+ 	return ret;
+@@ -2696,6 +2693,8 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 
+ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ {
++	assert(err);
++
+ 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+ 		/*
+ 		 * loose.  The loose file name is the same as the
+@@ -3551,6 +3550,8 @@ struct ref_transaction {
+ 
+ struct ref_transaction *ref_transaction_begin(struct strbuf *err)
+ {
++	assert(err);
++
+ 	return xcalloc(1, sizeof(struct ref_transaction));
+ }
+ 
+@@ -3590,6 +3591,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ {
+ 	struct ref_update *update;
+ 
++	assert(err);
++
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+ 		die("BUG: update called for transaction that is not open");
+ 
+@@ -3622,6 +3625,8 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ {
+ 	struct ref_update *update;
+ 
++	assert(err);
++
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+ 		die("BUG: create called for transaction that is not open");
+ 
+@@ -3653,6 +3658,8 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+ {
+ 	struct ref_update *update;
+ 
++	assert(err);
++
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+ 		die("BUG: delete called for transaction that is not open");
+ 
+@@ -3715,13 +3722,14 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ 					struct strbuf *err)
+ {
+ 	int i;
++
++	assert(err);
++
+ 	for (i = 1; i < n; i++)
+ 		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
+-			const char *str =
+-				"Multiple updates for ref '%s' not allowed.";
+-			if (err)
+-				strbuf_addf(err, str, updates[i]->refname);
+-
++			strbuf_addf(err,
++				    "Multiple updates for ref '%s' not allowed.",
++				    updates[i]->refname);
+ 			return 1;
+ 		}
+ 	return 0;
+@@ -3735,6 +3743,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	int n = transaction->nr;
+ 	struct ref_update **updates = transaction->updates;
+ 
++	assert(err);
++
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+ 		die("BUG: commit called for transaction that is not open");
+ 
+@@ -3771,9 +3781,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			ret = (errno == ENOTDIR)
+ 				? TRANSACTION_NAME_CONFLICT
+ 				: TRANSACTION_GENERIC_ERROR;
+-			if (err)
+-				strbuf_addf(err, "Cannot lock the ref '%s'.",
+-					    update->refname);
++			strbuf_addf(err, "Cannot lock the ref '%s'.",
++				    update->refname);
+ 			goto cleanup;
+ 		}
+ 	}
+@@ -3786,9 +3795,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			if (write_ref_sha1(update->lock, update->new_sha1,
+ 					   update->msg)) {
+ 				update->lock = NULL; /* freed by write_ref_sha1 */
+-				if (err)
+-					strbuf_addf(err, "Cannot update the ref '%s'.",
+-						    update->refname);
++				strbuf_addf(err, "Cannot update the ref '%s'.",
++					    update->refname);
+ 				ret = TRANSACTION_GENERIC_ERROR;
+ 				goto cleanup;
+ 			}
 -- 
 2.1.0.rc2.206.gedb03e5
