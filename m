@@ -1,58 +1,72 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Git log with follow & author not working
-Date: Thu, 16 Oct 2014 11:09:45 -0500
-Message-ID: <CAHd499DPx+1s+WTxJBEzgsJVy0M8AmuZzAx00mODWNy3KuCjdw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: fsck option to remove corrupt objects - why/why not?
+Date: Thu, 16 Oct 2014 09:36:34 -0700
+Message-ID: <xmqq8ukgug31.fsf@gitster.dls.corp.google.com>
+References: <20141015234637.9B4FC781EFB@mail110.syd.optusnet.com.au>
+	<543F0DAE.2050205@optusnet.com.au>
+	<CALKQrgda8mVbqP5=Ag8juN9HMQp7iQ9eDJETfRJe1b0taAFGkg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 16 18:09:52 2014
+Content-Type: text/plain
+Cc: Ben Aveling <bena.001@optusnet.com.au>,
+	Git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Oct 16 18:36:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xencc-0005gj-FP
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 18:09:51 +0200
+	id 1Xeo2m-0006tN-9d
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 18:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298AbaJPQJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2014 12:09:46 -0400
-Received: from mail-vc0-f182.google.com ([209.85.220.182]:48591 "EHLO
-	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751238AbaJPQJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2014 12:09:46 -0400
-Received: by mail-vc0-f182.google.com with SMTP id la4so2962691vcb.13
-        for <git@vger.kernel.org>; Thu, 16 Oct 2014 09:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=9dh/qpwNiPu1aeuhWdOjwDaoQbgmhFRwrE2JcnR9vvA=;
-        b=d8eYuxlAWXpAut0hItSr2S/lmCDN9BfPlkVU/cVAyf1R35lAWm5vaK3lomGIJgo2Fh
-         Yfw6OW8XdNm4GcTO+/PK/x4Z76fqP3E/JSD/hguRQDA3GhvgCeG669QJDAHBnDoOw6ut
-         f3qcj9c7bpKMc1ZeovTDxiDbJeswOzZIyGl32AE+SzQVvShrIb/VNVlu36Ouw7PzzQj2
-         z1AWu7ItLLuoYJiHvwqz2998JMlkIis59smHS5GJ7QZaqTLwcoUDCIJ3vEMX5YHgTqb9
-         gXjrzZl9U0tx/RE/hxf7fn+H+1KFKixZYvSEy5d/RYGIV7pv3lZo5p6dDVtEnKlXn1NL
-         CQ6A==
-X-Received: by 10.52.26.116 with SMTP id k20mr1545175vdg.82.1413475785421;
- Thu, 16 Oct 2014 09:09:45 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.3.200 with HTTP; Thu, 16 Oct 2014 09:09:45 -0700 (PDT)
-X-Google-Sender-Auth: caVScLXgV2eHxuQcm0TfCI4niZ4
+	id S1751847AbaJPQgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2014 12:36:42 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50783 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751298AbaJPQgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2014 12:36:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 93B5B14EDA;
+	Thu, 16 Oct 2014 12:36:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RePn/MQo7B6VxBp6vVvlWZ4kEUY=; b=vozr/k
+	Kffkc2gwdCPs/0e8oSMOVakqSTKY9Gt4Hit+ir7k6uIUyk7lQOssi9fWJ99FFNJb
+	wtNIHcDsVmf0zIWl6LpHC6MPsBiOhOmrNMTytTf9WSGW27VJuGiDgwom+CzI4AXq
+	5qpu9VcfYB1vvTD6RZnbHE/CuX4SAcdct/YSM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TD8ajMBRisScsB9nNchlmo6bGWawMH2P
+	VKSR4dXt1YlwWUlX0T2/aWkmXujUudGtodX6UnjksEnSO5Efp8mlVoBSzMnasfTw
+	AOESufSDP7SlkYB+tN/7nDLrGIu0rrPfD6uPee6ZtJrYnBDiFeQIlUia1KIqkIsk
+	rzn5f0mm/Xo=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 893D414ED7;
+	Thu, 16 Oct 2014 12:36:40 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 27B5814ED1;
+	Thu, 16 Oct 2014 12:36:36 -0400 (EDT)
+In-Reply-To: <CALKQrgda8mVbqP5=Ag8juN9HMQp7iQ9eDJETfRJe1b0taAFGkg@mail.gmail.com>
+	(Johan Herland's message of "Thu, 16 Oct 2014 11:04:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 987981AC-5552-11E4-B7DD-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have relocated a file into another directory and committed that.
-Using the --follow command on the NEW path of the file, I want to find
-all commits to that file by a specific author:
+Johan Herland <johan@herland.net> writes:
 
-$ git log --follow --author david -- new/path/to/file.cpp
+> I simply copied the packfile containing the good copy into the
+> corrupted repo, and then ran a "git gc", which "happened" to use the
+> good copy of the corrupted object and complete successfully (instead
+> of barfing on the bad copy). The GC then removed the old
+> (now-obsolete) packfiles, and thus the corruption was gone.
+>
+> However, exactly _why_ git happened to prefer the good copy in my
+> copied packfile instead of the bad copy in the existing packfile, I do
+> not know.
 
-When I do this, I get NO results. When I use the OLD path to the file, it works:
-
-$ git log --follow --author david -- OLD/path/to/file.cpp
-
-Also --follow seems to work fine on the NEW path if I do not specify
---author. Is this a bug or am I using this command incorrectly?
-
-Follow up assistance is very much appreciated. Thanks guys.
+By design ;-)
