@@ -1,116 +1,95 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] mergetools/meld: make usage of `--output` configurable and more robust
-Date: Wed, 15 Oct 2014 21:45:14 -0700
-Message-ID: <1413434714-20424-1-git-send-email-davvid@gmail.com>
-References: <xmqqh9z5w38h.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org, Andrey Novoseltsev <novoselt@gmail.com>
+Subject: [PATCH v2 4/5] t7610-mergetool: use test_config to isolate tests
+Date: Wed, 15 Oct 2014 22:30:04 -0700
+Message-ID: <1413437404-23810-1-git-send-email-davvid@gmail.com>
+References: <xmqqwq81ujlw.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, Charles Bailey <charles@hashpling.org>,
+	Thomas Rast <trast@student.ethz.ch>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 06:44:50 2014
+X-From: git-owner@vger.kernel.org Thu Oct 16 07:29:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xecvh-0000Lx-JB
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 06:44:49 +0200
+	id 1XeddA-0004Cj-0f
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 07:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751116AbaJPEoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2014 00:44:46 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:40200 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751035AbaJPEop (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2014 00:44:45 -0400
-Received: by mail-pd0-f177.google.com with SMTP id v10so2517330pde.36
-        for <git@vger.kernel.org>; Wed, 15 Oct 2014 21:44:44 -0700 (PDT)
+	id S1751033AbaJPF3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2014 01:29:39 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:56646 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750719AbaJPF3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2014 01:29:38 -0400
+Received: by mail-pd0-f174.google.com with SMTP id y13so2575647pdi.19
+        for <git@vger.kernel.org>; Wed, 15 Oct 2014 22:29:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gcxgA47h9Z2jJCNNFrH7eBBN0d5WqDZotzW3p/Mv3+o=;
-        b=sm1TQngz+Z7erffKB2sAqyxPGcQ7AK6jUwdkwlI7cMIdFvZ/CqOB+geU0i7jPV4Oi5
-         kqVrO/phe/HWX03ZZZw5zF6ib3qBCdLBdQmW/WURm0dbbl8hHD1AQ30SRfE+yoCXnQXs
-         Vk2+m/OsAaawariC4fiGm8fmWo6a6wecGjumApyUhJfoOkfe2ClvrSWUd9o33MWWX+hf
-         KTRhcJ6X8rSMyhkJLpZLXwIKSvrj1QD5nnBh37NT1VZ60Pz+1WHFUY4R/nMSuCsRREyy
-         2DvZ9AP56J2WQ02HegQnx+uMdLYpEuzD1/o+DIrG+XYdu46d3ELELItb2kcmwbG17vmT
-         aqhQ==
-X-Received: by 10.68.89.3 with SMTP id bk3mr17152288pbb.73.1413434684803;
-        Wed, 15 Oct 2014 21:44:44 -0700 (PDT)
+        bh=9XvHegy4zMRzYyPZv51xnr+Y+epw3b3tb+ymI9/8CgE=;
+        b=XKQAqDPfjX9HMNDsWcyPOEjRPoKSSnxi1/noRK0n+SksosBhIPXMcv0JqysypISiij
+         honIoskanvQ1IECb0TGbIzYuLMWcbnlO9KYp3g1YYcV9HDszpFvG06V8H1uNTO61mhL4
+         pM73+PTfT6/JQiLVW1LKC/83dne49TEXPuawfrlQFOniONGM+RfczRm3uy0ruEcJHgkO
+         KJBfuA5knEwuZp29dwJTf46F707sCPk7I2MdM767Ay3eAFsUqwKJIMjBCmPcnu8hWiS7
+         rCc/Nt70I83KYzWbADg6PLsV329XJrXPMjUQcQPoeAj8zG7CizXWlOtAtQ38SYWmWEg4
+         JVBg==
+X-Received: by 10.68.216.70 with SMTP id oo6mr2373958pbc.124.1413437378270;
+        Wed, 15 Oct 2014 22:29:38 -0700 (PDT)
 Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id cl1sm17592507pbb.92.2014.10.15.21.44.43
+        by mx.google.com with ESMTPSA id r8sm2916023pds.35.2014.10.15.22.29.35
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 15 Oct 2014 21:44:44 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2.444.g0cfad43
-In-Reply-To: <xmqqh9z5w38h.fsf@gitster.dls.corp.google.com>
+        Wed, 15 Oct 2014 22:29:37 -0700 (PDT)
+X-Mailer: git-send-email 2.1.2.453.g1b015e3
+In-Reply-To: <xmqqwq81ujlw.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Older versions of meld listed --output in `meld --help`.
-Newer versions only mention `meld [OPTIONS...]`.
-Improve the checks to catch these newer versions.
-
-Add a `mergetool.meld.hasOutput` configuration to allow
-overriding the heuristic.
-
-Reported-by: Andrey Novoseltsev <novoselt@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
+This is a replacement patch for
+"t7610-mergetool: prefer test_config over git config"
+in da/mergetool-tests.
+
 Changes since v1:
 
-This uses Junio's improved approach of checking for both --help
-styles and uses more focused name for the configuration variable.
-The documentation was reworded accordingly.
+The changes are more surgical and the commit message mentions
+why we are using test_config.
 
- Documentation/config.txt | 9 +++++++++
- mergetools/meld          | 9 +++++++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ t/t7610-mergetool.sh | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 04a1e2f..0f823eb 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1755,6 +1755,15 @@ mergetool.<tool>.trustExitCode::
- 	if the file has been updated, otherwise the user is prompted to
- 	indicate the success of the merge.
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 1a15e06..4fec633 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -112,7 +112,7 @@ test_expect_success 'custom mergetool' '
+ '
  
-+mergetool.meld.hasOutput::
-+	Older versions of `meld` do not support the `--output` option.
-+	Git will attempt to detect whether `meld` supports `--output`
-+	by inspecting the output of `meld --help`.  Configuring
-+	`mergetool.meld.hasOutput` will make Git skip these checks and
-+	use the configured value instead.  Setting `mergetool.meld.hasOutput`
-+	to `true` tells Git to unconditionally use the `--output` option,
-+	and `false` avoids using `--output`.
-+
- mergetool.keepBackup::
- 	After performing a merge, the original file with conflict markers
- 	can be saved as a file with a `.orig` extension.  If this variable
-diff --git a/mergetools/meld b/mergetools/meld
-index cb672a5..83ebdfb 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -18,13 +18,18 @@ merge_cmd () {
- 	check_unchanged
- }
+ test_expect_success 'mergetool crlf' '
+-	git config core.autocrlf true &&
++	test_config core.autocrlf true &&
+ 	git checkout -b test2 branch1 &&
+ 	test_must_fail git merge master >/dev/null 2>&1 &&
+ 	( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
+@@ -505,14 +505,12 @@ test_expect_success 'file with no base' '
  
--# Check whether 'meld --output <file>' is supported
-+# Check whether we should use 'meld --output <file>'
- check_meld_for_output_version () {
- 	meld_path="$(git config mergetool.meld.path)"
- 	meld_path="${meld_path:-meld}"
+ test_expect_success 'custom commands override built-ins' '
+ 	git checkout -b test14 branch1 &&
+-	git config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+-	git config mergetool.defaults.trustExitCode true &&
++	test_config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
++	test_config mergetool.defaults.trustExitCode true &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool defaults -- both &&
+ 	echo master both added >expected &&
+ 	test_cmp both expected &&
+-	git config --unset mergetool.defaults.cmd &&
+-	git config --unset mergetool.defaults.trustExitCode &&
+ 	git reset --hard master >/dev/null 2>&1
+ '
  
--	if "$meld_path" --help 2>&1 | grep -e --output >/dev/null
-+	if meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
- 	then
-+		: use configured value
-+	elif "$meld_path" --help 2>&1 |
-+		grep -e '--output=' -e '\[OPTION\.\.\.\]' >/dev/null
-+	then
-+		: old ones mention --output and new ones just say OPTION...
- 		meld_has_output_option=true
- 	else
- 		meld_has_output_option=false
 -- 
-2.1.2.444.g0cfad43
+2.1.2.453.g1b015e3
