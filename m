@@ -1,68 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Jeff King <peff@peff.net>
 Subject: Re: fsck option to remove corrupt objects - why/why not?
-Date: Thu, 16 Oct 2014 13:59:13 +0200
-Message-ID: <vpqmw8w6x9q.fsf@anie.imag.fr>
+Date: Thu, 16 Oct 2014 08:25:33 -0400
+Message-ID: <20141016122533.GA8451@peff.net>
 References: <20141015234637.9B4FC781EFB@mail110.syd.optusnet.com.au>
-	<543F0DAE.2050205@optusnet.com.au>
+ <543F0DAE.2050205@optusnet.com.au>
+ <CALKQrgda8mVbqP5=Ag8juN9HMQp7iQ9eDJETfRJe1b0taAFGkg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Ben Aveling <bena.001@optusnet.com.au>
-X-From: git-owner@vger.kernel.org Thu Oct 16 13:59:46 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Ben Aveling <bena.001@optusnet.com.au>,
+	Git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Oct 16 14:25:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xejib-0004XD-74
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 13:59:45 +0200
+	id 1Xek7g-00054Y-HN
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 14:25:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbaJPL7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2014 07:59:31 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:60772 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750789AbaJPL7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2014 07:59:30 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s9GBxCvs025630
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 16 Oct 2014 13:59:12 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s9GBxDbF031823;
-	Thu, 16 Oct 2014 13:59:13 +0200
-In-Reply-To: <543F0DAE.2050205@optusnet.com.au> (Ben Aveling's message of
-	"Thu, 16 Oct 2014 11:13:34 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 16 Oct 2014 13:59:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s9GBxCvs025630
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1414065555.70942@otYIWjjEcc2CeA7RyXQBVg
+	id S1751422AbaJPMZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2014 08:25:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59183 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750902AbaJPMZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2014 08:25:36 -0400
+Received: (qmail 5171 invoked by uid 102); 16 Oct 2014 12:25:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Oct 2014 07:25:35 -0500
+Received: (qmail 31690 invoked by uid 107); 16 Oct 2014 12:25:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Oct 2014 08:25:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Oct 2014 08:25:33 -0400
+Content-Disposition: inline
+In-Reply-To: <CALKQrgda8mVbqP5=Ag8juN9HMQp7iQ9eDJETfRJe1b0taAFGkg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Aveling <bena.001@optusnet.com.au> writes:
+On Thu, Oct 16, 2014 at 11:04:04AM +0200, Johan Herland wrote:
 
-> And that seems sensible to me - the object is corrupt, it is unusable,
-> the object graph is already broken, we already have big problems,
-> removing the corrupt object(s) doesn't create any new problems, and it
-> allows the possibility that the damaged objects can be restored.
+> I simply copied the packfile containing the good copy into the
+> corrupted repo, and then ran a "git gc", which "happened" to use the
+> good copy of the corrupted object and complete successfully (instead
+> of barfing on the bad copy). The GC then removed the old
+> (now-obsolete) packfiles, and thus the corruption was gone.
+> 
+> However, exactly _why_ git happened to prefer the good copy in my
+> copied packfile instead of the bad copy in the existing packfile, I do
+> not know. I suspect some amount of pure luck was involved.
 
-Removing completely may remove a chance to restore the corrupt object
-(rather unlikely, but I can imagine fine binary file surgery to un-break
-a broken object file).
+I'm not sure that it is luck, but more like 8eca0b4 (implement some
+resilience against pack corruptions, 2008-06-23) working as intended[1].
+Generally, git should be able to warn about corrupted objects and look
+in other packs for them (both for regular operations, and for
+repacking).
 
-But we could move them out of Git's object directory (a bit like
-.git/lost-found, we could have .git/corrupt). For unpacked objects, it's
-trivial (just mv them in the directory). For packed objects, I don't
-know what happens in case they are corrupt. That would solve essentially
-any problem that you can solve by removing the file, but it makes the
-operation reversible.
+-Peff
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[1] That's just one of the many commits dealing with this. Try running
+    "git log --author=Nicolas.Pitre --grep=corrupt" for more. :)
