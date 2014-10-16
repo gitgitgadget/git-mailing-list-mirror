@@ -1,146 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] core.filemode may need manual action
-Date: Thu, 16 Oct 2014 13:12:10 -0700
-Message-ID: <xmqq61fju63p.fsf@gitster.dls.corp.google.com>
-References: <54401CAD.4090606@web.de>
+Subject: Re: [PATCH] Update gitweb.perl to current CGI.pm API
+Date: Thu, 16 Oct 2014 13:18:45 -0700
+Message-ID: <xmqq1tq7u5sq.fsf@gitster.dls.corp.google.com>
+References: <87lhogzeq0.fsf@placard.fr.eu.org>
+	<xmqqa94vu7qh.fsf@gitster.dls.corp.google.com>
+	<CANQwDwdm6aMVC7U+nbbtS=J8M2fYOk_MECt_1=NX=pXdt06YjQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Oct 16 22:13:13 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
+	Roland Mas <lolando@debian.org>
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 16 22:18:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XerQ8-0005qO-Ps
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 22:13:13 +0200
+	id 1XerVe-0000qY-1Z
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 22:18:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752714AbaJPUNI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Oct 2014 16:13:08 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64788 "EHLO
+	id S1752676AbaJPUSu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Oct 2014 16:18:50 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64644 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752503AbaJPUNH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Oct 2014 16:13:07 -0400
+	with ESMTP id S1751637AbaJPUSs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Oct 2014 16:18:48 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51D901637A;
-	Thu, 16 Oct 2014 16:13:05 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C8D516517;
+	Thu, 16 Oct 2014 16:18:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=4SQcXM5zQd9c
-	wUWSaXQCMaVJ6s8=; b=tvkJeheqOMxy4WBwK16GVxukIiFjMf2iA/dullShkWMT
-	wa/UoPtwbG82/P08C+JyrffXWVRNh6jWmPd6xxwfCYJSPa27+BGo/SMkIT+NHsf4
-	FHOuAgzXmFdtUIBe/6s3jNG32RjKhYH82kDdar1mmz80/7wlSQwdJDgTt/WQUq0=
+	:content-type:content-transfer-encoding; s=sasl; bh=px8qaZuiVIot
+	RDiRMkMEvzqZ+1E=; b=LCHSsO6kay3/oCJweNsP8VJ2ET79i57/I5Ljpjgoe8ZW
+	kIM70r4mSv28OhOdOvqIBu4qd7MDeVyBngajEXNqg4TsQuPBi7lfvKuVQ96LSnpT
+	IV90Ycc0PZqXTkBIaxUV9aV9lJayh6K+DjSyv30bDRo8dQ8UVTiVbrNMWwSoxAc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Ua5Shq
-	Hx4oSQaYNqO/dhOwUfnWmBguPsLgiWFOOV59ZwtVzab4yljpbc/HSn1hrqSHnGVS
-	Fw0Cd5KTxeoxVpyeTadWa9FALP+kA85IWj9kWORxUlVHQDCFT32ShmCyTSaYwDus
-	zk4gK0j9HROadZIp2q6gSEOxBsF2l0tNHnZeI=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KKlmul
+	xUEWHQOSnqFssn86H89RWg8jHdHBdiFeGHOFYaipfPTmyi9iKaCcnoyYN6eyj4dp
+	3ZkrsWQAjd3ftUQy3cZ7K7EfebUlmpibdArrZxLoxqiMg2h/zrLJzkLOwfAU4kaC
+	oMFyiL30d9dgsMWHzH99hvij9QXEHo/inqOiE=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 498EC16379;
-	Thu, 16 Oct 2014 16:13:05 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 315F216516;
+	Thu, 16 Oct 2014 16:18:47 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 64D6C1633C;
-	Thu, 16 Oct 2014 16:12:11 -0400 (EDT)
-In-Reply-To: <54401CAD.4090606@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Thu, 16 Oct 2014 21:29:49 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC0EA16514;
+	Thu, 16 Oct 2014 16:18:46 -0400 (EDT)
+In-Reply-To: <CANQwDwdm6aMVC7U+nbbtS=J8M2fYOk_MECt_1=NX=pXdt06YjQ@mail.gmail.com>
+	("Jakub =?utf-8?Q?Nar=C4=99bski=22's?= message of "Thu, 16 Oct 2014
+ 22:02:08 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B67C1B6A-5570-11E4-8156-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A21877EE-5571-11E4-9E99-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-> core.filemode is set automatically when a repo is created.
-> But when a repo is exported via CIFS or cygwin is mixed with Git for =
-Windows
-> core.filemode may better be set manually to false.
-> Update and improve the documentation.
+> On Thu, Oct 16, 2014 at 9:36 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
+>> Looks sensible to me; Jakub, ack?
+>>
 >
-> Does this reflect the discussion via email ?
-> Or is more tweaking needed ?
+> Ack.
 >
->
->  Documentation/config.txt | 19 +++++++++++++++++--
->  1 file changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 4333636..b4fea43 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -204,8 +204,23 @@ advice.*::
->  --
-> =20
->  core.fileMode::
-> -	If false, the executable bit differences between the index and
-> -	the working tree are ignored; useful on broken filesystems like FAT=
-=2E
-> +	Tells Git if the executable bit of files in the working tree
-> +	is to be honored.
-> +
-> +	Some filesystems lose the executable bit when a file that is
-> +	marked as executable is checked out, or checks out an
-> +	non-executable file with executable bit on.  "git init" and
-> +	"git clone" probe the filesystem to see if it records
-> +	executable bit correctly when they create a new repository
-> +	and this variable is automatically set as necessary.
-> +
-> +	A repository, however, may be on a filesystem that records
-> +	the filemode correctly, and this variable is set to 'true'
-> +	when created, but later may be made accessible from another
-> +	environment that loses the filemode (e.g. exporting ext4 via
-> +	CIFS mount, visiting a Cygwin managed repository with
-> +	MsysGit).  In such a case, it may be necessary to set this
-> +	variable to 'false'.
->  	See linkgit:git-update-index[1].
->  +
->  The default is true, except linkgit:git-clone[1] or linkgit:git-init=
-[1]
+> Nb. this code follows back to original gitweb.cgi by Kay Sievers, ver=
+y
+> early in the development (2005)
 
-I suspect that the above will not format very well.  Hint: what is
-the lone "+" line before "The default is true..." doing there?
+Thanks.  I realize that Ack sounds as if "Yeah, I acknowledge and
+admit I was in the wrong earlier", but I didn't mean "I think this
+is your bug---do you think it is a good fix?"  I just meant the
+latter half of that sentence.
 
-Aside from "Is MsysGit the old name for Git for Windows"? raised by
-others, I think it may be worthwhile to mention Eclipse, as that is
-where the original (by the way, it would have been nice if you left
-some pointer to the original discussion when saying "the discussion
-via email"---it took me a while to recall what you are talking
-about) from Hilco Wijbenga was about ([$gmane/257689]).  So, perhaps
-s/with MsysGit/with Eclipse or Git for Windows/; or something.
+Here is what I'll queue (note: I've retitled so that an entry in
+"git shortlog" would mean something).
 
-Other than that, I do not see anything wrong in there.  Thanks.
+Thanks, both.
 
-As a separate topic, however, we may want to start thinking about
-adding a cheat-sheet on platform-specific bits to our documentation.
+-- >8 --
+=46rom: Roland Mas <lolando@debian.org>
+Subject: [PATCH] gitweb: use start_form, not startform that was removed=
+ in CGI.pm 4.04
 
-The alphabetical listing of configuration variables we see here is a
-very good way for people to go from variable names to what they do
-(e.g. find a variable defined in configuration file of a neighbour
-or be instructed to set a variable by project lead and want to learn
-why setting the variable to the value is a good idea), but not a
-good way to go in the other direction (e.g. have trouble running Git
-on a filesystem that mangles filenames and want to find out if there
-already is a way to work it around).
+CGI.pm 4.04 removed the startform method, which had previously been
+deprecated in favour of start_form.  Changes file for CGI.pm says:
 
-The cheat-sheet could be just a list of configuration and
-environment variables e.g. "Those on Windows may want to check into
-these settings".
+    4.04 2014-09-04
+     [ REMOVED / DEPRECATIONS ]
+	- startform and endform methods removed (previously deprecated,
+	  you should be using the start_form and end_form methods)
 
+Signed-off-by: Roland Mas <lolando@debian.org>
+Reviewed-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ gitweb/gitweb.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-[Reference]
-
-$gmane/257689:
-
-    http://thread.gmane.org/gmane.comp.version-control.git/257558/focus=
-=3D257689
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a9f57d6..ccf7516 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4100,7 +4100,7 @@ sub print_search_form {
+ 	if ($use_pathinfo) {
+ 		$action .=3D "/".esc_url($project);
+ 	}
+-	print $cgi->startform(-method =3D> "get", -action =3D> $action) .
++	print $cgi->start_form(-method =3D> "get", -action =3D> $action) .
+ 	      "<div class=3D\"search\">\n" .
+ 	      (!$use_pathinfo &&
+ 	      $cgi->input({-name=3D>"p", -value=3D>$project, -type=3D>"hidden=
+"}) . "\n") .
+@@ -5510,7 +5510,7 @@ sub git_project_search_form {
+ 	}
+=20
+ 	print "<div class=3D\"projsearch\">\n";
+-	print $cgi->startform(-method =3D> 'get', -action =3D> $my_uri) .
++	print $cgi->start_form(-method =3D> 'get', -action =3D> $my_uri) .
+ 	      $cgi->hidden(-name =3D> 'a', -value =3D> 'project_list')  . "\n=
+";
+ 	print $cgi->hidden(-name =3D> 'pf', -value =3D> $project_filter). "\n=
+"
+ 		if (defined $project_filter);
+--=20
+2.1.2-561-gc401a55
