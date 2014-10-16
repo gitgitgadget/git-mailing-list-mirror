@@ -1,97 +1,58 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] clone: --dissociate option to mark that reference is
- only temporary
-Date: Thu, 16 Oct 2014 11:26:54 -0400
-Message-ID: <543FE3BE.9010307@xiplink.com>
-References: <xmqqa94yzap8.fsf@gitster.dls.corp.google.com>	<543E85FA.6050404@xiplink.com>	<xmqqwq81w8az.fsf@gitster.dls.corp.google.com>	<543EDE6A.7040500@xiplink.com>	<xmqqsiipuifi.fsf@gitster.dls.corp.google.com>	<543EEAC4.8070204@xiplink.com> <xmqqfvepuhmy.fsf@gitster.dls.corp.google.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Git log with follow & author not working
+Date: Thu, 16 Oct 2014 11:09:45 -0500
+Message-ID: <CAHd499DPx+1s+WTxJBEzgsJVy0M8AmuZzAx00mODWNy3KuCjdw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 17:26:55 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 16 18:09:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xemx4-0001gh-E0
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 17:26:54 +0200
+	id 1Xencc-0005gj-FP
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 18:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298AbaJPP0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2014 11:26:50 -0400
-Received: from smtp106.ord1c.emailsrvr.com ([108.166.43.106]:36493 "EHLO
-	smtp106.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750947AbaJPP0u (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Oct 2014 11:26:50 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp22.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 6399E180BDA;
-	Thu, 16 Oct 2014 11:26:49 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp22.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 05007180BD0;
-	Thu, 16 Oct 2014 11:26:48 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.2.13);
-	Thu, 16 Oct 2014 15:26:49 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.2
-In-Reply-To: <xmqqfvepuhmy.fsf@gitster.dls.corp.google.com>
+	id S1751298AbaJPQJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2014 12:09:46 -0400
+Received: from mail-vc0-f182.google.com ([209.85.220.182]:48591 "EHLO
+	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751238AbaJPQJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2014 12:09:46 -0400
+Received: by mail-vc0-f182.google.com with SMTP id la4so2962691vcb.13
+        for <git@vger.kernel.org>; Thu, 16 Oct 2014 09:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=9dh/qpwNiPu1aeuhWdOjwDaoQbgmhFRwrE2JcnR9vvA=;
+        b=d8eYuxlAWXpAut0hItSr2S/lmCDN9BfPlkVU/cVAyf1R35lAWm5vaK3lomGIJgo2Fh
+         Yfw6OW8XdNm4GcTO+/PK/x4Z76fqP3E/JSD/hguRQDA3GhvgCeG669QJDAHBnDoOw6ut
+         f3qcj9c7bpKMc1ZeovTDxiDbJeswOzZIyGl32AE+SzQVvShrIb/VNVlu36Ouw7PzzQj2
+         z1AWu7ItLLuoYJiHvwqz2998JMlkIis59smHS5GJ7QZaqTLwcoUDCIJ3vEMX5YHgTqb9
+         gXjrzZl9U0tx/RE/hxf7fn+H+1KFKixZYvSEy5d/RYGIV7pv3lZo5p6dDVtEnKlXn1NL
+         CQ6A==
+X-Received: by 10.52.26.116 with SMTP id k20mr1545175vdg.82.1413475785421;
+ Thu, 16 Oct 2014 09:09:45 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.221.3.200 with HTTP; Thu, 16 Oct 2014 09:09:45 -0700 (PDT)
+X-Google-Sender-Auth: caVScLXgV2eHxuQcm0TfCI4niZ4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14-10-15 05:50 PM, Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> Yes, but we're cloning gko, not the neighbour.  Doesn't that mean that the
->> clone operation won't know about any of the neighbour's refs?
-> 
-> No.  --reference (and a natural implementation of --borrow, I would imagine)
-> peeks the refs of the repository we borrow from and that is how
-> clone can say "I already have objects reachable from these refs, so
-> please send me the remainder" to the repository it is cloning from.
+I have relocated a file into another directory and committed that.
+Using the --follow command on the NEW path of the file, I want to find
+all commits to that file by a specific author:
 
-By "know about" I meant "want to use".  Sorry for being a bit dense about
-this; let me try again.
+$ git log --follow --author david -- new/path/to/file.cpp
 
-(BTW, it occurs to me that your patch -- if I read it right -- doesn't
-fulfill your scenario since it disassociates the clone from all repos,
-regardless of whether they are specified with --reference or --borrow.  In
-the following I assume a --borrow that only disassociates from the specified
-repo and leaves the --reference repo(s) alone.)
+When I do this, I get NO results. When I use the OLD path to the file, it works:
 
-Since we're cloning gko's refs, all of the neighbour's unique refs and
-objects can be ignored.  Even though paths to the neighbour and the local
-pool will be in the clone's alternates file, any refs the clone operation
-creates won't need to use any objects from the neighbour.  The clone
-operation gives us no way to refer to the neighbour's unique objects.
+$ git log --follow --author david -- OLD/path/to/file.cpp
 
-I just don't see what difference the --borrow option makes.  Consider the two
-cases:
+Also --follow seems to work fine on the NEW path if I do not specify
+--author. Is this a bug or am I using this command incorrectly?
 
-With just --reference=/local/pool/linux.git:
-	1. Set up the alternates file with that path.
-	2. Copy gko's refs into refs/remotes/origin/.
-	3. Set up refs/heads/master to refer to gko's HEAD.
-	4. Checkout refs/heads/master (uses objects from local pool).
-
-With both that --reference and --borrow=../my/neighbour/linux-hack.git:
-	1. Set up the alternates file with both paths.
-	2. Copy gko's refs into refs/remotes/origin/.
-	3. Set up refs/heads/master to refer to gko's HEAD.
-	4. Checkout refs/heads/master (uses objects from local pool).
-	5. Disassociate ourselves from the neighbour repo.
-
-In both cases the first four actions have no need of the neighbour repo.  The
-second case's fifth action surgically removes the neighbour as an alternate
-object store, and we're left with the same clone we got in the first case.
-What was the point?
-
-It seems that in order to make something like --borrow useful, "git clone"
-would somehow need to know which of the neighbour's refs you want to *also*
-clone, then copy any unique objects from the neighbour before disassociating
-from it.
-
-		M.
+Follow up assistance is very much appreciated. Thanks guys.
