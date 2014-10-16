@@ -1,95 +1,94 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 4/5] t7610-mergetool: use test_config to isolate tests
-Date: Wed, 15 Oct 2014 22:30:04 -0700
-Message-ID: <1413437404-23810-1-git-send-email-davvid@gmail.com>
-References: <xmqqwq81ujlw.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org, Charles Bailey <charles@hashpling.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 16 07:29:44 2014
+From: Roland Mas <lolando@debian.org>
+Subject: [PATCH] Update gitweb.perl to current CGI.pm API
+Date: Thu, 16 Oct 2014 08:54:47 +0200
+Message-ID: <87lhogzeq0.fsf@placard.fr.eu.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>, 765525@bugs.debian.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 16 09:01:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XeddA-0004Cj-0f
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 07:29:44 +0200
+	id 1Xef3d-0007Ia-7k
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Oct 2014 09:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbaJPF3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2014 01:29:39 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:56646 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750719AbaJPF3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2014 01:29:38 -0400
-Received: by mail-pd0-f174.google.com with SMTP id y13so2575647pdi.19
-        for <git@vger.kernel.org>; Wed, 15 Oct 2014 22:29:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9XvHegy4zMRzYyPZv51xnr+Y+epw3b3tb+ymI9/8CgE=;
-        b=XKQAqDPfjX9HMNDsWcyPOEjRPoKSSnxi1/noRK0n+SksosBhIPXMcv0JqysypISiij
-         honIoskanvQ1IECb0TGbIzYuLMWcbnlO9KYp3g1YYcV9HDszpFvG06V8H1uNTO61mhL4
-         pM73+PTfT6/JQiLVW1LKC/83dne49TEXPuawfrlQFOniONGM+RfczRm3uy0ruEcJHgkO
-         KJBfuA5knEwuZp29dwJTf46F707sCPk7I2MdM767Ay3eAFsUqwKJIMjBCmPcnu8hWiS7
-         rCc/Nt70I83KYzWbADg6PLsV329XJrXPMjUQcQPoeAj8zG7CizXWlOtAtQ38SYWmWEg4
-         JVBg==
-X-Received: by 10.68.216.70 with SMTP id oo6mr2373958pbc.124.1413437378270;
-        Wed, 15 Oct 2014 22:29:38 -0700 (PDT)
-Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id r8sm2916023pds.35.2014.10.15.22.29.35
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 15 Oct 2014 22:29:37 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2.453.g1b015e3
-In-Reply-To: <xmqqwq81ujlw.fsf@gitster.dls.corp.google.com>
+	id S1751116AbaJPHBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2014 03:01:04 -0400
+Received: from mirepoix.gnurandal.net ([195.154.230.83]:57457 "EHLO
+	mirepoix.gnurandal.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750805AbaJPHBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2014 03:01:03 -0400
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Oct 2014 03:01:03 EDT
+Received: from polymir (polymir.placard.fr.eu.org [IPv6:2001:bc8:3a7e:210:5604:a6ff:fe48:8421])
+	by mirepoix.gnurandal.net (Postfix) with ESMTPA id F1F503BA;
+	Thu, 16 Oct 2014 08:54:47 +0200 (CEST)
+Received: from roland by polymir with local (Exim 4.84)
+	(envelope-from <lolando@debian.org>)
+	id 1XeexT-0007Wu-Hg; Thu, 16 Oct 2014 08:54:47 +0200
+Mail-Copies-To: never
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Hi all,
+
+  This simple two-line patch fixes a bug that makes gitweb unusable on
+systems where the installed CGI.pm is version 4.04 or later (such as on
+Debian unstable).  That version removed the startform method, which had
+previously been deprecated in favour of start_form since 2009.
+
+  I don't have any specific tests for that change, but it does help
+fixing the testsuite of FusionForge (which includes a test of its Git
+plugin, involving gitweb).
+
+  For reference, this is Debian bug #765525 (http://bugs.debian.org/765525).
+
+  (I'm not subscribed to the git@vger mailing-list; please Cc me on
+replies.)
+
+  Thanks,
+
+Roland.
+
+>From 1b74cfb8568927a307f165e428455789398f6d61 Mon Sep 17 00:00:00 2001
+From: Roland Mas <lolando@debian.org>
+Date: Thu, 16 Oct 2014 00:05:25 +0200
+Subject: [PATCH] Update gitweb.perl to current CGI.pm API
+
+CGI.pm 4.04 removed the startform method, which had previously been
+deprecated in favour of start_form.  Updated gitweb.perl accordingly.
+
+Signed-off-by: Roland Mas <lolando@debian.org>
 ---
-This is a replacement patch for
-"t7610-mergetool: prefer test_config over git config"
-in da/mergetool-tests.
+ gitweb/gitweb.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Changes since v1:
-
-The changes are more surgical and the commit message mentions
-why we are using test_config.
-
- t/t7610-mergetool.sh | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 1a15e06..4fec633 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -112,7 +112,7 @@ test_expect_success 'custom mergetool' '
- '
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a9f57d6..ccf7516 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4100,7 +4100,7 @@ sub print_search_form {
+ 	if ($use_pathinfo) {
+ 		$action .= "/".esc_url($project);
+ 	}
+-	print $cgi->startform(-method => "get", -action => $action) .
++	print $cgi->start_form(-method => "get", -action => $action) .
+ 	      "<div class=\"search\">\n" .
+ 	      (!$use_pathinfo &&
+ 	      $cgi->input({-name=>"p", -value=>$project, -type=>"hidden"}) . "\n") .
+@@ -5510,7 +5510,7 @@ sub git_project_search_form {
+ 	}
  
- test_expect_success 'mergetool crlf' '
--	git config core.autocrlf true &&
-+	test_config core.autocrlf true &&
- 	git checkout -b test2 branch1 &&
- 	test_must_fail git merge master >/dev/null 2>&1 &&
- 	( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-@@ -505,14 +505,12 @@ test_expect_success 'file with no base' '
- 
- test_expect_success 'custom commands override built-ins' '
- 	git checkout -b test14 branch1 &&
--	git config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
--	git config mergetool.defaults.trustExitCode true &&
-+	test_config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
-+	test_config mergetool.defaults.trustExitCode true &&
- 	test_must_fail git merge master &&
- 	git mergetool --no-prompt --tool defaults -- both &&
- 	echo master both added >expected &&
- 	test_cmp both expected &&
--	git config --unset mergetool.defaults.cmd &&
--	git config --unset mergetool.defaults.trustExitCode &&
- 	git reset --hard master >/dev/null 2>&1
- '
- 
+ 	print "<div class=\"projsearch\">\n";
+-	print $cgi->startform(-method => 'get', -action => $my_uri) .
++	print $cgi->start_form(-method => 'get', -action => $my_uri) .
+ 	      $cgi->hidden(-name => 'a', -value => 'project_list')  . "\n";
+ 	print $cgi->hidden(-name => 'pf', -value => $project_filter). "\n"
+ 		if (defined $project_filter);
 -- 
-2.1.2.453.g1b015e3
+2.1.1
