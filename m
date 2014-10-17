@@ -1,68 +1,73 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
-Date: Fri, 17 Oct 2014 16:14:19 +0700
-Message-ID: <CACsJy8ABm93QTZm8wnJUYaJ6zC2bXBDyois+Wrq-vCB=DCJmVQ@mail.gmail.com>
-References: <1413090791-14428-1-git-send-email-max@max630.net>
- <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
- <543D58D9.5060606@web.de> <20141014203114.GB8157@wheezy.local>
- <CACsJy8AmBr2YTJkVw4BDD95RVE91EEBtEyakOpb77NDXaVBzJA@mail.gmail.com> <xmqq1tq9xnrs.fsf@gitster.dls.corp.google.com>
+From: Ciro Santilli <ciro.santilli@gmail.com>
+Subject: Stop prepending /usr/bin to hooks PATH, or document it very clearly
+Date: Fri, 17 Oct 2014 13:25:42 +0200
+Message-ID: <CAFXrp_c+dxafLOO6T=LDd6OxhfpamkJsUc8iBwB-B41z8Htc4A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Max Kirillov <max@max630.net>, Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 11:15:01 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 17 13:25:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xf3ci-0002id-Bf
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Oct 2014 11:15:00 +0200
+	id 1Xf5fJ-0000mc-23
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Oct 2014 13:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562AbaJQJOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Oct 2014 05:14:54 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:65209 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752550AbaJQJOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2014 05:14:51 -0400
-Received: by mail-ig0-f172.google.com with SMTP id r2so1194206igi.17
-        for <git@vger.kernel.org>; Fri, 17 Oct 2014 02:14:51 -0700 (PDT)
+	id S1752382AbaJQLZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2014 07:25:45 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:41310 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752343AbaJQLZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2014 07:25:44 -0400
+Received: by mail-lb0-f175.google.com with SMTP id u10so487152lbd.20
+        for <git@vger.kernel.org>; Fri, 17 Oct 2014 04:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=s09owCBn0LjACFwbBitXtEfjRaMubEc7LZyp1vMyOiA=;
-        b=avDgQ/LuUvdxQnKImLr1U/IykVNhlY8mrkEpAySD0aXYRdNmcnMGjP4+ZUN5phB+6Q
-         vUt5mXh1rcOcappcz9MRFKkhO2B6c5pxeGDcbgGpnqFKyeF4O4i3wBCYn4LXOb1RkF+w
-         YxPBl9tUS8T0nAhOyFsSt5CVbHhCGgE6fPMdtRvcyqyKvfV/kmZ7rEja96wouSmRvcNA
-         CyCUqCfbyVi0OmVaMFambM6hDT4S/GQXMfnc89RLUVT7A6+5CO+Q5ldNviE+/RykcJrC
-         jKyIX8cDMAW1YJCvCDNTgEUQsZLykzDFyN0YJNeqRfkP29hQw7AgTFTKjduq5f1vrR1N
-         Rhlg==
-X-Received: by 10.42.114.18 with SMTP id e18mr9462317icq.42.1413537291050;
- Fri, 17 Oct 2014 02:14:51 -0700 (PDT)
-Received: by 10.107.131.1 with HTTP; Fri, 17 Oct 2014 02:14:19 -0700 (PDT)
-In-Reply-To: <xmqq1tq9xnrs.fsf@gitster.dls.corp.google.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=tcHODiyTsOT0xc2Tpk/ho+EtG792W18qPG9JMMy/Grw=;
+        b=Wwt54ZRyhrmM8F0NUqH8gFGWtDTMQH22j8NxslH0Y/bjVqxVPrI65NRZx1lL1A1ECv
+         o0m2vy/y2FDnZCmP0uEYqXO9UUuQvh+fqbqApmnc8TMjW88hDitwTNYuZMyNHbC9p/lk
+         XxcfXh/gQJXI0wHxlnQRN3LYxm0XfQKBYqtngD0270X8/IwHVBLjMBEz6p8ENBi+MZDn
+         wSlPGEzCIArYxx2js2yxABGkbhUkunpVQOk142xXs+VlVwkHmh61pOSKfBwBq5QJ3FFi
+         RC7/7AHPrY8hKvPWn/WyZA675F18DnPGoICuOlMelI9bwdUmm3Do9ykEU9xIzQTKMY7P
+         NjFw==
+X-Received: by 10.152.87.98 with SMTP id w2mr7972922laz.27.1413545142952; Fri,
+ 17 Oct 2014 04:25:42 -0700 (PDT)
+Received: by 10.152.170.133 with HTTP; Fri, 17 Oct 2014 04:25:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 16, 2014 at 12:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Hmph.  I was hoping that the multiple-work-trees topic was ready for
-> 'next' by now, but we may want to wait to see how the interaction
-> with submodule plays out to have another chance of a clean reroll
-> before it happens.  This is a topic with large impact and is quite
-> intrusive code-wise, even though the intrusive parts are cleanly
-> done.  So we'd want to take more time to unleash it to the general
-> public than more usual small scale topics, anyway.
+On hooks Git automatically prepends to the `PATH` via the `setup_path` function:
 
-Originally I wanted to get it merged without submodule support, but I
-failed to spot the local_repo_env problem and could have caused a
-regression for submodules. So yeah delaying the series does not sound
-bad. Not sure about the reroll (i.e. rewriting current patches). I
-think putting patches on top with explanation is better. But we can
-keep it in 'pu' and see if we really need to reroll.
--- 
-Duy
+- `git --exec-path` (`/usr/lib/git-core`)
+- the directory of `$0` (`/usr/bin`) if you call it with the full path
+
+The problem is that the `/usr/bin` breaks "interpreter version manager
+systems" like RVM, rbenv, virtualenv, etc. since people will write
+hooks like:
+
+    #!/usr/bin/env ruby
+
+and the `/usr/bin` ruby will get run instead of the managed one
+(`~/.rvm/some/path/bin).
+
+I recommend either:
+
+- not adding the `$0` if possible (ideal but backwards incompatible
+unless a new config is added)
+- documenting this behavior *very* clearly on `man githooks`
+- proposing some other mechanism that neatly solves the problem
+
+I will try to submit a patch for the desired solution if within my
+technical capability.
+
+Samples of problems this has caused people:
+
+- https://github.com/gitlabhq/gitlabhq/issues/8045
+- http://stackoverflow.com/questions/9037284/how-can-i-run-a-virtualenv-python-script-as-a-git-pre-commit-hook
+- http://stackoverflow.com/questions/17515769/why-is-my-ruby-git-script-hook-run-with-the-wrong-path
+- https://github.com/sstephenson/rbenv/issues/374
+- https://github.com/magit/magit/issues/498
