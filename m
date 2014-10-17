@@ -1,93 +1,106 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH V2B] core.filemode may need manual action
-Date: Fri, 17 Oct 2014 23:40:23 +0200
-Message-ID: <54418CC7.80601@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-bundle rev handling and de-duping
+Date: Fri, 17 Oct 2014 15:41:22 -0700
+Message-ID: <xmqq1tq6s4j1.fsf@gitster.dls.corp.google.com>
+References: <20141015223244.GA25368@peff.net>
+	<20141015223419.GC25630@peff.net>
+	<xmqqr3y7ud5h.fsf@gitster.dls.corp.google.com>
+	<20141017003356.GC7848@peff.net>
+	<ECD50FDF3714423E99E6CC6B4DE04FBF@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 17 23:40:34 2014
+Content-Type: text/plain
+Cc: "Jeff King" <peff@peff.net>, "Git List" <git@vger.kernel.org>,
+	"Michael Haggerty" <mhagger@alum.mit.edu>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sat Oct 18 00:41:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XfFGD-0004pb-Kx
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Oct 2014 23:40:33 +0200
+	id 1XfGDS-0007me-7T
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Oct 2014 00:41:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490AbaJQVk2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Oct 2014 17:40:28 -0400
-Received: from mout.web.de ([212.227.15.4]:64967 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751262AbaJQVk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Oct 2014 17:40:26 -0400
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0MINI7-1XioIJ1yPP-0048Po; Fri, 17 Oct 2014 23:40:24
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-Provags-ID: V03:K0:LkiuAiwx4d/qp9Je6nYGFk1YaxQrpkio6a/8w5RYRyB1irK6c16
- LNpmoaDCFyl0UP95oRzB02COWQo7jyKkTkDrdy0iT2MsyLUv7YcznFmlzCdNvfdWhDelYpN
- y9YGhxFgAYFPjxKk4IvPSNlW/M984M3/ghIG24jXECECxX544Dk4DAEl1M2H6V9vzikTveO
- 6Xtv0X5C1iV95Qyx31UPA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751302AbaJQWlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Oct 2014 18:41:32 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59235 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751158AbaJQWlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Oct 2014 18:41:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B614516AE4;
+	Fri, 17 Oct 2014 18:41:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+xvBlhmmmRgezRRMy06ze1UDNcY=; b=LAO108
+	2FShFvXJYEDmbUIFcz3+S2dVLOKvTi2DeIE/2vheWNf/NbE78RWazcYI3CQ7AhyS
+	XBGLHlXupn2nY0JilejQJIcGIAen9E/QNlCUtrt+QSxaP6gZlglVPPnGELv0Jhel
+	dXsS60+Mk7mZ+V2YKntCvdpZ9KW8JaxhxHiyc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yTRLOJuLwhFDYCTWpCcJwmvnKW+9x/1m
+	ib7AGsp+kek4bIHoW6UAiJ6+utkMlb/OfDRl8S5w0P3cd6hwSYn+15VEYCiBC93M
+	geoSfmvkYClBueo9TSrvdbyCDc9S5dSS+PC1wGpQrG4SW6Zg3sNBIt6bTJFkmFhm
+	X6c+CeSZFi8=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AB89816AE3;
+	Fri, 17 Oct 2014 18:41:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2C25316AE2;
+	Fri, 17 Oct 2014 18:41:24 -0400 (EDT)
+In-Reply-To: <ECD50FDF3714423E99E6CC6B4DE04FBF@PhilipOakley> (Philip Oakley's
+	message of "Fri, 17 Oct 2014 22:03:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B929C43C-564E-11E4-982C-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-core.filemode is set automatically when a repo is created.
-But when a repo is exported via CIFS or cygwin is mixed with Git for Wi=
-ndows
-or Eclipse core.filemode may better be set manually to false.
-Update and improve the documentation
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
+>>  # two branches point at the same object
+>>  git branch foo master
+>>
+>>  # the other side already has master. Let's send them foo.
+>>  # this will fail because the bundle is empty. That's mildly
+>>  # annoying because we really want to tell them "hey, update
+>>  # your foo branch". But at least we get an error.
+>>  git bundle create tmp.bundle foo ^master
+>
+> Isn't this kindof what happens as an issue when we want the right HEAD
+> to be included explicitly in a bundle. Though
 
-Does this makes more sence ?
 
- Documentation/config.txt | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+What we are discussing here is "we tell from the command line where
+the histories end, but do we correctly record all these end points
+as fetchable refs in the resulting bundle?"
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 04a1e2f..3127e5d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -204,13 +204,26 @@ advice.*::
- --
-=20
- core.fileMode::
--	If false, the executable bit differences between the index and
--	the working tree are ignored; useful on broken filesystems like FAT.
-+	Tells Git if the executable bit of files in the working tree
-+	is to be honored.
-++
-+	Some filesystems lose the executable bit when a file that is
-+	marked as executable is checked out, or checks out an
-+	non-executable file with executable bit on.
-+	linkgit:git-clone[1] or linkgit:git-init[1] probe the filesystem
-+	to see if it handles the executable bit correctly
-+	and this variable is automatically set as necessary.
-++
-+	A repository, however, may be on a filesystem that handles
-+	the filemode correctly, and this variable is set to 'true'
-+	when created, but later may be made accessible from another
-+	environment that loses the filemode (e.g. exporting ext4 via
-+	CIFS mount, visiting a Cygwin created repository with
-+	Git for Windows or Eclipse).
-+	In such a case it may be necessary to set this variable to 'false'.
- 	See linkgit:git-update-index[1].
- +
--The default is true, except linkgit:git-clone[1] or linkgit:git-init[1=
-]
--will probe and set core.fileMode false if appropriate when the
--repository is created.
-+The default is true (when core.filemode is not specified in the config=
- file).
-=20
- core.ignorecase::
- 	If true, this option enables various workarounds to enable
---=20
-2.1.0.rc2.210.g636bceb
+It does not have anything to do with "bundle that does not record
+its HEAD cannot be cloned", which happens when you do not mention
+HEAD when creating the bundle in the first place, which is a totally
+different thing.
+
+> http://thread.gmane.org/gmane.comp.version-control.git/234053 suggests
+> its more complicated than that.
+
+The main topic of discussion does not have much to what bundle
+records and what a reader of a bundle guesses.  It is about what
+goes on the wire and mention of bundle was just a tangent brought up
+by those who do not know what was being discussed, I think.
+
+I think the right fix to the "git bundle" issue is to make it easier
+on the "git bundle create" side to have the resulting bundle record
+its HEAD, even when the user did not mention HEAD on the command
+line.  For example, when there is only one end point, e.g. "git
+bundle create x next", record refs/heads/next _and_ HEAD pointing at
+the same commit, because there is no other seneible choice.  
+
+"git bundle create y master next" may record master, next and HEAD
+while HEAD is likely pointing at the same commit as master (because
+'master' is special).  Or we could give a warning and even go
+interactive to ask which ref to record as HEAD.
+
+But the above three paragraphs are tangent so I'd stop here.
