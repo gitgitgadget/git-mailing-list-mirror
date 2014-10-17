@@ -1,118 +1,109 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/25] prune-safety
-Date: Thu, 16 Oct 2014 20:03:41 -0400
-Message-ID: <20141017000341.GA7848@peff.net>
+Subject: Re: [PATCH v2 21/25] rev-list: add --index-objects option
+Date: Thu, 16 Oct 2014 20:12:31 -0400
+Message-ID: <20141017001230.GB7848@peff.net>
 References: <20141015223244.GA25368@peff.net>
- <xmqqsiinsoyk.fsf@gitster.dls.corp.google.com>
- <20141016212112.GA16054@peff.net>
- <20141016213918.GA29397@peff.net>
- <xmqq8ukfslol.fsf@gitster.dls.corp.google.com>
+ <20141015224430.GU25630@peff.net>
+ <xmqqiojjuaao.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 17 02:03:50 2014
+X-From: git-owner@vger.kernel.org Fri Oct 17 02:12:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xev1J-0007q3-QV
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Oct 2014 02:03:50 +0200
+	id 1Xev9z-0003yU-4q
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Oct 2014 02:12:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752796AbaJQADp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Oct 2014 20:03:45 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59445 "HELO cloud.peff.net"
+	id S1751499AbaJQAMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Oct 2014 20:12:34 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59454 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752448AbaJQADo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Oct 2014 20:03:44 -0400
-Received: (qmail 3109 invoked by uid 102); 17 Oct 2014 00:03:44 -0000
+	id S1751116AbaJQAMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Oct 2014 20:12:33 -0400
+Received: (qmail 3528 invoked by uid 102); 17 Oct 2014 00:12:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Oct 2014 19:03:44 -0500
-Received: (qmail 3873 invoked by uid 107); 17 Oct 2014 00:03:43 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Oct 2014 19:12:33 -0500
+Received: (qmail 3929 invoked by uid 107); 17 Oct 2014 00:12:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Oct 2014 20:03:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Oct 2014 20:03:41 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Oct 2014 20:12:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Oct 2014 20:12:31 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqq8ukfslol.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqiojjuaao.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 16, 2014 at 03:18:34PM -0700, Junio C Hamano wrote:
+On Thu, Oct 16, 2014 at 11:41:35AM -0700, Junio C Hamano wrote:
 
-> > We should probably add a test for cloning a tag of an otherwise
-> > unreferenced object, too.
+> I agree that "--index" is a bad name as it usually is used in a
+> particular context: the command can work on various combination of
+> working tree and the index, and I am asking it to work on both
+> (e.g. "apply --index" as opposed to "apply --cached").
+
+Thanks. I wasn't sure if I was just being paranoid or not, but now there
+are at least two of us.
+
+> > +--index-objects::
 > 
-> Yeah, that too ;-)
+> This risks "index" getting misunderstood as a verb, e.g. "please
+> enumerate the objects and assign labels to later refer to them",
+> doesn't it?
+> 
+> "--indexed-objects" (short for "--show-objects-in-the-index") or
+> something?
 
-Here's that test (after the scissors below). It can be applied totally
-separately, though I stuck it in as patch "18.5/25" in the existing
-series to confirm that my original series does cause the test to fail,
-and that it passes with the patch I posted earlier.
+That sounds reasonable. We could technically do `--indexed` as that is
+different from `--index`, but maybe they are still confusingly close.
 
-Do you want to just squash the fix I posted earlier (into patch 19, the
-"traverse_commit_list: ..." one)? I'm happy to repost the revised patch,
-but my impression of your workflow is that squashing is just as easy
-than replacing a patch (i.e., you're running "rebase -i" either way).
+> > +	Pretend as if all objects used by the index (any blobs, and any
+> > +	trees which are mentioned by the index's cache-tree extension)
+> > +	ad listed on the command line. Note that you probably want to
+> 
+> s/ad/are/, probably?
 
-Or I'm happy to re-post the whole series, but it's rather long. :)
+Yeah, sorry, vi cruft I think (at least I didn't accidentally insert
+"C-a C-k" ;) ).
 
-> Thanks for a quick diag.
+> > +	use `--objects`, too, as there are by definition no commits in
+> > +	the index.
+> 
+> For gitlinks/submodules, the index records names of the commit
+> objects, they are not listed, and that is the right behaviour, but
+> this description invites some confusion.
 
-I'm impressed that you found the bug so quickly. :) My biggest fear with
-the whole series is that it's disrupting and refactoring some
-fundamental parts of the code that might cause regressions. I put a lot
-of my faith in the test suite, but that did not work out here (I do
-still feel pretty good about the series overall, though I think I'd cook
-it longer than usual given the complexity and the areas it touches).
+Good point. How about this:
 
--- >8 --
-Subject: t5516: test pushing a tag of an otherwise unreferenced blob
-
-It's not unreasonable to have a tag that points to a blob
-that is not part of the normal history. We do this in
-git.git to distribute gpg keys. However, we never explicitly
-checked in our test suite that this actually works (i.e.,
-that pack-objects actually sends the blob because of the tag
-mentioning it).
-
-It does in fact work fine, but a recent patch under
-discussion broke this, and the test suite didn't notice.
-Let's make the test suite more complete.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-The "should have" below is belt-and-suspenders. The test actually fails
-with my series without the cat-file check, but I'm concerned a bug
-that affects pack-objects could also affect the connectivity check on
-the receiving side.
-
- t/t5516-fetch-push.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 67e0ab3..7c8a769 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1277,4 +1277,17 @@ EOF
- 	git push --no-thin --receive-pack="$rcvpck" no-thin/.git refs/heads/master:refs/heads/foo
- '
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 03ab343..3301fde 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -172,12 +172,10 @@ explicitly.
+ 	Pretend as if all objects mentioned by reflogs are listed on the
+ 	command line as `<commit>`.
  
-+test_expect_success 'pushing a tag pushes the tagged object' '
-+	rm -rf dst.git &&
-+	blob=$(echo unreferenced | git hash-object -w --stdin) &&
-+	git tag -m foo tag-of-blob $blob &&
-+	git init --bare dst.git &&
-+	git push dst.git tag-of-blob &&
-+	# the receiving index-pack should have noticed
-+	# any problems, but we double check
-+	echo unreferenced >expect &&
-+	git --git-dir=dst.git cat-file blob tag-of-blob >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.1.2.596.g7379948
+---index-objects::
+-	Pretend as if all objects used by the index (any blobs, and any
+-	trees which are mentioned by the index's cache-tree extension)
+-	ad listed on the command line. Note that you probably want to
+-	use `--objects`, too, as there are by definition no commits in
+-	the index.
++--indexed-objects::
++	Pretend as if all trees and blobs used by the index are listed
++	on the command line.  Note that you probably want to use
++	`--objects`, too.
+ 
+ --ignore-missing::
+ 	Upon seeing an invalid object name in the input, pretend as if
+
+I was tempted to not document this at all (nor to add documentation for
+--reflog), as I think these are really only going to be used internally.
+But it's nice to have documentation even for this internal stuff (if
+anything, we should probably be making sure they are just limited to
+rev-list plumbing, and not included in the log manpage).
+
+-Peff
