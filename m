@@ -1,208 +1,137 @@
-From: Etienne Buira <etienne.buira@gmail.com>
-Subject: [PATCH v5] Handle atexit list internaly for unthreaded builds
-Date: Sat, 18 Oct 2014 14:31:15 +0200
-Message-ID: <f75aaa6d99622317894351849d23a32b36a5039c.1413635268.git.etienne.buira@gmail.com>
-References: <CAMcFKVyMOO4iTq_70fqd0Jjq4WNzz9YrGYNSCZmVx5F28KXicQ@mail.gmail.com>
-Cc: git@vger.kernel.org, etienne.buira@gmail.com
-To: gitster@pobox.com, pclouds@gmail.com, schwab@linux-m68k.org
-X-From: git-owner@vger.kernel.org Sat Oct 18 14:32:34 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] git-completion.bash - avoid excruciatingly slow
+ ref completion on Cygwin
+Date: Sat, 18 Oct 2014 22:47:31 +0800
+Message-ID: <CALUzUxpGXwu=sdh7MHjEcJzDRzZZkTR0NajU0hrBGCZZLGj2aw@mail.gmail.com>
+References: <1413042673-24052-1-git-send-email-mlevedahl@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, 
+	"msysgit@googlegroups.com" <msysgit@googlegroups.com>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: msysgit+bncBCEMFWO7QMPRBF73RGRAKGQE4F2A4UA@googlegroups.com Sat Oct 18 16:47:54 2014
+Return-path: <msysgit+bncBCEMFWO7QMPRBF73RGRAKGQE4F2A4UA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-oi0-f55.google.com ([209.85.218.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XfTBS-0006jw-4a
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Oct 2014 14:32:34 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbaJRMca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2014 08:32:30 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:49737 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbaJRMc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2014 08:32:29 -0400
-Received: by mail-wg0-f43.google.com with SMTP id m15so2546627wgh.14
-        for <git@vger.kernel.org>; Sat, 18 Oct 2014 05:32:28 -0700 (PDT)
+	(envelope-from <msysgit+bncBCEMFWO7QMPRBF73RGRAKGQE4F2A4UA@googlegroups.com>)
+	id 1XfVIP-0003a6-3i
+	for gcvm-msysgit@m.gmane.org; Sat, 18 Oct 2014 16:47:53 +0200
+Received: by mail-oi0-f55.google.com with SMTP id u20sf357057oif.0
+        for <gcvm-msysgit@m.gmane.org>; Sat, 18 Oct 2014 07:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sgE6l/ubBH87vHZ3SJan/3Cm0WED9qR5F6OMw5S5Wms=;
-        b=BKcZQd9FZ+ztgUMfmJS3yWI40YEUUl2eX6mDvKq26C4YJ19LTSl7K3aoZCE+/9IVpb
-         Rsn83XPCtQjroi5ka7k44cj9boTULG5zUnJuLbfocEed59+QkE5E6X4zuB3ZbkckY0NP
-         I4UUfBlj4Zuq950eFDctzyhzO/lo+rO/grC1LoEh/lQu2ZtY0pee0FBtdHfLmxGO6p+a
-         KOHV6hu1dvPavSBkrZRBPQaBW7Ie4hYD6ZW0WO4/lCpuUjd7IF4I9v51geOmzjT7DJNI
-         IlV9ebfz5RcbCkXww/AmNqDN9cF9FbAgrwTGXRl1I5ZRH2/p43oKFhIt4i7u1TS69D2N
-         uZrA==
-X-Received: by 10.180.212.48 with SMTP id nh16mr2000887wic.50.1413635547900;
-        Sat, 18 Oct 2014 05:32:27 -0700 (PDT)
-Received: from localhost.localdomain (sbr22-2-88-185-151-243.fbx.proxad.net. [88.185.151.243])
-        by mx.google.com with ESMTPSA id i5sm5110078wjz.0.2014.10.18.05.32.26
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Oct 2014 05:32:26 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4
-In-Reply-To: <CAMcFKVyMOO4iTq_70fqd0Jjq4WNzz9YrGYNSCZmVx5F28KXicQ@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=Mh8ROT6OSF12aoil9p46hPBCruj3ZNa/TAxeGAUzNd4=;
+        b=N4QZUTlV8lEYdgDJmxsZJSfFUjr+k9ZZKA+/PcP0rkyoqzevTs48pjEfH7brizQCUh
+         tnir5XOM1qgDeO7WsfgR6BomOz2Uk4ON+ZgJFINgTKLG4KUk8uyD3nR1gXUrD81GzioF
+         jbfdXkWf5y3l10u8QU2d/Cg6+RQaEucXjCz+Dj+Og1h11sDQDXwPcJFESybIAvCmr76V
+         mUlnvT96Zu+Nbb5VKgboE0dabnL35eTsc/PEU+90cNUMnUJ+hlIXx8S/0MlCQi1yhFNt
+         vOna/jQ55Dkozt8fJ745SPuXVSoD1JFXGFoPR8eC7Z1+2+Pr+CHB7u1cdoJPOYHhB2BP
+         uoBw==
+X-Received: by 10.182.215.229 with SMTP id ol5mr78596obc.3.1413643672115;
+        Sat, 18 Oct 2014 07:47:52 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.96.103 with SMTP id dr7ls618785obb.93.gmail; Sat, 18 Oct
+ 2014 07:47:51 -0700 (PDT)
+X-Received: by 10.182.81.37 with SMTP id w5mr10813177obx.29.1413643671498;
+        Sat, 18 Oct 2014 07:47:51 -0700 (PDT)
+Received: from mail-ig0-x22a.google.com (mail-ig0-x22a.google.com. [2607:f8b0:4001:c05::22a])
+        by gmr-mx.google.com with ESMTPS id tr5si197187igb.1.2014.10.18.07.47.51
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 18 Oct 2014 07:47:51 -0700 (PDT)
+Received-SPF: pass (google.com: domain of rctay89@gmail.com designates 2607:f8b0:4001:c05::22a as permitted sender) client-ip=2607:f8b0:4001:c05::22a;
+Received: by mail-ig0-x22a.google.com with SMTP id hn15so4293348igb.1
+        for <msysgit@googlegroups.com>; Sat, 18 Oct 2014 07:47:51 -0700 (PDT)
+X-Received: by 10.50.110.65 with SMTP id hy1mr6007938igb.13.1413643671390;
+ Sat, 18 Oct 2014 07:47:51 -0700 (PDT)
+Received: by 10.64.8.200 with HTTP; Sat, 18 Oct 2014 07:47:31 -0700 (PDT)
+In-Reply-To: <1413042673-24052-1-git-send-email-mlevedahl@gmail.com>
+X-Original-Sender: rctay89@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of rctay89@gmail.com designates 2607:f8b0:4001:c05::22a
+ as permitted sender) smtp.mail=rctay89@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-Wrap atexit()s calls on unthreaded builds to handle callback list
-internally.
+On Sat, Oct 11, 2014 at 11:51 PM, Mark Levedahl <mlevedahl@gmail.com> wrote:
+>
+> $git checkout <tab> was taking about 3.5 seconds to respond on one
+> repository having four remotes with about 100 total refs (measured on
+> Cygwin).  All of the time was being claimed in "git for-each-ref" to do
+> its work.  This working directory was created using git-new-workdir, and
+> thus .git/refs and .git/packed-refs are both symlinks.  for-each-ref
+> operates in a way that causes the .git/refs symlink to be resolved
+> multiple times for each ref in the repository, and Cygwin is especially
+> slow in such operations.
 
-This is needed because on unthreaded builds, asyncs inherits parent's
-atexit() list, that gets run as soon as the async exit()s (and again at
-the end of async's parent process). That led to remove temporary files
-too early.
+Thanks for looking into this.
 
-Also remove a by-atexit-callback guard against this kind of issue in
-clone.c, as this patch makes it redundant.
+> Patching refs.c to avoid repeatedly dereferencing the symlink reduced
+> execution time from about 3.5 seconds to about 1.1 seconds (but no
+> improvement on Linux),
 
-Fixes test 5537 (temporary shallow file vanished before unpack-objects
-could open it)
+This makes your patch sound bad, but it isn't when one realises it is
+already fast on Linux!
 
-BTW remove an unused variable in shallow.c.
+> [snip]
+>
+> Relevant timing results using the same repository on both Linux and
+> Cygwin:
 
-Helped-by: Duy Nguyen <pclouds@gmail.com>
-Helped-by: Andreas Schwab <schwab@linux-m68k.org>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Etienne Buira <etienne.buira@gmail.com>
----
- builtin/clone.c   |  5 -----
- git-compat-util.h |  5 +++++
- run-command.c     | 40 ++++++++++++++++++++++++++++++++++++++++
- shallow.c         |  7 ++-----
- 4 files changed, 47 insertions(+), 10 deletions(-)
+FWIW, timings on msysgit:
 
-V5: update commit message
+$ time git for-each-ref --format="%(refname:short)" refs
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index bbd169c..e122f33 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -390,7 +390,6 @@ static void clone_local(const char *src_repo, const char *dest_repo)
- 
- static const char *junk_work_tree;
- static const char *junk_git_dir;
--static pid_t junk_pid;
- static enum {
- 	JUNK_LEAVE_NONE,
- 	JUNK_LEAVE_REPO,
-@@ -417,8 +416,6 @@ static void remove_junk(void)
- 		break;
- 	}
- 
--	if (getpid() != junk_pid)
--		return;
- 	if (junk_git_dir) {
- 		strbuf_addstr(&sb, junk_git_dir);
- 		remove_dir_recursively(&sb, 0);
-@@ -758,8 +755,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	struct refspec *refspec;
- 	const char *fetch_pattern;
- 
--	junk_pid = getpid();
--
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
- 			     builtin_clone_usage, 0);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f587749..6dd63dd 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -577,6 +577,11 @@ int inet_pton(int af, const char *src, void *dst);
- const char *inet_ntop(int af, const void *src, char *dst, size_t size);
- #endif
- 
-+#ifdef NO_PTHREADS
-+#define atexit git_atexit
-+extern int git_atexit(void (*handler)(void));
-+#endif
-+
- extern void release_pack_memory(size_t);
- 
- typedef void (*try_to_free_t)(size_t);
-diff --git a/run-command.c b/run-command.c
-index 35a3ebf..0f9a9b0 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -624,6 +624,45 @@ static int async_die_is_recursing(void)
- 	return ret != NULL;
- }
- 
-+#else
-+
-+static struct {
-+	void (**handlers)(void);
-+	size_t nr;
-+	size_t alloc;
-+} git_atexit_hdlrs;
-+
-+static int git_atexit_installed;
-+
-+static void git_atexit_dispatch()
-+{
-+	size_t i;
-+
-+	for (i=git_atexit_hdlrs.nr ; i ; i--)
-+		git_atexit_hdlrs.handlers[i-1]();
-+}
-+
-+static void git_atexit_clear()
-+{
-+	free(git_atexit_hdlrs.handlers);
-+	memset(&git_atexit_hdlrs, 0, sizeof(git_atexit_hdlrs));
-+	git_atexit_installed = 0;
-+}
-+
-+#undef atexit
-+int git_atexit(void (*handler)(void))
-+{
-+	ALLOC_GROW(git_atexit_hdlrs.handlers, git_atexit_hdlrs.nr + 1, git_atexit_hdlrs.alloc);
-+	git_atexit_hdlrs.handlers[git_atexit_hdlrs.nr++] = handler;
-+	if (!git_atexit_installed) {
-+		if (atexit(&git_atexit_dispatch))
-+			return -1;
-+		git_atexit_installed = 1;
-+	}
-+	return 0;
-+}
-+#define atexit git_atexit
-+
- #endif
- 
- int start_async(struct async *async)
-@@ -682,6 +721,7 @@ int start_async(struct async *async)
- 			close(fdin[1]);
- 		if (need_out)
- 			close(fdout[0]);
-+		git_atexit_clear();
- 		exit(!!async->proc(proc_in, proc_out, async->data));
- 	}
- 
-diff --git a/shallow.c b/shallow.c
-index de07709..f067811 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -226,7 +226,6 @@ static void remove_temporary_shallow_on_signal(int signo)
- 
- const char *setup_temporary_shallow(const struct sha1_array *extra)
- {
--	static int installed_handler;
- 	struct strbuf sb = STRBUF_INIT;
- 	int fd;
- 
-@@ -237,10 +236,8 @@ const char *setup_temporary_shallow(const struct sha1_array *extra)
- 		strbuf_addstr(&temporary_shallow, git_path("shallow_XXXXXX"));
- 		fd = xmkstemp(temporary_shallow.buf);
- 
--		if (!installed_handler) {
--			atexit(remove_temporary_shallow);
--			sigchain_push_common(remove_temporary_shallow_on_signal);
--		}
-+		atexit(remove_temporary_shallow);
-+		sigchain_push_common(remove_temporary_shallow_on_signal);
- 
- 		if (write_in_full(fd, sb.buf, sb.len) != sb.len)
- 			die_errno("failed to write to %s",
+real    0m8.799s
+user    0m0.109s
+sys     0m0.250s
+
+$ time (cd "$GIT_DIR" ; cat packed-refs ; find refs/ -type f) \
+        2>/dev/null | sed -ne 's@^.*refs/@refs/@p' | sort | uniq
+
+real    0m3.406s
+user    0m1.073s
+sys     0m2.398s
+
+so while your symlink-analysis might not accurately describe msysgit
+(I believe copies are made in place of a symlink), msysgit benefits
+from this too.
+
 -- 
-2.0.4
+Cheers,
+Ray Chuan
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
