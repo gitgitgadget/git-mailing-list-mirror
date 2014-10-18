@@ -1,95 +1,110 @@
-From: Ciro Santilli <ciro.santilli@gmail.com>
-Subject: Re: Stop prepending /usr/bin to hooks PATH, or document it very clearly
-Date: Sat, 18 Oct 2014 18:45:51 +0200
-Message-ID: <CAFXrp_fspAC1Q2NOzpFoxG=pQ1SsR3VaRf+BGx9V_dxUu7=diw@mail.gmail.com>
-References: <CAFXrp_c+dxafLOO6T=LDd6OxhfpamkJsUc8iBwB-B41z8Htc4A@mail.gmail.com>
-	<20141018144924.GA17925@inner.h.apk.li>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] revision: remove definition of unused 'add_object' function
+Date: Sat, 18 Oct 2014 22:36:12 +0100
+Message-ID: <5442DD4C.9050908@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 18 18:46:08 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 18 23:36:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XfX8p-0002tz-P7
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Oct 2014 18:46:08 +0200
+	id 1Xfbg4-0006v1-Ix
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Oct 2014 23:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbaJRQpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2014 12:45:53 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:56198 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751215AbaJRQpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2014 12:45:52 -0400
-Received: by mail-lb0-f177.google.com with SMTP id w7so2018511lbi.22
-        for <git@vger.kernel.org>; Sat, 18 Oct 2014 09:45:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=eYLpMFn1pKMrQ/FPx8ee1/5BE05gCcBB+Fym74GeCfI=;
-        b=GEOraVtu2zZYgV1FbbldAeWRflIyVzi4/+bJUB6tinzPak8KNNYyqvvfx/ZmKFWPuI
-         c9Cr4tleLj+J8swN+Gx/Y2soFbT4yJQCXN6aeKndb4imz7W7XOpxPxVxzwhF7tS5RdpV
-         MLYhPN0/v68Q/UuWkwv69EHE+6bS97TidiELIUW6Afs1rEUn/WDHCqqVVImVZMzExU2E
-         G6/Dd8WMZkeES+3N3dub+xR0XzQwXFjetcb+wq7JtYKKG418E9FW5jsupMeTN4Mnkw4K
-         WvHqlFBmPHx/81ShBv+IGnkVCI3jrRERabFnOtbaPie0uf54gCkMLzerF2hshORA4R0V
-         Jqgw==
-X-Received: by 10.152.5.38 with SMTP id p6mr11450540lap.44.1413650751146; Sat,
- 18 Oct 2014 09:45:51 -0700 (PDT)
-Received: by 10.152.170.133 with HTTP; Sat, 18 Oct 2014 09:45:51 -0700 (PDT)
-In-Reply-To: <20141018144924.GA17925@inner.h.apk.li>
+	id S1751250AbaJRVgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2014 17:36:40 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:52629 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751038AbaJRVgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2014 17:36:40 -0400
+Received: from smtp.demon.co.uk (unknown [127.0.0.1])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 87F86400AFD
+	for <git@vger.kernel.org>; Sat, 18 Oct 2014 22:36:30 +0100 (BST)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 5CF44AC40BF;
+	Sat, 18 Oct 2014 22:36:20 +0100 (BST)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 0DAD0AC40BD;
+	Sat, 18 Oct 2014 22:36:20 +0100 (BST)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
+	Sat, 18 Oct 2014 22:36:19 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+X-MDF-HostID: 17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 18, 2014 at 4:49 PM, Andreas Krey <a.krey@gmx.de> wrote:
-> On Fri, 17 Oct 2014 13:25:42 +0000, Ciro Santilli wrote:
-> ...
->> The problem is that the `/usr/bin` breaks "interpreter version manager
->> systems" like RVM, rbenv, virtualenv, etc. since people will write
->> hooks like:
->>
->>     #!/usr/bin/env ruby
->>
->> and the `/usr/bin` ruby will get run instead of the managed one
->
-> And that is the right thing to do. What ruby to execute with is
-> a property of the hook script, not of the virtualenv a user happens
-> to be in. If you want virtualenvs, you should set up the right one
-> within the hook script.
->
 
-I'm sure what you say has a good rationale, but can you give a more
-concrete example where PATH prepending is desirable?
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-Use cases that I have seen where it is surprising and undesirable:
+Hi Jeff,
 
-- I want binaries I manually installed under `/usr/local/bin` to have
-precedence over the system defaults under `/usr/bin`, so I modify the
-PATH on my `.profile`. But then I run a hook and things fail: so in
-each hook I have to do export PATH="$THE_GOOD_PATH", which makes me
-repeat the same thing many times.
+I noticed that your 'jk/prune-mtime' branch removes the last caller
+of the add_object() function; specifically commit 5f78a431a
+("reachable: use traverse_commit_list instead of custom walk", 15-10-2014).
 
-- Locally I use RVM. But the CI uses rbenv. Next year, there will be
-another version manager. If we follow the rule that when I invoke
-`system('git something')` it runs in the same environment as current,
-I don't need to do anything. But if environments change, I'd have to
-either write extra code for each manager, or install dependencies on
-multiple versions of the interpreter.
+If you need to re-roll those patches, could you please squash this
+patch into the above commit. (unless you have plans to add some new
+callers, of course! ;-) ).
 
-For now I'm going to go with `export PATH="$THE_GOOD_PATH && ruby
-real_script.rb"`.
+Thanks!
 
-> ...
->> - documenting this behavior *very* clearly on `man githooks`
->
-> That would still be a good thing to do.
->
-> Andreas
->
-> --
-> "Totally trivial. Famous last words."
-> From: Linus Torvalds <torvalds@*.org>
-> Date: Fri, 22 Jan 2010 07:29:21 -0800
+ATB,
+Ramsay Jones
+
+ revision.c | 10 ----------
+ revision.h |  5 -----
+ 2 files changed, 15 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 1316fe0..7bdf760 100644
+--- a/revision.c
++++ b/revision.c
+@@ -87,16 +87,6 @@ void show_object_with_name(FILE *out, struct object *obj,
+ 	fputc('\n', out);
+ }
+ 
+-void add_object(struct object *obj,
+-		struct object_array *p,
+-		struct name_path *path,
+-		const char *name)
+-{
+-	char *pn = path_name(path, name);
+-	add_object_array(obj, pn, p);
+-	free(pn);
+-}
+-
+ static void mark_blob_uninteresting(struct blob *blob)
+ {
+ 	if (!blob)
+diff --git a/revision.h b/revision.h
+index 9ab6755..b90f907 100644
+--- a/revision.h
++++ b/revision.h
+@@ -282,11 +282,6 @@ char *path_name(const struct name_path *path, const char *name);
+ extern void show_object_with_name(FILE *, struct object *,
+ 				  const struct name_path *, const char *);
+ 
+-extern void add_object(struct object *obj,
+-		       struct object_array *p,
+-		       struct name_path *path,
+-		       const char *name);
+-
+ extern void add_pending_object(struct rev_info *revs,
+ 			       struct object *obj, const char *name);
+ extern void add_pending_sha1(struct rev_info *revs,
+-- 
+2.1.0
