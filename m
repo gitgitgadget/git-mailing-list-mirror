@@ -1,82 +1,85 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn performance
-Date: Sun, 19 Oct 2014 00:32:56 +0000
-Message-ID: <20141019003256.GA18532@dcvr.yhbt.net>
-References: <CABBCAiv0WXNzo7W9PB_o_enLjtUO_rNRb4UBEqDPeSkBj1k-Ww@mail.gmail.com>
+Subject: Re: Specifying account profile in MSMTP
+Date: Sun, 19 Oct 2014 00:46:02 +0000
+Message-ID: <20141019004602.GA1977@dcvr.yhbt.net>
+References: <CAHd499C5FZietAxQYBFwk+Zm0AeLWSADog7+=W0Fnm6G1sPSHw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, stoklund@2pi.dk, sam@vilain.net,
-	stevenrwalter@gmail.com, waste.manager@gmx.de, amyrick@apple.com
-To: Fabian Schmied <fabian.schmied@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 19 02:33:31 2014
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 19 02:46:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XfeR8-0007xn-F8
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 02:33:30 +0200
+	id 1Xfeda-0003OM-6m
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 02:46:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbaJSAd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2014 20:33:26 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:50418 "EHLO dcvr.yhbt.net"
+	id S1751611AbaJSAqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2014 20:46:06 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:50486 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751722AbaJSAc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2014 20:32:58 -0400
+	id S1751589AbaJSAqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2014 20:46:04 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id B82EA1F8B3;
-	Sun, 19 Oct 2014 00:32:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C52891F8B3;
+	Sun, 19 Oct 2014 00:46:02 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <CABBCAiv0WXNzo7W9PB_o_enLjtUO_rNRb4UBEqDPeSkBj1k-Ww@mail.gmail.com>
+In-Reply-To: <CAHd499C5FZietAxQYBFwk+Zm0AeLWSADog7+=W0Fnm6G1sPSHw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Schmied <fabian.schmied@gmail.com> wrote:
-> Hi,
+Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> Hey guys,
 > 
-> I'm currently migrating an SVN repository to Git using git-svn (Git
-> for Windows 1.8.3-preview20130601), and I'm experiencing severe
-> performance problems with "git svn fetch". Commits to the SVN "trunk"
-> are fetched very fast (a few seconds or so per SVN revision), but
-> commits to some branches ("hotfix" branches) are currently taking
-> about 9 minutes per revision. I fear that the time per these commits
-> is increasing and that indeed the migration might not be finishable at
-> all.
+> I'm using MSMTP to define 2 accounts: Work email and personal email.
+> If I send patches via email through Git at work, I want to use my work
+> SMTP server and account information. Likewise at home for personal
+> projects, I want to use my personal SMTP account.
 > 
-> For the commits that take such a long time, git-svn always outputs
-> lots of warnings about ignored SVN cherry-picks, and it tells me it
-> can't find a revmap for the path being imported. (See [1].)
+> I put my .gitconfig in Dropbox and I share it across all of my
+> machines, so I avoid putting my SMTP server information in my global
+> config because I'd then have to use the same account everywhere.
+> However, I do not define a "default" account in my MSMTP file (which
+> is also in dropbox, in fact my whole home directory is in there).
 > 
-> AFAICS, the offending commits take place on some branches that include
-> a lot of manually merged ("SVN cherry-picked") revisions. Git-svn
-> seems to be checking something (though I don't know what) that makes
-> importing these revisions really slow. And it repeats this for every
-> revision on these branches with increasing work to do.
-> 
-> Is there anything I can do to speed this up? (I already tried
-> increasing the --log-window-size to 500, didn't have any effect.)
+> Is there a way to specify the MSMTP account to use at the command line
+> when I run `git send-email`? If not, are there other good solutions to
+> this problem?
 
-Can you take a look at the following two "mergeinfo-speedups"
-in my repo?  (git://bogomips.org/git-svn)
+msmtprc can be configured to picks accounts based on the envelop sender
+specified by git send-email.
 
-Jakob Stoklund Olesen (2):
-      git-svn: only look at the new parts of svn:mergeinfo
-      git-svn: only look at the root path for svn:mergeinfo
+I make sure my email address in the git commits is correct and use
+use envelopesender=auto for git send-email when using msmtp.
 
-Also downloadable here:
+Config examples below:
 
-http://bogomips.org/git-svn.git/patch?id=9b258e721b30785357535
-http://bogomips.org/git-svn.git/patch?id=73409a2145e93b436d74a
+----------- ~/.gitconfig ---------------
+[sendemail]
+	smtpserver = /usr/bin/msmtp
+	envelopesender = auto
 
-Hin-Tak (Cc-ed) reported good improvements with them, but also
-a large memory increase:
+---- /path/to/project_a/.git/config ----
+[user]
+	email = a@example.com
+---- /path/to/project_b/.git/config ----
+[user]
+	email = b@example.com
+------------ ~/.msmtprc ----------------
+account a
+host ...
+from a@example.com
+user a
+password ...
+auth ...
 
-http://mid.gmane.org/1412706046.90413.YahooMailBasic@web172303.mail.ir2.yahoo.com
-
-Jakob (or anybody else): I suppose we could tie the new
-cached_mergeinfo* caches to disk-backed storage to avoid the memory
-bloat.
+account b
+host ...
+from b@example.com
+user b
+password ...
+auth ...
