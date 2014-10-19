@@ -1,112 +1,180 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn performance
-Date: Sun, 19 Oct 2014 02:33:58 +0000
-Message-ID: <20141019023358.GA2946@dcvr.yhbt.net>
-References: <CABBCAiv0WXNzo7W9PB_o_enLjtUO_rNRb4UBEqDPeSkBj1k-Ww@mail.gmail.com>
- <20141019003256.GA18532@dcvr.yhbt.net>
- <20141019022953.GA6537@dcvr.yhbt.net>
+Subject: Re: git svn's performance issue and strange pauses, and other thing
+Date: Sun, 19 Oct 2014 04:12:38 +0000
+Message-ID: <20141019041238.GA8944@dcvr.yhbt.net>
+References: <1412706046.90413.YahooMailBasic@web172303.mail.ir2.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, stoklund@2pi.dk, sam@vilain.net,
 	stevenrwalter@gmail.com, waste.manager@gmx.de, amyrick@apple.com
-To: Fabian Schmied <fabian.schmied@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 19 04:34:08 2014
+To: Hin-Tak Leung <htl10@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sun Oct 19 06:12:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XfgJo-0002QA-1Q
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 04:34:04 +0200
+	id 1XfhrP-000328-4E
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 06:12:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666AbaJSCd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2014 22:33:59 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:51263 "EHLO dcvr.yhbt.net"
+	id S1750840AbaJSEMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2014 00:12:44 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:52258 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751608AbaJSCd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2014 22:33:58 -0400
+	id S1750716AbaJSEMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2014 00:12:43 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90E551F45D;
-	Sun, 19 Oct 2014 02:33:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A7B21F8B3;
+	Sun, 19 Oct 2014 04:12:38 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20141019022953.GA6537@dcvr.yhbt.net>
+In-Reply-To: <1412706046.90413.YahooMailBasic@web172303.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> This reduces hash lookups for looking up cache data and will
-> simplify tying data to disk in the next commit.
+Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
+> The new clone has:
+> 
+> <--
+> $ ls -ltr .git/svn/.caches/
+> total 144788
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak  1166138 Oct  7 13:44 lookup_svn_merge.yaml
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak 72849741 Oct  7 13:48 check_cherry_pick.yaml
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak  1133855 Oct  7 13:49 has_no_changes.yaml
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak 73109005 Oct  7 13:53 _rev_list.yaml
+> -->
+> 
+> The old clone has:
 
-I considered the following, but GDBM might not be readily available on
-non-POSIX platforms.  I think the other problem is the existing caches
-are still in memory (whether YAML or Storable) even if disk-backed,
-causing a large amount of memory usage anyways.
+<snip>
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak  40241189 Oct  5 16:42 lookup_svn_merge.yaml
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak 225323456 Oct  5 16:49 check_cherry_pick.yaml
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak    242547 Oct  5 16:49 has_no_changes.yaml
+> -rw-rw-r--. 1 Hin-Tak Hin-Tak  24120007 Oct  5 16:50 _rev_list.yaml
+> -->
+> 
+> I had to suspend somewhat around r59000 - but it is interesting to see
+> that the max memory consumption of the later part is almost double?
+> and it also runs at 100% rather than 60% overall; I don't know what
+> to make of that - probably just smaller changes versus
+> larger ones, or different time of day and network loads (yes,
+> I guess it is just bandwidth-limited?, since the bulk of CPU time is in system
+> rather than user).
 
-(Both patches on top of Jakob's)
--------------------------
-Subject: [RFC] git-svn: tie cached_mergeinfo to a GDBM_File store
+git-svn memory usage is insane, and we need to reduce it.
+(on Linux, fork() performance is reduced as memory size of the parent
+ grows, and I don't think we can easily call vfork() from Perl)
 
-This should reduce per-instance memory usage by allowing
-serialization to disk.  Using the existing Memoize::Storable
-or YAML backends does not allow fast lookups.
+> I am somwhat worry about the dramatic difference between the two .svn/.caches -
+> check_cherry_pick.yaml is 225MB in one and 73MB in the other, and also
+> _rev_list.yaml is opposite - 24MB vs 73MB. How do I reconcile that?
 
-GDBM_File should be available in most Perl installations
-and should not pose unnecessary burden
+Calling patterns changed, and it looks like Jakob's changes avoided some
+calls.  The main thing to care about:
+	Does the repository history look right?
+
+The check_cherry_pick cache can be made smaller, too:
+----------------------- 8< -----------------------------
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: reduce check_cherry_pick cache overhead
+
+We do not need to store entire lists of commits, only the
+number of incomplete and the first commit for reference.
+This reduces the amount of data we need to store in memory
+and on disk stores.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- perl/Git/SVN.pm | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ perl/Git/SVN.pm | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
 diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 25dbcd5..3e477c7 100644
+index 25dbcd5..b2d37cb 100644
 --- a/perl/Git/SVN.pm
 +++ b/perl/Git/SVN.pm
-@@ -14,6 +14,7 @@ use IPC::Open3;
- use Memoize;  # core since 5.8.0, Jul 2002
- use Memoize::Storable;
- use POSIX qw(:signal_h);
-+use Storable qw(freeze thaw);
+@@ -1537,7 +1537,7 @@ sub _rev_list {
+ 	@rv;
+ }
  
- use Git qw(
-     command
-@@ -1713,10 +1714,21 @@ sub mergeinfo_changes {
- 
- 	# Initialize cache on the first call.
- 	unless (defined $cached_mergeinfo) {
--		$cached_mergeinfo = $self->{cached_mergeinfo} = {};
-+		my %hash;
-+		eval '
-+		require File::Temp;
-+		use GDBM_File;
-+		my $fh = File::Temp->new(TEMPLATE => "mergeinfo.XXXXXXXX");
-+		$self->{cached_mergeinfo_fh} = $fh;
-+		$fh->unlink_on_destroy(1);
-+		tie %hash => "GDBM_File", $fh->filename, GDBM_WRCREAT, 0600;
-+		';
-+		$cached_mergeinfo = $self->{cached_mergeinfo} = \%hash;
- 	}
- 
- 	my $cached = $cached_mergeinfo->{$old_path};
-+	$cached = thaw($cached) if defined $cached;
-+
- 	if (defined $cached && $cached->[0] == $old_rev) {
- 		$old_minfo = $cached->[1];
- 	} else {
-@@ -1735,11 +1747,12 @@ sub mergeinfo_changes {
- 				$props->{"svn:mergeinfo"};
- 			$old_minfo = \%omi;
+-sub check_cherry_pick {
++sub check_cherry_pick2 {
+ 	my $base = shift;
+ 	my $tip = shift;
+ 	my $parents = shift;
+@@ -1552,7 +1552,8 @@ sub check_cherry_pick {
+ 			delete $commits{$commit};
  		}
--		$cached_mergeinfo->{$old_path} = [ $old_rev, $old_minfo ];
-+		$cached_mergeinfo->{$old_path} =
-+					freeze([ $old_rev, $old_minfo ]);
  	}
+-	return (keys %commits);
++	my @k = (keys %commits);
++	return (scalar @k, $k[0]);
+ }
  
- 	# Cache the new mergeinfo.
--	$cached_mergeinfo->{$path} = [ $rev, \%minfo ];
-+	$cached_mergeinfo->{$path} = freeze([ $rev, \%minfo ]);
+ sub has_no_changes {
+@@ -1597,7 +1598,7 @@ sub tie_for_persistent_memoization {
+ 		mkpath([$cache_path]) unless -d $cache_path;
  
- 	my %changes = ();
- 	foreach my $p (keys %minfo) {
+ 		my %lookup_svn_merge_cache;
+-		my %check_cherry_pick_cache;
++		my %check_cherry_pick2_cache;
+ 		my %has_no_changes_cache;
+ 		my %_rev_list_cache;
+ 
+@@ -1608,11 +1609,11 @@ sub tie_for_persistent_memoization {
+ 			LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
+ 		;
+ 
+-		tie_for_persistent_memoization(\%check_cherry_pick_cache,
+-		    "$cache_path/check_cherry_pick");
+-		memoize 'check_cherry_pick',
++		tie_for_persistent_memoization(\%check_cherry_pick2_cache,
++		    "$cache_path/check_cherry_pick2");
++		memoize 'check_cherry_pick2',
+ 			SCALAR_CACHE => 'FAULT',
+-			LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
++			LIST_CACHE => ['HASH' => \%check_cherry_pick2_cache],
+ 		;
+ 
+ 		tie_for_persistent_memoization(\%has_no_changes_cache,
+@@ -1636,7 +1637,7 @@ sub tie_for_persistent_memoization {
+ 		$memoized = 0;
+ 
+ 		Memoize::unmemoize 'lookup_svn_merge';
+-		Memoize::unmemoize 'check_cherry_pick';
++		Memoize::unmemoize 'check_cherry_pick2';
+ 		Memoize::unmemoize 'has_no_changes';
+ 		Memoize::unmemoize '_rev_list';
+ 	}
+@@ -1648,7 +1649,8 @@ sub tie_for_persistent_memoization {
+ 		return unless -d $cache_path;
+ 
+ 		for my $cache_file (("$cache_path/lookup_svn_merge",
+-				     "$cache_path/check_cherry_pick",
++				     "$cache_path/check_cherry_pick", # old
++				     "$cache_path/check_cherry_pick2",
+ 				     "$cache_path/has_no_changes")) {
+ 			for my $suffix (qw(yaml db)) {
+ 				my $file = "$cache_file.$suffix";
+@@ -1817,15 +1819,15 @@ sub find_extra_svn_parents {
+ 		}
+ 
+ 		# double check that there are no missing non-merge commits
+-		my (@incomplete) = check_cherry_pick(
++		my ($ninc, $ifirst) = check_cherry_pick2(
+ 			$merge_base, $merge_tip,
+ 			$parents,
+ 			@all_ranges,
+ 		       );
+ 
+-		if ( @incomplete ) {
+-			warn "W:svn cherry-pick ignored ($spec) - missing "
+-				.@incomplete." commit(s) (eg $incomplete[0])\n";
++		if ($ninc) {
++			warn "W:svn cherry-pick ignored ($spec) - missing " .
++				"$ninc commit(s) (eg $ifirst)\n";
+ 		} else {
+ 			warn
+ 				"Found merge parent ($spec): ",
 -- 
 EW
