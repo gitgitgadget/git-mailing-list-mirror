@@ -1,120 +1,82 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] object: make add_object_array_with_mode a static function
-Date: Sun, 19 Oct 2014 00:19:07 +0100
-Message-ID: <5442F56B.8020205@ramsay1.demon.co.uk>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn performance
+Date: Sun, 19 Oct 2014 00:32:56 +0000
+Message-ID: <20141019003256.GA18532@dcvr.yhbt.net>
+References: <CABBCAiv0WXNzo7W9PB_o_enLjtUO_rNRb4UBEqDPeSkBj1k-Ww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 19 01:24:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, stoklund@2pi.dk, sam@vilain.net,
+	stevenrwalter@gmail.com, waste.manager@gmx.de, amyrick@apple.com
+To: Fabian Schmied <fabian.schmied@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 19 02:33:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XfdMV-0003Dd-Sf
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 01:24:40 +0200
+	id 1XfeR8-0007xn-F8
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 02:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751561AbaJRXYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Oct 2014 19:24:36 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:33634 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751542AbaJRXYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Oct 2014 19:24:35 -0400
-X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Oct 2014 19:24:35 EDT
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 34C0A6F92FB;
-	Sun, 19 Oct 2014 00:18:46 +0100 (BST)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id E9E726F92FA;
-	Sun, 19 Oct 2014 00:18:45 +0100 (BST)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751617AbaJSAd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Oct 2014 20:33:26 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:50418 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751722AbaJSAc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Oct 2014 20:32:58 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Sun, 19 Oct 2014 00:18:45 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-MDF-HostID: 3
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id B82EA1F8B3;
+	Sun, 19 Oct 2014 00:32:56 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CABBCAiv0WXNzo7W9PB_o_enLjtUO_rNRb4UBEqDPeSkBj1k-Ww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fabian Schmied <fabian.schmied@gmail.com> wrote:
+> Hi,
+> 
+> I'm currently migrating an SVN repository to Git using git-svn (Git
+> for Windows 1.8.3-preview20130601), and I'm experiencing severe
+> performance problems with "git svn fetch". Commits to the SVN "trunk"
+> are fetched very fast (a few seconds or so per SVN revision), but
+> commits to some branches ("hotfix" branches) are currently taking
+> about 9 minutes per revision. I fear that the time per these commits
+> is increasing and that indeed the migration might not be finishable at
+> all.
+> 
+> For the commits that take such a long time, git-svn always outputs
+> lots of warnings about ignored SVN cherry-picks, and it tells me it
+> can't find a revmap for the path being imported. (See [1].)
+> 
+> AFAICS, the offending commits take place on some branches that include
+> a lot of manually merged ("SVN cherry-picked") revisions. Git-svn
+> seems to be checking something (though I don't know what) that makes
+> importing these revisions really slow. And it repeats this for every
+> revision on these branches with increasing work to do.
+> 
+> Is there anything I can do to speed this up? (I already tried
+> increasing the --log-window-size to 500, didn't have any effect.)
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+Can you take a look at the following two "mergeinfo-speedups"
+in my repo?  (git://bogomips.org/git-svn)
 
-Hi Jeff,
+Jakob Stoklund Olesen (2):
+      git-svn: only look at the new parts of svn:mergeinfo
+      git-svn: only look at the root path for svn:mergeinfo
 
-I noticed that your 'jk/prune-mtime' branch also removes the only
-call to the add_object_array_with_mode() function outside of the
-object.c file; specifically commit 75ac69fa ("traverse_commit_list:
-support pending blobs/trees with paths", 15-10-2014).
+Also downloadable here:
 
-This patch (which was generated using the '--histogram' option to
-format-patch), moves the function to before the definition of the
-add_object_array() function (to avoid a forward declaration), and
-makes it static.
+http://bogomips.org/git-svn.git/patch?id=9b258e721b30785357535
+http://bogomips.org/git-svn.git/patch?id=73409a2145e93b436d74a
 
-If you need to re-roll this branch, could you please squash this
-patch into the above commit. (again, assuming you have no plans
-to add new external callers.)
+Hin-Tak (Cc-ed) reported good improvements with them, but also
+a large memory increase:
 
-[If new external callers are very likely in the future (i.e. this
-function is an essential part of the object-array API), then it may
-well not be worth doing this. (with perhaps a note in the commit
-message? - dunno). Similar comments apply to the previous 'add_object'
-patch as well!]
+http://mid.gmane.org/1412706046.90413.YahooMailBasic@web172303.mail.ir2.yahoo.com
 
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
- object.c | 10 +++++-----
- object.h |  1 -
- 2 files changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/object.c b/object.c
-index df86bdd..e1ef3f9 100644
---- a/object.c
-+++ b/object.c
-@@ -339,16 +339,16 @@ void add_object_array_with_path(struct object *obj, const char *name,
- 	array->nr = ++nr;
- }
- 
-+static void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode)
-+{
-+	add_object_array_with_path(obj, name, array, mode, NULL);
-+}
-+
- void add_object_array(struct object *obj, const char *name, struct object_array *array)
- {
- 	add_object_array_with_mode(obj, name, array, S_IFINVALID);
- }
- 
--void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode)
--{
--	add_object_array_with_path(obj, name, array, mode, NULL);
--}
--
- /*
-  * Free all memory associated with an entry; the result is
-  * in an unspecified state and should not be examined.
-diff --git a/object.h b/object.h
-index e5178a5..6416247 100644
---- a/object.h
-+++ b/object.h
-@@ -114,7 +114,6 @@ int object_list_contains(struct object_list *list, struct object *obj);
- 
- /* Object array handling .. */
- void add_object_array(struct object *obj, const char *name, struct object_array *array);
--void add_object_array_with_mode(struct object *obj, const char *name, struct object_array *array, unsigned mode);
- void add_object_array_with_path(struct object *obj, const char *name, struct object_array *array, unsigned mode, const char *path);
- 
- typedef int (*object_array_each_func_t)(struct object_array_entry *, void *);
--- 
-2.1.0
+Jakob (or anybody else): I suppose we could tie the new
+cached_mergeinfo* caches to disk-backed storage to avoid the memory
+bloat.
