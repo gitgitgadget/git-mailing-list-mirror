@@ -1,180 +1,91 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn's performance issue and strange pauses, and other thing
-Date: Sun, 19 Oct 2014 04:12:38 +0000
-Message-ID: <20141019041238.GA8944@dcvr.yhbt.net>
-References: <1412706046.90413.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+From: Fabian Schmied <fabian.schmied@gmail.com>
+Subject: Re: git-svn performance
+Date: Sun, 19 Oct 2014 11:38:16 +0200
+Message-ID: <CABBCAivMYZJ-b2CFuCxBPRBYRkhJ_sKMBRHkenfqjpJbYcx5vw@mail.gmail.com>
+References: <CABBCAiv0WXNzo7W9PB_o_enLjtUO_rNRb4UBEqDPeSkBj1k-Ww@mail.gmail.com>
+ <20141019003256.GA18532@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, stoklund@2pi.dk, sam@vilain.net,
 	stevenrwalter@gmail.com, waste.manager@gmx.de, amyrick@apple.com
-To: Hin-Tak Leung <htl10@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sun Oct 19 06:12:52 2014
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Oct 19 11:38:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XfhrP-000328-4E
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 06:12:51 +0200
+	id 1Xfmwt-0001Qq-IZ
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Oct 2014 11:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750840AbaJSEMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Oct 2014 00:12:44 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:52258 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716AbaJSEMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Oct 2014 00:12:43 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A7B21F8B3;
-	Sun, 19 Oct 2014 04:12:38 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1412706046.90413.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+	id S1751109AbaJSJii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Oct 2014 05:38:38 -0400
+Received: from mail-yh0-f51.google.com ([209.85.213.51]:34472 "EHLO
+	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750947AbaJSJig (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Oct 2014 05:38:36 -0400
+Received: by mail-yh0-f51.google.com with SMTP id t59so1607776yho.24
+        for <git@vger.kernel.org>; Sun, 19 Oct 2014 02:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=D2vWhQkvoq0IsZs86J+tQ81vx50fXxtnHDBaMTeUJq0=;
+        b=eI9nE8dYWj04zIgekMleuQcGXVSX2lzz/RJ1LMfrgSRfBPT7E/4Gc0qQw3koo2y6S3
+         LmhuNRtlnTrBVNKj7ssZDpe8A4jeQ4piCQHhdw+oXHtG1aDqCq2Va9Zc5sY6V7c79DDz
+         CivgTthrvEJ/p2xOTdxRHoejBx0N32Zo9po7eiBb7twDXa1eb8SNBLaTQzyTv9qWQ66x
+         GVpbBfk1Jcki4AycK29WDd4hq8aYPLlvP2waS+rM1lrVdHB0IMzyEHWPtvKcqprkd8sE
+         lPjyYtJKuKfcjsPa2La93mQs/IzhXCiL1yOy8Vd+yHKu5+/GM1O6IC8J0wanmkR0zAyU
+         PPNQ==
+X-Received: by 10.236.210.108 with SMTP id t72mr2281166yho.116.1413711516162;
+ Sun, 19 Oct 2014 02:38:36 -0700 (PDT)
+Received: by 10.170.188.149 with HTTP; Sun, 19 Oct 2014 02:38:16 -0700 (PDT)
+In-Reply-To: <20141019003256.GA18532@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
-> The new clone has:
-> 
-> <--
-> $ ls -ltr .git/svn/.caches/
-> total 144788
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak  1166138 Oct  7 13:44 lookup_svn_merge.yaml
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak 72849741 Oct  7 13:48 check_cherry_pick.yaml
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak  1133855 Oct  7 13:49 has_no_changes.yaml
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak 73109005 Oct  7 13:53 _rev_list.yaml
-> -->
-> 
-> The old clone has:
+On Sun, Oct 19, 2014 at 2:32 AM, Eric Wong <normalperson@yhbt.net> wrote:
+> Fabian Schmied <fabian.schmied@gmail.com> wrote:
+>> Hi,
+>>
+>> I'm currently migrating an SVN repository to Git using git-svn (Git
+>> for Windows 1.8.3-preview20130601), and I'm experiencing severe
+>> performance problems with "git svn fetch". Commits to the SVN "trunk"
+>> are fetched very fast (a few seconds or so per SVN revision), but
+>> commits to some branches ("hotfix" branches) are currently taking
+>> about 9 minutes per revision. I fear that the time per these commits
+>> is increasing and that indeed the migration might not be finishable at
+>> all.
 
-<snip>
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak  40241189 Oct  5 16:42 lookup_svn_merge.yaml
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak 225323456 Oct  5 16:49 check_cherry_pick.yaml
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak    242547 Oct  5 16:49 has_no_changes.yaml
-> -rw-rw-r--. 1 Hin-Tak Hin-Tak  24120007 Oct  5 16:50 _rev_list.yaml
-> -->
-> 
-> I had to suspend somewhat around r59000 - but it is interesting to see
-> that the max memory consumption of the later part is almost double?
-> and it also runs at 100% rather than 60% overall; I don't know what
-> to make of that - probably just smaller changes versus
-> larger ones, or different time of day and network loads (yes,
-> I guess it is just bandwidth-limited?, since the bulk of CPU time is in system
-> rather than user).
+[...]
 
-git-svn memory usage is insane, and we need to reduce it.
-(on Linux, fork() performance is reduced as memory size of the parent
- grows, and I don't think we can easily call vfork() from Perl)
+>> Is there anything I can do to speed this up? (I already tried
+>> increasing the --log-window-size to 500, didn't have any effect.)
+>
+> Can you take a look at the following two "mergeinfo-speedups"
+> in my repo?  (git://bogomips.org/git-svn)
+>
+> Jakob Stoklund Olesen (2):
+>       git-svn: only look at the new parts of svn:mergeinfo
+>       git-svn: only look at the root path for svn:mergeinfo
+>
+> Also downloadable here:
+>
+> http://bogomips.org/git-svn.git/patch?id=9b258e721b30785357535
+> http://bogomips.org/git-svn.git/patch?id=73409a2145e93b436d74a
 
-> I am somwhat worry about the dramatic difference between the two .svn/.caches -
-> check_cherry_pick.yaml is 225MB in one and 73MB in the other, and also
-> _rev_list.yaml is opposite - 24MB vs 73MB. How do I reconcile that?
+[...]
 
-Calling patterns changed, and it looks like Jakob's changes avoided some
-calls.  The main thing to care about:
-	Does the repository history look right?
+Thank you _very_ much, the performance increase is tremendous: from,
+ATM, 15 minutes per commit (with large merge-infos) down to 15 seconds
+each. This means that instead of taking weeks, the migration will now
+complete in hours! Memory consumption might be a bit higher, but not a
+problem for me at all.
 
-The check_cherry_pick cache can be made smaller, too:
------------------------ 8< -----------------------------
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: reduce check_cherry_pick cache overhead
+(I didn't apply the two additional patches you supplied, only the two
+ones linked above.)
 
-We do not need to store entire lists of commits, only the
-number of incomplete and the first commit for reference.
-This reduces the amount of data we need to store in memory
-and on disk stores.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- perl/Git/SVN.pm | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
-
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 25dbcd5..b2d37cb 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1537,7 +1537,7 @@ sub _rev_list {
- 	@rv;
- }
- 
--sub check_cherry_pick {
-+sub check_cherry_pick2 {
- 	my $base = shift;
- 	my $tip = shift;
- 	my $parents = shift;
-@@ -1552,7 +1552,8 @@ sub check_cherry_pick {
- 			delete $commits{$commit};
- 		}
- 	}
--	return (keys %commits);
-+	my @k = (keys %commits);
-+	return (scalar @k, $k[0]);
- }
- 
- sub has_no_changes {
-@@ -1597,7 +1598,7 @@ sub tie_for_persistent_memoization {
- 		mkpath([$cache_path]) unless -d $cache_path;
- 
- 		my %lookup_svn_merge_cache;
--		my %check_cherry_pick_cache;
-+		my %check_cherry_pick2_cache;
- 		my %has_no_changes_cache;
- 		my %_rev_list_cache;
- 
-@@ -1608,11 +1609,11 @@ sub tie_for_persistent_memoization {
- 			LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
- 		;
- 
--		tie_for_persistent_memoization(\%check_cherry_pick_cache,
--		    "$cache_path/check_cherry_pick");
--		memoize 'check_cherry_pick',
-+		tie_for_persistent_memoization(\%check_cherry_pick2_cache,
-+		    "$cache_path/check_cherry_pick2");
-+		memoize 'check_cherry_pick2',
- 			SCALAR_CACHE => 'FAULT',
--			LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
-+			LIST_CACHE => ['HASH' => \%check_cherry_pick2_cache],
- 		;
- 
- 		tie_for_persistent_memoization(\%has_no_changes_cache,
-@@ -1636,7 +1637,7 @@ sub tie_for_persistent_memoization {
- 		$memoized = 0;
- 
- 		Memoize::unmemoize 'lookup_svn_merge';
--		Memoize::unmemoize 'check_cherry_pick';
-+		Memoize::unmemoize 'check_cherry_pick2';
- 		Memoize::unmemoize 'has_no_changes';
- 		Memoize::unmemoize '_rev_list';
- 	}
-@@ -1648,7 +1649,8 @@ sub tie_for_persistent_memoization {
- 		return unless -d $cache_path;
- 
- 		for my $cache_file (("$cache_path/lookup_svn_merge",
--				     "$cache_path/check_cherry_pick",
-+				     "$cache_path/check_cherry_pick", # old
-+				     "$cache_path/check_cherry_pick2",
- 				     "$cache_path/has_no_changes")) {
- 			for my $suffix (qw(yaml db)) {
- 				my $file = "$cache_file.$suffix";
-@@ -1817,15 +1819,15 @@ sub find_extra_svn_parents {
- 		}
- 
- 		# double check that there are no missing non-merge commits
--		my (@incomplete) = check_cherry_pick(
-+		my ($ninc, $ifirst) = check_cherry_pick2(
- 			$merge_base, $merge_tip,
- 			$parents,
- 			@all_ranges,
- 		       );
- 
--		if ( @incomplete ) {
--			warn "W:svn cherry-pick ignored ($spec) - missing "
--				.@incomplete." commit(s) (eg $incomplete[0])\n";
-+		if ($ninc) {
-+			warn "W:svn cherry-pick ignored ($spec) - missing " .
-+				"$ninc commit(s) (eg $ifirst)\n";
- 		} else {
- 			warn
- 				"Found merge parent ($spec): ",
--- 
-EW
+Thanks again, you saved my deadline :)
+Fabian
