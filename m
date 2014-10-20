@@ -1,82 +1,95 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: merge: fix rooturl/branchurl match check
-Date: Mon, 20 Oct 2014 06:24:13 +0000
-Message-ID: <20141020062413.GB27885@dcvr.yhbt.net>
-References: <BLU437-SMTP152A16338E427B250EB601FBAA0@phx.gbl>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] receive-pack: plug minor memory leak in unpack()
+Date: Mon, 20 Oct 2014 02:19:17 -0700
+Message-ID: <20141020091916.GA12913@peff.net>
+References: <54390DC0.8060302@web.de>
+ <20141012015321.GA15272@peff.net>
+ <xmqq1tqb4wkm.fsf@gitster.dls.corp.google.com>
+ <20141014091628.GB16686@peff.net>
+ <54439CDA.9070804@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Tommaso Colombo <zibo86@hotmail.com>
-To: Tommaso Colombo <tommaso.colombo@outlook.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 08:24:27 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Mon Oct 20 11:19:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xg6OI-00081V-Dw
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Oct 2014 08:24:26 +0200
+	id 1Xg97d-0004pc-WB
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Oct 2014 11:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752473AbaJTGYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2014 02:24:15 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:35271 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752322AbaJTGYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Oct 2014 02:24:14 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAF031F8B3;
-	Mon, 20 Oct 2014 06:24:13 +0000 (UTC)
+	id S1752870AbaJTJTW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Oct 2014 05:19:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60153 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752850AbaJTJTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2014 05:19:21 -0400
+Received: (qmail 4973 invoked by uid 102); 20 Oct 2014 09:19:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Oct 2014 04:19:21 -0500
+Received: (qmail 10416 invoked by uid 107); 20 Oct 2014 09:19:21 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Oct 2014 05:19:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Oct 2014 02:19:17 -0700
 Content-Disposition: inline
-In-Reply-To: <BLU437-SMTP152A16338E427B250EB601FBAA0@phx.gbl>
+In-Reply-To: <54439CDA.9070804@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tommaso Colombo <tommaso.colombo@outlook.com> wrote:
-> When populating svn:mergeinfo, git-svn merge checks if the merge parent
-> of the merged branch is under the same root as the git-svn repository.
-> This was implemented comparing $gs->repos_root with the return value of
-> of cmt_metadata for the merge parent. However, the first may contain a
-> username, whereas the second does not. In this case the comparison
-> fails.
-> 
-> Remove the username from $gs->repos_root before performing the
-> comparison.
+On Sun, Oct 19, 2014 at 01:13:30PM +0200, Ren=C3=A9 Scharfe wrote:
 
-Thanks.  Commit makes sense, but one of the test cases fails for me,
-can you check it out?
-$ make && make t9161-git-svn-mergeinfo-push.sh -C t GIT_TEST_OPTS='-i -v'
-<snip successes>
-ok 11 - reintegration merge
+> >We could flip it to give the managed version the short name (and cal=
+ling
+> >the unmanaged version "env_ptr" or something). That would require
+> >munging the existing callers, but the tweak would be simple.
+>=20
+> Perhaps, but I'm a but skeptical of big renames.  Let's start small a=
+nd add
+> env_array, and see how far we get with that.
 
-expecting success: 
-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
-	test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
-/branches/svnb2:3,8,16-17
-/branches/svnb3:4,9
-/branches/svnb5:6,11"
-	
-not ok 12 - check reintegration mergeinfo
-#	
-#		mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
-#		test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
-#	/branches/svnb2:3,8,16-17
-#	/branches/svnb3:4,9
-#	/branches/svnb5:6,11"
-#		
-make: *** [t9161-git-svn-mergeinfo-push.sh] Error 1
-make: Leaving directory `/home/ew/git-core/t'
+Yeah, having basically implemented patches similar to yours, I think
+that is a good first step. Both of your patches looked good to me.
 
+> Trickiness makes me nervous, especially in daemon.c.  And 5% CPU usag=
+e just
+> for waiting sounds awful.  Using waitpid(0, ...) is not supported by =
+the
+> current implementation in compat/mingw.c, however.
 
-You'll also need to sign-off (see Documentation/SubmittingPatches)
-It is required (project policy, not mine)
+I guess you could use wait() and a counter that you increment whenever
+you get SIGCLD, but that feels a bit hacky. I wonder how bad a real
+waitpid would be for mingw.
 
-> @@ -729,7 +730,7 @@ sub populate_merge_info {
->  			}
->  			my $branchpath = $1;
->  
-> -			my $ra = Git::SVN::Ra->new($branchurl);
-> +			my $ra = Git::SVN::Ra->new(add_path_to_url($gs->repos_root, $branchpath));
+> By the way, does getaddrinfo(3) show up in your profiles much?  Recen=
+tly I
+> looked into calling it only on demand instead of for all incoming
+> connections because doing that unconditional with a user-supplied
+> ("tainted") hostname just felt wrong.  The resulting patch series tur=
+ned out
+> to be not very pretty and I didn't see any performance improvements i=
+n my
+> very limited tests, however; not sure if it's worth it.
 
-Also, please keep long lines wrapped to <= 80 columns.
-Thanks again.
+It shows up in the child, not the parent, so it wasn't part of the
+profiling I did recently. I did look at it just now, and it does
+introduce some latency into each request (though not a lot of CPU;
+mainly it's the DNS request). Like you, I'm nervous about convincing
+git-daemon to do lookups on random hosts. By itself it's not horrible
+(except for tying up git-daemon with absurdly long chains of glueless
+references), but I worry that it could exacerbate other problems
+(overflows or other bugs in DNS resolvers, as part of a cache-poisoning
+scheme, orbeing used for DoS amplification).
+
+I think doing it on demand would be a lot more sensible. We do not need
+to do a lookup at all unless the %H, %CH, or %IP interpolated path
+features are used. And we do not need to do hostname canonicalization
+unless %CH is used.
+
+-Peff
