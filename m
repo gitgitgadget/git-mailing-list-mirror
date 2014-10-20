@@ -1,68 +1,72 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] doc: fix 'git status --help' character quoting
-Date: Mon, 20 Oct 2014 12:31:06 +0100
-Organization: OPDS
-Message-ID: <9FDB0D39D62C46ABA8D2C5356E497BE1@PhilipOakley>
-References: <1413728235-1504-1-git-send-email-philipoakley@iee.org> <xmqqwq7vr91j.fsf@gitster.dls.corp.google.com> <8D139BC1FB1E4335B4375FB0F056BB0B@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 20 13:31:14 2014
+From: Olivier Croquette <ocroquette@free.fr>
+Subject: [PATCH] Copy mergetool "bc3" as "bc4"
+Date: Mon, 20 Oct 2014 13:03:37 +0200
+Message-ID: <1413803017-30489-1-git-send-email-ocroquette@free.fr>
+Cc: ocroquette@free.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 20 13:48:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XgBBA-0002i2-QY
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Oct 2014 13:31:13 +0200
+	id 1XgBRT-0002qI-5T
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Oct 2014 13:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849AbaJTLa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2014 07:30:58 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:17659 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753764AbaJTLap (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2014 07:30:45 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArYMAAjyRFROl3LyPGdsb2JhbABcgw5TiBWBBMNfh0sEBAKBERcBAQUBAQEBODuDfQUBAQEBAgEIAQEuHgEBIQUGAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYgmDLU3jUaQUYM0gR4FiySGXF2DaYh/mC48L4JLAQEB
-X-IPAS-Result: ArYMAAjyRFROl3LyPGdsb2JhbABcgw5TiBWBBMNfh0sEBAKBERcBAQUBAQEBODuDfQUBAQEBAgEIAQEuHgEBIQUGAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYgmDLU3jUaQUYM0gR4FiySGXF2DaYh/mC48L4JLAQEB
-X-IronPort-AV: E=Sophos;i="5.04,755,1406588400"; 
-   d="scan'208";a="474462824"
-Received: from host-78-151-114-242.as13285.net (HELO PhilipOakley) ([78.151.114.242])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 20 Oct 2014 12:30:42 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751062AbaJTLr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2014 07:47:58 -0400
+Received: from ocroquette.fr ([78.46.91.4]:42473 "EHLO ocroquette.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750996AbaJTLr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2014 07:47:58 -0400
+X-Greylist: delayed 2658 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Oct 2014 07:47:58 EDT
+Received: from olivier by ocroquette.fr with local (Exim 4.72)
+	(envelope-from <ocroquette@free.fr>)
+	id 1XgAkU-0007wH-2L; Mon, 20 Oct 2014 13:03:38 +0200
+X-Mailer: git-send-email 1.7.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Philip Oakley" <philipoakley@iee.org>
-> From: "Junio C Hamano" <gitster@pobox.com>
->> Philip Oakley <philipoakley@iee.org> writes:
-..
->>
->>> While at it, use 00 for ASCII NUL to avoid any confusion with the 
->>> letter O.
+Beyond compare 4 is out since september 2014. The CLI interface doesn't seem to have changed compared to the version 3.
 
-> (remember its quotation is consumed by ascidoc) looked too much like 
-> an
-I mis-remembered. It's not quoted.
+Signed-off-by: Olivier Croquette <ocroquette@free.fr>
+---
+ mergetools/bc4 |   25 +++++++++++++++++++++++++
+ 1 files changed, 25 insertions(+), 0 deletions(-)
+ create mode 100644 mergetools/bc4
 
-> Looking around some more, it's as if "0)" is special cased in some 
-> conversion to HTML.
-
-This looks to be an issue of the browser display font 
-(Chrome/Chromium/Firefox) where it's almost impossible to distinguish 0 
-and o without other numbers or letters being present for context. The 
-old kernel.org page appears to specify the font differently and thus 
-provides a clear rendering.
-
-Philip 
+diff --git a/mergetools/bc4 b/mergetools/bc4
+new file mode 100644
+index 0000000..b6319d2
+--- /dev/null
++++ b/mergetools/bc4
+@@ -0,0 +1,25 @@
++diff_cmd () {
++	"$merge_tool_path" "$LOCAL" "$REMOTE"
++}
++
++merge_cmd () {
++	touch "$BACKUP"
++	if $base_present
++	then
++		"$merge_tool_path" "$LOCAL" "$REMOTE" "$BASE" \
++			-mergeoutput="$MERGED"
++	else
++		"$merge_tool_path" "$LOCAL" "$REMOTE" \
++			-mergeoutput="$MERGED"
++	fi
++	check_unchanged
++}
++
++translate_merge_tool_path() {
++	if type bcomp >/dev/null 2>/dev/null
++	then
++		echo bcomp
++	else
++		echo bcompare
++	fi
++}
+-- 
+1.7.2.5
