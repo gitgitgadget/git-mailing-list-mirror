@@ -1,118 +1,82 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH 0/4] Multiple worktrees vs. submodules fixes
-Date: Mon, 20 Oct 2014 07:11:09 +0300
-Message-ID: <20141020041109.GA5784@wheezy.local>
-References: <1413090791-14428-1-git-send-email-max@max630.net>
- <CACsJy8BUtkWKE+P_sHgpAY6wJ9tpzxZRtZHULiLoO=dGnBjkHQ@mail.gmail.com>
- <543D58D9.5060606@web.de>
- <xmqqoatezhnx.fsf@gitster.dls.corp.google.com>
- <20141014183431.GA8157@wheezy.local>
- <543D7EBA.4040206@web.de>
- <20141014221509.GA10580@wheezy.local>
- <543EC390.4000709@web.de>
- <20141016205453.GA8441@wheezy.local>
- <54441147.5080204@web.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: merge: fix rooturl/branchurl match check
+Date: Mon, 20 Oct 2014 06:24:13 +0000
+Message-ID: <20141020062413.GB27885@dcvr.yhbt.net>
+References: <BLU437-SMTP152A16338E427B250EB601FBAA0@phx.gbl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Oct 20 06:12:35 2014
+Cc: git@vger.kernel.org, Tommaso Colombo <zibo86@hotmail.com>
+To: Tommaso Colombo <tommaso.colombo@outlook.com>
+X-From: git-owner@vger.kernel.org Mon Oct 20 08:24:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xg4Kg-0002ZL-NP
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Oct 2014 06:12:35 +0200
+	id 1Xg6OI-00081V-Dw
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Oct 2014 08:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbaJTEMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Oct 2014 00:12:19 -0400
-Received: from p3plsmtpa12-09.prod.phx3.secureserver.net ([68.178.252.238]:50169
-	"EHLO p3plsmtpa12-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750798AbaJTEMR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Oct 2014 00:12:17 -0400
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa12-09.prod.phx3.secureserver.net with 
-	id 5GC31p00K5B68XE01GC89D; Sun, 19 Oct 2014 21:12:14 -0700
+	id S1752473AbaJTGYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Oct 2014 02:24:15 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:35271 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752322AbaJTGYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Oct 2014 02:24:14 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAF031F8B3;
+	Mon, 20 Oct 2014 06:24:13 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <54441147.5080204@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <BLU437-SMTP152A16338E427B250EB601FBAA0@phx.gbl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 19, 2014 at 09:30:15PM +0200, Jens Lehmann wrote:
-> Am 16.10.2014 um 22:54 schrieb Max Kirillov:
->> On Wed, Oct 15, 2014 at 08:57:20PM +0200, Jens Lehmann wrote:
->>> Am 15.10.2014 um 00:15 schrieb Max Kirillov:
->>>> I think the logic can be simple: it a submodule is not
->>>> checked-out in the repository "checkout --to" is called
->>>> from, then it is not checked-out to the new one also. If it
->>>> is, then checkout calls itself recursively in the submodule
->>>> and works like being run in standalone repository.
+Tommaso Colombo <tommaso.colombo@outlook.com> wrote:
+> When populating svn:mergeinfo, git-svn merge checks if the merge parent
+> of the merged branch is under the same root as the git-svn repository.
+> This was implemented comparing $gs->repos_root with the return value of
+> of cmt_metadata for the merge parent. However, the first may contain a
+> username, whereas the second does not. In this case the comparison
+> fails.
+> 
+> Remove the username from $gs->repos_root before performing the
+> comparison.
 
->>> But when I later decide to populate the submodule in a
->>> "checkout --to" work tree, should it automagically also
->>> use the central storage, creating the modules/<name>
->>> directory there if it doesn't exist yet? I think that'd
->>> make sense to avoid having the work tree layout depend
->>> on the order commands were ran in. And imagine new
->>> submodules, they should not be handled differently from
->>> those already present.
+Thanks.  Commit makes sense, but one of the test cases fails for me,
+can you check it out?
+$ make && make t9161-git-svn-mergeinfo-push.sh -C t GIT_TEST_OPTS='-i -v'
+<snip successes>
+ok 11 - reintegration merge
 
->> Like place the common directory to
->> $MAIN_REPO/.git/modules/$SUB/ and worktree-specific part to
->> $MAIN_REPO/.git/worktrees/$WORKTREE/modules/$SUB, rather
->> than placing all into the socond one? It would make sense to
->> make, but then it would be imposible to checkout a diferent
->> repository into the same submodule in different superproject
->> checkouts. However stupid is sounds, there could be cases
->> if, for example, at some moment submodule is being replaced
->> by another one, and older worktrees should work with older
->> submodule, while newer uses the newer submodule.
+expecting success: 
+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
+	test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
+/branches/svnb2:3,8,16-17
+/branches/svnb3:4,9
+/branches/svnb5:6,11"
+	
+not ok 12 - check reintegration mergeinfo
+#	
+#		mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
+#		test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
+#	/branches/svnb2:3,8,16-17
+#	/branches/svnb3:4,9
+#	/branches/svnb5:6,11"
+#		
+make: *** [t9161-git-svn-mergeinfo-push.sh] Error 1
+make: Leaving directory `/home/ew/git-core/t'
 
-> Yes, but I believe that the user must be careful to not
-> reuse the same submodule name for a different repo anyways,
-> no matter if shared or not. Currently you'll get a warning
-> about that when trying to add a submodule whose name is
-> already found in .git/modules to avoid such confusion.
 
-Yes, while trying to write tests for this case I discovered
-that there are warnings and the recommended way is to use
-different names for different repositories even if they are
-pointing to the same path. Then always placing common
-directory into the .git/modules/<module> could be a good
-idea, and in very special cases users could manually create
-repositories with custom placement.
+You'll also need to sign-off (see Documentation/SubmittingPatches)
+It is required (project policy, not mine)
 
->> Also, could you clarify the usage of the /modules/
->> directory. I did not notice it to affect anything after the
->> submofule is placed there. Submodule operations use the
->> submodule repositories directly (through the git link, which
->> can point anywhere), or in .gitmodules file, or maybe in
->> .git/config. So there is actually no need to have that
->> gitdir there. Is it correct?
+> @@ -729,7 +730,7 @@ sub populate_merge_info {
+>  			}
+>  			my $branchpath = $1;
+>  
+> -			my $ra = Git::SVN::Ra->new($branchurl);
+> +			my $ra = Git::SVN::Ra->new(add_path_to_url($gs->repos_root, $branchpath));
 
-> Nope. When submodules are cloned their git directory is
-> placed under .git/modules/<submodule name>, the .git file
-> in the work tree points there and the core.worktree setting
-> points back from there to the work tree.
-
-I meant is the fact that gitdir is placed in modules, rather
-than in any other place, is used anywhere. There are 2
-places to put the gitdir of submodule in linked copy:
-1. $MAIN_REPO/.git/worktrees/$WORKTREE/modules/$SUB
-2. $MAIN_REPO/.git/modules/$SUB/worktrees/$SUB_WTNAME
-First one is suggested by submodule way of placing gitdirs,
-and the second one by worrktree way. There are reasons to
-have the second one - garbage collection and check that 2
-branch is not checked out twice. Are there resons to have
-the 1st one? The one is to prevent use of different
-repositories with the same name, anything else?
-
--- 
-Max
+Also, please keep long lines wrapped to <= 80 columns.
+Thanks again.
