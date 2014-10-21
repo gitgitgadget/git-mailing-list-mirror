@@ -1,489 +1,174 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 12/15] refs.c: replace the onerr argument in update_ref with a strbuf err
-Date: Tue, 21 Oct 2014 13:36:57 -0700
-Message-ID: <1413923820-14457-13-git-send-email-sahlberg@google.com>
-References: <1413923820-14457-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH 1/8] receive-pack.c: add protocol support to negotiate atomic-push
+Date: Tue, 21 Oct 2014 13:46:33 -0700
+Message-ID: <1413924400-15418-2-git-send-email-sahlberg@google.com>
+References: <1413924400-15418-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 21 22:46:54 2014
+X-From: git-owner@vger.kernel.org Tue Oct 21 22:46:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XggKR-0004zm-So
+	id 1XggKS-0004zm-K3
 	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 22:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933489AbaJUUqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S933502AbaJUUqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2014 16:46:47 -0400
+Received: from mail-pa0-f74.google.com ([209.85.220.74]:37190 "EHLO
+	mail-pa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933466AbaJUUqo (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 21 Oct 2014 16:46:44 -0400
-Received: from mail-pa0-f73.google.com ([209.85.220.73]:46647 "EHLO
-	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932842AbaJUUqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2014 16:46:39 -0400
-Received: by mail-pa0-f73.google.com with SMTP id et14so371111pad.0
-        for <git@vger.kernel.org>; Tue, 21 Oct 2014 13:46:39 -0700 (PDT)
+Received: by mail-pa0-f74.google.com with SMTP id kq14so368881pab.5
+        for <git@vger.kernel.org>; Tue, 21 Oct 2014 13:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aIM0cRBwEFs4f3rpyLUL02N1rj9NptzreQLEtnqONsc=;
-        b=aid7IGA4Un/8JF2ig2YltwYHMlQqWyol3+rDOZ66btJ+ttDJdnK9C94e3zUZlTxawz
-         qticXKdml+Tiid+jiz+NzPvYz7hCKH9aVci8ixmonq8sxc0g8OECRtGOrNtSth8oeU2I
-         orVtpTsQYcGH3+QwtJ3nZYCVdfrIbXDVzLMmgzqlBSBjgRU79VxXeVPKBJNNmUNfMuCQ
-         akpJMsfMtd8PRMdb2HKwH3DGG4vzAGnOfATmQ2aOUzqCnk3UmvYuXS4S/hDajI928gb+
-         Vyka28Y6T6XTM+QdkeKfRJLGTWWCT0hTFeZ2qdG/5lT59AfQsy+CT03oSc6Jh2giPdgW
-         y/nA==
+        bh=YZCVVoyRG9IuCAOaKLfWIUj/0wgUooTcUpjXXg1H2N0=;
+        b=Nbk1/xFovPQ7P6JuVMiksxowizadThZ19cqbfZcM/hJLKY2O86UWqBf97HFlO8D7cE
+         Rlbod/xKuEq1N1jkiw0vor6BsMSP18NZtgpyDD1I7xwtTDksDhYSNUxlwNKs8Hpffi+K
+         UjkZfgUtgpXx/jTQtcOZzIZ1fca1INpQzWb0PBDZm6QkDGaja+khUQugHzAxmLBiFovA
+         chVud6mTj55jHUtybsCl2QMTdcy01cjRBNHG1D0MLz0e2lwpPwGEQIrj2HDI3Dnf8WiS
+         k0JEPB3lr7X/EL47EKh/0Bt6sxKCkLAikPlWTWOHTXz1JnKoqTabNutO3UGPMqAXdwqD
+         oahg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=aIM0cRBwEFs4f3rpyLUL02N1rj9NptzreQLEtnqONsc=;
-        b=SYg2zeTFd0Zh6EZEYMYQa5bLa3n9JM/6oiLK8B4uQs8gDrpO4nggdUuRMfe2aSHw7l
-         agLe9WxvsTeoXcV7bm6UE9Rt8ZDD8X9SSy8uBNdvQ7DMF0Gx/JMK8lwvd3atUOvDaVNB
-         mgdQAe1qCQHuBypVIpF/npxRFw2vohvWCt+u2SUnb23GcAonUgPZBbyJDTNZo8bsn9xk
-         nu40sGbZm01SaQB+by3A4VqTtYGf5RwGjBD6nWx+GQdX4/jmY9OKB2V/7SVLSvrecA/z
-         m7kMnP0/8RXwWRnC1iUnnfKqokw1gSL0QgQgG22OwLfqpUMYA/ubmTMHJ03IBkhNpw04
-         BBGQ==
-X-Gm-Message-State: ALoCoQmuoigf+UlTT10inNgZzDfF1YatXZP58pi6RGIp+Jl/5HEBGAqYBm575+dqvv1IjSZUD56w
-X-Received: by 10.66.178.68 with SMTP id cw4mr15343513pac.32.1413924399037;
-        Tue, 21 Oct 2014 13:46:39 -0700 (PDT)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id n24si594701yha.6.2014.10.21.13.46.38
+        bh=YZCVVoyRG9IuCAOaKLfWIUj/0wgUooTcUpjXXg1H2N0=;
+        b=YpkApCqWqKRDTffYdi2USrhjIWKH+WkkbF9QHuFYjwKaORvyTCQFcdF4Qu6HLQFvff
+         MAMVYGcpKe/I2o05McJ160sXp5l9rsoUuBVsQyFCIVTO+b+p+IGk7h939um2fGqu8162
+         YLxneGRvpCy0/vo0/k/0s0HJLNtVNCZ/TIOtP2FqRSJ+xXzutYg7nI/9YsBfdj9IssjY
+         5ipat1fIi7AFUkeH+Q+DFf+FDNe+AcfLa6nx24kvjENd8q34QbgF1cV3FD/cDoPEbPwd
+         gGBMEJfMBayR8I3NUWuMo/mBg+YaDGQZRK1ba3c8mOtGvcqvCv9emSvTEQgiXRBPX/iz
+         vumQ==
+X-Gm-Message-State: ALoCoQkgXi2QcIDjSf6inbgD+8GFAg9H1mtmgtQN+TFP6GBRP9Aq/42gyryZEK6yKp8kqrTgh5M8
+X-Received: by 10.70.43.5 with SMTP id s5mr23826114pdl.7.1413924404014;
+        Tue, 21 Oct 2014 13:46:44 -0700 (PDT)
+Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
+        by gmr-mx.google.com with ESMTPS id e24si596836yhe.3.2014.10.21.13.46.43
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Oct 2014 13:46:38 -0700 (PDT)
+        Tue, 21 Oct 2014 13:46:43 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id JxdJJCyu.1; Tue, 21 Oct 2014 13:46:38 -0700
+	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id K2TXo1bs.1; Tue, 21 Oct 2014 13:46:43 -0700
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 30D54E12A8; Tue, 21 Oct 2014 13:37:02 -0700 (PDT)
+	id 5375CE0952; Tue, 21 Oct 2014 13:46:43 -0700 (PDT)
 X-Mailer: git-send-email 2.1.2.738.gd04b95a
-In-Reply-To: <1413923820-14457-1-git-send-email-sahlberg@google.com>
+In-Reply-To: <1413924400-15418-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Get rid of the action_on_err enum and replace the action argument to
-update_ref with a strbuf *err for error reporting.
+This adds support to the protocol between send-pack and receive-pack to
+* allow receive-pack to inform the client that it has atomic push capability
+* allow send-pack to request atomic push back.
 
-Update all callers to the new api including two callers in transport*.c
-which used the literal 0 instead of an enum.
+There is currently no setting in send-pack to actually request that atomic
+pushes are to be used yet. This only adds protocol capability not ability
+for the user to activate it.
 
-Change-Id: I8ee1540380393380b5a06db380fb8491bfe1ecdd
+Change-Id: I9a12940fb5c7443a1ddf9e45f6ea33b547c7ecfd
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/checkout.c   |  7 +++++--
- builtin/clone.c      | 20 ++++++++++++--------
- builtin/merge.c      | 20 +++++++++++++-------
- builtin/notes.c      | 24 ++++++++++++++----------
- builtin/reset.c      | 12 ++++++++----
- builtin/update-ref.c |  7 +++++--
- notes-cache.c        |  2 +-
- notes-utils.c        |  5 +++--
- refs.c               | 14 +++-----------
- refs.h               | 10 ++--------
- transport-helper.c   |  7 ++++++-
- transport.c          |  9 ++++++---
- 12 files changed, 78 insertions(+), 59 deletions(-)
+ Documentation/technical/protocol-capabilities.txt | 12 ++++++++++--
+ builtin/receive-pack.c                            |  6 +++++-
+ send-pack.c                                       |  6 ++++++
+ 3 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 8550b6d..60a68f7 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -584,6 +584,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- {
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *old_desc, *reflog_msg;
-+	struct strbuf err = STRBUF_INIT;
-+
- 	if (opts->new_branch) {
- 		if (opts->new_orphan_branch) {
- 			if (opts->new_branch_log && !log_all_ref_updates) {
-@@ -621,8 +623,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 	if (!strcmp(new->name, "HEAD") && !new->path && !opts->force_detach) {
- 		/* Nothing to do. */
- 	} else if (opts->force_detach || !new->path) {	/* No longer on any branch. */
--		update_ref(msg.buf, "HEAD", new->commit->object.sha1, NULL,
--			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
-+		if (update_ref(msg.buf, "HEAD", new->commit->object.sha1, NULL,
-+			       REF_NODEREF, &err))
-+			die("%s", err.buf);
- 		if (!opts->quiet) {
- 			if (old->path && advice_detached_head)
- 				detach_advice(new->name);
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5052fac..e0a671d 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -522,6 +522,7 @@ static void write_remote_refs(const struct ref *local_refs)
- static void write_followtags(const struct ref *refs, const char *msg)
- {
- 	const struct ref *ref;
-+	struct strbuf err = STRBUF_INIT;
- 	for (ref = refs; ref; ref = ref->next) {
- 		if (!starts_with(ref->name, "refs/tags/"))
- 			continue;
-@@ -529,8 +530,9 @@ static void write_followtags(const struct ref *refs, const char *msg)
- 			continue;
- 		if (!has_sha1_file(ref->old_sha1))
- 			continue;
--		update_ref(msg, ref->name, ref->old_sha1,
--			   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+		if (update_ref(msg, ref->name, ref->old_sha1,
-+			       NULL, 0, &err))
-+			die("%s", err.buf);
- 	}
- }
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 0c92dee..26bc5b1 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -18,8 +18,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
+ and server advertised.  As a consequence of these rules, server MUST
+ NOT advertise capabilities it does not understand.
  
-@@ -593,28 +595,30 @@ static void update_remote_refs(const struct ref *refs,
- static void update_head(const struct ref *our, const struct ref *remote,
- 			const char *msg)
- {
-+	struct strbuf err = STRBUF_INIT;
- 	const char *head;
- 	if (our && skip_prefix(our->name, "refs/heads/", &head)) {
- 		/* Local default branch link */
- 		create_symref("HEAD", our->name, NULL);
- 		if (!option_bare) {
--			update_ref(msg, "HEAD", our->old_sha1, NULL, 0,
--				   UPDATE_REFS_DIE_ON_ERR);
-+			update_ref(msg, "HEAD", our->old_sha1, NULL, 0, &err);
- 			install_branch_config(0, head, option_origin, our->name);
+-The 'report-status', 'delete-refs', 'quiet', and 'push-cert' capabilities
+-are sent and recognized by the receive-pack (push to server) process.
++The 'atomic-push', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
++capabilities are sent and recognized by the receive-pack (push to server)
++process.
+ 
+ The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
+ by both upload-pack and receive-pack protocols.  The 'agent' capability
+@@ -244,6 +245,13 @@ respond with the 'quiet' capability to suppress server-side progress
+ reporting if the local progress reporting is also being suppressed
+ (e.g., via `push -q`, or if stderr does not go to a tty).
+ 
++atomic-push
++-----------
++
++If the server sends the 'atomic-push' capability, it means it is
++capable of accepting atomic pushes. If the pushing client requests this
++capability, the server will update the refs in one single atomic transaction.
++
+ allow-tip-sha1-in-want
+ ----------------------
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 7ddd756..b8ffd9e 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -40,6 +40,7 @@ static int transfer_unpack_limit = -1;
+ static int unpack_limit = 100;
+ static int report_status;
+ static int use_sideband;
++static int use_atomic_push;
+ static int quiet;
+ static int prefer_ofs_delta = 1;
+ static int auto_update_server_info;
+@@ -171,7 +172,8 @@ static void show_ref(const char *path, const unsigned char *sha1)
+ 		struct strbuf cap = STRBUF_INIT;
+ 
+ 		strbuf_addstr(&cap,
+-			      "report-status delete-refs side-band-64k quiet");
++			      "report-status delete-refs side-band-64k quiet "
++			      "atomic-push");
+ 		if (prefer_ofs_delta)
+ 			strbuf_addstr(&cap, " ofs-delta");
+ 		if (push_cert_nonce)
+@@ -1173,6 +1175,8 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 				use_sideband = LARGE_PACKET_MAX;
+ 			if (parse_feature_request(feature_list, "quiet"))
+ 				quiet = 1;
++			if (parse_feature_request(feature_list, "atomic-push"))
++				use_atomic_push = 1;
  		}
- 	} else if (our) {
- 		struct commit *c = lookup_commit_reference(our->old_sha1);
- 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
--		update_ref(msg, "HEAD", c->object.sha1,
--			   NULL, REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
-+		if (update_ref(msg, "HEAD", c->object.sha1,
-+			       NULL, REF_NODEREF, &err))
-+			die("%s", err.buf);
- 	} else if (remote) {
- 		/*
- 		 * We know remote HEAD points to a non-branch, or
- 		 * HEAD points to a branch but we don't know which one.
- 		 * Detach HEAD in all these cases.
- 		 */
--		update_ref(msg, "HEAD", remote->old_sha1,
--			   NULL, REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
-+	  if (update_ref(msg, "HEAD", remote->old_sha1,
-+			 NULL, REF_NODEREF, &err))
-+		die("%s", err.buf);
- 	}
- }
  
-diff --git a/builtin/merge.c b/builtin/merge.c
-index bebbe5b..a787b6a 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -396,9 +396,11 @@ static void finish(struct commit *head_commit,
- 			printf(_("No merge message -- not updating HEAD\n"));
- 		else {
- 			const char *argv_gc_auto[] = { "gc", "--auto", NULL };
--			update_ref(reflog_message.buf, "HEAD",
--				new_head, head, 0,
--				UPDATE_REFS_DIE_ON_ERR);
-+			struct strbuf err = STRBUF_INIT;
-+			if (update_ref(reflog_message.buf, "HEAD",
-+				       new_head, head, 0,
-+				       &err))
-+				die("%s", err.buf);
- 			/*
- 			 * We ignore errors in 'gc --auto', since the
- 			 * user should see them.
-@@ -1086,6 +1088,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	unsigned char head_sha1[20];
- 	struct commit *head_commit;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
- 	const char *head_arg;
- 	int flag, i, ret = 0, head_subsumed;
- 	int best_cnt = -1, merge_was_ok = 0, automerge_was_ok = 0;
-@@ -1214,8 +1217,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		if (!remote_head)
- 			die(_("%s - not something we can merge"), argv[0]);
- 		read_empty(remote_head->object.sha1, 0);
--		update_ref("initial pull", "HEAD", remote_head->object.sha1,
--			   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+		if (update_ref("initial pull", "HEAD", remote_head->object.sha1,
-+			       NULL, 0, &err))
-+			die("%s", err.buf);
- 		goto done;
- 	} else {
- 		struct strbuf merge_names = STRBUF_INIT;
-@@ -1328,8 +1332,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		free(list);
- 	}
+ 		if (!strcmp(line, "push-cert")) {
+diff --git a/send-pack.c b/send-pack.c
+index 949cb61..3520fe5 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -294,6 +294,8 @@ int send_pack(struct send_pack_args *args,
+ 	int use_sideband = 0;
+ 	int quiet_supported = 0;
+ 	int agent_supported = 0;
++	int atomic_push_supported = 0;
++	int atomic_push = 0;
+ 	unsigned cmds_sent = 0;
+ 	int ret;
+ 	struct async demux;
+@@ -314,6 +316,8 @@ int send_pack(struct send_pack_args *args,
+ 		agent_supported = 1;
+ 	if (server_supports("no-thin"))
+ 		args->use_thin_pack = 0;
++	if (server_supports("atomic-push"))
++		atomic_push_supported = 1;
+ 	if (args->push_cert) {
+ 		int len;
  
--	update_ref("updating ORIG_HEAD", "ORIG_HEAD", head_commit->object.sha1,
--		   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+	if (update_ref("updating ORIG_HEAD", "ORIG_HEAD",
-+		       head_commit->object.sha1,
-+		       NULL, 0, &err))
-+		die("%s", err.buf);
+@@ -337,6 +341,8 @@ int send_pack(struct send_pack_args *args,
+ 		strbuf_addstr(&cap_buf, " quiet");
+ 	if (agent_supported)
+ 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
++	if (atomic_push)
++		strbuf_addstr(&cap_buf, " atomic-push");
  
- 	if (remoteheads && !common)
- 		; /* No common ancestors found. We need a real merge. */
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 68b6cd8..b9fec39 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -674,6 +674,7 @@ static int merge_abort(struct notes_merge_options *o)
- static int merge_commit(struct notes_merge_options *o)
- {
- 	struct strbuf msg = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
- 	unsigned char sha1[20], parent_sha1[20];
- 	struct notes_tree *t;
- 	struct commit *partial;
-@@ -714,10 +715,10 @@ static int merge_commit(struct notes_merge_options *o)
- 	format_commit_message(partial, "%s", &msg, &pretty_ctx);
- 	strbuf_trim(&msg);
- 	strbuf_insert(&msg, 0, "notes: ", 7);
--	update_ref(msg.buf, o->local_ref, sha1,
--		   is_null_sha1(parent_sha1) ? NULL : parent_sha1,
--		   0, UPDATE_REFS_DIE_ON_ERR);
--
-+	if (update_ref(msg.buf, o->local_ref, sha1,
-+		       is_null_sha1(parent_sha1) ? NULL : parent_sha1,
-+		       0, &err))
-+		die("%s", err.buf);
- 	free_notes(t);
- 	strbuf_release(&msg);
- 	ret = merge_abort(o);
-@@ -728,6 +729,7 @@ static int merge_commit(struct notes_merge_options *o)
- static int merge(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf remote_ref = STRBUF_INIT, msg = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
- 	unsigned char result_sha1[20];
- 	struct notes_tree *t;
- 	struct notes_merge_options o;
-@@ -808,14 +810,16 @@ static int merge(int argc, const char **argv, const char *prefix)
- 
- 	result = notes_merge(&o, t, result_sha1);
- 
--	if (result >= 0) /* Merge resulted (trivially) in result_sha1 */
-+	if (result >= 0) {/* Merge resulted (trivially) in result_sha1 */
- 		/* Update default notes ref with new commit */
--		update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
--			   0, UPDATE_REFS_DIE_ON_ERR);
--	else { /* Merge has unresolved conflicts */
-+		if (update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
-+			       0, &err))
-+			die("%s", err.buf);
-+	} else { /* Merge has unresolved conflicts */
- 		/* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
--		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
--			   0, UPDATE_REFS_DIE_ON_ERR);
-+		if (update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
-+			       0, &err))
-+			die("%s", err.buf);
- 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
- 		if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
- 			die("Failed to store link to current notes ref (%s)",
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 4c08ddc..8ebf4ca 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -245,6 +245,7 @@ static int reset_refs(const char *rev, const unsigned char *sha1)
- {
- 	int update_ref_status;
- 	struct strbuf msg = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
- 	unsigned char *orig = NULL, sha1_orig[20],
- 		*old_orig = NULL, sha1_old_orig[20];
- 
-@@ -253,13 +254,16 @@ static int reset_refs(const char *rev, const unsigned char *sha1)
- 	if (!get_sha1("HEAD", sha1_orig)) {
- 		orig = sha1_orig;
- 		set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
--		update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0,
--			   UPDATE_REFS_MSG_ON_ERR);
-+		if (update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0, &err))
-+			error("%s", err.buf);
-+		strbuf_release(&err);
- 	} else if (old_orig)
- 		delete_ref("ORIG_HEAD", old_orig, 0);
- 	set_reflog_message(&msg, "updating HEAD", rev);
--	update_ref_status = update_ref(msg.buf, "HEAD", sha1, orig, 0,
--				       UPDATE_REFS_MSG_ON_ERR);
-+	update_ref_status = update_ref(msg.buf, "HEAD", sha1, orig, 0, &err);
-+	if (update_ref_status)
-+		error("%s", err.buf);
-+	strbuf_release(&err);
- 	strbuf_release(&msg);
- 	return update_ref_status;
- }
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index af08dd9..f650647 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -358,6 +358,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 	const char *refname, *oldval;
- 	unsigned char sha1[20], oldsha1[20];
- 	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0, flags = 0;
-+	struct strbuf err = STRBUF_INIT;
- 	struct option options[] = {
- 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
- 		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
-@@ -421,6 +422,8 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 	if (delete)
- 		return delete_ref(refname, oldval ? oldsha1 : NULL, flags);
- 	else
--		return update_ref(msg, refname, sha1, oldval ? oldsha1 : NULL,
--				  flags, UPDATE_REFS_DIE_ON_ERR);
-+		if (update_ref(msg, refname, sha1, oldval ? oldsha1 : NULL,
-+			       flags, &err))
-+			die("%s", err.buf);
-+	return 0;
- }
-diff --git a/notes-cache.c b/notes-cache.c
-index c4e9bb7..386e6d6 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -60,7 +60,7 @@ int notes_cache_write(struct notes_cache *c)
- 			commit_sha1, NULL, NULL) < 0)
- 		return -1;
- 	if (update_ref("update notes cache", c->tree.ref, commit_sha1, NULL,
--		       0, UPDATE_REFS_QUIET_ON_ERR) < 0)
-+		       0, NULL) < 0)
- 		return -1;
- 
- 	return 0;
-diff --git a/notes-utils.c b/notes-utils.c
-index b64dc1b..bcfe61e 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -34,6 +34,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	unsigned char commit_sha1[20];
-+	struct strbuf err = STRBUF_INIT;
- 
- 	if (!t)
- 		t = &default_notes_tree;
-@@ -49,8 +50,8 @@ void commit_notes(struct notes_tree *t, const char *msg)
- 
- 	create_notes_commit(t, NULL, buf.buf, buf.len, commit_sha1);
- 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
--	update_ref(buf.buf, t->ref, commit_sha1, NULL, 0,
--		   UPDATE_REFS_DIE_ON_ERR);
-+	if (update_ref(buf.buf, t->ref, commit_sha1, NULL, 0, &err))
-+		die("%s", err.buf);
- 
- 	strbuf_release(&buf);
- }
-diff --git a/refs.c b/refs.c
-index 1261a78..c7d0825 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3675,7 +3675,7 @@ int transaction_delete_ref(struct transaction *transaction,
- 
- int update_ref(const char *action, const char *refname,
- 	       const unsigned char *sha1, const unsigned char *oldval,
--	       int flags, enum action_on_err onerr)
-+	       int flags, struct strbuf *e)
- {
- 	struct transaction *t;
- 	struct strbuf err = STRBUF_INIT;
-@@ -3688,16 +3688,8 @@ int update_ref(const char *action, const char *refname,
- 		const char *str = "update_ref failed for ref '%s': %s";
- 
- 		transaction_free(t);
--		switch (onerr) {
--		case UPDATE_REFS_MSG_ON_ERR:
--			error(str, refname, err.buf);
--			break;
--		case UPDATE_REFS_DIE_ON_ERR:
--			die(str, refname, err.buf);
--			break;
--		case UPDATE_REFS_QUIET_ON_ERR:
--			break;
--		}
-+		if (e)
-+			strbuf_addf(e, str, refname, err.buf);
- 		strbuf_release(&err);
- 		return 1;
- 	}
-diff --git a/refs.h b/refs.h
-index 44ae7fe..f3e08f5 100644
---- a/refs.h
-+++ b/refs.h
-@@ -212,12 +212,6 @@ extern int rename_ref(const char *oldref, const char *newref, const char *logmsg
-  */
- extern int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1);
- 
--enum action_on_err {
--	UPDATE_REFS_MSG_ON_ERR,
--	UPDATE_REFS_DIE_ON_ERR,
--	UPDATE_REFS_QUIET_ON_ERR
--};
--
- /*
-  * Begin a reference transaction.  The reference transaction must
-  * be freed by calling transaction_free().
-@@ -340,8 +334,8 @@ void transaction_free(struct transaction *transaction);
- 
- /** Lock a ref and then write its file */
- int update_ref(const char *action, const char *refname,
--		const unsigned char *sha1, const unsigned char *oldval,
--		int flags, enum action_on_err onerr);
-+	       const unsigned char *sha1, const unsigned char *oldval,
-+	       int flags, struct strbuf *err);
- 
- extern int parse_hide_refs_config(const char *var, const char *value, const char *);
- extern int ref_is_hidden(const char *);
-diff --git a/transport-helper.c b/transport-helper.c
-index 9b29620..653cf74 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -735,6 +735,7 @@ static int push_update_refs_status(struct helper_data *data,
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct ref *ref = remote_refs;
-+	struct strbuf err = STRBUF_INIT;
- 	int ret = 0;
- 
- 	for (;;) {
-@@ -758,7 +759,11 @@ static int push_update_refs_status(struct helper_data *data,
- 		private = apply_refspecs(data->refspecs, data->refspec_nr, ref->name);
- 		if (!private)
- 			continue;
--		update_ref("update by helper", private, ref->new_sha1, NULL, 0, 0);
-+		if (update_ref("update by helper", private, ref->new_sha1,
-+			       NULL, 0, &err))
-+			error("%s", err.buf);
-+		strbuf_release(&err);
-+
- 		free(private);
- 	}
- 	strbuf_release(&buf);
-diff --git a/transport.c b/transport.c
-index b56620e..51570d6 100644
---- a/transport.c
-+++ b/transport.c
-@@ -597,6 +597,7 @@ int transport_refs_pushed(struct ref *ref)
- void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int verbose)
- {
- 	struct refspec rs;
-+	struct strbuf err = STRBUF_INIT;
- 
- 	if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
- 		return;
-@@ -609,9 +610,11 @@ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int v
- 			fprintf(stderr, "updating local tracking ref '%s'\n", rs.dst);
- 		if (ref->deletion) {
- 			delete_ref(rs.dst, NULL, 0);
--		} else
--			update_ref("update by push", rs.dst,
--					ref->new_sha1, NULL, 0, 0);
-+		} else if (update_ref("update by push", rs.dst,
-+				      ref->new_sha1, NULL, 0, &err))
-+			error("%s", err.buf);
-+
-+		strbuf_release(&err);
- 		free(rs.dst);
- 	}
- }
+ 	/*
+ 	 * NEEDSWORK: why does delete-refs have to be so specific to
 -- 
 2.1.0.rc2.206.gedb03e5
