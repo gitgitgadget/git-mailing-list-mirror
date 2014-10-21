@@ -1,103 +1,217 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] .mailmap: Add Stefan Bellers corporate mail address
-Date: Mon, 20 Oct 2014 22:53:33 -0700
-Message-ID: <xmqqppdm0y02.fsf@gitster.dls.corp.google.com>
-References: <1413856245-5443-1-git-send-email-stefanbeller@gmail.com>
-	<1413856245-5443-2-git-send-email-stefanbeller@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 07:53:46 2014
+From: Zoltan Klinger <zoltan.klinger@gmail.com>
+Subject: [PATCH] grep: fix match highlighting for combined patterns with context lines
+Date: Tue, 21 Oct 2014 16:56:03 +1100
+Message-ID: <1413870963-66431-1-git-send-email-zoltan.klinger@gmail.com>
+Cc: Zoltan Klinger <zoltan.klinger@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 21 07:57:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XgSO9-0003sl-HC
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 07:53:45 +0200
+	id 1XgSRY-00054D-I5
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 07:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbaJUFxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2014 01:53:41 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53496 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751409AbaJUFxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2014 01:53:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D77CD127EB;
-	Tue, 21 Oct 2014 01:53:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=skk6lj8mJtrQQhsYZhptbAosUMc=; b=vde3xW
-	8CfJY6CRmQDwotZn9rD+VwUwMPcWUdEN+fRhb4Eyvf6/SEfvlMN2CopEAdiuvCTL
-	aZp/7ThmPB4M2DMWPdF1Wvguan/rLG3lli2xIoYnwzgGUaYwX7X+5fyB+Q5+v/W6
-	Pb2FBGPInSq+LulfKIdXqoDEWNAd4T8gVrNFc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=twbfor2UrrOIUeDLGDGlAuUBRNIMqGdi
-	0wi/rgBNTAARPrD2h5B+wURH2lfGqkicEunIa/DPtYhM6y8Au7nbt8ktFJzGue/g
-	Qp5CdJD8Ch5XIK03AfJ04FZW5xsN2jfnsHp9BkPY/prCtwUCxJBpBSPBGJdUpRz2
-	6RoLlIEhPjA=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE4C0127EA;
-	Tue, 21 Oct 2014 01:53:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5945B127E8;
-	Tue, 21 Oct 2014 01:53:34 -0400 (EDT)
-In-Reply-To: <1413856245-5443-2-git-send-email-stefanbeller@gmail.com> (Stefan
-	Beller's message of "Mon, 20 Oct 2014 18:50:45 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 97FEF4F4-58E6-11E4-8DC4-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1753140AbaJUF5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2014 01:57:13 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:42776 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725AbaJUF5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2014 01:57:12 -0400
+Received: by mail-pa0-f41.google.com with SMTP id eu11so674273pac.0
+        for <git@vger.kernel.org>; Mon, 20 Oct 2014 22:57:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=mf4ZRb6l4BOIyVBQmCjdfNupdWJwBBXsUqghFNA/CJE=;
+        b=fYDvSMutyZy8+p4Ho1PWlHZnUMI7aGJrawAtDKTLTVI3nS3RjElMc4Ox6G7tUkDeoP
+         /asDk1MSZX7VmTjeGagJ+Fd+VQW1JJNaS6vYuAhQ2MSaYGnoZ2ZJPSEVHMgCs9gB9h09
+         K8S6NpDrLj+KFf2016sjV2vkz5he1de8hAf0FgX8241BBfErojLDEFlAhK+RUScl7Ri6
+         v0AvDC64zDTBxF+bunlBJPhBnczbdS8/BK06dPdjU4D5p9PNtjxYBBn6W/jSM8koL/U5
+         +FlhnIqLiFEowJmNcUu8JcxqkI6wvBnMEj8T3sk3ghZTDENcCM9SM50BrI09fotrdqjs
+         ZoXg==
+X-Received: by 10.66.154.10 with SMTP id vk10mr32059677pab.21.1413871031798;
+        Mon, 20 Oct 2014 22:57:11 -0700 (PDT)
+Received: from localhost.localdomain (202-129-81-152.perm.iinet.net.au. [202.129.81.152])
+        by mx.google.com with ESMTPSA id qj2sm10690050pbc.78.2014.10.20.22.57.06
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 20 Oct 2014 22:57:08 -0700 (PDT)
+X-Mailer: git-send-email 2.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <stefanbeller@gmail.com> writes:
+When git grep is run with combined patterns such as '-e p1 --and -e p2'
+and surrounding context lines are requested, the output contains
+incorrectly highlighted matches.
 
-> From: Stefan Beller <sbeller@google.com>
->
-> Note that despite the private address being first, Google owns the
-> copyright on this patch as any other patch I'll be sending signed off
-> by the sbeller@google.com address.
+Consider the following output (highlighted matches are surrounded by '*'
+characters):
+    $ cat testfile
+    foo a
+    foo b
+    foo bar
+    baz bar foo
+    bar x
+    bar y
+    $ git grep -n -C2 -e foo --and -e bar testfile
+    testfile-1-*foo* a
+    testfile-2-*foo* b
+    testfile:3:*foo* *bar*
+    testfile:4:baz *bar* *foo*
+    testfile-5-*bar* x
+    testfile-6-*bar* y
 
-While Googlers are encouraged to interact with external open source
-projects using their corp address when working as new contributors,
-Googlers are also encouraged to keep using the same pre-corp address
-when working with projects they have been part of for continuity.
+Lines 1, 2, 5 and 6 do not match the combined patterns, they only
+contain incorrectly highlighted 'false positives'.
 
-After all, even if you send patches from your @gmail.com address
-while being employed by Google, the patches are copyright Google,
-not yours, and DCO (a) "I have the right to submit" covers your
-submissions just fine (i.e. it does not say "I own the copyright"),
-as long as you are cleared to contribute your patches to us by
-Google's open source office (which I happen to know that you have
-already done).
+Modify the show_line() function in grep.c to highlight matches only on
+lines that match the combined pattern. Do not highlight matches on lines
+that provide only context or contain only the function name of the match.
 
-The mailmap is primarily to correct past mistakes and document the
-new addresses of those who lost the old address to maintain their
-reachability.  It is not about planning to send patches from two
-different addresses chosen by the phase of the moon or something.
+The output of the same command after the change:
+    $ git grep -n -C2 -e foo --and -e bar testfile
+    testfile-1-foo a
+    testfile-2-foo b
+    testfile:3:*foo* *bar*
+    testfile:4:baz *bar* *foo*
+    testfile-5-bar x
+    testfile-6-bar y
 
-I do not terribly mind, but is this patch really necessary?
+Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
+---
+ grep.c          |  7 +++--
+ t/t7810-grep.sh | 90 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+), 2 deletions(-)
 
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  .mailmap | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/.mailmap b/.mailmap
-> index 8aefb5a..bb6f52e 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -205,6 +205,7 @@ Shawn O. Pearce <spearce@spearce.org>
->  Simon Hausmann <hausmann@kde.org> <simon@lst.de>
->  Simon Hausmann <hausmann@kde.org> <shausman@trolltech.com>
->  Stefan Beller <stefanbeller@gmail.com> <stefanbeller@googlemail.com>
-> +Stefan Beller <stefanbeller@gmail.com> <sbeller@google.com>
->  Stefan Naewe <stefan.naewe@gmail.com> <stefan.naewe@atlas-elektronik.com>
->  Stefan Naewe <stefan.naewe@gmail.com> <stefan.naewe@googlemail.com>
->  Stefan Sperling <stsp@elego.de> <stsp@stsp.name>
+diff --git a/grep.c b/grep.c
+index 4dc31ea..3c4d68e 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1121,9 +1121,12 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 		enum grep_context ctx = GREP_CONTEXT_BODY;
+ 		int ch = *eol;
+ 		int eflags = 0;
++		char *match_color = NULL;
+ 
+-		if (sign == ':')
++		if (sign == ':') {
+ 			line_color = opt->color_selected;
++			match_color = opt->color_match;
++		}
+ 		else if (sign == '-')
+ 			line_color = opt->color_context;
+ 		else if (sign == '=')
+@@ -1136,7 +1139,7 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 			output_color(opt, bol, match.rm_so, line_color);
+ 			output_color(opt, bol + match.rm_so,
+ 				     match.rm_eo - match.rm_so,
+-				     opt->color_match);
++				     match_color);
+ 			bol += match.rm_eo;
+ 			rest -= match.rm_eo;
+ 			eflags = REG_NOTBOL;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 40615de..b0d6b6f 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1202,4 +1202,94 @@ test_expect_success LIBPCRE 'grep -P "^ "' '
+ 	test_cmp expected actual
+ '
+ 
++cat >expected <<EOF
++space-line without leading space1
++space: line <RED>with <RESET>leading space1
++space: line <RED>with <RESET>leading <RED>space2<RESET>
++space: line <RED>with <RESET>leading space3
++space:line without leading <RED>space2<RESET>
++EOF
++
++test_expect_success 'grep --color -e A -e B with context' '
++	test_config color.grep.context		normal &&
++	test_config color.grep.filename		normal &&
++	test_config color.grep.function		normal &&
++	test_config color.grep.linenumber	normal &&
++	test_config color.grep.match		red &&
++	test_config color.grep.selected		normal &&
++	test_config color.grep.separator	normal &&
++
++	git grep --color=always -C2 -e "with " -e space2  space |
++	test_decode_color >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++space-line without leading space1
++space- line with leading space1
++space: line <RED>with <RESET>leading <RED>space2<RESET>
++space- line with leading space3
++space-line without leading space2
++EOF
++
++test_expect_success 'grep --color -e A --and -e B with context' '
++	test_config color.grep.context		normal &&
++	test_config color.grep.filename		normal &&
++	test_config color.grep.function		normal &&
++	test_config color.grep.linenumber	normal &&
++	test_config color.grep.match		red &&
++	test_config color.grep.selected		normal &&
++	test_config color.grep.separator	normal &&
++
++	git grep --color=always -C2 -e "with " --and -e space2  space |
++	test_decode_color >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++space-line without leading space1
++space: line <RED>with <RESET>leading space1
++space- line with leading space2
++space: line <RED>with <RESET>leading space3
++space-line without leading space2
++EOF
++
++test_expect_success 'grep --color -e A --and --not -e B with context' '
++	test_config color.grep.context		normal &&
++	test_config color.grep.filename		normal &&
++	test_config color.grep.function		normal &&
++	test_config color.grep.linenumber	normal &&
++	test_config color.grep.match		red &&
++	test_config color.grep.selected		normal &&
++	test_config color.grep.separator	normal &&
++
++	git grep --color=always -C2 -e "with " --and --not -e space2  space |
++	test_decode_color >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++hello.c-#include <stdio.h>
++hello.c=int main(int argc, const char **argv)
++hello.c-{
++hello.c:	pr<RED>int<RESET>f("<RED>Hello<RESET> world.\n");
++hello.c-	return 0;
++hello.c-	/* char ?? */
++hello.c-}
++EOF
++
++test_expect_success 'grep --color -e A --and -e B -p with context' '
++	test_config color.grep.context		normal &&
++	test_config color.grep.filename		normal &&
++	test_config color.grep.function		normal &&
++	test_config color.grep.linenumber	normal &&
++	test_config color.grep.match		red &&
++	test_config color.grep.selected		normal &&
++	test_config color.grep.separator	normal &&
++
++	git grep --color=always -p -C3 -e int --and -e Hello --no-index hello.c |
++	test_decode_color >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+-- 
+2.1.1
