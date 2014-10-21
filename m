@@ -1,68 +1,91 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH] doc: 'git status' quote the zero (NUL) character
-Date: Tue, 21 Oct 2014 23:09:50 +0100
-Message-ID: <1413929390-1624-1-git-send-email-philipoakley@iee.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: GitList <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 22 00:09:40 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git reflog --date
+Date: Tue, 21 Oct 2014 15:21:16 -0700
+Message-ID: <xmqqvbndhxnn.fsf@gitster.dls.corp.google.com>
+References: <CAHQ6N+oQV8Uesv_eCBZc+hpwR5rDWA22OXR05AJ_zXcf7bfQ7g@mail.gmail.com>
+	<xmqqh9yx1gkt.fsf@gitster.dls.corp.google.com>
+	<CAHQ6N+rb6eNC0_uzCAdH-HNb_SmdG4-W9DgmVKjfNpRcKKxk=w@mail.gmail.com>
+	<xmqq8uk91emg.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 22 00:21:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xghca-00025O-Dv
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Oct 2014 00:09:40 +0200
+	id 1Xghnw-0006fr-Dt
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Oct 2014 00:21:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933454AbaJUWJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2014 18:09:37 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:33598 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933014AbaJUWJg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Oct 2014 18:09:36 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlEeAGjYRlRZ8YBmPGdsb2JhbABcgw0BAYEqgjaFB4F3s2mPVIdWBAKBFBcBAQUBAQEBODuEMC8jGIECChoTiEPHGpBXhFIFmQucO4IyPC+CSwEBAQ
-X-IPAS-Result: AlEeAGjYRlRZ8YBmPGdsb2JhbABcgw0BAYEqgjaFB4F3s2mPVIdWBAKBFBcBAQUBAQEBODuEMC8jGIECChoTiEPHGpBXhFIFmQucO4IyPC+CSwEBAQ
-X-IronPort-AV: E=Sophos;i="5.04,764,1406588400"; 
-   d="scan'208";a="474596071"
-Received: from host-89-241-128-102.as13285.net (HELO localhost) ([89.241.128.102])
-  by out1.ip04ir2.opaltelecom.net with ESMTP; 21 Oct 2014 23:09:31 +0100
-X-Mailer: git-send-email 1.9.4.msysgit.0
+	id S933410AbaJUWVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2014 18:21:20 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58706 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933387AbaJUWVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2014 18:21:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E96A618BCD;
+	Tue, 21 Oct 2014 18:21:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pjSka7PKS+xoG3M/9LVyVVSpmjE=; b=Z9lrt3
+	76h30fDOHgyqo/hzta2sPqjlBrO6d6m6MeZUhjP+VRgPqXGaxTXj5EqC0c0AZ8bq
+	IAQOlAsP59GE/8hx7y+c7RCrDql9wlXphhu3eGZyDkeYW315fQcyJUmERrlRcTGl
+	my6iKUr0y8si5Z8EOV5DsBpYipQlQnS+sFxQI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ay8qGoL+T7jaHNez3wyvhD6W8sWpFdee
+	i0+wGnhc9uPE+h+nREOr0GncMTRS6F2sT3xAblgMby469VA3BByPqyGMb5WiqAm2
+	dMSZy7mznd255KH72yxP/6iJ4T11DJzBAwsehrpwsxNwp+Mns/pLUShmZo6ri8y5
+	gWaRu20noag=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E046618BCC;
+	Tue, 21 Oct 2014 18:21:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C90218BCB;
+	Tue, 21 Oct 2014 18:21:17 -0400 (EDT)
+In-Reply-To: <xmqq8uk91emg.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 21 Oct 2014 11:06:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 93815A4A-5970-11E4-A9C6-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Newer web rendering of 'git status --help --web' shows the zero in
-"NUL (ASCII 0)" as if it is a small 'o' character. Back-tick quote the
-zero to ensure it is displayed as a full size mono-spaced font. Also
-display the "double quote (ASCII 34)" in the same manner.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
- Documentation/git-status.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> John Tapsell <johnflux@gmail.com> writes:
+>
+>> For me, writing "git reflog @{now}"  is a lot less intuitive than "git
+>> reflog --date"
+>>
+>> Currently the top google search for this question is here:
+>>
+>> http://stackoverflow.com/questions/17369254/is-there-a-way-to-cause-git-reflog-to-show-a-date-alongside-each-entry
+>>
+>> Which doesn't mention "@{now}"   at all.
+>
+> I would say that a site where cluelesses attempt to lead other
+> cluelesses is not the best source of information ;-), but that tells
+> us that either our docs are not read by people or they do not give
+> necessary information to them clearly enough.
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 4d8d530..24390d6 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -122,7 +122,7 @@ status code.
- The fields (including the `->`) are separated from each other by a
- single space. If a filename contains whitespace or other nonprintable
- characters, that field will be quoted in the manner of a C string
--literal: surrounded by ASCII double quote (34) characters, and with
-+literal: surrounded by double quote (ASCII `34`) characters, and with
- interior special characters backslash-escaped.
- 
- For paths with merge conflicts, `X` and `Y` show the modification
-@@ -189,7 +189,7 @@ There is also an alternate -z format recommended for machine parsing. In
- that format, the status field is the same, but some other things
- change.  First, the '\->' is omitted from rename entries and the field
- order is reversed (e.g 'from \-> to' becomes 'to from'). Second, a NUL
--(ASCII 0) follows each filename, replacing space as a field separator
-+(ASCII `0`) follows each filename, replacing space as a field separator
- and the terminating newline (but a space still separates the status
- field from the first filename).  Third, filenames containing special
- characters are not specially formatted; no quoting or
--- 
-1.9.4.msysgit.0
+And it turns out it is a little bit of both.  We have this shown in
+"git log --help":
+
+    -g::
+    --walk-reflogs::
+    ...
+    By default, 'commit@\{Nth}' notation is
+    used in the output.  When the starting commit is specified as
+    'commit@\{now}', output also uses 'commit@\{timestamp}' notation
+    instead.
+
+and "git reflog --help" says that "It is an alias for git log -g
+--abbrev-commit --pretty=oneline; see git-log(1)." in fairly early
+part of its description.
