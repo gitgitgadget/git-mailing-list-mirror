@@ -1,217 +1,102 @@
-From: Zoltan Klinger <zoltan.klinger@gmail.com>
-Subject: [PATCH] grep: fix match highlighting for combined patterns with context lines
-Date: Tue, 21 Oct 2014 16:56:03 +1100
-Message-ID: <1413870963-66431-1-git-send-email-zoltan.klinger@gmail.com>
-Cc: Zoltan Klinger <zoltan.klinger@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 21 07:57:17 2014
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Sources for 3.18-rc1 not uploaded
+Date: Tue, 21 Oct 2014 10:08:35 +0200
+Message-ID: <54461483.9010600@drmicha.warpmail.net>
+References: <20141020115943.GA27144@gmail.com>	<CA+55aFyDuHskYE66rBVL_P-T2pxg6f2m6mUicfz-mk+ysePBxg@mail.gmail.com>	<20141020222809.GB223410@vauxhall.crustytoothpaste.net> <CA+55aFyZ1Mzjdx+JsD4jmFnJo+xL8xLz5+mtbh+_25bCak-7hQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	infra-steering@kernel.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 21 10:08:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XgSRY-00054D-I5
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 07:57:17 +0200
+	id 1XgUUx-0006St-Ui
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 10:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140AbaJUF5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2014 01:57:13 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:42776 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752725AbaJUF5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2014 01:57:12 -0400
-Received: by mail-pa0-f41.google.com with SMTP id eu11so674273pac.0
-        for <git@vger.kernel.org>; Mon, 20 Oct 2014 22:57:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=mf4ZRb6l4BOIyVBQmCjdfNupdWJwBBXsUqghFNA/CJE=;
-        b=fYDvSMutyZy8+p4Ho1PWlHZnUMI7aGJrawAtDKTLTVI3nS3RjElMc4Ox6G7tUkDeoP
-         /asDk1MSZX7VmTjeGagJ+Fd+VQW1JJNaS6vYuAhQ2MSaYGnoZ2ZJPSEVHMgCs9gB9h09
-         K8S6NpDrLj+KFf2016sjV2vkz5he1de8hAf0FgX8241BBfErojLDEFlAhK+RUScl7Ri6
-         v0AvDC64zDTBxF+bunlBJPhBnczbdS8/BK06dPdjU4D5p9PNtjxYBBn6W/jSM8koL/U5
-         +FlhnIqLiFEowJmNcUu8JcxqkI6wvBnMEj8T3sk3ghZTDENcCM9SM50BrI09fotrdqjs
-         ZoXg==
-X-Received: by 10.66.154.10 with SMTP id vk10mr32059677pab.21.1413871031798;
-        Mon, 20 Oct 2014 22:57:11 -0700 (PDT)
-Received: from localhost.localdomain (202-129-81-152.perm.iinet.net.au. [202.129.81.152])
-        by mx.google.com with ESMTPSA id qj2sm10690050pbc.78.2014.10.20.22.57.06
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 20 Oct 2014 22:57:08 -0700 (PDT)
-X-Mailer: git-send-email 2.1.1
+	id S1754801AbaJUIIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2014 04:08:43 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33199 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754493AbaJUIIh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Oct 2014 04:08:37 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by gateway2.nyi.internal (Postfix) with ESMTP id 32D5A20942
+	for <git@vger.kernel.org>; Tue, 21 Oct 2014 04:08:37 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute6.internal (MEProxy); Tue, 21 Oct 2014 04:08:37 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=pObNH9Zhf+wkA6KKMb9HIL
+	jw4+s=; b=XmNcUT+VBCQQDyHESaLkryyDkqwnEYAbMfP9xJps5Ecp5BCnS/IGU6
+	zl222jpE2eFfm31kM/7crW2tyxlzxNzrs/EH3CVdPem8BsLAX1UjZeBHUcBmX7+N
+	floYL4FvZ3l1V/ojS1EmljUOty5t+T3K8KNXbwTPxmBm+H4LyGNRU=
+X-Sasl-enc: RXDfkuxDwMdCg+Kgk9NHpAfH+oCgoLpdTn2EowktRS7i 1413878916
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 50FFD680197;
+	Tue, 21 Oct 2014 04:08:36 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
+In-Reply-To: <CA+55aFyZ1Mzjdx+JsD4jmFnJo+xL8xLz5+mtbh+_25bCak-7hQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When git grep is run with combined patterns such as '-e p1 --and -e p2'
-and surrounding context lines are requested, the output contains
-incorrectly highlighted matches.
+Linus Torvalds schrieb am 21.10.2014 um 01:17:
+> On Mon, Oct 20, 2014 at 3:28 PM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+>>
+>> It doesn't appear that the stability of git archive --format=tar is
+>> documented anywhere.  Given that, it doesn't seem reasonable to expect
+>> that any tar implementation produces bit-for-bit compatible output
+>> between versions.
+> 
+> The kernel has simple stability rules: if it breaks users, it gets
+> fixed or reverted. That is a damn good rule.
+> 
+> I realize that some other projects are crap, and don't care about
+> their users. I hope and believe that git is not in that sad group.
+> 
+> The whole "it's not documented" excuse is pure and utter bollocks.
+> Users don't care. And stability of data should be *expected*, not need
+> some random documentation entry to make it explicit.
+> 
+>                       Linus
+> 
 
-Consider the following output (highlighted matches are surrounded by '*'
-characters):
-    $ cat testfile
-    foo a
-    foo b
-    foo bar
-    baz bar foo
-    bar x
-    bar y
-    $ git grep -n -C2 -e foo --and -e bar testfile
-    testfile-1-*foo* a
-    testfile-2-*foo* b
-    testfile:3:*foo* *bar*
-    testfile:4:baz *bar* *foo*
-    testfile-5-*bar* x
-    testfile-6-*bar* y
+Linus, with all due respect, this is not the LKML, so please watch your
+tone over here on the git list (and keep ranting on LKML however you want).
 
-Lines 1, 2, 5 and 6 do not match the combined patterns, they only
-contain incorrectly highlighted 'false positives'.
+Brian made a very valid point about what his patch was trying to fix -
+after all that is why it was applied. Konstantin made a very valid point
+about why the existing behavior is useful for KUP. Interestingly, both
+cared about the users of git, just different kinds users.
 
-Modify the show_line() function in grep.c to highlight matches only on
-lines that match the combined pattern. Do not highlight matches on lines
-that provide only context or contain only the function name of the match.
+Git is probably one of the most conservative projects regarding
+backwards compatibility and heeding users' expectations (sometimes to my
+own dismay). That being said, we distinguish between justified
+expectations and those without a solid base - which is why we have
+porcelain vs. plumbing, for example, to make clear which part of the ui
+is stable. (Yeah, I know you know, but you didn't argue as if you did.)
 
-The output of the same command after the change:
-    $ git grep -n -C2 -e foo --and -e bar testfile
-    testfile-1-foo a
-    testfile-2-foo b
-    testfile:3:*foo* *bar*
-    testfile:4:baz *bar* *foo*
-    testfile-5-bar x
-    testfile-6-bar y
+"data" in git is stable. "data exports" by git are as stable as the
+output format is intrinsically or due to the (hopefully documented) way
+git produces it.
 
-Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
----
- grep.c          |  7 +++--
- t/t7810-grep.sh | 90 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 95 insertions(+), 2 deletions(-)
+Unfortunately, the git archive doc clearly says that the umask is
+applied to all archive entries. And that clearly wasn't the case (for
+extended metadata headers) before Brian's fix.
 
-diff --git a/grep.c b/grep.c
-index 4dc31ea..3c4d68e 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1121,9 +1121,12 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 		enum grep_context ctx = GREP_CONTEXT_BODY;
- 		int ch = *eol;
- 		int eflags = 0;
-+		char *match_color = NULL;
- 
--		if (sign == ':')
-+		if (sign == ':') {
- 			line_color = opt->color_selected;
-+			match_color = opt->color_match;
-+		}
- 		else if (sign == '-')
- 			line_color = opt->color_context;
- 		else if (sign == '=')
-@@ -1136,7 +1139,7 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 			output_color(opt, bol, match.rm_so, line_color);
- 			output_color(opt, bol + match.rm_so,
- 				     match.rm_eo - match.rm_so,
--				     opt->color_match);
-+				     match_color);
- 			bol += match.rm_eo;
- 			rest -= match.rm_eo;
- 			eflags = REG_NOTBOL;
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 40615de..b0d6b6f 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1202,4 +1202,94 @@ test_expect_success LIBPCRE 'grep -P "^ "' '
- 	test_cmp expected actual
- '
- 
-+cat >expected <<EOF
-+space-line without leading space1
-+space: line <RED>with <RESET>leading space1
-+space: line <RED>with <RESET>leading <RED>space2<RESET>
-+space: line <RED>with <RESET>leading space3
-+space:line without leading <RED>space2<RESET>
-+EOF
-+
-+test_expect_success 'grep --color -e A -e B with context' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.match		red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=always -C2 -e "with " -e space2  space |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+space-line without leading space1
-+space- line with leading space1
-+space: line <RED>with <RESET>leading <RED>space2<RESET>
-+space- line with leading space3
-+space-line without leading space2
-+EOF
-+
-+test_expect_success 'grep --color -e A --and -e B with context' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.match		red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=always -C2 -e "with " --and -e space2  space |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+space-line without leading space1
-+space: line <RED>with <RESET>leading space1
-+space- line with leading space2
-+space: line <RED>with <RESET>leading space3
-+space-line without leading space2
-+EOF
-+
-+test_expect_success 'grep --color -e A --and --not -e B with context' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.match		red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=always -C2 -e "with " --and --not -e space2  space |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+hello.c-#include <stdio.h>
-+hello.c=int main(int argc, const char **argv)
-+hello.c-{
-+hello.c:	pr<RED>int<RESET>f("<RED>Hello<RESET> world.\n");
-+hello.c-	return 0;
-+hello.c-	/* char ?? */
-+hello.c-}
-+EOF
-+
-+test_expect_success 'grep --color -e A --and -e B -p with context' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.match		red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=always -p -C3 -e int --and -e Hello --no-index hello.c |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.1.1
+Brian: How old is the newest tar that get's the extended metadata
+headers wrong? If those tars are a "real concern" then we should
+probably do the extra pax_umask as suggested by Linus, but have the
+default protect the "unknowing users" and give the "knowing users" that
+config knob to twitch (sorry, Linus). Otherwise a revert is in order.
+
+Michael
