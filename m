@@ -1,97 +1,118 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] Copy mergetool "bc3" as "bc4"
-Date: Tue, 21 Oct 2014 01:44:38 -0700
-Message-ID: <20141021084436.GA39148@gmail.com>
-References: <1413803017-30489-1-git-send-email-ocroquette@free.fr>
- <xmqq7fzu4rve.fsf@gitster.dls.corp.google.com>
- <xmqqtx2y3avx.fsf@gitster.dls.corp.google.com>
- <54455334.8000503@gmail.com>
- <xmqqfvei37qg.fsf@gitster.dls.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn performance
+Date: Tue, 21 Oct 2014 09:00:56 +0000
+Message-ID: <20141021090055.GA22184@dcvr.yhbt.net>
+References: <CABBCAiv0WXNzo7W9PB_o_enLjtUO_rNRb4UBEqDPeSkBj1k-Ww@mail.gmail.com>
+ <20141019003256.GA18532@dcvr.yhbt.net>
+ <20141019022953.GA6537@dcvr.yhbt.net>
+ <20141019023358.GA2946@dcvr.yhbt.net>
+ <B5419560-60BC-4228-B1BA-9BAD5E4D58B9@2pi.dk>
+ <20141020011601.GA17345@dcvr.yhbt.net>
+ <00E02C52-67BC-461B-BF46-0EEDCFFFDFB1@2pi.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Olivier Croquette <ocroquette@free.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 10:44:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Fabian Schmied <fabian.schmied@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"sam@vilain.net" <sam@vilain.net>,
+	"stevenrwalter@gmail.com" <stevenrwalter@gmail.com>,
+	"waste.manager@gmx.de" <waste.manager@gmx.de>,
+	"amyrick@apple.com" <amyrick@apple.com>,
+	Hin-Tak Leung <htl10@users.sourceforge.net>
+To: Jakob Stoklund Olesen <stoklund@2pi.dk>
+X-From: git-owner@vger.kernel.org Tue Oct 21 11:01:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XgV3K-00010A-MF
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 10:44:27 +0200
+	id 1XgVJW-0001NK-5n
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 11:01:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244AbaJUIoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2014 04:44:19 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:50098 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751956AbaJUIoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2014 04:44:17 -0400
-Received: by mail-pa0-f50.google.com with SMTP id kx10so931836pab.37
-        for <git@vger.kernel.org>; Tue, 21 Oct 2014 01:44:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=RYk3wcOmk/kSgFb7hxAanxiXumbAFPH3WibHF/6jwBc=;
-        b=D5c8RlKL7it+HHE/ZT1wbxSPyCKUqB3RXazq7qL/0di2fLL0/h6m6zZxPlKWEb8biG
-         9R/LYW/7Z3YJZZMuWXeRYJ3dnmh5QPYzxUt9j5FjoD3sR/9jXn3fpzvvgAC14dBgE1bl
-         RcLqKF1aZvCue1dQkOYIGf8JxDAjdn2WRkkqXWw9gFclYrJ8Ap8LMYz+R9AlHgyh1y2x
-         YYEcz8leg0L1CsRN6pl1DxX5WcivUUPvG/70xui5gf3DkzLxRzT20pNawALF7xflMJ6s
-         6HWT4VrOUNS8X7usc70pHpDpZ+Dgtg07oP+xMmoJbZPrVq+l24Z14qGRbNVp9UaP43dm
-         YidA==
-X-Received: by 10.68.112.193 with SMTP id is1mr33464585pbb.35.1413881056657;
-        Tue, 21 Oct 2014 01:44:16 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id cl1sm11135471pbb.92.2014.10.21.01.44.15
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 21 Oct 2014 01:44:16 -0700 (PDT)
+	id S1754681AbaJUJBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2014 05:01:04 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:49753 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754956AbaJUJA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2014 05:00:58 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E79F44C010;
+	Tue, 21 Oct 2014 09:00:56 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <xmqqfvei37qg.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <00E02C52-67BC-461B-BF46-0EEDCFFFDFB1@2pi.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 20, 2014 at 11:40:23AM -0700, Junio C Hamano wrote:
-> Sebastian Schuberth <sschuberth@gmail.com> writes:
-> 
-> >> Perhaps something like this, so that existing users can still use
-> >> "bc3" and other people can use "bc" if it bothers them that they
-> >> have to say "3" when the backend driver works with both 3 and 4?
-> >
-> > That indeed sounds like the best approach.
-> >
-> >> --- a/git-mergetool--lib.sh
-> >> +++ b/git-mergetool--lib.sh
-> >> @@ -250,7 +250,7 @@ list_merge_tool_candidates () {
-> >>   			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
-> >>   		fi
-> >>   		tools="$tools gvimdiff diffuse diffmerge ecmerge"
-> >> -		tools="$tools p4merge araxis bc3 codecompare"
-> >> +		tools="$tools p4merge araxis bc bc3 codecompare"
-> >
-> > Why keep bc3 here?
-> 
-> I didn't carefully look at the code that uses this list to see if we
-> have to list everything or can list just the ones we recommend, and
-> erred on the safer side (unlike the one for completion where I
-> omitted bc3 as "deprecated").
+Jakob Stoklund Olesen <stoklund@2pi.dk> wrote:
+> Yes, but I think you can remove cached_mergeinfo_rev too. 
 
-We should drop "bc3" here.  This is the list of candidates that
-is used when no configuration exists.  Listing "bc" twice here
-implies that we might try that candidate twice.
+Thanks, pushed the patch at the bottom, too.
+Also started working on some memory reductions here:
+ http://mid.gmane.org/20141021033912.GA27462@dcvr.yhbt.net
+But there seem to be more problems :<
 
-Otherwise, this patch looks like the right way to go ~ it makes
-"bc" available and keeps compatibility for "bc3".
+----------------------------8<-----------------------------
+From: Eric Wong <normalperson@yhbt.net>
+Date: Tue, 21 Oct 2014 06:23:22 +0000
+Subject: [PATCH] git-svn: remove mergeinfo rev caching
 
-If we wanted to phase out "bc3" for Git 3.0 we could start
-warning inside of the "bc3" scriptlet, but I don't see any
-reason to do so a.t.m.
+This should further reduce memory usage from the new mergeinfo
+speedups without hurting performance too much, assuming
+reasonable latency to the SVN server.
 
-Thanks,
+Cc: Hin-Tak Leung <htl10@users.sourceforge.net>
+Suggested-by: Jakob Stoklund Olesen <stoklund@2pi.dk>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ perl/Git/SVN.pm | 30 +++++++++---------------------
+ 1 file changed, 9 insertions(+), 21 deletions(-)
+
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index f8a75b1..4364506 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1710,32 +1710,20 @@ sub mergeinfo_changes {
+ 	my %minfo = map {split ":", $_ } split "\n", $mergeinfo_prop;
+ 	my $old_minfo = {};
+ 
+-	# Initialize cache on the first call.
+-	unless (defined $self->{cached_mergeinfo_rev}) {
+-		$self->{cached_mergeinfo_rev} = {};
+-	}
+-
+-	my $cached_rev = $self->{cached_mergeinfo_rev}{$old_path};
+-	unless (defined $cached_rev && $cached_rev == $old_rev) {
+-		my $ra = $self->ra;
+-		# Give up if $old_path isn't in the repo.
+-		# This is probably a merge on a subtree.
+-		if ($ra->check_path($old_path, $old_rev) != $SVN::Node::dir) {
+-			warn "W: ignoring svn:mergeinfo on $old_path, ",
+-				"directory didn't exist in r$old_rev\n";
+-			return {};
+-		}
+-	}
+-	my (undef, undef, $props) = $self->ra->get_dir($old_path, $old_rev);
++	my $ra = $self->ra;
++	# Give up if $old_path isn't in the repo.
++	# This is probably a merge on a subtree.
++	if ($ra->check_path($old_path, $old_rev) != $SVN::Node::dir) {
++		warn "W: ignoring svn:mergeinfo on $old_path, ",
++			"directory didn't exist in r$old_rev\n";
++		return {};
++	}
++	my (undef, undef, $props) = $ra->get_dir($old_path, $old_rev);
+ 	if (defined $props->{"svn:mergeinfo"}) {
+ 		my %omi = map {split ":", $_ } split "\n",
+ 			$props->{"svn:mergeinfo"};
+ 		$old_minfo = \%omi;
+ 	}
+-	$self->{cached_mergeinfo_rev}{$old_path} = $old_rev;
+-
+-	# Cache the new mergeinfo.
+-	$self->{cached_mergeinfo_rev}{$path} = $rev;
+ 
+ 	my %changes = ();
+ 	foreach my $p (keys %minfo) {
 -- 
-David
+EW
