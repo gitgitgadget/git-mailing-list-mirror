@@ -1,78 +1,78 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git reflog --date
-Date: Tue, 21 Oct 2014 19:12:04 +0100
-Message-ID: <CAHQ6N+qkQbmhY-nueF28+iRhbVvH__gihXb6yyj3dRbgpbV18g@mail.gmail.com>
-References: <CAHQ6N+oQV8Uesv_eCBZc+hpwR5rDWA22OXR05AJ_zXcf7bfQ7g@mail.gmail.com>
- <xmqqh9yx1gkt.fsf@gitster.dls.corp.google.com> <CAHQ6N+rb6eNC0_uzCAdH-HNb_SmdG4-W9DgmVKjfNpRcKKxk=w@mail.gmail.com>
- <xmqq8uk91emg.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Sources for 3.18-rc1 not uploaded
+Date: Tue, 21 Oct 2014 11:14:10 -0700
+Message-ID: <xmqqwq7tz3wt.fsf@gitster.dls.corp.google.com>
+References: <20141020115943.GA27144@gmail.com>
+	<CA+55aFyDuHskYE66rBVL_P-T2pxg6f2m6mUicfz-mk+ysePBxg@mail.gmail.com>
+	<20141020222809.GB223410@vauxhall.crustytoothpaste.net>
+	<CA+55aFyZ1Mzjdx+JsD4jmFnJo+xL8xLz5+mtbh+_25bCak-7hQ@mail.gmail.com>
+	<54461483.9010600@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 21 20:12:31 2014
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	infra-steering@kernel.org, Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 21 20:14:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xgdv3-0001WZ-8p
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 20:12:29 +0200
+	id 1Xgdwn-0002L8-T5
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 20:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755988AbaJUSMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2014 14:12:25 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:40810 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754841AbaJUSMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2014 14:12:25 -0400
-Received: by mail-ie0-f182.google.com with SMTP id rp18so1774921iec.41
-        for <git@vger.kernel.org>; Tue, 21 Oct 2014 11:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=GSTGwXuayYDY2aHTDRyGGvdtsVRR4ZzgzbfXrktZT7o=;
-        b=k5232znBx4BDugip5uRQNlLIms98DRuCy/L6MqG0FotemXfi7aZTMbUfVjtYfERhPV
-         hHoQHH1/IcSLPrmn1rm+FduQUOK9AWzl7isH5gWmisi+3yU5nFKWVr2YlZdOnQS5ZquZ
-         AMSXDloFB3FHzSntxZ9RlQD2+/NcpsiRLe+vF1ODox19dV5+ASWUd16ucFhEJ+DvdWE1
-         DXkFq3CiT9/ZWo96sFCcfgDXfwpLh//ImsFRxN2+hP9qXG3JMxOxnrZV+J40P/nYSJr6
-         am8JZS3071P++eA6UEa2ACnFJRojRrJYvERW5jX5vAwCTInMeAlYBSPGFqlCMoHDbZZb
-         cL5A==
-X-Received: by 10.107.8.152 with SMTP id h24mr5099234ioi.84.1413915144252;
- Tue, 21 Oct 2014 11:12:24 -0700 (PDT)
-Received: by 10.107.11.96 with HTTP; Tue, 21 Oct 2014 11:12:04 -0700 (PDT)
-In-Reply-To: <xmqq8uk91emg.fsf@gitster.dls.corp.google.com>
+	id S1752859AbaJUSOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2014 14:14:14 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64024 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751191AbaJUSON (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2014 14:14:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE4291518B;
+	Tue, 21 Oct 2014 14:14:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=ByAnwDZzRwh8YMWnKGJnhqPIcNs=; b=w4Z0GSPyY/JcoaQdYZ1q
+	q153B0VSUMqlPQfSc0A7dFpLqLZViyifpgPYTzdmWpzi7p8+WjXN+jKWhhQVD1Oz
+	+9WJuIunKO5YBvHiY6YVDZ9/A2gBsNNxduofwXRFPxnocdqVzBwkIzkGJy/15+V3
+	sqUGlvDcbO2xdy2bmX2omP8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=TmPNB4JWfFxX7dqyMp2p96Uk3bas528e3K/lvbYYsAbcuk
+	HacZStweV848FoZT1+wjoblMOUHjWknjApOUDvlLN3S+N8G80NlzXA/S3yAxGJYx
+	TUVlOI06rvva0KgyjO4nuer2BblEbCmiAUCy9n1D/StWo85mikg6R1/B1kse4=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D3BE81518A;
+	Tue, 21 Oct 2014 14:14:12 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4E85F15188;
+	Tue, 21 Oct 2014 14:14:12 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0F15303C-594E-11E4-BA16-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Great - now I just need to persuade someone very nice nicely.. :-)
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-On 21 October 2014 19:06, Junio C Hamano <gitster@pobox.com> wrote:
-> John Tapsell <johnflux@gmail.com> writes:
->
->> For me, writing "git reflog @{now}"  is a lot less intuitive than "git
->> reflog --date"
->>
->> Currently the top google search for this question is here:
->>
->> http://stackoverflow.com/questions/17369254/is-there-a-way-to-cause-git-reflog-to-show-a-date-alongside-each-entry
->>
->> Which doesn't mention "@{now}"   at all.
->
-> I would say that a site where cluelesses attempt to lead other
-> cluelesses is not the best source of information ;-), but that tells
-> us that either our docs are not read by people or they do not give
-> necessary information to them clearly enough.
->
->> My opinion:
->>
->> 1. Add --date   as an option to reflog.  Perhaps using the log.date
->> format as the default.
->> 2. Document --date in the man page for "git reflog"
->> 3. Document @{now}  in the man page for "git reflog"
->>
->> Sound good?
->
-> The order of changes is questionable, but other than that, I think
-> that would be a good way forward.
+> Unfortunately, the git archive doc clearly says that the umask is
+> applied to all archive entries.
+
+Is an extended pax header "an archive entry"?  I doubt it, and the
+above is not relevant.  The mode bits for the archive entry that it
+applies to does not come from there.
+
+See my other message for my final judgement on this one.  I wouldn't
+have minded if the original used the same umask for those ignored
+mode bits, but changing the bits to be ignored after the fact is not
+helping any real use case and only hurts existing users.
+
+That is not to say that we cannot later fix bigger issues in the
+output.  I just do not see that otherwise-unused mode bits in the
+extended pax header big enough an issue to spend brain cycles to
+carefully lay and execute transition plans to avoid breaking
+existing users.
