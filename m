@@ -1,117 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Sources for 3.18-rc1 not uploaded
-Date: Tue, 21 Oct 2014 11:59:58 -0700
-Message-ID: <xmqqoat5z1sh.fsf@gitster.dls.corp.google.com>
-References: <20141020115943.GA27144@gmail.com>
-	<CA+55aFyDuHskYE66rBVL_P-T2pxg6f2m6mUicfz-mk+ysePBxg@mail.gmail.com>
-	<20141020222809.GB223410@vauxhall.crustytoothpaste.net>
-	<54459E49.3040908@linuxfoundation.org>
+Subject: Re: [PATCH] grep: fix match highlighting for combined patterns with context lines
+Date: Tue, 21 Oct 2014 12:23:27 -0700
+Message-ID: <xmqqh9yxz0pc.fsf@gitster.dls.corp.google.com>
+References: <1413870963-66431-1-git-send-email-zoltan.klinger@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	infra-steering@kernel.org, Git Mailing List <git@vger.kernel.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-X-From: git-owner@vger.kernel.org Tue Oct 21 21:00:21 2014
+Cc: git@vger.kernel.org
+To: Zoltan Klinger <zoltan.klinger@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 21 21:23:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XgefM-0006B7-G8
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 21:00:20 +0200
+	id 1Xgf22-0008NE-VI
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Oct 2014 21:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932672AbaJUTAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Oct 2014 15:00:07 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63074 "EHLO
+	id S932696AbaJUTXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Oct 2014 15:23:33 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50312 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932232AbaJUTAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Oct 2014 15:00:05 -0400
+	with ESMTP id S932382AbaJUTXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Oct 2014 15:23:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A81A715BBB;
-	Tue, 21 Oct 2014 15:00:04 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 509B7161FD;
+	Tue, 21 Oct 2014 15:23:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AbQsQhPW8N32ux1rdyAj5PZZIU4=; b=NOMIU/
-	a7oIwYOB/WvdNzhi2KAbCxrzWE5WsgT5VQr2tUy7XTfTrHRsvnfrwCv9wYxfG0Zj
-	RQYZ1J3fFJ2bs8wklG4DzjD1eJqg/KpDoHkbHmEAecvr++QOkSGgGOeR503XLe8G
-	aRTNVHikKEx+KDfK2jy9Buyg+QROKW2oeAyCQ=
+	:content-type; s=sasl; bh=E3I1SaOA7H2zFUTgNa4ihR5Oc10=; b=ThHltu
+	2gpP8kgw+RRbSucVzL1Jjj3WWWceQg+cB8EXy6QvHkKUICeFXXdjqgYOLNUdcLmi
+	gY47v/cFJ4hNNHkS+rN8r7w7OlQ9HGVnatFDAkGGbtRtWZ/Upk065/bhWsMr58Nt
+	qLl+/w6Jb7owBGkOIMfc9usXrxnQLmqruPH/k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w6fE2BmMZblElV2gAzgqnemhdPnN27uZ
-	FQrEFzwF/AnALgTMAzQ3/BZEHCtsAGoPDZojukQW22jgYW6niWPidJk4B43V4CS6
-	n12hmTJErmyh0aVVlGd8lfTpF+WKwvfOYlkl/Wh2+2hzCaZVqjlEZVimolXQvBXU
-	JO3Nhm6DkhU=
+	:content-type; q=dns; s=sasl; b=mHTEGXwQKt8Ng20wcCAXAzX+IQn7qRNJ
+	PT9+/Gmk35uVpeEdsurfDO8pBagp2kVsca7HDesiL2cTXZDWliGZDNbUgnmDcsL1
+	Qu55WcO+X07c4l5Tsy7tg/Dv1WfN77N/IA5pJU1aYpOHIpeJUFwfHbe8lvfG9mYz
+	YNr22hYwCvA=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C76115BBA;
-	Tue, 21 Oct 2014 15:00:04 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 470ED161FB;
+	Tue, 21 Oct 2014 15:23:29 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7D0415BA6;
-	Tue, 21 Oct 2014 14:59:59 -0400 (EDT)
-In-Reply-To: <54459E49.3040908@linuxfoundation.org> (Konstantin Ryabitsev's
-	message of "Mon, 20 Oct 2014 19:44:09 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 99571161F9;
+	Tue, 21 Oct 2014 15:23:28 -0400 (EDT)
+In-Reply-To: <1413870963-66431-1-git-send-email-zoltan.klinger@gmail.com>
+	(Zoltan Klinger's message of "Tue, 21 Oct 2014 16:56:03 +1100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 74CDED78-5954-11E4-A774-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: BC6F156E-5957-11E4-893B-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
+Zoltan Klinger <zoltan.klinger@gmail.com> writes:
 
-> On 20/10/14 06:28 PM, brian m. carlson wrote:
->>> Junio, quite frankly, I don't think that that fix was a good idea. I'd
->>> > suggest having a *separate* umask for the pax headers, so that we do
->>> > not  break this long-lasting stability of "git archive" output in ways
->>> > that are unfixable and not compatible. kernel.org has relied (for a
->>> > *long* time) on being able to just upload the signature of the
->>> > resulting tar-file, because both sides can generate the same tar-fiel
->>> > bit-for-bit.
->> It sounds like kernel.org has a bug, then.  Perhaps that's the
->> appropriate place to fix the issue.
+> When git grep is run with combined patterns such as '-e p1 --and -e p2'
+> and surrounding context lines are requested, the output contains
+> incorrectly highlighted matches.
 >
-> It's not a bug, it's a feature (TM). KUP relies on git-archive's ability
-> to create identical tar archives across platforms and versions. The
-> benefit is that Linus or Greg can create a detached PGP signature
-> against a tarball created from "git archive [tag]" on their system, and
-> just tell kup to create the same archive remotely, thus saving them the
-> trouble of uploading 80Mb each time they cut a release.
+> Consider the following output (highlighted matches are surrounded by '*'
+> characters):
+>     $ cat testfile
+>     foo a
+>     foo b
+>     foo bar
+>     baz bar foo
+>     bar x
+>     bar y
+>     $ git grep -n -C2 -e foo --and -e bar testfile
+>     testfile-1-*foo* a
+>     testfile-2-*foo* b
+>     testfile:3:*foo* *bar*
+>     testfile:4:baz *bar* *foo*
+>     testfile-5-*bar* x
+>     testfile-6-*bar* y
 >
-> With their frequent travel to places where upload bandwidth is both slow
-> and unreliable, this ability to not have to upload hundreds of Mbs each
-> time they cut a release is very handy and certainly helps keep kernel
-> releases on schedule.
+> Lines 1, 2, 5 and 6 do not match the combined patterns, they only
+> contain incorrectly highlighted 'false positives'.
 >
-> So, while it's fair to point out that git-archive was never intended to
-> always create bit-for-bit identical outputs, it would be *very nice* if
-> this remained in place, as at least one large-ish deployment (us) finds
-> it really handy.
+> Modify the show_line() function in grep.c to highlight matches only on
+> lines that match the combined pattern. Do not highlight matches on lines
+> that provide only context or contain only the function name of the match.
+>
+> The output of the same command after the change:
+>     $ git grep -n -C2 -e foo --and -e bar testfile
+>     testfile-1-foo a
+>     testfile-2-foo b
+>     testfile:3:*foo* *bar*
+>     testfile:4:baz *bar* *foo*
+>     testfile-5-bar x
+>     testfile-6-bar y
 
-While I agree that it is a nice "feature", I wish KUP folks thought
-more about what should happen when the archive output _must_ change
-when a more serious bug is discovered, and coordinated with us
-better.
+If your goal is to stop colouring words on context and other kinds
+of lines, do you still need the "while (next_match(...))" loop for
+them?  Can't you make the resulting code clearer by restructuring
+the inside of the whole "if (opt->color)" block further, something
+along the lines of...
 
-During a period where older and buggy versions of "git archive" are
-used by some uploaders while a new version is used by others, KUP
-could:
+	if (sign != ':') {
+		regmatch_t match; ...
+		enum grep_context ctx = GREP_CONTEXT_BODY;
+                ...
+        	while (next_match(...)) {
+                	... the "word-by-word" loop ...
+		}
+	} else {
+        	switch (sign) {
+		case '-':
+                       	line_color = opt->color_context;
+                        break;
+		case ':':
+                       	line_color = opt->color_function;
+                        break;
+		}
+                output_color(opt, bol, ..., line_color);
+	}
 
- - avail itself to a version (or versions) of "git archive" so that
-   it can recreate both older and newer output;
-
- - upon receiving a tarball and signature, try recreating newer
-   output and see if signature matches, and when the signature does
-   not match, recreate older output and try again.
-
-And we could supply "git archive --compatible=v1.7" option in the
-newer version if that is easier on KUP folks than having to keep
-multiple installations of versions of "git archive" around.
-
-While I am on the topic of KUP, one feature I wish, which is the
-only thing that is preventing me from updating the preformatted
-documentation https://www.kernel.org/pub/software/scm/git/docs/, is
-to allow me to upload a single tarball and extract it at one
-location (e.g. /pub/software/scm/git/docs/) while removing existing
-files in that location (i.e. removing deleted files).  Where do I
-file such a feature request?
+Hmm?
