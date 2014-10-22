@@ -1,172 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCHv2] push: heed user.signingkey for signed pushes
-Date: Wed, 22 Oct 2014 15:05:55 -0700
-Message-ID: <xmqq7fzru5do.fsf@gitster.dls.corp.google.com>
+Date: Wed, 22 Oct 2014 16:47:28 -0700
+Message-ID: <xmqq38afu0of.fsf@gitster.dls.corp.google.com>
 References: <787502533676138ad113e446eba71d92dee3b4de.1413989046.git.git@drmicha.warpmail.net>
 	<7b3546cd125d1ad92dd62297ecbe624a78c6079b.1413989799.git.git@drmicha.warpmail.net>
+	<xmqq7fzru5do.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Oct 23 00:06:06 2014
+X-From: git-owner@vger.kernel.org Thu Oct 23 01:47:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xh42e-0001um-42
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Oct 2014 00:06:04 +0200
+	id 1Xh5cu-0000nU-35
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Oct 2014 01:47:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933050AbaJVWF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2014 18:05:59 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61898 "EHLO
+	id S1754073AbaJVXrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2014 19:47:32 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59549 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932540AbaJVWF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2014 18:05:58 -0400
+	with ESMTP id S1753598AbaJVXrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2014 19:47:31 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 292CC17E1B;
-	Wed, 22 Oct 2014 18:05:57 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CEF851906E;
+	Wed, 22 Oct 2014 19:47:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jcpJ/dIIDXS2QOQ9auUE9zeN/eI=; b=HCviqN
-	qdX/o1zI+EYmqGQqUzd/ScqmXXoP0WG+Yv5W5OW0dCTfzxGcpGCXLHoPeEYI2Sgp
-	S45kFfo+Ee91ar4RXKVOhnOxP0ej1rsE8HWLEmMyYgQ3Z18uiMprq4koMygO5z6/
-	2/+Vtz/T0ink0B2eXR4OkgeezjxZPvjr/5fOc=
+	:content-type; s=sasl; bh=twD+btir3b0tDUcg7IUJkFGGvX0=; b=Wz4zVO
+	LjlbgLqgLfhGRTCY3XRryIEM0ppksodFWcpgcLA0/GdXCEEAbyxi+3EWqq4px9aQ
+	lvyqaI1t/nf7yis4uO0VWVF8vl4/nQ3vBL2ro3b9CmPBik+reGvXX9/O3Crqp8Wd
+	VvtrtWcwA2GfOEG/LIs1Bx9RMVdPQMY3Vfm1Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AaSqce3H4G0s3h3tnfT7lOjrKNHnFsmL
-	+0oCt4aXvsP9Jogtf1Vf8n7JJuoiq/hgBuOSRMDE9JU4rnZnWhb9B/AySscY6hJ/
-	hOxTC+n7t2n14AgBGa8/XZXxmyZrQJyIFWzj4tmr6RXcRY+45g5USbIpqZNAFui0
-	5K30tWDpMlo=
+	:content-type; q=dns; s=sasl; b=sMoa29L557253AWHJnzS0Wx4EzNPtvKU
+	lfY0kOIbZjJxClAFfoo/J7W7xnisBYUlnk6XtBIKs8KN2TJtL/4IGVpkzgYItIMl
+	hQDOmYfVDjAOHRiAHmYwcAciubvVgkqrg1hqHXe37eqwH5VUjpG68tPgP8DXMWob
+	AcwcH8pN0cU=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F1B217E1A;
-	Wed, 22 Oct 2014 18:05:57 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C038B1906D;
+	Wed, 22 Oct 2014 19:47:29 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 999B317E18;
-	Wed, 22 Oct 2014 18:05:56 -0400 (EDT)
-In-Reply-To: <7b3546cd125d1ad92dd62297ecbe624a78c6079b.1413989799.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Wed, 22 Oct 2014 16:57:49 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3DA271906C;
+	Wed, 22 Oct 2014 19:47:29 -0400 (EDT)
+In-Reply-To: <xmqq7fzru5do.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 22 Oct 2014 15:05:55 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 991C10B8-5A37-11E4-A5DE-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C8980A8C-5A45-11E4-A422-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> push --signed promises to take user.signingkey as the signing key but
-> fails to read the config.
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 >
-> Make it do so.
+>> push --signed promises to take user.signingkey as the signing key but
+>> fails to read the config.
+>>
+>> Make it do so.
+>>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
+>> Okay, I guess this is nicer. We do have the committer info in the env. Sorry.
+>>
+>>  builtin/push.c         |  13 ++++++++++++-
+>>  t/lib-gpg/trustdb.gpg  | Bin 1360 -> 1360 bytes
+>>  t/t5534-push-signed.sh |  44 ++++++++++++++++++++++++++++++++++++++++++++
+>>  3 files changed, 56 insertions(+), 1 deletion(-)
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> Okay, I guess this is nicer. We do have the committer info in the env. Sorry.
+> Hmph, I simply forgot about that configuration, I guess.
 >
->  builtin/push.c         |  13 ++++++++++++-
->  t/lib-gpg/trustdb.gpg  | Bin 1360 -> 1360 bytes
->  t/t5534-push-signed.sh |  44 ++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 56 insertions(+), 1 deletion(-)
+> What is this change to trustdb about, though?  The log message does
+> not say anything about it.
 
-Hmph, I simply forgot about that configuration, I guess.
+This is a related tangent, but I just tried this:
 
-What is this change to trustdb about, though?  The log message does
-not say anything about it.
+    $ git clone ... git.git
+    $ cd git.git
+    $ chmod a-w t/lib-gpg/* t/lib-gpg
+    $ make test
 
->
-> diff --git a/builtin/push.c b/builtin/push.c
-> index ae56f73..a076b19 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -471,6 +471,17 @@ static int option_parse_recurse_submodules(const struct option *opt,
->  	return 0;
->  }
->  
-> +static int git_push_config(const char *k, const char *v, void *cb)
-> +{
-> +	struct wt_status *s = cb;
-> +	int status;
-> +
-> +	status = git_gpg_config(k, v, NULL);
-> +	if (status)
-> +		return status;
-> +	return git_default_config(k, v, s);
-> +}
-> +
->  int cmd_push(int argc, const char **argv, const char *prefix)
->  {
->  	int flags = 0;
-> @@ -511,7 +522,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
->  	};
->  
->  	packet_trace_identity("push");
-> -	git_config(git_default_config, NULL);
-> +	git_config(git_push_config, NULL);
->  	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
->  
->  	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_PUSH_MIRROR))))
-> diff --git a/t/lib-gpg/trustdb.gpg b/t/lib-gpg/trustdb.gpg
-> index 4879ae9a84650a93a4d15bd6560c5d1b89eb4c2f..c11b1464b3d13b45966a493e2174fc0e253ddd0c 100644
-> GIT binary patch
-> delta 47
-> ncmcb>b%9HOF})z2nVFH5k%@sJ#C^}~iH71E)x}wb7%%_;=xPS!
->
-> delta 51
-> tcmcb>b%9HSF})z2nVFH5k%@sJ&}Z5*1_lPkiGso#)x}wb*nk{V008$D2C@JE
->
-> diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-> index 2786346..ecb8d44 100755
-> --- a/t/t5534-push-signed.sh
-> +++ b/t/t5534-push-signed.sh
-> @@ -124,4 +124,48 @@ test_expect_success GPG 'signed push sends push certificate' '
->  	test_cmp expect dst/push-cert-status
->  '
->  
-> +test_expect_success GPG 'fail without key and heed user.signingkey' '
-> +	prepare_dst &&
-> +	mkdir -p dst/.git/hooks &&
-> +	git -C dst config receive.certnonceseed sekrit &&
-> +	write_script dst/.git/hooks/post-receive <<-\EOF &&
-> +	# discard the update list
-> +	cat >/dev/null
-> +	# record the push certificate
-> +	if test -n "${GIT_PUSH_CERT-}"
-> +	then
-> +		git cat-file blob $GIT_PUSH_CERT >../push-cert
-> +	fi &&
-> +
-> +	cat >../push-cert-status <<E_O_F
-> +	SIGNER=${GIT_PUSH_CERT_SIGNER-nobody}
-> +	KEY=${GIT_PUSH_CERT_KEY-nokey}
-> +	STATUS=${GIT_PUSH_CERT_STATUS-nostatus}
-> +	NONCE_STATUS=${GIT_PUSH_CERT_NONCE_STATUS-nononcestatus}
-> +	NONCE=${GIT_PUSH_CERT_NONCE-nononce}
-> +	E_O_F
-> +
-> +	EOF
-> +
-> +	unset GIT_COMMITTER_EMAIL &&
-> +	git config user.email hasnokey@nowhere.com &&
-> +	test_must_fail git push --signed dst noop ff +noff &&
-> +	git config user.signingkey committer@example.com &&
-> +	git push --signed dst noop ff +noff &&
-> +
-> +	(
-> +		cat <<-\EOF &&
-> +		SIGNER=C O Mitter <committer@example.com>
-> +		KEY=13B6F51ECDDE430D
-> +		STATUS=G
-> +		NONCE_STATUS=OK
-> +		EOF
-> +		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
-> +	) >expect &&
-> +
-> +	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
-> +	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
-> +	test_cmp expect dst/push-cert-status
-> +'
-> +
->  test_done
+which makes GPG related tests to fail, as running GPG with the GNUPGHOME
+set there involves writing into the files in the directory (or
+removing and recreating).
+
+Perhaps GPG tests should create their own copy in the playpen (aka
+"trash directory") and use that as GNUPGHOME so that we do not have
+to write into the single shared directory?  I wonder if automated
+parallel tests can intermittently fail because of this...
