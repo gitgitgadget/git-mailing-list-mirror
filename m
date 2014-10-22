@@ -1,112 +1,237 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch-pack: don't resend known-common refs in find_common
-Date: Wed, 22 Oct 2014 10:11:40 -0700
-Message-ID: <xmqqfveghvw3.fsf@gitster.dls.corp.google.com>
-References: <1413884908.4175.49.camel@seahawk>
-	<20141021144838.GA11589@seahawk>
-	<xmqqd29l1f3p.fsf@gitster.dls.corp.google.com>
-	<1413963706.11656.5.camel@seahawk>
+From: Hin-Tak Leung <htl10@users.sourceforge.net>
+Subject: Re: git-svn performance
+Date: Wed, 22 Oct 2014 18:38:30 +0100
+Message-ID: <1413999510.36832.YahooMailBasic@web172305.mail.ir2.yahoo.com>
+Reply-To: htl10@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Wed Oct 22 19:12:07 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: fabian.schmied@gmail.com, git@vger.kernel.org, sam@vilain.net,
+	stevenrwalter@gmail.com, waste.manager@gmx.de, amyrick@apple.com
+To: normalperson@yhbt.net, stoklund@2pi.dk
+X-From: git-owner@vger.kernel.org Wed Oct 22 19:38:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XgzS9-00022D-NW
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Oct 2014 19:12:06 +0200
+	id 1Xgzrr-0006dr-2P
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Oct 2014 19:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753815AbaJVRMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2014 13:12:00 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54585 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753411AbaJVRLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2014 13:11:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E900C17E2A;
-	Wed, 22 Oct 2014 13:11:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TLu/CNtXi6Bys+KXS0IfCJHsaUM=; b=tSDa91
-	x8ZpHzTeGduCGbFpJnrSCx7cQQgtvYeNBeSK63j/63g5GctB98g4CX9BI0KiiEyM
-	8k+MPXpQRQvh7Z3n802ZXXOSQfxKxB1nQrj+UlBvzRMmcyoKw3s0hZaMoXEYpV33
-	3ceWJUVcAy3uAbqGi9UzKXEQSSsUmIkR5pEYo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=suNQC5EUylO6CLcx3mfyqvdogW32ijt5
-	mjMjvxPS5WFRanaxVUByjlciZ3gpJgvhLWAobdZUDgIIaqWksqfgut45BKDHVuea
-	cGqb2hc8+GfBnce+NIAi6TBbSm/NNrAaXTalDQyvUUpfAsVfcOw2Zw4PRZW4xzm7
-	04K43Wg/QeI=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF53117E29;
-	Wed, 22 Oct 2014 13:11:42 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5D45517E27;
-	Wed, 22 Oct 2014 13:11:42 -0400 (EDT)
-In-Reply-To: <1413963706.11656.5.camel@seahawk> (Dennis Kaarsemaker's message
-	of "Wed, 22 Oct 2014 09:41:46 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7E5B5942-5A0E-11E4-B4A5-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1754006AbaJVRif convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Oct 2014 13:38:35 -0400
+Received: from nm31-vm5.bullet.mail.ir2.yahoo.com ([212.82.97.92]:41358 "EHLO
+	nm31-vm5.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753975AbaJVRid convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Oct 2014 13:38:33 -0400
+Received: from [212.82.98.54] by nm31.bullet.mail.ir2.yahoo.com with NNFMP; 22 Oct 2014 17:38:30 -0000
+Received: from [212.82.98.65] by tm7.bullet.mail.ir2.yahoo.com with NNFMP; 22 Oct 2014 17:38:30 -0000
+Received: from [127.0.0.1] by omp1002.mail.ir2.yahoo.com with NNFMP; 22 Oct 2014 17:38:30 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 590249.32845.bm@omp1002.mail.ir2.yahoo.com
+Received: (qmail 56423 invoked by uid 60001); 22 Oct 2014 17:38:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1413999510; bh=DIndlVyomgmUB0pgrUibhGphFiz0LOZEwxxo/FFIDDU=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=2iuewAWKnSgI1AGr7orhKIXPLCzWQmvjpozKKRN8WI6PJsaUJaORFEw0wHEvCCSa+nZOXoInONi9HDLWjhvR/TSUHK7O2btVOXRebRA52z232PWV/jC2KILGEOHtT8V6oVP0/l6JEw0MXPfcgxm0IBbZBJrJTdpwuvuhdc/SiCQ=
+X-YMail-OSG: pcq1z2MVM1lQWIo1PualrmQL.cx23Uugma5sL.rXxQqaZWI
+ GW2ZfXwI3QBLfvtvs6J0oZi0sBGtEg9jRi6rzUiVZ7L1L5e7CHoSpmSEdJiw
+ M9voiMeQ0zbXJ4PN7k17dubZ22a0wkqSHxKrkqR.b6LZHwhES5dL_DlxvCpy
+ eFN8wQttB10WStbnPuTVh_hmKsrnh4zcatDlXFexuyKaVL20r9NTHrPA0Udd
+ m5QmOZ32Psqx3weaEx.Mu5IJ5ILP34AbqS..ZGePjzj1pM2983p1GQgIdljS
+ 6vxn4llsY2h3LoR2dF4nP8GSmRJak0mHZy3B5nX58a0oBUv1qfViFBAh7SoG
+ 27QrhqVHX62RoCkbWqwPETxGsjGeif1AsrTdYek156SdJgQgKeq9Sw0udTZE
+ UXYDiB.4mVQ.WSdTdtmyKuyDwRbQdTwsExGv9kByW7wPdjs0fK7PNAtFuIfU
+ OZTg2s9g7wTE.SCAq_yHGGim7rlc_A0TpFWzm4ERgghxo3mhY1Uhc8w2I4qC
+ MREOQ2M3Rtj2M6kuxBjKHsvL7Mw_DXSwzjzEf3v.L.VhigXaCSbCyPabsala
+ W9DQo_ObI1qtssn50pfzdLknfVJoPsy8ELfhO8yFISBnfX1IR9U3_7WJV0rG
+ DmmRAGB.3lJRIO9vAhrzKQR06frnp0vVnjjCiMS_prk4jiPq2PYRI55RdqWq
+ k7lj.CNWnqYYbnoqeaoUK2Ms6CS9NV9hJAJc_6wmsNllA03DnXwEYnnBPg9F
+ N__LD65cjgXFOpEL..ufkkF4FXg--
+Received: from [86.30.137.134] by web172305.mail.ir2.yahoo.com via HTTP; Wed, 22 Oct 2014 18:38:30 BST
+X-Rocket-MIMEInfo: 002.001,LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpPbiBUdWUsIE9jdCAyMSwgMjAxNCAxMDowMCBCU1QgRXJpYyBXb25nIHdyb3RlOg0KDQo.SmFrb2IgU3Rva2x1bmQgT2xlc2VuIDxzdG9rbHVuZEAycGkuZGs.IHdyb3RlOg0KPj4gWWVzLCBidXQgSSB0aGluayB5b3UgY2FuIHJlbW92ZSBjYWNoZWRfbWVyZ2VpbmZvX3JldiB0b28uIA0KPg0KPlRoYW5rcywgcHVzaGVkIHRoZSBwYXRjaCBhdCB0aGUgYm90dG9tLCB0b28uDQo.QWxzbyBzdGFydGVkIHdvcmtpbmcgb24gc29tZSBtZW1vcnkgcmVkdWN0aW8BMAEBAQE-
+X-RocketYMMF: hintak_leung
+X-Mailer: YahooMailClassic/810 YahooMailWebService/0.8.203.733
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+------------------------------
+On Tue, Oct 21, 2014 10:00 BST Eric Wong wrote:
 
-> On di, 2014-10-21 at 10:56 -0700, Junio C Hamano wrote:
->> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
->> 
->> > By not clearing the request buffer in stateless-rpc mode, fetch-pack
->> > would keep sending already known-common commits, leading to ever bigger
->> > http requests, eventually getting too large for git-http-backend to
->> > handle properly without filling up the pipe buffer in inflate_request.
->> > ---
->> > I'm still not quite sure whether this is the right thing to do, but make
->> > test still passes :) The new testcase demonstrates the problem, when
->> > running t5551 with EXPENSIVE, this test will hang without the patch to
->> > fetch-pack.c and succeed otherwise.
->> 
->> IIUC, because "stateless" is just that, i.e. the server-end does not
->> keep track of what is already known, not telling what is known to be
->> common in each request would fundamentally break the protocol.  Am I
->> mistaken?
+>Jakob Stoklund Olesen <stoklund@2pi.dk> wrote:
+>> Yes, but I think you can remove cached_mergeinfo_rev too.=20
 >
-> That sounds plausible, but why then does the fetch complete with this
-> line removed, and why does 'make test' still pass?
+>Thanks, pushed the patch at the bottom, too.
+>Also started working on some memory reductions here:
+> http://mid.gmane.org/20141021033912.GA27462@dcvr.yhbt.net
+>But there seem to be more problems :<
+>
+>----------------------------8<-----------------------------
+>From: Eric Wong <normalperson@yhbt.net>
+>Date: Tue, 21 Oct 2014 06:23:22 +0000
+>Subject: [PATCH] git-svn: remove mergeinfo rev caching
+>
+>This should further reduce memory usage from the new mergeinfo
+>speedups without hurting performance too much, assuming
+>reasonable latency to the SVN server.
+>
+>Cc: Hin-Tak Leung <htl10@users.sourceforge.net>
+>Suggested-by: Jakob Stoklund Olesen <stoklund@2pi.dk>
+>Signed-off-by: Eric Wong <normalperson@yhbt.net>
+>---
+> perl/Git/SVN.pm | 30 +++++++++---------------------
+> 1 file changed, 9 insertions(+), 21 deletions(-)
+>
+>diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+>index f8a75b1..4364506 100644
+>--- a/perl/Git/SVN.pm
+>+++ b/perl/Git/SVN.pm
+>@@ -1710,32 +1710,20 @@ sub mergeinfo_changes {
+> =A0=A0=A0 my %minfo =3D map {split ":", $_ } split "\n", $mergeinfo_p=
+rop;
+> =A0=A0=A0 my $old_minfo =3D {};
+>=20
+>-=A0=A0=A0 # Initialize cache on the first call.
+>-=A0=A0=A0 unless (defined $self->{cached_mergeinfo_rev}) {
+>-=A0=A0=A0 =A0=A0=A0 $self->{cached_mergeinfo_rev} =3D {};
+>-=A0=A0=A0 }
+>-
+>-=A0=A0=A0 my $cached_rev =3D $self->{cached_mergeinfo_rev}{$old_path}=
+;
+>-=A0=A0=A0 unless (defined $cached_rev && $cached_rev =3D=3D $old_rev)=
+ {
+>-=A0=A0=A0 =A0=A0=A0 my $ra =3D $self->ra;
+>-=A0=A0=A0 =A0=A0=A0 # Give up if $old_path isn't in the repo.
+>-=A0=A0=A0 =A0=A0=A0 # This is probably a merge on a subtree.
+>-=A0=A0=A0 =A0=A0=A0 if ($ra->check_path($old_path, $old_rev) !=3D $SV=
+N::Node::dir) {
+>-=A0=A0=A0 =A0=A0=A0 =A0=A0=A0 warn "W: ignoring svn:mergeinfo on $old=
+_path, ",
+>-=A0=A0=A0 =A0=A0=A0 =A0=A0=A0 =A0=A0=A0 "directory didn't exist in r$=
+old_rev\n";
+>-=A0=A0=A0 =A0=A0=A0 =A0=A0=A0 return {};
+>-=A0=A0=A0 =A0=A0=A0 }
+>-=A0=A0=A0 }
+>-=A0=A0=A0 my (undef, undef, $props) =3D $self->ra->get_dir($old_path,=
+ $old_rev);
+>+=A0=A0=A0 my $ra =3D $self->ra;
+>+=A0=A0=A0 # Give up if $old_path isn't in the repo.
+>+=A0=A0=A0 # This is probably a merge on a subtree.
+>+=A0=A0=A0 if ($ra->check_path($old_path, $old_rev) !=3D $SVN::Node::d=
+ir) {
+>+=A0=A0=A0 =A0=A0=A0 warn "W: ignoring svn:mergeinfo on $old_path, ",
+>+=A0=A0=A0 =A0=A0=A0 =A0=A0=A0 "directory didn't exist in r$old_rev\n"=
+;
+>+=A0=A0=A0 =A0=A0=A0 return {};
+>+=A0=A0=A0 }
+>+=A0=A0=A0 my (undef, undef, $props) =3D $ra->get_dir($old_path, $old_=
+rev);
+> =A0=A0=A0 if (defined $props->{"svn:mergeinfo"}) {
+> =A0=A0=A0 =A0=A0=A0 my %omi =3D map {split ":", $_ } split "\n",
+> =A0=A0=A0 =A0=A0=A0 =A0=A0=A0 $props->{"svn:mergeinfo"};
+> =A0=A0=A0 =A0=A0=A0 $old_minfo =3D \%omi;
+> =A0=A0=A0 }
+>-=A0=A0=A0 $self->{cached_mergeinfo_rev}{$old_path} =3D $old_rev;
+>-
+>-=A0=A0=A0 # Cache the new mergeinfo.
+>-=A0=A0=A0 $self->{cached_mergeinfo_rev}{$path} =3D $rev;
+>=20
+> =A0=A0=A0 my %changes =3D ();
+> =A0=A0=A0 foreach my $p (keys %minfo) {
+>--=20
+>EW
 
-The fetch-pack program tries to help the upload-pack program(s)
-running on the other end find what nodes in the graph both
-repositories have in common by sending what the repository on its
-end has.  Some commits may not be known by the other side (e.g. your
-new commits that haven't been pushed there that are made on a branch
-forked from the common history), and some others may be known
-(i.e. you drilled down the history from the tips of your refs and
-reached a commit that you fetched from the common history
-previously).  The latter are ACKed by the upload-pack process and
-are remembered to be re-sent to the _next_ incarnation of the
-upload-pack process when stateless RPC is in use.
+I'll have a look at the new changes at some point - I am still keeping =
+the old
+clone and the new clone and just fetching from time to time to keep the=
+m
+in sync. I just tried that and fetching the same 50 commits on the old =
+clone=20
+took 1.7 GB memory vs 1.0 GB memory on the new. Details below.
+This is just with the 2 earliest patches - I'll put the new 3 in at som=
+e point.
+So I see some needs for retrospectively fixing old clones (maybe as par=
+t
+of garbage collection?), since most would simply use an old clone throu=
+gh
+the ages...=20
 
-With your patch, you stop telling the upload-pack process what these
-two programs already found to be common in their exchange.  After
-the first exchange, fetch-pack and upload-pack may have noticed that
-both ends have version 2.0, but because you do not convey that fact
-to the other side, the new incarnation of upload-pack may end up
-deciding that the version 1.9 is the newest common commit between
-the two, and sending commits between 1.9 and 2.0.
+Comparing trunk of old and new, I see one difference -  One short
+commit message is missing in the *old* (the "Add checkPoFiles etc." par=
+t)
+and so all the sha1 afterwards differed. Is that an old bug that's fixe=
+d
+and therefore I should throw away the old clone?=20
 
-If you imagine an extreme case, it would be easy to see why "the
-fetch completes" and "make test passes" are not sufficient to say
-anything about this change.  Even if you break the protocol in in a
-way different from your patch, by not sending any "have", such a
-butchered "fetch-pack" will become "fetch everything from scratch",
-aka "clone".  The end result will still have correct history and
-"fetch completes" would be true.
+Date:   Wed Apr 25 18:21:29 2012 +0000
+    Add checkPoFiles etc.
+        git-svn-id: https://svn.r-project.org/R/trunk@59188=20
 
-But I'd prefer deferring a more detailed analysis/explanation to
-Shawn, as stateless RPC is his creation.
+Here is the details of fetching old and new:
+
+<---
+$ /usr/bin/time -v git svn fetch --all
+	M	doc/manual/R-admin.texi
+r66784 =3D fc20374f26f8e03bb88c00933982e29138a6f929 (refs/remotes/trunk=
+)
+=2E..
+	M	configure
+r66834 =3D d8d1876f6aa71b3fe3773cd28a760ff945d30bdf (refs/remotes/R-3-1=
+-branch)
+	Command being timed: "git svn fetch --all"
+	User time (seconds): 1520.77
+	System time (seconds): 156.32
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 28:15.82
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1738276
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 613
+	Minor (reclaiming a frame) page faults: 2039305
+	Voluntary context switches: 11243
+	Involuntary context switches: 181507
+	Swaps: 0
+	File system inputs: 658328
+	File system outputs: 754688
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+$ cd ../R-2/
+[Hin-Tak@localhost R-2]$ /usr/bin/time -v git svn fetch --all
+	M	doc/manual/R-admin.texi
+r66784 =3D 6a08d94b456d33d85add914a1b780a972689443a (refs/remotes/trunk=
+)
+=2E..
+	M	configure
+r66834 =3D 370a6484c2a65be78dfae184b50d8f08685d389c (refs/remotes/R-3-1=
+-branch)
+	Command being timed: "git svn fetch --all"
+	User time (seconds): 1507.89
+	System time (seconds): 134.25
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 27:38.49
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1026656
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1110
+	Minor (reclaiming a frame) page faults: 1630150
+	Voluntary context switches: 10280
+	Involuntary context switches: 176444
+	Swaps: 0
+	File system inputs: 361472
+	File system outputs: 477912
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+---->
