@@ -1,94 +1,84 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] fetch-pack: don't resend known-common refs in
- find_common
-Date: Wed, 22 Oct 2014 09:41:46 +0200
-Message-ID: <1413963706.11656.5.camel@seahawk>
-References: <1413884908.4175.49.camel@seahawk>
-	 <20141021144838.GA11589@seahawk>
-	 <xmqqd29l1f3p.fsf@gitster.dls.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Sources for 3.18-rc1 not uploaded
+Date: Wed, 22 Oct 2014 11:42:48 +0200
+Message-ID: <54477C18.5060806@drmicha.warpmail.net>
+References: <20141020115943.GA27144@gmail.com>	<CA+55aFyDuHskYE66rBVL_P-T2pxg6f2m6mUicfz-mk+ysePBxg@mail.gmail.com>	<20141020222809.GB223410@vauxhall.crustytoothpaste.net>	<CA+55aFyZ1Mzjdx+JsD4jmFnJo+xL8xLz5+mtbh+_25bCak-7hQ@mail.gmail.com>	<54461483.9010600@drmicha.warpmail.net> <xmqqwq7tz3wt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	infra-steering@kernel.org, Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 22 09:41:58 2014
+X-From: git-owner@vger.kernel.org Wed Oct 22 11:42:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XgqYQ-0000Kn-1B
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Oct 2014 09:41:58 +0200
+	id 1XgsRS-0007MZ-Tq
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Oct 2014 11:42:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932574AbaJVHlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Oct 2014 03:41:52 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:33952 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932558AbaJVHlu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Oct 2014 03:41:50 -0400
-Received: by mail-la0-f54.google.com with SMTP id gm9so2387638lab.41
-        for <git@vger.kernel.org>; Wed, 22 Oct 2014 00:41:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=2FHajd1I5BOV7EveZ7XAu62u9imBphNxidNZJLYnzEc=;
-        b=G09/qxqly+nm65fkzX18Dsd1WpRbEofqmYGr6uUBzE/nnsypH+kVoZcUylI5BKDYAJ
-         oiR4dJfSIyKmobkYgSYIXJyEVmXX4/uMBQuZpHpzf2f8wO6+K1iSPWheaG5eyAAzVdpg
-         9MZaQfZkNSUoIas5FSO3fmF4mqkF8Hi9GUSfFcdYvSqzYly7Z+abn9GqzFiVZ5eYYGMD
-         ACF9uqa8d4+W5PGcm1pEzYn4wbvrHJdJ5qobcNM4m73BiHb33u7QIOYfmaBXnWB6Hjqe
-         BOLx4Bpb5a+BHAJeP6l3To2BFVU39zqoVaUIolYWRJAba6z0VtZBVJaO5wGLJC8Aes/N
-         S1FQ==
-X-Gm-Message-State: ALoCoQn+m8qujmM3LhduH0wDXB+KnmzdYwiJEXV8jv4a0ErT+JryvC/fGV5PJ7651o5y0odnrRPR
-X-Received: by 10.112.172.231 with SMTP id bf7mr1020357lbc.100.1413963708909;
-        Wed, 22 Oct 2014 00:41:48 -0700 (PDT)
-Received: from [10.155.73.62] (proxy-gw-l.booking.com. [5.57.20.8])
-        by mx.google.com with ESMTPSA id am7sm5446938lbc.41.2014.10.22.00.41.47
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Wed, 22 Oct 2014 00:41:48 -0700 (PDT)
-In-Reply-To: <xmqqd29l1f3p.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S932458AbaJVJmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Oct 2014 05:42:51 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56191 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932123AbaJVJmu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Oct 2014 05:42:50 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by gateway2.nyi.internal (Postfix) with ESMTP id B20AA209EC
+	for <git@vger.kernel.org>; Wed, 22 Oct 2014 05:42:49 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Wed, 22 Oct 2014 05:42:49 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=dFiKETDnNLXzq6DAL7GHpq
+	zlPZU=; b=kucljSuIZysBJnHBLRhiipVtJ/xYKSuS8I7AXAbT7YFltrMccRTt36
+	jrAfEX0/Li7vu3iXr0L9yKM/O8A8Z3BzW+BtKygSx+satpNaqG6QvcT7pCL7sX3d
+	A5xx27sHb4++24vDGAmul7yM5A04TVu/pLWyhtooraOtkurPuaVbs=
+X-Sasl-enc: mFy7so7dggAHfevHlkt+UA9tKyo+mFl54HxwVHC28wJo 1413970969
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id D9C54C00006;
+	Wed, 22 Oct 2014 05:42:48 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <xmqqwq7tz3wt.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On di, 2014-10-21 at 10:56 -0700, Junio C Hamano wrote:
-> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Junio C Hamano schrieb am 21.10.2014 um 20:14:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> > By not clearing the request buffer in stateless-rpc mode, fetch-pack
-> > would keep sending already known-common commits, leading to ever bigger
-> > http requests, eventually getting too large for git-http-backend to
-> > handle properly without filling up the pipe buffer in inflate_request.
-> > ---
-> > I'm still not quite sure whether this is the right thing to do, but make
-> > test still passes :) The new testcase demonstrates the problem, when
-> > running t5551 with EXPENSIVE, this test will hang without the patch to
-> > fetch-pack.c and succeed otherwise.
+>> Unfortunately, the git archive doc clearly says that the umask is
+>> applied to all archive entries.
 > 
-> IIUC, because "stateless" is just that, i.e. the server-end does not
-> keep track of what is already known, not telling what is known to be
-> common in each request would fundamentally break the protocol.  Am I
-> mistaken?
+> Is an extended pax header "an archive entry"?  I doubt it, and the
+> above is not relevant.  The mode bits for the archive entry that it
+> applies to does not come from there.
 
-That sounds plausible, but why then does the fetch complete with this
-line removed, and why does 'make test' still pass? I tried to understand
-the protocol, but the documentation has TODO's in some critical
-places :)
+The problem seem to be old tar versions which mis-take the extensions
+for archive entries, aren't they?
 
-And if that's true, it means the inflate_request / upload-pack
-interaction should be fixed, so more than 64k (current linux pipe buffer
-size) of uncompressed data is supported. I see two options:
+> See my other message for my final judgement on this one.  I wouldn't
+> have minded if the original used the same umask for those ignored
+> mode bits, but changing the bits to be ignored after the fact is not
+> helping any real use case and only hurts existing users.
+> 
+> That is not to say that we cannot later fix bigger issues in the
+> output.  I just do not see that otherwise-unused mode bits in the
+> extended pax header big enough an issue to spend brain cycles to
+> carefully lay and execute transition plans to avoid breaking
+> existing users.
 
-* Turning that interaction into a more cooperative process, with a
-  select/poll loop
-* Make upload-pack buffer its entire response when run in stateless_rpc
-  mode until it has consumed all of the request
+My question to Brian still stands which existing users he was trying to
+cater for with his patch. If there indeed are no existing affected users
+besides the KUP users (as you seem to assume) it's a clear case. Pun
+intended ;)
 
-The latter sounds easier to do, but not being very familiar with the
-protocol, I may have missed something obvious.
+As I pointed out (and you cut out), I don't mind doing the revert. I
+just want us to do the right things for the right reasons (the ones you
+ponted out, Junio).
 
--- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+Michael
