@@ -1,105 +1,78 @@
-From: Csaba Kiraly <kiraly@disi.unitn.it>
-Subject: [PATCH 1/2] git-gui: fix problem with "important" files not shown
- if, gui.maxfilesdisplayed is exceeded
-Date: Thu, 23 Oct 2014 15:37:25 +0200
-Message-ID: <54490495.2010200@disi.unitn.it>
+From: Jeff King <peff@peff.net>
+Subject: Re: Plumbing version of 'git branch --contains' ?
+Date: Thu, 23 Oct 2014 10:19:22 -0700
+Message-ID: <20141023171921.GA25061@peff.net>
+References: <B82B660D4887C042850326C2BC65FE035D58B11E@G9W0757.americas.hpqcorp.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Dan Zwell <dzwell@zwell.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Csaba Kiraly <kiraly@fbk.eu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 23 15:47:14 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Crabtree, Andrew" <andrew.crabtree@hp.com>
+X-From: git-owner@vger.kernel.org Thu Oct 23 19:19:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XhIjL-0005oS-Nr
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Oct 2014 15:47:08 +0200
+	id 1XhM2z-0008JT-0g
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Oct 2014 19:19:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753207AbaJWNrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Oct 2014 09:47:04 -0400
-Received: from mail3.unitn.it ([193.205.206.24]:60563 "EHLO mail3.unitn.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752963AbaJWNrC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Oct 2014 09:47:02 -0400
-Received: from mail3.unitn.it (localhost.localdomain [127.0.0.1])
-	by localhost (Email Security Appliance) with SMTP id 89BDDC0752_449049BB;
-	Thu, 23 Oct 2014 13:37:31 +0000 (GMT)
-Received: from mailhub1.unitn.it (mailhub1.unitn.it [192.168.206.46])
-	by mail3.unitn.it (Sophos Email Appliance) with ESMTP id 30B00BBDFD_449049BF;
-	Thu, 23 Oct 2014 13:37:31 +0000 (GMT)
-Received: from disi.unitn.it (disi.unitn.it [193.205.194.4])
-	by mailhub1.unitn.it (Postfix) with ESMTP id 1E137AE5466;
-	Thu, 23 Oct 2014 15:37:31 +0200 (CEST)
-Received: by disi.unitn.it  with ESMTP id s9NDbPZt012660;Thu, 23 Oct 2014 15:37:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+	id S1755545AbaJWRTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Oct 2014 13:19:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:32994 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754756AbaJWRTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Oct 2014 13:19:30 -0400
+Received: (qmail 18676 invoked by uid 102); 23 Oct 2014 17:19:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Oct 2014 12:19:26 -0500
+Received: (qmail 6410 invoked by uid 107); 23 Oct 2014 17:19:27 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Oct 2014 13:19:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Oct 2014 10:19:22 -0700
+Content-Disposition: inline
+In-Reply-To: <B82B660D4887C042850326C2BC65FE035D58B11E@G9W0757.americas.hpqcorp.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gui.maxfilesdisplayed (added in dd6451f9c7c5a36d3006231b618ac6da06c7c7b4)
-was applied brute force on the file list in alphabetic order. As a result,
-files that had modifications might not be displayed by git-gui. Even
-worse, files that are already in the index might not be displayed, which
-makes git-gui unusable.
+On Wed, Oct 22, 2014 at 08:19:07PM +0000, Crabtree, Andrew wrote:
 
-This fix changes the meaning of gui.maxfilesdisplayed, making it a soft
-limit that only applies to "_O" files, i.e. files that are "Untracked,
-not staged".
+> I need to get a list of refs that can reach a certain SHA in in a script.
+> 
+> git branch --contains SHA 
+> 
+> would be great (runs in ~2 seconds), but not my preferred option for scripting.
+> 
+> I tried
+>  
+> for br in $(git for-each-ref --format='%(refname:short)' refs/heads/)
+> do
+>     git merge-base --is-ancestor $1 ${br}
+>     if [ $? -eq 0 ]
+>     then
+>             echo "${br}"
+>     fi
+> done
+> 
+> Which gives me perfect output, but takes 82 seconds to run in my environment.
 
-Signed-off-by: Csaba Kiraly <kiraly@disi.unitn.it>
----
- git-gui.sh | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+Right. There's some setup work that happens in `git branch --contains`
+that we end up repeating.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index bf68699..f86a948 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1967,20 +1967,22 @@ proc display_all_files {} {
- 
-     set to_display [lsort [array names file_states]]
-     set display_limit [get_config gui.maxfilesdisplayed]
--    if {[llength $to_display] > $display_limit} {
--        if {!$files_warning} {
--            # do not repeatedly warn:
--            set files_warning 1
--            info_popup [mc "Displaying only %s of %s files." \
--                $display_limit [llength $to_display]]
--        }
--        set to_display [lrange $to_display 0 [expr {$display_limit-1}]]
--    }
-+    set displayed 0
-     foreach path $to_display {
-         set s $file_states($path)
-         set m [lindex $s 0]
-         set icon_name [lindex $s 1]
- 
-+        if {$displayed > $display_limit && [string index $m 1] eq {O} } {
-+            if {!$files_warning} {
-+                # do not repeatedly warn:
-+                set files_warning 1
-+                info_popup [mc "Displaying only %s of %s files." \
-+                    $display_limit [llength $to_display]]
-+            }
-+            continue
-+        }
-+
-         set s [string index $m 0]
-         if {$s ne {U} && $s ne {_}} {
-             display_all_files_helper $ui_index $path \
-@@ -1995,6 +1997,7 @@ proc display_all_files {} {
-         if {$s ne {_}} {
-             display_all_files_helper $ui_workdir $path \
-                 $icon_name $s
-+            incr displayed
-         }
-     }
- 
--- 
-1.9.1
+> Is there an alternative I'm missing to give me the run time
+> performance of 'git branch --contains' but with stable output suitable
+> for parsing?
+
+Sadly, no, there isn't currently. The right tool would be `git
+for-each-ref --contains`, but it doesn't exist yet. I was working
+towards it, but got stopped on factoring out a `--contains` traversal
+suitable for both `git tag` and `git branch` (they currently are
+different and make performance tradeoffs based on the expected depth of
+the merge bases, which is usually different between tags and
+branches)[1].  That's work I'd love to resume, but I haven't gotten
+around to it yet.
+
+-Peff
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/252472
