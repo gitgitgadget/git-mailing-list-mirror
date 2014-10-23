@@ -1,103 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Plumbing version of 'git branch --contains' ?
-Date: Thu, 23 Oct 2014 11:07:13 -0700
-Message-ID: <xmqqd29islri.fsf@gitster.dls.corp.google.com>
-References: <B82B660D4887C042850326C2BC65FE035D58B11E@G9W0757.americas.hpqcorp.net>
-	<20141023171921.GA25061@peff.net>
+Subject: Re: [PATCH 09/15] refs.c: only write reflog update if msg is non-NULL
+Date: Thu, 23 Oct 2014 11:32:45 -0700
+Message-ID: <xmqq8uk6skky.fsf@gitster.dls.corp.google.com>
+References: <1413919462-3458-1-git-send-email-sahlberg@google.com>
+	<1413919462-3458-10-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "Crabtree\, Andrew" <andrew.crabtree@hp.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 23 20:07:25 2014
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu Oct 23 20:32:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XhMnE-0006fr-Dr
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Oct 2014 20:07:24 +0200
+	id 1XhNBt-0002HV-H6
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Oct 2014 20:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932351AbaJWSHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Oct 2014 14:07:19 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57643 "EHLO
+	id S1755343AbaJWSct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Oct 2014 14:32:49 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50564 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932129AbaJWSHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Oct 2014 14:07:17 -0400
+	with ESMTP id S1754197AbaJWScs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Oct 2014 14:32:48 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 44C6917346;
-	Thu, 23 Oct 2014 14:07:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E80F717A27;
+	Thu, 23 Oct 2014 14:32:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1RF1MiBH66/MyYkPJKooq2gq6oU=; b=kAV8FC
-	ChCT6UQRJiL63iZgMEHs1A70tS9NgHKYPGTO1/EH6W/XAAKNzfWShCl/b6dhK/9q
-	jRuhK+g0NMC1IOuSoq86F0VbMkvEb5MLR1r3XahhzbezrXkzJl73GR7Z7kwe+Zcz
-	6SYxbIZPr5KOAGsZxPPE8QimjhR/5Ld7AJLKw=
+	:content-type; s=sasl; bh=89IAWa4pQQUxr6M+652PcH+L7qQ=; b=Wrt7hX
+	w+t8MijIMS9FJ32W5GHNura/D3vYaioDrjShJWmyRakWMRjkNsCYqBd5gyaR0ku9
+	mG3La9edFyrbyG1+1YJ+8mCLx2Byv+vs+H19JxCit617tYSIzLyYhOvCzuhrdKyn
+	7S7k0dUKRjVCyHd57XW89bgZCyXhuUO0n/HNc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n6TSINk4ElJIASj3SeEkI4pDHhsJT+Hs
-	T+pz9RY/JDUttVytnyfLkfjLka6up+rAKGo45nmQnvi/KZWFu9CZUidTSHalGkbN
-	TlQMHkj/af7agw+NIGEjGPSrAw44atgGW/pB2w/SWwIzCFVM5yepiBSfgsymR5GS
-	/IY5mS9L4H0=
+	:content-type; q=dns; s=sasl; b=erWc+jgTiAHIvQFdoOgDH/ZnYwSGHRfS
+	IIkH7tqMTYTrBhsAVmhTiL5bRnDZhas6iy2Z/+jTwi8kO0nEByMmY073oxH1P/bc
+	8/xKZl8Z3O6WxPCkiCFLgFTGdoji/xxJhfb52FtAXgnDBffnTLJGLf0V1ssTETgc
+	UCxOiMObIFk=
 Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 39FE217344;
-	Thu, 23 Oct 2014 14:07:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DEF5417A26;
+	Thu, 23 Oct 2014 14:32:47 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A36D217343;
-	Thu, 23 Oct 2014 14:07:14 -0400 (EDT)
-In-Reply-To: <20141023171921.GA25061@peff.net> (Jeff King's message of "Thu,
-	23 Oct 2014 10:19:22 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FACA17A23;
+	Thu, 23 Oct 2014 14:32:47 -0400 (EDT)
+In-Reply-To: <1413919462-3458-10-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Tue, 21 Oct 2014 12:24:16 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6AF7E84E-5ADF-11E4-AAAD-855A93717476-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FC76EC86-5AE2-11E4-84F8-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-> On Wed, Oct 22, 2014 at 08:19:07PM +0000, Crabtree, Andrew wrote:
+> commit 020ed65a12838bdead64bc3c5de249d3c8f5cfd8 upstream.
 >
->> I need to get a list of refs that can reach a certain SHA in in a script.
->> 
->> git branch --contains SHA 
->> 
->> would be great (runs in ~2 seconds), but not my preferred option for scripting.
->> 
->> I tried
->>  
->> for br in $(git for-each-ref --format='%(refname:short)' refs/heads/)
->> do
->>     git merge-base --is-ancestor $1 ${br}
->>     if [ $? -eq 0 ]
->>     then
->>             echo "${br}"
->>     fi
->> done
->> 
->> Which gives me perfect output, but takes 82 seconds to run in my environment.
->
-> Right. There's some setup work that happens in `git branch --contains`
-> that we end up repeating.
->
->> Is there an alternative I'm missing to give me the run time
->> performance of 'git branch --contains' but with stable output suitable
->> for parsing?
->
-> Sadly, no, there isn't currently. The right tool would be `git
-> for-each-ref --contains`, but it doesn't exist yet. I was working
-> towards it, but got stopped on factoring out a `--contains` traversal
-> suitable for both `git tag` and `git branch` (they currently are
-> different and make performance tradeoffs based on the expected depth of
-> the merge bases, which is usually different between tags and
-> branches)[1].  That's work I'd love to resume, but I haven't gotten
-> around to it yet.
->
-> -Peff
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/252472
+> When performing a reflog transaction update, only write to the reflog iff
+> msg is non-NULL. This can then be combined with REFLOG_TRUNCATE to perform
+> an update that only truncates but does not write.
 
-Thanks for status update.  I was wondering if I should start looking
-into it myself.
+Does any existing caller call this codepath with update->msg == NULL?
+
+Will "please truncate" stay to be the only plausible special cause
+to call into this codepath without having any meaningful message?
+
+I am trying to make sure that this patch is not painting us into a
+corner where we will find out another reason for doing something
+esoteric in this codepath but need to find a way other than setting
+msg to NULL for the caller to trigger that new codepath.  Put it in
+another way, please convince me that a new boolean field in update,
+e.g. update->truncate_reflog, is way overkill for this.
+
+>
+> Change-Id: I44c89caa7e7c4960777b79cfb5d339a5aa3ddf7a
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  refs.c | 5 +++--
+>  refs.h | 1 +
+>  2 files changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index d54c3b9..f14b76e 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3895,8 +3895,9 @@ int transaction_commit(struct transaction *transaction,
+>  				update->reflog_fd = -1;
+>  				continue;
+>  			}
+> -		if (log_ref_write_fd(update->reflog_fd, update->old_sha1,
+> -				     update->new_sha1,
+> +		if (update->msg &&
+> +		    log_ref_write_fd(update->reflog_fd,
+> +				     update->old_sha1, update->new_sha1,
+>  				     update->committer, update->msg)) {
+>  			error("Could write to reflog: %s. %s",
+>  			      update->refname, strerror(errno));
+> diff --git a/refs.h b/refs.h
+> index 5075073..bf96b36 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -337,6 +337,7 @@ int transaction_delete_ref(struct transaction *transaction,
+>  /*
+>   * Append a reflog entry for refname. If the REFLOG_TRUNCATE flag is set
+>   * this update will first truncate the reflog before writing the entry.
+> + * If msg is NULL no update will be written to the log.
+>   */
+>  int transaction_update_reflog(struct transaction *transaction,
+>  			      const char *refname,
