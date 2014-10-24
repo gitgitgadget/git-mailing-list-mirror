@@ -1,190 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] merge & sequencer: turn "Conflicts:" hint into a comment
-Date: Fri, 24 Oct 2014 14:24:37 -0700
-Message-ID: <xmqqr3xxf9ey.fsf_-_@gitster.dls.corp.google.com>
-References: <xmqq1tpxgw6t.fsf@gitster.dls.corp.google.com>
-	<xmqqvbn9f9ig.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: life cycle documentation
+Date: Fri, 24 Oct 2014 21:56:07 +0000
+Message-ID: <20141024215607.GH312818@vauxhall.crustytoothpaste.net>
+References: <54497DF9.1050501@rackspace.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 24 23:24:58 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FUaywKC54iCcLzqT"
+Cc: git@vger.kernel.org
+To: Ben Harper <ben.harper@rackspace.com>
+X-From: git-owner@vger.kernel.org Fri Oct 24 23:56:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XhmLn-0007hj-D8
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Oct 2014 23:24:47 +0200
+	id 1XhmqJ-000849-Rd
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Oct 2014 23:56:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756546AbaJXVYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Oct 2014 17:24:41 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55319 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752865AbaJXVYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Oct 2014 17:24:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BCE30181BB;
-	Fri, 24 Oct 2014 17:24:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7pstejfwhv/AxeEoTR/ALom2CQo=; b=BIVecd
-	iywI8zfL8zoqbiKxJwcL9dsoKh40zk+N6/g7hGn5kWMAILA6ZQTWMXsaJXrhNeGl
-	JKlsgQl8AWwZt9Ad3rB0ndLFm1JXvRJlasqeJmHfVIvdOedN7Y8BN10BOf6Weyki
-	EqNVjTY2rcWo+g9IH55mR0s6Jmh6W+QTgDPIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eU4nvCez+TdAwVMhN3yIcxG3fpzagGIz
-	/QA1LYIFBic1L2iP5NrZ2cSENa9Y7C/TMXNthLDfXJjZZPFTzb/JjuG20Q2R2yXi
-	PTphEatyOpkW7IuOmn7gV42bT6ChApTYz+jF9KPEvVwwsJFcExVWctDQnpk/oGrJ
-	49z5ojZvEjs=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B45E1181BA;
-	Fri, 24 Oct 2014 17:24:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1755205AbaJXV4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Oct 2014 17:56:16 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49543 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754480AbaJXV4P (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Oct 2014 17:56:15 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3C44C181B9;
-	Fri, 24 Oct 2014 17:24:38 -0400 (EDT)
-In-Reply-To: <xmqqvbn9f9ig.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 24 Oct 2014 14:22:31 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 28B3FA82-5BC4-11E4-A103-855A93717476-77302942!pb-smtp1.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B42992808F;
+	Fri, 24 Oct 2014 21:56:11 +0000 (UTC)
+Mail-Followup-To: Ben Harper <ben.harper@rackspace.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <54497DF9.1050501@rackspace.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.17-rc5-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like other hints such as "Change to be committed" we show in
-the editor to remind the committer what paths were involved in the
-resulting commit to improve their log message, this section is
-merely a reminder.  Traditionally, it was not made into comments
-primarily because it has to be generated outside wt-status
-infrastructure, and secondary it was meant as a bit stronger
-reminder than the rest (i.e. explaining how you resolved conflicts
-is much more important than mentioning what you did to every paths
-involved in the commit), but that still does not make this hint a
-hint, which should be commented out by default.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/commit.c                | 42 ++++++++++++++++++++---------------------
- sequencer.c                     |  7 +++----
- t/t3507-cherry-pick-conflict.sh | 22 +++++++++++++--------
- 3 files changed, 38 insertions(+), 33 deletions(-)
+--FUaywKC54iCcLzqT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index fedb45a..3a1d1a8 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -719,30 +719,30 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		stripspace(&sb, 0);
- 
- 	if (signoff) {
--		/*
--		 * See if we have a Conflicts: block at the end. If yes, count
--		 * its size, so we can ignore it.
--		 */
--		int ignore_footer = 0;
--		int i, eol, previous = 0;
--		const char *nl;
--
--		for (i = 0; i < sb.len; i++) {
--			nl = memchr(sb.buf + i, '\n', sb.len - i);
--			if (nl)
--				eol = nl - sb.buf;
-+		/* Ignore comments and blanks after the trailer */
-+		int boc = 0;
-+		int bol = 0;
-+
-+		while (bol < sb.len) {
-+			char *next_line;
-+
-+			if (!(next_line = memchr(sb.buf + bol, '\n', sb.len - bol)))
-+				next_line = sb.buf + sb.len;
- 			else
--				eol = sb.len;
--			if (!prefixcmp(sb.buf + previous, "\nConflicts:\n")) {
--				ignore_footer = sb.len - previous;
--				break;
-+				next_line++;
-+
-+			if (sb.buf[bol] == comment_line_char || sb.buf[bol] == '\n') {
-+				/* is this the first of the run of comments? */
-+				if (!boc)
-+					boc = bol;
-+				/* otherwise, it is just continuing */
-+			} else if (boc) {
-+				/* the previous was not trailing comment */
-+				boc = 0;
- 			}
--			while (i < eol)
--				i++;
--			previous = eol;
-+			bol = next_line - sb.buf;
- 		}
--
--		append_signoff(&sb, ignore_footer, 0);
-+		append_signoff(&sb, boc ? sb.len - boc : 0, 0);
- 	}
- 
- 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
-diff --git a/sequencer.c b/sequencer.c
-index 0f84bbe..1d97da3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -291,13 +291,12 @@ void append_conflicts_hint(struct strbuf *msgbuf)
- {
- 	int i;
- 
--	strbuf_addstr(msgbuf, "\nConflicts:\n");
-+	strbuf_addch(msgbuf, '\n');
-+	strbuf_commented_addf(msgbuf, "Conflicts:\n");
- 	for (i = 0; i < active_nr;) {
- 		const struct cache_entry *ce = active_cache[i++];
- 		if (ce_stage(ce)) {
--			strbuf_addch(msgbuf, '\t');
--			strbuf_addstr(msgbuf, ce->name);
--			strbuf_addch(msgbuf, '\n');
-+			strbuf_commented_addf(msgbuf, "\t%s\n", ce->name);
- 			while (i < active_nr && !strcmp(ce->name,
- 							active_cache[i]->name))
- 				i++;
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 223b984..fa04226 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -351,18 +351,24 @@ test_expect_success 'commit after failed cherry-pick does not add duplicated -s'
- test_expect_success 'commit after failed cherry-pick adds -s at the right place' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick picked &&
-+
- 	git commit -a -s &&
--	pwd &&
--	cat <<EOF > expected &&
--picked
- 
--Signed-off-by: C O Mitter <committer@example.com>
-+	# Do S-o-b and Conflicts appear in the right order?
-+	cat <<-\EOF >expect &&
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	# Conflicts:
-+	EOF
-+	grep -e "^# Conflicts:" -e '^Signed-off-by' <.git/COMMIT_EDITMSG >actual &&
-+	test_cmp expect actual &&
-+
-+	cat <<-\EOF >expected &&
-+	picked
- 
--Conflicts:
--	foo
--EOF
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	EOF
- 
--	git show -s --pretty=format:%B > actual &&
-+	git show -s --pretty=format:%B >actual &&
- 	test_cmp expected actual
- '
- 
--- 
-2.1.2-595-g1568c45
+On Thu, Oct 23, 2014 at 05:15:21PM -0500, Ben Harper wrote:
+> Greetings,
+>=20
+> I am unable to find any documentation regarding the life cycle regarding =
+the
+> various versions of git.  Is only the current version supported?  What ab=
+out
+> older minor/major versions?  At what point does a version go EOL? Current=
+ly,
+> is only 2.1.2 supported?  I would entertain the thought on creating a
+> RELEASES document if the information is provided.
+
+The development process is outlined at [0].  Usually there's just one
+supported release (at the moment, 2.1.2), although I have occasionally
+seen releases out of order (from different branches).
+
+Having said that, Git developers try very hard not to break things, so
+many people are fine using an older version, such as the ones their
+distros provide.  It is considered courteous to try the latest version
+before reporting a bug, however.
+
+[0] https://github.com/git/git/blob/master/Documentation/howto/maintain-git=
+=2Etxt
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--FUaywKC54iCcLzqT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUSsr3AAoJEL9TXYEfUvaL904QAJfg3VmM9pN7h2lFy06ErPGn
+OWqJNfOtMAjXC4IGHdOdzPvdayVf8GA9GrxzLD8ABlIASSi9oAhNHNKvsQN6pS5Q
+ouHiLlOt9wLCxDWNoeP+bNRqzAQGfASAL9gv3jd4Tup+ksyB/7rgnEWX4uBBqVFc
+FsLjbKAO+QBhA9JC/1er5UM5RW84XIYlVJc6+NYWKFkCmX0s/k40HzylveI2ayTT
+OspJmoFutuoNkMHOpm860rvaX7o/UZpORXBp2A6V/YAc0TXaan7PMBwUDZvyEw46
+6Jdq5QRiPWxPcDAG+mdmVDZ3rITNu15DqG6V2fEPNF2pvHBZC6HO+AeANOonYD3o
+FyDxfVP56ahGf78s3dywKLxdYPWkzA9SvTxsLVNff8kZuh++SgYNtSrLTTYBilBW
+IK5b3suMz25gb56N8PhV4obA6wnceMwAU++XFSodwx9ziIQbm2ie8IdJzA0+9W0z
+yYIKjhYTK/quXpnJTpzoP+1dz4zqZqukyed23eOTA0W8iTUs4xO9++jVa+YVQsdw
+iT2pVCYaDBXM0cyOziOAstkjNkYTYwLHSb5lAD0mQy9Wexbs+AHMqNkHMYApqcM7
+/1BGTQI3Rc1F8kCVP9/kDjqRSV2+aNsSL/EwrKjZabNfByB07foIqXiL9BGyqhtW
+O05xe0L48Lu8ldSFuD/H
+=JmQW
+-----END PGP SIGNATURE-----
+
+--FUaywKC54iCcLzqT--
