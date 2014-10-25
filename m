@@ -1,73 +1,47 @@
-From: Henning Moll <newsScott@gmx.de>
-Subject: flatten-merge history
-Date: Sat, 25 Oct 2014 14:31:53 +0200
-Message-ID: <544B9839.7000302@gmx.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn performance
+Date: Sat, 25 Oct 2014 06:01:16 +0000
+Message-ID: <20141025060116.GA5629@dcvr.yhbt.net>
+References: <1414216069.95531.BPMail_high_carrier@web172304.mail.ir2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 25 20:53:24 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
+	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
+	amyrick@apple.com
+To: Hin-Tak Leung <htl10@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sat Oct 25 21:00:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xi6Sp-0002pg-SJ
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Oct 2014 20:53:24 +0200
+	id 1Xi6aA-0006LE-Px
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Oct 2014 21:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbaJYSxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2014 14:53:20 -0400
-Received: from mout.gmx.net ([212.227.17.21]:62668 "EHLO mout.gmx.net"
+	id S1751909AbaJYTAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2014 15:00:54 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:47682 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751267AbaJYSxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2014 14:53:19 -0400
-Received: from [192.168.178.33] ([88.217.115.1]) by mail.gmx.com (mrgmx101)
- with ESMTPSA (Nemesis) id 0MWwp6-1XenWQ0FoS-00VuDH for <git@vger.kernel.org>;
- Sat, 25 Oct 2014 14:31:54 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-Provags-ID: V03:K0:3PIx6NkRXnoC1rYAutmS3o0Uiyk/Dt5Bgs0l3+ieWpxtWUSWp42
- nIkAY7pfG5Kw+lYLTWOWshptNaM4n+0l5Su16yYf9XgT1SQYQ+en1CCJzw9cYF1rBaVLsJV
- gbiqTYdrGXwWGGr8KswbnrZEE0DRjXdIxbq3ZEPPGHWZ+X3L4kNrIlfXadGCUctW9e/GArc
- 6OUWMd3bo/L2P0hwMawmw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751737AbaJYTAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2014 15:00:54 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD611FB0E;
+	Sat, 25 Oct 2014 06:01:16 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1414216069.95531.BPMail_high_carrier@web172304.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
+> btw, git svn seems to disallow single word commit messages (or is it a
+> svn config?). i found that i could not do git svn dcommit, when i had
+> merely did git commit -m 'typos', for example, for an svn repo i have
+> write access to. (I don't have them many such things, so it is
+> difficult to tell whether it is a repo config, or a git svn
+> strangeness). i just do rebase and do 'typo correction' or something
+> before re-dcommit in the past.
 
-suppose the following history
-
-     P - - - Q - - - - - R       <-extern
-
-A -- - B - - - C - D - - - E   <-master
-          \           \
-           M ...       \         <-b1
-                        \
-                         W ...   <-b2
-
-
-Note that master and extern do not have a common parent. Both histories 
-are 'distinct', they do not share common files, so there can't be any 
-merge conflicts. What i want to achieve is this history:
-
-     P - - - Q - - - - - R       <-extern
-
-A -P'- B'- Q'- C'- D'- R'- E'  <-master
-          \           \
-           M'...       \         <-b1
-                        \
-                         W'...   <-b2
-
-The two histories should be merged in chronological order.
-So while master reflects P-Q-R, b2 should only reflect P-Q and b1 should 
-only reflect P.
-
-All my current attempts (surgery with git replace or interactive rebase 
-combined with merging) were not successfull.
-
-Any ideas?
-
-Best regards
-Henning
+Probably an SVN hook preventing it.  git-svn test cases such as
+t/t9118-git-svn-funky-branch-names.sh do single word commits.
