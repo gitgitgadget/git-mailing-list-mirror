@@ -1,47 +1,55 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn performance
-Date: Sat, 25 Oct 2014 06:01:16 +0000
-Message-ID: <20141025060116.GA5629@dcvr.yhbt.net>
-References: <1414216069.95531.BPMail_high_carrier@web172304.mail.ir2.yahoo.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Fatal: <hash> is corrupted can be caused by wrong permissions
+Date: Sat, 25 Oct 2014 03:17:41 -0700
+Message-ID: <20141025101741.GA17058@peff.net>
+References: <20141024134802.93466250E0D@webabinitio.net>
+ <vpqbnp1zhp7.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
-	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
-	amyrick@apple.com
-To: Hin-Tak Leung <htl10@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Oct 25 21:00:59 2014
+Content-Type: text/plain; charset=utf-8
+Cc: "R. David Murray" <rdmurray@bitdance.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Oct 25 21:17:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xi6aA-0006LE-Px
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Oct 2014 21:00:59 +0200
+	id 1Xi6qV-0005oI-OJ
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Oct 2014 21:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751909AbaJYTAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2014 15:00:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:47682 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751737AbaJYTAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2014 15:00:54 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD611FB0E;
-	Sat, 25 Oct 2014 06:01:16 +0000 (UTC)
+	id S1752544AbaJYTRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2014 15:17:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33585 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752379AbaJYTRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2014 15:17:46 -0400
+Received: (qmail 25418 invoked by uid 102); 25 Oct 2014 10:17:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Oct 2014 05:17:45 -0500
+Received: (qmail 20960 invoked by uid 107); 25 Oct 2014 10:17:48 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Oct 2014 06:17:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Oct 2014 03:17:41 -0700
 Content-Disposition: inline
-In-Reply-To: <1414216069.95531.BPMail_high_carrier@web172304.mail.ir2.yahoo.com>
+In-Reply-To: <vpqbnp1zhp7.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
-> btw, git svn seems to disallow single word commit messages (or is it a
-> svn config?). i found that i could not do git svn dcommit, when i had
-> merely did git commit -m 'typos', for example, for an svn repo i have
-> write access to. (I don't have them many such things, so it is
-> difficult to tell whether it is a repo config, or a git svn
-> strangeness). i just do rebase and do 'typo correction' or something
-> before re-dcommit in the past.
+On Fri, Oct 24, 2014 at 04:05:24PM +0200, Matthieu Moy wrote:
 
-Probably an SVN hook preventing it.  git-svn test cases such as
-t/t9118-git-svn-funky-branch-names.sh do single word commits.
+> I can reproduce with Git 1.7.10 by doing a chmod 0 on some object files,
+> but recent Git's produce
+> 
+> Checking object directories: 100% (256/256), done.
+> fatal: failed to read object ab2e06e74d922268fbff8d219dad9eee63786947: Permission denied
+> 
+> So I guess this has already been fixed :-).
+
+Probably d6c8a05 (open_sha1_file: report "most interesting" errno,
+2014-05-15). The example in the commit message even uses "chmod 0". :)
+
+It's in v2.0.1.
+
+-Peff
