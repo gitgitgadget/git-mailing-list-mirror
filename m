@@ -1,71 +1,52 @@
-From: phillip <phillip.szelat@gmail.com>
-Subject: Re: [PATCH v2] part1: l10n: de.po: use imperative form for command options
-Date: Sat, 25 Oct 2014 10:53:28 +0200
-Message-ID: <F5BFA47C-29B9-46BE-997E-7EAF7371A095@gmail.com>
-References: <CAN0XMO+BR4Tp1EOCPe-ajNyuHpkN1B36T3rzRdw1Z_tzsZH6Dg@mail.gmail.com> <1414173724-10104-1-git-send-email-ralf.thielow@gmail.com>
+From: Adri Farr <14farresa@gmail.com>
+Subject: Quit git difftool on error code
+Date: Sat, 25 Oct 2014 12:40:37 +0200
+Message-ID: <CAPfWmhgS8JXyXz5qp04+faqjdeHsydBz-fui-HeNhF3wYLv71g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 25 21:28:55 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 25 21:44:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xi71C-0002rA-HL
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Oct 2014 21:28:54 +0200
+	id 1Xi7GT-0001VQ-2S
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Oct 2014 21:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577AbaJYT2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2014 15:28:50 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:59479 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752569AbaJYT2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2014 15:28:47 -0400
-Received: by mail-wi0-f170.google.com with SMTP id n3so3359380wiv.5
-        for <git@vger.kernel.org>; Sat, 25 Oct 2014 12:28:45 -0700 (PDT)
+	id S1752443AbaJYToh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2014 15:44:37 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:58164 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752276AbaJYTog (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2014 15:44:36 -0400
+Received: by mail-qg0-f42.google.com with SMTP id z60so2436756qgd.1
+        for <git@vger.kernel.org>; Sat, 25 Oct 2014 12:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:content-type:subject:from:date:to:cc
-         :message-id;
-        bh=JqMBQjVrtBktwMl28R2N+53oMmzNKtOfDVtFBLNQCrc=;
-        b=ZV4itcI5o3yR59n7ouSYnxxCCzxfhqG147fwiGF4nEq9Ij5K6t8XXBBNyMatBuDkYZ
-         f0ej0Zic8SwwRWywL2i2bVhDr32HgICPjFPxbXzKNJngTsIKvoq2D5H70RGiaityVy4v
-         0Mn6dQhpJ/mweIjQKXyK1DioBSQqk43I4yAuPqYS0rPOY821E9/3VCPl/eQxRDm7+rVk
-         M9nqqFbFB0OHbnvAItJSiNTOnbKgYJdZGDekDfUZZ1zXxe5uqq+HXIHzOa7wadKwpQla
-         yTg2QaZigvp6a1ox+jJTFFaDjsb5b6eAvhhHwqt3LcD8esQfcOBxl7yE6rhPKuScGADG
-         j44g==
-X-Received: by 10.194.48.84 with SMTP id j20mr3416158wjn.35.1414227210463;
-        Sat, 25 Oct 2014 01:53:30 -0700 (PDT)
-Received: from android-b7bb6bce7d91de53.fritz.box (i59F4580E.versanet.de. [89.244.88.14])
-        by mx.google.com with ESMTPSA id k10sm8154357wjb.28.2014.10.25.01.53.29
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 25 Oct 2014 01:53:29 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <1414173724-10104-1-git-send-email-ralf.thielow@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=KFzB0Dt3VLg4pQmD8aKNxvy1E5+pS2UxXyoJXNy0JH8=;
+        b=ALiqPAvYUyGq2RNsFMpm0faw667TEGh+zcMB3VBcO/bwqFNqYKHrDEg5tAzeSR+S0w
+         BH7Wl+KzxuBC5MUxyRPbeV309fmACzaw53298rStwFtxgBE7Lo4iUFQfw3rZnyX/YV88
+         IPngKpoHYFPo7dsV89h+IzEWEs+yBGb2Cc1DKY5pP1FeC70CZ9pfrV9PhL4fIoDAbwe/
+         ZJsVPrcB1jpKRojGe7azoDHwVuplEQQDcvBLzEiJCau52TNmToDC7daXmagSMSgPDF9L
+         olg8gIWm1bJviLBQqQ//YFLI8Rkakt1fLajNMQnO2WJFp6Nau8xi1q75zGCPCzRsQIP1
+         kkLg==
+X-Received: by 10.224.26.5 with SMTP id b5mr14394207qac.12.1414233637247; Sat,
+ 25 Oct 2014 03:40:37 -0700 (PDT)
+Received: by 10.229.126.6 with HTTP; Sat, 25 Oct 2014 03:40:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hello!,
 
-> #: builtin/blame.c:2514
-> msgid "Show author email instead of name (Default: off)"
->-msgstr "Zeigt anstatt des Namens die Email-Adresse des Autors
->(Standard: aus)"
->+msgstr "Anstatt des Namens die Email-Adresse des Autors anzeigen
->(Standard: aus)"
-> 
+Pardon my ignorance, but I haven't found the solution anywhere. Is
+there a way to make git difftool quit when it receives an error code?
+I have vim as my difftool, and if I quit with an error (:cq) when
+there are pending files to be diffed, git difftool doesn't quit and
+keeps pushing me files to be diffed until there are no more pending
+files. What is the best way to get out of it?
 
-+msgstr "Anstatt des Namens die E-Mail-Adresse des Autors anzeigen
-(Standard: aus)" is better.
-
-All other strings are fine.
-
-Phillip
+Thank you
