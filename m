@@ -1,68 +1,88 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Feature Proposal: Track all branches from a given remote
-Date: Sun, 26 Oct 2014 12:18:33 +0100
-Message-ID: <87a94j3wqe.fsf@igel.home>
-References: <CAEFop41rvXCAawW7zWGzT251zWyyoMhQbg=5vtHzQrbk4W6D_Q@mail.gmail.com>
-	<20141026001610.GK312818@vauxhall.crustytoothpaste.net>
-	<CAEFop40qOPaq-6QrvNR0_MsgTv4K0jDNqb+m=BUZzFSXQ35YSQ@mail.gmail.com>
+From: Henning Moll <newsScott@gmx.de>
+Subject: Re: flatten-merge history
+Date: Sun, 26 Oct 2014 15:36:50 +0100
+Message-ID: <544D0702.1050907@gmx.de>
+References: <544B9839.7000302@gmx.de> <CAP8UFD3jyZ+7bk-xrE=TghzFj9UL=+Mtz-CvFWK9azNrRcOU5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net
-To: Scott Johnson <jaywir3@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 12:18:43 2014
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 26 15:37:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XiLqL-00041a-Iq
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 12:18:41 +0100
+	id 1XiOwm-0006cK-Bd
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 15:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbaJZLSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2014 07:18:37 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:46785 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049AbaJZLSg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2014 07:18:36 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3jQcB26sZPz3hjGk;
-	Sun, 26 Oct 2014 12:18:34 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3jQcB22fjdzvh1t;
-	Sun, 26 Oct 2014 12:18:34 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id c3wXjRc7TCU4; Sun, 26 Oct 2014 12:18:33 +0100 (CET)
-X-Auth-Info: 3h7PMF8mfXP7eP80gqyrQBVGaPCCtBV2MM9XyA5kobVIO7UjGLknBcZKwLNDC25M
-Received: from igel.home (ppp-93-104-158-8.dynamic.mnet-online.de [93.104.158.8])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sun, 26 Oct 2014 12:18:33 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-	id 32BD82C19C5; Sun, 26 Oct 2014 12:18:33 +0100 (CET)
-X-Yow: I just forgot my whole philosophy of life!!!
-In-Reply-To: <CAEFop40qOPaq-6QrvNR0_MsgTv4K0jDNqb+m=BUZzFSXQ35YSQ@mail.gmail.com>
-	(Scott Johnson's message of "Sun, 26 Oct 2014 02:57:45 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+	id S1751407AbaJZOgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2014 10:36:54 -0400
+Received: from mout.gmx.net ([212.227.15.15]:64205 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751357AbaJZOgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2014 10:36:53 -0400
+Received: from [192.168.178.33] ([88.217.115.1]) by mail.gmx.com (mrgmx003)
+ with ESMTPSA (Nemesis) id 0MhiTL-1XVYmm11t5-00Mw4k; Sun, 26 Oct 2014 15:36:51
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <CAP8UFD3jyZ+7bk-xrE=TghzFj9UL=+Mtz-CvFWK9azNrRcOU5Q@mail.gmail.com>
+X-Provags-ID: V03:K0:gqHQKweXWPZwaCIYc2w8o9dbnFWid40BlGBGC9yQh0HfTzYuqOI
+ 0qOWuGfyZfTwpD49ewOKgFDCdojXxInq/PJfuXk2Oaesk2S6rFTiexBxLlGaI3dZI2+8gkO
+ J6C8Uydf9G06clE2I8JGCj7xezwjSqEnOAT43/INTX1+bN0G3Ob2RnzLSvomEsnlZeI52qm
+ h8iHKKXvlChNkh+R1yavw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Scott Johnson <jaywir3@gmail.com> writes:
+Am 26.10.2014 um 06:46 schrieb Christian Couder:
+> Hi,Could you tell us why interactive rebase did not work?
 
-> Do you think there would be any interest in a patch that added this as
-> a simple command line option, though? I guess the idea of this patch
-> then would simply change this line in the .git/config file for the
-> length of the operation (and specified remote), execute the git pull
-> command, and then reset the configuration after the command finished.
+First of all i have to admit that i did not i-rebase-merge, but 
+i-rebase-cherrypick. Now i tried it with i-rebase-merge and it didn't 
+work either.
+Here's my workflow, which i repeated for all commits of 'extern' (in 
+chronological order'). For simplicity let's assume that there is a 
+parent commit for 'A'
 
-There is no need to modify the configuration, you can pass the fetch
-spec on the command line.
+1. For P, A is the nearest prior commit on 'master'
+2. on master: git rebase -i A^
+3. change A from pick to edit. save. quit
+4. git merge P
+5. git rebase --continue
 
-Andreas.
+ From the perspective of 'master' this worked. But as all of the commits 
+have been rewritten, the branches b1 and b2 no longer refer to 'master'. 
+Branch b2, for example, still branches off at B and not B'. So after 
+this action, my history looks like this:
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+
+     P - - - Q - - - - - R       <-extern
+       \
+A'- m - B'- - - C'- D'- - - E'  <-master
+
+A - - - B - - - C - D
+          \           \
+           M ...       \         <-b1
+                        \
+                         W ...   <-b2
+
+A and A' are nearly the same: they only differ in the new 
+GIT_COMITTER_DATE.
+Now this is what i try to get (after only applying P):
+
+
+
+     P - - - Q - - - - - R       <-extern
+     \
+A'- m - B'- - - C'- D'- - - E'  <-master
+          \           \
+           M'...       \         <-b1
+                        \
+                         W'...   <-b2
+
+Regards
+Henning
