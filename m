@@ -1,91 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: difftool--helper: exit when reading a prompt answer fails
-Date: Sun, 26 Oct 2014 09:09:20 +0100
-Message-ID: <544CAC30.7000607@kdbg.org>
+From: Scott Johnson <jaywir3@gmail.com>
+Subject: Re: Feature Proposal: Track all branches from a given remote
+Date: Sun, 26 Oct 2014 02:57:45 -0700
+Message-ID: <CAEFop40qOPaq-6QrvNR0_MsgTv4K0jDNqb+m=BUZzFSXQ35YSQ@mail.gmail.com>
+References: <CAEFop41rvXCAawW7zWGzT251zWyyoMhQbg=5vtHzQrbk4W6D_Q@mail.gmail.com>
+	<20141026001610.GK312818@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 09:09:35 2014
+Content-Type: text/plain; charset=UTF-8
+To: Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org,
+	sandals@crustytoothpaste.net
+X-From: git-owner@vger.kernel.org Sun Oct 26 11:00:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XiItK-0003wK-6n
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 09:09:34 +0100
+	id 1XiKcG-0000VJ-To
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 11:00:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbaJZIJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2014 04:09:27 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:24014 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750947AbaJZIJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2014 04:09:23 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jQWz26vmQz5tlF;
-	Sun, 26 Oct 2014 09:08:46 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id B191D19F571;
-	Sun, 26 Oct 2014 09:09:20 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+	id S1751254AbaJZJ5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2014 05:57:47 -0400
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:64147 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751236AbaJZJ5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2014 05:57:46 -0400
+Received: by mail-yh0-f47.google.com with SMTP id i57so222637yha.6
+        for <git@vger.kernel.org>; Sun, 26 Oct 2014 02:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=W/zvUD3GiTNqRg0jGmZZ16iQ16EcffByONdC23YtlJY=;
+        b=diemW7e2SkXNNLHB+FIGD5QXWj+vEbXh7mFUEIZkaCmT1otJzxP+nrskskrFlWgGIM
+         Pq8ybqEW9T+x8eocwuqYKweLbTrfdm3teBOfmf7pdduj2bcexfFQHPsOEbJTXOu3sZG4
+         lHZ6FkqU5an19hWIkuydxiod9LxXKweu/bfxJbMrh+Ic7VAL35UKElm4EeRIcCk7RcC9
+         ohmCtx33kL8R7zAxA6TcvUcKlQMOyQzvSUZToFboPwB5fF2gYwrmflejpjnOPlzuHcFZ
+         NXWrI5Oh69DC3yyqQaDAQvzjNp0cQ6N1yRjz6hsgpTTQfJFnFFMTY/8UCLkoVMpfb5/o
+         VfmQ==
+X-Received: by 10.236.206.42 with SMTP id k30mr15454061yho.58.1414317465565;
+ Sun, 26 Oct 2014 02:57:45 -0700 (PDT)
+Received: by 10.170.132.210 with HTTP; Sun, 26 Oct 2014 02:57:45 -0700 (PDT)
+In-Reply-To: <20141026001610.GK312818@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An attempt to quit difftool by hitting Ctrl-D (EOF) at its prompt does
-not quit it, but is treated as if 'yes' was answered to the prompt and
-all following prompts, which is contrary to the user's intent. Fix the
-error check.
+Hi Brian:
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- Found while reviewing your latest patch.
+> [remote "origin"]
+>   fetch = refs/heads/*:refs/heads/*
 
- I chose the 'foo || return' idiom for the error check, but left the
- 'if' for the interesting check, because I feel it is more readable
- than 'test ... && return'.
+Yes, you're right, this works just fine as long as I move out from a
+branch that's not in the remote in question, for example by doing:
 
- -- Hannes
+git checkout -b nothing
+git fetch
 
- git-difftool--helper.sh | 3 ++-
- t/t7800-difftool.sh     | 8 ++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+- OR -
 
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 7ef36b9..aca0413 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -49,7 +49,8 @@ launch_merge_tool () {
- 		else
- 			printf "Launch '%s' [Y/n]: " "$merge_tool"
- 		fi
--		if read ans && test "$ans" = n
-+		read ans || return
-+		if test "$ans" = n
- 		then
- 			return
- 		fi
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index dc30a51..9cf5dc9 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -301,6 +301,14 @@ test_expect_success PERL 'say no to the second file' '
- 	! grep br2 output
- '
- 
-+test_expect_success PERL 'ending prompt input with EOF' '
-+	git difftool -x cat branch </dev/null >output &&
-+	! grep master output &&
-+	! grep branch output &&
-+	! grep m2 output &&
-+	! grep br2 output
-+'
-+
- test_expect_success PERL 'difftool --tool-help' '
- 	git difftool --tool-help >output &&
- 	grep tool output
--- 
-2.0.0.12.gbcf935e
+git pull
+
+Do you think there would be any interest in a patch that added this as
+a simple command line option, though? I guess the idea of this patch
+then would simply change this line in the .git/config file for the
+length of the operation (and specified remote), execute the git pull
+command, and then reset the configuration after the command finished.
+(There really wouldn't be a need to affect the configuration on the
+filesystem - simply the effective configuration used while git is
+running for this operation).
+
+Thanks,
+
+~Scott
