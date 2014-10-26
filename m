@@ -1,46 +1,46 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] difftool: add support for --trust-exit-code
-Date: Sat, 25 Oct 2014 18:24:49 -0700
-Message-ID: <1414286689-62082-1-git-send-email-davvid@gmail.com>
-References: <CAPfWmhgS8JXyXz5qp04+faqjdeHsydBz-fui-HeNhF3wYLv71g@mail.gmail.com>
+Subject: [PATCH v2] difftool: add support for --trust-exit-code
+Date: Sat, 25 Oct 2014 18:38:46 -0700
+Message-ID: <1414287526-80060-1-git-send-email-davvid@gmail.com>
+References: <1414286689-62082-1-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, Adri Farr <14farresa@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 02:24:57 2014
+X-From: git-owner@vger.kernel.org Sun Oct 26 02:38:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XiCZk-0002zW-Rv
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 02:24:57 +0100
+	id 1XiCnC-0007W8-4u
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 02:38:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515AbaJZBYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2014 21:24:46 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:62165 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbaJZBYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2014 21:24:45 -0400
-Received: by mail-pa0-f42.google.com with SMTP id et14so867684pad.29
-        for <git@vger.kernel.org>; Sat, 25 Oct 2014 18:24:45 -0700 (PDT)
+	id S1751524AbaJZBil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Oct 2014 21:38:41 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:36157 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbaJZBik (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Oct 2014 21:38:40 -0400
+Received: by mail-pd0-f181.google.com with SMTP id w10so3520915pde.40
+        for <git@vger.kernel.org>; Sat, 25 Oct 2014 18:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=S1yTjGqwcImwyTB/2ztd3MBDpwbs6B3d2xAr6BPLG/4=;
-        b=gaSOEbIPk1ixeVyNodpMwe5Kjoqp/cvSviAnU/vZZkghwi3XnK/7FtAI9qHDjAAJkj
-         +PyNNUTOUSr/2VOePVAlEnJBcouT+6hTN9MfxywsS+1MhWCmTmh04iFuYdnPSRgiQWmo
-         4kHzmsltglxlUVffp5PVXtZJZ8bfqy0bffcqZP6ShFowY7ljvHeptRFAQnN44Ni2EX0K
-         svPo/OhbTeGquLeivcO/Cvyooc0L9OTq8K+Mw27zKjQnxzZKTlpjmHpXPmWoh/1FjbGC
-         op75zEsqO8BRliq5S7RsQcBo9h3Kq9SZlZdubBkb0H57IwQQlNQZ36uEUHAipv6WJ4/V
-         IfNg==
-X-Received: by 10.70.2.226 with SMTP id 2mr14609810pdx.56.1414286685338;
-        Sat, 25 Oct 2014 18:24:45 -0700 (PDT)
+        bh=BvwVYirhj+YcZQo41sH5fNycBQWNjHsfLESCxc4OTE4=;
+        b=Rf2221OLaO2kNVCHX5NBu9sj5y4EyEbet3IbnI6u9HKHPr9b4n4PxYXRnADq/5mRIQ
+         olQBI4Q+9GBylDnapMUrdhqcZDyugxJPeGot3Eh7QV+ynVsS0WMz3X7QLhV5daI9UGOf
+         gfF/A7y9bmGXZSMGeS3OsB9yJgVKd0yPiUeoNN0G6TC1xzAQkes1fBK0KycMNGrTXRiu
+         r9Qt73Wcpq1nIGvvZcauZj0vm2r/Jn5pp1ObMN54uiXLUJaQXXxK2sW5H9Qy0E3nZPPM
+         m6lx00E7FMkF1YUco3VbdYrXoIvXGx5LBOYU13s2G6gVYl3/MTmOZs8gl3b6eQKKJQ8k
+         6Fcg==
+X-Received: by 10.69.18.203 with SMTP id go11mr14188683pbd.101.1414287520104;
+        Sat, 25 Oct 2014 18:38:40 -0700 (PDT)
 Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id o5sm7204084pdc.24.2014.10.25.18.24.43
+        by mx.google.com with ESMTPSA id i13sm7180359pdm.93.2014.10.25.18.38.38
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 25 Oct 2014 18:24:44 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2.556.g2136b5c
-In-Reply-To: <CAPfWmhgS8JXyXz5qp04+faqjdeHsydBz-fui-HeNhF3wYLv71g@mail.gmail.com>
+        Sat, 25 Oct 2014 18:38:39 -0700 (PDT)
+X-Mailer: git-send-email 2.1.2.556.gbab03cb
+In-Reply-To: <1414286689-62082-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,6 +56,13 @@ Forward exit codes from invoked diff tools to the caller when
 Suggested-by: Adri Farr <14farresa@gmail.com>
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
+Changes since v1:
+
+This fixes typos in the documentation (s/an an/an/) and tests.
+
+I'll wait until tomorrow before sending follow-ups in case anyone spots
+any other issues.
+
  Documentation/git-difftool.txt | 14 ++++++++++++++
  git-difftool--helper.sh        |  7 +++++++
  git-difftool.perl              | 12 ++++++++++++
@@ -63,7 +70,7 @@ Signed-off-by: David Aguilar <davvid@gmail.com>
  4 files changed, 76 insertions(+)
 
 diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 11887e6..dc843d3 100644
+index 11887e6..333cf6f 100644
 --- a/Documentation/git-difftool.txt
 +++ b/Documentation/git-difftool.txt
 @@ -91,6 +91,15 @@ instead.  `--no-symlinks` is the default on Windows.
@@ -73,7 +80,7 @@ index 11887e6..dc843d3 100644
 +--[no-]trust-exit-code::
 +	'git-difftool' invokes a diff tool individually on each file.
 +	Errors reported by the diff tool are ignored by default.
-+	Use `--trust-exit-code` to make 'git-difftool' exit when an an
++	Use `--trust-exit-code` to make 'git-difftool' exit when an
 +	invoked diff tool returns a non-zero exit code.
 ++
 +'git-difftool' will forward the exit code of the invoked tool when
@@ -156,7 +163,7 @@ index 598fcc2..7df7c8a 100755
  	# to compare the a/b directories.  In file diff mode, 'git diff'
  	# will invoke a separate instance of 'git-difftool--helper' for
 diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index dc30a51..2b89b7b 100755
+index dc30a51..b273e97 100755
 --- a/t/t7800-difftool.sh
 +++ b/t/t7800-difftool.sh
 @@ -76,6 +76,49 @@ test_expect_success PERL 'difftool forwards arguments to diff' '
@@ -191,7 +198,7 @@ index dc30a51..2b89b7b 100755
 +	git difftool -y --no-trust-exit-code -t error branch
 +'
 +
-+write_script fail-right-file <<\EOF
++write_script .git/fail-right-file <<\EOF
 +echo "$2"
 +exit 1
 +EOF
@@ -199,11 +206,11 @@ index dc30a51..2b89b7b 100755
 +test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
 +	>for-diff &&
 +	git add for-diff &&
-+	echo branch >actual &&
++	echo file>expect &&
 +	test_must_fail git difftool -y --trust-exit-code \
-+		--extcmd "$(pwd)/fail-right-file" branch >actual &&
++		--extcmd .git/fail-right-file branch >actual &&
 +	test_cmp expect actual &&
-+	rm -f for-diff fail-right-file
++	rm -f for-diff .git/fail-right-file
 +'
 +
  test_expect_success PERL 'difftool honors --gui' '
