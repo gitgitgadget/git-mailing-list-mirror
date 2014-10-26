@@ -1,220 +1,87 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2] difftool: add support for --trust-exit-code
-Date: Sat, 25 Oct 2014 18:38:46 -0700
-Message-ID: <1414287526-80060-1-git-send-email-davvid@gmail.com>
-References: <1414286689-62082-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, Adri Farr <14farresa@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 26 02:38:51 2014
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: flatten-merge history
+Date: Sun, 26 Oct 2014 06:46:41 +0100
+Message-ID: <CAP8UFD3jyZ+7bk-xrE=TghzFj9UL=+Mtz-CvFWK9azNrRcOU5Q@mail.gmail.com>
+References: <544B9839.7000302@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Henning Moll <newsScott@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 26 06:49:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XiCnC-0007W8-4u
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 02:38:50 +0100
+	id 1XiGhJ-0001AF-8O
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 06:49:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbaJZBil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Oct 2014 21:38:41 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:36157 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbaJZBik (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Oct 2014 21:38:40 -0400
-Received: by mail-pd0-f181.google.com with SMTP id w10so3520915pde.40
-        for <git@vger.kernel.org>; Sat, 25 Oct 2014 18:38:40 -0700 (PDT)
+	id S1750909AbaJZFqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2014 01:46:43 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:61911 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750787AbaJZFqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2014 01:46:42 -0400
+Received: by mail-ig0-f177.google.com with SMTP id h18so715991igc.4
+        for <git@vger.kernel.org>; Sat, 25 Oct 2014 22:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BvwVYirhj+YcZQo41sH5fNycBQWNjHsfLESCxc4OTE4=;
-        b=Rf2221OLaO2kNVCHX5NBu9sj5y4EyEbet3IbnI6u9HKHPr9b4n4PxYXRnADq/5mRIQ
-         olQBI4Q+9GBylDnapMUrdhqcZDyugxJPeGot3Eh7QV+ynVsS0WMz3X7QLhV5daI9UGOf
-         gfF/A7y9bmGXZSMGeS3OsB9yJgVKd0yPiUeoNN0G6TC1xzAQkes1fBK0KycMNGrTXRiu
-         r9Qt73Wcpq1nIGvvZcauZj0vm2r/Jn5pp1ObMN54uiXLUJaQXXxK2sW5H9Qy0E3nZPPM
-         m6lx00E7FMkF1YUco3VbdYrXoIvXGx5LBOYU13s2G6gVYl3/MTmOZs8gl3b6eQKKJQ8k
-         6Fcg==
-X-Received: by 10.69.18.203 with SMTP id go11mr14188683pbd.101.1414287520104;
-        Sat, 25 Oct 2014 18:38:40 -0700 (PDT)
-Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id i13sm7180359pdm.93.2014.10.25.18.38.38
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 25 Oct 2014 18:38:39 -0700 (PDT)
-X-Mailer: git-send-email 2.1.2.556.gbab03cb
-In-Reply-To: <1414286689-62082-1-git-send-email-davvid@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0T0+4bEKfQriH1KhD8DZ2IFE1bUUsx+YW0YhgjSGyqg=;
+        b=rD7ygR11yEEaSNBC3L5SONZBD1lOxyL2tHTtky7LMbCXHzAtbYFy9+OVuqW5pN++pG
+         4uEqH9tgqmyKX+pquKPbesmb2ZoiHO6P4l9Mixgafar/ngxi7MtT+fQBoDacGZN27WLu
+         hCxwDWzR0JhMM3ZM62QIb78Q3w6vOfTlxLT8g+/sEgZ4E2KXH1Tsjs3UtAYKMj9xNJ9R
+         nVBjmfs9Z/sxVk4OS61J2ZuXBhF+/Vt/XnqbzzYUe7mhB4sp3PqLPMYLZ9litz64RITG
+         UoHcfxY8e+2QFhInXTs7Gt6dw/DfnFFB5/fkbEdoB3pxK+eJEAUeBMBMRwYPis4F3L2V
+         W/pA==
+X-Received: by 10.42.236.13 with SMTP id ki13mr1528360icb.15.1414302401889;
+ Sat, 25 Oct 2014 22:46:41 -0700 (PDT)
+Received: by 10.50.250.179 with HTTP; Sat, 25 Oct 2014 22:46:41 -0700 (PDT)
+In-Reply-To: <544B9839.7000302@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach difftool to exit when a diff tool returns a non-zero exit
-code when either --trust-exit-code is specified or
-difftool.trustExitCode is true.
+Hi,
 
-Forward exit codes from invoked diff tools to the caller when
---trust-exit-code is used.
+On Sat, Oct 25, 2014 at 2:31 PM, Henning Moll <newsScott@gmx.de> wrote:
+> Hi,
+>
+> suppose the following history
+>
+>     P - - - Q - - - - - R       <-extern
+>
+> A -- - B - - - C - D - - - E   <-master
+>           \           \
+>           M ...       \         <-b1
+>                           \
+>                           W ...   <-b2
+>
+>
+> Note that master and extern do not have a common parent. Both histories are
+> 'distinct', they do not share common files, so there can't be any merge
+> conflicts. What i want to achieve is this history:
+>
+>     P - - - Q - - - - - R       <-extern
+>
+> A -P'- B'- Q'- C'- D'- R'- E'  <-master
+>             \           \
+>             M'...       \         <-b1
+>                             \
+>                             W'...   <-b2
+>
+> The two histories should be merged in chronological order.
+> So while master reflects P-Q-R, b2 should only reflect P-Q and b1 should
+> only reflect P.
+>
+> All my current attempts (surgery with git replace or interactive rebase
+> combined with merging) were not successfull.
 
-Suggested-by: Adri Farr <14farresa@gmail.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Changes since v1:
+Could you tell us why interactive rebase did not work?
+If there can't be any merge conflict between both histories, it should
+have worked without asking you to resolve any conflict.
 
-This fixes typos in the documentation (s/an an/an/) and tests.
-
-I'll wait until tomorrow before sending follow-ups in case anyone spots
-any other issues.
-
- Documentation/git-difftool.txt | 14 ++++++++++++++
- git-difftool--helper.sh        |  7 +++++++
- git-difftool.perl              | 12 ++++++++++++
- t/t7800-difftool.sh            | 43 ++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 76 insertions(+)
-
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 11887e6..333cf6f 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -91,6 +91,15 @@ instead.  `--no-symlinks` is the default on Windows.
- 	the default diff tool will be read from the configured
- 	`diff.guitool` variable instead of `diff.tool`.
- 
-+--[no-]trust-exit-code::
-+	'git-difftool' invokes a diff tool individually on each file.
-+	Errors reported by the diff tool are ignored by default.
-+	Use `--trust-exit-code` to make 'git-difftool' exit when an
-+	invoked diff tool returns a non-zero exit code.
-++
-+'git-difftool' will forward the exit code of the invoked tool when
-+'--trust-exit-code' is used.
-+
- See linkgit:git-diff[1] for the full list of supported options.
- 
- CONFIG VARIABLES
-@@ -116,6 +125,11 @@ See the `--tool=<tool>` option above for more details.
- difftool.prompt::
- 	Prompt before each invocation of the diff tool.
- 
-+difftool.trustExitCode::
-+	Exit difftool if the invoked diff tool returns a non-zero exit status.
-++
-+See the `--trust-exit-code` option above for more details.
-+
- SEE ALSO
- --------
- linkgit:git-diff[1]::
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 7ef36b9..fdbd768 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -62,6 +62,8 @@ launch_merge_tool () {
- 	else
- 		run_merge_tool "$merge_tool"
- 	fi
-+	status=$?
-+	return $status
- }
- 
- if ! use_ext_cmd
-@@ -85,5 +87,10 @@ else
- 	do
- 		launch_merge_tool "$1" "$2" "$5"
- 		shift 7
-+		if test "$status" != 0 &&
-+			test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" = true
-+		then
-+			exit $status
-+		fi
- 	done
- fi
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 598fcc2..7df7c8a 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -342,6 +342,7 @@ sub main
- 		symlinks => $^O ne 'cygwin' &&
- 				$^O ne 'MSWin32' && $^O ne 'msys',
- 		tool_help => undef,
-+		trust_exit_code => undef,
- 	);
- 	GetOptions('g|gui!' => \$opts{gui},
- 		'd|dir-diff' => \$opts{dirdiff},
-@@ -352,6 +353,8 @@ sub main
- 		'no-symlinks' => sub { $opts{symlinks} = 0; },
- 		't|tool:s' => \$opts{difftool_cmd},
- 		'tool-help' => \$opts{tool_help},
-+		'trust-exit-code' => \$opts{trust_exit_code},
-+		'no-trust-exit-code' => sub { $opts{trust_exit_code} = 0; },
- 		'x|extcmd:s' => \$opts{extcmd});
- 
- 	if (defined($opts{help})) {
-@@ -383,6 +386,15 @@ sub main
- 		}
- 	}
- 
-+	if (!defined $opts{trust_exit_code}) {
-+		$opts{trust_exit_code} = Git::config_bool('difftool.trustExitCode');
-+	}
-+	if ($opts{trust_exit_code}) {
-+		$ENV{GIT_DIFFTOOL_TRUST_EXIT_CODE} = 'true';
-+	} else {
-+		$ENV{GIT_DIFFTOOL_TRUST_EXIT_CODE} = 'false';
-+	}
-+
- 	# In directory diff mode, 'git-difftool--helper' is called once
- 	# to compare the a/b directories.  In file diff mode, 'git diff'
- 	# will invoke a separate instance of 'git-difftool--helper' for
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index dc30a51..b273e97 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -76,6 +76,49 @@ test_expect_success PERL 'difftool forwards arguments to diff' '
- 	rm for-diff
- '
- 
-+test_expect_success PERL 'difftool ignores exit code' '
-+	test_config difftool.error.cmd false &&
-+	git difftool -y -t error branch
-+'
-+
-+test_expect_success PERL 'difftool forwards exit code with --trust-exit-code' '
-+	test_config difftool.error.cmd false &&
-+	test_must_fail git difftool -y --trust-exit-code -t error branch
-+'
-+
-+test_expect_success PERL 'difftool honors difftool.trustExitCode = true' '
-+	test_config difftool.error.cmd false &&
-+	test_config difftool.trustExitCode true &&
-+	test_must_fail git difftool -y -t error branch
-+'
-+
-+test_expect_success PERL 'difftool honors difftool.trustExitCode = false' '
-+	test_config difftool.error.cmd false &&
-+	test_config difftool.trustExitCode false &&
-+	git difftool -y -t error branch
-+'
-+
-+test_expect_success PERL 'difftool ignores exit code with --no-trust-exit-code' '
-+	test_config difftool.error.cmd false &&
-+	test_config difftool.trustExitCode true &&
-+	git difftool -y --no-trust-exit-code -t error branch
-+'
-+
-+write_script .git/fail-right-file <<\EOF
-+echo "$2"
-+exit 1
-+EOF
-+
-+test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
-+	>for-diff &&
-+	git add for-diff &&
-+	echo file>expect &&
-+	test_must_fail git difftool -y --trust-exit-code \
-+		--extcmd .git/fail-right-file branch >actual &&
-+	test_cmp expect actual &&
-+	rm -f for-diff .git/fail-right-file
-+'
-+
- test_expect_success PERL 'difftool honors --gui' '
- 	difftool_test_setup &&
- 	test_config merge.tool bogus-tool &&
--- 
-2.1.2.556.g2136b5c
+Best,
+Christian.
