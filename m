@@ -1,87 +1,70 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: flatten-merge history
-Date: Sun, 26 Oct 2014 06:46:41 +0100
-Message-ID: <CAP8UFD3jyZ+7bk-xrE=TghzFj9UL=+Mtz-CvFWK9azNrRcOU5Q@mail.gmail.com>
-References: <544B9839.7000302@gmx.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] difftool: add support for --trust-exit-code
+Date: Sun, 26 Oct 2014 08:31:05 +0100
+Message-ID: <544CA339.3000401@kdbg.org>
+References: <1414286689-62082-1-git-send-email-davvid@gmail.com> <1414287526-80060-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Henning Moll <newsScott@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 26 06:49:02 2014
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Adri Farr <14farresa@gmail.com>
+To: David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 26 08:31:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XiGhJ-0001AF-8O
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 06:49:01 +0100
+	id 1XiIIa-00081x-9L
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Oct 2014 08:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750909AbaJZFqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Oct 2014 01:46:43 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:61911 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750787AbaJZFqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Oct 2014 01:46:42 -0400
-Received: by mail-ig0-f177.google.com with SMTP id h18so715991igc.4
-        for <git@vger.kernel.org>; Sat, 25 Oct 2014 22:46:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0T0+4bEKfQriH1KhD8DZ2IFE1bUUsx+YW0YhgjSGyqg=;
-        b=rD7ygR11yEEaSNBC3L5SONZBD1lOxyL2tHTtky7LMbCXHzAtbYFy9+OVuqW5pN++pG
-         4uEqH9tgqmyKX+pquKPbesmb2ZoiHO6P4l9Mixgafar/ngxi7MtT+fQBoDacGZN27WLu
-         hCxwDWzR0JhMM3ZM62QIb78Q3w6vOfTlxLT8g+/sEgZ4E2KXH1Tsjs3UtAYKMj9xNJ9R
-         nVBjmfs9Z/sxVk4OS61J2ZuXBhF+/Vt/XnqbzzYUe7mhB4sp3PqLPMYLZ9litz64RITG
-         UoHcfxY8e+2QFhInXTs7Gt6dw/DfnFFB5/fkbEdoB3pxK+eJEAUeBMBMRwYPis4F3L2V
-         W/pA==
-X-Received: by 10.42.236.13 with SMTP id ki13mr1528360icb.15.1414302401889;
- Sat, 25 Oct 2014 22:46:41 -0700 (PDT)
-Received: by 10.50.250.179 with HTTP; Sat, 25 Oct 2014 22:46:41 -0700 (PDT)
-In-Reply-To: <544B9839.7000302@gmx.de>
+	id S1750965AbaJZHbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Oct 2014 03:31:11 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:57139 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750907AbaJZHbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Oct 2014 03:31:10 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jQW7J6CGQz5tlB;
+	Sun, 26 Oct 2014 08:30:52 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 5B9F719F571;
+	Sun, 26 Oct 2014 08:31:06 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.1.0
+In-Reply-To: <1414287526-80060-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Am 26.10.2014 um 02:38 schrieb David Aguilar:
+> diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+> index 7ef36b9..fdbd768 100755
+> --- a/git-difftool--helper.sh
+> +++ b/git-difftool--helper.sh
+> @@ -62,6 +62,8 @@ launch_merge_tool () {
+>  	else
+>  		run_merge_tool "$merge_tool"
+>  	fi
+> +	status=$?
+> +	return $status
+>  }
+>  
+>  if ! use_ext_cmd
+> @@ -85,5 +87,10 @@ else
+>  	do
+>  		launch_merge_tool "$1" "$2" "$5"
+>  		shift 7
+> +		if test "$status" != 0 &&
+> +			test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" = true
+> +		then
+> +			exit $status
+> +		fi
 
-On Sat, Oct 25, 2014 at 2:31 PM, Henning Moll <newsScott@gmx.de> wrote:
-> Hi,
->
-> suppose the following history
->
->     P - - - Q - - - - - R       <-extern
->
-> A -- - B - - - C - D - - - E   <-master
->           \           \
->           M ...       \         <-b1
->                           \
->                           W ...   <-b2
->
->
-> Note that master and extern do not have a common parent. Both histories are
-> 'distinct', they do not share common files, so there can't be any merge
-> conflicts. What i want to achieve is this history:
->
->     P - - - Q - - - - - R       <-extern
->
-> A -P'- B'- Q'- C'- D'- R'- E'  <-master
->             \           \
->             M'...       \         <-b1
->                             \
->                             W'...   <-b2
->
-> The two histories should be merged in chronological order.
-> So while master reflects P-Q-R, b2 should only reflect P-Q and b1 should
-> only reflect P.
->
-> All my current attempts (surgery with git replace or interactive rebase
-> combined with merging) were not successfull.
+If you insert this new code block before the 'shift 7', you can set
+status here and do not have to hide it in the helper function.
 
-Could you tell us why interactive rebase did not work?
-If there can't be any merge conflict between both histories, it should
-have worked without asking you to resolve any conflict.
+>  	done
+>  fi
 
-Best,
-Christian.
+-- Hannes
