@@ -1,78 +1,71 @@
-From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: Re: Anomaly with the new code - Re: git-svn performance
-Date: Mon, 27 Oct 2014 23:26:28 +0000
-Message-ID: <1414452388.89217.YahooMailBasic@web172306.mail.ir2.yahoo.com>
-Reply-To: htl10@users.sourceforge.net
+From: Zoltan Klinger <zoltan.klinger@gmail.com>
+Subject: Re: [PATCH][RFC] grep: add color.grep.matchcontext and color.grep.matchselected
+Date: Tue, 28 Oct 2014 10:32:23 +1100
+Message-ID: <CAKJhZwRShbV14=BihxiTzayR4kg3GaAPN_NFXwFZ-4kAD-QHTA@mail.gmail.com>
+References: <1413870963-66431-1-git-send-email-zoltan.klinger@gmail.com>
+	<544D3A3C.4080906@web.de>
+	<544E8D89.3030201@web.de>
+	<xmqqy4s1s44h.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
-	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
-	amyrick@apple.com
-To: normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Tue Oct 28 00:26:34 2014
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 28 00:32:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XitgI-0002GK-D2
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 00:26:34 +0100
+	id 1Xitm0-00053H-74
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 00:32:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682AbaJ0X0a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Oct 2014 19:26:30 -0400
-Received: from nm28-vm5.bullet.mail.ir2.yahoo.com ([212.82.97.65]:47411 "EHLO
-	nm28-vm5.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752521AbaJ0X0a convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2014 19:26:30 -0400
-Received: from [212.82.98.58] by nm28.bullet.mail.ir2.yahoo.com with NNFMP; 27 Oct 2014 23:26:28 -0000
-Received: from [212.82.98.96] by tm11.bullet.mail.ir2.yahoo.com with NNFMP; 27 Oct 2014 23:26:28 -0000
-Received: from [127.0.0.1] by omp1033.mail.ir2.yahoo.com with NNFMP; 27 Oct 2014 23:26:28 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 535738.7342.bm@omp1033.mail.ir2.yahoo.com
-Received: (qmail 57485 invoked by uid 60001); 27 Oct 2014 23:26:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1414452388; bh=WgWVoMQxiALsnMX/QUXlu+sIxxWutZcp6i/w6AVUe2w=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=TY374UunUoizMoM5gGESb1Ite7J0pvLDpflnyY0r9spPSYZKOci46p2ZqU+iULcq1kYlWKrqe++3kgZy/9qGd/OqwaWwmsizaOf+KmxHGoolRoA8tYlPvaPvKLJda6uJExx09ox7bwma/5pi55AEM7Vc3hWr8kzbmvkoBTmFUzs=
-X-YMail-OSG: sIqnKJkVM1lK5Ux6ThBaJSkf935bXPPdTgudmC9xhRrYisG
- Kdm.9_rGSKAPr3nbj9LCbDgqdO2MSy1NrFNDBbnYq9PbHmP3HkUCtnJJw_fM
- ff.RtyYu4IkIGh95tAGOTlD_U08qYkg8TMdFfZbikOM0z5vqfbOlz7JBzdN9
- auk0A2Ymf.QnyR1xLCVgrfhzyZd5L3DIWmTFviUY7un1nwRtzRNhTcY7l.Ox
- _LTHOGW.Rbx2e.v.eFhseLGYmzFIw3IP4V9fRB3aw_zXxHVXXBieqO4ZwGFb
- A0CoZEWUGBxaeb4PjEJesd9dSXmjO1qZnVwKf4V9i2slQaXSloaL4Zt5491A
- Tu_tnQNYxwoPqS4tMp0wrZYSJIqONTkoehmn3jcafuIEvTxSdHbY7DadgDPX
- KwjNE1xao7mNBwtvdX.Y66dhVww0WF6azmtEKDp2dpOUoCtXnBTm.uUmRS0d
- 5K9TC1bxjGsupfQL2Br3j7jQcS26CEiZeqPu_UNL6NUYunTa4UmRxykBwFu5
- Ia7Hojo9m9InX.NNs9k3_C7HPNQC03EzK1cEeTfxOQyjxx8bs9VRJv1C1HQg
- M9adhwCQ.R7p.X3raZS9ekSBs1vPeaayQOa3wSl_mEirWTmHaKs9.uNwbeLi
- 02uTIO9E-
-Received: from [86.30.137.134] by web172306.mail.ir2.yahoo.com via HTTP; Mon, 27 Oct 2014 23:26:28 GMT
-X-Rocket-MIMEInfo: 002.001,LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpPbiBNb24sIE9jdCAyNywgMjAxNCAxNjo1NiBHTVQgRXJpYyBXb25nIHdyb3RlOg0KDQo.RXJpYyBXb25nIDxub3JtYWxwZXJzb25AeWhidC5uZXQ.IHdyb3RlOg0KPj4gV2hpY2ggU1ZOIHZlcnNpb24gYXJlIHlvdSB1c2luZz_CoCBJJ20gY2xvbmluZyAoY3VycmVudGx5IG9uIHIzNzN4eCkNCj4.IGh0dHBzOi8vc3ZuLnItcHJvamVjdC5vcmcvUiB1c2luZyAtLXN0ZGxheW91dCBhbmQNCj4.IHVuYWJsZSB0byBzZWUgbWVtb3J5IGdyb3d0aCBvZiB0aGUBMAEBAQE-
-X-RocketYMMF: hintak_leung
-X-Mailer: YahooMailClassic/810 YahooMailWebService/0.8.203.733
+	id S1752510AbaJ0XcY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Oct 2014 19:32:24 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:37593 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473AbaJ0XcY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Oct 2014 19:32:24 -0400
+Received: by mail-ig0-f169.google.com with SMTP id a13so1493261igq.4
+        for <git@vger.kernel.org>; Mon, 27 Oct 2014 16:32:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=bmSHS8xEModVEC3Tk8Mtv2rD9VFWzUCgCDcEoeaocmk=;
+        b=kjDWYRCRjkfkzq1mYPJVc2PMeukOHQP+OkLOCmROxDkkdzCma6i15yUHVYf+WKqeGF
+         Ut5E0dwEw1TEYrnW2h9II7+QUA9qIBQ3IyM+YwwT2NdKpEIxPNIGaH7am2FgvyU5VpPB
+         k/Zk8tqbz9eXaNiIglVOT2OgzsJ4sk14uu52plavaqbZTyFTJuyFY44sJ4WWy2KEmez1
+         bqdFDD/RRJlUmzjqZXFhyDKGAeqH2LAKuhGbk+GfxFSIdQw7YFjIVO3deOWPCvHo74Vu
+         a1ILhE98YbogCfM+6xCsfR5RgxVDiMu8Ib8XGF8OTAyFd1wzhiDd2qinuCr+Cq533NFU
+         chmA==
+X-Received: by 10.42.250.17 with SMTP id mm17mr533773icb.18.1414452743315;
+ Mon, 27 Oct 2014 16:32:23 -0700 (PDT)
+Received: by 10.50.163.66 with HTTP; Mon, 27 Oct 2014 16:32:23 -0700 (PDT)
+In-Reply-To: <xmqqy4s1s44h.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-------------------------------
-On Mon, Oct 27, 2014 16:56 GMT Eric Wong wrote:
+I like Ren=C3=A9's approach, too. It's more flexible, supports the old
+behaviour and it scratches my itch as well.
+Don't mind if you dropped my patch and used Ren=C3=A9's instead.
 
->Eric Wong <normalperson@yhbt.net> wrote:
->> Which SVN version are you using?=A0 I'm cloning (currently on r373xx=
-)
->> https://svn.r-project.org/R using --stdlayout and
->> unable to see memory growth of the git-svn Perl process beyond 40M
->> (on a 32-bit system).
+>> Only *very* lightly tested, and a test for t/is missing anyway.  Jus=
+t
+>> wanted to quickly show what I meant.  You'd set color.grep.matchCont=
+ext=3D""
+>> to turn off highlighting in context lines.  What do you think?
 >
->git-svn hit 45M and took 11:44 to finish.=A0=A0=A0My ping times to
->svn.r-project.org is around 150ms (I'm running this from a server in
->Fremont, California).=A0 I'll keep the repo around and periodically fe=
-tch
->to see how it runs.
-
-I'll apply the 10 patches against 2.1.0 and see then. As I wrote
-in my last reply, my 3rd clone took about 8 hours to finish,
-and the max resident size is about 700MB (according to GNU "time").
-
-AFAIK the hosting server is in northern Europe (Copahagen?), I think,
-so it is supposed to be faster for me fetching from UK.
+> I didn't realize that people wanted to see pieces on non-matching
+> lines highlighted.  It makes certain sense, e.g. it would allow you
+> to spot near-misses, but that is only true for lines that neighbour
+> real hits, so...
+>
+> I like this approach better in that it makes those who want a
+> different behaviour to do the work without breaking the expectation
+> of those who are used to the established behaviour.
+>
+> Zoltan?
