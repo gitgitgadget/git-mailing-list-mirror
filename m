@@ -1,103 +1,73 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: difftool--helper: exit when reading a prompt answer fails
-Date: Mon, 27 Oct 2014 13:54:15 +0100
-Message-ID: <544E4077.8070208@drmicha.warpmail.net>
-References: <544CAC30.7000607@kdbg.org> <20141027004148.GB81127@gmail.com> <20141027011051.GA87518@gmail.com>
+From: Ben Harper <ben.harper@rackspace.com>
+Subject: Re: life cycle documentation
+Date: Mon, 27 Oct 2014 09:52:31 -0500
+Message-ID: <544E5C2F.3090800@rackspace.com>
+References: <54497DF9.1050501@rackspace.com> <20141024215607.GH312818@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="windows-1252"; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Oct 27 13:54:26 2014
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 27 15:45:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XijoW-0002Bl-Bp
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Oct 2014 13:54:25 +0100
+	id 1XilYS-0002Bi-I0
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Oct 2014 15:45:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751812AbaJ0MyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2014 08:54:18 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33478 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751149AbaJ0MyR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Oct 2014 08:54:17 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9F5962095D
-	for <git@vger.kernel.org>; Mon, 27 Oct 2014 08:54:16 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 27 Oct 2014 08:54:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=ZetHHOj0xUpIVXqIL1IBQg
-	YhSJI=; b=cNcXXIenELXWlkVNo8KpLXDtcDfA4lt+sqxltOBjf6QflpjpPhvhDr
-	vHgUOTe+f7gK8kuvlBR1XO4zkOmddbF6uoo9neR/nPEN86lNt0GXsHfXcV538dGz
-	GFLRj6jZZb3DNTLmmF6q5ugqEhaSzMVG2i+KJs92n5ZflSwKjCQEA=
-X-Sasl-enc: 0R+D10AuFHCwyXycIT1PyvcRqhDJQE/Kq7vmJjlGTdgS 1414414456
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id DA337680076;
-	Mon, 27 Oct 2014 08:54:15 -0400 (EDT)
+	id S1753339AbaJ0Opx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2014 10:45:53 -0400
+Received: from mx2.ord1.rackspace.com ([173.203.4.136]:17038 "EHLO
+	mx2.ord1.rackspace.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752920AbaJ0Opw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2014 10:45:52 -0400
+X-SBRS: None
+X-SenderGroup: RELAYLIST-US
+X-MailFlowPolicy: $RELAYED-US
+X-IronPort-AV: E=McAfee;i="5600,1067,7471"; a="400046321"
+X-IronPort-AV: E=Sophos;i="5.01,489,1400043600"; 
+   d="scan'208";a="400046321"
+Received: from ord1exh01.rackspace.corp ([10.12.120.25])
+  by mx2.ord1.rackspace.com with ESMTP/TLS/AES128-SHA; 27 Oct 2014 09:45:51 -0500
+Received: from x.box (10.1.69.34) by smtpout.rackspace.com (10.12.120.25) with
+ Microsoft SMTP Server (TLS) id 14.3.123.3; Mon, 27 Oct 2014 09:45:51 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <20141027011051.GA87518@gmail.com>
+In-Reply-To: <20141024215607.GH312818@vauxhall.crustytoothpaste.net>
+X-Originating-IP: [10.1.69.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Aguilar schrieb am 27.10.2014 um 02:10:
-> On Sun, Oct 26, 2014 at 05:41:49PM -0700, David Aguilar wrote:
->> On Sun, Oct 26, 2014 at 09:09:20AM +0100, Johannes Sixt wrote:
->>> An attempt to quit difftool by hitting Ctrl-D (EOF) at its prompt does
->>> not quit it, but is treated as if 'yes' was answered to the prompt and
->>> all following prompts, which is contrary to the user's intent. Fix the
->>> error check.
->>>
->>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->>> ---
->>>  Found while reviewing your latest patch.
+On 10/24/2014 04:56 PM, brian m. carlson wrote:
+> On Thu, Oct 23, 2014 at 05:15:21PM -0500, Ben Harper wrote:
+>> Greetings,
 >>
->>
->> Thanks for the careful review.
->> I have one small question about the test below.
-> 
-> [snip]
-> 
->>> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
->>> index dc30a51..9cf5dc9 100755
->>> --- a/t/t7800-difftool.sh
->>> +++ b/t/t7800-difftool.sh
->>> @@ -301,6 +301,14 @@ test_expect_success PERL 'say no to the second file' '
->>>  	! grep br2 output
->>>  '
->>>  
->>> +test_expect_success PERL 'ending prompt input with EOF' '
->>> +	git difftool -x cat branch </dev/null >output &&
->>> +	! grep master output &&
->>> +	! grep branch output &&
->>> +	! grep m2 output &&
->>> +	! grep br2 output
->>> +'
->>
->> Should we use "test_must_fail grep ..." instead of "! grep ..." here?
-> 
-> 
-> Nevermind, this is good as-is.
-> Using "! grep" is consistent with the rest of the tests in t7800.
-> 
-> What I'll do is add a follow-up patch in my upcoming reroll
-> that swaps all the "! grep" lines to "test_must_fail grep"
-> in one step.
+>> I am unable to find any documentation regarding the life cycle regarding the
+>> various versions of git.  Is only the current version supported?  What about
+>> older minor/major versions?  At what point does a version go EOL? Currently,
+>> is only 2.1.2 supported?  I would entertain the thought on creating a
+>> RELEASES document if the information is provided.
+> The development process is outlined at [0].  Usually there's just one
+> supported release (at the moment, 2.1.2), although I have occasionally
+> seen releases out of order (from different branches).
+>
+> Having said that, Git developers try very hard not to break things, so
+> many people are fine using an older version, such as the ones their
+> distros provide.  It is considered courteous to try the latest version
+> before reporting a bug, however.
+>
+> [0] https://github.com/git/git/blob/master/Documentation/howto/maintain-git.txt
+Hey Brian,
 
-Don't do that ;)
+Thanks for the clarification.  Someone in IRC mentioned the 
+maintain-git.txt file.  I skimmed it and searched for some keywords, but 
+was unable to find the information I needed.
 
-test_must_fail is meant for testing (git) commands such that a "failure
-return code" is marked as "success", whereas a failure to run the
-command is still capturd and marked as a failed test.
+Do you feel a RELEASES document is needed or is the maintain-git.txt 
+file sufficient?
 
-For non-git commands like grep sed etc. which we do not perform tests
-*on* (but only *with*), the simple negator "!" is fine and preferable.
-
-Michael who has sinned in the past, but repented
+Ben Harper
+OS Deployment Services, RPMDEV
+Rackspace Hosting & IUS Community
