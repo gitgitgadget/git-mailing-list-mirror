@@ -1,73 +1,72 @@
-From: Ben Harper <ben.harper@rackspace.com>
-Subject: Re: life cycle documentation
-Date: Mon, 27 Oct 2014 09:52:31 -0500
-Message-ID: <544E5C2F.3090800@rackspace.com>
-References: <54497DF9.1050501@rackspace.com> <20141024215607.GH312818@vauxhall.crustytoothpaste.net>
+From: "Voynar, Stephen S CIV NSWCDD, Z24" <stephen.voynar@navy.mil>
+Subject: git documentation webpage is unavailable
+Date: Mon, 27 Oct 2014 14:56:51 +0000
+Message-ID: <0B98A2C77BEB3C458CAF2DE6D4D181FC0366EF05@NAEANRFKXM03V.nadsusea.nads.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 27 15:45:58 2014
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 27 16:08:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XilYS-0002Bi-I0
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Oct 2014 15:45:56 +0100
+	id 1Xiluc-0005yh-0Y
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Oct 2014 16:08:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbaJ0Opx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Oct 2014 10:45:53 -0400
-Received: from mx2.ord1.rackspace.com ([173.203.4.136]:17038 "EHLO
-	mx2.ord1.rackspace.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752920AbaJ0Opw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2014 10:45:52 -0400
-X-SBRS: None
-X-SenderGroup: RELAYLIST-US
-X-MailFlowPolicy: $RELAYED-US
-X-IronPort-AV: E=McAfee;i="5600,1067,7471"; a="400046321"
-X-IronPort-AV: E=Sophos;i="5.01,489,1400043600"; 
-   d="scan'208";a="400046321"
-Received: from ord1exh01.rackspace.corp ([10.12.120.25])
-  by mx2.ord1.rackspace.com with ESMTP/TLS/AES128-SHA; 27 Oct 2014 09:45:51 -0500
-Received: from x.box (10.1.69.34) by smtpout.rackspace.com (10.12.120.25) with
- Microsoft SMTP Server (TLS) id 14.3.123.3; Mon, 27 Oct 2014 09:45:51 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <20141024215607.GH312818@vauxhall.crustytoothpaste.net>
-X-Originating-IP: [10.1.69.34]
+	id S1752533AbaJ0PIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Oct 2014 11:08:45 -0400
+Received: from ucol19pa11.eemsg.mail.mil ([214.24.24.84]:49896 "EHLO
+	ucol19pa11.eemsg.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751929AbaJ0PIo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Oct 2014 11:08:44 -0400
+X-Greylist: delayed 690 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Oct 2014 11:08:44 EDT
+Received: from naeanrfkax25.nmci.navy.mil (HELO NAEANRFKAX25o.NADSUSEA.NADS.NAVY.MIL) ([205.85.33.189])
+  by ucol19pa11.eemsg.mail.mil with ESMTP; 27 Oct 2014 14:56:59 +0000
+X-AuditID: cd5521bc-f79a46d000001641-e8-544e5d340f37
+Received: from NAEANRFKXH50V.nadsusea.nads.navy.mil (Unknown_Domain [205.85.33.242])
+	by NAEANRFKAX25o.NADSUSEA.NADS.NAVY.MIL (Symantec Messaging Gateway) with SMTP id BF.E7.05697.43D5E445; Mon, 27 Oct 2014 10:56:52 -0400 (EDT)
+Received: from NAEANRFKXM03V.nadsusea.nads.navy.mil ([10.26.67.170]) by
+ NAEANRFKXH50V.nadsusea.nads.navy.mil ([10.26.67.159]) with mapi id
+ 14.03.0174.001; Mon, 27 Oct 2014 10:56:52 -0400
+Thread-Topic: git documentation webpage is unavailable
+Thread-Index: Ac/x9j2QhV38wM7QRvahPjxC0V/6fQ==
+Content-Class: urn:content-classes:message
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mimectl: Produced By Microsoft Exchange V14.3.123.2
+x-originating-ip: [205.85.33.164]
+Content-ID: <A9406985D7D5524EB81874BA88CAA094@nmci-isf.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEIsWRmVeSWpSXmKPExsVyNlTxk65JrF+Iwcf1ohZdV7qZHBg9Pm+S
+	C2CM4rJJSc3JLEst0rdL4MpoP/aFteAIa8WTTffZGxgfsXQxcnJICJhIHPi/mQnCFpO4cG89
+	WxcjF4eQwBNGicnfW5ggnH2MEgvufACrYhNwllj55CBQNweHiIC+RN8FUZCwsIChxPcFR8FK
+	RATMJKbOmQxl60kcXfOFEcRmFtCS2DFhH5jNIqAq8WzhdLAaXoFoiX3zf4DZjEBHfD+1hgmi
+	Xlzi1pP5UMcJSCzZc54ZwhaVePn4HyvICRICphLbzkRAhBUlNneuZYdo1ZO4MXUKG4RtLXF8
+	Sz8rhK0tsWzha2aItYISJ2c+YZnAKDYLyXWzkGyehWTULCSjZiEZNQvJqAWMbKsYlf0cXR39
+	gty8HSOMTPX8HF2CQ4NdHcEMIBEWqefr6bOJERJze3YwNq+wOsQowMGoxMObOMU3RIg1say4
+	MvcQowQHs5II76kAvxAh3pTEyqrUovz4otKc1OJDjNIcLErivNlWDiFCAumJJanZqakFqUUw
+	WSYOTqkGxpDvfT/3nn7fd+bd0S/z+xWfMEf053BJnK1MZ/7K/YvfsVgiJnpz8vsfQVfrDhlX
+	nBdfVFz0Rau3Vq1RrfXHdNkDqnLPD3GzcLHHiQbfY8zLObpfN23l+18Z/3+5afxSyXSX+MKZ
+	5bDYq8t1zcK2EsPOPX+Ws977fdtorayF11U3y42/9S0ClFiKMxINtZiLihMBHqic3LUCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/24/2014 04:56 PM, brian m. carlson wrote:
-> On Thu, Oct 23, 2014 at 05:15:21PM -0500, Ben Harper wrote:
->> Greetings,
->>
->> I am unable to find any documentation regarding the life cycle regarding the
->> various versions of git.  Is only the current version supported?  What about
->> older minor/major versions?  At what point does a version go EOL? Currently,
->> is only 2.1.2 supported?  I would entertain the thought on creating a
->> RELEASES document if the information is provided.
-> The development process is outlined at [0].  Usually there's just one
-> supported release (at the moment, 2.1.2), although I have occasionally
-> seen releases out of order (from different branches).
->
-> Having said that, Git developers try very hard not to break things, so
-> many people are fine using an older version, such as the ones their
-> distros provide.  It is considered courteous to try the latest version
-> before reporting a bug, however.
->
-> [0] https://github.com/git/git/blob/master/Documentation/howto/maintain-git.txt
-Hey Brian,
+    Several weblinks located on your git website (http://git-scm.com/) have broken links to the Documentation page (i.e. the links to http://git-scm.com/documentation and http://git-scm.com/doc are yielding an Internal Server Error).
 
-Thanks for the clarification.  Someone in IRC mentioned the 
-maintain-git.txt file.  I skimmed it and searched for some keywords, but 
-was unable to find the information I needed.
 
-Do you feel a RELEASES document is needed or is the maintain-git.txt 
-file sufficient?
 
-Ben Harper
-OS Deployment Services, RPMDEV
-Rackspace Hosting & IUS Community
+
+
+Stephen Voynar
+Computer Scientist
+Naval Surface Warfare Center Dahlgren
+CBR Analysis, Testing, and Systems Engineering Branch (Z24)
+ATTN Kaitlan Phillips
+18372 Frontage Road, Suite 318, Dahlgren, VA 22448-5160
+(540) 653-8199, DSN 249-8199
+stephen.voynar@navy.mil<https://webmail.east.nmci.navy.mil/OWA/redir.aspx?C=0zUaFD9kAkKckrWd75k-VzgnsfCUqtAIa5Nzj0Xiev1Tup7pUqMKxpVQOTTPARRlu49oS7XFRqY.&URL=mailto%3astephen.voynar%40navy.mil>
