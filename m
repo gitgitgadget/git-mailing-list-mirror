@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 11/19] untracked cache: invalidate at index addition or removal
-Date: Mon, 27 Oct 2014 19:10:38 +0700
-Message-ID: <1414411846-4450-12-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 12/19] read-cache.c: split racy stat test to a separate function
+Date: Mon, 27 Oct 2014 19:10:39 +0700
+Message-ID: <1414411846-4450-13-git-send-email-pclouds@gmail.com>
 References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,42 +10,42 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 27 13:11:49 2014
+X-From: git-owner@vger.kernel.org Mon Oct 27 13:11:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xij9H-00030p-9M
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Oct 2014 13:11:47 +0100
+	id 1Xij9L-000341-RQ
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Oct 2014 13:11:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbaJ0MLm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Oct 2014 08:11:42 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:52780 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935AbaJ0MLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Oct 2014 08:11:41 -0400
-Received: by mail-pd0-f174.google.com with SMTP id p10so5527323pdj.19
-        for <git@vger.kernel.org>; Mon, 27 Oct 2014 05:11:41 -0700 (PDT)
+	id S1752557AbaJ0MLr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Oct 2014 08:11:47 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:37096 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752544AbaJ0MLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Oct 2014 08:11:46 -0400
+Received: by mail-pa0-f48.google.com with SMTP id ey11so5324489pad.7
+        for <git@vger.kernel.org>; Mon, 27 Oct 2014 05:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=cUa6n24dd/zmVqJH0IEuIoP3eoYtW32CG5zntugTw+w=;
-        b=jF/ngFk139LlGoRCmyjEgPixtuhHrFRlidL1xmxEe/6ysUdP7jw5cGfj0viFLciG4b
-         NSydWfKdXcZEuEsaJ2blolZ6b5WqJw9+DXZ5+69diRWZMiAOfYW1UMMR1URw9y8olyA0
-         2sl86VcubHsgNbmVRBfN5lg56IJFMF6VX4KQ2d6WuOwOGPjiwlRkKVZBFlVBozWLyDmz
-         xpQNA4x1XfXu0ef3yUhD5IvWA/7OYZKws7Nv4+fsoKfqp2NQVfsIE2WO6jd3Y8J+BX2l
-         p0EHMRGXwGruQwSwc77A0vyps0aGl2Pn4CFJ/DbwJn/d6DYJXWH7Z/jYaX5AFj7oX+RY
-         szhA==
-X-Received: by 10.70.130.174 with SMTP id of14mr23983862pdb.90.1414411901494;
-        Mon, 27 Oct 2014 05:11:41 -0700 (PDT)
+        bh=zPhTlbz5e2Yjk8NmhQ0PQbIEFJ2vdipnlgT1jTMbRYc=;
+        b=RU45mboLajHvv7WvRVDNIveqg2dl4ql1mBsakncxlqNgTB+v1oBT6ZxTcipk9/gFrE
+         4LeshR51RP/G6R36vvBXG9BRxYiSlDqLZ7stVT4NAMnPAkQ14zh2yQl5WCgLeEv9N38p
+         DKQP6V9ukfuwnq+R8CD811BAC9sITyDv9tE1QXtvVcii7i4MJUJ8sDbHrGiXdNTEmAQG
+         7tEns1XBHMhlU5ze5ljbhkmcs96sbNxhyAv+oiokBiJEFupaP8CpuoUNWOxMEUlO8mvF
+         cV19mojyaeryjjzv7U9P2zI+a5sSmPPc/yYTiBYNoghYLyL2QhGbGVVt6rFXzz31j88g
+         fWvg==
+X-Received: by 10.70.92.68 with SMTP id ck4mr23958473pdb.28.1414411906482;
+        Mon, 27 Oct 2014 05:11:46 -0700 (PDT)
 Received: from lanh ([115.73.192.230])
-        by mx.google.com with ESMTPSA id mp5sm10764280pbc.33.2014.10.27.05.11.39
+        by mx.google.com with ESMTPSA id u6sm10782526pdi.61.2014.10.27.05.11.43
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Oct 2014 05:11:40 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 27 Oct 2014 19:11:44 +0700
+        Mon, 27 Oct 2014 05:11:45 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 27 Oct 2014 19:11:49 +0700
 X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
 In-Reply-To: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
@@ -53,146 +53,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ideally we should implement untracked_cache_remove_from_index() and
-untracked_cache_add_to_index() so that they update untracked cache
-right away instead of invalidating it and wait for read_directory()
-next time to deal with it. But that may need some more work in
-unpack-trees.c. So stay simple as the first step.
-
-The new call in add_index_entry_with_check() may look strange because
-new calls usually stay close to cache_tree_invalidate_path(). We do it
-a bit later than c_t_i_p() in this function because if it's about
-replacing the entry with the same name, we don't care (but cache-tree
-does).
-
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- dir.c          | 31 +++++++++++++++++++++++++++++++
- dir.h          |  4 ++++
- read-cache.c   |  4 ++++
- unpack-trees.c |  7 +++++--
- 4 files changed, 44 insertions(+), 2 deletions(-)
+ read-cache.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index c97b0c3..ddc549c 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2369,3 +2369,34 @@ struct untracked_cache *read_untracked_extension=
-(const void *data, unsigned long
- 	free_untracked_cache(uc);
- 	return NULL;
- }
-+
-+void untracked_cache_invalidate_path(struct index_state *istate,
-+				     const char *path)
-+{
-+	const char *sep;
-+	struct untracked_cache_dir *d;
-+	if (!istate->untracked || !istate->untracked->root)
-+		return;
-+	sep =3D strrchr(path, '/');
-+	if (sep)
-+		d =3D lookup_untracked(istate->untracked,
-+				     istate->untracked->root,
-+				     path, sep - path);
-+	else
-+		d =3D istate->untracked->root;
-+	istate->untracked->dir_invalidated++;
-+	d->valid =3D 0;
-+	d->untracked_nr =3D 0;
-+}
-+
-+void untracked_cache_remove_from_index(struct index_state *istate,
-+				       const char *path)
-+{
-+	untracked_cache_invalidate_path(istate, path);
-+}
-+
-+void untracked_cache_add_to_index(struct index_state *istate,
-+				  const char *path)
-+{
-+	untracked_cache_invalidate_path(istate, path);
-+}
-diff --git a/dir.h b/dir.h
-index 014f3ed..8c29324 100644
---- a/dir.h
-+++ b/dir.h
-@@ -298,6 +298,10 @@ static inline int dir_path_match(const struct dir_=
-entry *ent,
- 			      has_trailing_dir);
- }
-=20
-+void untracked_cache_invalidate_path(struct index_state *, const char =
-*);
-+void untracked_cache_remove_from_index(struct index_state *, const cha=
-r *);
-+void untracked_cache_add_to_index(struct index_state *, const char *);
-+
- void free_untracked_cache(struct untracked_cache *);
- struct untracked_cache *read_untracked_extension(const void *data, uns=
-igned long sz);
- void write_untracked_extension(struct strbuf *out, struct untracked_ca=
-che *untracked);
 diff --git a/read-cache.c b/read-cache.c
-index 60baeaf..feb10b0 100644
+index feb10b0..a14646b 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -79,6 +79,7 @@ void rename_index_entry_at(struct index_state *istate=
-, int nr, const char *new_n
- 	memcpy(new->name, new_name, namelen + 1);
-=20
- 	cache_tree_invalidate_path(istate, old->name);
-+	untracked_cache_remove_from_index(istate, old->name);
- 	remove_index_entry_at(istate, nr);
- 	add_index_entry(istate, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPL=
-ACE);
+@@ -271,20 +271,26 @@ static int ce_match_stat_basic(const struct cache=
+_entry *ce, struct stat *st)
+ 	return changed;
  }
-@@ -538,6 +539,7 @@ int remove_file_from_index(struct index_state *ista=
-te, const char *path)
- 	if (pos < 0)
- 		pos =3D -pos-1;
- 	cache_tree_invalidate_path(istate, path);
-+	untracked_cache_remove_from_index(istate, path);
- 	while (pos < istate->cache_nr && !strcmp(istate->cache[pos]->name, pa=
-th))
- 		remove_index_entry_at(istate, pos);
- 	return 0;
-@@ -969,6 +971,8 @@ static int add_index_entry_with_check(struct index_=
-state *istate, struct cache_e
- 	}
- 	pos =3D -pos-1;
 =20
-+	untracked_cache_add_to_index(istate, ce->name);
-+
- 	/*
- 	 * Inserting a merged entry ("stage 0") into the index
- 	 * will always replace all non-merged entries..
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 629c658..e5ddb0c 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -9,6 +9,7 @@
- #include "refs.h"
- #include "attr.h"
- #include "split-index.h"
-+#include "dir.h"
-=20
- /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -1255,8 +1256,10 @@ static int verify_uptodate_sparse(const struct c=
-ache_entry *ce,
- static void invalidate_ce_path(const struct cache_entry *ce,
- 			       struct unpack_trees_options *o)
+-static int is_racy_timestamp(const struct index_state *istate,
+-			     const struct cache_entry *ce)
++static int is_racy_stat(const struct index_state *istate,
++			const struct stat_data *sd)
  {
--	if (ce)
--		cache_tree_invalidate_path(o->src_index, ce->name);
-+	if (!ce)
-+		return;
-+	cache_tree_invalidate_path(o->src_index, ce->name);
-+	untracked_cache_invalidate_path(o->src_index, ce->name);
+-	return (!S_ISGITLINK(ce->ce_mode) &&
+-		istate->timestamp.sec &&
++	return (istate->timestamp.sec &&
+ #ifdef USE_NSEC
+ 		 /* nanosecond timestamped files can also be racy! */
+-		(istate->timestamp.sec < ce->ce_stat_data.sd_mtime.sec ||
+-		 (istate->timestamp.sec =3D=3D ce->ce_stat_data.sd_mtime.sec &&
+-		  istate->timestamp.nsec <=3D ce->ce_stat_data.sd_mtime.nsec))
++		(istate->timestamp.sec < sd->sd_mtime.sec ||
++		 (istate->timestamp.sec =3D=3D sd->sd_mtime.sec &&
++		  istate->timestamp.nsec <=3D sd->sd_mtime.nsec))
+ #else
+-		istate->timestamp.sec <=3D ce->ce_stat_data.sd_mtime.sec
++		istate->timestamp.sec <=3D sd->sd_mtime.sec
+ #endif
+-		 );
++		);
++}
++
++static int is_racy_timestamp(const struct index_state *istate,
++			     const struct cache_entry *ce)
++{
++	return (!S_ISGITLINK(ce->ce_mode) &&
++		is_racy_stat(istate, &ce->ce_stat_data));
  }
 =20
- /*
+ int ie_match_stat(const struct index_state *istate,
 --=20
 2.1.0.rc0.78.gc0d8480
