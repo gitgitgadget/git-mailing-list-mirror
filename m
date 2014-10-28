@@ -1,125 +1,68 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v3 2/2] difftool: add support for --trust-exit-code
-Date: Tue, 28 Oct 2014 02:34:09 -0700
-Message-ID: <20141028093407.GA20944@gmail.com>
-References: <544CAC30.7000607@kdbg.org>
- <1414372542-3485-1-git-send-email-davvid@gmail.com>
- <1414372542-3485-2-git-send-email-davvid@gmail.com>
- <xmqq38a9tkqt.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH][RFC] grep: add color.grep.matchcontext and color.grep.matchselected
+Date: Tue, 28 Oct 2014 09:50:23 -0700
+Message-ID: <xmqqzjcg3zqo.fsf@gitster.dls.corp.google.com>
+References: <1413870963-66431-1-git-send-email-zoltan.klinger@gmail.com>
+	<544D3A3C.4080906@web.de> <544E8D89.3030201@web.de>
+	<xmqqy4s1s44h.fsf@gitster.dls.corp.google.com>
+	<CAKJhZwRShbV14=BihxiTzayR4kg3GaAPN_NFXwFZ-4kAD-QHTA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Adri Farr <14farresa@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 28 10:34:01 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Zoltan Klinger <zoltan.klinger@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 28 18:16:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xj3A6-0001p7-1i
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 10:33:58 +0100
+	id 1XjANh-0003y4-8a
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 18:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216AbaJ1Jdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2014 05:33:53 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:39261 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762AbaJ1Jdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 05:33:50 -0400
-Received: by mail-pa0-f42.google.com with SMTP id bj1so332539pad.1
-        for <git@vger.kernel.org>; Tue, 28 Oct 2014 02:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+FC9VXdw2xjjqJ/A0/WpBec8zdVEFloIr2GjNbqXdOM=;
-        b=LSOxWOXMc+FRsCZyLpCfTkEfZm9lWTm45fKkqMcsg3/vKHuxfk362xJyBZRrEUkQIC
-         LPuEn3X4DJZZZBe0hmff9aibeaFYO7TtMN7MkVZPnNtmxAfQeJkK9pCLMDdbAOsjXOGx
-         fSqFQnB6gsBrVxQwvYbrgaVO9J7nXyIcpTMHu9W7HmbHH4d/hiLupv/bgnz8vpSHVVNz
-         Lo67fIrIaQQq0a3KHMj6v1FkP9FPo5JUn89/JjV7qiZrIV0+/7Wsl+g1R7nYdpVCmdRv
-         X9fHSZoIDsJbwa5HHMbaT640knPUuuaiZRjKGIdx52Ow66Kdopx1Hw6zSpErNBeXCAlk
-         zZJw==
-X-Received: by 10.66.138.47 with SMTP id qn15mr2162470pab.82.1414488830019;
-        Tue, 28 Oct 2014 02:33:50 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id dl1sm1144237pbc.16.2014.10.28.02.33.48
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 28 Oct 2014 02:33:49 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqq38a9tkqt.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753919AbaJ1RQX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2014 13:16:23 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50016 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752271AbaJ1RQV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Oct 2014 13:16:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 25E6B18A01;
+	Tue, 28 Oct 2014 13:16:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=o4Tcyl7tbkb7
+	/CRatxDzAgzcu3E=; b=l4hrKXC1NH6vTX9W1rzQwMVN1Pyh9sQfm7unhQF40iqZ
+	F+toJduP/YRo6urb169fn2mu/TYYdzkoSfXx9DlVfTi/0mTWlZziYZkn8HM+BvRh
+	2kVGKZxAEb/QCIPC9Wi/BHElYodl+PdMN8MVKXHEq/XhpWDzMV4URZBC48Lo5lY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=f0+G1L
+	v+2TLvQ5kES3WJTfG+BD4jhkzmbL0dJYXvWeFLCEOucEpkplNEZjmeYvIgat6+yJ
+	AqGQ9yZ2KfOdiwAVpOxHvgtAp0mYWJ2BLHdEIVk82k00TLAFOG+aBLqo0DNhh6fD
+	Y7+bYFP16xvQYkBIsAbhsxbxuIYg7/EUCj4cQ=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B5CA18A00;
+	Tue, 28 Oct 2014 13:16:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC232182DF;
+	Tue, 28 Oct 2014 12:50:25 -0400 (EDT)
+In-Reply-To: <CAKJhZwRShbV14=BihxiTzayR4kg3GaAPN_NFXwFZ-4kAD-QHTA@mail.gmail.com>
+	(Zoltan Klinger's message of "Tue, 28 Oct 2014 10:32:23 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 83E108FE-5EC2-11E4-B87D-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 27, 2014 at 11:45:14AM -0700, Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
-> 
-> > +write_script .git/fail-right-file <<\EOF
-> > +echo "$2"
-> > +exit 1
-> > +EOF
-> 
-> This should be inside the next one, no?
-> 
-> > +test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
-> > +	>for-diff &&
-> > +	git add for-diff &&
-> > +	echo file>expect &&
-> > +	test_must_fail git difftool -y --trust-exit-code \
-> > +		--extcmd .git/fail-right-file branch >actual &&
-> > +	test_cmp expect actual &&
-> > +	git reset -- for-diff &&
-> > +	rm -f for-diff .git/fail-right-file
-> > +'
-> 
-> In other words, this squashed in.
+Zoltan Klinger <zoltan.klinger@gmail.com> writes:
 
+> I like Ren=C3=A9's approach, too. It's more flexible, supports the ol=
+d
+> behaviour and it scratches my itch as well.
 
-Yes, please.  And drop patch 1/2, of course.
-Thanks for the clarification.
-
-
-> 
->  t/t7800-difftool.sh | 17 ++++++++---------
->  1 file changed, 8 insertions(+), 9 deletions(-)
-> 
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index 4b2f611..69bde7a 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -104,20 +104,19 @@ test_expect_success PERL 'difftool ignores exit code with --no-trust-exit-code'
->  	git difftool -y --no-trust-exit-code -t error branch
->  '
->  
-> -write_script .git/fail-right-file <<\EOF
-> -echo "$2"
-> -exit 1
-> -EOF
-> -
->  test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
-> +	test_when_finished "rm -f for-diff .git/fail-right-file" &&
-> +	test_when_finished "git reset -- for-diff" &&
-> +	write_script .git/fail-right-file <<-\EOF &&
-> +	echo "$2"
-> +	exit 1
-> +	EOF
->  	>for-diff &&
->  	git add for-diff &&
-> -	echo file>expect &&
-> +	echo file >expect &&
->  	test_must_fail git difftool -y --trust-exit-code \
->  		--extcmd .git/fail-right-file branch >actual &&
-> -	test_cmp expect actual &&
-> -	git reset -- for-diff &&
-> -	rm -f for-diff .git/fail-right-file
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success PERL 'difftool honors --gui' '
-
--- 
-David
+OK, then let's go with that one.
