@@ -1,164 +1,94 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH][RFC] grep: add color.grep.matchcontext and color.grep.matchselected
-Date: Tue, 28 Oct 2014 19:19:46 +0100
-Message-ID: <544FDE42.4050905@web.de>
-References: <1413870963-66431-1-git-send-email-zoltan.klinger@gmail.com>	<544D3A3C.4080906@web.de>	<544E8D89.3030201@web.de>	<xmqqy4s1s44h.fsf@gitster.dls.corp.google.com> <CAKJhZwRShbV14=BihxiTzayR4kg3GaAPN_NFXwFZ-4kAD-QHTA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/15] refs.c make ref_transaction_create a wrapper to ref_transaction_update
+Date: Tue, 28 Oct 2014 11:40:14 -0700
+Message-ID: <xmqqtx2ojawh.fsf@gitster.dls.corp.google.com>
+References: <1413919462-3458-1-git-send-email-sahlberg@google.com>
+	<1413919462-3458-2-git-send-email-sahlberg@google.com>
+	<xmqqy4s6smwz.fsf@gitster.dls.corp.google.com>
+	<CAL=YDWm0-6rNrmm2xG18qf9DrAoEOVdtE_o0onQUGu14AwTRxQ@mail.gmail.com>
+	<xmqqh9yusmd3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Zoltan Klinger <zoltan.klinger@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 28 19:20:05 2014
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue Oct 28 20:12:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjBND-0002ee-8O
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 19:20:03 +0100
+	id 1XjCBr-0003y1-6l
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 20:12:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752843AbaJ1ST6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2014 14:19:58 -0400
-Received: from mout.web.de ([212.227.17.12]:55548 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752626AbaJ1ST5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 14:19:57 -0400
-Received: from [192.168.178.27] ([79.253.156.206]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MFcE5-1Xv1Lx2vxN-00EftI; Tue, 28 Oct 2014 19:19:52
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <CAKJhZwRShbV14=BihxiTzayR4kg3GaAPN_NFXwFZ-4kAD-QHTA@mail.gmail.com>
-X-Provags-ID: V03:K0:Jkl/4Qdi8UO9WornnPJUeSTXcFv3xPLPNnhwZ2RYtJqmFDBYzdX
- Xho6mMbgZEAh+LAr2LJJ/7WRkFZlQ1ZKQn2+GmtJVqLFHFAIxDeZsJVM9sSh7+wFaoTVOzn
- iINiPsBTHBKLizeysskB0BTfwF48ZrFKewWedONbH9YCGXq1qs+L2P8j/TFGhDQrAqV4x4L
- pRwHku1Y6NF8Czoubl3Nw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1750925AbaJ1TMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 15:12:19 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60874 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750722AbaJ1TMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 15:12:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 86AE0189B1;
+	Tue, 28 Oct 2014 15:12:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Atp24UAxxUpnjx0B+XqLeeDebqA=; b=xT0vhb
+	ln59jBaxzGfjAo3nozciufP9cP6arlVpJm2DA3ZlEkp3UNXcybDe4NzQBDxUZmVN
+	fq9ZrX053xI99QCNW/3ueKNlKvcuW3jkiKDmGDVV5Crq9VGJuIzdzctOz6S6SfJW
+	Dssl1wJgEWP/YLOTnU3qlllzADbdD+BS7lrnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IiVm5ArsJpwR++aIeIk1vGXxPlu4aWkD
+	uCv7G3jtHKsKKW7AhBuWJddsYnFn2FVscz5sEgdm+F2XTpYYKuTz2OvHQNuQAHki
+	64pLkMEMu5CN7UskJv0OusPcZuR2VHMQ54fhy/c++MzgCPRRkvnunve/WhggzMpu
+	cwcTqJAFE8Y=
+Received: from pb-smtp1. (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D9C8189AF;
+	Tue, 28 Oct 2014 15:12:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 57684181B5;
+	Tue, 28 Oct 2014 14:40:16 -0400 (EDT)
+In-Reply-To: <xmqqh9yusmd3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 23 Oct 2014 10:54:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DC3D0638-5ED1-11E4-996F-855A93717476-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.10.2014 um 00:32 schrieb Zoltan Klinger:
-> I like Ren=C3=A9's approach, too. It's more flexible, supports the ol=
-d
-> behaviour and it scratches my itch as well.
-> Don't mind if you dropped my patch and used Ren=C3=A9's instead.
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Ronnie Sahlberg <sahlberg@google.com> writes:
+>
+>> On Thu, Oct 23, 2014 at 10:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Ronnie Sahlberg <sahlberg@google.com> writes:
+>>>
+>>>> Subject: Re: [PATCH 01/15] refs.c make ref_transaction_create a
+>>>> wrapper to ref_transaction_update
+>>>
+>>> Missing colon after "refs.c"
+>>> ...
+>>>> Change-Id: I687dd47cc4f4e06766e8313b4fd1b07cd4a56c1a
+>>>
+>>> Please don't leak local housekeeping details into the official
+>>> history.
+>>
+>> Ah, Ok.
+>>
+>> Do you want me to re-send the series with these lines deleted ?
+>
+> When the series is rerolled, I'd like to see these crufts gone.
+>
+> But please do not re-send the series without waiting for further
+> reviews and making necessary updates, if any.  Otherwise it will
+> only make extra busywork for you and me.
 
-Good. :)  And here's the t/ part of your patch, slightly changed to
-exercise the new config options.
+I've read thru 01/15 (i.e. this first series out of the three) and
+have no further comments so far.  There are a few questions I asked
+that haven't been answered, and hopefully others will help to move
+this series forward by lending eyeballs further.
 
----
- t/t7810-grep.sh | 93 +++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 file changed, 93 insertions(+)
-
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 40615de..5d3e161 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1202,4 +1202,97 @@ test_expect_success LIBPCRE 'grep -P "^ "' '
- 	test_cmp expected actual
- '
-=20
-+cat >expected <<EOF
-+space-line without leading space1
-+space: line <RED>with <RESET>leading space1
-+space: line <RED>with <RESET>leading <RED>space2<RESET>
-+space: line <RED>with <RESET>leading space3
-+space:line without leading <RED>space2<RESET>
-+EOF
-+
-+test_expect_success 'grep --color -e A -e B with context' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.match		red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=3Dalways -C2 -e "with " -e space2  space |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+space-line without leading space1
-+space- line <GREEN>with <RESET>leading space1
-+space: line <RED>with <RESET>leading <RED>space2<RESET>
-+space- line <GREEN>with <RESET>leading space3
-+space-line without leading <GREEN>space2<RESET>
-+EOF
-+
-+test_expect_success 'grep --color -e A --and -e B with context' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.matchContext	green &&
-+	test_config color.grep.matchSelected	red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=3Dalways -C2 -e "with " --and -e space2  space |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+space-line without leading space1
-+space: line <RED>with <RESET>leading space1
-+space- line <GREEN>with <RESET>leading <GREEN>space2<RESET>
-+space: line <RED>with <RESET>leading space3
-+space-line without leading <GREEN>space2<RESET>
-+EOF
-+
-+test_expect_success 'grep --color -e A --and --not -e B with context' =
-'
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.matchContext	green &&
-+	test_config color.grep.matchSelected	red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=3Dalways -C2 -e "with " --and --not -e space2  space=
- |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+hello.c-#include <stdio.h>
-+hello.c=3D<GREEN>int<RESET> main(<GREEN>int<RESET> argc, const char **=
-argv)
-+hello.c-{
-+hello.c:	pr<RED>int<RESET>f("<RED>Hello<RESET> world.\n");
-+hello.c-	return 0;
-+hello.c-	/* char ?? */
-+hello.c-}
-+EOF
-+
-+test_expect_success 'grep --color -e A --and -e B -p with context' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		normal &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.matchContext	green &&
-+	test_config color.grep.matchSelected	red &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --color=3Dalways -p -C3 -e int --and -e Hello --no-index hel=
-lo.c |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
---=20
-2.1.2
+Thanks.
