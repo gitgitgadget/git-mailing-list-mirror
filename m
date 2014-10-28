@@ -1,76 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/15] refs.c: update rename_ref to use a transaction
-Date: Tue, 28 Oct 2014 14:12:49 -0700
-Message-ID: <xmqqh9ynkiem.fsf@gitster.dls.corp.google.com>
-References: <1413923820-14457-1-git-send-email-sahlberg@google.com>
-	<1413923820-14457-6-git-send-email-sahlberg@google.com>
-	<xmqqppdcj9m9.fsf@gitster.dls.corp.google.com>
-	<xmqqlho0j7dq.fsf@gitster.dls.corp.google.com>
-	<CAL=YDWm05PyO07HbiOTiweh+3AEvXnbptbzoreLw-b9YUrm-Hg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue Oct 28 22:40:55 2014
+Subject: [PATCH v2 1/4] builtin/merge.c: drop a parameter that is never used
+Date: Tue, 28 Oct 2014 14:36:49 -0700
+Message-ID: <1414532212-9016-2-git-send-email-gitster@pobox.com>
+References: <1414532212-9016-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 28 22:56:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjEVZ-00033G-4o
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 22:40:53 +0100
+	id 1XjEl7-0007K9-9w
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 22:56:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932328AbaJ1Vks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2014 17:40:48 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59040 "EHLO
+	id S932068AbaJ1V4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 17:56:53 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57601 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932227AbaJ1Vkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 17:40:47 -0400
+	with ESMTP id S1755257AbaJ1V4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 17:56:51 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 540CA1AB6F;
-	Tue, 28 Oct 2014 17:40:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TNkdauoofKPxgQkj8b+xYuMh3WA=; b=tSV2IK
-	UEvZw45lYB5VExDjZfaXDvgHUEFZfGeadea0NV1mp7elndYhFf/Y8hz2OTmwJTim
-	NwuFO/TVggD6BciIZn/ItaRE1SNStwg+mtJHNoB2P5YTJQ/mKBffIRZv1icouSxZ
-	VZMz92FL5NUl6wN+0r11QljgKNNpQBH+kOuHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cc2TiAPXIzqS/Q8uC+vH6+0VroqruxV5
-	rVpQROoAloVNV9rymQH5zZZ5yM3/+B5YCJXwRsmWKYVQjySNNbwJj7S5JaUGG63K
-	GF66SdIslajkD4Xvc7s7XiDBS/ps474um4AbuKJSEFnVLvkQiIS6ut6GvSi5Ed4H
-	j/hjd2JRw/I=
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F04C31AFC3;
+	Tue, 28 Oct 2014 17:56:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=fYFg
+	xODM+FAyKfY+aVWhYib+xVA=; b=o9U5pUAIJAuD5dqI5BDMsHjBngVAG3ARJ5hg
+	rTYn/KHAxnLsk60WJyd43we17Qmbjgk+1d3fsNTi8dNSkSTHqWOXNxc+26KgIJ9U
+	RqN0GKUMi8xs9PDVeIMyXcpPYb0sYc3FAoxT8pYjDw9XJK73EWCRWIp0zduA8Es+
+	P3Kf8J8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Cba3Oa
+	Qri69KvJB4HfRGRMRQmkCtUfpWKSynQGsBiICb24g3oQpkzrF97ZuSipYwU5+vlP
+	Ljn9OTky9ByVcENmaMVwAwjs97v5IOHB8JFlfUXonzHvFPRBU+kEo9HY7efjD/e5
+	5MMezPc1gmXIgHn19PwqzqO7pz9VWr+YibDsM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4AEB51AB6D;
-	Tue, 28 Oct 2014 17:40:46 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E66F61AFC2;
+	Tue, 28 Oct 2014 17:56:50 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CBB4F1A55E;
-	Tue, 28 Oct 2014 17:12:50 -0400 (EDT)
-In-Reply-To: <CAL=YDWm05PyO07HbiOTiweh+3AEvXnbptbzoreLw-b9YUrm-Hg@mail.gmail.com>
-	(Ronnie Sahlberg's message of "Tue, 28 Oct 2014 13:56:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2CB4CCA8-5EE7-11E4-870D-527C6E758C04-77302942!pb-smtp1.pobox.com
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 498DB1AAA5;
+	Tue, 28 Oct 2014 17:36:58 -0400 (EDT)
+X-Mailer: git-send-email 2.1.2-620-g33c52cb
+In-Reply-To: <1414532212-9016-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 8B780E46-5EEA-11E4-93A1-527C6E758C04-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
+Since the very beginning when we added the "renormalizing" parameter
+to this function with 7610fa57 (merge-recursive --renormalize,
+2010-08-05), nobody seems to have ever referenced it.
 
-> I timed a git branch -m for a branch with ~2400 log entries and it
-> takes neglible time :
->   real 0m0.008s
->   user 0m0.000s
->   sys 0m0.007s
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/merge.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I really hate this line of reasoning.  Small things tend to add up.
-
-More importantly, when you know that the end result you want to see
-is that the old and new log files are bit-for-bit identical, and if
-not there is some bug in either parsing or formatting, why parse the
-old and reformat into the new?  What would happen when there were
-malformed entries in the old that makes your parsing fail?
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 41fb66d..f6894c7 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -884,7 +884,7 @@ static int finish_automerge(struct commit *head,
+ 	return 0;
+ }
+ 
+-static int suggest_conflicts(int renormalizing)
++static int suggest_conflicts(void)
+ {
+ 	const char *filename;
+ 	FILE *fp;
+@@ -1557,7 +1557,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		fprintf(stderr, _("Automatic merge went well; "
+ 			"stopped before committing as requested\n"));
+ 	else
+-		ret = suggest_conflicts(option_renormalize);
++		ret = suggest_conflicts();
+ 
+ done:
+ 	free(branch_to_free);
+-- 
+2.1.2-620-g33c52cb
