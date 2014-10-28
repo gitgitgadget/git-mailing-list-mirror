@@ -1,105 +1,119 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] use child_process_init() to initialize struct child_process
- variables
-Date: Tue, 28 Oct 2014 21:52:34 +0100
-Message-ID: <54500212.7040603@web.de>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 05/15] refs.c: update rename_ref to use a transaction
+Date: Tue, 28 Oct 2014 13:56:16 -0700
+Message-ID: <CAL=YDWm05PyO07HbiOTiweh+3AEvXnbptbzoreLw-b9YUrm-Hg@mail.gmail.com>
+References: <1413923820-14457-1-git-send-email-sahlberg@google.com>
+	<1413923820-14457-6-git-send-email-sahlberg@google.com>
+	<xmqqppdcj9m9.fsf@gitster.dls.corp.google.com>
+	<xmqqlho0j7dq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 28 21:52:51 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 28 21:56:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjDl4-0002yQ-7a
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 21:52:50 +0100
+	id 1XjDoc-00069M-FE
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 21:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172AbaJ1Uwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2014 16:52:46 -0400
-Received: from mout.web.de ([212.227.17.11]:56484 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753496AbaJ1Uwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 16:52:45 -0400
-Received: from [192.168.178.27] ([79.253.156.206]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MPYNR-1Xf79M14nh-004o2o; Tue, 28 Oct 2014 21:52:41
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-Provags-ID: V03:K0:a5JyCdexDubL3We70AFAs34HazbkS9r9W2vmYidKo1XkbhP1ilH
- 8OWwq0v20hjhTfU+nm4gyJ5q1fwmAuaPcu0SUtrwzGlhPGh4qDAsM4aa7mq82hCd1/c2FT+
- MEbMeuL5XSvuP1DrmKq1kgl6crz3dzg+3L5k0xaqTR+6QbD1ncC1raN9MZcwoKmATa7KQ2d
- VvZbZoiB8tr7Z8Xv0ugyg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753337AbaJ1U41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 16:56:27 -0400
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:52932 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753220AbaJ1U40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 16:56:26 -0400
+Received: by mail-qc0-f176.google.com with SMTP id x3so1288310qcv.7
+        for <git@vger.kernel.org>; Tue, 28 Oct 2014 13:56:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=j5a0TQEfVVU4+g4rA8Rx7YNQ4Ev2ISOIc1iVy6nUDbA=;
+        b=UEX4jylhLKeeThf+/CcEfZW4TOHdfyRYGC085egWwkiCz9gRRNq+Y5UfaeH6qTrxjW
+         Kxh5haP9QPUBIPtnOjBtfYd6nNjRG2IXErclYoNHycP1rgSyE1vy3ofZGoaGCpjB/soS
+         ZsYn2V8SXi2f/SoPcLh8OjntbzeszoMcu5AwW3qJvHdh5u9GYxV2rhYTDdS1ruQbLoUe
+         cwnqRznRTGdEZnU+jXLMOUMAyM+mQCyOMP3aC00J2zLbU6IyBTTIPdWiaIdr3ZbEYY7i
+         hm0o0c/05QEFv4xfHIYG825dcYNSwu3fo9PJGUMNdtDrViq53riKTyjzqYgoi+xb8nMG
+         7wKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=j5a0TQEfVVU4+g4rA8Rx7YNQ4Ev2ISOIc1iVy6nUDbA=;
+        b=Vd2m0VUL/u9TebiOozPA5G25rU/ElHULY+VVMvR2SgICNaq7Nf9BWnQLs5MsJl/ORp
+         nxZaCohQ7Ry1RxCV8OLbk0B0EEzDFYyBZZ4x8eg/Rnsp5F0lTQ0sPzIDnK0AVks3eeXi
+         1cJ9mtvTXU5VgCSyiG9+GmzfG6qobAmJvFvDU82v2txLktL9b9Bks+wxsA6F9rJb0Sn4
+         BNkZZfHMK/z8j8ruKKivF8OojwJbzLRV/KhoLPYCNZlvk1NhFwv/fZN0h9CUzR956Xpu
+         162bh9CYWsNvo8yPfh801ySAmw39gDJfWt9O/huXnGW1oZR0rSZUVvj2Mna4cOlsCTig
+         UlFw==
+X-Gm-Message-State: ALoCoQmEznXk3FAX57NY2s5DzPuNZEYXTq5uE8ZT5ljAxxaLGQHjiJkYiDGdYwt9gPLjTqs2zNk2
+X-Received: by 10.224.2.135 with SMTP id 7mr9299664qaj.64.1414529776195; Tue,
+ 28 Oct 2014 13:56:16 -0700 (PDT)
+Received: by 10.229.225.202 with HTTP; Tue, 28 Oct 2014 13:56:16 -0700 (PDT)
+In-Reply-To: <xmqqlho0j7dq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Call child_process_init() instead of zeroing the memory of variables of
-type struct child_process by hand before use because the former is both
-clearer and shorter.
+On Tue, Oct 28, 2014 at 12:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Ronnie Sahlberg <sahlberg@google.com> writes:
+>>
+>>> commit 0295e9cebc41020ee84da275549b164a8770ffba upstream.
+>>>
+>>> Change refs.c to use a single transaction to copy/rename both the refs and
+>>> its reflog. Since we are no longer using rename() to move the reflog file
+>>> we no longer need to disallow rename_ref for refs with a symlink for its
+>>> reflog so we can remove that test from the testsuite.
+>>
+>> Do you mean that we used to do a single rename(2) to move the entire
+>> logfile, but now you copy potentially thousands of reflog entries
+>> one by one?
+>>
+>> Hmmmm,... is that an improvement?
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- bundle.c           | 2 +-
- column.c           | 2 +-
- trailer.c          | 2 +-
- transport-helper.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+I think so. It makes to code a lot simpler and more atomic. As a side
+effect it removes restrictions for symlink handling and eliminates the
+two renames colliding race.
+Though, a read and then rewrite thousands of reflog entries will be
+slower than a single rename() syscall.
 
-diff --git a/bundle.c b/bundle.c
-index fa67057..c846092 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -381,7 +381,7 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	write_or_die(bundle_fd, "\n", 1);
- 
- 	/* write pack */
--	memset(&rls, 0, sizeof(rls));
-+	child_process_init(&rls);
- 	argv_array_pushl(&rls.args,
- 			 "pack-objects", "--all-progress-implied",
- 			 "--stdout", "--thin", "--delta-base-offset",
-diff --git a/column.c b/column.c
-index 8082a94..786abe6 100644
---- a/column.c
-+++ b/column.c
-@@ -374,7 +374,7 @@ int run_column_filter(int colopts, const struct column_options *opts)
- 	if (fd_out != -1)
- 		return -1;
- 
--	memset(&column_process, 0, sizeof(column_process));
-+	child_process_init(&column_process);
- 	argv = &column_process.args;
- 
- 	argv_array_push(argv, "column");
-diff --git a/trailer.c b/trailer.c
-index 8514566..7ff036c 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -237,7 +237,7 @@ static const char *apply_command(const char *command, const char *arg)
- 		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
- 
- 	argv[0] = cmd.buf;
--	memset(&cp, 0, sizeof(cp));
-+	child_process_init(&cp);
- 	cp.argv = argv;
- 	cp.env = local_repo_env;
- 	cp.no_stdin = 1;
-diff --git a/transport-helper.c b/transport-helper.c
-index 6cd9dd1..0224687 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -414,7 +414,7 @@ static int get_exporter(struct transport *transport,
- 	struct child_process *helper = get_helper(transport);
- 	int i;
- 
--	memset(fastexport, 0, sizeof(*fastexport));
-+	child_process_init(fastexport);
- 
- 	/* we need to duplicate helper->in because we want to use it after
- 	 * fastexport is done with it. */
--- 
-2.1.2
+>
+> I see some value in "keep the original while creating a new one,
+> just in case we fail to fully recreate the new one so that we can
+> roll back with less programming effort".  But still, we should be
+> able to copy the original to new without parsing and reformatting
+> each and every entry, no?
+
+Is renaming a branch with a long history is such a frequent or time
+critical event?
+I timed a git branch -m for a branch with ~2400 log entries and it
+takes neglible time :
+  real 0m0.008s
+  user 0m0.000s
+  sys 0m0.007s
+
+
+During the special rename case, we are deleting one ref and creating
+another. For cases such as m->m/m or the reverse we must delete the
+old file/directory before we can create the new one.
+
+The old rename code did this by renaming the file out to a common
+directory and then back to the new location. Which is fast (but a bit
+...)
+The alternative is to read the old file into memory, delete it and
+then write the content back to the new location, which is kind of what
+the new code does.
+
+If this turns out to be a bottleneck we can change the io when writing
+the reflog entries to use fwrite(). Lets see if there is a problem
+first.
+
+regards
+ronnie sahlberg
