@@ -1,164 +1,100 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 18/19] update-index: test the system before enabling
- untracked cache
-Date: Tue, 28 Oct 2014 19:25:19 -0400
-Message-ID: <CAPig+cS9C9m-wqMO3up+BRHBN1a0FB-eDO7UUPv7NLx1JCC3PQ@mail.gmail.com>
-References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
-	<1414411846-4450-19-git-send-email-pclouds@gmail.com>
+From: Hin-Tak Leung <htl10@users.sourceforge.net>
+Subject: Regression and failure to clone/fetch with new code Re: git-svn performance
+Date: Tue, 28 Oct 2014 23:33:34 +0000
+Message-ID: <1414539214.3654.YahooMailBasic@web172306.mail.ir2.yahoo.com>
+References: <1414474807.30075.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+Reply-To: htl10@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 00:25:29 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
+	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
+	amyrick@apple.com
+To: normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Wed Oct 29 00:33:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjG8i-0003ui-Vn
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 00:25:25 +0100
+	id 1XjGGi-0001Da-VR
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 00:33:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753223AbaJ1XZV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2014 19:25:21 -0400
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:53963 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979AbaJ1XZU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Oct 2014 19:25:20 -0400
-Received: by mail-yh0-f45.google.com with SMTP id f73so73436yha.18
-        for <git@vger.kernel.org>; Tue, 28 Oct 2014 16:25:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=nihkU17Xq0h6TmAmWc+8dlKxwtn7XepQkS+cIHhLBMg=;
-        b=pHyZxNoscQO8C5ciEMTFsa9QsIRdiEccDyvRYabx5d5xgNg+uK20d5YdSLQatS5EoD
-         CjueUC1ISF62nBWV5q2YY6nZ2gcCMPvjMlepSByzKMQ73cRO2zRV7R+B+XbnxZL3JjJp
-         TB0hBkWVFTgpGJvF7SR7VE1pA89F7uhl0RPiETdZazIHUXG9SjoFi73pdqXUqSAiziV2
-         USk7nJmIbir7UlzuBOxg5OV5bjr53S1DFjebttTUxb4gj8xGALGGvl1al2gOcCnRK1dK
-         1FqUy8b7f6QKu8j6VFedsPjAvCItsxTkP5ZmhbmCh53oV+xvY+80dPonSUf6FkC0v4VH
-         bt8g==
-X-Received: by 10.170.128.145 with SMTP id u139mr6956712ykb.51.1414538719897;
- Tue, 28 Oct 2014 16:25:19 -0700 (PDT)
-Received: by 10.170.68.68 with HTTP; Tue, 28 Oct 2014 16:25:19 -0700 (PDT)
-In-Reply-To: <1414411846-4450-19-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: z7MV9Io_rUam8Ant3xnpks_BV6s
+	id S932093AbaJ1Xdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 19:33:37 -0400
+Received: from nm20-vm7.bullet.mail.ir2.yahoo.com ([212.82.96.249]:49837 "EHLO
+	nm20-vm7.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932091AbaJ1Xdg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 19:33:36 -0400
+Received: from [212.82.98.60] by nm20.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:33:35 -0000
+Received: from [212.82.98.102] by tm13.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:33:35 -0000
+Received: from [127.0.0.1] by omp1039.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:33:34 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 992681.84143.bm@omp1039.mail.ir2.yahoo.com
+Received: (qmail 46305 invoked by uid 60001); 28 Oct 2014 23:33:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1414539214; bh=xLHCQwfRgJt9uB4LjB9HwU0XmSVXpGrvgfvmO49HIJg=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=4N/e93uA30SDsjTFCigCqmZJhIdZFWL2F3DAvorJwa5PAZyh9qGkaKfP3CsemJjLFeRIly0zT5/3bFi7HfSNXtNoP08QKMl32Zs1Pd9qg/7VdR27HU5zyEMMd3UhcIEpZOqi11lOiaOm4x5bnH3dT+13xT+eIJUo2kv4QMtTC9g=
+X-YMail-OSG: 2SKMpV0VM1kFor0PulPj._gXvgjqAj1.iV5P_eaD7o1EmYH
+ PzoTQQQGLOFPsCgyvjW9PxRs6DJgEZ9xvPvuvJIXiT7VtRigV8jFhPC2HT8U
+ fF9vJobe6pxLm0CSon1a7q4CsIrEZhaKssY0w0Hi.CFC_8tx9m4eZv3KNweg
+ hm4ur8kB8c.qAmYPNHLMzFrPvCFqk8Gaqrv9TPvJt8FBdn1fpIzGLF_NiZ9T
+ RhNqZAmCK99uvpopi.RV_VNwVPhekF13vreiyxxuidRwdU5qfcyAABEEmy6O
+ N3RVOOJixj.zqfVUShrtvt1BtL5Qzk8S2Za9.3oBfhDmDKLloPlEqoAImJQB
+ KZdBfpZjh3pQLK8lSH4Emui4_dZ5Ahsy4Xxvw_y6jgSbNhfWHbTqKDzh_p6R
+ uvr6riOH.zXQpQWbCeEp6EpjECBU2msRyAeiSmSTAj3g_AAccPFc.GCtKqja
+ qFMI1oeLcfRmHsmDXC9KHX0yaH3aeYX1lysO28lb300JASaKc__tNemzbk9x
+ JQH9s5UFFGRdwc7dBSbfMDF57yGQsjMUvsPR.f_i2aaPN0j.cuz4o_Z2x4ft
+ a.c08yzVZhAQUWqYULOHBwEssgXegOHEZdfLOQ5hAkbKQ8f3p89nnzNoG_8D
+ BFMB2FC012tInaD0G8Y4yxksmacSqK.ny3JRaBjItU2MxUNOFM2e0uNzDxA-
+ -
+Received: from [86.30.137.134] by web172306.mail.ir2.yahoo.com via HTTP; Tue, 28 Oct 2014 23:33:34 GMT
+X-Rocket-MIMEInfo: 002.001,SGksIEkgcGF0Y2hlZCBteSBzeXN0ZW0gZ2l0IHdpdGggdGhlIHJlY2VudCBnaXQtc3ZuIGltcHJvdmVtZW50cywgYW5kIGp1c3QgdXNlDQppdCBmb3IgZ2VuZXJhbCB1c2U7IHNvIHRoZXNlcyBhcmUgdGhlIHBhdGNoZXMsIGFnYWluc3QgMi4xLjAuDQoNCjAwMDEtZ2l0LXN2bi1vbmx5LWxvb2stYXQtdGhlLW5ldy1wYXJ0cy1vZi1zdm4tbWVyZ2VpbmZvLnBhdGNoDQowMDAyLWdpdC1zdm4tb25seS1sb29rLWF0LXRoZS1yb290LXBhdGgtZm9yLXN2bi1tZXJnZWluZm8ucGF0Y2gNCjAwMDMtZ2l0LXN2bi1yZWQBMAEBAQE-
+X-RocketYMMF: hintak_leung
+X-Mailer: YahooMailClassic/810 YahooMailWebService/0.8.203.733
+In-Reply-To: <1414474807.30075.YahooMailBasic@web172303.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 27, 2014 at 8:10 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index e57e2d7..471c0b4 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -48,6 +48,145 @@ static void report(const char *fmt, ...)
->         va_end(vp);
->  }
->
-> +static int test_if_untracked_cache_is_supported(void)
-> +{
-> +       struct stat st;
-> +       struct stat_data base;
-> +       int fd;
-> +
-> +       fprintf(stderr, _("Testing "));
-> +       xmkdir("dir-mtime-test");
-> +       atexit(remove_test_directory);
-> +       xstat("dir-mtime-test", &st);
-> +       fill_stat_data(&base, &st);
-> +       fputc('.', stderr);
-> +
-> +       avoid_racy();
-> +       fd =3D create_file("dir-mtime-test/newfile");
-> +       xstat("dir-mtime-test", &st);
-> +       if (!match_stat_data(&base, &st)) {
+Hi, I patched my system git with the recent git-svn improvements, and just use
+it for general use; so theses are the patches, against 2.1.0.
 
-close(fd);
+0001-git-svn-only-look-at-the-new-parts-of-svn-mergeinfo.patch
+0002-git-svn-only-look-at-the-root-path-for-svn-mergeinfo.patch
+0003-git-svn-reduce-check_cherry_pick-cache-overhead.patch
+0004-git-svn-cache-only-mergeinfo-revisions.patch
+0005-git-svn-remove-mergeinfo-rev-caching.patch
+0006-git-svn.txt-advertise-pushurl-with-dcommit.patch
+0007-git-svn-reload-RA-every-log-window-size.patch
+0008-git-svn-remove-unnecessary-DESTROY-override.patch
+0009-git-svn-save-a-little-memory-as-fetch-progresses.patch
+0010-git-svn-disable-_rev_list-memoization.patch
 
-> +               fputc('\n', stderr);
-> +               fprintf_ln(stderr,_("directory stat info does not "
-> +                                   "change after adding a new file")=
-);
-> +               return 0;
-> +       }
-> +       fill_stat_data(&base, &st);
-> +       fputc('.', stderr);
-> +
-> +       avoid_racy();
-> +       xmkdir("dir-mtime-test/new-dir");
-> +       xstat("dir-mtime-test", &st);
-> +       if (!match_stat_data(&base, &st)) {
+trying to do this:
+git svn clone http://www.virtualbox.org/svn/vbox/trunk vbox
 
-close(fd);
+(there is no publicly visible branches, so it is just a straight-forward single-branch clone).
 
-> +               fputc('\n', stderr);
-> +               fprintf_ln(stderr, _("directory stat info does not ch=
-ange "
-> +                                    "after adding a new directory"))=
-;
-> +               return 0;
-> +       }
-> +       fill_stat_data(&base, &st);
-> +       fputc('.', stderr);
-> +
-> +       avoid_racy();
-> +       write_or_die(fd, "data", 4);
-> +       close(fd);
-> +       xstat("dir-mtime-test", &st);
-> +       if (match_stat_data(&base, &st)) {
-> +               fputc('\n', stderr);
-> +               fprintf_ln(stderr, _("directory stat info changes "
-> +                                    "after updating a file"));
-> +               return 0;
-> +       }
-> +       fputc('.', stderr);
-> +
-> +       avoid_racy();
-> +       close(create_file("dir-mtime-test/new-dir/new"));
-> +       xstat("dir-mtime-test", &st);
-> +       if (match_stat_data(&base, &st)) {
-> +               fputc('\n', stderr);
-> +               fprintf_ln(stderr, _("directory stat info changes aft=
-er "
-> +                                    "adding a file inside subdirecto=
-ry"));
-> +               return 0;
-> +       }
-> +       fputc('.', stderr);
-> +
-> +       avoid_racy();
-> +       xunlink("dir-mtime-test/newfile");
-> +       xstat("dir-mtime-test", &st);
-> +       if (!match_stat_data(&base, &st)) {
-> +               fputc('\n', stderr);
-> +               fprintf_ln(stderr, _("directory stat info does not "
-> +                                    "change after deleting a file"))=
-;
-> +               return 0;
-> +       }
-> +       fill_stat_data(&base, &st);
-> +       fputc('.', stderr);
-> +
-> +       avoid_racy();
-> +       xunlink("dir-mtime-test/new-dir/new");
-> +       xrmdir("dir-mtime-test/new-dir");
-> +       xstat("dir-mtime-test", &st);
-> +       if (!match_stat_data(&base, &st)) {
-> +               fputc('\n', stderr);
-> +               fprintf_ln(stderr, _("directory stat info does not "
-> +                                    "change after deleting a directo=
-ry"));
-> +               return 0;
-> +       }
-> +
-> +       xrmdir("dir-mtime-test");
-> +       fprintf_ln(stderr, _(" OK"));
-> +       return 1;
-> +}
+aborts with 
+
+---------------
+	M	src/VBox/Main/HostImpl.cpp
+Incorrect parameters given: Could not convert '%ld' into a number at /usr/share/perl5/vendor_perl/Git/SVN.pm line 1711.
+
+$ git svn fetch --all
+Index mismatch: d6c75bc195b1daad647322e2cc025bd31265c6b9 != 3927d05f6ab037fcf2b4d964c9633efade037d1b
+rereading a65b5fc0077c2fa80a344833b65ac19ff4ae88b6
+	M	src/VBox/Main/HostImpl.cpp
+Incorrect parameters given: Could not convert '%ld' into a number at /usr/share/perl5/vendor_perl/Git/SVN.pm line 1711.
+----------------
+
+I have never seen such behavior before, and seeing as the lines indicated are in
+a routine called "mergeinfo_changes", and recently added/changed by
+quite a few of the patches, I started reverting from the back in this order: #5, #4, #2, #1 
+and tried again between each revert. And it finally allows me to fetch again after
+reverting #1.
+
+I don't see any %ld close by, but presumably this is enough information for somebody else
+to try. The platform is linux x86_64. (mostly fedora 20 but with a lot of additional
+changes like a newer gnome than shipped, etc so probably not really fc20) 
