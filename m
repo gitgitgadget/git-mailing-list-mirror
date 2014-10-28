@@ -1,100 +1,116 @@
 From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: Regression and failure to clone/fetch with new code Re: git-svn performance
-Date: Tue, 28 Oct 2014 23:33:34 +0000
-Message-ID: <1414539214.3654.YahooMailBasic@web172306.mail.ir2.yahoo.com>
-References: <1414474807.30075.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+Subject: Re: differences between old clone and new  Re: git-svn performance
+Date: Tue, 28 Oct 2014 23:59:02 +0000
+Message-ID: <1414540742.41763.YahooMailBasic@web172305.mail.ir2.yahoo.com>
+References: <20141028074104.GA7762@dcvr.yhbt.net>
 Reply-To: htl10@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
 	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
 	amyrick@apple.com
-To: normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Wed Oct 29 00:33:41 2014
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Oct 29 00:59:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjGGi-0001Da-VR
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 00:33:41 +0100
+	id 1XjGfN-0000V7-Tz
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 00:59:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932093AbaJ1Xdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2014 19:33:37 -0400
-Received: from nm20-vm7.bullet.mail.ir2.yahoo.com ([212.82.96.249]:49837 "EHLO
-	nm20-vm7.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932091AbaJ1Xdg convert rfc822-to-8bit
+	id S1754186AbaJ1X7F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2014 19:59:05 -0400
+Received: from nm28-vm5.bullet.mail.ir2.yahoo.com ([212.82.97.65]:52053 "EHLO
+	nm28-vm5.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750858AbaJ1X7E convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 19:33:36 -0400
-Received: from [212.82.98.60] by nm20.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:33:35 -0000
-Received: from [212.82.98.102] by tm13.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:33:35 -0000
-Received: from [127.0.0.1] by omp1039.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:33:34 -0000
+	Tue, 28 Oct 2014 19:59:04 -0400
+Received: from [212.82.98.50] by nm28.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:59:02 -0000
+Received: from [212.82.98.109] by tm3.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:59:02 -0000
+Received: from [127.0.0.1] by omp1046.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 23:59:02 -0000
 X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 992681.84143.bm@omp1039.mail.ir2.yahoo.com
-Received: (qmail 46305 invoked by uid 60001); 28 Oct 2014 23:33:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1414539214; bh=xLHCQwfRgJt9uB4LjB9HwU0XmSVXpGrvgfvmO49HIJg=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=4N/e93uA30SDsjTFCigCqmZJhIdZFWL2F3DAvorJwa5PAZyh9qGkaKfP3CsemJjLFeRIly0zT5/3bFi7HfSNXtNoP08QKMl32Zs1Pd9qg/7VdR27HU5zyEMMd3UhcIEpZOqi11lOiaOm4x5bnH3dT+13xT+eIJUo2kv4QMtTC9g=
-X-YMail-OSG: 2SKMpV0VM1kFor0PulPj._gXvgjqAj1.iV5P_eaD7o1EmYH
- PzoTQQQGLOFPsCgyvjW9PxRs6DJgEZ9xvPvuvJIXiT7VtRigV8jFhPC2HT8U
- fF9vJobe6pxLm0CSon1a7q4CsIrEZhaKssY0w0Hi.CFC_8tx9m4eZv3KNweg
- hm4ur8kB8c.qAmYPNHLMzFrPvCFqk8Gaqrv9TPvJt8FBdn1fpIzGLF_NiZ9T
- RhNqZAmCK99uvpopi.RV_VNwVPhekF13vreiyxxuidRwdU5qfcyAABEEmy6O
- N3RVOOJixj.zqfVUShrtvt1BtL5Qzk8S2Za9.3oBfhDmDKLloPlEqoAImJQB
- KZdBfpZjh3pQLK8lSH4Emui4_dZ5Ahsy4Xxvw_y6jgSbNhfWHbTqKDzh_p6R
- uvr6riOH.zXQpQWbCeEp6EpjECBU2msRyAeiSmSTAj3g_AAccPFc.GCtKqja
- qFMI1oeLcfRmHsmDXC9KHX0yaH3aeYX1lysO28lb300JASaKc__tNemzbk9x
- JQH9s5UFFGRdwc7dBSbfMDF57yGQsjMUvsPR.f_i2aaPN0j.cuz4o_Z2x4ft
- a.c08yzVZhAQUWqYULOHBwEssgXegOHEZdfLOQ5hAkbKQ8f3p89nnzNoG_8D
- BFMB2FC012tInaD0G8Y4yxksmacSqK.ny3JRaBjItU2MxUNOFM2e0uNzDxA-
- -
-Received: from [86.30.137.134] by web172306.mail.ir2.yahoo.com via HTTP; Tue, 28 Oct 2014 23:33:34 GMT
-X-Rocket-MIMEInfo: 002.001,SGksIEkgcGF0Y2hlZCBteSBzeXN0ZW0gZ2l0IHdpdGggdGhlIHJlY2VudCBnaXQtc3ZuIGltcHJvdmVtZW50cywgYW5kIGp1c3QgdXNlDQppdCBmb3IgZ2VuZXJhbCB1c2U7IHNvIHRoZXNlcyBhcmUgdGhlIHBhdGNoZXMsIGFnYWluc3QgMi4xLjAuDQoNCjAwMDEtZ2l0LXN2bi1vbmx5LWxvb2stYXQtdGhlLW5ldy1wYXJ0cy1vZi1zdm4tbWVyZ2VpbmZvLnBhdGNoDQowMDAyLWdpdC1zdm4tb25seS1sb29rLWF0LXRoZS1yb290LXBhdGgtZm9yLXN2bi1tZXJnZWluZm8ucGF0Y2gNCjAwMDMtZ2l0LXN2bi1yZWQBMAEBAQE-
+X-Yahoo-Newman-Id: 337548.88986.bm@omp1046.mail.ir2.yahoo.com
+Received: (qmail 82645 invoked by uid 60001); 28 Oct 2014 23:59:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1414540742; bh=Bq//bbXL0IAlk9nL4XC309cyzYZZf7RKgo5emKQMxpA=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=U8deQM1sOkVsDh7cd78oeFVGe+pQOUC1JBEVj0kTWqpdDkyXKSavMLfAzAlZrl86Ah4XyPOLpGpuhsXGt3y8gOSI3jBN6WsM47Nq5MM9KaSZ1KG0jkVMBQN+PphfJZclQzGI2OchDtHojVdNxnZSwuD0KndOqnger45LNGnOVso=
+X-YMail-OSG: noxdJsgVM1m6F..6GBSkf.FNj6vk3OsL9SBUYw21x0i0gfg
+ Ao33PlxwQc6RBWLFqh.kRKaBndginiIvag3.fUVLPXtnGByHiu455t2UMJB.
+ Q7.Ezws_mabJW1mR.Vzfgfai0k4vSFkAga91lgY3KIGj2Znrnsl40447BtEx
+ JLR7Jzqoqbh2Ydz_l4TPdZmosTwNVrxNCx66N.k0QhjFcHjXKw3glwL0K51B
+ NQsBybzz5dE.C1NNb1Ft71Cq3bIQA6V08AjUm_Plmie452kQdei6ZMlYz0jf
+ 2XstoUNaLJBG8i7Y0PVHqLIqyfV61k_GY_UqLm8DWWU_eI0Jzh9pTslFDVym
+ RU8UgOVqOKiqBCSB9z4QJWVqZ8VJoy2Z1cP.zBVNwDb0PSUEli2Q2wSLpk5w
+ 4dll4qV6zqjbp0LAbqshDbg_6qU53fv8wwz_h6AzrwLLvRmFlogLOd_EGEOe
+ vP8fXjrF1UV949NALROOgSMDusO9yqi6mA9sJNJGrgtMq0Uz6dG1SCquJW.U
+ Eiz.U_ZPtO41XsHEZ2Cx1_qDPuMlhOBDzX6hM3Zl77cq1289wQ2p0sZ9vkkZ
+ cKMXTETH.t.abIrdoOi7l7vbUhfA_._pReLU61D4bi4VoXD5B1rmDDwdVkO6
+ GrCAXvkXtdGF0bH4AfXoOXlxwmY7WLqCwyZlg6mmLd24kCQ0-
+Received: from [86.30.137.134] by web172305.mail.ir2.yahoo.com via HTTP; Tue, 28 Oct 2014 23:59:02 GMT
+X-Rocket-MIMEInfo: 002.001,T24gVHVlLCAyOC8xMC8xNCwgRXJpYyBXb25nIDxub3JtYWxwZXJzb25AeWhidC5uZXQ.IHdyb3RlOg0KDQo.IFNvIGJvdGggbWVyZ2VzDQogYXJlIGNvcnJlY3QsIGJ1dCB3ZSBsb3NlIG9uZSwgYW5kIGdhaW4gb25lPw0KIEknbGwgdHJ5IHRvIGNoZWNrIG1vcmUgY2xvc2VseSB0b21vcnJvdy7CoA0KIENhbiB5b3UgcG9pbnQgb3V0DQogdGhlIGV4YWN0IHJldmlzaW9ucyBpbiB0aGUNCiBSIHJlcG8_wqAgVGhhbmtzLg0KDQoNClRoZSBtaXNzaW5nIG1lcmdlIG9uIGJyYW5jaCAiUi0yLTE0LWJyYW5jaCIgaXMBMAEBAQE-
 X-RocketYMMF: hintak_leung
 X-Mailer: YahooMailClassic/810 YahooMailWebService/0.8.203.733
-In-Reply-To: <1414474807.30075.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+In-Reply-To: <20141028074104.GA7762@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, I patched my system git with the recent git-svn improvements, and just use
-it for general use; so theses are the patches, against 2.1.0.
+On Tue, 28/10/14, Eric Wong <normalperson@yhbt.net> wrote:
 
-0001-git-svn-only-look-at-the-new-parts-of-svn-mergeinfo.patch
-0002-git-svn-only-look-at-the-root-path-for-svn-mergeinfo.patch
-0003-git-svn-reduce-check_cherry_pick-cache-overhead.patch
-0004-git-svn-cache-only-mergeinfo-revisions.patch
-0005-git-svn-remove-mergeinfo-rev-caching.patch
-0006-git-svn.txt-advertise-pushurl-with-dcommit.patch
-0007-git-svn-reload-RA-every-log-window-size.patch
-0008-git-svn-remove-unnecessary-DESTROY-override.patch
-0009-git-svn-save-a-little-memory-as-fetch-progresses.patch
-0010-git-svn-disable-_rev_list-memoization.patch
+> So both merges
+ are correct, but we lose one, and gain one?
+ I'll try to check more closely tomorrow.=A0
+ Can you point out
+ the exact revisions in the
+ R repo?=A0 Thanks.
 
-trying to do this:
-git svn clone http://www.virtualbox.org/svn/vbox/trunk vbox
 
-(there is no publicly visible branches, so it is just a straight-forward single-branch clone).
+The missing merge on branch "R-2-14-branch" is:
 
-aborts with 
+commit 93af4d4cc3a5e0039944dd4e340d26995be8a252
+Merge: 121990f 6ff1b87
+Author: ripley <ripley@00db46b3-68df-0310-9c12-caf00c1e9a41>
+Date:   Wed Feb 22 13:45:34 2012 +0000
 
----------------
-	M	src/VBox/Main/HostImpl.cpp
-Incorrect parameters given: Could not convert '%ld' into a number at /usr/share/perl5/vendor_perl/Git/SVN.pm line 1711.
+    port r58453 from trunk
 
-$ git svn fetch --all
-Index mismatch: d6c75bc195b1daad647322e2cc025bd31265c6b9 != 3927d05f6ab037fcf2b4d964c9633efade037d1b
-rereading a65b5fc0077c2fa80a344833b65ac19ff4ae88b6
-	M	src/VBox/Main/HostImpl.cpp
-Incorrect parameters given: Could not convert '%ld' into a number at /usr/share/perl5/vendor_perl/Git/SVN.pm line 1711.
-----------------
+    git-svn-id: https://svn.r-project.org/R/branches/R-2-14-branch@5845=
+4 00db46b3-68df-0310-9c12-caf00c1e9a41
 
-I have never seen such behavior before, and seeing as the lines indicated are in
-a routine called "mergeinfo_changes", and recently added/changed by
-quite a few of the patches, I started reverting from the back in this order: #5, #4, #2, #1 
-and tried again between each revert. And it finally allows me to fetch again after
-reverting #1.
 
-I don't see any %ld close by, but presumably this is enough information for somebody else
-to try. The platform is linux x86_64. (mostly fedora 20 but with a lot of additional
-changes like a newer gnome than shipped, etc so probably not really fc20) 
+
+121990f is R-2-14-branch@58449, 6ff1b87 is trunk@58453, but the two bra=
+nches
+are only identical  up to and including R-2-14-branch@57129  -=20
+i.e. trunk@57130 appears in my old clone's  "R-2-14-branch" git log but=
+ not in the new clone's.
+
+The extra merge in the new clone is in branch "djm-parseRd":
+
+commit 6d93330f7637eb4da81adaea58454c6b43da1c65
+Merge: f503a9d 23deade
+Author: murdoch <murdoch@00db46b3-68df-0310-9c12-caf00c1e9a41>
+Date:   Thu Nov 13 14:24:17 2008 +0000
+
+    Update from trunk to r46923
+   =20
+    git-svn-id: https://svn.r-project.org/R/branches/djm-parseRd@46925 =
+00db46b3-68df-0310-9c12-caf00c1e9a41
+
+You can look up f503a9d (djm-parseRd@46922) and 23deade (trunk@46923) y=
+ourself.
+The two branches' git log agree up to and including djm-parseRd@46659 .
+
+Hmm, the new "djm-parseRd" branch actually have *two* extra merges,
+the earlier extra is:
+
+commit 1e8174c797ba8471d604e89e4d614ad969b93b72
+Merge: 55a1d9b 72744ab
+Author: murdoch <murdoch@00db46b3-68df-0310-9c12-caf00c1e9a41>
+Date:   Tue Nov 11 21:17:06 2008 +0000
+
+    Merge trunk changes to r46902
+   =20
+    git-svn-id: https://svn.r-project.org/R/branches/djm-parseRd@46906 =
+00db46b3-68df-0310-9c12-caf00c1e9a41
