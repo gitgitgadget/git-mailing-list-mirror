@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/4] merge & sequencer: unify codepaths that write "Conflicts:" hint
-Date: Tue, 28 Oct 2014 14:36:50 -0700
-Message-ID: <1414532212-9016-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 3/4] builtin/commit.c: extract ignore_non_trailer() helper function
+Date: Tue, 28 Oct 2014 14:36:51 -0700
+Message-ID: <1414532212-9016-4-git-send-email-gitster@pobox.com>
 References: <1414532212-9016-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Oct 28 22:57:13 2014
@@ -10,162 +10,137 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjElM-0007Wl-Jg
+	id 1XjElM-0007Wl-0Y
 	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 22:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755296AbaJ1V5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2014 17:57:06 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53667 "EHLO
+	id S1755322AbaJ1V5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 17:57:07 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55129 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932071AbaJ1V5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 17:57:03 -0400
+	with ESMTP id S1754951AbaJ1V5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 17:57:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7025F1AFD1;
-	Tue, 28 Oct 2014 17:57:03 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AC2E1AFD3;
+	Tue, 28 Oct 2014 17:57:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=nF7r
-	drTQ9hbFbCRFkWzGKfWqFHk=; b=enHKXCq3rS/IvS7i0t5cAqrN02pr3afdPxOK
-	3vxz4h8a2KUAAFdJKNCO1W9G/lcpi9FNTuHX7y/GvC1gd/xn1ROZ1sKfPy8jNqS8
-	DnQ3ugLhVr3kvZv8Ow4b5otTaEvU6SACviF5HcDLmQgffwiN1Rko3cfpR4ukiQu9
-	jUSOE50=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=utM9
+	LFfhtZ6Ul0qSN2TM51Fx+rY=; b=MqU8dsnoQZFogHptqCzJa8731++Km5/qWkhp
+	k8dGvQtiDmzfH47uT6w0aKTSVUP5Zdq6/9aPRnRUZ1y2quyDDoYr9XaP7bu8xSDq
+	wZJIWfYMyeerRnaxa94eioDyXOkcRFE2DFE2zFjIJ94bcXRGOxrlMVgQ2bEUmcgX
+	v2nkIG4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=wrAhOd
-	SmEKyf+ZoDGQsnyXhDy9U47nyn6A6hvN2WhSDbtJfuDi341nuowO/vN7VIFQhFoq
-	zAjsqOwGvxxnChDuCeYdiuU1YOaTursQhfu3WfmATEfQ6Cks7H1uDir7gVpDsLGz
-	iHeOis90b4OuhXnNuQtocVwuzhTXMCnRaE57Y=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=bIOgeu
+	UdLs49szGKHK2UZPT3bZVVNG0n6kt/uLBQSOPM3AIPBpS0fXYyeHoxWgrBzwhN3e
+	p7aVecy1jzq8hobeCc5XSpwIopf0KoiPJ5jxk6lCzJfY8HMze+z+ZoL31QyFp4rk
+	xYCueqxn5qUTLOlOgnNGDN7g5zeY0GpwMHTWY=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 650961AFD0;
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 017A71AFD2;
 	Tue, 28 Oct 2014 17:57:03 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54FBF1AAAB;
-	Tue, 28 Oct 2014 17:37:00 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 470F21AAB0;
+	Tue, 28 Oct 2014 17:37:02 -0400 (EDT)
 X-Mailer: git-send-email 2.1.2-620-g33c52cb
 In-Reply-To: <1414532212-9016-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 8CB03BC6-5EEA-11E4-A408-527C6E758C04-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8DD7BE3E-5EEA-11E4-A530-527C6E758C04-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Two identical loops in suggest_conflicts() in merge, and
-do_recursive_merge() in sequencer, can use a single helper function
-extracted from the latter that prepares the "Conflicts:" hint that
-is meant to remind the user the paths for which merge conflicts had
-to be resolved to write a better commit log message.
+Extract a helper function from prepare_to_commit() to determine
+where to place a new Signed-off-by: line, which is essentially the
+true "end" of the log message, ignoring the trailing "Conflicts:"
+line and everything below it.
+
+The detection _should_ make sure the "Conflicts:" line it finds is
+truly the conflict hint block by checking everything that follows is
+a HT indented pathname to avoid false positive, but this logic will
+be revamped in a later patch to ignore comments and blanks anyway,
+so it is left as-is in this step.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/merge.c | 18 +++++-------------
- sequencer.c     | 35 ++++++++++++++++++++---------------
- sequencer.h     |  1 +
- 3 files changed, 26 insertions(+), 28 deletions(-)
+ builtin/commit.c | 59 +++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 33 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index f6894c7..d30cb60 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -28,6 +28,7 @@
- #include "remote.h"
- #include "fmt-merge-msg.h"
- #include "gpg-interface.h"
-+#include "sequencer.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -888,24 +889,15 @@ static int suggest_conflicts(void)
- {
- 	const char *filename;
- 	FILE *fp;
--	int pos;
-+	struct strbuf msgbuf = STRBUF_INIT;
- 
- 	filename = git_path("MERGE_MSG");
- 	fp = fopen(filename, "a");
- 	if (!fp)
- 		die_errno(_("Could not open '%s' for writing"), filename);
--	fprintf(fp, "\nConflicts:\n");
--	for (pos = 0; pos < active_nr; pos++) {
--		const struct cache_entry *ce = active_cache[pos];
--
--		if (ce_stage(ce)) {
--			fprintf(fp, "\t%s\n", ce->name);
--			while (pos + 1 < active_nr &&
--					!strcmp(ce->name,
--						active_cache[pos + 1]->name))
--				pos++;
--		}
--	}
-+
-+	append_conflicts_hint(&msgbuf);
-+	fputs(msgbuf.buf, fp);
- 	fclose(fp);
- 	rerere(allow_rerere_auto);
- 	printf(_("Automatic merge failed; "
-diff --git a/sequencer.c b/sequencer.c
-index 06e52b4..0f84bbe 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -287,6 +287,24 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
- 	return ret;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index fedb45a..cd455aa 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -593,6 +593,37 @@ static char *cut_ident_timestamp_part(char *string)
+ 	return ket;
  }
  
-+void append_conflicts_hint(struct strbuf *msgbuf)
++/*
++ * Inspect sb and determine the true "end" of the log message, in
++ * order to find where to put a new Signed-off-by: line.  Ignored are
++ * trailing "Conflict:" block.
++ *
++ * Returns the number of bytes from the tail to ignore, to be fed as
++ * the second parameter to append_signoff().
++ */
++static int ignore_non_trailer(struct strbuf *sb)
 +{
-+	int i;
++	int ignore_footer = 0;
++	int i, eol, previous = 0;
++	const char *nl;
 +
-+	strbuf_addstr(msgbuf, "\nConflicts:\n");
-+	for (i = 0; i < active_nr;) {
-+		const struct cache_entry *ce = active_cache[i++];
-+		if (ce_stage(ce)) {
-+			strbuf_addch(msgbuf, '\t');
-+			strbuf_addstr(msgbuf, ce->name);
-+			strbuf_addch(msgbuf, '\n');
-+			while (i < active_nr && !strcmp(ce->name,
-+							active_cache[i]->name))
-+				i++;
++	for (i = 0; i < sb->len; i++) {
++		nl = memchr(sb->buf + i, '\n', sb->len - i);
++		if (nl)
++			eol = nl - sb->buf;
++		else
++			eol = sb->len;
++		if (!prefixcmp(sb->buf + previous, "\nConflicts:\n")) {
++			ignore_footer = sb->len - previous;
++			break;
 +		}
++		while (i < eol)
++			i++;
++		previous = eol;
 +	}
++	return ignore_footer;
 +}
 +
- static int do_recursive_merge(struct commit *base, struct commit *next,
- 			      const char *base_label, const char *next_label,
- 			      unsigned char *head, struct strbuf *msgbuf,
-@@ -328,21 +346,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	if (opts->signoff)
- 		append_signoff(msgbuf, 0, 0);
+ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			     struct commit *current_head,
+ 			     struct wt_status *s,
+@@ -718,32 +749,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	if (clean_message_contents)
+ 		stripspace(&sb, 0);
  
--	if (!clean) {
--		int i;
--		strbuf_addstr(msgbuf, "\nConflicts:\n");
--		for (i = 0; i < active_nr;) {
--			const struct cache_entry *ce = active_cache[i++];
--			if (ce_stage(ce)) {
--				strbuf_addch(msgbuf, '\t');
--				strbuf_addstr(msgbuf, ce->name);
--				strbuf_addch(msgbuf, '\n');
--				while (i < active_nr && !strcmp(ce->name,
--						active_cache[i]->name))
--					i++;
+-	if (signoff) {
+-		/*
+-		 * See if we have a Conflicts: block at the end. If yes, count
+-		 * its size, so we can ignore it.
+-		 */
+-		int ignore_footer = 0;
+-		int i, eol, previous = 0;
+-		const char *nl;
+-
+-		for (i = 0; i < sb.len; i++) {
+-			nl = memchr(sb.buf + i, '\n', sb.len - i);
+-			if (nl)
+-				eol = nl - sb.buf;
+-			else
+-				eol = sb.len;
+-			if (!prefixcmp(sb.buf + previous, "\nConflicts:\n")) {
+-				ignore_footer = sb.len - previous;
+-				break;
 -			}
+-			while (i < eol)
+-				i++;
+-			previous = eol;
 -		}
+-
+-		append_signoff(&sb, ignore_footer, 0);
 -	}
-+	if (!clean)
-+		append_conflicts_hint(msgbuf);
++	if (signoff)
++		append_signoff(&sb, ignore_non_trailer(&sb), 0);
  
- 	return !clean;
- }
-diff --git a/sequencer.h b/sequencer.h
-index 1fc22dc..c53519d 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -51,5 +51,6 @@ int sequencer_pick_revisions(struct replay_opts *opts);
- extern const char sign_off_header[];
- 
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
-+void append_conflicts_hint(struct strbuf *msgbuf);
- 
- #endif
+ 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
+ 		die_errno(_("could not write commit template"));
 -- 
 2.1.2-620-g33c52cb
