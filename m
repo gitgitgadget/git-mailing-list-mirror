@@ -1,94 +1,157 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/15] refs.c make ref_transaction_create a wrapper to ref_transaction_update
-Date: Tue, 28 Oct 2014 11:40:14 -0700
-Message-ID: <xmqqtx2ojawh.fsf@gitster.dls.corp.google.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 09/15] refs.c: only write reflog update if msg is non-NULL
+Date: Tue, 28 Oct 2014 12:17:23 -0700
+Message-ID: <CAL=YDWkZE0KXrM+SqL1gZoQR_u7kcvWjQfton7AoavfptqcM4w@mail.gmail.com>
 References: <1413919462-3458-1-git-send-email-sahlberg@google.com>
-	<1413919462-3458-2-git-send-email-sahlberg@google.com>
-	<xmqqy4s6smwz.fsf@gitster.dls.corp.google.com>
-	<CAL=YDWm0-6rNrmm2xG18qf9DrAoEOVdtE_o0onQUGu14AwTRxQ@mail.gmail.com>
-	<xmqqh9yusmd3.fsf@gitster.dls.corp.google.com>
+	<1413919462-3458-10-git-send-email-sahlberg@google.com>
+	<xmqq8uk6skky.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue Oct 28 20:12:23 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 28 20:24:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjCBr-0003y1-6l
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 20:12:23 +0100
+	id 1XjCNn-00039f-AO
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 20:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbaJ1TMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2014 15:12:19 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60874 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750722AbaJ1TMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 15:12:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 86AE0189B1;
-	Tue, 28 Oct 2014 15:12:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Atp24UAxxUpnjx0B+XqLeeDebqA=; b=xT0vhb
-	ln59jBaxzGfjAo3nozciufP9cP6arlVpJm2DA3ZlEkp3UNXcybDe4NzQBDxUZmVN
-	fq9ZrX053xI99QCNW/3ueKNlKvcuW3jkiKDmGDVV5Crq9VGJuIzdzctOz6S6SfJW
-	Dssl1wJgEWP/YLOTnU3qlllzADbdD+BS7lrnY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IiVm5ArsJpwR++aIeIk1vGXxPlu4aWkD
-	uCv7G3jtHKsKKW7AhBuWJddsYnFn2FVscz5sEgdm+F2XTpYYKuTz2OvHQNuQAHki
-	64pLkMEMu5CN7UskJv0OusPcZuR2VHMQ54fhy/c++MzgCPRRkvnunve/WhggzMpu
-	cwcTqJAFE8Y=
-Received: from pb-smtp1. (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D9C8189AF;
-	Tue, 28 Oct 2014 15:12:17 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 57684181B5;
-	Tue, 28 Oct 2014 14:40:16 -0400 (EDT)
-In-Reply-To: <xmqqh9yusmd3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 23 Oct 2014 10:54:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DC3D0638-5ED1-11E4-996F-855A93717476-77302942!pb-smtp1.pobox.com
+	id S1752347AbaJ1TYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 15:24:39 -0400
+Received: from mail-qc0-f179.google.com ([209.85.216.179]:62679 "EHLO
+	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230AbaJ1TYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 15:24:38 -0400
+Received: by mail-qc0-f179.google.com with SMTP id o8so1136669qcw.24
+        for <git@vger.kernel.org>; Tue, 28 Oct 2014 12:24:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qKgF994XZOfy8IDgQvraFofzU7eqpslP7vlgxe9aifg=;
+        b=J5FpEMSxJVHDgle5Q9aVbped+xhdEXAjPzURVuV7MmXnNDxqnK/iWcCwGeK+r55pPl
+         0JueGB9pm+glIFKUQ6OsSq0a8H9TVMYzOi3QM3Wnn8FKDu2DbJdZNCDhXdWFRA2Pg273
+         Z/3YW6d/NqqVt+OnfrVuZqJb7o5tcyIpopO9ZHaZ0QJoNTJNKfnzoScXfBEIdKeNpjjI
+         wu3xKL871JxzzCgfbsV+KPf4rcSPOrqMVMtDP4F32aolRMf7BkOTVW8a9OjADHN/s9xE
+         XtSwFc+YxMOUpsGvJoviyidKb/fQEAX1/WOVs8jdqt+DV9mbOk1YIVtBRG6zYGPIU74L
+         IMvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=qKgF994XZOfy8IDgQvraFofzU7eqpslP7vlgxe9aifg=;
+        b=LHAyae26CncWl2RmRYsMRMnxyyD/9UJWiqt5QFTkmylrB6M9EFgwQv8NVG99jHhEBB
+         3lXJZBcdt1XfXh63K7/CattWyQgzjE6R5xV1HPVC4JSpGFkz0o2beB6M67YRJ7Cf8weo
+         Am/IO/7ZoNkIGxUR0DlW+WXLzWMxTBrFzXkx2Y9OMbCZSE/DGEdgQu0tFSWIS2EGNmJl
+         bU4Lljq3sgrKtuI99OiZ1MhV9CVM9ambQNokSW+usMgpabFJ/sfaR+m3NZDOLELpPu6N
+         DQn4TTGyrwu+Pe0XeMlZ1fIhZkoklzTl/l5QHu+Wy+O8aDhQiED23XExmYgxsBR6NqCb
+         5hYA==
+X-Gm-Message-State: ALoCoQlwb4YHv2RGrlnXPHiKpdx/DsVfBu12/OmD6ozUepGf89VhNL2tIsKCxRrD1b+CWQTSOAkq
+X-Received: by 10.140.19.205 with SMTP id 71mr7799299qgh.98.1414523843719;
+ Tue, 28 Oct 2014 12:17:23 -0700 (PDT)
+Received: by 10.229.225.202 with HTTP; Tue, 28 Oct 2014 12:17:23 -0700 (PDT)
+In-Reply-To: <xmqq8uk6skky.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Thu, Oct 23, 2014 at 11:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
 > Ronnie Sahlberg <sahlberg@google.com> writes:
 >
->> On Thu, Oct 23, 2014 at 10:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Ronnie Sahlberg <sahlberg@google.com> writes:
->>>
->>>> Subject: Re: [PATCH 01/15] refs.c make ref_transaction_create a
->>>> wrapper to ref_transaction_update
->>>
->>> Missing colon after "refs.c"
->>> ...
->>>> Change-Id: I687dd47cc4f4e06766e8313b4fd1b07cd4a56c1a
->>>
->>> Please don't leak local housekeeping details into the official
->>> history.
+>> commit 020ed65a12838bdead64bc3c5de249d3c8f5cfd8 upstream.
 >>
->> Ah, Ok.
+>> When performing a reflog transaction update, only write to the reflog iff
+>> msg is non-NULL. This can then be combined with REFLOG_TRUNCATE to perform
+>> an update that only truncates but does not write.
+>
+> Does any existing caller call this codepath with update->msg == NULL?
+>
+> Will "please truncate" stay to be the only plausible special cause
+> to call into this codepath without having any meaningful message?
+>
+> I am trying to make sure that this patch is not painting us into a
+> corner where we will find out another reason for doing something
+> esoteric in this codepath but need to find a way other than setting
+> msg to NULL for the caller to trigger that new codepath.  Put it in
+> another way, please convince me that a new boolean field in update,
+> e.g. update->truncate_reflog, is way overkill for this.
+
+This change only affects whether or not a reflog entry will be emitted
+by the update.
+msg==NULL means we will not create a new entry. This is orthogonal to
+whether we truncate the log or not.
+
+In order to truncate the reflog we do have a boolean in update->flags
+& REFLOG_TRUNCATE
+which determines whether the update will truncate the log or not.
+
+I see these two actions a) write a log entry and b) truncate the log
+as orthogonal and thus think we should have separate knobs for them.
+
+
+Currently, modulo bugs, the only caller that will use msg==NULL is
+when we do reflog truncations. Thus that codepath BOTH sets msg==NULL
+(to not write a new log entry) and also sets
+update->flags&REFLOG_TRUNCATE (to truncate the log).
+
+
+Having separate knobs for the two actions allow us the current behaviour with:
+  msg==NULL update->flags&REFLOG_TRUNCATE
+
+but it will also allow a caller to do things like
+   msg="truncated by foo because ..." update->flags&REFLOG_TRUNCATE
+
+If there is some future usecase where we want to truncate the log and
+then also generate a new initial log entry for the new log.
+
+
+I will work on the commit message to make the distinction between
+msg==NULL and update->flags&REFLOG_TRUNCATE more clear.
+
+
+thanks
+ronnie sahlberg
+
+
+>
 >>
->> Do you want me to re-send the series with these lines deleted ?
->
-> When the series is rerolled, I'd like to see these crufts gone.
->
-> But please do not re-send the series without waiting for further
-> reviews and making necessary updates, if any.  Otherwise it will
-> only make extra busywork for you and me.
-
-I've read thru 01/15 (i.e. this first series out of the three) and
-have no further comments so far.  There are a few questions I asked
-that haven't been answered, and hopefully others will help to move
-this series forward by lending eyeballs further.
-
-Thanks.
+>> Change-Id: I44c89caa7e7c4960777b79cfb5d339a5aa3ddf7a
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> ---
+>>  refs.c | 5 +++--
+>>  refs.h | 1 +
+>>  2 files changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/refs.c b/refs.c
+>> index d54c3b9..f14b76e 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -3895,8 +3895,9 @@ int transaction_commit(struct transaction *transaction,
+>>                               update->reflog_fd = -1;
+>>                               continue;
+>>                       }
+>> -             if (log_ref_write_fd(update->reflog_fd, update->old_sha1,
+>> -                                  update->new_sha1,
+>> +             if (update->msg &&
+>> +                 log_ref_write_fd(update->reflog_fd,
+>> +                                  update->old_sha1, update->new_sha1,
+>>                                    update->committer, update->msg)) {
+>>                       error("Could write to reflog: %s. %s",
+>>                             update->refname, strerror(errno));
+>> diff --git a/refs.h b/refs.h
+>> index 5075073..bf96b36 100644
+>> --- a/refs.h
+>> +++ b/refs.h
+>> @@ -337,6 +337,7 @@ int transaction_delete_ref(struct transaction *transaction,
+>>  /*
+>>   * Append a reflog entry for refname. If the REFLOG_TRUNCATE flag is set
+>>   * this update will first truncate the reflog before writing the entry.
+>> + * If msg is NULL no update will be written to the log.
+>>   */
+>>  int transaction_update_reflog(struct transaction *transaction,
+>>                             const char *refname,
