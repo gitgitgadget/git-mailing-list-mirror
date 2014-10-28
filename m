@@ -1,61 +1,125 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Anomaly with the new code - Re: git-svn performance
-Date: Tue, 28 Oct 2014 07:45:34 +0000
-Message-ID: <20141028074534.GB7762@dcvr.yhbt.net>
-References: <1414452388.89217.YahooMailBasic@web172306.mail.ir2.yahoo.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v3 2/2] difftool: add support for --trust-exit-code
+Date: Tue, 28 Oct 2014 02:34:09 -0700
+Message-ID: <20141028093407.GA20944@gmail.com>
+References: <544CAC30.7000607@kdbg.org>
+ <1414372542-3485-1-git-send-email-davvid@gmail.com>
+ <1414372542-3485-2-git-send-email-davvid@gmail.com>
+ <xmqq38a9tkqt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
-	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
-	amyrick@apple.com
-To: Hin-Tak Leung <htl10@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Oct 28 08:46:01 2014
+Cc: git@vger.kernel.org, Adri Farr <14farresa@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 28 10:34:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xj1TW-0002MD-PM
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 08:45:55 +0100
+	id 1Xj3A6-0001p7-1i
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 10:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758120AbaJ1Hpg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2014 03:45:36 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:36788 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755725AbaJ1Hpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 03:45:35 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2BE71F665;
-	Tue, 28 Oct 2014 07:45:34 +0000 (UTC)
+	id S1753216AbaJ1Jdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 05:33:53 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:39261 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751762AbaJ1Jdu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 05:33:50 -0400
+Received: by mail-pa0-f42.google.com with SMTP id bj1so332539pad.1
+        for <git@vger.kernel.org>; Tue, 28 Oct 2014 02:33:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+FC9VXdw2xjjqJ/A0/WpBec8zdVEFloIr2GjNbqXdOM=;
+        b=LSOxWOXMc+FRsCZyLpCfTkEfZm9lWTm45fKkqMcsg3/vKHuxfk362xJyBZRrEUkQIC
+         LPuEn3X4DJZZZBe0hmff9aibeaFYO7TtMN7MkVZPnNtmxAfQeJkK9pCLMDdbAOsjXOGx
+         fSqFQnB6gsBrVxQwvYbrgaVO9J7nXyIcpTMHu9W7HmbHH4d/hiLupv/bgnz8vpSHVVNz
+         Lo67fIrIaQQq0a3KHMj6v1FkP9FPo5JUn89/JjV7qiZrIV0+/7Wsl+g1R7nYdpVCmdRv
+         X9fHSZoIDsJbwa5HHMbaT640knPUuuaiZRjKGIdx52Ow66Kdopx1Hw6zSpErNBeXCAlk
+         zZJw==
+X-Received: by 10.66.138.47 with SMTP id qn15mr2162470pab.82.1414488830019;
+        Tue, 28 Oct 2014 02:33:50 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id dl1sm1144237pbc.16.2014.10.28.02.33.48
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 28 Oct 2014 02:33:49 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1414452388.89217.YahooMailBasic@web172306.mail.ir2.yahoo.com>
+In-Reply-To: <xmqq38a9tkqt.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
-> >Eric Wong <normalperson@yhbt.net> wrote:
-> >> Which SVN version are you using?=C2=A0 I'm cloning (currently on r=
-373xx)
-> >> https://svn.r-project.org/R using --stdlayout and
-> >> unable to see memory growth of the git-svn Perl process beyond 40M
-> >> (on a 32-bit system).
-> >
-> >git-svn hit 45M and took 11:44 to finish.=C2=A0=C2=A0=C2=A0My ping t=
-imes to
-> >svn.r-project.org is around 150ms (I'm running this from a server in
-> >Fremont, California).=C2=A0 I'll keep the repo around and periodical=
-ly fetch
-> >to see how it runs.
->=20
-> I'll apply the 10 patches against 2.1.0 and see then. As I wrote
-> in my last reply, my 3rd clone took about 8 hours to finish,
-> and the max resident size is about 700MB (according to GNU "time").
+On Mon, Oct 27, 2014 at 11:45:14AM -0700, Junio C Hamano wrote:
+> David Aguilar <davvid@gmail.com> writes:
+> 
+> > +write_script .git/fail-right-file <<\EOF
+> > +echo "$2"
+> > +exit 1
+> > +EOF
+> 
+> This should be inside the next one, no?
+> 
+> > +test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
+> > +	>for-diff &&
+> > +	git add for-diff &&
+> > +	echo file>expect &&
+> > +	test_must_fail git difftool -y --trust-exit-code \
+> > +		--extcmd .git/fail-right-file branch >actual &&
+> > +	test_cmp expect actual &&
+> > +	git reset -- for-diff &&
+> > +	rm -f for-diff .git/fail-right-file
+> > +'
+> 
+> In other words, this squashed in.
 
-The "time" command is not a good measurement since it includes child
-process memory use (which may be file-backed mmap for git repack or
-"git cat-file --batch").  My measurements are just the RSS of the
-git-svn Perl process (from "ps aux" or VmRSS in /proc/$PID/status
-on Linux)
+
+Yes, please.  And drop patch 1/2, of course.
+Thanks for the clarification.
+
+
+> 
+>  t/t7800-difftool.sh | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
+> 
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 4b2f611..69bde7a 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -104,20 +104,19 @@ test_expect_success PERL 'difftool ignores exit code with --no-trust-exit-code'
+>  	git difftool -y --no-trust-exit-code -t error branch
+>  '
+>  
+> -write_script .git/fail-right-file <<\EOF
+> -echo "$2"
+> -exit 1
+> -EOF
+> -
+>  test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
+> +	test_when_finished "rm -f for-diff .git/fail-right-file" &&
+> +	test_when_finished "git reset -- for-diff" &&
+> +	write_script .git/fail-right-file <<-\EOF &&
+> +	echo "$2"
+> +	exit 1
+> +	EOF
+>  	>for-diff &&
+>  	git add for-diff &&
+> -	echo file>expect &&
+> +	echo file >expect &&
+>  	test_must_fail git difftool -y --trust-exit-code \
+>  		--extcmd .git/fail-right-file branch >actual &&
+> -	test_cmp expect actual &&
+> -	git reset -- for-diff &&
+> -	rm -f for-diff .git/fail-right-file
+> +	test_cmp expect actual
+>  '
+>  
+>  test_expect_success PERL 'difftool honors --gui' '
+
+-- 
+David
