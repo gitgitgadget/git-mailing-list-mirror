@@ -1,226 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 4/4] merge & sequencer: turn "Conflicts:" hint into a comment
-Date: Tue, 28 Oct 2014 14:36:52 -0700
-Message-ID: <1414532212-9016-5-git-send-email-gitster@pobox.com>
-References: <1414532212-9016-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 28 22:57:24 2014
+From: mike.gorchak.qnx@gmail.com
+Subject: Re: [PATCH] use child_process_init() to initialize struct child_process variables
+Date: Tue, 28 Oct 2014 17:58:56 -0400
+Message-ID: <20141028215856.6643859.60752.16778@gmail.com>
+References: <54500212.7040603@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 28 22:59:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjElU-0007g0-Px
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 22:57:21 +0100
+	id 1XjEnD-0000Vy-7Q
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 22:59:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323AbaJ1V5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Oct 2014 17:57:15 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61438 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753305AbaJ1V5N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Oct 2014 17:57:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 622311AFD8;
-	Tue, 28 Oct 2014 17:57:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=B8QW
-	rVUEHth9tdTExx1S3GihCQY=; b=JJ3siYEABpgHPO9+c8a6+Y6ddoloeb3fiuCD
-	4uBzXeRQRiuP3aVDhkuSJL1s+pg7WZ5OIfMLhwgrF4A8qEuJTAZKBjJ2dnL8bfll
-	jt+I/CP++N837K9qi2WaGXcs08VxXZunqtEtRCnKxbBY+uDrE12zvjeVmw1pbfxa
-	cviUWks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=DEshGE
-	r1Qx5UncNcW4AO1PTvLVGOuvqvJ/Z22oNvfIhlpRf0rXehhU1Eo0DNpxgMCx56fF
-	3OaQNXw8qqveBeyAEOS4z0wKKJbRwyM9qw56jGETl8PUIr3qvI84cSFLM6QtxAe6
-	A6L0TqmWAiKnvZKvEDwkXsvOSCJVNp3ClyM88=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 585931AFD7;
-	Tue, 28 Oct 2014 17:57:13 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 98BAB1AAB3;
-	Tue, 28 Oct 2014 17:37:04 -0400 (EDT)
-X-Mailer: git-send-email 2.1.2-620-g33c52cb
-In-Reply-To: <1414532212-9016-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 8F3B669A-5EEA-11E4-910A-527C6E758C04-77302942!pb-smtp1.pobox.com
+	id S1755758AbaJ1V7A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Oct 2014 17:59:00 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:43931 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755720AbaJ1V65 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Oct 2014 17:58:57 -0400
+Received: by mail-ie0-f172.google.com with SMTP id rl12so1756827iec.3
+        for <git@vger.kernel.org>; Tue, 28 Oct 2014 14:58:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:content-transfer-encoding:message-id:date
+         :subject:from:in-reply-to:references:to:cc;
+        bh=h4GoQQhN+nKCwYiMJcgukGA1Q/sI+xUx4iirux6Xfrg=;
+        b=X1XwKqXJq7jnzbkk1e3NBHm6BA1dbyRxFYs/IL5svGwmKhi2OxqLCBi4pB0BHrQRqn
+         RJ8FDyjfITMSNs9ZEmmhAZljwG90NYJuQDFr/MbcCBuZtjRYTxA5ocSDnXiQSwymxr5/
+         GevD85qEm1bBj6tk0a42JyIFYTt9D0V4wsTvjmPdWHo0uM4rlDxkgSNoTnlSMOGIt5/z
+         nWQ+x0Qx/Nk/NqrDwZ5oL/NGVj657zMmkFtOnzDB5DLQxNBkYojy4hTYhfvXri/njiG0
+         Wy6Z4kDLWqJmsE08eH6fubSKw69opNRm6fmrP3J976vSx8c7KOuKDVzFr0UeiZrwCGj/
+         wHlg==
+X-Received: by 10.107.150.213 with SMTP id y204mr7087272iod.59.1414533537308;
+        Tue, 28 Oct 2014 14:58:57 -0700 (PDT)
+Received: from [127.0.0.1] ([24.114.84.210])
+        by mx.google.com with ESMTPSA id xb4sm1465654igc.11.2014.10.28.14.58.56
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 28 Oct 2014 14:58:56 -0700 (PDT)
+X-Mailer: BlackBerry Email (10.2.1.3247)
+In-Reply-To: <54500212.7040603@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like other hints such as "Changes to be committed" we show in
-the editor to remind the committer what paths were involved in the
-resulting commit to help improving their log message, this section
-is merely a reminder.
 
-Traditionally, it was not made into comments primarily because it
-has to be generated outside the wt-status infrastructure, and also
-because it was meant as a bit stronger reminder than the others
-(i.e. explaining how you resolved conflicts is much more important
-than mentioning what you did to every paths involved in the commit).
 
-But that still does not make this hint a part of the log message
-proper, and not showing it as a comment is inviting mistakes.
+Sent from my BlackBerry 10 smartphone on the Rogers network.
+=A0 Original Message =A0
+=46rom: Ren=E9 Scharfe
+Sent: Tuesday, October 28, 2014 16:59
+To: Git Mailing List
+Cc: Junio C Hamano
+Subject: [PATCH] use child_process_init() to initialize struct child_pr=
+ocess variables
 
-Note that we still notice "Conflicts:" followed by list of indented
-pathnames as an old-style cruft and insert a new Signed-off-by:
-before it.  This is so that "commit --amend -s" adds the new S-o-b
-at the right place when used on an older commit.
+Call child_process_init() instead of zeroing the memory of variables of
+type struct child_process by hand before use because the former is both
+clearer and shorter.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/commit.c                | 47 +++++++++++++++++++++++++++--------------
- sequencer.c                     |  7 +++---
- t/t3507-cherry-pick-conflict.sh | 42 +++++++++++++++++++++++++++++-------
- 3 files changed, 68 insertions(+), 28 deletions(-)
+bundle.c | 2 +-
+column.c | 2 +-
+trailer.c | 2 +-
+transport-helper.c | 2 +-
+4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index cd455aa..0a78e76 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -596,32 +596,47 @@ static char *cut_ident_timestamp_part(char *string)
- /*
-  * Inspect sb and determine the true "end" of the log message, in
-  * order to find where to put a new Signed-off-by: line.  Ignored are
-- * trailing "Conflict:" block.
-+ * trailing comment lines and blank lines, and also the traditional
-+ * "Conflicts:" block that is not commented out, so that we can use
-+ * "git commit -s --amend" on an existing commit that forgot to remove
-+ * it.
-  *
-  * Returns the number of bytes from the tail to ignore, to be fed as
-  * the second parameter to append_signoff().
-  */
- static int ignore_non_trailer(struct strbuf *sb)
- {
--	int ignore_footer = 0;
--	int i, eol, previous = 0;
--	const char *nl;
-+	int boc = 0;
-+	int bol = 0;
-+	int in_old_conflicts_block = 0;
- 
--	for (i = 0; i < sb->len; i++) {
--		nl = memchr(sb->buf + i, '\n', sb->len - i);
--		if (nl)
--			eol = nl - sb->buf;
-+	while (bol < sb->len) {
-+		char *next_line;
-+
-+		if (!(next_line = memchr(sb->buf + bol, '\n', sb->len - bol)))
-+			next_line = sb->buf + sb->len;
- 		else
--			eol = sb->len;
--		if (!prefixcmp(sb->buf + previous, "\nConflicts:\n")) {
--			ignore_footer = sb->len - previous;
--			break;
-+			next_line++;
-+
-+		if (sb->buf[bol] == comment_line_char || sb->buf[bol] == '\n') {
-+			/* is this the first of the run of comments? */
-+			if (!boc)
-+				boc = bol;
-+			/* otherwise, it is just continuing */
-+		} else if (!prefixcmp(sb->buf + bol, "Conflicts:\n")) {
-+			in_old_conflicts_block = 1;
-+			if (!boc)
-+				boc = bol;
-+		} else if (in_old_conflicts_block && sb->buf[bol] == '\t') {
-+			; /* a pathname in the conflicts block */
-+		} else if (boc) {
-+			/* the previous was not trailing comment */
-+			boc = 0;
-+			in_old_conflicts_block = 0;
- 		}
--		while (i < eol)
--			i++;
--		previous = eol;
-+		bol = next_line - sb->buf;
- 	}
--	return ignore_footer;
-+	return boc ? sb->len - boc : 0;
- }
- 
- static int prepare_to_commit(const char *index_file, const char *prefix,
-diff --git a/sequencer.c b/sequencer.c
-index 0f84bbe..1d97da3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -291,13 +291,12 @@ void append_conflicts_hint(struct strbuf *msgbuf)
- {
- 	int i;
- 
--	strbuf_addstr(msgbuf, "\nConflicts:\n");
-+	strbuf_addch(msgbuf, '\n');
-+	strbuf_commented_addf(msgbuf, "Conflicts:\n");
- 	for (i = 0; i < active_nr;) {
- 		const struct cache_entry *ce = active_cache[i++];
- 		if (ce_stage(ce)) {
--			strbuf_addch(msgbuf, '\t');
--			strbuf_addstr(msgbuf, ce->name);
--			strbuf_addch(msgbuf, '\n');
-+			strbuf_commented_addf(msgbuf, "\t%s\n", ce->name);
- 			while (i < active_nr && !strcmp(ce->name,
- 							active_cache[i]->name))
- 				i++;
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 223b984..7c5ad08 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -351,19 +351,45 @@ test_expect_success 'commit after failed cherry-pick does not add duplicated -s'
- test_expect_success 'commit after failed cherry-pick adds -s at the right place' '
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick picked &&
-+
- 	git commit -a -s &&
--	pwd &&
--	cat <<EOF > expected &&
--picked
- 
--Signed-off-by: C O Mitter <committer@example.com>
-+	# Do S-o-b and Conflicts appear in the right order?
-+	cat <<-\EOF >expect &&
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	# Conflicts:
-+	EOF
-+	grep -e "^# Conflicts:" -e '^Signed-off-by' <.git/COMMIT_EDITMSG >actual &&
-+	test_cmp expect actual &&
-+
-+	cat <<-\EOF >expected &&
-+	picked
- 
--Conflicts:
--	foo
--EOF
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	EOF
- 
--	git show -s --pretty=format:%B > actual &&
-+	git show -s --pretty=format:%B >actual &&
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'commit --amend -s places the sign-off at the right place' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick picked &&
-+
-+	# emulate old-style conflicts block
-+	mv .git/MERGE_MSG .git/MERGE_MSG+ &&
-+	sed -e "/^# Conflicts:/,\$s/^# *//" <.git/MERGE_MSG+ >.git/MERGE_MSG &&
-+
-+	git commit -a &&
-+	git commit --amend -s &&
-+
-+	# Do S-o-b and Conflicts appear in the right order?
-+	cat <<-\EOF >expect &&
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Conflicts:
-+	EOF
-+	grep -e "^Conflicts:" -e '^Signed-off-by' <.git/COMMIT_EDITMSG >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.1.2-620-g33c52cb
+diff --git a/bundle.c b/bundle.c
+index fa67057..c846092 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -381,7 +381,7 @@ int create_bundle(struct bundle_header *header, con=
+st char *path,
+write_or_die(bundle_fd, "\n", 1);
+
+/* write pack */
+-	memset(&rls, 0, sizeof(rls));
++	child_process_init(&rls);
+argv_array_pushl(&rls.args,
+"pack-objects", "--all-progress-implied",
+"--stdout", "--thin", "--delta-base-offset",
+diff --git a/column.c b/column.c
+index 8082a94..786abe6 100644
+--- a/column.c
++++ b/column.c
+@@ -374,7 +374,7 @@ int run_column_filter(int colopts, const struct col=
+umn_options *opts)
+if (fd_out !=3D -1)
+return -1;
+
+-	memset(&column_process, 0, sizeof(column_process));
++	child_process_init(&column_process);
+argv =3D &column_process.args;
+
+argv_array_push(argv, "column");
+diff --git a/trailer.c b/trailer.c
+index 8514566..7ff036c 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -237,7 +237,7 @@ static const char *apply_command(const char *comman=
+d, const char *arg)
+strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
+
+argv[0] =3D cmd.buf;
+-	memset(&cp, 0, sizeof(cp));
++	child_process_init(&cp);
+cp.argv =3D argv;
+cp.env =3D local_repo_env;
+cp.no_stdin =3D 1;
+diff --git a/transport-helper.c b/transport-helper.c
+index 6cd9dd1..0224687 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -414,7 +414,7 @@ static int get_exporter(struct transport *transport=
+,
+struct child_process *helper =3D get_helper(transport);
+int i;
+
+-	memset(fastexport, 0, sizeof(*fastexport));
++	child_process_init(fastexport);
+
+/* we need to duplicate helper->in because we want to use it after
+* fastexport is done with it. */
+--=20
+2.1.2
+
