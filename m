@@ -1,129 +1,76 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 01/19] dir.c: optionally compute sha-1 of a .gitignore file
-Date: Tue, 28 Oct 2014 07:12:26 +0700
-Message-ID: <CACsJy8CgiQhAs2ydKLei9QUZLUXCfCHMCAaZcOdKgMVBGNB=FA@mail.gmail.com>
-References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
- <1414411846-4450-2-git-send-email-pclouds@gmail.com> <xmqq7fzl5dxw.fsf@gitster.dls.corp.google.com>
+From: Hin-Tak Leung <htl10@users.sourceforge.net>
+Subject: differences between old clone and new  Re: git-svn performance
+Date: Tue, 28 Oct 2014 05:40:07 +0000
+Message-ID: <1414474807.30075.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+References: <1414452388.89217.YahooMailBasic@web172306.mail.ir2.yahoo.com>
+Reply-To: htl10@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 28 01:13:03 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
+	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
+	amyrick@apple.com
+To: normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Tue Oct 28 06:40:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XiuPF-0002LN-VX
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 01:13:02 +0100
+	id 1XizVz-00026l-Ck
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Oct 2014 06:40:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbaJ1AM6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Oct 2014 20:12:58 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:52561 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752692AbaJ1AM5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Oct 2014 20:12:57 -0400
-Received: by mail-ie0-f176.google.com with SMTP id rd18so4804145iec.7
-        for <git@vger.kernel.org>; Mon, 27 Oct 2014 17:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ngsKGivglcrOiUuvWAZA8k+dBO7Hm6ESxLN8nv1x7BQ=;
-        b=D8OKE4b15toXZdKjXfDJDHun8LARzDiuR58iLzdtHey4JZPIMf3utemlKketKdbU4W
-         NcxE3gU8zB7wMEHtMumjXA1VWWz+6CWy0BDktGcSd7U10qErIBgv4phBLrQ7gSVuiTsU
-         ZsFN/YsU30gsh9RtuiZOH080QDRyOwZjB9kfbgY4rQg1SBLL17B69eDpjfdR0widLaHq
-         kh63TNzRI/JjMiJmCkRZNITmwo8Bqfaetsk+CitjggLNp9PRc4uCLoI52MW58cF16GSk
-         QMwpqL9sNArqkYsMHd/76d7EJL7UG6Os2UCPOJIN0CvFHDS/LB70Oz1r5i85vRkHCUIE
-         O+5w==
-X-Received: by 10.107.38.136 with SMTP id m130mr28981iom.72.1414455176796;
- Mon, 27 Oct 2014 17:12:56 -0700 (PDT)
-Received: by 10.107.176.8 with HTTP; Mon, 27 Oct 2014 17:12:26 -0700 (PDT)
-In-Reply-To: <xmqq7fzl5dxw.fsf@gitster.dls.corp.google.com>
+	id S1756452AbaJ1FkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Oct 2014 01:40:12 -0400
+Received: from nm4-vm8.bullet.mail.ir2.yahoo.com ([212.82.96.106]:49335 "EHLO
+	nm4-vm8.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751461AbaJ1FkJ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Oct 2014 01:40:09 -0400
+Received: from [212.82.98.49] by nm4.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 05:40:07 -0000
+Received: from [212.82.98.83] by tm2.bullet.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 05:40:07 -0000
+Received: from [127.0.0.1] by omp1020.mail.ir2.yahoo.com with NNFMP; 28 Oct 2014 05:40:07 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 532663.76127.bm@omp1020.mail.ir2.yahoo.com
+Received: (qmail 54467 invoked by uid 60001); 28 Oct 2014 05:40:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1414474807; bh=AeFOd3s9KX77ManLTnZnQlSz3mo3uGxxfHfv3xSbMEg=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=MuCLA5bRI6vM1gksVoVJqFZPrhws/mJTh9rc9YLGRF5lj81IF8T/cv2rBkWXYBa3HAmmuM3H+Gpo7DTCGgEMReRty1IPfNHQFJlWWs3kQP3ly6ouVynYBkmpb/Q/VhCSxvi0mWXozogg/xLltfRdbY4FWeGOyweNoc1xLF3WIWg=
+X-YMail-OSG: mOOhECYVM1n.XaFTZDfnmY9ZV7FQKn1ccExoQECV9YL79Uy
+ bXi5rHgP1ZUc0MhqmF7Fjk4y42yK0GwImNvWoNdaSeqbHxtxblYP.7AYnEY1
+ uqNHSNBk.H3ijmFx.Bm9_PFnq_sKKknnTr8HYa5lJ3RpEBZ5Rffdh16BYLrW
+ Xfomuhytb1UN3h9b_sMZbK.cicoh5CSzc.qpfxzPCX5zJfArwiM4Wc2ezW58
+ MStjWD_3R7aBXkR0Db3wSOth7sU7WqaFCYWR_GmYVC8wSY314HRLJ_fRN_Uq
+ y2AnKHZE5NYmF9CzBOqJMcAZdbyhisj9M8u7oPgMbA.MLt4V6pkwJbErRBxG
+ TIdmfbUdtSdUR.OLQlM8MCIT3.CD0nNR8xWwB9QB5A6bOzCjYIQX6K5nXfYT
+ hUrSTWmSujX0j9t_hl.arxODYKZvGJ0XPmh5y236hQ7XMhoxwdzmvIOhpi8D
+ 4_m4IPnU4CyxkewMHu65rCJn3..U0Vj43xcCpFbr_6wi7ya1iFV9xn8DpJoX
+ ziqUqUvXCMgVFvp8awlECFtgWYHIw1cXFahbhmmipaT3TxG7t1p1_a97sBKS
+ E2A--
+Received: from [86.30.137.134] by web172303.mail.ir2.yahoo.com via HTTP; Tue, 28 Oct 2014 05:40:07 GMT
+X-Rocket-MIMEInfo: 002.001,VG8gY29tcGFyZSB0aGUgb2xkIGNsb25lIHdpdGggdGhlIG5ldywgSSBkaWQ6DQoNCmdpdCBicmFuY2ggLXIgfCBzb3J0IHwgeGFyZ3MgLW4gMSBnaXQgbG9nIC0tZGVjb3JhdGU9ZnVsbCAtbiAxDQoNCkl0IHR1cm5lZCBvdXQgb3RoZXIgdGhhbiB0aGUgZW1wdHkgdnMgMyB3b3JkIGNvbW1pdCBtZXNzYWdlcw0KYWJvdXQgdHdvIHllYXJzIGFnbyBvbiB0cnVuayAod2hpY2ggYXJlIGluaGVyaXRlZCBpbiBhbGwgdGhlIG5ld2VyDQpicmFuY2hlcyksIHRoZXJlIGFyZSB0d28gb3RoZXIgZ3JvdXBzIG9mIGRpZmYBMAEBAQE-
+X-RocketYMMF: hintak_leung
+X-Mailer: YahooMailClassic/810 YahooMailWebService/0.8.203.733
+In-Reply-To: <1414452388.89217.YahooMailBasic@web172306.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 28, 2014 at 5:46 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> This is not used anywhere yet. But the goal is to compare quickly if=
- a
->> .gitignore file has changed when we have the SHA-1 of both old (cach=
-ed
->> somewhere) and new (from index or a tree) versions.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  dir.c | 50 +++++++++++++++++++++++++++++++++++++++++++-------
->>  dir.h |  5 +++++
->>  2 files changed, 48 insertions(+), 7 deletions(-)
->>
->> diff --git a/dir.c b/dir.c
->> index bd274a7..33a35c1 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -466,7 +466,8 @@ void add_exclude(const char *string, const char =
-*base,
->>       x->el =3D el;
->>  }
->>
->> -static void *read_skip_worktree_file_from_index(const char *path, s=
-ize_t *size)
->> +static void *read_skip_worktree_file_from_index(const char *path, s=
-ize_t *size,
->> +                                             struct sha1_stat *ss)
->>  {
->>       int pos, len;
->>       unsigned long sz;
->> @@ -485,6 +486,10 @@ static void *read_skip_worktree_file_from_index=
-(const char *path, size_t *size)
->>               return NULL;
->>       }
->>       *size =3D xsize_t(sz);
->> +     if (ss) {
->> +             memset(&ss->stat, 0, sizeof(ss->stat));
->> +             hashcpy(ss->sha1, active_cache[pos]->sha1);
->> +     }
->>       return data;
->>  }
->>
->> @@ -529,11 +534,18 @@ static void trim_trailing_spaces(char *buf)
->>               *last_space =3D '\0';
->>  }
->>
->> -int add_excludes_from_file_to_list(const char *fname,
->> -                                const char *base,
->> -                                int baselen,
->> -                                struct exclude_list *el,
->> -                                int check_index)
->> +/*
->> + * Given a file with name "fname", read it (either from disk, or fr=
-om
->> + * the index if "check_index" is non-zero), parse it and store the
->> + * exclude rules in "el".
->> + *
->> + * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
->> + * stat data from disk (only valid if add_excludes returns zero). I=
-f
->> + * ss_valid is non-zero, "ss" must contain good value as input.
->> + */
->
-> Hmm, do we want a separate parameter for that?  Wouldn't it be
-> sufficient and cleaner to pass is_null_sha1(ss->sha1[]),
+To compare the old clone with the new, I did:
 
-Hm.. no. If both ss->sha1 and ss->stat are valid, then we could try to
-match stat on disk and reuse ss->sha1, so we can't use a special value
-of ss->sha1[] to mark the validity.
+git branch -r | sort | xargs -n 1 git log --decorate=full -n 1
 
-> or alternatively have an element ss->valid that is initialized to fal=
-se?
+It turned out other than the empty vs 3 word commit messages
+about two years ago on trunk (which are inherited in all the newer
+branches), there are two other groups of differences.
 
-Yeah..
---=20
-Duy
+One branch on the old clone has an extra merge from trunk (
+and some extra trunk commits) listed in 'git log', while
+another branch has the exact opposite - on the old clone
+has one fewer merge.
+
+I see the merge seem to be genuine - the subversion log
+often says so e.g. "ported from rXXX from trunk", but
+the extra/missing pattern isn't consistent.
+
+So the histories are largely the same, except due to the 
+extra merge, don't have the same sha1 sums.
