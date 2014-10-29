@@ -1,64 +1,99 @@
-From: Peter Vojtek <peter.vojtek@gmail.com>
-Subject: Is there way to set git commit --date to be older than 1970 ?
-Date: Wed, 29 Oct 2014 19:49:19 +0100
-Message-ID: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] cache-tree: avoid infinite loop on zero-entry tree
+Date: Wed, 29 Oct 2014 11:50:12 -0700
+Message-ID: <xmqqppdayal7.fsf@gitster.dls.corp.google.com>
+References: <20141029171158.GA32188@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 29 19:49:53 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 29 19:50:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjYJW-0002X5-2J
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 19:49:46 +0100
+	id 1XjYK5-0002tb-TK
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 19:50:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756067AbaJ2Stm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2014 14:49:42 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:47945 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752071AbaJ2Stl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2014 14:49:41 -0400
-Received: by mail-ie0-f181.google.com with SMTP id rp18so1929905iec.40
-        for <git@vger.kernel.org>; Wed, 29 Oct 2014 11:49:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=QjXll4WM0iMyQ/PuXmZEunWPzOMzVbz1Xv1TgrT/pcg=;
-        b=lB8MY0pZ2iJk2KqqauSLyuHmXVOyKcf9eNRebj7aKrPQKZkXL4U1XKw69cxGZ8klhU
-         E0UE10sxb6IyjI/YP7hOKihJhTrOBNOASRfOJCW0o1zonqZd1nXbRQnYCAKSLCfN03J2
-         J8bx0GzfxYFrsf1L+wc7WjTf93NKewF6S7sjm4sLkpjZt5XCucWCdrj0CH12jkNZcbli
-         2+1Qt+Go0mZJ9Anflr4Gq6oJL23DTolNntGlZPpkgAYFRMTkYKxeZhI18cLTCEvP9jVw
-         CxambXtmEupXg8+5dYkhJ3401VlOMrf97tiuJH8x/I4VORZiIHeV39VC6R0CYOrdPcQ6
-         WxvA==
-X-Received: by 10.50.253.67 with SMTP id zy3mr14934882igc.45.1414608581358;
- Wed, 29 Oct 2014 11:49:41 -0700 (PDT)
-Received: by 10.50.207.3 with HTTP; Wed, 29 Oct 2014 11:49:19 -0700 (PDT)
+	id S1756104AbaJ2SuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2014 14:50:15 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52356 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752071AbaJ2SuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2014 14:50:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD708199C0;
+	Wed, 29 Oct 2014 14:50:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O7sk+zEE5HiWPTMOQJO4xVteFbI=; b=GeaTCr
+	k/goELuham3/AIkgr4WBZ8sPZEeFt8s0LnpJC8+Zaor5Qe2y9h2bQW1YeUd6sKE0
+	p3NMVE4J42cRG6e297ip9jbpADzy1vROlEcaz2+zZnsWM5mcGY+PFNYNB2Iajyh6
+	Z+J+NgMIjI5y1iQh4rVnY1hvjNUGmAoSIpgSM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=obg296M9gy3pmGcnpZjM0LSnOUS93q1d
+	2cdckZHpKvXzl8JzMYcE/embgnbARwqd8JV2c/Z4XCtlSrBkpYz1Hj4CCYBAYmG2
+	YKFpLb8rddMFvYM85gEs2Hyjql/wC8P8LAS+U/fM1vYTg3LT+ymz/lXSFTDgPuyE
+	qccC2Zp/2qk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3CEE199BF;
+	Wed, 29 Oct 2014 14:50:13 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AA7D199BE;
+	Wed, 29 Oct 2014 14:50:13 -0400 (EDT)
+In-Reply-To: <20141029171158.GA32188@peff.net> (Jeff King's message of "Wed,
+	29 Oct 2014 13:11:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6A6F3578-5F9C-11E4-A62D-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Jeff King <peff@peff.net> writes:
 
-I am playing with git in slightly unusual manner - e.g., to use git to
-store history of europe:
+> I'm a little iffy on this just because it is fixing one particular bug,
+> and I am sure there are probably a bunch of other ways to have a bogus
+> index. Fundamentally, I think we pretty much trust that the index was
+> not maliciously generated (unlike packfiles, for instance, which can
+> come from elsewhere).  Still, this is one step closer to safe, and the
+> bug was seen in the wild, so maybe it is worth doing.
 
-$ touch Italy
-$ git add Italy
-$ git commit -m "add Italy" --date="01/01/1861T01:01:01" # Italy
-gained sovereignity at year 1861
-fatal: invalid date format: 01/01/1861T01:01:01
+Is it cheap to sanity-check the input when we map in the cache-tree
+upon read_cache()?  Then we can just invalidate the cache-tree,
+either in its entirety (easy) or just the bogus subpart (maybe not
+worth doing).
 
-It seems the commit date can be between 1970 and 2100 (on my 32bit
-linux), however man git (section DATE FORMATS) claims ISO 8601
-standard is supported.  ISO 8601 allows even B.C. dates (via minus
-sign).
+> We could alternatively (or in addition) reject 0-entry cache trees when
+> reading them from disk. The trick, though, is that it is not just
+> records with 0 entries, but ones where the sum of the entries and
+> subtree entries is 0. Given that it is not something we expect to
+> happen, it is easier to catch it here. And we know there can be no
+> regressions for missed corner cases, because the case we are catching
+> here would _always_ have gone into an infinite loop before this patch.
 
+OK.  I wonder if we can instead die here but propagate the error
+back up the callchain and have the ultimate caller rebuild the cache
+tree without paying attention to the existing data that we now know
+is bogus.
 
-I understand that this is rather an esoteric use case :)
-
-Regards,
-
-Peter
+>  cache-tree.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 215202c..32772b9 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -303,6 +303,8 @@ static int update_one(struct cache_tree *it,
+>  				    flags);
+>  		if (subcnt < 0)
+>  			return subcnt;
+> +		if (!subcnt)
+> +			die("index cache-tree records empty sub-tree");
+>  		i += subcnt;
+>  		sub->count = subcnt; /* to be used in the next loop */
+>  		*skip_count += subskip;
