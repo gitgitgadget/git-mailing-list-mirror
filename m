@@ -1,66 +1,75 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Git.pm: add specified name to tempfile template
-Date: Wed, 29 Oct 2014 19:31:55 +0000
-Message-ID: <20141029193155.GA2232@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Is there way to set git commit --date to be older than 1970 ?
+Date: Wed, 29 Oct 2014 12:31:54 -0700
+Message-ID: <xmqqh9ymy8np.fsf@gitster.dls.corp.google.com>
+References: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:32:06 2014
+To: Peter Vojtek <peter.vojtek@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:32:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjYyT-0004pf-LL
+	id 1XjYyU-0004pf-Ct
 	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:32:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756750AbaJ2Tb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755504AbaJ2TcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2014 15:32:01 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53980 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756730AbaJ2Tb5 (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 29 Oct 2014 15:31:57 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:48801 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755214AbaJ2Tb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2014 15:31:56 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 78974194BE;
+	Wed, 29 Oct 2014 15:31:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=n5akyUDJIN7kMftXj9+POV9l28k=; b=ezYy5+
+	alBf7F1UKZjrV35ZJ50gjyc23qWPS1orRtqGu7Na54e4IYM1HJ4GSxpbDwh4S+Ww
+	pqa3+Z9z/gMOzHIraZF0UvB6HXWZRS0vqldG4ejY2Cci+ROcH8wUAFklm1kAmbFv
+	rk/Ym6GanZoyPWlr2gWPp72yVs1EUu7Wqd1wE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UeQy6h4S/19RdjSYHiIm6vwS2dyxwD5t
+	pmBx+lXMubCc/wRZBxsFwH20DSq0/5OJ97VfJQ7yW9db44luzBGXKcvXfrALckAp
+	SHCd5NKETBC5rU2nlIzcCv5ivflPL8kMTln6okWCCbMCEuouyMc8QwAbT9lmWzDN
+	q6Fsf/3IIKE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 705C8194BD;
+	Wed, 29 Oct 2014 15:31:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id AC6641F7C9;
-	Wed, 29 Oct 2014 19:31:55 +0000 (UTC)
-Content-Disposition: inline
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E280B194BC;
+	Wed, 29 Oct 2014 15:31:55 -0400 (EDT)
+In-Reply-To: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
+	(Peter Vojtek's message of "Wed, 29 Oct 2014 19:49:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3E1CA270-5FA2-11E4-8880-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This should help me track down errors in git-svn more easily:
+Peter Vojtek <peter.vojtek@gmail.com> writes:
 
-	write .git/Git_XXXXXX: Bad file descriptor
-	 at /usr/lib/perl5/SVN/Ra.pm line 623
+> It seems the commit date can be between 1970 and 2100 (on my 32bit
+> linux),...
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
-  Not sure you want to take this separately or in a git-svn pull.
-  Still working on the error this patch is meant to help me find.
+The underlying data representation records time as number of seconds
+since epoch (1970-01-01).  Theoretically the codepaths that read
+data could consider negative timestamps to represent times before
+the epoch, but in the context of source code control, negative
+values are more likely to be an indication of a bug or a user
+mistake, and I do not think any existing code in Git is prepared to
+pass such a timestamp as a sane value---instead they diagnose a
+failure and die.
 
- perl/Git.pm | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> I understand that this is rather an esoteric use case :)
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 204fdc6..b5905ee 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -1294,8 +1294,11 @@ sub _temp_cache {
- 			$tmpdir = $self->repo_path();
- 		}
- 
-+		my $n = $name;
-+		$n =~ s/\W/_/g; # no strange chars
-+
- 		($$temp_fd, $fname) = File::Temp::tempfile(
--			'Git_XXXXXX', UNLINK => 1, DIR => $tmpdir,
-+			"Git_${n}_XXXXXX", UNLINK => 1, DIR => $tmpdir,
- 			) or throw Error::Simple("couldn't open new temp file");
- 
- 		$$temp_fd->autoflush;
--- 
-EW
+Yeah, this is pretty much outside of what we intend to support.
+
+Thanks.
