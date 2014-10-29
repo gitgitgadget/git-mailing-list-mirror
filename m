@@ -1,93 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Git.pm: add specified name to tempfile template
-Date: Wed, 29 Oct 2014 12:50:49 -0700
-Message-ID: <xmqqd29ay7s6.fsf@gitster.dls.corp.google.com>
-References: <20141029193155.GA2232@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Documentation for "git log --all" incorrect
+Date: Wed, 29 Oct 2014 15:54:45 -0400
+Message-ID: <20141029195445.GA27413@peff.net>
+References: <20141029115134.GA33348@bat.dot-bit.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:50:57 2014
+To: Francis Irving <francis@scraperwiki.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:54:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjZGi-0008AT-JQ
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:50:56 +0100
+	id 1XjZKW-00028O-Tb
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:54:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756762AbaJ2Tuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2014 15:50:52 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52785 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755556AbaJ2Tuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2014 15:50:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 227D819980;
-	Wed, 29 Oct 2014 15:50:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aN60RDjsquGzkvgaT1Vyn6gwJIs=; b=eRQhyF
-	6g7gf4BZ6ARpntuZTASCqF+aqQDrgOMdRJ72oAlq5y+eZiBK6ksrGoqOR6bNPGUj
-	AbuS/S7wk02RJMwqP5kj4hHPyJ+i6fYyji9UIWcEhJfx58yMfHViLuLZw0itTIfN
-	ESaVqzAiBiEb2/xJW5TVzXn2e7GaoTkz2kcY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cloGnAxvGnJzaMb91QaF7GLvsZo7zf4n
-	bwgQjGyPwiMBJTb0/NVGuK8ORyaosl6NA926oihLp3jNEdoUGIg3RB+2K3Z3gNGU
-	iN/QkcXFTQ7zs707qMXBkgvbYjwZQ9UYxzjOHF0THt2KqDUCO0DNHcBqntllmyDY
-	M8XRgrYrKHY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1142E1997F;
-	Wed, 29 Oct 2014 15:50:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9359D1997E;
-	Wed, 29 Oct 2014 15:50:50 -0400 (EDT)
-In-Reply-To: <20141029193155.GA2232@dcvr.yhbt.net> (Eric Wong's message of
-	"Wed, 29 Oct 2014 19:31:55 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E26E9336-5FA4-11E4-ABBD-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756825AbaJ2Tyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2014 15:54:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34971 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756185AbaJ2Tys (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2014 15:54:48 -0400
+Received: (qmail 601 invoked by uid 102); 29 Oct 2014 19:54:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Oct 2014 14:54:48 -0500
+Received: (qmail 2532 invoked by uid 107); 29 Oct 2014 19:54:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Oct 2014 15:54:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Oct 2014 15:54:45 -0400
+Content-Disposition: inline
+In-Reply-To: <20141029115134.GA33348@bat.dot-bit.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Wed, Oct 29, 2014 at 11:51:34AM +0000, Francis Irving wrote:
 
-> This should help me track down errors in git-svn more easily:
->
-> 	write .git/Git_XXXXXX: Bad file descriptor
-> 	 at /usr/lib/perl5/SVN/Ra.pm line 623
->
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ---
->   Not sure you want to take this separately or in a git-svn pull.
->   Still working on the error this patch is meant to help me find.
+> The help for "git log --all" says:
+> 
+>        --all
+>                   Pretend as if all the refs in refs/ are listed on
+>                   the command line as <commit>.
+> 
+> This makes no sense, as <commit> is not a documented valid command line
+> parameter. These are the documented parameters:
+> 
+>         SYNOPSIS
+>                git log [<options>] [<revision range>] [[--] <path>...]
+> 
+> Even if it means <revision range>, which is my best guess, it still
+> makes no sense as <revision range> cannot be a list of many refs.
 
-Thanks; I think it is OK for it to be part of the git-svn update.
-No other active perl/Git.pm user that wants to have access to this
-facility early exists as far as I can see ;-)
+The text for "--all" comes from rev-list-options.txt, which is included
+in git-rev-list.txt and git-log.txt. It makes sense in the former but
+not the latter. One fix would be to use "<commit>" in the synopsis for
+git-log. But I think it would probably be OK to just drop the "as
+<commit>" part of the --all text (and other related options need this,
+too). It seems pretty clear to me without it.
 
->
->  perl/Git.pm | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index 204fdc6..b5905ee 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -1294,8 +1294,11 @@ sub _temp_cache {
->  			$tmpdir = $self->repo_path();
->  		}
->  
-> +		my $n = $name;
-> +		$n =~ s/\W/_/g; # no strange chars
-> +
->  		($$temp_fd, $fname) = File::Temp::tempfile(
-> -			'Git_XXXXXX', UNLINK => 1, DIR => $tmpdir,
-> +			"Git_${n}_XXXXXX", UNLINK => 1, DIR => $tmpdir,
->  			) or throw Error::Simple("couldn't open new temp file");
->  
->  		$$temp_fd->autoflush;
+Do you want to try your hand at a patch?
+
+-Peff
