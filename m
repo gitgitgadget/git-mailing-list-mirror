@@ -1,81 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] cache-tree: avoid infinite loop on zero-entry tree
-Date: Wed, 29 Oct 2014 14:52:50 -0400
-Message-ID: <20141029185249.GA26740@peff.net>
-References: <20141029171158.GA32188@peff.net>
- <xmqqppdayal7.fsf@gitster.dls.corp.google.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: Is there way to set git commit --date to be older than 1970 ?
+Date: Wed, 29 Oct 2014 20:19:14 +0100
+Message-ID: <20141029191914.GA16599@paksenarrion.iveqy.com>
+References: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 19:52:57 2014
+To: Peter Vojtek <peter.vojtek@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:13:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjYMa-0004YG-Il
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 19:52:56 +0100
+	id 1XjYg8-0001in-Bs
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:13:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755700AbaJ2Swx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2014 14:52:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34944 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751145AbaJ2Sww (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2014 14:52:52 -0400
-Received: (qmail 30198 invoked by uid 102); 29 Oct 2014 18:52:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Oct 2014 13:52:52 -0500
-Received: (qmail 2148 invoked by uid 107); 29 Oct 2014 18:52:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Oct 2014 14:52:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Oct 2014 14:52:50 -0400
+	id S1756697AbaJ2TM7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2014 15:12:59 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:64474 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756683AbaJ2TM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2014 15:12:57 -0400
+Received: by mail-lb0-f169.google.com with SMTP id l4so3080668lbv.28
+        for <git@vger.kernel.org>; Wed, 29 Oct 2014 12:12:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=GclUS12I1j7156cGp9V4GKZfqa1NjRVoDtQoyda9KPI=;
+        b=pKL+e1l+QUxhbuxATgSMZVfCuMc2QqfE8VYvPzKPYR5ZDu7qzjobR5eYO2OlT018LL
+         tpMklXbfMFhgNsZ2k5rrTYtIHid8ddQC1fjE3R6TQRZJFUGvQCuNQqdpN8RX1rbjwkvG
+         L5XGJvqajd7UbLpftcel7bcPbl/4w9X3WoeR7ueRcnaVQu5gTGICqkcwsrOaQaoV/K5N
+         shP4J0E5d48+j91QK7WL0Yw5fCNDNHwh6gNy4wM4AUeEOrPtexqBKUC0W8nE8qXZtnnR
+         jAamodpVyTCZ4Cb0HlXpBRPbX099FF+t/uKheo61jfTTZKbbMGm6fOigjbSBEqldvoF8
+         fmVw==
+X-Received: by 10.152.5.201 with SMTP id u9mr13581143lau.24.1414609975998;
+        Wed, 29 Oct 2014 12:12:55 -0700 (PDT)
+Received: from paksenarrion.paks.iveqy.com (c83-249-10-52.bredband.comhem.se. [83.249.10.52])
+        by mx.google.com with ESMTPSA id vr7sm2276207lbb.21.2014.10.29.12.12.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Oct 2014 12:12:55 -0700 (PDT)
+Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1XjYm2-00027B-83; Wed, 29 Oct 2014 20:19:14 +0100
 Content-Disposition: inline
-In-Reply-To: <xmqqppdayal7.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 29, 2014 at 11:50:12AM -0700, Junio C Hamano wrote:
+On Wed, Oct 29, 2014 at 07:49:19PM +0100, Peter Vojtek wrote:
+> I am playing with git in slightly unusual manner - e.g., to use git t=
+o
+> store history of europe:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I'm a little iffy on this just because it is fixing one particular bug,
-> > and I am sure there are probably a bunch of other ways to have a bogus
-> > index. Fundamentally, I think we pretty much trust that the index was
-> > not maliciously generated (unlike packfiles, for instance, which can
-> > come from elsewhere).  Still, this is one step closer to safe, and the
-> > bug was seen in the wild, so maybe it is worth doing.
-> 
-> Is it cheap to sanity-check the input when we map in the cache-tree
-> upon read_cache()?  Then we can just invalidate the cache-tree,
-> either in its entirety (easy) or just the bogus subpart (maybe not
-> worth doing).
+Actually you're the second person I hear that is trying to use git as a
+timeline of some sort. The previous person had the exact same problem.
+Unfortunately I couldn't find a mailthread about it in the archives.
 
-I think it is not super-expensive, but it is not as easy as:
+I'm curious, why did you choose git for this? Maybe this is a use case
+we should consider?
 
-  if (!it->entry_count)
-	return -1;
+--=20
+Med v=E4nlig h=E4lsning
+=46redrik Gustafsson
 
-> > We could alternatively (or in addition) reject 0-entry cache trees when
-> > reading them from disk. The trick, though, is that it is not just
-> > records with 0 entries, but ones where the sum of the entries and
-> > subtree entries is 0. Given that it is not something we expect to
-> > happen, it is easier to catch it here. And we know there can be no
-> > regressions for missed corner cases, because the case we are catching
-> > here would _always_ have gone into an infinite loop before this patch.
-> 
-> OK.  I wonder if we can instead die here but propagate the error
-> back up the callchain and have the ultimate caller rebuild the cache
-> tree without paying attention to the existing data that we now know
-> is bogus.
-
-Yeah, that would make sense to me, but I was not familiar with the
-cache-tree code to do it easily (and given that this is not something
-that should ever happen, I didn't want to spend time digging in).
-
-I can provide you with a real-world test case if you want to explore it
-further.
-
--Peff
+tel: 0733-608274
+e-post: iveqy@iveqy.com
