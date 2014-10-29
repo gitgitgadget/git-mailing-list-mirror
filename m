@@ -1,133 +1,82 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: prepare SVN::Ra config pieces once
-Date: Wed, 29 Oct 2014 19:55:02 +0000
-Message-ID: <20141029195502.GA5729@dcvr.yhbt.net>
+From: Roberto Eduardo Decurnex Gorosito <decurnex.roberto@gmail.com>
+Subject: Re: Is there way to set git commit --date to be older than 1970 ?
+Date: Wed, 29 Oct 2014 17:03:55 -0300
+Message-ID: <CABj5xzcigToDam4JGG9POkaZPh8V=ptEW_F8AO621HA0vCqM8A@mail.gmail.com>
+References: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
+ <xmqqh9ymy8np.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:55:14 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Peter Vojtek <peter.vojtek@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 29 21:04:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjZKq-0002NP-5W
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:55:12 +0100
+	id 1XjZTh-00089P-M7
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 21:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756861AbaJ2TzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2014 15:55:05 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:49155 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756185AbaJ2TzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2014 15:55:03 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 079461F7C9;
-	Wed, 29 Oct 2014 19:55:03 +0000 (UTC)
-Content-Disposition: inline
+	id S1755698AbaJ2UER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2014 16:04:17 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:41171 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755357AbaJ2UEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2014 16:04:16 -0400
+Received: by mail-ig0-f173.google.com with SMTP id r10so2013038igi.0
+        for <git@vger.kernel.org>; Wed, 29 Oct 2014 13:04:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=E4vxSwv7jqnuXJiNeboucUYP0+J76kJF6dRDBFLCKok=;
+        b=M7NlU3pmui4RbqDwgFSdqUOw+pCDbx9r34Cx1IBdEboCWg0hd3Z+39p/TUQaoeCRT+
+         KdowuCTwkz7lvIxNUad7CMeFby5bPYrq/+kJZpyNLRKxZThqmuK/bPfDuKuaFTgrjQkT
+         c1qjcKfF1LyZMK7dt/D4mL3XqAc8poH3WH8zOSsfSpNBvbC5mmS/ODJwZAhVxHSccOvs
+         lGgEnoaltiFBg6zi3/YNG5IAoaj7v8YZTD9VMpwXgapxm5+oG4wyD0Oy43MzqGs7hjDm
+         4gTy/iGs0FyWPG2/yltxTJn0meB9VzBcb1uuN7D9NMxQhvcSQJZalvwsXlap3I69U+CR
+         Yl9Q==
+X-Received: by 10.50.43.200 with SMTP id y8mr40847537igl.7.1414613056162; Wed,
+ 29 Oct 2014 13:04:16 -0700 (PDT)
+Received: by 10.64.228.99 with HTTP; Wed, 29 Oct 2014 13:03:55 -0700 (PDT)
+In-Reply-To: <xmqqh9ymy8np.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Memoizing these initialization functions saves some memory for
-long fetches which require scanning many unwanted revisions
-before any wanted revisions happen.
+Peter,
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- perl/Git/SVN/Ra.pm | 63 +++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 36 insertions(+), 27 deletions(-)
+You should be happy of getting the error message.
 
-diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
-index 5bc5b4e..75cdac9 100644
---- a/perl/Git/SVN/Ra.pm
-+++ b/perl/Git/SVN/Ra.pm
-@@ -2,6 +2,7 @@ package Git::SVN::Ra;
- use vars qw/@ISA $config_dir $_ignore_refs_regex $_log_window_size/;
- use strict;
- use warnings;
-+use Memoize;
- use SVN::Client;
- use Git::SVN::Utils qw(
- 	canonicalize_url
-@@ -76,6 +77,40 @@ sub _auth_providers () {
- 	\@rv;
- }
- 
-+sub prepare_config_once {
-+	SVN::_Core::svn_config_ensure($config_dir, undef);
-+	my ($baton, $callbacks) = SVN::Core::auth_open_helper(_auth_providers);
-+	my $config = SVN::Core::config_get_config($config_dir);
-+	my $dont_store_passwords = 1;
-+	my $conf_t = $config->{'config'};
-+
-+	no warnings 'once';
-+	# The usage of $SVN::_Core::SVN_CONFIG_* variables
-+	# produces warnings that variables are used only once.
-+	# I had not found the better way to shut them up, so
-+	# the warnings of type 'once' are disabled in this block.
-+	if (SVN::_Core::svn_config_get_bool($conf_t,
-+	    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
-+	    $SVN::_Core::SVN_CONFIG_OPTION_STORE_PASSWORDS,
-+	    1) == 0) {
-+		SVN::_Core::svn_auth_set_parameter($baton,
-+		    $SVN::_Core::SVN_AUTH_PARAM_DONT_STORE_PASSWORDS,
-+		    bless (\$dont_store_passwords, "_p_void"));
-+	}
-+	if (SVN::_Core::svn_config_get_bool($conf_t,
-+	    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
-+	    $SVN::_Core::SVN_CONFIG_OPTION_STORE_AUTH_CREDS,
-+	    1) == 0) {
-+		$Git::SVN::Prompt::_no_auth_cache = 1;
-+	}
-+
-+	return ($config, $baton, $callbacks);
-+} # no warnings 'once'
-+
-+INIT {
-+	Memoize::memoize '_auth_providers';
-+	Memoize::memoize 'prepare_config_once';
-+}
- 
- sub new {
- 	my ($class, $url) = @_;
-@@ -84,34 +119,8 @@ sub new {
- 
- 	::_req_svn();
- 
--	SVN::_Core::svn_config_ensure($config_dir, undef);
--	my ($baton, $callbacks) = SVN::Core::auth_open_helper(_auth_providers);
--	my $config = SVN::Core::config_get_config($config_dir);
- 	$RA = undef;
--	my $dont_store_passwords = 1;
--	my $conf_t = ${$config}{'config'};
--	{
--		no warnings 'once';
--		# The usage of $SVN::_Core::SVN_CONFIG_* variables
--		# produces warnings that variables are used only once.
--		# I had not found the better way to shut them up, so
--		# the warnings of type 'once' are disabled in this block.
--		if (SVN::_Core::svn_config_get_bool($conf_t,
--		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
--		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_PASSWORDS,
--		    1) == 0) {
--			SVN::_Core::svn_auth_set_parameter($baton,
--			    $SVN::_Core::SVN_AUTH_PARAM_DONT_STORE_PASSWORDS,
--			    bless (\$dont_store_passwords, "_p_void"));
--		}
--		if (SVN::_Core::svn_config_get_bool($conf_t,
--		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
--		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_AUTH_CREDS,
--		    1) == 0) {
--			$Git::SVN::Prompt::_no_auth_cache = 1;
--		}
--	} # no warnings 'once'
--
-+	my ($config, $baton, $callbacks) = prepare_config_once();
- 	my $self = SVN::Ra->new(url => $url, auth => $baton,
- 	                      config => $config,
- 			      pool => SVN::Pool->new,
--- 
-EW
+ Since Git 2 invalid years will default to the current year (keeping
+the given day and month) without warnings.
+
+--
+Roberto Decurnex
+
+On Wed, Oct 29, 2014 at 4:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Peter Vojtek <peter.vojtek@gmail.com> writes:
+>
+>> It seems the commit date can be between 1970 and 2100 (on my 32bit
+>> linux),...
+>
+> The underlying data representation records time as number of seconds
+> since epoch (1970-01-01).  Theoretically the codepaths that read
+> data could consider negative timestamps to represent times before
+> the epoch, but in the context of source code control, negative
+> values are more likely to be an indication of a bug or a user
+> mistake, and I do not think any existing code in Git is prepared to
+> pass such a timestamp as a sane value---instead they diagnose a
+> failure and die.
+>
+>> I understand that this is rather an esoteric use case :)
+>
+> Yeah, this is pretty much outside of what we intend to support.
+>
+> Thanks.
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
