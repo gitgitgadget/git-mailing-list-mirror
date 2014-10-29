@@ -1,101 +1,93 @@
-From: Peter Vojtek <peter.vojtek@gmail.com>
-Subject: Re: Is there way to set git commit --date to be older than 1970 ?
-Date: Wed, 29 Oct 2014 20:50:16 +0100
-Message-ID: <CAOE_JxJ5fUmSTcb4VF+K=y8gej2GqzQJrimt8fVn=gUL6veyqg@mail.gmail.com>
-References: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
- <20141029191914.GA16599@paksenarrion.iveqy.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Git.pm: add specified name to tempfile template
+Date: Wed, 29 Oct 2014 12:50:49 -0700
+Message-ID: <xmqqd29ay7s6.fsf@gitster.dls.corp.google.com>
+References: <20141029193155.GA2232@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:50:45 2014
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:50:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjZGU-0007yg-Dk
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:50:42 +0100
+	id 1XjZGi-0008AT-JQ
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:50:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755465AbaJ2Tui convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2014 15:50:38 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:54178 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751226AbaJ2Tui convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Oct 2014 15:50:38 -0400
-Received: by mail-ie0-f177.google.com with SMTP id tp5so3619310ieb.8
-        for <git@vger.kernel.org>; Wed, 29 Oct 2014 12:50:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=WUISPNq3+rhOVHvY3/72lE3ZRdzWLrmHIJjY3CgIVDc=;
-        b=zaUTaS20TU0J+XMNQYMDCknKZWbXPPhifeCK0LEnFBdxdaMxp2zc2bJOKkJCkchMbe
-         Bks27kucDPMeHWZ4UHhREhvP5iwAXTSQeNx44+tTlHUOC2PIXKDsczg1vbSGZiUH7rrr
-         3nqcRVpVwq3UPu6qJrX9DZa5fx5BptiZH4VsM/bHrq48OCq0f/gfaCT5pmV98gY8Ci7y
-         VHq+p/a4Sc6uVppyVKqCPVlO6DSx7BZOaO7f33RPn7Rl4RELyluXQFOLb0UePjXkBLaC
-         GzxxdVR+a7v20iRLdWgqS45BtmqGx6WHzSThe/Ruiho2WjwfMBjczu6NqGTfkIvGAZUq
-         TnFA==
-X-Received: by 10.107.30.136 with SMTP id e130mr7896358ioe.9.1414612237454;
- Wed, 29 Oct 2014 12:50:37 -0700 (PDT)
-Received: by 10.50.207.3 with HTTP; Wed, 29 Oct 2014 12:50:16 -0700 (PDT)
-In-Reply-To: <20141029191914.GA16599@paksenarrion.iveqy.com>
+	id S1756762AbaJ2Tuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2014 15:50:52 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52785 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755556AbaJ2Tuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2014 15:50:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 227D819980;
+	Wed, 29 Oct 2014 15:50:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aN60RDjsquGzkvgaT1Vyn6gwJIs=; b=eRQhyF
+	6g7gf4BZ6ARpntuZTASCqF+aqQDrgOMdRJ72oAlq5y+eZiBK6ksrGoqOR6bNPGUj
+	AbuS/S7wk02RJMwqP5kj4hHPyJ+i6fYyji9UIWcEhJfx58yMfHViLuLZw0itTIfN
+	ESaVqzAiBiEb2/xJW5TVzXn2e7GaoTkz2kcY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cloGnAxvGnJzaMb91QaF7GLvsZo7zf4n
+	bwgQjGyPwiMBJTb0/NVGuK8ORyaosl6NA926oihLp3jNEdoUGIg3RB+2K3Z3gNGU
+	iN/QkcXFTQ7zs707qMXBkgvbYjwZQ9UYxzjOHF0THt2KqDUCO0DNHcBqntllmyDY
+	M8XRgrYrKHY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1142E1997F;
+	Wed, 29 Oct 2014 15:50:51 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9359D1997E;
+	Wed, 29 Oct 2014 15:50:50 -0400 (EDT)
+In-Reply-To: <20141029193155.GA2232@dcvr.yhbt.net> (Eric Wong's message of
+	"Wed, 29 Oct 2014 19:31:55 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E26E9336-5FA4-11E4-ABBD-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-thanks for quick response, Fredrik.
+Eric Wong <normalperson@yhbt.net> writes:
 
-> I'm curious, why did you choose git for this? Maybe this is a use cas=
-e
-we should consider?
-
-this is a part of "thinking out of the box" mental execise.
-
-With the advent of many tools to visualize and analyze git
-repositories, it makes some sense to use the underlying beauty and
-power of git for unusual use cases. Similar evolution happened to
-javascript (originally a simple language to apply form validations on
-browser side).
-
-Here are few other use cases which may be fun to realize with git:
-
-- history of political parties in one country. when a party splits
-into two, we create new branch, and when parties join, we merge
-branches. branch name =3D party name. commiter name =3D party leader.
-
-- how country populations evolve year by year. country is a file,
-bytesize equals to its population.
-
-- track evolution of some political document (e.g., u.s. constitution).
-
-
-
-Peter
-
-
-On Wed, Oct 29, 2014 at 8:19 PM, Fredrik Gustafsson <iveqy@iveqy.com> w=
-rote:
-> On Wed, Oct 29, 2014 at 07:49:19PM +0100, Peter Vojtek wrote:
->> I am playing with git in slightly unusual manner - e.g., to use git =
-to
->> store history of europe:
+> This should help me track down errors in git-svn more easily:
 >
-> Actually you're the second person I hear that is trying to use git as=
- a
-> timeline of some sort. The previous person had the exact same problem=
-=2E
-> Unfortunately I couldn't find a mailthread about it in the archives.
+> 	write .git/Git_XXXXXX: Bad file descriptor
+> 	 at /usr/lib/perl5/SVN/Ra.pm line 623
 >
-> I'm curious, why did you choose git for this? Maybe this is a use cas=
-e
-> we should consider?
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>   Not sure you want to take this separately or in a git-svn pull.
+>   Still working on the error this patch is meant to help me find.
+
+Thanks; I think it is OK for it to be part of the git-svn update.
+No other active perl/Git.pm user that wants to have access to this
+facility early exists as far as I can see ;-)
+
 >
-> --
-> Med v=C3=A4nlig h=C3=A4lsning
-> Fredrik Gustafsson
+>  perl/Git.pm | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> tel: 0733-608274
-> e-post: iveqy@iveqy.com
+> diff --git a/perl/Git.pm b/perl/Git.pm
+> index 204fdc6..b5905ee 100644
+> --- a/perl/Git.pm
+> +++ b/perl/Git.pm
+> @@ -1294,8 +1294,11 @@ sub _temp_cache {
+>  			$tmpdir = $self->repo_path();
+>  		}
+>  
+> +		my $n = $name;
+> +		$n =~ s/\W/_/g; # no strange chars
+> +
+>  		($$temp_fd, $fname) = File::Temp::tempfile(
+> -			'Git_XXXXXX', UNLINK => 1, DIR => $tmpdir,
+> +			"Git_${n}_XXXXXX", UNLINK => 1, DIR => $tmpdir,
+>  			) or throw Error::Simple("couldn't open new temp file");
+>  
+>  		$$temp_fd->autoflush;
