@@ -1,85 +1,99 @@
-From: Francis Irving <francis@scraperwiki.com>
-Subject: Bug reporting method too hard to find
-Date: Wed, 29 Oct 2014 11:58:57 +0000
-Message-ID: <20141029115857.GB33348@bat.dot-bit.org>
+From: Ismael Bouya <ismael.bouya@normalesup.org>
+Subject: Problem with git when rebasing
+Date: Wed, 29 Oct 2014 14:48:47 +0100
+Message-ID: <20141029134847.GF12302@ns208507.ip-188-165-209.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vSsTm1kUtxIHoa7M"
+Cc: thaddee.tyl@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 29 13:39:38 2014
+X-From: git-owner@vger.kernel.org Wed Oct 29 14:57:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjSXK-0005Xb-0d
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 13:39:38 +0100
+	id 1XjTkk-0003yQ-Qo
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 14:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932797AbaJ2Mje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Oct 2014 08:39:34 -0400
-Received: from haggis.mythic-beasts.com ([93.93.131.52]:38603 "EHLO
-	haggis.mythic-beasts.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932759AbaJ2Mjd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2014 08:39:33 -0400
-X-Greylist: delayed 2432 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Oct 2014 08:39:33 EDT
-Received: from [93.93.130.55] (port=46898 helo=sphinx.mythic-beasts.com)
-	by haggis.mythic-beasts.com with esmtp (Exim 4.80)
-	(envelope-from <francis@scraperwiki.com>)
-	id 1XjRu0-0000Kc-Cu
-	for git@vger.kernel.org; Wed, 29 Oct 2014 11:59:00 +0000
-Received: from secure.pacec.co.uk ([93.93.130.55]:50330 helo=bat.localdomain)
-	by sphinx.mythic-beasts.com with esmtp (Exim 4.72)
-	(envelope-from <francis@scraperwiki.com>)
-	id 1XjRtz-0007Q6-5C
-	for git@vger.kernel.org; Wed, 29 Oct 2014 11:58:59 +0000
-Received: by bat.localdomain (Postfix, from userid 502)
-	id 0558652AF4DD; Wed, 29 Oct 2014 11:58:57 +0000 (GMT)
+	id S932994AbaJ2N5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2014 09:57:30 -0400
+Received: from ns208507.ip-188-165-209.eu ([188.165.209.148]:37584 "EHLO
+	immae.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932906AbaJ2N53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2014 09:57:29 -0400
+X-Greylist: delayed 519 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Oct 2014 09:57:28 EDT
+Received: by immae.eu (Postfix, from userid 1000)
+	id 25FAA1802E1; Wed, 29 Oct 2014 14:48:47 +0100 (CET)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Mythic-Sender-Verify: + host 64.233.166.27 accepted RCPT TO with '250 2.1.5 OK fu14si5931588wjc.11 - gsmtp'
-X-Spam-Status: No, score=-1.2
-X-BlackCat-Spam-Score: -11
-Received-SPF: softfail (secure.pacec.co.uk: transitioning domain of francis@scraperwiki.com does not designate 93.93.130.55 as permitted sender) client-ip=93.93.130.55 envelope-from=francis@scraperwiki.com helo=bat.localdomain
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I could not find out how to report a bug. In the end, a colleague
-had to tell me.
 
-Some suggested improvements:
+--vSsTm1kUtxIHoa7M
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Hi all,
+git rebase can sometimes "forget" a commit, here is the workflow to reprodu=
+ce
+this problem:
 
-1) Explicitly mention the word "bug" on the home page, or have
-a page which Google will find called "Reporting bugs".
+$ git init .
+$ echo "content 1" > file1
+$ git add file1 && git commit -m "C1"
+$ echo "content 2" > file2
+$ git add file2 && git commit -m "C2"
+$ echo "content 3" > file3
+$ echo "content 2.3" >> file2
+$ git add file3 && git commit -a -m "C3"
+$ echo "content 4" > file4
+$ git add file4 && git commit -a -m "C4"
+$ git rebase -i HEAD^^
+<change "pick" to "edit" for C2>
+$ echo "content 2" > file3
+$ git rebase --continue
 
+Here, we get an error
+------
+error: The following untracked working tree files would be overwritten by m=
+erge:
+  file3
+Please move or remove them before you can merge.
+Aborting
+Could not apply <hash_C3>... C3
+------
+This is expected, as we have created an untracked file which will be created
+later.
 
-2) I did eventually get to the Community page:
-http://git-scm.com/community
+However, if we remove/move away the file3 which conflicts, the "git status"
+command is misleading, in the sense that it doesn't tell us to run
+git cherry-pick <hash_C3>
+Or something approaching. If we don't, then commit <hash_C3> is completely
+forgotten by the rebasing once we continue it.
 
-Alas, when I scanned the headline "Mailing List" I ignored that
-whole section because I didn't want to join a mailing list - I just
-wanted to report a bug.
+Maybe a more explanatory error message would be useful? It is very unclear =
+that
+the commit won't apply when we continue the rebase workflow.
 
-I'd call it maybe "Mailing List and Bug Reporting". Or have a 
-separate bugs section below called "Bug Reporting" which refers
-to the mailing list.
+Kind regards,
+--=20
+Ismael
 
+--vSsTm1kUtxIHoa7M
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-3) I definitely wasn't going to subscribe to a mailing list to report
-a bug (no idea why - I'm just reporting my instinct which lots of
-people likely have). 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-I am only doing so because I saw that I don't have to subscribe.
+iEYEARECAAYFAlRQ8D8ACgkQbQyv/dsc/pCAUwCfUpZkIPdaLRTTh90EpkQKWx/3
+XugAnAj7PEv2Q8xBTHZC4rmank2DLBhu
+=NB1S
+-----END PGP SIGNATURE-----
 
-I'm not sure how to make it clearer, but it needs to be as it is
-highly unintuitive. These days, you have to join most email lists to
-post to them.
-
-
-This all matters, because Git is likely losing lots of basic bugs,
-particularly ones to do with usability for beginner users.
-
-Thanks for a great tool!
-
-Francis
+--vSsTm1kUtxIHoa7M--
