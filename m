@@ -1,114 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use child_process_init() to initialize struct child_process variables
-Date: Wed, 29 Oct 2014 12:16:05 -0700
-Message-ID: <xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com>
-References: <54500212.7040603@web.de> <20141029172109.GA32234@peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Regression and failure to clone/fetch with new code Re: git-svn
+ performance
+Date: Wed, 29 Oct 2014 19:23:52 +0000
+Message-ID: <20141029192352.GA32032@dcvr.yhbt.net>
+References: <1414474807.30075.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+ <1414539214.3654.YahooMailBasic@web172306.mail.ir2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 29 20:16:19 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
+	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
+	amyrick@apple.com
+To: Hin-Tak Leung <htl10@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Oct 29 20:23:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjYj9-0003qh-HT
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:16:15 +0100
+	id 1XjYqc-0008WI-ND
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Oct 2014 20:23:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755436AbaJ2TQL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2014 15:16:11 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54724 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754881AbaJ2TQJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Oct 2014 15:16:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63635190C7;
-	Wed, 29 Oct 2014 15:16:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cyTY3p6hHj4k
-	81bo0iA1J5VICJw=; b=NccuCKy+HfPJp1a7ZKLwyuEMlImT4HW7FOAtQ7dVgGKj
-	vzNitDAPtWiGHq4uRXfScSPIMjZ8GxP9miptXW9f8tWH3I/pSlx0E0KeajLCDvrf
-	KMurvzLoxd0Az3isUIrbpaKsrLwILKQu95ZDd6W6zb7WOYU5Qn0ihMy4m1jZzCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wf+pLM
-	yNjJneFXFPANMBtW+0QMPCON5uCVK7yepiSd37n1mP7k6W2ELo1BUlwS0BQocLVj
-	q2QQx5uHHNZfWsti4/jCnU3olepwzEMtRv74VPH78nS8I1b+mddpfFGi3FbfHh14
-	waqhf3B2NaFHjzJNpX8be3qIaS5zoisCknEvI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A5BD190C6;
-	Wed, 29 Oct 2014 15:16:08 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
+	id S1755636AbaJ2TXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Oct 2014 15:23:55 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:48621 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751917AbaJ2TXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Oct 2014 15:23:54 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29B9A190C4;
-	Wed, 29 Oct 2014 15:16:07 -0400 (EDT)
-In-Reply-To: <20141029172109.GA32234@peff.net> (Jeff King's message of "Wed,
-	29 Oct 2014 13:21:09 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 089C4A3A-5FA0-11E4-BE85-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id AAD3E1F7C9;
+	Wed, 29 Oct 2014 19:23:52 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1414539214.3654.YahooMailBasic@web172306.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
+> Hi, I patched my system git with the recent git-svn improvements, and just use
+> it for general use; so theses are the patches, against 2.1.0.
+> 
+> 0001-git-svn-only-look-at-the-new-parts-of-svn-mergeinfo.patch
+> 0002-git-svn-only-look-at-the-root-path-for-svn-mergeinfo.patch
+> 0003-git-svn-reduce-check_cherry_pick-cache-overhead.patch
+> 0004-git-svn-cache-only-mergeinfo-revisions.patch
+> 0005-git-svn-remove-mergeinfo-rev-caching.patch
+> 0006-git-svn.txt-advertise-pushurl-with-dcommit.patch
+> 0007-git-svn-reload-RA-every-log-window-size.patch
+> 0008-git-svn-remove-unnecessary-DESTROY-override.patch
+> 0009-git-svn-save-a-little-memory-as-fetch-progresses.patch
+> 0010-git-svn-disable-_rev_list-memoization.patch
+> 
+> trying to do this:
+> git svn clone http://www.virtualbox.org/svn/vbox/trunk vbox
+> 
+> (there is no publicly visible branches, so it is just a straight-forward single-branch clone).
+> 
+> aborts with 
+> 
+> ---------------
+> 	M	src/VBox/Main/HostImpl.cpp
+> Incorrect parameters given: Could not convert '%ld' into a number at /usr/share/perl5/vendor_perl/Git/SVN.pm line 1711.
+> 
+> $ git svn fetch --all
+> Index mismatch: d6c75bc195b1daad647322e2cc025bd31265c6b9 != 3927d05f6ab037fcf2b4d964c9633efade037d1b
+> rereading a65b5fc0077c2fa80a344833b65ac19ff4ae88b6
+> 	M	src/VBox/Main/HostImpl.cpp
+> Incorrect parameters given: Could not convert '%ld' into a number at /usr/share/perl5/vendor_perl/Git/SVN.pm line 1711.
+> ----------------
+> 
+> I have never seen such behavior before, and seeing as the lines indicated are in
+> a routine called "mergeinfo_changes", and recently added/changed by
+> quite a few of the patches, I started reverting from the back in this order: #5, #4, #2, #1 
+> and tried again between each revert. And it finally allows me to fetch again after
+> reverting #1.
 
-> On Tue, Oct 28, 2014 at 09:52:34PM +0100, Ren=C3=A9 Scharfe wrote:
->
->> --- a/bundle.c
->> +++ b/bundle.c
->> @@ -381,7 +381,7 @@ int create_bundle(struct bundle_header *header, =
-const char *path,
->>  	write_or_die(bundle_fd, "\n", 1);
->> =20
->>  	/* write pack */
->> -	memset(&rls, 0, sizeof(rls));
->> +	child_process_init(&rls);
->>  	argv_array_pushl(&rls.args,
->>  			 "pack-objects", "--all-progress-implied",
->>  			 "--stdout", "--thin", "--delta-base-offset",
->
-> I wondered if this one could use CHILD_PROCESS_INIT in the declaratio=
-n
-> instead. And indeed, we _do_ use CHILD_PROCESS_INIT there, but we use
-> the same variable twice for two different child processes in the same
-> function. Besides variable reuse being slightly confusing, the name
-> "rls" (which presumably stands for "rev-list" for the first child) me=
-ans
-> nothing here, where we are calling "pack-objects". Maybe it would be
-> cleaner to introduce a second variable?
+Me neither, this is new bug to me.  I cannot reproduce it, either.  Which
+revision did you hit this on?  I completed your vbox trunk clone without
+any problems on my side (Debian i386, SVN 1.6.17).
 
-It has been this way since day one at b1daf300 (Replace
-fork_with_pipe in bundle with run_command, 2007-03-12); I agree that
-two variables might make things less confusing.
+Can you try the following to dump out the parameters passed to
+mergeinfo_changes?
 
-> I also suspect the function would be a lot more readable broken into =
-two
-> sub-functions (reading from rev-list and writing to pack-objects), bu=
-t I
-> did not look closely enough to see whether there were any complicatin=
-g
-> factors.
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1695,8 +1695,10 @@ sub parents_exclude {
+ }
+ 
+ # Compute what's new in svn:mergeinfo.
++use Data::Dumper;
+ sub mergeinfo_changes {
+ 	my ($self, $old_path, $old_rev, $path, $rev, $mergeinfo_prop) = @_;
++	print STDERR Dumper(\@_);
+ 	my %minfo = map {split ":", $_ } split "\n", $mergeinfo_prop;
+ 	my $old_minfo = {};
+ 
 
-Probably three helper functions:
+Btw, I missed part of your other email, but no, I never maintained any
+Chinese packages in Debian.
 
- - The first is to find tops and bottoms (this translates fuzzy
-   specifications such as "--since 30.days" into a more concrete
-   revision range "^A ^B ... Z" to establish bundle prerequisites),
-   which is done by running a "rev-list --boundary".
-
- - The second is to show refs, while paying attention to things like
-   "--10 maint master" which may result in the tip of 'maint' not
-   being shown at all.  I am not sure if this part can/should take
-   advantage of revs.cmdline, though.
-
- - The last is to create the actual pack data.
-
-I agree with your analysis on the change in column.c and trailer.c
-
-Thanks.
+> I don't see any %ld close by, but presumably this is enough information for somebody else
+> to try. The platform is linux x86_64. (mostly fedora 20 but with a lot of additional
+> changes like a newer gnome than shipped, etc so probably not really fc20) 
+> 
