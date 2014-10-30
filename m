@@ -1,163 +1,187 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] bundle: split out a helper function to compute and write prerequisites
-Date: Thu, 30 Oct 2014 11:08:17 -0700
-Message-ID: <xmqqh9ylwhv2.fsf_-_@gitster.dls.corp.google.com>
-References: <54500212.7040603@web.de> <20141029172109.GA32234@peff.net>
-	<xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH] config: add show_err flag to git_config_parse_key()
+Date: Thu, 30 Oct 2014 23:48:06 +0530
+Message-ID: <CAEc54XCcY68bqw9mp4wokOKJEz3Fr5+U7jOStfQ3QWcj7sgDqw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 30 19:08:42 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu Oct 30 19:18:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xju9F-0006hH-AE
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 19:08:37 +0100
+	id 1XjuIZ-0003nt-Sm
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 19:18:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759170AbaJ3SId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 14:08:33 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52431 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758787AbaJ3SIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 14:08:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BF9C199D4;
-	Thu, 30 Oct 2014 14:08:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KjA/asSf7jDcuiLznsTxgXY24WU=; b=mbI5LS
-	tgHYYyUt7IYh9/WSp3oqzqCq+Szva/Z+fzhuMOE86Z8vTkFi4/CfKWFYAs4IAPX7
-	Vq2AEAB4IAUzAmwQgpr8qWsKsQ+2E3Pz/7bAR2Fx4J2hxVwmWDxdEoq2VUJMVVcU
-	LW14o9kZ/Va0G4yJ89WCMqR4A3qLOwENGULM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xdTcicegsDrv7CoXnl2YXxIL2dDx4lje
-	8Wk8mxRB7ensqpqtAv6KEj4+t3TSEXFyGTawggVPGVjlPWJBnehOE3zTlvobRuZK
-	zjZwFGEubLC5+dfmmnp27kNnMng0HPIT+GI6f6UR+/KDHz+evnG7utXCAWki4927
-	mrbkEIoUoms=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 80C64199D3;
-	Thu, 30 Oct 2014 14:08:19 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 01DC7199D2;
-	Thu, 30 Oct 2014 14:08:18 -0400 (EDT)
-In-Reply-To: <xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 29 Oct 2014 12:16:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BA384B80-605F-11E4-9BC0-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1760433AbaJ3SSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 14:18:10 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:35273 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758636AbaJ3SSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 14:18:09 -0400
+Received: by mail-ie0-f174.google.com with SMTP id x19so5877036ier.19
+        for <git@vger.kernel.org>; Thu, 30 Oct 2014 11:18:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:cc:content-type;
+        bh=JyQtJsHGY/TK/biv7SQrA7C2dkIR9RQGXplEkcHtf4w=;
+        b=Hdc2+rwGzNljBHsiFJLdxeeEf1V78OIiCV0PGhxGAnd3t+IkJW+picH78nUtFrZ/M/
+         rkMb11driTjOHPvN9GR6qGNjeiSulYSLBqXJT4EmlR+S4+y5GhaMTN0vsWUKbyZUln5y
+         /2VjbExQsczYhjKRj8iq1/G7VynJvcf9oldtEazT5CylFPAzUjrgtu2Xy7t8Hrmcg1Pz
+         LM4i+hSoGcs9bXiyjtLnNHAyj/dOAhLHjsdoJIqJh5fiUbMueFoCIPjCH2G5htZlY5BN
+         E74ldflfwcnqLJdH7Teot/6KQBEh8qT39jpUnKMr5RbvlqhKrCJRlE28RHyfJxynWukb
+         h1kg==
+X-Received: by 10.50.41.99 with SMTP id e3mr22424790igl.41.1414693086675; Thu,
+ 30 Oct 2014 11:18:06 -0700 (PDT)
+Received: by 10.107.28.75 with HTTP; Thu, 30 Oct 2014 11:18:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new helper compute_and_write_prerequistes() is ugly, but it
-cannot be avoided.  Ideally we should avoid a function that computes
-and does I/O at the same time, but the prerequisites lines in the
-output needs the human readable title only to help the recipient of
-the bundle.  The code copies them straight from the rev-list output
-and immediately discards as no other internal computation needs that
-information.
+>From c87ddf6397964154932d49385ed1433b62631f30 Mon Sep 17 00:00:00 2001
+From: Tanay Abhra <tanayabh@gmail.com>
+Date: Thu, 30 Oct 2014 08:54:58 -0700
+Subject: [PATCH] config: add show_err flag to git_config_parse_key()
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+`git_config_parse_key()` is used to sanitize the input key.
+Some callers of the function like `git_config_set_multivar_in_file()`
+get the pre-sanitized key directly from the user so it becomes
+necessary to raise an error specifying what went wrong when the entered
+key is defective.
+
+Other callers like `configset_find_element()` get their keys from
+the git itself so a return value signifying error would be enough.
+The error output shown to the user is useless and confusing in this
+case so add a show_err flag to suppress errors in such cases.
+
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- * And this is to address the first one in the three-bullet list.
 
- bundle.c | 59 +++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 35 insertions(+), 24 deletions(-)
+*Resend*
+I am behind a firewall and gmail web interface butchered my previous mail.
+This is a resend, if the patch again corrupts I will send it tomorrow through
+a proper internet connection.
 
-diff --git a/bundle.c b/bundle.c
-index 9c87532..0ca8737 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -270,33 +270,15 @@ static int write_pack_data(int bundle_fd, struct lock_file *lock, struct rev_inf
- 	return 0;
- }
- 
--int create_bundle(struct bundle_header *header, const char *path,
--		  int argc, const char **argv)
-+static int compute_and_write_prerequistes(int bundle_fd,
-+					  struct rev_info *revs,
-+					  int argc, const char **argv)
+Hi,
+
+You were right, one of the functions was calling git_config_parse_key()
+which was leaking errors to the console. git_config_parse_key() was
+meant for sanitizing user provided keys only but it was being used
+internally in a place where only a return value would be enough.
+
+Thanks for bringing this to our attention.
+
+Cheers,
+Tanay Abhra.
+
+ builtin/config.c |  2 +-
+ cache.h          |  2 +-
+ config.c         | 19 ++++++++++++-------
+ 3 files changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/config.c b/builtin/config.c
+index 8cc2604..51635dc 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -200,7 +200,7 @@ static int get_value(const char *key_, const char *regex_)
+ 			goto free_strings;
+ 		}
+ 	} else {
+-		if (git_config_parse_key(key_, &key, NULL)) {
++		if (git_config_parse_key(key_, &key, NULL, 1)) {
+ 			ret = CONFIG_INVALID_KEY;
+ 			goto free_strings;
+ 		}
+diff --git a/cache.h b/cache.h
+index 99ed096..8129590 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1362,7 +1362,7 @@ extern int git_config_string(const char **,
+const char *, const char *);
+ extern int git_config_pathname(const char **, const char *, const char *);
+ extern int git_config_set_in_file(const char *, const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+-extern int git_config_parse_key(const char *, char **, int *);
++extern int git_config_parse_key(const char *, char **, int *, int);
+ extern int git_config_set_multivar(const char *, const char *, const
+char *, int);
+ extern int git_config_set_multivar_in_file(const char *, const char
+*, const char *, const char *, int);
+ extern int git_config_rename_section(const char *, const char *);
+diff --git a/config.c b/config.c
+index 15a2983..eb9058c 100644
+--- a/config.c
++++ b/config.c
+@@ -1299,7 +1299,7 @@ static struct config_set_element
+*configset_find_element(struct config_set *cs,
+ 	 * `key` may come from the user, so normalize it before using it
+ 	 * for querying entries from the hashmap.
+ 	 */
+-	ret = git_config_parse_key(key, &normalized_key, NULL);
++	ret = git_config_parse_key(key, &normalized_key, NULL, 0);
+
+ 	if (ret)
+ 		return NULL;
+@@ -1832,8 +1832,9 @@ int git_config_set(const char *key, const char *value)
+  *             lowercase section and variable name
+  * baselen - pointer to int which will hold the length of the
+  *           section + subsection part, can be NULL
++ * show_err - toggle whether the function raises an error on a defective key
+  */
+-int git_config_parse_key(const char *key, char **store_key, int *baselen_)
++int git_config_parse_key(const char *key, char **store_key, int
+*baselen_, int show_err)
  {
--	static struct lock_file lock;
--	int bundle_fd = -1;
--	int bundle_to_stdout;
--	int i, ref_count = 0;
--	struct strbuf buf = STRBUF_INIT;
--	struct rev_info revs;
- 	struct child_process rls = CHILD_PROCESS_INIT;
-+	struct strbuf buf = STRBUF_INIT;
- 	FILE *rls_fout;
-+	int i;
- 
--	bundle_to_stdout = !strcmp(path, "-");
--	if (bundle_to_stdout)
--		bundle_fd = 1;
--	else
--		bundle_fd = hold_lock_file_for_update(&lock, path,
--						      LOCK_DIE_ON_ERROR);
--
--	/* write signature */
--	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
--
--	/* init revs to list objects for pack-objects later */
--	save_commit_buffer = 0;
--	init_revisions(&revs, NULL);
--
--	/* write prerequisites */
- 	argv_array_pushl(&rls.args,
- 			 "rev-list", "--boundary", "--pretty=oneline",
- 			 NULL);
-@@ -314,7 +296,7 @@ int create_bundle(struct bundle_header *header, const char *path,
- 			if (!get_sha1_hex(buf.buf + 1, sha1)) {
- 				struct object *object = parse_object_or_die(sha1, buf.buf);
- 				object->flags |= UNINTERESTING;
--				add_pending_object(&revs, object, buf.buf);
-+				add_pending_object(revs, object, buf.buf);
+ 	int i, dot, baselen;
+ 	const char *last_dot = strrchr(key, '.');
+@@ -1844,12 +1845,14 @@ int git_config_parse_key(const char *key, char
+**store_key, int *baselen_)
+ 	 */
+
+ 	if (last_dot == NULL || last_dot == key) {
+-		error("key does not contain a section: %s", key);
++		if (show_err)
++			error("key does not contain a section: %s", key);
+ 		return -CONFIG_NO_SECTION_OR_NAME;
+ 	}
+
+ 	if (!last_dot[1]) {
+-		error("key does not contain variable name: %s", key);
++		if (show_err)
++			error("key does not contain variable name: %s", key);
+ 		return -CONFIG_NO_SECTION_OR_NAME;
+ 	}
+
+@@ -1871,12 +1874,14 @@ int git_config_parse_key(const char *key, char
+**store_key, int *baselen_)
+ 		if (!dot || i > baselen) {
+ 			if (!iskeychar(c) ||
+ 			    (i == baselen + 1 && !isalpha(c))) {
+-				error("invalid key: %s", key);
++				if (show_err)
++					error("invalid key: %s", key);
+ 				goto out_free_ret_1;
  			}
- 		} else if (!get_sha1_hex(buf.buf, sha1)) {
- 			struct object *object = parse_object_or_die(sha1, buf.buf);
-@@ -325,6 +307,35 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	fclose(rls_fout);
- 	if (finish_command(&rls))
- 		return error(_("rev-list died"));
-+	return 0;
-+}
-+
-+int create_bundle(struct bundle_header *header, const char *path,
-+		  int argc, const char **argv)
-+{
-+	static struct lock_file lock;
-+	int bundle_fd = -1;
-+	int bundle_to_stdout;
-+	int i, ref_count = 0;
-+	struct rev_info revs;
-+
-+	bundle_to_stdout = !strcmp(path, "-");
-+	if (bundle_to_stdout)
-+		bundle_fd = 1;
-+	else
-+		bundle_fd = hold_lock_file_for_update(&lock, path,
-+						      LOCK_DIE_ON_ERROR);
-+
-+	/* write signature */
-+	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
-+
-+	/* init revs to list objects for pack-objects later */
-+	save_commit_buffer = 0;
-+	init_revisions(&revs, NULL);
-+
-+	/* write prerequisites */
-+	if (compute_and_write_prerequistes(bundle_fd, &revs, argc, argv))
-+		return -1;
- 
- 	/* write references */
- 	argc = setup_revisions(argc, argv, &revs, NULL);
+ 			c = tolower(c);
+ 		} else if (c == '\n') {
+-			error("invalid key (newline): %s", key);
++			if (show_err)
++				error("invalid key (newline): %s", key);
+ 			goto out_free_ret_1;
+ 		}
+ 		(*store_key)[i] = c;
+@@ -1926,7 +1931,7 @@ int git_config_set_multivar_in_file(const char
+*config_filename,
+ 	char *filename_buf = NULL;
+
+ 	/* parse-key returns negative; flip the sign to feed exit(3) */
+-	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
++	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen, 1);
+ 	if (ret)
+ 		goto out_free;
+
 -- 
-2.1.3-612-g493e79e
+1.9.0.GIT
