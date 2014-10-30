@@ -1,209 +1,120 @@
-From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: Re: Regression and failure to clone/fetch with new code Re: git-svn performance
-Date: Thu, 30 Oct 2014 00:06:10 +0000
-Message-ID: <1414627570.41692.YahooMailBasic@web172306.mail.ir2.yahoo.com>
-References: <20141029192352.GA32032@dcvr.yhbt.net>
-Reply-To: htl10@users.sourceforge.net
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: differences between old clone and new  Re: git-svn performance
+Date: Thu, 30 Oct 2014 00:21:36 +0000
+Message-ID: <20141030002136.GA31920@dcvr.yhbt.net>
+References: <20141028074104.GA7762@dcvr.yhbt.net>
+ <1414540742.41763.YahooMailBasic@web172305.mail.ir2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
 	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
 	amyrick@apple.com
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Oct 30 01:06:18 2014
+To: Hin-Tak Leung <htl10@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Oct 30 01:21:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjdFp-0002Pa-LU
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 01:06:18 +0100
+	id 1XjdUl-00018i-L3
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 01:21:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757587AbaJ3AGN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2014 20:06:13 -0400
-Received: from nm32.bullet.mail.ir2.yahoo.com ([212.82.96.57]:56269 "EHLO
-	nm32.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755251AbaJ3AGM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Oct 2014 20:06:12 -0400
-Received: from [212.82.98.57] by nm32.bullet.mail.ir2.yahoo.com with NNFMP; 30 Oct 2014 00:06:11 -0000
-Received: from [212.82.98.64] by tm10.bullet.mail.ir2.yahoo.com with NNFMP; 30 Oct 2014 00:06:11 -0000
-Received: from [127.0.0.1] by omp1001.mail.ir2.yahoo.com with NNFMP; 30 Oct 2014 00:06:11 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 115218.73892.bm@omp1001.mail.ir2.yahoo.com
-Received: (qmail 49912 invoked by uid 60001); 30 Oct 2014 00:06:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1414627571; bh=5CekxiNBajKtxb/bEhoVRJ4bNpus6a75gGCEk6SlO6s=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=rA3cjwrPRTPJi5O1HKMOm6vBeDOXSGFl3x2b1Lv0+fMJg0Yj77wZ23s55XT9poww4p4YRn6UptBg9e51ox0lrJlTWL7quabFJdBL++2/aiCiCy/tZOawmCiMuVZHCUEZxb9rhyUjZ34GRxHWYuoMClKJ/Fs3N8qK1oJLT4jQoXA=
-X-YMail-OSG: VirZdTsVM1kyYVCqCUT2pNvgW70WJesF4YUZhZMG9IkaX99
- CyS2qdIbDSbB3auwLAOEk4JhJFSP.EnlUbpUb7HmgXIdo.nnzAeQWy_ql7zt
- e5W0o5hWNfQs9zSYH0rZmAd5DbWSgqeKTdlDots53EsRT5MNWrBDR7YBl3aH
- 59cp5tx8NbPeKguXGSvoxFbb3vqnuq8NkTut8wYp7PJZB.nXeMkxTDcPhilu
- U8v3t330mgdr2NrRU2wyY6zjKPDorhBdgNxbGLjmcJ76Sbuscycv2YP6Gpt4
- zhc9PbrqKQIbLXYaVPrpf_1O78i7ZiljF_gPiDng_K5M76QmOPBPqtOWEw7A
- TIMlJD2memVRcJeqTah0HGmHoD.1vDJGSJ2SLSEi.8Wz0j5VIx3zGdHDZhMn
- 1shChD9ZVe4vUzunBgRY7LoYHcp58VDm6AvzyTFfog6PiUD716sbbOXkvFGK
- 7bOvUXK95KaiXMM1eKF41MhaE6R_VyhT22vgLjnn9vNeLL1z3ncuzPlgztP.
- GvUls0dOwqdHFRlYfOJ.siU8smfOwqkFqxWD5xkTmaGAsodxLUzm7.vrUaQc
- TMnOto7.LNSXjwoWxHJfL7iksuEyVVjNrq5EJ8YgSInZnfW73Rh9NMLjibgm
- 05l_vdcRL6hSUyudOAzc2h91_WuMNjd5AiIWyqB.YZl22626RlJD0dvl95B3
- M
-Received: from [86.30.137.134] by web172306.mail.ir2.yahoo.com via HTTP; Thu, 30 Oct 2014 00:06:10 GMT
-X-Rocket-MIMEInfo: 002.001,QXJnaCwgc29ycnkuIEkgdGhvdWdodCBJIGluY2x1ZGVkIHRoZSBpbmZvIGJ1dCBJIGRpZG4ndC4NCg0KZ2l0IDIuMS4wICsgMTAgcGF0Y2hlcyBhYm9ydHMgYWZ0ZXIgdHJ1bmtAMjg5MjMgKGkuZS4gZmFpbGluZyB0byBmZXRjaCAyODkyNCk7DQppZiBJIHJldmVydCB0aGUgcGF0Y2hlcyBpbiB0aGF0IG9yZGVyICgjNSwjNCwjMiwgIzEpIGFuZCByZXRyeSBpbiB0aGUgbWlkZGxlLA0KSSBoYXZlIHRvIHJldmVydCBhbGwgNCB0byBnZXQgJ2dpdCBzdm4gZmV0Y2gnIHRvIGNvbnRpbnVlIG9uIHRvIDI4OTI0Lg0BMAEBAQE-
-X-RocketYMMF: hintak_leung
-X-Mailer: YahooMailClassic/810 YahooMailWebService/0.8.203.733
-In-Reply-To: <20141029192352.GA32032@dcvr.yhbt.net>
+	id S1757855AbaJ3AVk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Oct 2014 20:21:40 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53483 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755398AbaJ3AVj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Oct 2014 20:21:39 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id E958F1F7C9;
+	Thu, 30 Oct 2014 00:21:36 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1414540742.41763.YahooMailBasic@web172305.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Argh, sorry. I thought I included the info but I didn't.
+Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
+> On Tue, 28/10/14, Eric Wong <normalperson@yhbt.net> wrote:
+>=20
+> > So both merges
+>  are correct, but we lose one, and gain one?
+>  I'll try to check more closely tomorrow.=C2=A0
+>  Can you point out
+>  the exact revisions in the
+>  R repo?=C2=A0 Thanks.
+>=20
+>=20
+> The missing merge on branch "R-2-14-branch" is:
+>=20
+> commit 93af4d4cc3a5e0039944dd4e340d26995be8a252
+> Merge: 121990f 6ff1b87
+> Author: ripley <ripley@00db46b3-68df-0310-9c12-caf00c1e9a41>
+> Date:   Wed Feb 22 13:45:34 2012 +0000
+>=20
+>     port r58453 from trunk
+>=20
+>     git-svn-id: https://svn.r-project.org/R/branches/R-2-14-branch@58=
+454 00db46b3-68df-0310-9c12-caf00c1e9a41
 
-git 2.1.0 + 10 patches aborts after trunk@28923 (i.e. failing to fetch =
-28924);
-if I revert the patches in that order (#5,#4,#2, #1) and retry in the m=
-iddle,
-I have to revert all 4 to get 'git svn fetch' to continue on to 28924.
+I'm curious if you can tell me which version of git-svn you used to get
+that as a merge commit.  git-svn mergeinfo handling has changed
+(hopefully improved) over the years, so some differences in history
+can be (unfortunately) expected, I think.
 
-I tried --stdlayout (it seems that there were branches, but just merged=
- and "deleted"
-according to the web code browsing interface) but it failed at the same=
- revision.
+I cannot reproduce your original merge on Junio's current master.  Usin=
+g
+Junio's master[1] without any recent git-svn changes, a partial clone
+doing:
 
-I'll try the data dump and see what it gives me...
+   git svn clone -s -r52000:58600 svn+ssh://127.0.0.1/path/to/my/R-mirr=
+or
 
-What do you think were missing in my e-mails? The differences of new cl=
-one against old
-is a missing merge in at R-2-14-branch@58454 , and two extra merges at
-djm-parseRd@46925  and djm-parseRd@46906 .
+=2E..causes the merges in r58454 to be ignored as cherry-picks, too.
+I suspect it's correct for git-svn to ignore those as cherry-picks
+nowadays.
 
---------------------------------------------
-On Wed, 29/10/14, Eric Wong <normalperson@yhbt.net> wrote:
+Here's a snippet of what I see from the above command:
+----------------------------------8<-----------------------------------
+r58452 =3D ebf3a1ca312ca7cc03dc2387d86491a0cdc95bad (refs/remotes/origi=
+n/trunk)
+	M	src/library/base/man/Primitive.Rd
+	M	src/main/names.c
+	M	doc/NEWS.Rd
+r58453 =3D 05b55eee9e6bed628873d34261e54c70f87a3736 (refs/remotes/origi=
+n/trunk)
+	M	doc/NEWS.Rd
+	M	src/library/base/man/Primitive.Rd
+	M	src/main/names.c
+W:svn cherry-pick ignored (/branches/R-2-12-branch:52939,54476,55265) -=
+ missing 492 commit(s) (eg df9d875de507ac51932c0ed980392e8262f98b31)
+W:svn cherry-pick ignored (/branches/R-2-13-branch:55265,55432) - missi=
+ng 231 commit(s) (eg cad052d416d9b8a9dfbfb2ae7bf85c39306c67bb)
+W:svn cherry-pick ignored (/trunk:57183,57204-57205,57242,57259,57314,5=
+7316,57321,57370,57411,57428,57430,57432,57438,57440,57484,57489-57490,=
+57579,57589,57604,57614-57618,57625,57679,57681,57687,57738,57741,57744=
+-57745,57747,57752,57758,57761,57763,57765,57767,57769,57771,57790,5779=
+3,57803,57812,57814,57816,57826-57827,57836,57840-57841,57844,57846,578=
+51,57853,57856,57861-57862,57867,57880,57884,57890,57893,57895,57900,57=
+904,57908,57913,57920,57936,57939-57941,57950,57952,57959,57964,57970,5=
+7975,57977,57981,57987,58006,58008,58037,58039,58042,58047,58052,58056,=
+58058,58066-58067,58082,58084,58089,58094,58098,58100,58107,58126,58129=
+,58135,58142,58161,58178,58182,58187,58195,58204,58213,58217,58221,5822=
+5,58228,58232,58234,58239,58248,58253,58265,58269,58272,58274,58276,582=
+78,58282,58284,58288,58294,58296,58305,58312,58314,58318,58324,58326,58=
+328,58332,58334,58340,58346,58348,58353,58355,58357,58359,58361,58373,5=
+8378,58381,58386,58388,58392,58395,58397,58405,58412,58415,58429,58435,=
+58437,58439,58453) - missing 716 commit(s) (eg e9ccca5db27696ed8faa4427=
+ec4110ddf230d141)
+r58454 =3D 96d6087a494bb7da6d90f02e8bd36833eaad2067 (refs/remotes/origi=
+n/R-2-14-branch)
+	M	doc/manual/R-exts.texi
+	M	doc/NEWS.Rd
+	M	src/library/tools/R/check.R
+r58455 =3D 742cbc791fa6760d5dfb4c4ea1e032d32e9e87c9 (refs/remotes/origi=
+n/trunk)
+----------------------------------8<-----------------------------------
 
- Subject: Re: Regression and failure to clone/fetch with new code Re: g=
-it-svn performance
- To: "Hin-Tak Leung" <htl10@users.sourceforge.net>
- Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org, sa=
-m@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de, amyrick@ap=
-ple.com
- Date: Wednesday, 29 October, 2014, 20:23
-=20
- Hin-Tak Leung <htl10@users.sourceforge.net>
- wrote:
- > Hi, I patched my system git with
- the recent git-svn improvements, and just use
- > it for general use; so theses are the
- patches, against 2.1.0.
- >=20
- >
- 0001-git-svn-only-look-at-the-new-parts-of-svn-mergeinfo.patch
- >
- 0002-git-svn-only-look-at-the-root-path-for-svn-mergeinfo.patch
- >
- 0003-git-svn-reduce-check_cherry_pick-cache-overhead.patch
- >
- 0004-git-svn-cache-only-mergeinfo-revisions.patch
- >
- 0005-git-svn-remove-mergeinfo-rev-caching.patch
- >
- 0006-git-svn.txt-advertise-pushurl-with-dcommit.patch
- >
- 0007-git-svn-reload-RA-every-log-window-size.patch
- >
- 0008-git-svn-remove-unnecessary-DESTROY-override.patch
- >
- 0009-git-svn-save-a-little-memory-as-fetch-progresses.patch
- >
- 0010-git-svn-disable-_rev_list-memoization.patch
- >=20
- > trying to do
- this:
- > git svn clone http://www.virtualbox.org/svn/vbox/trunk
- vbox
- >=20
- > (there
- is no publicly visible branches, so it is just a
- straight-forward single-branch clone).
- >
-=20
- > aborts with=20
- >=20
- > ---------------
- >
- =A0=A0=A0 M=A0=A0=A0 src/VBox/Main/HostImpl.cpp
- > Incorrect parameters given: Could not
- convert '%ld' into a number at
- /usr/share/perl5/vendor_perl/Git/SVN.pm line 1711.
- >=20
- > $ git svn fetch
- --all
- > Index mismatch:
- d6c75bc195b1daad647322e2cc025bd31265c6b9 !=3D
- 3927d05f6ab037fcf2b4d964c9633efade037d1b
- > rereading
- a65b5fc0077c2fa80a344833b65ac19ff4ae88b6
- > =A0=A0=A0 M=A0=A0=A0
- src/VBox/Main/HostImpl.cpp
- > Incorrect
- parameters given: Could not convert '%ld' into a
- number at /usr/share/perl5/vendor_perl/Git/SVN.pm line
- 1711.
- > ----------------
- >=20
- > I have never seen
- such behavior before, and seeing as the lines indicated are
- in
- > a routine called
- "mergeinfo_changes", and recently added/changed
- by
- > quite a few of the patches, I
- started reverting from the back in this order: #5, #4, #2,
- #1=20
- > and tried again between each
- revert. And it finally allows me to fetch again after
- > reverting #1.
-=20
- Me neither, this is new bug to me.=A0 I cannot
- reproduce it, either.=A0 Which
- revision did
- you hit this on?=A0 I completed your vbox trunk clone
- without
- any problems on my side (Debian
- i386, SVN 1.6.17).
-=20
- Can you
- try the following to dump out the parameters passed to
- mergeinfo_changes?
-=20
- --- a/perl/Git/SVN.pm
- +++
- b/perl/Git/SVN.pm
- @@ -1695,8 +1695,10 @@ sub
- parents_exclude {
-  }
- =20
-  # Compute what's new in svn:mergeinfo.
- +use Data::Dumper;
-  sub
- mergeinfo_changes {
-  =A0=A0=A0 my ($self,
- $old_path, $old_rev, $path, $rev, $mergeinfo_prop) =3D @_;
- +=A0=A0=A0 print STDERR Dumper(\@_);
-  =A0=A0=A0 my %minfo =3D map {split ":",
- $_ } split "\n", $mergeinfo_prop;
-=20
- =A0=A0=A0 my $old_minfo =3D {};
- =20
-=20
- Btw, I missed part of your
- other email, but no, I never maintained any
- Chinese packages in Debian.
-=20
- > I don't see any %ld close by, but
- presumably this is enough information for somebody else
- > to try. The platform is linux x86_64.
- (mostly fedora 20 but with a lot of additional
- > changes like a newer gnome than shipped,
- etc so probably not really fc20)=20
- >=20
-=20
+[1] - fbecd99 Update draft release notes to 2.2
