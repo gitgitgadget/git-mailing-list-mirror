@@ -1,186 +1,84 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH] git-compat-util.h: implement a different ARRAY_SIZE macro for for safely deriving the size of array
-Date: Thu, 30 Oct 2014 03:56:12 -0700
-Message-ID: <1414666572-4812-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 30 11:56:23 2014
+From: Fedor Eftimitsa <Fedor.Eftimitsa@nivalnetwork.com>
+Subject: (unknown)
+Date: Thu, 30 Oct 2014 12:23:56 +0000
+Message-ID: <BF520C46C422AF4A8718EAD1AA903AF0743CF010@exchange1.intra.nival.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 30 13:29:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjnOx-0002oK-0w
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 11:56:23 +0100
+	id 1XjorH-0005Th-FJ
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 13:29:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758611AbaJ3K4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 06:56:19 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:47028 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758111AbaJ3K4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 06:56:17 -0400
-Received: by mail-pa0-f46.google.com with SMTP id lf10so5239549pab.33
-        for <git@vger.kernel.org>; Thu, 30 Oct 2014 03:56:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=EuolaJmVzDHucFokHOpN8QnQeryeRffiP7wicGHC6LY=;
-        b=SuiPq4CzRgVvWpxZ6SxNt94837FcamDulJRURvGqmvkYL7OZesSwLffUpWL/WxFoNL
-         jWklwd96PMnzA1nyj/oRgxx99n8Z7SZ2STZn9I7nLGV8FCILjkssqk6pBTalnyTCrODn
-         LYAuGm4aON9Xfs4Mow5BlMEBZqy93vte5oczBxKdAeelKiEHT2ctjkWQdtUs8bcef8lX
-         vtZ/pSm1Hfe94PWcYKHpopvyegYSySN5LLW2qgebm92kum7ujUoKZwPdqK7R9Puc+vo1
-         ZeVX6gG/vGDBdtBwRDKZefBEI7d2wiS4tu5LZrlUGVxxsaDns3HTKAol0TMgy98r6WBS
-         SEAg==
-X-Received: by 10.70.118.165 with SMTP id kn5mr14069680pdb.140.1414666577249;
-        Thu, 30 Oct 2014 03:56:17 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id dx10sm6829700pab.38.2014.10.30.03.56.15
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 30 Oct 2014 03:56:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+	id S1759341AbaJ3M3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 08:29:39 -0400
+Received: from edge1.nivalnetwork.com ([195.128.68.8]:43797 "EHLO
+	edge1.nivalnetwork.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759165AbaJ3M3i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2014 08:29:38 -0400
+X-Greylist: delayed 332 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Oct 2014 08:29:37 EDT
+Received: from EXCHANGE2.intra.nival.com (192.168.1.188) by
+ EDGE1.nivalnetwork.com (195.128.68.8) with Microsoft SMTP Server (TLS) id
+ 8.3.297.1; Thu, 30 Oct 2014 15:23:39 +0300
+Received: from exchange1.intra.nival.com ([fe80::fd05:2c4c:cdb1:25a]) by
+ EXCHANGE2.intra.nival.com ([fe80::e960:fdac:6649:26c7%14]) with mapi id
+ 14.02.0387.000; Thu, 30 Oct 2014 15:23:57 +0300
+Subject: 
+Thread-Index: Ac/0PF8SaehmHhiFQAyFYtHm/wOVxQ==
+Accept-Language: ru-RU, en-US
+Content-Language: ru-RU
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.200.1.65]
+city: Saint-Petersburg
+X-EsetResult: clean, is OK
+X-EsetId: 42359C3EF90E34301874C2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To get number of elements in an array git use the ARRAY_SIZE macro defined as:
+Greetings!
 
-#define ARRAY_SIZE(x) (sizeof(x)/sizeof((x)[0]))
+I have very large git repository (>20Gb) and after repack the size of it increases by 1.3-2 times.
+I try to understand why it is happened and how to solve this matter.
 
-The problem with it is a possibility of mistakenly passing to it a
-pointer instead an array.
+Details
+I work in gamedev and we store under git all what we have: source code, textures and other binary data.
+Now size of the main repository (.git) is about 23Gb right after cloning.
+But if I run 'git gc' or 'git gc --aggressive' size of repository increases to more than 40Gb.
+'git gc --auto' doesn't change existing packs and doesn't increase size so much.
 
-Use instead a different but compatible ARRAY_SIZE() macro,
-which (given a good compiler) will also break compile if you try to
-use it on a pointer.
+For a long time we disabled 'gc auto' for all work PCs and repacked repository by script at night.
+Script configures some options and runs 'git gc' without --auto and now the size of most repositories is more than 50Gb.
+Here this options from script:
+-- pack.threads 2
+-- pack.windowMemory 16m
+-- pack.depth 1
+-- pack.window 10
+-- gc.aggressiveWindow 10
+-- pack.packSizeLimit 2g
 
-This can ensure your code is robust to changes, without
-needing a gratuitous macro or constant. A similar
-ARRAY_SIZE implementation also exists in the linux kernel.
+I try to improve this script and find the way to decrease size of these repositories to initial (after clone) size. The size of repository is very important because it's located on SSD disk for comfort work.
+I've tried different options for 'git gc' and 'git gc --aggressive' but can't achieve this - size of repository always about 40Gb and more.
+Best result provides 'git gc --aggressive' with disabled pack.packSizeLimit, window and depth is 250 - it creates single pack about 36Gb.
+In worst case repository size can be more than 60Gb.
 
-Credits to Rusty Russell and his ccan library.
+Can you help me to understand what options I can try to repack repositories to initial size?
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- Makefile          |    7 +++++++
- configure.ac      |   24 ++++++++++++++++++++++++
- git-compat-util.h |   36 +++++++++++++++++++++++++++++++++++-
- 3 files changed, 66 insertions(+), 1 deletion(-)
+All work PCs have Windows 7 and git version >=1.8.1 installed.
 
-diff --git a/Makefile b/Makefile
-index 827006b..37eb1e1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -339,6 +339,9 @@ all::
- # return NULL when it receives a bogus time_t.
- #
- # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime in librt.
-+#
-+# Define SUPPORT__BUILTIN_TYPES_COMPATIBLE_P if your compiler support 
-+# the builtin function __builtin_types_compatible_
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -1382,6 +1385,10 @@ ifdef HAVE_CLOCK_GETTIME
- 	EXTLIBS += -lrt
- endif
- 
-+ifdef SUPPORT__BUILTIN_TYPES_COMPATIBLE_P
-+	BASIC_CFLAGS += -DSUPPORT__BUILTIN_TYPES_COMPATIBLE_P
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-diff --git a/configure.ac b/configure.ac
-index 6af9647..9d489c1 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -139,6 +139,28 @@ if test -n "$1"; then
- fi
- ])
- 
-+AC_DEFUN([GIT_FUNC_TYPES_COMPATIBLE_P], [
-+	AC_CACHE_CHECK([if compiler has __builtin_types_compatible_p function],
-+		[cc_cv_func_types_compatible_p],
-+		[ac_save_CFLAGS="$CFLAGS"
-+		CFLAGS="$CFLAGS -Werror"
-+		AC_COMPILE_IFELSE([AC_LANG_SOURCE(
-+			[int some_function();
-+			int some_function() {
-+			return __builtin_types_compatible_p(char *, int) ? 1 : 0;
-+			}])],
-+			[cc_cv_func_types_compatible_p=yes],
-+			[cc_cv_func_types_compatible_p=no])
-+		CFLAGS="$ac_save_CFLAGS"
-+	])
-+
-+	AS_IF([test "x$cc_cv_func_types_compatible_p" = "xyes"],
-+		[GIT_CONF_SUBST([SUPPORT__BUILTIN_TYPES_COMPATIBLE_P], [YesPlease])],
-+		[$2])
-+])
-+
-+
-+
- ## Configure body starts here.
- 
- AC_PREREQ(2.59)
-@@ -874,6 +896,8 @@ else
- fi
- GIT_CONF_SUBST([SNPRINTF_RETURNS_BOGUS])
- 
-+GIT_FUNC_TYPES_COMPATIBLE_P
-+
- 
- ## Checks for library functions.
- ## (in default C library and libraries checked by AC_CHECK_LIB)
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 400e921..cb45886 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -25,7 +25,41 @@
- #endif
- #endif
- 
--#define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
-+
-+/*
-+ * BUILD_ASSERT_OR_ZERO - assert a build-time dependency, as an expression.
-+ * @cond: the compile-time condition which must be true.
-+ *
-+ * Your compile will fail if the condition isn't true, or can't be evaluated
-+ * by the compiler.  This can be used in an expression: its value is "0".
-+ *
-+ * Example:
-+ *	#define foo_to_char(foo)					\
-+ *		 ((char *)(foo)						\
-+ *		  + BUILD_ASSERT_OR_ZERO(offsetof(struct foo, string) == 0))
-+ */
-+#define BUILD_ASSERT_OR_ZERO(cond) \
-+	(sizeof(char [1 - 2*!(cond)]) - 1)
-+
-+
-+#if SUPPORT__BUILTIN_TYPES_COMPATIBLE_P
-+/* &arr[0] degrades to a pointer: a different type from an array */
-+#define _array_size_chk(arr)						\
-+	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(typeof(arr), \
-+							typeof(&(arr)[0])))
-+#else
-+#define _array_size_chk(arr) 0
-+#endif
-+
-+/*
-+ * ARRAY_SIZE - get the number of elements in a visible array
-+ *  <at> x: the array whose size you want.
-+ *
-+ * This does not work on pointers, or arrays declared as [], or
-+ * function parameters.  With correct compiler support, such usage
-+ * will cause a build error (see build_assert).
-+ */
-+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]) + _array_size_chk(x))
- #define bitsizeof(x)  (CHAR_BIT * sizeof(x))
- 
- #define maximum_signed_value_of_type(a) \
--- 
-1.7.10.4
+All the best,
+Fedor Eftimitsa
+Senior Programmer
+
+Nival
+www.nival.com
+www.zzima.com
+
+Skype: d9fault
