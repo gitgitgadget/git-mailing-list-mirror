@@ -1,78 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is there way to set git commit --date to be older than 1970 ?
-Date: Thu, 30 Oct 2014 15:11:53 -0700
-Message-ID: <xmqqtx2ltdg6.fsf@gitster.dls.corp.google.com>
-References: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
-	<xmqqh9ymy8np.fsf@gitster.dls.corp.google.com>
-	<CAPBPrnuxAPmKe_aRb9USh=cOu4jMZaYzOorXC_RJa8b8ROq+iA@mail.gmail.com>
-	<20141030214852.GB21017@peff.net>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 6/8] receive-pack.c: add a receive.preferatomicpush
+ configuration variable
+Date: Thu, 30 Oct 2014 15:26:47 -0700
+Message-ID: <CAL=YDWms5geok1j8tQUjHaOVTSG-_zbTob_AVX0GS8cA0rwaSQ@mail.gmail.com>
+References: <1413924400-15418-1-git-send-email-sahlberg@google.com>
+	<1413924400-15418-7-git-send-email-sahlberg@google.com>
+	<xmqq7fzhuxlh.fsf@gitster.dls.corp.google.com>
+	<CAL=YDWmNXpe=0UxbHD-5pwNW-hdp=Ja1Xy8gXAKcbSkoJhpgRw@mail.gmail.com>
+	<xmqqy4rxtdu5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Dan Johnson <computerdruid@gmail.com>,
-	Peter Vojtek <peter.vojtek@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 30 23:12:05 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 23:26:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xjxwn-0007xP-ER
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 23:12:01 +0100
+	id 1XjyBA-0007Zu-VQ
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 23:26:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161314AbaJ3WL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 18:11:57 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61936 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1161019AbaJ3WL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 18:11:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCE781A43B;
-	Thu, 30 Oct 2014 18:11:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DLDSQwfRYcrOcEQHwOtcjXoQ0dg=; b=lNILN7
-	gar5JE7qFzw45uLuZ0B1F8z5S9XbJuG+lmVHXlqQyyyrHyZqPemLFffUx1kOLztJ
-	69g4EuYzGizEM2mKx54M+rw1JyZzhgD34P6Th9Jm1rvEXGoTkUkd2Q3yMqP3zObX
-	cNGMGyLMqxygS4XurEb6JtTp3Gadu/UIHMcJ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QwlaE14SA8i0nCQ42LtyLR0sqCfS/ngR
-	E+TJeQUYQehs2xFRBdxRY26VJrR0qJ5GNePLCLrhj4FbULnuveyhalyruFjVyb5J
-	6WBaGw5mjIWgYD1NihSND2IlDqJ1sLhLbjqECzhyLv3Ooq+a1sLEHMzYQV9+xHxC
-	8YQBl8AFqZ8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C21C01A43A;
-	Thu, 30 Oct 2014 18:11:55 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B3CC1A439;
-	Thu, 30 Oct 2014 18:11:55 -0400 (EDT)
-In-Reply-To: <20141030214852.GB21017@peff.net> (Jeff King's message of "Thu,
-	30 Oct 2014 17:48:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C2205F0A-6081-11E4-BA23-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1161211AbaJ3W0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 18:26:49 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:61925 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161019AbaJ3W0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 18:26:48 -0400
+Received: by mail-qg0-f46.google.com with SMTP id i50so3781753qgf.19
+        for <git@vger.kernel.org>; Thu, 30 Oct 2014 15:26:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ND1Pbayt+k3Q/niudV2QdSUEK4q75E81JzYuzBcRil8=;
+        b=f3z0miqeaJOv/Q+CYlWp59KLiHhyb0Bsbjx1iR628Mrgs4SMRYamyhiCXp0muoGvIf
+         6DlNV47X5zhDslHpC3NrRY2e4A2Pc+pkni9uiX0vIx88osQUhiVYwWsygYKNfwJ5psqa
+         +utkmU6lr18QLGyTnIFUGModKfH9I66inkImLfuSHNy3tvzsLtsI81qXCqc8NLDJw/hv
+         ZaprIjJG8M6BM+qcAzKk8TNFDLlmL7+5mqK4wW53xAexGQItsiI1sbV/wAzGTXnBUKAF
+         S/t+DmW1yxltJmPB8m0s5uGCs90SkUPsVPDnyO+wQPdYcJvBcE/Cp3eKK2X8pAx/YpGH
+         52hA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ND1Pbayt+k3Q/niudV2QdSUEK4q75E81JzYuzBcRil8=;
+        b=E8KQy1mOAqt5ewJeCysJv1riUC5NO2SjV9iZ6h0mGsX2GXifwH/IiXMZ30Gn45slC4
+         2ML6+LhyAkg12uw1b1T8gmJyoX0bbdyX+7LASeydKgBFeEtYAEpjQMbDKCztQuRVRoIQ
+         OGQeIn/z3fBAdiig6PYCiJsSU80lga1i/b/NusKymte2EmtkItrxOP7qGPT69s5gOZqD
+         HjyuXpW2lpVZUI4JFIfqM/sXS+hAXPrYXjvGBLFXx3lUDA0S6iYCEc4wAkdLAX9zQjsa
+         y9KTno+i493YdJmxbH1OnGwX/9gJtAizEryW3NtBbmV/N7YjnyPGN+MyhxWPsfm5ikhu
+         b7cQ==
+X-Gm-Message-State: ALoCoQknub8vfnNss/zRPNeK5hvEH+cvvgV7S5i+LQFiDZDur1sh3kU+G3gGRNjKsT8PqGJRFd7a
+X-Received: by 10.140.109.244 with SMTP id l107mr28669262qgf.80.1414708007440;
+ Thu, 30 Oct 2014 15:26:47 -0700 (PDT)
+Received: by 10.229.225.202 with HTTP; Thu, 30 Oct 2014 15:26:47 -0700 (PDT)
+In-Reply-To: <xmqqy4rxtdu5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> I think it would be a nice project to convert git to consistently use
-> signed 64-bit times internally, and then everything would Just Work
-> going back to the beginning of history. But the demand for such a
-> feature has been low enough that nobody has really dug in and tried the
-> conversion.
+On Thu, Oct 30, 2014 at 3:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ronnie Sahlberg <sahlberg@google.com> writes:
 >
-> We do also gain some small amount of efficiency by storing commit
-> timestamps as 32-bit values. However, those should always be "current"
-> times anyway. I think we are really talking about author timestamps
-> here (and of course the underlying time-manipulation functions).
+>> At some stage it may becomes too many preferences and over-engineered.
+>> Maybe I should drop this patch and then just require the plain "if you
+>> want a push to be atomic, then use --atomic-push. end." and we have
+>> simple and easy to understand semantics.
+>
+> As I still do not quite understand why you find that this could be a
+> "convenience preference" on the server operator's end, that would be
+> my preference, at least until I am convinced why this could be a
+> good idea.
+>
+> Thanks.
+>
 
-There are only three places we store timestamps that matter in the
-on-disk representations, so if we were to go 64-bit internally,
-which I do not mind at all, we probably should do all three i.e.,
-committer, tagger and author dates.
+Ok,  I dropped this patch.
+
+Thanks
+Ronnie Sahlberg
