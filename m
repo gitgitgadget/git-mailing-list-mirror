@@ -1,105 +1,86 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 05/15] refs.c: update rename_ref to use a transaction
-Date: Thu, 30 Oct 2014 11:46:34 -0700
-Message-ID: <CAL=YDW=jk1wO8KB1=Wpiw-AKa9xzLJYr36zF6HxMDPxUHoP_6Q@mail.gmail.com>
-References: <1413923820-14457-1-git-send-email-sahlberg@google.com>
-	<1413923820-14457-6-git-send-email-sahlberg@google.com>
-	<xmqqppdcj9m9.fsf@gitster.dls.corp.google.com>
-	<xmqqlho0j7dq.fsf@gitster.dls.corp.google.com>
-	<CAL=YDWm05PyO07HbiOTiweh+3AEvXnbptbzoreLw-b9YUrm-Hg@mail.gmail.com>
-	<xmqqh9ynkiem.fsf@gitster.dls.corp.google.com>
-	<CAL=YDWkOZ29+ikXJUzhZqW8-Mk91Z_E1QCiXxT1HZ1oj04pk0w@mail.gmail.com>
-	<xmqqtx2myawy.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC/PATCH] bisect: clean flags after checking merge bases
+Date: Thu, 30 Oct 2014 12:01:11 -0700
+Message-ID: <xmqq4mulwfew.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 19:46:50 2014
+Content-Type: text/plain
+Cc: Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 30 20:01:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjukC-0003qJ-Rz
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 19:46:49 +0100
+	id 1XjuyE-0004rQ-Uv
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 20:01:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760715AbaJ3Sqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 14:46:43 -0400
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:37205 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760187AbaJ3Sql (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 14:46:41 -0400
-Received: by mail-qc0-f173.google.com with SMTP id x3so4708118qcv.18
-        for <git@vger.kernel.org>; Thu, 30 Oct 2014 11:46:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=UiZml8jDs5B8AYGyrUCqTwmFnxUfL3YLkxD4fLA3iZM=;
-        b=iRzNx7JvuRc8Ztl9Da/qxM+XmT8aMYdcXykZbDwReEvRsRQ6iTRb8r2xnbVdtfTUaK
-         K96ks75HpF17CjdqluEioc79pBZcvoErCJ8WZxeWFTNHC64LkdTf/1JBhzKmVOCBUWOb
-         7ITmo1McYt6gf3sFRd0peBBudoHin8zUFk3NLsNe2E8m9UIALv9HXKIsUADsPS7d3FJV
-         9UJEMABvkvleJT7ei1vQ8LoakffGNzycp0vOdUoGUPdwB1w3cxWxVqF+DnZoSL5muh2S
-         Dq5le2a69Ytp4ISWzeGqRDEevnJjrtgl5oiPj/T5xnSAcPgxmXtHoZdEiEh99xXT2uC0
-         lw7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=UiZml8jDs5B8AYGyrUCqTwmFnxUfL3YLkxD4fLA3iZM=;
-        b=IlHcdcEN0JiE5tUXsqtFFt8z4l5saiMvXqJNLlMVx3ktiJXRTTGYNC/5bhZvn6gnl6
-         yIu0pNk19pxUp+2NGR2RLgWyvuuy69A7rwbR/uyfmg5M3zTZqDtNXDBOMn7r4MpuJAAQ
-         2KM23qT8v6y2FWSgV9GHo2F1kigsKf0Zf/d+rklY1hjiaEq6j99GUfBFK+atXYydUO6T
-         n0UBfTZ1j1Q8w6osGbT2AqOBg1K/cMepyibGOXI22mNhqIEchoEAHfXNwLssE+hj/fnS
-         HB3OpvL7WTO/KYtYcDCKDv6uzHADVuZisIeGyVltiSRIZ+Ar2R01ll5+NVvn+IJoVz2u
-         +57A==
-X-Gm-Message-State: ALoCoQmFzOB3AorXBcr3y0a2X18EhTfzWe6aLJJHf21HO7eZUVwDdzDFwk4Qx8jnP2SnJJOuEtRT
-X-Received: by 10.140.109.244 with SMTP id l107mr27024202qgf.80.1414694794170;
- Thu, 30 Oct 2014 11:46:34 -0700 (PDT)
-Received: by 10.229.225.202 with HTTP; Thu, 30 Oct 2014 11:46:34 -0700 (PDT)
-In-Reply-To: <xmqqtx2myawy.fsf@gitster.dls.corp.google.com>
+	id S1758010AbaJ3TBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 15:01:15 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56428 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758728AbaJ3TBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 15:01:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7627C1877F;
+	Thu, 30 Oct 2014 15:01:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=EERoCZzIycK1PBrfDekR342MFUc=; b=QfgooS+xNPBCGr2O9KvJFIJwBwMW
+	66wL4KXJKfbkk8Nk9XGgZXsq67NJnryiZWkE11slS5B6ciMu5SuCLQsBqIJQdGWy
+	k4HSeElMkWpxL0iuAdmlde5TVHbPAxDTZAfhxc0zkmf2FE3Fr8L+kjw+EEd8Pi8b
+	Ohjc5imptKl/dks=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	lue6G+EGKPv6LTt0b4d46Vhh1DXt1JWuBWVRd2RBy6gQLIkuZHmkuPYW2YsDAd97
+	leUwbN6o9qFdJXPOB54GV2DmXMdv2Iw2n6CGjHaVTt3xEuvr/JjVl4QSC3wLuuQk
+	sIOzQLDSAMXXAoUCqcGNoKmId8+sjzQ/35KQr11/iy4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F5731877E;
+	Thu, 30 Oct 2014 15:01:13 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDB711877D;
+	Thu, 30 Oct 2014 15:01:12 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1DF5E66C-6067-11E4-A118-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 29, 2014 at 11:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> On Tue, Oct 28, 2014 at 2:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> More importantly, when you know that the end result you want to see
->>> is that the old and new log files are bit-for-bit identical, and if
->>> not there is some bug in either parsing or formatting, why parse the
->>> old and reformat into the new?  What would happen when there were
->>> malformed entries in the old that makes your parsing fail?
->>>
->>
->> Fair enough. I will change it to ONLY use a transaction for the actual
->> ref update and keep using rename() for the reflog handling.
->> Only real change I will do for the reflog handling is to change the
->> temporary file name used to be less collission prone if there are two
->> renames happening at the same time
->> so that they don't destroy each others reflogs.
->
-> I think it is a good idea to make renaming the entire reflog a
-> logical element of transaction (as you mentioned in our private
-> discussion) to allow different backends implement in their best
-> efficient & robust way.
+Unless there is a good reason to belieave that a particular
+invocation of a get_merge_bases*() is the last one that cares about
+the object flags the computation of merge bases leaves on the
+objects, the "cleanup" parameter should always be true, and I do not
+think there is one in this codepath.
 
-Right. I have changed it to use an optimized function to read the
-whole existing reflog as a blob into a strbuf
-and then a new transaction function   transaction_replace_reflog(...
-the-blob ...) to write the whole blob back to the new location.
+Found by code inspection.
 
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * I am planning to eventually change the function signature for
+   this function to drop "cleanup" and change rare selected
+   codepaths that know what they are doing to call a separate
+   function that allows the flags not to be cleaned up.  Two calls
+   in builtin/merge-base.c are both the last ones that can leave the
+   flags on the objects, but I do not think this one, which happens
+   before the main traversal even starts, should pass 0 here.
 
->
-> And for filesystem-backed backends, I actually think "keep the
-> original until we know we do not have to roll back", that follows
-> the same pattern for the other transactional updates, is a good
-> implementation of that "best efficient & robust way", compared to
-> the original "just rename it".  It frees us from having to be
-> worried about what happens if we cannot rename it back.
->
-> Thanks.
+ bisect.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bisect.c b/bisect.c
+index df09cbc..ccca3b5 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -777,7 +777,7 @@ static void check_merge_bases(int no_checkout)
+ 	int rev_nr;
+ 	struct commit **rev = get_bad_and_good_commits(&rev_nr);
+ 
+-	result = get_merge_bases_many(rev[0], rev_nr - 1, rev + 1, 0);
++	result = get_merge_bases_many(rev[0], rev_nr - 1, rev + 1, 1);
+ 
+ 	for (; result; result = result->next) {
+ 		const unsigned char *mb = result->item->object.sha1;
