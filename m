@@ -1,83 +1,64 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 6/8] receive-pack.c: add a receive.preferatomicpush
- configuration variable
-Date: Thu, 30 Oct 2014 15:26:47 -0700
-Message-ID: <CAL=YDWms5geok1j8tQUjHaOVTSG-_zbTob_AVX0GS8cA0rwaSQ@mail.gmail.com>
-References: <1413924400-15418-1-git-send-email-sahlberg@google.com>
-	<1413924400-15418-7-git-send-email-sahlberg@google.com>
-	<xmqq7fzhuxlh.fsf@gitster.dls.corp.google.com>
-	<CAL=YDWmNXpe=0UxbHD-5pwNW-hdp=Ja1Xy8gXAKcbSkoJhpgRw@mail.gmail.com>
-	<xmqqy4rxtdu5.fsf@gitster.dls.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: differences between old clone and new  Re: git-svn performance
+Date: Thu, 30 Oct 2014 23:08:31 +0000
+Message-ID: <20141030230831.GA14160@dcvr.yhbt.net>
+References: <20141030002136.GA31920@dcvr.yhbt.net>
+ <1414630550.65737.YahooMailBasic@web172303.mail.ir2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 23:26:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
+	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
+	amyrick@apple.com
+To: Hin-Tak Leung <htl10@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Oct 31 00:08:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjyBA-0007Zu-VQ
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 23:26:53 +0100
+	id 1XjypZ-0000Qy-QK
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Oct 2014 00:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161211AbaJ3W0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 18:26:49 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:61925 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161019AbaJ3W0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 18:26:48 -0400
-Received: by mail-qg0-f46.google.com with SMTP id i50so3781753qgf.19
-        for <git@vger.kernel.org>; Thu, 30 Oct 2014 15:26:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ND1Pbayt+k3Q/niudV2QdSUEK4q75E81JzYuzBcRil8=;
-        b=f3z0miqeaJOv/Q+CYlWp59KLiHhyb0Bsbjx1iR628Mrgs4SMRYamyhiCXp0muoGvIf
-         6DlNV47X5zhDslHpC3NrRY2e4A2Pc+pkni9uiX0vIx88osQUhiVYwWsygYKNfwJ5psqa
-         +utkmU6lr18QLGyTnIFUGModKfH9I66inkImLfuSHNy3tvzsLtsI81qXCqc8NLDJw/hv
-         ZaprIjJG8M6BM+qcAzKk8TNFDLlmL7+5mqK4wW53xAexGQItsiI1sbV/wAzGTXnBUKAF
-         S/t+DmW1yxltJmPB8m0s5uGCs90SkUPsVPDnyO+wQPdYcJvBcE/Cp3eKK2X8pAx/YpGH
-         52hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ND1Pbayt+k3Q/niudV2QdSUEK4q75E81JzYuzBcRil8=;
-        b=E8KQy1mOAqt5ewJeCysJv1riUC5NO2SjV9iZ6h0mGsX2GXifwH/IiXMZ30Gn45slC4
-         2ML6+LhyAkg12uw1b1T8gmJyoX0bbdyX+7LASeydKgBFeEtYAEpjQMbDKCztQuRVRoIQ
-         OGQeIn/z3fBAdiig6PYCiJsSU80lga1i/b/NusKymte2EmtkItrxOP7qGPT69s5gOZqD
-         HjyuXpW2lpVZUI4JFIfqM/sXS+hAXPrYXjvGBLFXx3lUDA0S6iYCEc4wAkdLAX9zQjsa
-         y9KTno+i493YdJmxbH1OnGwX/9gJtAizEryW3NtBbmV/N7YjnyPGN+MyhxWPsfm5ikhu
-         b7cQ==
-X-Gm-Message-State: ALoCoQknub8vfnNss/zRPNeK5hvEH+cvvgV7S5i+LQFiDZDur1sh3kU+G3gGRNjKsT8PqGJRFd7a
-X-Received: by 10.140.109.244 with SMTP id l107mr28669262qgf.80.1414708007440;
- Thu, 30 Oct 2014 15:26:47 -0700 (PDT)
-Received: by 10.229.225.202 with HTTP; Thu, 30 Oct 2014 15:26:47 -0700 (PDT)
-In-Reply-To: <xmqqy4rxtdu5.fsf@gitster.dls.corp.google.com>
+	id S1161391AbaJ3XId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 19:08:33 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39252 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161332AbaJ3XId (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 19:08:33 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 2D0071F7C9;
+	Thu, 30 Oct 2014 23:08:31 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1414630550.65737.YahooMailBasic@web172303.mail.ir2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 30, 2014 at 3:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> At some stage it may becomes too many preferences and over-engineered.
->> Maybe I should drop this patch and then just require the plain "if you
->> want a push to be atomic, then use --atomic-push. end." and we have
->> simple and easy to understand semantics.
->
-> As I still do not quite understand why you find that this could be a
-> "convenience preference" on the server operator's end, that would be
-> my preference, at least until I am convinced why this could be a
-> good idea.
->
-> Thanks.
->
+Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
+> That's quite straight-forward, I think  - except for the recent burst (I am essentially
+> adapting the git 2.1.0 release shipped by the upcoming fedora 21 scheduled for christmas)
+> I tend to update to the latest fedora release about a week or two after release;
+> fedora 17 was shipped in May 2012 and only just enter Alpha in 22 Feb 2012.
+> and I tracked R at least as frequently as weekly around then;
+> So I would be using what ever version of git was shipping with fedora 16 around late
+> Feb 2012.
+> 
+> On fedora's build farm, git-1.7.7.5 was bult in dec 2011 and git-1.7.7.6 was built
+> on 2012-01-19 . Depending on how soon
+> 1.7.7.6 filtered down to update, and when I update my git and also tracked R,
+> (all three of these events probably happened around 22 Feb), I could be
+> using either 1.7.7.5 or 1.7.7.6. I still have the system software update log around
+> (the repo was cloned on a now-dead system, then moved over when it died),
+> and presumably I can get git log to show me the fetch date (?), I might
+> be able to tell whether it is 17.7.5 or 1.7.7.6 if you really want to know.
 
-Ok,  I dropped this patch.
+I tried a full clone on 1.7.7.6 (no git-svn difference from 1.7.7.5).
+Even with that old git, I was able to reproduce the same merge behavior
+as current (Junio's) master as well as our recent patches.
 
-Thanks
-Ronnie Sahlberg
+So I believe r58454, r46925, and r46906 in the R repo are all handled
+correctly and no mergeinfo-handling regressions are introduced in the
+latest round of git-svn changes.  Thanks.
