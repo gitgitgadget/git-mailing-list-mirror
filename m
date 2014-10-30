@@ -1,121 +1,83 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 6/8] receive-pack.c: add a receive.preferatomicpush
- configuration variable
-Date: Thu, 30 Oct 2014 14:36:50 -0700
-Message-ID: <CAL=YDWmNXpe=0UxbHD-5pwNW-hdp=Ja1Xy8gXAKcbSkoJhpgRw@mail.gmail.com>
-References: <1413924400-15418-1-git-send-email-sahlberg@google.com>
-	<1413924400-15418-7-git-send-email-sahlberg@google.com>
-	<xmqq7fzhuxlh.fsf@gitster.dls.corp.google.com>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH v2 2/3] gitk: write only changed configuration variables
+Date: Thu, 30 Oct 2014 23:43:57 +0200
+Message-ID: <20141030214357.GA6484@wheezy.local>
+References: <1410726959-20353-1-git-send-email-max@max630.net>
+ <1410726959-20353-3-git-send-email-max@max630.net>
+ <20141030095513.GE16472@iris.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 22:36:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Oct 30 22:45:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjxOq-0004HM-1d
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 22:36:56 +0100
+	id 1XjxWf-0000qu-4G
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 22:45:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161199AbaJ3Vgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 17:36:52 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:48738 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161089AbaJ3Vgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 17:36:51 -0400
-Received: by mail-qg0-f44.google.com with SMTP id q107so4809167qgd.3
-        for <git@vger.kernel.org>; Thu, 30 Oct 2014 14:36:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=M+/Sz20t6cY/gQbNQ6flqNewq5dtyencYGm2fevsfCY=;
-        b=d+3IrjF8HYSZJ7CVrKkM6PYGrXx69Ze3vAJoAOaBmVmXKODzwftXFBGUwUay/NhTcM
-         gpZH9YoMu/LJg61ki72fsUxRFYKX7ZmYQ29kYno04pxZvx3nHjsVaccid/5jvhEIs+z8
-         G6ioPS//mhYwEhoOS9pny9coTl9spnfeHyiz/LtotkBMx7dw6RBePhPzkSd0ly18o8W5
-         q6Etr7bY/3bmlAcgPYDiz4In64R9vEPYXkG1s6za/SKtUFPjisE9/y0SllRb7wuiZTWm
-         4shZXxgzDCk14kXCC182MKcSbxaIrmoeIZnppWMyUxEh9x29KhPaXeqYU4Vh/MnABJiy
-         a1SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=M+/Sz20t6cY/gQbNQ6flqNewq5dtyencYGm2fevsfCY=;
-        b=I0wUCgRv262+NUhKeQZn2tVnsErBeuZfxvpIkGayPqrwl39/FmpDfxcsn9+l9PUo4m
-         MYEkMenck1G2KavTymNt7BZITaucz01DKfsetjLKP3S5LT98vcGEWdU3oBruNocyqdyr
-         PE4p5y4GroTEv80aFV/SPAT/Ki3rDPJh+jxvFQNKJ11v0yFEKrdgJID35ubuZxdeQJlc
-         l9GSfirkzRmqwaK7PnTB8KCC8o7NQ9PgEHoZSTu/PTfrawaqYmo51X+8Clu1YPd3Ud7k
-         VvPoIv3N3yQ0o0ROwQU+whcp0cQXgtpbDpvBLSGXAucO78TO/HmhkKFqTrnUfU12Roaq
-         CNtA==
-X-Gm-Message-State: ALoCoQm+AVxakIHHoWs29VqkHGF/CYKevUcMP1w94cy4J87CJmxDNtVZeLdvqxG5t6hBTiylIKu3
-X-Received: by 10.229.40.71 with SMTP id j7mr30521309qce.21.1414705010909;
- Thu, 30 Oct 2014 14:36:50 -0700 (PDT)
-Received: by 10.229.225.202 with HTTP; Thu, 30 Oct 2014 14:36:50 -0700 (PDT)
-In-Reply-To: <xmqq7fzhuxlh.fsf@gitster.dls.corp.google.com>
+	id S1161307AbaJ3Vo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 17:44:57 -0400
+Received: from p3plsmtpa07-01.prod.phx3.secureserver.net ([173.201.192.230]:45202
+	"EHLO p3plsmtpa07-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1161107AbaJ3Vo5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2014 17:44:57 -0400
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa07-01.prod.phx3.secureserver.net with 
+	id 9Zko1p00N5B68XE01Zkuaj; Thu, 30 Oct 2014 14:44:55 -0700
+Content-Disposition: inline
+In-Reply-To: <20141030095513.GE16472@iris.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 30, 2014 at 1:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> Add receive.preferatomicpush setting to receive-pack.c. This triggers
->> a new capability "prefer-atomic-push" to be sent back to the send-pack
->> client, requesting the client, if it supports it, to request
->> an atomic push.
->
-> I can understand a configuration that says "We take only atomics
-> when a push tries to update more than one", but this one is iffy.
->
-> If the receiver accepts non-atomic from older send-pack, those with
-> newer send-pack should have a way to say "the receiving end may
-> prefer atomic, but I choose not to."  Is there a way to do so?
+Hi.
 
-There is no way to do so right now.
-I can add a --no-atomic-push argument to the client to make it ignore
-this hint from the server.
+On Thu, Oct 30, 2014 at 08:55:13PM +1100, Paul Mackerras wrote:
+> It seems to me that we need the trace only for the
+> non-array configuration variables; the array case is only
+> for the view definitions, and I think we could just set
+> the changed flag for a view explicitly in [newviewok].
+> That would simplify things quite a bit.
 
->
-> And if there is such a way, what value does the preference add to
-> the user experience and the server's operation?
->
+I liked the idea to exploit that tcl can watch array element
+uniformly with scalar variables. But I agree that the result
+is a bit complicated. I will try to use the explicit flag and
+see how it's going to look.
 
-The reason for this preference was to make it possible to flag a
-repository to always try to make all pushes atomic, when possible.
-A preference for convenience. You could set on the server to try to
-make all pushes atomic so that clients do not have to specify
---atomic-push all the time.
+> On Sun, Sep 14, 2014 at 11:35:58PM +0300, Max Kirillov wrote:
+> I'm also not convinced we need all the uses of upvar.  Why do we need
+> to use upvar to rename viewname, viewfiles etc. to current_viewname,
+> etc.?  If you're concerned about what might possibly be in the .gitk
+> when you source it, perhaps doing the source inside a namespace would
+> be a cleaner approach?
 
+I have tried namespaces originally but failed with them.
+Apparently when "set v .." runs in namespace and global v
+exists, it modifies the global v rather than creates a new
+variabe in a namespace. I don't remember all details now but
+I could not find how to make it with namespaces. I should
+say I had not known anything about tcl namespaces before
+I started doing this but, so maybe I missed something.
 
-Currently this is just a hint on from the server and is not enforced
-for backward compatibility reasons.
-If the client does not have atomic push support, the client will
-ignore this hint and just do a normal push instead.
+-- 
+Max
 
+PS: the script which shows the namespace behavior:
 
-This is the least important part in this patch series so I am open for advice :
-1, I can remove this patch/preference if you prefer.
-or
-2a, I can add a --no-atomic-push flag to send-pack to have a way to
-force the client to do a normal nonatomic push even if the server
-indicates it wants atomic pushes.
-and/or
-2b, I can add another preference  receive.requireatomicpush to the
-server so that the server can reject any push outright if it is not
-atomic.
+> set a 1
+> namespace eval ns1 {
+>  set a 2
+> }
+> puts "a=$a"
+> puts "ns1::a=$ns1::a"
 
-
-At some stage it may becomes too many preferences and over-engineered.
-Maybe I should drop this patch and then just require the plain "if you
-want a push to be atomic, then use --atomic-push. end." and we have
-simple and easy to understand semantics.
-
-
-Please advise.
-
-
-Regards
-Ronnie Sahlberg
+Output is:
+> a=2
+> can't read "ns1::a": no such variable
+>    while executing
+> "puts "ns1::a=$ns1::a""
