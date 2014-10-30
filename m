@@ -1,114 +1,87 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Joining historical repository using grafts or replace
-Date: Thu, 30 Oct 2014 08:44:26 -0700
-Message-ID: <20141030154426.GU15443@odin.tremily.us>
-References: <CA+POfmvCiNBF=P-OvQBTROVhaLtOdgNTDgPNyS=97bupSGk=4g@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] dir.c: mark a file local function as static
+Date: Thu, 30 Oct 2014 16:01:46 +0000
+Message-ID: <545260EA.7050903@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eEYjL7b2m+/uQ8dh"
-Cc: git@vger.kernel.org
-To: Dmitry Oksenchuk <oksenchuk89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 16:52:45 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 17:01:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xjs1l-0004as-3k
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 16:52:45 +0100
+	id 1XjsAd-0001sP-Tz
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 17:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933837AbaJ3Pwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 11:52:41 -0400
-Received: from resqmta-ch2-05v.sys.comcast.net ([69.252.207.37]:46958 "EHLO
-	resqmta-ch2-05v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751426AbaJ3Pwk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2014 11:52:40 -0400
-X-Greylist: delayed 492 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Oct 2014 11:52:40 EDT
-Received: from resomta-ch2-09v.sys.comcast.net ([69.252.207.105])
-	by resqmta-ch2-05v.sys.comcast.net with comcast
-	id 9Tj01p0062GyhjZ01TkTiW; Thu, 30 Oct 2014 15:44:27 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by resomta-ch2-09v.sys.comcast.net with comcast
-	id 9TkS1p00J152l3L01TkS91; Thu, 30 Oct 2014 15:44:27 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 37687143E993; Thu, 30 Oct 2014 08:44:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1414683866; bh=3AGabMazjG1clGKvM8UJUDtIOvw8WbfeJvrDxz6Xl0c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=seuKMxLIbOh9fPb8+3h26IcFn2TK7mWjyyEuJnzF7yL8thD9LXQUmecXAIrXdh/m6
-	 dK2Prmd9fM22JjAKmbCdeJpKqltLMhf3nHxC+RXUPBwJXrJiEIykh/rB9lh1l1i46H
-	 HuuadTMpPF3fFZtL4a3geab4N3wlI71rMvP16lGo=
-Content-Disposition: inline
-In-Reply-To: <CA+POfmvCiNBF=P-OvQBTROVhaLtOdgNTDgPNyS=97bupSGk=4g@mail.gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1414683867;
-	bh=3AGabMazjG1clGKvM8UJUDtIOvw8WbfeJvrDxz6Xl0c=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=NjFkTPCi2DnScdd8N1sTTHjpizYdldFWFS+dLY929KulIQLEqUEopfgjKWH4K9ot0
-	 pIYQ4iWqsXGugNK3FWAinkQjWRq1SLvU8zQxNV9yZb+kCX2+6nSnk4ghqyWOfOJkyT
-	 ygTAGRywT5hoUrO6GXS0Ne+nPdxnwk/0Q36xXHhPC/vLR4g98ZRiw2Flxg6mxknTlR
-	 nn2ekppc6kItkwy2welw2II+iH932EmrMuVR3KCHimcyw9QWc4tBYg8+JsVB9Nyupn
-	 96ln43EznI4H2hETpe9eBMrBJ3oF8UwG+BfC6Wj0T3sTzzsPZ+dHWReSjtjB2puT9v
-	 ZJ/zRh6T5Kbdw==
+	id S1161088AbaJ3QBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 12:01:51 -0400
+Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:49599 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758284AbaJ3QBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 12:01:51 -0400
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 3F0FE38408D;
+	Thu, 30 Oct 2014 16:01:01 +0000 (GMT)
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id EF265384087;
+	Thu, 30 Oct 2014 16:01:00 +0000 (GMT)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
+	Thu, 30 Oct 2014 16:01:00 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+X-MDF-HostID: 4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---eEYjL7b2m+/uQ8dh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Commit b74884b86 ("untracked cache: make a wrapper around
+{open,read,close}dir()", 27-10-2014) added the read_cached_dir()
+function as an external symbol.
 
-On Thu, Oct 30, 2014 at 06:39:56PM +0300, Dmitry Oksenchuk wrote:
-> We're in the middle of conversion of a large CVS repository (20
-> years, 70K commits, 1K branches, 10K tags) to Git and considering
-> two separate Git repositories: "historical" with CVS history and
-> "working" created without history from heads of active branches (10
-> active branches). This allows us to have small fast "working"
-> repository for developers who don't want to have full history
-> locally and ability to rewrite history in "historical" repository
-> (for example, to add parents to merge commits or to fix conversion
-> mistakes) without affecting commit hashes in "working" repository
-> (the hashes can be stored in bug tracker or in the code).
+Noticed by sparse. ("'read_cached_dir' was not declared. Should it
+be static?").
 
-A number of projects have done something like this (e.g. Linux).
-Modern Gits have good support for shallow repositories though, so I'd
-just make one full repository and leave it to developers to decide how
-deep they want their local copy to be.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-Cheers,
-Trevor
+Hi Duy,
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+If you need to re-roll your 'nd/untracked-cache' branch, could you
+please squash this into the relevant patch.
 
---eEYjL7b2m+/uQ8dh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+Thanks!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+[If this function is destined to be used from external call sites
+in future patches, then adding an extern declaration to "dir.h"
+would be an alternative, of course. ;-) ]
 
-iQIcBAEBAgAGBQJUUlzXAAoJEG8/JgBt8ol8MDAQAIZxOCkW27X/iVGyLkqPKbF6
-42VdZAWCnTOpTTNnKl9/BeHi9BLXRIzJwp7EpAdFbVsHnFmTylsVfvgsT3wfGi8c
-LPStD/1NVtHNLKig1x3uNDf1racAzd383ptmqd2T6j/KsB2IazT+OxleEygkLGxn
-cTWY48u7zGpz/opcrXyjyX0vldQn9Ih+l4cQdRKgg3ZKNQSWzAGH9e8ppgoJIP7J
-MC2PneufYtLX1hlfupR9Z6w7xKmyr6VFt8NmSMJXHwxfuaQ3bU8he0YuKCmPJf6q
-tZRKtkixMkxCl15iHSHANH6swF3xawebcxqevuXiCnnriLIC0Q6PBHo/UmdoXIEv
-78jyziVHk3n93uyOj7Wv8MLdmMKzvLNIkx1nXm2qXPsVmO+yMkfxC/CmUnqCpr1q
-OCtSBQj3ppZh4nJYzQm8M66g7XEgoLHmIB5jmAkgd1HKHN+iIw7vPud01ZV1T4D7
-QoXIHNNhY9dJj5l8CrbLi+alyKq6l9+5nJOcTlfX3YC0O0lRXZQ2CT6rq3pd3nRN
-lGpHujwDXQxyvnmZSuXKm1Aw/M3AivQiUF7t+AuMMwN2pk4qZDAQKAhDcM6JIDRu
-W+JPG/llwhIaTGQjz8zcfS+Ns1GbF13iVH0sK1FJRt1X+Qnzkk2lMOLB0RoPOiKq
-DGBPwZandG4J4o8YYEBt
-=0pPC
------END PGP SIGNATURE-----
+ATB,
+Ramsay Jones
 
---eEYjL7b2m+/uQ8dh--
+
+ dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dir.c b/dir.c
+index 0040ca1..e999cc8 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1582,7 +1582,7 @@ static int open_cached_dir(struct cached_dir *cdir,
+ 	return 0;
+ }
+ 
+-int read_cached_dir(struct cached_dir *cdir)
++static int read_cached_dir(struct cached_dir *cdir)
+ {
+ 	if (cdir->fdir) {
+ 		cdir->de = readdir(cdir->fdir);
+-- 
+2.1.0
