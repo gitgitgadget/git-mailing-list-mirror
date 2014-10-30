@@ -1,85 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is there way to set git commit --date to be older than 1970 ?
-Date: Thu, 30 Oct 2014 10:24:48 -0700
-Message-ID: <xmqqr3xpwjvj.fsf@gitster.dls.corp.google.com>
-References: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
+From: Dmitry Oksenchuk <oksenchuk89@gmail.com>
+Subject: Re: Joining historical repository using grafts or replace
+Date: Thu, 30 Oct 2014 20:41:37 +0300
+Message-ID: <CA+POfmvXEjDV9Vap6NDX7HvOMjEVG4mVe1uWFSTQy5g_c+vJnw@mail.gmail.com>
+References: <CA+POfmvCiNBF=P-OvQBTROVhaLtOdgNTDgPNyS=97bupSGk=4g@mail.gmail.com>
+	<CAP8UFD3_fAWRdxQgAbfxYZSzrmy1Aza=nuZh-uSJsKOdRj+LVA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: Peter Vojtek <peter.vojtek@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 18:25:03 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 18:42:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjtT3-00058S-Qy
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 18:25:02 +0100
+	id 1Xjtjg-0007l4-Da
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 18:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760141AbaJ3RYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 13:24:54 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59688 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1759077AbaJ3RYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 13:24:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0877F18E42;
-	Thu, 30 Oct 2014 13:24:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=K7jQnfIfg0IunFP8cvAJ9XCXxvw=; b=EvnSC+
-	BCZ4NMsRAmwX+4iCiWD/tszEz+WgCFzDI8Je6fZSd+4CegVr+jvb53/yrrnbVgKG
-	4w1A01eeUiGJLy/BAdslyFu7zC5Q1o+R/XjhedaMVwoL3ZDyYu8FqADxYaMfPuqV
-	GO9ds+VKH1v3AQ02jsPnj8yAQk49bBFphkkiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PAEMLjROXeFLxvyH0fmQPVUo1JGdAp5P
-	Kdu0aeUFueZbpWnW/399b/M3VL+eFjZaeb0cUoU1/ouzqj6eGZfSa42hIIWOBXA0
-	UYsTPijSENVD5Gj1/lzkr9JZWW6wirASpsv/Im8CDeJ+6np5J0bL5pP2ZgXVXuMY
-	GzmXJuBS6h0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 000D218E40;
-	Thu, 30 Oct 2014 13:24:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7219E18E3D;
-	Thu, 30 Oct 2014 13:24:50 -0400 (EDT)
-In-Reply-To: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
-	(Peter Vojtek's message of "Wed, 29 Oct 2014 19:49:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A765DD7A-6059-11E4-BEB5-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1161110AbaJ3RmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 13:42:06 -0400
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:60672 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760782AbaJ3Rlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 13:41:39 -0400
+Received: by mail-yk0-f178.google.com with SMTP id 9so2540968ykp.9
+        for <git@vger.kernel.org>; Thu, 30 Oct 2014 10:41:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NGqYCyu5nl4XQ4LgAkDVRVcZBBlo2u7BwF/iT2tNa/o=;
+        b=pJUSrqjP02Us7Dvw87oo4aUBXyfX+X1J5HtgY7TMbAMQrICBcbp/Gl9hdZVFlLrglP
+         ZFgKKwxXF64Zt4HZimGAe04s6ibvrdkAtUbGEJk2nuLPCVSuoXGLTijQsBYCwImGf+Nm
+         k5WiD0zGPc4wrtImWCUNkp7zZ6YQBZJm960rX9YQhsU+SPNFlkL/gu1GtuaTB+HbhHiB
+         4aN9NkGwQbEaVtW1pQD0pFMGbdgwey2VU/b+h7E73GhBLOGgVEC1lWlh1pfVWoi054Xh
+         8vu+DUt7I03ZN0B+wE2AK3t47H+OgpmI+WgTBA+lFmydL7ULQMZHbCzAB4miel1R9YQb
+         Vmkg==
+X-Received: by 10.170.147.2 with SMTP id o2mr19076998ykc.81.1414690898021;
+ Thu, 30 Oct 2014 10:41:38 -0700 (PDT)
+Received: by 10.170.141.194 with HTTP; Thu, 30 Oct 2014 10:41:37 -0700 (PDT)
+In-Reply-To: <CAP8UFD3_fAWRdxQgAbfxYZSzrmy1Aza=nuZh-uSJsKOdRj+LVA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Peter Vojtek <peter.vojtek@gmail.com> writes:
+Hi Christian,
 
-> It seems the commit date can be between 1970 and 2100 (on my 32bit
-> linux), however man git (section DATE FORMATS) claims ISO 8601
-> standard is supported.
+Thanks for your reply.
 
-The date formats section of "git log" only talks about the output
-format (I do not see in "man git" any section about date formats, by
-the way), once Git understands and records the timestamp in its
-internal representation (which is "seconds since the epoch"; as I
-already said, theoretically it should be possible to record negative
-number of seconds there, the current code does not allow it).
+2014-10-30 19:54 GMT+03:00 Christian Couder <christian.couder@gmail.com>:
+> On Thu, Oct 30, 2014 at 4:39 PM, Dmitry Oksenchuk <oksenchuk89@gmail.com> wrote:
+>> We're in the middle of conversion of a large CVS repository (20 years,
+>> 70K commits, 1K branches, 10K tags) to Git and considering two
+>> separate Git repositories: "historical" with CVS history and "working"
+>> created without history from heads of active branches (10 active
+>> branches). This allows us to have small fast "working" repository for
+>> developers who don't want to have full history locally and ability to
+>> rewrite history in "historical" repository (for example, to add
+>> parents to merge commits or to fix conversion mistakes) without
+>> affecting commit hashes in "working" repository (the hashes can be
+>> stored in bug tracker or in the code).
+>
+> This might be a good idea. Did you already test that the small
+> repository is really faster than the full repository?
 
-The documentation may need to be clarified, independent from what
-the implementation does on the input side.  The current text from
-"git log" reads like so:
+Yes, because of such amount of refs, push in "historical" repository
+takes 12 sec, push in "working" repository takes 0.4 sec, push in
+"joined" repository takes 2 sec. Local operations with history like
+log and blame work with the same speed in "joined" repository as in
+"historical" repository.
 
-       --date=(relative|local|default|iso|iso-strict|rfc|short|raw)
-           Only takes effect for dates shown in human-readable
-           format, such as when using --pretty.  log.date config
-           variable sets a default value for the log command’s
-           --date option.
+>> Are there any disadvantages of using grafts and replace? Will both of
+>> them be supported in future versions of Git?
+>
+> My opinion is that grafts have no advantage compared to replace refs.
+>
+> Once you have created your replace refs, they can be managed like
+> other git refs, so they are easier to distribute.
+>
+> Basically if you want to get the full history on a computer you just need to do:
+>
+> git fetch 'refs/replace/*:refs/replace/*'
 
-The word "shown" is meant to stress that this description is about
-output side, but apparently it was misread as if somehow a user can
-affect the input by giving --date=iso or something, so perhaps you
-would want to suggest a better phrasing?
+That's true but you still need to have another remote with full
+history because it has lots of tags and branches that will be cloned
+by initial clone.
 
-Thanks.
+Regards,
+Dmitry
