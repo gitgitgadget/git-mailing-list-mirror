@@ -1,81 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Is there way to set git commit --date to be older than 1970 ?
-Date: Thu, 30 Oct 2014 17:48:52 -0400
-Message-ID: <20141030214852.GB21017@peff.net>
-References: <CAOE_JxJp0nA_p_42yOyk_nMjsyMaovj0Fx6AJ5nywiEQfB5XAQ@mail.gmail.com>
- <xmqqh9ymy8np.fsf@gitster.dls.corp.google.com>
- <CAPBPrnuxAPmKe_aRb9USh=cOu4jMZaYzOorXC_RJa8b8ROq+iA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/8] receive-pack.c: add a receive.preferatomicpush configuration variable
+Date: Thu, 30 Oct 2014 15:03:30 -0700
+Message-ID: <xmqqy4rxtdu5.fsf@gitster.dls.corp.google.com>
+References: <1413924400-15418-1-git-send-email-sahlberg@google.com>
+	<1413924400-15418-7-git-send-email-sahlberg@google.com>
+	<xmqq7fzhuxlh.fsf@gitster.dls.corp.google.com>
+	<CAL=YDWmNXpe=0UxbHD-5pwNW-hdp=Ja1Xy8gXAKcbSkoJhpgRw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Peter Vojtek <peter.vojtek@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dan Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 22:49:00 2014
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 23:03:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjxaV-0003Ih-JU
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 22:49:00 +0100
+	id 1Xjxof-0003LE-V2
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 23:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161346AbaJ3Vsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 17:48:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35297 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161336AbaJ3Vsz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 17:48:55 -0400
-Received: (qmail 3360 invoked by uid 102); 30 Oct 2014 21:48:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Oct 2014 16:48:54 -0500
-Received: (qmail 9226 invoked by uid 107); 30 Oct 2014 21:48:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Oct 2014 17:48:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Oct 2014 17:48:52 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPBPrnuxAPmKe_aRb9USh=cOu4jMZaYzOorXC_RJa8b8ROq+iA@mail.gmail.com>
+	id S1161035AbaJ3WDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 18:03:34 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58722 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934742AbaJ3WDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 18:03:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E89281A291;
+	Thu, 30 Oct 2014 18:03:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7Tqj6TMNKOJtkEtl7XULLkxg464=; b=RZ/b8i
+	9XWLapW6uBmFLmlqA4aiCMzWIJFwYcp81vWV4j0TSskD1ccN2xXzmts1rrI2rRKk
+	bgNz7pu+wpZxIN/yR8+WxctRlCosyn4xiWshr6qGtqs3h8ikWEmrp7+CxTZMtsUw
+	qNsT4tFUIFg+dJtB6kJdwXnir/ysfrL4WUBM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iyKfiGrrH3DQEqb7+mznd5OpkNQIXBZZ
+	SmY1lrdJQ7NaiqMg3/vX3ZbQbQssFBfuAwRRUOZ7szHFEH4ZpWfv1NQRNxIeJnkD
+	EPdEF1xlNo7OdJXANDjDP0va5n33QLmDfQlSBBXjNYG/epitrf/BixnJtoo6bHY1
+	Lek5TPGbDA4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE5CF1A290;
+	Thu, 30 Oct 2014 18:03:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E3AB1A28E;
+	Thu, 30 Oct 2014 18:03:31 -0400 (EDT)
+In-Reply-To: <CAL=YDWmNXpe=0UxbHD-5pwNW-hdp=Ja1Xy8gXAKcbSkoJhpgRw@mail.gmail.com>
+	(Ronnie Sahlberg's message of "Thu, 30 Oct 2014 14:36:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 95D770A6-6080-11E4-9D42-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 30, 2014 at 05:08:56PM -0400, Dan Johnson wrote:
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-> > The underlying data representation records time as number of seconds
-> > since epoch (1970-01-01).  Theoretically the codepaths that read
-> > data could consider negative timestamps to represent times before
-> > the epoch, but in the context of source code control, negative
-> > values are more likely to be an indication of a bug or a user
-> > mistake, and I do not think any existing code in Git is prepared to
-> > pass such a timestamp as a sane value---instead they diagnose a
-> > failure and die.
-> 
-> I remember a pretty old thread found some success storing timestamps this way:
-> http://comments.gmane.org/gmane.comp.version-control.git/152433
+> At some stage it may becomes too many preferences and over-engineered.
+> Maybe I should drop this patch and then just require the plain "if you
+> want a push to be atomic, then use --atomic-push. end." and we have
+> simple and easy to understand semantics.
 
-A few things have changed since then. Most notably, git is more careful
-about overflow of "unsigned long" when reading in timestamp values. Of
-course, we can't do much in the overflow case except assign a sentinel
-value. But it at least means that overflowing values all end up as "Jan
-1 1970" and not whatever random 32-bit wraparound you happen to get.
+As I still do not quite understand why you find that this could be a
+"convenience preference" on the server operator's end, that would be
+my preference, at least until I am convinced why this could be a
+good idea.
 
-But what _hasn't_ changed is that we still use "unsigned long"
-internally. The fact that the 1787 date in that thread worked at all is
-somewhat accidental and due to implicit casts between "unsigned long"
-and "time_t" working. As noted here (and downthread):
-
-  http://permalink.gmane.org/gmane.comp.version-control.git/152508
-
-I think it would be a nice project to convert git to consistently use
-signed 64-bit times internally, and then everything would Just Work
-going back to the beginning of history. But the demand for such a
-feature has been low enough that nobody has really dug in and tried the
-conversion.
-
-We do also gain some small amount of efficiency by storing commit
-timestamps as 32-bit values. However, those should always be "current"
-times anyway. I think we are really talking about author timestamps
-here (and of course the underlying time-manipulation functions).
-
--Peff
+Thanks.
