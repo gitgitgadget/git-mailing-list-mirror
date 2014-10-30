@@ -1,87 +1,129 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] dir.c: mark a file local function as static
-Date: Thu, 30 Oct 2014 16:01:46 +0000
-Message-ID: <545260EA.7050903@ramsay1.demon.co.uk>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 06/19] untracked cache: record/validate dir mtime and
+ reuse cached output
+Date: Thu, 30 Oct 2014 12:19:12 -0400
+Message-ID: <CAPig+cRQPWRjCeZ6LD0pn3DRX_rZcG-modk5OGXxqoyb=kE6iw@mail.gmail.com>
+References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
+	<1414411846-4450-7-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 17:01:57 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 17:19:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjsAd-0001sP-Tz
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 17:01:56 +0100
+	id 1XjsRW-00052q-FM
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 17:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161088AbaJ3QBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 12:01:51 -0400
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:49599 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758284AbaJ3QBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 12:01:51 -0400
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 3F0FE38408D;
-	Thu, 30 Oct 2014 16:01:01 +0000 (GMT)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id EF265384087;
-	Thu, 30 Oct 2014 16:01:00 +0000 (GMT)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
-	Thu, 30 Oct 2014 16:01:00 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-MDF-HostID: 4
+	id S1759265AbaJ3QTQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Oct 2014 12:19:16 -0400
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:46842 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759245AbaJ3QTN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2014 12:19:13 -0400
+Received: by mail-yh0-f47.google.com with SMTP id i57so1789491yha.34
+        for <git@vger.kernel.org>; Thu, 30 Oct 2014 09:19:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=frPhK5uyMRtv4qZrOhGTq+Vv9JE1pK/rovE0Jt3fajc=;
+        b=FypUexM2GFZJnaDQqc2qsP50VXl8b3uxxOmBz64fUTvpovIvgI9svMaqVr2x/O2+Lv
+         Al1rVQa0WkpjFr1rSDAnr8+KfJWBjO02h7lH+vuCxFZBLSJ4+SN4z4JiUrO8GdxU9ie0
+         RT/uFcTSXR+9jr337olQc24KmxbXPKExvT9jNNdiBJutHtLxk0X14dvfmQwQLhUzoHN+
+         OV41r0stvPA58x/rJhs36IeAELbvZWEKR7avg2/NnjrBLGAMqZOW6alfzmUQ6oGnj0bn
+         vwIuRgFoQoH3nf4Xr4ElKh9TnqQsKwnCABhzyCtG6NIui+ZGCRFWnM0OBaDyZ2oLe02H
+         V5Uw==
+X-Received: by 10.236.210.114 with SMTP id t78mr3699640yho.148.1414685952807;
+ Thu, 30 Oct 2014 09:19:12 -0700 (PDT)
+Received: by 10.170.68.68 with HTTP; Thu, 30 Oct 2014 09:19:12 -0700 (PDT)
+In-Reply-To: <1414411846-4450-7-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: X0uVkb3tlBlMyfNGLc1wzeEbhdA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Oct 27, 2014 at 8:10 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> diff --git a/dir.c b/dir.c
+> index 2793e57..55780a7 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -37,7 +37,12 @@ enum path_treatment {
+> +static enum path_treatment treat_path_fast(struct dir_struct *dir,
+> +                                          struct untracked_cache_dir=
+ *untracked,
+> +                                          struct cached_dir *cdir,
+> +                                          struct strbuf *path,
+> +                                          int baselen,
+> +                                          const struct path_simplify=
+ *simplify)
+> +{
+> +       if (!cdir->ucd) {
+> +               strbuf_setlen(path, baselen);
+> +               strbuf_addstr(path, cdir->file);
+> +               return path_untracked;
+> +       }
+> +       strbuf_setlen(path, baseline);
 
-Commit b74884b86 ("untracked cache: make a wrapper around
-{open,read,close}dir()", 27-10-2014) added the read_cached_dir()
-function as an external symbol.
+Would it make sense to move the strbuf_setlen(path,baseline) above the
+conditional since it is common to both cases, or are they conceptually
+distinct enough that it is clearer to duplicate the function call for
+each case?
 
-Noticed by sparse. ("'read_cached_dir' was not declared. Should it
-be static?").
+> +       strbuf_addstr(path, cdir->ucd->name);
+> +       /* treat_one_path() does this before it calls treat_directory=
+() */
+> +       if (path->buf[path->len - 1] !=3D '/')
+> +               strbuf_addch(path, '/');
+> +       if (cdir->ucd->check_only)
+> +               /*
+> +                * check_only is set as a result of treat_directory()=
+ getting
+> +                * to its bottom. Verify again the same set of direct=
+ories
+> +                * with check_only set.
+> +                */
+> +               return read_directory_recursive(dir, path->buf, path-=
+>len,
+> +
+> +                                               cdir->ucd, 1, simplif=
+y);
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+Unusual blank line placement.
 
-Hi Duy,
+> +       /*
+> +        * We get path_recurse in the first run when
+> +        * directory_exists_in_index() returns index_nonexistent. We
+> +        * are sure that new changes in the index does not impact the
+> +        * outcome. Return now.
+> +        */
+> +       return path_recurse;
+> +}
+> +
+> @@ -1477,6 +1590,12 @@ static void close_cached_dir(struct cached_dir=
+ *cdir)
+>  {
+>         if (cdir->fdir)
+>                 closedir(cdir->fdir);
+> +       /*
+> +        * We have gone through this directory and found no untracked
+> +        * entries. Mark it valid.
+> +        */
+> +       if (cdir->untracked && !cdir->untracked->valid)
+> +               cdir->untracked->valid =3D 1;
 
-If you need to re-roll your 'nd/untracked-cache' branch, could you
-please squash this into the relevant patch.
+Or, stated more simply:
 
-Thanks!
+   if (cdir->untracked)
+        cdir->untracked->valid =3D 1;
 
-[If this function is destined to be used from external call sites
-in future patches, then adding an extern declaration to "dir.h"
-would be an alternative, of course. ;-) ]
-
-ATB,
-Ramsay Jones
-
-
- dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/dir.c b/dir.c
-index 0040ca1..e999cc8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1582,7 +1582,7 @@ static int open_cached_dir(struct cached_dir *cdir,
- 	return 0;
- }
- 
--int read_cached_dir(struct cached_dir *cdir)
-+static int read_cached_dir(struct cached_dir *cdir)
- {
- 	if (cdir->fdir) {
- 		cdir->de = readdir(cdir->fdir);
--- 
-2.1.0
+>  }
+>
+>  /*
