@@ -1,129 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 06/19] untracked cache: record/validate dir mtime and
- reuse cached output
-Date: Thu, 30 Oct 2014 12:19:12 -0400
-Message-ID: <CAPig+cRQPWRjCeZ6LD0pn3DRX_rZcG-modk5OGXxqoyb=kE6iw@mail.gmail.com>
-References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
-	<1414411846-4450-7-git-send-email-pclouds@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Joining historical repository using grafts or replace
+Date: Thu, 30 Oct 2014 17:54:54 +0100
+Message-ID: <CAP8UFD3_fAWRdxQgAbfxYZSzrmy1Aza=nuZh-uSJsKOdRj+LVA@mail.gmail.com>
+References: <CA+POfmvCiNBF=P-OvQBTROVhaLtOdgNTDgPNyS=97bupSGk=4g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 17:19:23 2014
+Cc: git <git@vger.kernel.org>
+To: Dmitry Oksenchuk <oksenchuk89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 17:56:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XjsRW-00052q-FM
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 17:19:22 +0100
+	id 1Xjt11-0004HC-Nk
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 17:56:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759265AbaJ3QTQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Oct 2014 12:19:16 -0400
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:46842 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759245AbaJ3QTN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Oct 2014 12:19:13 -0400
-Received: by mail-yh0-f47.google.com with SMTP id i57so1789491yha.34
-        for <git@vger.kernel.org>; Thu, 30 Oct 2014 09:19:12 -0700 (PDT)
+	id S1161107AbaJ3Qy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 12:54:59 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:51213 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759794AbaJ3Qy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 12:54:56 -0400
+Received: by mail-ig0-f180.google.com with SMTP id h3so5530611igd.1
+        for <git@vger.kernel.org>; Thu, 30 Oct 2014 09:54:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=frPhK5uyMRtv4qZrOhGTq+Vv9JE1pK/rovE0Jt3fajc=;
-        b=FypUexM2GFZJnaDQqc2qsP50VXl8b3uxxOmBz64fUTvpovIvgI9svMaqVr2x/O2+Lv
-         Al1rVQa0WkpjFr1rSDAnr8+KfJWBjO02h7lH+vuCxFZBLSJ4+SN4z4JiUrO8GdxU9ie0
-         RT/uFcTSXR+9jr337olQc24KmxbXPKExvT9jNNdiBJutHtLxk0X14dvfmQwQLhUzoHN+
-         OV41r0stvPA58x/rJhs36IeAELbvZWEKR7avg2/NnjrBLGAMqZOW6alfzmUQ6oGnj0bn
-         vwIuRgFoQoH3nf4Xr4ElKh9TnqQsKwnCABhzyCtG6NIui+ZGCRFWnM0OBaDyZ2oLe02H
-         V5Uw==
-X-Received: by 10.236.210.114 with SMTP id t78mr3699640yho.148.1414685952807;
- Thu, 30 Oct 2014 09:19:12 -0700 (PDT)
-Received: by 10.170.68.68 with HTTP; Thu, 30 Oct 2014 09:19:12 -0700 (PDT)
-In-Reply-To: <1414411846-4450-7-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: X0uVkb3tlBlMyfNGLc1wzeEbhdA
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=yM57zhhlz3GI0ta3v748KvNuiJgA9hcmGJNH1hUL3Ww=;
+        b=rJvEXZ4z/x+aVWa3mdaNZ7ErE3NxM8AvhF6+HQv4w8zbU6Skyt/SJ0L5hq31k/3NHL
+         43Zek5F4HZa1elYbnEAKAAku1k+RDQ2Exl3BpqCpZc/ZVsomEkoM7S23XEb1v5zWtRZJ
+         FUuqjtphwP+Gmlo7xBJMTDB+GoVdbbdH5D3d4j29BDICC3gJK6QMSvlae/btQNx960Uy
+         JvbOH6tgz2wBHYxyB6Ck1LkLVV2My/hvJcfNzz7umYvV8UCheYeVFcWZbYWthmrif7zW
+         hL5CjZsQ6lfw4BLU9rfrKyX0P9z3L0xdqfQCDAD8QkZXQNzU+ZfPaJFzvA7MGC2hrQb5
+         64sA==
+X-Received: by 10.107.128.146 with SMTP id k18mr4285346ioi.69.1414688094953;
+ Thu, 30 Oct 2014 09:54:54 -0700 (PDT)
+Received: by 10.50.250.179 with HTTP; Thu, 30 Oct 2014 09:54:54 -0700 (PDT)
+In-Reply-To: <CA+POfmvCiNBF=P-OvQBTROVhaLtOdgNTDgPNyS=97bupSGk=4g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 27, 2014 at 8:10 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> diff --git a/dir.c b/dir.c
-> index 2793e57..55780a7 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -37,7 +37,12 @@ enum path_treatment {
-> +static enum path_treatment treat_path_fast(struct dir_struct *dir,
-> +                                          struct untracked_cache_dir=
- *untracked,
-> +                                          struct cached_dir *cdir,
-> +                                          struct strbuf *path,
-> +                                          int baselen,
-> +                                          const struct path_simplify=
- *simplify)
-> +{
-> +       if (!cdir->ucd) {
-> +               strbuf_setlen(path, baselen);
-> +               strbuf_addstr(path, cdir->file);
-> +               return path_untracked;
-> +       }
-> +       strbuf_setlen(path, baseline);
+Hi,
 
-Would it make sense to move the strbuf_setlen(path,baseline) above the
-conditional since it is common to both cases, or are they conceptually
-distinct enough that it is clearer to duplicate the function call for
-each case?
-
-> +       strbuf_addstr(path, cdir->ucd->name);
-> +       /* treat_one_path() does this before it calls treat_directory=
-() */
-> +       if (path->buf[path->len - 1] !=3D '/')
-> +               strbuf_addch(path, '/');
-> +       if (cdir->ucd->check_only)
-> +               /*
-> +                * check_only is set as a result of treat_directory()=
- getting
-> +                * to its bottom. Verify again the same set of direct=
-ories
-> +                * with check_only set.
-> +                */
-> +               return read_directory_recursive(dir, path->buf, path-=
->len,
-> +
-> +                                               cdir->ucd, 1, simplif=
-y);
-
-Unusual blank line placement.
-
-> +       /*
-> +        * We get path_recurse in the first run when
-> +        * directory_exists_in_index() returns index_nonexistent. We
-> +        * are sure that new changes in the index does not impact the
-> +        * outcome. Return now.
-> +        */
-> +       return path_recurse;
-> +}
-> +
-> @@ -1477,6 +1590,12 @@ static void close_cached_dir(struct cached_dir=
- *cdir)
->  {
->         if (cdir->fdir)
->                 closedir(cdir->fdir);
-> +       /*
-> +        * We have gone through this directory and found no untracked
-> +        * entries. Mark it valid.
-> +        */
-> +       if (cdir->untracked && !cdir->untracked->valid)
-> +               cdir->untracked->valid =3D 1;
-
-Or, stated more simply:
-
-   if (cdir->untracked)
-        cdir->untracked->valid =3D 1;
-
->  }
+On Thu, Oct 30, 2014 at 4:39 PM, Dmitry Oksenchuk <oksenchuk89@gmail.com> wrote:
+> Hello,
 >
->  /*
+> We're in the middle of conversion of a large CVS repository (20 years,
+> 70K commits, 1K branches, 10K tags) to Git and considering two
+> separate Git repositories: "historical" with CVS history and "working"
+> created without history from heads of active branches (10 active
+> branches). This allows us to have small fast "working" repository for
+> developers who don't want to have full history locally and ability to
+> rewrite history in "historical" repository (for example, to add
+> parents to merge commits or to fix conversion mistakes) without
+> affecting commit hashes in "working" repository (the hashes can be
+> stored in bug tracker or in the code).
+
+This might be a good idea. Did you already test that the small
+repository is really faster than the full repository?
+
+> The first idea was to use grafs to join branch roots in "working"
+> repository with branches in "historical" repository like in linux
+> repository but it seems that grafts are known as a "horrible hack" (
+> http://marc.info/?l=git&m=131127600030310&w=2
+> http://permalink.gmane.org/gmane.comp.version-control.git/177153 )
+>
+> Since Git 1.6.5 "replace" can also be used to join the histories by
+> replacing branch roots in "working" repository with branch heads in
+> "historical" repository.
+>
+> Both grafts and replace will be used locally. Grafts is a bit easier
+> to distribute (simple copying, replaces should be created via bash
+> script).
+
+First, you might want to have a look at:
+
+http://git-scm.com/book/en/v2/Git-Tools-Replace
+
+as it looks like it describes your use case very well.
+
+> Are there any disadvantages of using grafts and replace? Will both of
+> them be supported in future versions of Git?
+
+My opinion is that grafts have no advantage compared to replace refs.
+
+Once you have created your replace refs, they can be managed like
+other git refs, so they are easier to distribute.
+
+Basically if you want to get the full history on a computer you just need to do:
+
+git fetch 'refs/replace/*:refs/replace/*'
+
+Best,
+Christian.
