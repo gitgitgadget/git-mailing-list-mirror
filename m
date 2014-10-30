@@ -1,73 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/8] receive-pack.c: add a receive.preferatomicpush configuration variable
-Date: Thu, 30 Oct 2014 13:11:22 -0700
-Message-ID: <xmqq7fzhuxlh.fsf@gitster.dls.corp.google.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 1/8] receive-pack.c: add protocol support to negotiate atomic-push
+Date: Thu, 30 Oct 2014 13:46:17 -0700
+Message-ID: <CAL=YDWnTOqcGxKWUUcwCW+oouznXYPbt_B1tVjavFwn=Yp08+g@mail.gmail.com>
 References: <1413924400-15418-1-git-send-email-sahlberg@google.com>
-	<1413924400-15418-7-git-send-email-sahlberg@google.com>
+	<1413924400-15418-2-git-send-email-sahlberg@google.com>
+	<xmqqmw8duy5p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu Oct 30 21:11:39 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 30 21:46:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xjw4A-0004GN-Jx
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 21:11:30 +0100
+	id 1Xjwbv-0007T9-5m
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Oct 2014 21:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933938AbaJ3UL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Oct 2014 16:11:26 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57002 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932513AbaJ3ULZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 16:11:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D5E119924;
-	Thu, 30 Oct 2014 16:11:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1zOY6xN9rrkFFk+NKsv8YtqeWpo=; b=VuI1Xh
-	EKenZMkEPj5YcAe/3Vnfy/6wwT+71cuHwQ/uH58uWVe1olQT9OIxyVnrS1YuBrdJ
-	shWWyseAZC6jeBRsQe8MRrSFdrMRL7QN+2a1uBps/k40BpLSGj2pLDCcltLeCZ5P
-	HWunEYaGaKxUtDLtCuJHk/LvsS+0zXNgxNXHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PbfaOAyqQSqTTO6EArYbQ6dCVFjBPAL2
-	CHDmt1GxNqhDkqnpbbYtob3buoi/KVsrrxT1Y6V3Q5Gz24bzb6NGgD4K+zKoVq/H
-	16Si2B2+Nwm9Ti3o+g34kPY8hF1aqigbb0pOtO/h3ljM/fawLez5TVR1vCfLkz6F
-	KPc5IW0SW6g=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0374419922;
-	Thu, 30 Oct 2014 16:11:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4247A19921;
-	Thu, 30 Oct 2014 16:11:24 -0400 (EDT)
-In-Reply-To: <1413924400-15418-7-git-send-email-sahlberg@google.com> (Ronnie
-	Sahlberg's message of "Tue, 21 Oct 2014 13:46:38 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EC2D1254-6070-11E4-B14F-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1161172AbaJ3UqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Oct 2014 16:46:18 -0400
+Received: from mail-qa0-f51.google.com ([209.85.216.51]:58280 "EHLO
+	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933386AbaJ3UqS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Oct 2014 16:46:18 -0400
+Received: by mail-qa0-f51.google.com with SMTP id f12so4394756qad.10
+        for <git@vger.kernel.org>; Thu, 30 Oct 2014 13:46:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YofjUOqqqU+xGkDtfdxFCGDZ6xOqhzTCXfuZL/uxWJE=;
+        b=oyp5sGUuBp+043EeALEj1x4U0/qH+JeoYBZDjOBJca49vb+t4pqAUk1vhkn3T1Td+s
+         RdpkPszIGHX8NhpT6HUN8PNvAjBfRpJoVLlAoDXhDtMesn6wZRR3/ClDpoWtjMQdKgvz
+         HN73/pl8rrTmIjjfnMa7KKYYWMahoraOqBOAIZNkURiglCJ8t90GMjdoglUT6SjRR4Yy
+         YtbetOdvJIacSnA08agWCMJKf7P2xteMKRcpm154BexFsDD7iUVO7yPPEntD7e6G1Puh
+         lHXU1yp6HPoEmEfwGI3GijaMPx0e4AAMvMseGNCydBWCtp63GdHPf7zViSJIHvwQSS1i
+         eOsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=YofjUOqqqU+xGkDtfdxFCGDZ6xOqhzTCXfuZL/uxWJE=;
+        b=kPYm0vmLOch7sldXmLTz8yc+DzOc6cLnWfkTkWbZ9D0ok7kAvLeYFrqg3eS0mnvRYd
+         Z5USuIMS5lecwaWev3DSpws0kgAsTV2JW8ahQSQP5IW2CAsLn3Uq6UlQ5nxTlCVNSm9a
+         nXh9izVNwo5RawSw9NFZ2noD58/s5dq5CN0kkfW3dEzSYsiAs6AH1YPp3oLvpvs7/Nb8
+         BbOZ/fwEEdqvtBIDd4J8jfuEcOrb3oEpAiQ+JdRFiG2YY1sDBdu4IFz3wwfWUrafi7yg
+         wzzEHtFWQfdoWU5JaY97WTeTrBFb0Nsxi5WhdzOr99kseu4bovOuZk6/kGItu3Jd/UQw
+         fuMw==
+X-Gm-Message-State: ALoCoQnr4DIKcTX0V/HWG0wJUCVbvCOhl/OjY87Amdn4dKVNmY0KGJW3nJ+AkMoImo8W8G2IAphh
+X-Received: by 10.224.136.130 with SMTP id r2mr30596933qat.80.1414701977413;
+ Thu, 30 Oct 2014 13:46:17 -0700 (PDT)
+Received: by 10.229.225.202 with HTTP; Thu, 30 Oct 2014 13:46:17 -0700 (PDT)
+In-Reply-To: <xmqqmw8duy5p.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
+On Thu, Oct 30, 2014 at 12:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ronnie Sahlberg <sahlberg@google.com> writes:
+>
+>> @@ -337,6 +341,8 @@ int send_pack(struct send_pack_args *args,
+>>               strbuf_addstr(&cap_buf, " quiet");
+>>       if (agent_supported)
+>>               strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+>> +     if (atomic_push)
+>> +             strbuf_addstr(&cap_buf, " atomic-push");
+>
+> This is just aesthetics, but please leave the agent at the end.
 
-> Add receive.preferatomicpush setting to receive-pack.c. This triggers
-> a new capability "prefer-atomic-push" to be sent back to the send-pack
-> client, requesting the client, if it supports it, to request
-> an atomic push.
-
-I can understand a configuration that says "We take only atomics
-when a push tries to update more than one", but this one is iffy.
-
-If the receiver accepts non-atomic from older send-pack, those with
-newer send-pack should have a way to say "the receiving end may
-prefer atomic, but I choose not to."  Is there a way to do so?
-
-And if there is such a way, what value does the preference add to
-the user experience and the server's operation?
+Done. Thanks. Will be in the re-roll.
