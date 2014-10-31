@@ -1,107 +1,124 @@
-From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: Re: Regression and failure to clone/fetch with new code Re: git-svn performance
-Date: Fri, 31 Oct 2014 02:30:17 +0000
-Message-ID: <1414722617.89476.YahooMailBasic@web172305.mail.ir2.yahoo.com>
-Reply-To: htl10@users.sourceforge.net
+From: Alexandre Garnier <zigarn+git@gmail.com>
+Subject: Bug in log for path in case of identical commit
+Date: Fri, 31 Oct 2014 09:40:38 +0100
+Message-ID: <CAFFOgCUeqcEPdjUyri0bivCj-Ofzp_9GhH3mR7UTzD-8PY9tGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
-	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
-	amyrick@apple.com
-To: normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Fri Oct 31 03:30:26 2014
+Content-Type: multipart/mixed; boundary=001a1135e17e8f47bc0506b3f3a3
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 09:41:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xk1yp-00060a-Gs
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Oct 2014 03:30:23 +0100
+	id 1Xk7le-0006vx-Le
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Oct 2014 09:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161600AbaJaCaU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Oct 2014 22:30:20 -0400
-Received: from nm2-vm6.bullet.mail.ir2.yahoo.com ([212.82.96.86]:51977 "EHLO
-	nm2-vm6.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1422652AbaJaCaS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Oct 2014 22:30:18 -0400
-Received: from [212.82.98.127] by nm2.bullet.mail.ir2.yahoo.com with NNFMP; 31 Oct 2014 02:30:17 -0000
-Received: from [212.82.98.77] by tm20.bullet.mail.ir2.yahoo.com with NNFMP; 31 Oct 2014 02:30:17 -0000
-Received: from [127.0.0.1] by omp1014.mail.ir2.yahoo.com with NNFMP; 31 Oct 2014 02:30:17 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 273181.95344.bm@omp1014.mail.ir2.yahoo.com
-Received: (qmail 52923 invoked by uid 60001); 31 Oct 2014 02:30:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1414722617; bh=pZ4Unbkvu6EkAPAdsCLRYERStkn6pcoL1gOmrzHtZHU=; h=Message-ID:Date:From:Reply-To:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=NbcK90St/ij3OufPYsivjUi9Yl5IiJyRxkIokxdCUlbvt2LIvnZzv8gio45FZu25nsjqC8LGOt2SbrmPNQEXadHYHDDaHwGIX8+DmrpomfiIb/73cYwUrf6tabD030oaDxuNWRHgp8CMMIs6Hj0IUAfFaGZlycQeS3GL8gxge/A=
-X-YMail-OSG: NIL5SIcVM1nbSiKtSdihWlecmh0csh7iFdf8t4YoNkq_89L
- vbyHN4aO.guS838EcIot8FveMAiWRQrA3_dTqsy1hV1RzB1P8gnef75Yk6dv
- LMGQP04l5ADwC3lrRVFOQOXTy.wD87eB2k5ArW9eVWB5fYd4V6TZOdCslaFL
- ywgxt7yzOwu_xkyW5WpG9krcCyYBgwegTo65qCxNjq0BNIeBzfgQDtIw6_OH
- dW3ngCgrHmQMOPvuMTP0_FS3TOnURxrOhXQ3_IMT78BO0Ow1JnuzyoUEJQaD
- e21X_r5W_02FIbbx5.yaAicsHhJtRN4QOs.ejdjrUsvBqr_zXrFiR1CA82D9
- L0r1My4VJ1v2gP1VTqtk_8qTl9XZzf9H25exjT0zDF_EZ6CUx2Ucep4ydcO1
- tqlngh.cIGby9EDYFD_c32J7bnufC23a8FWGtEL5tYe5gyDCBJ.5G4EytoSd
- ScfdF3S37ZzUUdHCjMRHc.o5lb5TjNdWA8xjDlOxYBl21_UDe0N7wTNnJ9Gm
- KFfRp03ox.431wialW96eeJMgIKSGafpLehtP7FoDWINO0Mju.oT54BSZH.J
- B.k0pN0WtoCP1AKC1MkH_RWHZFUaEPKZsm92XDjzt7ntLm4bG8aBpGKCMssF
- 0y9AgPUh4pINew2ovNWV66B2mbF5paUF8IXbMgHiJuCixnwmwYTH2937w.24
- aTvYUH8fj._SZfe3P
-Received: from [86.30.137.134] by web172305.mail.ir2.yahoo.com via HTTP; Fri, 31 Oct 2014 02:30:17 GMT
-X-Rocket-MIMEInfo: 002.001,KGFwb2xvZ3kgZm9yIHRoZSBlbXB0eSBtZXNzYWdlIGFnYWluIC0gc3RpY2t5IGZpbmdlcnMgaW4gc21hcnQgcGhvbmUuLi4pDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KT24gVGh1LCBPY3QgMzAsIDIwMTQgMDg6NDYgR01UIEVyaWMgV29uZyB3cm90ZToNCg0KPlRoYW5rcywgSSdtIG5vdCBhYmxlIHRvIHJlcHJvZHVjZSB0aGUgaXNzdWUsIGJ1dCBjYW4geW91IHRyeSB0aGUNCj5mb2xsb3dpbmc_DQo.DQo.ZGlmZiAtLWdpdCBhL3BlcmwvR2l0L1NWTi9SYS5wbSBiL3BlcmwvR2l0L1NWTi8BMAEBAQE-
-X-RocketYMMF: hintak_leung
-X-Mailer: YahooMailClassic/810 YahooMailWebService/0.8.203.733
+	id S1756741AbaJaIlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2014 04:41:06 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:33245 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752825AbaJaIkj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2014 04:40:39 -0400
+Received: by mail-vc0-f176.google.com with SMTP id hq11so3528800vcb.21
+        for <git@vger.kernel.org>; Fri, 31 Oct 2014 01:40:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=/pIQITZh8ahYyiBmiCs2sWWwDhzx9P3QX5OkrQZHRFM=;
+        b=X5bMOi24nct8nblLhc7Tf7dradX+9JkmtG+7OR2sMnhW7VXCPDcroP1m/U9/SM9Wtk
+         gyugN2g4T9ZGsgReMX3LpJojjh0WLUAa1LPHmFYigwVktCFLnEBXaOZPNMnfoIGU91R7
+         o3yfTuhZ5szEKthtr6FspppCKLHkXQ6Faz13bnQ4gV2eUyRxO3vEyKa7rN7tvOpcTqEd
+         2AGWXvohf3r7dRMtsG7GS0m6TffZrdd39qwwu8M2eclk7dH7x2NvbkRcNJEkIAUplIUs
+         BV4FMxTNHKw+1sQQHgJyuG3e6JYFkWpO2kXIIpZfZkxRW8aLkZbzRo2XDvjYPBhfQ+kf
+         q/Jw==
+X-Received: by 10.52.251.34 with SMTP id zh2mr79761vdc.70.1414744838707; Fri,
+ 31 Oct 2014 01:40:38 -0700 (PDT)
+Received: by 10.220.122.132 with HTTP; Fri, 31 Oct 2014 01:40:38 -0700 (PDT)
+X-Google-Sender-Auth: E3STGqm9FCeGXoEb3HzxMv48dOM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(apology for the empty message again - sticky fingers in smart phone...=
-)
+--001a1135e17e8f47bc0506b3f3a3
+Content-Type: text/plain; charset=UTF-8
 
-------------------------------
-On Thu, Oct 30, 2014 08:46 GMT Eric Wong wrote:
+When merging 2 branches with the same modifications on the both sides,
+depending the merge side, one branch disappear from the file history.
 
->Thanks, I'm not able to reproduce the issue, but can you try the
->following?
->
->diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
->index 75cdac9..82d6108 100644
->--- a/perl/Git/SVN/Ra.pm
->+++ b/perl/Git/SVN/Ra.pm
->@@ -153,6 +153,7 @@ sub url {
-> sub check_path {
-> =A0=A0=A0 my ($self, $path, $r) =3D @_;
-> =A0=A0=A0 my $cache =3D $self->{cache}->{check_path};
->+=A0=A0=A0 $r =3D int($r);
-> =A0=A0=A0 if ($r =3D=3D $cache->{r} && exists $cache->{data}->{$path}=
-) {
-> =A0=A0=A0 =A0=A0=A0 return $cache->{data}->{$path};
-> =A0=A0=A0 }
->@@ -169,6 +170,7 @@ sub check_path {
-> sub get_dir {
-> =A0=A0=A0 my ($self, $dir, $r) =3D @_;
-> =A0=A0=A0 my $cache =3D $self->{cache}->{get_dir};
->+=A0=A0=A0 $r =3D int($r);
-> =A0=A0=A0 if ($r =3D=3D $cache->{r}) {
-> =A0=A0=A0 =A0=A0=A0 if (my $x =3D $cache->{data}->{$dir}) {
-> =A0=A0=A0 =A0=A0=A0 =A0=A0=A0 return wantarray ? @$x : $x->[0];
->---
+To be more clear, there is a script in attachment to reproduce, but
+here is the result :
+$ git log --graph --oneline --all --decorate --name-status
+*   63c807f (HEAD, master) Merge branch 'branch' into 'master'
+|\
+| * 5dc8785 (branch) Change line 15 on branch
+| | M   file
+| * d9cd3ce Change line 25 on branch
+| | M   file
+* | 7220d52 Change line 15 on master
+|/
+|   M   file
+* 7566672 Initial commit
+  A     file
 
-I added those two lines to my git and there is no improvement. It still=
- won't svn fetch the next
-revision. I think it may be important/interesting to find out when or h=
-ow it becomes non-int,
-so I have tar'gz'ed my wont-fetch virtual box .git and in the middle of=
- uploading here:=20
+$ git log --graph --oneline --all --decorate --name-status -- file
+* 5dc8785 (branch) Change line 15 on branch
+| M     file
+* d9cd3ce Change line 25 on branch
+| M     file
+* 7566672 Initial commit
+  A     file
 
-http://sourceforge.net/projects/outmodedbonsai/files/R/
+=> The commit 7220d52 modified the file but is not shown in file
+history anymore.
+The expected result would be:
+* 5dc8785 (branch) Change line 15 on branch
+| M     file
+* d9cd3ce Change line 25 on branch
+| M     file
+| * 7220d52 Change line 15 on master
+|/
+|   M   file
+* 7566672 Initial commit
+  A     file
 
-I am also uploading my old R clone also - maybe you'd like to see why i=
-ts .git/svn/.caches
-is so big compared to a recent one, as well as how and why there were a=
-n extra merge
-and two missing merges compared to a recent clone?
+The order between the 2 commits on the branch is not important.
+If you do a 'cherry-pick 7220d52' or a 'merge --squash master' instead
+of applying the same modification for commit 5dc8785, you get the same
+result (cherry-picking was my initial use-case).
+If you do not create the commit d9cd3ce, then the file history show all commits.
+If you merge 'master' into 'branch', then the file history show all commits.
 
-(FYI - I have some local stuff on my old R clone. They are mostly
-there because the R devs don't agree etc but there is nothing confident=
-ial about them).
+Am I missing something or is it really a bug?
+Thanks.
+
+-- 
+Alex
+
+--001a1135e17e8f47bc0506b3f3a3
+Content-Type: application/x-sh; name="git_log_path_bug.sh"
+Content-Disposition: attachment; filename="git_log_path_bug.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_i1xa6ur50
+
+IyEvYmluL3NoCmdpdCBpbml0IC0tcSByZXBvCmNkIHJlcG8KcHl0aG9uIC1jICJpbXBvcnQgcmFu
+ZG9tOyBwcmludCAnXG4nLmpvaW4oWycgJy5qb2luKFt3b3JkLnJlcGxhY2UoJ1xuJywgJycpIGZv
+ciB3b3JkIGluIHJhbmRvbS5zYW1wbGUobGlzdChvcGVuKCcvdXNyL3NoYXJlL2RpY3Qvd29yZHMn
+KSksIDEwKV0pIGZvciBfIGluIHJhbmdlKDUwKV0pIiA+PiBmaWxlCmdpdCBhZGQgZmlsZQpnaXQg
+Y29tbWl0IC1xbSAiSW5pdGlhbCBjb21taXQiCgpzZWQgLWkgJzE1cy9bZWlvdXldL2EvJyBmaWxl
+CmdpdCBjb21taXQgLWFxbSAiQ2hhbmdlIGxpbmUgMTUgb24gbWFzdGVyIgoKZ2l0IGNoZWNrb3V0
+IC1xYiBicmFuY2ggSEVBRH4Kc2VkIC1pICcyNXMvW2Vpb3V5XS9hLycgZmlsZQpnaXQgY29tbWl0
+IC1hcW0gIkNoYW5nZSBsaW5lIDI1IG9uIGJyYW5jaCIKc2VkIC1pICcxNXMvW2Vpb3V5XS9hLycg
+ZmlsZQpnaXQgY29tbWl0IC1hcW0gIkNoYW5nZSBsaW5lIDE1IG9uIGJyYW5jaCIKCmdpdCBtZXJn
+ZSAtcSBtYXN0ZXIgLW0gIk1lcmdlIGJyYW5jaCAnbWFzdGVyJyBpbnRvICdicmFuY2gnIgplY2hv
+ICJGdWxsIGxvZzoiCmdpdCBsb2cgLS1ncmFwaCAtLW9uZWxpbmUgLS1hbGwgLS1kZWNvcmF0ZSAt
+LW5hbWUtc3RhdHVzCmVjaG8gIi0tLSIKZWNobyAiTG9nIG9mICdmaWxlJzoiCmdpdCBsb2cgLS1n
+cmFwaCAtLW9uZWxpbmUgLS1hbGwgLS1kZWNvcmF0ZSAtLW5hbWUtc3RhdHVzIC0tIGZpbGUKCmdp
+dCByZXNldCAtcSAtLWhhcmQgSEVBRF4KZ2l0IGNoZWNrb3V0IC1xIG1hc3RlcgpnaXQgbWVyZ2Ug
+LXEgYnJhbmNoIC1tICJNZXJnZSBicmFuY2ggJ2JyYW5jaCcgaW50byAnbWFzdGVyJyIgPiAvZGV2
+L251bGwKZWNobyAiLS0tIgplY2hvICJGdWxsIGxvZzoiCmdpdCBsb2cgLS1ncmFwaCAtLW9uZWxp
+bmUgLS1hbGwgLS1kZWNvcmF0ZSAtLW5hbWUtc3RhdHVzCmVjaG8gIi0tLSIKZWNobyAiTG9nIG9m
+ICdmaWxlJzoiCmdpdCBsb2cgLS1ncmFwaCAtLW9uZWxpbmUgLS1hbGwgLS1kZWNvcmF0ZSAtLW5h
+bWUtc3RhdHVzIC0tIGZpbGUKIyA9PT4gTm8gaGlzdG9yeSBmcm9tIG1hc3RlciAhCg==
+--001a1135e17e8f47bc0506b3f3a3--
