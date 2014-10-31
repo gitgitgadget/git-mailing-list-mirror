@@ -1,73 +1,76 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: [ANNOUNCE] A pre-receive hook to intelligently block binary data
-Date: Fri, 31 Oct 2014 20:25:41 +0100
-Message-ID: <CACBZZX64ofaQSoOMhQcjx+ED2LOpdDVZJ_5TSjotuBv4m+Fb5A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 31 20:26:08 2014
+From: Tzvetan Mikov <tmikov@gmail.com>
+Subject: [PATCH] line-log: fix crash when --first-parent is used
+Date: Fri, 31 Oct 2014 12:43:56 -0700
+Message-ID: <1414784636-43155-1-git-send-email-tmikov@gmail.com>
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Tzvetan Mikov <tmikov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 31 20:44:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XkHpo-0005i2-1i
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Oct 2014 20:26:08 +0100
+	id 1XkI7J-0007Pf-JB
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Oct 2014 20:44:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758155AbaJaT0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2014 15:26:03 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:55520 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751708AbaJaT0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2014 15:26:02 -0400
-Received: by mail-ob0-f172.google.com with SMTP id wp4so6488515obc.3
-        for <git@vger.kernel.org>; Fri, 31 Oct 2014 12:26:01 -0700 (PDT)
+	id S1751032AbaJaToJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2014 15:44:09 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:62332 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750710AbaJaToH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2014 15:44:07 -0400
+Received: by mail-pa0-f54.google.com with SMTP id rd3so8276463pab.41
+        for <git@vger.kernel.org>; Fri, 31 Oct 2014 12:44:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=VSQNVDJV/+sEejjONO29uLBGiQsHw9s7SjHFog+Xc1E=;
-        b=I4za40dEB8085IAamIwB6zmovV4QZ5PKE/BwMw9e/ducKnxpZYXhU1tYJuC6j3NasX
-         mMWoK5E4erxra7P+oHU5gF2UKKR+4GmWERhZ9/zgDqOXt32l78n8OqKmA8CawE+DAXqq
-         Xgp3ZO+tlLUGLvT7YijBDi0khFW8vEKD+rQZsvjiFr7UKvo/tdOzA1PvRDCWp2jIxaUb
-         KygJESY/iQn8NU+TnBiN8Vv0HViXeFSWnXP4gl06CTMKrQtuTqRPSgG3apzXxkjceZEm
-         jhZUPxUEMZDCyK+hyjAqLH1yMyF95Vi4pXeaL+n5ORY3MgKk+paQSs08HPZ9s0cZJQJB
-         5isw==
-X-Received: by 10.182.33.67 with SMTP id p3mr22168722obi.15.1414783561158;
- Fri, 31 Oct 2014 12:26:01 -0700 (PDT)
-Received: by 10.76.171.166 with HTTP; Fri, 31 Oct 2014 12:25:41 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=tlMM/ZCDg/+SeDmIcaeRekZVPFLP6e063GtN1La5QI4=;
+        b=UH5jhNqtWk6VKAJsxjmDzMvbn00AmF15BM1ZO9TjyOqiM14hMsTefpdEMhS2XIer55
+         zAw0lVgBWr9ui7ZuwTUMaDXUezb8c0AzLegPiNLeA3500Ss8IJLgwRfEPS9IxlTz7nYv
+         47SZDjBTNNBtEpcfYqcHCHgQxkrXyyx4VX2TIuydDO5Ehu35MFfI4bMw5xJqzXFZK6Kt
+         uOuSvNyNrovfqmreTUZo2zFGzhjAl20KIO8OvRjjFY88sWORBSCjsXsQcQjPdWWivUNB
+         BGccFxQa4FJJTSok/s/QTkTwQDE3tCgSJdUhItm2fPsjRYQZ4NEATumrMoEzcO/Hdov7
+         eiBw==
+X-Received: by 10.66.139.134 with SMTP id qy6mr15941466pab.128.1414784647117;
+        Fri, 31 Oct 2014 12:44:07 -0700 (PDT)
+Received: from localhost.localdomain ([199.47.77.98])
+        by mx.google.com with ESMTPSA id rb2sm10693442pab.5.2014.10.31.12.44.05
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 31 Oct 2014 12:44:06 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After searching around a bit I couldn't find a stand-alone Git hook
-that would intelligently block binary data pushes so I wrote my own:
-https://github.com/avar/pre-receive-reject-binaries
+line-log tries to access all parents of a commit, but only the first
+parent has been loaded if "--first-parent" is specified, resulting
+in a crash.
 
-Main features:
+Limit the number of parents to one if "--first-parent" is specified.
 
- * Quota per-commit for how much binary data is OK
- * Ability to optionally allow users to override binary pushes by
-including a notice in their commit messages
- * Doesn't disallow removing existing binary data, or renaming
-existing binary files
- * Will block commits that include references to existing binary blobs though
- * Spots cases where a push is pushing commits that add and then
-remove binary blobs (i.e. counts net additions)
- * Has hookable support for logging by piping its output to external
-commands when it runs or when it rejects/unblocks a binary push. I'm
-using this for logging its output to a logfile, and to send E-Mails
-when it blocks/is unblocked.
-* Only requires a stock perl install, should run on any *nix-like OS
-out of the box
-* Should be relatively fast compared to some other similar solutions
-I've seen, i.e. it parses the output of one "git-log --stat" command
-for the entire push, and doesn't e.g. do a "git show" for each commit
-being pushed.
+Reported-by: Eric N. Vander Weele <ericvw@gmail.com>
+Signed-off-by: Tzvetan Mikov <tmikov@gmail.com>
+---
+ line-log.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-One general note about git-log output: I was disappointed to see that
-there was no easily parsable "git log" output that showed you how much
-binary files increased in size, --numstat will just show "-" for
-binary files, and it's non-trivial to parse the "--stat" output. It's
-meant for human consumption and will sometimes include variations in
-how much whitespace is inserted.
+diff --git a/line-log.c b/line-log.c
+index 1008e72..86e7274 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -1141,6 +1141,9 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+ 	int i;
+ 	int nparents = commit_list_count(commit->parents);
+ 
++	if (nparents > 1 && rev->first_parent_only)
++	    nparents = 1;
++
+ 	diffqueues = xmalloc(nparents * sizeof(*diffqueues));
+ 	cand = xmalloc(nparents * sizeof(*cand));
+ 	parents = xmalloc(nparents * sizeof(*parents));
+-- 
+1.9.1
