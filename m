@@ -1,59 +1,93 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2] git-svn: use SVN::Ra::get_dir2 when possible
-Date: Fri, 31 Oct 2014 21:42:17 +0000
-Message-ID: <20141031214217.GA15591@dcvr.yhbt.net>
-References: <1414789740.30576.BPMail_high_carrier@web172302.mail.ir2.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use child_process_init() to initialize struct child_process variables
+Date: Fri, 31 Oct 2014 14:48:17 -0700
+Message-ID: <xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com>
+References: <54500212.7040603@web.de> <20141029172109.GA32234@peff.net>
+	<xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com>
+	<20141030213523.GA21017@peff.net>
+	<FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, stoklund@2pi.dk, fabian.schmied@gmail.com,
-	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
-	amyrick@apple.com
-To: Hin-Tak Leung <htl10@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Oct 31 22:42:25 2014
+Content-Type: text/plain
+Cc: "Jeff King" <peff@peff.net>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Oct 31 22:48:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XkJxe-0006hx-HG
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Oct 2014 22:42:22 +0100
+	id 1XkK3U-0001hy-7P
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Oct 2014 22:48:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903AbaJaVmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2014 17:42:18 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:48765 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751958AbaJaVmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2014 17:42:17 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AD0C1F838;
-	Fri, 31 Oct 2014 21:42:17 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1414789740.30576.BPMail_high_carrier@web172302.mail.ir2.yahoo.com>
+	id S1752903AbaJaVsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2014 17:48:20 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54857 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751933AbaJaVsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2014 17:48:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00B8E18CC4;
+	Fri, 31 Oct 2014 17:48:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3HMSJw0s5xfr+TfGKOX5rL3vDuo=; b=mW4Rpk
+	Ch9I4CMwnFwCRAdDgDPwiCPQjEkTNJ4YVCNC4qm/ANEuR5HaPEWQuMmWxF3OFSBn
+	GagMoV0Rl4OIKk+WbQTAdOH8QE5OidqStfnR3fCTBTriIr/Ao0Htj0i2DwVfbikt
+	9oXWzIy6TLfC1+/ZZp26j6pAIk3vMQQetjgOQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Oa/QhaAC6gSPjBib9Qkp7UM6FFxBBkPm
+	ryhz/9zjEmlsZQI6pqsaWIn6tgjcLqKkwmVwP8grHo/fWgKC1TJOQdeH42t+1H4E
+	2dGsQ114dF/CCijYPkYh1zLlxcIUF1kjLusgLktzIP9auhlDOSSBBYsTwYETqnTs
+	C36qb9VFKc4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EB0E118CC2;
+	Fri, 31 Oct 2014 17:48:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EE8418CC1;
+	Fri, 31 Oct 2014 17:48:18 -0400 (EDT)
+In-Reply-To: <FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley> (Philip Oakley's
+	message of "Fri, 31 Oct 2014 00:19:20 -0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A01ABA10-6147-11E4-B3AC-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
-> On Fri, Oct 31, 2014 19:08 GMT Eric Wong wrote:
-> >Filed a bug in Debian since I hit it in sid, too:
-> >http://bugs.debian.org/767530
-> >
-> >Thanks all.
-> 
-> Hmm, but why are you filing at debian? I had the error when i applied
-> the dev code patches on top of 2.1.0, and the error disappeared as
-> soon as I reverted the patches. So it looks like a issue for the
-> upstream developers, rather than distro. Are you saying debian is
-> shipping a dev snapshot of git svn?
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-I don't track SVN upstream development, so haven't checked if it affects
-newer SVN, yet.  It is the distro maintainer's job to get this resolved.
+> As a side project (slow time) I've been looking at the loss of the
+> HEAD symbolic ref when multiple heads are bundled that point at the
+> same rev. That is, when the HEAD detection heuristic fails.
 
-This bug affects existing cases of "git svn show-ignore",
-we just happened to find it with "git svn fetch", first.
+It think you are talking about the logic used by the "clone", where
 
-Debian's bug tracker also has the lowest barrier to entry:
-no login/registration is necessary (just like this git list).
-If you want to handle this with upstream directly, please do.
-I try to avoid logins/accounts as much as possible.
+ - if there is only one branch ref that matches the value of HEAD,
+   that is the branch;
+
+ - if there are more than one refs that match the value of HEAD,
+   and if one of them is 'master', then that is the branch;
+
+ - if there are more than one refs that match the value of HEAD,
+   and if none of them is 'master', then pick the earliest one.
+
+So you would be in trouble _if_ you have two refs pointing at the
+same commit, one of them being 'master', and the current branch is
+the other ref.  All other cases you shouldn't have to change the
+file format and have older client understand which branch is the
+current one.
+
+Programs that read a pack data stream unpack-objects were originally
+designed to ignore cruft after the pack data stream ends, and
+because the bundle file format ends with pack data stream, you
+should have been able to append extra information at the end without
+breaking older clients.  Alas, this principle is still true for
+unpack-objects, but index-pack broke it fairly early on, and we use
+the latter to deal with bundles, so we cannot just tuck extra info
+at the end of an existing bundle.  You'd instead need a new option
+to create a bundle that cannot be read by existing clients X-<.
