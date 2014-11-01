@@ -1,53 +1,72 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2] git-svn: use SVN::Ra::get_dir2 when possible
-Date: Sat, 1 Nov 2014 03:13:52 +0000
-Message-ID: <20141101031352.GA17306@dcvr.yhbt.net>
-References: <20141031232222.GA30046@dcvr.yhbt.net>
- <1414808346.73568.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] use child_process_init() to initialize struct
+ child_process variables
+Date: Fri, 31 Oct 2014 23:33:27 -0400
+Message-ID: <20141101033327.GA8307@peff.net>
+References: <54500212.7040603@web.de>
+ <20141029172109.GA32234@peff.net>
+ <xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com>
+ <20141030213523.GA21017@peff.net>
+ <FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley>
+ <xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: stoklund@2pi.dk, fabian.schmied@gmail.com, git@vger.kernel.org,
-	sam@vilain.net, stevenrwalter@gmail.com, waste.manager@gmx.de,
-	amyrick@apple.com
-To: Hin-Tak Leung <htl10@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Nov 01 04:14:04 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Philip Oakley <philipoakley@iee.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 01 04:33:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XkP8c-0004ka-FN
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Nov 2014 04:14:02 +0100
+	id 1XkPRX-0008Jw-G0
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Nov 2014 04:33:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903AbaKADNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Oct 2014 23:13:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:51515 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752137AbaKADNy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Oct 2014 23:13:54 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D49D41F838;
-	Sat,  1 Nov 2014 03:13:52 +0000 (UTC)
+	id S1752402AbaKADda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Oct 2014 23:33:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35605 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751906AbaKADd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Oct 2014 23:33:29 -0400
+Received: (qmail 13629 invoked by uid 102); 1 Nov 2014 03:33:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 31 Oct 2014 22:33:29 -0500
+Received: (qmail 18017 invoked by uid 107); 1 Nov 2014 03:33:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 31 Oct 2014 23:33:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 31 Oct 2014 23:33:27 -0400
 Content-Disposition: inline
-In-Reply-To: <1414808346.73568.YahooMailBasic@web172303.mail.ir2.yahoo.com>
+In-Reply-To: <xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hin-Tak Leung <htl10@users.sourceforge.net> wrote:
-> While my 2.10 + 11 patches continue to fetch, where it was stuck, now
-> it does "Couldn't find revmap..." - also, the single branch clone is doing
-> the 'trunk/branches/... thing - are these supposed to happen?
+On Fri, Oct 31, 2014 at 02:48:17PM -0700, Junio C Hamano wrote:
 
-I'm afraid this is a problem with the vbox repo not publishing anything
-but trunk, but their svn:mergeinfo refers to non-public branches.
+> Programs that read a pack data stream unpack-objects were originally
+> designed to ignore cruft after the pack data stream ends, and
+> because the bundle file format ends with pack data stream, you
+> should have been able to append extra information at the end without
+> breaking older clients.  Alas, this principle is still true for
+> unpack-objects, but index-pack broke it fairly early on, and we use
+> the latter to deal with bundles, so we cannot just tuck extra info
+> at the end of an existing bundle.  You'd instead need a new option
+> to create a bundle that cannot be read by existing clients X-<.
 
-This shows only changes to trunk:
+I think you could use a similar NUL-trick to what we do in the online
+protocol, and have a ref section like:
 
-	svn log -v http://www.virtualbox.org/svn/vbox
+  ...sha1... refs/heads/master
+  ...sha1... refs/heads/confused-with-master
+  ...sha1... HEAD\0symref=refs/heads/master
 
-I do not know what their development process is like.  From the looks of
-it, every change is made by a "vboxsync" user.  I suspect that's driven
-by an automated export script, and the real development happens in a
-different (private) repo...
+The current parser reads into a strbuf up to the newline, but we ignore
+everything after the NUL, treating it like a C string. Prior to using
+strbufs, we used fgets, which behaves similarly (you could not know from
+fgets that there is extra data after the NUL, but that is OK; we only
+want older versions to ignore the data, not do anything useful with it).
+
+-Peff
