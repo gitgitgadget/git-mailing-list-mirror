@@ -1,97 +1,152 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 01/19] dir.c: optionally compute sha-1 of a .gitignore file
-Date: Sun, 2 Nov 2014 08:25:12 +0700
-Message-ID: <CACsJy8COjFxFUoUn7YY-0ciGmmRnih+ijPoF7PAd=89ejAUfiA@mail.gmail.com>
-References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
- <1414411846-4450-2-git-send-email-pclouds@gmail.com> <544FD44D.4000101@web.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v5] lockfile.c: store absolute path
+Date: Sun,  2 Nov 2014 07:24:37 +0100
+Message-ID: <1414909477-20030-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Nov 02 02:25:48 2014
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Yue Lin Ho <yuelinho777@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 02 07:25:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XkjvP-0004LL-Rq
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Nov 2014 02:25:48 +0100
+	id 1Xkob1-0003ZC-UO
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Nov 2014 07:25:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751642AbaKBBZo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Nov 2014 21:25:44 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:64846 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750914AbaKBBZn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Nov 2014 21:25:43 -0400
-Received: by mail-ie0-f180.google.com with SMTP id y20so3510195ier.11
-        for <git@vger.kernel.org>; Sat, 01 Nov 2014 18:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=AXwLC6kmkudM5i3tS2JxahS+hJ38mMrByRjpDvyRZsg=;
-        b=LfGsK5hiVwuntSon3YeKNDXe+FS8ARQa+T6GPB2P+MGYD/86MOsBpIcFejm+s306E5
-         k/ddUu1/ji8N6jFhji9Jrl9tUlm//cKQ2xX0axAOYhrPsLQEZ8AchQAT6VuyZSSLrAJZ
-         nb2bDa3sim5AlM10QMOyWbfzJgeDTGDuvZJrAc16LV1BtFIgjNtvn5ZLDYJ1AiHGxDXK
-         U3wgyayTxnVctfHf+sEVhc4Yqr1+6Mbi7L/pUbXcsn6GbbATJYFV7RETAimI7O2AJOv8
-         6iGSA06Tx3eSFcv2tKhdFLdFnS28yod0tYsj1mLyUNTytAX3wXuKbq2u7JKxR9MD/1No
-         uJ1A==
-X-Received: by 10.42.24.10 with SMTP id u10mr71247icb.58.1414891542479; Sat,
- 01 Nov 2014 18:25:42 -0700 (PDT)
-Received: by 10.107.176.8 with HTTP; Sat, 1 Nov 2014 18:25:12 -0700 (PDT)
-In-Reply-To: <544FD44D.4000101@web.de>
+	id S1751069AbaKBGYq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Nov 2014 01:24:46 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:62802 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750763AbaKBGYp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Nov 2014 01:24:45 -0500
+X-AuditID: 12074414-f79f06d000000daf-2a-5455ce2c0a80
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 00.6D.03503.C2EC5545; Sun,  2 Nov 2014 01:24:45 -0500 (EST)
+Received: from michael.fritz.box (p4FC976D4.dip0.t-ipconnect.de [79.201.118.212])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sA26OeeI022453
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sun, 2 Nov 2014 01:24:42 -0500
+X-Mailer: git-send-email 2.1.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqKt7LjTE4G6CRdeVbiaLht4rzBZP
+	5t5ltri9Yj6zRfeUt4wWu6ctYLNo23mEyYHd4+/7D0weO2fdZfd4+KqL3ePiJWWPxxNPsHp8
+	3iQXwBbFbZOUWFIWnJmep2+XwJ0x8dBmtoJJkhUXTz1mamC8LtLFyMkhIWAicfXfHDYIW0zi
+	wr31QDYXh5DAZUaJ+W0XmSCcE0wS/f/mMYFUsQnoSizqaQazRQTUJCa2HWIBKWIWWMQksWRx
+	F1hCWMBY4tiGmexdjBwcLAKqEhMvB4OEeQVcJK6eusQEsU1OYu/k1SwQcUGJkzOfsICUMwuo
+	S6yfJwQSZhaQl2jeOpt5AiPfLCRVsxCqZiGpWsDIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI
+	10IvN7NELzWldBMjJJhFdjAeOSl3iFGAg1GJhzfhRGiIEGtiWXFl7iFGSQ4mJVFel9lAIb6k
+	/JTKjMTijPii0pzU4kOMEhzMSiK8hblAOd6UxMqq1KJ8mJQ0B4uSOO+3xep+QgLpiSWp2amp
+	BalFMFkZDg4lCV7Gs0CNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aC4iy8GRh5I
+	igdoLydIO29xQWIuUBSi9RSjopQ4r/oZoIQASCKjNA9uLCxFvWIUB/pSmFccpJ0HmN7gul8B
+	DWYCGuzYFQIyuCQRISXVwDgvMCsugVmUm0381LFwhfMsSne0tMrWnr56YM6ms1Palm863xy5
+	X1lUuS3VXXG99sSC7efnn24qrTs//ZWIr7JBiJvy4sR1BXefRdcKn8/5O2mOWMrJ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 29, 2014 at 12:37 AM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
->
-> On 2014-10-27 13.10, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> []
-> Nice serious, I can imagine to test & benchmark it (so I assume there=
- is a branch
-> on github or so ?)
+=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-It's on 'pu' now. There's a branch on my github repo, but it has some
-extra debugging on top, so 'pu' is probably the best option.
+Locked paths can be saved in a linked list so that if something wrong
+happens, *.lock are removed. For relative paths, this works fine if we
+keep cwd the same, which is true 99% of time except:
 
-> Another thing:
-> Can we switch the feature off?
->
-> It could be nice to benchmark with and without the cache on the comma=
-nd line,
-> and besides that we may want to switch it on or off, depending on the=
- file system.
-> I think this can be easily done when reading and writing the index fi=
-le.
-> (But may cost a config variable, core.dirmtime ??)
+- update-index and read-tree hold the lock on $GIT_DIR/index really
+  early, then later on may call setup_work_tree() to move cwd.
 
-You can permanently switch it off with "git update-index
---no-untracked-cache". An option to temporarily disable it is not
-available. I'll add an environment variable for that.
+- Suppose a lock is being held (e.g. by "git add") then somewhere
+  down the line, somebody calls real_path (e.g. "link_alt_odb_entry"),
+  which temporarily moves cwd away and back.
 
-=46or a normal case, "update-index --untracked-cache" would test if the
-OS/FS supports this before enabling it. If the repo is moved to
-another fs, or being used by a different OS, then the user has to
-manually disable it first. I don't know what we can do here, maybe
-record uname and filesystem in the index as well..
+During that time when cwd is moved (either permanently or temporarily)
+and we decide to die(), attempts to remove relative *.lock will fail,
+and the next operation will complain that some files are still locked.
 
->> diff --git a/dir.c b/dir.c
->> +static int add_excludes(const char *fname, const char *base, int ba=
-selen,
->> +                     struct exclude_list *el, int check_index,
->> +                     struct sha1_stat *ss, int ss_valid)
-> Cosmetic question: does it make sense to write
->
-> struct sha1_stat *sha1_stat
-> or
-> struct sha1_stat *s_stat
+Avoid this case by turning relative paths to absolute before storing
+the path in "filename" field.
 
-Noted.
+Reported-by: Yue Lin Ho <yuelinho777@gmail.com>
+Helped-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Adapted-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+This is a re-roll onto master to resolve conflicts with other changes
+that have been merged since v4 [1]:
 
+* The length of path is now available, so use strbuf_add() instead of
+  strbuf_addstr().
 
+* LOCK_NODEREF has been renamed to LOCK_NO_DEREF.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/255069/focus=
+=3D256584
+
+ lockfile.c                    | 14 +++++++++++---
+ t/t2107-update-index-basic.sh | 15 +++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/lockfile.c b/lockfile.c
+index 4f16ee7..9889277 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -128,9 +128,17 @@ static int lock_file(struct lock_file *lk, const c=
+har *path, int flags)
+ 		    path);
+ 	}
+=20
+-	strbuf_add(&lk->filename, path, pathlen);
+-	if (!(flags & LOCK_NO_DEREF))
+-		resolve_symlink(&lk->filename);
++	if (flags & LOCK_NO_DEREF) {
++		strbuf_add_absolute_path(&lk->filename, path);
++	} else {
++		struct strbuf resolved_path =3D STRBUF_INIT;
++
++		strbuf_add(&resolved_path, path, pathlen);
++		resolve_symlink(&resolved_path);
++		strbuf_add_absolute_path(&lk->filename, resolved_path.buf);
++		strbuf_release(&resolved_path);
++	}
++
+ 	strbuf_addstr(&lk->filename, LOCK_SUFFIX);
+ 	lk->fd =3D open(lk->filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
+ 	if (lk->fd < 0) {
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic=
+=2Esh
+index 1bafb90..dfe02f4 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -65,4 +65,19 @@ test_expect_success '--cacheinfo mode,sha1,path (new=
+ syntax)' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success '.lock files cleaned up' '
++	mkdir cleanup &&
++	(
++	cd cleanup &&
++	mkdir worktree &&
++	git init repo &&
++	cd repo &&
++	git config core.worktree ../../worktree &&
++	# --refresh triggers late setup_work_tree,
++	# active_cache_changed is zero, rollback_lock_file fails
++	git update-index --refresh &&
++	! test -f .git/index.lock
++	)
++'
++
+ test_done
 --=20
-Duy
+2.1.1
