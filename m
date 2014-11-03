@@ -1,121 +1,90 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 14/15] refs.c: remove lock_any_ref_for_update
-Date: Mon,  3 Nov 2014 08:55:56 -0800
-Message-ID: <1415033757-9539-15-git-send-email-sahlberg@google.com>
-References: <1415033757-9539-1-git-send-email-sahlberg@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 03 18:04:22 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 18/19] update-index: test the system before enabling untracked cache
+Date: Mon, 03 Nov 2014 10:09:48 -0800
+Message-ID: <xmqqr3xkrw9f.fsf@gitster.dls.corp.google.com>
+References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
+	<1414411846-4450-19-git-send-email-pclouds@gmail.com>
+	<544FD474.3050805@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Nov 03 19:10:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XlL3F-0006Gf-Er
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 18:04:21 +0100
+	id 1XlM4t-0008AZ-4C
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 19:10:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665AbaKCRES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2014 12:04:18 -0500
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:33640 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752324AbaKCRER (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2014 12:04:17 -0500
-Received: by mail-vc0-f202.google.com with SMTP id hy10so821836vcb.5
-        for <git@vger.kernel.org>; Mon, 03 Nov 2014 09:04:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ei4JikTOjpnIV1rUu65ZoLMNqYIlcHScc1bnGTHQB/k=;
-        b=Tdhik0LkJhd+3/9HYExaSvaQZwRra+o/gmdHc2u0NeNIt0zyAR1vKikL9e+s1hYBAN
-         FlpBses/fu5x7oRYYn7U0jOZ0V8BSVKCE1raIrDiqWOrUSCCQ7e2D4slwy6G+wiavCxu
-         xAeZVuBzyftB7t9pQ/agVUqTOlb9VTMWbKzGRoPx0POxwPostXgX9BbzcaM6p3MtoQGK
-         niVZ2Lp3TYcC37cHRZyxXHaHgPixLan2yJ05W+Gcg0e1F1bN0luGF+TImo45AKivMMzH
-         Wafa7oOHMLjVnULMKrAIFj6Pq3sjtq+KhBiBFhGGU9YUijtmrMZEWsJL+BmP0NVbx6rN
-         XASA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ei4JikTOjpnIV1rUu65ZoLMNqYIlcHScc1bnGTHQB/k=;
-        b=fKKGRJaO+2LDqj9+XvuM9kRkBUbcHosSunFGCRzlzipp1u9xaI9Vxd21vRDCXixEJv
-         zk6BleGPhYN97ADtMcMirQZOPhuiQXU5+XytoNXz49UKZcgN03V/UA4D42SATlCksgSB
-         iVSVrl9DnakkcDW2Ffdn9PeJvs8LKZiB06LWFTTPK0usvalggQzADmH3vtH+FJbKv+rr
-         Hwjbcxhl6+TANEvyBgDf/vbG8h6BlZ7iBXVpZJFMOa0R13eEhYUr/oBnd3M++1d27vmH
-         C4MUwTeftJCG97EsrE2dXs0QqL69pODOq8JB/dPx2HMiv6tV58786hVJ9Inr90k13Q1W
-         wAZw==
-X-Gm-Message-State: ALoCoQk+ou57ytL4Yw5XTWwsI81+C4OhVU4GS8bC9KFhfcKjXHczFfOq3pL78H3SVK78FrrIev6q
-X-Received: by 10.236.228.202 with SMTP id f70mr26082217yhq.28.1415033764180;
-        Mon, 03 Nov 2014 08:56:04 -0800 (PST)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id 5si150666yhd.6.2014.11.03.08.56.03
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Nov 2014 08:56:04 -0800 (PST)
-Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id gn2vF0Xp.2; Mon, 03 Nov 2014 08:56:04 -0800
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id ABC78E10E3; Mon,  3 Nov 2014 08:56:02 -0800 (PST)
-X-Mailer: git-send-email 2.1.2.785.g8f5823f
-In-Reply-To: <1415033757-9539-1-git-send-email-sahlberg@google.com>
+	id S1753531AbaKCSKA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Nov 2014 13:10:00 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55803 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753409AbaKCSJ5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Nov 2014 13:09:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F0491AEC9;
+	Mon,  3 Nov 2014 13:09:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4axMjFhr5XRD
+	AIHRT4vzMpNDARE=; b=jw9Uuif891Rwx1xQKOH3uqwLPmEz1uLCCgndbv3UWsxr
+	gIUPSVN0AzUf1QMLKvHKH4P532IHbK1z+bkkTny4oIr2ouBg5HFqs/JfidRFV5bf
+	GFlg7s6JHOoJcgms0d9tmlkCjqES75O9uqhClvi/bQEyAVTtJUc5TGvew9KdRZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IiMd08
+	BphTyw8pEZvBsDxm2PhPw551wEUV7utdialWWSB3ZDegZkQRBqLXVLV5PmJybe2U
+	8bbFLulH5uMjivbCW5m2ExNgc+vOjRDSMZMtaF0Ir/ELOwzgDpvVNW++E5mvVOKm
+	1kho5IKKAp0C93BUWKdQTTeEbrFDF8jUxduKY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 253371AEC8;
+	Mon,  3 Nov 2014 13:09:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A20961AEC4;
+	Mon,  3 Nov 2014 13:09:49 -0500 (EST)
+In-Reply-To: <544FD474.3050805@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Tue, 28 Oct 2014 18:37:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 99E563FE-6384-11E4-A488-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No one is using this function so we can delete it.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- refs.c | 7 -------
- refs.h | 9 +--------
- 2 files changed, 1 insertion(+), 15 deletions(-)
+> On 2014-10-27 13.10, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> []
+>
+>> +static void xmkdir(const char *path)
+>> +{
+>> +	if (mkdir(path, 0700))
+>> +		die_errno(_("failed to create directory %s"), path);
+>> +}
+>
+> Does it makes sense to ignore EINTR and do a "retry" ?
+> Another question is if the function could be called mkdir_or_die() in=
+stead?
 
-diff --git a/refs.c b/refs.c
-index e4ad4f4..6d50a32 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2352,13 +2352,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	return NULL;
- }
- 
--struct ref_lock *lock_any_ref_for_update(const char *refname,
--					 const unsigned char *old_sha1,
--					 int flags, int *type_p)
--{
--	return lock_ref_sha1_basic(refname, old_sha1, NULL, flags, type_p);
--}
--
- /*
-  * Write an entry to the packed-refs file for the specified refname.
-  * If peeled is non-NULL, write it as the entry's peeled value.
-diff --git a/refs.h b/refs.h
-index 025e2cb..721e21f 100644
---- a/refs.h
-+++ b/refs.h
-@@ -181,8 +181,7 @@ extern int is_branch(const char *refname);
- extern int peel_ref(const char *refname, unsigned char *sha1);
- 
- /*
-- * Flags controlling lock_any_ref_for_update(), transaction_update_ref(),
-- * transaction_create_ref(), etc.
-+ * Flags controlling transaction_update_ref(), transaction_create_ref(), etc.
-  * REF_NODEREF: act on the ref directly, instead of dereferencing
-  *              symbolic references.
-  * REF_DELETING: tolerate broken refs
-@@ -191,12 +190,6 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
-  */
- #define REF_NODEREF	0x01
- #define REF_DELETING	0x02
--/*
-- * This function sets errno to something meaningful on failure.
-- */
--extern struct ref_lock *lock_any_ref_for_update(const char *refname,
--						const unsigned char *old_sha1,
--						int flags, int *type_p);
- 
- /** Reads log for the value of ref during at_time. **/
- extern int read_ref_at(const char *refname, unsigned int flags,
--- 
-2.1.0.rc2.206.gedb03e5
+Probably.  It is in the same league as xread() and xwrite().
+
+> I realized that there are 2 families of xfunc() in wrapper.c, some di=
+e, some retry.
+
+The general idea of wrapper.c is to free callers from coding
+something they have only one sensible choice for.  The ones that
+retry such as xread() and xwrite() are to free callers from
+diagnosing and retrying upon EAGAIN/EINTR because they want to read
+or write and there is no other thing they want to do.  The ones that
+die such as xmkstemp() are for the failure modes that are likely
+without any other choice.  xcalloc() and other allocators started as
+(and still are) the latter, but instead of immediately dying they
+know a last-ditch effort that is common to all Git operations.
