@@ -1,139 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: Fix documentation of update subcommand
-Date: Mon, 03 Nov 2014 13:35:32 -0800
-Message-ID: <xmqqbnooq863.fsf@gitster.dls.corp.google.com>
-References: <1415009391-14979-1-git-send-email-sojkam1@fel.cvut.cz>
-	<xmqqegtkrtt9.fsf@gitster.dls.corp.google.com>
-	<5457E7DF.5070500@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] use child_process_init() to initialize struct
+ child_process variables
+Date: Mon, 3 Nov 2014 17:04:08 -0500
+Message-ID: <20141103220408.GA12462@peff.net>
+References: <54500212.7040603@web.de>
+ <20141029172109.GA32234@peff.net>
+ <xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com>
+ <20141030213523.GA21017@peff.net>
+ <FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley>
+ <xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com>
+ <20141101033327.GA8307@peff.net>
+ <F44397C122BB4E63B89EC9BE26007B2E@PhilipOakley>
+ <xmqqmw88rvh3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michal Sojka <sojkam1@fel.cvut.cz>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Nov 03 22:35:40 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Philip Oakley <philipoakley@iee.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 23:04:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XlPHn-0001tI-Q3
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 22:35:40 +0100
+	id 1XlPjT-0000E2-FQ
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 23:04:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754006AbaKCVfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2014 16:35:36 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54758 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752376AbaKCVff (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2014 16:35:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 513FA1A34F;
-	Mon,  3 Nov 2014 16:35:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zVKVefDk7I1I6yDrFBWp4CLlmJk=; b=YDGIvv
-	YivasySf1etX2n2zPJE1pACcf3okT76DxHcX4KEGE37R/TzJ9BpBk1grppQ+knhY
-	aI3qz8hfLhe0Z4fpVgQtWedU/RV4rVU2uYcBVTeXfW+/w0jfUIvG1IMjDNQomBK4
-	y39PmthL5QGQOCoXmLxTgQBHSLEhCoX3u4mjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VQBJlnfpPnKxbYDAPjYPgAEzF+kiyr1o
-	jgrHwz9U9Urj4WVPoS7Qxbyc3a6QRRug9ROYWxydzkULrHK3ymeT7sJqKblL/ncp
-	eAhDqkQM014mPIZYVDAh+J+K+wtFogv0Z1k0sGV3k4rCc8IDjGjZGe9kNNpxqtuq
-	IicwCEoM+wI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 48BEA1A34E;
-	Mon,  3 Nov 2014 16:35:34 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB5E71A34D;
-	Mon,  3 Nov 2014 16:35:33 -0500 (EST)
-In-Reply-To: <5457E7DF.5070500@web.de> (Jens Lehmann's message of "Mon, 03 Nov
-	2014 21:38:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 578F2B08-63A1-11E4-920B-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752325AbaKCWEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2014 17:04:12 -0500
+Received: from cloud.peff.net ([50.56.180.127]:36459 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750810AbaKCWEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2014 17:04:10 -0500
+Received: (qmail 20012 invoked by uid 102); 3 Nov 2014 22:04:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Nov 2014 16:04:09 -0600
+Received: (qmail 8141 invoked by uid 107); 3 Nov 2014 22:04:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 03 Nov 2014 17:04:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Nov 2014 17:04:08 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqmw88rvh3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Mon, Nov 03, 2014 at 10:26:48AM -0800, Junio C Hamano wrote:
 
-> This was introduced in e6a1c43aaf (document submdule.$name.update=none
-> option for gitmodules), and I agree with Michal that we should fix it.
-> But I think we should rather say "This can be overridden by specifying
-> '--merge', '--rebase' or `--checkout`." here, as the other two options
-> also override the update setting. So I think we should queue this:
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 8e6af65..84ab577 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -158,7 +158,7 @@ update::
->  	checkout the commit specified in the index of the containing repository.
->  	This will make the submodules HEAD be detached unless `--rebase` or
->  	`--merge` is specified or the key `submodule.$name.update` is set to
-> -	`rebase`, `merge` or `none`. `none` can be overridden by specifying
-> +	`rebase`, `merge` or `none`. This can be overridden by using '--merge',
-> +	'--rebase' or
->  	`--checkout`. Setting the key `submodule.$name.update` to `!command`
->  	will cause `command` to be run. `command` can be any arbitrary shell
->  	command that takes a single argument, namely the sha1 to update to.
->
-> Apart from that I'm all for it.
+> "Philip Oakley" <philipoakley@iee.org> writes:
+> 
+> > This certainly looks the way to go. The one extra question would be
+> > whether the symref should be included by default when HEAD is present,
+> > or only if there was possible ambiguity between the other listed
+> > refs.
+> 
+> Just include the "\0symref=..." for any symbolic ref you mention,
+> and the ref in question does not even have to be "HEAD", I would
+> say.
+> 
+> The mechanism chosen should be something that will be transparently
+> ignored by existing implementations, there is no need to make the
+> data format conditional.
 
-But read the whole thing again.  Isn't that a bit roundabout and
-tortuous?
+One thing I glossed over in my suggestion of the NUL trick: it works on
+git.git, but no clue about elsewhere. I can imagine that other non-C
+implementations might treat the whole thing (NUL and extra data
+included) as the refname. Back when we did the NUL trick to the online
+protocol, git.git was the only serious implementation. But nowadays we
+should at least consider the impact on JGit, libgit2, and/or dulwich
+(breaking them is not necessarily a showstopper IMHO, but we should at
+least know what we are breaking).
 
-The paragraph is about the "update" subcommand, and then mentions
-how the subcommand is affected by options and configuration.  And
-"OVERRIDING" the topic of this thread is only about configuration.
+I peeked at libgit2 and I think it does not support bundles at all yet,
+so that is safe. Grepping for "bundle" in dulwich turns up no hits,
+either.
 
-Disecting what each sentence in the existing paragraph says:
+Looks like JGit does support them. I did a very brief test, and it seems
+to silently ignore a HEAD ref that has the NUL (I guess maybe it just
+rejects it as a malformed refname).
 
-    - This is about updating the submodule working tree to match
-      what the superproject expects.
+We could make JGit happier either by:
 
-    - There can be three ways how it is "updated" (and one way to
-      leave it not updated), by setting submodule.$name.update
-      and/or giving --rebase, --merge or --checkout option, and one
-      way to leave it not "updated" by setting .update=none.
+  1. Only including the symref magic in ambiguous cases, so that regular
+     ones Just Work as usual.
 
-    - The .update=none can be defeated with --checkout
+  2. Including two lines, like:
 
-which I think is a mess.
+        $sha1 HEAD\0symref=refs/heads/master
+	$sha1 HEAD
 
-It is a fairly common and uniform pattern that command line options
-override configured defaults, so I think it could be argued that
-"you can override .update=none or .update=anything with command line
-option" is not even worth saying.  Definitely not by piling yet
-another "oh by the way, if you have this, things behave differently
-again" on top of existing description.
+     which JGit does the right thing with (and git.git seems to, as
+     well).
 
-	Update the registered submodules to match what the superproject
-	expects by cloning missing submodules and updating the
-	working tree of the submodules.  The "updating" can take
-	various forms:
-
-	(1) By default, or by explicitly giving `--checkout` option,
-            the HEAD of the submodules are detached to the exact
-            commit recorded by the superproject.
-
-	(2) By giving `--rebase` or `--merge` option, the commit
-            that happens to be checked out in the submodule's
-            working tree is integrated with the commit recorded by
-            the superproject by rebasing or merging, respectively.
-
-	Setting submodule.$name.update configuration to `rebase` or
-        `merge` will make `git submodule update` without these
-        command line options to default to `--rebase` or `--merge`,
-        respectively.
-
-	Also, setting submodule.$name.update configuration to `none`
-        marks the named submodule not updated by "submodule update"
-        by default (you can still use `--checkout`, `--merge`, or
-        `--rebase`).
-
-Or something perhaps?  Or the detailed description of
-submodule.$name.update should be dropped from here and refer the
-reader to config.txt instead?
+-Peff
