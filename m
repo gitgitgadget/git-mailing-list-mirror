@@ -1,87 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: Fix documentation of update subcommand
-Date: Mon, 03 Nov 2014 11:02:42 -0800
-Message-ID: <xmqqegtkrtt9.fsf@gitster.dls.corp.google.com>
-References: <1415009391-14979-1-git-send-email-sojkam1@fel.cvut.cz>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michal Sojka <sojkam1@fel.cvut.cz>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Nov 03 20:03:18 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v2 12/17] refs.c: make repack_without_refs static
+Date: Mon,  3 Nov 2014 11:02:14 -0800
+Message-ID: <1415041339-18450-13-git-send-email-sahlberg@google.com>
+References: <1415041339-18450-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 03 20:03:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XlMuH-0001m8-UL
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 20:03:14 +0100
+	id 1XlMuG-0001m8-Ou
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 20:03:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbaKCTDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2014 14:03:00 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53449 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753456AbaKCTCw (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753466AbaKCTCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 3 Nov 2014 14:02:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6214F1BDF7;
-	Mon,  3 Nov 2014 14:02:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QMm7yH0iA96BxIoXQCszniWyu0I=; b=t8h7Pe
-	ziIEWFXI88o1uIGGXIbxLP791T9MOjOxCC2QEcFqUiuqDCRrPulnoIgptW/9HKpR
-	q3iQY7foCu864qxylP9HX8sV8DGCZ/8yAXnBjHjFy084TzUJz7HefQs74jRSDt8E
-	W6wE6gDS4iN8TsJ6cb8AK5FHehvk136XNTveM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f9Rqzqg6Zq+B3OAKstgE42rwhvBR6MYg
-	fxJ+5/YUwRjuB5935gAuo/S6LsKRgN9KcEyTEfcSML+IlNqhe3qkd0D4b80rtP0Q
-	PDFyL6S/TQkdUla8pXxMQiHKJPeZHWm5QdetmIYtvCszpC7aYZi7DdePIbmr82pB
-	TEkct00hN5A=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 594AB1BDF1;
-	Mon,  3 Nov 2014 14:02:45 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC9601BDEF;
-	Mon,  3 Nov 2014 14:02:44 -0500 (EST)
-In-Reply-To: <1415009391-14979-1-git-send-email-sojkam1@fel.cvut.cz> (Michal
-	Sojka's message of "Mon, 3 Nov 2014 11:09:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FE727EFE-638B-11E4-AC4E-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+Received: from mail-ig0-f201.google.com ([209.85.213.201]:55588 "EHLO
+	mail-ig0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753307AbaKCTCZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2014 14:02:25 -0500
+Received: by mail-ig0-f201.google.com with SMTP id h15so783553igd.4
+        for <git@vger.kernel.org>; Mon, 03 Nov 2014 11:02:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HFEbDas7o+UQ/GDv8PwRuUGMKtTn/vBPfcleq6d8owM=;
+        b=pJJD4U8kjjHa3o7rwAYcUCUx8yJi/H1wLEWfDeMTxuT0XLapktSZTDaZumB2Z1XzSf
+         9/fccI43Ceen3evDt6A8gfjQdzomGFo1YVXQG96EDgJZX+PA4VxgPC7zKAx6ZBey6tS8
+         T7BP0pjpPSi/ZbHybTyS1zdYwVQj3G2vWYd45jxlBUyO/nbnaU3TUjFQmf8SJWMbJ55x
+         caiYrmZySw2A91anoXkQqn7vwkkBbLcyMxFEgEucPbPUpUriNMVmkUaDMqKF8g/UK4LL
+         HrCsAeT41sIHEscMcIQE+0besmprtXRdM8vSWi0/ghA7yRjwJ7LK/vNDXvi3qQ7xtRtj
+         C8zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=HFEbDas7o+UQ/GDv8PwRuUGMKtTn/vBPfcleq6d8owM=;
+        b=gZmJ5s6bVm9M7TdZ0ubARb78LOQsovFTPKJYbzWAZuHjuWP6k9yHhqBSwg70Et/eQl
+         UlFgvxCYWDaegBtAg8VnjzSFI6NOvF2GpW3Z3XLaJ8VSQ2GT94QphjLEODcxcvs760OK
+         +IiujNrvQwVho1MGto786V5XrigZBZtFK0HmGUa5SRn8OleFP3DagrGDF5SMWHTrmOAa
+         5xfqvLEkZN6oW3Le9qGI5a6RL+1lyctqbyYl6JS/hQk/TV9d5W2a5GpD2nEHaugTcf9H
+         xqnDTYee5pDGm9krBJDYL6/72hPhZ7JkUyMt387OQUnQ6NvhtbBAPNI99KLf/7qlHx7b
+         x5/A==
+X-Gm-Message-State: ALoCoQmxvxnyzrNPzh7BUUhcxADU5AgomBGtbPZMDKn4FkHbOLh4QOKUvokYtU5kxbL1JbqcHtb1
+X-Received: by 10.43.97.66 with SMTP id cj2mr32532609icc.8.1415041344163;
+        Mon, 03 Nov 2014 11:02:24 -0800 (PST)
+Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
+        by gmr-mx.google.com with ESMTPS id t28si974949yhb.4.2014.11.03.11.02.23
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Nov 2014 11:02:24 -0800 (PST)
+Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
+	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id J95ZVEsi.1; Mon, 03 Nov 2014 11:02:24 -0800
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id D9254E0FD8; Mon,  3 Nov 2014 11:02:22 -0800 (PST)
+X-Mailer: git-send-email 2.1.2.785.g8f5823f
+In-Reply-To: <1415041339-18450-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Sojka <sojkam1@fel.cvut.cz> writes:
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 2 +-
+ refs.h | 3 ---
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-> The documentation says that submodule.$name.update can be overridden by
-> --checkout only if its value is `none`. This is not true, because both
-> implementation and documentation of --checkout specifies that the
-> override applies to all possible values.
->
-> Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
-> ---
->  Documentation/git-submodule.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 8e6af65..84ab577 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -158,7 +158,7 @@ update::
->  	checkout the commit specified in the index of the containing repository.
->  	This will make the submodules HEAD be detached unless `--rebase` or
->  	`--merge` is specified or the key `submodule.$name.update` is set to
-> -	`rebase`, `merge` or `none`. `none` can be overridden by specifying
-> +	`rebase`, `merge` or `none`. This can be overridden by specifying
->  	`--checkout`. Setting the key `submodule.$name.update` to `!command`
->  	will cause `command` to be run. `command` can be any arbitrary shell
->  	command that takes a single argument, namely the sha1 to update to.
-
-Thanks.  This looks sensible, judging only from the text (iow I
-didn't check if there were legitimate reason why rebase/merge
-settings should not be overriden from the command line).
-
-Jens?
+diff --git a/refs.c b/refs.c
+index 57e5d2f..56b0360 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2668,7 +2668,7 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
+ /*
+  * Must be called with packed refs already locked (and sorted)
+  */
+-int repack_without_refs(struct string_list *without, struct strbuf *err)
++static int repack_without_refs(struct string_list *without, struct strbuf *err)
+ {
+ 	struct ref_dir *packed;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+diff --git a/refs.h b/refs.h
+index ec4965f..f5ba534 100644
+--- a/refs.h
++++ b/refs.h
+@@ -163,9 +163,6 @@ extern void rollback_packed_refs(void);
+  */
+ int pack_refs(unsigned int flags);
+ 
+-extern int repack_without_refs(struct string_list *without,
+-			       struct strbuf *err);
+-
+ extern int ref_exists(const char *);
+ 
+ extern int is_branch(const char *refname);
+-- 
+2.1.0.rc2.206.gedb03e5
