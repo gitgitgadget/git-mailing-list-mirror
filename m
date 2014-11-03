@@ -1,96 +1,164 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] RelNotes/2.2.0.txt: fix minor typos
-Date: Mon, 03 Nov 2014 11:28:57 -0800
-Message-ID: <xmqqa948rsli.fsf@gitster.dls.corp.google.com>
-References: <1415027520-28410-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 1/2] configure.ac: add new autoconf macro for checking valid compiler flags
+Date: Mon, 03 Nov 2014 11:39:44 -0800
+Message-ID: <xmqq61ewrs3j.fsf@gitster.dls.corp.google.com>
+References: <1415026641-24767-1-git-send-email-gitter.spiros@gmail.com>
+	<1415026641-24767-2-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 03 20:29:12 2014
+Cc: git@vger.kernel.org, jnareb@gmail.com
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 03 20:39:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XlNJQ-0005k9-BC
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 20:29:12 +0100
+	id 1XlNTj-00034Y-Tu
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 20:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753371AbaKCT3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2014 14:29:04 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50404 "EHLO
+	id S1752342AbaKCTjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2014 14:39:48 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50434 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753299AbaKCT3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2014 14:29:02 -0500
+	with ESMTP id S1752144AbaKCTjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Nov 2014 14:39:47 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 28E261A499;
-	Mon,  3 Nov 2014 14:29:00 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DF7D1A782;
+	Mon,  3 Nov 2014 14:39:46 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kHJ2R17SIWVvCETaVSv5/8D+G+c=; b=EBW4t5
-	rXGfIigxPGClXdeObz/OsV6yQOpJfyiNiYzu8jMUbKP9dey1+Hv6TKoDi+dvtlK6
-	CypcNLks/NDLrbgkSvhqDGNqvS1bo+QqueaLk6I1NIDWvjqsigIf++XH7aHqwzX5
-	m4x1uPfNWErz+X/b297KH23TVKqjXNd5IYg2E=
+	:content-type; s=sasl; bh=d+oXR9jrLWqJ7TIfKzoIsexMe3w=; b=X+N9WQ
+	7kKdAB97xvGc+ur+ZrpUR3orf3GGbYwIYxrrMxRHeCY5v800HolRIsL23MTktAuI
+	eCBMi0rU6KXih5pCBTEhWkYt5vsHwCd2QCf+cD9Kdn4yBoS1ifLJqtPWBbcgcirg
+	3vynUvd8X5xwVXoYcvBLJtBq+tPHe9a+TIVeQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ghe46PPG/Me57lKj64R2TojsH9XVddC9
-	wTmqOJH6QdA3IAnzbBqxgrZcDazg5rNMzqpC2XylSFVf02RvWzmQDqJ1n96EXbdn
-	RY4ro3hrmJBUWXuA9N0JekFMEvUombyTBSAhx9LWlhwkKAgTaqkIwQbJgZ1N5br7
-	6llWddABqhk=
+	:content-type; q=dns; s=sasl; b=fcFOpGqaW9v3+blyKEUceaze44qSXWxl
+	DZ3+uVwGlqgW5Ddq/AJBnkNhduDc0NnQVWT325+Gu228cvrLHPvS14IwNbbW6sxA
+	WOjEjI2tKvuRXaKAKYq02QxC4tPtEFJJkUqX0vkH7kIib4/mX1iDTdmLTuO8RZgd
+	pxKH7CNhhgM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2015B1A497;
-	Mon,  3 Nov 2014 14:29:00 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7541A1A781;
+	Mon,  3 Nov 2014 14:39:46 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8619C1A495;
-	Mon,  3 Nov 2014 14:28:59 -0500 (EST)
-In-Reply-To: <1415027520-28410-1-git-send-email-Matthieu.Moy@imag.fr>
-	(Matthieu Moy's message of "Mon, 3 Nov 2014 16:12:00 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EEC041A780;
+	Mon,  3 Nov 2014 14:39:45 -0500 (EST)
+In-Reply-To: <1415026641-24767-2-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Mon, 3 Nov 2014 06:57:20 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A90C3294-638F-11E4-A7E5-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2A597374-6391-11E4-9B66-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
+> Add GIT_CC_CHECK_FLAG_APPEND, GIT_CC_CHECK_FLAGS_APPEND
+> and GIT_CC_CHECK_LDFLAGS autoconf macro.
 
-Thanks.
+... which does what and for what purpose?
 
->  Documentation/RelNotes/2.2.0.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+Don't explain it to me in your response, or tell me to read the
+patch text.  I am speaking for those who have to read "git log"
+output down the line and need to get the big picture.
+
+In the bigger picture, what is important is "why" than "how".
+
+You add a handy way to give list of possible compilation flags and
+add as many of them as we can without triggering errors to CFLAGS
+and LDFLAGS.  Why is that a good thing to do?  What kind of
+compilation flags you are planning to throw at these macros?  I
+think a mere mention of the latter will be sufficient to remind the
+reader why this change would be a good idea.
+
 >
-> diff --git a/Documentation/RelNotes/2.2.0.txt b/Documentation/RelNotes/2.2.0.txt
-> index 741e14e..a50896f 100644
-> --- a/Documentation/RelNotes/2.2.0.txt
-> +++ b/Documentation/RelNotes/2.2.0.txt
-> @@ -40,7 +40,7 @@ UI, Workflows & Features
->     diff backend when it exits with a non-zero status.
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  Makefile     |    6 ++++--
+>  configure.ac |   45 +++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 49 insertions(+), 2 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 827006b..23485f1 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -344,10 +344,12 @@ GIT-VERSION-FILE: FORCE
+>  	@$(SHELL_PATH) ./GIT-VERSION-GEN
+>  -include GIT-VERSION-FILE
 >  
->   * "git grep" allows to paint (or not paint) partial matches on
-> -   context lines whenshowing "grep -C<num>" output in color.
-> +   context lines when showing "grep -C<num>" output in color.
+> +GIT_CFLAGS  =
+> +GIT_LDFLAGS =
+>  # CFLAGS and LDFLAGS are for the users to override from the command line.
 >  
->   * "log --date=iso" uses a slight variant of ISO 8601 format that is
->     made more human readable.  A new "--date=iso-strict" option gives
-> @@ -62,7 +62,7 @@ UI, Workflows & Features
->     e.g. "hello_BASE_4321.c").
+> -CFLAGS = -g -O2 -Wall
+> -LDFLAGS =
+> +CFLAGS = -g -O2 -Wall $(GIT_CFLAGS)
+> +LDFLAGS = $(GIT_LDFLAGS)
+>  ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+>  ALL_LDFLAGS = $(LDFLAGS)
+>  STRIP ?= strip
+> diff --git a/configure.ac b/configure.ac
+> index 6af9647..c67ca60 100644
+> --- a/configure.ac
+> +++ b/configure.ac
+> @@ -139,6 +139,51 @@ if test -n "$1"; then
+>  fi
+>  ])
 >  
->   * The temporary files "git mergetools" uses can be placed in a newly
-> -   creted temporary directory, instead of the current directory, by
-> +   created temporary directory, instead of the current directory, by
->     setting the mergetool.writeToTemp configuration variable.
+> +
+> +dnl Check if FLAG in ENV-VAR is supported by compiler and append it
+> +dnl to WHERE-TO-APPEND variable
+> +dnl GIT_CC_CHECK_FLAG_APPEND([WHERE-TO-APPEND], [ENV-VAR], [FLAG])
+> +
+> +AC_DEFUN([GIT_CC_CHECK_FLAG_APPEND], [
+> +  AC_CACHE_CHECK([if $CC supports flag $3 in envvar $2],
+> +                 AS_TR_SH([cc_cv_$2_$3]),
+> +          [eval "AS_TR_SH([cc_save_$2])='${$2}'"
+> +           eval "AS_TR_SH([$2])='-Werror $3'"
+> +           AC_LINK_IFELSE([AC_LANG_SOURCE([int a = 0; int main(void) { return a; } ])],
+> +                          [eval "AS_TR_SH([cc_cv_$2_$3])='yes'"],
+> +                          [eval "AS_TR_SH([cc_cv_$2_$3])='no'"])
+> +           eval "AS_TR_SH([$2])='$cc_save_$2'"])
+> +
+> +  AS_IF([eval test x$]AS_TR_SH([cc_cv_$2_$3])[ = xyes],
+> +        [eval "$1='${$1} $3'"])
+> +])
+> +
+> +dnl GIT_CC_CHECK_FLAGS_APPEND([WHERE-TO-APPEND], [ENV-VAR], [FLAG1 FLAG2])
+> +AC_DEFUN([GIT_CC_CHECK_FLAGS_APPEND], [
+> +  for flag in $3; do
+> +    GIT_CC_CHECK_FLAG_APPEND($1, $2, $flag)
+> +  done
+> +])
+> +
+> +dnl Check if the flag is supported by linker (cacheable)
+> +dnl GIT_CC_CHECK_LDFLAGS([FLAG], [ACTION-IF-FOUND],[ACTION-IF-NOT-FOUND])
+
+Missing SP after comma?  I do not particularly mind commas without
+leading SP in m4 source, but please be consistent unless there is a
+compelling reason not to (and I do not think there is in this case).
+
+> +
+> +AC_DEFUN([GIT_CC_CHECK_LDFLAGS], [
+> +  AC_CACHE_CHECK([if $CC supports $1 flag],
+> +    AS_TR_SH([cc_cv_ldflags_$1]),
+> +    [ac_save_LDFLAGS="$LDFLAGS"
+> +     LDFLAGS="$LDFLAGS $1"
+> +     AC_LINK_IFELSE([int main() { return 1; }],
+> +       [eval "AS_TR_SH([cc_cv_ldflags_$1])='yes'"],
+> +       [eval "AS_TR_SH([cc_cv_ldflags_$1])="])
+> +     LDFLAGS="$ac_save_LDFLAGS"
+> +    ])
+> +
+> +  AS_IF([eval test x$]AS_TR_SH([cc_cv_ldflags_$1])[ = xyes],
+> +    [$2], [$3])
+> +])
+> +
+> +
+>  ## Configure body starts here.
 >  
->   * "git mergetool" understands "--tool bc" now, as version 4 of
-> @@ -292,6 +292,6 @@ notes for details).
->     (merge b12d045 da/mergetool-meld later to maint).
->  
->   * "git pack-objects" forgot to disable the codepath to generate
-> -   object recheability bitmap when it needs to split the resulting
-> +   object reachability bitmap when it needs to split the resulting
->     pack.
->     (merge 2113471 jk/pack-objects-no-bitmap-when-splitting later to maint).
+>  AC_PREREQ(2.59)
