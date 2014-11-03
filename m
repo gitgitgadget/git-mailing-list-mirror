@@ -1,61 +1,61 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 05/15] refs.c: add a function to append a reflog entry to a fd
-Date: Mon,  3 Nov 2014 08:55:47 -0800
-Message-ID: <1415033757-9539-6-git-send-email-sahlberg@google.com>
+Subject: [PATCH v2 04/15] refs.c: add a new update_type field to ref_update
+Date: Mon,  3 Nov 2014 08:55:46 -0800
+Message-ID: <1415033757-9539-5-git-send-email-sahlberg@google.com>
 References: <1415033757-9539-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 03 17:59:20 2014
+X-From: git-owner@vger.kernel.org Mon Nov 03 17:59:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XlKyL-0003HJ-Oc
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 17:59:18 +0100
+	id 1XlKyc-0003Rr-Gr
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Nov 2014 17:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752342AbaKCQ7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Nov 2014 11:59:14 -0500
-Received: from mail-qg0-f73.google.com ([209.85.192.73]:44553 "EHLO
-	mail-qg0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753274AbaKCQ4D (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752579AbaKCQ7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Nov 2014 11:59:15 -0500
+Received: from mail-yh0-f74.google.com ([209.85.213.74]:43069 "EHLO
+	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229AbaKCQ4D (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 3 Nov 2014 11:56:03 -0500
-Received: by mail-qg0-f73.google.com with SMTP id z107so738956qgd.4
+Received: by mail-yh0-f74.google.com with SMTP id 29so706855yhl.3
         for <git@vger.kernel.org>; Mon, 03 Nov 2014 08:56:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F428+zIy7ULOCbHa1ozdnUS5OP+UnpQbGv0HkpE9opU=;
-        b=iFfDM6aEXepBGhKC31WqD+0TMi7+3MRETYlqfV4Kk+6tT1mpXZNqd5QBrXYi3tDjI2
-         7p/B7YsOqjzyjQNC8a92FczXh00YJbPWd96RmOnvqjJAC6gDNM83gd9eCd5rewJie/+i
-         eXsxiLpjplIfMc3hD0jM/kQkR7r0cbobD8cS6ywHg6bv02Wa4HcSwukQmald/M/jKNW0
-         woD3CruNRQydmCFhmp2RpNVKhu0YLdcmSJG/lqkzbKMt2NxgxnynLdriejsbfAVkndo0
-         13quOERIXHs5owmw1SEnufvYDGbrUI9dQWb3i2VKdpwPs+y8VzvKvtUWwN0l1Mxi/8Ob
-         PK8A==
+        bh=zZZGO80bXJLIMAgWZZAKFTFCRkLsC93hKZmiW7iRkqs=;
+        b=igEjXfle4WMitqVEHnXiAPVpcMLHwRy1IvChcjpqZXDs2/9SUYBY0hro7RwnkEgzaN
+         uqKkEbH5PI3UnCMYyxekwpGwtyFVyczagoPvoQDnAp0ptCPUyfQIIGcoSbL940Z9WL6L
+         Lh/nBkd6GE3rt5ar4euAlwj6hw41ZFYMw5QZRMRP+/Qks2uRCv/nYqfidZkbu3MMQd/1
+         TN76ssk4w7Da0u+LKmhF0lBR1PZ6ANugTrIRn7vdhw+32AkaLjk43E++15XM3+KfoADf
+         nVjkE25/0WIWZ1YSGrsNxlre6w8ZexNob1JSlQDoMibBzICkzJ80ELPoP+48Uj3XBPGE
+         tjaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=F428+zIy7ULOCbHa1ozdnUS5OP+UnpQbGv0HkpE9opU=;
-        b=kMOsuU3awSAX/z3NaJ0sXpCeEMip7McW625OJqC5dJWG0j39ZRrMcRb4gwo2NZb/U0
-         ztaJg9LK0hHZGtHxQHJ0u7hqtdXt//Cj3Cyr7gAMnUjdSp6BwpaXVMOChRN72jPhRbw7
-         QUHxCQYJI21ZQbUOBCqsUtQN2LWeqmpxto0he7t5w/seVnUK4UlFhAW64dmopq4s+7AZ
-         sWDltY7uLvRxHP++d4QFNP+fKbIihpaNfgL2xbb8sWi5HYmTEZ3B9W17rWfKlxnxaL41
-         XepyNrFtoBE9HL5hdyUIGCYPPbWsKu5hzzRdJEesasjP0dUb8Dw2NU9kk45ETeYEtlzn
-         YMTw==
-X-Gm-Message-State: ALoCoQk164hD1W/joIyqkTB3zffGBt7ywc1tRBHFlj/X0OgFjMf85iUbkBSIVDgZtRjQMfPVzqoi
-X-Received: by 10.236.29.78 with SMTP id h54mr8337111yha.22.1415033762844;
+        bh=zZZGO80bXJLIMAgWZZAKFTFCRkLsC93hKZmiW7iRkqs=;
+        b=M6969Eye+MAK4Y+koOQ8YPrlNEj8ODITdduS8h3pWHmUe9nDb8kOBl2wLbNlzfAVvp
+         G6eCIpPelkAgUJ2yyHTjP0iTZZXpnupi5cnSr/52oUZSDFkMxI6LfdjCfTMTJvPc+ECV
+         UoV/OmWrRGzvV6vrq24vXwNNIAkuhSA01zEnr5sDysDvVk4XdzhWGcHmzeR8cAwT92Ef
+         qEztMll5BVXyoooRFD8UeiURs4PQG10/GrL9lWKYW66krnW3HWCj55zwy5SomTDixoHa
+         FcSF4n/PCuh2v9iHhjvnkyQU2wB+EAHV3uo9YocWH62jbfYL3B3A2cuPS1SyhYHYZC5C
+         tscA==
+X-Gm-Message-State: ALoCoQnlZE7ZYZBmw7N4nmnBZsyOFRdJmKXydkfqH6jL3Mc/JQea4t2pimWm4VFI5na91JoymMRd
+X-Received: by 10.236.15.131 with SMTP id f3mr2444993yhf.57.1415033762873;
         Mon, 03 Nov 2014 08:56:02 -0800 (PST)
 Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
-        by gmr-mx.google.com with ESMTPS id 5si150659yhd.6.2014.11.03.08.56.02
+        by gmr-mx.google.com with ESMTPS id 5si150658yhd.6.2014.11.03.08.56.02
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 03 Nov 2014 08:56:02 -0800 (PST)
 Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
-	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id w74sUdVM.1; Mon, 03 Nov 2014 08:56:02 -0800
+	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id ympwsOQP.1; Mon, 03 Nov 2014 08:56:02 -0800
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 08E43E0F5D; Mon,  3 Nov 2014 08:56:01 -0800 (PST)
+	id F0A32E0967; Mon,  3 Nov 2014 08:56:01 -0800 (PST)
 X-Mailer: git-send-email 2.1.2.785.g8f5823f
 In-Reply-To: <1415033757-9539-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
@@ -63,88 +63,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Break out the code to create the string and writing it to the file
-descriptor from log_ref_write and into a dedicated function log_ref_write_fd.
-For now this is only used from log_ref_write but later on we will call
-this function from reflog transactions too which means that we will end
-up with only a single place where we write a reflog entry to a file instead
-of the current two places (log_ref_write and builtin/reflog.c).
+Add a field that describes what type of update this refers to. For now
+the only type is UPDATE_SHA1 but we will soon add more types.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- refs.c | 48 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 18 deletions(-)
+ refs.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 8803b95..0e11b1c 100644
+index a1bfaa2..8803b95 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2990,15 +2990,37 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+@@ -3504,6 +3504,10 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ 	return retval;
+ }
+ 
++enum transaction_update_type {
++	UPDATE_SHA1 = 0
++};
++
+ /**
+  * Information needed for a single ref update.  Set new_sha1 to the
+  * new value or to zero to delete the ref.  To check the old value
+@@ -3511,6 +3515,7 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+  * value or to zero to ensure the ref does not exist before update.
+  */
+ struct ref_update {
++	enum transaction_update_type update_type;
+ 	unsigned char new_sha1[20];
+ 	unsigned char old_sha1[20];
+ 	int flags; /* REF_NODEREF? */
+@@ -3571,12 +3576,14 @@ void transaction_free(struct transaction *transaction)
+ }
+ 
+ static struct ref_update *add_update(struct transaction *transaction,
+-				     const char *refname)
++				     const char *refname,
++				     enum transaction_update_type update_type)
+ {
+ 	size_t len = strlen(refname);
+ 	struct ref_update *update = xcalloc(1, sizeof(*update) + len + 1);
+ 
+ 	strcpy((char *)update->refname, refname);
++	update->update_type = update_type;
+ 	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
+ 	transaction->updates[transaction->nr++] = update;
+ 	return update;
+@@ -3606,7 +3613,7 @@ int transaction_update_ref(struct transaction *transaction,
+ 		return -1;
+ 	}
+ 
+-	update = add_update(transaction, refname);
++	update = add_update(transaction, refname, UPDATE_SHA1);
+ 	hashcpy(update->new_sha1, new_sha1);
+ 	update->flags = flags;
+ 	update->have_old = have_old;
+@@ -3684,13 +3691,17 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ 
+ 	assert(err);
+ 
+-	for (i = 1; i < n; i++)
++	for (i = 1; i < n; i++) {
++		if (updates[i - 1]->update_type != UPDATE_SHA1 ||
++		    updates[i]->update_type != UPDATE_SHA1)
++			continue;
+ 		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
+ 			strbuf_addf(err,
+ 				    "Multiple updates for ref '%s' not allowed.",
+ 				    updates[i]->refname);
+ 			return 1;
+ 		}
++	}
  	return 0;
  }
  
-+static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
-+			    const unsigned char *new_sha1,
-+			    const char *committer, const char *msg)
-+{
-+	int msglen, written;
-+	unsigned maxlen, len;
-+	char *logrec;
-+
-+	msglen = msg ? strlen(msg) : 0;
-+	maxlen = strlen(committer) + msglen + 100;
-+	logrec = xmalloc(maxlen);
-+	len = sprintf(logrec, "%s %s %s\n",
-+		      sha1_to_hex(old_sha1),
-+		      sha1_to_hex(new_sha1),
-+		      committer);
-+	if (msglen)
-+		len += copy_msg(logrec + len - 1, msg) - 1;
-+
-+	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
-+	free(logrec);
-+	if (written != len)
-+		return -1;
-+
-+	return 0;
-+}
-+
- static int log_ref_write(const char *refname, const unsigned char *old_sha1,
- 			 const unsigned char *new_sha1, const char *msg)
- {
--	int logfd, result, written, oflags = O_APPEND | O_WRONLY;
--	unsigned maxlen, len;
--	int msglen;
-+	int logfd, result, oflags = O_APPEND | O_WRONLY;
- 	char log_file[PATH_MAX];
--	char *logrec;
--	const char *committer;
+@@ -3722,13 +3733,17 @@ int transaction_commit(struct transaction *transaction,
+ 		goto cleanup;
+ 	}
  
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates = !is_bare_repository();
-@@ -3010,19 +3032,9 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
- 	logfd = open(log_file, oflags);
- 	if (logfd < 0)
- 		return 0;
--	msglen = msg ? strlen(msg) : 0;
--	committer = git_committer_info(0);
--	maxlen = strlen(committer) + msglen + 100;
--	logrec = xmalloc(maxlen);
--	len = sprintf(logrec, "%s %s %s\n",
--		      sha1_to_hex(old_sha1),
--		      sha1_to_hex(new_sha1),
--		      committer);
--	if (msglen)
--		len += copy_msg(logrec + len - 1, msg) - 1;
--	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
--	free(logrec);
--	if (written != len) {
-+	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
-+				  git_committer_info(0), msg);
-+	if (result) {
- 		int save_errno = errno;
- 		close(logfd);
- 		error("Unable to append to %s", log_file);
+-	/* Acquire all locks while verifying old values */
++	/* Acquire all ref locks while verifying old values */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 		int flags = update->flags;
+ 
++		if (update->update_type != UPDATE_SHA1)
++			continue;
++
+ 		if (is_null_sha1(update->new_sha1))
+ 			flags |= REF_DELETING;
++
+ 		update->lock = lock_ref_sha1_basic(update->refname,
+ 						   (update->have_old ?
+ 						    update->old_sha1 :
+@@ -3750,6 +3765,8 @@ int transaction_commit(struct transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
++		if (update->update_type != UPDATE_SHA1)
++			continue;
+ 		if (!is_null_sha1(update->new_sha1)) {
+ 			if (write_ref_sha1(update->lock, update->new_sha1,
+ 					   update->msg)) {
+@@ -3767,6 +3784,8 @@ int transaction_commit(struct transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
++		if (update->update_type != UPDATE_SHA1)
++			continue;
+ 		if (update->lock) {
+ 			if (delete_ref_loose(update->lock, update->type, err)) {
+ 				ret = TRANSACTION_GENERIC_ERROR;
 -- 
 2.1.0.rc2.206.gedb03e5
