@@ -1,93 +1,96 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: Fix documentation of update subcommand
-Date: Tue, 04 Nov 2014 21:22:10 +0100
-Message-ID: <54593572.3080805@web.de>
-References: <1415009391-14979-1-git-send-email-sojkam1@fel.cvut.cz>	<xmqqegtkrtt9.fsf@gitster.dls.corp.google.com>	<5457E7DF.5070500@web.de>	<xmqqbnooq863.fsf@gitster.dls.corp.google.com>	<87k33bao7w.fsf@steelpick.2x.cz> <xmqq7fzbriew.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Tue Nov 04 21:22:26 2014
+From: Tzvetan Mikov <tmikov@gmail.com>
+Subject: [PATCH v2] line-log: fix crash when --first-parent is used
+Date: Tue,  4 Nov 2014 12:33:37 -0800
+Message-ID: <1415133217-7824-1-git-send-email-tmikov@gmail.com>
+References: <1414784636-43155-1-git-send-email-tmikov@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Eric Vander Weele <ericvw@gmail.com>,
+	Tzvetan Mikov <tmikov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 04 21:34:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XlkcT-00025C-HE
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Nov 2014 21:22:25 +0100
+	id 1XlkoE-00084B-VQ
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Nov 2014 21:34:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbaKDUWW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Nov 2014 15:22:22 -0500
-Received: from mout.web.de ([212.227.17.11]:61196 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751778AbaKDUWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2014 15:22:21 -0500
-Received: from [192.168.178.41] ([79.211.99.175]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0Ljrq1-1YIcSl0ZnV-00bunw; Tue, 04 Nov 2014 21:22:14
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <xmqq7fzbriew.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:+wdqXOgjd4JTA8iqTdp856Td3QIKaPfRBJXbULq23HiJHBp1L4Z
- dSa59sB8OR615Z/XPQJ6gGLHS5Oz4KxEl7PMXoA+vNpFzGcpNsDP+sLlzVKHI8Ya7usx2iW
- Gv2V5IrvZcCiiGkN9PKUwuyMNXpzaJeW5yVEq5zxKx5j+rSOxcoN/rsxcqWu8DeFRx7C38z
- wNxED1XIeqi9gP68kXXHg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751325AbaKDUeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2014 15:34:31 -0500
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:38683 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751118AbaKDUea (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2014 15:34:30 -0500
+Received: by mail-pd0-f175.google.com with SMTP id y13so14407452pdi.34
+        for <git@vger.kernel.org>; Tue, 04 Nov 2014 12:34:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=yN/XstDqYKRTIe87BnxeRezVn0m8WNzj2CoH1o4y/hc=;
+        b=QNmh5FSILkHNPacB4ZDHBws/Z7mMIXVqBf6wQ7+la0FUt5plNHf4N37XuBvR/tSsgO
+         1Jv3h1PPNu5yw8OYjYZ4VoHvOrBG+ylExzmrRLkkvIOb/hFZE7jjPlhEV34jQmQdYEJi
+         s/jeWZc9W4zAsJacvx0yCTHoQ9oMvLE/GP6zPZMh507ckugC01C5XEU+NovQM7ZKJhFO
+         3Sk/No8NlZKSbQnLGLVkEsYZgYS39eWmpQTV260RhV4Tkbn/BBCmVwIAWPw5Bcqmn9bq
+         dTO8znxEyLPiIQip7glxWS0AtaNFyR6bLcWzjBD0EOWkY9A8O0rcK3g2dPU/wcz6BITj
+         xZjg==
+X-Received: by 10.70.10.195 with SMTP id k3mr51910855pdb.41.1415133270301;
+        Tue, 04 Nov 2014 12:34:30 -0800 (PST)
+Received: from localhost.localdomain ([67.188.241.113])
+        by mx.google.com with ESMTPSA id l5sm1217264pdj.12.2014.11.04.12.34.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 04 Nov 2014 12:34:29 -0800 (PST)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1414784636-43155-1-git-send-email-tmikov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.11.2014 um 00:08 schrieb Junio C Hamano:
-> Michal Sojka <sojkam1@fel.cvut.cz> writes:
->>> Or something perhaps?  Or the detailed description of
->>> submodule.$name.update should be dropped from here and refer the
->>> reader to config.txt instead?
->>
->> I guess you mean gitmodules.txt.
->
-> Actually, I do mean the configuration.  .gitmodules is just a
-> template to help the user populate .git/config, and the latter of
-> which should be the sole source of truth.  This is an important
-> principle, and it becomes even more important once we start talking
-> about security sensitive possiblity like allowing !command as the
-> value.
+line-log tries to access all parents of a commit, but only the first
+parent has been loaded if "--first-parent" is specified, resulting
+in a crash.
 
-Not quite. You're definitely right about the !command value for
-the 'update' setting; this should never be taken from .gitmodules
-but only from .git/config. But apart from that following this
-principle would hurt submodule users a lot. The only thing that
-should be set in stone in .git/config is the 'url' setting,
-because an older url might not even exist anmore. But e.g. the
-'branch' setting must be taken from .gitmodules. Otherwise we
-could not change it on a per-superproject-branch basis. And if
-the 'path' setting would only be taken from .git/config instead
-of .gitmodules, we wouldn't even be able to rename submodules
-(which is exactly what this setting was added for in the first
-place). The same applies to 'ignore' and 'fetch'.
+Limit the number of parents to one if "--first-parent" is specified.
 
-So I believe that gitmodules.txt should describe all =C4=87onfig
-options that can be provided by upstream (and e.g. mention that
-the 'url' and 'update' values are copied into .git/config on
-init), while all settings that can be overridden locally should
-be documented in config.txt (which will be a subset of those
-documented in gitmodules.txt).
+Reported-by: Eric N. Vander Weele <ericvw@gmail.com>
+Signed-off-by: Tzvetan Mikov <tmikov@gmail.com>
+---
+ PATCH v2: Add a test case (thanks Michael J Gruber)
 
->> The `!command` form is not documented in gitmodules.txt. Maybe it wo=
-uld
->> be best to fully document .update in gitmodules.txt and just refer t=
-o
->> there. Having documentation at two places seems to be confusing not =
-only
->> for users, but also for those who send patches :)
->>
->> I'm no longer able to formulate my proposal properly as a patch toni=
-ght,
->> but if needed I'll try it later.
->
-> That is fine.  People have lived with the current text for more than
-> two years without problems, so we are obviously not in a hurry.
+ line-log.c          | 3 +++
+ t/t4211-line-log.sh | 5 +++++
+ 2 files changed, 8 insertions(+)
 
-Yup.
+diff --git a/line-log.c b/line-log.c
+index 1008e72..86e7274 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -1141,6 +1141,9 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+ 	int i;
+ 	int nparents = commit_list_count(commit->parents);
+ 
++	if (nparents > 1 && rev->first_parent_only)
++	    nparents = 1;
++
+ 	diffqueues = xmalloc(nparents * sizeof(*diffqueues));
+ 	cand = xmalloc(nparents * sizeof(*cand));
+ 	parents = xmalloc(nparents * sizeof(*parents));
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 7369d3c..0901b30 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -94,4 +94,9 @@ test_expect_success '-L ,Y (Y == nlines + 2)' '
+ 	test_must_fail git log -L ,$n:b.c
+ '
+ 
++test_expect_success '-L with --first-parent and a merge' '
++	git checkout parallel-change &&
++	git log --first-parent -L 1,1:b.c
++'
++
+ test_done
+-- 
+1.9.1
