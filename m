@@ -1,54 +1,47 @@
-From: Thomas Quinot <thomas@quinot.org>
-Subject: Re: [PATCH] git_connect: allow passing arguments to ssh in
- GIT_SSH_ARGS
-Date: Sat, 8 Nov 2014 13:35:54 +0100
-Message-ID: <20141108123554.GA90057@melamine.cuivre.fr.eu.org>
-References: <20141108104439.GA89717@melamine.cuivre.fr.eu.org>
- <20141108110958.GB20750@peff.net>
+From: "Dr. George E. Moore" <gem@x-ctr-l.com>
+Subject: Using git clone
+Date: Tue, 04 Nov 2014 11:59:59 -0500
+Organization: Extreme Computing Group
+Message-ID: <1415120399.4259.5.camel@precision690.xccg.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 08 13:36:06 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 08 13:58:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xn5FO-0008It-Ir
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 13:36:06 +0100
+	id 1Xn5bS-0003h6-Kh
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 13:58:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753742AbaKHMf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2014 07:35:57 -0500
-Received: from houdart.cuivre.fr.eu.org ([81.57.40.110]:14380 "EHLO
-	melamine.cuivre.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753654AbaKHMf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2014 07:35:57 -0500
-Received: by melamine.cuivre.fr.eu.org (Postfix, from userid 1000)
-	id A2AF6359F5; Sat,  8 Nov 2014 13:35:54 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20141108110958.GB20750@peff.net>
-X-message-flag: WARNING! Using Outlook can damage your computer.
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1753708AbaKHM6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2014 07:58:48 -0500
+Received: from ecbiz55.inmotionhosting.com ([173.205.124.107]:48964 "EHLO
+	ecbiz55.inmotionhosting.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753662AbaKHM6s (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Nov 2014 07:58:48 -0500
+X-Greylist: delayed 95480 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Nov 2014 07:58:48 EST
+Received: from c-98-223-104-188.hsd1.in.comcast.net ([98.223.104.188]:58417 helo=[192.168.1.110])
+	by ecbiz55.inmotionhosting.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.82)
+	(envelope-from <gem@x-ctr-l.com>)
+	id 1XlhTr-0006Il-Ne
+	for git@vger.kernel.org; Tue, 04 Nov 2014 12:01:22 -0500
+X-Mailer: Evolution 3.4.4-3 
+X-OutGoing-Spam-Status: No, score=-1.5
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - ecbiz55.inmotionhosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - x-ctr-l.com
+X-Get-Message-Sender-Via: ecbiz55.inmotionhosting.com: authenticated_id: gem@x-ctr-l.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff,
-
-Thanks for your feedback!
-
-* Jeff King, 2014-11-08 :
-
-> What do you think of adding an alternate variable that is not ssh
-> _arguments_, but rather just a full shell command for running ssh?
-> I'm not sure what it could be called (GIT_SSH_SH is probably too
-> confusing).
-
-Interesting idea, I had not thought of this, but I agree that it looks
-nicer and more flexible from the user's point of view. In addition, it
-turns out that it makes the implementation even simpler! I suggest
-'GIT_SSH_CMD' for the variable name; patch v2 coming...
-
-Thomas.
+Is it appropriate to use "git clone" to update the master branch of an
+existing repository? The current master branch is for a much earlier
+release candidate.
