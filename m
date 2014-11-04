@@ -1,60 +1,98 @@
-From: Tzvetan Mikov <tmikov@gmail.com>
-Subject: Re: [PATCH v2] line-log: fix crash when --first-parent is used
-Date: Tue, 4 Nov 2014 13:41:54 -0800
-Message-ID: <CACt9tMi24QyvdpCk-tmU5U8jbP8eYhaNm4zWu6PqcKsJQ=OsYw@mail.gmail.com>
-References: <1414784636-43155-1-git-send-email-tmikov@gmail.com>
- <1415133217-7824-1-git-send-email-tmikov@gmail.com> <xmqq8ujqpsk6.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use child_process_init() to initialize struct child_process variables
+Date: Tue, 04 Nov 2014 13:56:15 -0800
+Message-ID: <xmqq4muepr40.fsf@gitster.dls.corp.google.com>
+References: <54500212.7040603@web.de> <20141029172109.GA32234@peff.net>
+	<xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com>
+	<20141030213523.GA21017@peff.net>
+	<FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley>
+	<xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com>
+	<20141101033327.GA8307@peff.net>
+	<F44397C122BB4E63B89EC9BE26007B2E@PhilipOakley>
+	<xmqqmw88rvh3.fsf@gitster.dls.corp.google.com>
+	<20141103220408.GA12462@peff.net>
+	<xmqq389zrguw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
-	Eric Vander Weele <ericvw@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 04 22:42:36 2014
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 04 22:56:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xlls4-00018Y-EV
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Nov 2014 22:42:36 +0100
+	id 1Xlm5P-00088i-QE
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Nov 2014 22:56:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977AbaKDVmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2014 16:42:32 -0500
-Received: from mail-qc0-f178.google.com ([209.85.216.178]:40732 "EHLO
-	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbaKDVmb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2014 16:42:31 -0500
-Received: by mail-qc0-f178.google.com with SMTP id b13so12943874qcw.37
-        for <git@vger.kernel.org>; Tue, 04 Nov 2014 13:42:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=02NF5vcJoob+n+2YmG1cHm+ye7PffZHcP8l/TeUC8RI=;
-        b=MRBTgk4jiz8YE06eCH8N0lqxf7C1CFoIL5hxmvq5WBjFAtasTWZdvdaqYaJX4ljo2Q
-         TWaIyHztlMhB+sOiSTGXKNvVPjQMMMDFZ2+C5voZZG2U4BDtqHpx5cJsK9IUiiEjNiML
-         AehM6bVN6XN5zgRNgfUrLeEi7YDd5fU5CxgEuREyQAgunSOQfxRCHDB8QV5+h8X4hIS1
-         7mMVSVReRglfyOFUKNROAl0OzRQVFm7juNhvZHPJAB/pNiNjCD4RQQcObBg1bNJ+HI3t
-         HxThvaTPZSvXaVhe1y4qF7QLx1iLb2BWMZ/4rvJPhREpoyqDd5+17BcC5ombt2Rwx+AZ
-         URCw==
-X-Received: by 10.229.53.133 with SMTP id m5mr80514468qcg.28.1415137344798;
- Tue, 04 Nov 2014 13:42:24 -0800 (PST)
-Received: by 10.140.16.45 with HTTP; Tue, 4 Nov 2014 13:41:54 -0800 (PST)
-In-Reply-To: <xmqq8ujqpsk6.fsf@gitster.dls.corp.google.com>
+	id S1752323AbaKDV4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2014 16:56:20 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50051 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752188AbaKDV4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2014 16:56:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE87D1AD5C;
+	Tue,  4 Nov 2014 16:56:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4i2zZFFx19YeLWPro+qeUEEgK/Y=; b=hptoMN
+	j5JxbU4uX1V3wL+oGTNp9OLzAD3Byb26bBnnN3qrcel1lbtQWt93Wps+D0cBVUL+
+	4vpo9odbN/bhtio+2wRPRaIYfwCOXvYgHh06D6ZAxZkhRpUYwI3Lud0/gkRK1eSU
+	ESCrWuCB4FQkUuO2Ar9fsFNFjScZXjxQSUXMg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hK2Y+juriJsV/nfc/lv721nW6yMEM1w9
+	U04C93lvLm7PHjVgZ2FHReDGTaQfhKjXIbhAd4cTzJF1FuypFqmTZe1kh0GHGCUv
+	jHwTP0S6BIqYxggL4xiYcLMYJTOVFZzF7QxtxLVFOh+H7inH0Z6PwD/PFsUUZ3zE
+	LUPqCOr4Hr4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3FB91AD5B;
+	Tue,  4 Nov 2014 16:56:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2C0651AD5A;
+	Tue,  4 Nov 2014 16:56:17 -0500 (EST)
+In-Reply-To: <xmqq389zrguw.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 03 Nov 2014 15:42:31 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6719CA48-646D-11E4-B54B-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 4, 2014 at 1:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Thanks, both.  The patch looks good (modulo the indentation of
-> nparents assignment, which I'll locally fix up).
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jeff King <peff@peff.net> writes:
 >
-> Will queue.
+>> I peeked at libgit2 and I think it does not support bundles at all yet,
+>> so that is safe. Grepping for "bundle" in dulwich turns up no hits,
+>> either.
+>>
+>> Looks like JGit does support them. I did a very brief test, and it seems
+>> to silently ignore a HEAD ref that has the NUL (I guess maybe it just
+>> rejects it as a malformed refname).
+>>
+>> We could make JGit happier either by:
+>>
+>>   1. Only including the symref magic in ambiguous cases, so that regular
+>>      ones Just Work as usual.
+>>
+>>   2. Including two lines, like:
+>>
+>>         $sha1 HEAD\0symref=refs/heads/master
+>> 	$sha1 HEAD
+>>
+>>      which JGit does the right thing with (and git.git seems to, as
+>>      well).
+>
+> Sounds sensible, even though it looks ugly X-<.
 
-Awesome, thanks!
-(I can't believe I missed that tab. Well, at least one of my two
-lines was correct :-) )
-
-regards,
-Tzvetan
+I have a mild preference for a syntax that is more similar to the
+on-wire protocol, so that connect.c::parse_feature_value() can be
+reused to parse it and possibly annotate_refs_with_symref_info() can
+also be reused by calling it from transport.c::get_refs_from_bundle().
