@@ -1,33 +1,33 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] fetch: load all default config at startup
-Date: Tue, 4 Nov 2014 08:11:19 -0500
-Message-ID: <20141104131118.GA23608@peff.net>
+Subject: [PATCH 2/2] ignore stale directories when checking reflog existence
+Date: Tue, 4 Nov 2014 08:24:53 -0500
+Message-ID: <20141104132452.GB23608@peff.net>
 References: <20141104131006.GA1077@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 04 14:11:31 2014
+X-From: git-owner@vger.kernel.org Tue Nov 04 14:24:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XldtR-0000AD-AE
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Nov 2014 14:11:29 +0100
+	id 1Xle6U-0006hs-EE
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Nov 2014 14:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754126AbaKDNLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2014 08:11:23 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36638 "HELO cloud.peff.net"
+	id S1753234AbaKDNYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2014 08:24:54 -0500
+Received: from cloud.peff.net ([50.56.180.127]:36641 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751732AbaKDNLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2014 08:11:21 -0500
-Received: (qmail 25612 invoked by uid 102); 4 Nov 2014 13:11:19 -0000
+	id S1750985AbaKDNYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Nov 2014 08:24:54 -0500
+Received: (qmail 26189 invoked by uid 102); 4 Nov 2014 13:24:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Nov 2014 07:11:19 -0600
-Received: (qmail 17720 invoked by uid 107); 4 Nov 2014 13:11:26 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Nov 2014 07:24:53 -0600
+Received: (qmail 17846 invoked by uid 107); 4 Nov 2014 13:25:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Nov 2014 08:11:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Nov 2014 08:11:19 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Nov 2014 08:25:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Nov 2014 08:24:53 -0500
 Content-Disposition: inline
 In-Reply-To: <20141104131006.GA1077@peff.net>
 Sender: git-owner@vger.kernel.org
@@ -35,107 +35,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we start the git-fetch program, we call git_config to
-load all config, but our callback only processes the
-fetch.prune option; we do not chain to git_default_config at
-all.
+When we update a ref, we have two rules for whether or not
+we actually update the reflog:
 
-This means that we may not load some core configuration
-which will have an effect. For instance, we do not load
-core.logAllRefUpdates, which impacts whether or not we
-create reflogs in a bare repository.
+  1. If the reflog already exists, we will always append to
+     it.
 
-Note that I said "may" above. It gets even more exciting. If
-we have to transfer actual objects as part of the fetch,
-then we call fetch_pack as part of the same process. That
-function loads its own config, which does chain to
-git_default_config, impacting global variables which are
-used by the rest of fetch. But if the fetch is a pure ref
-update (e.g., a new ref which is a copy of an old one), we
-skip fetch_pack entirely. So we get inconsistent results
-depending on whether or not we have actual objects to
-transfer or not!
+  2. If log_all_ref_updates is set, we will create a new
+     reflog file if necessary.
 
-Let's just load the core config at the start of fetch, so we
-know we have it (we may also load it again as part of
-fetch_pack, but that's OK; it's designed to be idempotent).
+We do the existence check by trying to open the reflog file,
+either with or without O_CREAT (depending on log_all_ref_updates).
+If it fails, then we check errno to see what happened.
 
-Our tests check both cases (with and without a pack). We
-also check similar behavior for push for good measure, but
-it already works as expected.
+If we were not using O_CREAT and we got ENOENT, the file
+doesn't exist, and we return success (there isn't a reflog
+already, and we were not told to make a new one).
+
+If we get EISDIR, then there is likely a stale directory
+that needs to be removed (e.g., there used to be "foo/bar",
+it was deleted, and the directory "foo" was left. Now we
+want to create the ref "foo"). If O_CREAT is set, then we
+catch this case, try to remove the directory, and retry our
+open. So far so good.
+
+But if we get EISDIR and O_CREAT is not set, then we treat
+this as any other error, which is not right. Like ENOENT,
+EISDIR is an indication that we do not have a reflog, and we
+should silently return success (we were not told to create
+it). Instead, the current code reports this as an error, and
+we fail to update the ref at all.
+
+Note that this is relatively unlikely to happen, as you
+would have to have had reflogs turned on, and then later
+turned them off (it could also happen due to a bug in fetch,
+but that was fixed in the previous commit). However, it's
+quite easy to fix: we just need to treat EISDIR like ENOENT
+for the non-O_CREAT case, and silently return (note that
+this early return means we can also simplify the O_CREAT
+case).
+
+Our new tests cover both cases (O_CREAT and non-O_CREAT).
+The first one already worked, of course.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/fetch.c       |  2 +-
- t/t5516-fetch-push.sh | 40 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 1 deletion(-)
+Note that rs/ref-transaction-reflog tweaks this area a bit; it
+introduces a separate reflog_exists() check that runs before we even get
+to the first open(). Which would make the tests I introduce here run
+correctly even without this patch. However, the code I am changing does
+still exist in that series, and I think would handle cases where
+logallrefupdates was turned on, but the ref was outside of refs/heads/.
+So even with that series, we do still need this fix (and of course there
+is the obvious benefit that we can probably merge this fix sooner than
+that series).
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 6ffd023..7b84d35 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -68,7 +68,7 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 		fetch_prune_config = git_config_bool(k, v);
- 		return 0;
- 	}
--	return 0;
-+	return git_default_config(k, v, cb);
- }
+ refs.c            |  4 ++--
+ t/t1410-reflog.sh | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 2 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 0368ed4..5ff457e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2962,10 +2962,10 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
  
- static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 7c8a769..f4da20a 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -11,6 +11,7 @@ This test checks the following functionality:
- * hooks
- * --porcelain output format
- * hiderefs
-+* reflogs
+ 	logfd = open(logfile, oflags, 0666);
+ 	if (logfd < 0) {
+-		if (!(oflags & O_CREAT) && errno == ENOENT)
++		if (!(oflags & O_CREAT) && (errno == ENOENT || errno == EISDIR))
+ 			return 0;
+ 
+-		if ((oflags & O_CREAT) && errno == EISDIR) {
++		if (errno == EISDIR) {
+ 			if (remove_empty_directories(logfile)) {
+ 				int save_errno = errno;
+ 				error("There are still logs under '%s'",
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 8cab06f..485f1a7 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -253,4 +253,38 @@ test_expect_success 'checkout should not delete log for packed ref' '
+ 	test $(git reflog master | wc -l) = 4
  '
  
- . ./test-lib.sh
-@@ -1290,4 +1291,43 @@ test_expect_success 'pushing a tag pushes the tagged object' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'push into bare respects core.logallrefupdates' '
-+	rm -rf dst.git &&
-+	git init --bare dst.git &&
-+	git -C dst.git config core.logallrefupdates true &&
++test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
++	test_when_finished "git branch -d a || git branch -d a/b" &&
 +
-+	# double push to test both with and without
-+	# the actual pack transfer
-+	git push dst.git master:one &&
-+	echo "one@{0} push" >expect &&
-+	git -C dst.git log -g --format="%gd %gs" one >actual &&
++	git branch a/b &&
++	echo "a/b@{0} branch: Created from foo" >expect &&
++	git log -g --format="%gd %gs" a/b >actual &&
 +	test_cmp expect actual &&
++	git branch -d a/b &&
 +
-+	git push dst.git master:two &&
-+	echo "two@{0} push" >expect &&
-+	git -C dst.git log -g --format="%gd %gs" two >actual &&
++	# now logs/refs/heads/a is a stale directory, but
++	# we should move it out of the way to create "a" reflog
++	git branch a &&
++	echo "a@{0} branch: Created from foo" >expect &&
++	git log -g --format="%gd %gs" a >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'fetch into bare respects core.logallrefupdates' '
-+	rm -rf dst.git &&
-+	git init --bare dst.git &&
-+	(
-+		cd dst.git &&
-+		git config core.logallrefupdates true &&
++test_expect_success 'stale dirs do not cause d/f conflicts (reflogs off)' '
++	test_when_finished "git branch -d a || git branch -d a/b" &&
 +
-+		# as above, we double-fetch to test both
-+		# with and without pack transfer
-+		git fetch .. master:one &&
-+		echo "one@{0} fetch .. master:one: storing head" >expect &&
-+		git log -g --format="%gd %gs" one >actual &&
-+		test_cmp expect actual &&
++	git branch a/b &&
++	echo "a/b@{0} branch: Created from foo" >expect &&
++	git log -g --format="%gd %gs" a/b >actual &&
++	test_cmp expect actual &&
++	git branch -d a/b &&
 +
-+		git fetch .. master:two &&
-+		echo "two@{0} fetch .. master:two: storing head" >expect &&
-+		git log -g --format="%gd %gs" two >actual &&
-+		test_cmp expect actual
-+	)
++	# same as before, but we only create a reflog for "a" if
++	# it already exists, which it does not
++	git -c core.logallrefupdates=false branch a &&
++	: >expect &&
++	git log -g --format="%gd %gs" a >actual &&
++	test_cmp expect actual
 +'
 +
  test_done
