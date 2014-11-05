@@ -1,54 +1,88 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: Odd git am behavior rewriting subject, adding "ASoC: " prefix
-Date: Wed, 05 Nov 2014 05:51:43 -0800
-Message-ID: <1415195503.6634.7.camel@perches.com>
-References: <1415149921.6634.1.camel@perches.com>
-	 <CAFOYHZAimkSMWC42S_C=OkNuz+cjT3vhsGo6AwuCtt8M2REkig@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v5] lockfile.c: store absolute path
+Date: Wed, 05 Nov 2014 15:19:28 +0100
+Message-ID: <545A31F0.5080306@alum.mit.edu>
+References: <1414909477-20030-1-git-send-email-mhagger@alum.mit.edu> <20141105022315.GA28292@odin.ulthar.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 05 14:51:56 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
+	<pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Yue Lin Ho <yuelinho777@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 05 15:19:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xm104-00065t-Eb
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 14:51:52 +0100
+	id 1Xm1R7-0003zu-Lr
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 15:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754713AbaKENvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2014 08:51:48 -0500
-Received: from smtprelay0132.hostedemail.com ([216.40.44.132]:59173 "EHLO
-	smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753644AbaKENvr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Nov 2014 08:51:47 -0500
-Received: from filter.hostedemail.com (unknown [216.40.38.60])
-	by smtprelay04.hostedemail.com (Postfix) with ESMTP id 283BD351F77;
-	Wed,  5 Nov 2014 13:51:46 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::,RULES_HIT:41:355:379:541:599:800:960:973:988:989:1260:1277:1311:1313:1314:1345:1359:1373:1437:1515:1516:1518:1534:1537:1567:1593:1594:1711:1714:1730:1747:1777:1792:2393:2553:2559:2562:2828:3138:3139:3140:3141:3142:3622:3865:3866:3873:3874:4321:5007:6119:6261:7903:10004:10400:10848:11232:11658:11914:12517:12519:12740:13069:13311:13357:21080,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:none,Custom_rules:0:0:0
-X-HE-Tag: move04_498d0da79b33d
-X-Filterd-Recvd-Size: 1245
-Received: from joe-X200MA.home (pool-71-103-235-196.lsanca.fios.verizon.net [71.103.235.196])
-	(Authenticated sender: joe@perches.com)
-	by omf02.hostedemail.com (Postfix) with ESMTPA;
-	Wed,  5 Nov 2014 13:51:45 +0000 (UTC)
-In-Reply-To: <CAFOYHZAimkSMWC42S_C=OkNuz+cjT3vhsGo6AwuCtt8M2REkig@mail.gmail.com>
-X-Mailer: Evolution 3.12.7-0ubuntu1 
+	id S1753898AbaKEOTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2014 09:19:44 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:63525 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751500AbaKEOTn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Nov 2014 09:19:43 -0500
+X-AuditID: 1207440f-f79ea6d000004f72-77-545a31f32397
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id AE.87.20338.3F13A545; Wed,  5 Nov 2014 09:19:31 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB064F.dip0.t-ipconnect.de [93.219.6.79])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sA5EJSFH031618
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 5 Nov 2014 09:19:30 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.1.2
+In-Reply-To: <20141105022315.GA28292@odin.ulthar.us>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqPvZMCrEYHuLrUXXlW4mi4beK8wW
+	T+beZbbonvKW0WL3tAVsFm07jzA5sHnsnHWX3ePhqy52j4uXlD0eTzzB6vF5k1wAaxS3TVJi
+	SVlwZnqevl0Cd8aq1fNZC15zVcw7+YSxgfEyRxcjB4eEgInE3olBXYycQKaYxIV769m6GLk4
+	hAQuM0qsWL+UHcI5wyRxbvcDZpAqXgFtif3TFoLZLAKqEgfv72EEsdkEdCUW9TQzgdiiAkES
+	H07uZIeoF5Q4OfMJC8ggEYGFTBIbJvaxgiSEBcwljny4zQZiCwnkSMxrfsECchEn0EWbH9WD
+	mMwC6hLr5wmBVDALyEtsfzuHeQIj/ywkU2chVM1CUrWAkXkVo1xiTmmubm5iZk5xarJucXJi
+	Xl5qka6JXm5miV5qSukmRkhA8+9g7Fovc4hRgINRiYfXIDcyRIg1say4MvcQoyQHk5Ior5dO
+	VIgQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd4mbaAcb0piZVVqUT5MSpqDRUmcV32Jup+QQHpi
+	SWp2ampBahFMVoaDQ0mC94ABUKNgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KBrj
+	i4HxCJLiAdp7GqSdt7ggMRcoCtF6ilFRSpz3nz5QQgAkkVGaBzcWlqZeMYoDfSnMuw2knQeY
+	4uC6XwENZgIabNETATK4JBEhJdXAuHmp+dKDW4/237734rPbhUfbCxP7Tq/8qnFZ50W+9InV
+	Ar+Fy+9Mc8z6+Dj4q1vRav8XHJGnHquqTjsZdkB/8V6PduadUwsEf6/JNzlx6cL6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2014-11-05 at 22:12 +1300, Chris Packham wrote:
-> On Wed, Nov 5, 2014 at 2:12 PM, Joe Perches <joe@perches.com> wrote:
-> > I have a patch file created by git format-patch.
-[]
-> > ASoC:? where does that come from?
-[]
-> Looks like you have an apply-patch-msg hook installed. What does the
-> output of 'ls -l .git/hooks' look like.
+On 11/05/2014 03:23 AM, Scott Schmit wrote:
+> On Sun, Nov 02, 2014 at 07:24:37AM +0100, Michael Haggerty wrote:
+>> Locked paths can be saved in a linked list so that if something wrong
+>> happens, *.lock are removed. For relative paths, this works fine if we
+>> keep cwd the same, which is true 99% of time except:
+>>
+>> - update-index and read-tree hold the lock on $GIT_DIR/index really
+>>   early, then later on may call setup_work_tree() to move cwd.
+>>
+>> - Suppose a lock is being held (e.g. by "git add") then somewhere
+>>   down the line, somebody calls real_path (e.g. "link_alt_odb_entry"),
+>>   which temporarily moves cwd away and back.
+>>
+>> During that time when cwd is moved (either permanently or temporarily)
+>> and we decide to die(), attempts to remove relative *.lock will fail,
+>> and the next operation will complain that some files are still locked.
+>>
+>> Avoid this case by turning relative paths to absolute before storing
+>> the path in "filename" field.
+> 
+> This might be a little pathological, but it seems like this scheme would
+> run into trouble if the entire repo is moved while the lock is held.
 
-Correct.  I didn't look there.  Thanks. 
+Correct. You shouldn't move a repository while Git operations are
+running in it. That would break for many reasons, not just because of
+this change to lockfile handling.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
