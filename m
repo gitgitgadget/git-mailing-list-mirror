@@ -1,88 +1,167 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v5] lockfile.c: store absolute path
-Date: Wed, 05 Nov 2014 15:19:28 +0100
-Message-ID: <545A31F0.5080306@alum.mit.edu>
-References: <1414909477-20030-1-git-send-email-mhagger@alum.mit.edu> <20141105022315.GA28292@odin.ulthar.us>
+From: Bernhard Reiter <ockham@raz.or.at>
+Subject: imap-send: Use parse options API to determine verbosity
+Date: Wed, 05 Nov 2014 15:29:21 +0100
+Message-ID: <545A3441.9040403@raz.or.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Yue Lin Ho <yuelinho777@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 05 15:19:50 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 05 15:29:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xm1R7-0003zu-Lr
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 15:19:50 +0100
+	id 1Xm1aR-0000jj-BA
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 15:29:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753898AbaKEOTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2014 09:19:44 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:63525 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751500AbaKEOTn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Nov 2014 09:19:43 -0500
-X-AuditID: 1207440f-f79ea6d000004f72-77-545a31f32397
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id AE.87.20338.3F13A545; Wed,  5 Nov 2014 09:19:31 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB064F.dip0.t-ipconnect.de [93.219.6.79])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sA5EJSFH031618
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 5 Nov 2014 09:19:30 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.1.2
-In-Reply-To: <20141105022315.GA28292@odin.ulthar.us>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqPvZMCrEYHuLrUXXlW4mi4beK8wW
-	T+beZbbonvKW0WL3tAVsFm07jzA5sHnsnHWX3ePhqy52j4uXlD0eTzzB6vF5k1wAaxS3TVJi
-	SVlwZnqevl0Cd8aq1fNZC15zVcw7+YSxgfEyRxcjB4eEgInE3olBXYycQKaYxIV769m6GLk4
-	hAQuM0qsWL+UHcI5wyRxbvcDZpAqXgFtif3TFoLZLAKqEgfv72EEsdkEdCUW9TQzgdiiAkES
-	H07uZIeoF5Q4OfMJC8ggEYGFTBIbJvaxgiSEBcwljny4zQZiCwnkSMxrfsECchEn0EWbH9WD
-	mMwC6hLr5wmBVDALyEtsfzuHeQIj/ywkU2chVM1CUrWAkXkVo1xiTmmubm5iZk5xarJucXJi
-	Xl5qka6JXm5miV5qSukmRkhA8+9g7Fovc4hRgINRiYfXIDcyRIg1say4MvcQoyQHk5Ior5dO
-	VIgQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd4mbaAcb0piZVVqUT5MSpqDRUmcV32Jup+QQHpi
-	SWp2ampBahFMVoaDQ0mC94ABUKNgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KBrj
-	i4HxCJLiAdp7GqSdt7ggMRcoCtF6ilFRSpz3nz5QQgAkkVGaBzcWlqZeMYoDfSnMuw2knQeY
-	4uC6XwENZgIabNETATK4JBEhJdXAuHmp+dKDW4/237734rPbhUfbCxP7Tq/8qnFZ50W+9InV
-	Ar+Fy+9Mc8z6+Dj4q1vRav8XHJGnHquqTjsZdkB/8V6PduadUwsEf6/JNzlx6cL6 
+	id S1754893AbaKEO3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2014 09:29:23 -0500
+Received: from mhub.domainplanet.at ([92.43.99.117]:54066 "EHLO
+	mhub.domainplanet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753888AbaKEO3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2014 09:29:23 -0500
+Received: from smtp.domainplanet.at (smtp.domainplanet.at [92.43.99.22])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mhub.domainplanet.at (Postfix) with ESMTPS id 0270E9D33A1;
+	Wed,  5 Nov 2014 15:29:18 +0100 (CET)
+Received: from [10.0.0.25] (91-113-40-41.adsl.highway.telekom.at [91.113.40.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.domainplanet.at (Postfix) with ESMTPSA id CD319BF5F6;
+	Wed,  5 Nov 2014 15:30:14 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/05/2014 03:23 AM, Scott Schmit wrote:
-> On Sun, Nov 02, 2014 at 07:24:37AM +0100, Michael Haggerty wrote:
->> Locked paths can be saved in a linked list so that if something wrong
->> happens, *.lock are removed. For relative paths, this works fine if we
->> keep cwd the same, which is true 99% of time except:
->>
->> - update-index and read-tree hold the lock on $GIT_DIR/index really
->>   early, then later on may call setup_work_tree() to move cwd.
->>
->> - Suppose a lock is being held (e.g. by "git add") then somewhere
->>   down the line, somebody calls real_path (e.g. "link_alt_odb_entry"),
->>   which temporarily moves cwd away and back.
->>
->> During that time when cwd is moved (either permanently or temporarily)
->> and we decide to die(), attempts to remove relative *.lock will fail,
->> and the next operation will complain that some files are still locked.
->>
->> Avoid this case by turning relative paths to absolute before storing
->> the path in "filename" field.
-> 
-> This might be a little pathological, but it seems like this scheme would
-> run into trouble if the entire repo is moved while the lock is held.
+Signed-off-by: Bernhard Reiter <ockham@raz.or.at>
+---
+As requested per <xmqqzjcewq6p.fsf@gitster.dls.corp.google.com>.
 
-Correct. You shouldn't move a repository while Git operations are
-running in it. That would break for many reasons, not just because of
-this change to lockfile handling.
+ Documentation/git-imap-send.txt | 14 +++++++++++++-
+ imap-send.c                     | 25 +++++++++++++++----------
+ 2 files changed, 28 insertions(+), 11 deletions(-)
 
-Michael
-
+diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
+index c7c0d21..0897131 100644
+--- a/Documentation/git-imap-send.txt
++++ b/Documentation/git-imap-send.txt
+@@ -9,7 +9,7 @@ git-imap-send - Send a collection of patches from stdin to an IMAP folder
+ SYNOPSIS
+ --------
+ [verse]
+-'git imap-send'
++'git imap-send' [-v] [-q]
+ 
+ 
+ DESCRIPTION
+@@ -26,6 +26,18 @@ Typical usage is something like:
+ git format-patch --signoff --stdout --attach origin | git imap-send
+ 
+ 
++OPTIONS
++-------
++
++-v::
++--verbose::
++	Be verbose.
++
++-q::
++--quiet::
++	Be quiet.
++
++
+ CONFIGURATION
+ -------------
+ 
+diff --git a/imap-send.c b/imap-send.c
+index 70bcc7a..7f40960 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -26,11 +26,19 @@
+ #include "credential.h"
+ #include "exec_cmd.h"
+ #include "run-command.h"
++#include "parse-options.h"
+ #ifdef NO_OPENSSL
+ typedef void *SSL;
+ #endif
+ 
+-static const char imap_send_usage[] = "git imap-send < <mbox>";
++static int verbosity;
++
++static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] < <mbox>", NULL };
++
++static struct option imap_send_options[] = {
++	OPT__VERBOSITY(&verbosity),
++	OPT_END()
++};
+ 
+ #undef DRV_OK
+ #define DRV_OK          0
+@@ -38,8 +46,6 @@ static const char imap_send_usage[] = "git imap-send < <mbox>";
+ #define DRV_BOX_BAD     -2
+ #define DRV_STORE_BAD   -3
+ 
+-static int Verbose, Quiet;
+-
+ __attribute__((format (printf, 1, 2)))
+ static void imap_info(const char *, ...);
+ __attribute__((format (printf, 1, 2)))
+@@ -418,7 +424,7 @@ static int buffer_gets(struct imap_buffer *b, char **s)
+ 			if (b->buf[b->offset + 1] == '\n') {
+ 				b->buf[b->offset] = 0;  /* terminate the string */
+ 				b->offset += 2; /* next line */
+-				if (Verbose)
++				if (verbosity >= 0)
+ 					puts(*s);
+ 				return 0;
+ 			}
+@@ -433,7 +439,7 @@ static void imap_info(const char *msg, ...)
+ {
+ 	va_list va;
+ 
+-	if (!Quiet) {
++	if (verbosity >= 0) {
+ 		va_start(va, msg);
+ 		vprintf(msg, va);
+ 		va_end(va);
+@@ -445,7 +451,7 @@ static void imap_warn(const char *msg, ...)
+ {
+ 	va_list va;
+ 
+-	if (Quiet < 2) {
++	if (verbosity < 2) {
+ 		va_start(va, msg);
+ 		vfprintf(stderr, msg, va);
+ 		va_end(va);
+@@ -522,7 +528,7 @@ static struct imap_cmd *issue_imap_cmd(struct imap_store *ctx,
+ 				  cmd->tag, cmd->cmd, cmd->cb.dlen,
+ 				  CAP(LITERALPLUS) ? "+" : "");
+ 
+-	if (Verbose) {
++	if (verbosity >= 0) {
+ 		if (imap->num_in_progress)
+ 			printf("(%d in progress) ", imap->num_in_progress);
+ 		if (!starts_with(cmd->cmd, "LOGIN"))
+@@ -1352,12 +1358,11 @@ int main(int argc, char **argv)
+ 
+ 	git_setup_gettext();
+ 
+-	if (argc != 1)
+-		usage(imap_send_usage);
+-
+ 	setup_git_directory_gently(&nongit_ok);
+ 	git_imap_config();
+ 
++	argc = parse_options(argc, (const char **)argv, "", imap_send_options, imap_send_usage, 0);
++
+ 	if (!server.port)
+ 		server.port = server.use_ssl ? 993 : 143;
+ 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.1.2.557.g06ecad4
