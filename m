@@ -1,167 +1,91 @@
-From: Bernhard Reiter <ockham@raz.or.at>
-Subject: imap-send: Use parse options API to determine verbosity
-Date: Wed, 05 Nov 2014 15:29:21 +0100
-Message-ID: <545A3441.9040403@raz.or.at>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: fatal unresolved deltas error
+Date: Wed, 5 Nov 2014 20:01:32 +0300
+Message-ID: <20141105200132.1464d476d91ce4f32b085b6a@domain007.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 05 15:29:27 2014
+Cc: Anjib Mulepati <anjibman@gmail.com>
+To: flatworm@users.sourceforge.net
+X-From: git-owner@vger.kernel.org Wed Nov 05 18:02:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xm1aR-0000jj-BA
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 15:29:27 +0100
+	id 1Xm3yq-00080U-Ec
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 18:02:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754893AbaKEO3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2014 09:29:23 -0500
-Received: from mhub.domainplanet.at ([92.43.99.117]:54066 "EHLO
-	mhub.domainplanet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753888AbaKEO3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Nov 2014 09:29:23 -0500
-Received: from smtp.domainplanet.at (smtp.domainplanet.at [92.43.99.22])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mhub.domainplanet.at (Postfix) with ESMTPS id 0270E9D33A1;
-	Wed,  5 Nov 2014 15:29:18 +0100 (CET)
-Received: from [10.0.0.25] (91-113-40-41.adsl.highway.telekom.at [91.113.40.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.domainplanet.at (Postfix) with ESMTPSA id CD319BF5F6;
-	Wed,  5 Nov 2014 15:30:14 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+	id S932309AbaKERCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2014 12:02:45 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:54098 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932305AbaKERCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2014 12:02:42 -0500
+Received: from tigra.domain007.com ([192.168.2.102])
+	(authenticated bits=0)
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id sA5H2bjM017347
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 5 Nov 2014 20:02:39 +0300
+X-Mailer: Sylpheed 3.2.0 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Bernhard Reiter <ockham@raz.or.at>
----
-As requested per <xmqqzjcewq6p.fsf@gitster.dls.corp.google.com>.
+Hi,
 
- Documentation/git-imap-send.txt | 14 +++++++++++++-
- imap-send.c                     | 25 +++++++++++++++----------
- 2 files changed, 28 insertions(+), 11 deletions(-)
+I'm posting on behalf of Anjib Mulepati (Cc'ed) whose mails have
+troubles getting in here.  Originally posted to git-users [*] but the
+problem appears to be too complicated for that list.
 
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-index c7c0d21..0897131 100644
---- a/Documentation/git-imap-send.txt
-+++ b/Documentation/git-imap-send.txt
-@@ -9,7 +9,7 @@ git-imap-send - Send a collection of patches from stdin to an IMAP folder
- SYNOPSIS
- --------
- [verse]
--'git imap-send'
-+'git imap-send' [-v] [-q]
- 
- 
- DESCRIPTION
-@@ -26,6 +26,18 @@ Typical usage is something like:
- git format-patch --signoff --stdout --attach origin | git imap-send
- 
- 
-+OPTIONS
-+-------
-+
-+-v::
-+--verbose::
-+	Be verbose.
-+
-+-q::
-+--quiet::
-+	Be quiet.
-+
-+
- CONFIGURATION
- -------------
- 
-diff --git a/imap-send.c b/imap-send.c
-index 70bcc7a..7f40960 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -26,11 +26,19 @@
- #include "credential.h"
- #include "exec_cmd.h"
- #include "run-command.h"
-+#include "parse-options.h"
- #ifdef NO_OPENSSL
- typedef void *SSL;
- #endif
- 
--static const char imap_send_usage[] = "git imap-send < <mbox>";
-+static int verbosity;
-+
-+static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] < <mbox>", NULL };
-+
-+static struct option imap_send_options[] = {
-+	OPT__VERBOSITY(&verbosity),
-+	OPT_END()
-+};
- 
- #undef DRV_OK
- #define DRV_OK          0
-@@ -38,8 +46,6 @@ static const char imap_send_usage[] = "git imap-send < <mbox>";
- #define DRV_BOX_BAD     -2
- #define DRV_STORE_BAD   -3
- 
--static int Verbose, Quiet;
--
- __attribute__((format (printf, 1, 2)))
- static void imap_info(const char *, ...);
- __attribute__((format (printf, 1, 2)))
-@@ -418,7 +424,7 @@ static int buffer_gets(struct imap_buffer *b, char **s)
- 			if (b->buf[b->offset + 1] == '\n') {
- 				b->buf[b->offset] = 0;  /* terminate the string */
- 				b->offset += 2; /* next line */
--				if (Verbose)
-+				if (verbosity >= 0)
- 					puts(*s);
- 				return 0;
- 			}
-@@ -433,7 +439,7 @@ static void imap_info(const char *msg, ...)
- {
- 	va_list va;
- 
--	if (!Quiet) {
-+	if (verbosity >= 0) {
- 		va_start(va, msg);
- 		vprintf(msg, va);
- 		va_end(va);
-@@ -445,7 +451,7 @@ static void imap_warn(const char *msg, ...)
- {
- 	va_list va;
- 
--	if (Quiet < 2) {
-+	if (verbosity < 2) {
- 		va_start(va, msg);
- 		vfprintf(stderr, msg, va);
- 		va_end(va);
-@@ -522,7 +528,7 @@ static struct imap_cmd *issue_imap_cmd(struct imap_store *ctx,
- 				  cmd->tag, cmd->cmd, cmd->cb.dlen,
- 				  CAP(LITERALPLUS) ? "+" : "");
- 
--	if (Verbose) {
-+	if (verbosity >= 0) {
- 		if (imap->num_in_progress)
- 			printf("(%d in progress) ", imap->num_in_progress);
- 		if (!starts_with(cmd->cmd, "LOGIN"))
-@@ -1352,12 +1358,11 @@ int main(int argc, char **argv)
- 
- 	git_setup_gettext();
- 
--	if (argc != 1)
--		usage(imap_send_usage);
--
- 	setup_git_directory_gently(&nongit_ok);
- 	git_imap_config();
- 
-+	argc = parse_options(argc, (const char **)argv, "", imap_send_options, imap_send_usage, 0);
-+
- 	if (!server.port)
- 		server.port = server.use_ssl ? 993 : 143;
- 
--- 
-2.1.2.557.g06ecad4
+[*] https://groups.google.com/d/topic/git-users/fnU3JtRuwH8/discussion
+
+Below is the original Anjib's message.
+
+I am trying to do push but getting this error
+
+$ git push
+Counting objects: 83, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (16/16), done.
+Writing objects: 100% (17/17), 1.32 KiB | 0 bytes/s, done.
+Total 17 (delta 12), reused 0 (delta 0)
+remote: fatal: unresolved deltas left after unpacking
+error: unpack failed: unpack-objects abnormal exit
+To //myserver/git/apps/myApp.git
+! [remote rejected] master -> master (unpacker error)
+error: failed to push some refs to '//myserver/git/apps/myApp.git'
+
+1. When I do new clean of the repo in new directory (say \newRepoDir)
+I am getting error
+
+$ git clone //myserver/git/apps/myApp.git/
+Cloning into 'MyApp'...
+done.
+fatal: unable to read tree 18295307f1270da3c09e3de91890652af4ff7ca8
+warning: Clone succeeded, but checkout failed.
+You can inspect what was checked out with 'git status'
+and retry the checkout with 'git checkout -f HEAD'
+
+2. When I do cat in  new directory I am getting fatal: ..bad file error
+
+$ git cat-file -t 18295307f1270da3c09e3de91890652af4ff7ca8
+fatal: git cat-file 18295307f1270da3c09e3de91890652af4ff7ca8: bad file
+
+3. But if I do cat in my current working directory it can tell its tree
+
+$ git cat-file -t 18295307f1270da3c09e3de91890652af4ff7ca8
+tree
+
+My git repo is in network share drive and its Windows 7 and I am
+working on Windows 7 machine too.
+
+As client tool I am using Git for Windows 1.9.2.msysgit.0.
+
+At this point I am thinking I have to push this tree in repo but not
+sure how to do it or really that a solution.
+
+Let me know what I have to do and if any further information is needed.
+
+Thanks.
