@@ -1,124 +1,54 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] use child_process_init() to initialize struct child_process variables
-Date: Wed, 5 Nov 2014 13:41:06 -0000
-Organization: OPDS
-Message-ID: <95BF305A6E8D485F9F63503ACE7FC2AB@PhilipOakley>
-References: <xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com> <20141030213523.GA21017@peff.net> <FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley> <xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com> <20141101033327.GA8307@peff.net> <F44397C122BB4E63B89EC9BE26007B2E@PhilipOakley> <xmqqmw88rvh3.fsf@gitster.dls.corp.google.com> <20141103220408.GA12462@peff.net> <xmqq389zrguw.fsf@gitster.dls.corp.google.com> <xmqq4muepr40.fsf@gitster.dls.corp.google.com> <20141104233215.GA16091@peff.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Joe Perches <joe@perches.com>
+Subject: Re: Odd git am behavior rewriting subject, adding "ASoC: " prefix
+Date: Wed, 05 Nov 2014 05:51:43 -0800
+Message-ID: <1415195503.6634.7.camel@perches.com>
+References: <1415149921.6634.1.camel@perches.com>
+	 <CAFOYHZAimkSMWC42S_C=OkNuz+cjT3vhsGo6AwuCtt8M2REkig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 05 14:37:57 2014
+Cc: git <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 05 14:51:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xm0mZ-0006Sa-0a
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 14:37:55 +0100
+	id 1Xm104-00065t-Eb
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 14:51:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754343AbaKENhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2014 08:37:51 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:58913 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754004AbaKENhu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Nov 2014 08:37:50 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgMTAJknWlRZ8YDkPGdsb2JhbABcgw6BLYMGhDeBBMwlBAKBFxcBAQEBAQEFAQEBATggG4N9BQEBAQECAQgBARkVHgEBIQUGAgMFAgEDDgcCAQICBSECAhQBBBoGBwMMCAYBEggCAQIDAYgnDbNohwGOJAErgS2PZIJ+NoEeBZIhYow+i0mCKYlmgUQ9L4JLAQEB
-X-IPAS-Result: AgMTAJknWlRZ8YDkPGdsb2JhbABcgw6BLYMGhDeBBMwlBAKBFxcBAQEBAQEFAQEBATggG4N9BQEBAQECAQgBARkVHgEBIQUGAgMFAgEDDgcCAQICBSECAhQBBBoGBwMMCAYBEggCAQIDAYgnDbNohwGOJAErgS2PZIJ+NoEeBZIhYow+i0mCKYlmgUQ9L4JLAQEB
-X-IronPort-AV: E=Sophos;i="5.07,319,1413241200"; 
-   d="scan'208";a="759499118"
-Received: from host-89-241-128-228.as13285.net (HELO PhilipOakley) ([89.241.128.228])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 05 Nov 2014 13:37:49 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754713AbaKENvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2014 08:51:48 -0500
+Received: from smtprelay0132.hostedemail.com ([216.40.44.132]:59173 "EHLO
+	smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753644AbaKENvr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Nov 2014 08:51:47 -0500
+Received: from filter.hostedemail.com (unknown [216.40.38.60])
+	by smtprelay04.hostedemail.com (Postfix) with ESMTP id 283BD351F77;
+	Wed,  5 Nov 2014 13:51:46 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::,RULES_HIT:41:355:379:541:599:800:960:973:988:989:1260:1277:1311:1313:1314:1345:1359:1373:1437:1515:1516:1518:1534:1537:1567:1593:1594:1711:1714:1730:1747:1777:1792:2393:2553:2559:2562:2828:3138:3139:3140:3141:3142:3622:3865:3866:3873:3874:4321:5007:6119:6261:7903:10004:10400:10848:11232:11658:11914:12517:12519:12740:13069:13311:13357:21080,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:none,Custom_rules:0:0:0
+X-HE-Tag: move04_498d0da79b33d
+X-Filterd-Recvd-Size: 1245
+Received: from joe-X200MA.home (pool-71-103-235-196.lsanca.fios.verizon.net [71.103.235.196])
+	(Authenticated sender: joe@perches.com)
+	by omf02.hostedemail.com (Postfix) with ESMTPA;
+	Wed,  5 Nov 2014 13:51:45 +0000 (UTC)
+In-Reply-To: <CAFOYHZAimkSMWC42S_C=OkNuz+cjT3vhsGo6AwuCtt8M2REkig@mail.gmail.com>
+X-Mailer: Evolution 3.12.7-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Jeff King" <peff@peff.net>
-Subject: Re: [PATCH] use child_process_init() to initialize struct 
-child_process variables
+On Wed, 2014-11-05 at 22:12 +1300, Chris Packham wrote:
+> On Wed, Nov 5, 2014 at 2:12 PM, Joe Perches <joe@perches.com> wrote:
+> > I have a patch file created by git format-patch.
+[]
+> > ASoC:? where does that come from?
+[]
+> Looks like you have an apply-patch-msg hook installed. What does the
+> output of 'ls -l .git/hooks' look like.
 
-
-> On Tue, Nov 04, 2014 at 01:56:15PM -0800, Junio C Hamano wrote:
->
->> >>   2. Including two lines, like:
->> >>
->> >>         $sha1 HEAD\0symref=refs/heads/master
->> >>         $sha1 HEAD
->> >>
->> >>      which JGit does the right thing with (and git.git seems to, 
->> >> as
->> >>      well).
->> >
->> > Sounds sensible, even though it looks ugly X-<.
->>
->> I have a mild preference for a syntax that is more similar to the
->> on-wire protocol, so that connect.c::parse_feature_value() can be
->> reused to parse it and possibly annotate_refs_with_symref_info() can
->> also be reused by calling it from 
->> transport.c::get_refs_from_bundle().
->
-> Yeah, what I wrote above was the simplest thing that could work, and
-> does not need to be the final form.  I know that you already know what
-> I'm about to describe below, Junio, but I want to expand on the
-> situation for the benefit of onlookers (and potential implementers 
-> like
-> Philip).
-
-I think I'm keeping up ;-)
->
-> The online protocol is hampered by the "if you see something after a
-> NUL, it is a capabilities string, and you must throw out the previous
-> capabilities string and replace it with this one" historical rule. And
-> that's why we cannot do:
->
->  $sha1 refs/heads/master\0thin-pack side-band etc
->  $sha1 HEAD\0symref=refs/heads/master
->
-> as it would throw out "thin-pack", "side-band", etc. Instead we do it
-> more like:
->
->  $sha1 refs/heads/master\0thin-pack side-band etc 
-> symref=HEAD:refs/heads/master
->  $sha1 HEAD
->
-> to shove _all_ of the symref mappings into the capability string, 
-> rather
-> than letting them ride along with their respective refs. The downside 
-> is
-> that we are bounded in the number of symref mappings we can send (by 
-> the
-> maximum length for a single pkt-line), and therefore send only the 
-> value
-> of HEAD.
->
-> The bundle code is not bound by this historical legacy, and could do 
-> it
-> in a different (and more efficient and flexible) way. But it is 
-> probably
-> saner to just keep them identical. It makes the code simpler, and 
-> having
-> bundle as the only transport which has the extra flexibility does not
-> really buy us much (and probably just invites confusion).
->
-> -Peff
->
-Obviously bundles are always off-line, so it's reasonable to be cautious 
-about using an on-line sideband method, though the re-use of a standard 
-format is good.
-
-Finding the right parsing method will be important, as well as ensuring 
-there are no races from the update of unsorted refs.
-
-Philip 
+Correct.  I didn't look there.  Thanks. 
