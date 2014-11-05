@@ -1,84 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use child_process_init() to initialize struct child_process variables
-Date: Tue, 04 Nov 2014 16:32:06 -0800
-Message-ID: <xmqqvbmuo5bt.fsf@gitster.dls.corp.google.com>
-References: <xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com>
-	<20141030213523.GA21017@peff.net>
-	<FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley>
-	<xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com>
-	<20141101033327.GA8307@peff.net>
-	<F44397C122BB4E63B89EC9BE26007B2E@PhilipOakley>
-	<xmqqmw88rvh3.fsf@gitster.dls.corp.google.com>
-	<20141103220408.GA12462@peff.net>
-	<xmqq389zrguw.fsf@gitster.dls.corp.google.com>
-	<xmqq4muepr40.fsf@gitster.dls.corp.google.com>
-	<20141104233215.GA16091@peff.net>
+From: Joe Perches <joe@perches.com>
+Subject: Odd git am behavior rewriting subject, adding "ASoC: " prefix
+Date: Tue, 04 Nov 2014 17:12:01 -0800
+Message-ID: <1415149921.6634.1.camel@perches.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 05 01:32:18 2014
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 05 02:18:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XloWG-0001kc-Hz
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 01:32:16 +0100
+	id 1XlpFO-0002bY-Jb
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Nov 2014 02:18:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbaKEAcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Nov 2014 19:32:12 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50665 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751792AbaKEAcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Nov 2014 19:32:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 482BE1BE5B;
-	Tue,  4 Nov 2014 19:32:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2xGFFZYsq+aNyxhNik9TbST50Kc=; b=yAFg6t
-	OhMjbrtSqf//Cgzu7Mn8jniOppllCvtt2sJOAVa97Fu2r49yS2HxdzgW3bO2GUO0
-	UAgeBOf6la25a/TI8Y+D959enj9bFySY3gOIQr8gqG9nfJRFMeInVufFMd7+ezbT
-	4LDYqJVzf34Vfhf/znZiFlVhwCNtghFU94nrU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nfl1lzBXtLtisZELykxnQJE0nenUmxGI
-	8z/I7bSMKC7o4pvOo/iS839WmbtJJMGjQX35/YBn2ZOQC86Adv6rNMP6uobYBOpY
-	3Thn7lgvelqZuusrAXrvVlJZz+a7SObypI+HK4CT1tV3G47nzg7GWmsPX6JZL4S9
-	ng8F76DeH3w=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FA1D1BE58;
-	Tue,  4 Nov 2014 19:32:09 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C3EC41BE57;
-	Tue,  4 Nov 2014 19:32:08 -0500 (EST)
-In-Reply-To: <20141104233215.GA16091@peff.net> (Jeff King's message of "Tue, 4
-	Nov 2014 18:32:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2D19DA5C-6483-11E4-A2B8-692F9F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752155AbaKEBSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Nov 2014 20:18:51 -0500
+Received: from smtprelay0013.hostedemail.com ([216.40.44.13]:54885 "EHLO
+	smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751303AbaKEBSu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Nov 2014 20:18:50 -0500
+X-Greylist: delayed 406 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Nov 2014 20:18:50 EST
+Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
+	by smtpgrave08.hostedemail.com (Postfix) with ESMTP id 0B2B9211558
+	for <git@vger.kernel.org>; Wed,  5 Nov 2014 01:12:05 +0000 (UTC)
+Received: from filter.hostedemail.com (unknown [216.40.38.60])
+	by smtprelay01.hostedemail.com (Postfix) with ESMTP id 460DF23413
+	for <git@vger.kernel.org>; Wed,  5 Nov 2014 01:12:03 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:,RULES_HIT:41:69:355:379:541:800:960:968:973:988:989:1260:1277:1311:1313:1314:1345:1373:1381:1437:1515:1516:1518:1534:1540:1593:1594:1711:1730:1747:1777:1792:2393:2559:2562:2828:3138:3139:3140:3141:3142:3352:3653:3865:3867:3868:3871:3872:3874:4250:5007:6261:7903:10004:10400:10848:11658:11914:12043:12296:12517:12519:12679:13019:13069:13095:13311:13357:21080,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:none,Custom_rules:0:0:0
+X-HE-Tag: price97_8643a34cda762
+X-Filterd-Recvd-Size: 1441
+Received: from joe-X200MA.home (pool-71-103-235-196.lsanca.fios.verizon.net [71.103.235.196])
+	(Authenticated sender: joe@perches.com)
+	by omf03.hostedemail.com (Postfix) with ESMTPA
+	for <git@vger.kernel.org>; Wed,  5 Nov 2014 01:12:02 +0000 (UTC)
+X-Mailer: Evolution 3.12.7-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+I have a patch file created by git format-patch.
 
-> The bundle code is not bound by this historical legacy, and could do it
-> in a different (and more efficient and flexible) way. But it is probably
-> saner to just keep them identical. It makes the code simpler, and having
-> bundle as the only transport which has the extra flexibility does not
-> really buy us much (and probably just invites confusion).
+Applying it via git am changes the subject prefix.
+Anyone know why?
 
-Yeah, so let's have only symref=HEAD:refs/heads/master for now.
+$ git --version
+git version 2.1.2
 
-I would like to have the protocol update on the on-wire side during
-2015 to lift various limits and correct inefficiencies (the largest
-of which is the "who speaks first" issue).  We should make sure that
-the bundle format can be enhanced to match when it happens.
+$ git am -i 0002-staging-ft1000-Logging-message-neatening.patch
+Commit Body is:
+--------------------------
+staging: ft1000: Logging message neatening
 
-Thanks.
+Use a more common logging style.
+
+o Convert DEBUG macros to pr_debug
+o Add pr_fmt
+o Remove embedded function names from pr_debug
+o Convert printks to pr_<level>
+o Coalesce formats and align arguments
+o Add missing terminating newlines
+
+Signed-off-by: Joe Perches <joe@perches.com>
+--------------------------
+Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all 
+
+choosing "Y" emits:
+
+Applying: ASoC: staging: ft1000: Logging message neatening
+
+ASoC:? where does that come from?
