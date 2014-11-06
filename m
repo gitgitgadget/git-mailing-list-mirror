@@ -1,83 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Opinions] Integrated tickets
-Date: Thu, 06 Nov 2014 10:45:16 -0800
-Message-ID: <xmqqvbmsgocj.fsf@gitster.dls.corp.google.com>
-References: <20141105124429.GF15384@paksenarrion.iveqy.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Thu Nov 06 19:45:28 2014
+From: Tristan Roussel <troussel@phare.normalesup.org>
+Subject: Re: Question about rerere
+Date: Thu, 6 Nov 2014 23:29:51 +0100
+Message-ID: <AC58C459-3E1D-4C6A-B717-9609F29F78A6@phare.normalesup.org>
+References: <F9D7CE90-BED2-4694-B5DB-AE848C9F3F34@phare.normalesup.org> <CA+39Oz4k97uKceBmaiz3z5m2sVZ6jtQS9s+UVCwixkF_Rn+U+A@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 8.0 \(1990.1\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Thu Nov 06 23:30:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XmS3i-0004hY-Eb
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Nov 2014 19:45:26 +0100
+	id 1XmVZ0-0001EW-9D
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Nov 2014 23:29:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbaKFSpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2014 13:45:22 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64888 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751156AbaKFSpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2014 13:45:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 225461BE3D;
-	Thu,  6 Nov 2014 13:45:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zXoJGv03Crjb7FFu7TJPo6xXklQ=; b=DXxs8q
-	32j4s4sXdajr9h2r5yJGi2qwysIUK+Tla2cbFaa7/ZKZcQkfXu1a/IyB3i3sji/s
-	L1jrYoofKsdTGH4fNy2ZwaBMoJSnOV/zapuSMeN340HqQmyv3097OCB/90KJ6uHW
-	PYzxUFyZC4J6TWl2JVxRPnstEMnF7faH70DzA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HAFWCE9CJljuQ5LAbxn+rAPXbWMZHaeU
-	1ETf+DVSEqMl+xZzK7KFAtGKUY/UDbk/P+eSLUG98EHP5nYE+eUIK362ad3GZjn8
-	M0jI5gwgpugMiga14UlcEnhv4fkWWwKIMPWkDzS/ZXIXB2SRbLR8TZueP8GpLYpG
-	Ccb9Ib5ST10=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B6801BE3C;
-	Thu,  6 Nov 2014 13:45:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 43B5F1BE36;
-	Thu,  6 Nov 2014 13:45:18 -0500 (EST)
-In-Reply-To: <20141105124429.GF15384@paksenarrion.iveqy.com> (Fredrik
-	Gustafsson's message of "Wed, 5 Nov 2014 13:44:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0DE329F0-65E5-11E4-8848-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751247AbaKFW3y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Nov 2014 17:29:54 -0500
+Received: from nef2.ens.fr ([129.199.96.40]:3673 "EHLO nef2.ens.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751193AbaKFW3x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Nov 2014 17:29:53 -0500
+Received: from phare.normalesup.org (phare.normalesup.org [129.199.129.80])
+          by nef2.ens.fr (8.13.6/1.01.28121999) with ESMTP id sA6MTqa0012562
+          ; Thu, 6 Nov 2014 23:29:52 +0100 (CET)
+Received: from [192.168.1.31] (dan75-4-82-239-58-136.fbx.proxad.net [82.239.58.136])
+	by phare.normalesup.org (Postfix) with ESMTPSA id 15A7248002;
+	Thu,  6 Nov 2014 23:29:52 +0100 (CET)
+In-Reply-To: <CA+39Oz4k97uKceBmaiz3z5m2sVZ6jtQS9s+UVCwixkF_Rn+U+A@mail.gmail.com>
+X-Mailer: Apple Mail (2.1990.1)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.4.3 (nef2.ens.fr [129.199.96.32]); Thu, 06 Nov 2014 23:29:52 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
 
-> So my question is:
->
-> what's your opinions on building an integrated ticket system on top of git?
->
-> and (maybe mostly for Junio)
->
-> Would such system possible be included in git.git?
->
-> TL;DR;
-> Is an integrated ticket system something for git?
+> Le 6 nov. 2014 =C3=A0 18:03, Thomas Adam <thomas@xteddy.org> a =C3=A9=
+crit :
+>=20
+> On 6 November 2014 11:30, Tristan Roussel <troussel@phare.normalesup.=
+org> wrote:
+>> Hello,
+>>=20
+>> I=E2=80=99ve just learnt about rerere and it=E2=80=99s going to make=
+ my life so much easier, I have a question though.
+>>=20
+>> I enabled rerere very lately and I wanted to know if there was a way=
+ to feed rerere with old merge conflict resolutions (and if not, would =
+it be considered a good feature request)? I=E2=80=99d like to do a reba=
+se of my work because I unintentionally merged a branch I didn=E2=80=99=
+t want and the merge is a bit far in the git history and I don=E2=80=99=
+t want to re-resolve merge conflicts I had after that.
+>=20
+> Have a look at contrib/rerere-train.sh
+>=20
+> -- Thomas Adam
 
-Integrated?  Not really, unless we already have a clear winner in
-the marketplace that we can just ship in contrib/ or something, and
-even then, the Git ecosystem is now rich enough and the userbase
-strong enough that having something in contrib/ adds much less value
-than additional burden of having to keep up with the upstream, and
-user confusion coming from possible version skew from the upstream.
-It used to make a lot of sense to ship Git with things like gitweb
-and gitk when we were trying to gain momentum, but it is no longer
-2005 ;-).  Even kernel.org does not run gitweb anymore.
-
-This is a tangent, but I personally do not think "ticket" meshes
-very well with "commit".  If you already know which commit was
-problematic, why are you annotating it with a ticket before
-reverting it first?
+Thank you very much for the advice (and sorry for not searching enough)=
+=2E
