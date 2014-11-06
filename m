@@ -1,68 +1,79 @@
-From: victor <liwenxi9999@163.com>
-Subject: Re: Installed git 2.1.3 on sparc 8, but got core dump during 'git
- clone'
-Date: Wed, 5 Nov 2014 23:38:27 -0800 (PST)
-Message-ID: <1415259507566-7620694.post@n2.nabble.com>
-References: <1415251144220-7620692.post@n2.nabble.com> <1415255667304-7620693.post@n2.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] docs/credential-store: s/--store/--file/
+Date: Thu, 6 Nov 2014 02:40:32 -0500
+Message-ID: <20141106074032.GA25359@peff.net>
+References: <E3D4929B4BF48B439B609986B0C719EA25896EBB@HDXDSP52.us.lmco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 06 08:38:35 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Hopkins, Jesse" <jesse.hopkins@lmco.com>
+X-From: git-owner@vger.kernel.org Thu Nov 06 08:40:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XmHeL-00081A-MV
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Nov 2014 08:38:34 +0100
+	id 1XmHgZ-0000wA-MV
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Nov 2014 08:40:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbaKFHi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Nov 2014 02:38:29 -0500
-Received: from sam.nabble.com ([216.139.236.26]:58085 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750985AbaKFHi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Nov 2014 02:38:29 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <liwenxi9999@163.com>)
-	id 1XmHeF-0006kE-IW
-	for git@vger.kernel.org; Wed, 05 Nov 2014 23:38:27 -0800
-In-Reply-To: <1415255667304-7620693.post@n2.nabble.com>
+	id S1751368AbaKFHks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Nov 2014 02:40:48 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37193 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751338AbaKFHkr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Nov 2014 02:40:47 -0500
+Received: (qmail 29254 invoked by uid 102); 6 Nov 2014 07:40:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Nov 2014 01:40:33 -0600
+Received: (qmail 435 invoked by uid 107); 6 Nov 2014 07:40:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Nov 2014 02:40:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Nov 2014 02:40:32 -0500
+Content-Disposition: inline
+In-Reply-To: <E3D4929B4BF48B439B609986B0C719EA25896EBB@HDXDSP52.us.lmco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+On Thu, Oct 23, 2014 at 05:14:56PM +0000, Hopkins, Jesse wrote:
 
-Thanks for your help, as your suggestion, I can compile/install git with
---disable_ptheads now.
+> The man page for git-credential-store at
+> http://git-scm.com/docs/git-credential-store
+> and
+> https://www.kernel.org/pub/software/scm/git/docs/git-credential-store.html
+> 
+> incorrectly state that the option to change the credential storage
+> path is '--store'.  The name of the option should be '--file'. I have
+> noticed this running it 1.8.5.3
 
-While ran 'git clone', it still got core dump.
+Thanks. Here's a fix.
 
-Would you please have a look at it? 
+-- >8 --
+The option name "--store" was used early in development, but
+never even made it into an applied patch, let alone a
+released version of git. I forgot to update the matching
+documentation at the time, though.
 
-(gdb) bt full
-#0  0xff0332ec in strlen () from /usr/lib/libc.so.1
-No symbol table info available.
-#1  0xff0866b8 in _doprnt () from /usr/lib/libc.so.1
-No symbol table info available.
-#2  0xff088ac0 in vsnprintf () from /usr/lib/libc.so.1
-No symbol table info available.
-#3  0x00137c18 in vreportf (prefix=0x190038 "cannot create thread: %s",
-    err=0x190038 "cannot create thread: %s", params=0xffbeec88)
-    at usage.c:12
-        msg = "' for tags you want to propagate.\" >&2\n\t\t\texit 1\n\t\tfi               
-\n\t\t;;\n\trefs/tags/*,delete)\n\t\t# delete tag\n\t\tif [ \"$allowdeleteta               
-g\" != \"true\" ]; then\n\t\t\techo \"*** Deleting a tag is not allowed in t               
-his repository\""...
+Noticed-by: Jesse Hopkins <jesse.hopkins@lmco.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-credential-store.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Victor
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/Installed-git-2-1-3-on-sparc-8-but-got-core-dump-during-git-clone-tp7620692p7620694.html
-Sent from the git mailing list archive at Nabble.com.
+diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
+index 8481cae..bc97071 100644
+--- a/Documentation/git-credential-store.txt
++++ b/Documentation/git-credential-store.txt
+@@ -29,7 +29,7 @@ linkgit:gitcredentials[7] or `EXAMPLES` below.
+ OPTIONS
+ -------
+ 
+---store=<path>::
++--file=<path>::
+ 
+ 	Use `<path>` to store credentials. The file will have its
+ 	filesystem permissions set to prevent other users on the system
+-- 
+2.1.2.596.g7379948
