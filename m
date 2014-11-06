@@ -1,81 +1,90 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] use child_process_init() to initialize struct child_process variables
-Date: Wed, 5 Nov 2014 23:50:14 -0000
-Organization: OPDS
-Message-ID: <05777A2415DD49F78B81EEA886A98F48@PhilipOakley>
-References: <xmqqlhnyy9e2.fsf@gitster.dls.corp.google.com> <20141030213523.GA21017@peff.net> <FEC7DC4C920D4F97B5F165B10BC564D2@PhilipOakley> <xmqqvbmzsyfy.fsf@gitster.dls.corp.google.com> <20141101033327.GA8307@peff.net> <F44397C122BB4E63B89EC9BE26007B2E@PhilipOakley> <xmqqmw88rvh3.fsf@gitster.dls.corp.google.com> <20141103220408.GA12462@peff.net> <xmqq389zrguw.fsf@gitster.dls.corp.google.com> <D4F1F843014841509E8BFB9ACC7CDBCC@PhilipOakley> <20141105193557.GA12620@peff.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] imap-send: Use parse options API to determine verbosity
+Date: Wed, 05 Nov 2014 16:01:11 -0800
+Message-ID: <xmqqbnoli4e0.fsf@gitster.dls.corp.google.com>
+References: <545AAA60.3040207@raz.or.at>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	=?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 06 00:50:01 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Bernhard Reiter <ockham@raz.or.at>
+X-From: git-owner@vger.kernel.org Thu Nov 06 01:01:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XmAKu-00075M-Ez
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Nov 2014 00:50:00 +0100
+	id 1XmAVx-00040e-7L
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Nov 2014 01:01:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751313AbaKEXt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Nov 2014 18:49:56 -0500
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:19862 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751281AbaKEXtz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Nov 2014 18:49:55 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ag0TADu3WlRcDxlMPGdsb2JhbABbgw6BLYMGhDeBBMwnBAKBHBcBAQEBAQEFAQEBATggG4N9BQEBAQECAQgBARkVHgEBIQUGAgMFAgEDDgcDAgIFIQICFAEEGgYHAxQGEwgCAQIDAYgnDbcZhwKOWYEtj2SCfjaBHgWSIWKYCYwPgUQ9L4JLAQEB
-X-IPAS-Result: Ag0TADu3WlRcDxlMPGdsb2JhbABbgw6BLYMGhDeBBMwnBAKBHBcBAQEBAQEFAQEBATggG4N9BQEBAQECAQgBARkVHgEBIQUGAgMFAgEDDgcDAgIFIQICFAEEGgYHAxQGEwgCAQIDAYgnDbcZhwKOWYEtj2SCfjaBHgWSIWKYCYwPgUQ9L4JLAQEB
-X-IronPort-AV: E=Sophos;i="5.07,322,1413241200"; 
-   d="scan'208";a="15131849"
-Received: from host-92-15-25-76.as43234.net (HELO PhilipOakley) ([92.15.25.76])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 05 Nov 2014 23:49:53 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1750980AbaKFABQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Nov 2014 19:01:16 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51012 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750860AbaKFABQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Nov 2014 19:01:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D10371BCF3;
+	Wed,  5 Nov 2014 19:01:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t8SVfOaqK7O1oK+5QO+LYLip7pA=; b=Lvuoe5
+	cCJxvGTtIi2Ik2LyM6FIaD9ADZN/QJzr3emxFgHSqN2NhRrdX3FcG1PT3stSOBBA
+	MFaCiLEezC9EEl2YzZ5w5F6Vl64oa7qQO2phXKJCXZTqa5wTjPYy4IzHvZCU0sNF
+	o53luZ2aRgtrJaNlJ6tQuhVmZVu4gBznyz42Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H1p/qL/7mo2Jm2YcdSkoShjW9yjB5P3o
+	+3PZB+9oKBTBfN5FE8SCkPmEvpQGY4aqwE8iQXsLxrv11ztv4QON7RI0+g7fuWN/
+	9HZopUCGltAAFjHkKpesDXPEFpl/99fbAR9lwDwNm0Ua2Df2dOJ/n20p3ilyQhdI
+	sLmqV+Cjqv8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C844A1BCF2;
+	Wed,  5 Nov 2014 19:01:13 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D3591BCF1;
+	Wed,  5 Nov 2014 19:01:13 -0500 (EST)
+In-Reply-To: <545AAA60.3040207@raz.or.at> (Bernhard Reiter's message of "Wed,
+	05 Nov 2014 23:53:20 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 057AF5B0-6548-11E4-916A-692F9F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Jeff King" <peff@peff.net>
-> On Wed, Nov 05, 2014 at 01:35:21PM -0000, Philip Oakley wrote:
+Bernhard Reiter <ockham@raz.or.at> writes:
+
+> Signed-off-by: Bernhard Reiter <ockham@raz.or.at>
+> ---
+> In reply to <xmqqk339ibal.fsf@gitster.dls.corp.google.com>.
 >
->> >>  2. Including two lines, like:
->> [...]
->> I believe that the 'two HEADs' mechanism would also fall foul of the
->> 'duplicate refs' warning (untested).
->
-> It didn't in my very brief testing of what I posted above, but maybe
-> there is some other case that triggers it that I didn't exercise.
+> Thanks for bearing with me. I should've given the corresponding verbosity
+> values more thought myself in the first place.
 
-I'd been testing the inclusion of a duplicate of the ref that matched 
-the HEAD symref (rather than HEAD itself), and had hit that message a 
-few times, hence my concern.
->
-> I grepped through the code and the only "duplicate ref" warning I see
-> comes from the refs.c code, which comes from commit_packed_refs().
+The original defined and even used these two variables, but as far
+as I can tell they were always set to 0 and nobody modified them.
+Hence, we would be OK as long as the end result will behave the same
+as before without any -v/-q from the command line ;-)
 
-I had it from is_dup_ref(), also in refs.c, though I may have followed 
-the call stack incorrectly back to the bundle effects.
+Thanks.  This version looks more sensible.
 
-> If
-> the duplicate line is HEAD, I think it shouldn't trigger that, as it 
-> is
-> not a regular ref. That would explain why I didn't see it in my 
-> testing.
+> -	if (argc != 1)
+> -		usage(imap_send_usage);
+> -
+>  	setup_git_directory_gently(&nongit_ok);
+>  	git_imap_config();
+>  
+> +	argc = parse_options(argc, (const char **)argv, "", imap_send_options, imap_send_usage, 0);
+> +
 
-I've now also done a test and found the same (no warning/error) when 
-there are two HEADs listed in the bundle preamble. Sorry for the 
-confusion.
+... except we might want to check argc here and say something about
+missing or excess parameters, which was lost in the change in this
+hunk.  I think (without giving it a real thought, though ;-) you
+would expect that nothing remains on the command line after
+parse_options() has done its thing, no?
 
---
-Philip
+
+>  	if (!server.port)
+>  		server.port = server.use_ssl ? 993 : 143;
