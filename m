@@ -1,56 +1,56 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 2/5] t3301: Verify that 'git notes' removes empty notes by default
-Date: Fri, 07 Nov 2014 09:48:00 -0800
-Message-ID: <xmqq61eqhpgv.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCHv3 3/5] builtin/notes: Add --allow-empty, to allow storing empty notes
+Date: Fri, 07 Nov 2014 10:04:18 -0800
+Message-ID: <xmqq1tpehopp.fsf@gitster.dls.corp.google.com>
 References: <1415351961-31567-1-git-send-email-johan@herland.net>
-	<1415351961-31567-3-git-send-email-johan@herland.net>
+	<1415351961-31567-4-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, mackyle@gmail.com, jhf@trifork.com,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Nov 07 18:48:13 2014
+X-From: git-owner@vger.kernel.org Fri Nov 07 19:04:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xmndq-0000wk-8n
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 18:48:10 +0100
+	id 1Xmnte-0000oh-0b
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 19:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752473AbaKGRsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2014 12:48:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50969 "EHLO
+	id S1753082AbaKGSEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2014 13:04:25 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51048 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751480AbaKGRsD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2014 12:48:03 -0500
+	with ESMTP id S1753072AbaKGSEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2014 13:04:22 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 791DB1AFBA;
-	Fri,  7 Nov 2014 12:48:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C1AE1B448;
+	Fri,  7 Nov 2014 13:04:20 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eGzfQE2pLLNwy+tdB5qvg8+JD7Q=; b=p+SUJC
-	OzVcnCZmlKPKz2VMicXVdP37K54wZhU0+tt7jkpQP3I5tUHYjQJ94y/jP992svfD
-	h6iu4JXnU9OcdgAwyLPz1qsjTyogcAl/nad01ELyAJGNfv+X0SYr24VTgghiS4qT
-	Y2alZR4mCgMJUFSaoN4qqYM4NqtlMBincm6PI=
+	:content-type; s=sasl; bh=pD88ck5LgTC5MCLwBXp1Sh8rNgc=; b=JdIn2I
+	gb3Zt1xmcbFggmbtAVJJvgjLZI+Ia6XPvnrKpsr6tPh5KRrgheci8ox5YEtRUze6
+	mK9NWpiO7pbj8KNBQia75rPCGEj8dgq8VwCkza6vrezz29LS1N1emKF8J4e27WU6
+	9XNnUyrAq7TODfJYkLaFtqJGGkhJ0jzC/rWuk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NX9GQlfquNlmW3gdSZkOwisvrrxecaAu
-	xac68MO+6ixG5mVHnBkw4GGZS8PAxoOVeY70i/l4vbrBT1IjOFqA4dsSKlIpjOqq
-	PkuPqStGVhGF/gAZ+B5jtFH8z53poz4bg3MkjmQl88m5ol5NNRvxzix998HESmR3
-	G9tueNKADC0=
+	:content-type; q=dns; s=sasl; b=bR4VXXUiYNGkgIaBmeYAmjz+PMTEP8ii
+	Xn8JnBJ7rpqCeLsjJBum5Dm0KBxA9Yw03WmCAr9WMGxOzPu08bdF8WSbX+S90DzZ
+	6ujT/qk8MpQlpp0U38/fKeuwD9kvH4wYQ4zHJiNfX7Y+CRwoiYsOxLHU20Wy82CU
+	+kKy5VhSYRE=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F2201AFB9;
-	Fri,  7 Nov 2014 12:48:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 82D501B447;
+	Fri,  7 Nov 2014 13:04:20 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB9B51AFB6;
-	Fri,  7 Nov 2014 12:48:01 -0500 (EST)
-In-Reply-To: <1415351961-31567-3-git-send-email-johan@herland.net> (Johan
-	Herland's message of "Fri, 7 Nov 2014 10:19:18 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05EEC1B446;
+	Fri,  7 Nov 2014 13:04:20 -0500 (EST)
+In-Reply-To: <1415351961-31567-4-git-send-email-johan@herland.net> (Johan
+	Herland's message of "Fri, 7 Nov 2014 10:19:19 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3823D590-66A6-11E4-A0E4-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7F1BAF70-66A8-11E4-832C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,58 +58,57 @@ X-Mailing-List: git@vger.kernel.org
 
 Johan Herland <johan@herland.net> writes:
 
-> Add test cases documenting the current behavior when trying to
-> add/append/edit empty notes. This is in preparation for adding
-> --allow-empty; to allow empty notes to be stored.
+> Although the "git notes" man page advertises that we support binary-safe
+> notes addition (using the -C option), we currently do not support adding
+> the empty note (i.e. using the empty blob to annotate an object). Instead,
+> an empty note is always treated as an intent to remove the note
+> altogether.
 >
-> Improved-by: Eric Sunshine <sunshine@sunshineco.com>
+> Introduce the --allow-empty option to the add/append/edit subcommands,
+> to explicitly allow an empty note to be stored into the notes tree.
+>
+> Also update the documentation, and add test cases for the new option.
+>
+> Reported-by: James H. Fisher <jhf@trifork.com>
+> Improved-by: Kyle J. McKay <mackyle@gmail.com>
 > Improved-by: Junio C Hamano <gitster@pobox.com>
 > Signed-off-by: Johan Herland <johan@herland.net>
 > ---
->  t/t3301-notes.sh | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
->
-> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-> index cfd67ff..33f0558 100755
-> --- a/t/t3301-notes.sh
-> +++ b/t/t3301-notes.sh
-> @@ -1239,4 +1239,31 @@ test_expect_success 'git notes get-ref (--ref)' '
->  	test "$(GIT_NOTES_REF=refs/notes/bar git notes --ref=baz get-ref)" = "refs/notes/baz"
->  '
->  
-> +test_expect_success 'setup testing of empty notes' '
-> +	git config --unset core.notesRef &&
 
-Use "test_unconfig" instead?
+Assuming that it is a good idea to "allow" empty notes, I think
+there are two issues involved here:
 
-If the previous test failed (or a different topic that touches this
-same script is merged to change what the previous test leaves), this
-configuration variable may not be set, and "config --unset" may
-fail.
+ * Traditionally, feeding an empty note is taken as a request to
+   remove an existing note.  Therefore, there is no way to
+   explicitly ask an empty note to be stored for a commit.
 
-> +	test_commit 16th &&
-> +	empty_blob=$(git hash-object -w /dev/null)
-> +'
-> +
-> +while read cmd
-> +do
-> +	test_expect_success "'git notes $cmd' removes empty note" "
-> +		test_might_fail git notes remove HEAD &&
-> +		MSG= git notes $cmd &&
-> +		test_must_fail git notes list HEAD
-> +	"
-> +done <<\EOF
-> +add
-> +add -F /dev/null
-> +add -m ""
-> +add -c "$empty_blob"
-> +add -C "$empty_blob"
-> +append
-> +append -F /dev/null
-> +append -m ""
-> +append -c "$empty_blob"
-> +append -C "$empty_blob"
-> +edit
-> +EOF
-> +
->  test_done
+ * Because feeding an empty note was the way to request removal,
+   even though "git notes remove" is there, it is underused.
+
+In other words, assuming that it is a good idea to allow empty
+notes, isn't the desired endgame, after compatibility transition
+period, that "git notes add" will never remove notes?
+
+With that endgame in mind, shouldn't the internal implementation be
+moving in a direction where "create_note()" will *not* be doing any
+removal, and its caller (i.e. "add") does the switching depending on
+the "do we take emptyness as a request to remove"?  I.e.
+
+         static int add(...)
+         {
+		if (!allow_empty && message_is_empty())
+                	remove_note();
+		else
+                	create_note();
+	}
+
+>  static void create_note(const unsigned char *object, struct msg_arg *msg,
+> -			int append_only, const unsigned char *prev,
+> -			unsigned char *result)
+> +			int append_only, int allow_empty,
+> +			const unsigned char *prev, unsigned char *result)
+
+In other words, I have this suspicion that create_note() that 
+removes is a wrong interface in the first place, and giving it
+a new allow_empty parameter to conditionally perform removal is
+making it worse.  No?
