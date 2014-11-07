@@ -1,79 +1,70 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv3 1/5] builtin/notes: Fix premature failure when trying to add the empty blob
-Date: Fri,  7 Nov 2014 10:19:17 +0100
-Message-ID: <1415351961-31567-2-git-send-email-johan@herland.net>
-References: <1415351961-31567-1-git-send-email-johan@herland.net>
-Cc: git@vger.kernel.org, mackyle@gmail.com, jhf@trifork.com,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johan Herland <johan@herland.net>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Nov 07 10:20:00 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC] git checkout $tree -- $path always rewrites files
+Date: Fri, 7 Nov 2014 17:13:47 +0700
+Message-ID: <CACsJy8CPLvmbcdHHmfu6g0dUXJVQ8NhwqfGPD=-kcBmzF_ha6g@mail.gmail.com>
+References: <20141107081324.GA19845@peff.net> <20141107083805.GA26365@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 07 11:14:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xmfi4-0007YC-2F
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 10:20:00 +0100
+	id 1XmgYi-0007p7-I1
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 11:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481AbaKGJTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2014 04:19:50 -0500
-Received: from mail-la0-f50.google.com ([209.85.215.50]:34613 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088AbaKGJTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2014 04:19:32 -0500
-Received: by mail-la0-f50.google.com with SMTP id hz20so4103437lab.9
-        for <git@vger.kernel.org>; Fri, 07 Nov 2014 01:19:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vte1Qi/UotYrNJbMxjhh9jIMnDSa900mNXicE4TscIQ=;
-        b=R4Rlp5g55oRgif7vST0nMLufH0xRfZJauOMaP+YeyvPwD1y6THo8427yxWw1VmXlbL
-         n4hwl8lTKLbnkX4ZciemE/BcmfX88yKJ794T5dHJIsK2pXGP6f771fFMLLLZa3OF2jzz
-         1l854Q/Z7o6p1WXVaNDyHC5WtklZv+6yYh+DHSHMCpzgRuO/VpQFwnBbYau1zzEY4y6F
-         /ADrJTuyBhHsyk37mr5Ox18Ki4MuB+zI/kOB3yMp0UFbjkWbUjxHEcPFG1BAPifHWmY4
-         dgbp6XVf1LzW2G0/RMrTEw+imvOupwPcDS3ZqdGUGmBcVc+tnBooRQJT/NcJogTZMh6v
-         3oMw==
-X-Received: by 10.112.63.70 with SMTP id e6mr1074498lbs.93.1415351970401;
-        Fri, 07 Nov 2014 01:19:30 -0800 (PST)
-Received: from alpha.herland (245.37-191-128.fiber.lynet.no. [37.191.128.245])
-        by mx.google.com with ESMTPSA id 8sm3081897lav.15.2014.11.07.01.19.28
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 07 Nov 2014 01:19:29 -0800 (PST)
-X-Mailer: git-send-email 2.0.0.rc4.501.gdaf83ca
-In-Reply-To: <1415351961-31567-1-git-send-email-johan@herland.net>
+	id S1751298AbaKGKOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2014 05:14:19 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:42565 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751251AbaKGKOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2014 05:14:18 -0500
+Received: by mail-ig0-f175.google.com with SMTP id h3so12517843igd.8
+        for <git@vger.kernel.org>; Fri, 07 Nov 2014 02:14:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=fHJgNF2gwspuqXiUQ+C11CVbOqfKyOtgzFDx3Yh540o=;
+        b=GN0dyEisIZolFoMc0DqR6MAFJ8rfk4lvGuFBnCQdEZP04Xgly+xHTosMynQ6EMBgaB
+         idiQ08SIRwreL84jEBagicJh3ctEzzxkwxKVfmSCcLAWHT4U/6sF914rCSajoLmmI5ce
+         KzLTsIFjIMtH+4cM8q7ceg6jxjrFjS2qrH4lUcdMzOpbaF0CwKEAlaEyD51bbNz+dyZ2
+         CyFfPZO9nrOFtXd2MW7328mFz4aSMzyXKMqeZah+pNoP82tBSnRhxGpMyNNwGYbkZTWj
+         StUaoZPTUixBak1qvfjqNSO2OW+DKOYRMwVsfw7BefdOcxi1dQi06K56GNiYEIklMwbB
+         ribQ==
+X-Received: by 10.107.17.77 with SMTP id z74mr1255217ioi.86.1415355257704;
+ Fri, 07 Nov 2014 02:14:17 -0800 (PST)
+Received: by 10.107.176.8 with HTTP; Fri, 7 Nov 2014 02:13:47 -0800 (PST)
+In-Reply-To: <20141107083805.GA26365@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes a small buglet when trying to explicitly add the empty blob
-as a note object using the -c or -C option to git notes add/append.
-Instead of failing with a nonsensical error message indicating that the
-empty blob does not exist, we should rather behave as if an empty notes
-message was given (e.g. using -m "" or -F /dev/null).
+On Fri, Nov 7, 2014 at 3:38 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Nov 07, 2014 at 03:13:24AM -0500, Jeff King wrote:
+>
+>> I noticed that "git checkout $tree -- $path" will _always_ unlink and
+>> write a new copy of each matching path, even if they are up-to-date with
+>> the index and the content in $tree is the same.
+>
+> By the way, one other thing I wondered while looking at this code: when
+> we checkout a working tree file, we unlink the old one and write the new
+> one in-place. Is there a particular reason we do this versus writing to
+> a temporary file and renaming it into place?  That would give
+> simultaneous readers a more atomic view.
+>
+> I suspect the answer is something like: you cannot always do a rename,
+> because you might have a typechange, directory becoming a file, or vice
+> versa; so anyone relying on an atomic view during a checkout operation
+> is already Doing It Wrong.  Handling a content-change of an existing
+> path would complicate the code, so we do not bother.
 
-The next patch contains a test that verifies the fixed behavior.
-
-Found-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Johan Herland <johan@herland.net>
----
- builtin/notes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 68b6cd8..9ee6816 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -266,7 +266,7 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
- 
- 	if (get_sha1(arg, object))
- 		die(_("Failed to resolve '%s' as a valid ref."), arg);
--	if (!(buf = read_sha1_file(object, &type, &len)) || !len) {
-+	if (!(buf = read_sha1_file(object, &type, &len))) {
- 		free(buf);
- 		die(_("Failed to read object '%s'."), arg);
- 	}
+Not a confirmation, but it looks like Linus did it just to make sure
+he had new permissions right, in e447947 (Be much more liberal about
+the file mode bits. - 2005-04-16).
 -- 
-2.0.0.rc4.501.gdaf83ca
+Duy
