@@ -1,60 +1,60 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 2/7] send-pack.c: add an --atomic-push command line argument
-Date: Fri,  7 Nov 2014 11:41:56 -0800
-Message-ID: <1415389321-10386-3-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 5/7] t5543-atomic-push.sh: add basic tests for atomic pushes
+Date: Fri,  7 Nov 2014 11:41:59 -0800
+Message-ID: <1415389321-10386-6-git-send-email-sahlberg@google.com>
 References: <1415389321-10386-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 20:42:24 2014
+X-From: git-owner@vger.kernel.org Fri Nov 07 20:42:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XmpQC-0006vF-Gc
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:42:13 +0100
+	id 1XmpQX-0007IV-N7
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753302AbaKGTmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2014 14:42:08 -0500
-Received: from mail-qg0-f74.google.com ([209.85.192.74]:36979 "EHLO
-	mail-qg0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752258AbaKGTmG (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753303AbaKGTmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2014 14:42:13 -0500
+Received: from mail-qc0-f201.google.com ([209.85.216.201]:54225 "EHLO
+	mail-qc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752773AbaKGTmG (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 7 Nov 2014 14:42:06 -0500
-Received: by mail-qg0-f74.google.com with SMTP id q107so280137qgd.3
+Received: by mail-qc0-f201.google.com with SMTP id l6so278905qcy.0
         for <git@vger.kernel.org>; Fri, 07 Nov 2014 11:42:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4EiA0T2AeKr2+bI9FQfsMvCiJEKbrkanVicLyGyySvQ=;
-        b=en4hQofguVbXRw/KC3fVRH9/sFme070Acm3vnwFBfHaKjpQb7x2nq+RCA/3Qv6Q6XJ
-         j8H1v/7UR8PHHM8JMSBmRjbPVvQVZQd2lVbOuKKzWeqpsPtCu9RDnD3iKxZyyyIS9kGn
-         OABUR9h7lTBlClul4ENvdwq1vfgFa9l0wOUrhvTnTbt6uja/BahdUiJMMO8nLaQPDs+U
-         Cr/PqdopslhAYGjt569Wchhc2+HT2FFXl2xuMpBatBpiaxitEwtlZ0n6pVYvL5L7WxTe
-         ko4nuIcGcOiaSVy3Aegavw85slBu4lW6QUSRlEjVcSalPY6s8U7C04JW+VMY78giPh7p
-         QuUA==
+        bh=ZND2vS7YeWX2SD4Oyz5sS+i4iKJsGJ6fmlAEf5M+tpU=;
+        b=OZlFazEj+lx8baYDypGJRYkQ+7snAsuuBfS1GrOd/ng5UTAhM3pzotiHXhrPdu0zzs
+         /PBMxhHsm+OMg3e7lL18tiHYds6k2HAXVBRkDZnLHwbnKh/SFiPkrbSLAz6KsTBs+hSl
+         OuQY9kJooQkUQsVfGXkAeCTIGgY6sgczEopFiB8/Sk09YrW7ZLPZdSH17NiE2BXJjo/e
+         CTfHdVnHaLdpuPCsHCSSlfD68naLRRNNC53i9nQf0ziiYiLz7LZE4Px73KL0PZZk0VBO
+         bOyvLL3sSsd6NX7m/glrmp+/8iGJ+yGgYnkXOXynKZiFVLDm/6IKYXG99kieb04yhrWS
+         2/HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4EiA0T2AeKr2+bI9FQfsMvCiJEKbrkanVicLyGyySvQ=;
-        b=hpPQ/X+/wdLqGicp1EG/8XnWqlLlMFzPSEOp0l1QknHnQJNFIsDkrmYgvNKB1NnVyP
-         xlReztLbTwakRCE3SKS68jSYW1MfTBtM0qIhEZAZ9ZD5UMuOLbXo125QWqdO+fFUWnT1
-         8vBPCYlO9bmNdb0e6yfi/BUzpTZBrP+DY/CaDskgUJlFEtHCFvWXGRNc5ygAoeL6epYX
-         S/d1TNvOWnCsKaGaeJUgnXxkxLOZkVuRiLOYIo9jhkUphKWXs+3aMZkNoM9JO/IDwu54
-         fyvz28D5dcU07xokJ+5yziHV6xRV/8MH8ucovzprHi0Aff+5Md523EV1jU0sf0uss8YH
-         CC0A==
-X-Gm-Message-State: ALoCoQn5pGh8TDYc7MzNLsi1Kb+4m+0pxEsHq99w5cAP6U7MC9iDdrI48N4R82weJG2PTQWjKcOv
-X-Received: by 10.236.98.71 with SMTP id u47mr10404807yhf.30.1415389324609;
+        bh=ZND2vS7YeWX2SD4Oyz5sS+i4iKJsGJ6fmlAEf5M+tpU=;
+        b=LXLSPpQeS8j+31/Lae9Z2CvdVe/ffhHamvPneJWq/a/ZM0KtvHs7PXLue1BGadpvzI
+         J5Kec0m9z5YfHOPGdu12XHB76XBOG71o1MrDRrUK6wzN+u4Ue7ZnI4nN7pQv1LFKrnm9
+         McIOhTMVv53PDmhblEZZFGu9zRZoz9/uRmUb9DcRkI+54D80Z7pMLZNRSwSSn2KghA3f
+         G2jZcgrUZJ/3/lVN/YmfMBDBZtdkgUuHklDZSaTLg4KRu0hxHxjsnnCaWfXP0Xu/QUF1
+         aQjtNGlt+5+hqI5MATqfCbKEai6VA1FWuVOS3B5H8ws/uZssml1lCwYj6zjsVhGk3PBl
+         1eJg==
+X-Gm-Message-State: ALoCoQl6euQeEztz3JzbLMgk90QkdKtJJYpMmMbKrRCbCnfhw7QTzZpiCNT0uubDCotUgfRJP5s3
+X-Received: by 10.236.203.200 with SMTP id f48mr10347974yho.14.1415389324622;
         Fri, 07 Nov 2014 11:42:04 -0800 (PST)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id e24si404246yhe.3.2014.11.07.11.42.04
+Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
+        by gmr-mx.google.com with ESMTPS id k66si400865yho.7.2014.11.07.11.42.04
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 07 Nov 2014 11:42:04 -0800 (PST)
 Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id KDDjYACt.1; Fri, 07 Nov 2014 11:42:04 -0800
+	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id psTDqlkw.1; Fri, 07 Nov 2014 11:42:04 -0800
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id C19D9E0B1A; Fri,  7 Nov 2014 11:42:03 -0800 (PST)
+	id CBE44E08CB; Fri,  7 Nov 2014 11:42:03 -0800 (PST)
 X-Mailer: git-send-email 2.1.2.810.gfbd2bf7.dirty
 In-Reply-To: <1415389321-10386-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
@@ -62,227 +62,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds support to send-pack to negotiate and use atomic pushes
-iff the server supports it. Atomic pushes are activated by a new command
-line flag --atomic-push.
-
-In order to do this we also need to change the semantics for send_pack()
-slightly. The existing send_pack() function actually don't sent all the
-refs back to the server when multiple refs are involved, for example
-when using --all. Several of the failure modes for pushes can already be
-detected locally in the send_pack client based on the information from the
-initial server side list of all the refs as generated by receive-pack.
-Any such refs that we thus know would fail to push are thus pruned from
-the list of refs we send to the server to update.
-
-For atomic pushes, we have to deal thus with both failures that are detected
-locally as well as failures that are reported back from the server. In order
-to do so we treat all local failures as push failures too.
-
-We introduce a new status code REF_STATUS_ATOMIC_PUSH_FAILED so we can
-flag all refs that we would normally have tried to push to the server
-but we did not due to local failures. This is to improve the error message
-back to the end user to flag that "these refs failed to update since the
-atomic push operation failed."
-
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- Documentation/git-send-pack.txt |  7 ++++++-
- builtin/send-pack.c             |  6 +++++-
- remote.h                        |  3 ++-
- send-pack.c                     | 39 ++++++++++++++++++++++++++++++++++-----
- send-pack.h                     |  1 +
- transport.c                     |  4 ++++
- 6 files changed, 52 insertions(+), 8 deletions(-)
+ t/t5543-atomic-push.sh | 101 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 101 insertions(+)
+ create mode 100755 t/t5543-atomic-push.sh
 
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index 2a0de42..9296587 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -9,7 +9,7 @@ git-send-pack - Push objects over Git protocol to another repository
- SYNOPSIS
- --------
- [verse]
--'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]
-+'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic-push] [<host>:]<directory> [<ref>...]
- 
- DESCRIPTION
- -----------
-@@ -62,6 +62,11 @@ be in a separate packet, and the list must end with a flush packet.
- 	Send a "thin" pack, which records objects in deltified form based
- 	on objects not included in the pack to reduce network traffic.
- 
-+--atomic-push::
-+	Use an atomic transaction for updating the refs. If any of the refs
-+	fails to update then the entire push will fail without changing any
-+	refs.
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+new file mode 100755
+index 0000000..4903227
+--- /dev/null
++++ b/t/t5543-atomic-push.sh
+@@ -0,0 +1,101 @@
++#!/bin/sh
 +
- <host>::
- 	A remote host to house the repository.  When this
- 	part is specified, 'git-receive-pack' is invoked via
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index b564a77..93cb17c 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -13,7 +13,7 @@
- #include "sha1-array.h"
- 
- static const char send_pack_usage[] =
--"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
-+"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic-push] [<host>:]<directory> [<ref>...]\n"
- "  --all and explicit <ref> specification are mutually exclusive.";
- 
- static struct send_pack_args args;
-@@ -170,6 +170,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 				args.use_thin_pack = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--atomic-push")) {
-+				args.use_atomic_push = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--stateless-rpc")) {
- 				args.stateless_rpc = 1;
- 				continue;
-diff --git a/remote.h b/remote.h
-index 8b62efd..f346524 100644
---- a/remote.h
-+++ b/remote.h
-@@ -115,7 +115,8 @@ struct ref {
- 		REF_STATUS_REJECT_SHALLOW,
- 		REF_STATUS_UPTODATE,
- 		REF_STATUS_REMOTE_REJECT,
--		REF_STATUS_EXPECTING_REPORT
-+		REF_STATUS_EXPECTING_REPORT,
-+		REF_STATUS_ATOMIC_PUSH_FAILED
- 	} status;
- 	char *remote_status;
- 	struct ref *peer_ref; /* when renaming */
-diff --git a/send-pack.c b/send-pack.c
-index 1ccc84c..08602a8 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -190,7 +190,7 @@ static void advertise_shallow_grafts_buf(struct strbuf *sb)
- 	for_each_commit_graft(advertise_shallow_grafts_cb, sb);
- }
- 
--static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args)
-+static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args, int *atomic_push_failed)
- {
- 	if (!ref->peer_ref && !args->send_mirror)
- 		return 0;
-@@ -203,6 +203,12 @@ static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_a
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
- 	case REF_STATUS_REJECT_STALE:
- 	case REF_STATUS_REJECT_NODELETE:
-+		if (atomic_push_failed) {
-+			fprintf(stderr, "Atomic push failed for ref %s. "
-+				"Status:%d\n", ref->name, ref->status);
-+			*atomic_push_failed = 1;
-+		}
-+		/* fallthrough */
- 	case REF_STATUS_UPTODATE:
- 		return 0;
- 	default:
-@@ -250,7 +256,7 @@ static int generate_push_cert(struct strbuf *req_buf,
- 	strbuf_addstr(&cert, "\n");
- 
- 	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!ref_update_to_be_sent(ref, args))
-+		if (!ref_update_to_be_sent(ref, args, NULL))
- 			continue;
- 		update_seen = 1;
- 		strbuf_addf(&cert, "%s %s %s\n",
-@@ -297,7 +303,7 @@ int send_pack(struct send_pack_args *args,
- 	int atomic_push_supported = 0;
- 	int atomic_push = 0;
- 	unsigned cmds_sent = 0;
--	int ret;
-+	int ret, atomic_push_failed = 0;
- 	struct async demux;
- 	const char *push_cert_nonce = NULL;
- 
-@@ -332,6 +338,11 @@ int send_pack(struct send_pack_args *args,
- 			"Perhaps you should specify a branch such as 'master'.\n");
- 		return 0;
- 	}
-+	if (args->use_atomic_push && !atomic_push_supported) {
-+		fprintf(stderr, "Server does not support atomic-push.");
-+		return -1;
-+	}
-+	atomic_push = atomic_push_supported && args->use_atomic_push;
- 
- 	if (status_report)
- 		strbuf_addstr(&cap_buf, " report-status");
-@@ -365,7 +376,8 @@ int send_pack(struct send_pack_args *args,
- 	 * the pack data.
- 	 */
- 	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!ref_update_to_be_sent(ref, args))
-+		if (!ref_update_to_be_sent(ref, args,
-+			args->use_atomic_push ? &atomic_push_failed : NULL))
- 			continue;
- 
- 		if (!ref->deletion)
-@@ -377,6 +389,23 @@ int send_pack(struct send_pack_args *args,
- 			ref->status = REF_STATUS_EXPECTING_REPORT;
- 	}
- 
-+	if (atomic_push_failed) {
-+		for (ref = remote_refs; ref; ref = ref->next) {
-+			if (!ref->peer_ref && !args->send_mirror)
-+				continue;
++test_description='pushing to a mirror repository'
 +
-+			switch (ref->status) {
-+			case REF_STATUS_EXPECTING_REPORT:
-+				ref->status = REF_STATUS_ATOMIC_PUSH_FAILED;
-+				continue;
-+			default:
-+				; /* do nothing */
-+			}
-+		}
-+		fprintf(stderr, "Atomic push failed.");
-+		return -1;
-+	}
++. ./test-lib.sh
 +
- 	/*
- 	 * Finally, tell the other end!
- 	 */
-@@ -386,7 +415,7 @@ int send_pack(struct send_pack_args *args,
- 		if (args->dry_run || args->push_cert)
- 			continue;
- 
--		if (!ref_update_to_be_sent(ref, args))
-+		if (!ref_update_to_be_sent(ref, args, NULL))
- 			continue;
- 
- 		old_hex = sha1_to_hex(ref->old_sha1);
-diff --git a/send-pack.h b/send-pack.h
-index 5635457..7486e65 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -11,6 +11,7 @@ struct send_pack_args {
- 		force_update:1,
- 		use_thin_pack:1,
- 		use_ofs_delta:1,
-+		use_atomic_push:1,
- 		dry_run:1,
- 		push_cert:1,
- 		stateless_rpc:1;
-diff --git a/transport.c b/transport.c
-index f70d62f..2111986 100644
---- a/transport.c
-+++ b/transport.c
-@@ -731,6 +731,10 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
- 						 ref->deletion ? NULL : ref->peer_ref,
- 						 "remote failed to report status", porcelain);
- 		break;
-+	case REF_STATUS_ATOMIC_PUSH_FAILED:
-+		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+						 "atomic-push-failed", porcelain);
-+		break;
- 	case REF_STATUS_OK:
- 		print_ok_ref_status(ref, porcelain);
- 		break;
++D=`pwd`
++
++invert () {
++	if "$@"; then
++		return 1
++	else
++		return 0
++	fi
++}
++
++mk_repo_pair () {
++	rm -rf master mirror &&
++	mkdir mirror &&
++	(
++		cd mirror &&
++		git init &&
++		git config receive.denyCurrentBranch warn
++	) &&
++	mkdir master &&
++	(
++		cd master &&
++		git init &&
++		git remote add $1 up ../mirror
++	)
++}
++
++
++test_expect_success 'atomic push works for a single branch' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git push --mirror up
++		echo two >foo && git add foo && git commit -m two &&
++		git push --atomic-push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
++	test "$master_master" = "$mirror_master"
++
++'
++
++test_expect_success 'atomic push works for two branches' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git branch second &&
++		git push --mirror up
++		echo two >foo && git add foo && git commit -m two &&
++		git checkout second &&
++		echo three >foo && git add foo && git commit -m three &&
++		git checkout master &&
++		git push --atomic-push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
++	test "$master_master" = "$mirror_master"
++
++	master_second=$(cd master && git show-ref -s --verify refs/heads/second) &&
++	mirror_second=$(cd mirror && git show-ref -s --verify refs/heads/second) &&
++	test "$master_second" = "$mirror_second"
++'
++
++# set up two branches where master can be pushed but second can not
++# (non-fast-forward). Since second can not be pushed the whole operation
++# will fail and leave master untouched.
++test_expect_success 'atomic push fails if one branch fails' '
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git branch second &&
++		git checkout second &&
++		echo two >foo && git add foo && git commit -m two &&
++		echo three >foo && git add foo && git commit -m three &&
++		echo four >foo && git add foo && git commit -m four &&
++		git push --mirror up
++		git reset --hard HEAD~2 &&
++		git checkout master
++		echo five >foo && git add foo && git commit -m five &&
++		! git push --atomic-push --all up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
++	test "$master_master" != "$mirror_master" &&
++
++	master_second=$(cd master && git show-ref -s --verify refs/heads/second) &&
++	mirror_second=$(cd mirror && git show-ref -s --verify refs/heads/second) &&
++	test "$master_second" != "$mirror_second"
++'
++
++test_done
 -- 
 2.1.0.rc2.206.gedb03e5
