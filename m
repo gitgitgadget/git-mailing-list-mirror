@@ -1,225 +1,139 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 05/16] refs.c: add transaction support for renaming a reflog
-Date: Fri,  7 Nov 2014 11:38:54 -0800
-Message-ID: <1415389145-6391-6-git-send-email-sahlberg@google.com>
-References: <1415389145-6391-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 4/7] push.c: add an --atomic-push argument
+Date: Fri,  7 Nov 2014 11:41:58 -0800
+Message-ID: <1415389321-10386-5-git-send-email-sahlberg@google.com>
+References: <1415389321-10386-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 20:46:10 2014
+X-From: git-owner@vger.kernel.org Fri Nov 07 20:49:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XmpTy-0002VI-Qp
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:46:07 +0100
+	id 1XmpWo-0005Nq-MT
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753243AbaKGTqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2014 14:46:00 -0500
-Received: from mail-qc0-f202.google.com ([209.85.216.202]:44011 "EHLO
+	id S1752965AbaKGTs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2014 14:48:59 -0500
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:37619 "EHLO
 	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753049AbaKGTp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2014 14:45:59 -0500
-Received: by mail-qc0-f202.google.com with SMTP id m20so278188qcx.3
-        for <git@vger.kernel.org>; Fri, 07 Nov 2014 11:45:58 -0800 (PST)
+	with ESMTP id S1751806AbaKGTs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2014 14:48:58 -0500
+Received: by mail-qc0-f202.google.com with SMTP id m20so278661qcx.1
+        for <git@vger.kernel.org>; Fri, 07 Nov 2014 11:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/0OdXmuXw9L/8m3xKX8639j4DPGyCPFv5LlZfKfibHg=;
-        b=GcMh2Z6jKQMcQqQlMaePfuKzwd722Pgg0Z1kMEKwmaW+Vj3v8Mvqhq1EPH/PotuwHs
-         0ewUCGDHpYHJ5Nuqo4QJ8UopECaxy/h0f0qUkfTBmpuLTYdLrZvZToqvXzBe4F4C6CUW
-         sBoz4uqjQL46GJjVr/+K8bfOjAAe9C3l9pzxEMDd7NKe0JtISgiCVlv+LHeGFbLpqK3B
-         0QwSkR9kdsk95IgkCucWL7hN2H5qVABO/xci9f8Xi2SHhedCvbhdA07qVBVtwQzPLMI/
-         uTLvULfKxVZcL+9F4S90xWKfGDz0BwNbmYKrcxgiUfCdNPg9fulxlzBRqr+59eoM0hbD
-         Rfew==
+        bh=O9ybpa6gLJCST4tFFcTsDqZZY05OqV8Czwe2U98fyjQ=;
+        b=JGPz8XVtjlDMSoGXwMvM81fsVc6P3kqRYT6px3jGkEXb3S0NnjCRbyKv0sR7V3dEJ3
+         xRrdC+XThRO6UvBuJ0DdDK7VNzwP0Fn6E8X0rlavrVAHYjczwLUcuJJbXyxXnVXnSTiR
+         YoVJ+Xj6HbnCHCto1BX8wUWZt7cA51RH4OSftFPDHfHuPHqXnm6PCdS1BnFy5HoSjn9C
+         tWgvCLi8aNoTDLJVLrOIlBNoYM65fQTh93nwD/MBMs1/dDAm0iKKxzUGa6/Zw1ftfR1n
+         +7bZ8kC010BFq0p41u3k1pkxjfZdOdkOE1pa3p8V4zVRzns7BuHGOaIgHnpG9uTXhqrh
+         60YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/0OdXmuXw9L/8m3xKX8639j4DPGyCPFv5LlZfKfibHg=;
-        b=hU1Z+eUuqck+Kh8vQtR2APXWZVoAxi2eggyoUHIwXVsjTiLbDZJzzmrEk8y+pYnBwk
-         R6OTkEEGiZhjABgEsO17JQy85GzHvSMdeL/0qysa95BpcdYlmmzaEDkwKzL+BR/Gl4Dy
-         bcBqQzqY4Mi2vGpgTAkTOA+xEBCK7Wiu5NgKyNALAGcJwqzbCs0KaMrEAbLz5Da8mBGM
-         SIcHafff2QRTVjtvGZcKSQpWMW2As3vqQLhrKsaOTAnJt1mN1E0i+BA/yZoDWZ/wZ0MV
-         k4dE3MUYFcbHv+2lKeAJDOep5BsYchoLYkdMDLI0YbDYceMaZsWPhnFceOohp+oJveCa
-         mMZg==
-X-Gm-Message-State: ALoCoQmiVEwLyU0ClAaXUc5nkGiJHMBfminLTsw0Swc9vT/XnNaZRWSbZMhXMnnzqtMD7w67b62R
-X-Received: by 10.224.30.133 with SMTP id u5mr10405483qac.8.1415389150390;
-        Fri, 07 Nov 2014 11:39:10 -0800 (PST)
-Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
-        by gmr-mx.google.com with ESMTPS id s23si405356yhf.0.2014.11.07.11.39.10
+        bh=O9ybpa6gLJCST4tFFcTsDqZZY05OqV8Czwe2U98fyjQ=;
+        b=I/uJoeiX+P2LiLJLMdrCBMz25OiOfGsydDPcysfOMUmTfePzGFVk9Xmk9sV43M/y/g
+         45on3onWc+LOK1Px7AK8S94DWBhGxZl5zVQzuLHqTPougLEuXkHXszn3BCjyTHIA8rka
+         TUOz7P9dZZHRpNdFfmKqHmrLInDPapIuEosg2Oyfca9yyc6B1lNNhZzj8UeNUvSsQia/
+         XY7XCTDfPIBigQ2rvB+eBxLnAmj0CQlTkuSLBVgi7gYrErgVlPCv+uuhH0hudxkbZI8m
+         7SbyzZKYvLkX3EHSgnDPgsRPi9ssK3upgONyWXZ8fri93ximExD9u5Ik8mA8Wb9Qqekc
+         zi6A==
+X-Gm-Message-State: ALoCoQnUwQuj7BMOdyJqqAiRia+WnBXHc3aZBz2yF5iY7AmfoD6Fb34jMxsuuXi0BL4TL9EF+e+9
+X-Received: by 10.236.53.34 with SMTP id f22mr10929008yhc.51.1415389325207;
+        Fri, 07 Nov 2014 11:42:05 -0800 (PST)
+Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
+        by gmr-mx.google.com with ESMTPS id s23si405691yhf.0.2014.11.07.11.42.04
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Nov 2014 11:39:10 -0800 (PST)
+        Fri, 07 Nov 2014 11:42:05 -0800 (PST)
 Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
-	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id Y1wOX2aw.1; Fri, 07 Nov 2014 11:39:10 -0800
+	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id wHUlofbV.1; Fri, 07 Nov 2014 11:42:05 -0800
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 874F9E0A83; Fri,  7 Nov 2014 11:39:09 -0800 (PST)
+	id DE834E0A73; Fri,  7 Nov 2014 11:42:03 -0800 (PST)
 X-Mailer: git-send-email 2.1.2.810.gfbd2bf7.dirty
-In-Reply-To: <1415389145-6391-1-git-send-email-sahlberg@google.com>
+In-Reply-To: <1415389321-10386-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new transaction function transaction_rename_reflog.
+Add a command line argument to the git push command to request atomic
+pushes.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- refs.h |  8 ++++++++
- 2 files changed, 79 insertions(+), 1 deletion(-)
+ Documentation/git-push.txt | 7 ++++++-
+ builtin/push.c             | 2 ++
+ transport.c                | 1 +
+ transport.h                | 1 +
+ 4 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/refs.c b/refs.c
-index e9e321e..8ca6add 100644
---- a/refs.c
-+++ b/refs.c
-@@ -35,6 +35,11 @@ static unsigned char refname_disposition[256] = {
-  * just use the lock taken by the first update.
-  */
- #define UPDATE_REFLOG_NOLOCK 0x0200
-+/*
-+ * This update is used to replace a new or existing reflog with new content
-+ * held in update->new_reflog.
-+ */
-+#define REFLOG_REPLACE 0x0400
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 21b3f29..04de8d8 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -9,7 +9,7 @@ git-push - Update remote refs along with associated objects
+ SYNOPSIS
+ --------
+ [verse]
+-'git push' [--all | --mirror | --tags] [--follow-tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
++'git push' [--all | --mirror | --tags] [--follow-tags] [--atomic-push] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+ 	   [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose]
+ 	   [-u | --set-upstream] [--signed]
+ 	   [--force-with-lease[=<refname>[:<expect>]]]
+@@ -136,6 +136,11 @@ already exists on the remote side.
+ 	logged.  See linkgit:git-receive-pack[1] for the details
+ 	on the receiving end.
  
- /*
-  * Try to read one refname component from the front of refname.
-@@ -2821,6 +2826,37 @@ static int rename_ref_available(const char *oldname, const char *newname)
- static int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1,
- 			  const char *logmsg);
++--atomic-push::
++	Try using atomic push. If atomic push is negotiated with the server
++	then any push covering multiple refs will be atomic. Either all
++	refs are updated, or on error, no refs are updated.
++
+ --receive-pack=<git-receive-pack>::
+ --exec=<git-receive-pack>::
+ 	Path to the 'git-receive-pack' program on the remote
+diff --git a/builtin/push.c b/builtin/push.c
+index ae56f73..0b9f21a 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -507,6 +507,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT(0, "follow-tags", &flags, N_("push missing but relevant tags"),
+ 			TRANSPORT_PUSH_FOLLOW_TAGS),
+ 		OPT_BIT(0, "signed", &flags, N_("GPG sign the push"), TRANSPORT_PUSH_CERT),
++		OPT_BIT(0, "atomic-push", &flags, N_("use atomic push, if available"),
++			TRANSPORT_ATOMIC_PUSH),
+ 		OPT_END()
+ 	};
  
-+/*
-+ * This is an optimized function to read the whole reflog as a blob
-+ * into a strbuf. It is used during ref_rename so that we can use an
-+ * efficient method to read the whole log and later write it back to a
-+ * different file.
-+ */
-+static int copy_reflog_into_strbuf(const char *refname, struct strbuf *buf)
-+{
-+	struct stat st;
-+	int fd;
-+
-+	if (lstat(git_path("logs/%s", refname), &st) == -1)
-+		return 1;
-+	if ((fd = open(git_path("logs/%s", refname), O_RDONLY)) == -1) {
-+		error("failed to open reflog %s, %s",
-+		      refname, strerror(errno));
-+		return 1;
-+	}
-+	strbuf_init(buf, st.st_size);
-+	strbuf_setlen(buf, st.st_size);
-+	if (read_in_full(fd, buf->buf, st.st_size) != st.st_size) {
-+		close(fd);
-+		error("failed to read reflog %s, %s",
-+		      refname, strerror(errno));
-+		return 1;
-+	}
-+	close(fd);
-+
-+	return 0;
-+}
-+
- int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
- {
- 	unsigned char sha1[20], orig_sha1[20];
-@@ -3561,6 +3597,7 @@ struct ref_update {
- 	struct lock_file *reflog_lock;
- 	char *committer;
- 	struct ref_update *orig_update; /* For UPDATE_REFLOG_NOLOCK */
-+	struct strbuf new_reflog;
+diff --git a/transport.c b/transport.c
+index 2111986..cd2b63a 100644
+--- a/transport.c
++++ b/transport.c
+@@ -833,6 +833,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
+ 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
+ 	args.push_cert = !!(flags & TRANSPORT_PUSH_CERT);
++	args.use_atomic_push = !!(flags & TRANSPORT_ATOMIC_PUSH);
+ 	args.url = transport->url;
  
- 	const char refname[FLEX_ARRAY];
- };
-@@ -3607,6 +3644,7 @@ void transaction_free(struct transaction *transaction)
- 		return;
+ 	ret = send_pack(&args, data->fd, data->conn, remote_refs,
+diff --git a/transport.h b/transport.h
+index 3e0091e..25fa1da 100644
+--- a/transport.h
++++ b/transport.h
+@@ -125,6 +125,7 @@ struct transport {
+ #define TRANSPORT_PUSH_NO_HOOK 512
+ #define TRANSPORT_PUSH_FOLLOW_TAGS 1024
+ #define TRANSPORT_PUSH_CERT 2048
++#define TRANSPORT_ATOMIC_PUSH 4096
  
- 	for (i = 0; i < transaction->nr; i++) {
-+		strbuf_release(&transaction->updates[i]->new_reflog);
- 		free(transaction->updates[i]->msg);
- 		free(transaction->updates[i]->committer);
- 		free(transaction->updates[i]);
-@@ -3622,6 +3660,7 @@ static struct ref_update *add_update(struct transaction *transaction,
- 	size_t len = strlen(refname);
- 	struct ref_update *update = xcalloc(1, sizeof(*update) + len + 1);
- 
-+	strbuf_init(&update->new_reflog, 0);
- 	strcpy((char *)update->refname, refname);
- 	update->update_type = update_type;
- 	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
-@@ -3681,6 +3720,27 @@ int transaction_update_reflog(struct transaction *transaction,
- 	return 0;
- }
- 
-+int transaction_rename_reflog(struct transaction *transaction,
-+			      const char *oldrefname,
-+			      const char *newrefname,
-+			      struct strbuf *err)
-+{
-+	struct ref_update *update;
-+
-+	if (transaction->state != TRANSACTION_OPEN)
-+		die("BUG: transaction_replace_reflog called for transaction "
-+		    "that is not open");
-+
-+	update = add_update(transaction, newrefname, UPDATE_LOG);
-+	update->flags = REFLOG_REPLACE;
-+	update->reflog_lock = xcalloc(1, sizeof(struct lock_file));
-+	if (copy_reflog_into_strbuf(oldrefname, &update->new_reflog))
-+		die("BUG: failed to read old reflog in "
-+		    "transaction_rename_reflog");
-+
-+	return 0;
-+}
-+
- int transaction_update_ref(struct transaction *transaction,
- 			   const char *refname,
- 			   const unsigned char *new_sha1,
-@@ -4012,7 +4072,7 @@ int transaction_commit(struct transaction *transaction,
- 			continue;
- 		if (update->reflog_fd == -1)
- 			continue;
--		if (update->flags & REFLOG_TRUNCATE)
-+		if (update->flags & (REFLOG_TRUNCATE|REFLOG_REPLACE))
- 			if (lseek(update->reflog_fd, 0, SEEK_SET) < 0 ||
- 				ftruncate(update->reflog_fd, 0)) {
- 				error("Could not truncate reflog: %s. %s",
-@@ -4030,6 +4090,16 @@ int transaction_commit(struct transaction *transaction,
- 			rollback_lock_file(update->reflog_lock);
- 			update->reflog_fd = -1;
- 		}
-+		if (update->flags & REFLOG_REPLACE)
-+			if (write_in_full(update->reflog_fd,
-+					  update->new_reflog.buf,
-+					  update->new_reflog.len) !=
-+			    update->new_reflog.len) {
-+				error("Could write to reflog: %s. %s",
-+				      update->refname, strerror(errno));
-+				rollback_lock_file(update->reflog_lock);
-+				update->reflog_fd = -1;
-+			}
- 	}
- 
- 	/* Commit all reflog files */
-diff --git a/refs.h b/refs.h
-index d174380..0ba078e 100644
---- a/refs.h
-+++ b/refs.h
-@@ -354,6 +354,14 @@ int transaction_update_reflog(struct transaction *transaction,
- 			      struct strbuf *err);
- 
- /*
-+ * Rename a reflog.
-+ */
-+int transaction_rename_reflog(struct transaction *transaction,
-+			      const char *oldrefname,
-+			      const char *newrefname,
-+			      struct strbuf *err);
-+
-+/*
-  * Commit all of the changes that have been queued in transaction, as
-  * atomically as possible.
-  *
+ #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
+ #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
 -- 
 2.1.0.rc2.206.gedb03e5
