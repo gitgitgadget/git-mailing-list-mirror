@@ -1,114 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 3/5] builtin/notes: Add --allow-empty, to allow storing empty notes
-Date: Fri, 07 Nov 2014 10:04:18 -0800
-Message-ID: <xmqq1tpehopp.fsf@gitster.dls.corp.google.com>
-References: <1415351961-31567-1-git-send-email-johan@herland.net>
-	<1415351961-31567-4-git-send-email-johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mackyle@gmail.com, jhf@trifork.com,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Nov 07 19:04:37 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/5] trailer: ignore comment lines inside the trailers
+Date: Fri, 07 Nov 2014 19:50:48 +0100
+Message-ID: <20141107185053.16854.34105.chriscool@tuxfamily.org>
+References: <20141107184148.16854.63825.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 07 19:51:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xmnte-0000oh-0b
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 19:04:30 +0100
+	id 1XmodB-0006Gl-1d
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 19:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbaKGSEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2014 13:04:25 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51048 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753072AbaKGSEW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2014 13:04:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C1AE1B448;
-	Fri,  7 Nov 2014 13:04:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pD88ck5LgTC5MCLwBXp1Sh8rNgc=; b=JdIn2I
-	gb3Zt1xmcbFggmbtAVJJvgjLZI+Ia6XPvnrKpsr6tPh5KRrgheci8ox5YEtRUze6
-	mK9NWpiO7pbj8KNBQia75rPCGEj8dgq8VwCkza6vrezz29LS1N1emKF8J4e27WU6
-	9XNnUyrAq7TODfJYkLaFtqJGGkhJ0jzC/rWuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bR4VXXUiYNGkgIaBmeYAmjz+PMTEP8ii
-	Xn8JnBJ7rpqCeLsjJBum5Dm0KBxA9Yw03WmCAr9WMGxOzPu08bdF8WSbX+S90DzZ
-	6ujT/qk8MpQlpp0U38/fKeuwD9kvH4wYQ4zHJiNfX7Y+CRwoiYsOxLHU20Wy82CU
-	+kKy5VhSYRE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 82D501B447;
-	Fri,  7 Nov 2014 13:04:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05EEC1B446;
-	Fri,  7 Nov 2014 13:04:20 -0500 (EST)
-In-Reply-To: <1415351961-31567-4-git-send-email-johan@herland.net> (Johan
-	Herland's message of "Fri, 7 Nov 2014 10:19:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7F1BAF70-66A8-11E4-832C-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753102AbaKGSv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2014 13:51:29 -0500
+Received: from mail-2y.bbox.fr ([194.158.98.15]:64115 "EHLO mail-2y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751708AbaKGSv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2014 13:51:28 -0500
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 281488C;
+	Fri,  7 Nov 2014 19:51:26 +0100 (CET)
+X-git-sha1: bbd20666c99e29f0484bca021d32ab3f448a05b4 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20141107184148.16854.63825.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johan Herland <johan@herland.net> writes:
+Otherwise trailers that are commented out might be
+processed. We would also error out if the comment line
+char is also a separator.
 
-> Although the "git notes" man page advertises that we support binary-safe
-> notes addition (using the -C option), we currently do not support adding
-> the empty note (i.e. using the empty blob to annotate an object). Instead,
-> an empty note is always treated as an intent to remove the note
-> altogether.
->
-> Introduce the --allow-empty option to the add/append/edit subcommands,
-> to explicitly allow an empty note to be stored into the notes tree.
->
-> Also update the documentation, and add test cases for the new option.
->
-> Reported-by: James H. Fisher <jhf@trifork.com>
-> Improved-by: Kyle J. McKay <mackyle@gmail.com>
-> Improved-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Johan Herland <johan@herland.net>
-> ---
+This means that comments inside a trailer block will
+disappear, but that was already the case anyway.
 
-Assuming that it is a good idea to "allow" empty notes, I think
-there are two issues involved here:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ trailer.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
- * Traditionally, feeding an empty note is taken as a request to
-   remove an existing note.  Therefore, there is no way to
-   explicitly ask an empty note to be stored for a commit.
-
- * Because feeding an empty note was the way to request removal,
-   even though "git notes remove" is there, it is underused.
-
-In other words, assuming that it is a good idea to allow empty
-notes, isn't the desired endgame, after compatibility transition
-period, that "git notes add" will never remove notes?
-
-With that endgame in mind, shouldn't the internal implementation be
-moving in a direction where "create_note()" will *not* be doing any
-removal, and its caller (i.e. "add") does the switching depending on
-the "do we take emptyness as a request to remove"?  I.e.
-
-         static int add(...)
-         {
-		if (!allow_empty && message_is_empty())
-                	remove_note();
-		else
-                	create_note();
-	}
-
->  static void create_note(const unsigned char *object, struct msg_arg *msg,
-> -			int append_only, const unsigned char *prev,
-> -			unsigned char *result)
-> +			int append_only, int allow_empty,
-> +			const unsigned char *prev, unsigned char *result)
-
-In other words, I have this suspicion that create_note() that 
-removes is a wrong interface in the first place, and giving it
-a new allow_empty parameter to conditionally perform removal is
-making it worse.  No?
+diff --git a/trailer.c b/trailer.c
+index 8514566..761b763 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -804,8 +804,10 @@ static int process_input_file(struct strbuf **lines,
+ 
+ 	/* Parse trailer lines */
+ 	for (i = trailer_start; i < patch_start; i++) {
+-		struct trailer_item *new = create_trailer_item(lines[i]->buf);
+-		add_trailer_item(in_tok_first, in_tok_last, new);
++		if (lines[i]->buf[0] != comment_line_char) {
++			struct trailer_item *new = create_trailer_item(lines[i]->buf);
++			add_trailer_item(in_tok_first, in_tok_last, new);
++		}
+ 	}
+ 
+ 	return patch_start;
+-- 
+2.1.2.555.gfbecd99
