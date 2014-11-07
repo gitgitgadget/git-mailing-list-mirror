@@ -1,60 +1,60 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 14/16] refs.c: make add_packed_ref return an error instead of calling die
-Date: Fri,  7 Nov 2014 11:39:03 -0800
-Message-ID: <1415389145-6391-15-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 15/16] refs.c: make lock_packed_refs take an err argument
+Date: Fri,  7 Nov 2014 11:39:04 -0800
+Message-ID: <1415389145-6391-16-git-send-email-sahlberg@google.com>
 References: <1415389145-6391-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 20:49:15 2014
+X-From: git-owner@vger.kernel.org Fri Nov 07 20:49:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XmpX0-0005Wg-93
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:49:14 +0100
+	id 1XmpX7-0005f5-Fo
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753328AbaKGTtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2014 14:49:10 -0500
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:55659 "EHLO
-	mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752977AbaKGTtH (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753299AbaKGTtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2014 14:49:08 -0500
+Received: from mail-oi0-f73.google.com ([209.85.218.73]:51204 "EHLO
+	mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752975AbaKGTtH (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 7 Nov 2014 14:49:07 -0500
-Received: by mail-oi0-f74.google.com with SMTP id u20so546308oif.1
+Received: by mail-oi0-f73.google.com with SMTP id e131so546693oig.0
         for <git@vger.kernel.org>; Fri, 07 Nov 2014 11:49:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TXqIUKvmucyaP7Tk/k7xaT80Pl46tcfI4Iq1aLlllcg=;
-        b=onA1muHe0+QRaf6PYPGiCcdSS8lzRMOGd6zej8SRGd/FPdyo1lp9pROmObK769U/FO
-         P2IswShOuh4/MasuTYstFoO4hpOiib138Ch0YHCR3NG7WiFzwChCn5tGJ5PPImmxJvwz
-         N6LZLjFx4y86Pcim7k7uNYS46x277OXLEqpuWQNMQVBzMdSYZwHoq0QDZh5X67bX8zX2
-         z9Cc+4N//2ZvvWOyW0Q9Z3w71uK5WX2Oe7UM3+WxWl/qzaB95/U0p/ZzPLeIsGSjKH2/
-         tRCiDTz2oGeNP0SDQXybS5Hp3obC8cYfsOYRSeP4HOZsHpQtUnYq0SidNvxLPz0KITKK
-         rqAA==
+        bh=ePrLbiXb1Llk1ucyNJ3+DQ3J8yGGwqkineUWKaVPNyE=;
+        b=TT7S1FJD9j0VND0/Z6rm2T8MYwdno1a95DRajTVuT03MHYAH7IVMbQ8/HDd1c9IbCM
+         Irqu9W+8fx2XQTtI6w7fO54EyFawDDo09YwcSBxpuyiMf351tCwOOo1K8Q8nq03ZjbpS
+         Kp3/vj6lTtHD1o1wLAtJT+QhbKeGKX67dxTp1Nzb8LztRHr37cqx8kWmtKFXpoCL7q2Z
+         KJlTcU5lsNS/ffKEcHUK4o+o6rO6O10uRzgijanZ8Z3VLoRXKMWjn+rqEZpcqJL4JdC+
+         fJ7SBr53EfnusQYKHGQsoKC89i3GHvJpp0BAWyGnXQmIyY8fqWlKFsbakuq3u4I17M8h
+         wTnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TXqIUKvmucyaP7Tk/k7xaT80Pl46tcfI4Iq1aLlllcg=;
-        b=GkNxYujmd55msUD9NqTINki3NlvSmmXjXhCxrryaTODOFuFPNGYty2NNcfxM+toI5T
-         0ppyXBOzSq9dAAimLWSD2mGjovU4bQZ/916r9mNXPI4LjcIBsFb+bxpxek8POvM5nxbT
-         QiSi6OARfXH5JFkeOizC21Xomu8dGSo1ZEJS0c6TD5F7kzsAUQk6/52ptNilGiDU23iI
-         51588KH3jfYyMQgkM1evJIOLsStRTmQ6fnaHTSmU0EDUuJ+BchaTodrDW84iPfDczcKW
-         H9WmzzAOE7tvnJc32XrCgvUK5eVVnlQfLBL2zCSXbf39EZrljw2/Fa8yxUt11rBL+m6+
-         j9PA==
-X-Gm-Message-State: ALoCoQlPaloZHQw2zGZWc/aXCjE0lfyu59YKqkPf84Tg7L5Yowsef0yNVdTsdC4X3y7LVJ7vdiDV
-X-Received: by 10.42.10.132 with SMTP id q4mr16442197icq.25.1415389746720;
+        bh=ePrLbiXb1Llk1ucyNJ3+DQ3J8yGGwqkineUWKaVPNyE=;
+        b=Ee6nJjfNu/sGh8EJ/5trKTVlvag7h8j2uJRVBl0neG5SRqW8TmEK+JFaAfUFGwY+Hr
+         mTNuY+rvpN0ilyhM/n60BUwV2CR7nDXfsVf3klrf+kdcxbFKqwrJqNZycYEShKn0rKVj
+         qfulwvs7Xhc8RnLt9ATamzd0ApYv7QllgzxYSAfHbWQYW61TAXoerXZZBZ93NhHHnxyB
+         vBwszIfHsjpo3GTwu7NnzJJBL0qORirCjybQOwjq0ompatmnkEI5uzmTGxMHXxlyG/56
+         lQ7PVC4RFtGSGkDwuMTuhPxI1Jj66afHnym83xPuzNLAmTI6mOWii+GfGj7Q92WI4tq0
+         0/lQ==
+X-Gm-Message-State: ALoCoQkl50BVhjuDBVLvaGMThsko4X5G3nhmArec8/ngOYxarvKSlRZ3H1G7kG0xshclsiYaccjV
+X-Received: by 10.182.104.69 with SMTP id gc5mr11064457obb.18.1415389746663;
         Fri, 07 Nov 2014 11:49:06 -0800 (PST)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id 5si403282yhd.6.2014.11.07.11.49.06
+Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
+        by gmr-mx.google.com with ESMTPS id k66si401589yho.7.2014.11.07.11.49.06
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 07 Nov 2014 11:49:06 -0800 (PST)
 Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id RhO4CP0s.1; Fri, 07 Nov 2014 11:49:06 -0800
+	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id g5OsVHcl.1; Fri, 07 Nov 2014 11:49:06 -0800
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 04E91E0D7C; Fri,  7 Nov 2014 11:39:09 -0800 (PST)
+	id 0F735E0F5D; Fri,  7 Nov 2014 11:39:10 -0800 (PST)
 X-Mailer: git-send-email 2.1.2.810.gfbd2bf7.dirty
 In-Reply-To: <1415389145-6391-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
@@ -62,66 +62,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change add_packed_ref to return an error instead of calling die().
-Update all callers to check the return value of add_packed_ref.
-
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ refs.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index b59e2b8..0829c55 100644
+index 0829c55..1314a9a 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1229,15 +1229,16 @@ static struct ref_dir *get_packed_refs(struct ref_cache *refs)
- 	return get_packed_ref_dir(get_packed_ref_cache(refs));
+@@ -2398,13 +2398,17 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
+ 	return 0;
  }
  
--static void add_packed_ref(const char *refname, const unsigned char *sha1)
-+static int add_packed_ref(const char *refname, const unsigned char *sha1)
+-/* This should return a meaningful errno on failure */
+-static int lock_packed_refs(int flags)
++static int lock_packed_refs(struct strbuf *err)
  {
- 	struct packed_ref_cache *packed_ref_cache =
- 		get_packed_ref_cache(&ref_cache);
+ 	struct packed_ref_cache *packed_ref_cache;
  
- 	if (!packed_ref_cache->lock)
--		die("internal error: packed refs not locked");
-+		return -1;
- 	add_ref(get_packed_ref_dir(packed_ref_cache),
- 		create_ref_entry(refname, sha1, REF_ISPACKED, 1));
-+	return 0;
- }
+-	if (hold_lock_file_for_update(&packlock, git_path("packed-refs"), flags) < 0)
++	if (hold_lock_file_for_update(&packlock, git_path("packed-refs"),
++				      0) < 0) {
++		if (err)
++			unable_to_lock_message(git_path("packed-refs"),
++					       errno, err);
+ 		return -1;
++	}
+ 	/*
+ 	 * Get the current packed-refs while holding the lock.  If the
+ 	 * packed-refs file has been modified since we last read it,
+@@ -2592,11 +2596,14 @@ static void prune_refs(struct ref_to_prune *r)
+ int pack_refs(unsigned int flags)
+ {
+ 	struct pack_refs_cb_data cbdata;
++	struct strbuf err = STRBUF_INIT;
  
- /*
-@@ -3827,7 +3828,13 @@ int transaction_commit(struct transaction *transaction,
- 					sha1, NULL))
- 			continue;
+ 	memset(&cbdata, 0, sizeof(cbdata));
+ 	cbdata.flags = flags;
  
--		add_packed_ref(update->refname, sha1);
-+		if (add_packed_ref(update->refname, sha1)) {
-+			if (err)
-+				strbuf_addf(err, "Failed to add %s to packed "
-+					    "refs", update->refname);
-+			ret = -1;
-+			goto cleanup;
-+		}
- 		need_repack = 1;
+-	lock_packed_refs(LOCK_DIE_ON_ERROR);
++	if (lock_packed_refs(&err))
++		die("%s", err.buf);
++
+ 	cbdata.packed_refs = get_packed_refs(&ref_cache);
+ 
+ 	do_for_each_entry_in_dir(get_loose_refs(&ref_cache), 0,
+@@ -3789,10 +3796,7 @@ int transaction_commit(struct transaction *transaction,
  	}
- 	if (need_repack) {
-@@ -3941,7 +3948,13 @@ int transaction_commit(struct transaction *transaction,
  
- 		packed = get_packed_refs(&ref_cache);
- 		remove_entry(packed, update->refname);
--		add_packed_ref(update->refname, update->new_sha1);
-+		if (add_packed_ref(update->refname, update->new_sha1)) {
-+			if (err)
-+				strbuf_addf(err, "Failed to add %s to packed "
-+					    "refs", update->refname);
-+			ret = -1;
-+			goto cleanup;
-+		}
- 		need_repack = 1;
- 
- 		try_remove_empty_parents((char *)update->refname);
+ 	/* Lock packed refs during commit */
+-	if (lock_packed_refs(0)) {
+-		if (err)
+-			unable_to_lock_message(git_path("packed-refs"),
+-					       errno, err);
++	if (lock_packed_refs(err)) {
+ 		ret = -1;
+ 		goto cleanup;
+ 	}
+@@ -3847,10 +3851,7 @@ int transaction_commit(struct transaction *transaction,
+ 			goto cleanup;
+ 		}
+ 		/* lock the packed refs again so no one can change it */
+-		if (lock_packed_refs(0)) {
+-			if (err)
+-				unable_to_lock_message(git_path("packed-refs"),
+-						       errno, err);
++		if (lock_packed_refs(err)) {
+ 			ret = -1;
+ 			goto cleanup;
+ 		}
 -- 
 2.1.0.rc2.206.gedb03e5
