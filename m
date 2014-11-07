@@ -1,7 +1,7 @@
 From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH v3 3/7] part3: l10n: de.po: use imperative form for command options
-Date: Fri,  7 Nov 2014 21:11:16 +0100
-Message-ID: <1415391080-26841-4-git-send-email-ralf.thielow@gmail.com>
+Subject: [PATCH v3 1/7] part1: l10n: de.po: use imperative form for command options
+Date: Fri,  7 Nov 2014 21:11:14 +0100
+Message-ID: <1415391080-26841-2-git-send-email-ralf.thielow@gmail.com>
 References: <1411146770-8508-1-git-send-email-ralf.thielow@gmail.com>
  <1415391080-26841-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
@@ -11,41 +11,41 @@ Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
 	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
 	Ralf Thielow <ralf.thielow@gmail.com>
 To: git@vger.kernel.org, phillip.szelat@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 07 21:11:44 2014
+X-From: git-owner@vger.kernel.org Fri Nov 07 21:11:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xmpsd-0002db-TD
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 21:11:36 +0100
+	id 1Xmpsc-0002db-UR
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 21:11:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbaKGULd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2014 15:11:33 -0500
-Received: from mail-wg0-f50.google.com ([74.125.82.50]:59655 "EHLO
-	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753111AbaKGULb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2014 15:11:31 -0500
-Received: by mail-wg0-f50.google.com with SMTP id z12so4578919wgg.37
-        for <git@vger.kernel.org>; Fri, 07 Nov 2014 12:11:29 -0800 (PST)
+	id S1753281AbaKGUL3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2014 15:11:29 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:65140 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753111AbaKGUL1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2014 15:11:27 -0500
+Received: by mail-wi0-f174.google.com with SMTP id d1so5932629wiv.7
+        for <git@vger.kernel.org>; Fri, 07 Nov 2014 12:11:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=fky4MTQQCuBURSCnxf++Ti3hphMmvDGRPRmKf6ysdTA=;
-        b=mL1qCyl6nzPZwgUbtj5YNJnnBzGwMkDzHbCIgyHBhXOXR/Xv/1VkAGZFGQZvK2gndY
-         BegXXHtF325fALvd5HlouQMToih03OQ339Wi/qzsvB8hXlWdv46ANaJnDiDTJwuk3YZZ
-         FjPpdkudv5r1pUabYeuJ2kIY71Z0EVp186zUxPTEBXAZytP83LqUNGdbh8MP/eNJZxFB
-         jniqnYDyqmKzIoodqmg2+GzwZhEirPGhaDwVX1osalx3jPPRTZfTz24rG+HMlSsTvJSB
-         D2Ftnqc+4adYWeNyXYn+asxUo0tH3rzHYgF9BTArJvSaRv1uqx9xQVqavsmbZTD1II29
-         1RCg==
-X-Received: by 10.180.107.1 with SMTP id gy1mr8356266wib.8.1415391089664;
-        Fri, 07 Nov 2014 12:11:29 -0800 (PST)
+        bh=iTyYlgC3m5gb2Sr1B9SRyD8quEmu26tgIGd9FX5jUAw=;
+        b=htqY5cFyAHuL5GWgBKUgkR9c4/02A6QguWkjRwf1zQ6UuE7/w6gnp5axqXL4fKY737
+         qvoXcZUrvJ1EI8r03W9Kux+FJYtZZaKMvZXnXLMegt7KT4lpjfmtArV0ZcIktRCz2Gi4
+         ijhx9snM/GOicDNWTODO1yvfbD9WrJ+TItDV6Ms2hgs5/VkqSSWxuRvy4Qc04wIeWNrw
+         C1iCutT4C/JMceiJt7CrLHTrScc59JQAH66Dx5FXdxwTlgrX3Pj3XHDR3IDxvqCIbggD
+         45xI/FiameD/oF6jaJt0FEyxpe8zF6gHzsF/BXIQex7aYL+6O7H/0MwWUT0IMlG73l06
+         XnfA==
+X-Received: by 10.180.36.229 with SMTP id t5mr8264969wij.56.1415391086105;
+        Fri, 07 Nov 2014 12:11:26 -0800 (PST)
 Received: from localhost (dslb-088-073-206-248.088.073.pools.vodafone-ip.de. [88.73.206.248])
-        by mx.google.com with ESMTPSA id cv7sm13046675wjc.3.2014.11.07.12.11.28
+        by mx.google.com with ESMTPSA id fv2sm3283631wib.2.2014.11.07.12.11.24
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 07 Nov 2014 12:11:29 -0800 (PST)
+        Fri, 07 Nov 2014 12:11:25 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.rc0.232.g8ec773f
 In-Reply-To: <1415391080-26841-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
@@ -55,532 +55,578 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 ---
- po/de.po | 160 +++++++++++++++++++++++++++++++------------------------=
+ po/de.po | 166 +++++++++++++++++++++++++++++++------------------------=
 --------
- 1 file changed, 80 insertions(+), 80 deletions(-)
+ 1 file changed, 83 insertions(+), 83 deletions(-)
 
 diff --git a/po/de.po b/po/de.po
-index 47b2d68..8071fd1 100644
+index c807967..8782bd4 100644
 --- a/po/de.po
 +++ b/po/de.po
-@@ -4648,31 +4648,31 @@ msgstr "interaktives Hinzuf=C3=BCgen von =C3=84=
-nderungen"
+@@ -70,7 +70,7 @@ msgstr "Pr=C3=A4fix"
 =20
- #: builtin/commit.c:1592
- msgid "commit only specified files"
--msgstr "committet nur die angegebenen Dateien"
-+msgstr "nur die angegebenen Dateien committen"
+ #: archive.c:330
+ msgid "prepend prefix to each pathname in the archive"
+-msgstr "stellt einen Pr=C3=A4fix vor jeden Pfadnamen in dem Archiv"
++msgstr "einen Pr=C3=A4fix vor jeden Pfadnamen in dem Archiv stellen"
 =20
- #: builtin/commit.c:1593
- msgid "bypass pre-commit hook"
--msgstr "umgeht \"pre-commit hook\""
-+msgstr "\"pre-commit hook\" umgehen"
+ #: archive.c:331 builtin/archive.c:88 builtin/blame.c:2517
+ #: builtin/blame.c:2518 builtin/config.c:57 builtin/fast-export.c:709
+@@ -82,15 +82,15 @@ msgstr "Datei"
 =20
- #: builtin/commit.c:1594
- msgid "show what would be committed"
--msgstr "zeigt an, was committet werden w=C3=BCrde"
-+msgstr "anzeigen, was committet werden w=C3=BCrde"
+ #: archive.c:332 builtin/archive.c:89
+ msgid "write the archive to this file"
+-msgstr "schreibt das Archiv in diese Datei"
++msgstr "das Archiv in diese Datei schreiben"
 =20
- #: builtin/commit.c:1605
- msgid "amend previous commit"
--msgstr "=C3=A4ndert vorherigen Commit"
-+msgstr "vorherigen Commit =C3=A4ndern"
+ #: archive.c:334
+ msgid "read .gitattributes in working directory"
+-msgstr "liest .gitattributes aus dem Arbeitsverzeichnis"
++msgstr ".gitattributes aus dem Arbeitsverzeichnis lesen"
 =20
- #: builtin/commit.c:1606
- msgid "bypass post-rewrite hook"
--msgstr "umgeht \"post-rewrite hook\""
-+msgstr "\"post-rewrite hook\" umgehen"
+ #: archive.c:335
+ msgid "report archived files on stderr"
+-msgstr "gibt archivierte Dateien in der Standard-Fehlerausgabe aus"
++msgstr "archivierte Dateien in der Standard-Fehlerausgabe ausgeben"
 =20
- #: builtin/commit.c:1611
- msgid "ok to record an empty change"
--msgstr "erlaubt Aufzeichnung einer leeren =C3=84nderung"
-+msgstr "Aufzeichnung einer leeren =C3=84nderung erlauben"
+ #: archive.c:336
+ msgid "store only"
+@@ -106,7 +106,7 @@ msgstr "besser komprimieren"
 =20
- #: builtin/commit.c:1613
- msgid "ok to record a change with an empty message"
--msgstr "erlaubt Aufzeichnung einer =C3=84nderung mit einer leeren Besc=
-hreibung"
-+msgstr "Aufzeichnung einer =C3=84nderung mit einer leeren Beschreibung=
- erlauben"
+ #: archive.c:348
+ msgid "list supported archive formats"
+-msgstr "listet unterst=C3=BCtzte Archivformate auf"
++msgstr "unterst=C3=BCtzte Archivformate auflisten"
 =20
- #: builtin/commit.c:1641
- msgid "could not parse HEAD commit"
-@@ -4740,19 +4740,19 @@ msgstr "Ort der Konfigurationsdatei"
+ #: archive.c:350 builtin/archive.c:90 builtin/clone.c:84
+ msgid "repo"
+@@ -114,7 +114,7 @@ msgstr "Repository"
 =20
- #: builtin/config.c:54
- msgid "use global config file"
--msgstr "verwendet globale Konfigurationsdatei"
-+msgstr "globale Konfigurationsdatei verwenden"
+ #: archive.c:351 builtin/archive.c:91
+ msgid "retrieve the archive from remote repository <repo>"
+-msgstr "ruft das Archiv von Remote-Repository <Repository> ab"
++msgstr "Archiv vom Remote-Repository <Repository> abrufen"
 =20
- #: builtin/config.c:55
- msgid "use system config file"
--msgstr "verwendet systemweite Konfigurationsdatei"
-+msgstr "systemweite Konfigurationsdatei verwenden"
+ #: archive.c:352 builtin/archive.c:92 builtin/notes.c:491
+ msgid "command"
+@@ -2014,38 +2014,38 @@ msgstr "aktuelle Unterschiede editieren und anw=
+enden"
 =20
- #: builtin/config.c:56
- msgid "use repository config file"
--msgstr "verwendet Konfigurationsdatei des Repositories"
-+msgstr "Konfigurationsdatei des Repositories verwenden"
+ #: builtin/add.c:254
+ msgid "allow adding otherwise ignored files"
+-msgstr "erlaubt das Hinzuf=C3=BCgen andernfalls ignorierter Dateien"
++msgstr "das Hinzuf=C3=BCgen andernfalls ignorierter Dateien erlauben"
 =20
- #: builtin/config.c:57
- msgid "use given config file"
--msgstr "verwendet die angegebene Konfigurationsdatei"
-+msgstr "die angegebene Konfigurationsdatei verwenden"
+ #: builtin/add.c:255
+ msgid "update tracked files"
+-msgstr "aktualisiert beobachtete Dateien"
++msgstr "beobachtete Dateien aktualisieren"
 =20
- #: builtin/config.c:58
- msgid "blob-id"
-@@ -4760,7 +4760,7 @@ msgstr "Blob-Id"
+ #: builtin/add.c:256
+ msgid "record only the fact that the path will be added later"
+-msgstr "speichert nur, dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt werd=
+en soll"
++msgstr "nur speichern, dass der Pfad sp=C3=A4ter hinzugef=C3=BCgt werd=
+en soll"
 =20
- #: builtin/config.c:58
- msgid "read config from given blob object"
--msgstr "liest Konfiguration von angegebenem Blob-Objekt"
-+msgstr "Konfiguration von angegebenem Blob-Objekt lesen"
-=20
- #: builtin/config.c:59
- msgid "Action"
-@@ -4768,51 +4768,51 @@ msgstr "Aktion"
-=20
- #: builtin/config.c:60
- msgid "get value: name [value-regex]"
--msgstr "gibt Wert zur=C3=BCck: Name [Wert-regex]"
-+msgstr "Wert zur=C3=BCckgeben: Name [Wert-regex]"
-=20
- #: builtin/config.c:61
- msgid "get all values: key [value-regex]"
--msgstr "gibt alle Werte zur=C3=BCck: Schl=C3=BCssel [Wert-regex]"
-+msgstr "alle Werte zur=C3=BCckgeben: Schl=C3=BCssel [Wert-regex]"
-=20
- #: builtin/config.c:62
- msgid "get values for regexp: name-regex [value-regex]"
--msgstr "gibt Werte f=C3=BCr den regul=C3=A4ren Ausdruck zur=C3=BCck: N=
-ame-regex [Wert-regex]"
-+msgstr "Werte f=C3=BCr den regul=C3=A4ren Ausdruck zur=C3=BCckgeben: N=
-ame-regex [Wert-regex]"
-=20
- #: builtin/config.c:63
- msgid "get value specific for the URL: section[.var] URL"
--msgstr "gibt Wert spezifisch f=C3=BCr eine URL zur=C3=BCck: section[.v=
-ar] URL"
-+msgstr "Wert spezifisch f=C3=BCr eine URL zur=C3=BCckgeben: section[.v=
-ar] URL"
-=20
- #: builtin/config.c:64
- msgid "replace all matching variables: name value [value_regex]"
--msgstr "ersetzt alle passenden Variablen: Name Wert [Wert-regex] "
-+msgstr "alle passenden Variablen ersetzen: Name Wert [Wert-regex] "
-=20
- #: builtin/config.c:65
- msgid "add a new variable: name value"
--msgstr "f=C3=BCgt neue Variable hinzu: Name Wert"
-+msgstr "neue Variable hinzuf=C3=BCgen: Name Wert"
-=20
- #: builtin/config.c:66
- msgid "remove a variable: name [value-regex]"
--msgstr "entfernt eine Variable: Name [Wert-regex]"
-+msgstr "eine Variable entfernen: Name [Wert-regex]"
-=20
- #: builtin/config.c:67
- msgid "remove all matches: name [value-regex]"
--msgstr "entfernt alle =C3=9Cbereinstimmungen: Name [Wert-regex]"
-+msgstr "alle =C3=9Cbereinstimmungen entfernen: Name [Wert-regex]"
-=20
- #: builtin/config.c:68
- msgid "rename section: old-name new-name"
--msgstr "benennt eine Sektion um: alter-Name neuer-Name"
-+msgstr "eine Sektion umbenennen: alter-Name neuer-Name"
-=20
- #: builtin/config.c:69
- msgid "remove a section: name"
--msgstr "entfernt eine Sektion: Name"
-+msgstr "eine Sektion entfernen: Name"
-=20
- #: builtin/config.c:70
- msgid "list all"
--msgstr "listet alles auf"
-+msgstr "alles auflisten"
-=20
- #: builtin/config.c:71
- msgid "open an editor"
--msgstr "=C3=B6ffnet einen Editor"
-+msgstr "einen Editor =C3=B6ffnen"
-=20
- #: builtin/config.c:72 builtin/config.c:73
- msgid "slot"
-@@ -4820,11 +4820,11 @@ msgstr "Slot"
-=20
- #: builtin/config.c:72
- msgid "find the color configured: [default]"
--msgstr "findet die konfigurierte Farbe: [Standard]"
-+msgstr "die konfigurierte Farbe finden: [Standard]"
-=20
- #: builtin/config.c:73
- msgid "find the color setting: [stdout-is-tty]"
--msgstr "findet die Farbeinstellung: [Standard-Ausgabe-ist-Terminal]"
-+msgstr "die Farbeinstellung finden: [Standard-Ausgabe-ist-Terminal]"
-=20
- #: builtin/config.c:74
- msgid "Type"
-@@ -4948,43 +4948,43 @@ msgstr ""
-=20
- #: builtin/describe.c:395
- msgid "find the tag that comes after the commit"
--msgstr "findet das Tag, das nach Commit kommt"
-+msgstr "das Tag finden, das nach dem Commit kommt"
-=20
- #: builtin/describe.c:396
- msgid "debug search strategy on stderr"
--msgstr "protokolliert die Suchstrategie in der Standard-Fehlerausgabe"
-+msgstr "die Suchstrategie in der Standard-Fehlerausgabe protokollieren=
-"
-=20
- #: builtin/describe.c:397
- msgid "use any ref"
--msgstr "verwendet alle Referenzen"
-+msgstr "alle Referenzen verwenden"
-=20
- #: builtin/describe.c:398
- msgid "use any tag, even unannotated"
--msgstr "verwendet jedes Tag, auch nicht-annotierte"
-+msgstr "jedes Tag verwenden, auch nicht-annotierte"
-=20
- #: builtin/describe.c:399
- msgid "always use long format"
--msgstr "verwendet immer langes Format"
-+msgstr "immer langes Format verwenden"
-=20
- #: builtin/describe.c:400
- msgid "only follow first parent"
--msgstr "folgt nur erstem Elternteil"
-+msgstr "nur erstem Elternteil folgen"
-=20
- #: builtin/describe.c:403
- msgid "only output exact matches"
--msgstr "gibt nur exakte =C3=9Cbereinstimmungen aus"
-+msgstr "nur exakte =C3=9Cbereinstimmungen ausgeben"
-=20
- #: builtin/describe.c:405
- msgid "consider <n> most recent tags (default: 10)"
--msgstr "betrachtet die j=C3=BCngsten <n> Tags (Standard: 10)"
-+msgstr "die j=C3=BCngsten <n> Tags betrachten (Standard: 10)"
-=20
- #: builtin/describe.c:407
- msgid "only consider tags matching <pattern>"
--msgstr "betrachtet nur Tags die <Muster> entsprechen"
-+msgstr "nur Tags, die <Muster> entsprechen, betrachten"
-=20
- #: builtin/describe.c:409 builtin/name-rev.c:318
- msgid "show abbreviated commit object as fallback"
--msgstr "zeigt gek=C3=BCrztes Commit-Objekt, wenn sonst nichts zutrifft=
-"
-+msgstr "gek=C3=BCrztes Commit-Objekt anzeigen, wenn sonst nichts zutri=
-fft"
-=20
- #: builtin/describe.c:410
- msgid "mark"
-@@ -4993,7 +4993,7 @@ msgstr "Kennzeichen"
- #: builtin/describe.c:411
- msgid "append <mark> on dirty working tree (default: \"-dirty\")"
+ #: builtin/add.c:257
+ msgid "add changes from all tracked and untracked files"
  msgstr ""
--"f=C3=BCgt <Kennzeichen> bei ge=C3=A4ndertem Arbeitsverzeichnis hinzu =
-(Standard: \"-"
-+"<Kennzeichen> bei ge=C3=A4ndertem Arbeitsverzeichnis hinzuf=C3=BCgen =
-(Standard: \"-"
- "dirty\")"
+-"f=C3=BCgt =C3=84nderungen von allen beobachteten und unbeobachteten D=
+ateien hinzu"
++"=C3=84nderungen von allen beobachteten und unbeobachteten Dateien hin=
+zuf=C3=BCgen"
 =20
- #: builtin/describe.c:429
-@@ -5043,39 +5043,39 @@ msgstr "git fast-export [rev-list-opts]"
+ #: builtin/add.c:260
+ msgid "ignore paths removed in the working tree (same as --no-all)"
+-msgstr "ignoriert gel=C3=B6schte Pfade im Arbeitsverzeichnis (genau wi=
+e --no-all)"
++msgstr "gel=C3=B6schte Pfade im Arbeitsverzeichnis ignorieren (genau w=
+ie --no-all)"
 =20
- #: builtin/fast-export.c:702
- msgid "show progress after <n> objects"
--msgstr "zeigt Fortschritt nach <n> Objekten an"
-+msgstr "Fortschritt nach <n> Objekten anzeigen"
+ #: builtin/add.c:262
+ msgid "don't add, only refresh the index"
+-msgstr "f=C3=BCgt nichts hinzu, aktualisiert nur die Staging-Area"
++msgstr "nichts hinzuf=C3=BCgen, nur die Staging-Area aktualisieren"
 =20
- #: builtin/fast-export.c:704
- msgid "select handling of signed tags"
--msgstr "w=C3=A4hlt Behandlung von signierten Tags"
-+msgstr "Behandlung von signierten Tags w=C3=A4hlen"
+ #: builtin/add.c:263
+ msgid "just skip files which cannot be added because of errors"
+ msgstr ""
+-"=C3=BCberspringt Dateien, die aufgrund von Fehlern nicht hinzugef=C3=BC=
+gt werden "
++"Dateien =C3=BCberspringen, die aufgrund von Fehlern nicht hinzugef=C3=
+=BCgt werden "
+ "konnten"
 =20
- #: builtin/fast-export.c:707
- msgid "select handling of tags that tag filtered objects"
--msgstr "w=C3=A4hlt Behandlung von Tags, die gefilterte Objekte markier=
+ #: builtin/add.c:264
+ msgid "check if - even missing - files are ignored in dry run"
+-msgstr "pr=C3=BCft ob - auch fehlende - Dateien im Probelauf ignoriert=
+ werden"
++msgstr "pr=C3=BCfen ob - auch fehlende - Dateien im Probelauf ignorier=
+t werden"
+=20
+ #: builtin/add.c:286
+ #, c-format
+@@ -2427,11 +2427,11 @@ msgstr "Pfad"
+=20
+ #: builtin/apply.c:4359
+ msgid "don't apply changes matching the given path"
+-msgstr "wendet keine =C3=84nderungen im angegebenen Pfad an"
++msgstr "keine =C3=84nderungen im angegebenen Pfad anwenden"
+=20
+ #: builtin/apply.c:4362
+ msgid "apply changes matching the given path"
+-msgstr "wendet =C3=84nderungen nur im angegebenen Pfad an"
++msgstr "=C3=84nderungen nur im angegebenen Pfad anwenden"
+=20
+ #: builtin/apply.c:4364
+ msgid "num"
+@@ -2440,29 +2440,29 @@ msgstr "Anzahl"
+ #: builtin/apply.c:4365
+ msgid "remove <num> leading slashes from traditional diff paths"
+ msgstr ""
+-"entfernt <Anzahl> vorangestellte Schr=C3=A4gstriche von herk=C3=B6mml=
+ichen "
+-"Differenzpfaden"
++"<Anzahl> vorangestellte Schr=C3=A4gstriche von herk=C3=B6mmlichen "
++"Differenzpfaden entfernen"
+=20
+ #: builtin/apply.c:4368
+ msgid "ignore additions made by the patch"
+-msgstr "ignoriert hinzugef=C3=BCgte Zeilen des Patches"
++msgstr "hinzugef=C3=BCgte Zeilen des Patches ignorieren"
+=20
+ #: builtin/apply.c:4370
+ msgid "instead of applying the patch, output diffstat for the input"
+ msgstr ""
+-"anstatt der Anwendung des Patches, wird der \"diffstat\" f=C3=BCr die=
+ Eingabe "
++"anstatt der Anwendung des Patches, den \"diffstat\" f=C3=BCr die Eing=
+abe "
+ "ausgegeben"
+=20
+ #: builtin/apply.c:4374
+ msgid "show number of added and deleted lines in decimal notation"
+ msgstr ""
+-"zeigt die Anzahl von hinzugef=C3=BCgten/entfernten Zeilen in Dezimaln=
+otation"
++"die Anzahl von hinzugef=C3=BCgten/entfernten Zeilen in Dezimalnotatio=
+n anzeigen"
+=20
+ #: builtin/apply.c:4376
+ msgid "instead of applying the patch, output a summary for the input"
+ msgstr ""
+-"anstatt der Anwendung des Patches, wird eine Zusammenfassung f=C3=BCr=
+ die Eingabe "
+-"ausgegeben"
++"anstatt der Anwendung des Patches, eine Zusammenfassung f=C3=BCr die =
+Eingabe "
++"ausgeben"
+=20
+ #: builtin/apply.c:4378
+ msgid "instead of applying the patch, see if the patch is applicable"
+@@ -2472,27 +2472,27 @@ msgstr ""
+ #: builtin/apply.c:4380
+ msgid "make sure the patch is applicable to the current index"
+ msgstr ""
+-"stellt sicher, dass der Patch in der aktuellen Staging-Area angewende=
+t "
++"sicherstellen, dass der Patch in der aktuellen Staging-Area angewende=
+t "
+ "werden kann"
+=20
+ #: builtin/apply.c:4382
+ msgid "apply a patch without touching the working tree"
+ msgstr ""
+-"wendet einen Patch an, ohne =C3=84nderungen im Arbeitsverzeichnis vor=
+zunehmen"
++"Patch anwenden, ohne =C3=84nderungen im Arbeitsverzeichnis vorzunehme=
+n"
+=20
+ #: builtin/apply.c:4384
+ msgid "also apply the patch (use with --stat/--summary/--check)"
+-msgstr "wendet den Patch an (Benutzung mit --stat/--summary/--check)"
++msgstr "Patch anwenden (Benutzung mit --stat/--summary/--check)"
+=20
+ #: builtin/apply.c:4386
+ msgid "attempt three-way merge if a patch does not apply"
+-msgstr "versucht 3-Wege-Merge, wenn der Patch nicht angewendet werden =
+konnte"
++msgstr "versuche 3-Wege-Merge, wenn der Patch nicht angewendet werden =
+konnte"
+=20
+ #: builtin/apply.c:4388
+ msgid "build a temporary index based on embedded index information"
+ msgstr ""
+-"erstellt eine tempor=C3=A4re Staging-Area basierend auf den integrier=
+ten Staging-"
+-"Area-Informationen"
++"eine tempor=C3=A4re Staging-Area, basierend auf den integrierten Stag=
+ing-"
++"Area-Informationen, erstellen"
+=20
+ #: builtin/apply.c:4390 builtin/checkout-index.c:198 builtin/ls-files.=
+c:455
+ msgid "paths are separated with NUL character"
+@@ -2500,7 +2500,7 @@ msgstr "Pfade sind getrennt durch NUL Zeichen"
+=20
+ #: builtin/apply.c:4393
+ msgid "ensure at least <n> lines of context match"
+-msgstr "stellt sicher, dass mindestens <n> Zeilen des Kontextes =C3=BC=
+bereinstimmen"
++msgstr "sicher stellen, dass mindestens <n> Zeilen des Kontextes =C3=BC=
+bereinstimmen"
+=20
+ #: builtin/apply.c:4394
+ msgid "action"
+@@ -2508,36 +2508,36 @@ msgstr "Aktion"
+=20
+ #: builtin/apply.c:4395
+ msgid "detect new or modified lines that have whitespace errors"
+-msgstr "ermittelt neue oder ge=C3=A4nderte Zeilen die Whitespace-Fehle=
+r haben"
++msgstr "neue oder ge=C3=A4nderte Zeilen, die Whitespace-Fehler haben, =
+ermitteln"
+=20
+ #: builtin/apply.c:4398 builtin/apply.c:4401
+ msgid "ignore changes in whitespace when finding context"
+-msgstr "ignoriert =C3=84nderungen im Whitespace bei der Suche des Kont=
+extes"
++msgstr "=C3=84nderungen im Whitespace bei der Suche des Kontextes igno=
+rieren"
+=20
+ #: builtin/apply.c:4404
+ msgid "apply the patch in reverse"
+-msgstr "wendet den Patch in umgekehrter Reihenfolge an"
++msgstr "den Patch in umgekehrter Reihenfolge anwenden"
+=20
+ #: builtin/apply.c:4406
+ msgid "don't expect at least one line of context"
+-msgstr "erwartet keinen Kontext"
++msgstr "keinen Kontext erwarten"
+=20
+ #: builtin/apply.c:4408
+ msgid "leave the rejected hunks in corresponding *.rej files"
+ msgstr ""
+-"hinterl=C3=A4sst zur=C3=BCckgewiesene Patch-Bl=C3=B6cke in entspreche=
+nden *.rej Dateien"
++"zur=C3=BCckgewiesene Patch-Bl=C3=B6cke in entsprechenden *.rej Dateie=
+n hinterlassen"
+=20
+ #: builtin/apply.c:4410
+ msgid "allow overlapping hunks"
+-msgstr "erlaubt sich =C3=BCberlappende Patch-Bl=C3=B6cke"
++msgstr "sich =C3=BCberlappende Patch-Bl=C3=B6cke erlauben"
+=20
+ #: builtin/apply.c:4413
+ msgid "tolerate incorrectly detected missing new-line at the end of fi=
+le"
+-msgstr "toleriert fehlerhaft erkannten fehlenden Zeilenumbruch am Date=
+iende"
++msgstr "fehlerhaft erkannten fehlenden Zeilenumbruch am Dateiende tole=
+rieren"
+=20
+ #: builtin/apply.c:4416
+ msgid "do not trust the line counts in the hunk headers"
+-msgstr "vertraut nicht den Zeilennummern im Kopf des Patch-Blocks"
++msgstr "den Zeilennummern im Kopf des Patch-Blocks nicht vertrauen"
+=20
+ #: builtin/apply.c:4418
+ msgid "root"
+@@ -2545,7 +2545,7 @@ msgstr "Wurzelverzeichnis"
+=20
+ #: builtin/apply.c:4419
+ msgid "prepend <root> to all filenames"
+-msgstr "stellt <Wurzelverzeichnis> vor alle Dateinamen"
++msgstr "<Wurzelverzeichnis> vor alle Dateinamen stellen"
+=20
+ #: builtin/apply.c:4441
+ msgid "--3way outside a repository"
+@@ -2622,11 +2622,11 @@ msgstr "git bisect--helper --next-all [--no-che=
+ckout]"
+=20
+ #: builtin/bisect--helper.c:17
+ msgid "perform 'git bisect next'"
+-msgstr "f=C3=BChrt 'git bisect next' aus"
++msgstr "'git bisect next' ausf=C3=BChren"
+=20
+ #: builtin/bisect--helper.c:19
+ msgid "update BISECT_HEAD instead of checking out the current commit"
+-msgstr "aktualisiert BISECT_HEAD, anstatt den aktuellen Commit auszuch=
+ecken"
++msgstr "BISECT_HEAD aktualisieren, anstatt den aktuellen Commit auszuc=
+hecken"
+=20
+ #: builtin/blame.c:30
+ msgid "git blame [options] [rev-opts] [rev] [--] file"
+@@ -2638,31 +2638,31 @@ msgstr "[rev-opts] sind dokumentiert in git-rev=
+-list(1)"
+=20
+ #: builtin/blame.c:2501
+ msgid "Show blame entries as we find them, incrementally"
+-msgstr "Zeigt \"blame\"-Eintr=C3=A4ge schrittweise, w=C3=A4hrend wir s=
+ie generieren"
++msgstr "\"blame\"-Eintr=C3=A4ge schrittweise anzeigen, w=C3=A4hrend wi=
+r sie generieren"
+=20
+ #: builtin/blame.c:2502
+ msgid "Show blank SHA-1 for boundary commits (Default: off)"
+-msgstr "Zeigt leere SHA-1 f=C3=BCr Grenz-Commits (Standard: aus)"
++msgstr "leere SHA-1 f=C3=BCr Grenz-Commits anzeigen (Standard: aus)"
+=20
+ #: builtin/blame.c:2503
+ msgid "Do not treat root commits as boundaries (Default: off)"
+-msgstr "Behandelt Ursprungs-Commit nicht als Grenzen (Standard: aus)"
++msgstr "Ursprungs-Commit nicht als Grenzen behandeln (Standard: aus)"
+=20
+ #: builtin/blame.c:2504
+ msgid "Show work cost statistics"
+-msgstr "Zeigt Statistiken zum Arbeitsaufwand"
++msgstr "Statistiken zum Arbeitsaufwand anzeigen"
+=20
+ #: builtin/blame.c:2505
+ msgid "Show output score for blame entries"
+-msgstr "Zeigt Ausgabebewertung f=C3=BCr \"blame\"-Eintr=C3=A4ge"
++msgstr "Ausgabebewertung f=C3=BCr \"blame\"-Eintr=C3=A4ge anzeigen"
+=20
+ #: builtin/blame.c:2506
+ msgid "Show original filename (Default: auto)"
+-msgstr "Zeigt urspr=C3=BCnglichen Dateinamen (Standard: auto)"
++msgstr "urspr=C3=BCnglichen Dateinamen anzeigen (Standard: auto)"
+=20
+ #: builtin/blame.c:2507
+ msgid "Show original linenumber (Default: off)"
+-msgstr "Zeigt urspr=C3=BCngliche Zeilennummer (Standard: aus)"
++msgstr "urspr=C3=BCngliche Zeilennummer anzeigen (Standard: aus)"
+=20
+ #: builtin/blame.c:2508
+ msgid "Show in a format designed for machine consumption"
+@@ -2675,39 +2675,39 @@ msgstr ""
+=20
+ #: builtin/blame.c:2510
+ msgid "Use the same output mode as git-annotate (Default: off)"
+-msgstr "Benutzt den gleichen Ausgabemodus wie \"git-annotate\" (Standa=
+rd: aus)"
++msgstr "Den gleichen Ausgabemodus benutzen wie \"git-annotate\" (Stand=
+ard: aus)"
+=20
+ #: builtin/blame.c:2511
+ msgid "Show raw timestamp (Default: off)"
+-msgstr "Zeigt unbearbeiteten Zeitstempel (Standard: aus)"
++msgstr "Unbearbeiteten Zeitstempel anzeigen (Standard: aus)"
+=20
+ #: builtin/blame.c:2512
+ msgid "Show long commit SHA1 (Default: off)"
+-msgstr "Zeigt langen Commit-SHA1 (Standard: aus)"
++msgstr "Langen Commit-SHA1 anzeigen (Standard: aus)"
+=20
+ #: builtin/blame.c:2513
+ msgid "Suppress author name and timestamp (Default: off)"
+-msgstr "Unterdr=C3=BCckt den Namen des Autors und den Zeitstempel (Sta=
+ndard: aus)"
++msgstr "Den Namen des Autors und den Zeitstempel unterdr=C3=BCcken (St=
+andard: aus)"
+=20
+ #: builtin/blame.c:2514
+ msgid "Show author email instead of name (Default: off)"
+-msgstr "Zeigt anstatt des Namens die E-Mail-Adresse des Autors (Standa=
+rd: aus)"
++msgstr "Anstatt des Namens die E-Mail-Adresse des Autors anzeigen (Sta=
+ndard: aus)"
+=20
+ #: builtin/blame.c:2515
+ msgid "Ignore whitespace differences"
+-msgstr "Ignoriert Unterschiede im Whitespace"
++msgstr "Unterschiede im Whitespace ignorieren"
+=20
+ #: builtin/blame.c:2516
+ msgid "Spend extra cycles to find better match"
+-msgstr "arbeite l=C3=A4nger, um bessere =C3=9Cbereinstimmungen zu find=
 en"
-+msgstr "Behandlung von Tags w=C3=A4hlen, die gefilterte Objekte markie=
-ren"
++msgstr "L=C3=A4nger arbeiten, um bessere =C3=9Cbereinstimmungen zu fin=
+den"
 =20
- #: builtin/fast-export.c:710
- msgid "Dump marks to this file"
--msgstr "Schreibt Kennzeichen in diese Datei"
-+msgstr "Kennzeichen in diese Datei schreiben"
-=20
- #: builtin/fast-export.c:712
- msgid "Import marks from this file"
--msgstr "Importiert Kennzeichen von dieser Datei"
-+msgstr "Kennzeichen von dieser Datei importieren"
-=20
- #: builtin/fast-export.c:714
- msgid "Fake a tagger when tags lack one"
--msgstr "erzeugt k=C3=BCnstlich einen Tag-Ersteller, wenn das Tag keine=
-n hat"
-+msgstr "k=C3=BCnstlich einen Tag-Ersteller erzeugen, wenn das Tag kein=
-en hat"
-=20
- #: builtin/fast-export.c:716
- msgid "Output full tree for each commit"
--msgstr "gibt f=C3=BCr jeden Commit das gesamte Verzeichnis aus"
-+msgstr "f=C3=BCr jeden Commit das gesamte Verzeichnis ausgeben"
-=20
- #: builtin/fast-export.c:718
- msgid "Use the done feature to terminate the stream"
--msgstr "Benutzt die \"done\"-Funktion, um den Strom abzuschlie=C3=9Fen=
-"
-+msgstr "die \"done\"-Funktion benutzen, um den Datenstrom abzuschlie=C3=
-=9Fen"
-=20
- #: builtin/fast-export.c:719
- msgid "Skip output of blob data"
--msgstr "=C3=9Cberspringt Ausgabe von Blob-Daten"
-+msgstr "Ausgabe von Blob-Daten =C3=BCberspringen"
-=20
- #: builtin/fast-export.c:720
- msgid "refspec"
-@@ -5083,7 +5083,7 @@ msgstr "Refspec"
-=20
- #: builtin/fast-export.c:721
- msgid "Apply refspec to exported refs"
--msgstr "Wendet Refspec auf exportierte Referenzen an"
-+msgstr "Refspec auf exportierte Referenzen anwenden"
-=20
- #: builtin/fetch.c:20
- msgid "git fetch [<options>] [<repository> [<refspec>...]]"
-@@ -5107,7 +5107,7 @@ msgstr "fordert von allen Remote-Repositories an"
-=20
- #: builtin/fetch.c:92
- msgid "append to .git/FETCH_HEAD instead of overwriting"
--msgstr "h=C3=A4ngt an .git/FETCH_HEAD an, anstatt zu =C3=BCberschreibe=
+ #: builtin/blame.c:2517
+ msgid "Use revisions from <file> instead of calling git-rev-list"
+-msgstr "Benutzt Commits von <Datei> anstatt \"git-rev-list\" aufzurufe=
 n"
-+msgstr "an .git/FETCH_HEAD anh=C3=A4ngen, anstatt zu =C3=BCberschreibe=
-n"
++msgstr "Commits von <Datei> benutzen, anstatt \"git-rev-list\" aufzuru=
+fen"
 =20
- #: builtin/fetch.c:94
- msgid "path to upload pack on remote end"
-@@ -5115,24 +5115,24 @@ msgstr "Pfad des Programms zum Hochladen von Pa=
-keten auf der Gegenseite"
+ #: builtin/blame.c:2518
+ msgid "Use <file>'s contents as the final image"
+-msgstr "Benutzt Inhalte der <Datei>en als entg=C3=BCltiges Abbild"
++msgstr "Inhalte der <Datei>en als entg=C3=BCltiges Abbild benutzen"
 =20
- #: builtin/fetch.c:95
- msgid "force overwrite of local branch"
--msgstr "erzwingt das =C3=9Cberschreiben von lokalen Branches"
-+msgstr "das =C3=9Cberschreiben von lokalen Branches erzwingen"
+ #: builtin/blame.c:2519 builtin/blame.c:2520
+ msgid "score"
+@@ -2715,11 +2715,11 @@ msgstr "Bewertung"
 =20
- #: builtin/fetch.c:97
- msgid "fetch from multiple remotes"
--msgstr "fordert von mehreren Remote-Repositories an"
-+msgstr "von mehreren Remote-Repositories anfordern"
+ #: builtin/blame.c:2519
+ msgid "Find line copies within and across files"
+-msgstr "Findet kopierte Zeilen innerhalb oder zwischen Dateien"
++msgstr "kopierte Zeilen innerhalb oder zwischen Dateien finden"
 =20
- #: builtin/fetch.c:99
- msgid "fetch all tags and associated objects"
--msgstr "fordert alle Tags und verbundene Objekte an"
-+msgstr "alle Tags und verbundene Objekte anfordern"
+ #: builtin/blame.c:2520
+ msgid "Find line movements within and across files"
+-msgstr "Findet verschobene Zeilen innerhalb oder zwischen Dateien"
++msgstr "verschobene Zeilen innerhalb oder zwischen Dateien finden"
 =20
- #: builtin/fetch.c:101
- msgid "do not fetch all tags (--no-tags)"
--msgstr "fordert nicht alle Tags an (--no-tags)"
-+msgstr "nicht alle Tags anfordern (--no-tags)"
+ #: builtin/blame.c:2521
+ msgid "n,m"
+@@ -2727,7 +2727,7 @@ msgstr "n,m"
 =20
- #: builtin/fetch.c:103
- msgid "prune remote-tracking branches no longer on remote"
+ #: builtin/blame.c:2521
+ msgid "Process only line range n,m, counting from 1"
+-msgstr "Verarbeitet nur Zeilen im Bereich n,m, gez=C3=A4hlt von 1"
++msgstr "nur Zeilen im Bereich n,m verarbeiten, gez=C3=A4hlt von 1"
+=20
+ #. TRANSLATORS: This string is used to tell us the maximum
+ #. display width for a relative timestamp in "git blame"
+@@ -2959,27 +2959,27 @@ msgstr "Allgemeine Optionen"
+=20
+ #: builtin/branch.c:805
+ msgid "show hash and subject, give twice for upstream branch"
+-msgstr "Zeigt Hash und Betreff; -vv: zus=C3=A4tzlich Upstream-Branch"
++msgstr "Hash und Betreff anzeigen; -vv: zus=C3=A4tzlich Upstream-Branc=
+h"
+=20
+ #: builtin/branch.c:806
+ msgid "suppress informational messages"
+-msgstr "unterdr=C3=BCckt Informationsmeldungen"
++msgstr "Informationsmeldungen unterdr=C3=BCcken"
+=20
+ #: builtin/branch.c:807
+ msgid "set up tracking mode (see git-pull(1))"
+-msgstr "stellt den =C3=9Cbernahmemodus ein (siehe git-pull(1))"
++msgstr "den =C3=9Cbernahmemodus einstellen (siehe git-pull(1))"
+=20
+ #: builtin/branch.c:809
+ msgid "change upstream info"
+-msgstr "=C3=A4ndert Informationen zum Upstream-Branch"
++msgstr "Informationen zum Upstream-Branch =C3=A4ndern"
+=20
+ #: builtin/branch.c:813
+ msgid "use colored output"
+-msgstr "verwendet farbliche Ausgaben"
++msgstr "farbliche Ausgaben verwenden"
+=20
+ #: builtin/branch.c:814
+ msgid "act on remote-tracking branches"
+-msgstr "wirkt auf Remote-Tracking-Branches"
++msgstr "auf Remote-Tracking-Branches wirken"
+=20
+ #: builtin/branch.c:817 builtin/branch.c:823 builtin/branch.c:844
+ #: builtin/branch.c:850 builtin/commit.c:1573 builtin/commit.c:1574
+@@ -2990,7 +2990,7 @@ msgstr "Commit"
+=20
+ #: builtin/branch.c:818 builtin/branch.c:824
+ msgid "print only branches that contain the commit"
+-msgstr "gibt nur Branches aus, welche diesen Commit beinhalten"
++msgstr "nur Branches ausgeben, welche diesen Commit beinhalten"
+=20
+ #: builtin/branch.c:830
+ msgid "Specific git-branch actions:"
+@@ -2998,52 +2998,52 @@ msgstr "spezifische Aktionen f=C3=BCr \"git-bra=
+nch\":"
+=20
+ #: builtin/branch.c:831
+ msgid "list both remote-tracking and local branches"
+-msgstr "listet Remote-Tracking und lokale Branches auf"
++msgstr "Remote-Tracking und lokale Branches auflisten"
+=20
+ #: builtin/branch.c:833
+ msgid "delete fully merged branch"
+-msgstr "entfernt vollst=C3=A4ndig zusammengef=C3=BChrten Branch"
++msgstr "vollst=C3=A4ndig zusammengef=C3=BChrten Branch entfernen"
+=20
+ #: builtin/branch.c:834
+ msgid "delete branch (even if not merged)"
+-msgstr "l=C3=B6scht Branch (auch wenn nicht zusammengef=C3=BChrt)"
++msgstr "Branch l=C3=B6schen (auch wenn nicht zusammengef=C3=BChrt)"
+=20
+ #: builtin/branch.c:835
+ msgid "move/rename a branch and its reflog"
+-msgstr "verschiebt/benennt einen Branch und dessen Reflog um"
++msgstr "einen Branch und dessen Reflog verschieben/umbenennen"
+=20
+ #: builtin/branch.c:836
+ msgid "move/rename a branch, even if target exists"
  msgstr ""
--"entfernt Remote-Tracking-Branches, die sich nicht mehr im Remote-Repo=
-sitory "
-+"Remote-Tracking-Branches entfernen, die sich nicht mehr im Remote-Rep=
-ository "
- "befinden"
+-"verschiebt/benennt einen Branch um, auch wenn das Ziel bereits existi=
+ert"
++"einen Branch verschieben/umbenennen, auch wenn das Ziel bereits exist=
+iert"
 =20
- #: builtin/fetch.c:104
-@@ -5141,24 +5141,24 @@ msgstr "bei-Bedarf"
+ #: builtin/branch.c:837
+ msgid "list branch names"
+-msgstr "listet Branchnamen auf"
++msgstr "Branchnamen auflisten"
 =20
- #: builtin/fetch.c:105
- msgid "control recursive fetching of submodules"
--msgstr "kontrolliert rekursive Anforderungen von Submodulen"
-+msgstr "rekursive Anforderungen von Submodulen kontrollieren"
+ #: builtin/branch.c:838
+ msgid "create the branch's reflog"
+-msgstr "erzeugt das Reflog des Branches"
++msgstr "das Reflog des Branches erzeugen"
 =20
- #: builtin/fetch.c:109
- msgid "keep downloaded pack"
--msgstr "beh=C3=A4lt heruntergeladenes Paket"
-+msgstr "heruntergeladenes Paket behalten"
+ #: builtin/branch.c:840
+ msgid "edit the description for the branch"
+-msgstr "bearbeitet die Beschreibung f=C3=BCr den Branch"
++msgstr "die Beschreibung f=C3=BCr den Branch bearbeiten"
 =20
- #: builtin/fetch.c:111
- msgid "allow updating of HEAD ref"
--msgstr "erlaubt Aktualisierung der \"HEAD\"-Referenz"
-+msgstr "Aktualisierung der \"HEAD\"-Referenz erlauben"
+ #: builtin/branch.c:841
+ msgid "force creation (when already exists)"
+-msgstr "erzeuge auch, wenn der Branch bereits existiert"
++msgstr "Branch auch erzeugen, wenn dieser bereits existiert"
 =20
- #: builtin/fetch.c:114
- msgid "deepen history of shallow clone"
- msgstr ""
--"vertieft die Historie eines Klons mit unvollst=C3=A4ndiger Historie (=
-shallow)"
-+"die Historie eines Klons mit unvollst=C3=A4ndiger Historie (shallow) =
-vertiefen"
+ #: builtin/branch.c:844
+ msgid "print only not merged branches"
+-msgstr "gibt nur Branches aus, die nicht zusammengef=C3=BChrt sind"
++msgstr "nur Branches ausgeben, die nicht zusammengef=C3=BChrt sind"
 =20
- #: builtin/fetch.c:116
- msgid "convert to a complete repository"
--msgstr "konvertiert zu einem vollst=C3=A4ndigen Repository"
-+msgstr "zu einem vollst=C3=A4ndigen Repository konvertieren"
+ #: builtin/branch.c:850
+ msgid "print only merged branches"
+-msgstr "gibt nur Branches aus, die zusammengef=C3=BChrt sind"
++msgstr "nur Branches ausgeben, die zusammengef=C3=BChrt sind"
 =20
- #: builtin/fetch.c:118 builtin/log.c:1205
- msgid "dir"
-@@ -5166,7 +5166,7 @@ msgstr "Verzeichnis"
+ #: builtin/branch.c:854
+ msgid "list branches in columns"
+-msgstr "listet Branches in Spalten auf"
++msgstr "Branches in Spalten auflisten"
 =20
- #: builtin/fetch.c:119
- msgid "prepend this to submodule path output"
--msgstr "stellt dies an die Ausgabe der Submodul-Pfade voran"
-+msgstr "dies an die Ausgabe der Submodul-Pfade voranstellen"
+ #: builtin/branch.c:867
+ msgid "Failed to resolve HEAD as a valid ref."
+@@ -3188,15 +3188,15 @@ msgstr "<Art> kann sein: blob, tree, commit, ta=
+g"
 =20
- #: builtin/fetch.c:122
- msgid "default mode for recursion"
-@@ -5174,7 +5174,7 @@ msgstr "Standard-Modus f=C3=BCr Rekursion"
+ #: builtin/cat-file.c:370
+ msgid "show object type"
+-msgstr "zeigt Objektart"
++msgstr "Objektart anzeigen"
 =20
- #: builtin/fetch.c:124
- msgid "accept refs that update .git/shallow"
--msgstr "akzeptiert Referenzen die .git/shallow aktualisieren"
-+msgstr "Referenzen, die .git/shallow aktualisieren, akzeptieren"
+ #: builtin/cat-file.c:371
+ msgid "show object size"
+-msgstr "zeigt Objektgr=C3=B6=C3=9Fe"
++msgstr "Objektgr=C3=B6=C3=9Fe anzeigen"
 =20
- #: builtin/fetch.c:125
- msgid "refmap"
-@@ -5182,7 +5182,7 @@ msgstr "Refmap"
+ #: builtin/cat-file.c:373
+ msgid "exit with zero when there's no error"
+-msgstr "beendet mit R=C3=BCckgabewert 0, wenn kein Fehler aufgetreten =
+ist"
++msgstr "mit R=C3=BCckgabewert 0 beenden, wenn kein Fehler aufgetreten =
+ist"
 =20
- #: builtin/fetch.c:126
- msgid "specify fetch refmap"
--msgstr "Angabe der Refmap f=C3=BCr 'fetch'"
-+msgstr "Refmap f=C3=BCr 'fetch' angeben"
+ #: builtin/cat-file.c:374
+ msgid "pretty-print object's content"
+@@ -3204,7 +3204,7 @@ msgstr "ansprechende Anzeige des Objektinhaltes"
 =20
- #: builtin/fetch.c:376
- msgid "Couldn't find remote ref HEAD"
-@@ -5377,7 +5377,7 @@ msgstr "Anzahl"
+ #: builtin/cat-file.c:376
+ msgid "for blob objects, run textconv on object's content"
+-msgstr "f=C3=BChrt eine Textkonvertierung auf den Inhalt von Blob-Obje=
+kten aus"
++msgstr "eine Textkonvertierung auf den Inhalt von Blob-Objekten ausf=C3=
+=BChren"
 =20
- #: builtin/fmt-merge-msg.c:664
- msgid "populate log with at most <n> entries from shortlog"
--msgstr "f=C3=BCgt Historie mit h=C3=B6chstens <n> Eintr=C3=A4gen von \=
-"shortlog\" hinzu"
-+msgstr "Historie mit h=C3=B6chstens <n> Eintr=C3=A4gen von \"shortlog\=
-" hinzuf=C3=BCgen"
-=20
- #: builtin/fmt-merge-msg.c:667
- msgid "alias for --log (deprecated)"
-@@ -5389,7 +5389,7 @@ msgstr "Text"
-=20
- #: builtin/fmt-merge-msg.c:671
- msgid "use <text> as start of message"
--msgstr "verwendet <Text> als Beschreibungsanfang"
-+msgstr "<Text> als Beschreibungsanfang verwenden"
-=20
- #: builtin/fmt-merge-msg.c:672
- msgid "file to read from"
-@@ -5401,23 +5401,23 @@ msgstr "git for-each-ref [Optionen] [<Muster>]"
-=20
- #: builtin/for-each-ref.c:1066
- msgid "quote placeholders suitably for shells"
--msgstr "formatiert Platzhalter als Shell-String"
-+msgstr "Platzhalter als Shell-String formatieren"
-=20
- #: builtin/for-each-ref.c:1068
- msgid "quote placeholders suitably for perl"
--msgstr "formatiert Platzhalter als Perl-String"
-+msgstr "Platzhalter als Perl-String formatieren"
-=20
- #: builtin/for-each-ref.c:1070
- msgid "quote placeholders suitably for python"
--msgstr "formatiert Platzhalter als Python-String"
-+msgstr "Platzhalter als Python-String formatieren"
-=20
- #: builtin/for-each-ref.c:1072
- msgid "quote placeholders suitably for tcl"
--msgstr "formatiert Platzhalter als TCL-String"
-+msgstr "Platzhalter als TCL-String formatieren"
-=20
- #: builtin/for-each-ref.c:1075
- msgid "show only <n> matched refs"
--msgstr "zeigt nur <n> passende Referenzen"
-+msgstr "nur <n> passende Referenzen anzeigen"
-=20
- #: builtin/for-each-ref.c:1076 builtin/replace.c:435
- msgid "format"
-@@ -5449,27 +5449,27 @@ msgstr "git fsck [Optionen] [<Objekt>...]"
-=20
- #: builtin/fsck.c:607
- msgid "show unreachable objects"
--msgstr "zeigt unerreichbare Objekte"
-+msgstr "unerreichbare Objekte anzeigen"
-=20
- #: builtin/fsck.c:608
- msgid "show dangling objects"
--msgstr "zeigt unreferenzierte Objekte"
-+msgstr "unreferenzierte Objekte anzeigen"
-=20
- #: builtin/fsck.c:609
- msgid "report tags"
--msgstr "meldet Tags"
-+msgstr "Tags melden"
-=20
- #: builtin/fsck.c:610
- msgid "report root nodes"
--msgstr "meldet Hauptwurzeln"
-+msgstr "Hauptwurzeln melden"
-=20
- #: builtin/fsck.c:611
- msgid "make index objects head nodes"
--msgstr "pr=C3=BCft Objekte in der Staging-Area"
-+msgstr "Objekte in der Staging-Area pr=C3=BCfen"
-=20
- #: builtin/fsck.c:612
- msgid "make reflogs head nodes (default)"
--msgstr "pr=C3=BCft die Reflogs (Standard)"
-+msgstr "die Reflogs pr=C3=BCfen (Standard)"
-=20
- #: builtin/fsck.c:613
- msgid "also consider packs and alternate objects"
-@@ -5477,15 +5477,15 @@ msgstr ""
-=20
- #: builtin/fsck.c:614
- msgid "enable more strict checking"
--msgstr "aktiviert genauere Pr=C3=BCfung"
-+msgstr "genauere Pr=C3=BCfung aktivieren"
-=20
- #: builtin/fsck.c:616
- msgid "write dangling objects in .git/lost-found"
--msgstr "schreibt unreferenzierte Objekte nach .git/lost-found"
-+msgstr "unreferenzierte Objekte nach .git/lost-found schreiben"
-=20
- #: builtin/fsck.c:617 builtin/prune.c:144
- msgid "show progress"
--msgstr "zeigt Fortschrittsanzeige"
-+msgstr "Fortschrittsanzeige anzeigen"
-=20
- #: builtin/fsck.c:667
- msgid "Checking objects"
-@@ -5507,7 +5507,7 @@ msgstr "zu langes Objekt-Verzeichnis %.*s"
-=20
- #: builtin/gc.c:287
- msgid "prune unreferenced objects"
--msgstr "entfernt unreferenzierte Objekte"
-+msgstr "unreferenzierte Objekte entfernen"
-=20
- #: builtin/gc.c:289
- msgid "be more thorough (increased runtime)"
-@@ -5515,12 +5515,12 @@ msgstr "mehr Gr=C3=BCndlichkeit (erh=C3=B6ht La=
-ufzeit)"
-=20
- #: builtin/gc.c:290
- msgid "enable auto-gc mode"
--msgstr "aktiviert \"auto-gc\" Modus"
-+msgstr "\"auto-gc\" Modus aktivieren"
-=20
- #: builtin/gc.c:291
- msgid "force running gc even if there may be another gc running"
- msgstr ""
--"erzwingt Ausf=C3=BChrung von \"git gc\" selbst wenn ein anderes\n"
-+"Ausf=C3=BChrung von \"git gc\" erwzingen, selbst wenn ein anderes\n"
- "\"git gc\" bereits ausgef=C3=BChrt wird"
-=20
- #: builtin/gc.c:332
+ #: builtin/cat-file.c:378
+ msgid "show info and content of objects fed from the standard input"
 --=20
 2.2.0.rc0.232.g8ec773f
