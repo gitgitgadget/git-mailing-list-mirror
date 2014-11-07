@@ -1,60 +1,60 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 08/16] refs.c: move reflog updates into its own function
-Date: Fri,  7 Nov 2014 11:38:57 -0800
-Message-ID: <1415389145-6391-9-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 06/16] refs.c: update rename_ref to use a transaction
+Date: Fri,  7 Nov 2014 11:38:55 -0800
+Message-ID: <1415389145-6391-7-git-send-email-sahlberg@google.com>
 References: <1415389145-6391-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 07 20:39:48 2014
+X-From: git-owner@vger.kernel.org Fri Nov 07 20:39:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XmpNm-0004FM-9V
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:39:42 +0100
+	id 1XmpNt-0004Pd-PE
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 20:39:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204AbaKGTjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Nov 2014 14:39:25 -0500
-Received: from mail-ie0-f202.google.com ([209.85.223.202]:40100 "EHLO
-	mail-ie0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752975AbaKGTjM (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753185AbaKGTjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Nov 2014 14:39:22 -0500
+Received: from mail-qa0-f73.google.com ([209.85.216.73]:38818 "EHLO
+	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753003AbaKGTjM (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 7 Nov 2014 14:39:12 -0500
-Received: by mail-ie0-f202.google.com with SMTP id tr6so843292ieb.5
+Received: by mail-qa0-f73.google.com with SMTP id f12so283073qad.2
         for <git@vger.kernel.org>; Fri, 07 Nov 2014 11:39:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YBFpovx/s6RywFG5EaxrdcyPe+qrLBYAkyyoSksluVg=;
-        b=JHR6EK6PxqZMZzTkEXn8yvr62u048fyKdHKTPgPiz/nLixRAge2jYxT9X2ZVo6VHmu
-         Ceg4K8ndcYgfo8kxv8n90c6o6E+wpnhyasvwm/poMn1P+ZgQGZA6DpNZv9JYFdHhPS/X
-         R3CkfFyDdkK9Lit56/53CaeBbI6gvJF9ELBXrTF+6K9bfY2Ar0HuNBc5To572QO0AXQ1
-         /Us7YgHiLboktMrlXeSIK6c5iejtoCN4h2r+gYhtNhU8LakdS4ErOm8p+NcCQUHNjuSz
-         KlxELkYXjzLZp5az9mAuLFk0V0fQitRx00jjgM3VT09kVWcRtUTc2xQkVX6pR0Dk5EaX
-         Glbg==
+        bh=e1nbI7S5WGLsNF4CWjSP5VW9nOEUJmAzzbV3eGSfw+E=;
+        b=Vv5ns321PFvoNRrI16tmmOD5bEX+2lRJPYCLUEqw6hiPyK0d1Gn0V2ZPKBfbr/ULdQ
+         qHLvg+RysDyBwvowTlwwok6L5vr84K6Kq5Ha+JWy7sbiUwYEwXdF3a0qQeLFodkkUhqo
+         os+clI02P6Lcay4RlRksqSq3m/O3O8BJwWxXz/GV88SOUgHq5xZrZ1wn8357lqDc1+1G
+         l6euhJc2j59QB6X8WKB8wCobU5WUqQchoN+yIJt8mTO3vhRNDavaWx1UrDg0Mys7KAoH
+         Gw0k1MEhiFqyj3hR52mDylxCM/OglhMfZ3vzK2XF8jw3SwEyhtRrXmCr6dpuvk12JHMN
+         I0vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YBFpovx/s6RywFG5EaxrdcyPe+qrLBYAkyyoSksluVg=;
-        b=K8cclw1a9QN2JzrXsY5WBZ5PqrPnTZZ3kxlW2PSP/UUYGsSHHgl820geHEf7PPq9up
-         3BoA2cLn0qv+tf4XBJZDxU3jmxoly4HGIuI8rNt2qs5pH9ye71djRkOzzbl0kyI0VfNA
-         6Z0bcwIEO26qOHCd2FtiOsyztRyWn3uihU6YNki8xUFa2uS+8KWYYpetyyDyk9huVpsi
-         LCMnfVH/h7LhmC9LL6gXSW+0Z8IFrGhbMv+SSi+HS+sDsQICzYyjGyiCsapeD9gVHFK3
-         dnrh8uuDBEZZtitdRkD/rlmVOchjHS/TurjqjAuGbvJSKt9u/txuiHitOrroXRuvM5SM
-         yC/w==
-X-Gm-Message-State: ALoCoQlsk9ZZ6Jacc6QUVMp5zAdD0iY1jheHQR3thwhsfmDptdrMzyHEFHAxX/7snmO/jvfVXfJd
-X-Received: by 10.182.168.114 with SMTP id zv18mr10237065obb.23.1415389151089;
+        bh=e1nbI7S5WGLsNF4CWjSP5VW9nOEUJmAzzbV3eGSfw+E=;
+        b=QYrUs8PoQ5WzkACLoQNOcsqmTBYxskA6shQ6Qrsb4mjcxJAvIzfbRBGU0OUc+mF/tZ
+         Z3QOxqeXhpRvs7kcxEiaTRO9mAkD3Ftvsh6FBXKA/QOvHreQUFeRKzCJq7gHC/GbvSxf
+         XJUlSQflXJ6yngHlEKCZK+2PYwkn+4Cv4Gq9x0im7kyfyMTP9/eYwROliOxOFSFDI1yQ
+         YVuH/enSKf0Ja/8dxclQTX/a27GWxEEiXIq5LzMQ1qE0aMithNLPpqbChYL9E4SrY2DV
+         ObAUaMMS7iqMAITuc2i8g2fnfOZbm5HSpxjAgmKbx0onqEqWbQ9gdXMZ3FfHWwMTNUtA
+         BcKQ==
+X-Gm-Message-State: ALoCoQkFL/Ga8bQcOOwfDO1G3B8PmAAbWFgtITCP1wDdXQ6ZORDXoh2y7HKNnqsGV1cEI6OChUFx
+X-Received: by 10.236.11.194 with SMTP id 42mr10452754yhx.19.1415389151020;
         Fri, 07 Nov 2014 11:39:11 -0800 (PST)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id k66si400509yho.7.2014.11.07.11.39.10
+Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
+        by gmr-mx.google.com with ESMTPS id t28si402542yhb.4.2014.11.07.11.39.10
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 07 Nov 2014 11:39:11 -0800 (PST)
 Received: from sahlberg1.mtv.corp.google.com ([172.27.69.52])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id nU2RkKYE.1; Fri, 07 Nov 2014 11:39:10 -0800
+	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id xzafQ6uy.1; Fri, 07 Nov 2014 11:39:10 -0800
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id B0D90E0B1A; Fri,  7 Nov 2014 11:39:09 -0800 (PST)
+	id 95BE5E0A99; Fri,  7 Nov 2014 11:39:09 -0800 (PST)
 X-Mailer: git-send-email 2.1.2.810.gfbd2bf7.dirty
 In-Reply-To: <1415389145-6391-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
@@ -62,99 +62,234 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-write_ref_sha1 tries to update the reflog while updating the ref.
-Move these reflog changes out into its own function so that we can do the
-same thing if we write a sha1 ref differently, for example by writing a ref
-to the packed refs file instead.
+Change refs.c to use a single transaction to perform the rename.
+Change the function to return 1 on failure instead of either -1 or 1.
 
-No functional changes intended. We only move some code out into a separate
-function.
+These changes make the rename_ref operation atomic.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 60 +++++++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 35 insertions(+), 25 deletions(-)
+ refs.c            | 168 ++++++++++++++----------------------------------------
+ t/t3200-branch.sh |   7 ---
+ 2 files changed, 43 insertions(+), 132 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 5a8f3da..7f4b4cb 100644
+index 8ca6add..9a3c7fe 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3028,6 +3028,40 @@ int is_branch(const char *refname)
- 	return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
+@@ -2757,60 +2757,6 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ 	return 0;
  }
  
-+static int write_sha1_update_reflog(struct ref_lock *lock,
-+	const unsigned char *sha1, const char *logmsg)
-+{
-+	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
-+	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
-+	     log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
-+		unlock_ref(lock);
-+		return -1;
-+	}
-+	if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
-+		/*
-+		 * Special hack: If a branch is updated directly and HEAD
-+		 * points to it (may happen on the remote side of a push
-+		 * for example) then logically the HEAD reflog should be
-+		 * updated too.
-+		 * A generic solution implies reverse symref information,
-+		 * but finding all symrefs pointing to the given branch
-+		 * would be rather costly for this rare event (the direct
-+		 * update of a branch) to be worth it.  So let's cheat and
-+		 * check with HEAD only which should cover 99% of all usage
-+		 * scenarios (even 100% of the default ones).
-+		 */
-+		unsigned char head_sha1[20];
-+		int head_flag;
-+		const char *head_ref;
-+		head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
-+					      head_sha1, &head_flag);
-+		if (head_ref && (head_flag & REF_ISSYMREF) &&
-+		    !strcmp(head_ref, lock->ref_name))
-+			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
-+	}
-+	return 0;
-+}
-+
- /*
-  * Write sha1 into the ref specified by the lock. Make sure that errno
-  * is sane on error.
-@@ -3071,34 +3105,10 @@ static int write_ref_sha1(struct ref_lock *lock,
- 		return -1;
- 	}
- 	clear_loose_ref_cache(&ref_cache);
--	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
--	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
--	     log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
-+	if (write_sha1_update_reflog(lock, sha1, logmsg)) {
- 		unlock_ref(lock);
- 		return -1;
- 	}
--	if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
--		/*
--		 * Special hack: If a branch is updated directly and HEAD
--		 * points to it (may happen on the remote side of a push
--		 * for example) then logically the HEAD reflog should be
--		 * updated too.
--		 * A generic solution implies reverse symref information,
--		 * but finding all symrefs pointing to the given branch
--		 * would be rather costly for this rare event (the direct
--		 * update of a branch) to be worth it.  So let's cheat and
--		 * check with HEAD only which should cover 99% of all usage
--		 * scenarios (even 100% of the default ones).
--		 */
--		unsigned char head_sha1[20];
--		int head_flag;
--		const char *head_ref;
--		head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
--					      head_sha1, &head_flag);
--		if (head_ref && (head_flag & REF_ISSYMREF) &&
--		    !strcmp(head_ref, lock->ref_name))
--			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
+-/*
+- * People using contrib's git-new-workdir have .git/logs/refs ->
+- * /some/other/path/.git/logs/refs, and that may live on another device.
+- *
+- * IOW, to avoid cross device rename errors, the temporary renamed log must
+- * live into logs/refs.
+- */
+-#define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
+-
+-static int rename_tmp_log(const char *newrefname)
+-{
+-	int attempts_remaining = 4;
+-
+- retry:
+-	switch (safe_create_leading_directories(git_path("logs/%s", newrefname))) {
+-	case SCLD_OK:
+-		break; /* success */
+-	case SCLD_VANISHED:
+-		if (--attempts_remaining > 0)
+-			goto retry;
+-		/* fall through */
+-	default:
+-		error("unable to create directory for %s", newrefname);
+-		return -1;
 -	}
- 	if (commit_ref(lock)) {
- 		error("Couldn't set %s", lock->ref_name);
- 		unlock_ref(lock);
+-
+-	if (rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", newrefname))) {
+-		if ((errno==EISDIR || errno==ENOTDIR) && --attempts_remaining > 0) {
+-			/*
+-			 * rename(a, b) when b is an existing
+-			 * directory ought to result in ISDIR, but
+-			 * Solaris 5.8 gives ENOTDIR.  Sheesh.
+-			 */
+-			if (remove_empty_directories(git_path("logs/%s", newrefname))) {
+-				error("Directory not empty: logs/%s", newrefname);
+-				return -1;
+-			}
+-			goto retry;
+-		} else if (errno == ENOENT && --attempts_remaining > 0) {
+-			/*
+-			 * Maybe another process just deleted one of
+-			 * the directories in the path to newrefname.
+-			 * Try again from the beginning.
+-			 */
+-			goto retry;
+-		} else {
+-			error("unable to move logfile "TMP_RENAMED_LOG" to logs/%s: %s",
+-				newrefname, strerror(errno));
+-			return -1;
+-		}
+-	}
+-	return 0;
+-}
+-
+ static int rename_ref_available(const char *oldname, const char *newname)
+ {
+ 	struct string_list skip = STRING_LIST_INIT_NODUP;
+@@ -2859,91 +2805,63 @@ static int copy_reflog_into_strbuf(const char *refname, struct strbuf *buf)
+ 
+ int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
+ {
+-	unsigned char sha1[20], orig_sha1[20];
+-	int flag = 0, logmoved = 0;
+-	struct ref_lock *lock;
+-	struct stat loginfo;
+-	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
++	unsigned char sha1[20];
++	int flag = 0;
++	int log;
++	struct transaction *transaction = NULL;
++	struct strbuf err = STRBUF_INIT;
+ 	const char *symref = NULL;
++	struct reflog_committer_info ci;
+ 
+-	if (log && S_ISLNK(loginfo.st_mode))
+-		return error("reflog for %s is a symlink", oldrefname);
++	memset(&ci, 0, sizeof(ci));
++	ci.committer_info = git_committer_info(0);
+ 
+ 	symref = resolve_ref_unsafe(oldrefname, RESOLVE_REF_READING,
+-				    orig_sha1, &flag);
+-	if (flag & REF_ISSYMREF)
+-		return error("refname %s is a symbolic ref, renaming it is not supported",
+-			oldrefname);
+-	if (!symref)
+-		return error("refname %s not found", oldrefname);
+-
+-	if (!rename_ref_available(oldrefname, newrefname))
++				    sha1, &flag);
++	if (flag & REF_ISSYMREF) {
++		error("refname %s is a symbolic ref, renaming it is not "
++		      "supported", oldrefname);
+ 		return 1;
+-
+-	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
+-		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
+-			oldrefname, strerror(errno));
+-
+-	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF)) {
+-		error("unable to delete old %s", oldrefname);
+-		goto rollback;
+ 	}
+-
+-	if (!read_ref_full(newrefname, RESOLVE_REF_READING, sha1, NULL) &&
+-	    delete_ref(newrefname, sha1, REF_NODEREF)) {
+-		if (errno==EISDIR) {
+-			if (remove_empty_directories(git_path("%s", newrefname))) {
+-				error("Directory not empty: %s", newrefname);
+-				goto rollback;
+-			}
+-		} else {
+-			error("unable to delete existing %s", newrefname);
+-			goto rollback;
+-		}
++	if (!symref) {
++		error("refname %s not found", oldrefname);
++		return 1;
+ 	}
+ 
+-	if (log && rename_tmp_log(newrefname))
+-		goto rollback;
++	if (!rename_ref_available(oldrefname, newrefname))
++		return 1;
+ 
+-	logmoved = log;
++	log = reflog_exists(oldrefname);
+ 
+-	lock = lock_ref_sha1_basic(newrefname, NULL, NULL, 0, NULL);
+-	if (!lock) {
+-		error("unable to lock %s for update", newrefname);
+-		goto rollback;
+-	}
+-	lock->force_write = 1;
+-	hashcpy(lock->old_sha1, orig_sha1);
+-	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
+-		error("unable to write current sha1 into %s", newrefname);
+-		goto rollback;
++	transaction = transaction_begin(&err);
++	if (!transaction)
++		goto fail;
++
++	if (strcmp(oldrefname, newrefname)) {
++		if (transaction_delete_ref(transaction, oldrefname, sha1,
++					   REF_NODEREF, 1, NULL, &err))
++			goto fail;
++		if (log && transaction_rename_reflog(transaction, oldrefname,
++						     newrefname, &err))
++			goto fail;
++		if (log && transaction_update_reflog(transaction, newrefname,
++				     sha1, sha1, &ci, logmsg,
++				     REFLOG_COMMITTER_INFO_IS_VALID, &err))
++			goto fail;
+ 	}
+ 
++	if (transaction_update_ref(transaction, newrefname, sha1,
++				   NULL, 0, 0, NULL, &err))
++		goto fail;
++	if (transaction_commit(transaction, &err))
++		goto fail;
++	transaction_free(transaction);
+ 	return 0;
+ 
+- rollback:
+-	lock = lock_ref_sha1_basic(oldrefname, NULL, NULL, 0, NULL);
+-	if (!lock) {
+-		error("unable to lock %s for rollback", oldrefname);
+-		goto rollbacklog;
+-	}
+-
+-	lock->force_write = 1;
+-	flag = log_all_ref_updates;
+-	log_all_ref_updates = 0;
+-	if (write_ref_sha1(lock, orig_sha1, NULL))
+-		error("unable to write current sha1 into %s", oldrefname);
+-	log_all_ref_updates = flag;
+-
+- rollbacklog:
+-	if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
+-		error("unable to restore logfile %s from %s: %s",
+-			oldrefname, newrefname, strerror(errno));
+-	if (!logmoved && log &&
+-	    rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
+-		error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
+-			oldrefname, strerror(errno));
+-
++ fail:
++	error("rename_ref failed: %s", err.buf);
++	strbuf_release(&err);
++	transaction_free(transaction);
+ 	return 1;
+ }
+ 
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 432921b..c6c53e4 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -302,13 +302,6 @@ test_expect_success 'renaming a symref is not allowed' '
+ 	test_path_is_missing .git/refs/heads/master3
+ '
+ 
+-test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
+-	git branch -l u &&
+-	mv .git/logs/refs/heads/u real-u &&
+-	ln -s real-u .git/logs/refs/heads/u &&
+-	test_must_fail git branch -m u v
+-'
+-
+ test_expect_success 'test tracking setup via --track' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
 -- 
 2.1.0.rc2.206.gedb03e5
