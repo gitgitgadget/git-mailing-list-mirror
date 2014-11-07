@@ -1,7 +1,7 @@
 From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH v3 7/7] part7: l10n: de.po: use imperative form for command options
-Date: Fri,  7 Nov 2014 21:11:20 +0100
-Message-ID: <1415391080-26841-8-git-send-email-ralf.thielow@gmail.com>
+Subject: [PATCH v3 4/7] part4: l10n: de.po: use imperative form for command options
+Date: Fri,  7 Nov 2014 21:11:17 +0100
+Message-ID: <1415391080-26841-5-git-send-email-ralf.thielow@gmail.com>
 References: <1411146770-8508-1-git-send-email-ralf.thielow@gmail.com>
  <1415391080-26841-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
@@ -11,41 +11,41 @@ Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
 	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
 	Ralf Thielow <ralf.thielow@gmail.com>
 To: git@vger.kernel.org, phillip.szelat@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 07 21:12:02 2014
+X-From: git-owner@vger.kernel.org Fri Nov 07 21:12:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xmpsr-0002qR-SP
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 21:11:50 +0100
+	id 1Xmpsr-0002qR-1V
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Nov 2014 21:11:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313AbaKGULq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2014 15:11:46 -0500
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:48921 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753267AbaKGULi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Nov 2014 15:11:38 -0500
-Received: by mail-wg0-f53.google.com with SMTP id b13so4737751wgh.26
-        for <git@vger.kernel.org>; Fri, 07 Nov 2014 12:11:36 -0800 (PST)
+	id S1753307AbaKGULk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Nov 2014 15:11:40 -0500
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:40877 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753163AbaKGULd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Nov 2014 15:11:33 -0500
+Received: by mail-wi0-f173.google.com with SMTP id n3so5661049wiv.6
+        for <git@vger.kernel.org>; Fri, 07 Nov 2014 12:11:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Dx4ZKXew18xyFpdPaz2h7cJm1z03acGXL9a+oE3H744=;
-        b=kC0rB7Nz9pEukNgPu0UUbZ8qTCA/ebkcnT3ijvr2zN30BR0MwoktQVcZd2wuGxCdrN
-         egOsy+PmRj42aelyMraWcp/sLFirIVWnc+HPKzuJi5MPH5hikJl5+y2xYT/TBH+L8OQi
-         DnsmfzJxfCzJZxE+oVTgUw+2IYtL40U8Z1xuMqhj2A6hvShNc06qzcoNTNw+1kjticwv
-         bJGinoZKwZMAMz1oAQ4r4ju+m7Tk2X5cXL2ig+FJLrqM7ssMHdoPfAjCgtmsWPIHiWj4
-         rmKR1wQcvwIoMhDyttC9MpsH5RgdhTnFKgySW8a3wZX/iKSFU/lLOonddyHBNeoO2aQ7
-         BBjw==
-X-Received: by 10.194.206.36 with SMTP id ll4mr19631597wjc.21.1415391096453;
-        Fri, 07 Nov 2014 12:11:36 -0800 (PST)
+        bh=BRQbixlseMOchPQ2D8b+d3z/dPG8KI+NAU1E57zxRSA=;
+        b=Cyxd+ye5VqApAGg202ghj1RryJJDHz62Dw4Afn/1FyZpqTyx6VA/G4ftiAgb2TDNQ4
+         Fi6fjVcxJJf0wPFY4NO1WWQ/koMSoGqlq12jLckTNzj4dblhrbbd/E+dTU6n8zFiP7X0
+         Pem4S2IczrNHBjqHOt+kMOXoI0kW29KAhSqOTge9aEO08DVl5OEUtrln3i4sgddFp5EP
+         L5ESG0QHywUXNthMpyMIIEpbLGKt2zrGgmzYyZPe6XYkVknt5SGgJEK11CC9eA0HsD5o
+         qmGXsHMXP+dLQFTiQ6LauWxfTnzd5crefbGKJGVeMlcd0+eDvjlQobgi6NUefCz/gzKr
+         TsQw==
+X-Received: by 10.194.63.79 with SMTP id e15mr20067452wjs.79.1415391091382;
+        Fri, 07 Nov 2014 12:11:31 -0800 (PST)
 Received: from localhost (dslb-088-073-206-248.088.073.pools.vodafone-ip.de. [88.73.206.248])
-        by mx.google.com with ESMTPSA id q9sm3272169wix.6.2014.11.07.12.11.35
+        by mx.google.com with ESMTPSA id kn5sm5471348wjb.48.2014.11.07.12.11.30
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 07 Nov 2014 12:11:36 -0800 (PST)
+        Fri, 07 Nov 2014 12:11:30 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.rc0.232.g8ec773f
 In-Reply-To: <1415391080-26841-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
@@ -55,565 +55,602 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 ---
- po/de.po | 162 +++++++++++++++++++++++++++++++------------------------=
+ po/de.po | 192 +++++++++++++++++++++++++++++++------------------------=
 --------
- 1 file changed, 81 insertions(+), 81 deletions(-)
+ 1 file changed, 96 insertions(+), 96 deletions(-)
 
 diff --git a/po/de.po b/po/de.po
-index 5a1a61f..dea43e0 100644
+index 8071fd1..64ee621 100644
 --- a/po/de.po
 +++ b/po/de.po
-@@ -9479,35 +9479,35 @@ msgstr "Synonym f=C3=BCr more=3D-1"
+@@ -5588,83 +5588,83 @@ msgstr "kann '%s' nicht =C3=B6ffnen"
 =20
- #: builtin/show-branch.c:658
- msgid "suppress naming strings"
--msgstr "unterdr=C3=BCckt Namen"
-+msgstr "Namen unterdr=C3=BCcken"
+ #: builtin/grep.c:638
+ msgid "search in index instead of in the work tree"
+-msgstr "sucht in der Staging-Area anstatt im Arbeitsverzeichnis"
++msgstr "in der Staging-Area anstatt im Arbeitsverzeichnis suchen"
 =20
- #: builtin/show-branch.c:660
- msgid "include the current branch"
--msgstr "bezieht den aktuellen Branch ein"
-+msgstr "den aktuellen Branch einbeziehen"
+ #: builtin/grep.c:640
+ msgid "find in contents not managed by git"
+-msgstr "findet auch in Inhalten, die nicht von Git verwaltet werden"
++msgstr "auch in Inhalten finden, die nicht von Git verwaltet werden"
 =20
- #: builtin/show-branch.c:662
- msgid "name commits with their object names"
--msgstr "benennt Commits nach ihren Objektnamen"
-+msgstr "Commits nach ihren Objektnamen benennen"
+ #: builtin/grep.c:642
+ msgid "search in both tracked and untracked files"
+-msgstr "sucht in beobachteten und unbeobachteten Dateien"
++msgstr "in beobachteten und unbeobachteten Dateien suchen"
 =20
- #: builtin/show-branch.c:664
- msgid "show possible merge bases"
--msgstr "zeigt m=C3=B6gliche Merge-Basen an"
-+msgstr "m=C3=B6gliche Merge-Basen anzeigen"
+ #: builtin/grep.c:644
+ msgid "search also in ignored files"
+-msgstr "sucht auch in ignorierten Dateien"
++msgstr "auch in ignorierten Dateien suchen"
 =20
- #: builtin/show-branch.c:666
- msgid "show refs unreachable from any other ref"
--msgstr "zeigt Referenzen die unerreichbar von allen anderen Referenzen=
- sind"
-+msgstr "Referenzen, die unerreichbar von allen anderen Referenzen sind=
-, anzeigen"
+ #: builtin/grep.c:647
+ msgid "show non-matching lines"
+-msgstr "zeigt Zeilen ohne =C3=9Cbereinstimmungen"
++msgstr "Zeilen ohne =C3=9Cbereinstimmungen anzeigen"
 =20
- #: builtin/show-branch.c:668
- msgid "show commits in topological order"
--msgstr "zeigt Commits in topologischer Ordnung"
-+msgstr "Commits in topologischer Ordnung anzeigen"
+ #: builtin/grep.c:649
+ msgid "case insensitive matching"
+-msgstr "findet =C3=9Cbereinstimmungen unabh=C3=A4ngig von Gro=C3=9F- u=
+nd Kleinschreibung"
++msgstr "=C3=9Cbereinstimmungen unabh=C3=A4ngig von Gro=C3=9F- und Klei=
+nschreibung finden"
 =20
- #: builtin/show-branch.c:671
- msgid "show only commits not on the first branch"
--msgstr "zeigt nur Commits, die sich nicht im ersten Branch befinden"
-+msgstr "nur Commits anzeigen, die sich nicht im ersten Branch befinden=
+ #: builtin/grep.c:651
+ msgid "match patterns only at word boundaries"
+-msgstr "sucht nur ganze W=C3=B6rter"
++msgstr "nur ganze W=C3=B6rter suchen"
+=20
+ #: builtin/grep.c:653
+ msgid "process binary files as text"
+-msgstr "verarbeitet bin=C3=A4re Dateien als Text"
++msgstr "bin=C3=A4re Dateien als Text verarbeiten"
+=20
+ #: builtin/grep.c:655
+ msgid "don't match patterns in binary files"
+-msgstr "findet keine Muster in Bin=C3=A4rdateien"
++msgstr "keine Muster in Bin=C3=A4rdateien finden"
+=20
+ #: builtin/grep.c:658
+ msgid "process binary files with textconv filters"
+-msgstr "verarbeitet bin=C3=A4re Dateien mit \"textconv\"-Filtern"
++msgstr "bin=C3=A4re Dateien mit \"textconv\"-Filtern verarbeiten"
+=20
+ #: builtin/grep.c:660
+ msgid "descend at most <depth> levels"
+-msgstr "durchl=C3=A4uft h=C3=B6chstens <Tiefe> Ebenen"
++msgstr "h=C3=B6chstens <Tiefe> Ebenen durchlaufen"
+=20
+ #: builtin/grep.c:664
+ msgid "use extended POSIX regular expressions"
+-msgstr "verwendet erweiterte regul=C3=A4re Ausdr=C3=BCcke aus POSIX"
++msgstr "erweiterte regul=C3=A4re Ausdr=C3=BCcke aus POSIX verwenden"
+=20
+ #: builtin/grep.c:667
+ msgid "use basic POSIX regular expressions (default)"
+-msgstr "verwendet grundlegende regul=C3=A4re Ausdr=C3=BCcke aus POSIX =
+(Standard)"
++msgstr "grundlegende regul=C3=A4re Ausdr=C3=BCcke aus POSIX verwenden =
+(Standard)"
+=20
+ #: builtin/grep.c:670
+ msgid "interpret patterns as fixed strings"
+-msgstr "interpretiert Muster als feste Zeichenketten"
++msgstr "Muster als feste Zeichenketten interpretieren"
+=20
+ #: builtin/grep.c:673
+ msgid "use Perl-compatible regular expressions"
+-msgstr "verwendet Perl-kompatible regul=C3=A4re Ausdr=C3=BCcke"
++msgstr "Perl-kompatible regul=C3=A4re Ausdr=C3=BCcke verwenden"
+=20
+ #: builtin/grep.c:676
+ msgid "show line numbers"
+-msgstr "zeigt Zeilennummern"
++msgstr "Zeilennummern anzeigen"
+=20
+ #: builtin/grep.c:677
+ msgid "don't show filenames"
+-msgstr "zeigt keine Dateinamen"
++msgstr "keine Dateinamen anzeigen"
+=20
+ #: builtin/grep.c:678
+ msgid "show filenames"
+-msgstr "zeigt Dateinamen"
++msgstr "Dateinamen anzeigen"
+=20
+ #: builtin/grep.c:680
+ msgid "show filenames relative to top directory"
+-msgstr "zeigt Dateinamen relativ zum Projektverzeichnis"
++msgstr "Dateinamen relativ zum Projektverzeichnis anzeigen"
+=20
+ #: builtin/grep.c:682
+ msgid "show only filenames instead of matching lines"
+-msgstr "zeigt nur Dateinamen anstatt =C3=BCbereinstimmende Zeilen"
++msgstr "nur Dateinamen anzeigen anstatt =C3=BCbereinstimmende Zeilen"
+=20
+ #: builtin/grep.c:684
+ msgid "synonym for --files-with-matches"
+@@ -5672,42 +5672,42 @@ msgstr "Synonym f=C3=BCr --files-with-matches"
+=20
+ #: builtin/grep.c:687
+ msgid "show only the names of files without match"
+-msgstr "zeigt nur die Dateinamen ohne =C3=9Cbereinstimmungen"
++msgstr "nur die Dateinamen ohne =C3=9Cbereinstimmungen anzeigen"
+=20
+ #: builtin/grep.c:689
+ msgid "print NUL after filenames"
+-msgstr "gibt NUL-Zeichen nach Dateinamen aus"
++msgstr "NUL-Zeichen nach Dateinamen ausgeben"
+=20
+ #: builtin/grep.c:691
+ msgid "show the number of matches instead of matching lines"
+-msgstr "zeigt, anstatt der Zeilen, die Anzahl der =C3=BCbereinstimmend=
+en Zeilen"
++msgstr "anstatt der Zeilen, die Anzahl der =C3=BCbereinstimmenden Zeil=
+en anzeigen"
+=20
+ #: builtin/grep.c:692
+ msgid "highlight matches"
+-msgstr "hebt =C3=9Cbereinstimmungen hervor"
++msgstr "=C3=9Cbereinstimmungen hervorheben"
+=20
+ #: builtin/grep.c:694
+ msgid "print empty line between matches from different files"
+ msgstr ""
+-"gibt eine Leerzeile zwischen =C3=9Cbereinstimmungen in verschiedenen =
+Dateien aus"
++"eine Leerzeile zwischen =C3=9Cbereinstimmungen in verschiedenen Datei=
+en ausgeben"
+=20
+ #: builtin/grep.c:696
+ msgid "show filename only once above matches from same file"
+ msgstr ""
+-"zeigt den Dateinamen nur einmal oberhalb der =C3=9Cbereinstimmungen a=
+us dieser "
+-"Datei an"
++"den Dateinamen nur einmal oberhalb der =C3=9Cbereinstimmungen aus die=
+ser "
++"Datei anzeigen"
+=20
+ #: builtin/grep.c:699
+ msgid "show <n> context lines before and after matches"
+-msgstr "zeigt <n> Zeilen vor und nach den =C3=9Cbereinstimmungen an"
++msgstr "<n> Zeilen vor und nach den =C3=9Cbereinstimmungen anzeigen"
+=20
+ #: builtin/grep.c:702
+ msgid "show <n> context lines before matches"
+-msgstr "zeigt <n> Zeilen vor den =C3=9Cbereinstimmungen an"
++msgstr "<n> Zeilen vor den =C3=9Cbereinstimmungen anzeigen"
+=20
+ #: builtin/grep.c:704
+ msgid "show <n> context lines after matches"
+-msgstr "zeigt <n> Zeilen nach den =C3=9Cbereinstimmungen an"
++msgstr "<n> Zeilen nach den =C3=9Cbereinstimmungen anzeigen"
+=20
+ #: builtin/grep.c:705
+ msgid "shortcut for -C NUM"
+@@ -5715,35 +5715,35 @@ msgstr "Kurzform f=C3=BCr -C NUM"
+=20
+ #: builtin/grep.c:708
+ msgid "show a line with the function name before matches"
+-msgstr "zeigt eine Zeile mit dem Funktionsnamen vor =C3=9Cbereinstimmu=
+ngen an"
++msgstr "eine Zeile mit dem Funktionsnamen vor =C3=9Cbereinstimmungen a=
+nzeigen"
+=20
+ #: builtin/grep.c:710
+ msgid "show the surrounding function"
+-msgstr "zeigt die umgebende Funktion an"
++msgstr "die umgebende Funktion anzeigen"
+=20
+ #: builtin/grep.c:713
+ msgid "read patterns from file"
+-msgstr "liest Muster von einer Datei"
++msgstr "Muster von einer Datei lesen"
+=20
+ #: builtin/grep.c:715
+ msgid "match <pattern>"
+-msgstr "findet <Muster>"
++msgstr "<Muster> finden"
+=20
+ #: builtin/grep.c:717
+ msgid "combine patterns specified with -e"
+-msgstr "kombiniert Muster, die mit -e angegeben wurden"
++msgstr "Muster kombinieren, die mit -e angegeben wurden"
+=20
+ #: builtin/grep.c:729
+ msgid "indicate hit with exit status without output"
+-msgstr "zeigt =C3=9Cbereinstimmungen nur durch Beendigungsstatus an"
++msgstr "=C3=9Cbereinstimmungen nur durch Beendigungsstatus anzeigen"
+=20
+ #: builtin/grep.c:731
+ msgid "show only matches from files that match all patterns"
+-msgstr "zeigt nur =C3=9Cbereinstimmungen von Dateien, die allen Muster=
+n entsprechen"
++msgstr "nur =C3=9Cbereinstimmungen von Dateien anzeigen, die allen Mus=
+tern entsprechen"
+=20
+ #: builtin/grep.c:733
+ msgid "show parse tree for grep expression"
+-msgstr "zeigt geparstes Verzeichnis f=C3=BCr \"grep\"-Ausdruck"
++msgstr "geparstes Verzeichnis f=C3=BCr \"grep\"-Ausdruck anzeigen"
+=20
+ #: builtin/grep.c:737
+ msgid "pager"
+@@ -5751,15 +5751,15 @@ msgstr "Anzeigeprogramm"
+=20
+ #: builtin/grep.c:737
+ msgid "show matching files in the pager"
+-msgstr "zeigt Dateien mit =C3=9Cbereinstimmungen im Anzeigeprogramm"
++msgstr "Dateien mit =C3=9Cbereinstimmungen im Anzeigeprogramm anzeigen=
 "
 =20
- #: builtin/show-branch.c:673
- msgid "show merges reachable from only one tip"
--msgstr "zeigt Merges, die nur von einem Branch aus erreichbar sind"
-+msgstr "Merges anzeigen, die nur von einem Branch aus erreichbar sind"
+ #: builtin/grep.c:740
+ msgid "allow calling of grep(1) (ignored by this build)"
+-msgstr "erlaubt den Aufruf von grep(1) (von dieser Programmversion ign=
+oriert)"
++msgstr "den Aufruf von grep(1) erlauben (von dieser Programmversion ig=
+noriert)"
 =20
- #: builtin/show-branch.c:675
- msgid "topologically sort, maintaining date order where possible"
-@@ -9519,7 +9519,7 @@ msgstr "<n>[,<Basis>]"
+ #: builtin/grep.c:741 builtin/show-ref.c:187
+ msgid "show usage"
+-msgstr "zeigt Verwendung"
++msgstr "Verwendung anzeigen"
 =20
- #: builtin/show-branch.c:679
- msgid "show <n> most recent ref-log entries starting at base"
--msgstr "zeigt die <n> j=C3=BCngsten Eintr=C3=A4ge im Reflog beginnend =
-an der Basis"
-+msgstr "die <n> j=C3=BCngsten Eintr=C3=A4ge im Reflog, beginnend an de=
-r Basis, anzeigen"
+ #: builtin/grep.c:808
+ msgid "no pattern given."
+@@ -5815,39 +5815,39 @@ msgstr "Art des Objektes"
 =20
- #: builtin/show-ref.c:10
- msgid ""
-@@ -9535,11 +9535,11 @@ msgstr "git show-ref --exclude-existing[=3DMust=
-er] < ref-list"
+ #: builtin/hash-object.c:73
+ msgid "write the object into the object database"
+-msgstr "schreibt das Objekt in die Objektdatenbank"
++msgstr "das Objekt in die Objektdatenbank schreiben"
 =20
- #: builtin/show-ref.c:168
- msgid "only show tags (can be combined with heads)"
--msgstr "zeigt nur Tags (kann mit \"heads\" kombiniert werden)"
-+msgstr "nur Tags anzeigen (kann mit \"heads\" kombiniert werden)"
+ #: builtin/hash-object.c:74
+ msgid "read the object from stdin"
+-msgstr "liest das Objekt von der Standard-Eingabe"
++msgstr "das Objekt von der Standard-Eingabe lesen"
 =20
- #: builtin/show-ref.c:169
- msgid "only show heads (can be combined with tags)"
--msgstr "zeigt nur Branches (kann mit \"tags\" kombiniert werden)"
-+msgstr "nur Branches anzeigen (kann mit \"tags\" kombiniert werden)"
+ #: builtin/hash-object.c:76
+ msgid "store file as is without filters"
+-msgstr "speichert Datei wie sie ist, ohne Filter"
++msgstr "Datei wie sie ist speichern, ohne Filter"
 =20
- #: builtin/show-ref.c:170
- msgid "stricter reference checking, requires exact ref path"
-@@ -9547,15 +9547,15 @@ msgstr "strengere Referenzpr=C3=BCfung, erforde=
-rt exakten Referenzpfad"
+ #: builtin/hash-object.c:77
+ msgid "process file as it were from this path"
+-msgstr "verarbeitet Datei, als ob sie von diesem Pfad w=C3=A4re"
++msgstr "Datei verarbeiten, als ob sie von diesem Pfad w=C3=A4re"
 =20
- #: builtin/show-ref.c:173 builtin/show-ref.c:175
- msgid "show the HEAD reference, even if it would be filtered out"
--msgstr "zeigt die HEAD-Referenz, selbst wenn diese ausgefiltert werden=
- w=C3=BCrde"
-+msgstr "die HEAD-Referenz anzeigen, selbst wenn diese ausgefiltert wer=
-den w=C3=BCrde"
+ #: builtin/help.c:41
+ msgid "print all available commands"
+-msgstr "Anzeige aller vorhandenen Kommandos"
++msgstr "alle vorhandenen Kommandos anzeigen"
 =20
- #: builtin/show-ref.c:177
- msgid "dereference tags into object IDs"
--msgstr "dereferenziert Tags in Objekt-Identifikationen"
-+msgstr "Tags in Objekt-Identifikationen dereferenzieren"
+ #: builtin/help.c:42
+ msgid "print list of useful guides"
+-msgstr "zeigt Liste von allgemein verwendeten Anleitungen"
++msgstr "Liste von allgemein verwendeten Anleitungen anzeigen"
 =20
- #: builtin/show-ref.c:179
- msgid "only show SHA1 hash using <n> digits"
--msgstr "zeigt nur SHA1 Hash mit <n> Ziffern"
-+msgstr "nur SHA1 Hash mit <n> Ziffern anzeigen"
+ #: builtin/help.c:43
+ msgid "show man page"
+-msgstr "zeigt Handbuch"
++msgstr "Handbuch anzeigen"
 =20
- #: builtin/show-ref.c:183
- msgid "do not print results to stdout (useful with --verify)"
-@@ -9565,8 +9565,8 @@ msgstr ""
- #: builtin/show-ref.c:185
- msgid "show refs from stdin that aren't in local repository"
- msgstr ""
--"zeigt Referenzen von der Standard-Eingabe, die sich nicht im lokalen =
+ #: builtin/help.c:44
+ msgid "show manual in web browser"
+-msgstr "zeigt Handbuch in einem Webbrowser"
++msgstr "Handbuch in einem Webbrowser anzeigen"
+=20
+ #: builtin/help.c:46
+ msgid "show info page"
+-msgstr "zeigt Info-Seite"
++msgstr "Info-Seite anzeigen"
+=20
+ #: builtin/help.c:52
+ msgid "git help [--all] [--guides] [--man|--web|--info] [command]"
+@@ -6361,7 +6361,7 @@ msgstr "Berechtigungen"
+=20
+ #: builtin/init-db.c:489
+ msgid "specify that the git repository is to be shared amongst several=
+ users"
+-msgstr "gibt an, dass das Git-Repository mit mehreren Benutzern geteil=
+t wird"
++msgstr "angeben, dass das Git-Repository mit mehreren Benutzern geteil=
+t wird"
+=20
+ #: builtin/init-db.c:491 builtin/prune-packed.c:79 builtin/repack.c:17=
+2
+ msgid "be quiet"
+@@ -6405,15 +6405,15 @@ msgstr "   oder: git show [Optionen] <Objekt>..=
+=2E"
+=20
+ #: builtin/log.c:127
+ msgid "suppress diff output"
+-msgstr "unterdr=C3=BCckt Ausgabe der Unterschiede"
++msgstr "Ausgabe der Unterschiede unterdr=C3=BCcken"
+=20
+ #: builtin/log.c:128
+ msgid "show source"
+-msgstr "zeigt Quelle"
++msgstr "Quelle anzeigen"
+=20
+ #: builtin/log.c:129
+ msgid "Use mail map file"
+-msgstr "verwendet \"mailmap\"-Datei"
++msgstr "\"mailmap\"-Datei verwenden"
+=20
+ #: builtin/log.c:130
+ msgid "decorate options"
+@@ -6474,11 +6474,11 @@ msgstr "Zwei Ausgabeverzeichnisse?"
+=20
+ #: builtin/log.c:1183
+ msgid "use [PATCH n/m] even with a single patch"
+-msgstr "verwendet [PATCH n/m] auch mit einzelnem Patch"
++msgstr "[PATCH n/m] auch mit einzelnem Patch verwenden"
+=20
+ #: builtin/log.c:1186
+ msgid "use [PATCH] even with multiple patches"
+-msgstr "verwendet [PATCH] auch mit mehreren Patches"
++msgstr "[PATCH] auch mit mehreren Patches verwenden"
+=20
+ #: builtin/log.c:1190
+ msgid "print patches to standard out"
+@@ -6486,11 +6486,11 @@ msgstr "Ausgabe der Patches in Standard-Ausgabe=
 "
--"Repository befinden, an"
-+"Referenzen von der Standard-Eingabe anzeigen, die sich nicht im lokal=
-en "
-+"Repository befinden"
 =20
- #: builtin/symbolic-ref.c:7
- msgid "git symbolic-ref [options] name [ref]"
-@@ -9579,11 +9579,11 @@ msgstr "git symbolic-ref -d [-q] name"
- #: builtin/symbolic-ref.c:40
- msgid "suppress error message for non-symbolic (detached) refs"
+ #: builtin/log.c:1192
+ msgid "generate a cover letter"
+-msgstr "erzeugt ein Deckblatt"
++msgstr "ein Deckblatt erzeugen"
+=20
+ #: builtin/log.c:1194
+ msgid "use simple number sequence for output file names"
+-msgstr "verwendet einfache Nummernfolge f=C3=BCr die Namen der Ausgabe=
+dateien"
++msgstr "einfache Nummernfolge f=C3=BCr die Namen der Ausgabedateien ve=
+rwenden"
+=20
+ #: builtin/log.c:1195
+ msgid "sfx"
+@@ -6498,40 +6498,40 @@ msgstr "Dateiendung"
+=20
+ #: builtin/log.c:1196
+ msgid "use <sfx> instead of '.patch'"
+-msgstr "verwendet <Dateiendung> anstatt '.patch'"
++msgstr "<Dateiendung> anstatt '.patch' verwenden"
+=20
+ #: builtin/log.c:1198
+ msgid "start numbering patches at <n> instead of 1"
+-msgstr "beginnt die Nummerierung der Patches bei <n> anstatt bei 1"
++msgstr "die Nummerierung der Patches bei <n> anstatt bei 1 beginnen"
+=20
+ #: builtin/log.c:1200
+ msgid "mark the series as Nth re-roll"
+-msgstr "kennzeichnet die Serie als n-te Fassung"
++msgstr "die Serie als n-te Fassung kennzeichnen"
+=20
+ #: builtin/log.c:1202
+ msgid "Use [<prefix>] instead of [PATCH]"
+-msgstr "verwendet [<Pr=C3=A4fix>] anstatt [PATCH]"
++msgstr "[<Pr=C3=A4fix>] anstatt [PATCH] verwenden"
+=20
+ #: builtin/log.c:1205
+ msgid "store resulting files in <dir>"
+-msgstr "speichert erzeugte Dateien in <Verzeichnis>"
++msgstr "erzeugte Dateien in <Verzeichnis> speichern"
+=20
+ #: builtin/log.c:1208
+ msgid "don't strip/add [PATCH]"
+-msgstr "[PATCH] wird nicht entfernt/hinzugef=C3=BCgt"
++msgstr "[PATCH] nicht entfernen/hinzuf=C3=BCgen"
+=20
+ #: builtin/log.c:1211
+ msgid "don't output binary diffs"
+-msgstr "gibt keine bin=C3=A4ren Unterschiede aus"
++msgstr "keine bin=C3=A4ren Unterschiede ausgeben"
+=20
+ #: builtin/log.c:1213
+ msgid "don't include a patch matching a commit upstream"
  msgstr ""
--"unterdr=C3=BCckt Fehlermeldungen f=C3=BCr nicht-symbolische (losgel=C3=
-=B6ste) Referenzen"
-+"Fehlermeldungen f=C3=BCr nicht-symbolische (losgel=C3=B6ste) Referenz=
-en unterdr=C3=BCcken"
+-"schlie=C3=9Ft keine Patches ein, die einem Commit im Upstream-Branch =
+entsprechen"
++"keine Patches einschlie=C3=9Fen, die einem Commit im Upstream-Branch =
+entsprechen"
 =20
- #: builtin/symbolic-ref.c:41
- msgid "delete symbolic ref"
--msgstr "l=C3=B6scht symbolische Referenzen"
-+msgstr "symbolische Referenzen l=C3=B6schen"
+ #: builtin/log.c:1215
+ msgid "show patch format instead of default (patch + stat)"
+-msgstr "zeigt Patchformat anstatt des Standards (Patch + Zusammenfassu=
+ng)"
++msgstr "Patchformat anstatt des Standards anzeigen (Patch + Zusammenfa=
+ssung)"
 =20
- #: builtin/symbolic-ref.c:42
- msgid "shorten ref output"
-@@ -9719,19 +9719,19 @@ msgstr "fehlerhafter Objekt-Name '%s'"
+ #: builtin/log.c:1217
+ msgid "Messaging"
+@@ -6543,7 +6543,7 @@ msgstr "Header"
 =20
- #: builtin/tag.c:588
- msgid "list tag names"
--msgstr "listet Tagnamen auf"
-+msgstr "Tagnamen auflisten"
+ #: builtin/log.c:1219
+ msgid "add email header"
+-msgstr "f=C3=BCgt E-Mail-Header hinzu"
++msgstr "E-Mail-Header hinzuf=C3=BCgen"
 =20
- #: builtin/tag.c:590
- msgid "print <n> lines of each tag message"
--msgstr "zeigt <n> Zeilen jeder Tag-Beschreibung"
-+msgstr "<n> Zeilen jeder Tag-Beschreibung anzeigen"
+ #: builtin/log.c:1220 builtin/log.c:1222
+ msgid "email"
+@@ -6551,11 +6551,11 @@ msgstr "E-Mail"
 =20
- #: builtin/tag.c:592
- msgid "delete tags"
--msgstr "l=C3=B6scht Tags"
-+msgstr "Tags l=C3=B6schen"
+ #: builtin/log.c:1220
+ msgid "add To: header"
+-msgstr "f=C3=BCgt  \"To:\"-Header hinzu"
++msgstr "\"To:\"-Header hinzuf=C3=BCgen"
 =20
- #: builtin/tag.c:593
- msgid "verify tags"
--msgstr "=C3=BCberpr=C3=BCft Tags"
-+msgstr "Tags =C3=BCberpr=C3=BCfen"
+ #: builtin/log.c:1222
+ msgid "add Cc: header"
+-msgstr "f=C3=BCgt \"Cc:\"-Header hinzu"
++msgstr "\"Cc:\"-Header hinzuf=C3=BCgen"
 =20
- #: builtin/tag.c:595
- msgid "Tag creation options"
-@@ -9751,19 +9751,19 @@ msgstr "annotiertes und GPG-signiertes Tag"
-=20
- #: builtin/tag.c:605
- msgid "use another key to sign the tag"
--msgstr "verwendet einen anderen Schl=C3=BCssel, um das Tag zu signiere=
-n"
-+msgstr "einen anderen Schl=C3=BCssel verwenden, um das Tag zu signiere=
-n"
-=20
- #: builtin/tag.c:606
- msgid "replace the tag if exists"
--msgstr "ersetzt das Tag, wenn es existiert"
-+msgstr "das Tag ersetzen, wenn es existiert"
-=20
- #: builtin/tag.c:607
- msgid "show tag list in columns"
--msgstr "zeigt Liste der Tags in Spalten"
-+msgstr "Liste der Tags in Spalten anzeigen"
-=20
- #: builtin/tag.c:609
- msgid "sort tags"
--msgstr "sortiert Tags"
-+msgstr "Tags sortieren"
-=20
- #: builtin/tag.c:613
- msgid "Tag listing options"
-@@ -9771,11 +9771,11 @@ msgstr "Optionen f=C3=BCr Auflistung der Tags"
-=20
- #: builtin/tag.c:616 builtin/tag.c:622
- msgid "print only tags that contain the commit"
--msgstr "gibt nur Tags aus, die diesen Commit beinhalten"
-+msgstr "nur Tags ausgeben, die diesen Commit beinhalten"
-=20
- #: builtin/tag.c:628
- msgid "print only tags of the object"
--msgstr "gibt nur Tags von dem Objekt aus"
-+msgstr "nur Tags von dem Objekt ausgeben"
-=20
- #: builtin/tag.c:654
- msgid "--column and -n are incompatible"
-@@ -9850,25 +9850,25 @@ msgstr "Aktualisierung: ignoriert Submodule"
-=20
- #: builtin/update-index.c:761
- msgid "do not ignore new files"
--msgstr "ignoriert keine neuen Dateien"
-+msgstr "keine neuen Dateien ignorieren"
-=20
- #: builtin/update-index.c:763
- msgid "let files replace directories and vice-versa"
--msgstr "l=C3=A4sst Dateien Verzeichnisse ersetzen, und umgedreht"
-+msgstr "Dateien Verzeichnisse ersetzen lassen, und umgedreht"
-=20
- #: builtin/update-index.c:765
- msgid "notice files missing from worktree"
--msgstr "beachtet fehlende Dateien im Arbeitsverzeichnis"
-+msgstr "fehlende Dateien im Arbeitsverzeichnis beachten"
-=20
- #: builtin/update-index.c:767
- msgid "refresh even if index contains unmerged entries"
+ #: builtin/log.c:1224
+ msgid "ident"
+@@ -6564,7 +6564,7 @@ msgstr "Ident"
+ #: builtin/log.c:1225
+ msgid "set From address to <ident> (or committer ident if absent)"
  msgstr ""
--"aktualisiert, auch wenn die Staging-Area nicht zusammengef=C3=BChrte =
-Eintr=C3=A4ge "
-+"aktualisieren, auch wenn die Staging-Area nicht zusammengef=C3=BChrte=
- Eintr=C3=A4ge "
- "beinhaltet"
+-"setzt \"From\"-Adresse auf <Ident> (oder Ident des Commit-Erstellers,=
+wenn "
++"\"From\"-Adresse auf <Ident> setzen (oder Ident des Commit-Erstellers=
+, wenn "
+ "fehlend)"
 =20
- #: builtin/update-index.c:770
- msgid "refresh stat information"
--msgstr "aktualisiert Dateiinformationen"
-+msgstr "Dateiinformationen aktualisieren"
+ #: builtin/log.c:1227
+@@ -6573,7 +6573,7 @@ msgstr "message-id"
 =20
- #: builtin/update-index.c:774
- msgid "like --refresh, but ignore assume-unchanged setting"
-@@ -9880,7 +9880,7 @@ msgstr "<Modus>,<Objekt>,<Pfad>"
+ #: builtin/log.c:1228
+ msgid "make first mail a reply to <message-id>"
+-msgstr "macht aus erster E-Mail eine Antwort zu <message-id>"
++msgstr "aus erster E-Mail eine Antwort zu <message-id> machen"
 =20
- #: builtin/update-index.c:779
- msgid "add the specified entry to the index"
--msgstr "merkt den angegebenen Eintrag zum Commit vor"
-+msgstr "den angegebenen Eintrag zum Commit vormerken"
+ #: builtin/log.c:1229 builtin/log.c:1232
+ msgid "boundary"
+@@ -6581,15 +6581,15 @@ msgstr "Grenze"
 =20
- #: builtin/update-index.c:783
- msgid "(+/-)x"
-@@ -9888,34 +9888,34 @@ msgstr "(+/-)x"
+ #: builtin/log.c:1230
+ msgid "attach the patch"
+-msgstr "h=C3=A4ngt einen Patch an"
++msgstr "den Patch anh=C3=A4ngen"
 =20
- #: builtin/update-index.c:784
- msgid "override the executable bit of the listed files"
--msgstr "=C3=BCberschreibt das \"ausf=C3=BChrbar\"-Bit der aufgelistete=
-n Dateien"
-+msgstr "das \"ausf=C3=BChrbar\"-Bit der aufgelisteten Dateien =C3=BCbe=
-rschreiben"
+ #: builtin/log.c:1233
+ msgid "inline the patch"
+-msgstr "f=C3=BCgt den Patch direkt in die Nachricht ein"
++msgstr "den Patch direkt in die Nachricht einf=C3=BCgen"
 =20
- #: builtin/update-index.c:788
- msgid "mark files as \"not changing\""
--msgstr "betrachte diese Datei immer als unver=C3=A4ndert"
-+msgstr "diese Datei immer als unver=C3=A4ndert betrachten"
+ #: builtin/log.c:1237
+ msgid "enable message threading, styles: shallow, deep"
+-msgstr "aktiviert Nachrichtenverkettung, Stile: shallow, deep"
++msgstr "Nachrichtenverkettung aktivieren, Stile: shallow, deep"
 =20
- #: builtin/update-index.c:791
- msgid "clear assumed-unchanged bit"
--msgstr "l=C3=B6scht \"assumed-unchanged\"-Bit"
-+msgstr "\"assumed-unchanged\"-Bit l=C3=B6schen"
+ #: builtin/log.c:1239
+ msgid "signature"
+@@ -6597,15 +6597,15 @@ msgstr "Signatur"
 =20
- #: builtin/update-index.c:794
- msgid "mark files as \"index-only\""
--msgstr "markiert Dateien als \"index-only\""
-+msgstr "Dateien als \"index-only\" markieren"
+ #: builtin/log.c:1240
+ msgid "add a signature"
+-msgstr "f=C3=BCgt eine Signatur hinzu"
++msgstr "eine Signatur hinzuf=C3=BCgen"
 =20
- #: builtin/update-index.c:797
- msgid "clear skip-worktree bit"
--msgstr "l=C3=B6scht \"skip-worktree\"-Bit"
-+msgstr "\"skip-worktree\"-Bit l=C3=B6schen"
+ #: builtin/log.c:1242
+ msgid "add a signature from a file"
+-msgstr "f=C3=BCgt eine Signatur aus einer Datei hinzu"
++msgstr "eine Signatur aus einer Datei hinzuf=C3=BCgen"
 =20
- #: builtin/update-index.c:800
- msgid "add to index only; do not add content to object database"
+ #: builtin/log.c:1243
+ msgid "don't print the patch filenames"
+-msgstr "zeigt keine Dateinamen der Patches"
++msgstr "keine Dateinamen der Patches anzeigen"
+=20
+ #: builtin/log.c:1317
+ #, c-format
+@@ -6673,74 +6673,74 @@ msgstr "git ls-files [Optionen] [<Datei>...]"
+=20
+ #: builtin/ls-files.c:458
+ msgid "identify the file status with tags"
+-msgstr "zeigt den Dateistatus mit Tags"
++msgstr "den Dateistatus mit Tags anzeigen"
+=20
+ #: builtin/ls-files.c:460
+ msgid "use lowercase letters for 'assume unchanged' files"
  msgstr ""
--"merkt die =C3=84nderungen nur zum Commit vor; Inhalt wird nicht der O=
-bjekt-"
-+"die =C3=84nderungen nur zum Commit vormerken; Inhalt wird nicht der O=
-bjekt-"
- "Datenbank hinzugef=C3=BCgt"
+-"verwendet Kleinbuchstaben f=C3=BCr Dateien mit 'assume unchanged' Mar=
+kierung"
++"Kleinbuchstaben f=C3=BCr Dateien mit 'assume unchanged' Markierung ve=
+rwenden"
 =20
- #: builtin/update-index.c:802
- msgid "remove named paths even if present in worktree"
+ #: builtin/ls-files.c:462
+ msgid "show cached files in the output (default)"
+-msgstr "zeigt zwischengespeicherten Dateien in der Ausgabe an (Standar=
+d)"
++msgstr "zwischengespeicherten Dateien in der Ausgabe anzeigen (Standar=
+d)"
+=20
+ #: builtin/ls-files.c:464
+ msgid "show deleted files in the output"
+-msgstr "zeigt entfernte Dateien in der Ausgabe an"
++msgstr "entfernte Dateien in der Ausgabe anzeigen"
+=20
+ #: builtin/ls-files.c:466
+ msgid "show modified files in the output"
+-msgstr "zeigt ge=C3=A4nderte Dateien in der Ausgabe an"
++msgstr "ge=C3=A4nderte Dateien in der Ausgabe anzeigen"
+=20
+ #: builtin/ls-files.c:468
+ msgid "show other files in the output"
+-msgstr "zeigt sonstige Dateien in der Ausgabe an"
++msgstr "sonstige Dateien in der Ausgabe anzeigen"
+=20
+ #: builtin/ls-files.c:470
+ msgid "show ignored files in the output"
+-msgstr "zeigt ignorierte Dateien in der Ausgabe an"
++msgstr "ignorierte Dateien in der Ausgabe anzeigen"
+=20
+ #: builtin/ls-files.c:473
+ msgid "show staged contents' object name in the output"
  msgstr ""
--"l=C3=B6scht benannte Pfade, auch wenn sie sich im Arbeitsverzeichnis =
-befinden"
-+"benannte Pfade l=C3=B6schen, auch wenn sie sich im Arbeitsverzeichnis=
- befinden"
+-"zeigt Objektnamen von Inhalten, die zum Commit vorgemerkt sind, in de=
+r "
+-"Ausgabe an"
++"Objektnamen von Inhalten, die zum Commit vorgemerkt sind, in der "
++"Ausgabe anzeigen"
 =20
- #: builtin/update-index.c:804
- msgid "with --stdin: input lines are terminated by null bytes"
-@@ -9923,11 +9923,11 @@ msgstr "mit --stdin: eingegebene Zeilen sind du=
-rch NUL-Bytes abgeschlossen"
+ #: builtin/ls-files.c:475
+ msgid "show files on the filesystem that need to be removed"
+-msgstr "zeigt Dateien im Dateisystem, die gel=C3=B6scht werden m=C3=BC=
+ssen, an"
++msgstr "Dateien im Dateisystem, die gel=C3=B6scht werden m=C3=BCssen, =
+anzeigen"
 =20
- #: builtin/update-index.c:806
- msgid "read list of paths to be updated from standard input"
--msgstr "liest Liste der zu aktualisierenden Pfade von der Standard-Ein=
-gabe"
-+msgstr "Liste der zu aktualisierenden Pfade von der Standard-Eingabe l=
-esen"
+ #: builtin/ls-files.c:477
+ msgid "show 'other' directories' name only"
+-msgstr "zeigt nur Namen von 'sonstigen' Verzeichnissen an"
++msgstr "nur Namen von 'sonstigen' Verzeichnissen anzeigen"
 =20
- #: builtin/update-index.c:810
- msgid "add entries from standard input to the index"
--msgstr "merkt Eintr=C3=A4ge von der Standard-Eingabe zum Commit vor"
-+msgstr "Eintr=C3=A4ge von der Standard-Eingabe zum Commit vormerken"
+ #: builtin/ls-files.c:480
+ msgid "don't show empty directories"
+-msgstr "zeigt keine leeren Verzeichnisse an"
++msgstr "keine leeren Verzeichnisse anzeigen"
 =20
- #: builtin/update-index.c:814
- msgid "repopulate stages #2 and #3 for the listed paths"
-@@ -9936,15 +9936,15 @@ msgstr ""
+ #: builtin/ls-files.c:483
+ msgid "show unmerged files in the output"
+-msgstr "zeigt nicht zusammengef=C3=BChrte Dateien in der Ausgabe an"
++msgstr "nicht zusammengef=C3=BChrte Dateien in der Ausgabe anzeigen"
 =20
- #: builtin/update-index.c:818
- msgid "only update entries that differ from HEAD"
--msgstr "aktualisiert nur Eintr=C3=A4ge, die unterschiedlich zu HEAD si=
-nd"
-+msgstr "nur Eintr=C3=A4ge aktualisieren, die unterschiedlich zu HEAD s=
-ind"
+ #: builtin/ls-files.c:485
+ msgid "show resolve-undo information"
+-msgstr "zeigt 'resolve-undo' Informationen an"
++msgstr "'resolve-undo' Informationen anzeigen"
 =20
- #: builtin/update-index.c:822
- msgid "ignore files missing from worktree"
--msgstr "ignoriert fehlende Dateien im Arbeitsverzeichnis"
-+msgstr "fehlende Dateien im Arbeitsverzeichnis ignorieren"
+ #: builtin/ls-files.c:487
+ msgid "skip files matching pattern"
+-msgstr "l=C3=A4sst Dateien aus, die einem Muster entsprechen"
++msgstr "Dateien auslassen, die einem Muster entsprechen"
 =20
- #: builtin/update-index.c:825
- msgid "report actions to standard output"
--msgstr "gibt die Aktionen in der Standard-Ausgabe aus"
-+msgstr "die Aktionen in der Standard-Ausgabe ausgeben"
+ #: builtin/ls-files.c:490
+ msgid "exclude patterns are read from <file>"
+-msgstr "schlie=C3=9Ft Muster, gelesen von <Datei>, aus"
++msgstr "Muster, gelesen von <Datei>, ausschlie=C3=9Fen"
 =20
- #: builtin/update-index.c:827
- msgid "(for porcelains) forget saved unresolved conflicts"
-@@ -9952,7 +9952,7 @@ msgstr "(f=C3=BCr Fremdprogramme) keine gespeiche=
-rten, nicht aufgel=C3=B6ste Konflikte"
+ #: builtin/ls-files.c:493
+ msgid "read additional per-directory exclude patterns in <file>"
+-msgstr "liest zus=C3=A4tzliche pro-Verzeichnis Auschlussmuster aus <Da=
+tei>"
++msgstr "zus=C3=A4tzliche pro-Verzeichnis Auschlussmuster aus <Datei> a=
+uslesen"
 =20
- #: builtin/update-index.c:831
- msgid "write index in this format"
--msgstr "schreibt Staging-Area-Datei in diesem Format"
-+msgstr "Staging-Area-Datei in diesem Format schreiben"
+ #: builtin/ls-files.c:495
+ msgid "add the standard git exclusions"
+-msgstr "f=C3=BCgt die standardm=C3=A4=C3=9Figen Git-Ausschl=C3=BCsse h=
+inzu"
++msgstr "die standardm=C3=A4=C3=9Figen Git-Ausschl=C3=BCsse hinzuf=C3=BC=
+gen"
 =20
- #: builtin/update-index.c:833
- msgid "enable or disable split index"
-@@ -9972,11 +9972,11 @@ msgstr "git update-ref [Optionen] --stdin [-z]"
-=20
- #: builtin/update-ref.c:350
- msgid "delete the reference"
--msgstr "l=C3=B6scht diese Referenz"
-+msgstr "diese Referenz l=C3=B6schen"
-=20
- #: builtin/update-ref.c:352
- msgid "update <refname> not the one it points to"
--msgstr "aktualisiert <Referenzname>, nicht den Verweis"
-+msgstr "<Referenzname> aktualisieren, nicht den Verweis"
-=20
- #: builtin/update-ref.c:353
- msgid "stdin has NUL-terminated arguments"
-@@ -9984,7 +9984,7 @@ msgstr "Standard-Eingabe hat durch NUL-Zeichen ab=
-geschlossene Argumente"
-=20
- #: builtin/update-ref.c:354
- msgid "read updates from stdin"
--msgstr "liest Aktualisierungen von der Standard-Eingabe"
-+msgstr "Aktualisierungen von der Standard-Eingabe lesen"
-=20
- #: builtin/update-server-info.c:6
- msgid "git update-server-info [--force]"
-@@ -9992,7 +9992,7 @@ msgstr "git update-server-info [--force]"
-=20
- #: builtin/update-server-info.c:14
- msgid "update the info files from scratch"
--msgstr "aktualisiert die Informationsdateien von Grund auf"
-+msgstr "die Informationsdateien von Grund auf aktualisieren"
-=20
- #: builtin/verify-commit.c:17
- msgid "git verify-commit [-v|--verbose] <commit>..."
-@@ -10000,7 +10000,7 @@ msgstr "git verify-commit [-v|--verbose] <Commi=
-t>..."
-=20
- #: builtin/verify-commit.c:75
- msgid "print commit contents"
--msgstr "gibt Commit-Inhalte aus"
-+msgstr "Commit-Inhalte ausgeben"
-=20
- #: builtin/verify-pack.c:55
- msgid "git verify-pack [-v|--verbose] [-s|--stat-only] <pack>..."
-@@ -10012,7 +10012,7 @@ msgstr "erweiterte Ausgaben"
-=20
- #: builtin/verify-pack.c:67
- msgid "show statistics only"
--msgstr "zeigt nur Statistiken"
-+msgstr "nur Statistiken anzeigen"
-=20
- #: builtin/verify-tag.c:17
- msgid "git verify-tag [-v|--verbose] <tag>..."
-@@ -10020,7 +10020,7 @@ msgstr "git verify-tag [-v|--verbose] <Tag>..."
-=20
- #: builtin/verify-tag.c:73
- msgid "print tag contents"
--msgstr "gibt Tag-Inhalte aus"
-+msgstr "Tag-Inhalte ausgeben"
-=20
- #: builtin/write-tree.c:13
- msgid "git write-tree [--missing-ok] [--prefix=3D<prefix>/]"
-@@ -10032,7 +10032,7 @@ msgstr "<Pr=C3=A4fix>/"
-=20
- #: builtin/write-tree.c:27
- msgid "write tree object for a subdirectory <prefix>"
--msgstr "schreibt das \"Tree\"-Objekt f=C3=BCr ein Unterverzeichnis <Pr=
-=C3=A4fix>"
-+msgstr "das \"Tree\"-Objekt f=C3=BCr ein Unterverzeichnis <Pr=C3=A4fix=
-> schreiben"
-=20
- #: builtin/write-tree.c:30
- msgid "only useful for debugging"
-@@ -10067,100 +10067,100 @@ msgstr "weniger Ausgaben"
-=20
- #: parse-options.h:240
- msgid "use <n> digits to display SHA-1s"
--msgstr "benutze <n> Ziffern zur Anzeige von SHA-1s"
-+msgstr "<n> Ziffern zur Anzeige von SHA-1s benutzen"
-=20
- #: common-cmds.h:8
- msgid "Add file contents to the index"
--msgstr "merkt Dateiinhalte zum Commit vor"
-+msgstr "Dateiinhalte zum Commit vormerken"
-=20
- #: common-cmds.h:9
- msgid "Find by binary search the change that introduced a bug"
- msgstr ""
--"Findet =C3=BCber eine Bin=C3=A4rsuche die =C3=84nderungen, die einen =
-=46ehler verursacht haben"
-+"=C3=BCber eine Bin=C3=A4rsuche die =C3=84nderungen finden, die einen =
-=46ehler verursacht haben"
-=20
- #: common-cmds.h:10
- msgid "List, create, or delete branches"
--msgstr "Zeigt an, erstellt oder entfernt Branches"
-+msgstr "Branches anzeigen, erstellen oder entfernen"
-=20
- #: common-cmds.h:11
- msgid "Checkout a branch or paths to the working tree"
--msgstr "Checkt Branches oder Pfade im Arbeitsverzeichnis aus"
-+msgstr "Branches oder Pfade im Arbeitsverzeichnis auschecken"
-=20
- #: common-cmds.h:12
- msgid "Clone a repository into a new directory"
--msgstr "Klont ein Repository in einem neuen Verzeichnis"
-+msgstr "ein Repository in einem neuen Verzeichnis klonen"
-=20
- #: common-cmds.h:13
- msgid "Record changes to the repository"
--msgstr "Tr=C3=A4gt =C3=84nderungen in das Repository ein"
-+msgstr "=C3=84nderungen in das Repository eintragen"
-=20
- #: common-cmds.h:14
- msgid "Show changes between commits, commit and working tree, etc"
- msgstr ""
--"Zeigt =C3=84nderungen zwischen Commits, Commit und Arbeitsverzeichnis=
-, etc. an"
-+"=C3=84nderungen zwischen Commits, Commit und Arbeitsverzeichnis, etc.=
- anzeigen"
-=20
- #: common-cmds.h:15
- msgid "Download objects and refs from another repository"
--msgstr "L=C3=A4dt Objekte und Referenzen von einem anderen Repository =
-herunter"
-+msgstr "Objekte und Referenzen von einem anderen Repository herunterla=
-den"
-=20
- #: common-cmds.h:16
- msgid "Print lines matching a pattern"
--msgstr "Stellt Zeilen dar, die einem Muster entsprechen"
-+msgstr "Zeilen darstellen, die einem Muster entsprechen"
-=20
- #: common-cmds.h:17
- msgid "Create an empty Git repository or reinitialize an existing one"
- msgstr ""
--"Erstellt ein leeres Git-Repository oder initialisiert ein bestehendes=
- neu"
-+"ein leeres Git-Repository erstellen oder ein bestehendes neuinitialis=
-ieren"
-=20
- #: common-cmds.h:18
- msgid "Show commit logs"
--msgstr "Zeigt Commit-Historie an"
-+msgstr "Commit-Historie anzeigen"
-=20
- #: common-cmds.h:19
- msgid "Join two or more development histories together"
--msgstr "F=C3=BChrt zwei oder mehr Entwicklungszweige zusammen"
-+msgstr "zwei oder mehr Entwicklungszweige zusammenf=C3=BChren"
-=20
- #: common-cmds.h:20
- msgid "Move or rename a file, a directory, or a symlink"
- msgstr ""
--"Verschiebt oder benennt eine Datei, ein Verzeichnis, oder einen symbo=
-lischen "
--"Verweis um"
-+"eine Datei, ein Verzeichnis, oder einen symbolischen "
-+"Verweis verschieben oder umbenennen"
-=20
- #: common-cmds.h:21
- msgid "Fetch from and integrate with another repository or a local bra=
-nch"
- msgstr ""
--"Fordert Objekte von einem externen Repository an und f=C3=BChrt sie m=
-it einem "
--"anderen Repository oder einem lokalen Branch zusammen"
-+"Objekte von einem externen Repository anfordern und sie mit einem "
-+"anderen Repository oder einem lokalen Branch zusammenf=C3=BChren"
-=20
- #: common-cmds.h:22
- msgid "Update remote refs along with associated objects"
--msgstr "Aktualisiert Remote-Referenzen mitsamt den verbundenen Objekte=
-n"
-+msgstr "Remote-Referenzen mitsamt den verbundenen Objekten aktualisier=
-en"
-=20
- #: common-cmds.h:23
- msgid "Forward-port local commits to the updated upstream head"
--msgstr "Baut lokale Commits auf einem aktuellerem Upstream-Branch neu =
-auf"
-+msgstr "lokale Commits auf einem aktuellerem Upstream-Branch neu aufba=
-uen"
-=20
- #: common-cmds.h:24
- msgid "Reset current HEAD to the specified state"
--msgstr "Setzt aktuellen HEAD zu einem spezifizierten Zustand"
-+msgstr "aktuellen HEAD zu einem spezifizierten Zustand setzen"
-=20
- #: common-cmds.h:25
- msgid "Remove files from the working tree and from the index"
--msgstr "L=C3=B6scht Dateien im Arbeitsverzeichnis und von der Staging-=
-Area"
-+msgstr "Dateien im Arbeitsverzeichnis und von der Staging-Area l=C3=B6=
-schen"
-=20
- #: common-cmds.h:26
- msgid "Show various types of objects"
--msgstr "Zeigt verschiedene Arten von Objekten an"
-+msgstr "verschiedene Arten von Objekten anzeigen"
-=20
- #: common-cmds.h:27
- msgid "Show the working tree status"
--msgstr "Zeigt den Zustand des Arbeitsverzeichnisses an"
-+msgstr "den Zustand des Arbeitsverzeichnisses anzeigen"
-=20
- #: common-cmds.h:28
- msgid "Create, list, delete or verify a tag object signed with GPG"
- msgstr ""
--"Erzeugt, listet auf, l=C3=B6scht oder verifiziert ein mit GPG signier=
-tes Tag-"
--"Objekt"
-+"ein mit GPG signiertes Tag-Objekt erzeugen, auflisten, l=C3=B6schen o=
-der "
-+"verifizieren."
-=20
- #: git-am.sh:52
- msgid "You need to set your committer info first"
-@@ -10347,7 +10347,7 @@ msgstr ""
-=20
- #: git-am.sh:902
- msgid "applying to an empty history"
--msgstr "wende zu leerer Historie an"
-+msgstr "auf leere Historie anwenden"
-=20
- #: git-bisect.sh:48
- msgid "You need to start by \"git bisect start\""
+ #: builtin/ls-files.c:498
+ msgid "make the output relative to the project top directory"
 --=20
 2.2.0.rc0.232.g8ec773f
