@@ -1,110 +1,110 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 1/2] Add a few more values for receive.denyCurrentBranch
-Date: Sat, 8 Nov 2014 18:48:32 +0000
-Message-ID: <20141108184832.GA167774@vauxhall.crustytoothpaste.net>
-References: <cover.1415368490.git.johannes.schindelin@gmx.de>
- <f82aedcb632571d0b756d62c58479c0aab35b026.1415368490.git.johannes.schindelin@gmx.de>
- <20141108111855.GA21620@peff.net>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Test failure
+Date: Sat, 8 Nov 2014 11:28:32 -0800
+Message-ID: <CAO2U3QiFvwMiwVCdVju_vJKK_HVndpQf4VyrEaHeeVVN6rgYgA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bp/iNruPH9dso1Pn"
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	gitster@pobox.com, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 08 19:48:45 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 08 20:28:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnB40-0002Nc-QJ
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 19:48:45 +0100
+	id 1XnBgv-00077f-J5
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 20:28:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbaKHSsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2014 13:48:40 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49901 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752119AbaKHSsj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Nov 2014 13:48:39 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 04D362808F;
-	Sat,  8 Nov 2014 18:48:36 +0000 (UTC)
-Mail-Followup-To: Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>, gitster@pobox.com,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20141108111855.GA21620@peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.17-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1752435AbaKHT2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2014 14:28:53 -0500
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:41991 "EHLO
+	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752365AbaKHT2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2014 14:28:53 -0500
+Received: by mail-oi0-f52.google.com with SMTP id u20so3763424oif.25
+        for <git@vger.kernel.org>; Sat, 08 Nov 2014 11:28:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=WMLu507GLnO1pQ9KDzALDDYyLGk7RHR8I5e7PuZPlMk=;
+        b=nTNmataQ5whFHfu7gSrHflxIM3/rYEl99a0XUD9OtjFzQzgOaiBFaDnAs5z0d+mctD
+         60ZNbcbbxpsL2SA67fq/1H9BBAmr9UcclrPDmZTVQyWlxjXb0QqMbngWH0qVU/wA7CHs
+         Ma2RRGjuvvYzSNUT2OJMEaMOXBk1gMqVyk7KYfgeEFuZh+IX+dm/e9LJskUM/QiztimF
+         rSnCooD2i6VnMqmk67G6GbNlz+LYyyRFdd/Bin65V1tsAnSo9tYSaWnXvIm4wRZPKvyv
+         UpD6MTi+abE4tj0qOahBj+tmveSCjmGFKcFWjUwRTueswMaLl9jf/l02t5XCYt4SEDDA
+         As2w==
+X-Received: by 10.60.123.77 with SMTP id ly13mr2329841oeb.79.1415474932557;
+ Sat, 08 Nov 2014 11:28:52 -0800 (PST)
+Received: by 10.202.18.132 with HTTP; Sat, 8 Nov 2014 11:28:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I'm on a macbook running a beta of Mac OS Yosemite 10.10.1. I've never
+been able to get GETTEXT to work so I have
 
---bp/iNruPH9dso1Pn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+NO_GETTEXT=1
 
-On Sat, Nov 08, 2014 at 06:18:55AM -0500, Jeff King wrote:
-> On Fri, Nov 07, 2014 at 02:58:17PM +0100, Johannes Schindelin wrote:
->=20
-> > Under certain circumstances, it makes a *lot* of sense to allow pushing
-> > into the current branch. For example, when two machines with different
-> > Operating Systems are required for testing, it makes much more sense to
-> > synchronize between working directories than having to go via a third
-> > server.
->=20
-> FWIW, I do this without a third server (and without resorting to pull),
-> with:
->=20
->   host1$ git push host2 master:refs/remotes/host1/master
->   host2$ git merge host1/master
->=20
-> You can even set up a push refspec to make "git push host2" do the right
-> thing.
+in my makefile, but other than that I'm using the master branch of the
+official github mirror.
 
-I do something similar, but it's inconvenient when the repo you're
-pushing into is $HOME, since you have to type something like "exec zsh
--l" in order to fix things up.
+When I build and run tests I get
 
-> That being said, I do like the premise of your patch, as it eliminates
-> the extra step on the remote side (which is not that big a deal in
-> itself, but when you realize that host2 _did_ have some changes on it,
-> then you end up doing the merge there, when in general I'd prefer to do
-> all the work on host1 via "git pull").
+[11:17][michael.blume@tcc-michael-4:~/workspace/git/t(master)]$
+./t1410-reflog.sh
+ok 1 - setup
+ok 2 - rewind
+ok 3 - corrupt and check
+ok 4 - reflog expire --dry-run should not touch reflog
+ok 5 - reflog expire
+ok 6 - prune and fsck
+ok 7 - recover and check
+ok 8 - delete
+ok 9 - rewind2
+ok 10 - --expire=never
+ok 11 - gc.reflogexpire=never
+ok 12 - gc.reflogexpire=false
+ok 13 - checkout should not delete log for packed ref
+not ok 14 - stale dirs do not cause d/f conflicts (reflogs on)
+#
+# test_when_finished "git branch -d a || git branch -d a/b" &&
+#
+# git branch a/b master &&
+# echo "a/b@{0} branch: Created from master" >expect &&
+# git log -g --format="%gd %gs" a/b >actual &&
+# test_cmp expect actual &&
+# git branch -d a/b &&
+#
+# # now logs/refs/heads/a is a stale directory, but
+# # we should move it out of the way to create "a" reflog
+# git branch a master &&
+# echo "a@{0} branch: Created from master" >expect &&
+# git log -g --format="%gd %gs" a >actual &&
+# test_cmp expect actual
+#
+not ok 15 - stale dirs do not cause d/f conflicts (reflogs off)
+#
+# test_when_finished "git branch -d a || git branch -d a/b" &&
+#
+# git branch a/b master &&
+# echo "a/b@{0} branch: Created from master" >expect &&
+# git log -g --format="%gd %gs" a/b >actual &&
+# test_cmp expect actual &&
+# git branch -d a/b &&
+#
+# # same as before, but we only create a reflog for "a" if
+# # it already exists, which it does not
+# git -c core.logallrefupdates=false branch a master &&
+# : >expect &&
+# git log -g --format="%gd %gs" a >actual &&
+# test_cmp expect actual
+#
+# failed 2 among 15 test(s)
 
-I agree.  This is very useful.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+(I get the same thing with 'make test' but this is me just running the
+problematic test)
 
---bp/iNruPH9dso1Pn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+A quick search seems to indicate the test is pretty new?
+http://www.mail-archive.com/git@vger.kernel.org/msg60495.html
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJUXmWAAAoJEL9TXYEfUvaLjAIQAIaTeCNuD1R0tcLvK+EHctk0
-4fnuM5+ylRX4X288KUegyTnJfP5cre/LV3aiynciDQMmv0/ZZltCM+50TAWUWrLP
-KJ/B3muOC6bvDrkIxhCZM6FkbPGrBiTn0/9e6fP2pt3YHU/t7wNJJpSpINF2liUh
-8ciIJXaT58bnpzpbPIJTydUSiHlQe/2Ntue9M2NeI2pGw20WcFhYtUhJ/QhUHW53
-Y3W+ZIjZLh7VKzFAwjs/l4/N4ext4AaDPomVGqW2t5x+zciPrNgQkoIBXpoIP7O6
-w+NT89aUnWz0zxd/AjpKhXbJhNqFZG9ayOXYrtayYHXxqKWNYNT0xnjFPuuvZs0d
-1elAWfMNCx0oh86lskEZ7USpfV+o+R4e6tQRlUi1cLevcbR+3RmT1NKq6qzdmZ3l
-Ywq0XUnXBPzYzQrDCl1CNh/Z8diqzw9hSmzmDsVrWGqx9hrWSSoxD0bWmenPVr45
-Hzd2rqiynSqT/HnkO9PdZ4rESHfcX1/A+JhiAhFRz65dzSw8s62Rww4D+6M0Wlwc
-dhVmmGCykG3cGufzmZEWClQtHsAavBFiBT/l50QlIKm3aivKoe+RN9AnbaTdfIJ5
-K89ZKgYAX5B14ouL0SjlKSLzvILx9AArZixmh1/fQtYl020Qsy5uJX/xrXrZrOOz
-10LNMeBsJfkZhUnp/VKY
-=N/4A
------END PGP SIGNATURE-----
-
---bp/iNruPH9dso1Pn--
+Test passes in my ubuntu vm.
