@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 17/22] status: enable untracked cache
-Date: Sat,  8 Nov 2014 16:39:50 +0700
-Message-ID: <1415439595-469-18-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 18/22] update-index: manually enable or disable untracked cache
+Date: Sat,  8 Nov 2014 16:39:51 +0700
+Message-ID: <1415439595-469-19-git-send-email-pclouds@gmail.com>
 References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
  <1415439595-469-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -11,42 +11,42 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 08 10:41:28 2014
+X-From: git-owner@vger.kernel.org Sat Nov 08 10:41:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xn2WN-0001di-7Q
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 10:41:27 +0100
+	id 1Xn2WT-0001ib-58
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 10:41:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753685AbaKHJlT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2014 04:41:19 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:38809 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753680AbaKHJlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2014 04:41:16 -0500
-Received: by mail-pa0-f47.google.com with SMTP id kx10so5041583pab.6
-        for <git@vger.kernel.org>; Sat, 08 Nov 2014 01:41:16 -0800 (PST)
+	id S1753690AbaKHJl0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Nov 2014 04:41:26 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:36734 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753680AbaKHJlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2014 04:41:21 -0500
+Received: by mail-pa0-f46.google.com with SMTP id lf10so5076484pab.33
+        for <git@vger.kernel.org>; Sat, 08 Nov 2014 01:41:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=RmCktpphx/Kezb97AiLw//yzuNHlrRvMwaYhQI0uCP8=;
-        b=vFf0nBLHDfEhQYCnMLVKx0vpqGsf4Oh8QPcE3GsrFVtAKmUQilDFUYWduQ/nt+JoA8
-         zIn6q+LqaX+xQFt3r+QjKTVe3TGXK+jRcUC6LMdXepzvO3mQ4oJRiRmYDpOtSykf8KcE
-         JmIVlSRzwT8cvb/e5wv+B4IFWNx56LM8F2YGB77ITGtYkA7DyBwx6Ow9NSA+NUHuHnIU
-         rk+08vg5P1gVxiJXV8IIjdlTJ/HpOS+1cjvIAPD+rGPfA+CEudXrZbcaS9OtjQmHe0lc
-         YaNm2VJyWN3t8EXZLs0lNJrsMlCh5THsnW0OXCaBADhPsMtOhhbiWObgpRv3PlZB49/J
-         5vJA==
-X-Received: by 10.66.162.37 with SMTP id xx5mr18335142pab.10.1415439676262;
-        Sat, 08 Nov 2014 01:41:16 -0800 (PST)
+        bh=scHDANi7jLR6C4+4RNfz3O2RW8fnnTQ5QTgOaSdQ8zE=;
+        b=X+JEKPHI/DMXlYiN76D4gBp15vxkrgXQfJe0oPKjHNrODRe3VpZusivTNAU+zzzPPn
+         7EuVUjw22FGGno64ugsnZy0PrbAz8+G4heJNIrEOaKWToY0NzC1F9zsSwc9AZz7PRxAA
+         F9xBD3kVEiPzMIAvfpGWcbTT8iDWavEFkBiQWsdvnL+WH42O9FU/wO6hCz+QyoEoAfGm
+         L+/+5dK7f6f/12FxvAVdg/vfgPeBSJj2Qy7RyK81Lsv391DkbTRqkPGZQmjME+dBl9ac
+         Lfid9xZGZ9R0GEUIXqa5jMqZNXqJQBUwzGxd1p7J3Bqalf3lRVAtEMXa1bRlVl7XgqYD
+         gXYg==
+X-Received: by 10.68.224.227 with SMTP id rf3mr18209489pbc.61.1415439681352;
+        Sat, 08 Nov 2014 01:41:21 -0800 (PST)
 Received: from lanh ([115.73.197.54])
-        by mx.google.com with ESMTPSA id pg2sm11000480pbb.43.2014.11.08.01.41.13
+        by mx.google.com with ESMTPSA id r2sm10997383pdi.60.2014.11.08.01.41.18
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Nov 2014 01:41:15 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 08 Nov 2014 16:41:30 +0700
+        Sat, 08 Nov 2014 01:41:20 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 08 Nov 2014 16:41:35 +0700
 X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
 In-Reply-To: <1415439595-469-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
@@ -54,52 +54,320 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-update_index_if_able() is moved down so that the updated untracked
-cache could be written out.
+Overall time saving on "git status" is about 40% in the best case
+scenario, removing ..collect_untracked() as the most time consuming
+function. read and refresh index operations are now at the top (which
+should drop when index-helper and/or watchman support is added). More
+numbers and analysis below.
+
+webkit.git
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+169k files. 6k dirs. Lots of test data (i.e. not touched most of the
+time)
+
+Base status
+-----------
+
+Index version 4 in split index mode and cache-tree populated. No
+untracked cache. It shows how time is consumed by "git status". The
+same settings are used for other repos below.
+
+18:28:10.199679 builtin/commit.c:1394   performance: 0.000000451 s: cmd=
+_status:setup
+18:28:10.474847 read-cache.c:1407       performance: 0.274873831 s: rea=
+d_index
+18:28:10.475295 read-cache.c:1407       performance: 0.000000656 s: rea=
+d_index
+18:28:10.728443 preload-index.c:131     performance: 0.253147487 s: rea=
+d_index_preload
+18:28:10.741422 read-cache.c:1254       performance: 0.012868340 s: ref=
+resh_index
+18:28:10.752300 wt-status.c:623         performance: 0.010421357 s: wt_=
+status_collect_changes_worktree
+18:28:10.762069 wt-status.c:629         performance: 0.009644748 s: wt_=
+status_collect_changes_index
+18:28:11.601019 wt-status.c:632         performance: 0.838859547 s: wt_=
+status_collect_untracked
+18:28:11.605939 builtin/commit.c:1421   performance: 0.004835004 s: cmd=
+_status:update_index
+18:28:11.606580 trace.c:415             performance: 1.407878388 s: git=
+ command: 'git' 'status'
+
+Populating status
+-----------------
+
+This is after enabling untracked cache and the cache is still empty.
+We see a slight increase in .._collect_untracked() and update_index
+(because new cache has to be written to $GIT_DIR/index).
+
+18:28:18.915213 builtin/commit.c:1394   performance: 0.000000326 s: cmd=
+_status:setup
+18:28:19.197364 read-cache.c:1407       performance: 0.281901416 s: rea=
+d_index
+18:28:19.197754 read-cache.c:1407       performance: 0.000000546 s: rea=
+d_index
+18:28:19.451355 preload-index.c:131     performance: 0.253599607 s: rea=
+d_index_preload
+18:28:19.464400 read-cache.c:1254       performance: 0.012935336 s: ref=
+resh_index
+18:28:19.475115 wt-status.c:623         performance: 0.010236920 s: wt_=
+status_collect_changes_worktree
+18:28:19.486022 wt-status.c:629         performance: 0.010801685 s: wt_=
+status_collect_changes_index
+18:28:20.362660 wt-status.c:632         performance: 0.876551366 s: wt_=
+status_collect_untracked
+18:28:20.396199 builtin/commit.c:1421   performance: 0.033447969 s: cmd=
+_status:update_index
+18:28:20.396939 trace.c:415             performance: 1.482695902 s: git=
+ command: 'git' 'status'
+
+Populated status
+----------------
+
+After the cache is populated, wt_status_collect_untracked() drops 82%
+from 0.838s to 0.144s. Overall time drops 45%. Top offenders are now
+read_index() and read_index_preload().
+
+18:28:20.408605 builtin/commit.c:1394   performance: 0.000000457 s: cmd=
+_status:setup
+18:28:20.692864 read-cache.c:1407       performance: 0.283980458 s: rea=
+d_index
+18:28:20.693273 read-cache.c:1407       performance: 0.000000661 s: rea=
+d_index
+18:28:20.958814 preload-index.c:131     performance: 0.265540254 s: rea=
+d_index_preload
+18:28:20.972375 read-cache.c:1254       performance: 0.013437429 s: ref=
+resh_index
+18:28:20.983959 wt-status.c:623         performance: 0.011146646 s: wt_=
+status_collect_changes_worktree
+18:28:20.993948 wt-status.c:629         performance: 0.009879094 s: wt_=
+status_collect_changes_index
+18:28:21.138125 wt-status.c:632         performance: 0.144084737 s: wt_=
+status_collect_untracked
+18:28:21.173678 builtin/commit.c:1421   performance: 0.035463949 s: cmd=
+_status:update_index
+18:28:21.174251 trace.c:415             performance: 0.766707355 s: git=
+ command: 'git' 'status'
+
+gentoo-x86.git
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This repository is a strange one with a balanced, wide and shallow
+worktree (about 100k files and 23k dirs) and no .gitignore in
+worktree. .._collect_untracked() time drops 88%, total time drops 56%.
+
+Base status
+-----------
+18:20:40.828642 builtin/commit.c:1394   performance: 0.000000496 s: cmd=
+_status:setup
+18:20:41.027233 read-cache.c:1407       performance: 0.198130532 s: rea=
+d_index
+18:20:41.027670 read-cache.c:1407       performance: 0.000000581 s: rea=
+d_index
+18:20:41.171716 preload-index.c:131     performance: 0.144045594 s: rea=
+d_index_preload
+18:20:41.179171 read-cache.c:1254       performance: 0.007320424 s: ref=
+resh_index
+18:20:41.185785 wt-status.c:623         performance: 0.006144638 s: wt_=
+status_collect_changes_worktree
+18:20:41.192701 wt-status.c:629         performance: 0.006780184 s: wt_=
+status_collect_changes_index
+18:20:41.991723 wt-status.c:632         performance: 0.798927029 s: wt_=
+status_collect_untracked
+18:20:41.994664 builtin/commit.c:1421   performance: 0.002852772 s: cmd=
+_status:update_index
+18:20:41.995458 trace.c:415             performance: 1.168427502 s: git=
+ command: 'git' 'status'
+Populating status
+-----------------
+18:20:48.968848 builtin/commit.c:1394   performance: 0.000000380 s: cmd=
+_status:setup
+18:20:49.172918 read-cache.c:1407       performance: 0.203734214 s: rea=
+d_index
+18:20:49.173341 read-cache.c:1407       performance: 0.000000562 s: rea=
+d_index
+18:20:49.320013 preload-index.c:131     performance: 0.146671391 s: rea=
+d_index_preload
+18:20:49.328039 read-cache.c:1254       performance: 0.007921957 s: ref=
+resh_index
+18:20:49.334680 wt-status.c:623         performance: 0.006172020 s: wt_=
+status_collect_changes_worktree
+18:20:49.342526 wt-status.c:629         performance: 0.007731746 s: wt_=
+status_collect_changes_index
+18:20:50.257510 wt-status.c:632         performance: 0.914864222 s: wt_=
+status_collect_untracked
+18:20:50.338371 builtin/commit.c:1421   performance: 0.080776477 s: cmd=
+_status:update_index
+18:20:50.338900 trace.c:415             performance: 1.371462446 s: git=
+ command: 'git' 'status'
+Populated status
+----------------
+18:20:50.351160 builtin/commit.c:1394   performance: 0.000000571 s: cmd=
+_status:setup
+18:20:50.577358 read-cache.c:1407       performance: 0.225917338 s: rea=
+d_index
+18:20:50.577794 read-cache.c:1407       performance: 0.000000617 s: rea=
+d_index
+18:20:50.734140 preload-index.c:131     performance: 0.156345564 s: rea=
+d_index_preload
+18:20:50.745717 read-cache.c:1254       performance: 0.011463075 s: ref=
+resh_index
+18:20:50.755176 wt-status.c:623         performance: 0.008877929 s: wt_=
+status_collect_changes_worktree
+18:20:50.763768 wt-status.c:629         performance: 0.008471633 s: wt_=
+status_collect_changes_index
+18:20:50.854885 wt-status.c:632         performance: 0.090988721 s: wt_=
+status_collect_untracked
+18:20:50.857765 builtin/commit.c:1421   performance: 0.002789097 s: cmd=
+_status:update_index
+18:20:50.858411 trace.c:415             performance: 0.508647673 s: git=
+ command: 'git' 'status'
+
+linux-2.6
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Reference repo. Not too big. .._collect_status() drops 84%. Total time
+drops 42%.
+
+Base status
+-----------
+18:34:09.870122 builtin/commit.c:1394   performance: 0.000000385 s: cmd=
+_status:setup
+18:34:09.943218 read-cache.c:1407       performance: 0.072871177 s: rea=
+d_index
+18:34:09.943614 read-cache.c:1407       performance: 0.000000491 s: rea=
+d_index
+18:34:10.004364 preload-index.c:131     performance: 0.060748102 s: rea=
+d_index_preload
+18:34:10.008190 read-cache.c:1254       performance: 0.003714285 s: ref=
+resh_index
+18:34:10.012087 wt-status.c:623         performance: 0.002775446 s: wt_=
+status_collect_changes_worktree
+18:34:10.016054 wt-status.c:629         performance: 0.003862140 s: wt_=
+status_collect_changes_index
+18:34:10.214747 wt-status.c:632         performance: 0.198604837 s: wt_=
+status_collect_untracked
+18:34:10.216102 builtin/commit.c:1421   performance: 0.001244166 s: cmd=
+_status:update_index
+18:34:10.216817 trace.c:415             performance: 0.347670735 s: git=
+ command: 'git' 'status'
+Populating status
+-----------------
+18:34:16.595102 builtin/commit.c:1394   performance: 0.000000456 s: cmd=
+_status:setup
+18:34:16.666600 read-cache.c:1407       performance: 0.070992413 s: rea=
+d_index
+18:34:16.667012 read-cache.c:1407       performance: 0.000000606 s: rea=
+d_index
+18:34:16.729375 preload-index.c:131     performance: 0.062362492 s: rea=
+d_index_preload
+18:34:16.732565 read-cache.c:1254       performance: 0.003075517 s: ref=
+resh_index
+18:34:16.736148 wt-status.c:623         performance: 0.002422201 s: wt_=
+status_collect_changes_worktree
+18:34:16.739990 wt-status.c:629         performance: 0.003746618 s: wt_=
+status_collect_changes_index
+18:34:16.948505 wt-status.c:632         performance: 0.208426710 s: wt_=
+status_collect_untracked
+18:34:16.961744 builtin/commit.c:1421   performance: 0.013151887 s: cmd=
+_status:update_index
+18:34:16.962233 trace.c:415             performance: 0.368537535 s: git=
+ command: 'git' 'status'
+Populated status
+----------------
+18:34:16.970026 builtin/commit.c:1394   performance: 0.000000631 s: cmd=
+_status:setup
+18:34:17.046235 read-cache.c:1407       performance: 0.075904673 s: rea=
+d_index
+18:34:17.046644 read-cache.c:1407       performance: 0.000000681 s: rea=
+d_index
+18:34:17.113564 preload-index.c:131     performance: 0.066920253 s: rea=
+d_index_preload
+18:34:17.117281 read-cache.c:1254       performance: 0.003604055 s: ref=
+resh_index
+18:34:17.121115 wt-status.c:623         performance: 0.002508345 s: wt_=
+status_collect_changes_worktree
+18:34:17.125089 wt-status.c:629         performance: 0.003871636 s: wt_=
+status_collect_changes_index
+18:34:17.156089 wt-status.c:632         performance: 0.030895703 s: wt_=
+status_collect_untracked
+18:34:17.169861 builtin/commit.c:1421   performance: 0.013686404 s: cmd=
+_status:update_index
+18:34:17.170391 trace.c:415             performance: 0.201474531 s: git=
+ command: 'git' 'status'
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/commit.c | 5 +++--
- wt-status.c      | 2 ++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ Documentation/git-update-index.txt |  8 ++++++++
+ builtin/update-index.c             | 16 ++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 5ed6036..bdcfa61 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1372,13 +1372,14 @@ int cmd_status(int argc, const char **argv, con=
-st char *prefix)
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &s.pathspec=
-, NULL, NULL);
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
+ate-index.txt
+index dfc09d9..f9a35cd 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -172,6 +172,14 @@ may not support it yet.
+ 	the shared index file. This mode is designed for very large
+ 	indexes that take a signficant amount of time to read or write.
 =20
- 	fd =3D hold_locked_index(&index_lock, 0);
--	if (0 <=3D fd)
--		update_index_if_able(&the_index, &index_lock);
-=20
- 	s.is_initial =3D get_sha1(s.reference, sha1) ? 1 : 0;
- 	s.ignore_submodule_arg =3D ignore_submodule_arg;
- 	wt_status_collect(&s);
-=20
-+	if (0 <=3D fd)
-+		update_index_if_able(&the_index, &index_lock);
++--untracked-cache::
++--no-untracked-cache::
++	Enable or disable untracked cache extension. This could speed
++	up for commands that involve determining untracked files such
++	as `git status`. The underlying operating system and file
++	system must change `st_mtime` field of a directory if files
++	are added or deleted in that directory.
 +
- 	if (s.relative_paths)
- 		s.prefix =3D prefix;
+ \--::
+ 	Do not interpret any more arguments as options.
 =20
-diff --git a/wt-status.c b/wt-status.c
-index 27da529..8880c3b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -585,6 +585,8 @@ static void wt_status_collect_untracked(struct wt_s=
-tatus *s)
- 			DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
- 	if (s->show_ignored_files)
- 		dir.flags |=3D DIR_SHOW_IGNORED_TOO;
-+	else
-+		dir.untracked =3D the_index.untracked;
- 	setup_standard_excludes(&dir);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index e8c7fd4..3d2dedd 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -740,6 +740,7 @@ static int reupdate_callback(struct parse_opt_ctx_t=
+ *ctx,
+ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ {
+ 	int newfd, entries, has_errors =3D 0, line_termination =3D '\n';
++	int untracked_cache =3D -1;
+ 	int read_from_stdin =3D 0;
+ 	int prefix_length =3D prefix ? strlen(prefix) : 0;
+ 	int preferred_index_format =3D 0;
+@@ -831,6 +832,8 @@ int cmd_update_index(int argc, const char **argv, c=
+onst char *prefix)
+ 			N_("write index in this format")),
+ 		OPT_BOOL(0, "split-index", &split_index,
+ 			N_("enable or disable split index")),
++		OPT_BOOL(0, "untracked-cache", &untracked_cache,
++			N_("enable/disable untracked cache")),
+ 		OPT_END()
+ 	};
 =20
- 	fill_directory(&dir, &s->pathspec);
+@@ -937,6 +940,19 @@ int cmd_update_index(int argc, const char **argv, =
+const char *prefix)
+ 		the_index.split_index =3D NULL;
+ 		the_index.cache_changed |=3D SOMETHING_CHANGED;
+ 	}
++	if (untracked_cache > 0 && !the_index.untracked) {
++		struct untracked_cache *uc;
++
++		uc =3D xcalloc(1, sizeof(*uc));
++		uc->exclude_per_dir =3D ".gitignore";
++		/* should be the same flags used by git-status */
++		uc->dir_flags =3D DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECT=
+ORIES;
++		the_index.untracked =3D uc;
++		the_index.cache_changed |=3D UNTRACKED_CHANGED;
++	} else if (!untracked_cache && the_index.untracked) {
++		the_index.untracked =3D NULL;
++		the_index.cache_changed |=3D UNTRACKED_CHANGED;
++	}
+=20
+ 	if (active_cache_changed) {
+ 		if (newfd < 0) {
 --=20
 2.1.0.rc0.78.gc0d8480
