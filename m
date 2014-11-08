@@ -1,58 +1,128 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What is the default refspec for fetch?
-Date: Sat, 8 Nov 2014 05:52:21 -0500
-Message-ID: <20141108105221.GA20750@peff.net>
-References: <CAENte7inZ5fm2SzNPq=HNPKnPco9tM4T_es5Dphnpbia-uiLdg@mail.gmail.com>
+From: Thomas Quinot <thomas@quinot.org>
+Subject: [PATCH] git_connect: allow passing arguments to ssh in GIT_SSH_ARGS
+Date: Sat, 8 Nov 2014 11:44:39 +0100
+Message-ID: <20141108104439.GA89717@melamine.cuivre.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git <git@vger.kernel.org>
-To: Christian Halstrick <christian.halstrick@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 11:52:29 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 08 11:54:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xn3d6-0007JF-Oz
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 11:52:29 +0100
+	id 1Xn3f5-0000ln-OG
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 11:54:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753606AbaKHKwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2014 05:52:25 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37925 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753580AbaKHKwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2014 05:52:24 -0500
-Received: (qmail 2906 invoked by uid 102); 8 Nov 2014 10:52:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Nov 2014 04:52:24 -0600
-Received: (qmail 3239 invoked by uid 107); 8 Nov 2014 10:52:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Nov 2014 05:52:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Nov 2014 05:52:21 -0500
+	id S1753641AbaKHKy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2014 05:54:27 -0500
+Received: from houdart.cuivre.fr.eu.org ([81.57.40.110]:29772 "EHLO
+	melamine.cuivre.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753578AbaKHKyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2014 05:54:25 -0500
+X-Greylist: delayed 582 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Nov 2014 05:54:25 EST
+Received: by melamine.cuivre.fr.eu.org (Postfix, from userid 1000)
+	id D576033553; Sat,  8 Nov 2014 11:44:39 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <CAENte7inZ5fm2SzNPq=HNPKnPco9tM4T_es5Dphnpbia-uiLdg@mail.gmail.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 07, 2014 at 04:31:08PM +0100, Christian Halstrick wrote:
+It may be impractical to install a wrapper script for ssh
+when additional parameters need to be passed. Provide an
+alternative way of specifying these by means of the GIT_SSH_ARGS
+environment variable. Arguments are whitespace delimited following
+usual shell conventions; embedded whitespace can be enclosed
+in quotes, or escaped with a backslash.
 
-> In a repo where no remote.<name>.fetch config parameter is set what
-> should a "git fetch" do? My experiments let me think it's
-> "HEAD:FETCH_HEAD". Right?
+Signed-off-by: Thomas Quinot <thomas@quinot.org>
+---
 
-Basically, yes. We always write FETCH_HEAD, regardless of the refspec.
-We choose "HEAD" if no other refspec was provided. So it is really more
-like
+Dear fellow GIT developers,
 
-  git fetch $remote HEAD
+I hope I won't stray too far away from established procedures
+with my first contribution to git. This patch adds support
+for a GIT_SSH_ARGS environment variable, providing a way
+of specifying ssh arguments without having to create a
+wrapper script.
 
-This is what makes one-off bare-url pulls work, like:
+Thomas.
 
-  git pull git://...
+ Documentation/git.txt | 11 +++++++++--
+ connect.c             | 22 ++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
-It runs fetch under the hood, which writes into FETCH_HEAD, and then we
-merge that.
-
--Peff
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 9202010..3ac7b5b 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -887,13 +887,20 @@ other
+ 	than the default SSH port.
+ +
+ To pass options to the program that you want to list in GIT_SSH
+-you will need to wrap the program and options into a shell script,
+-then set GIT_SSH to refer to the shell script.
++you can either wrap the program and options into a shell script,
++then set GIT_SSH to refer to the shell script, or use the
++GIT_SSH_ARGS environment variable (see below).
+ +
+ Usually it is easier to configure any desired options through your
+ personal `.ssh/config` file.  Please consult your ssh documentation
+ for further details.
+ 
++'GIT_SSH_ARGS'::
++	This environment variables provides additional arguments to be
++	passed to GIT_SSH. Arguments are split by spaces, the usual shell
++	quoting and escaping is supported. Quote pairs or a backslash can
++	be used to quote them.
++
+ 'GIT_ASKPASS'::
+ 	If this environment variable is set, then Git commands which need to
+ 	acquire passwords or passphrases (e.g. for HTTP or IMAP authentication)
+diff --git a/connect.c b/connect.c
+index d47d0ec..3d4b182 100644
+--- a/connect.c
++++ b/connect.c
+@@ -701,9 +701,15 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		conn->in = conn->out = -1;
+ 		if (protocol == PROTO_SSH) {
+ 			const char *ssh = getenv("GIT_SSH");
++			const char *ssh_args_env = getenv("GIT_SSH_ARGS");
++			char *ssh_args = ssh_args_env ?
++				xstrdup(ssh_args_env) : NULL;
+ 			int putty = ssh && strcasestr(ssh, "plink");
+ 			char *ssh_host = hostandport;
+ 			const char *port = NULL;
++			const char **argv;
++			int argc;
++
+ 			get_host_and_port(&ssh_host, &port);
+ 			port = get_port_numeric(port);
+ 
+@@ -717,6 +723,22 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				argv_array_push(&conn->args, putty ? "-P" : "-p");
+ 				argv_array_push(&conn->args, port);
+ 			}
++
++			if (ssh_args) {
++				argc = split_cmdline(ssh_args, &argv);
++				if (argc < 0) {
++					free(ssh_args);
++					die("invalid GIT_SSH_ARGS '%s': %s",
++					    ssh_args_env,
++					    split_cmdline_strerror(argc));
++				}
++
++				while (argc--)
++					argv_array_push(&conn->args, *argv++);
++				free(ssh_args);
++				free(argv);
++			}
++
+ 			argv_array_push(&conn->args, ssh_host);
+ 		} else {
+ 			/* remove repo-local variables from the environment */
+-- 
+1.9.2
