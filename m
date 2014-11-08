@@ -1,84 +1,58 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Using git clone
-Date: Sat, 8 Nov 2014 17:15:39 +0000
-Message-ID: <20141108171539.GB162918@vauxhall.crustytoothpaste.net>
-References: <1415120399.4259.5.camel@precision690.xccg.com>
+From: Adri Farr <14farresa@gmail.com>
+Subject: --trust-exit-code not working
+Date: Sat, 8 Nov 2014 18:23:48 +0100
+Message-ID: <CAPfWmhg=Ok+ZQXBbiNWyhJay5h9xXkR7Vu+4u0C19EKa-OU8hQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="St7VIuEGZ6dlpu13"
-Cc: git@vger.kernel.org
-To: "Dr. George E. Moore" <gem@x-ctr-l.com>
-X-From: git-owner@vger.kernel.org Sat Nov 08 18:15:51 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 08 18:23:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xn9c6-0004tY-DH
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 18:15:50 +0100
+	id 1Xn9jt-0004F7-DK
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 18:23:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753909AbaKHRPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2014 12:15:44 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49895 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753838AbaKHRPn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Nov 2014 12:15:43 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 43FA82808F;
-	Sat,  8 Nov 2014 17:15:43 +0000 (UTC)
-Mail-Followup-To: "Dr. George E. Moore" <gem@x-ctr-l.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1415120399.4259.5.camel@precision690.xccg.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.17-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1753908AbaKHRXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2014 12:23:49 -0500
+Received: from mail-qa0-f43.google.com ([209.85.216.43]:53690 "EHLO
+	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753395AbaKHRXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2014 12:23:49 -0500
+Received: by mail-qa0-f43.google.com with SMTP id j7so3685287qaq.16
+        for <git@vger.kernel.org>; Sat, 08 Nov 2014 09:23:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=rIjPWLLRdnwF61ys54LBA1DduUA1YdoawV1x3OdS0mg=;
+        b=kyKrxIxMgk14E+RActif2Xw5e7O2Rqf+IMjfuZ3xZW8H6CgryLE5l8a+SOjkHQYyNl
+         oN1McHnY8eILbVttRRtWirubR8loNXYXVoM3EnLF1YRPMdj1wieNqotxPt90wgUo1xTB
+         HhotvG+O9pOs1+X+rUUP/cgcUUZ0IfGreTT0gwrTLxFqFM+D1nAlNuVk/J1LfMx/kb9R
+         VgZroSm2VIMM3shywwQz3N8Rj3q52tWJJlCVuYJgMHhaoaHurENMN6EI31UdN6nhPO53
+         MmR42hzuiX+Lp0SlgD8UaXir87rTW1azGtUk3D5oz8Je9Kn0uLqTBFUo+8GctxZDU9Qx
+         94MQ==
+X-Received: by 10.229.111.201 with SMTP id t9mr29056307qcp.9.1415467428255;
+ Sat, 08 Nov 2014 09:23:48 -0800 (PST)
+Received: by 10.229.126.6 with HTTP; Sat, 8 Nov 2014 09:23:48 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello!,
 
---St7VIuEGZ6dlpu13
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Firstly, thank you very much to those that contributed the patch; I
+truly appreciate it. I haven't been able to make it work in 2.2.0.rc1,
+though. I'm not sure whether it's my fault, or the patch', but a 'git
+difftool --trust-exit-code' call with vimdiff as the diff tool and
+exiting with :cq doesn't seem to make it quit. git simply keeps
+pushing files to be diffed. Similarly, if I set meld as the tool and
+kill it, git will reopen meld with new files.
 
-On Tue, Nov 04, 2014 at 11:59:59AM -0500, Dr. George E. Moore wrote:
-> Is it appropriate to use "git clone" to update the master branch of an
-> existing repository? The current master branch is for a much earlier
-> release candidate.
+Sorry for bringing that up so late; I've been fairly busy. I did test
+it some days ago and didn't manage to make it work, either.
 
-You generally want to use git fetch or git pull in that case.  git clone
-creates an entirely new copy of the original repository.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Thank you,
 
---St7VIuEGZ6dlpu13
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJUXk+7AAoJEL9TXYEfUvaLFwkQAJ7auhqI+nUyoyozNc23vUwv
-5JoLqnEOHH88IQqMoUKqjeYBQuw0MJFPmU3Jh9A+wql+6jQuv9R128bMwNNpdmnG
-BrhChugVuf11RX+ogkxVGTlSfeNoewi0Vlr3qNQvO9SEeIEpi9Bd/VBa2JPD6lAp
-fL52Edxh6II3YaUQTpRQk9W5th2WaTBcGgqLeSTmj4DgxjHaCFfBOxdnTj1tt3R0
-Gy4X9yq2d6ZQN+NKst1gJ3U6K1FDh1FHajqsuhiQOMFhGOnuJckkP0lGLuFug2Sh
-0I8KwGRI7iLmoIyJiuiytfI9UVSEbZ8L5mhr4U/AEYyDcaGtv7qO3AXHVnG26XTL
-/4QxnNyJzbW9a5urdY9oBvke3KlTyIcqcVqxHZ02iUQShyveNpyA1hqZz2AykDse
-H5Ey2h0jLMnd1SuxsKOwqI51cnO79r2UARTWPrcDWcYRn86MCfbkr7CHQeATEXOF
-2YsXH3tDJzMTb1BFI6Ootbl0Cw3LbKiWfhZMV/j9xK7x15iIvV0UvV6AlR84kYEd
-Yepk+X3hyPpAWyiRpj2uNGoDLy5fTP7auaCyL9G69RtqT5xzWCXelQFIYXXsbbog
-e7sOCxjWHRsIZS3BolD6zalGKDFpYQFMvGqlb+t2OKAHlCFs4RZAZrJBF8W9C27p
-XvprHhHmfmhN3gx/8I3j
-=ELls
------END PGP SIGNATURE-----
-
---St7VIuEGZ6dlpu13--
+Adria
