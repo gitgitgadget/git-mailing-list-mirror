@@ -1,84 +1,63 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git_connect: allow passing arguments to ssh in
- GIT_SSH_ARGS
-Date: Sat, 8 Nov 2014 06:09:58 -0500
-Message-ID: <20141108110958.GB20750@peff.net>
-References: <20141108104439.GA89717@melamine.cuivre.fr.eu.org>
+Subject: Re: [PATCH 1/2] Add a few more values for receive.denyCurrentBranch
+Date: Sat, 8 Nov 2014 06:18:55 -0500
+Message-ID: <20141108111855.GA21620@peff.net>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de>
+ <f82aedcb632571d0b756d62c58479c0aab35b026.1415368490.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Thomas Quinot <thomas@quinot.org>
-X-From: git-owner@vger.kernel.org Sat Nov 08 12:10:12 2014
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 08 12:19:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xn3uG-0006HG-2p
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 12:10:12 +0100
+	id 1Xn42v-0005qo-6T
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Nov 2014 12:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753600AbaKHLKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Nov 2014 06:10:01 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37944 "HELO cloud.peff.net"
+	id S1753548AbaKHLS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Nov 2014 06:18:58 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37948 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753519AbaKHLKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Nov 2014 06:10:00 -0500
-Received: (qmail 3701 invoked by uid 102); 8 Nov 2014 11:10:00 -0000
+	id S1753521AbaKHLS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Nov 2014 06:18:57 -0500
+Received: (qmail 4080 invoked by uid 102); 8 Nov 2014 11:18:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Nov 2014 05:10:00 -0600
-Received: (qmail 3517 invoked by uid 107); 8 Nov 2014 11:10:08 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Nov 2014 05:18:57 -0600
+Received: (qmail 3649 invoked by uid 107); 8 Nov 2014 11:19:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Nov 2014 06:10:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Nov 2014 06:09:58 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Nov 2014 06:19:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Nov 2014 06:18:55 -0500
 Content-Disposition: inline
-In-Reply-To: <20141108104439.GA89717@melamine.cuivre.fr.eu.org>
+In-Reply-To: <f82aedcb632571d0b756d62c58479c0aab35b026.1415368490.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 08, 2014 at 11:44:39AM +0100, Thomas Quinot wrote:
+On Fri, Nov 07, 2014 at 02:58:17PM +0100, Johannes Schindelin wrote:
 
-> It may be impractical to install a wrapper script for ssh
-> when additional parameters need to be passed. Provide an
-> alternative way of specifying these by means of the GIT_SSH_ARGS
-> environment variable. Arguments are whitespace delimited following
-> usual shell conventions; embedded whitespace can be enclosed
-> in quotes, or escaped with a backslash.
+> Under certain circumstances, it makes a *lot* of sense to allow pushing
+> into the current branch. For example, when two machines with different
+> Operating Systems are required for testing, it makes much more sense to
+> synchronize between working directories than having to go via a third
+> server.
 
-This has bugged me before, too. Almost every sub-program invoked by git
-is done so using a shell, so you can put in arbitrary arguments or even
-snippets of shell code. But not GIT_SSH.
+FWIW, I do this without a third server (and without resorting to pull),
+with:
 
-I think the original reason was to match other programs with similar
-variables. At this point, we can't just change it on a whim; the quoting
-requirements are different and it would break people's setups. So your
-approach of adding a new variable is good (the other option is figuring
-out a long-term transition plan).
+  host1$ git push host2 master:refs/remotes/host1/master
+  host2$ git merge host1/master
 
-However, I'm not sure adding a separate variable for options is the best
-we can do. Besides being a bit clunky, it has two big shortcomings:
+You can even set up a push refspec to make "git push host2" do the right
+thing.
 
-  1. It's not consistent with other git variables that use the shell
-     (e.g., GIT_PAGER).
-
-  2. It's not as flexible as a shell; you can't specify "$HOME/bin/ssh"
-     or other even more esoteric things, like dynamically tweaking
-     the options based on the environment.
-
-What do you think of adding an alternate variable that is not ssh
-_arguments_, but rather just a full shell command for running ssh?
-I'm not sure what it could be called (GIT_SSH_SH is probably too
-confusing).
-
-> I hope I won't stray too far away from established procedures
-> with my first contribution to git. This patch adds support
-> for a GIT_SSH_ARGS environment variable, providing a way
-> of specifying ssh arguments without having to create a
-> wrapper script.
-
-The formatting and whatnot of your submission looks fine to me. The
-patch itself looks reasonable, though I didn't look too closely after
-making my comments above. :)
+That being said, I do like the premise of your patch, as it eliminates
+the extra step on the remote side (which is not that big a deal in
+itself, but when you realize that host2 _did_ have some changes on it,
+then you end up doing the merge there, when in general I'd prefer to do
+all the work on host1 via "git pull").
 
 -Peff
