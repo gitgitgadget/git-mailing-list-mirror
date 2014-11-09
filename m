@@ -1,104 +1,63 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv3 3/5] builtin/notes: Add --allow-empty, to allow storing
- empty notes
-Date: Sun, 9 Nov 2014 13:31:32 +0100
-Message-ID: <CALKQrgdFDHUc8JzH3XnwvnHdEZOhUN=EmrWXKKDLd+6MG7jMKw@mail.gmail.com>
-References: <1415351961-31567-1-git-send-email-johan@herland.net>
-	<1415351961-31567-4-git-send-email-johan@herland.net>
-	<xmqq1tpehopp.fsf@gitster.dls.corp.google.com>
+From: Thomas Quinot <thomas@quinot.org>
+Subject: Re: [PATCH v2 1/2] git_connect: set ssh shell command in GIT_SSH_CMD
+Date: Sun, 9 Nov 2014 13:39:34 +0100
+Message-ID: <20141109123934.GA50956@melamine.cuivre.fr.eu.org>
+References: <20141108104439.GA89717@melamine.cuivre.fr.eu.org>
+ <20141108110958.GB20750@peff.net>
+ <20141108123554.GA90057@melamine.cuivre.fr.eu.org>
+ <20141108142753.GA28652@melamine.cuivre.fr.eu.org>
+ <20141109095155.GB17369@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	"James H. Fisher" <jhf@trifork.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 09 13:31:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Nov 09 13:39:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnRek-0008Hv-NF
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 13:31:47 +0100
+	id 1XnRmf-0008B9-FT
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 13:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071AbaKIMbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2014 07:31:42 -0500
-Received: from mail12.copyleft.no ([188.94.218.224]:43114 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbaKIMbl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2014 07:31:41 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1XnRee-0001Cf-3k
-	for git@vger.kernel.org; Sun, 09 Nov 2014 13:31:40 +0100
-Received: from mail-pd0-f176.google.com ([209.85.192.176])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1XnRed-000CdO-NV
-	for git@vger.kernel.org; Sun, 09 Nov 2014 13:31:39 +0100
-Received: by mail-pd0-f176.google.com with SMTP id ft15so6054599pdb.7
-        for <git@vger.kernel.org>; Sun, 09 Nov 2014 04:31:32 -0800 (PST)
-X-Received: by 10.68.90.225 with SMTP id bz1mr593825pbb.153.1415536292634;
- Sun, 09 Nov 2014 04:31:32 -0800 (PST)
-Received: by 10.70.68.3 with HTTP; Sun, 9 Nov 2014 04:31:32 -0800 (PST)
-In-Reply-To: <xmqq1tpehopp.fsf@gitster.dls.corp.google.com>
+	id S1752104AbaKIMjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2014 07:39:54 -0500
+Received: from houdart.cuivre.fr.eu.org ([81.57.40.110]:49914 "EHLO
+	melamine.cuivre.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867AbaKIMjx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2014 07:39:53 -0500
+Received: by melamine.cuivre.fr.eu.org (Postfix, from userid 1000)
+	id DC95435E33; Sun,  9 Nov 2014 13:39:34 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20141109095155.GB17369@peff.net>
+X-message-flag: WARNING! Using Outlook can damage your computer.
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 7, 2014 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
+* Jeff King, 2014-11-09 :
 
-[...]
+> Thanks, I like this much better. The name GIT_SSH_CMD is not too bad.
+> Personally, of the two (GIT_SSH and GIT_SSH_CMD) I would expect the
+> "_CMD" form to be the one that does not use the shell.
 
-> Assuming that it is a good idea to "allow" empty notes, I think
-> there are two issues involved here:
->
->  * Traditionally, feeding an empty note is taken as a request to
->    remove an existing note.  Therefore, there is no way to
->    explicitly ask an empty note to be stored for a commit.
->
->  * Because feeding an empty note was the way to request removal,
->    even though "git notes remove" is there, it is underused.
->
-> In other words, assuming that it is a good idea to allow empty
-> notes, isn't the desired endgame, after compatibility transition
-> period, that "git notes add" will never remove notes?
->
-> With that endgame in mind, shouldn't the internal implementation be
-> moving in a direction where "create_note()" will *not* be doing any
-> removal, and its caller (i.e. "add") does the switching depending on
-> the "do we take emptyness as a request to remove"?  I.e.
->
->          static int add(...)
->          {
->                 if (!allow_empty && message_is_empty())
->                         remove_note();
->                 else
->                         create_note();
->         }
->
->>  static void create_note(const unsigned char *object, struct msg_arg *msg,
->> -                     int append_only, const unsigned char *prev,
->> -                     unsigned char *result)
->> +                     int append_only, int allow_empty,
->> +                     const unsigned char *prev, unsigned char *result)
->
-> In other words, I have this suspicion that create_note() that
-> removes is a wrong interface in the first place, and giving it
-> a new allow_empty parameter to conditionally perform removal is
-> making it worse.  No?
+Right, except of course we're stuck with the compatibility issue in any
+case.
 
-I agree, and it's fixed in the re-roll. It turned into a slightly
-larger rewrite than anticipated, but I'm fairly happy with the result.
+> But I do not really have a better suggestion for the name, so perhaps
+> it's OK.
 
+Could also be GIT_SSH_SHELLCMD, to denote that this is a *shell*
+command...
 
-...Johan
+> Parsing complications aside, you cannot even know in git which ssh is
+> going to be run until the shell code is executed. I think either we have
+> to leave the responsibility for munging "-p" into "-P" on the side of
+> the user's shell snippet
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+That sounds like a reasonable approach, and leaves us with the simpler
+change (that splitting circuitry was admittely a bit awkward...)
+
+Thomas.
