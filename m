@@ -1,122 +1,124 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] trailer: reuse ignore_non_trailer() to ignore conflict lines
-Date: Sun, 09 Nov 2014 10:24:20 -0800
-Message-ID: <xmqqlhnkb5bf.fsf@gitster.dls.corp.google.com>
-References: <20141107184148.16854.63825.chriscool@tuxfamily.org>
-	<20141107185053.16854.5660.chriscool@tuxfamily.org>
-	<xmqqzjc2eoyw.fsf@gitster.dls.corp.google.com>
-	<20141109.113509.1363113947439404678.chriscool@tuxfamily.org>
-	<xmqqfvdse308.fsf@gitster.dls.corp.google.com>
+Subject: Re: [RFC] git checkout $tree -- $path always rewrites files
+Date: Sun, 09 Nov 2014 10:37:29 -0800
+Message-ID: <xmqqh9y8b4pi.fsf@gitster.dls.corp.google.com>
+References: <20141107081324.GA19845@peff.net>
+	<xmqqegtfgcfx.fsf@gitster.dls.corp.google.com>
+	<20141107191745.GB5695@peff.net>
+	<CANiSa6hufp=80TaesNpo1CxCbwVq3LPXvYaUSbcmzPE5pj_GGw@mail.gmail.com>
+	<CANiSa6ggX-DJSXLzjYwv1K2nF1ZrpJ3bHvPjh6gFnqSLQaqZFQ@mail.gmail.com>
+	<CAPc5daWdzrHr8Rdksr3HycMRQu0=Ji7h=BPYjzZj7MH6Ko0VgQ@mail.gmail.com>
+	<20141108083040.GA15833@peff.net> <20141108084526.GA18912@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
-	tr@thomasrast.ch, mhagger@alum.mit.edu, dan.carpenter@oracle.com,
-	greg@kroah.com, peff@peff.net, sunshine@sunshineco.com,
-	ramsay@ramsay1.demon.co.uk, jrnieder@gmail.com,
-	marcnarc@xiplink.com
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Nov 09 19:24:29 2014
+Cc: Martin von Zweigbergk <martinvonz@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Nov 09 19:37:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnXA4-00068Q-GL
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 19:24:28 +0100
+	id 1XnXN5-0003dK-25
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 19:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbaKISYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2014 13:24:24 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64948 "EHLO
+	id S1751422AbaKIShd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2014 13:37:33 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53867 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751416AbaKISYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2014 13:24:24 -0500
+	with ESMTP id S1751347AbaKIShc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2014 13:37:32 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6646619560;
-	Sun,  9 Nov 2014 13:24:22 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B6A5197A4;
+	Sun,  9 Nov 2014 13:37:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z/+wGMN26oA82ijHetRfAZ9qyGk=; b=NVvlQx
-	t7QIWJJI3xdp7NnBV0JLzRn5tCZahl7w+ePEgzJWcfwu8FnUlzPz/W28GTJt8Esp
-	IKvFeanPV0+VadmEWhH9EMlVuLGlo8RZ820671c2LPfa4ym3buqOnYpgHF9gAH+/
-	5D3I1t4rno2bekHITpAwQsV4t968C+mWHsDCU=
+	:content-type; s=sasl; bh=SQHLAL4njurL5ChgfDgJXb/5HVs=; b=nfJxb8
+	BuBfPzO8SfJW7hfv0pJKWQ849zLEa4gn+jU1ReZKhLqzKPF3R1G3cJiZGgcAj7Te
+	+NlA3XkH3dJNmbTsXqggsVdM5xs8BRWEabYV/OLaMW7WimEGDCBFrqUYSOAVa3s8
+	ni+2mRafpzzKmc+AT7xuowyCaJph3LKRHIDGE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hqbHhOmC5oBYUnclrB/Bm4v6FZecOOUj
-	ysqfMg9y6Rj4BZE572gmI6L+BpCwdWy6gTEjY+ZpdOPDJ4HYPribVVgNX4eIk088
-	J/K3xUL18Lg28ECYcmYpbdDJpi9SYUJeVzCjU8Aj+yiGtKyUPAS2J2YPxj0iu82z
-	2v6zNFKtsOE=
+	:content-type; q=dns; s=sasl; b=E6jbnFooJnHsG6uUT5u6f+T1xM5YW+aS
+	lUy1afS9XtXQaYaJx3NZUIf5u+WteB7PV/c+7KIFzm728OpXg+cqGdlkYF/xRkjJ
+	P3bhkPypqyrKE81Q23qIu8jfgWjULUb1P5ArXAOsSgwuyHrfQNH7HKFljFJi+CZ9
+	cyYMis6Ghck=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5BBBD1955F;
-	Sun,  9 Nov 2014 13:24:22 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 41CB5197A3;
+	Sun,  9 Nov 2014 13:37:31 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE66F1955E;
-	Sun,  9 Nov 2014 13:24:21 -0500 (EST)
-In-Reply-To: <xmqqfvdse308.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 09 Nov 2014 08:45:59 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B4368197A2;
+	Sun,  9 Nov 2014 13:37:30 -0500 (EST)
+In-Reply-To: <20141108084526.GA18912@peff.net> (Jeff King's message of "Sat, 8
+	Nov 2014 03:45:27 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A046C1B2-683D-11E4-BCD4-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7673FE5C-683F-11E4-91A4-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Christian Couder <chriscool@tuxfamily.org> writes:
+> On Sat, Nov 08, 2014 at 03:30:40AM -0500, Jeff King wrote:
 >
->> Yeah, it won't be as efficient as using only one strbuf and only byte
->> oriented functions, and it looks much less manly too :-) But over time in
->> Git we have developed a number of less efficient but quite clean
->> abstractions like strbuf, argv_array, sha1_array and so on, that we
->> are quite happy with.
+>> So just to be clear, the behavior we want is that:
+>> 
+>>   echo foo >some-new-path
+>>   git add some-new-path
+>>   git checkout HEAD -- .
+>> 
+>> will delete some-new-path (whereas the current code turns it into an
+>> untracked file). What should:
+>> 
+>>   git checkout HEAD -- some-new-path
+>> 
+>> do in that case? With the current code, it actually barfs, complaining
+>> that nothing matched some-new-path (because it is not part of HEAD, and
+>> therefore we don't consider it at all), and aborts the whole operation.
+>> I think we would want to delete some-new-path in that case, too.
 >
-> Actually, all these examples you gave are fairly efficient and clean
-> abstractions.  I find it insulting to pretend that the "one line per
-> strbuf" is in the same league.  It isn't.
+> Also, t2022.3 has me very confused.
 >
-> And it is not about manliness.
+> It is explicitly checking that if we have "subdir/foo" unmerged in the
+> index, and we "git checkout $tree -- subdir", and $tree does not mention
+> "foo", that we _leave_ foo in place.
 
-By the way, I do not mean to say that all of strbuf (which is a
-rather full API) is uniformly efficient and cleanly abstracted.
+The definition of how "checkout $tree -- $pathspec" should behave
+logically leads to that, I think.  Grabbing everything that matches
+the "subdir" pathspec from $tree, adding them to the index and
+checking them out will not touch subdir/foo that does not appear in
+that $tree.
 
-For example, I see strbuf_split() is a handy but a lousy invitation
-to stupid programmers to do stupid things and needs to be used
-carefully (rather, you need to carefully consider if a possible
-solution that uses it is really a good solution).  If you start with
-a single strbuf (e.g. perhaps read from a file or a blob in bulk in
-an I/O efficient way), pass it around and then have to manipulate
-each and every line in it to massage the information on each line
-into other useful form (e.g. perhaps each line is a [+]src:dst
-refspec element and you are parsing it into an array of "struct
-refspec"), it may be tempting to write a parser from a single strbuf
-into a single refspec, use strbuf_split() to break the single strbuf
-input into multiple and feed each of them to your parser.
+With the proposed updated semantics, it would behave differently, so
+it is natural that we have tests that protect the traditional
+definition of how it should behave and we will have to visit them
+and update their expectation if we decide that the proposed updated
+semantics is what we want.
 
-But it does not have to be the only way to create such a caller.
-Unless the final "other useful form" is an array of strbuf, and you
-have to remember that the whole point of using strbuf is because it
-is easy to edit its contents efficiently in place, that needs to
-further be modified in various ways, the splitting of N lines into N
-strbuf, only to parse each line one by one, is a huge waste.  A
-right approach may involve introducing a foreach_strbuf_line
-iterator function that takes a callback, or a macro of the same name
-that puts a control structure.
+> That seems very counter-intuitive to me. If you asked to make "subdir"
+> look like $tree, then we should clobber it.
 
-Going back to the trailer processing, if you are likely to be
-editing each and every line in the input before producing the final
-result, an array of strbuf would be a perfectly sensible data
-structure to use.  I just didn't get the impression that that is
-what is being done.  You would be presented a single text with
-multiple lines (whose natural representation would be a <ptr,len>
-that fits in a single strbuf), you would be asked to inspect and
-manipulate one single section in the middle (namely, the runs of
-lines that begin with some "keyword: "), and return the
-concatenation of the part before that one section (intact), the
-section you have manipulated (i.e. the trailer) and possibly the
-remainder (intact).  Outside that single section you will be
-touching, I do not see a good reason for each of their lines to be
-first stored in a strbuf (while moving bunch of pointers in the
-array using ARRAY_GROW() and friends), only to be later concatenated
-back into a single string.
+Yes.  But the existing expectation is different ;-)
+
+If the $tree has 'subdir/foo', we would want "checkout $tree --
+subdir/foo" to keep working as a way for the user to declare the
+resolution of the ongoing merge.  With the proposed change in
+sematics, "git checkout $tree -- subdir" will become a way to say
+"Everything inside subdir/ I'd resolve to the state recorded in
+$tree" during such a conflicted merge, and it will lose paths not in
+the $tree.
+
+Which may be a good thing, but existing users who are used to the
+traditional behaviour will find it confusing and even risky (i.e. "I
+am checking OUT; never expected it to lose any path").  A counter
+argument that I find sensible, of course, is "You told us to check
+out subdir/, and the state recorded for subdir/ in $tree does not
+have 'foo' in it.  That is the state you asked us to check out".
+
+The argument for "checkout $tree -- subdir/foo" is essentially the
+same.  The state recorded in $tree for subdir/foo is non-existence,
+and that is checked out with the proposed new semantics.
