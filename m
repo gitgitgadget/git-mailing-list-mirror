@@ -1,63 +1,58 @@
-From: Thomas Quinot <thomas@quinot.org>
-Subject: Re: [PATCH v2 1/2] git_connect: set ssh shell command in GIT_SSH_CMD
-Date: Sun, 9 Nov 2014 13:39:34 +0100
-Message-ID: <20141109123934.GA50956@melamine.cuivre.fr.eu.org>
-References: <20141108104439.GA89717@melamine.cuivre.fr.eu.org>
- <20141108110958.GB20750@peff.net>
- <20141108123554.GA90057@melamine.cuivre.fr.eu.org>
- <20141108142753.GA28652@melamine.cuivre.fr.eu.org>
- <20141109095155.GB17369@peff.net>
+From: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] git-imap-send: use libcurl for implementation
+Date: Sun, 09 Nov 2014 14:00:54 +0100
+Message-ID: <545F6586.109@web.de>
+References: <53FD0CD1.7030801@raz.or.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 09 13:39:59 2014
+To: Bernhard Reiter <ockham@raz.or.at>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 09 14:01:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnRmf-0008B9-FT
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 13:39:57 +0100
+	id 1XnS7D-00052Z-3w
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 14:01:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104AbaKIMjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2014 07:39:54 -0500
-Received: from houdart.cuivre.fr.eu.org ([81.57.40.110]:49914 "EHLO
-	melamine.cuivre.fr.eu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751867AbaKIMjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2014 07:39:53 -0500
-Received: by melamine.cuivre.fr.eu.org (Postfix, from userid 1000)
-	id DC95435E33; Sun,  9 Nov 2014 13:39:34 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20141109095155.GB17369@peff.net>
-X-message-flag: WARNING! Using Outlook can damage your computer.
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1751897AbaKINA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2014 08:00:59 -0500
+Received: from mout.web.de ([212.227.15.4]:52203 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751873AbaKINA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2014 08:00:58 -0500
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0LmcRH-1YLxmW4BIR-00aCf9; Sun, 09 Nov 2014 14:00:56
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <53FD0CD1.7030801@raz.or.at>
+X-Provags-ID: V03:K0:xS3IIR1FhtWQJWFSbBIUGm2ntKW1HaQKYOavSXcvGLYEVEOrbxi
+ UWuDaD1VGkIN3iFpE4Pe5U9C2DUsVpguimaV+9sLlRc34w8vqClQ5Te8hBgbKrQYXiJWZMa
+ K4AT8utKAQbjqYAMtU907ziIi7TjfekxIl58oP5cEaIdUg5xcOF5z0GI2YnM02tvYLVzDao
+ gygJW/n7k/45laCyryWjg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* Jeff King, 2014-11-09 :
+On 2014-08-27 00.40, Bernhard Reiter wrote:
+> Use libcurl's high-level API functions to implement git-imap-send
+> instead of the previous low-level OpenSSL-based functions.
+> 
+This doesn't seem to fully work under Debian 7:
+/home/tb/projects/git/git.pu/imap-send.c:1546: undefined reference to `curl_append_msgs_to_imap'
 
-> Thanks, I like this much better. The name GIT_SSH_CMD is not too bad.
-> Personally, of the two (GIT_SSH and GIT_SSH_CMD) I would expect the
-> "_CMD" form to be the one that does not use the shell.
+Some more info:
+ curl-config --vernum
+071a00
 
-Right, except of course we're stuck with the compatibility issue in any
-case.
+ (echo 072200; curl-config --vernum) 2>/dev/null | sort -r 
+072200
+071a00
 
-> But I do not really have a better suggestion for the name, so perhaps
-> it's OK.
-
-Could also be GIT_SSH_SHELLCMD, to denote that this is a *shell*
-command...
-
-> Parsing complications aside, you cannot even know in git which ssh is
-> going to be run until the shell code is executed. I think either we have
-> to leave the responsibility for munging "-p" into "-P" on the side of
-> the user's shell snippet
-
-That sounds like a reasonable approach, and leaves us with the simpler
-change (that splitting circuitry was admittely a bit awkward...)
-
-Thomas.
+(echo 072200; curl-config --vernum) 2>/dev/null | sort -r  | sed -ne 2p
+071a00
