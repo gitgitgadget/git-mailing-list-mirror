@@ -1,96 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 21/22] mingw32: add uname()
-Date: Sun, 09 Nov 2014 10:47:42 -0800
-Message-ID: <xmqqd28wb48h.fsf@gitster.dls.corp.google.com>
-References: <1414411846-4450-1-git-send-email-pclouds@gmail.com>
-	<1415439595-469-1-git-send-email-pclouds@gmail.com>
-	<1415439595-469-22-git-send-email-pclouds@gmail.com>
-	<CAPig+cS2FzL6kXTvoG6cTX1yUjmGUkEm5mAHNxmtU5-=ngcoFg@mail.gmail.com>
-	<CACsJy8CRzngC5U3VY9Bi1uRmdRfEWQWOCokRLLWNKRNUjyJrrw@mail.gmail.com>
-	<545F540D.8010207@web.de>
+From: Phillip Sz <phillip.szelat@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 62 new messages
+Date: Sun, 09 Nov 2014 21:00:07 +0100
+Message-ID: <545FC7C7.1040109@gmail.com>
+References: <1415394326-28696-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Nov 09 19:47:51 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="hvL1gob6jrQgQGqbap5lAw8VQXG8AI8cb"
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
+To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 09 21:00:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnXWg-0006A0-Fs
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 19:47:50 +0100
+	id 1XnYer-0000yg-GT
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 21:00:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751249AbaKISrr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Nov 2014 13:47:47 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54858 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751059AbaKISrq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Nov 2014 13:47:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 401F419980;
-	Sun,  9 Nov 2014 13:47:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cZauFEt2W1/q
-	e6VGNyk3gnvYjcQ=; b=SPJP7KaJ8WHNcJ4s5pVWohpxC3a1wJhLDMyDfM4wwolz
-	8G6QsQTnm68pc5+fUnfHBPhnULQv9NUOl3nBXV6ZJdkhBFZ1Gj+fZN5AMF7I7ZZA
-	5KdmiBPFjjmC6iYPdsdmDSdn7wPPmV+brAnEWe8DdWsf/gkdOvwFs8jvQFb83tg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yUO4K+
-	83EFOs9yOXDO9blbpt1sw778T7UQ6wvdF8W346Dh+NcXTCMJ9Rfx+hdpyJZbVqvD
-	vappEC0zdnCJaK9V3e3StivwrjfKIV7N99ym4jm/AAZ/qFqk2ypHCZPxlB3LpAAD
-	QFALfUhSI2Eg9fGuKG5ork9anktpen0i7cGQs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 358491997F;
-	Sun,  9 Nov 2014 13:47:44 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C075C1997D;
-	Sun,  9 Nov 2014 13:47:43 -0500 (EST)
-In-Reply-To: <545F540D.8010207@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Sun, 09 Nov 2014 12:46:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E3DBB02E-6840-11E4-B236-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751305AbaKIUAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2014 15:00:12 -0500
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:53198 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751095AbaKIUAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2014 15:00:11 -0500
+Received: by mail-wg0-f49.google.com with SMTP id x13so7264225wgg.22
+        for <git@vger.kernel.org>; Sun, 09 Nov 2014 12:00:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type;
+        bh=6aikYZypU+0EL5Wp7FPAGF1AQ7UjQqDxh03YRQf6CCg=;
+        b=Co5/MA4C7w+28aG8CVS9OD/HnVV8Na1U+bgLswd7ejT0VI/3+kMX1IIVmh/Csd21ZD
+         GoeMy7ytuYxRl01mlGDvDZHG/rQQiWGU1CMmyAFYVzJmu8JFFgpw1i2PUu5N4W0pKvXH
+         Tayb0FpuriepzuugGETW5m8mVoe3AGZJ3eT0ObZW2A1kAO2ce2Oni5Ra5yS6AcsGY/6k
+         BRFSkHdMgRNrZHnH2X6Zz6+L1Cc856cGMSJforw56NUV/RKW8Qpwn4gmXcpWKNWpiUVZ
+         UcEW7KC9NpcSoayCYXC19FioNT5yyf7EAan8fd1jRUSvGe5UCWXRPAQHt6W3xnU4P24O
+         tYxA==
+X-Received: by 10.194.2.244 with SMTP id 20mr37206693wjx.4.1415563209869;
+        Sun, 09 Nov 2014 12:00:09 -0800 (PST)
+Received: from [192.168.178.21] (i577ABE7B.versanet.de. [87.122.190.123])
+        by mx.google.com with ESMTPSA id w10sm20397876wje.10.2014.11.09.12.00.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 09 Nov 2014 12:00:08 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <1415394326-28696-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--hvL1gob6jrQgQGqbap5lAw8VQXG8AI8cb
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
->>> strcpy() maybe?
->>=20
->> It was originally strcpy, then I wanted to get fancy and show Win3.1=
-,
->> Win95... but it got complicated (couldn't just do it based on the la=
-st
->> bit of 'v'). Will revert.
->>=20
-> Why not use strlcpy() ?
-> (This feels little like an overkill, but on the other hand it is safe=
- to use regardless
-> how long the buf is, and it is a good example how to avoid "overrunni=
-ng" code)
+Hi,
 
-I actually think such a blind belief in strlcpy() is a disease.
+>  #: builtin/commit.c:594
+>  #, c-format
+>  msgid "commit '%s' has malformed author line"
+> -msgstr ""
+> +msgstr "Commit '%s' hat missgebildete Autor-Zeile"
 
-Surely it will help you avoid overwriting other unrelated data after
-the string buffer you are writing into, but it does not help you
-very much to make sure what you wanted to place in the string buffer
-all got recorded in that buffer, unless you remember to check its
-return value to make sure it did not get truncated.  Otherwise, you
-may be valuing other people's data, but you are not valuing your own
-data sufficiently enough.
+I would use "fehlerhafte" as "missgebildete" is an old word (1) and I
+would not use it. So maybe
 
-And if you (1) know how big your own buffer is, and (2) are checking
-if your call to strlcpy() copied everything you wanted to copy, it
-would not be more work to do it without strlcpy()---you need to know
-how big a string you are copying into anyway if you care about your
-own data to the same degree you care about other people's data ;-)
++msgstr "Commit '%s' hat eine fehlerhafte Autor-Zeile"
+
+>  #: builtin/merge.c:1129
+>  msgid "There is no merge to abort (MERGE_HEAD missing)."
+>  msgstr "Es gibt keinen Merge zum Abbrechen (vermisse MERGE_HEAD)"
+
+msgstr "Es gibt keinen Merge zum Abbrechen (MERGE_HEAD fehlt)"
+looks better to me.
+
+Phillip
+
+1: http://www.duden.de/rechtschreibung/missgebildet
+
+
+--hvL1gob6jrQgQGqbap5lAw8VQXG8AI8cb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJUX8fHAAoJEJIt6Cqh4sVSz8QIAJr40QB3fkZF74It1ECFr3Ro
+X2YcZvPGaYCxSb4/2ti43sA3e+BsC5TFJd6DXw3UplbZg9luWS1tHV1jeAcWo7IF
+xIg1qg3lrNFOHUQG10pCJZ9Fnmsf6FgSz03ThotTbZ/WTDlRwmwxbmSEc+bA0V5z
+ueFfC+gUlsyTxQy7BeMXivCOD880fb8jVKo+yGXsBF+BchEmJLyXWGDUASRC7JNm
+yVSzrP+kfazcu51FZQRKTdBMyt5TkvG9nlqwSNn8SMlsbZ20wSqsLwweVLgNDpcz
+mdjxSQK3efJhFcKBqSwbDsdpOzWQkClcTVnXSOXq02LG7UnmQ1Rydrh+5uZcu8s=
+=MTdr
+-----END PGP SIGNATURE-----
+
+--hvL1gob6jrQgQGqbap5lAw8VQXG8AI8cb--
