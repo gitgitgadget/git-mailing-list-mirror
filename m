@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 5/5] trailer: add test with an old style conflict block
-Date: Sun, 09 Nov 2014 10:23:43 +0100
-Message-ID: <20141109092344.4864.23949.chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/5] trailer: display a trailer without its trailing newline
+Date: Sun, 09 Nov 2014 10:23:40 +0100
+Message-ID: <20141109092344.4864.55173.chriscool@tuxfamily.org>
 References: <20141109092313.4864.54933.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -20,19 +20,19 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnOml-0006Of-Il
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 10:27:51 +0100
+	id 1XnOmk-0006Of-Dk
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 10:27:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605AbaKIJ1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2014 04:27:42 -0500
-Received: from [194.158.98.15] ([194.158.98.15]:60681 "EHLO mail-2y.bbox.fr"
+	id S1751587AbaKIJ1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2014 04:27:39 -0500
+Received: from [194.158.98.14] ([194.158.98.14]:55728 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751588AbaKIJ1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2014 04:27:40 -0500
+	id S1751514AbaKIJ1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2014 04:27:38 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 78B61A3;
-	Sun,  9 Nov 2014 10:27:18 +0100 (CET)
-X-git-sha1: 21a8e4102395af9657b87b1d9676b52704c0ea02 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 5BDC269;
+	Sun,  9 Nov 2014 10:27:16 +0100 (CET)
+X-git-sha1: 18abf41e1e5363a4c1729c2425a9ebb0cd651262 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20141109092313.4864.54933.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
@@ -40,60 +40,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Trailers passed to the parse_trailer() function often have
+a trailing newline. When erroring out, we should display
+the invalid trailer properly, that means without any
+trailing newline.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t7513-interpret-trailers.sh | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ trailer.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index fed053a..bd0ab46 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -213,7 +213,7 @@ test_expect_success 'with 2 files arguments' '
- '
- 
- test_expect_success 'with message that has comments' '
--	cat basic_message >>message_with_comments &&
-+	cat basic_message >message_with_comments &&
- 	sed -e "s/ Z\$/ /" >>message_with_comments <<-\EOF &&
- 		# comment
- 
-@@ -240,6 +240,36 @@ test_expect_success 'with message that has comments' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'with message that has an old style conflict block' '
-+	cat basic_message >message_with_comments &&
-+	sed -e "s/ Z\$/ /" >>message_with_comments <<-\EOF &&
-+		# comment
-+
-+		# other comment
-+		Cc: Z
-+		# yet another comment
-+		Reviewed-by: Johan
-+		Reviewed-by: Z
-+		# last comment
-+
-+		Conflicts:
-+
-+	EOF
-+	cat basic_message >expected &&
-+	cat >>expected <<-\EOF &&
-+		# comment
-+
-+		Reviewed-by: Johan
-+		Cc: Peff
-+		# last comment
-+
-+		Conflicts:
-+
-+	EOF
-+	git interpret-trailers --trim-empty --trailer "Cc: Peff" message_with_comments >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'with commit complex message and trailer args' '
- 	cat complex_message_body >expected &&
- 	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
+diff --git a/trailer.c b/trailer.c
+index 761b763..219a5a2 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -583,8 +583,12 @@ static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *tra
+ 	strbuf_addch(&seps, '=');
+ 	len = strcspn(trailer, seps.buf);
+ 	strbuf_release(&seps);
+-	if (len == 0)
+-		return error(_("empty trailer token in trailer '%s'"), trailer);
++	if (len == 0) {
++		int l = strlen(trailer);
++		while (l > 0 && isspace(trailer[l - 1]))
++			l--;
++		return error(_("empty trailer token in trailer '%.*s'"), l, trailer);
++	}
+ 	if (len < strlen(trailer)) {
+ 		strbuf_add(tok, trailer, len);
+ 		strbuf_trim(tok);
 -- 
 2.1.2.555.gfbecd99
