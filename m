@@ -1,147 +1,64 @@
-From: Michael Blume <blume.mike@gmail.com>
-Subject: Re: [PATCH] t1410: fix breakage on case-insensitive filesystems
-Date: Sun, 9 Nov 2014 09:34:34 -0800
-Message-ID: <CAO2U3QiNYCWF_otPnR43gHNA22otR62aC2g8b0CnxVz3rjp7kQ@mail.gmail.com>
-References: <CAO2U3QiFvwMiwVCdVju_vJKK_HVndpQf4VyrEaHeeVVN6rgYgA@mail.gmail.com>
- <20141109014354.GA23883@peff.net> <20141109015918.GA24736@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] replace: fix replacing object with itself
+Date: Sun, 09 Nov 2014 09:35:52 -0800
+Message-ID: <xmqqy4rkcm4n.fsf@gitster.dls.corp.google.com>
+References: <1415491531-29913-1-git-send-email-manzurmm@gmail.com>
+	<20141109055842.GB13445@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: Manzur Mukhitdinov <manzurmm@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 09 18:35:03 2014
+X-From: git-owner@vger.kernel.org Sun Nov 09 18:36:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnWOD-0003AH-2w
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 18:35:01 +0100
+	id 1XnWP9-0004Gk-JI
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 18:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398AbaKIRe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2014 12:34:56 -0500
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:44139 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751334AbaKIRe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2014 12:34:56 -0500
-Received: by mail-oi0-f53.google.com with SMTP id a141so4339494oig.26
-        for <git@vger.kernel.org>; Sun, 09 Nov 2014 09:34:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=uOZHbRUCxWD4LyYdXjTo9oEGfSNm7C58KaKWZUo+1DU=;
-        b=chXOnOtTGCqw2v+QkxSkeDNcyAoiAHl67N4vZqoZmM1Onr/X1wvUxweCdVv8s87bmR
-         /bvoZkWCOcm7PGjLaODOXZR6j2kYzfc6Kfq0Byf9wfwyxyI1ga4VZPa26qQDFfbtpuwS
-         vXr35qcwN9v4kC23KVMzzH3LGmL6VRZQldpC1aSEjqJJl69TbXS1bqfgZt0boWLYtmcn
-         9MZqtmO2g7XAbUEqK5puoxbWi6ZK+iDPFOP1JF/0i7gyw2rhA/BzpoHcAwU2Ld3stAOq
-         zsh6OL9JYGIVHLI/ZpovohIeXjS8S7ZQN4QoddQBQpRg/vn6xZdz4LlFqbAl/g7AI47U
-         JKCA==
-X-Received: by 10.202.198.82 with SMTP id w79mr20929060oif.45.1415554495177;
- Sun, 09 Nov 2014 09:34:55 -0800 (PST)
-Received: by 10.202.18.132 with HTTP; Sun, 9 Nov 2014 09:34:34 -0800 (PST)
-In-Reply-To: <20141109015918.GA24736@peff.net>
+	id S1751410AbaKIRf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2014 12:35:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51869 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751334AbaKIRfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2014 12:35:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D7E711ABE1;
+	Sun,  9 Nov 2014 12:35:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YXZ26gJPK1AbO7yLi4kc4ydJTb4=; b=ZjOy6w
+	FZukbpzQKTu7PO7IuAdSf2ZLB5pcNAYX10hAhXeJQ/VCF9gZdGgcbQmvG2y/IvOE
+	VskvCPdXbfWG4LP3A2UGbHWzTqWx2yDA8sf57kKm5M+AdprHHpc6WyuErRSQGRr2
+	tI4Xcm2EFgMGbDk3MzMB7C7u2u/npiWG4zQOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Aah3BVAQ7nVJp+AubVSkCq1hnVCAZ9Gr
+	k95FQD6fmWuoMoYVx1gMeRsJotpCFGnSTzKpDXxR1hWSQIYnYrW1dF93n3JusdaU
+	VNzv30fS9/Gk02mO282RLkd1rtg2D406JJK/NRedIWk0PECEpYg4I7wd7d5BhgKm
+	DV5/CgEZzuk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD4ED1ABDF;
+	Sun,  9 Nov 2014 12:35:54 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3C0C81ABDD;
+	Sun,  9 Nov 2014 12:35:54 -0500 (EST)
+In-Reply-To: <20141109055842.GB13445@peff.net> (Jeff King's message of "Sun, 9
+	Nov 2014 00:58:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DB2BA86C-6836-11E4-9D3D-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Works for me, thanks =)
+Jeff King <peff@peff.net> writes:
 
-I'm curious now, is there an automated build of git running on a mac
-anywhere? There's a mac mini running jenkins in my office and it's
-possible I could convince someone to let me set up a git build that'll
-e-mail me if there's a test failure.
+> I think all of the callers of replace_object_sha1 do this same check
+> now. Can we just move the check into that function instead of adding
+> another instance of it?
 
-On Sat, Nov 8, 2014 at 5:59 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Nov 08, 2014 at 08:43:54PM -0500, Jeff King wrote:
->
->> Unfortunately I don't have an OS X install handy to test on.
->
-> I lied; it turns out I still had access to an old VM. The problem did
-> turn out to be rather silly. Here's a patch.
->
-> -- >8 --
-> Two tests recently added to t1410 create branches "a" and
-> "a/b" to test d/f conflicts on reflogs. Earlier, unrelated
-> tests in that script create the path "A/B" in the working
-> tree.  There's no conflict on a case-sensitive filesystem,
-> but on a case-insensitive one, "git log" will complain that
-> "a/b" is both a revision and a working tree path.
->
-> We could fix this by using a "--" to disambiguate, but we
-> are probably better off using names that are less confusing
-> to make it more clear that they are unrelated to the working
-> tree files.  This patch turns "a/b" into "one/two".
->
-> Reported-by: Michael Blume <blume.mike@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> The line-diff is hard to read, but if anyone was looking for a chance to
-> test-drive contrib/diff-highlight, it does a good job of making the
-> change easy to see.
->
->  t/t1410-reflog.sh | 36 ++++++++++++++++++------------------
->  1 file changed, 18 insertions(+), 18 deletions(-)
->
-> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-> index 976c1d4..8cf4461 100755
-> --- a/t/t1410-reflog.sh
-> +++ b/t/t1410-reflog.sh
-> @@ -254,36 +254,36 @@ test_expect_success 'checkout should not delete log for packed ref' '
->  '
->
->  test_expect_success 'stale dirs do not cause d/f conflicts (reflogs on)' '
-> -       test_when_finished "git branch -d a || git branch -d a/b" &&
-> +       test_when_finished "git branch -d one || git branch -d one/two" &&
->
-> -       git branch a/b master &&
-> -       echo "a/b@{0} branch: Created from master" >expect &&
-> -       git log -g --format="%gd %gs" a/b >actual &&
-> +       git branch one/two master &&
-> +       echo "one/two@{0} branch: Created from master" >expect &&
-> +       git log -g --format="%gd %gs" one/two >actual &&
->         test_cmp expect actual &&
-> -       git branch -d a/b &&
-> +       git branch -d one/two &&
->
-> -       # now logs/refs/heads/a is a stale directory, but
-> -       # we should move it out of the way to create "a" reflog
-> -       git branch a master &&
-> -       echo "a@{0} branch: Created from master" >expect &&
-> -       git log -g --format="%gd %gs" a >actual &&
-> +       # now logs/refs/heads/one is a stale directory, but
-> +       # we should move it out of the way to create "one" reflog
-> +       git branch one master &&
-> +       echo "one@{0} branch: Created from master" >expect &&
-> +       git log -g --format="%gd %gs" one >actual &&
->         test_cmp expect actual
->  '
->
->  test_expect_success 'stale dirs do not cause d/f conflicts (reflogs off)' '
-> -       test_when_finished "git branch -d a || git branch -d a/b" &&
-> +       test_when_finished "git branch -d one || git branch -d one/two" &&
->
-> -       git branch a/b master &&
-> -       echo "a/b@{0} branch: Created from master" >expect &&
-> -       git log -g --format="%gd %gs" a/b >actual &&
-> +       git branch one/two master &&
-> +       echo "one/two@{0} branch: Created from master" >expect &&
-> +       git log -g --format="%gd %gs" one/two >actual &&
->         test_cmp expect actual &&
-> -       git branch -d a/b &&
-> +       git branch -d one/two &&
->
-> -       # same as before, but we only create a reflog for "a" if
-> +       # same as before, but we only create a reflog for "one" if
->         # it already exists, which it does not
-> -       git -c core.logallrefupdates=false branch a master &&
-> +       git -c core.logallrefupdates=false branch one master &&
->         : >expect &&
-> -       git log -g --format="%gd %gs" a >actual &&
-> +       git log -g --format="%gd %gs" one >actual &&
->         test_cmp expect actual
->  '
->
-> --
-> 2.1.2.596.g7379948
->
+Good thinking.  Thanks.
