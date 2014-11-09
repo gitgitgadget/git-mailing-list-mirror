@@ -1,176 +1,76 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 3/5] commit: make ignore_non_trailer() non static
-Date: Sun, 09 Nov 2014 10:23:41 +0100
-Message-ID: <20141109092344.4864.789.chriscool@tuxfamily.org>
-References: <20141109092313.4864.54933.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 09 10:29:42 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] git checkout $tree -- $path always rewrites files
+Date: Sun, 9 Nov 2014 04:42:43 -0500
+Message-ID: <20141109094243.GA17369@peff.net>
+References: <20141107081324.GA19845@peff.net>
+ <xmqqegtfgcfx.fsf@gitster.dls.corp.google.com>
+ <20141107191745.GB5695@peff.net>
+ <CANiSa6hufp=80TaesNpo1CxCbwVq3LPXvYaUSbcmzPE5pj_GGw@mail.gmail.com>
+ <CANiSa6ggX-DJSXLzjYwv1K2nF1ZrpJ3bHvPjh6gFnqSLQaqZFQ@mail.gmail.com>
+ <CAPc5daWdzrHr8Rdksr3HycMRQu0=Ji7h=BPYjzZj7MH6Ko0VgQ@mail.gmail.com>
+ <20141108083040.GA15833@peff.net>
+ <CANiSa6gqu9cRJ4gY5M4ou_zQP=1+U2_C9nHDOoaX01yYn5C+aw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 09 10:42:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnOoW-00082O-AH
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 10:29:40 +0100
+	id 1XnP1K-00035B-AK
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Nov 2014 10:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751898AbaKIJ32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Nov 2014 04:29:28 -0500
-Received: from [194.158.98.15] ([194.158.98.15]:60663 "EHLO mail-2y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751553AbaKIJ1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Nov 2014 04:27:38 -0500
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 29D136D;
-	Sun,  9 Nov 2014 10:27:17 +0100 (CET)
-X-git-sha1: a1765bd2a9e5f47729956d97c43bab822d825b91 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20141109092313.4864.54933.chriscool@tuxfamily.org>
+	id S1751426AbaKIJmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Nov 2014 04:42:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38219 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751447AbaKIJmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Nov 2014 04:42:47 -0500
+Received: (qmail 27098 invoked by uid 102); 9 Nov 2014 09:42:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Nov 2014 03:42:47 -0600
+Received: (qmail 18258 invoked by uid 107); 9 Nov 2014 09:42:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 09 Nov 2014 04:42:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Nov 2014 04:42:43 -0500
+Content-Disposition: inline
+In-Reply-To: <CANiSa6gqu9cRJ4gY5M4ou_zQP=1+U2_C9nHDOoaX01yYn5C+aw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/commit.c | 46 ----------------------------------------------
- commit.c         | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- commit.h         |  3 +++
- 3 files changed, 49 insertions(+), 46 deletions(-)
+On Sat, Nov 08, 2014 at 08:19:21AM -0800, Martin von Zweigbergk wrote:
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e3c60dd..cda74e9 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -677,52 +677,6 @@ static void adjust_comment_line_char(const struct strbuf *sb)
- 	comment_line_char = *p;
- }
- 
--/*
-- * Inspect sb and determine the true "end" of the log message, in
-- * order to find where to put a new Signed-off-by: line.  Ignored are
-- * trailing comment lines and blank lines, and also the traditional
-- * "Conflicts:" block that is not commented out, so that we can use
-- * "git commit -s --amend" on an existing commit that forgot to remove
-- * it.
-- *
-- * Returns the number of bytes from the tail to ignore, to be fed as
-- * the second parameter to append_signoff().
-- */
--static int ignore_non_trailer(struct strbuf *sb)
--{
--	int boc = 0;
--	int bol = 0;
--	int in_old_conflicts_block = 0;
--
--	while (bol < sb->len) {
--		char *next_line;
--
--		if (!(next_line = memchr(sb->buf + bol, '\n', sb->len - bol)))
--			next_line = sb->buf + sb->len;
--		else
--			next_line++;
--
--		if (sb->buf[bol] == comment_line_char || sb->buf[bol] == '\n') {
--			/* is this the first of the run of comments? */
--			if (!boc)
--				boc = bol;
--			/* otherwise, it is just continuing */
--		} else if (starts_with(sb->buf + bol, "Conflicts:\n")) {
--			in_old_conflicts_block = 1;
--			if (!boc)
--				boc = bol;
--		} else if (in_old_conflicts_block && sb->buf[bol] == '\t') {
--			; /* a pathname in the conflicts block */
--		} else if (boc) {
--			/* the previous was not trailing comment */
--			boc = 0;
--			in_old_conflicts_block = 0;
--		}
--		bol = next_line - sb->buf;
--	}
--	return boc ? sb->len - boc : 0;
--}
--
- static int prepare_to_commit(const char *index_file, const char *prefix,
- 			     struct commit *current_head,
- 			     struct wt_status *s,
-diff --git a/commit.c b/commit.c
-index 19cf8f9..a54cb9a 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1640,3 +1640,49 @@ const char *find_commit_header(const char *msg, const char *key, size_t *out_len
- 	}
- 	return NULL;
- }
-+
-+/*
-+ * Inspect sb and determine the true "end" of the log message, in
-+ * order to find where to put a new Signed-off-by: line.  Ignored are
-+ * trailing comment lines and blank lines, and also the traditional
-+ * "Conflicts:" block that is not commented out, so that we can use
-+ * "git commit -s --amend" on an existing commit that forgot to remove
-+ * it.
-+ *
-+ * Returns the number of bytes from the tail to ignore, to be fed as
-+ * the second parameter to append_signoff().
-+ */
-+int ignore_non_trailer(struct strbuf *sb)
-+{
-+	int boc = 0;
-+	int bol = 0;
-+	int in_old_conflicts_block = 0;
-+
-+	while (bol < sb->len) {
-+		char *next_line;
-+
-+		if (!(next_line = memchr(sb->buf + bol, '\n', sb->len - bol)))
-+			next_line = sb->buf + sb->len;
-+		else
-+			next_line++;
-+
-+		if (sb->buf[bol] == comment_line_char || sb->buf[bol] == '\n') {
-+			/* is this the first of the run of comments? */
-+			if (!boc)
-+				boc = bol;
-+			/* otherwise, it is just continuing */
-+		} else if (starts_with(sb->buf + bol, "Conflicts:\n")) {
-+			in_old_conflicts_block = 1;
-+			if (!boc)
-+				boc = bol;
-+		} else if (in_old_conflicts_block && sb->buf[bol] == '\t') {
-+			; /* a pathname in the conflicts block */
-+		} else if (boc) {
-+			/* the previous was not trailing comment */
-+			boc = 0;
-+			in_old_conflicts_block = 0;
-+		}
-+		bol = next_line - sb->buf;
-+	}
-+	return boc ? sb->len - boc : 0;
-+}
-diff --git a/commit.h b/commit.h
-index bc68ccb..cd35ac1 100644
---- a/commit.h
-+++ b/commit.h
-@@ -337,6 +337,9 @@ extern void free_commit_extra_headers(struct commit_extra_header *extra);
- extern const char *find_commit_header(const char *msg, const char *key,
- 				      size_t *out_len);
- 
-+/* Find the end of the log message, the right place for a new trailer. */
-+extern int ignore_non_trailer(struct strbuf *sb);
-+
- typedef void (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
- 				 void *cb_data);
- 
--- 
-2.1.2.555.gfbecd99
+> > What should:
+> >
+> >   git checkout HEAD -- some-new-path
+> >
+> > do in that case? With the current code, it actually barfs, complaining
+> > that nothing matched some-new-path (because it is not part of HEAD, and
+> > therefore we don't consider it at all), and aborts the whole operation.
+> > I think we would want to delete some-new-path in that case, too.
+> 
+> I don't think we'd want it to be deleted. I would view 'git reset
+> --hard' as the role model here, and that command (without paths) would
+> not remove the file. And applying it to a path should not change the
+> behavior, just restrict it to the paths, right?
+
+Are you sure about "git reset" here? If I do:
+
+  git init
+  echo content >file && git add file && git commit -m base
+  echo modified >file
+  echo new >some-new-path
+  git add file some-new-path
+  git reset --hard
+
+then we delete some-new-path (it is not untracked, because the index
+knows about it). That makes sense to me. I.e., we treat it with the same
+"preciousness" whether it is named explicitly or not.
+
+-Peff
