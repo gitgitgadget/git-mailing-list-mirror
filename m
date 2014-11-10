@@ -1,100 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] run-command: use void to declare that functions take no parameters
-Date: Mon, 10 Nov 2014 14:43:10 -0800
-Message-ID: <xmqq7fz28yo1.fsf@gitster.dls.corp.google.com>
-References: <54612B4C.8010609@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Etienne Buira <etienne.buira@gmail.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Mon Nov 10 23:43:18 2014
+From: Manzur Mukhitdinov <manzurmm@gmail.com>
+Subject: [PATCH] replace: fix replacing object with itself
+Date: Tue, 11 Nov 2014 00:20:56 +0100
+Message-ID: <1415661656-3657-1-git-send-email-manzurmm@gmail.com>
+Cc: Manzur Mukhitdinov <manzurmm@gmail.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 11 00:21:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xnxg5-000472-HW
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 23:43:17 +0100
+	id 1XnyGu-0006rc-2w
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Nov 2014 00:21:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbaKJWnO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Nov 2014 17:43:14 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64607 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751138AbaKJWnN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2014 17:43:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FF1F1D9DD;
-	Mon, 10 Nov 2014 17:43:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=E74LU+NrDsIL
-	rzdF91GnnJAnaWw=; b=GQZL4UK5TScXGXyFaPMIviV3lKAJWuL2N0OVRk4npwFZ
-	MP2c/H0J2BSYUGe590cYs6VEsD0KN0iwk31KIY87UzWdamgZC6H1DgTOPox9FQQT
-	zIvJPMDmLMZYE/S5F6kI5fe6xa0FNkJgI3276L2gX8NuJxPQ/5KimaYl9QmQ0UQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=G5XWBZ
-	ymti5oN0Hfl5Q1O4ALBTaO99Sz8CCcsTsi61/Wy0ko2VFZ5JbzPrAFk3trBuu0T8
-	4615MAy4Wwoeqw1SNoOq6M14d/pUHt1KLJ5gSj8uMot5NI1hKLPtAcywEGE9oxQk
-	DzN6jqGMGr1U/n42SyQf6DSQMf3F7yHqEq99U=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 561911D9DC;
-	Mon, 10 Nov 2014 17:43:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD2231D9DA;
-	Mon, 10 Nov 2014 17:43:11 -0500 (EST)
-In-Reply-To: <54612B4C.8010609@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
- message of "Mon, 10
-	Nov 2014 22:17:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F34921A0-692A-11E4-A1F4-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751443AbaKJXVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2014 18:21:10 -0500
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:33860 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398AbaKJXVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2014 18:21:09 -0500
+Received: by mail-wg0-f44.google.com with SMTP id x12so10262719wgg.31
+        for <git@vger.kernel.org>; Mon, 10 Nov 2014 15:21:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=nAiaPFJ30KWP7uxqVwZQT//S49JmIZvkS7mk+2+e/K4=;
+        b=aF2E5tPohHsiJYg3EOlhmgrmA28bKjziIAJzRqBKz1QDbMnEy2FeKtuQALrvHs5Fbd
+         AYN+ZFS74V81Af+Uql1yQAuRywD37YE6HzTh9yhbTFn7vhj+zd9FV9Wkw4omte7GOW7p
+         baySsf90GBHs1QgD1dWM86+CfC2wjtY/6qZZEe+HIvZEtWkdMoNd0yyl+8xcMwzezf5f
+         Sl7sBIieRTkqcW888v2CCENFOuIblhHyRSmyrjXk+2IXzRKKwoDjAFervWQm//7rwLFi
+         g0Rr4aFi5ZomlEPQ+egLEh3fTX3QLoU4Fa+eu/AKUqtHJsCyyMaF6v8HdxbPXOXqJdBJ
+         0aqg==
+X-Received: by 10.180.109.17 with SMTP id ho17mr28298759wib.4.1415661668178;
+        Mon, 10 Nov 2014 15:21:08 -0800 (PST)
+Received: from localhost.localdomain (a86147.upc-a.chello.nl. [62.163.86.147])
+        by mx.google.com with ESMTPSA id wl1sm24992282wjb.4.2014.11.10.15.21.06
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 10 Nov 2014 15:21:07 -0800 (PST)
+X-Mailer: git-send-email 2.1.3.2.gb1b4c12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+When object is replaced with itself git shows unhelpful messages like(git log):
+    "fatal: replace depth too high for object <SHA1>"
 
-> Explicitly declare that git_atexit_dispatch() and git_atexit_clear()
-> take no parameters instead of leaving their parameter list empty and
-> thus unspecified.
->
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
+Prevents user from replacing object with itself(with test for checking
+this case).
+---
+ builtin/replace.c  | 8 +++-----
+ t/t6050-replace.sh | 8 ++++++++
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-Thanks.
-
-I was kind of surprised after running a git blame to find that this
-is a recent thing, and the same patch looked quite substandard with
-numerious style violations, and I somehow managed to let them slip
-in X-<.  Perhaps I was having a bad day or something...
-
->  run-command.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/run-command.c b/run-command.c
-> index 79a0a76..a476999 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -636,7 +636,7 @@ static struct {
-> =20
->  static int git_atexit_installed;
-> =20
-> -static void git_atexit_dispatch()
-> +static void git_atexit_dispatch(void)
->  {
->  	size_t i;
-> =20
-> @@ -644,7 +644,7 @@ static void git_atexit_dispatch()
->  		git_atexit_hdlrs.handlers[i-1]();
->  }
-> =20
-> -static void git_atexit_clear()
-> +static void git_atexit_clear(void)
->  {
->  	free(git_atexit_hdlrs.handlers);
->  	memset(&git_atexit_hdlrs, 0, sizeof(git_atexit_hdlrs));
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 294b61b..628377a 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -157,6 +157,9 @@ static int replace_object_sha1(const char *object_ref,
+ 	char ref[PATH_MAX];
+ 	struct ref_lock *lock;
+ 
++	if (!hashcmp(object, repl))
++		return error("new object is the same as the old one: '%s'", sha1_to_hex(object));
++
+ 	obj_type = sha1_object_info(object, NULL);
+ 	repl_type = sha1_object_info(repl, NULL);
+ 	if (!force && obj_type != repl_type)
+@@ -295,9 +298,6 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
+ 
+ 	free(tmpfile);
+ 
+-	if (!hashcmp(old, new))
+-		return error("new object is the same as the old one: '%s'", sha1_to_hex(old));
+-
+ 	return replace_object_sha1(object_ref, old, "replacement", new, force);
+ }
+ 
+@@ -406,8 +406,6 @@ static int create_graft(int argc, const char **argv, int force)
+ 
+ 	strbuf_release(&buf);
+ 
+-	if (!hashcmp(old, new))
+-		return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
+ 
+ 	return replace_object_sha1(old_ref, old, "replacement", new, force);
+ }
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 4d5a25e..98ac9dd 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -440,4 +440,12 @@ test_expect_success GPG '--graft on a commit with a mergetag' '
+ 	git replace -d $HASH10
+ '
+ 
++test_expect_success 'replacing object with itself must fail' '
++    test_must_fail git replace $HASH1 $HASH1 &&
++    HASH8=$(git rev-parse --verify HEAD) &&
++    test_must_fail git replace HEAD $HASH8 &&
++    test_must_fail git replace --graft HEAD HEAD^ &&
++    test_must_fail env GIT_EDITOR=true git replace --edit HEAD
++'
++
+ test_done
+-- 
+1.9.1
