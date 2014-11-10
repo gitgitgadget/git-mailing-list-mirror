@@ -1,75 +1,83 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] Add a few more values for
- receive.denyCurrentBranch
-Date: Mon, 10 Nov 2014 14:03:29 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1411101401510.13845@s15462909.onlinehome-server.info>
-References: <cover.1415368490.git.johannes.schindelin@gmx.de> <f82aedcb632571d0b756d62c58479c0aab35b026.1415368490.git.johannes.schindelin@gmx.de> <20141108111855.GA21620@peff.net>
+Subject: Re: [PATCH 2/2] Let deny.currentBranch=updateInstead ignore
+ submodules
+Date: Mon, 10 Nov 2014 14:04:04 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1411101403380.13845@s15462909.onlinehome-server.info>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de> <84dba8872922da96e99953eea0ccff5f5af9dd4a.1415368490.git.johannes.schindelin@gmx.de> <xmqqh9yag6mt.fsf@gitster.dls.corp.google.com> <545F9990.9050505@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 10 14:03:39 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Nov 10 14:04:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xnod8-0007AR-Uw
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 14:03:39 +0100
+	id 1Xnodr-0007nP-Pq
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 14:04:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092AbaKJNDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2014 08:03:35 -0500
-Received: from mout.gmx.net ([212.227.15.19]:52801 "EHLO mout.gmx.net"
+	id S1751887AbaKJNEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2014 08:04:20 -0500
+Received: from mout.gmx.net ([212.227.17.22]:51432 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750814AbaKJNDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2014 08:03:34 -0500
+	id S1750814AbaKJNET (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2014 08:04:19 -0500
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MOfcU-1XtqFA2ehS-0065aB;
- Mon, 10 Nov 2014 14:03:30 +0100
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0Mcyxq-1XWpiZ1mR0-00IAbM;
+ Mon, 10 Nov 2014 14:04:05 +0100
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <20141108111855.GA21620@peff.net>
+In-Reply-To: <545F9990.9050505@web.de>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:smSOAxK+B9+gSo54Ppn6blK67wC/6KlSA4frZYAmdzvMpDkVyM5
- zZBP36Ny5AgCLJadrxFSQ8iftFTZsw2mzW3IRUaFjfFmm7M/G/TJzsgYUL+IarsYWvPKb2T
- kL5SLLMhqv4+JL6V6lKU//q9d6UYngAjLy77l258K+Hxgnd/WJu/e66z8fxf4vNuSY8rSj6
- S81C+bzc7bKdZ+kYqScZQ==
+X-Provags-ID: V03:K0:b1KD9XqBuwedQSVfH6sqTFBwOROUtGg+lb3uUYTMe9HAJS+xtLV
+ pndWzUbeKoAW/8b084B6kA7P0WGfe1vZsy30G4YziTvinTsvQoa4jHNhytIpzrukdNQU2gY
+ n8qfdbWtzF0M+cSm5mDPy/hlZVbQq7M9Gk6xdlSZMcf7k5yiG+HnqUUxnWiP6gwl6Ez85WD
+ bwWrh2F7AiZEDTR0y9v3w==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Jens,
 
-On Sat, 8 Nov 2014, Jeff King wrote:
+On Sun, 9 Nov 2014, Jens Lehmann wrote:
 
-> On Fri, Nov 07, 2014 at 02:58:17PM +0100, Johannes Schindelin wrote:
+> Am 07.11.2014 um 20:20 schrieb Junio C Hamano:
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >
+> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > ---
+> > >   builtin/receive-pack.c | 2 +-
+> > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > > index be4172f..4ba51df 100644
+> > > --- a/builtin/receive-pack.c
+> > > +++ b/builtin/receive-pack.c
+> > > @@ -740,7 +740,7 @@ static int update_shallow_ref(struct command *cmd,
+> > > struct shallow_info *si)
+> > >   static void merge_worktree(unsigned char *sha1)
+> > >   {
+> > >   	const char *update_refresh[] = {
+> > > -		"update-index", "--refresh", NULL
+> > > +		"update-index", "--ignore-submodules", "--refresh", NULL
+> > >    };
+> > >    const char *read_tree[] = {
+> > >     "read-tree", "-u", "-m", sha1_to_hex(sha1), NULL
+> >
+> > I suspect that you did not squash this into 1/2 on purpose, and I am
+> > guessing the reason is because you were unsure what should happen
+> > when there were differences in submodules' working trees (otherwise,
+> > you would have simply squashed without "oops it was a thinko to
+> > forget passing this option" as a separate patch).  I am not sure
+> > either.
 > 
-> > Under certain circumstances, it makes a *lot* of sense to allow pushing
-> > into the current branch. For example, when two machines with different
-> > Operating Systems are required for testing, it makes much more sense to
-> > synchronize between working directories than having to go via a third
-> > server.
-> 
-> FWIW, I do this without a third server (and without resorting to pull),
-> with:
-> 
->   host1$ git push host2 master:refs/remotes/host1/master
->   host2$ git merge host1/master
-> 
-> You can even set up a push refspec to make "git push host2" do the right
-> thing.
-> 
-> That being said, I do like the premise of your patch, as it eliminates
-> the extra step on the remote side (which is not that big a deal in
-> itself, but when you realize that host2 _did_ have some changes on it,
-> then you end up doing the merge there, when in general I'd prefer to do
-> all the work on host1 via "git pull").
+> I think --ignore-submodules is currently the right thing to do here
+> and would rather squash this into the first commit.
 
-Plus: you have the luxury of working on an OS that makes ssh'ing from
-another machine relatively easy. At least if you have the root password on
-your machine. Which, I hate to point it out, is not too common a
-commodity.
+Done.
 
-Ciao,
+Thanks,
 Dscho
