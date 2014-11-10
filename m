@@ -1,116 +1,98 @@
-From: Bryan Turner <bturner@atlassian.com>
-Subject: 2.2.0-rc behavior changes (2/2)
-Date: Mon, 10 Nov 2014 19:51:00 +1100
-Message-ID: <CAGyf7-GWBWrV9SjMY3n3B-0gCMZGfEsYfX-0vSvz6GT6r=vO6A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: 2.2.0-rc behavior changes (1/2)
+Date: Mon, 10 Nov 2014 04:22:19 -0500
+Message-ID: <20141110092219.GA11387@peff.net>
+References: <CAGyf7-GxJ6XHjKqwktKqpo_mFuC_D3gzeOGNTdt4sweAnFqNRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 10 09:57:22 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Git Users <git@vger.kernel.org>
+To: Bryan Turner <bturner@atlassian.com>
+X-From: git-owner@vger.kernel.org Mon Nov 10 10:22:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xnkmn-0007rz-Hy
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 09:57:21 +0100
+	id 1XnlBN-0000Eq-Kc
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 10:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573AbaKJI5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2014 03:57:18 -0500
-Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:38896 "HELO
-	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750716AbaKJI5R (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Nov 2014 03:57:17 -0500
-Received: from mail-oi0-f42.google.com ([209.85.218.42]) (using TLSv1) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKVGB97F0r0AnymYKml+wO46d87riuaJ5O@postini.com; Mon, 10 Nov 2014 00:57:17 PST
-Received: by mail-oi0-f42.google.com with SMTP id a3so5080274oib.29
-        for <git@vger.kernel.org>; Mon, 10 Nov 2014 00:57:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=npC0T3iM10OMnP09DcMxrksFkyzlbFDVetfApMi3XmM=;
-        b=bIlIRGyP+ZyqZG0OqHqz1IHQ31cPtaLpUL65C9DmttTykQLkYHr/FDDRqqTj0Vf+w6
-         wTVJXrb+azGc/jFytN0DeMxq2HNBGkvskhfPdEnvErgjGldT9+8oZ/t1cuzv8rGlH6/L
-         p5QsnKcZdbKGjIBix/SOAe1GGf1jBdbMUJ1f57v+80oUR/gD7waFvdwp4sVDovFg6oi1
-         Tx8pI5/0hnchDxRd52M2viPxnlVFRqVetcO5hVCBufOJe8rlZz6sJkLcczP1yl1d6OIN
-         Wf3nQTBZZNRL6DsKsWPux9D3oKkbsi28TTwYAOkr41SDfDEp10OWcxcVUmvYDbk2o4M7
-         jfWw==
-X-Received: by 10.182.125.3 with SMTP id mm3mr25106734obb.7.1415609460958;
-        Mon, 10 Nov 2014 00:51:00 -0800 (PST)
-X-Gm-Message-State: ALoCoQk6DDK9G93qz3by4FOGxy4Mrh23E0fVDc88FSUZgHCLbA0yTYBOM6+iz+aTyGt4es13eDm2B89FqCcmizoMYC+YAZX4KFjELoi3prCBfeWVXqw2UjGgKjDdntMARsUTuuwfs9bulq9ytLRWsQA/yXemLWQDaw==
-X-Received: by 10.182.125.3 with SMTP id mm3mr25106727obb.7.1415609460827;
- Mon, 10 Nov 2014 00:51:00 -0800 (PST)
-Received: by 10.182.245.170 with HTTP; Mon, 10 Nov 2014 00:51:00 -0800 (PST)
+	id S1752208AbaKJJWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2014 04:22:23 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38671 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751892AbaKJJWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2014 04:22:21 -0500
+Received: (qmail 22885 invoked by uid 102); 10 Nov 2014 09:22:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Nov 2014 03:22:22 -0600
+Received: (qmail 1978 invoked by uid 107); 10 Nov 2014 09:22:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Nov 2014 04:22:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Nov 2014 04:22:19 -0500
+Content-Disposition: inline
+In-Reply-To: <CAGyf7-GxJ6XHjKqwktKqpo_mFuC_D3gzeOGNTdt4sweAnFqNRg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've been running a test suite we use to verify Git behaviors across
-versions, and the 2.2.0 RCs (0 and 1 both) have a couple of small
-behavioral differences. I'm sending them in separate e-mails just to
-make the contents easier to grok.
+On Mon, Nov 10, 2014 at 07:47:32PM +1100, Bryan Turner wrote:
 
-Important: It's entirely possible neither of these is a _bug_; they
-may both be intentional changes in behavior.
+> First change: git update-ref -d /refs/heads/nonexistent
+> <some-valid-sha1> now produces an error about ref locking that it
+> didn't produce before
+> 
+> Git 2.1.x and prior produced this output:
+> error: unable to resolve reference refs/heads/nonexistent: No such
+> file or directory
+> 
+> Now, in the 2.2.0 RCs, it says:
+> error: unable to resolve reference refs/heads/nonexistent: No such
+> file or directory
+> error: Cannot lock the ref 'refs/heads/nonexistent'.
+> 
+> This one feels more like a bug, but again may not be. I say it feels
+> like a bug because of the order of the messages: If git has decided
+> the ref doesn't exist, why is it still trying to lock it?
 
-Second change: git gc --auto now fails if there are loose empty blobs.
+I don't think this is a bug. The order you see is because the code goes
+something like this:
 
-We have a test which just touched empty files in objects/17 to trigger
-the gc --auto preconditions (Note: I realize this is completely
-invalid, and I've changed the test to no longer do this; I'm only
-surfacing the behavioral change).
+  1. the parent function calls a sub-function to lock
 
-On Xubuntu 14.10 I can reproduce this using bash with the following steps:
-git init gc
-cd gc
-echo Hello, world > file.txt
-git add file.txt
-git commit -m "Initial commit"
-mkdir .git/objects/17
-git config gc.auto 2
-git config --bool gc.autodetach false
-for i in $(seq 1 20); do touch .git/objects/17/$(head -n 4096
-/dev/urandom | openssl sha1 | cut -c 10-47); done
+  2. the sub-function generates the error "no such file or directory"
+     and returns failure to the caller
 
-(openssl sha1 on my machine prefixes the SHA-1s with "(stdin)= ", so
-the cut is both to shorten the SHA-1 and to drop that prefix)
+  3. the caller reports that acquiring the lock failed
 
-In 2.1.x and prior, git gc --auto appears to ignore those objects and
-exit 0, although it does note that there are still too many loose
-objects:
-bturner@felurian:~/tmp/gc$ git version
-git version 2.1.0
-bturner@felurian:~/tmp/gc$ git gc --auto
-Auto packing the repository for optimum performance.
-See "git help gc" for manual housekeeping.
-Nothing new to pack.
-warning: There are too many unreachable loose objects; run 'git prune'
-to remove them.
+The only thing that has changed between the two is step (3), but it is
+not an extra lock action after the error. It is just a more verbose
+report of the same error.
 
-In the 2.2.0 RCs git gc --auto exits with 255 and the following errors:
-bturner@felurian:~/tmp/gc$ /opt/git-2.2.0-rc1/bin/git gc --auto
-Auto packing the repository for optimum performance.
-See "git help gc" for manual housekeeping.
-Nothing new to pack.
-error: object file
-.git/objects/17/02d54e8fba95ef9968a0c9b183fe22ec551c86 is empty
-fatal: unable to get object info for 1702d54e8fba95ef9968a0c9b183fe22ec551c86
-error: failed to run prune
+That being said, the sub-function (lock_ref_sha1_basic) gives a much
+more useful message. So it would be a nice enhancement to make sure that
+it prints something useful in every return case, and then drop the
+message from the caller.
 
-Making git gc more sensitive to invalid objects may be a good thing. I
-only point out this behavior change because the change it bisects to
-doesn't really cite this as an intentional change.
+As an aside, I'm also slightly confused by your output. Are you feeding
+"/refs/heads/nonexistent" (with a leading slash), or
+"refs/heads/nonexistent" (no leading slash)? If the latter, then that
+should silently succeed (and seems to in my tests). If the former, then
+the real problem is not ENOENT, but rather EINVAL; that name is not a
+valid refname.
 
-This change bisects to:
+Older versions of git would produce:
 
-bturner@felurian:~/Development/git/git$ git bisect good
-d3038d22f91aad9620bd8e6fc43fc67c16219738 is the first bad commit
-commit d3038d22f91aad9620bd8e6fc43fc67c16219738
-Author: Jeff King <peff@peff.net>
-Date:   Wed Oct 15 18:41:35 2014 -0400
+  error: unable to resolve reference /refs/heads/nonexistent: No such file or directory
 
-    prune: keep objects reachable from recent objects
+which is like the error you showed, but note that the refname is
+reported with the leading slash. In v2.2.0-rc1, this is:
 
-Best regards,
-Bryan Turner
+  error: unable to resolve reference /refs/heads/nonexistent: Invalid argument
+  error: Cannot lock the ref '/refs/heads/nonexistent'.
+
+which is more accurate. I could explain the differences in our output
+from some simple transcription errors when writing your email, but I
+wanted to make sure I am not missing something.
+
+-Peff
