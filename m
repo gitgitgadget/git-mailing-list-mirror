@@ -1,88 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/5] trailer: reuse ignore_non_trailer() to ignore conflict lines
-Date: Mon, 10 Nov 2014 11:58:49 -0800
-Message-ID: <xmqqy4ri969y.fsf@gitster.dls.corp.google.com>
-References: <20141109092313.4864.54933.chriscool@tuxfamily.org>
-	<20141109092344.4864.88180.chriscool@tuxfamily.org>
-	<xmqqbnof9c9d.fsf@gitster.dls.corp.google.com>
-	<20141110.200502.1295000903783079007.chriscool@tuxfamily.org>
+Subject: Re: [PATCHv3 3/5] builtin/notes: Add --allow-empty, to allow storing empty notes
+Date: Mon, 10 Nov 2014 12:18:14 -0800
+Message-ID: <xmqqr3xa95dl.fsf@gitster.dls.corp.google.com>
+References: <1415351961-31567-1-git-send-email-johan@herland.net>
+	<1415351961-31567-4-git-send-email-johan@herland.net>
+	<xmqq1tpehopp.fsf@gitster.dls.corp.google.com>
+	<CALKQrgdFDHUc8JzH3XnwvnHdEZOhUN=EmrWXKKDLd+6MG7jMKw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, johan@herland.net, tr@thomasrast.ch,
-	mhagger@alum.mit.edu, peff@peff.net, sunshine@sunshineco.com,
-	ramsay@ramsay1.demon.co.uk, jrnieder@gmail.com,
-	marcnarc@xiplink.com
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Nov 10 20:58:58 2014
+Cc: Git mailing list <git@vger.kernel.org>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	"James H. Fisher" <jhf@trifork.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Nov 10 21:18:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xnv72-0000rF-Tu
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 20:58:57 +0100
+	id 1XnvPq-00071F-Az
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 21:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752137AbaKJT6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2014 14:58:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54537 "EHLO
+	id S1751594AbaKJUSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2014 15:18:18 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60297 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751607AbaKJT6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2014 14:58:52 -0500
+	with ESMTP id S1750923AbaKJUSR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2014 15:18:17 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C1FF1C53D;
-	Mon, 10 Nov 2014 14:58:51 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DBACC1CA82;
+	Mon, 10 Nov 2014 15:18:15 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h5uKt1lGGn8ypQGOsftXmH51woU=; b=AhleC1
-	IHhBxcyzx4YAL25ic+e/f2wfTfWyPLXTIORSwe2tRoyNDLQQIRyTcMtrbYslHonW
-	RKfn2rqqYP0sEDs9P/sMG6CIfvRRiU+0KSby+Mk3OQAENQeO2zFgXIlqykFWmY8Z
-	zx7ZTH60dxOLHaqgXdbkETbY5D9OIBPN69tXA=
+	:content-type; s=sasl; bh=fsCR0t2Fv+PxJHGRyroHzEjTftU=; b=PRmJdJ
+	f33hVpCKq9XRQJNp+Bgks2EO2NKn7ye1/WCijeDy8aY+C7dp7KgGZH3GJfoEgdBM
+	XFQHRXx76fQkuLLoxqJFINKMSs96I2SQuPM6wq5iplhS2IFvfEd/MEKAuK8SLtSY
+	wKFBuNZ+akrdOqHdjh2Y8XXcW0xAkSumif2VM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F5ehiPeC1J561iUtTXWGJxna4HO2jvhL
-	Kn9aihYqOiXAb6LiU+ixWl40P6Mwm3P93H+t2B1vM60H4KbRLL+fGWOPmnqvziKQ
-	4XTayfmG0YSufJG9qPQ45CdymeWwg2jb9qMEuXQXVN84l1s4sHzCpDbgoR4w0Pkr
-	BsdPAJz7bCs=
+	:content-type; q=dns; s=sasl; b=NaulnoqMfGABsV6Cs8FNtASDe1Gu+84h
+	5oBwyipmDCs2gCdp5W4NL7sZEf3G3PpT4+pE3AMfKFfiEbi+nAnKEFr69jht+BHd
+	Oh5Vagwi+Ebt/eEnKwPaymD/Gu0Sv531YZSz+yeyTZ/9wQQmkPXBQEUtJDYXTfiA
+	H14FXQPc15c=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 927D61C53C;
-	Mon, 10 Nov 2014 14:58:51 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CF0571CA81;
+	Mon, 10 Nov 2014 15:18:15 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CA71C1C53B;
-	Mon, 10 Nov 2014 14:58:50 -0500 (EST)
-In-Reply-To: <20141110.200502.1295000903783079007.chriscool@tuxfamily.org>
-	(Christian Couder's message of "Mon, 10 Nov 2014 20:05:02 +0100
-	(CET)")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 506291CA7F;
+	Mon, 10 Nov 2014 15:18:15 -0500 (EST)
+In-Reply-To: <CALKQrgdFDHUc8JzH3XnwvnHdEZOhUN=EmrWXKKDLd+6MG7jMKw@mail.gmail.com>
+	(Johan Herland's message of "Sun, 9 Nov 2014 13:31:32 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FDAC8B12-6913-11E4-A778-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B3B94934-6916-11E4-8A44-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Johan Herland <johan@herland.net> writes:
 
-> From: Junio C Hamano <gitster@pobox.com>
-> Subject: Re: [PATCH v2 4/5] trailer: reuse ignore_non_trailer() to ignore conflict lines
-> Date: Mon, 10 Nov 2014 09:49:34 -0800
+> On Fri, Nov 7, 2014 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> Christian Couder <chriscool@tuxfamily.org> writes:
->> 
->>> Make sure we look for trailers before any conflict line
->>> by reusing the ignore_non_trailer() function.
->>>
->>> Helped-by: Junio C Hamano <gitster@pobox.com>
->>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->>> ---
->> 
->> It makes sense to unify the logic to decide where the trailer block
->> is, I would think.  I however don't think I helped this change in
->> any way, not more than "maintained the codebase as a solid
->> foundation to build new features on", but at that point it would
->> apply to any other change and not worth mentioning ;-).
+>> In other words, I have this suspicion that create_note() that
+>> removes is a wrong interface in the first place, and giving it
+>> a new allow_empty parameter to conditionally perform removal is
+>> making it worse.  No?
 >
-> Do you want me to resend the series with only the Helped-by removed?
+> I agree, and it's fixed in the re-roll. It turned into a slightly
+> larger rewrite than anticipated, but I'm fairly happy with the result.
 
-Nah, I've already removed it.  You have better things to spend your
-time on ;-)
+;-)
