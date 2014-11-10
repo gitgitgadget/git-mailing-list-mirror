@@ -1,64 +1,140 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] Clean stale environment pointer in
- finish_command()
-Date: Mon, 10 Nov 2014 15:41:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1411101539091.13845@s15462909.onlinehome-server.info>
-References: <cover.1415368490.git.johannes.schindelin@gmx.de> <cover.1415630072.git.johannes.schindelin@gmx.de> <df1b16208e443416f7185c8c8c110e637ea97ac4.1415630072.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Let deny.currentBranch=updateInstead ignore submodules
+Date: Mon, 10 Nov 2014 07:42:01 -0800
+Message-ID: <xmqq1tpbawqe.fsf@gitster.dls.corp.google.com>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de>
+	<84dba8872922da96e99953eea0ccff5f5af9dd4a.1415368490.git.johannes.schindelin@gmx.de>
+	<xmqqh9yag6mt.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411101400050.13845@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Nov 10 15:41:31 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 10 16:42:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xnq9p-0002eM-Lv
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 15:41:30 +0100
+	id 1Xnr6Z-0008AB-RG
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 16:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752758AbaKJOl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2014 09:41:26 -0500
-Received: from mout.gmx.net ([212.227.15.19]:52710 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752543AbaKJOlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2014 09:41:25 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LfSyv-1YL1G31Au9-00p1LE;
- Mon, 10 Nov 2014 15:41:10 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <df1b16208e443416f7185c8c8c110e637ea97ac4.1415630072.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:dPq4lcjZkn4R2jU65aIhDNKDg6mD/tVLvW93kLkRa09a04E2usL
- kCFDcDaQrGLJs1cQCwPcLwEarKFUlym5yzbSvT9uzyB3JvZ+aZiCMnDtiZLAVa7f8jczyE7
- QvLjcYoQAVeYZ5gQFE+0vP6oYXOA79jw56Ijcp1fyiVhrgqRz+xxiIIqrZh4fYZtfe+pOoF
- FMm2IlNSQYu2fOm0ZNbuQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751883AbaKJPmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2014 10:42:07 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750993AbaKJPmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2014 10:42:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F1E451A03E;
+	Mon, 10 Nov 2014 10:42:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZKUqVf7mGGlDvI5vFn8aGDm6+8I=; b=yMPiqW
+	p8CAqF4rIZuDphBV2a+1TpDV98n/sUGQeAQc53PRVv7a59FzOlzgOmeRgzAafOkT
+	lhS4kthfWxW9znGqav5tajSn+gBC1eGP9+Qkm1y/8e4feN/ULNYupABG5OFdifFK
+	ctcy55M2OZf3cJZ3Tsu2u4mRdw5zvYq25pvIo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ns+r5/6BpsoD8Vf1Evme1DllDbUUDmr+
+	5TYvnGspLcJ1ihP3h4Q2Hiza5tcwL+5L+PjoZZz37Sg28mHuqqnikpPyoJbWlTQG
+	CviZGoL1TFRwE4K2hlSw8UiMrU/76O2PRkXZjNphD/nYMtOD0SI+PDcI+wDYYslw
+	yqsZw04nmjg=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E83231A03D;
+	Mon, 10 Nov 2014 10:42:03 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38C2C1A03C;
+	Mon, 10 Nov 2014 10:42:03 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1411101400050.13845@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Mon, 10 Nov 2014 14:01:20 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1DFBC320-68F0-11E4-BC63-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Mon, 10 Nov 2014, Johannes Schindelin wrote:
+>> By the way, if the expected use case of updateInstead is what I
+>> outlined in the previous message, would it make more sense not to
+>> fail with "update-index --refresh" failure (i.e. the working tree
+>> files have no changes since the index)?
+>> 
+>> Thinking about it a bit more, checking with "update-index --refresh"
+>> feels doubly wrong.  You not just want the working tree files to be
+>> pristine with respect to the index, but also you do not want to see
+>> any change between the index and the original HEAD, i.e.
+>> 
+>> 	$ git reset --hard && echo >>Makefile ; git add Makefile
+>>         $ git update-index --refresh ; echo $?
+>>         0
+>> 
+>> this is not a good state from which you would want to update the
+>> working tree.
+>> 
+>> Wouldn't the two-tree form "read-tree -u -m" that is the equivalent
+>> to branch switching do a sufficient check?
+>
+> That is indeed what the patched code calls.
 
-> In start_command(), unset "env" fields are initialized via "env_array". In
-> finish_command(), the "env_array" is cleared, therefore the "env" field
-> will point to free()d data.
-> 
-> However, start_command() will set "env" to env_array.argv only if "env"
-> was unset to begin with, and if it was already set, the caller will need
-> the original value. Therefore, we need to be very careful only to reset
-> "env" in finish_command() when it has been initialized in start_command().
+I know that ;-), but I think I wasn't clear enough.
 
-In case it was unclear: this is needed for the the suggested switch from the
-previous method to construct the environment to the new env_array method
-to work.
+I am not saying you are not using two-tree read-tree.  I am saying
+the check with update-index --refresh before read-tree seems
+dubious.
 
-(The env_array method unfortunately requires the code to initialize the
-environment twice because finish_command() insists on always releasing the
-env_array, even if the caller may want to reuse the generated array).
+There are three "cleanliness" we require in various occasions:
 
-Ciao,
-Johannes
+ (1) rebase asks you to have your index and the working tree match
+     HEAD exactly, as if just after "reset --hard HEAD".
+
+ (2) merge asks you to have your index match HEAD exactly (i.e. no
+     output from "diff --cached HEAD"), and have no changes in the
+     working tree at paths that are involved in the operation.  It
+     is OK to have local changes in the working tree (but not in the
+     index) at paths that are not involved in a mergy operation.
+
+ (3) checkout asks you to have your index and the working tree match
+     either HEAD or the commit you are switching to exactly at paths
+     that are involved in the operation.  It is OK to have local
+     changes in the working tree and in the index at paths that are
+     not different between the commits you are moving between, and
+     it is also OK to have the contents from the "new" commit in the
+     working tree and the index at paths that are different between
+     the two.
+
+Dying when "update-index --refresh" signals a difference is an
+attempt to mimic #1, but it is in line with the spirit of the reason
+why a user would want to use updateInstead, I think.  The situation
+is more like the person who pushed into your repository from
+sideline did a "checkout -B $current_branch $new_commit" to update
+the HEAD, the index and the working tree, to let you pretend as if
+you based your work on the commit he pushed to you.
+
+While you still need to error out when your local work does not
+satisfy the cleanliness criteria #3 above, I do not think you would
+want to stop the operation when "checkout" would not fail, e.g. you
+have a local change that does not interfere with the update between
+the two commits, with this one:
+
++	if (run_command(&child))
++		die ("Could not refresh the index");
+
+When refreshed the index successfully, we signal that there were
+differences between the index and the working tree with a non-zero
+return value, so "Could not refresh" is not quite right, either.
+
+But this one that checks the exit status from two-tree read-tree
+
++	if (run_command(&child))
++		die ("Could not merge working tree with new HEAD.  Good luck.");
+
+is checking the right condition, i.e. cleanliness #3.  The
+disposition should not be "die", but an error return to tell the
+caller to abort the push as we discussed earlier.
