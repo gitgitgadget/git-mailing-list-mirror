@@ -1,72 +1,99 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] run-command: use void to declare that functions take no parameters
-Date: Mon, 10 Nov 2014 22:17:00 +0100
-Message-ID: <54612B4C.8010609@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] Clean stale environment pointer in finish_command()
+Date: Mon, 10 Nov 2014 13:44:24 -0800
+Message-ID: <xmqqbnoe91dz.fsf@gitster.dls.corp.google.com>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de>
+	<cover.1415630072.git.johannes.schindelin@gmx.de>
+	<df1b16208e443416f7185c8c8c110e637ea97ac4.1415630072.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Etienne Buira <etienne.buira@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 10 22:17:27 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 10 22:44:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XnwL0-0008IH-55
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 22:17:26 +0100
+	id 1XnwlF-000340-Gm
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Nov 2014 22:44:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753107AbaKJVRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2014 16:17:21 -0500
-Received: from mout.web.de ([212.227.15.3]:62560 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752748AbaKJVRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2014 16:17:20 -0500
-Received: from [192.168.178.27] ([79.253.174.47]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MgfH5-1XcCbq2Xah-00O1BJ; Mon, 10 Nov 2014 22:17:01
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-Provags-ID: V03:K0:8QF0A3QhhAP0IsYuBPIURAyg7vz7W7dB6CP29C223sOkiZxEaEi
- qwaZt/YFSK5jPlYlTMdn26F0IZ0SbmCy8eLjHPgDHVf09PdsjKlA3qXSc57Xr7rAovPxKRk
- cl7E9OAhH45ezuH1+9mMx9oK9th6WYxlYiTqnpV9yLhnHv/foZoxxp3TyZKFcVi63lLmi0Y
- yhn29PGaJ8eNlczqo9IHg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752506AbaKJVo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2014 16:44:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58670 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752100AbaKJVo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2014 16:44:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 579DF1DDC6;
+	Mon, 10 Nov 2014 16:44:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sfImZzm7rJATkiLbSLIuk6BL2/Y=; b=kzKL4s
+	8NOd9SoCcnbydtqleae/fVypONcLA/r6/uUTaSjNq5YCEuae/2JXzD6Wa3XS5Zlp
+	PaWJ5XHB8Fd+WQ9oRj0UGPohkjeoU+qq8BrtU5iBj8YZ6Ca/NRblEFGOh/lTLe8K
+	0nRigD3k2++DAVyw8TUxa55c0Y+p2C1R17XiQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Xc3Z7ydQ5QOhjElbdqgYXNcphMVjnPW6
+	WnRZu2x9oumhUxTv7KQhIM2vDtLIAfNuiuwoZOZ8qLpSKwEyjIcjizsVS4FzKhMw
+	/voKgKyoEFOEbBjGw33W0KDNrUi4cZH7USbAqAVYs4gKR3sER5wAOEdIOkobA8hG
+	M44ah1b4goc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E8B91DDC5;
+	Mon, 10 Nov 2014 16:44:27 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B8A511DDC3;
+	Mon, 10 Nov 2014 16:44:25 -0500 (EST)
+In-Reply-To: <df1b16208e443416f7185c8c8c110e637ea97ac4.1415630072.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 10 Nov 2014 15:38:36 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BD896212-6922-11E4-A3E8-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Explicitly declare that git_atexit_dispatch() and git_atexit_clear()
-take no parameters instead of leaving their parameter list empty and
-thus unspecified.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- run-command.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> In start_command(), unset "env" fields are initialized via "env_array". In
+> finish_command(), the "env_array" is cleared, therefore the "env" field
+> will point to free()d data.
+>
+> However, start_command() will set "env" to env_array.argv only if "env"
+> was unset to begin with, and if it was already set, the caller will need
+> the original value. Therefore, we need to be very careful only to reset
+> "env" in finish_command() when it has been initialized in start_command().
 
-diff --git a/run-command.c b/run-command.c
-index 79a0a76..a476999 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -636,7 +636,7 @@ static struct {
- 
- static int git_atexit_installed;
- 
--static void git_atexit_dispatch()
-+static void git_atexit_dispatch(void)
- {
- 	size_t i;
- 
-@@ -644,7 +644,7 @@ static void git_atexit_dispatch()
- 		git_atexit_hdlrs.handlers[i-1]();
- }
- 
--static void git_atexit_clear()
-+static void git_atexit_clear(void)
- {
- 	free(git_atexit_hdlrs.handlers);
- 	memset(&git_atexit_hdlrs, 0, sizeof(git_atexit_hdlrs));
--- 
-2.1.3
+Hmph.  Does the same observation apply to cmd->argv that is
+initialied to point to cmd->args.argv only when it is unset?
+
+These managed argv/env arrays originate from c460c0ec (run-command:
+store an optional argv_array, 2014-05-15), so I am CC'ing Peff.  I
+think this change makes sense but I suspect we should do the same
+for args.
+
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  run-command.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/run-command.c b/run-command.c
+> index 79a0a76..85578da 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -555,6 +555,9 @@ int finish_command(struct child_process *cmd)
+>  {
+>  	int ret = wait_or_whine(cmd->pid, cmd->argv[0]);
+>  	argv_array_clear(&cmd->args);
+> +	/* Avoid pointing to a stale environment */
+> +	if (cmd->env == cmd->env_array.argv)
+> +		cmd->env = NULL;
+>  	argv_array_clear(&cmd->env_array);
+>  	return ret;
+>  }
