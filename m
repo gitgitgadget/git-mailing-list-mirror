@@ -1,119 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GIT PULL] l10n updates for 2.2.0 round 1
-Date: Tue, 11 Nov 2014 09:35:47 -0800
-Message-ID: <xmqq61el7i8c.fsf@gitster.dls.corp.google.com>
-References: <CANYiYbHmebuwuGTPNHfZ4MHKeJSMBnwmVSaZ0ZD6tFKrYAawgQ@mail.gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: [Opinions] Integrated tickets
+Date: Tue, 11 Nov 2014 19:15:47 +0100
+Message-ID: <54625253.4070903@ira.uka.de>
+References: <20141105124429.GF15384@paksenarrion.iveqy.com>	<xmqqvbmsgocj.fsf@gitster.dls.corp.google.com>	<54620522.4060600@ira.uka.de> <xmqqioil7j20.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Jean-Noel Avila <jn.avila@free.fr>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Tran Ngoc Quan <vnwildman@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 18:36:03 2014
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 11 19:16:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoFMI-000730-GF
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Nov 2014 18:36:02 +0100
+	id 1XoFyw-0002VT-8u
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Nov 2014 19:15:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbaKKRf5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Nov 2014 12:35:57 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62785 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750859AbaKKRf5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Nov 2014 12:35:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FA9F1C622;
-	Tue, 11 Nov 2014 12:35:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=rXN3yy8JHJjt
-	6kPQcv6EBVIdGsg=; b=DSkcNFVKHPRgWt6nb9ATCC8AYksxCHfrPqf4eLKHBfXq
-	h1rU4dQ3wYy5PtwRXrvvktLiI3ipRF0SqAikyo/4ZeoQrNZhUTwh5GoYlsnr1JJr
-	Sh4KUFPi/tPJFXbZbzesW5YrzwMNw5n2BQpskG3wiRIAUxXPQPbwk6hf93AQ+mI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=izKw51
-	E115UFRNz1V+yXMBnhfnK5np3qu6ERQgBihWuRQHB2znns8t6og8EGJgRWoq9a1s
-	Nx0UmbvaHd8ruZA1LAXKXcvw+HjQw/MrwISwGOsWWWT95LIfkUNAXxQZqIookjWe
-	rK9Y7VmHgRI3UtX7fVvDgGqIKyUIZ/L6iHwfw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 357E91C61E;
-	Tue, 11 Nov 2014 12:35:56 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 267D21C615;
-	Tue, 11 Nov 2014 12:35:49 -0500 (EST)
-In-Reply-To: <CANYiYbHmebuwuGTPNHfZ4MHKeJSMBnwmVSaZ0ZD6tFKrYAawgQ@mail.gmail.com>
-	(Jiang Xin's message of "Sun, 9 Nov 2014 22:36:50 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2CF88082-69C9-11E4-AA9D-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751608AbaKKSPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2014 13:15:54 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:43923 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750859AbaKKSPy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Nov 2014 13:15:54 -0500
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1XoFyl-0004tl-Fe; Tue, 11 Nov 2014 19:15:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <xmqqioil7j20.fsf@gitster.dls.corp.google.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1415729747.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Am 11.11.2014 um 18:17 schrieb Junio C Hamano:
+> Holger Hellmuth <hellmuth@ira.uka.de> writes:
+>
+>> Am 06.11.2014 um 19:45 schrieb Junio C Hamano:
+>>> This is a tangent, but I personally do not think "ticket" meshes
+>>> very well with "commit".  If you already know which commit was
+>>> problematic, why are you annotating it with a ticket before
+>>> reverting it first?
+>>
+>> I would expect a ticket to be annotating the commit or version tag
+>> where the bug was found, which usually isn't the commit where the bug
+>> was introduced.
 
-> Please pull the following git l10n updates.
->
-> The following changes since commit 4ace7ff4557350b7e0b57d024a2ea311b3=
-32e01d:
->
->   Git 2.2.0-rc0 (2014-10-31 11:57:23 -0700)
->
-> are available in the git repository at:
->
->   git://github.com/git-l10n/git-po master
->
-> for you to fetch changes up to 6c31a5e94af1036bb29da8a75f1e735e662aee=
-92:
->
->   l10n: Updated Bulgarian translation of git (2296t,0f,0u) (2014-11-0=
-2
-> 19:11:08 +0200)
+[...]
 
-Thanks, all.
+> Either way, I do not see how such an arrangement is the most
+> convenient way to organize the tickets and ask questions such as
+> "what are the known, untriaged, or unresolved issues in v1.8.5?",
+> "what are the issues that didn't exist in v1.7.0 but appear in
+> v1.8.5?", "what are the outstanding issues around refs handling that
+> are the highest priority?", etc.  With your arrangement of data, any
+> of the common questions I think of asking would require a linear
+> scan of a commit range, followed by an enumeration and parsing of
+> all the notes attached to the commits to answer.
+>
+> So I would have to say that your expectation makes even less sense
+> than annotating an exact buggy commit with a note saying what is
+> broken by it.
 
->
-> ----------------------------------------------------------------
-> Alexander Shopov (1):
->       l10n: Updated Bulgarian translation of git (2296t,0f,0u)
->
-> Jean-Noel Avila (1):
->       l10n: fr.po (2296t) update for version 2.2.0
->
-> Jiang Xin (4):
->       l10n: git.pot: v2.2.0 round 1 (62 new, 23 removed)
->       Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
->       Merge branch 'fr_2.2.0' of git://github.com/jnavila/git
->       l10n: zh_CN: translations for git v2.2.0-rc0
->
-> Peter Krefting (1):
->       l10n: sv.po: Update Swedish translation (2296t0f0u)
->
-> Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
->       l10n: vi.po: Update new message strings
->
->  po/bg.po    | 3211 +++++++++++++++++++++++++++++++------------------=
---------
->  po/fr.po    | 3199 +++++++++++++++++++++++++++++++------------------=
---------
->  po/git.pot  | 3109 +++++++++++++++++++++++++++++--------------------=
-------
->  po/sv.po    | 3187 ++++++++++++++++++++++++++++++-------------------=
--------
->  po/vi.po    | 3306 ++++++++++++++++++++++++++++++++-----------------=
-----------
->  po/zh_CN.po | 3197 +++++++++++++++++++++++++++++++------------------=
---------
->  6 files changed, 10327 insertions(+), 8882 deletions(-)
->
-> --
-> Jiang Xin
+Not less sense, because with tickets attached to the exact buggy commit 
+one would have the same problems answering the questions above. I don't 
+dispute that tickets and commits don't mesh, it was the reason that you 
+gave the first time that didn't sound right. Sorry if I have wasted your 
+time, but looking at it from the management side removed any lingering 
+doubts for me that there might be a benefit to an integration, even if 
+some sort of indexing or database was used.
