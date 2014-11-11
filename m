@@ -1,79 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gittutorial.txt: remove reference to ancient Git version
-Date: Tue, 11 Nov 2014 14:51:41 -0800
-Message-ID: <xmqqioil5p1e.fsf@gitster.dls.corp.google.com>
-References: <1409592246.526697.1415733216505.JavaMail.ngmail@webmail12.arcor-online.net>
+From: Christian Halstrick <christian.halstrick@gmail.com>
+Subject: Re: What is the default refspec for fetch?
+Date: Wed, 12 Nov 2014 00:01:12 +0100
+Message-ID: <CAENte7ggGPgNktH_ArVsjN2yDLADHQApDCzWbQLo_bbCiduk6w@mail.gmail.com>
+References: <CAENte7inZ5fm2SzNPq=HNPKnPco9tM4T_es5Dphnpbia-uiLdg@mail.gmail.com>
+ <20141108105221.GA20750@peff.net> <545E2A2D.2040205@gmail.com> <xmqq7fz4e18x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Tue Nov 11 23:51:49 2014
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 00:01:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoKHs-00019O-Bo
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Nov 2014 23:51:48 +0100
+	id 1XoKRN-00077Y-FM
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 00:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752453AbaKKWvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2014 17:51:44 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52117 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752359AbaKKWvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2014 17:51:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A3021DA01;
-	Tue, 11 Nov 2014 17:51:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=qzRm51qDp3qL18CmHD3dmNzdG/E=; b=UklBizaln848tKn+kyht
-	7LzKMqdH4eoUtrgjeWgxhw9+5ufYbtgzYYdrffP+65QZeJyEwvHqlFcmtUE4PcZb
-	mZh8GQwYm3Oum4qzfllzvUkeZc3XkH5BRTNZK5Jnt7iT/on1XFT12BO5q1JLfQt+
-	r+61IeVgEAa0vEo54we9huM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=obb2loqkQOA6IWow5w8yYAkM3K+iSw4aKkB7+r0jug6VFZ
-	Tt6xCPvoSzw9K6X8wgEL4tHgETrmyTYdMyV6kxkTWP88Fa4lM7Z4k+2ETuSt741K
-	rBhkVay1p6UYHgf3lIjYVEM5vaXnSsIAe4b9emQPTDXUKJ5xpKvZ3kkWdx4hE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 609D41DA00;
-	Tue, 11 Nov 2014 17:51:43 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB82C1D9FF;
-	Tue, 11 Nov 2014 17:51:42 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4E3243D8-69F5-11E4-A612-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752422AbaKKXBe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Nov 2014 18:01:34 -0500
+Received: from mail-qa0-f44.google.com ([209.85.216.44]:36859 "EHLO
+	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752380AbaKKXBd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Nov 2014 18:01:33 -0500
+Received: by mail-qa0-f44.google.com with SMTP id w8so7680046qac.17
+        for <git@vger.kernel.org>; Tue, 11 Nov 2014 15:01:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=2+dApNti82a7hRg3HB5eOXGL8nBc8Z5MTK3KqwIK27U=;
+        b=V6y0oP2xCzhWUtI5QYVAX4akhmyKn7BDQIbXr4AFtS2rqIJ/cXLDemSxoaa3vVxkQw
+         iOFM00jSVcpp1tkKiBggG8IIwNcfOGhgdXejDcLUWOf/kFM4DU7iLe624/0qgnug76sR
+         O1NM8nPw0cZz4pfytovCwnZI73RxSzI9jU7KLh+DOF/lbEPWlkd/4PUzIpBXmYUKM1HA
+         B5y0+D7RHkQ9JGgblJLP49xy4bdspJhnl+bzEvgz6hbG1VPVVGVUf1KpLh1S1Z9R38al
+         WFWIsx289pp5tWFm9zOKFBVHz0JyDgYXdu5rGGVJAK6iW/QdLDejMSrJyoN78oSoXWiZ
+         oNfQ==
+X-Received: by 10.229.64.134 with SMTP id e6mr10202201qci.11.1415746892453;
+ Tue, 11 Nov 2014 15:01:32 -0800 (PST)
+Received: by 10.96.149.71 with HTTP; Tue, 11 Nov 2014 15:01:12 -0800 (PST)
+In-Reply-To: <xmqq7fz4e18x.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Ackermann <th.acker@arcor.de> writes:
+ok, thanks. Then I'll teach JGit to fetch at least "HEAD" if nothing
+is configured and nothing explicitly specified as refspec.
+Ciao
+  Chris
 
-> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
-> ---
->  Documentation/gittutorial.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+
+On Sun, Nov 9, 2014 at 6:23 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Jakub Nar=EAbski <jnareb@gmail.com> writes:
 >
-> diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-> index af9f709..710e636 100644
-> --- a/Documentation/gittutorial.txt
-> +++ b/Documentation/gittutorial.txt
-> @@ -3,7 +3,7 @@ gittutorial(7)
->  
->  NAME
->  ----
-> -gittutorial - A tutorial introduction to Git (for version 1.5.1 or newer)
-> +gittutorial - A tutorial introduction to Git
->  
->  SYNOPSIS
->  --------
-
-Yeah, sounds like going in the right direction.
-
-Perhaps we should start doing a serious re-reading of this document
-and update the contents to suggest better ways that were invented
-to solve common problems since this document was written.
+>> W dniu 2014-11-08 11:52, Jeff King pisze:
+>>> On Fri, Nov 07, 2014 at 04:31:08PM +0100, Christian Halstrick wrote=
+:
+>>>
+>>>> In a repo where no remote.<name>.fetch config parameter is set wha=
+t
+>>>> should a "git fetch" do? My experiments let me think it's
+>>>> "HEAD:FETCH_HEAD". Right?
+>>>
+>>> Basically, yes. We always write FETCH_HEAD, regardless of the refsp=
+ec.
+>>> We choose "HEAD" if no other refspec was provided. So it is really =
+more
+>>> like
+>>>
+>>>    git fetch $remote HEAD
+>>>
+>>> This is what makes one-off bare-url pulls work, like:
+>>>
+>>>    git pull git://...
+>>>
+>>> It runs fetch under the hood, which writes into FETCH_HEAD, and the=
+n we
+>>> merge that.
+>>
+>> Actually FETCH_HEAD consists of multiple lines, one per ref...
+>> but only top ref is merged.
+>
+> Incorrect in that "only top" is misinformation, and irrelevant in
+> the context of discussing the "what is fetched in a one-off fetch".
