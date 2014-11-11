@@ -1,76 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] run-command: use void to declare that functions take no
- parameters
-Date: Mon, 10 Nov 2014 21:54:15 -0500
-Message-ID: <20141111025415.GB21328@peff.net>
-References: <54612B4C.8010609@web.de>
- <xmqq7fz28yo1.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH] replace: fix replacing object with itself
+Date: Mon, 10 Nov 2014 22:03:41 -0500
+Message-ID: <20141111030341.GC21328@peff.net>
+References: <1415661656-3657-1-git-send-email-manzurmm@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Etienne Buira <etienne.buira@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 11 03:54:27 2014
+Cc: git@vger.kernel.org
+To: Manzur Mukhitdinov <manzurmm@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 11 04:03:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xo1b3-0005Tl-TP
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Nov 2014 03:54:22 +0100
+	id 1Xo1kC-00029x-5K
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Nov 2014 04:03:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751474AbaKKCyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Nov 2014 21:54:18 -0500
-Received: from cloud.peff.net ([50.56.180.127]:38956 "HELO cloud.peff.net"
+	id S1751398AbaKKDDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Nov 2014 22:03:44 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38963 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751260AbaKKCyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Nov 2014 21:54:17 -0500
-Received: (qmail 6218 invoked by uid 102); 11 Nov 2014 02:54:17 -0000
+	id S1751316AbaKKDDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Nov 2014 22:03:43 -0500
+Received: (qmail 7370 invoked by uid 102); 11 Nov 2014 03:03:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Nov 2014 20:54:17 -0600
-Received: (qmail 14129 invoked by uid 107); 11 Nov 2014 02:54:26 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Nov 2014 21:03:43 -0600
+Received: (qmail 14237 invoked by uid 107); 11 Nov 2014 03:03:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Nov 2014 21:54:26 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Nov 2014 21:54:15 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Nov 2014 22:03:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Nov 2014 22:03:41 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqq7fz28yo1.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <1415661656-3657-1-git-send-email-manzurmm@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 10, 2014 at 02:43:10PM -0800, Junio C Hamano wrote:
+On Tue, Nov 11, 2014 at 12:20:56AM +0100, Manzur Mukhitdinov wrote:
 
-> > Explicitly declare that git_atexit_dispatch() and git_atexit_clear()
-> > take no parameters instead of leaving their parameter list empty and
-> > thus unspecified.
-> [...]
+> When object is replaced with itself git shows unhelpful messages like(git log):
+>     "fatal: replace depth too high for object <SHA1>"
 > 
-> I was kind of surprised after running a git blame to find that this
-> is a recent thing, and the same patch looked quite substandard with
-> numerious style violations, and I somehow managed to let them slip
-> in X-<.  Perhaps I was having a bad day or something...
+> Prevents user from replacing object with itself(with test for checking
+> this case).
 
-I had always just assumed that -Wstrict-prototypes was part of -Wall,
-but it is not (nor even part of -Wextra!). Maybe it is time to add it to
-your integration-build flags. :)
+Thanks, this looks good to me.
 
-Looks like we also need this on top of hv/submodule-config (still in pu,
-so squashing is probably best):
+> +test_expect_success 'replacing object with itself must fail' '
+> +    test_must_fail git replace $HASH1 $HASH1 &&
+> +    HASH8=$(git rev-parse --verify HEAD) &&
+> +    test_must_fail git replace HEAD $HASH8 &&
+> +    test_must_fail git replace --graft HEAD HEAD^ &&
+> +    test_must_fail env GIT_EDITOR=true git replace --edit HEAD
+> +'
 
-diff --git a/submodule-config.h b/submodule-config.h
-index 58afc83..9061e4e 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -24,6 +24,6 @@ const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
- 		const char *name);
- const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
- 		const char *path);
--void submodule_free();
-+void submodule_free(void);
+I think some of these overlap with earlier tests (I know that the
+"--edit" case is checked already), but I think it is nice to keep the
+related checks together here.
+
+Should we maybe squash this in to drop the now redundant test (AFAICT,
+that is the only one that overlaps)?
+
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 98ac9dd..5f96374 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -369,9 +369,8 @@ test_expect_success '--edit with and without already replaced object' '
+ 	git cat-file commit "$PARA3" | grep "A fake Thor"
+ '
  
- #endif /* SUBMODULE_CONFIG_H */
-
--Peff
+-test_expect_success '--edit and change nothing or command failed' '
++test_expect_success '--edit with failed editor' '
+ 	git replace -d "$PARA3" &&
+-	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
+ 	test_must_fail env GIT_EDITOR="./fakeeditor;false" git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+ 	git replace -l | grep "$PARA3" &&
