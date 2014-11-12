@@ -1,90 +1,117 @@
-From: Jens Stimpfle <debian@jstimpfle.de>
-Subject: [PATCH] git-send-email.perl: Fix handling of suppresscc option.
-Date: Wed, 12 Nov 2014 14:18:11 +0000
-Message-ID: <1415801891-28471-1-git-send-email-debian@jstimpfle.de>
-Cc: Jens Stimpfle <debian@jstimpfle.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 12 14:51:02 2014
+From: Jonas Fonseca <jonas.fonseca@gmail.com>
+Subject: Re: tig: Improving startup time and interactivity
+Date: Wed, 12 Nov 2014 09:35:38 -0500
+Message-ID: <CAFuPQ1Lm95ztfa3wOZ4LQD05XdV-30UKr4Y9+HoHYbQyw9qj-g@mail.gmail.com>
+References: <20141111085014.GA26147@linux.vnet.ibm.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 12 15:36:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoYK5-0004F8-Jd
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 14:51:01 +0100
+	id 1XoZ1h-0002Za-39
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 15:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752705AbaKLNu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 08:50:57 -0500
-Received: from jstimpfle.de ([85.214.245.181]:40205 "EHLO
-	h1929017.stratoserver.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752377AbaKLNu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 08:50:57 -0500
-X-Greylist: delayed 1465 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Nov 2014 08:50:56 EST
-Received: from jfs by h1929017.stratoserver.net with local (Exim 4.80)
-	(envelope-from <debian@jstimpfle.de>)
-	id 1XoXwL-00068u-TG; Wed, 12 Nov 2014 14:26:30 +0100
-X-Mailer: git-send-email 2.1.1
+	id S1752617AbaKLOgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 09:36:00 -0500
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:35595 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752190AbaKLOf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 09:35:59 -0500
+Received: by mail-ie0-f175.google.com with SMTP id y20so13692395ier.20
+        for <git@vger.kernel.org>; Wed, 12 Nov 2014 06:35:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=UBtOslmzcnT7Mf1r6uHo8ER/JtCaEQI37Ah8SseIETs=;
+        b=dIx9Z2/B34A69EQ9rrOz7lDr7u6D1mQACjCWBm59KeW36320mSvRUOzVBUdyJvSRDZ
+         CRNtUSMpi1cbEL10WWDxjdH+I/wmdx/8nVYTf0vaZx53ssLdJNSRk5OWpSJc3Qh4TkOt
+         s1Rd1Fmw9Lqsl9RfxUKI8mAz54d+4QI4iVjCv+14jO23PR/f6gIJQGDWAS+hUsdNC2B8
+         RA7Jtg9A6L8aZ3eWxdQOdOPr8SsQif3nk/Y4hgexgwTq1KLmXHUG/GWzhDXSjf0HxsPX
+         6AoZuVcEgFYJ5VK83Wp8KQtR3EhZ/Pt1lFy4+ccdVSLhzGXlhRHJiXiSZKH7T654hcp/
+         Hqhw==
+X-Received: by 10.42.179.195 with SMTP id br3mr3332080icb.37.1415802958986;
+ Wed, 12 Nov 2014 06:35:58 -0800 (PST)
+Received: by 10.107.8.6 with HTTP; Wed, 12 Nov 2014 06:35:38 -0800 (PST)
+In-Reply-To: <20141111085014.GA26147@linux.vnet.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jens Stimpfle <debian@jstimpfle.de>
----
+On Tue, Nov 11, 2014 at 3:50 AM, Dominik Vogt <vogt@linux.vnet.ibm.com> wrote:
+> Hi Jonas,
 
-Notes:
-    This patch makes sure that "sob", "cc" and "bodycc" values for
-    sendemail.suppresscc option are handled, even when the email-addresses in
-    question are equal to the sender and "self" in not configured in
-    sendemail.suppresscc.
-    
-    Sounds complicated, I know. But the current behaviour is really confusing: For
-    example, when sending, git-send-email logs
-    
-    (mbox) Adding cc: Jens Stimpfle <debian@jstimpfle.de> from line 'From: Jens Stimpfle <debian@jstimpfle.de>'
-    (body) Adding cc: Jens Stimpfle <debian@jstimpfle.de> from line 'Signed-off-by: Jens Stimpfle <debian@jstimpfle.de>'
-    
-    even though I have "sob" configured in sendemail.suppresscc.
-    
-    With this patch, the suppression handling is also made consistent with the
-    handling of the "author" value.
+HI Dominik,
 
- git-send-email.perl | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+Good to hear from you.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9949db0..452a783 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1377,11 +1377,8 @@ foreach my $t (@files) {
- 				foreach my $addr (parse_address_line($1)) {
- 					my $qaddr = unquote_rfc2047($addr);
- 					my $saddr = sanitize_address($qaddr);
--					if ($saddr eq $sender) {
--						next if ($suppress_cc{'self'});
--					} else {
--						next if ($suppress_cc{'cc'});
--					}
-+					next if $suppress_cc{'cc'};
-+					next if $suppress_cc{'self'} and $saddr eq $sender;
- 					printf("(mbox) Adding cc: %s from line '%s'\n",
- 						$addr, $_) unless $quiet;
- 					push @cc, $addr;
-@@ -1425,12 +1422,9 @@ foreach my $t (@files) {
- 			my ($what, $c) = ($1, $2);
- 			chomp $c;
- 			my $sc = sanitize_address($c);
--			if ($sc eq $sender) {
--				next if ($suppress_cc{'self'});
--			} else {
--				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
--				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
--			}
-+			next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
-+			next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
-+			next if $suppress_cc{'self'} and $sc eq $sender;
- 			push @cc, $c;
- 			printf("(body) Adding cc: %s from line '%s'\n",
- 				$c, $_) unless $quiet;
+> working on a relatively old machine with a crypted disk, there are
+> really two performance problems with tig on large repos like gcc
+> or the Linux kernel.  I wonder what would be necessary to improve
+> these two problems:
+>
+>  1) Firing up tig for the first time in the kernel repo, the screen
+>     goes blank for about a minute.  After that it comes up
+>     quickly.  This is probably caused by decrypting lots of
+>     on-disk-objects.
+
+You are not alone at reporting this problem. The main reason is that
+when the revision graph is enabled, tig automatically passes
+--topo-order to git-log. This commit order seems to cause quite a slow
+down before the first commits are available in the output in the Linux
+kernel repo, I assume, due to its many merges.
+
+I recently added an option to disable the automatic forcing of
+topological commit order. So assuming you are using tig from current
+master, you can do this using `set main-view-commit-title-graph =
+no-topo`, but I will probably move this setting to another option
+before the next release (so if it breaks take a look at the NEWS
+file). Alternatively you can disable the revision graph completely
+using `set main-view-commit-title-graph = no`.
+
+Before the next commit I plan to also investigate whether tig can
+first load a screen full of commits without --topo-order and then
+restart git-log, so the main view has content faster.
+
+>  2) When I cherry pick commits inside tig, it reloads the whole
+>     commit history of the active branch before tig accepts new
+>     commands.
+
+This should should be able to disable this behaviour using `set
+refresh-mode = manual` if you don't want tig to automatically reload
+the view.
+
+> I guess both issues are caused by tig reading the whole commit
+> history before user input is allowed.  Is there a way to do that
+> in the background, or interrupt loading when the user presses a
+> key, or to load the history in small chunks?
+
+The loading should already happen while also accepting user input
+(modulo any bugs).
+
+> After all, you're
+> usually interested only in the last 100 commits or so, and there's
+> no need to block the UI while loading the rest.
+
+True. Well,  The only part of the loading that is blocking is the
+.git/index refreshing that takes place when display of work tree
+changes is enabled in the main view (when `set show-changes = yes`).
+
+I will review this again.
+
+> Could you point me to the right source file?  I'm not used to the
+> sources split into multiple files yet.  :-)
+
+Try: tig grep main_open
+
+> Ciao
+
+Have a great day.
+
 -- 
-2.1.1
+Jonas Fonseca
