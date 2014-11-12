@@ -1,99 +1,155 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] doc: add some crossrefs between manual pages
-Date: Wed, 12 Nov 2014 13:07:13 -0800
-Message-ID: <xmqq7fz03z7i.fsf@gitster.dls.corp.google.com>
-References: <1415737027-44589-1-git-send-email-max@quendi.de>
-	<xmqqppct5p1q.fsf@gitster.dls.corp.google.com>
-	<96693472-344E-4ED3-B027-49A8303AF8C0@quendi.de>
-	<xmqqbnoc3zli.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCHv5 9/9] t3301: Modernize
+Date: Wed, 12 Nov 2014 13:18:30 -0800
+Message-ID: <xmqq389o3yop.fsf@gitster.dls.corp.google.com>
+References: <1415752816-22782-1-git-send-email-johan@herland.net>
+	<1415752816-22782-10-git-send-email-johan@herland.net>
+	<CAPig+cSVtAi-n4EKaOgNwDqLvajzvozRG5_o3XjfZAMzW8T8-g@mail.gmail.com>
+	<CALKQrgd-XzAhyZCADmQbCuUL6bdr1nrY8XACBb7UbEv9c=X3dQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, spearce@spearce.org, jrnieder@gmail.com
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Nov 12 22:07:58 2014
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	"James H. Fisher" <jhf@trifork.com>, Jeff King <peff@peff.net>,
+	Michael Blume <blume.mike@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Nov 12 22:18:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xof8v-0000Tq-WB
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 22:07:58 +0100
+	id 1XofJH-0006hM-IH
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 22:18:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364AbaKLVHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 16:07:54 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63534 "EHLO
+	id S1753416AbaKLVSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 16:18:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61239 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753309AbaKLVHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 16:07:53 -0500
+	with ESMTP id S1753309AbaKLVSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 16:18:34 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 69E581D489;
-	Wed, 12 Nov 2014 16:07:51 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F8CF1D7CA;
+	Wed, 12 Nov 2014 16:18:32 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pQPMteD46lNTJCyRtbQVgDLE7Wg=; b=IFu7Je
-	DvbhKYYCWLw00brSaIX0QHSVZFBUsFcGLWqO68g1tM+NcXGqccRf067e4C1QOOmv
-	//7eHcxAV+jK728bbgD/IbqTtuYKWfwx2PWWyP2j1sXwcJH0/WAML/dIUE9dbSd2
-	3/INOle+a0YmQio1Tri8bCtgbFZD8YPOlW3gQ=
+	:content-type; s=sasl; bh=QQ3qnRBfs3GP4QTn7R+ofx31maw=; b=Mxd4dr
+	IlGHum4peAG9Ftw5/7mmFbzqjfuX+ArOADGXqgIYfIRDCLVN+e6brgCGFwA2/NKF
+	TdgNM6cQ9hMIMNWL0pGELBVxQaaz/AYTaXshCY1FG1Dx5Agofvfgkc0VLuGs5dFn
+	PypBDoeNK3dDqMfU4gelS5XKfG0kpN38qJIX8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wkjs2M/53HzjQL8m8DvgN5yaVTFBHXdl
-	vWOMeMC2Cw9EeEERD8bopoynK+UyF0xzycwzL6HXkQ5elcWb5c5fiG4uNHotfH/R
-	hXA/w7srLGIen3yEmkNGO3t+z7Km2KeVMdXZic1frSOaUzSWznJ/oxKc3QwCg8Pm
-	CNt8Q7VHxPM=
+	:content-type; q=dns; s=sasl; b=XnwOx/q6YSgb1IWZzjVpG63lxZixHobU
+	GVBTN+QoTnYqdwGMshiz6voimYyECZX8oh67nyXhXhNxa/BInkpiLoEsBBnWyzYa
+	YulH+9Bzd3X/X9NNhPLEjkDh6Xi916LdMjsQbadVeikLYbWAeHIlzQeCLw1RkUx/
+	fZ5ISXkFOp4=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6169E1D488;
-	Wed, 12 Nov 2014 16:07:51 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43D961D7C9;
+	Wed, 12 Nov 2014 16:18:32 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4B621D44A;
-	Wed, 12 Nov 2014 16:07:14 -0500 (EST)
-In-Reply-To: <xmqqbnoc3zli.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 12 Nov 2014 12:58:49 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BAB361D7C8;
+	Wed, 12 Nov 2014 16:18:31 -0500 (EST)
+In-Reply-To: <CALKQrgd-XzAhyZCADmQbCuUL6bdr1nrY8XACBb7UbEv9c=X3dQ@mail.gmail.com>
+	(Johan Herland's message of "Wed, 12 Nov 2014 10:08:02 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E0A6EB96-6AAF-11E4-9ED1-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7426D61E-6AB1-11E4-B278-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johan Herland <johan@herland.net> writes:
 
-> Max Horn <max@quendi.de> writes:
->
->> On 11.11.2014, at 23:51, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->>>> +linkgit:git-fast-import[1]
->>> 
->>> This looks somewhat out of place; fast-import is not the only or
->>> even the primary way to do a remote-helper, is it?
+> On Wed, Nov 12, 2014 at 2:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Tue, Nov 11, 2014 at 7:40 PM, Johan Herland <johan@herland.net> wrote:
+>>> +       test_line_count = 1 actual
 >>
->> It depends on how you look at it, I'd say. If you write a remote-helper that
->> uses the import/export feature, it is absolutely vital.  All remote helpers
->> I ever worked on are of that kind, so to me it is the primary way ;-),
->> although of course I realize there are others. So, how would you determine
->> which of the various methods is the "primary" one?
+>> Broken &&-chain. This problem is repeated each place use invoke
+>> test_line_count().
 >
-> You don't.  If there exists no clear "primary" one, you do not have
-> to designate a random one as the "primary".
+> Thanks. Fixed in the next iteration.
 >
-> I just thought that these references are to related/relevant pages
-> in the same family of commands, and not a place to list possible
-> implementation technologies.  We do not say "see also libcurl" only
-> because we have the curl-based remote helper that almost everybody
-> uses to interact with other repositories over https:// URLs here,
-> and do not list send-pack or receive-pack, even though the pair
-> would be a natural way to implement 'fetch' and 'push' methods to a
-> helper to interact with a native Git repository, either.
+> ...Johan
 
-Sorry, the final paragraph did not make it for some reason, which
-read like this:
+Just FYI, here is what I came up with on top of 9/9 as 10/9, and it
+can be squashed in.  If these will be the only differences between
+v5 and upcoming v6, you can just tell me to squash them together.
 
-    Having said that, we do seem to refer to fast-import quite
-    extensively in the text of this manual page, so I think it is good
-    to have a reference to its documentation at the bottom.
-
-So I am OK to special case fast-import and single it out as a
-notable implementation technology, which is what your patch does.
+One unrelated changes is that '\'' is a bit shorter than '"'"' (and
+the four-letter sequence is idiomatic and easier to spot, once your
+eyes are used to reading strings in single-quote pairs).
 
 Thanks.
+
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 861c159..245406a 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -53,7 +53,7 @@ test_expect_success 'create notes' '
+ 	MSG=b4 git notes add &&
+ 	test_path_is_missing .git/NOTES_EDITMSG &&
+ 	git ls-tree -r refs/notes/commits >actual &&
+-	test_line_count = 1 actual
++	test_line_count = 1 actual &&
+ 	test "b4" = "$(git notes show)" &&
+ 	git show HEAD^ &&
+ 	test_must_fail git notes show HEAD^
+@@ -67,7 +67,7 @@ test_expect_success 'show notes entry with %N' '
+ 
+ test_expect_success 'create reflog entry' '
+ 	cat <<-EOF >expect &&
+-		a1d8fa6 refs/notes/commits@{0}: notes: Notes added by '"'"'git notes add'"'"'
++		a1d8fa6 refs/notes/commits@{0}: notes: Notes added by '\''git notes add'\''
+ 	EOF
+ 	git reflog show refs/notes/commits >actual &&
+ 	test_cmp expect actual
+@@ -77,7 +77,7 @@ test_expect_success 'edit existing notes' '
+ 	MSG=b3 git notes edit &&
+ 	test_path_is_missing .git/NOTES_EDITMSG &&
+ 	git ls-tree -r refs/notes/commits >actual &&
+-	test_line_count = 1 actual
++	test_line_count = 1 actual &&
+ 	test "b3" = "$(git notes show)" &&
+ 	git show HEAD^ &&
+ 	test_must_fail git notes show HEAD^
+@@ -87,7 +87,7 @@ test_expect_success 'cannot "git notes add -m" where notes already exists' '
+ 	test_must_fail git notes add -m "b2" &&
+ 	test_path_is_missing .git/NOTES_EDITMSG &&
+ 	git ls-tree -r refs/notes/commits >actual &&
+-	test_line_count = 1 actual
++	test_line_count = 1 actual &&
+ 	test "b3" = "$(git notes show)" &&
+ 	git show HEAD^ &&
+ 	test_must_fail git notes show HEAD^
+@@ -97,7 +97,7 @@ test_expect_success 'can overwrite existing note with "git notes add -f -m"' '
+ 	git notes add -f -m "b1" &&
+ 	test_path_is_missing .git/NOTES_EDITMSG &&
+ 	git ls-tree -r refs/notes/commits >actual &&
+-	test_line_count = 1 actual
++	test_line_count = 1 actual &&
+ 	test "b1" = "$(git notes show)" &&
+ 	git show HEAD^ &&
+ 	test_must_fail git notes show HEAD^
+@@ -107,7 +107,7 @@ test_expect_success 'add w/no options on existing note morphs into edit' '
+ 	MSG=b2 git notes add &&
+ 	test_path_is_missing .git/NOTES_EDITMSG &&
+ 	git ls-tree -r refs/notes/commits >actual &&
+-	test_line_count = 1 actual
++	test_line_count = 1 actual &&
+ 	test "b2" = "$(git notes show)" &&
+ 	git show HEAD^ &&
+ 	test_must_fail git notes show HEAD^
+@@ -117,7 +117,7 @@ test_expect_success 'can overwrite existing note with "git notes add -f"' '
+ 	MSG=b1 git notes add -f &&
+ 	test_path_is_missing .git/NOTES_EDITMSG &&
+ 	git ls-tree -r refs/notes/commits >actual &&
+-	test_line_count = 1 actual
++	test_line_count = 1 actual &&
+ 	test "b1" = "$(git notes show)" &&
+ 	git show HEAD^ &&
+ 	test_must_fail git notes show HEAD^
+-- 
+2.2.0-rc1-84-gcd6439f
