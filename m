@@ -1,73 +1,65 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH] gittutorial.txt: remove reference to ancient Git
- version
-Date: Wed, 12 Nov 2014 09:57:00 +0100 (CET)
-Message-ID: <1325552150.191076.1415782620274.JavaMail.ngmail@webmail22.arcor-online.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv5 9/9] t3301: Modernize
+Date: Wed, 12 Nov 2014 10:08:02 +0100
+Message-ID: <CALKQrgd-XzAhyZCADmQbCuUL6bdr1nrY8XACBb7UbEv9c=X3dQ@mail.gmail.com>
+References: <1415752816-22782-1-git-send-email-johan@herland.net>
+	<1415752816-22782-10-git-send-email-johan@herland.net>
+	<CAPig+cSVtAi-n4EKaOgNwDqLvajzvozRG5_o3XjfZAMzW8T8-g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Wed Nov 12 09:57:12 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	"James H. Fisher" <jhf@trifork.com>, Jeff King <peff@peff.net>,
+	Michael Blume <blume.mike@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 10:08:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoTji-0005se-Lt
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 09:57:11 +0100
+	id 1XoTua-0003ec-5h
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 10:08:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbaKLI5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 03:57:05 -0500
-Received: from mail-in-10.arcor-online.net ([151.189.21.50]:48274 "EHLO
-	mail-in-10.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752112AbaKLI5C (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Nov 2014 03:57:02 -0500
-Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
-	by mx.arcor.de (Postfix) with ESMTP id 535942D6BB8;
-	Wed, 12 Nov 2014 09:57:00 +0100 (CET)
-Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
-	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 4987133B65A;
-	Wed, 12 Nov 2014 09:57:00 +0100 (CET)
-Received: from webmail22.arcor-online.net (webmail22.arcor-online.net [151.189.8.137])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 4113F10BD7D;
-	Wed, 12 Nov 2014 09:57:00 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-06.arcor-online.net 4113F10BD7D
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1415782620; bh=u25nHPDP1wrVHciINHUUGQrvWzDVGhMA47WnMeBx55M=;
-	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=tT41d2wcZEd6l9ImV0HJ73oc6WLmv39PuWfpN2q0o/Au1/QJSKlVcskz1bze9SWX8
-	 wOOSoa7WJTUhauuCVVcX0CnJ0AwMipdApMMPQxiMR06NCSoyx5zkBSzpy6yI+r7NHA
-	 FxJP9VZf+vAzu4/mRFlaA2sQyY+/ogtsFDCW6d/I=
-Received: from [194.138.39.56] by webmail22.arcor-online.net (151.189.8.137) with HTTP (Arcor Webmail); Wed, 12 Nov 2014 09:57:00 +0100 (CET)
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 194.138.39.56
+	id S1751826AbaKLJIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 04:08:17 -0500
+Received: from mail12.copyleft.no ([188.94.218.224]:33040 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751588AbaKLJIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 04:08:14 -0500
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1XoTuN-0004yD-HW
+	for git@vger.kernel.org; Wed, 12 Nov 2014 10:08:11 +0100
+Received: from mail-pd0-f176.google.com ([209.85.192.176])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1XoTuN-000EF5-81
+	for git@vger.kernel.org; Wed, 12 Nov 2014 10:08:11 +0100
+Received: by mail-pd0-f176.google.com with SMTP id ft15so11800117pdb.7
+        for <git@vger.kernel.org>; Wed, 12 Nov 2014 01:08:02 -0800 (PST)
+X-Received: by 10.68.221.162 with SMTP id qf2mr17745354pbc.148.1415783282754;
+ Wed, 12 Nov 2014 01:08:02 -0800 (PST)
+Received: by 10.70.68.3 with HTTP; Wed, 12 Nov 2014 01:08:02 -0800 (PST)
+In-Reply-To: <CAPig+cSVtAi-n4EKaOgNwDqLvajzvozRG5_o3XjfZAMzW8T8-g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- 
-I also re-read the whole document and think it's still up-to-date
-with Git 2.0. But I might have missed some subtler points.
+On Wed, Nov 12, 2014 at 2:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Nov 11, 2014 at 7:40 PM, Johan Herland <johan@herland.net> wrote:
+>> +       test_line_count = 1 actual
+>
+> Broken &&-chain. This problem is repeated each place use invoke
+> test_line_count().
 
-Thomas
+Thanks. Fixed in the next iteration.
 
------ Original Nachricht ----
-Von:     Junio C Hamano <gitster@pobox.com>
-An:      Thomas Ackermann <th.acker@arcor.de>
-Datum:   11.11.2014 23:51
-Betreff: Re: [PATCH] gittutorial.txt: remove reference to ancient Git version
+...Johan
 
-> 
-> Yeah, sounds like going in the right direction.
-> 
-> Perhaps we should start doing a serious re-reading of this document
-> and update the contents to suggest better ways that were invented
-> to solve common problems since this document was written.
-> 
-
-
----
-Thomas
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
