@@ -1,155 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv5 9/9] t3301: Modernize
-Date: Wed, 12 Nov 2014 13:18:30 -0800
-Message-ID: <xmqq389o3yop.fsf@gitster.dls.corp.google.com>
-References: <1415752816-22782-1-git-send-email-johan@herland.net>
-	<1415752816-22782-10-git-send-email-johan@herland.net>
-	<CAPig+cSVtAi-n4EKaOgNwDqLvajzvozRG5_o3XjfZAMzW8T8-g@mail.gmail.com>
-	<CALKQrgd-XzAhyZCADmQbCuUL6bdr1nrY8XACBb7UbEv9c=X3dQ@mail.gmail.com>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: mac test failure -- 2gb clone
+Date: Wed, 12 Nov 2014 13:57:49 -0800
+Message-ID: <CAO2U3QjFCBqJ+_E-nyxGnm3GdwB1zJgK6d8SJ4QULQHY1D6bUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	"James H. Fisher" <jhf@trifork.com>, Jeff King <peff@peff.net>,
-	Michael Blume <blume.mike@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Nov 12 22:18:40 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 12 22:58:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XofJH-0006hM-IH
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 22:18:39 +0100
+	id 1Xofvc-0003aY-Su
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 22:58:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753416AbaKLVSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 16:18:35 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61239 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753309AbaKLVSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 16:18:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F8CF1D7CA;
-	Wed, 12 Nov 2014 16:18:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QQ3qnRBfs3GP4QTn7R+ofx31maw=; b=Mxd4dr
-	IlGHum4peAG9Ftw5/7mmFbzqjfuX+ArOADGXqgIYfIRDCLVN+e6brgCGFwA2/NKF
-	TdgNM6cQ9hMIMNWL0pGELBVxQaaz/AYTaXshCY1FG1Dx5Agofvfgkc0VLuGs5dFn
-	PypBDoeNK3dDqMfU4gelS5XKfG0kpN38qJIX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XnwOx/q6YSgb1IWZzjVpG63lxZixHobU
-	GVBTN+QoTnYqdwGMshiz6voimYyECZX8oh67nyXhXhNxa/BInkpiLoEsBBnWyzYa
-	YulH+9Bzd3X/X9NNhPLEjkDh6Xi916LdMjsQbadVeikLYbWAeHIlzQeCLw1RkUx/
-	fZ5ISXkFOp4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43D961D7C9;
-	Wed, 12 Nov 2014 16:18:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BAB361D7C8;
-	Wed, 12 Nov 2014 16:18:31 -0500 (EST)
-In-Reply-To: <CALKQrgd-XzAhyZCADmQbCuUL6bdr1nrY8XACBb7UbEv9c=X3dQ@mail.gmail.com>
-	(Johan Herland's message of "Wed, 12 Nov 2014 10:08:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7426D61E-6AB1-11E4-B278-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752176AbaKLV6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 16:58:13 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:60471 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752009AbaKLV6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 16:58:12 -0500
+Received: by mail-la0-f46.google.com with SMTP id gm9so12291419lab.33
+        for <git@vger.kernel.org>; Wed, 12 Nov 2014 13:58:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=zV0T4MrEl5QqZ3WDegyW0q8XU3jB105D+kcQTnCxBsc=;
+        b=n9qBgb6VwIHk3/OmerpY8jqClKQB+N4j9hBhfje12NKi8R3rTs08xR4ShSDvkoxd0q
+         57hVIKR/7VcIftb1xyl/7M4rXkleIJM9rphUQQFy264RhhFiDRcmPD50jMNEPz7cs8Bh
+         k2qjzbPi66106Npl2JBzMYpTDST2pI3MIA14eQXe7tDz7PeMm+I715+DGLQEqvF2grqZ
+         AzzktacB+SG8zVBw7qmqMKQ97HdeK2trjt5XYJ968dyHFWPR8nuyL0ljLpkdhDZwAD21
+         crNNOSfG1n6lCppD95DduvcB8BEDjG6oflsFEgGs1SBdtRz4/JZgtpGtEh1i1oc4Qvoq
+         vipw==
+X-Received: by 10.152.120.73 with SMTP id la9mr44758564lab.23.1415829490727;
+ Wed, 12 Nov 2014 13:58:10 -0800 (PST)
+Received: by 10.25.160.20 with HTTP; Wed, 12 Nov 2014 13:57:49 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johan Herland <johan@herland.net> writes:
+This is in pu, haven't checked if it's also in master, this is the
+first time I've run this test
 
-> On Wed, Nov 12, 2014 at 2:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Tue, Nov 11, 2014 at 7:40 PM, Johan Herland <johan@herland.net> wrote:
->>> +       test_line_count = 1 actual
->>
->> Broken &&-chain. This problem is repeated each place use invoke
->> test_line_count().
->
-> Thanks. Fixed in the next iteration.
->
-> ...Johan
+$ GIT_TEST_CLONE_2GB=t ./t5705-clone-2gb.sh -v
+Initialized empty Git repository in
+/Users/michael.blume/workspace/git/t/trash
+directory.t5705-clone-2gb/.git/
+expecting success:
 
-Just FYI, here is what I came up with on top of 9/9 as 10/9, and it
-can be squashed in.  If these will be the only differences between
-v5 and upcoming v6, you can just tell me to squash them together.
+git config pack.compression 0 &&
+git config pack.depth 0 &&
+blobsize=$((100*1024*1024)) &&
+blobcount=$((2*1024*1024*1024/$blobsize+1)) &&
+i=1 &&
+(while test $i -le $blobcount
+do
+printf "Generating blob $i/$blobcount\r" >&2 &&
+printf "blob\nmark :$i\ndata $blobsize\n" &&
+#test-genrandom $i $blobsize &&
+printf "%-${blobsize}s" $i &&
+echo "M 100644 :$i $i" >> commit
+i=$(($i+1)) ||
+echo $? > exit-status
+done &&
+echo "commit refs/heads/master" &&
+echo "author A U Thor <author@email.com> 123456789 +0000" &&
+echo "committer C O Mitter <committer@email.com> 123456789 +0000" &&
+echo "data 5" &&
+echo ">2gb" &&
+cat commit) |
+git fast-import --big-file-threshold=2 &&
+test ! -f exit-status
 
-One unrelated changes is that '\'' is a bit shorter than '"'"' (and
-the four-letter sequence is idiomatic and easier to spot, once your
-eyes are used to reading strings in single-quote pairs).
 
-Thanks.
+git-fast-import statistics:
+---------------------------------------------------------------------
+Alloc'd objects:       5000
+Total objects:           23 (         0 duplicates                  )
+      blobs  :           21 (         0 duplicates          0 deltas
+of          0 attempts)
+      trees  :            1 (         0 duplicates          0 deltas
+of          0 attempts)
+      commits:            1 (         0 duplicates          0 deltas
+of          0 attempts)
+      tags   :            0 (         0 duplicates          0 deltas
+of          0 attempts)
+Total branches:           1 (         1 loads     )
+      marks:           1024 (        21 unique    )
+      atoms:             21
+Memory total:          2344 KiB
+       pools:          2110 KiB
+     objects:           234 KiB
+---------------------------------------------------------------------
+pack_report: getpagesize()            =       4096
+pack_report: core.packedGitWindowSize = 1073741824
+pack_report: core.packedGitLimit      = 8589934592
+pack_report: pack_used_ctr            =          2
+pack_report: pack_mmap_calls          =          1
+pack_report: pack_open_windows        =          1 /          1
+pack_report: pack_mapped              =   54863024 /   54863024
+---------------------------------------------------------------------
 
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 861c159..245406a 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -53,7 +53,7 @@ test_expect_success 'create notes' '
- 	MSG=b4 git notes add &&
- 	test_path_is_missing .git/NOTES_EDITMSG &&
- 	git ls-tree -r refs/notes/commits >actual &&
--	test_line_count = 1 actual
-+	test_line_count = 1 actual &&
- 	test "b4" = "$(git notes show)" &&
- 	git show HEAD^ &&
- 	test_must_fail git notes show HEAD^
-@@ -67,7 +67,7 @@ test_expect_success 'show notes entry with %N' '
- 
- test_expect_success 'create reflog entry' '
- 	cat <<-EOF >expect &&
--		a1d8fa6 refs/notes/commits@{0}: notes: Notes added by '"'"'git notes add'"'"'
-+		a1d8fa6 refs/notes/commits@{0}: notes: Notes added by '\''git notes add'\''
- 	EOF
- 	git reflog show refs/notes/commits >actual &&
- 	test_cmp expect actual
-@@ -77,7 +77,7 @@ test_expect_success 'edit existing notes' '
- 	MSG=b3 git notes edit &&
- 	test_path_is_missing .git/NOTES_EDITMSG &&
- 	git ls-tree -r refs/notes/commits >actual &&
--	test_line_count = 1 actual
-+	test_line_count = 1 actual &&
- 	test "b3" = "$(git notes show)" &&
- 	git show HEAD^ &&
- 	test_must_fail git notes show HEAD^
-@@ -87,7 +87,7 @@ test_expect_success 'cannot "git notes add -m" where notes already exists' '
- 	test_must_fail git notes add -m "b2" &&
- 	test_path_is_missing .git/NOTES_EDITMSG &&
- 	git ls-tree -r refs/notes/commits >actual &&
--	test_line_count = 1 actual
-+	test_line_count = 1 actual &&
- 	test "b3" = "$(git notes show)" &&
- 	git show HEAD^ &&
- 	test_must_fail git notes show HEAD^
-@@ -97,7 +97,7 @@ test_expect_success 'can overwrite existing note with "git notes add -f -m"' '
- 	git notes add -f -m "b1" &&
- 	test_path_is_missing .git/NOTES_EDITMSG &&
- 	git ls-tree -r refs/notes/commits >actual &&
--	test_line_count = 1 actual
-+	test_line_count = 1 actual &&
- 	test "b1" = "$(git notes show)" &&
- 	git show HEAD^ &&
- 	test_must_fail git notes show HEAD^
-@@ -107,7 +107,7 @@ test_expect_success 'add w/no options on existing note morphs into edit' '
- 	MSG=b2 git notes add &&
- 	test_path_is_missing .git/NOTES_EDITMSG &&
- 	git ls-tree -r refs/notes/commits >actual &&
--	test_line_count = 1 actual
-+	test_line_count = 1 actual &&
- 	test "b2" = "$(git notes show)" &&
- 	git show HEAD^ &&
- 	test_must_fail git notes show HEAD^
-@@ -117,7 +117,7 @@ test_expect_success 'can overwrite existing note with "git notes add -f"' '
- 	MSG=b1 git notes add -f &&
- 	test_path_is_missing .git/NOTES_EDITMSG &&
- 	git ls-tree -r refs/notes/commits >actual &&
--	test_line_count = 1 actual
-+	test_line_count = 1 actual &&
- 	test "b1" = "$(git notes show)" &&
- 	git show HEAD^ &&
- 	test_must_fail git notes show HEAD^
--- 
-2.2.0-rc1-84-gcd6439f
+ok 1 - setup
+
+expecting success:
+
+git clone --bare --no-hardlinks . clone-bare
+
+
+Cloning into bare repository 'clone-bare'...
+done.
+ok 2 - clone - bare
+
+expecting success:
+
+git clone file://. clone-wt
+
+
+Cloning into 'clone-wt'...
+fatal: No path specified. See 'man git-pull' for valid url syntax
+not ok 3 - clone - with worktree, file:// protocol
+#
+#
+# git clone file://. clone-wt
+#
+#
+
+# failed 1 among 3 test(s)
+1..3
