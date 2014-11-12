@@ -1,46 +1,46 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 6/9] builtin/notes: Split create_note() to clarify add vs. remove logic
-Date: Wed, 12 Nov 2014 01:40:13 +0100
-Message-ID: <1415752816-22782-7-git-send-email-johan@herland.net>
+Subject: [PATCHv5 7/9] builtin/notes: Add --allow-empty, to allow storing empty notes
+Date: Wed, 12 Nov 2014 01:40:14 +0100
+Message-ID: <1415752816-22782-8-git-send-email-johan@herland.net>
 References: <1415752816-22782-1-git-send-email-johan@herland.net>
 Cc: git@vger.kernel.org, mackyle@gmail.com, jhf@trifork.com,
 	sunshine@sunshineco.com, peff@peff.net, blume.mike@gmail.com,
 	Johan Herland <johan@herland.net>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Nov 12 01:40:56 2014
+X-From: git-owner@vger.kernel.org Wed Nov 12 01:40:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoLzT-0005vi-Cy
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 01:40:55 +0100
+	id 1XoLzT-0005vi-Up
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 01:40:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbaKLAkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752715AbaKLAkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Nov 2014 19:40:45 -0500
+Received: from mail-la0-f51.google.com ([209.85.215.51]:64920 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752684AbaKLAkn (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 11 Nov 2014 19:40:43 -0500
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:40348 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752612AbaKLAkk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Nov 2014 19:40:40 -0500
-Received: by mail-lb0-f175.google.com with SMTP id n15so8443164lbi.6
-        for <git@vger.kernel.org>; Tue, 11 Nov 2014 16:40:39 -0800 (PST)
+Received: by mail-la0-f51.google.com with SMTP id q1so10538333lam.38
+        for <git@vger.kernel.org>; Tue, 11 Nov 2014 16:40:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iL3pAYgTgQCEjJo74vkiz+EpsbSNGSA0Cr2LdFm2jCE=;
-        b=di6TlgtYyhqAGbjOoDKsteUDpuwGTjgdYSr+L7Xak1IPb6lgw8hQUP7MkNm85gixBj
-         DQmfwuCvrIOJNUc31fYtotpHa2i7xvrcecl9zPowTBx1u7NzSHNcGi+Ll8CsbMZ5cGS7
-         shrIvchuNYW71iz9Eqx9ONZiwaNRP9kzZgD4I0f9tzufHKnM+Ika26fSJtzhLvPkHB5d
-         KnR20au3U5UhFcASsbNCVTW/NvJEXL9qNiREpHU6VI2eqEsD9PsJdNZZ/kFS4Jc8j6p2
-         dEHsFAT6fwrDC2M2TrbWzcsiLAe6ORRr0ql96BsM7TX8wgfPgwtg026xl0JHFS+rO01D
-         Ii+A==
-X-Received: by 10.152.170.131 with SMTP id am3mr38702726lac.15.1415752839428;
-        Tue, 11 Nov 2014 16:40:39 -0800 (PST)
+        bh=rHjFeJNy59fRdiinPLumV+I6yhjdeivUDcDieiF/b7o=;
+        b=d9BYvWnxNw5zxW611WIcTtr1YYnDqmxopkG/8vRmHiazIPsTlX6LOtWpgT2Rtg/sYf
+         1fBC9DbkW8NtQ0WxbNwhvy3wiot7OOI+uu64zPWCZZIl2iURv3YwHVv2xUvKv2AnTlK7
+         PAc6mN9uxVSFyb2RtmIVFwUnd56gwB50951NFux60oT59T+s6cLBxE+gX0GKi5meqZjP
+         13BXm0y+nIsdzd2dI/HdRFADtWF1f8UQ5fWr7xdYA5xsT3zJhd0a2ALiPh42rw81dZvd
+         V4IbBp3Vm0EvNIr5YJNPm9nC53aqsmzyqEFlnB1xabKpDdQhPgAaUkGUEUhz0rzZ0Bra
+         sldw==
+X-Received: by 10.152.29.8 with SMTP id f8mr39155187lah.56.1415752841379;
+        Tue, 11 Nov 2014 16:40:41 -0800 (PST)
 Received: from alpha.herland (245.37-191-128.fiber.lynet.no. [37.191.128.245])
-        by mx.google.com with ESMTPSA id 8sm6341174lav.15.2014.11.11.16.40.37
+        by mx.google.com with ESMTPSA id 8sm6341174lav.15.2014.11.11.16.40.39
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Nov 2014 16:40:38 -0800 (PST)
+        Tue, 11 Nov 2014 16:40:40 -0800 (PST)
 X-Mailer: git-send-email 2.0.0.rc4.501.gdaf83ca
 In-Reply-To: <1415752816-22782-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
@@ -48,180 +48,163 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-create_note() has a non-trivial interface, and comprises three loosely
-related parts:
+Although the "git notes" man page advertises that we support binary-safe
+notes addition (using the -C option), we currently do not support adding
+the empty note (i.e. using the empty blob to annotate an object). Instead,
+an empty note is always treated as an intent to remove the note
+altogether.
 
- 1. launching the editor with the note contents, if needed
- 2. appending to an existing note, if append_only was given
- 3. adding or removing the resulting note, based on whether it's non-empty
+Introduce the --allow-empty option to the add/append/edit subcommands,
+to explicitly allow an empty note to be stored into the notes tree.
 
-Split it along those lines to make the logic clearer: The first part
-goes into a new function - prepare_note_data(), with a simpler interface.
-The second part is moved into append_edit(), which is the only user of
-this code. Finally, the add vs. remove decision is moved into the callers
-(add() and append_edit()), keeping the logic for writing the actual note
-object in a separate function: write_note_data().
+Also update the documentation, and add test cases for the new option.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: James H. Fisher <jhf@trifork.com>
+Improved-by: Kyle J. McKay <mackyle@gmail.com>
+Improved-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- builtin/notes.c | 103 +++++++++++++++++++++++++++++---------------------------
- 1 file changed, 54 insertions(+), 49 deletions(-)
+ Documentation/git-notes.txt | 12 ++++++++----
+ builtin/notes.c             | 17 +++++++++++------
+ t/t3301-notes.sh            | 10 +++++++++-
+ 3 files changed, 28 insertions(+), 11 deletions(-)
 
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 310f0a5..851518d 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -9,10 +9,10 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git notes' [list [<object>]]
+-'git notes' add [-f] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
++'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+ 'git notes' copy [-f] ( --stdin | <from-object> <to-object> )
+-'git notes' append [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+-'git notes' edit [<object>]
++'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
++'git notes' edit [--allow-empty] [<object>]
+ 'git notes' show [<object>]
+ 'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
+ 'git notes' merge --commit [-v | -q]
+@@ -155,6 +155,10 @@ OPTIONS
+ 	Like '-C', but with '-c' the editor is invoked, so that
+ 	the user can further edit the note message.
+ 
++--allow-empty::
++	Allow an empty note object to be stored. The default behavior is
++	to automatically remove empty notes.
++
+ --ref <ref>::
+ 	Manipulate the notes tree in <ref>.  This overrides
+ 	'GIT_NOTES_REF' and the "core.notesRef" configuration.  The ref
+@@ -287,7 +291,7 @@ arbitrary files using 'git hash-object':
+ ------------
+ $ cc *.c
+ $ blob=$(git hash-object -w a.out)
+-$ git notes --ref=built add -C "$blob" HEAD
++$ git notes --ref=built add --allow-empty -C "$blob" HEAD
+ ------------
+ 
+ (You cannot simply use `git notes --ref=built add -F a.out HEAD`
 diff --git a/builtin/notes.c b/builtin/notes.c
-index acdedbd..ed32d63 100644
+index ed32d63..a9f37d0 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -159,9 +159,8 @@ static void write_commented_object(int fd, const unsigned char *object)
- 		    sha1_to_hex(object));
- }
+@@ -22,10 +22,10 @@
  
--static void create_note(const unsigned char *object, struct note_data *d,
--			int append_only, const unsigned char *prev,
--			unsigned char *result)
-+static void prepare_note_data(const unsigned char *object, struct note_data *d,
-+		const unsigned char *old_note)
+ static const char * const git_notes_usage[] = {
+ 	N_("git notes [--ref <notes_ref>] [list [<object>]]"),
+-	N_("git notes [--ref <notes_ref>] add [-f] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
++	N_("git notes [--ref <notes_ref>] add [-f] [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
+ 	N_("git notes [--ref <notes_ref>] copy [-f] <from-object> <to-object>"),
+-	N_("git notes [--ref <notes_ref>] append [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
+-	N_("git notes [--ref <notes_ref>] edit [<object>]"),
++	N_("git notes [--ref <notes_ref>] append [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
++	N_("git notes [--ref <notes_ref>] edit [--allow-empty] [<object>]"),
+ 	N_("git notes [--ref <notes_ref>] show [<object>]"),
+ 	N_("git notes [--ref <notes_ref>] merge [-v | -q] [-s <strategy> ] <notes_ref>"),
+ 	N_("git notes merge --commit [-v | -q]"),
+@@ -381,7 +381,7 @@ static int append_edit(int argc, const char **argv, const char *prefix);
+ 
+ static int add(int argc, const char **argv, const char *prefix)
  {
- 	if (d->use_editor || !d->given) {
- 		int fd;
-@@ -175,8 +174,8 @@ static void create_note(const unsigned char *object, struct note_data *d,
- 
- 		if (d->given)
- 			write_or_die(fd, d->buf.buf, d->buf.len);
--		else if (prev && !append_only)
--			copy_obj_to_fd(fd, prev);
-+		else if (old_note)
-+			copy_obj_to_fd(fd, old_note);
- 
- 		strbuf_addch(&buf, '\n');
- 		strbuf_add_commented_lines(&buf, note_template, strlen(note_template));
-@@ -194,33 +193,16 @@ static void create_note(const unsigned char *object, struct note_data *d,
- 		}
- 		stripspace(&d->buf, 1);
- 	}
-+}
- 
--	if (prev && append_only) {
--		/* Append buf to previous note contents */
--		unsigned long size;
--		enum object_type type;
--		char *prev_buf = read_sha1_file(prev, &type, &size);
--
--		strbuf_grow(&d->buf, size + 1);
--		if (d->buf.len && prev_buf && size)
--			strbuf_insert(&d->buf, 0, "\n", 1);
--		if (prev_buf && size)
--			strbuf_insert(&d->buf, 0, prev_buf, size);
--		free(prev_buf);
--	}
--
--	if (!d->buf.len) {
--		fprintf(stderr, _("Removing note for object %s\n"),
--			sha1_to_hex(object));
--		hashclr(result);
--	} else {
--		if (write_sha1_file(d->buf.buf, d->buf.len, blob_type, result)) {
--			error(_("unable to write note object"));
--			if (d->edit_path)
--				error(_("The note contents have been left in %s"),
--				      d->edit_path);
--			exit(128);
--		}
-+static void write_note_data(struct note_data *d, unsigned char *sha1)
-+{
-+	if (write_sha1_file(d->buf.buf, d->buf.len, blob_type, sha1)) {
-+		error(_("unable to write note object"));
-+		if (d->edit_path)
-+			error(_("The note contents have been left in %s"),
-+				d->edit_path);
-+		exit(128);
- 	}
- }
- 
-@@ -403,7 +385,6 @@ static int add(int argc, const char **argv, const char *prefix)
+-	int force = 0;
++	int force = 0, allow_empty = 0;
  	const char *object_ref;
  	struct notes_tree *t;
  	unsigned char object[20], new_note[20];
--	char logmsg[100];
- 	const unsigned char *note;
- 	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
- 	struct option options[] = {
-@@ -463,17 +444,20 @@ static int add(int argc, const char **argv, const char *prefix)
- 			sha1_to_hex(object));
+@@ -400,6 +400,8 @@ static int add(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 'C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg},
++		OPT_BOOL(0, "allow-empty", &allow_empty,
++			N_("allow storing empty note")),
+ 		OPT__FORCE(&force, N_("replace existing notes")),
+ 		OPT_END()
+ 	};
+@@ -445,7 +447,7 @@ static int add(int argc, const char **argv, const char *prefix)
  	}
  
--	create_note(object, &d, 0, note, new_note);
--	free_note_data(&d);
--
--	if (is_null_sha1(new_note))
-+	prepare_note_data(object, &d, note);
-+	if (d.buf.len) {
-+		write_note_data(&d, new_note);
-+		if (add_note(t, object, new_note, combine_notes_overwrite))
-+			die("BUG: combine_notes_overwrite failed");
-+		commit_notes(t, "Notes added by 'git notes add'");
-+	} else {
-+		fprintf(stderr, _("Removing note for object %s\n"),
-+			sha1_to_hex(object));
- 		remove_note(t, object);
--	else if (add_note(t, object, new_note, combine_notes_overwrite))
--		die("BUG: combine_notes_overwrite failed");
-+		commit_notes(t, "Notes removed by 'git notes add'");
-+	}
+ 	prepare_note_data(object, &d, note);
+-	if (d.buf.len) {
++	if (d.buf.len || allow_empty) {
+ 		write_note_data(&d, new_note);
+ 		if (add_note(t, object, new_note, combine_notes_overwrite))
+ 			die("BUG: combine_notes_overwrite failed");
+@@ -540,6 +542,7 @@ out:
  
--	snprintf(logmsg, sizeof(logmsg), "Notes %s by 'git notes %s'",
--		 is_null_sha1(new_note) ? "removed" : "added", "add");
--	commit_notes(t, logmsg);
-+	free_note_data(&d);
- 	free_notes(t);
- 	return 0;
- }
-@@ -602,17 +586,38 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	t = init_notes_check(argv[0]);
- 	note = get_note(t, object);
+ static int append_edit(int argc, const char **argv, const char *prefix)
+ {
++	int allow_empty = 0;
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+ 	unsigned char object[20], new_note[20];
+@@ -560,6 +563,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 'C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg},
++		OPT_BOOL(0, "allow-empty", &allow_empty,
++			N_("allow storing empty note")),
+ 		OPT_END()
+ 	};
+ 	int edit = !strcmp(argv[0], "edit");
+@@ -602,7 +607,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		free(prev_buf);
+ 	}
  
--	create_note(object, &d, !edit, note, new_note);
--	free_note_data(&d);
-+	prepare_note_data(object, &d, edit ? note : NULL);
+-	if (d.buf.len) {
++	if (d.buf.len || allow_empty) {
+ 		write_note_data(&d, new_note);
+ 		if (add_note(t, object, new_note, combine_notes_overwrite))
+ 			die("BUG: combine_notes_overwrite failed");
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index f74b3fa..70ec5c3 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1242,7 +1242,8 @@ test_expect_success 'git notes get-ref (--ref)' '
+ test_expect_success 'setup testing of empty notes' '
+ 	test_unconfig core.notesRef &&
+ 	test_commit 16th &&
+-	empty_blob=$(git hash-object -w /dev/null)
++	empty_blob=$(git hash-object -w /dev/null) &&
++	echo "$empty_blob" >expect_empty
+ '
  
--	if (is_null_sha1(new_note))
--		remove_note(t, object);
--	else if (add_note(t, object, new_note, combine_notes_overwrite))
--		die("BUG: combine_notes_overwrite failed");
-+	if (note && !edit) {
-+		/* Append buf to previous note contents */
-+		unsigned long size;
-+		enum object_type type;
-+		char *prev_buf = read_sha1_file(note, &type, &size);
+ while read cmd
+@@ -1252,6 +1253,13 @@ do
+ 		MSG= git notes $cmd &&
+ 		test_must_fail git notes list HEAD
+ 	"
 +
-+		strbuf_grow(&d.buf, size + 1);
-+		if (d.buf.len && prev_buf && size)
-+			strbuf_insert(&d.buf, 0, "\n", 1);
-+		if (prev_buf && size)
-+			strbuf_insert(&d.buf, 0, prev_buf, size);
-+		free(prev_buf);
-+	}
- 
--	snprintf(logmsg, sizeof(logmsg), "Notes %s by 'git notes %s'",
--		 is_null_sha1(new_note) ? "removed" : "added", argv[0]);
-+	if (d.buf.len) {
-+		write_note_data(&d, new_note);
-+		if (add_note(t, object, new_note, combine_notes_overwrite))
-+			die("BUG: combine_notes_overwrite failed");
-+		snprintf(logmsg, sizeof(logmsg), "Notes added by 'git notes %s'",
-+			argv[0]);
-+	} else {
-+		fprintf(stderr, _("Removing note for object %s\n"),
-+			sha1_to_hex(object));
-+		remove_note(t, object);
-+		snprintf(logmsg, sizeof(logmsg), "Notes removed by 'git notes %s'",
-+			argv[0]);
-+	}
- 	commit_notes(t, logmsg);
-+
-+	free_note_data(&d);
- 	free_notes(t);
- 	return 0;
- }
++	test_expect_success "'git notes $cmd --allow-empty' stores empty note" "
++		test_might_fail git notes remove HEAD &&
++		MSG= git notes $cmd --allow-empty &&
++		git notes list HEAD >actual &&
++		test_cmp expect_empty actual
++	"
+ done <<\EOF
+ add
+ add -F /dev/null
 -- 
 2.0.0.rc4.501.gdaf83ca
