@@ -1,7 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 4/9] builtin/notes: Refactor note file path into struct note_data
-Date: Wed, 12 Nov 2014 01:40:11 +0100
-Message-ID: <1415752816-22782-5-git-send-email-johan@herland.net>
+Subject: [PATCHv5 3/9] builtin/notes: Improve naming
+Date: Wed, 12 Nov 2014 01:40:10 +0100
+Message-ID: <1415752816-22782-4-git-send-email-johan@herland.net>
 References: <1415752816-22782-1-git-send-email-johan@herland.net>
 Cc: git@vger.kernel.org, mackyle@gmail.com, jhf@trifork.com,
 	sunshine@sunshineco.com, peff@peff.net, blume.mike@gmail.com,
@@ -13,34 +13,34 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoLzS-0005vi-9O
+	id 1XoLzR-0005vi-Hs
 	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 01:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707AbaKLAkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Nov 2014 19:40:39 -0500
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:45846 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752612AbaKLAkh (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752704AbaKLAkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 11 Nov 2014 19:40:37 -0500
-Received: by mail-lb0-f171.google.com with SMTP id b6so8512861lbj.16
-        for <git@vger.kernel.org>; Tue, 11 Nov 2014 16:40:35 -0800 (PST)
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:57314 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752684AbaKLAkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Nov 2014 19:40:35 -0500
+Received: by mail-lb0-f178.google.com with SMTP id f15so9532662lbj.9
+        for <git@vger.kernel.org>; Tue, 11 Nov 2014 16:40:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vLt5J20FxAc0aKj1map1bCWRd0bZJW35i3l+pAunHDE=;
-        b=mIaveaalnrgY8FEGjvTEkfgTJtAthVtvm9DdUoQd+6r4Vgep4zc1gxobaDIl639Zph
-         GyMDLx+8QIXtvgZfBxTEXHzNLEQyzxeIXLLlGpJxm/2K9cH7MjYtYbP+UGromuFCXTBq
-         beocWdW/JEbYZiPHrBBuqh2YoIHWVfC5GiQ9gRCtmm1D40J3tlRxZh4PYa3s1hS3x+3m
-         lpUZqgaWxO2n6LQTAfNcGquY5cLUVUExXfh7mEjLBYKot9um+z2YycxkwqAa6YkPweIT
-         i7hlmOPhhiQpYkvM8x2Lqv+ibDv96VRs7EwpeIZDFEnx+ZlXOayFI4IZbTL3P29bBVdD
-         zQgg==
-X-Received: by 10.112.148.130 with SMTP id ts2mr39403401lbb.43.1415752835788;
-        Tue, 11 Nov 2014 16:40:35 -0800 (PST)
+        bh=a+zQL8XIpwzkIk4SX74y2r9YHUudTt9CI8Ing1rTd5o=;
+        b=IPXMK7NhYAJ5sKosfut9cvSV0rP2dLTdi3puqmcFKkM2Wkj6ojOeZEKFelgVscqbch
+         XUNGwgc0NeCB3ZKsiNaPF87mqdwG7e7Rcu/SHqZWOLqXZnZSzyPQ9VK49WBg8N6c+Yhk
+         kciAcqIrlnW9oCLdOJ7Y6iu47OrvTPAjF+Zc7NUWR7nzVyKSEYUKAry6JGiWj+c017k/
+         Bi9L3MkivH04IfJi2wkGO5qA5S6jZ2VKdlstlMa1TaFxtRbNqRgxFZ7PqO+HFEqwYfiJ
+         VQogpp1y+b+0Wage+u0LqaJvx9YlCAZBKO8CM0RfsiAI6UH05PdrDdirDa5feO1xC1Nh
+         vTJQ==
+X-Received: by 10.153.4.12 with SMTP id ca12mr19564272lad.4.1415752833613;
+        Tue, 11 Nov 2014 16:40:33 -0800 (PST)
 Received: from alpha.herland (245.37-191-128.fiber.lynet.no. [37.191.128.245])
-        by mx.google.com with ESMTPSA id 8sm6341174lav.15.2014.11.11.16.40.33
+        by mx.google.com with ESMTPSA id 8sm6341174lav.15.2014.11.11.16.40.31
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Nov 2014 16:40:34 -0800 (PST)
+        Tue, 11 Nov 2014 16:40:32 -0800 (PST)
 X-Mailer: git-send-email 2.0.0.rc4.501.gdaf83ca
 In-Reply-To: <1415752816-22782-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
@@ -48,147 +48,302 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the 'path' variable from create_note() and into the
-note_data struct. Unify cleanup of note_data objects with
-a free_note_data() function.
+In preparation for some needed refactoring, rename struct msg_arg to
+struct note_data, and rename its instances from "msg" to "d" (also
+removing some unnecessary parentheses). The 'msg_arg' name was
+inherited from tag.c, but is not really a good name for the contents
+of a note.
 
-This might not make too much sense on its own, but it makes the
-future refactoring of create_note() considerably cleaner.
+Also rename write_note_data() to copy_obj_to_fd(), which more aptly
+describes what it actually does: Copying the contents of a git object
+(given by its SHA1) into a given file descriptor.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- builtin/notes.c | 38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ builtin/notes.c | 109 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 54 insertions(+), 55 deletions(-)
 
 diff --git a/builtin/notes.c b/builtin/notes.c
-index 3cf22cb..1017472 100644
+index 9ee6816..3cf22cb 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -95,9 +95,19 @@ static const char note_template[] =
- struct note_data {
+@@ -92,7 +92,7 @@ static const char * const git_notes_get_ref_usage[] = {
+ static const char note_template[] =
+ 	"\nWrite/edit the notes for the following object:\n";
+ 
+-struct msg_arg {
++struct note_data {
  	int given;
  	int use_editor;
-+	char *edit_path;
  	struct strbuf buf;
- };
+@@ -106,7 +106,7 @@ static int list_each_note(const unsigned char *object_sha1,
+ 	return 0;
+ }
  
-+static void free_note_data(struct note_data *d)
-+{
-+	if (d->edit_path) {
-+		unlink_or_warn(d->edit_path);
-+		free(d->edit_path);
-+	}
-+	strbuf_release(&d->buf);
-+}
-+
- static int list_each_note(const unsigned char *object_sha1,
- 		const unsigned char *note_sha1, char *note_path,
- 		void *cb_data)
-@@ -153,17 +163,15 @@ static void create_note(const unsigned char *object, struct note_data *d,
+-static void write_note_data(int fd, const unsigned char *sha1)
++static void copy_obj_to_fd(int fd, const unsigned char *sha1)
+ {
+ 	unsigned long size;
+ 	enum object_type type;
+@@ -149,13 +149,13 @@ static void write_commented_object(int fd, const unsigned char *object)
+ 		    sha1_to_hex(object));
+ }
+ 
+-static void create_note(const unsigned char *object, struct msg_arg *msg,
++static void create_note(const unsigned char *object, struct note_data *d,
  			int append_only, const unsigned char *prev,
  			unsigned char *result)
  {
--	char *path = NULL;
--
- 	if (d->use_editor || !d->given) {
+ 	char *path = NULL;
+ 
+-	if (msg->use_editor || !msg->given) {
++	if (d->use_editor || !d->given) {
  		int fd;
  		struct strbuf buf = STRBUF_INIT;
  
- 		/* write the template message before editing: */
--		path = git_pathdup("NOTES_EDITMSG");
--		fd = open(path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-+		d->edit_path = git_pathdup("NOTES_EDITMSG");
-+		fd = open(d->edit_path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+@@ -165,10 +165,10 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
  		if (fd < 0)
--			die_errno(_("could not create file '%s'"), path);
-+			die_errno(_("could not create file '%s'"), d->edit_path);
+ 			die_errno(_("could not create file '%s'"), path);
  
- 		if (d->given)
- 			write_or_die(fd, d->buf.buf, d->buf.len);
-@@ -181,7 +189,7 @@ static void create_note(const unsigned char *object, struct note_data *d,
+-		if (msg->given)
+-			write_or_die(fd, msg->buf.buf, msg->buf.len);
++		if (d->given)
++			write_or_die(fd, d->buf.buf, d->buf.len);
+ 		else if (prev && !append_only)
+-			write_note_data(fd, prev);
++			copy_obj_to_fd(fd, prev);
+ 
+ 		strbuf_addch(&buf, '\n');
+ 		strbuf_add_commented_lines(&buf, note_template, strlen(note_template));
+@@ -179,13 +179,12 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
+ 
+ 		close(fd);
  		strbuf_release(&buf);
- 		strbuf_reset(&d->buf);
+-		strbuf_reset(&(msg->buf));
++		strbuf_reset(&d->buf);
  
--		if (launch_editor(path, &d->buf, NULL)) {
-+		if (launch_editor(d->edit_path, &d->buf, NULL)) {
- 			die(_("Please supply the note contents using either -m or -F option"));
+-		if (launch_editor(path, &(msg->buf), NULL)) {
+-			die(_("Please supply the note contents using either -m" \
+-			    " or -F option"));
++		if (launch_editor(path, &d->buf, NULL)) {
++			die(_("Please supply the note contents using either -m or -F option"));
  		}
- 		stripspace(&d->buf, 1);
-@@ -208,17 +216,12 @@ static void create_note(const unsigned char *object, struct note_data *d,
- 	} else {
- 		if (write_sha1_file(d->buf.buf, d->buf.len, blob_type, result)) {
- 			error(_("unable to write note object"));
--			if (path)
-+			if (d->edit_path)
- 				error(_("The note contents have been left in %s"),
--				      path);
-+				      d->edit_path);
- 			exit(128);
- 		}
+-		stripspace(&(msg->buf), 1);
++		stripspace(&d->buf, 1);
  	}
--
--	if (path) {
--		unlink_or_warn(path);
--		free(path);
--	}
- }
+ 
+ 	if (prev && append_only) {
+@@ -194,20 +193,20 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
+ 		enum object_type type;
+ 		char *prev_buf = read_sha1_file(prev, &type, &size);
+ 
+-		strbuf_grow(&(msg->buf), size + 1);
+-		if (msg->buf.len && prev_buf && size)
+-			strbuf_insert(&(msg->buf), 0, "\n", 1);
++		strbuf_grow(&d->buf, size + 1);
++		if (d->buf.len && prev_buf && size)
++			strbuf_insert(&d->buf, 0, "\n", 1);
+ 		if (prev_buf && size)
+-			strbuf_insert(&(msg->buf), 0, prev_buf, size);
++			strbuf_insert(&d->buf, 0, prev_buf, size);
+ 		free(prev_buf);
+ 	}
+ 
+-	if (!msg->buf.len) {
++	if (!d->buf.len) {
+ 		fprintf(stderr, _("Removing note for object %s\n"),
+ 			sha1_to_hex(object));
+ 		hashclr(result);
+ 	} else {
+-		if (write_sha1_file(msg->buf.buf, msg->buf.len, blob_type, result)) {
++		if (write_sha1_file(d->buf.buf, d->buf.len, blob_type, result)) {
+ 			error(_("unable to write note object"));
+ 			if (path)
+ 				error(_("The note contents have been left in %s"),
+@@ -224,45 +223,45 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
  
  static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
-@@ -402,7 +405,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ {
+-	struct msg_arg *msg = opt->value;
++	struct note_data *d = opt->value;
+ 
+-	strbuf_grow(&(msg->buf), strlen(arg) + 2);
+-	if (msg->buf.len)
+-		strbuf_addch(&(msg->buf), '\n');
+-	strbuf_addstr(&(msg->buf), arg);
+-	stripspace(&(msg->buf), 0);
++	strbuf_grow(&d->buf, strlen(arg) + 2);
++	if (d->buf.len)
++		strbuf_addch(&d->buf, '\n');
++	strbuf_addstr(&d->buf, arg);
++	stripspace(&d->buf, 0);
+ 
+-	msg->given = 1;
++	d->given = 1;
+ 	return 0;
+ }
+ 
+ static int parse_file_arg(const struct option *opt, const char *arg, int unset)
+ {
+-	struct msg_arg *msg = opt->value;
++	struct note_data *d = opt->value;
+ 
+-	if (msg->buf.len)
+-		strbuf_addch(&(msg->buf), '\n');
++	if (d->buf.len)
++		strbuf_addch(&d->buf, '\n');
+ 	if (!strcmp(arg, "-")) {
+-		if (strbuf_read(&(msg->buf), 0, 1024) < 0)
++		if (strbuf_read(&d->buf, 0, 1024) < 0)
+ 			die_errno(_("cannot read '%s'"), arg);
+-	} else if (strbuf_read_file(&(msg->buf), arg, 1024) < 0)
++	} else if (strbuf_read_file(&d->buf, arg, 1024) < 0)
+ 		die_errno(_("could not open or read '%s'"), arg);
+-	stripspace(&(msg->buf), 0);
++	stripspace(&d->buf, 0);
+ 
+-	msg->given = 1;
++	d->given = 1;
+ 	return 0;
+ }
+ 
+ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ {
+-	struct msg_arg *msg = opt->value;
++	struct note_data *d = opt->value;
+ 	char *buf;
+ 	unsigned char object[20];
+ 	enum object_type type;
+ 	unsigned long len;
+ 
+-	if (msg->buf.len)
+-		strbuf_addch(&(msg->buf), '\n');
++	if (d->buf.len)
++		strbuf_addch(&d->buf, '\n');
+ 
+ 	if (get_sha1(arg, object))
+ 		die(_("Failed to resolve '%s' as a valid ref."), arg);
+@@ -274,17 +273,17 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ 		free(buf);
+ 		die(_("Cannot read note data from non-blob object '%s'."), arg);
+ 	}
+-	strbuf_add(&(msg->buf), buf, len);
++	strbuf_add(&d->buf, buf, len);
+ 	free(buf);
+ 
+-	msg->given = 1;
++	d->given = 1;
+ 	return 0;
+ }
+ 
+ static int parse_reedit_arg(const struct option *opt, const char *arg, int unset)
+ {
+-	struct msg_arg *msg = opt->value;
+-	msg->use_editor = 1;
++	struct note_data *d = opt->value;
++	d->use_editor = 1;
+ 	return parse_reuse_arg(opt, arg, unset);
+ }
+ 
+@@ -403,18 +402,18 @@ static int add(int argc, const char **argv, const char *prefix)
  	unsigned char object[20], new_note[20];
  	char logmsg[100];
  	const unsigned char *note;
--	struct note_data d = { 0, 0, STRBUF_INIT };
-+	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+-	struct msg_arg msg = { 0, 0, STRBUF_INIT };
++	struct note_data d = { 0, 0, STRBUF_INIT };
  	struct option options[] = {
- 		{ OPTION_CALLBACK, 'm', "message", &d, N_("message"),
+-		{ OPTION_CALLBACK, 'm', "message", &msg, N_("message"),
++		{ OPTION_CALLBACK, 'm', "message", &d, N_("message"),
  			N_("note contents as a string"), PARSE_OPT_NONEG,
-@@ -447,6 +450,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 				 * therefore still in argv[0-1].
- 				 */
- 				argv[0] = "edit";
-+				free_note_data(&d);
- 				free_notes(t);
- 				return append_edit(argc, argv, prefix);
- 			}
-@@ -460,6 +464,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 			parse_msg_arg},
+-		{ OPTION_CALLBACK, 'F', "file", &msg, N_("file"),
++		{ OPTION_CALLBACK, 'F', "file", &d, N_("file"),
+ 			N_("note contents in a file"), PARSE_OPT_NONEG,
+ 			parse_file_arg},
+-		{ OPTION_CALLBACK, 'c', "reedit-message", &msg, N_("object"),
++		{ OPTION_CALLBACK, 'c', "reedit-message", &d, N_("object"),
+ 			N_("reuse and edit specified note object"), PARSE_OPT_NONEG,
+ 			parse_reedit_arg},
+-		{ OPTION_CALLBACK, 'C', "reuse-message", &msg, N_("object"),
++		{ OPTION_CALLBACK, 'C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg},
+ 		OPT__FORCE(&force, N_("replace existing notes")),
+@@ -439,7 +438,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 
+ 	if (note) {
+ 		if (!force) {
+-			if (!msg.given) {
++			if (!d.given) {
+ 				/*
+ 				 * Redirect to "edit" subcommand.
+ 				 *
+@@ -460,7 +459,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 			sha1_to_hex(object));
  	}
  
- 	create_note(object, &d, 0, note, new_note);
-+	free_note_data(&d);
+-	create_note(object, &msg, 0, note, new_note);
++	create_note(object, &d, 0, note, new_note);
  
  	if (is_null_sha1(new_note))
  		remove_note(t, object);
-@@ -471,7 +476,6 @@ static int add(int argc, const char **argv, const char *prefix)
+@@ -472,7 +471,7 @@ static int add(int argc, const char **argv, const char *prefix)
  	commit_notes(t, logmsg);
  out:
  	free_notes(t);
--	strbuf_release(&d.buf);
+-	strbuf_release(&(msg.buf));
++	strbuf_release(&d.buf);
  	return retval;
  }
  
-@@ -559,7 +563,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+@@ -560,18 +559,18 @@ static int append_edit(int argc, const char **argv, const char *prefix)
  	const unsigned char *note;
  	char logmsg[100];
  	const char * const *usage;
--	struct note_data d = { 0, 0, STRBUF_INIT };
-+	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+-	struct msg_arg msg = { 0, 0, STRBUF_INIT };
++	struct note_data d = { 0, 0, STRBUF_INIT };
  	struct option options[] = {
- 		{ OPTION_CALLBACK, 'm', "message", &d, N_("message"),
+-		{ OPTION_CALLBACK, 'm', "message", &msg, N_("message"),
++		{ OPTION_CALLBACK, 'm', "message", &d, N_("message"),
  			N_("note contents as a string"), PARSE_OPT_NONEG,
-@@ -600,6 +604,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 			parse_msg_arg},
+-		{ OPTION_CALLBACK, 'F', "file", &msg, N_("file"),
++		{ OPTION_CALLBACK, 'F', "file", &d, N_("file"),
+ 			N_("note contents in a file"), PARSE_OPT_NONEG,
+ 			parse_file_arg},
+-		{ OPTION_CALLBACK, 'c', "reedit-message", &msg, N_("object"),
++		{ OPTION_CALLBACK, 'c', "reedit-message", &d, N_("object"),
+ 			N_("reuse and edit specified note object"), PARSE_OPT_NONEG,
+ 			parse_reedit_arg},
+-		{ OPTION_CALLBACK, 'C', "reuse-message", &msg, N_("object"),
++		{ OPTION_CALLBACK, 'C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg},
+ 		OPT_END()
+@@ -587,7 +586,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(usage, options);
+ 	}
+ 
+-	if (msg.given && edit)
++	if (d.given && edit)
+ 		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
+ 			"for the 'edit' subcommand.\n"
+ 			"Please use 'git notes add -f -m/-F/-c/-C' instead.\n"));
+@@ -600,7 +599,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	t = init_notes_check(argv[0]);
  	note = get_note(t, object);
  
- 	create_note(object, &d, !edit, note, new_note);
-+	free_note_data(&d);
+-	create_note(object, &msg, !edit, note, new_note);
++	create_note(object, &d, !edit, note, new_note);
  
  	if (is_null_sha1(new_note))
  		remove_note(t, object);
-@@ -610,7 +615,6 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+@@ -611,7 +610,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
  		 is_null_sha1(new_note) ? "removed" : "added", argv[0]);
  	commit_notes(t, logmsg);
  	free_notes(t);
--	strbuf_release(&d.buf);
+-	strbuf_release(&(msg.buf));
++	strbuf_release(&d.buf);
  	return 0;
  }
  
