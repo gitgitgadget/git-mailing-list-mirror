@@ -1,119 +1,87 @@
-From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
-Subject: Re: [PATCH] gittutorial.txt: remove reference to ancient Git version
-Date: Wed, 12 Nov 2014 10:20:42 +0100
-Message-ID: <5463266A.1060706@atlas-elektronik.com>
-References: <1325552150.191076.1415782620274.JavaMail.ngmail@webmail22.arcor-online.net> <54632468.8090105@atlas-elektronik.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/2] Clean stale environment pointer in
+ finish_command()
+Date: Wed, 12 Nov 2014 11:45:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1411121142480.13845@s15462909.onlinehome-server.info>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de> <cover.1415630072.git.johannes.schindelin@gmx.de> <df1b16208e443416f7185c8c8c110e637ea97ac4.1415630072.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.1411101539091.13845@s15462909.onlinehome-server.info>
+ <20141111031636.GE21328@peff.net> <xmqqr3x97mv4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Ackermann <th.acker@arcor.de>,
-	"gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 10:21:02 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 11:45:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoU6n-0001m6-HP
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 10:21:01 +0100
+	id 1XoVQa-0001Qa-Lw
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 11:45:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbaKLJU4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Nov 2014 04:20:56 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:27259 "EHLO mail96.atlas.de"
+	id S1752357AbaKLKp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 05:45:26 -0500
+Received: from mout.gmx.net ([212.227.17.20]:62606 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751734AbaKLJUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 04:20:54 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id B7D8C10166;
-	Wed, 12 Nov 2014 10:20:53 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id de8hjNHoIr_Z; Wed, 12 Nov 2014 10:20:43 +0100 (CET)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Wed, 12 Nov 2014 10:20:43 +0100 (CET)
-Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 1A47C2716C;
-	Wed, 12 Nov 2014 10:20:43 +0100 (CET)
-Received: from [10.200.54.122] (10.200.54.122) by MSSRVS1.atlas.de
- (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.327.1; Wed, 12 Nov
- 2014 10:20:43 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.1.1
-In-Reply-To: <54632468.8090105@atlas-elektronik.com>
-OpenPGP: id=922127AF
+	id S1752261AbaKLKpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 05:45:25 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0LzbXq-1Y1JA23bta-014ogo;
+ Wed, 12 Nov 2014 11:45:20 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqr3x97mv4.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:mYVQJ8SC4WCSBIfy/ZpIKzZjWfW36/Fvuw4LOLvLtptqttIk5TV
+ lAQeTqrfqtRkkGM+GasNt9OLKBSOxXcuoPq7sCjBq3ILCF+4CgGQ2jD5yfzeNYzFGnXJ3L7
+ pZiz3XhbIWYQ3JLOk9QsNizo8zoZksdzDpfLgYwkG8RKMr0X883tMAzt51RC0/aEWApKFTL
+ bjG5vOeiJ3OKsW/1QzJJA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Am 12.11.2014 um 10:12 schrieb Stefan N=C3=A4we:
-> Am 12.11.2014 um 09:57 schrieb Thomas Ackermann:
->=20
->> I also re-read the whole document and think it's still up-to-date
->> with Git 2.0. But I might have missed some subtler points.
->=20
-> Hhmm..
-> At least this is not 100% up to date:
->=20
-> diff --git a/Documentation/gittutorial.txt b/Documentation/gittutoria=
-l.txt
-> [...]
+On Tue, 11 Nov 2014, Junio C Hamano wrote:
 
-And while at it:
+> Jeff King <peff@peff.net> writes:
+> 
+> > I don't think this is "unfortunately"; freeing the memory was the entire
+> > purpose in adding env_array. If you want to easily reuse the same
+> > environment in multiple commands, it is still perfectly fine to use
+> > "env" directly, like:
+> >
+> >   struct argv_array env = ARGV_ARRAY_INIT;
+> >   struct child_process one = CHILD_PROCESS_INIT;
+> >   struct child_process two = CHILD_PROCESS_INIT;
+> >
+> >   ... setup env with argv_array_push ...
+> >
+> >   one.argv = foo;
+> >   one.env = env.argv;
+> >   run_command(&one);
+> >
+> >   two.argv = bar;
+> >   two.env = env.argv;
+> >   run_command(&two);
+> >
+> >   argv_array_clear(&env);
+> >
+> > You do not get the benefit of the auto-cleanup (you have to call
+> > argv_array_clear yourself), but that is less bad than repeating the
+> > setup of "env" twice.
+> 
+> Yeah, the above looks like the best option, better than using a
+> single child_process and having to re-initialize fds and envs.
 
-diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutoria=
-l-2.txt
-index 3109ea8..1901af7 100644
-- --- a/Documentation/gittutorial-2.txt
-+++ b/Documentation/gittutorial-2.txt
-@@ -368,17 +368,18 @@ situation:
+Okay, I have to say that I was led to believe that reusing the
+child_process struct is okay because argv_array_clear() explicitly
+reinitializes the env_array field, something that is useless churn unless
+you plan to reuse the memory.
 
- ------------------------------------------------
- $ git status
-- -# On branch master
-- -# Changes to be committed:
-- -#   (use "git reset HEAD <file>..." to unstage)
-- -#
-- -#       new file: closing.txt
-- -#
-- -# Changes not staged for commit:
-- -#   (use "git add <file>..." to update what will be committed)
-- -#
-- -#       modified: file.txt
-- -#
-+On branch master
-+Changes to be committed:
-+  (use "git reset HEAD <file>..." to unstage)
-+
-+        new file:   closing.txt
-+
-+Changes not staged for commit:
-+  (use "git add <file>..." to update what will be committed)
-+  (use "git checkout -- <file>..." to discard changes in working direc=
-tory)
-+
-+        modified:   file.txt
-+
+However, my personal taste says that reusing the same memory is more
+elegant than to waste extra memory unnecessarily, so I will go with the
+child_process_init() solution.
 
-
-Stefan
-- --=20
-- ----------------------------------------------------------------
-/dev/random says: Make it idiot proof and someone will make a better id=
-iot.
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
-e696b2e636f6d'.decode('hex')"=20
-GPG Key fingerprint =3D 2DF5 E01B 09C3 7501 BCA9  9666 829B 49C5 9221 2=
-7AF
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlRjJmoACgkQgptJxZIhJ6+LBgCgmVgJCmJjC86NHopW1rQwk/eA
-r04AoIgMfKhB00H8KCHBMAsC5LjCFXY5
-=3DbNM+
------END PGP SIGNATURE-----
+Ciao,
+Dscho
