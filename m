@@ -1,72 +1,130 @@
-From: Scott Baker <bakers@canbytel.com>
-Subject: Re: diff-highlight highlight words?
-Date: Wed, 12 Nov 2014 09:59:35 -0800
-Message-ID: <5463A007.4090302@canbytel.com>
-References: <5462907B.1050207@canbytel.com> <20141112075609.GA21485@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email.perl: Fix handling of suppresscc option.
+Date: Wed, 12 Nov 2014 10:25:14 -0800
+Message-ID: <xmqqoasc46ph.fsf@gitster.dls.corp.google.com>
+References: <1415801891-28471-1-git-send-email-debian@jstimpfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 12 19:06:23 2014
+To: Jens Stimpfle <debian@jstimpfle.de>
+X-From: git-owner@vger.kernel.org Wed Nov 12 19:25:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XocJC-0003Gk-B8
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 19:06:22 +0100
+	id 1Xocbc-00060T-62
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 19:25:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753372AbaKLSGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 13:06:18 -0500
-Received: from magenta.web-ster.com ([216.105.64.36]:55963 "HELO
-	magenta.web-ster.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751685AbaKLSGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 13:06:17 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Nov 2014 13:06:17 EST
-Received: (qmail 14731 invoked from network); 12 Nov 2014 17:59:35 -0000
-Received: from bar-1.web-ster.com (HELO [10.1.1.1]) (bakers@web-ster.com@65.182.224.20)
-	by magenta.web-ster.com with (DHE-RSA-AES128-SHA encrypted) SMTP
-	(a96934d2-6a95-11e4-a8f9-5254004741a3); Wed, 12 Nov 2014 09:59:35 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <20141112075609.GA21485@peff.net>
-X-MagicMail-UUID: a96934d2-6a95-11e4-a8f9-5254004741a3
-X-MagicMail-Authenticated: bakers@web-ster.com
-X-MagicMail-SourceIP: 65.182.224.20
-X-MagicMail-EnvelopeFrom: <bakers@canbytel.com>
+	id S1753262AbaKLSZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 13:25:19 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64432 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753144AbaKLSZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 13:25:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 57ACA1CED6;
+	Wed, 12 Nov 2014 13:25:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yG3LCZSUA0sezM2YMvTyHhOv4I0=; b=H4lYA7
+	gEksLXmhkKQMuHSTeWWF6WF8J4Ym4c7sBtTyfy2jCXzN33AGn8a3KH9gQAxEOsH2
+	HlBkl+rlbciAOiIYYABWBqi39i48AVFfVbc905/ynag/llqYFF7R8ixvZukEThPX
+	+OKuTF+qsLI2WAe1M/YRZrmCPRX78mvu2afQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OqCptlyjKmp5XKcUsML6jd1ngnSW7v10
+	iKgZRo3+cZZcmc93V+PMmE36KaMzWMPiDFPC9fylFommSHJB2GbeNyHusSk4B+78
+	ypKImUuXuQ7+4tNwuoxBTLSisi6vsdzPsczuD16xREM6bIWQ4mP3RmVgryqyXyxK
+	5qSEHVaKQas=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D74C1CED5;
+	Wed, 12 Nov 2014 13:25:16 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BECFE1CED4;
+	Wed, 12 Nov 2014 13:25:15 -0500 (EST)
+In-Reply-To: <1415801891-28471-1-git-send-email-debian@jstimpfle.de> (Jens
+	Stimpfle's message of "Wed, 12 Nov 2014 14:18:11 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3F9F3CD2-6A99-11E4-8009-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/11/2014 11:56 PM, Jeff King wrote:
-> [+cc git@vger, since this may be of interest to others]
->
-> On Tue, Nov 11, 2014 at 02:40:59PM -0800, Scott Baker wrote:
->
-> > I'd like to recreate the github style diffs on the command line. It
-> > appears that your diff-highlight is very close. The current version only
-> > allows you to "invert the colors" which isn't ideal.
->
-> Yes, I never built any configurability into the script. However, you can
-> tweak the definitions at the top to get different effects.
-> Traditionally, ANSI colors on the terminal only came in two flavors:
-> "normal" and "bright" (which is attached to the "bold" attribute").
-> Instead of reversing video, you can switch on brightness like this:
+Jens Stimpfle <debian@jstimpfle.de> writes:
 
-It's 2014, most terminals are at least 256 colors. I'm fine if the
-defaults are 16 colors (that's safest), but it would be really cool if
-we could have an option for:
+> Signed-off-by: Jens Stimpfle <debian@jstimpfle.de>
+> ---
 
-line add color
-line remove color
-word add color
-word remove color
+Thanks.
 
-I would then configure appropriate colors from the 256 color palette. I
-think the Github style diffs which include the lines/words that are
-changed are very readable and make dealing with diffs easier.
+Please do better than saying "Fix" to explain your changes in your
+log message.
 
--- 
-Scott Baker - Canby Telcom 
-Senior System Administrator - RHCE
+Also, on the Subject:, s/Fix/fix/; s/option./option/ to match other
+entries in "git shortlog" message.
+
+"What you think is broken" is clear (i.e. "supresscc option" is
+broken) with the subject line alone, but "How it is broken", "How it
+should behave instead", and "What are the differences between the
+broken and the correct behaviour" should be explained in the log
+message.
+
+In other words, most of what you wrote below should come before your
+S-o-b: line.
+
+> Notes:
+> ...
+
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 9949db0..452a783 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1377,11 +1377,8 @@ foreach my $t (@files) {
+>  				foreach my $addr (parse_address_line($1)) {
+>  					my $qaddr = unquote_rfc2047($addr);
+>  					my $saddr = sanitize_address($qaddr);
+> -					if ($saddr eq $sender) {
+> -						next if ($suppress_cc{'self'});
+> -					} else {
+> -						next if ($suppress_cc{'cc'});
+> -					}
+> +					next if $suppress_cc{'cc'};
+> +					next if $suppress_cc{'self'} and $saddr eq $sender;
+
+This smells more like a change in behaviour than bugfix from a
+cursory look, though.  It used to be that I could receive a copy by
+adding me to cc as long as I did not suppress 'self', even I
+squelched everybody else by suppressing 'cc'.  I do not use such a
+configuration myself but I wonder if people rely on this behaviour
+as a feature.
+
+> @@ -1425,12 +1422,9 @@ foreach my $t (@files) {
+>  			my ($what, $c) = ($1, $2);
+>  			chomp $c;
+>  			my $sc = sanitize_address($c);
+> -			if ($sc eq $sender) {
+> -				next if ($suppress_cc{'self'});
+> -			} else {
+> -				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+> -				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+> -			}
+> +			next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+> +			next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+> +			next if $suppress_cc{'self'} and $sc eq $sender;
+
+Likewise.
+
+I do like the updated logic flow in both hunks, though.
+
+"When I say addresses on Cc: does not matter, it doesn't.  No matter
+what the address in question is" (likewise for S-o-b:) is what the
+updated logic says.  It is easier to explain than the traditional
+"The way to squelch my address is by 'suppress self'; for all other
+addresses on Cc:/S-o-b:, there are separate suppression methods".
+
+But I have a slight suspicion that this special casing of 'self' was
+done on purpose, and people may be relying on it.
