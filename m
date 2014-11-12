@@ -1,108 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] Add a few more values for
- receive.denyCurrentBranch
-Date: Wed, 12 Nov 2014 12:13:21 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1411121209330.13845@s15462909.onlinehome-server.info>
-References: <cover.1415368490.git.johannes.schindelin@gmx.de> <f82aedcb632571d0b756d62c58479c0aab35b026.1415368490.git.johannes.schindelin@gmx.de> <xmqqvbmqg81g.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411101305510.13845@s15462909.onlinehome-server.info>
- <xmqqwq739hau.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 12:13:34 2014
+From: Jens Stimpfle <debian@jstimpfle.de>
+Subject: [PATCH] git-send-email.perl: Fix handling of suppresscc option.
+Date: Wed, 12 Nov 2014 14:18:11 +0000
+Message-ID: <1415801891-28471-1-git-send-email-debian@jstimpfle.de>
+Cc: Jens Stimpfle <debian@jstimpfle.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 12 14:51:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoVri-0001rg-4x
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 12:13:34 +0100
+	id 1XoYK5-0004F8-Jd
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 14:51:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751983AbaKLLNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 06:13:30 -0500
-Received: from mout.gmx.net ([212.227.17.21]:53154 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751762AbaKLLN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 06:13:29 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0Lxu7U-1Y2w5O1BS8-015Gqs;
- Wed, 12 Nov 2014 12:13:22 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqqwq739hau.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:7ElL99+reuaHKGbXqXpF7SLi89pTKLDVuqD6P4jizcZLtP9d1Xx
- y9JwaWRCKZ1psFh1mUALj3eNKRaBiT7b0tJUybPgwBvXr3f16zaPRUrmLGEy4tEiGx6HdN0
- NqI5V+fKyQ1EolpnMzcI+Cms17UjdwiI9E0JCmQMdK4SwPHB5d14RHq5Fm8o6PYi3ASysAy
- 9Tf0kDa6KacKgDoGE/RyA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752705AbaKLNu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 08:50:57 -0500
+Received: from jstimpfle.de ([85.214.245.181]:40205 "EHLO
+	h1929017.stratoserver.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752377AbaKLNu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 08:50:57 -0500
+X-Greylist: delayed 1465 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Nov 2014 08:50:56 EST
+Received: from jfs by h1929017.stratoserver.net with local (Exim 4.80)
+	(envelope-from <debian@jstimpfle.de>)
+	id 1XoXwL-00068u-TG; Wed, 12 Nov 2014 14:26:30 +0100
+X-Mailer: git-send-email 2.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Signed-off-by: Jens Stimpfle <debian@jstimpfle.de>
+---
 
-On Mon, 10 Nov 2014, Junio C Hamano wrote:
+Notes:
+    This patch makes sure that "sob", "cc" and "bodycc" values for
+    sendemail.suppresscc option are handled, even when the email-addresses in
+    question are equal to the sender and "self" in not configured in
+    sendemail.suppresscc.
+    
+    Sounds complicated, I know. But the current behaviour is really confusing: For
+    example, when sending, git-send-email logs
+    
+    (mbox) Adding cc: Jens Stimpfle <debian@jstimpfle.de> from line 'From: Jens Stimpfle <debian@jstimpfle.de>'
+    (body) Adding cc: Jens Stimpfle <debian@jstimpfle.de> from line 'Signed-off-by: Jens Stimpfle <debian@jstimpfle.de>'
+    
+    even though I have "sob" configured in sendemail.suppresscc.
+    
+    With this patch, the suppression handling is also made consistent with the
+    handling of the "author" value.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> I do not think of a good justification of detachInstead offhand, but
-> >> you must have thought things through a lot more than I did, so you
-> >> can come up with a work flow description that is more usable by mere
-> >> mortals to justify that mode.
-> >
-> > The main justification is that it is safer than updateInstead because
-> > it is guaranteed not to modify the working directory. I intended it
-> > for use by developers who are uncomfortable with updating the working
-> > directory through a push, and as uncomfortable with forgetting about
-> > temporary branches pushed, say, via "git push other-computer
-> > HEAD:refs/heads/tmp".
-> >
-> > However, I have to admit that I never used this myself after the first
-> > few weeks of playing with this patch series.
-> >
-> >> Without such a description to justify why detachInstead makes sense,
-> >> for example, I cannot even answer this simple question:
-> >> 
-> >>     Would it make sense to have a third mode, "check out if the
-> >>     working tree is clean, detach otherwise"?
-> >
-> > I imagine that some developer might find that useful. If you insist, I
-> > will implement it, even if I personally deem this mode way too
-> > complicated a concept for myself to be used safely.
-> 
-> You have been around long enough to know that adding a feature of an
-> unknown value is the last thing I would ask, don't you?
+ git-send-email.perl | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-Given that you actually did ask me to add such a feature when I simply
-wanted to get a bug fix for fast-export into Git to support Sverre's
-remote-hg (that he abandoned because of my failure to get the bug fix in),
-I have to respectfully declare that I do not know that, no, sorry!
-
-> I am essentially saying this:
-> 
->     I do not see why and the patch and its documentation do not
->     explain why it is useful, but Dscho wouldn't have added the
->     feature without a reason better than "just because we can do
->     so", so let's assume the mode is useful for some unknown reason.
->     Would people find "updateInstead if able otherwise
->     detachInstead" even more useful for that same unknown reason?
-
-Okay, here is my explanation: at the time I wanted to disprove that
-updateInstead could make sense, I wanted to offer a milder version of
-updating the current branch that left the working directory alone:
-detachInstead.
-
-Now, I never used it myself, but I use updateInstead extensively.
-
-So now I offer you two choices:
-
-- help me come up with a good scenario where it makes sense to
-  detachInstead, or
-
-- tell me to drop it.
-
-I have no preference.
-
-Ciao,
-Johannes
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 9949db0..452a783 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1377,11 +1377,8 @@ foreach my $t (@files) {
+ 				foreach my $addr (parse_address_line($1)) {
+ 					my $qaddr = unquote_rfc2047($addr);
+ 					my $saddr = sanitize_address($qaddr);
+-					if ($saddr eq $sender) {
+-						next if ($suppress_cc{'self'});
+-					} else {
+-						next if ($suppress_cc{'cc'});
+-					}
++					next if $suppress_cc{'cc'};
++					next if $suppress_cc{'self'} and $saddr eq $sender;
+ 					printf("(mbox) Adding cc: %s from line '%s'\n",
+ 						$addr, $_) unless $quiet;
+ 					push @cc, $addr;
+@@ -1425,12 +1422,9 @@ foreach my $t (@files) {
+ 			my ($what, $c) = ($1, $2);
+ 			chomp $c;
+ 			my $sc = sanitize_address($c);
+-			if ($sc eq $sender) {
+-				next if ($suppress_cc{'self'});
+-			} else {
+-				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+-				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+-			}
++			next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
++			next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
++			next if $suppress_cc{'self'} and $sc eq $sender;
+ 			push @cc, $c;
+ 			printf("(body) Adding cc: %s from line '%s'\n",
+ 				$c, $_) unless $quiet;
+-- 
+2.1.1
