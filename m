@@ -1,121 +1,95 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH] doc: add some crossrefs between manual pages
-Date: Wed, 12 Nov 2014 21:47:18 +0100
-Message-ID: <96693472-344E-4ED3-B027-49A8303AF8C0@quendi.de>
-References: <1415737027-44589-1-git-send-email-max@quendi.de> <xmqqppct5p1q.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, spearce@spearce.org, jrnieder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 12 21:47:21 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: smudge filters during checkout & crash consistency
+Date: Wed, 12 Nov 2014 12:51:16 -0800
+Message-ID: <xmqqfvdo3zy3.fsf@gitster.dls.corp.google.com>
+References: <CAMsgyKbox7e2pv4+_=jG6Ywh3Km2gPsw+Qf6qj-28GWrVg7RZQ@mail.gmail.com>
+	<xmqqk33046ha.fsf@gitster.dls.corp.google.com>
+	<CAMsgyKagoz7NU7cGuwvq61aiKc6Wq-z+w0_Fep7t9tYy90pB6w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Derek Moore <derek.p.moore@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 12 21:51:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xoeoy-0005Ev-JW
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 21:47:20 +0100
+	id 1Xoest-0007Ng-D5
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Nov 2014 21:51:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364AbaKLUrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 15:47:16 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:46661 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753248AbaKLUrQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 15:47:16 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1Xoeoq-0006tW-7q; Wed, 12 Nov 2014 21:47:12 +0100
-In-Reply-To: <xmqqppct5p1q.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1415825236;0369f0f6;
+	id S1753362AbaKLUvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 15:51:19 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54272 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753248AbaKLUvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 15:51:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D92AC1DF16;
+	Wed, 12 Nov 2014 15:51:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iCCu945SDewLYoJOj6ArnenXTxA=; b=n3nNhw
+	jw7JdiV9lRij/ZuGaO30SKquUKeqwMtcu5WLkxBDUYtzwQpz4XMkkqBVL5fND/Yj
+	Y4z0DUO+dZ70i3yuu4jVBY/NciC9PffWgg0r96wqlEaaVb4m+w/YcqCYYGAFgUta
+	x8zYJleiFiMUAuqlv8EPvqfIX8qTzbF7yEtao=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kdcoIIqPdnte5y3VrjBLppEMdEFnRUn0
+	ZKXWyNasVNU+XpuGMLA3RVrHaphQkdLTm1EXuAD8migucWZMyeDMj1PBx3HJwNRo
+	8zA173v77abBKvRUSXoTWRA6iTtI9KTH2bT9YvUHL5ta1x44AM8rt1gTFhapKW1w
+	QYbH3Vv7f7c=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D0C9D1DF15;
+	Wed, 12 Nov 2014 15:51:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A5901DF12;
+	Wed, 12 Nov 2014 15:51:17 -0500 (EST)
+In-Reply-To: <CAMsgyKagoz7NU7cGuwvq61aiKc6Wq-z+w0_Fep7t9tYy90pB6w@mail.gmail.com>
+	(Derek Moore's message of "Wed, 12 Nov 2014 14:30:12 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A5E61204-6AAD-11E4-9219-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derek Moore <derek.p.moore@gmail.com> writes:
 
-On 11.11.2014, at 23:51, Junio C Hamano <gitster@pobox.com> wrote:
+>> But if you then switch to B from that state, F will not even be
+>> modified (i.e. it will keep the contents you prepared for "branch
+>> A's instance of F").
+>
+> Or: the post-commit hook used in the workaround looks up the prior
+> branch via @{-1}, finds all files common between @ & @{-1} that don't
+> share a latest commit, deletes those files and replaces them singly
+> with the results of git-archive using the latest commits of those
+> files relative to @. ("All files common between @ & @{-1}" would need
+> to be either all non-locally-modified files or making use of git-stash
+> {save,pop} to preserve local modifications.) All this assumes having
+> reversible $Format$ strings, so the clean filter can restore the
+> proper $Format$ string.
+>
+> Might be worth doing...
 
-> Max Horn <max@quendi.de> writes:
-> 
->> I did this because I was browsing the remote helper docs online quite a bit,
->> and was wishing for some more direct links between the pages. While I can
->> manyally edit the URL, it seems logical to offer these links directly.
-> 
->> diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
->> ...
->> +linkgit:git-fast-import[1]
-> 
->> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
->> ...
->> +linkgit:git-fast-export[1]
-> 
-> Makes sense to have these pair refer to each other.
-> 
->> diff --git a/Documentation/git-remote-ext.txt b/Documentation/git-remote-ext.txt
->> ...
->> +linkgit:gitremote-helpers[1]
-> 
->> diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
->> +linkgit:gitremote-helpers[1]
-> 
-> Likewise.  git-remote-* are instances of gitremote-helpers.
-> 
->> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
->> index 64f7ad2..8edf72c 100644
->> --- a/Documentation/gitremote-helpers.txt
->> +++ b/Documentation/gitremote-helpers.txt
->> @@ -452,8 +452,14 @@ SEE ALSO
->> --------
->> linkgit:git-remote[1]
->> 
->> +linkgit:git-remote-ext[1]
->> +
->> +linkgit:git-remote-fd[1]
->> +
->> linkgit:git-remote-testgit[1]
-> 
-> Makes sense.
-> 
->> +linkgit:git-fast-import[1]
-> 
-> This looks somewhat out of place; fast-import is not the only or
-> even the primary way to do a remote-helper, is it?
+I still do not see what you are trying to record in the checked out
+source files with your smudge filter, so I won't comment if it might
+be "worth" doing.
 
-It depends on how you look at it, I'd say. If you write a remote-helper that
-uses the import/export feature, it is absolutely vital.  All remote helpers
-I ever worked on are of that kind, so to me it is the primary way ;-),
-although of course I realize there are others. So, how would you determine
-which of the various methods is the "primary" one?
+Your use of reflog suggests me that whatever you are recording
+depends on how you acquired your history in your specific repository
+you work in, and your result is not reproducible by other people who
+work with you by fetching from a repository that is different from
+the repository you work in.  E.g. perhaps you have a repository at
+GitHub and push into there, and others fetch from there into their
+repository.  What is in their reflog has no relation to what you
+have in your reflog.
 
-In fact, this single link is the one that motivated me to write the whole
-patch; all the others were afterthoughts ;-).
-
-To elaborate on that: In the past, I did some work on various import/export
-remote-helpers; and I recall wishing for this precise link several times.
-More recently, I worked on some tweaks and fixes for Felipe's git-remote-hg.
-Whenever doing that, the place in the docs I start to refresh my memory on
-how remote helpers work is gitremote-helpers. But then at some point I
-realize "ah wait, *that* particular bit is actually part of the "fastimport"
-protocol". So I need to look that up. And again and again thought "dang, why
-isn't there a hyperlink for that here". Fact is, I need both man pages to
-understand what's going on.
-
-Now, clearly, I can live without that link. But I feel that there is a clear
-connection.  And if you say it doesn't belong here because it is only
-relevant for one of multiple ways to do a remote-helper, then shouldn't one
-drop the links to git-remote-ext etc., too? After all, they are only
-examples for one of multiple ways, too...
-
-In other words, I find it arbitrary to exclude one link that is useful for
-some, but not all remote-helper authors, while adding some other links that
-are also useful for some, but not all remote-helper authors...
-
-That said, I certainly don't plan to hold that patch hostage to this one
-line. :-)
-
-
-Cheers,
-Max
+That's the nature of distrubuted life.  More generally, in a
+distributred world with merges, even between two people who agree
+that the tip of the 'master' branch of the project is at a certain
+commit, there is no single sensible answer to the question "which
+commit changed this path last?"  We wouldn't mind anything you may
+do to emulate RCS $Id$, but it would be futile.
