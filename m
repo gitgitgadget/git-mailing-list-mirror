@@ -1,95 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git archiving only branch work
-Date: Thu, 13 Nov 2014 13:48:12 -0800
-Message-ID: <xmqq61eizs9v.fsf@gitster.dls.corp.google.com>
-References: <5464a4e8.4a0.2bfa0e00.3067f800@geldenhuys.co.uk>
-	<20141113133615.GA28346@lanh> <20141113200640.GB3869@peff.net>
-	<xmqqvbmizu12.fsf@gitster.dls.corp.google.com>
-	<20141113213318.GA7563@peff.net>
-	<xmqqa93uzssv.fsf@gitster.dls.corp.google.com>
-	<20141113213937.GD7563@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Graeme Geldenhuys <mailinglists@geldenhuys.co.uk>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 13 22:49:11 2014
+From: Mike Blume <blume.mike@gmail.com>
+Subject: [PATCH] allow TTY tests to run under recent Mac OS
+Date: Thu, 13 Nov 2014 14:01:27 -0800
+Message-ID: <1415916087-18953-1-git-send-email-blume.mike@gmail.com>
+Cc: Mike Blume <blume.mike@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 13 23:01:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp2GL-0003EP-4x
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 22:49:09 +0100
+	id 1Xp2SN-0000lf-VX
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 23:01:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108AbaKMVtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 16:49:04 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62792 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753950AbaKMVtC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 16:49:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 538191DD84;
-	Thu, 13 Nov 2014 16:49:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nPikBoeEownf6qkBouXT5Bq+5bk=; b=WRe0Mv
-	kICIFmFdL80PTVgHGjIC7TWBV8LF3OyGG2IXSkA/Wk8E0wUkGud9M35WsNT00buj
-	L5MpXRPXFnQL3eLyeXJLZhEyNqP5yKzrcuphLs069KLiZx3GW9Z5gLbi+Qsqo8Rw
-	ZonevaM/EwpEMgK+myFLGVhkpkpuKDa/azEVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TQPrOi91nfxO7GvuorUh2itaDi3RhvDJ
-	i5V0q7Xtp4RjyCtfshjfpUdvVx/l3KMbVk+qtYI8xRzj2iJtw6DtLi4MzSqoTewn
-	GBa2wTKcT8LBe9CwvFUmnZwXjTXcIKKsofhNdUpll0o/k9JwUH20mhSIBzJMzesb
-	qKlDvdqBJB0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A7721DD83;
-	Thu, 13 Nov 2014 16:49:01 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1BC4A1DD39;
-	Thu, 13 Nov 2014 16:48:13 -0500 (EST)
-In-Reply-To: <20141113213937.GD7563@peff.net> (Jeff King's message of "Thu, 13
-	Nov 2014 16:39:38 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C455255A-6B7E-11E4-A8BE-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S934096AbaKMWBc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 17:01:32 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:35976 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933512AbaKMWBb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 17:01:31 -0500
+Received: by mail-pa0-f49.google.com with SMTP id lj1so16017734pab.22
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 14:01:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=3JwA1y3XS2T9sDEzyIBhkCISpx9htJIKuW2iXbesSJ0=;
+        b=j7KnKbFbTvR63AP4oRJH8iEIEW4kZ1Se2v+qurt+qGYLmK0lPqzP9alH/qRG3Xbjo9
+         nDI71A6FIW/BTS4VD1cL0salQXVprJaqZBDn1K6MyoOqmo/GViH9Bi3HN2mQ6AGinW7R
+         AmVedcXGEqMvBRnWNmz8Zo93jQuqPabOOOFhw3XsNhurTloGAp2kHDUWtFu6+EdFxbWH
+         X/Ed6qcdJUMiMmPHDtSz4LuYV0/SiRscCpfbqpeWcNjk9fvJqXyYGya65mgdzRZoHjPc
+         j8Gl4a8CgGgMfTETy6dvGdezD3toilBFfK4ZWryvM++HCz+F3/HmBiyIkPmXWwQzFFHC
+         mong==
+X-Received: by 10.66.145.42 with SMTP id sr10mr5510581pab.73.1415916090848;
+        Thu, 13 Nov 2014 14:01:30 -0800 (PST)
+Received: from tcc-michael-4.local.com ([50.59.189.124])
+        by mx.google.com with ESMTPSA id ml5sm25843405pab.32.2014.11.13.14.01.29
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 13 Nov 2014 14:01:30 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.rc1.197.g60bf093
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+listed bug doesn't reproduce on Mac OS Yosemite. For now, just enable
+TTY on Yosemite and higher
 
-> I agree they are technically orthogonal, but I cannot think of a case
-> where I have ever generated actual _pathspecs_, which might have
-> wildcards, and needed to use "-z". The point of using "-z" is that you
-> do not know what crap you are feeding.
+Signed-off-by: Mike Blume <blume.mike@gmail.com>
+---
+ t/lib-terminal.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-You do not have to generate, i.e. you should be allowed to do this:
-
-    $ git cmd --stdin -z <list-of-patterns
-
-And this is not about "flexibility".  Unless your plan is to forbid
-a corner case you do not anticipate and always disable pathspec
-globbing, you would need to say something like:
-
-	--literal-pathspecs::
-
-        	All Git command lines take dashed options first and
-		then revs and then "pathspecs".  They are usually
-		used to select the paths using glob(1)-like
-		matching, but with this option they must match the
-		paths byte-for-byte.
-
-                Except when "--stdin -z" is used, in which case you
-                need to give "--no-literal-pathspecs" if you want to
-                feed patterns.
-
-Which is awkward.  And "--stdin -z" is most likely used in scripts;
-we are not forcing people to keep typing --literal-pathspecs by
-leaving them orthogonal *and* people do not have to remember one
-more exception (the default of --literal-pathspecs is flipped only
-when --stdin -z is in use) to the rule.
+diff --git a/t/lib-terminal.sh b/t/lib-terminal.sh
+index 5184549..1311ce0 100644
+--- a/t/lib-terminal.sh
++++ b/t/lib-terminal.sh
+@@ -29,7 +29,10 @@ test_lazy_prereq TTY '
+ 	# After 2000 iterations or so it hangs.
+ 	# https://rt.cpan.org/Ticket/Display.html?id=65692
+ 	#
+-	test "$(uname -s)" != Darwin &&
++	# Under Mac OS X 10.10.1 and Perl 5.18.2, this problem
++	# appears to be gone.
++	#
++	[[ test "$(uname -s)" != Darwin || test "$(uname -r | cut -d. -f1") -ge 14 ]] &&
+ 
+ 	perl "$TEST_DIRECTORY"/test-terminal.perl \
+ 		sh -c "test -t 1 && test -t 2"
+-- 
+2.2.0.rc1.197.g60bf093
