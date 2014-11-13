@@ -1,63 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug: git log showing nothing when using --since and --until
- flags with specific dates
-Date: Thu, 13 Nov 2014 04:36:06 -0500
-Message-ID: <20141113093606.GC8329@peff.net>
-References: <CAPLyDLo+-SebLvHxVKT7RAiER2c8HdeZQUg7_DGrpER1h-BPQA@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Let deny.currentBranch=updateInstead ignore
+ submodules
+Date: Thu, 13 Nov 2014 11:29:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1411131123330.13845@s15462909.onlinehome-server.info>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de> <84dba8872922da96e99953eea0ccff5f5af9dd4a.1415368490.git.johannes.schindelin@gmx.de> <xmqqh9yag6mt.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411101400050.13845@s15462909.onlinehome-server.info>
+ <xmqq1tpbawqe.fsf@gitster.dls.corp.google.com> <xmqq389qam25.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411121208250.13845@s15462909.onlinehome-server.info> <xmqqzjbw47vr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Colin Smith <colin.webdev@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 10:36:20 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 11:29:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xoqp7-0000LP-A6
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 10:36:17 +0100
+	id 1XoreN-0004Hc-Qq
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 11:29:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932181AbaKMJgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 04:36:10 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39797 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932127AbaKMJgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 04:36:09 -0500
-Received: (qmail 19082 invoked by uid 102); 13 Nov 2014 09:36:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 03:36:08 -0600
-Received: (qmail 22159 invoked by uid 107); 13 Nov 2014 09:36:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 04:36:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 04:36:06 -0500
-Content-Disposition: inline
-In-Reply-To: <CAPLyDLo+-SebLvHxVKT7RAiER2c8HdeZQUg7_DGrpER1h-BPQA@mail.gmail.com>
+	id S932374AbaKMK3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 05:29:12 -0500
+Received: from mout.gmx.net ([212.227.15.18]:56428 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932254AbaKMK3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 05:29:11 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0M3RVA-1Y6OSu2436-00qzR7;
+ Thu, 13 Nov 2014 11:29:04 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqzjbw47vr.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:UNO6rKYqYzfYPx752ujXCWX7Sjo0wb8bA4H7NTZe59+UkdjNIXj
+ pWcAz4X+ShicIFdr/CUfv3fod+l0tKU3kDN9NXPutBlvyCJR7w8VIUlM8YwgWKcyuuODqWr
+ zV0VC62dEqyDSQZB8CEXPiis6xJU28cLqd/EzMjRjxsaQdVGDaxiziMKgJiIiScGH9zpgFI
+ vbcvBEy+Ehtcen4zA6UNA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 11:27:06AM +1100, Colin Smith wrote:
+Hi Junio,
 
-> Apologies if this has already been raised or PEBCAK, but I've noticed
-> a bug where git log with certain date ranges breaks things. It appears
-> to be any --since date with a --until date in the future between
-> 2014-12-01 and 2014-12-09. Dates from 2014-12-10 appear to work, and
-> so does the date 2015-12-01.
+On Wed, 12 Nov 2014, Junio C Hamano wrote:
 
-Ugh. Approxidate strikes again:
+> Instead of running "update-index --refresh; read-tree -m -u", using
+> "reset --keep" may be a better implementation of what you are trying to
+> do here.
 
-  for i in 2014-11-01 2013-12-01 2014-12-01; do
-    ./test-date approxidate $i
-  done
+I do not think that `reset --keep` is what I want. I really want to update
+only if the working directory is clean. So I guess I will have to bite the
+bullet and test the output of `update-index --refresh`, `diff-index
+--quiet --cached HEAD --`.
 
-produces:
+In my case, the lacking test whether there are staged changes did not
+matter, just because I pretty much never leave staged changes around.
 
-  2014-11-01 -> 2014-11-01 09:35:19 +0000
-  2013-12-01 -> 2013-12-01 09:35:19 +0000
-  2014-12-01 -> 2014-01-12 09:35:19 +0000
+What did matter, however, was to make sure that I did not update the
+working directory carelessly. In one case, that `update-index --refresh`
+test really helped me out because I was about to push  into a working
+directory with uncommitted changes inside some web space. That push would
+have broken the web application because of the local changes, so I was
+really, really happy that I decided to be quite strict in the
+implementation of `updateInstead`.
 
-The first two are right, but the fourth one is not.  It's probably
-something simple and stupid.
+Due to that experience, the documentation also states pretty clearly that
+`updateInstead` succeeds only in updating the current branch if the
+working directory is clean.
 
--Peff
+Ciao,
+Johannes
