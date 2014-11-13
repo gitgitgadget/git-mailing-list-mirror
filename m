@@ -1,121 +1,70 @@
-From: <stefan.naewe@atlas-elektronik.com>
-Subject: [PATCH] gittutorial: fix output of 'git status'
-Date: Thu, 13 Nov 2014 10:40:07 +0000
-Message-ID: <1415875207-5992-1-git-send-email-stefan.naewe@atlas-elektronik.com>
-References: <1638160691.207203.1415866403277.JavaMail.ngmail@webmail23.arcor-online.net>
+From: Alex Kuleshov <kuleshovmail@gmail.com>
+Subject: t9902-completion.sh failed
+Date: Thu, 13 Nov 2014 16:59:12 +0600
+Message-ID: <87mw7v9xhl.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: <th.acker@arcor.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 13 11:40:38 2014
+To: "git\@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 13 12:00:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XorpN-00028J-OY
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 11:40:38 +0100
+	id 1Xos8R-0004PT-SR
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 12:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932364AbaKMKke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 05:40:34 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:16193 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932229AbaKMKkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 05:40:33 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id D75C34A009;
-	Thu, 13 Nov 2014 11:40:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VbqVNLg3Mb7g; Thu, 13 Nov 2014 11:40:21 +0100 (CET)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Thu, 13 Nov 2014 11:40:21 +0100 (CET)
-Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 27EE02716A;
-	Thu, 13 Nov 2014 11:40:20 +0100 (CET)
-Received: from localhost (10.200.54.122) by MSSRVS1.atlas.de (10.200.101.71)
- with Microsoft SMTP Server (TLS) id 8.3.327.1; Thu, 13 Nov 2014 11:40:20
- +0100
-X-Mailer: git-send-email 1.9.2.msysgit.0.2270.g8768113
-In-Reply-To: <1638160691.207203.1415866403277.JavaMail.ngmail@webmail23.arcor-online.net>
+	id S932627AbaKMLAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 06:00:12 -0500
+Received: from mail-la0-f42.google.com ([209.85.215.42]:61588 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932419AbaKMLAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 06:00:11 -0500
+Received: by mail-la0-f42.google.com with SMTP id gq15so13174388lab.1
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 03:00:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:mime-version:content-type;
+        bh=Zjm48+/C7Q6hsUgJdhGSMzM/sZLjJtF7m6rxjZSHYh8=;
+        b=Gx3kOb2dwRStQVNh2iXxWJgJ1pJuQ/o5U/PPk6G4G4utigRmBWhMLmNz+o/EBZQ/Eh
+         E0kgb3+qeF6q03cwF92KNqJcVf/Sbe9va+XXxZYuniZD+FgZ9nWTJrUr8YQsNKYV55aW
+         XcrGO79Fm6h6H1VKiQrxmyBBdI7xQdfapspra6RSXkm5QmN7DTkBqgDKAMud7irYBUqC
+         ZFrlP9lhhhp16ludPwSD54SmaYTMn81duMOqSbPGixhQBhh1JHsNEzLW3URHXWdikNaA
+         3BMzZKZc/IHXQlh5Fb60DGzNUkMb2kqLgkv7g9RiajUtFbSOdcHxSKYLbEKGsaHVyGGf
+         1n/A==
+X-Received: by 10.112.42.114 with SMTP id n18mr1749028lbl.44.1415876409110;
+        Thu, 13 Nov 2014 03:00:09 -0800 (PST)
+Received: from alex-desktop ([92.46.69.219])
+        by mx.google.com with ESMTPSA id o10sm7375830lal.37.2014.11.13.03.00.07
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 13 Nov 2014 03:00:08 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stefan Naewe <stefan.naewe@gmail.com>
 
-'git status' doesn't output leading '#'s these days.
+Hello all,
 
-Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
----
- Documentation/gittutorial-2.txt | 23 ++++++++++++-----------
- Documentation/gittutorial.txt   | 17 +++++++++--------
- 2 files changed, 21 insertions(+), 19 deletions(-)
+i just got git from master (f6f61cbbad0611e03b712cc354f1665b5d7b087e),
+built and installed it successfully, now i'm running make test and got
+following error:
 
-diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
-index 3109ea8..1901af7 100644
---- a/Documentation/gittutorial-2.txt
-+++ b/Documentation/gittutorial-2.txt
-@@ -368,17 +368,18 @@ situation:
- 
- ------------------------------------------------
- $ git status
--# On branch master
--# Changes to be committed:
--#   (use "git reset HEAD <file>..." to unstage)
--#
--#       new file: closing.txt
--#
--# Changes not staged for commit:
--#   (use "git add <file>..." to update what will be committed)
--#
--#       modified: file.txt
--#
-+On branch master
-+Changes to be committed:
-+  (use "git reset HEAD <file>..." to unstage)
-+
-+        new file:   closing.txt
-+
-+Changes not staged for commit:
-+  (use "git add <file>..." to update what will be committed)
-+  (use "git checkout -- <file>..." to discard changes in working directory)
-+
-+        modified:   file.txt
-+
- ------------------------------------------------
- 
- Since the current state of closing.txt is cached in the index file,
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index 8262196..8715244 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -107,14 +107,15 @@ summary of the situation with 'git status':
- 
- ------------------------------------------------
- $ git status
--# On branch master
--# Changes to be committed:
--#   (use "git reset HEAD <file>..." to unstage)
--#
--#	modified:   file1
--#	modified:   file2
--#	modified:   file3
--#
-+On branch master
-+Changes to be committed:
-+Your branch is up-to-date with 'origin/master'.
-+  (use "git reset HEAD <file>..." to unstage)
-+
-+        modified:   file1
-+        modified:   file2
-+        modified:   file3
-+
- ------------------------------------------------
- 
- If you need to make any further adjustments, do so now, and then add any
--- 
-1.9.2.msysgit.0.2270.g8768113
+*** t9902-completion.sh ***
+t9902-completion.sh: 118:
+/home/shk/dev/git/t/../contrib/completion/git-completion.bash: Syntax
+error: "(" unexpected (expecting "fi")
+FATAL: Unexpected exit with code 2
+make[2]: *** [t9902-completion.sh] Error 1
+make[2]: Leaving directory `/home/shk/dev/git/t'
+make[1]: *** [test] Error 2
+make[1]: Leaving directory `/home/shk/dev/git/t'
+make: *** [test] Error 2
+
+$ bash --version
+4.3.11(1)-release (x86_64-pc-linux-gnu)
+
+--
+Best regards.
+0xAX
