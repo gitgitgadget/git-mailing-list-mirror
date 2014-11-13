@@ -1,85 +1,87 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv5 9/9] t3301: Modernize
-Date: Thu, 13 Nov 2014 00:43:41 +0100
-Message-ID: <CALKQrge2FM79XQy14jEYQBY+DwQ9xpcC-yMmKk1kE-yJixzJVw@mail.gmail.com>
-References: <1415752816-22782-1-git-send-email-johan@herland.net>
-	<1415752816-22782-10-git-send-email-johan@herland.net>
-	<CAPig+cSVtAi-n4EKaOgNwDqLvajzvozRG5_o3XjfZAMzW8T8-g@mail.gmail.com>
-	<CALKQrgd-XzAhyZCADmQbCuUL6bdr1nrY8XACBb7UbEv9c=X3dQ@mail.gmail.com>
-	<xmqq389o3yop.fsf@gitster.dls.corp.google.com>
+From: slavomir vlcek <svlc@inventati.org>
+Subject: [PATCH] SubmittingPatches: fix an inconsistency
+Date: Thu, 13 Nov 2014 01:29:00 +0100
+Message-ID: <5463FB4C.2060203@inventati.org>
+References: <5463DA20.3080703@inventati.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	"James H. Fisher" <jhf@trifork.com>, Jeff King <peff@peff.net>,
-	Michael Blume <blume.mike@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 00:44:04 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 13 01:26:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XohZz-0007nL-FF
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 00:44:03 +0100
+	id 1XoiEb-0002MO-BR
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 01:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753821AbaKLXn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 18:43:58 -0500
-Received: from mail12.copyleft.no ([188.94.218.224]:37224 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753645AbaKLXn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 18:43:58 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1XohZm-0002dc-O1
-	for git@vger.kernel.org; Thu, 13 Nov 2014 00:43:51 +0100
-Received: from mail-pa0-f46.google.com ([209.85.220.46])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1XohZk-0004nV-Fv
-	for git@vger.kernel.org; Thu, 13 Nov 2014 00:43:48 +0100
-Received: by mail-pa0-f46.google.com with SMTP id lf10so13878683pab.5
-        for <git@vger.kernel.org>; Wed, 12 Nov 2014 15:43:41 -0800 (PST)
-X-Received: by 10.66.139.234 with SMTP id rb10mr21153881pab.146.1415835821590;
- Wed, 12 Nov 2014 15:43:41 -0800 (PST)
-Received: by 10.70.68.3 with HTTP; Wed, 12 Nov 2014 15:43:41 -0800 (PST)
-In-Reply-To: <xmqq389o3yop.fsf@gitster.dls.corp.google.com>
+	id S1752834AbaKMAZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 19:25:57 -0500
+Received: from latitanza.investici.org ([82.94.249.234]:33185 "EHLO
+	latitanza.investici.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462AbaKMAZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 19:25:57 -0500
+Received: from [82.94.249.234] (latitanza [82.94.249.234]) (Authenticated sender: svlc@inventati.org) by localhost (Postfix) with ESMTPSA id 96C2D120E66;
+	Thu, 13 Nov 2014 00:25:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inventati.org;
+	s=stigmate; t=1415838355;
+	bh=C4J0tA79d5wSYHJdyV/mdfGYaAHXSFi5ZEmQbU7unrU=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To;
+	b=ENkXtfaIjEkcDh1UzWKsTMyNO9Jp3dWLW5ivQbWQzq/hnHRmzDimiBOXi1jbyz50r
+	 tCdPzhPohxFmgnL430hItvcQ/gasLnKgupO9FrT7pk2l5BloJ1za1+mlRNXLz09K+Q
+	 nDjCyvjrC7Y/dYlOgOEKO+o8tHqU/MFixhiCgIog=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <5463DA20.3080703@inventati.org>
+X-Forwarded-Message-Id: <5463DA20.3080703@inventati.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 12, 2014 at 10:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
->> On Wed, Nov 12, 2014 at 2:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Tue, Nov 11, 2014 at 7:40 PM, Johan Herland <johan@herland.net> wrote:
->>>> +       test_line_count = 1 actual
->>>
->>> Broken &&-chain. This problem is repeated each place use invoke
->>> test_line_count().
->>
->> Thanks. Fixed in the next iteration.
->
-> Just FYI, here is what I came up with on top of 9/9 as 10/9, and it
-> can be squashed in.  If these will be the only differences between
-> v5 and upcoming v6, you can just tell me to squash them together.
+The 'SubmittingPatches' document contains a small inconsistency
+ in a patch-email sending procedure.
 
-So far this is the only diff on top of v5. I've squashed it into my
-tree, so if a re-roll is needed, this diff will also be part of it.
-But if no other issues show up to trigger a re-roll, then please
-squash them on your end as well.
+Not a big thing,
+but a newcomer could get confused.
 
-> One unrelated changes is that '\'' is a bit shorter than '"'"' (and
-> the four-letter sequence is idiomatic and easier to spot, once your
-> eyes are used to reading strings in single-quote pairs).
+Please,
+also consider adding the definition/explanation for all the branches available
+at the beginning of this document (and maybe even what their names stand for).
+Thanks.
 
-Agreed, thanks.
+Signed-off-by: slavomir vlcek <svlc@inventati.org>
+---
 
-...Johan
+>From 74859712cf805663e3863686bdc09511c74b207b Mon Sep 17 00:00:00 2001
+From: slavomir vlcek <svlc@inventati.org>
+Date: Thu, 13 Nov 2014 00:18:39 +0100
+Subject: [PATCH] SubmittingPatches: fix an inconsistency
 
+At line 213 there was an instruction:
+  "re-send it with "To:" set to the maintainer [*1*] and "cc:" the list [*2*]"
+
+and this instruction got repeated once more in the document (line 340):
+  "Send it to the list and cc the maintainer."
+
+This inconsistency was solved by editing the second occurance.
+---
+ Documentation/SubmittingPatches | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index e6d46ed..fa71b5f 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -337,7 +337,7 @@ suggests to the contributors:
+      spend their time to improve your patch.  Go back to step (2).
+ 
+  (4) The list forms consensus that the last round of your patch is
+-     good.  Send it to the list and cc the maintainer.
++     good.  Send it to the maintainer and cc the list.
+ 
+  (5) A topic branch is created with the patch and is merged to 'next',
+      and cooked further and eventually graduates to 'master'.
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+2.0.1
