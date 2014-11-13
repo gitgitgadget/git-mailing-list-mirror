@@ -1,82 +1,134 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5705: Use the correct file:// URL
-Date: Thu, 13 Nov 2014 08:37:48 -0800
-Message-ID: <xmqqtx232h0j.fsf@gitster.dls.corp.google.com>
-References: <54645F67.30008@web.de> <20141113091724.GB8329@peff.net>
+Subject: Re: [PATCH] gittutorial: fix output of 'git status'
+Date: Thu, 13 Nov 2014 08:38:54 -0800
+Message-ID: <xmqqppcr2gyp.fsf@gitster.dls.corp.google.com>
+References: <1638160691.207203.1415866403277.JavaMail.ngmail@webmail23.arcor-online.net>
+	<1415875207-5992-1-git-send-email-stefan.naewe@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 13 17:37:58 2014
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, <th.acker@arcor.de>
+To: <stefan.naewe@atlas-elektronik.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 17:39:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoxPB-0001SR-A8
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 17:37:57 +0100
+	id 1XoxQE-0002AB-O0
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 17:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988AbaKMQhx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2014 11:37:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50115 "EHLO
+	id S933349AbaKMQi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 11:38:58 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60765 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753969AbaKMQhw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2014 11:37:52 -0500
+	with ESMTP id S932955AbaKMQi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 11:38:57 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BFFB41C0EC;
-	Thu, 13 Nov 2014 11:37:50 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E3A41C140;
+	Thu, 13 Nov 2014 11:38:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=f+jaL0+3ZpF2
-	asKlnzzAz1SFwYs=; b=xM+dXVmQfdRJ+ir+udC9ikkGceOwqPKDfLs8+aYLmSLD
-	nvr/Cxl8faxOjAjocVY6IlfArp8ShEdKmNsAYdnw/DbWuK6yqJxmWTtWb4hdQ6sk
-	NgN50+lHi3Pt5SDcDjDQWs50zw0cqb/Ax8s3PvDxFSrzvjcIY58D6/GTZ9y2+Ec=
+	:content-type; s=sasl; bh=7UT2sgTjHJ9M2GZf+xWDIbibFyA=; b=ghpBH/
+	+El40ZJRxeL3gibcw2bqEVxFsGCa9tx5yBPMRwF33SWZFW1K+fyvnS/nq6wn5Kk5
+	DYq/sPNH4jjEaCk1EPaGbKq3JPXzKbbK9IjmfvJL8qtW9cQIVDiH80dxb0T1YrLH
+	+xw9kAHbSFzWuOZainK3gdGHdRx7JycYW/QD0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=oyhWLV
-	K561nHvF6yMyuf8IVd4R7XCEmP1K7ZHbmGv5QesXL76Z7Wbj2DsOneGJewqVwv9G
-	EcQunQwXA4Ux69NGE26ms2vwxAMJL8GhW7EAXPluJvXl/S/AVBd4V3+ZdGWENUbR
-	guyKAZ+9WNLqw+3hzZ4FqnwjQqQbSHbktnTG4=
+	:content-type; q=dns; s=sasl; b=rl91s1SQa3QPipo6X49y4BRiz0INMRQG
+	D/TA78ioBg3VcgoWmYyBJtG3qZ3AtawT9BCv0EAsil9shzIIF6tQ1b0kFqX8nvMZ
+	/HsyPmz9ksUigQpqHXULJh0pjaPN303tdDmo2r327PAKZ1Prq+XrsSkhJF1RpOSK
+	MtTfttnzVPY=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6AF131C0EA;
-	Thu, 13 Nov 2014 11:37:50 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 25A781C13E;
+	Thu, 13 Nov 2014 11:38:56 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E30701C0E8;
-	Thu, 13 Nov 2014 11:37:49 -0500 (EST)
-In-Reply-To: <20141113091724.GB8329@peff.net> (Jeff King's message of "Thu, 13
-	Nov 2014 04:17:24 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A72C1C13C;
+	Thu, 13 Nov 2014 11:38:55 -0500 (EST)
+In-Reply-To: <1415875207-5992-1-git-send-email-stefan.naewe@atlas-elektronik.com>
+	(stefan naewe's message of "Thu, 13 Nov 2014 10:40:07 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6802418C-6B53-11E4-BCC9-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8F2BA172-6B53-11E4-A4F3-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+<stefan.naewe@atlas-elektronik.com> writes:
 
-> On Thu, Nov 13, 2014 at 08:36:07AM +0100, Torsten B=C3=B6gershausen w=
-rote:
+> From: Stefan Naewe <stefan.naewe@gmail.com>
 >
->> A URL like file;//. is (no longer) supported by Git:
->> Typically there is no host, and RFC1738 says that file:///<path>
->> should be used.
->>=20
->> Update t5705 to use a working URL.
+> 'git status' doesn't output leading '#'s these days.
 >
-> Interesting. This looks like it was unintentionally lost in c59ab2e
-> (connect.c: refactor url parsing, 2013-11-28). Given RFC1738, and tha=
-t
-> this is the first notice of it (and that it is not even a real use ca=
-se,
-> but something questionable in the test script), it's probably OK to
-> declare the syntax dead and not treat it like a regression.
+> Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
+> ---
 
-Yeah, I tend to agree.  I do not think there is any <scheme>:// that
-lets you say things relative to something that is not "root" of the
-namespace, and it was a bug the old test depended on that we did not
-notice it as an error when "file://." tried to refer to "the current
-directory".
+Thanks, will queue.
+
+>  Documentation/gittutorial-2.txt | 23 ++++++++++++-----------
+>  Documentation/gittutorial.txt   | 17 +++++++++--------
+>  2 files changed, 21 insertions(+), 19 deletions(-)
+>
+> diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
+> index 3109ea8..1901af7 100644
+> --- a/Documentation/gittutorial-2.txt
+> +++ b/Documentation/gittutorial-2.txt
+> @@ -368,17 +368,18 @@ situation:
+>  
+>  ------------------------------------------------
+>  $ git status
+> -# On branch master
+> -# Changes to be committed:
+> -#   (use "git reset HEAD <file>..." to unstage)
+> -#
+> -#       new file: closing.txt
+> -#
+> -# Changes not staged for commit:
+> -#   (use "git add <file>..." to update what will be committed)
+> -#
+> -#       modified: file.txt
+> -#
+> +On branch master
+> +Changes to be committed:
+> +  (use "git reset HEAD <file>..." to unstage)
+> +
+> +        new file:   closing.txt
+> +
+> +Changes not staged for commit:
+> +  (use "git add <file>..." to update what will be committed)
+> +  (use "git checkout -- <file>..." to discard changes in working directory)
+> +
+> +        modified:   file.txt
+> +
+>  ------------------------------------------------
+>  
+>  Since the current state of closing.txt is cached in the index file,
+> diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+> index 8262196..8715244 100644
+> --- a/Documentation/gittutorial.txt
+> +++ b/Documentation/gittutorial.txt
+> @@ -107,14 +107,15 @@ summary of the situation with 'git status':
+>  
+>  ------------------------------------------------
+>  $ git status
+> -# On branch master
+> -# Changes to be committed:
+> -#   (use "git reset HEAD <file>..." to unstage)
+> -#
+> -#	modified:   file1
+> -#	modified:   file2
+> -#	modified:   file3
+> -#
+> +On branch master
+> +Changes to be committed:
+> +Your branch is up-to-date with 'origin/master'.
+> +  (use "git reset HEAD <file>..." to unstage)
+> +
+> +        modified:   file1
+> +        modified:   file2
+> +        modified:   file3
+> +
+>  ------------------------------------------------
+>  
+>  If you need to make any further adjustments, do so now, and then add any
