@@ -1,134 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gittutorial: fix output of 'git status'
-Date: Thu, 13 Nov 2014 08:38:54 -0800
-Message-ID: <xmqqppcr2gyp.fsf@gitster.dls.corp.google.com>
-References: <1638160691.207203.1415866403277.JavaMail.ngmail@webmail23.arcor-online.net>
-	<1415875207-5992-1-git-send-email-stefan.naewe@atlas-elektronik.com>
+Subject: Re: Git archiving only branch work
+Date: Thu, 13 Nov 2014 08:49:19 -0800
+Message-ID: <xmqqlhnf2ghc.fsf@gitster.dls.corp.google.com>
+References: <5464a4e8.4a0.2bfa0e00.3067f800@geldenhuys.co.uk>
+	<20141113133615.GA28346@lanh>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: <git@vger.kernel.org>, <th.acker@arcor.de>
-To: <stefan.naewe@atlas-elektronik.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 17:39:08 2014
+Cc: Graeme Geldenhuys <mailinglists@geldenhuys.co.uk>,
+	git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 17:49:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoxQE-0002AB-O0
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 17:39:03 +0100
+	id 1XoxaN-0000fa-1d
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 17:49:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933349AbaKMQi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 11:38:58 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60765 "EHLO
+	id S933324AbaKMQtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 11:49:25 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63402 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932955AbaKMQi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 11:38:57 -0500
+	with ESMTP id S933286AbaKMQtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 11:49:24 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E3A41C140;
-	Thu, 13 Nov 2014 11:38:56 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D99CA1C504;
+	Thu, 13 Nov 2014 11:49:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7UT2sgTjHJ9M2GZf+xWDIbibFyA=; b=ghpBH/
-	+El40ZJRxeL3gibcw2bqEVxFsGCa9tx5yBPMRwF33SWZFW1K+fyvnS/nq6wn5Kk5
-	DYq/sPNH4jjEaCk1EPaGbKq3JPXzKbbK9IjmfvJL8qtW9cQIVDiH80dxb0T1YrLH
-	+xw9kAHbSFzWuOZainK3gdGHdRx7JycYW/QD0=
+	:content-type; s=sasl; bh=lOgmv8ooWslhuktgczyIN2ojCt8=; b=Y7v6tp
+	YQ7egGtzGg3+9o88Pc+JwL5cJN0HyGR1Ci5OTYofE2O6WO/ULs5llKGEzgcFXMsE
+	lVsjWTLTwAfV7tBGPk6fIgDhyxFF4E+qD6K/cS9zoMii4o8xbY2znMkS8Svk+Kw/
+	8Eah24o6LW/OLXMhgPNBCQzZDez33k7d42ZRk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rl91s1SQa3QPipo6X49y4BRiz0INMRQG
-	D/TA78ioBg3VcgoWmYyBJtG3qZ3AtawT9BCv0EAsil9shzIIF6tQ1b0kFqX8nvMZ
-	/HsyPmz9ksUigQpqHXULJh0pjaPN303tdDmo2r327PAKZ1Prq+XrsSkhJF1RpOSK
-	MtTfttnzVPY=
+	:content-type; q=dns; s=sasl; b=pISdY3krEbcp3fxzNEi+An/lWC00Kjyb
+	rFd7p7kAHOC6hEz+dikI0YUHxIoBDtRdJ/QhMSBqjfF2s8rpjdeFXTPXSCU6TvJZ
+	qg7zu40oW1Z1Bv1TauYCCQc6iZifXNtR/OcoD5bMEBPZCdQ/BCsduDwwZvumThY7
+	p50Yol6zZPI=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 25A781C13E;
-	Thu, 13 Nov 2014 11:38:56 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D0E8E1C503;
+	Thu, 13 Nov 2014 11:49:22 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A72C1C13C;
-	Thu, 13 Nov 2014 11:38:55 -0500 (EST)
-In-Reply-To: <1415875207-5992-1-git-send-email-stefan.naewe@atlas-elektronik.com>
-	(stefan naewe's message of "Thu, 13 Nov 2014 10:40:07 +0000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FC441C502;
+	Thu, 13 Nov 2014 11:49:22 -0500 (EST)
+In-Reply-To: <20141113133615.GA28346@lanh> (Duy Nguyen's message of "Thu, 13
+	Nov 2014 20:36:16 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8F2BA172-6B53-11E4-A4F3-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 04AB9000-6B55-11E4-A8DC-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<stefan.naewe@atlas-elektronik.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> From: Stefan Naewe <stefan.naewe@gmail.com>
->
-> 'git status' doesn't output leading '#'s these days.
->
-> Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
-> ---
+> On Thu, Nov 13, 2014 at 12:32:40PM +0000, Graeme Geldenhuys wrote:
+>> [alias]
+>>     deploy = !sh -c 'git archive --prefix=$1/ -o deploy_$1.zip HEAD 
+>> $(git diff --name-only -D $2)' -
+>> 
+>> This works very well. The only problem we have so far is that if we 
+>> have files with spaces in the name (eg: SQL update scripts), then the 
+>> command breaks.
+>> 
+>> Does anybody have an idea on how this can be resolved?  Any help would 
+>> be much appreciated.
 
-Thanks, will queue.
+Set $IFS to newline, so that $(git diff --name-only ...) output is
+split at record boundaries, not inside pathnames?
 
->  Documentation/gittutorial-2.txt | 23 ++++++++++++-----------
->  Documentation/gittutorial.txt   | 17 +++++++++--------
->  2 files changed, 21 insertions(+), 19 deletions(-)
->
-> diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
-> index 3109ea8..1901af7 100644
-> --- a/Documentation/gittutorial-2.txt
-> +++ b/Documentation/gittutorial-2.txt
-> @@ -368,17 +368,18 @@ situation:
->  
->  ------------------------------------------------
->  $ git status
-> -# On branch master
-> -# Changes to be committed:
-> -#   (use "git reset HEAD <file>..." to unstage)
-> -#
-> -#       new file: closing.txt
-> -#
-> -# Changes not staged for commit:
-> -#   (use "git add <file>..." to update what will be committed)
-> -#
-> -#       modified: file.txt
-> -#
-> +On branch master
-> +Changes to be committed:
-> +  (use "git reset HEAD <file>..." to unstage)
-> +
-> +        new file:   closing.txt
-> +
-> +Changes not staged for commit:
-> +  (use "git add <file>..." to update what will be committed)
-> +  (use "git checkout -- <file>..." to discard changes in working directory)
-> +
-> +        modified:   file.txt
-> +
->  ------------------------------------------------
->  
->  Since the current state of closing.txt is cached in the index file,
-> diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-> index 8262196..8715244 100644
-> --- a/Documentation/gittutorial.txt
-> +++ b/Documentation/gittutorial.txt
-> @@ -107,14 +107,15 @@ summary of the situation with 'git status':
->  
->  ------------------------------------------------
->  $ git status
-> -# On branch master
-> -# Changes to be committed:
-> -#   (use "git reset HEAD <file>..." to unstage)
-> -#
-> -#	modified:   file1
-> -#	modified:   file2
-> -#	modified:   file3
-> -#
-> +On branch master
-> +Changes to be committed:
-> +Your branch is up-to-date with 'origin/master'.
-> +  (use "git reset HEAD <file>..." to unstage)
-> +
-> +        modified:   file1
-> +        modified:   file2
-> +        modified:   file3
-> +
->  ------------------------------------------------
->  
->  If you need to make any further adjustments, do so now, and then add any
+A quick experiment you can do to convince yourself may be:
+
+-- >8 --
+#!/bin/sh
+
+data () {
+	echo "a"
+	echo "b c" ;# SP in between
+	echo "d	e " ;# HT and trailing SP
+}
+
+show () {
+	for i
+	do
+		echo "<<$i>>"
+	done
+}
+
+echo ONE
+show $(data)
+
+IFS='
+'
+
+echo TWO
+show $(data)
+-- 8< --
+
+On the "git archive" invocation, there may be something that tells
+the pathspecs are literal, like '--literal-pathspecs' option, to
+avoid metacharacters from being expanded, though.
