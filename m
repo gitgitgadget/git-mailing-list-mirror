@@ -1,106 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] git checkout $tree -- $path always rewrites files
-Date: Thu, 13 Nov 2014 14:26:55 -0500
-Message-ID: <20141113192655.GA3413@peff.net>
-References: <20141107081324.GA19845@peff.net>
- <xmqqegtfgcfx.fsf@gitster.dls.corp.google.com>
- <20141107191745.GB5695@peff.net>
- <CANiSa6hufp=80TaesNpo1CxCbwVq3LPXvYaUSbcmzPE5pj_GGw@mail.gmail.com>
- <CANiSa6ggX-DJSXLzjYwv1K2nF1ZrpJ3bHvPjh6gFnqSLQaqZFQ@mail.gmail.com>
- <CAPc5daWdzrHr8Rdksr3HycMRQu0=Ji7h=BPYjzZj7MH6Ko0VgQ@mail.gmail.com>
- <20141108083040.GA15833@peff.net>
- <xmqqbnoge1ci.fsf@gitster.dls.corp.google.com>
- <20141113183033.GA24107@peff.net>
- <xmqqbnoa29ps.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Let deny.currentBranch=updateInstead ignore submodules
+Date: Thu, 13 Nov 2014 11:48:59 -0800
+Message-ID: <xmqq4mu2285w.fsf@gitster.dls.corp.google.com>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de>
+	<84dba8872922da96e99953eea0ccff5f5af9dd4a.1415368490.git.johannes.schindelin@gmx.de>
+	<xmqqh9yag6mt.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411101400050.13845@s15462909.onlinehome-server.info>
+	<xmqq1tpbawqe.fsf@gitster.dls.corp.google.com>
+	<xmqq389qam25.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411121208250.13845@s15462909.onlinehome-server.info>
+	<xmqqzjbw47vr.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411131123330.13845@s15462909.onlinehome-server.info>
+	<alpine.DEB.1.00.1411131136200.13845@s15462909.onlinehome-server.info>
+	<xmqqh9y32e36.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411131850510.13845@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Martin von Zweigbergk <martinvonz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 20:27:03 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 13 20:49:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp02p-0005bo-8q
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 20:27:03 +0100
+	id 1Xp0OE-00026e-ES
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 20:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933697AbaKMT07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 14:26:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40043 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933423AbaKMT05 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 14:26:57 -0500
-Received: (qmail 11236 invoked by uid 102); 13 Nov 2014 19:26:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 13:26:57 -0600
-Received: (qmail 30213 invoked by uid 107); 13 Nov 2014 19:27:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 14:27:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 14:26:55 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqbnoa29ps.fsf@gitster.dls.corp.google.com>
+	id S933626AbaKMTtF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2014 14:49:05 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56267 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933146AbaKMTtD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2014 14:49:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4DBF71DCC7;
+	Thu, 13 Nov 2014 14:49:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=NYCDowQr2XqK
+	Q26XyewjkoRwXbg=; b=okxSIfFx6/dMKrpUevJxO2SJR58eBYgH8jGJD48k+sti
+	AeQPaGsRX8vI3275cLtbKra1w03VH8Ye1gG7ZOLbLg2eYDTTRAa7e1e4WbYpKSvq
+	CZcY0HmG1i9S1eFBDllNc96/jFAlzTC79QPahVuoHV/PSuwTrNP5i10QsoEMg5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gyNwjW
+	lA090repoJwI9X3OnxZRynkk0+4Yu+YsF638B3Uv9Ug0XJiPH1Uu7GYEmfZ59WVv
+	9voiuX7YoPImb0A92jWxo9A0rGkqKvbu6bY6nnxniuqZA1Bm2RAoX/5WsY51ciOn
+	75mEhdHjmFXBH5MBDGguGy2x0avYemSEaow8Q=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 45CBB1DCC6;
+	Thu, 13 Nov 2014 14:49:01 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EDF71DCC2;
+	Thu, 13 Nov 2014 14:49:00 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1411131850510.13845@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Thu, 13 Nov 2014 19:55:49 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1CFA0538-6B6E-11E4-AD4C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 11:15:27AM -0800, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> > diff --git a/builtin/checkout.c b/builtin/checkout.c
-> > index 5410dac..67cab4e 100644
-> > --- a/builtin/checkout.c
-> > +++ b/builtin/checkout.c
-> > @@ -65,21 +65,40 @@ static int post_checkout_hook(struct commit *old, struct commit *new,
-> >  static int update_some(const unsigned char *sha1, const char *base, int baselen,
-> >  		const char *pathname, unsigned mode, int stage, void *context)
-> >  {
-> > ...
-> >  }
-> 
-> Makes sense, including the use of strbuf (otherwise you would
-> allocate ce and then discard when it turns out that it is not
-> needed, which is probably with the same allocation pressure, but
-> looks uglier).
+> Thanks for mentioning this. I would like to ask not to loosen this la=
+ter.
+> Let me try to explain in more detail than before why I think it would=
+ make
+> *my* life hard if it ever were loosened.
+> ...
+> And now when I try to push, Git complains that the working directory =
+is
+> not clean, which is *just* fine by me, because after further inspecti=
+on it
+> turns out that the uncommitted changes =E2=80=93 which are in a diffe=
+rent file
+> than the changes introducing my new feature =E2=80=93 would have bork=
+ed the
+> production system rather thoroughly.
+> ...
+> In my mind, when (and if!) a less strict version is desired, it shoul=
+d be
+> added as another denyCurrentBranch value and 'updateInstead' should b=
+e
+> unaffected, otherwise, speaking for me personally, all my work in thi=
+s
+> patch series would be for naught.
 
-Exactly. Constructing it in ce->name does save you an allocation/memcpy
-in the case that we actually use the new entry, but I thought it would
-look weirder. It probably doesn't matter much either way, so I tried to
-write the most obvious thing.
+Thanks for an explanation why the updateInstead mode must require a
+pristine working tree (and the index).  I *now* agree why such a
+mode would be useful, *after* reading it.  I did not understand why
+*after* reading only the patch, the documentation updates and the
+log message.
 
-(I also experimented with using make_cache_entry at one point, which
-requires the strbuf; some of my thinking on what looks reasonable may be
-left over from that approach).
+That tells us something, doesn't it? ;-)
 
-> > +test_expect_success 'do not touch files that are already up-to-date' '
-> > +	git reset --hard &&
-> > +	echo one >file1 &&
-> > +	echo two >file2 &&
-> > +	git add file1 file2 &&
-> > +	git commit -m base &&
-> > +	echo modified >file1 &&
-> > +	test-chmtime =1000000000 file2 &&
-> 
-> Is the idea behind the hardcoded timestamp that this is sufficiently
-> old (Sep 2001) that we will not get in trouble comparing with the
-> real timestamp we get from the filesystem (which will definitely newer
-> than that anyway) no matter when we run this test (unless you have a
-> time-machine, that is)?
+Also the failure case test must protect us from making a change you
+fear in the future.  The interdiff you sent in a separate message
+was to smudge path2 that is modified in the 'fourth' commit, which
+should fail with either your "OK only if really clean" requirement
+or the other "OK as long as it does not interfere with the switch"
+criterion.  Checking that is a good step, but you would want to have
+a separate "Smudge a path that is unchanged with the switch and see
+the push updateInstead fail" to protect the current semantics.
 
-I didn't actually calculate what the timestamp was. The important thing
-is that it is not the timestamp that your system would give to the file
-if git-checkout opened and rewrote it. :)
+I agree that a new value "mergeInstead" or something should be
+invented when/if different workflows want a looser semantics.
+People would rely not only on "being able to push when clean" but
+also on "being safely prevented from pushing when not" (and that is
+where my earlier comment to test both sides comes from).  Loosening
+the check to an existing "updateInstead" would break users who have
+been using updateInstead.
 
-I initially used "123", but was worried that would cause weird
-portability problems on systems. So I opted for something closer to
-"normal", but in the past. I think it is fine (modulo time machines),
-but I'd be happy to put in some more obvious sentinel, too.
+Also I suspect that people would want to send a patch to add "-q" to
+your "update-index --refresh" invocation, at which time you would
+need to add a call to "diff-files" to check that the working tree
+and the index match.  You may want to add that "diff-files" now, or
+at least have a test that is designed to break when "-q" is added to
+"update-index --refresh" without adding the necessary "diff-files".
 
-And the worst case if you did have a time machine is that we might
-accidentally declare a buggy git to be correct (racily!). I can live
-with that, but I guess you could use a relative value (like "-10000")
-instead of a fixed sentinel (but then you'd have to record it for the
-"expect" check).
-
--Peff
+Thanks.
