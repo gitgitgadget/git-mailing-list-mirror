@@ -1,73 +1,79 @@
-From: Mike Blume <blume.mike@gmail.com>
-Subject: [PATCH v2] allow TTY tests to run under recent Mac OS
-Date: Thu, 13 Nov 2014 14:40:19 -0800
-Message-ID: <1415918419-20807-1-git-send-email-blume.mike@gmail.com>
-Cc: Mike Blume <blume.mike@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 23:40:29 2014
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Re: [PATCH] allow TTY tests to run under recent Mac OS
+Date: Thu, 13 Nov 2014 14:40:50 -0800
+Message-ID: <CAO2U3QgbCVnF=TFWD5ZFjMSc=ez21KObSdF=v75DfDSJhH8A5Q@mail.gmail.com>
+References: <1415916087-18953-1-git-send-email-blume.mike@gmail.com> <xmqq1tp6zqq1.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 23:41:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp33z-0001Ya-Ps
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 23:40:28 +0100
+	id 1Xp34l-0001w5-P9
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 23:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934216AbaKMWkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 17:40:24 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:39119 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933065AbaKMWkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 17:40:23 -0500
-Received: by mail-pa0-f53.google.com with SMTP id kx10so16203290pab.40
-        for <git@vger.kernel.org>; Thu, 13 Nov 2014 14:40:23 -0800 (PST)
+	id S934159AbaKMWlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 17:41:12 -0500
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:44268 "EHLO
+	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933065AbaKMWlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 17:41:11 -0500
+Received: by mail-oi0-f47.google.com with SMTP id v63so1897638oia.6
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 14:41:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=rGxnR79YCo/rmXnUj787GDwUNeyIGukps6WcpxHUQR8=;
-        b=GlR7OkwltfTL6rHTsOjP6GhXPZ+W4EJY8ZQSd+ZiC7AIoayzDjbt0yPV06NBryw95F
-         eodjdutnU9PtXadcukKI8vzsiUZX0u9WYXa0uHHFFNgdMCXdUOcGdQ2zxkK12jYzMLbV
-         vimyUeUxBAZz9LupxlhVfBaPnreEUc3hmHaAREtPUgf56pOQjAkXH+4duujG/1Stuq63
-         FV3Mtw1Im2rdmNjXc/Z6JFZ/dld2jKFr7az0CS2oPUUzjsK1BuIOa+hNBu8X9xKiklmL
-         9ECR0iG/saNIHoL8niG8HFqFz48MycqnWUftKPV8opgWOTJwTHWwZ1o3aQVjof5RnZPj
-         iQKg==
-X-Received: by 10.68.250.131 with SMTP id zc3mr5986320pbc.34.1415918423376;
-        Thu, 13 Nov 2014 14:40:23 -0800 (PST)
-Received: from tcc-michael-4.local.com ([50.59.189.124])
-        by mx.google.com with ESMTPSA id cf12sm25734861pdb.77.2014.11.13.14.40.22
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 13 Nov 2014 14:40:22 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc1.197.g60bf093
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=QzUaRYdFjfReuHy8Eml1exE0oKIg4I8NgV5pOPiW1Ec=;
+        b=I8Jzdquz+5IvIGcvDJaxhyamnhuuZpeGqeMKA3du4Xev5T3kWPG8+1X4iVKRe6whmv
+         wG5kcKrkLxkWg9VSaSlO7HIsopotuXfTSu8fFoA00QJhHnul8FbgLFA+V8dzGNQVvrVC
+         L5YtBELODQpLwzOz6AMeID/MPBvFa/+5G9NJjHiC7mwqU6j/4mtoVobtCTMlbvlJvWGX
+         a0MFJ9wImJI2gxajZVvDTxdBP0DYqO/LylbI8EMpbiSb2+Leh7+Sn9sAnhlN+db8hKI0
+         tKlrWbo8c70ZgYCtTDWj2zVE/JA/db77KZkt17nPow3rULTnvrkGhLLN2oNeMjrsooOH
+         Dtsg==
+X-Received: by 10.202.214.19 with SMTP id n19mr4116521oig.9.1415918470640;
+ Thu, 13 Nov 2014 14:41:10 -0800 (PST)
+Received: by 10.202.18.132 with HTTP; Thu, 13 Nov 2014 14:40:50 -0800 (PST)
+In-Reply-To: <xmqq1tp6zqq1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-listed bug doesn't reproduce on Mac OS Yosemite. For now, just enable
-TTY on Yosemite and higher
+ah, sorry, didn't realize those were bash-only
 
-Signed-off-by: Mike Blume <blume.mike@gmail.com>
-Improved-by: Junio C Hamano <gitster@pobox.com>
----
- t/lib-terminal.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/t/lib-terminal.sh b/t/lib-terminal.sh
-index 5184549..6395a34 100644
---- a/t/lib-terminal.sh
-+++ b/t/lib-terminal.sh
-@@ -29,7 +29,10 @@ test_lazy_prereq TTY '
- 	# After 2000 iterations or so it hangs.
- 	# https://rt.cpan.org/Ticket/Display.html?id=65692
- 	#
--	test "$(uname -s)" != Darwin &&
-+	# Under Mac OS X 10.10.1 and Perl 5.18.2, this problem
-+	# appears to be gone.
-+	#
-+	test "$(uname -s)" != Darwin || test "$(uname -r | cut -d. -f1)" -ge 14 &&
- 
- 	perl "$TEST_DIRECTORY"/test-terminal.perl \
- 		sh -c "test -t 1 && test -t 2"
--- 
-2.2.0.rc1.197.g60bf093
+On Thu, Nov 13, 2014 at 2:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Mike Blume <blume.mike@gmail.com> writes:
+>
+>> listed bug doesn't reproduce on Mac OS Yosemite. For now, just enable
+>> TTY on Yosemite and higher
+>>
+>> Signed-off-by: Mike Blume <blume.mike@gmail.com>
+>> ---
+>>  t/lib-terminal.sh | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/t/lib-terminal.sh b/t/lib-terminal.sh
+>> index 5184549..1311ce0 100644
+>> --- a/t/lib-terminal.sh
+>> +++ b/t/lib-terminal.sh
+>> @@ -29,7 +29,10 @@ test_lazy_prereq TTY '
+>>       # After 2000 iterations or so it hangs.
+>>       # https://rt.cpan.org/Ticket/Display.html?id=65692
+>>       #
+>> -     test "$(uname -s)" != Darwin &&
+>> +     # Under Mac OS X 10.10.1 and Perl 5.18.2, this problem
+>> +     # appears to be gone.
+>> +     #
+>> +     [[ test "$(uname -s)" != Darwin || test "$(uname -r | cut -d. -f1") -ge 14 ]] &&
+>
+> This is designed to be a plain vanilla POSIX shell script.  Please
+> avoid these double brackets.
+>
+>>
+>>       perl "$TEST_DIRECTORY"/test-terminal.perl \
+>>               sh -c "test -t 1 && test -t 2"
