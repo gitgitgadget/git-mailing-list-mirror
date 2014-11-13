@@ -1,52 +1,53 @@
-From: Patrick Hemmer <git@stormcloud9.net>
-Subject: Set file modification time on checkout
-Date: Wed, 12 Nov 2014 23:45:52 -0500
-Message-ID: <54643780.7060504@stormcloud9.net>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Set file modification time on checkout
+Date: Thu, 13 Nov 2014 06:04:15 +0100
+Message-ID: <54643BCF.5000900@web.de>
+References: <54643780.7060504@stormcloud9.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 05:45:59 2014
+To: Patrick Hemmer <git@stormcloud9.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 13 06:04:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XomIA-0000xM-Dv
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 05:45:58 +0100
+	id 1XomaK-0007aJ-Km
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 06:04:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651AbaKMEpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 23:45:54 -0500
-Received: from ec2-54-241-211-23.us-west-1.compute.amazonaws.com ([54.241.211.23]:42029
-	"EHLO feystorm.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753559AbaKMEpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 23:45:54 -0500
-Received: from [192.168.0.24] (thirteen.feystorm.net [192.168.0.1])
-	(using TLSv1 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by feystorm.net (Postfix) with ESMTPSA id 96D5A191BED8
-	for <git@vger.kernel.org>; Wed, 12 Nov 2014 23:45:52 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.8.0
+	id S1751071AbaKMFEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 00:04:40 -0500
+Received: from mout.web.de ([212.227.15.14]:65114 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750750AbaKMFEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 00:04:39 -0500
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0LoYJu-1YVEsh0zuM-00gZu1; Thu, 13 Nov 2014 06:04:37
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <54643780.7060504@stormcloud9.net>
+X-Provags-ID: V03:K0:LlM9WGE9p+v6RtjwSQ799xXK5Dsf+uHbzmiF/QdpXeWXkIS5QDZ
+ 1hqoDaV0JWKYdo9DwEBmTtHylwy4k8FktWAoy8QeN/2xCvf0H2u3Pq0h7/lDy0zEllT6eJO
+ Rb1fr4J758GxoDo6CCb+/JROfxB5Og98xziPGNkl30TE0Smv3+/BbK4TYjSta9xKF8Q1vHA
+ fx5ToEFEFW+QWChNHLGNA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The request is to allow git to set the file modification time on
-checkout to the commit-author-date of the commit which last modified the
-file.
-Yes I know this is in the FAQ, but the FAQ entry is missing an
-increasingly common use case: docker.
-When docker builds an image, it generates layers of images based on each
-build step. Adding a file would be a build step, and for this action it
-generates a hash based on the file modification time & content. Next
-time the image is built, if these haven't changed, the previously built
-layer is reused. And like git commit history, if a layer changes, the
-hash of all subsequent layers change and have to be rebuilt. So reusing
-layers can save a ton of time.
+On 2014-11-13 05.45, Patrick Hemmer wrote:
+> The request is to allow git to set the file modification time on
+> checkout to the commit-author-date of the commit which last modified the
+> file.
+> Yes I know this is in the FAQ, but the FAQ entry is missing an
+> increasingly common use case: docker.
+> When docker builds an image, it generates layers of images based on each
+> build step. Adding a file would be a build step, and for this action it
+> generates a hash based on the file modification time & content.
+Why do they do this?
+The file content is the only thing that matters.
 
-Now I'm not proposing that this be made the default action. The `make`
-use case is legitimate. But it would be nice to have an option for
-`checkout` and `reset` which toggles the behavior.
-
--Patrick
+The other thing is to use a hook, utilizing test-chmtime
+from test-chmtime.c
