@@ -1,70 +1,73 @@
-From: Alex Kuleshov <kuleshovmail@gmail.com>
-Subject: t9902-completion.sh failed
-Date: Thu, 13 Nov 2014 16:59:12 +0600
-Message-ID: <87mw7v9xhl.fsf@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] approxidate and future ISO-like times
+Date: Thu, 13 Nov 2014 06:03:25 -0500
+Message-ID: <20141113110325.GD8329@peff.net>
+References: <CAPLyDLo+-SebLvHxVKT7RAiER2c8HdeZQUg7_DGrpER1h-BPQA@mail.gmail.com>
+ <20141113093606.GC8329@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: "git\@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 13 12:00:22 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Colin Smith <colin.webdev@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 12:03:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xos8R-0004PT-SR
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 12:00:20 +0100
+	id 1XosBZ-0006RS-3l
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 12:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932627AbaKMLAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 06:00:12 -0500
-Received: from mail-la0-f42.google.com ([209.85.215.42]:61588 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932419AbaKMLAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 06:00:11 -0500
-Received: by mail-la0-f42.google.com with SMTP id gq15so13174388lab.1
-        for <git@vger.kernel.org>; Thu, 13 Nov 2014 03:00:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:mime-version:content-type;
-        bh=Zjm48+/C7Q6hsUgJdhGSMzM/sZLjJtF7m6rxjZSHYh8=;
-        b=Gx3kOb2dwRStQVNh2iXxWJgJ1pJuQ/o5U/PPk6G4G4utigRmBWhMLmNz+o/EBZQ/Eh
-         E0kgb3+qeF6q03cwF92KNqJcVf/Sbe9va+XXxZYuniZD+FgZ9nWTJrUr8YQsNKYV55aW
-         XcrGO79Fm6h6H1VKiQrxmyBBdI7xQdfapspra6RSXkm5QmN7DTkBqgDKAMud7irYBUqC
-         ZFrlP9lhhhp16ludPwSD54SmaYTMn81duMOqSbPGixhQBhh1JHsNEzLW3URHXWdikNaA
-         3BMzZKZc/IHXQlh5Fb60DGzNUkMb2kqLgkv7g9RiajUtFbSOdcHxSKYLbEKGsaHVyGGf
-         1n/A==
-X-Received: by 10.112.42.114 with SMTP id n18mr1749028lbl.44.1415876409110;
-        Thu, 13 Nov 2014 03:00:09 -0800 (PST)
-Received: from alex-desktop ([92.46.69.219])
-        by mx.google.com with ESMTPSA id o10sm7375830lal.37.2014.11.13.03.00.07
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 13 Nov 2014 03:00:08 -0800 (PST)
+	id S932628AbaKMLD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 06:03:29 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39813 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932518AbaKMLD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 06:03:28 -0500
+Received: (qmail 22625 invoked by uid 102); 13 Nov 2014 11:03:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 05:03:28 -0600
+Received: (qmail 23005 invoked by uid 107); 13 Nov 2014 11:03:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 06:03:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 06:03:25 -0500
+Content-Disposition: inline
+In-Reply-To: <20141113093606.GC8329@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 13, 2014 at 04:36:06AM -0500, Jeff King wrote:
 
-Hello all,
+> On Thu, Nov 13, 2014 at 11:27:06AM +1100, Colin Smith wrote:
+> 
+> > Apologies if this has already been raised or PEBCAK, but I've noticed
+> > a bug where git log with certain date ranges breaks things. It appears
+> > to be any --since date with a --until date in the future between
+> > 2014-12-01 and 2014-12-09. Dates from 2014-12-10 appear to work, and
+> > so does the date 2015-12-01.
+> 
+> Ugh. Approxidate strikes again:
+> 
+>   for i in 2014-11-01 2013-12-01 2014-12-01; do
+>     ./test-date approxidate $i
+>   done
+> 
+> produces:
+> 
+>   2014-11-01 -> 2014-11-01 09:35:19 +0000
+>   2013-12-01 -> 2013-12-01 09:35:19 +0000
+>   2014-12-01 -> 2014-01-12 09:35:19 +0000
+> 
+> The first two are right, but the fourth one is not.  It's probably
+> something simple and stupid.
 
-i just got git from master (f6f61cbbad0611e03b712cc354f1665b5d7b087e),
-built and installed it successfully, now i'm running make test and got
-following error:
+Less simple and stupid than I thought, but I think I have a fix. It is
+not about December specifically, but about the date being in the future.
+The first patch is a cleanup to help us more accurately test the bug;
+the interesting bits are in the second one.
 
-*** t9902-completion.sh ***
-t9902-completion.sh: 118:
-/home/shk/dev/git/t/../contrib/completion/git-completion.bash: Syntax
-error: "(" unexpected (expecting "fi")
-FATAL: Unexpected exit with code 2
-make[2]: *** [t9902-completion.sh] Error 1
-make[2]: Leaving directory `/home/shk/dev/git/t'
-make[1]: *** [test] Error 2
-make[1]: Leaving directory `/home/shk/dev/git/t'
-make: *** [test] Error 2
+  [1/2]: pass TIME_DATE_NOW to approxidate future-check
+  [2/2]: approxidate: allow ISO-like dates far in the future
 
-$ bash --version
-4.3.11(1)-release (x86_64-pc-linux-gnu)
-
---
-Best regards.
-0xAX
+-Peff
