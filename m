@@ -1,118 +1,56 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Thu, 13 Nov 2014 17:08:19 +0100
-Message-ID: <CALKQrgeZYs9A-GZLuRczwzRWWapmfrjFvcvR8GN+YNKxajjDRw@mail.gmail.com>
-References: <20141113111444.GA15503@aepfle.de>
-	<20141113154457.GA31624@aepfle.de>
-	<20141113160325.GA24351@paksenarrion.iveqy.com>
+From: Thomas Koch <thomas@koch.ro>
+Subject: Re: Git archiving only branch work
+Date: Thu, 13 Nov 2014 17:10:11 +0100
+Message-ID: <201411131710.12409.thomas@koch.ro>
+References: <5464a4e8.4a0.2bfa0e00.3067f800@geldenhuys.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Olaf Hering <olaf@aepfle.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 17:08:37 2014
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Graeme Geldenhuys <mailinglists@geldenhuys.co.uk>
+X-From: git-owner@vger.kernel.org Thu Nov 13 17:19:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xowwn-00007t-3V
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 17:08:37 +0100
+	id 1Xox6z-0006j6-GY
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 17:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040AbaKMQIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 11:08:30 -0500
-Received: from mail12.copyleft.no ([188.94.218.224]:41326 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752938AbaKMQI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 11:08:29 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1Xowwc-0007Yn-PI
-	for git@vger.kernel.org; Thu, 13 Nov 2014 17:08:26 +0100
-Received: from mail-pa0-f41.google.com ([209.85.220.41])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Xowwc-000DLM-CH
-	for git@vger.kernel.org; Thu, 13 Nov 2014 17:08:26 +0100
-Received: by mail-pa0-f41.google.com with SMTP id rd3so974893pab.28
-        for <git@vger.kernel.org>; Thu, 13 Nov 2014 08:08:19 -0800 (PST)
-X-Received: by 10.67.30.194 with SMTP id kg2mr3853599pad.8.1415894899297; Thu,
- 13 Nov 2014 08:08:19 -0800 (PST)
-Received: by 10.70.68.3 with HTTP; Thu, 13 Nov 2014 08:08:19 -0800 (PST)
-In-Reply-To: <20141113160325.GA24351@paksenarrion.iveqy.com>
+	id S933277AbaKMQTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 11:19:04 -0500
+Received: from mx1.mailbox.org ([80.241.60.212]:47081 "EHLO mx1.mailbox.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933262AbaKMQTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 11:19:03 -0500
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.mailbox.org (Postfix) with ESMTPS id 9F888424FE;
+	Thu, 13 Nov 2014 17:10:16 +0100 (CET)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp1.mailbox.org ([80.241.60.240]) (using TLS with cipher AES256-GCM-SHA384)
+	by hefe.heinlein-support.de (hefe.heinlein-support.de [91.198.250.172]) (amavisd-new, port 10030)
+	with ESMTPS id cD4yGuri044q; Thu, 13 Nov 2014 17:10:15 +0100 (CET)
+User-Agent: KMail/1.13.7 (Linux/3.16-0.bpo.3-amd64; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <5464a4e8.4a0.2bfa0e00.3067f800@geldenhuys.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 5:03 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
-> Thanks for sharing your notes! A few comments:
->
-> On Thu, Nov 13, 2014 at 04:44:57PM +0100, Olaf Hering wrote:
->> First clone the remote repository as usual. Then create a local branch for
->> each remote branch that is supposed to be worked on:
->> # git clone git://host/repo.git repo-master
->> # cd repo-master
->> # git checkout -b branchA origin/branchA
->> # git checkout -b branchB origin/branchB
->> # cd -
->>
->> Now clone each work branch into its own directory. The work dir references the
->> master repo. All changes come from and go into this repo, instead of the
->> remote repo.
->> # git clone -l -b branchA repo-master repo-branchA
->> # git clone -l -b branchB repo-master repo-branchB
->>
->> To make changs in a work dir, commit as usual. The changes will be pushed from
->> the work copy into the local master repo. Its required to have some other
->> branch than branchA active in repo-master, or push from work copy to
->> repo-master will fail.
->
-> That's one of the reason it's not recommended to push into a non-bare
-> repository. You should clone your repo-master with the --bare option to
-> avoid having a work dir there.
->
->> To publish the outstanding changes its required to do this from the master
->> repo. First checkout the work branch, then pull the local changes and finally
->> push them to the remote repo.
->> # cd repo-master
->> # git checkout branchA
->> # git pull
->> # git push origin branchA
->> # cd -
->
-> It's not. You could just add your remote repository as a remote to each
-> of your clones of your master repo and push directly from them. It
-> would be much simplier and it would allow you to directly fetch changes
-> from your remote into your branches as well.
->
-> (however, I'm not sure but I think, that this will slowly increase the
-> difference between your repositories when you develop. So that they
-> won't change any new data since to local clone was made).
+If your servers run a Unix and you can install Git on the servers than you 
+might want to try the install script we use in our company:
 
-Can you not do this much simpler with --reference? Like this:
+https://github.com/comsolit/comsolit_deploy
 
-  $ git clone --bare git://host/repo.git repo-master
-  $ git clone -b branchA --reference repo-master git://host/repo.git
-repo-branchA
-  $ git clone -b branchB --reference repo-master git://host/repo.git
-repo-branchB
+There's a bare git repository on the server and a post-receive hook that 
+exports the content of the git repository in a predefined folder. After that a 
+symlink is switched to the new version.
 
-All three repos now push/pull directly to/from git://host/repo.git,
-but repo-branchA and repo-branchB reference objects from within the
-bare repo-master. You have to make use to never delete objects from
-repo-master (if those objects happen to be referenced from
-repo-branchA|B). If you want to prevent the repos growing in size, you
-must devise a way to add new objects into repo-master before
-repo-branchA|B. (e.g. a nightly cron-job in repo-master that fetches
-from origin), so that when repo-branchA|B pulls, they will find most
-objects are already present in repo-master.
+You can run hook scripts after the export (checkout) and after the switch.
 
+The script lacks documentation... (PRs welcome!) But it is unit tested!
 
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Regards, Thomas Koch
