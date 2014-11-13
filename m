@@ -1,57 +1,80 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Olaf Hering <olaf@aepfle.de>
 Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Thu, 13 Nov 2014 19:09:58 +0700
-Message-ID: <CACsJy8BytRtHkq1eXdEXMgjnZuDSOJs33nyQ1=xd4jtSDaZ8BA@mail.gmail.com>
+Date: Thu, 13 Nov 2014 13:21:20 +0100
+Message-ID: <20141113122119.GC15503@aepfle.de>
 References: <20141113111444.GA15503@aepfle.de>
+ <1415880149.4825.43.camel@knuth.computer-surgery.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Olaf Hering <olaf@aepfle.de>
-X-From: git-owner@vger.kernel.org Thu Nov 13 13:10:38 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Roger Gammans <roger@gammascience.co.uk>
+X-From: git-owner@vger.kernel.org Thu Nov 13 13:21:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XotEP-00019S-Te
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 13:10:34 +0100
+	id 1XotOx-0006n3-2h
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 13:21:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932648AbaKMMKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 07:10:30 -0500
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:58744 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932419AbaKMMK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 07:10:29 -0500
-Received: by mail-ie0-f170.google.com with SMTP id tp5so15689023ieb.29
-        for <git@vger.kernel.org>; Thu, 13 Nov 2014 04:10:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8c3KW6CIOtQ1LfDWgx3Jcwi7O4yZrXtlKGIuWKYpcUY=;
-        b=IbAe0vuZWsyb6tmUNDDuneYY6SF4SWxS57dkwQ6yuFPAxz/17WP/zHsB2grmI5GK6q
-         Mu5TdwoYHp3lh6+t681eeptZK+jifNGZLm2bp7x0k/WC6gcAEac/Zta228E5ljjbzn9n
-         fpnGsSixtF/eQpWkrjqjQ51C18k6wa/vI9WLQsLTUEekYEico89vHu3DdNq/RZbcR4Gi
-         KdNgU6MY+/NCpZ6Zc5xG5p4XPJvatUkNb5NDDWxx/d+1bNTthK9upaak8bapS21TCTUA
-         9KCvvrbRrzYx+vkGXewgLGP3poeYlfnFtBOy3Y0+kIK3uV2DewZ6+zb7d1p9/Zg8T6dv
-         ODHA==
-X-Received: by 10.107.17.77 with SMTP id z74mr1267335ioi.86.1415880629085;
- Thu, 13 Nov 2014 04:10:29 -0800 (PST)
-Received: by 10.107.176.8 with HTTP; Thu, 13 Nov 2014 04:09:58 -0800 (PST)
-In-Reply-To: <20141113111444.GA15503@aepfle.de>
+	id S932684AbaKMMVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 07:21:23 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.162]:25202 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932512AbaKMMVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 07:21:22 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415881280; l=774;
+	s=domk; d=aepfle.de;
+	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Subject:Cc:To:From:Date;
+	bh=ULhxW87EietU98CWkKASeDKxCXs=;
+	b=q6Wie++0Xoue2Ldcerh1Z/la8iQhgBAxd3WA+kZq7oW+Cfol1Y2nL6xQ+jjn0NIEwZ/
+	e/eJZkmdJ6Wb5NsFfD/uEOs4gEfUBSvIUB8TrNCfiOBVQaRzRUiCzwQ8NuCTBdF0LO22g
+	Cw/tOQILBXmIH9CSnGhaNqM1Wz8CWwjh0zg=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
+	by smtp.strato.de (RZmta 35.11 AUTH)
+	with ESMTPSA id Y01991qADCLKkWZ
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate);
+	Thu, 13 Nov 2014 13:21:20 +0100 (CET)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id 403D250172; Thu, 13 Nov 2014 13:21:20 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1415880149.4825.43.camel@knuth.computer-surgery.co.uk>
+User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 6:14 PM, Olaf Hering <olaf@aepfle.de> wrote:
-> Since each .git is almost identical I wonder if there is a reliable way
-> to "share" it. The "git clone" man page mentions --shared as a dangerous
-> way to do things. It does not give an advice how to manage such cloned
-> trees.
+On Thu, Nov 13, Roger Gammans wrote:
 
-If you know what you are doing, you can try git-new-workdir in
-contrib/workdir. A safe and reliable version of that is being worked
-on, hopefully it'll be released in 2.3.0.
--- 
-Duy
+> Note the first sentence of the second paragraph.
+>  eg:
+>  # git clone git://host/repo.git repo-master
+>  # git clone repo-master repo-branchA
+>  # cd repo-branchA
+>  # git checkout -b branchA origin/branchA
+
+It fails right here because in this dir only "master" exists, but
+branchA is expected.
+
+So far the sequence of commands is:
+
+# git clone git://host/repo.git repo-master
+# cd repo-master
+# git checkout -b branchA origin/branchA
+# git checkout -b branchB origin/branchB
+# cd -
+# git clone -l -b branchA repo-master repo-branchA
+# git clone -l -b branchB repo-master repo-branchB
+
+Next step will be:
+# $do_work ; git commit -avs ; git push 
+
+Will that work as expected? Will find out after lunch..
+
+
+Olaf
