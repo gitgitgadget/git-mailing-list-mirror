@@ -1,83 +1,82 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
+From: Olaf Hering <olaf@aepfle.de>
 Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Thu, 13 Nov 2014 12:49:19 +0100
-Message-ID: <20141113114919.GA2737@paksenarrion.iveqy.com>
+Date: Thu, 13 Nov 2014 13:03:13 +0100
+Message-ID: <20141113120313.GB15503@aepfle.de>
 References: <20141113111444.GA15503@aepfle.de>
+ <20141113114919.GA2737@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Olaf Hering <olaf@aepfle.de>
-X-From: git-owner@vger.kernel.org Thu Nov 13 12:43:02 2014
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 13:03:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xosnl-00033O-MN
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 12:43:02 +0100
+	id 1Xot7Q-0005iZ-Cv
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 13:03:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932610AbaKMLm5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2014 06:42:57 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:56707 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932552AbaKMLmz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 06:42:55 -0500
-Received: by mail-lb0-f179.google.com with SMTP id l4so10986149lbv.10
-        for <git@vger.kernel.org>; Thu, 13 Nov 2014 03:42:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=BxdKxBsdFjgLH2MmhJQZcq74bCXyN7jCcoLHyeeF1vE=;
-        b=wk/HV1Oof7UhA3sClKu1hnsIPWcYF7xQKZkMuGH3G7zvPpe8Jb86Pjobi3m1prCBuR
-         F+k294vIKtM7BMbYSRKDwErcPR7XO85DAvS3zv7MvL70wkitiAYDH4cxVyVFFH3rmA5T
-         yIc8RVFw5bVwSzvMkDtOGi9Lo7t8sQCA3W/gPy4iM/SH2K/Xed7vBvamyQFVyMNlRLRj
-         34v+S/HyyKrWCnhFYvdTjZfoVGA3zn6wy6RbaV8I0ZjAgAN1nTGYKVCDE+Zs3eTMlUMQ
-         FU+EjItz7o0ZHxBD8H4M2iv5Ck1nAcVIV472kLIuVETEeFQaIC7G1/uRFM7MMKulZMJd
-         xojw==
-X-Received: by 10.112.166.101 with SMTP id zf5mr2018631lbb.42.1415878974041;
-        Thu, 13 Nov 2014 03:42:54 -0800 (PST)
-Received: from paksenarrion.paks.iveqy.com (c83-249-10-52.bredband.comhem.se. [83.249.10.52])
-        by mx.google.com with ESMTPSA id p2sm7397305lah.48.2014.11.13.03.42.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Nov 2014 03:42:53 -0800 (PST)
-Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1Xostr-0005f7-IN; Thu, 13 Nov 2014 12:49:19 +0100
+	id S932667AbaKMMDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 07:03:16 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217]:36073 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932329AbaKMMDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 07:03:16 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415880194; l=1114;
+	s=domk; d=aepfle.de;
+	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Subject:Cc:To:From:Date;
+	bh=7AO/tfxC8xbSX3M6c19YagXQYEE=;
+	b=BGi3Xh4F3czfipP+E/5o+mdk89Mu/kR1tuVnBEejPyPDqxCMlQA2LI7283Bo9iN9/LB
+	wHnp+FYgpoz+7DrVwYriWuWKfENq6sNhcMDPyZUuei8sagMl+xryS9q+uFNyjcC0/O6PR
+	qhh+nbJky2LkskeLfmnNHAwBXUMXRUNI+Ug=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
+	by smtp.strato.de (RZmta 35.11 AUTH)
+	with ESMTPSA id f03037qADC3EjUp
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate);
+	Thu, 13 Nov 2014 13:03:14 +0100 (CET)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id 8DF1C50172; Thu, 13 Nov 2014 13:03:13 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20141113111444.GA15503@aepfle.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <20141113114919.GA2737@paksenarrion.iveqy.com>
+User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 12:14:44PM +0100, Olaf Hering wrote:
->=20
-> How can I reduce the disk usage for multiple copies of the same repo?
+On Thu, Nov 13, Fredrik Gustafsson wrote:
 
-You can use --local och --shared. As you say --shared can be dangerous.
-If you don't understand the man page enough to know how you should
-manage your clones you should probably not use it.
+> On Thu, Nov 13, 2014 at 12:14:44PM +0100, Olaf Hering wrote:
+> > 
+> > How can I reduce the disk usage for multiple copies of the same repo?
+> 
+> You can use --local och --shared. As you say --shared can be dangerous.
+> If you don't understand the man page enough to know how you should
+> manage your clones you should probably not use it.
 
---local seems to be what you're looking for.
+Perhaps its more a lack of doc how to use the result.
 
-However as a side note I'm curious about what your use case is. Why do
-you need this many repos?
+> --local seems to be what you're looking for.
 
-Your setup looks familiar to me for a subversion user switching to git
-and trying to use git as subversion. The common usecase is not to have
-multiple worktrees but to do a checkout to the worktree you need to wor=
-k
-on. This is possible with git since it's very fast and I recommend you
-to try to use one worktree.
+I will try this.
 
---=20
-Med v=E4nlig h=E4lsning
-=46redrik Gustafsson
+> However as a side note I'm curious about what your use case is. Why do
+> you need this many repos?
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+Because I do work in each copy, poke around, or do commits and push
+them.
+
+> Your setup looks familiar to me for a subversion user switching to git
+> and trying to use git as subversion. The common usecase is not to have
+> multiple worktrees but to do a checkout to the worktree you need to work
+> on. This is possible with git since it's very fast and I recommend you
+> to try to use one worktree.
+
+Switching branches will invalidate timestamps, causing a full rebuild.
+
+Olaf
