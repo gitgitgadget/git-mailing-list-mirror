@@ -1,84 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Thu, 13 Nov 2014 15:15:42 -0500
-Message-ID: <20141113201542.GC3869@peff.net>
-References: <20141113111444.GA15503@aepfle.de>
- <20141113154457.GA31624@aepfle.de>
- <20141113160325.GA24351@paksenarrion.iveqy.com>
- <CALKQrgeZYs9A-GZLuRczwzRWWapmfrjFvcvR8GN+YNKxajjDRw@mail.gmail.com>
+Subject: Re: TTY tests are unnecessarily suppressed under Mac OS
+Date: Thu, 13 Nov 2014 15:20:00 -0500
+Message-ID: <20141113201959.GD3869@peff.net>
+References: <CAO2U3QhB6rSfJn5ODE8-n2XWuBw8BePqDpQbNdx6LyWy=OFbcg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, Olaf Hering <olaf@aepfle.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Nov 13 21:15:55 2014
+Cc: Git List <git@vger.kernel.org>
+To: Michael Blume <blume.mike@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 21:21:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp0o1-0000T0-Fl
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 21:15:49 +0100
+	id 1Xp0tf-0003Q2-Fd
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 21:21:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934045AbaKMUPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 15:15:45 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40068 "HELO cloud.peff.net"
+	id S934070AbaKMUUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 15:20:03 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40075 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933146AbaKMUPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 15:15:44 -0500
-Received: (qmail 14006 invoked by uid 102); 13 Nov 2014 20:15:44 -0000
+	id S933296AbaKMUUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 15:20:02 -0500
+Received: (qmail 14181 invoked by uid 102); 13 Nov 2014 20:20:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 14:15:44 -0600
-Received: (qmail 30838 invoked by uid 107); 13 Nov 2014 20:15:54 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 14:20:01 -0600
+Received: (qmail 30900 invoked by uid 107); 13 Nov 2014 20:20:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 15:15:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 15:15:42 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 15:20:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 15:20:00 -0500
 Content-Disposition: inline
-In-Reply-To: <CALKQrgeZYs9A-GZLuRczwzRWWapmfrjFvcvR8GN+YNKxajjDRw@mail.gmail.com>
+In-Reply-To: <CAO2U3QhB6rSfJn5ODE8-n2XWuBw8BePqDpQbNdx6LyWy=OFbcg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 05:08:19PM +0100, Johan Herland wrote:
+On Wed, Nov 12, 2014 at 02:25:52PM -0800, Michael Blume wrote:
 
-> Can you not do this much simpler with --reference? Like this:
+> From lib_terminal.sh:
 > 
->   $ git clone --bare git://host/repo.git repo-master
->   $ git clone -b branchA --reference repo-master git://host/repo.git
-> repo-branchA
->   $ git clone -b branchB --reference repo-master git://host/repo.git
-> repo-branchB
+> # Reading from the pty master seems to get stuck _sometimes_
+> # on Mac OS X 10.5.0, using Perl 5.10.0 or 5.8.9.
+> #
+> # Reproduction recipe: run
+> #
+> # i=0
+> # while ./test-terminal.perl echo hi $i
+> # do
+> # : $((i = $i + 1))
+> # done
+> #
+> # After 2000 iterations or so it hangs.
+> # https://rt.cpan.org/Ticket/Display.html?id=65692
+> #
+> test "$(uname -s)" != Darwin &&
 > 
-> All three repos now push/pull directly to/from git://host/repo.git,
-> but repo-branchA and repo-branchB reference objects from within the
-> bare repo-master. You have to make use to never delete objects from
-> repo-master
+> I tried the reproduction recipe on my mac and couldn't reproduce, so
+> it may make sense to take this switch out? In any case, I've set my
+> automated mac build to include TTY tests
 
-I think the "never delete" part is why we usually warn people off of
-using alternates. I think at the least you would have to "git config
-gc.auto 0" in the bare repository (otherwise your nightly fetches risk
-pruning). Of course you'd probably want to repack eventually for
-performance reasons. So maybe setting gc.pruneExpire is a better option
-(to something like "20.years.ago").
+10.5.0 is pretty ancient at this point; I can well believe that the
+upstream problem has been fixed. It would be nice if we knew in which
+version it was fixed, though. Just dropping the restriction risks people
+getting spurious failures if they are on an old enough version.
 
-> If you want to prevent the repos growing in size, you must devise a
-> way to add new objects into repo-master before repo-branchA|B. (e.g. a
-> nightly cron-job in repo-master that fetches from origin), so that
-> when repo-branchA|B pulls, they will find most objects are already
-> present in repo-master.
-
-You can also fetch from the children into repo-master periodically.
-Like:
-
-  cd repo-master &&
-  for i in branchA branchB; do
-    git fetch ../$i +refs/*:refs/remotes/$i/*
-  done
-
-after which it is actually safe to run "git gc" in the master (assuming
-there isn't simultaneous activity in the children). This is how we
-manage fork networks on GitHub (we take in objects to individual forks
-via push, and then migrate them to the master repo via fetch).
+Do you want to roll a patch that checks $(uname) to see if we're on a
+recent-enough version (where we can just be conservative, and assume
+whatever version you have is the first one to fix it)?
 
 -Peff
