@@ -1,121 +1,116 @@
-From: Manzur Mukhitdinov <manzurmm@gmail.com>
-Subject: [PATCH] replace: fix replacing object with itself
-Date: Thu, 13 Nov 2014 15:05:59 +0100
-Message-ID: <1415887559-16585-1-git-send-email-manzurmm@gmail.com>
-Cc: Manzur Mukhitdinov <manzurmm@gmail.com>, Jeff King <peff@peff.net>
+From: Olaf Hering <olaf@aepfle.de>
+Subject: Re: how to reduce disk usage for large .git dirs?
+Date: Thu, 13 Nov 2014 16:44:57 +0100
+Message-ID: <20141113154457.GA31624@aepfle.de>
+References: <20141113111444.GA15503@aepfle.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 15:07:05 2014
+X-From: git-owner@vger.kernel.org Thu Nov 13 16:45:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xov3A-00013P-4l
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 15:07:04 +0100
+	id 1Xowa3-0002YI-VA
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 16:45:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933122AbaKMOHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 09:07:00 -0500
-Received: from mail-la0-f51.google.com ([209.85.215.51]:47389 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932756AbaKMOG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 09:06:59 -0500
-Received: by mail-la0-f51.google.com with SMTP id q1so13195879lam.24
-        for <git@vger.kernel.org>; Thu, 13 Nov 2014 06:06:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=qeula4bUpWHoglU5RnZQt/R/9thWqofLS4993xxNX8o=;
-        b=ka271usN2M89TVSNKk3qa6EiEqOEjcOgalRGy1IlzEcHH3uvK2NICf0sDsNrwI0Frg
-         0AAM8LnqtHoYIvu0fLQsCFll03zIqfsSakqxlq8cf1W1QhqlfT/0A+NHYqlUz323zj4w
-         vFRwiFilAzBeuyMP/n95SlaZJRQf7BDUvrgs+/QNOahTPTtUYeg8GvDZ7cljVv6CljAR
-         Le5ABcv8Lv+nIMW4BopxnwTSQYIyW/EZ2fJIHbiV3xO36CWoRogUe2IaLjtyHEMtguYm
-         jgbCCUuSOdAjXBQcDy7CWmoYO6R6IpL6FSk4WrYJLFn8kxpf+5tawZLIaIjI+nKzA60x
-         7t+g==
-X-Received: by 10.152.21.135 with SMTP id v7mr2664706lae.65.1415887617477;
-        Thu, 13 Nov 2014 06:06:57 -0800 (PST)
-Received: from localhost.localdomain ([37.110.214.49])
-        by mx.google.com with ESMTPSA id qg4sm7507178lbb.36.2014.11.13.06.06.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 13 Nov 2014 06:06:56 -0800 (PST)
-X-Mailer: git-send-email 2.1.3.2.ge64e4eb
+	id S932767AbaKMPpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 10:45:01 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217]:9700 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752938AbaKMPpA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 10:45:00 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415893498; l=2155;
+	s=domk; d=aepfle.de;
+	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Subject:To:From:Date;
+	bh=ZTwk4FeqjxCS/xayOhJpyIeTZe4=;
+	b=vWIzUJ9/9WenZlTfERUKVHPrTFMvOc1v3LcfFUOoLlacHF46x2N95MnCEPuzKPR2EPv
+	MJ98pTClBKooghQ4Et/Gp8QheWtqEUjnZaWOJglRKsKPCNcJZtRn+KNRKt5qRRBdl/myZ
+	ZXdLklTKw2p/4a9Jz3D/RVw4VjGzzhrZHUw=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
+	by smtp.strato.de (RZmta 35.11 AUTH)
+	with ESMTPSA id 6037d0qADFiwold
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	for <git@vger.kernel.org>;
+	Thu, 13 Nov 2014 16:44:58 +0100 (CET)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id 1816A50172; Thu, 13 Nov 2014 16:44:57 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20141113111444.GA15503@aepfle.de>
+User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When object is replaced with itself git shows unhelpful messages like(git log):
-    "fatal: replace depth too high for object <SHA1>"
+On Thu, Nov 13, Olaf Hering wrote:
 
-Prevents user from replacing object with itself(with test for checking
-this case).
+> So how can I reduce the disk usage needed for the four .git dirs above?
+> I looked around in the docs that came with my git-2.1.3 package, but
+> found nothing that answers my question. Maybe we can workout something
+> and add it to one of the existing docs.
 
-Signed-off-by: Manzur Mukhitdinov <manzurmm@gmail.com>
----
- builtin/replace.c  |  8 +++-----
- t/t6050-replace.sh | 11 +++++++++--
- 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 294b61b..628377a 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -157,6 +157,9 @@ static int replace_object_sha1(const char *object_ref,
- 	char ref[PATH_MAX];
- 	struct ref_lock *lock;
- 
-+	if (!hashcmp(object, repl))
-+		return error("new object is the same as the old one: '%s'", sha1_to_hex(object));
-+
- 	obj_type = sha1_object_info(object, NULL);
- 	repl_type = sha1_object_info(repl, NULL);
- 	if (!force && obj_type != repl_type)
-@@ -295,9 +298,6 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
- 
- 	free(tmpfile);
- 
--	if (!hashcmp(old, new))
--		return error("new object is the same as the old one: '%s'", sha1_to_hex(old));
--
- 	return replace_object_sha1(object_ref, old, "replacement", new, force);
- }
- 
-@@ -406,8 +406,6 @@ static int create_graft(int argc, const char **argv, int force)
- 
- 	strbuf_release(&buf);
- 
--	if (!hashcmp(old, new))
--		return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
- 
- 	return replace_object_sha1(old_ref, old, "replacement", new, force);
- }
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index 4d5a25e..5f96374 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -369,9 +369,8 @@ test_expect_success '--edit with and without already replaced object' '
- 	git cat-file commit "$PARA3" | grep "A fake Thor"
- '
- 
--test_expect_success '--edit and change nothing or command failed' '
-+test_expect_success '--edit with failed editor' '
- 	git replace -d "$PARA3" &&
--	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
- 	test_must_fail env GIT_EDITOR="./fakeeditor;false" git replace --edit "$PARA3" &&
- 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
- 	git replace -l | grep "$PARA3" &&
-@@ -440,4 +439,12 @@ test_expect_success GPG '--graft on a commit with a mergetag' '
- 	git replace -d $HASH10
- '
- 
-+test_expect_success 'replacing object with itself must fail' '
-+    test_must_fail git replace $HASH1 $HASH1 &&
-+    HASH8=$(git rev-parse --verify HEAD) &&
-+    test_must_fail git replace HEAD $HASH8 &&
-+    test_must_fail git replace --graft HEAD HEAD^ &&
-+    test_must_fail env GIT_EDITOR=true git replace --edit HEAD
-+'
-+
- test_done
--- 
-1.9.1
+While playing around with this I made some notes, this is the result:
+
+
+Manage multiple branches as separate copies
+
+
+To preserve disk space for each clone, use a master copy of the reop and do
+local clones from such copy of a remote repository.
+
+First clone the remote repository as usual. Then create a local branch for
+each remote branch that is supposed to be worked on:
+# git clone git://host/repo.git repo-master                                                                                                                                                                                                                            
+# cd repo-master                                                                                                                                                                                                                                                       
+# git checkout -b branchA origin/branchA                                                                                                                                                                                                                               
+# git checkout -b branchB origin/branchB                                                                                                                                                                                                                               
+# cd -                                                                                                                                                                                                                                                                 
+
+Now clone each work branch into its own directory. The work dir references the
+master repo. All changes come from and go into this repo, instead of the
+remote repo.
+# git clone -l -b branchA repo-master repo-branchA                                                                                                                                                                                                                     
+# git clone -l -b branchB repo-master repo-branchB                                                                                                                                                                                                                     
+
+To make changs in a work dir, commit as usual. The changes will be pushed from
+the work copy into the local master repo. Its required to have some other
+branch than branchA active in repo-master, or push from work copy to
+repo-master will fail.
+# cd repo-master
+# git checkout master
+# cd -
+# cd repo-branchA
+# git commit -avs
+# git push origin branchA
+# cd -
+
+To publish the outstanding changes its required to do this from the master
+repo. First checkout the work branch, then pull the local changes and finally
+push them to the remote repo.
+# cd repo-master
+# git checkout branchA
+# git pull
+# git push origin branchA
+# cd -
+
+To receive changes from the remote repo its required to do this from the
+master repo. First checkout the work branch, then pull the outstanding remote
+changes into the local branch. And finally pull them into the work dir.
+# cd repo-master
+# git fetch --all (optional)
+# git checkout branchB
+# git pull
+# cd -
+# cd repo-branchB
+# git pull
+# cd -
+
+
+# vim: set tw=72 et
