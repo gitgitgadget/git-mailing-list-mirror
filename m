@@ -1,80 +1,97 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Thu, 13 Nov 2014 13:21:20 +0100
-Message-ID: <20141113122119.GC15503@aepfle.de>
-References: <20141113111444.GA15503@aepfle.de>
- <1415880149.4825.43.camel@knuth.computer-surgery.co.uk>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC] On watchman support
+Date: Thu, 13 Nov 2014 19:22:48 +0700
+Message-ID: <CACsJy8AKsvL2XcBMGG1Jy_W2KaOCuYm16Ffk529KDOARr68XNQ@mail.gmail.com>
+References: <20141111124901.GA6011@lanh> <54643C30.6010204@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Roger Gammans <roger@gammascience.co.uk>
-X-From: git-owner@vger.kernel.org Thu Nov 13 13:21:29 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twopensource.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Nov 13 13:23:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XotOx-0006n3-2h
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 13:21:27 +0100
+	id 1XotQq-0007iT-8Z
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 13:23:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932684AbaKMMVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 07:21:23 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.162]:25202 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932512AbaKMMVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 07:21:22 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415881280; l=774;
-	s=domk; d=aepfle.de;
-	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Subject:Cc:To:From:Date;
-	bh=ULhxW87EietU98CWkKASeDKxCXs=;
-	b=q6Wie++0Xoue2Ldcerh1Z/la8iQhgBAxd3WA+kZq7oW+Cfol1Y2nL6xQ+jjn0NIEwZ/
-	e/eJZkmdJ6Wb5NsFfD/uEOs4gEfUBSvIUB8TrNCfiOBVQaRzRUiCzwQ8NuCTBdF0LO22g
-	Cw/tOQILBXmIH9CSnGhaNqM1Wz8CWwjh0zg=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 35.11 AUTH)
-	with ESMTPSA id Y01991qADCLKkWZ
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate);
-	Thu, 13 Nov 2014 13:21:20 +0100 (CET)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 403D250172; Thu, 13 Nov 2014 13:21:20 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1415880149.4825.43.camel@knuth.computer-surgery.co.uk>
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S932757AbaKMMXW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2014 07:23:22 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:41997 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932703AbaKMMXT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2014 07:23:19 -0500
+Received: by mail-ie0-f179.google.com with SMTP id rl12so15693612iec.38
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 04:23:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=cfB+Bjm/j9slGLXeb3qoehPbrKyxAcWhpz4qMUxfuOY=;
+        b=fSZPG2Ylqf67TAuYauHcHSqzE6uEUCuKBwFwnzrFwVv3YzwfRK2gmQWSJeDnUDVn+S
+         rbZrHfqMu+MPKofnEmN83v8LdPMOKnenGkGfYTGjeyUHU/l0GrnWPPqWs0yBxUGLVfos
+         x/V9PxqURaxXdA2vWbNpJAVd7QYgzzcuwo2Z4mLtwISt69eqZPTwnijkiJGXTkcX/RI6
+         Udy3FQ5hQfWdjXUDCx+rld6drl5EZgvZvLwLdRUpRCOl9m8VcP5E0raNzQ5vqUys+L1J
+         2i/sTTebb1mADuAM1+GN0xjlGHcKAOkqFsO4169Ko5apSAdPni7H0br2rBS2SSWtxEdu
+         6vgQ==
+X-Received: by 10.50.66.179 with SMTP id g19mr2354916igt.40.1415881398392;
+ Thu, 13 Nov 2014 04:23:18 -0800 (PST)
+Received: by 10.107.176.8 with HTTP; Thu, 13 Nov 2014 04:22:48 -0800 (PST)
+In-Reply-To: <54643C30.6010204@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, Roger Gammans wrote:
+On Thu, Nov 13, 2014 at 12:05 PM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+> From a Git user perspective it could be good to have something like t=
+his:
+>
+> a) git status -u
+> b) git status -uno
+> c) git status -umtime
+> d) git status -uwatchman
+>
+> We know that a) and b) already exist.
+> c) Can be convenient to have, in order to do benchmarking and testing=
+=2E
+>   When the UNTR extension is not found, Git can give an error,
+>   saying something like this:
+>   No mtime information found, use "git update-index --untracked-cache=
+"
+> d) does not yet exist
+>
+> Of course we may want to configure the default for "git status" in a =
+default variable,
+> like status.findUntrackedFiles, which can be empty "", "mtime" or "wa=
+tchman",
+> and we may add other backends later.
 
-> Note the first sentence of the second paragraph.
->  eg:
->  # git clone git://host/repo.git repo-master
->  # git clone repo-master repo-branchA
->  # cd repo-branchA
->  # git checkout -b branchA origin/branchA
+While "git status" is in the spotlight, these optimizations have wider
+impact. Faster index read/refresh/write helps the majority of
+commands. Faster untracked listing hits git-status, git-add,
+git-commit -A... This is why I go with environment variable for
+temporarily disabling something, or we'll need many config and command
+line options, one per command.
 
-It fails right here because in this dir only "master" exists, but
-branchA is expected.
+> A short test showed that watchman compiles under Mac OS.
+> The patch did not compile out of the box (both Git and watchman decla=
+re
+> there own version of usage(), some C99 complaints from the compiler i=
+n watchman,
+> nothing that can not be fixed easily)
 
-So far the sequence of commands is:
+Yeah it's not perfect. It's mainly to show speeding up refresh with
+watchman could be done easily and with low impact
 
-# git clone git://host/repo.git repo-master
-# cd repo-master
-# git checkout -b branchA origin/branchA
-# git checkout -b branchB origin/branchB
-# cd -
-# git clone -l -b branchA repo-master repo-branchA
-# git clone -l -b branchB repo-master repo-branchB
+> I will test the mtime patch under networked file systems the next wee=
+ks.
 
-Next step will be:
-# $do_work ; git commit -avs ; git push 
-
-Will that work as expected? Will find out after lunch..
-
-
-Olaf
+Hmm.. you remind me mtime series may have this as an advantage over wat=
+chman..
+--=20
+Duy
