@@ -1,75 +1,52 @@
-From: Colin Smith <colin.webdev@gmail.com>
-Subject: Bug: git log showing nothing when using --since and --until flags
- with specific dates
-Date: Thu, 13 Nov 2014 11:27:06 +1100
-Message-ID: <CAPLyDLo+-SebLvHxVKT7RAiER2c8HdeZQUg7_DGrpER1h-BPQA@mail.gmail.com>
+From: Patrick Hemmer <git@stormcloud9.net>
+Subject: Set file modification time on checkout
+Date: Wed, 12 Nov 2014 23:45:52 -0500
+Message-ID: <54643780.7060504@stormcloud9.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 01:27:13 2014
+X-From: git-owner@vger.kernel.org Thu Nov 13 05:45:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoiFk-0002sO-Lg
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 01:27:13 +0100
+	id 1XomIA-0000xM-Dv
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 05:45:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753079AbaKMA1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Nov 2014 19:27:09 -0500
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:38090 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752890AbaKMA1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Nov 2014 19:27:08 -0500
-Received: by mail-wi0-f177.google.com with SMTP id l15so2729487wiw.4
-        for <git@vger.kernel.org>; Wed, 12 Nov 2014 16:27:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=qQzkN1+MpJVLClnMkjthB+HuFiGl5RRp5acKNw2yQxg=;
-        b=QLEz8K7DQO4BRrqS+96kX8N6C+F9NK0WnmhFHFZOMVWMgbYBL/Q/lU9T3Ht1xyRnHx
-         0XBtoNuMel19PA7/9C1AEVZfoHpx4oCKqcxnimvU8czN6hWxyYM5ojnqqcmgwq4XGO1l
-         hDT2mxKVYNpBlukqJbzJAdBHEMBp0FCMOT/8hRUH+mCTWtzD5nNPeMaVPEoyDjzsxqNq
-         uuWx/+W/9p3TCmpTWBMY7L5dyvAK0HJ2SJAJTqGclqwzQneTnfYqEldQQkWqv6F0Bhy8
-         OFYxg53gPB4aCYwxPxjNBbZGiyvriNJKzzxEOT6YopLycRXtDDH5ZRTZEgwcyHNBa3nF
-         ESfQ==
-X-Received: by 10.180.73.45 with SMTP id i13mr54696329wiv.32.1415838426418;
- Wed, 12 Nov 2014 16:27:06 -0800 (PST)
-Received: by 10.194.85.227 with HTTP; Wed, 12 Nov 2014 16:27:06 -0800 (PST)
+	id S1753651AbaKMEpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Nov 2014 23:45:54 -0500
+Received: from ec2-54-241-211-23.us-west-1.compute.amazonaws.com ([54.241.211.23]:42029
+	"EHLO feystorm.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753559AbaKMEpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Nov 2014 23:45:54 -0500
+Received: from [192.168.0.24] (thirteen.feystorm.net [192.168.0.1])
+	(using TLSv1 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by feystorm.net (Postfix) with ESMTPSA id 96D5A191BED8
+	for <git@vger.kernel.org>; Wed, 12 Nov 2014 23:45:52 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+The request is to allow git to set the file modification time on
+checkout to the commit-author-date of the commit which last modified the
+file.
+Yes I know this is in the FAQ, but the FAQ entry is missing an
+increasingly common use case: docker.
+When docker builds an image, it generates layers of images based on each
+build step. Adding a file would be a build step, and for this action it
+generates a hash based on the file modification time & content. Next
+time the image is built, if these haven't changed, the previously built
+layer is reused. And like git commit history, if a layer changes, the
+hash of all subsequent layers change and have to be rebuilt. So reusing
+layers can save a ton of time.
 
-Apologies if this has already been raised or PEBCAK, but I've noticed
-a bug where git log with certain date ranges breaks things. It appears
-to be any --since date with a --until date in the future between
-2014-12-01 and 2014-12-09. Dates from 2014-12-10 appear to work, and
-so does the date 2015-12-01.
+Now I'm not proposing that this be made the default action. The `make`
+use case is legitimate. But it would be nice to have an option for
+`checkout` and `reset` which toggles the behavior.
 
-Tested with the following versions:
-
-git version 2.2.0.rc1.18.gf6f61cb on Ubuntu
-
-git version 2.0.1 on whatever the latest version of OS X is.
-
-To reproduce, on a git repo with a recent enough change to view a
-checkin after October 1 2014, run 'git log --since=2014-10-01
---until=2014-12-02' - no errors or anything to indicate the command
-failed are shown, now run 'git log --since=2014-10-01
---until=2014-12-10'.
-
-Btw, the mail daemon appears to reject emails with '550 5.7.1
-Content-Policy reject msg: The message contains HTML subpart,
-therefore we consider it SPAM or Outlook Virus.  TEXT/PLAIN is
-accepted.! BF:<U 0.499737>; S1752168AbaKMAGd' - makes reporting bugs a
-bit of a hassle...
-
-
-Cheers,
-
-
-
-Colin Smith
+-Patrick
