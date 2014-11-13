@@ -1,116 +1,115 @@
-From: Olaf Hering <olaf@aepfle.de>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
 Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Thu, 13 Nov 2014 16:44:57 +0100
-Message-ID: <20141113154457.GA31624@aepfle.de>
+Date: Thu, 13 Nov 2014 17:03:25 +0100
+Message-ID: <20141113160325.GA24351@paksenarrion.iveqy.com>
 References: <20141113111444.GA15503@aepfle.de>
+ <20141113154457.GA31624@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 16:45:10 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Olaf Hering <olaf@aepfle.de>
+X-From: git-owner@vger.kernel.org Thu Nov 13 16:57:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xowa3-0002YI-VA
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 16:45:08 +0100
+	id 1Xowlg-00017e-3V
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 16:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932767AbaKMPpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 10:45:01 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217]:9700 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752938AbaKMPpA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 10:45:00 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415893498; l=2155;
-	s=domk; d=aepfle.de;
-	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Subject:To:From:Date;
-	bh=ZTwk4FeqjxCS/xayOhJpyIeTZe4=;
-	b=vWIzUJ9/9WenZlTfERUKVHPrTFMvOc1v3LcfFUOoLlacHF46x2N95MnCEPuzKPR2EPv
-	MJ98pTClBKooghQ4Et/Gp8QheWtqEUjnZaWOJglRKsKPCNcJZtRn+KNRKt5qRRBdl/myZ
-	ZXdLklTKw2p/4a9Jz3D/RVw4VjGzzhrZHUw=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 35.11 AUTH)
-	with ESMTPSA id 6037d0qADFiwold
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	for <git@vger.kernel.org>;
-	Thu, 13 Nov 2014 16:44:58 +0100 (CET)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 1816A50172; Thu, 13 Nov 2014 16:44:57 +0100 (CET)
+	id S933251AbaKMP5D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Nov 2014 10:57:03 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:38500 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932245AbaKMP5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 10:57:00 -0500
+Received: by mail-lb0-f174.google.com with SMTP id w7so2672170lbi.33
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 07:56:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=gtWLD+0/eh8FAWtLrcisgx8Ho62hzUQcTIUHaFQPpDM=;
+        b=PwwyD3aq1FmqK4AN4eIoTLpE8HaRqowa/woi83btPrJsGDBcJdmEikLTGk7BqGWVfh
+         u/fjPWonng2hxM2uULC19SqcQKZOPd9MoDOcbkYSpxSwlCO5Y0sK0aNWKa9vlb9hHy1M
+         uCspVY8qnlCth8eFT6ouJH14hRabJI1IqtZMXp+vrBWnJVa1qeN4WTpfd5Cbumr8HiAO
+         7YN/uOgo4jyTVSoTN07deVsQ2IX90vWRrB31Hu1oiMAYysLXmptbTocQemkitpGDOkVk
+         7jsg75BlrptaLoOWmAniGJaAq9be3MWnYdYn/Gb3kCJYe+JAS4NEcp64mk8ankZZBWpi
+         bYCg==
+X-Received: by 10.152.22.194 with SMTP id g2mr3196544laf.33.1415894219477;
+        Thu, 13 Nov 2014 07:56:59 -0800 (PST)
+Received: from paksenarrion.paks.iveqy.com (c83-249-10-52.bredband.comhem.se. [83.249.10.52])
+        by mx.google.com with ESMTPSA id ed8sm4075333lbb.41.2014.11.13.07.56.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Nov 2014 07:56:58 -0800 (PST)
+Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1Xowrl-00074k-97; Thu, 13 Nov 2014 17:03:25 +0100
 Content-Disposition: inline
-In-Reply-To: <20141113111444.GA15503@aepfle.de>
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+In-Reply-To: <20141113154457.GA31624@aepfle.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, Olaf Hering wrote:
+Thanks for sharing your notes! A few comments:
 
-> So how can I reduce the disk usage needed for the four .git dirs above?
-> I looked around in the docs that came with my git-2.1.3 package, but
-> found nothing that answers my question. Maybe we can workout something
-> and add it to one of the existing docs.
+On Thu, Nov 13, 2014 at 04:44:57PM +0100, Olaf Hering wrote:
+> First clone the remote repository as usual. Then create a local branc=
+h for
+> each remote branch that is supposed to be worked on:
+> # git clone git://host/repo.git repo-master
+> # cd repo-master
+> # git checkout -b branchA origin/branchA
+> # git checkout -b branchB origin/branchB
+> # cd -
+>
+> Now clone each work branch into its own directory. The work dir refer=
+ences the
+> master repo. All changes come from and go into this repo, instead of =
+the
+> remote repo.
+> # git clone -l -b branchA repo-master repo-branchA
+> # git clone -l -b branchB repo-master repo-branchB
+>
+> To make changs in a work dir, commit as usual. The changes will be pu=
+shed from
+> the work copy into the local master repo. Its required to have some o=
+ther
+> branch than branchA active in repo-master, or push from work copy to
+> repo-master will fail.
 
+That's one of the reason it's not recommended to push into a non-bare
+repository. You should clone your repo-master with the --bare option to
+avoid having a work dir there.
 
-While playing around with this I made some notes, this is the result:
+> To publish the outstanding changes its required to do this from the m=
+aster
+> repo. First checkout the work branch, then pull the local changes and=
+ finally
+> push them to the remote repo.
+> # cd repo-master
+> # git checkout branchA
+> # git pull
+> # git push origin branchA
+> # cd -
 
+It's not. You could just add your remote repository as a remote to each
+of your clones of your master repo and push directly from them. It
+would be much simplier and it would allow you to directly fetch changes
+from your remote into your branches as well.
 
-Manage multiple branches as separate copies
+(however, I'm not sure but I think, that this will slowly increase the
+difference between your repositories when you develop. So that they
+won't change any new data since to local clone was made).
 
+--=20
+Med v=E4nlig h=E4lsning
+=46redrik Gustafsson
 
-To preserve disk space for each clone, use a master copy of the reop and do
-local clones from such copy of a remote repository.
-
-First clone the remote repository as usual. Then create a local branch for
-each remote branch that is supposed to be worked on:
-# git clone git://host/repo.git repo-master                                                                                                                                                                                                                            
-# cd repo-master                                                                                                                                                                                                                                                       
-# git checkout -b branchA origin/branchA                                                                                                                                                                                                                               
-# git checkout -b branchB origin/branchB                                                                                                                                                                                                                               
-# cd -                                                                                                                                                                                                                                                                 
-
-Now clone each work branch into its own directory. The work dir references the
-master repo. All changes come from and go into this repo, instead of the
-remote repo.
-# git clone -l -b branchA repo-master repo-branchA                                                                                                                                                                                                                     
-# git clone -l -b branchB repo-master repo-branchB                                                                                                                                                                                                                     
-
-To make changs in a work dir, commit as usual. The changes will be pushed from
-the work copy into the local master repo. Its required to have some other
-branch than branchA active in repo-master, or push from work copy to
-repo-master will fail.
-# cd repo-master
-# git checkout master
-# cd -
-# cd repo-branchA
-# git commit -avs
-# git push origin branchA
-# cd -
-
-To publish the outstanding changes its required to do this from the master
-repo. First checkout the work branch, then pull the local changes and finally
-push them to the remote repo.
-# cd repo-master
-# git checkout branchA
-# git pull
-# git push origin branchA
-# cd -
-
-To receive changes from the remote repo its required to do this from the
-master repo. First checkout the work branch, then pull the outstanding remote
-changes into the local branch. And finally pull them into the work dir.
-# cd repo-master
-# git fetch --all (optional)
-# git checkout branchB
-# git pull
-# cd -
-# cd repo-branchB
-# git pull
-# cd -
-
-
-# vim: set tw=72 et
+tel: 0733-608274
+e-post: iveqy@iveqy.com
