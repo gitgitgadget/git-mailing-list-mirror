@@ -1,121 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-new-workdir: Add -f to force new-workdir in existing directory.
-Date: Thu, 13 Nov 2014 13:21:59 -0800
-Message-ID: <xmqqioiizthk.fsf@gitster.dls.corp.google.com>
-References: <1415906213.32352.43.camel@mad-scientist.net>
+Subject: Re: appropriate mailing list for gitk patches
+Date: Thu, 13 Nov 2014 13:32:28 -0800
+Message-ID: <xmqqegt6zt03.fsf@gitster.dls.corp.google.com>
+References: <54651E28.9090100@informatik.uni-kiel.de>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Paul Smith <paul@mad-scientist.net>
-X-From: git-owner@vger.kernel.org Thu Nov 13 22:23:41 2014
+To: lennart spitzner <lsp@informatik.uni-kiel.de>
+X-From: git-owner@vger.kernel.org Thu Nov 13 22:32:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp1rh-0007SY-82
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 22:23:41 +0100
+	id 1Xp20L-0003VS-QX
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 22:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934097AbaKMVXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 16:23:37 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59401 "EHLO
+	id S934741AbaKMVcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 16:32:33 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59381 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934044AbaKMVXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 16:23:36 -0500
+	with ESMTP id S934245AbaKMVcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 16:32:31 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4FE6C1D797;
-	Thu, 13 Nov 2014 16:23:35 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EBAB21D9E7;
+	Thu, 13 Nov 2014 16:32:29 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WxAL52sUtg7XZXFK4ARJ5+L/i4Y=; b=oS7efP
-	CvbRHkV+Y8Sn+ozO0WdKfEAAYA5eWg7pSPa5i7BSJHlmPBUNVSVKwQCVjdAQ7614
-	XgdRtVIjT6kL3wAneBlwlxHCM6oPXfDExEK9jXC3REwWjGFCDK8uJRLQpCwJgDnj
-	r7YFV9czl6Q0nxGhpyIXNLShTE+4/v+Wfm/Q8=
+	:content-type; s=sasl; bh=bXIv/WrhOZtZaJRyAj6U3Qzy6TY=; b=ltff0S
+	BuBE1Junuw7nnY8iFMFuTfUJRP3MYML1ftHlLUcAceoqVOXMl87O/jeY3LUPee7X
+	F4J0fxEG+gxmSCR0fBGPFWLg5pVFCgwcOrjWPty8cHVS7Qq/Zu/qWWGZw/nzMgyf
+	gdx3/Be3HsiyB8fukCO0yF8ASvn5vv4YEAy9A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E802YCaUAm7oNnbxYzYuPzxjSaSisol+
-	MxVvKVEleV24WBotMB5HogO4JW2CWZ5wlvyxVr6ckGDqy9LNpb0PTTH61+TwumSg
-	SKlVZNNgRJytuPqkQPp4JHLO/hYPN9M538J5qjTNPpIeSTGmhj9ky8I9MGfcGfit
-	ls3MKW/KsSM=
+	:content-type; q=dns; s=sasl; b=AeXdqd34mtckNr31GE9p6lfU8MEBtXaV
+	fBueyx2dCJWg7sfdz7YCk3UDc36sE/Fni8IY0G4icpIdAmwsY6QK1nZ6jGyQIE6F
+	pTO69lL3ZTGVh/H+SBmyNaXNdssarzpgZVWyycOezFFHE/aPyb1DTuC99C+3UT+M
+	eDXkb3vXPjM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 462D71D793;
-	Thu, 13 Nov 2014 16:23:35 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E1A441D9E5;
+	Thu, 13 Nov 2014 16:32:29 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 336111D745;
-	Thu, 13 Nov 2014 16:22:00 -0500 (EST)
-In-Reply-To: <1415906213.32352.43.camel@mad-scientist.net> (Paul Smith's
-	message of "Thu, 13 Nov 2014 14:16:53 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 484081D9E4;
+	Thu, 13 Nov 2014 16:32:29 -0500 (EST)
+In-Reply-To: <54651E28.9090100@informatik.uni-kiel.de> (lennart spitzner's
+	message of "Thu, 13 Nov 2014 22:10:00 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1AC461D4-6B7B-11E4-9F1F-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 91BB641C-6B7C-11E4-A56D-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul Smith <paul@mad-scientist.net> writes:
+lennart spitzner <lsp@informatik.uni-kiel.de> writes:
 
-> From: Paul Smith <paul@mad-scientist.net>
-> Date: Thu, 13 Nov 2014 14:01:34 -0500
-> Subject: [PATCH] git-new-workdir: Add -f to force new-workdir in existing directory.
->
-> Signed-off-by: Paul Smith <psmith@mad-scientist.net>
-> ---
->
-> I have an environment I want to use new-workdir for, where the directory
-> I need to use is pre-created for me and I'm dropped into that directory
-> and I have no control over this (it's an automated build system).  The
-> directory is empty but git-new-workdir still is unhappy about it.  I
-> added a "-f" flag to allow the user to force git-new-workdir to continue
-> even if the directory exists.  It still bails if there's a .git
-> directory already, however.
+> I have a patch for gitk. Should i send it to this list, or is there some
+> other?  git/Documentation/SubmittingPatches mentions
+> git://ozlabs.org/~paulus/gitk (the master of which i based my commit
+> on), but never mentions any list(s) by name (only "the Git mailing
+> list", which i presume is this one).
 
-Is there an easy way to check if the existing directory is really
-empty?  For one thing, with your patched version, you may be by
-mistake overwriting things when "git checkout -f" happens at the
-end, even if there weren't any existing ".git/" directory there.
-And if you can check that the existing directory is empty, you
-perhaps may not even have to protect this behind a "-f" option.
+You are in the right place ;-)  Make sure you Cc: paulus as the area
+maintainer on your patches, though.
 
->
->  contrib/workdir/git-new-workdir | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
->
-> diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
-> index 75e8b25..a4079c1 100755
-> --- a/contrib/workdir/git-new-workdir
-> +++ b/contrib/workdir/git-new-workdir
-> @@ -10,11 +10,17 @@ die () {
->  	exit 128
->  }
->  
-> -if test $# -lt 2 || test $# -gt 3
-> +if test $# -lt 2 || test $# -gt 4
->  then
-> -	usage "$0 <repository> <new_workdir> [<branch>]"
-> +	usage "$0 [-f] <repository> <new_workdir> [<branch>]"
->  fi
->  
-> +force=false
-> +if [ x"$1" = x-f ]
-> +then
-> +    force=true
-> +    shift
-> +fi
->  orig_git=$1
->  new_workdir=$2
->  branch=$3
-> @@ -51,7 +57,11 @@ fi
->  # don't recreate a workdir over an existing repository
->  if test -e "$new_workdir"
->  then
-> -	die "destination directory '$new_workdir' already exists."
-> +	$force || die "destination directory '$new_workdir' already exists."
-> +	if test -e "$new_workdir/.git"
-> +	then
-> +		die "destination directory '$new_workdir/.git' already exists."
-> +	fi
->  fi
->  
->  # make sure the links use full paths
+> Also, a minor question regarding patches: I wondered why patches do not
+> mention the commit id that the patch(es) are based on. My current guess
+> is that the diffs containing the sha1's is considered sufficient. Is
+> this the case? Are there more/other aspects?
+
+A new development is done based on the tip of 'master' by convention
+around here, so people know it is meant to apply there unless the
+patch submitter says otherwise explicitly.
+
+People send patches on a random commit of their own that is not
+available to the public (e.g. you may be working on some big topic,
+discover a simple bug that is not related to the topic, and create a
+fix for that simple bug right there on top and send that out as a
+patch).  Base commit object name would be useless in such a case
+anyway.
