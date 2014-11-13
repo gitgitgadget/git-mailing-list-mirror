@@ -1,107 +1,153 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: [PATCH] git-new-workdir: Add -f to force new-workdir in existing
- directory.
-Date: Thu, 13 Nov 2014 14:16:53 -0500
-Message-ID: <1415906213.32352.43.camel@mad-scientist.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3 0/1] Support updating working trees when pushing into
+ non-bare repos
+Date: Thu, 13 Nov 2014 20:18:09 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1411132001290.13845@s15462909.onlinehome-server.info>
+References: <cover.1415629053.git.johannes.schindelin@gmx.de> <cover.1415876330.git.johannes.schindelin@gmx.de> <xmqqbnob2ds7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 13 20:17:31 2014
+Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-1925862511-1415906290=:13845"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 13 20:18:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XoztX-0000ID-9m
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 20:17:27 +0100
+	id 1XozuR-0000s7-0s
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 20:18:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933917AbaKMTRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 14:17:07 -0500
-Received: from gproxy7-pub.mail.unifiedlayer.com ([70.40.196.235]:32983 "HELO
-	gproxy7-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S933423AbaKMTRG (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Nov 2014 14:17:06 -0500
-Received: (qmail 2324 invoked by uid 0); 13 Nov 2014 19:17:04 -0000
-Received: from unknown (HELO cmgw4) (10.0.90.85)
-  by gproxy7.mail.unifiedlayer.com with SMTP; 13 Nov 2014 19:17:04 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-	by cmgw4 with 
-	id FDGz1p0142qhmhE01DH2Jw; Thu, 13 Nov 2014 18:17:03 -0700
-X-Authority-Analysis: v=2.1 cv=b7chvL2x c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
- a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
- a=2NV5t7OSZ7cA:10 a=HLPSmqP3z1ZTmeDY7uYA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:Date:To:From:Subject:Message-ID; bh=O08rwx5o9SHhgpLJgL3NrECQdmG8nBixwKLE/dmN7xE=;
-	b=TP+dSA9R196YGm9/+Kr4uRQ2Y8Ut7/ewZP2bx7YfaI5y+SKahOV2VD37Zjet/Q0/2FrX7N/gU2pFGK8jtAbowDYFyUB6hhpyvK5f9vgMUEfZoFt/ChqGNfd1rwlenMqp;
-Received: from [173.9.45.73] (port=37604 helo=pdsdesk)
-	by box531.bluehost.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-	(Exim 4.82)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1Xozt6-0007Cc-Bu
-	for git@vger.kernel.org; Thu, 13 Nov 2014 12:17:00 -0700
-X-Mailer: Evolution 3.12.7-0ubuntu1 
-X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 173.9.45.73 authed with paul@mad-scientist.us}
+	id S933675AbaKMTSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 14:18:17 -0500
+Received: from mout.gmx.net ([212.227.17.20]:61732 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932939AbaKMTSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 14:18:15 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0LZzY9-1YGP670DEL-00lp6S;
+ Thu, 13 Nov 2014 20:18:10 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqbnob2ds7.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:/Fs5lGaCER+zmFlP2vshPX/I9ABoorD78FixoesOa+La0AKr3dS
+ qQLlo997gZGXYyBWtVgPrESE7eX5PmFUTBWk3Zv90+u2t5jh7tav5awaduLm9RRO/RQgEJ2
+ POmfNqbupS0B+UgRXXqMmsEp/5HOLjeT/e+ZBdmHEtJzBW62qLko2FydKQ8sbYRPkzcqXxk
+ slF5GHNYCZhCqDNXQ0f6Q==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Paul Smith <paul@mad-scientist.net>
-Date: Thu, 13 Nov 2014 14:01:34 -0500
-Subject: [PATCH] git-new-workdir: Add -f to force new-workdir in existing directory.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Paul Smith <psmith@mad-scientist.net>
----
+--1784107012-1925862511-1415906290=:13845
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I have an environment I want to use new-workdir for, where the directory
-I need to use is pre-created for me and I'm dropped into that directory
-and I have no control over this (it's an automated build system).  The
-directory is empty but git-new-workdir still is unhappy about it.  I
-added a "-f" flag to allow the user to force git-new-workdir to continue
-even if the directory exists.  It still bails if there's a .git
-directory already, however.
+Hi Junio,
 
- contrib/workdir/git-new-workdir | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+On Thu, 13 Nov 2014, Junio C Hamano wrote:
 
-diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
-index 75e8b25..a4079c1 100755
---- a/contrib/workdir/git-new-workdir
-+++ b/contrib/workdir/git-new-workdir
-@@ -10,11 +10,17 @@ die () {
- 	exit 128
- }
- 
--if test $# -lt 2 || test $# -gt 3
-+if test $# -lt 2 || test $# -gt 4
- then
--	usage "$0 <repository> <new_workdir> [<branch>]"
-+	usage "$0 [-f] <repository> <new_workdir> [<branch>]"
- fi
- 
-+force=false
-+if [ x"$1" = x-f ]
-+then
-+    force=true
-+    shift
-+fi
- orig_git=$1
- new_workdir=$2
- branch=$3
-@@ -51,7 +57,11 @@ fi
- # don't recreate a workdir over an existing repository
- if test -e "$new_workdir"
- then
--	die "destination directory '$new_workdir' already exists."
-+	$force || die "destination directory '$new_workdir' already exists."
-+	if test -e "$new_workdir/.git"
-+	then
-+		die "destination directory '$new_workdir/.git' already exists."
-+	fi
- fi
- 
- # make sure the links use full paths
--- 
-2.1.3
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>=20
+> > This patch series adds support for a new receive.denyCurrentBranch sett=
+ing
+> > to update the working directory (which must be clean, i.e. there must n=
+ot be
+> > any uncommitted changes) when pushing into the current branch.
+> >
+> > The scenario in which the 'updateInstead' setting became a boon in this
+> > developer's daily work is when trying to get a bug fix from a Windows
+> > computer, a virtual machine or a user's machine onto his main machine (=
+in
+> > all of those cases it is only possible to connect via ssh in one direct=
+ion,
+> > but not in the reverse direction).
+> >
+> > Interdiff vs v2 below the diffstat.
+> >
+> > Johannes Schindelin (1):
+> >   Add another option for receive.denyCurrentBranch
+> >
+> >  Documentation/config.txt |  5 ++++
+> >  builtin/receive-pack.c   | 78 ++++++++++++++++++++++++++++++++++++++++=
+++++++--
+> >  t/t5516-fetch-push.sh    | 17 +++++++++++
+> >  3 files changed, 98 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index 4f9fe81..c384515 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -2134,10 +2134,6 @@ Another option is "updateInstead" which will upd=
+ate the working
+> >  directory (must be clean) if pushing into the current branch. This opt=
+ion is
+> >  intended for synchronizing working directories when one side is not ea=
+sily
+> >  accessible via ssh (e.g. inside a VM).
+> > -+
+> > -Yet another option is "detachInstead" which will detach the HEAD if up=
+dates
+> > -are pushed into the current branch; That way, the current revision, th=
+e
+> > -index and the working directory are always left untouched by pushes.
+>=20
+> I think we had an exchange to clarify the workflow in which
+> updateInstead is useful and how to help readers, but I do not see
+> any change on that in this part of documentation.  Forgot to revise?
+
+I had revised it for v2 already. It now reads:
+
+-- snip --
+Another option is "updateInstead" which will update the working directory
+(must be clean) if pushing into the current branch. This option is
+intended for synchronizing working directories when one side is not easily
+accessible via ssh (e.g. inside a VM).
+-- snap --
+
+In my mind, this strikes the balance between sketching a scenario where
+the setting makes sense on the one hand and abducting config.txt to tell
+my life's story on the other.
+
+> > @@ -737,36 +733,66 @@ static int update_shallow_ref(struct command *cmd=
+, struct shallow_info *si)
+> >  =09return 0;
+> >  }
+> > =20
+> > -static const char *merge_worktree(unsigned char *sha1)
+> > +static const char *update_worktree(unsigned char *sha1)
+> >  {
+> >  =09const char *update_refresh[] =3D {
+> >  =09=09"update-index", "--ignore-submodules", "--refresh", NULL
+> >  =09};
+> > +=09const char *diff_index[] =3D {
+> > +=09=09"diff-index", "--quiet", "--cached", "--ignore-submodules",
+> > +=09=09"HEAD", "--", NULL
+> > +=09};
+> >  =09const char *read_tree[] =3D {
+> >  =09=09"read-tree", "-u", "-m", sha1_to_hex(sha1), NULL
+> >  =09};
+>=20
+> OK.
+>=20
+> "update-index --refresh && diff-files && diff-index --cached" is how
+> we traditionally ensure the working tree is absolutely clean (see
+> require_clean_work_tree in git-sh-setup.sh), but I do not think of a
+> reason why diff-files step is not redundant.
+
+I fear that my double-negation-fu is still stuck somewhere in dreamland.
+Do you mean to say "I could imagine that the diff-files step is
+redundant"? If that is what you are telling me, then your explanation of
+the exit code of update-index --refresh would suggest so, and so would
+https://github.com/git/git/blob/f5709437/read-cache.c#L1201-L1230 *except*
+in the case where refresh_cache_ent() returns an updated cache entry:
+https://github.com/git/git/blob/f5709437/read-cache.c#L1116-L1131 =E2=80=93=
+ but I
+could not figure out quickly when this code path is hit.
+
+Ciao,
+Johannes
+--1784107012-1925862511-1415906290=:13845--
