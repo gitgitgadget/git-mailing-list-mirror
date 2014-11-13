@@ -1,217 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] git checkout $tree -- $path always rewrites files
-Date: Thu, 13 Nov 2014 13:30:34 -0500
-Message-ID: <20141113183033.GA24107@peff.net>
-References: <20141107081324.GA19845@peff.net>
- <xmqqegtfgcfx.fsf@gitster.dls.corp.google.com>
- <20141107191745.GB5695@peff.net>
- <CANiSa6hufp=80TaesNpo1CxCbwVq3LPXvYaUSbcmzPE5pj_GGw@mail.gmail.com>
- <CANiSa6ggX-DJSXLzjYwv1K2nF1ZrpJ3bHvPjh6gFnqSLQaqZFQ@mail.gmail.com>
- <CAPc5daWdzrHr8Rdksr3HycMRQu0=Ji7h=BPYjzZj7MH6Ko0VgQ@mail.gmail.com>
- <20141108083040.GA15833@peff.net>
- <xmqqbnoge1ci.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] SubmittingPatches: fix an inconsistency
+Date: Thu, 13 Nov 2014 10:30:36 -0800
+Message-ID: <xmqqppcr0x83.fsf@gitster.dls.corp.google.com>
+References: <5463DA20.3080703@inventati.org> <5463FB4C.2060203@inventati.org>
+	<xmqqy4rf0xod.fsf@gitster.dls.corp.google.com>
+	<xmqqtx230xax.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Martin von Zweigbergk <martinvonz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 19:30:42 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: slavomir vlcek <svlc@inventati.org>
+X-From: git-owner@vger.kernel.org Thu Nov 13 19:30:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XozAI-0000DI-5Y
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 19:30:42 +0100
+	id 1XozAQ-0000HS-0w
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 19:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933785AbaKMSai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 13:30:38 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39999 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933226AbaKMSag (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 13:30:36 -0500
-Received: (qmail 8893 invoked by uid 102); 13 Nov 2014 18:30:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 12:30:36 -0600
-Received: (qmail 29336 invoked by uid 107); 13 Nov 2014 18:30:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 13:30:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 13:30:34 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqbnoge1ci.fsf@gitster.dls.corp.google.com>
+	id S933627AbaKMSal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 13:30:41 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60939 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933226AbaKMSaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 13:30:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 605081C352;
+	Thu, 13 Nov 2014 13:30:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mZyWrrWjoJv8FVxVt9t1Mfxs/UQ=; b=UEbnGc
+	zNf4vKablqM1UZLCsT+gwMZAulF8TVO/KyT75/60Y+MpVLAVyCw2Dig7/5njXuvC
+	bWxD4TH0+lXnBREIrW0euWbK+pep/hPCE9p0vld9TIB6vbGi8P3J4yFGXqfI0aZy
+	/taHEZqq5MTLCA1+4TFG/+kuAUgRf9i0dm2S4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SO9z7QfO2l3CoL5kwa9gVlj2kpJ78Osc
+	opb7sMrIX+PBSx+rOOBNDdK80CFl8u99ABCgTLgj90ZCDX/qJk4vUoO6moQoKhy5
+	plLplWLSS553JJcRYYuMt1QSf7OFqrJX3wheaJMsxu9vwigWO5mWLnhnnURiVNz0
+	wekcrLwJvBY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BDD71C351;
+	Thu, 13 Nov 2014 13:30:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A52661C350;
+	Thu, 13 Nov 2014 13:30:37 -0500 (EST)
+In-Reply-To: <xmqqtx230xax.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 13 Nov 2014 10:28:54 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 29E67750-6B63-11E4-8995-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 09, 2014 at 09:21:49AM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Fri, Nov 07, 2014 at 11:35:59PM -0800, Junio C Hamano wrote:
-> >
-> >> I think that has direct linkage; what you have in mind I think is
-> >> http://thread.gmane.org/gmane.comp.version-control.git/234903/focus=234935
-> >
-> > Thanks for that link.
-> 
-> It was one of the items in the "git blame leftover bits" list
-> (websearch for that exact phrase), so I didn't have to do any
-> digging just for this thread ;-)
-> 
-> But I made a huge typo above.  s/I think/I do not think/;
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> Signed-off-by: slavomir vlcek <svlc@inventati.org>
+>
+>> The same comment applies to the log message part.
+>
+> I said:
+>
+>> Will queue; no need to resend.
+>>
+>> Thanks.
+>
+> But one thing to make sure.  Do you really mean to have your
+> sign-off with all lowercase?  I can amend the patch to read
+>
+>     Signed-off-by: Slavomir Vlcek <svlc@inventati.org>
+>
+> while applying, so that your name does not stand out like a sore
+> thumb in "git shortlog -20 -s" output, if you want.
 
-Oh. That might explain some of my confusion. :)
-
-> The original observation you made in this thread is that when "git
-> checkout $tree - $pathspec", whose defintion is to "grab paths in
-> the $tree that match $pathspec and put them in the index, and then
-> overwrite the working tree paths with the contents of these paths
-> that are updated in the index with the contents taken from the
-> $tree", unnecessarily rewrites the working tree paths even when they
-> already had contents that were up to date.  That is what I called an
-> "implementation glitch".
-> 
-> The old thread is a different topic.
-> [...]
-
-Right, I do agree that these things don't need to be linked. The reason
-I ended up dealing with the deletion thing is that one obvious way to
-implement "do not touch entries which have not changed" is by running a
-diff between $tree and the index. But doing a diff means we have to
-reconsider all of the code surrounding deletions (and handling of
-unmerged entries in the pathspec but not in $tree). I tried a few
-variants and had trouble making it work (getting caught up either in the
-"make sure each pathspec matched" code, or the "treat unmerged entries
-specially" behavior).
-
-In the patch below, I ended up retaining the existing
-read_tree_recursive code, and just specially handling the replacement of
-index entries (which is itself sort of a diff, but it fits nicely into
-the existing scheme).
-
-> I'd prefer that these two to be treated separately.
-
-Yeah, that makes sense after reading your emails. What I was really
-unclear on was whether the handling of deletion was a bug or a design
-choice, and it is the latter (if it were the former, we would not need a
-transition plan :) ).
-
-Anyway, here is the patch.
+... by the above, I mean something like what appears after the
+scissors "-- >8 --" line below.
 
 -- >8 --
-Subject: checkout $tree: do not throw away unchanged index entries
+From: Slavomir Vlcek <svlc@inventati.org>
+Date: Thu, 13 Nov 2014 00:18:39 +0100
+Subject: [PATCH] SubmittingPatches: final submission is To: maintainer and CC: list
 
-When we "git checkout $tree", we pull paths from $tree into
-the index, and then check the resulting entries out to the
-worktree. Our method for the first step is rather
-heavy-handed, though; it clobbers the entire existing index
-entry, even if the content is the same. This means we lose
-our stat information, leading checkout_entry to later
-rewrite the entire file with identical content.
+In an earlier part there is:
 
-Instead, let's see if we have the identical entry already in
-the index, in which case we leave it in place. That lets
-checkout_entry do the right thing. Our tests cover two
-interesting cases:
+  "re-send it with "To:" set to the maintainer [*1*] and "cc:" the list [*2*]"
 
-  1. We make sure that a file which has no changes is not
-     rewritten.
+for the final submission, but later we see
 
-  2. We make sure that we do update a file that is unchanged
-     in the index (versus $tree), but has working tree
-     changes. We keep the old index entry, and
-     checkout_entry is able to realize that our stat
-     information is out of date.
+  "Send it to the list and cc the maintainer."
 
-Signed-off-by: Jeff King <peff@peff.net>
+Fix the later one to match the previous.
+
+Signed-off-by: Slavomir Vlcek <svlc@inventati.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Note that the test refreshes the index manually (because we are tweaking
-the timestamp of file2). In normal use this should not be necessary
-(i.e., your entries should generally be uptodate). I did wonder if
-checkout should be refreshing the index itself, but it would a bunch of
-extra lstats in the common case.
+ Documentation/SubmittingPatches | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- builtin/checkout.c        | 31 +++++++++++++++++++++++++------
- t/t2022-checkout-paths.sh | 17 +++++++++++++++++
- 2 files changed, 42 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 5410dac..67cab4e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -65,21 +65,40 @@ static int post_checkout_hook(struct commit *old, struct commit *new,
- static int update_some(const unsigned char *sha1, const char *base, int baselen,
- 		const char *pathname, unsigned mode, int stage, void *context)
- {
--	int len;
-+	struct strbuf buf = STRBUF_INIT;
- 	struct cache_entry *ce;
-+	int pos;
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index e6d46ed..fa71b5f 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -337,7 +337,7 @@ suggests to the contributors:
+      spend their time to improve your patch.  Go back to step (2).
  
- 	if (S_ISDIR(mode))
- 		return READ_TREE_RECURSIVE;
+  (4) The list forms consensus that the last round of your patch is
+-     good.  Send it to the list and cc the maintainer.
++     good.  Send it to the maintainer and cc the list.
  
--	len = baselen + strlen(pathname);
--	ce = xcalloc(1, cache_entry_size(len));
-+	strbuf_add(&buf, base, baselen);
-+	strbuf_addstr(&buf, pathname);
-+
-+	/*
-+	 * If the entry is the same as the current index, we can leave the old
-+	 * entry in place. Whether it is UPTODATE or not, checkout_entry will
-+	 * do the right thing.
-+	 */
-+	pos = cache_name_pos(buf.buf, buf.len);
-+	if (pos >= 0) {
-+		struct cache_entry *old = active_cache[pos];
-+		if (create_ce_mode(mode) == old->ce_mode &&
-+		    !hashcmp(old->sha1, sha1)) {
-+			old->ce_flags |= CE_UPDATE;
-+			strbuf_release(&buf);
-+			return 0;
-+		}
-+	}
-+
-+	ce = xcalloc(1, cache_entry_size(buf.len));
- 	hashcpy(ce->sha1, sha1);
--	memcpy(ce->name, base, baselen);
--	memcpy(ce->name + baselen, pathname, len - baselen);
-+	memcpy(ce->name, buf.buf, buf.len);
- 	ce->ce_flags = create_ce_flags(0) | CE_UPDATE;
--	ce->ce_namelen = len;
-+	ce->ce_namelen = buf.len;
- 	ce->ce_mode = create_ce_mode(mode);
- 	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+	strbuf_release(&buf);
- 	return 0;
- }
- 
-diff --git a/t/t2022-checkout-paths.sh b/t/t2022-checkout-paths.sh
-index 8e3545d..f46d049 100755
---- a/t/t2022-checkout-paths.sh
-+++ b/t/t2022-checkout-paths.sh
-@@ -61,4 +61,21 @@ test_expect_success 'do not touch unmerged entries matching $path but not in $tr
- 	test_cmp expect.next0 actual.next0
- '
- 
-+test_expect_success 'do not touch files that are already up-to-date' '
-+	git reset --hard &&
-+	echo one >file1 &&
-+	echo two >file2 &&
-+	git add file1 file2 &&
-+	git commit -m base &&
-+	echo modified >file1 &&
-+	test-chmtime =1000000000 file2 &&
-+	git update-index -q --refresh &&
-+	git checkout HEAD -- file1 file2 &&
-+	echo one >expect &&
-+	test_cmp expect file1 &&
-+	echo "1000000000	file2" >expect &&
-+	test-chmtime -v +0 file2 >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+  (5) A topic branch is created with the patch and is merged to 'next',
+      and cooked further and eventually graduates to 'master'.
 -- 
-2.1.2.596.g7379948
+2.2.0-rc1-84-gcd6439f
