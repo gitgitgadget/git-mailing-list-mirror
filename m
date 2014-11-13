@@ -1,69 +1,158 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git archiving only branch work
-Date: Thu, 13 Nov 2014 16:39:38 -0500
-Message-ID: <20141113213937.GD7563@peff.net>
-References: <5464a4e8.4a0.2bfa0e00.3067f800@geldenhuys.co.uk>
- <20141113133615.GA28346@lanh>
- <20141113200640.GB3869@peff.net>
- <xmqqvbmizu12.fsf@gitster.dls.corp.google.com>
- <20141113213318.GA7563@peff.net>
- <xmqqa93uzssv.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 2/2] approxidate: allow ISO-like dates far in the future
+Date: Thu, 13 Nov 2014 16:43:31 -0500
+Message-ID: <20141113214330.GA10653@peff.net>
+References: <20141113110325.GD8329@peff.net>
+ <20141113110722.GB4386@peff.net>
+ <xmqqr3x6ztyl.fsf@gitster.dls.corp.google.com>
+ <20141113213647.GB7563@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Graeme Geldenhuys <mailinglists@geldenhuys.co.uk>,
-	git@vger.kernel.org
+Cc: Colin Smith <colin.webdev@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 13 22:39:44 2014
+X-From: git-owner@vger.kernel.org Thu Nov 13 22:43:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp27E-000752-Be
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 22:39:44 +0100
+	id 1Xp2Az-0000aD-Vx
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 22:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934678AbaKMVjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 16:39:41 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40139 "HELO cloud.peff.net"
+	id S965008AbaKMVne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 16:43:34 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40147 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934250AbaKMVjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 16:39:40 -0500
-Received: (qmail 17560 invoked by uid 102); 13 Nov 2014 21:39:40 -0000
+	id S964929AbaKMVnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 16:43:33 -0500
+Received: (qmail 17743 invoked by uid 102); 13 Nov 2014 21:43:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 15:39:40 -0600
-Received: (qmail 32165 invoked by uid 107); 13 Nov 2014 21:39:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 15:43:32 -0600
+Received: (qmail 32221 invoked by uid 107); 13 Nov 2014 21:43:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 16:39:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 16:39:38 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Nov 2014 16:43:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Nov 2014 16:43:31 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqa93uzssv.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20141113213647.GB7563@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 01:36:48PM -0800, Junio C Hamano wrote:
+On Thu, Nov 13, 2014 at 04:36:47PM -0500, Jeff King wrote:
 
-> > I agree it is probably OK in practice and for the OP's question, but it
-> > is nice to have "-z" variants so you do not have to worry about quoting
-> > at all. I'd argue that a "--stdin -z" should probably also accept raw
-> > filenames, not pathspecs, too (so you do not have to use
-> > "--literal-pathspecs" elsewhere).
+> On Thu, Nov 13, 2014 at 01:11:46PM -0800, Junio C Hamano wrote:
 > 
-> I agree "--stdin -z" is a good thing but what makes you think that
-> the producer of the data is _always_ walking the directory hierarchy
-> and showing the pathnames it sees?  I think use of literal-pathspecs
-> should not be tied to the use of either --stdin or -z.
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > >  		if (c != '.' &&
+> > > -		    is_date(num3, num, num2, refuse_future, now, tm))
+> > > +		    is_date(num3, num, num2, refuse_future, now, tm, 0))
+> > >  			break;
+> > 
+> > Doesn't the new argument '0', which is "allow-future", look somewhat
+> > strange when we are already passing refuse_future?
+> 
+> To be honest, I had trouble figuring out what the name "refuse_future"
+> really meant. We do skip the future check, but it also means that
+> is_date will munge the "struct tm" directly, even if we do not find a
+> valid date. That worried me a bit.
+> 
+> But yeah, in theory, the callers I wanted to tweak can just pass in a
+> NULL refuse_future.
 
-I agree they are technically orthogonal, but I cannot think of a case
-where I have ever generated actual _pathspecs_, which might have
-wildcards, and needed to use "-z". The point of using "-z" is that you
-do not know what crap you are feeding.
+So here's what the patch looks like just using refuse_future.
 
-Normally I'm in favor of keeping things as flexible as possible, but it
-seems very likely that somebody would forget pathspecs in such a case
-(the OP did in his example, and I know I have many times in the past).
-I don't feel too strongly about it, though.
+It's definitely nicer to read, and it passes the tests. But I am still
+concerned there is some unknown case that is impacted by us half-filling
+out the tm_mon and tm_mday fields of the "struct tm" in the first half
+of is_date.
 
--Peff
+-- >8 --
+Subject: approxidate: allow ISO-like dates far in the future
+
+When we are parsing approxidate strings and we find three
+numbers separate by one of ":/-.", we guess that it may be a
+date. We feed the numbers to match_multi_number, which
+checks whether it makes sense as a date in various orderings
+(e.g., dd/mm/yy or mm/dd/yy, etc).
+
+One of the checks we do is to see whether it is a date more
+than 10 days in the future. This was added in 38035cf (date
+parsing: be friendlier to our European friends.,
+2006-04-05), and lets us guess that if it is currently April
+2014, then "10/03/2014" is probably March 10th, not October
+3rd.
+
+This has a downside, though; if you want to be overly
+generous with your "--until" date specification, we may
+wrongly parse "2014-12-01" as "2014-01-12" (because the
+latter is an in-the-past date). If the year is a future year
+(i.e., both are future dates), it gets even weirder. Due to
+the vagaries of approxidate, months _after_ the current date
+(no matter the year) get flipped, but ones before do not.
+
+This patch drops the "in the future" check for dates of this
+form, letting us treat them always as yyyy-mm-dd, even if
+they are in the future. This does not affect the normal
+dd/mm/yyyy versus mm/dd/yyyy lookup, because this code path
+only kicks in when the first number is greater than 70
+(i.e., it must be a year, and cannot be either a date or a
+month).
+
+The one possible casualty is that "yyyy-dd-mm" is less
+likely to be chosen over "yyyy-mm-dd". That's probably OK,
+though because:
+
+  1. The difference happens only when the date is in the
+     future. Already we prefer yyyy-mm-dd for dates in the
+     past.
+
+  2. It's unclear whether anybody even uses yyyy-dd-mm
+     regularly. It does not appear in lists of common date
+     formats in Wikipedia[1,2].
+
+  3. Even if (2) is wrong, it is better to prefer ISO-like
+     dates, as that is consistent with what we use elsewhere
+     in git.
+
+[1] http://en.wikipedia.org/wiki/Date_and_time_representation_by_country
+[2] http://en.wikipedia.org/wiki/Calendar_date
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ date.c          | 4 ++--
+ t/t0006-date.sh | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/date.c b/date.c
+index e1a4d49..3eba2df 100644
+--- a/date.c
++++ b/date.c
+@@ -441,10 +441,10 @@ static int match_multi_number(unsigned long num, char c, const char *date,
+ 
+ 		if (num > 70) {
+ 			/* yyyy-mm-dd? */
+-			if (is_date(num, num2, num3, refuse_future, now, tm))
++			if (is_date(num, num2, num3, NULL, now, tm))
+ 				break;
+ 			/* yyyy-dd-mm? */
+-			if (is_date(num, num3, num2, refuse_future, now, tm))
++			if (is_date(num, num3, num2, NULL, now, tm))
+ 				break;
+ 		}
+ 		/* Our eastern European friends say dd.mm.yy[yy]
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index e53cf6d..fac0986 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -82,4 +82,7 @@ check_approxidate 'Jun 6, 5AM' '2009-06-06 05:00:00'
+ check_approxidate '5AM Jun 6' '2009-06-06 05:00:00'
+ check_approxidate '6AM, June 7, 2009' '2009-06-07 06:00:00'
+ 
++check_approxidate '2008-12-01' '2008-12-01 19:20:00'
++check_approxidate '2009-12-01' '2009-12-01 19:20:00'
++
+ test_done
+-- 
+2.1.2.596.g7379948
