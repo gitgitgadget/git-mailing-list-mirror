@@ -1,119 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] SubmittingPatches: fix an inconsistency
-Date: Thu, 13 Nov 2014 10:30:36 -0800
-Message-ID: <xmqqppcr0x83.fsf@gitster.dls.corp.google.com>
-References: <5463DA20.3080703@inventati.org> <5463FB4C.2060203@inventati.org>
-	<xmqqy4rf0xod.fsf@gitster.dls.corp.google.com>
-	<xmqqtx230xax.fsf@gitster.dls.corp.google.com>
+From: Alex Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: t9902-completion.sh failed
+Date: Fri, 14 Nov 2014 00:35:25 +0600
+Message-ID: <8761ej54oa.fsf@gmail.com>
+References: <87mw7v9xhl.fsf@gmail.com> <20141113112447.GA4437@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: slavomir vlcek <svlc@inventati.org>
-X-From: git-owner@vger.kernel.org Thu Nov 13 19:30:51 2014
+Cc: <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 13 19:36:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XozAQ-0000HS-0w
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 19:30:50 +0100
+	id 1XozFf-0003Kj-Vh
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Nov 2014 19:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933627AbaKMSal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 13:30:41 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60939 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933226AbaKMSaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 13:30:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 605081C352;
-	Thu, 13 Nov 2014 13:30:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mZyWrrWjoJv8FVxVt9t1Mfxs/UQ=; b=UEbnGc
-	zNf4vKablqM1UZLCsT+gwMZAulF8TVO/KyT75/60Y+MpVLAVyCw2Dig7/5njXuvC
-	bWxD4TH0+lXnBREIrW0euWbK+pep/hPCE9p0vld9TIB6vbGi8P3J4yFGXqfI0aZy
-	/taHEZqq5MTLCA1+4TFG/+kuAUgRf9i0dm2S4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SO9z7QfO2l3CoL5kwa9gVlj2kpJ78Osc
-	opb7sMrIX+PBSx+rOOBNDdK80CFl8u99ABCgTLgj90ZCDX/qJk4vUoO6moQoKhy5
-	plLplWLSS553JJcRYYuMt1QSf7OFqrJX3wheaJMsxu9vwigWO5mWLnhnnURiVNz0
-	wekcrLwJvBY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BDD71C351;
-	Thu, 13 Nov 2014 13:30:38 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A52661C350;
-	Thu, 13 Nov 2014 13:30:37 -0500 (EST)
-In-Reply-To: <xmqqtx230xax.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 13 Nov 2014 10:28:54 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 29E67750-6B63-11E4-8995-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933690AbaKMSgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 13:36:11 -0500
+Received: from mail-la0-f50.google.com ([209.85.215.50]:54226 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933526AbaKMSgL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 13:36:11 -0500
+Received: by mail-la0-f50.google.com with SMTP id hs14so7576959lab.9
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 10:36:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=references:from:to:cc:subject:date:in-reply-to:message-id
+         :mime-version:content-type;
+        bh=I6pVIZs8Goz5GZCuvm1ODXyfZSStxraYYHWoop61xq4=;
+        b=UhRDdg7EMz9VYRzZoOYGCLhNzCzX0DYIsDiPebNlHSiaKWx5Vw6zJouOeMEu741y/2
+         lr6QdrMAe6ALtzj/monECzJsXbMLptr064d/1MBiHnpC/CEs89KHcb4YzONA/UsjjjV+
+         pTbMpRIdSwiIQ6mcQCD0AnZfHvlFi2xNIoKLO/4koxXHwxJg3mJEWZqRknKS0TUz9ll5
+         Vwpb/9lchBDPeARQI85scUM6ktsEPzT52zLxGSvtgbgXeSeRJDTkKsxddnumWf2Vg5q7
+         x9pNC4OftCosy6KFPLjILI1hmnINI19/9fESB4I2jAPILH+8DX3nO+G5OwPMV3ZYrkj0
+         7Tlg==
+X-Received: by 10.153.11.169 with SMTP id ej9mr3949087lad.72.1415903769030;
+        Thu, 13 Nov 2014 10:36:09 -0800 (PST)
+Received: from alex-desktop ([2.133.1.112])
+        by mx.google.com with ESMTPSA id jq16sm7652439lab.14.2014.11.13.10.36.07
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 13 Nov 2014 10:36:08 -0800 (PST)
+In-reply-to: <20141113112447.GA4437@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+ah, i catched the problem, I launched make test with sudo and now all
+tests passed successfully.
+
+Jeff King <peff@peff.net> @ 2014-11-13 17:24 ALMT:
+
+> On Thu, Nov 13, 2014 at 04:59:12PM +0600, Alex Kuleshov wrote:
 >
->>> Signed-off-by: slavomir vlcek <svlc@inventati.org>
->
->> The same comment applies to the log message part.
->
-> I said:
->
->> Will queue; no need to resend.
+>> i just got git from master (f6f61cbbad0611e03b712cc354f1665b5d7b087e),
+>> built and installed it successfully, now i'm running make test and got
+>> following error:
 >>
->> Thanks.
+>> *** t9902-completion.sh ***
+>> t9902-completion.sh: 118:
+>> /home/shk/dev/git/t/../contrib/completion/git-completion.bash: Syntax
+>> error: "(" unexpected (expecting "fi")
+>> FATAL: Unexpected exit with code 2
+>> make[2]: *** [t9902-completion.sh] Error 1
+>> make[2]: Leaving directory `/home/shk/dev/git/t'
+>> make[1]: *** [test] Error 2
+>> make[1]: Leaving directory `/home/shk/dev/git/t'
+>> make: *** [test] Error 2
+>>
+>> $ bash --version
+>> 4.3.11(1)-release (x86_64-pc-linux-gnu)
 >
-> But one thing to make sure.  Do you really mean to have your
-> sign-off with all lowercase?  I can amend the patch to read
+> Weird. I can't reproduce here, using the version of bash from Debian
+> unstable (4.3.30(1)), nor compiling 4.3.11 from sources. What platform
+> are you on (i.e., might it be bash + some other patches installed by the
+> distro)?
 >
->     Signed-off-by: Slavomir Vlcek <svlc@inventati.org>
->
-> while applying, so that your name does not stand out like a sore
-> thumb in "git shortlog -20 -s" output, if you want.
+> -Peff
 
-... by the above, I mean something like what appears after the
-scissors "-- >8 --" line below.
-
--- >8 --
-From: Slavomir Vlcek <svlc@inventati.org>
-Date: Thu, 13 Nov 2014 00:18:39 +0100
-Subject: [PATCH] SubmittingPatches: final submission is To: maintainer and CC: list
-
-In an earlier part there is:
-
-  "re-send it with "To:" set to the maintainer [*1*] and "cc:" the list [*2*]"
-
-for the final submission, but later we see
-
-  "Send it to the list and cc the maintainer."
-
-Fix the later one to match the previous.
-
-Signed-off-by: Slavomir Vlcek <svlc@inventati.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/SubmittingPatches | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index e6d46ed..fa71b5f 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -337,7 +337,7 @@ suggests to the contributors:
-      spend their time to improve your patch.  Go back to step (2).
- 
-  (4) The list forms consensus that the last round of your patch is
--     good.  Send it to the list and cc the maintainer.
-+     good.  Send it to the maintainer and cc the list.
- 
-  (5) A topic branch is created with the patch and is merged to 'next',
-      and cooked further and eventually graduates to 'master'.
--- 
-2.2.0-rc1-84-gcd6439f
+--
+Best regards.
+0xAX
