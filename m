@@ -1,109 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t1410: fix breakage on case-insensitive filesystems
-Date: Fri, 14 Nov 2014 12:03:03 -0800
-Message-ID: <xmqqoas935zc.fsf@gitster.dls.corp.google.com>
-References: <CAO2U3QiFvwMiwVCdVju_vJKK_HVndpQf4VyrEaHeeVVN6rgYgA@mail.gmail.com>
-	<20141109014354.GA23883@peff.net> <20141109015918.GA24736@peff.net>
-	<5463C106.5090803@kdbg.org> <20141112215923.GB6801@peff.net>
-	<546470D0.3080809@kdbg.org> <20141113090832.GA8329@peff.net>
-	<546653D6.7040505@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] git-config: git-config --list fixed when GIT_CONFIG
+ value starts with ~/
+Date: Fri, 14 Nov 2014 15:04:20 -0500
+Message-ID: <20141114200419.GB11581@peff.net>
+References: <1415989760-20259-1-git-send-email-kuleshovmail@gmail.com>
+ <CAPig+cTpUyfKYj4VTK1AT-ga6UvupJrERsTHWTEzNP-Ogc4ujQ@mail.gmail.com>
+ <20141114193049.GB10860@peff.net>
+ <87vbmh8syq.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Michael Blume <blume.mike@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Nov 14 21:03:20 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alex Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 21:04:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpN5S-000325-94
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 21:03:18 +0100
+	id 1XpN6Y-0003Vl-5m
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 21:04:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754377AbaKNUDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 15:03:14 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55043 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753231AbaKNUDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 15:03:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D0C8B1DF26;
-	Fri, 14 Nov 2014 15:03:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0+abUjMKfSyuP/whgVI3AZ+4EtU=; b=ufZzhI
-	7ocUUc48/CfKTZV/UxAi9FsAzs8MHrj06yyTI2q5iEkkvCTRzGiUBMcv5so7SJvP
-	bpCvpco9U6bFw1NEkaTRRPJMANKuJ9hA8DnbIQplkfHmHRdSZpj4b9R83McUc7wq
-	2WxPDRmPqzP3hHMPnpH1MExyHCvsL89RKoRfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uyMVnmFMLUnQqzlRZcGgMZMNEGeQuLWZ
-	R2yzbhbYttQg5fqEr7nX8HWzA11TCRUBruol6QW6+R1NVBST2ZHPvJczEGSVER7P
-	+Zgq2PnvrSz0x7UAFnLTBC6wT8oMFVjeD7OasjuLcU8L7kYKzXcXY3bxh13jjuiW
-	ExIUGQXkiOc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C70DE1DF25;
-	Fri, 14 Nov 2014 15:03:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C33D1DF15;
-	Fri, 14 Nov 2014 15:03:04 -0500 (EST)
-In-Reply-To: <546653D6.7040505@kdbg.org> (Johannes Sixt's message of "Fri, 14
-	Nov 2014 20:11:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3ECEC5EC-6C39-11E4-9135-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1161794AbaKNUEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 15:04:22 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40467 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161783AbaKNUEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 15:04:21 -0500
+Received: (qmail 13843 invoked by uid 102); 14 Nov 2014 20:04:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Nov 2014 14:04:21 -0600
+Received: (qmail 16248 invoked by uid 107); 14 Nov 2014 20:04:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Nov 2014 15:04:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Nov 2014 15:04:20 -0500
+Content-Disposition: inline
+In-Reply-To: <87vbmh8syq.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Sat, Nov 15, 2014 at 01:38:36AM +0600, Alex Kuleshov wrote:
 
-> Not a comment, on this paragraph of yours, but while I was walking
-> through the code with gdb, I was wondering why the reflog directory is
-> being touched at all when core.logallrefupdates is off (in
-> log_ref_setup via log_ref_write). With the patch below I now get the
-> same unlink warning as on Linux.
+> > Yeah, I'd agree it is a little unexpected to expand here. The "~" is
+> > mostly a shell thing, and doing:
+> >
+> >   GIT_CONFIG=~/.gitconfig git config --list
+> >
+> > from the shell generally works, because the shell will expand the "~"
+> > before it even hits git. If you're not using a shell to set the
+> > variable, you probably should be pre-expanding it yourself.
+> 
+> Yes, you're right here, but i put GIT_CONFIG=~/.gitconfig to my .bashrc
+> and it doesn't work so.
 
-I do not do Windows, but your analysis feels really sound and
-explains the symptom well, and the change looks like the right fix
-to the issue.
+Weird. It seems to work fine for me (though I admit I only did a pretty
+cursory test).
 
-Thanks.
+> > Probably the right place would be the if/else chain around
+> > builtin/config.c:514, where we convert a relative path into an absolute
+> > one. But I'm not convinced it's a good thing to be doing in the first
+> > place.
+> >
+> What if we'll put path expanding right after getting value of file path,
+> after given_config_source.file = getenv(CONFIG_ENVIRONMENT); at 451?
 
-> --- 8< ---
-> Subject: [PATCH] Windows: correct detection of EISDIR in mingw_open()
->
-> According to the Linux open(2) man page, open() returns EISDIR if a
-> directory was attempted to be opened for writing. Our emulation in
-> mingw_open() does not get this right: it checks only for O_CREAT. Fix
-> it to check for one of the write flags.
->
-> This fixes a failure in reflog handling, which opens files with
-> O_APPEND|O_WRONLY, but without O_CREAT, and expects EISDIR when the
-> named file happens to be a directory.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  compat/mingw.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 2ee3fe3..fc64b73 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -312,7 +312,7 @@ int mingw_open (const char *filename, int oflags, ...)
->  		return -1;
->  	fd = _wopen(wfilename, oflags, mode);
->  
-> -	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
-> +	if (fd < 0 && (oflags & (O_WRONLY|O_RDWR)) && errno == EACCES) {
->  		DWORD attrs = GetFileAttributesW(wfilename);
->  		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
->  			errno = EISDIR;
-> -- 
-> 2.0.0.12.gbcf935e
->
-> -- 
+That is a good place to put it if you want to impact $GIT_CONFIG but not
+"--file". I am not sure if that is sensible. But then, I am not sure
+that I am convinced that we should be making any change at all.
+
+-Peff
