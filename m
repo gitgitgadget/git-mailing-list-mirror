@@ -1,62 +1,83 @@
-From: Olaf Hering <olaf@aepfle.de>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
 Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Fri, 14 Nov 2014 12:24:28 +0100
-Message-ID: <20141114112428.GA12702@aepfle.de>
-References: <20141113111444.GA15503@aepfle.de>
- <20141113154457.GA31624@aepfle.de>
- <20141113160325.GA24351@paksenarrion.iveqy.com>
+Date: Fri, 14 Nov 2014 13:32:09 +0100
+Message-ID: <5465F649.4090906@gmail.com>
+References: <20141113111444.GA15503@aepfle.de> <20141113114919.GA2737@paksenarrion.iveqy.com> <20141113120313.GB15503@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 12:24:37 2014
+To: Olaf Hering <olaf@aepfle.de>, Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 13:32:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpEzT-0007rl-BI
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 12:24:35 +0100
+	id 1XpG3C-00007J-3S
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 13:32:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965240AbaKNLYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 06:24:31 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.219]:23740 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965074AbaKNLYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 06:24:30 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415964269; l=355;
-	s=domk; d=aepfle.de;
-	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Subject:Cc:To:From:Date;
-	bh=7X38VA7syJJbrY+d2tVrab3QC7Q=;
-	b=vSPp12pyJz4fekU2yvmotwNH+HPs+Pea/jDxgig1FYn/uKnDNK6FFItKkFY40iRm22a
-	G3FPCpT52zITQvc1IpYL79J8q82Zw52EMKiWyuMI3/K2IVkXblE/23mQfLAzXk8iDeUF0
-	lideyyRefy96It1uzK7hDbyTIxk9W6hYlWI=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 35.11 AUTH)
-	with ESMTPSA id R0409dqAEBOSzsa
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate);
-	Fri, 14 Nov 2014 12:24:28 +0100 (CET)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 5E13750172; Fri, 14 Nov 2014 12:24:28 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20141113160325.GA24351@paksenarrion.iveqy.com>
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S965492AbaKNMc0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2014 07:32:26 -0500
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:51319 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965171AbaKNMcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 07:32:25 -0500
+Received: by mail-wi0-f172.google.com with SMTP id bs8so2495767wib.17
+        for <git@vger.kernel.org>; Fri, 14 Nov 2014 04:32:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=cu+gbb8gzne7DqnyoEfBZjDh+aztkSIQR4wBzLcvuEA=;
+        b=u3R3ywnbsecxmGoJItbMul3hCMFmLiwyA3FZ2UJPHOproBV4B0Fugnb/YI6MVtZ4Yh
+         nTOwQdFWbcLKHKUmJZxljK9dTqhgEj33FU9wehfmO2iG9UMJTOg5cODw6YCg4p92bIjz
+         NyKJPcTNirwbCWa30NHywXVZo0K7ni8lipxxraSaFpNe8x12FXLr9f7+rbKeW6vOvpp3
+         yRiFHExYt3xNHYvYuwFyVp2ViQ21zSwsMeqcqTRsnt7WSDme6KE7CORQW/4yo1UNzUcB
+         ckTGcRQZ+ccE0qdKg+fkPzzfnzkVMmCtZ4/CGvRaBm+eK+XFwPA29eyR/GpYgwQCyrtl
+         G8kg==
+X-Received: by 10.194.150.148 with SMTP id ui20mr13415016wjb.90.1415968344053;
+        Fri, 14 Nov 2014 04:32:24 -0800 (PST)
+Received: from [192.168.130.235] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id r10sm3267670wiy.13.2014.11.14.04.32.22
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 14 Nov 2014 04:32:23 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20141113120313.GB15503@aepfle.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, Fredrik Gustafsson wrote:
+W dniu 2014-11-13 13:03, Olaf Hering pisze:
+ > On Thu, Nov 13, Fredrik Gustafsson wrote:
+[...]
+>> Your setup looks familiar to me for a subversion user switching to g=
+it
+>> and trying to use git as subversion. The common usecase is not to ha=
+ve
+>> multiple worktrees but to do a checkout to the worktree you need to =
+work
+>> on. This is possible with git since it's very fast and I recommend y=
+ou
+>> to try to use one worktree.
 
-> That's one of the reason it's not recommended to push into a non-bare
-> repository. You should clone your repo-master with the --bare option to
-> avoid having a work dir there.
+> Switching branches will invalidate timestamps, causing a full rebuild=
+=2E
 
-Even if I do a fresh clone with --bare, the result can not be updated
-anymore with git fetch. What I'm doing wrong?
+Wouldn't a better way of solving "full rebuild" issue be to use ccache=20
+or similar solution?
 
-Olaf
+Anyway, switching branches invalidates timestamps only on those files=20
+that change between branches -- it is to avoid unnecessary rebuilds.
+
+You can always clone with --reference, and use alternates (alternate=20
+object store). Just don't delete objects in repository that other=20
+repositories borrow from; GitHub uses refs/borrowers/ namespace for=20
+that, IIRC.
+
+HTH
+--=20
+Jakub Nar=C4=99bski
