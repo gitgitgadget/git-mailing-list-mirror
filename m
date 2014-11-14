@@ -1,106 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gc: support temporarily preserving garbage
-Date: Fri, 14 Nov 2014 15:01:05 -0800
-Message-ID: <xmqqlhnd1j66.fsf@gitster.dls.corp.google.com>
-References: <1415927805-53644-1-git-send-email-brodie@sf.io>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v4] Allow TTY tests to run under recent Mac OS
+Date: Fri, 14 Nov 2014 15:21:07 -0800
+Message-ID: <20141114232106.GA6527@google.com>
+References: <1415995993-70879-1-git-send-email-blume.mike@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Bryan Turner <bturner@atlassian.com>
-To: Brodie Rao <brodie@sf.io>
-X-From: git-owner@vger.kernel.org Sat Nov 15 00:01:16 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	dborowitz@google.com
+To: Mike Blume <blume.mike@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 15 00:21:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpPrf-0005NL-N5
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 00:01:16 +0100
+	id 1XpQB4-0005eH-Ec
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 00:21:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422752AbaKNXBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 18:01:11 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61526 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1422637AbaKNXBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 18:01:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DE631E495;
-	Fri, 14 Nov 2014 18:01:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qKEdUEFYjk5f5bI0FEQ4vke4GlA=; b=AHEIUl
-	ZM56VgAKb9kmvWDmmrNU4iduxp65zR9D6T3hayAYE6SYl9R7HqH+uN3L+2L+9ZOP
-	1Bv8SQ7aeDcWtQd4G11DXJCExpN06f7FNhnRo2WGqBvkDRAbIMZEen6H0fdJKben
-	sFh841YcGqdwzxJiWQL0UNL+X0DQkF0l0l/Dg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uc9654vuho9Dxkug+OSuLM16NSoCeV1/
-	bdxvDMKFkbtqLIX7AjXCUDfSt/wyoimNiXXTVsw3YIwD4vFZ+ClYpMqfEwl3TXOq
-	OcHrIyafebVlyKqpb4tuu3y7DG43jXrlVquB87hE31LCK8CO5gdTIQWItPkZOFsd
-	m/8xCg3tOAE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 769E01E494;
-	Fri, 14 Nov 2014 18:01:09 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85BB01E493;
-	Fri, 14 Nov 2014 18:01:06 -0500 (EST)
-In-Reply-To: <1415927805-53644-1-git-send-email-brodie@sf.io> (Brodie Rao's
-	message of "Thu, 13 Nov 2014 17:16:45 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1D798E54-6C52-11E4-AA62-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S935370AbaKNXVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 18:21:14 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:55318 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933574AbaKNXVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 18:21:13 -0500
+Received: by mail-ig0-f169.google.com with SMTP id hn18so601914igb.4
+        for <git@vger.kernel.org>; Fri, 14 Nov 2014 15:21:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=tPX0u4YBrnHZNVST2a4g7emSBE2xthFvf81/MylWuKo=;
+        b=BO8VIU8fS1wKP1RDgCydrxhEQPn26rcXIa+gCTBVAwXHXbnFmq72o9O7AN6ETC4u0V
+         L4LgMIJsIu4oWwkYSUkm+Q0w/ODxtfToXZ2KdPnu59Fn9qYHt0bC1GuCY7hZTR5s1cHz
+         3LrpIEYCcfNlz3FkWUKVLKEs8+q/zNe1RcUjde+gm4aTZNxHJ5ilPm3W10tDOTbXqFBS
+         PylWG8xCf6xAGPSUgufhsBqxHjeGEjx4XkyWizp2ImtX0U1OKG//nx5g5iKKkHn5CQbQ
+         XhKb+IiIxDDM4bbC+RRDN7mAsmuI6k51+NikaAKU9j413cdMs9ltjzx9YXSuII9VeFvc
+         iX7w==
+X-Received: by 10.42.128.81 with SMTP id l17mr14291548ics.8.1416007272972;
+        Fri, 14 Nov 2014 15:21:12 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:a875:b2b9:165d:cb33])
+        by mx.google.com with ESMTPSA id q17sm8777327ioe.21.2014.11.14.15.21.11
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Nov 2014 15:21:12 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1415995993-70879-1-git-send-email-blume.mike@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brodie Rao <brodie@sf.io> writes:
+Hi,
 
-> This patch adds a gc.garbageexpire setting that, when not set to "now",
-> makes gc (and prune, prune-packed, and repack) move garbage into a
-> temporary garbage directory instead of deleting it immediately. The
-> garbage directory is then cleared out based on gc.garbageexpire.
->
-> The motivation for this setting is to work around various NFS servers
-> not supporting delete-on-last-close semantics between NFS clients.
-> Without proper support for that, gc could potentially delete objects
-> and packs that are in use by git processes on other NFS clients. If
-> another git process has a deleted pack file mmap()ed, it could crash
-> with a SIGBUS error on Linux.
->
-> Signed-off-by: Brodie Rao <brodie@sf.io>
-> ---
->  .gitignore                             |  1 +
->  Documentation/config.txt               | 20 +++++++++
->  Documentation/git-gc.txt               |  7 ++++
->  Documentation/git-prune-garbage.txt    | 55 ++++++++++++++++++++++++
->  Documentation/git-prune-packed.txt     |  9 ++++
->  Documentation/git-prune.txt            |  9 ++++
->  Documentation/git-repack.txt           |  6 +++
->  Documentation/git.txt                  |  6 +++
->  Makefile                               |  2 +
->  builtin.h                              |  1 +
->  builtin/gc.c                           | 20 +++++++++
->  builtin/prune-garbage.c                | 77 ++++++++++++++++++++++++++++++++++
->  builtin/prune-packed.c                 |  3 +-
->  builtin/prune.c                        |  5 ++-
->  builtin/repack.c                       |  7 ++--
->  cache.h                                |  2 +
->  command-list.txt                       |  1 +
->  contrib/completion/git-completion.bash |  2 +
->  environment.c                          | 12 +++++-
->  gc.c                                   | 60 ++++++++++++++++++++++++++
->  gc.h                                   | 16 +++++++
->  git.c                                  |  1 +
->  t/t6502-gc-garbage-expire.sh           | 60 ++++++++++++++++++++++++++
->  23 files changed, 375 insertions(+), 7 deletions(-)
->  create mode 100644 Documentation/git-prune-garbage.txt
->  create mode 100644 builtin/prune-garbage.c
->  create mode 100644 gc.c
->  create mode 100644 gc.h
->  create mode 100755 t/t6502-gc-garbage-expire.sh
+Mike Blume wrote:
 
-I am not sure if this much of code churn is warranted to work around
-issues that only happen on repositories on NFS servers that do not
-keep open-but-deleted files available.  Is it an option to instead
-have a copy of repository locally off NFS?
+> TTY tests were previously skipped on all Mac OS systems because of a
+> bug where reading from pty master occasionally hung. This bug has since
+> been found not to be reproducible under Mac OS 10.9 and 10.10.1.
+>
+> Therefore, run TTY tests under Mac OS 10.9 (Mavericks) and higher.
+
+*puzzled* Testing on Yosemite with the following script[1]
+
+	perl -MIO::Pty -MFile::Copy -e '
+	       for (my $i = 0;; $i++) {
+		       my $master = new IO::Pty;
+		       my $slave = $master->slave;
+		       if (fork == 0) {
+			       close $master or die "close: $!";
+			       open STDOUT, ">&", $slave or die "dup2: $!";
+			       close $slave or die "close: $!";
+			       exec("echo", "hi", $i) or die "exec: $!";
+		       }
+		       close $slave or die "close: $!";
+		       copy($master, \*STDOUT) or die "copy: $!";
+		       close $master or die "close: $!";
+		       wait;
+	       }
+	'
+
+still seems to hang eventually (after 61 iterations when my officemate
+tried it), reproducing the bug.
+
+Do you get a different result?
+
+The bug was originally found in an autobuilder that would run the test
+suite when new versions were pushed to check for regressions.  Even if
+the hang only happened 0.1% of the time, that would get the
+autobuilder stuck after a while, which was how the problem got
+noticed.
+
+Thanks,
+Jonathan
+
+[1] https://rt.cpan.org/Public/Bug/Display.html?id=65692
