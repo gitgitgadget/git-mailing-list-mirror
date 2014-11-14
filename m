@@ -1,563 +1,817 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Nov 2014, #03; Thu, 13)
-Date: Thu, 13 Nov 2014 15:28:35 -0800
-Message-ID: <xmqqmw7uy924.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Brodie Rao <brodie@sf.io>
+Subject: [PATCH] gc: support temporarily preserving garbage
+Date: Thu, 13 Nov 2014 17:16:45 -0800
+Message-ID: <1415927805-53644-1-git-send-email-brodie@sf.io>
+Cc: Bryan Turner <bturner@atlassian.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 14 00:28:45 2014
+X-From: git-owner@vger.kernel.org Fri Nov 14 02:16:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp3oi-0004uy-2c
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 00:28:44 +0100
+	id 1Xp5VQ-0003P2-Li
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 02:16:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934666AbaKMX2j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Nov 2014 18:28:39 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58329 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934087AbaKMX2i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Nov 2014 18:28:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC6531E624;
-	Thu, 13 Nov 2014 18:28:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
-	QJW3rNxTM3yRmo6D2gumtxRjV8=; b=dsrU2/qIeSgsFy/QLk3ykZzHDOZb1UpXD
-	ut7ipT32seEdNgQ90icOUHiLy8w7wRJWwxjbBKsDYBVLsuVbLF54kIx2Y4R57I8X
-	95T/8zbS0PtnirbaKvXoFjecNtFQ5vRdBQwjDrPyRJNER5j43UMWKC5WS0Mg4QgT
-	L9o5dCSo/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=vVP
-	+pqhREMskoH/ccDt2Rt/kU/AaFcwyvP9rqAYwfkPP4JJJ9e2N8EpnDUrJ4uFD9A5
-	Wb+ki9invkcsTka9MhEoQxED49VAXP+PlOZXI35dlR9ff+/DGpBOM00g2zA3k/rz
-	U2U97bZw9oqomU9HAu7MADkNcrvawh9AxLpsLCfw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E40E21E623;
-	Thu, 13 Nov 2014 18:28:36 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B38C1E61F;
-	Thu, 13 Nov 2014 18:28:36 -0500 (EST)
-X-master-at: f5709437d963e585df0691989d3ccfee1de1572b
-X-next-at: 9da3436bf99e47e1efc737cce3b3fec70f88f2f7
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CA510D8A-6B8C-11E4-ACD6-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S965081AbaKNBQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Nov 2014 20:16:53 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:33898 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965061AbaKNBQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Nov 2014 20:16:49 -0500
+Received: by mail-pa0-f44.google.com with SMTP id et14so1630950pad.17
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 17:16:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=from:to:cc:subject:date:message-id;
+        bh=ffSWqfJdcrQsViUnC47Lmb7ETCmB9PAa18oaDsGt86I=;
+        b=Jb7+2VRmsAzoCEW+EMtpT16nCD3nYXMiz7piqSqNdBOG/gdF4HKhJLAtMYIS/3ocrZ
+         XPGzV55yfYphp8pjxX/ee9G22cd+rZUldNBdIC7OnG5gpoNnIld6dL9dmuaE8932W3N6
+         YBTPtWRlYQHMvFPSfqtRFhef0c9dEsVR0Lqjwy0x7PhmpsgASjiEuZPB4LC7AS1ePhps
+         oO4tLoTjX6ApJ/I537FEUr55EuBf5e0Jf2TfRNiSGCmmp3murNJexwG3giaE6QcuXyTN
+         CA3QIEhTKts6yOL8q6O1E8ZqPjZDNTLag7bmM1wPMC3XF1RIf0bOxxJFL38kwZ+0+EV/
+         4IVA==
+X-Received: by 10.70.118.1 with SMTP id ki1mr6589507pdb.69.1415927809129;
+        Thu, 13 Nov 2014 17:16:49 -0800 (PST)
+Received: from localhost (70-35-42-138.static.wiline.com. [70.35.42.138])
+        by mx.google.com with ESMTPSA id kk1sm25927143pbd.14.2014.11.13.17.16.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Nov 2014 17:16:48 -0800 (PST)
+X-Mailer: git-send-email 2.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.
-
-Will tag v2.2.0-rc2 tomorrow and v2.2.0 final hopefully late next
-week.
-
-You can find the changes described here in the integration branches
-of the repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[New Topics]
-
-* mh/doc-remote-helper-xref (2014-11-11) 1 commit
- - doc: add some crossrefs between manual pages
-
- Will merge to 'next'.
-
-
-* ta/tutorial-modernize (2014-11-11) 1 commit
- - gittutorial.txt: remove reference to ancient Git version
-
- Will merge to 'next'.
-
-
-* jk/approxidate-avoid-y-d-m-over-future-dates (2014-11-13) 2 commits
- - approxidate: allow ISO-like dates far in the future
- - pass TIME_DATE_NOW to approxidate future-check
-
-
-* jk/checkout-from-tree (2014-11-13) 1 commit
- - checkout $tree: do not throw away unchanged index entries
-
- Will merge to 'next'.
-
-
-* mb/enable-lib-terminal-test-on-newer-darwin (2014-11-13) 1 commit
- - allow TTY tests to run under recent Mac OS
-
- Will merge to 'next'.
-
-
-* sn/tutorial-status-output-example (2014-11-13) 1 commit
- - gittutorial: fix output of 'git status'
-
- Will merge to 'next'.
-
-
-* sv/get-builtin (2014-11-13) 1 commit
- - builtin: move builtin retrieval to get_builtin()
-
- Will merge to 'next'.
-
-
-* sv/submitting-final-patch (2014-11-13) 1 commit
- - SubmittingPatches: final submission is To: maintainer and CC: list
-
- Will merge to 'next'.
-
-
-* tb/no-relative-file-url (2014-11-13) 1 commit
- - t5705: the file:// URL should be absolute
-
- Will merge to 'next'.
-
---------------------------------------------------
-[Stalled]
-
-* je/quiltimport-no-fuzz (2014-10-21) 2 commits
- - git-quiltimport: flip the default not to allow fuzz
- - git-quiltimport.sh: allow declining fuzz with --exact option
-
- "quiltimport" drove "git apply" always with -C1 option to reduce
- context of the patch in order to give more chance to somewhat stale
- patches to apply.  Add an "--exact" option to disable, and also
- "-C$n" option to customize this behaviour.  The top patch
- optionally flips the default to "--exact".
-
- Waiting for an Ack.
-
-
-* jc/push-cert-hmac-optim (2014-09-25) 2 commits
- - receive-pack: truncate hmac early and convert only necessary bytes
- - sha1_to_hex: split out "hex-format n bytes" helper and use it
-
- This is "we could do this if we wanted to", not "we measured and it
- improves performance critical codepath".
-
- Will perhaps drop.
-
-
-* nd/multiple-work-trees (2014-09-27) 32 commits
- . t2025: add a test to make sure grafts is working from a linked checkout
- . checkout: don't require a work tree when checking out into a new one
- . git_path(): keep "info/sparse-checkout" per work-tree
- . count-objects: report unused files in $GIT_DIR/worktrees/...
- . gc: support prune --worktrees
- . gc: factor out gc.pruneexpire parsing code
- . gc: style change -- no SP before closing parenthesis
- . checkout: clean up half-prepared directories in --to mode
- . checkout: reject if the branch is already checked out elsewhere
- . prune: strategies for linked checkouts
- . checkout: support checking out into a new working directory
- . use new wrapper write_file() for simple file writing
- . wrapper.c: wrapper to open a file, fprintf then close
- . setup.c: support multi-checkout repo setup
- . setup.c: detect $GIT_COMMON_DIR check_repository_format_gently()
- . setup.c: convert check_repository_format_gently to use strbuf
- . setup.c: detect $GIT_COMMON_DIR in is_git_directory()
- . setup.c: convert is_git_directory() to use strbuf
- . git-stash: avoid hardcoding $GIT_DIR/logs/....
- . *.sh: avoid hardcoding $GIT_DIR/hooks/...
- . git-sh-setup.sh: use rev-parse --git-path to get $GIT_DIR/objects
- . $GIT_COMMON_DIR: a new environment variable
- . commit: use SEQ_DIR instead of hardcoding "sequencer"
- . fast-import: use git_path() for accessing .git dir instead of get_git_dir()
- . reflog: avoid constructing .lock path with git_path
- . *.sh: respect $GIT_INDEX_FILE
- . git_path(): be aware of file relocation in $GIT_DIR
- . path.c: group git_path(), git_pathdup() and strbuf_git_path() together
- . path.c: rename vsnpath() to do_git_path()
- . git_snpath(): retire and replace with strbuf_git_path()
- . path.c: make get_pathname() call sites return const char *
- . path.c: make get_pathname() return strbuf instead of static buffer
-
- A replacement for contrib/workdir/git-new-workdir that does not
- rely on symbolic links and make sharing of objects and refs safer
- by making the borrowee and borrowers aware of each other.
-
- A few tests need some tweaks for MinGW ($gmane/{257756,257757}).
- Conflicts with rs/ref-transaction so ejected for now, waiting for a
- reroll.
-
-
-* mt/patch-id-stable (2014-06-10) 1 commit
- - patch-id: change default to stable
-
- Teaches "git patch-id" to compute the patch ID that does not change
- when the files in a single patch is reordered. As this new algorithm
- is backward incompatible, the last bit to flip it to be the default
- is left out of 'master' for now.
-
- Nobody seems to be jumping up & down requesting this last step,
- which makes the result somewhat backward incompatible.
- Will perhaps drop.
-
-
-* tr/remerge-diff (2014-11-10) 9 commits
- - t4213: avoid "|" in sed regexp
- - log --remerge-diff: show what the conflict resolution changed
- - name-hash: allow dir hashing even when !ignore_case
- - merge-recursive: allow storing conflict hunks in index
- - merge_diff_mode: fold all merge diff variants into an enum
- - combine-diff: do not pass revs->dense_combined_merges redundantly
- - merge-recursive: -Xindex-only to leave worktree unchanged
- - merge-recursive: internal flag to avoid touching the worktree
- - merge-recursive: remove dead conditional in update_stages()
-
- "log -p" output learns a new way to let users inspect a merge
- commit by showing the differences between the automerged result
- with conflicts the person who recorded the merge would have seen
- and the final conflict resolution that was recorded in the merge.
-
- Waiting for a reroll ($gmane/256591).
-
-
-* hv/submodule-config (2014-11-11) 4 commits
- - do not die on error of parsing fetchrecursesubmodules option
- - use new config API for worktree configurations of submodules
- - extract functions for submodule config set and lookup
- - implement submodule config cache for lookup of submodule names
-
- Kicked back to 'pu' per request ($gmane/255610).
-
-
-* jk/pack-bitmap (2014-08-04) 1 commit
- - pack-bitmap: do not use gcc packed attribute
-
- Hold, waiting for Karsten's replacement.
-
-
-* ab/add-interactive-show-diff-func-name (2014-05-12) 2 commits
- - SQUASH??? git-add--interactive: Preserve diff heading when splitting hunks
- - git-add--interactive: Preserve diff heading when splitting hunks
-
- Waiting for a reroll.
-
-
-* jn/gitweb-utf8-in-links (2014-05-27) 1 commit
- - gitweb: Harden UTF-8 handling in generated links
-
- $gmane/250758?
-
-
-* ss/userdiff-update-csharp-java (2014-06-02) 2 commits
- - userdiff: support Java try keyword
- - userdiff: support C# async methods and correct C# keywords
-
- Reviews sent; waiting for a response.
-
-
-* bg/rebase-off-of-previous-branch (2014-04-16) 1 commit
- - git-rebase: print name of rev when using shorthand
-
- Teach "git rebase -" to report the concrete name of the branch
- (i.e. the previous one).
-
- But it stops short and does not do the same for "git rebase @{-1}".
- Expecting a reroll.
-
-
-* rb/merge-prepare-commit-msg-hook (2014-01-10) 4 commits
- - merge: drop unused arg from abort_commit method signature
- - merge: make prepare_to_commit responsible for write_merge_state
- - t7505: ensure cleanup after hook blocks merge
- - t7505: add missing &&
-
- Expose more merge states (e.g. $GIT_DIR/MERGE_MODE) to hooks that
- run during "git merge".  The log message stresses too much on one
- hook, prepare-commit-msg, but it would equally apply to other hooks
- like post-merge, I think.
-
- Waiting for a reroll.
-
-
-* jc/graph-post-root-gap (2013-12-30) 3 commits
- - WIP: document what we want at the end
- - graph: remove unused code a bit
- - graph: stuff the current commit into graph->columns[]
-
- This was primarily a RFH ($gmane/239580).
-
-
-* tg/perf-lib-test-perf-cleanup (2013-09-19) 2 commits
- - perf-lib: add test_perf_cleanup target
- - perf-lib: split starting the test from the execution
-
- Add test_perf_cleanup shell function to the perf suite, that allows
- the script writers to define a test with a clean-up action.
-
- Will hold.
-
-
-* jc/show-branch (2014-03-24) 5 commits
- - show-branch: use commit slab to represent bitflags of arbitrary width
- - show-branch.c: remove "all_mask"
- - show-branch.c: abstract out "flags" operation
- - show-branch.c: lift all_mask/all_revs to a global static
- - show-branch.c: update comment style
-
- Waiting for the final step to lift the hard-limit before sending it out.
-
---------------------------------------------------
-[Cooking]
-
-* br/imap-send-verbosity (2014-11-05) 1 commit
-  (merged to 'next' on 2014-11-12 at d9e58ec)
- + imap-send: use parse options API to determine verbosity
- (this branch is used by br/imap-send-via-libcurl.)
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* br/imap-send-via-libcurl (2014-11-10) 1 commit
-  (merged to 'next' on 2014-11-12 at 5327ab4)
- + git-imap-send: use libcurl for implementation
- (this branch uses br/imap-send-verbosity.)
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* jc/doc-commit-only (2014-11-07) 1 commit
- - Documentation/git-commit: clarify that --only/--include records the working tree contents
-
- Will merge to 'next'.
-
-
-* cc/interpret-trailers (2014-11-10) 2 commits
- - trailer: display a trailer without its trailing newline
- - trailer: ignore comment lines inside the trailers
- (this branch is used by cc/interpret-trailers-more.)
-
- Will merge to 'next'.
-
-
-* cc/interpret-trailers-more (2014-11-10) 4 commits
- - trailer: add test with an old style conflict block
- - trailer: reuse ignore_non_trailer() to ignore conflict lines
- - commit: make ignore_non_trailer() non static
- - Merge branch 'jc/conflict-hint' into cc/interpret-trailers-more
- (this branch uses cc/interpret-trailers and jc/conflict-hint.)
-
-
-* js/push-to-update (2014-11-13) 1 commit
- - Add another option for receive.denyCurrentBranch
-
- Still being discussed but we seem to have agreed what the desired
- semantics should be.
-
-
-* rs/env-array-in-child-process (2014-11-10) 1 commit
- - use args member of struct child_process
-
- Will merge to 'next'.
-
-
-* tq/git-ssh-command (2014-11-10) 1 commit
- - git_connect: set ssh shell command in GIT_SSH_COMMAND
-
- Will merge to 'next'.
-
-
-* ms/submodule-update-config-doc (2014-11-03) 1 commit
- - submodule: clarify documentation for update subcommand
-
- Needs a reroll ($gmane/259037).
-
-
-* nd/lockfile-absolute (2014-11-03) 1 commit
-  (merged to 'next' on 2014-11-06 at 68722a9)
- + lockfile.c: store absolute path
-
- The lockfile API can get confused which file to clean up when the
- process moved the $cwd after creating a lockfile.
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* jh/empty-notes (2014-11-12) 10 commits
- - SQUASH???
- - t3301: modernize style
- - notes: empty notes should be shown by 'git log'
- - builtin/notes: add --allow-empty, to allow storing empty notes
- - builtin/notes: split create_note() to clarify add vs. remove logic
- - builtin/notes: simplify early exit code in add()
- - builtin/notes: refactor note file path into struct note_data
- - builtin/notes: improve naming
- - t3301: verify that 'git notes' removes empty notes by default
- - builtin/notes: fix premature failure when trying to add the empty blob
-
- A request to store an empty note via "git notes" meant to remove
- note from the object but with --allow-empty we will store a (surprise!)
- note that is empty.  In the longer run, we might want to deprecate
- the somewhat unintuitive "emptying means deletion" behaviour.
-
-
-* jc/merge-bases (2014-10-30) 2 commits
-  (merged to 'next' on 2014-11-06 at 491e576)
- + get_merge_bases(): always clean-up object flags
- + bisect: clean flags after checking merge bases
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* jc/strbuf-add-lines-avoid-sp-ht-sequence (2014-10-27) 1 commit
-  (merged to 'next' on 2014-10-29 at 9167582)
- + strbuf_add_commented_lines(): avoid SP-HT sequence in commented lines
-
- The commented output used to blindly add a SP before the payload
- line, resulting in "# \t<indented text>\n" when the payload began
- with a HT.  Instead, produce "#\t<indented text>\n".
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* nd/untracked-cache (2014-10-27) 19 commits
- - t7063: tests for untracked cache
- - update-index: test the system before enabling untracked cache
- - update-index: manually enable or disable untracked cache
- - status: enable untracked cache
- - untracked cache: mark index dirty if untracked cache is updated
- - untracked cache: print stats with $GIT_TRACE_UNTRACKED_STATS
- - untracked cache: avoid racy timestamps
- - read-cache.c: split racy stat test to a separate function
- - untracked cache: invalidate at index addition or removal
- - untracked cache: load from UNTR index extension
- - untracked cache: save to an index extension
- - untracked cache: don't open non-existent .gitignore
- - untracked cache: mark what dirs should be recursed/saved
- - untracked cache: record/validate dir mtime and reuse cached output
- - untracked cache: make a wrapper around {open,read,close}dir()
- - untracked cache: invalidate dirs recursively if .gitignore changes
- - untracked cache: initial untracked cache validation
- - untracked cache: record .gitignore information and dir hierarchy
- - dir.c: optionally compute sha-1 of a .gitignore file
-
-
-* zk/grep-color-words (2014-10-27) 2 commits
-  (merged to 'next' on 2014-10-28 at 4d0457c)
- + Revert "grep: fix match highlighting for combined patterns with context lines"
-  (merged to 'next' on 2014-10-24 at 2d2f8f8)
- + grep: fix match highlighting for combined patterns with context lines
-
- rs/grep-color-words topic solves it in a different way.
-
- Will discard.
-
-
-* jc/conflict-hint (2014-10-28) 4 commits
-  (merged to 'next' on 2014-10-29 at 693250f)
- + merge & sequencer: turn "Conflicts:" hint into a comment
- + builtin/commit.c: extract ignore_non_trailer() helper function
- + merge & sequencer: unify codepaths that write "Conflicts:" hint
- + builtin/merge.c: drop a parameter that is never used
- (this branch is used by cc/interpret-trailers-more.)
-
- Unlike all the other hints given in the commit log editor, the list
- of conflicted paths were appended at the end without commented out.
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* jc/diff-b-m (2014-10-23) 1 commit
-  (merged to 'next' on 2014-10-28 at 4daedb1)
- + diff -B -M: fix output for "copy and then rewrite" case
-
- Fix long-standing bug in "diff -B -M" output.
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* rs/ref-transaction-reflog (2014-11-03) 15 commits
- - refs.c: allow deleting refs with a broken sha1
- - refs.c: remove lock_any_ref_for_update
- - refs.c: make unlock_ref/close_ref/commit_ref static
- - refs.c: rename log_ref_setup to create_reflog
- - reflog.c: use a reflog transaction when writing during expire
- - refs.c: allow multiple reflog updates during a single transaction
- - refs.c: only write reflog update if msg is non-NULL
- - refs.c: add a flag to allow reflog updates to truncate the log
- - refs.c: add a transaction function to append a reflog entry
- - copy.c: make copy_fd preserve meaningful errno
- - refs.c: add a function to append a reflog entry to a fd
- - refs.c: add a new update_type field to ref_update
- - refs.c: rename the transaction functions
- - refs.c: make ref_transaction_delete a wrapper for ref_transaction_update
- - refs.c make ref_transaction_create a wrapper to ref_transaction_update
- (this branch is used by rs/ref-transaction-rename and rs/ref-transaction-send-pack.)
-
- Reviews and comments?
-
-
-* rs/ref-transaction-rename (2014-11-07) 16 commits
- - refs.c: add an err argument to pack_refs
- - refs.c: make lock_packed_refs take an err argument
- - refs.c: make add_packed_ref return an error instead of calling die
- - refs.c: replace the onerr argument in update_ref with a strbuf err
- - refs.c: make the *_packed_refs functions static
- - refs.c: make repack_without_refs static
- - remote.c: use a transaction for deleting refs
- - refs.c: write updates to packed refs when a transaction has more than one ref
- - refs.c: move reflog updates into its own function
- - refs.c: rollback the lockfile before we die() in repack_without_refs
- - refs.c: update rename_ref to use a transaction
- - refs.c: add transaction support for renaming a reflog
- - refs.c: use a stringlist for repack_without_refs
- - refs.c: use packed refs when deleting refs during a transaction
- - refs.c: return error instead of dying when locking fails during transaction
- - refs.c: allow passing raw git_committer_info as email to _update_reflog
- (this branch is used by rs/ref-transaction-send-pack; uses rs/ref-transaction-reflog.)
-
- Reviews and comments?
-
-
-* rs/ref-transaction-send-pack (2014-11-07) 7 commits
- - refs.c: add an err argument to create_symref
- - refs.c: add an err argument to create_reflog
- - t5543-atomic-push.sh: add basic tests for atomic pushes
- - push.c: add an --atomic-push argument
- - receive-pack.c: use a single transaction when atomic-push is negotiated
- - send-pack.c: add an --atomic-push command line argument
- - receive-pack.c: add protocol support to negotiate atomic-push
- (this branch uses rs/ref-transaction-reflog and rs/ref-transaction-rename.)
-
- Reviews and comments?
-
-
-* jc/checkout-local-track-report (2014-10-14) 1 commit
-  (merged to 'next' on 2014-10-21 at f636a00)
- + checkout: report upstream correctly even with loosely defined branch.*.merge
-
- The report from "git checkout" on a branch that builds on another
- local branch by setting its branch.*.merge to branch name (not a
- full refname) incorrectly said that the upstream is gone.
-
- Will cook in 'next' throughout the remainder of the cycle.
-
-
-* jc/clone-borrow (2014-10-15) 1 commit
-  (merged to 'next' on 2014-10-21 at b76ea34)
- + clone: --dissociate option to mark that reference is only temporary
-
- Allow "git clone --reference" to be used more safely.
-
- Will cook in 'next' throughout the remainder of the cycle.
-
---------------------------------------------------
-[Discarded]
-
-* jt/timer-settime (2014-08-29) 6 commits
- . use timer_settime() for new platforms
- . autoconf: check for timer_settime()
- . autoconf: check for struct itimerspec
- . autoconf: check for struct sigevent
- . autoconf: check for struct timespec
- . autoconf: check for timer_t
-
- Was wanting for a reroll.
+This patch adds a gc.garbageexpire setting that, when not set to "now",
+makes gc (and prune, prune-packed, and repack) move garbage into a
+temporary garbage directory instead of deleting it immediately. The
+garbage directory is then cleared out based on gc.garbageexpire.
+
+The motivation for this setting is to work around various NFS servers
+not supporting delete-on-last-close semantics between NFS clients.
+Without proper support for that, gc could potentially delete objects
+and packs that are in use by git processes on other NFS clients. If
+another git process has a deleted pack file mmap()ed, it could crash
+with a SIGBUS error on Linux.
+
+Signed-off-by: Brodie Rao <brodie@sf.io>
+---
+ .gitignore                             |  1 +
+ Documentation/config.txt               | 20 +++++++++
+ Documentation/git-gc.txt               |  7 ++++
+ Documentation/git-prune-garbage.txt    | 55 ++++++++++++++++++++++++
+ Documentation/git-prune-packed.txt     |  9 ++++
+ Documentation/git-prune.txt            |  9 ++++
+ Documentation/git-repack.txt           |  6 +++
+ Documentation/git.txt                  |  6 +++
+ Makefile                               |  2 +
+ builtin.h                              |  1 +
+ builtin/gc.c                           | 20 +++++++++
+ builtin/prune-garbage.c                | 77 ++++++++++++++++++++++++++++++++++
+ builtin/prune-packed.c                 |  3 +-
+ builtin/prune.c                        |  5 ++-
+ builtin/repack.c                       |  7 ++--
+ cache.h                                |  2 +
+ command-list.txt                       |  1 +
+ contrib/completion/git-completion.bash |  2 +
+ environment.c                          | 12 +++++-
+ gc.c                                   | 60 ++++++++++++++++++++++++++
+ gc.h                                   | 16 +++++++
+ git.c                                  |  1 +
+ t/t6502-gc-garbage-expire.sh           | 60 ++++++++++++++++++++++++++
+ 23 files changed, 375 insertions(+), 7 deletions(-)
+ create mode 100644 Documentation/git-prune-garbage.txt
+ create mode 100644 builtin/prune-garbage.c
+ create mode 100644 gc.c
+ create mode 100644 gc.h
+ create mode 100755 t/t6502-gc-garbage-expire.sh
+
+diff --git a/.gitignore b/.gitignore
+index a052419..a9a4e30 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -107,6 +107,7 @@
+ /git-parse-remote
+ /git-patch-id
+ /git-prune
++/git-prune-garbage
+ /git-prune-packed
+ /git-pull
+ /git-push
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 9220725..0106d8f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1213,6 +1213,26 @@ gc.autodetach::
+ 	Make `git gc --auto` return immediately and run in background
+ 	if the system supports it. Default is true.
+ 
++gc.garbageexpire::
++	When 'git gc' is run, objects and packs that are pruned are
++	immediately deleted from the file system. This setting can be
++	overridden to move pruned objects and packs to the garbage
++	directory. That leftover garbage will be deleted after the
++	specified grace period. The default value is "now", meaning
++	garbage is deleted immediately.
+++
++Setting this to something other than "now" (e.g., "1.day.ago") can help
++work around issues with NFS servers that don't support
++delete-on-last-close semantics between NFS clients. 'git gc' will not
++unlink files immediately, so a git process on another NFS client that
++might be reading a garbage collected file will not crash.
+++
++Note that this setting can cause the repository's size to increase as
++garbage collection passes are made. Care should be taken to make sure
++the grace period isn't too long. A grace period of one day might be
++reasonable if you make the assumption that your git processes over NFS
++won't run longer or have files open longer than one day.
++
+ gc.packrefs::
+ 	Running `git pack-refs` in a repository renders it
+ 	unclonable by Git versions prior to 1.5.1.2 over dumb
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 273c466..f90dc0a 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -131,6 +131,12 @@ The optional configuration variable 'gc.pruneExpire' controls how old
+ the unreferenced loose objects have to be before they are pruned.  The
+ default is "2 weeks ago".
+ 
++The optional configurable variable 'gc.garbageexpire' controls how
++pruned objects and packs are deleted. This can be overridden to move
++pruned objects and packs to the garbage directory. That leftover garbage
++will be deleted after the specified grace period. The default value is
++"now", meaning garbage is deleted immediately.
++
+ 
+ Notes
+ -----
+@@ -156,6 +162,7 @@ linkgit:githooks[5] for more information.
+ SEE ALSO
+ --------
+ linkgit:git-prune[1]
++linkgit:git-prune-garbage[1]
+ linkgit:git-reflog[1]
+ linkgit:git-repack[1]
+ linkgit:git-rerere[1]
+diff --git a/Documentation/git-prune-garbage.txt b/Documentation/git-prune-garbage.txt
+new file mode 100644
+index 0000000..ff130e0
+--- /dev/null
++++ b/Documentation/git-prune-garbage.txt
+@@ -0,0 +1,55 @@
++git-prune-garbage(1)
++====================
++
++NAME
++----
++git-prune-garbage - Remove garbage objects and pack files
++
++
++SYNOPSIS
++--------
++[verse]
++'git prune-garbage' [-n] [-v] [--expire <expire>]
++
++
++DESCRIPTION
++-----------
++This command deletes objects and pack files in `$GIT_GARBAGE_DIRECTORY`
++that are older than the specified garbage expiration time. This is
++automatically run by linkgit:git-gc[1].
++
++The garbage directory is populated by linkgit:git-gc[1] and the commands
++it runs (linkgit:git-prune[1], linkgit:git-prune-packed[1], and
++linkgit:git-repack[1]).
++
++OPTIONS
++-------
++-n::
++--dry-run::
++	Do not remove anything; just report what it would remove.
++
++-v::
++--verbose::
++	Report all removed objects and packs.
++
++--expire <time>::
++	Only expire garbage objects and packs older than <time> (the
++	default is now, overridable by the config variable
++	`gc.garbageexpire`).
++
++Configuration
++-------------
++The optional configurable variable 'gc.garbageexpire' controls when garbage
++objects and packs are deleted. The default value is "now", meaning garbage
++is deleted immediately.
++
++SEE ALSO
++--------
++linkgit:git-gc[1]
++linkgit:git-prune[1]
++linkgit:git-prune-packed[1]
++linkgit:git-repack[1]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-prune-packed.txt b/Documentation/git-prune-packed.txt
+index 9fed59a..2858828 100644
+--- a/Documentation/git-prune-packed.txt
++++ b/Documentation/git-prune-packed.txt
+@@ -37,6 +37,15 @@ OPTIONS
+ --quiet::
+ 	Squelch the progress indicator.
+ 
++Configuration
++-------------
++
++The optional configurable variable 'gc.garbageexpire' controls how pruned
++objects are deleted. This can be overridden to move redundant objects to
++the garbage directory. That leftover garbage will be deleted by 'git gc'
++after the specified grace period. The default value is "now", meaning
++garbage is deleted immediately.
++
+ SEE ALSO
+ --------
+ linkgit:git-pack-objects[1]
+diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
+index 7a493c8..a97ff12 100644
+--- a/Documentation/git-prune.txt
++++ b/Documentation/git-prune.txt
+@@ -53,6 +53,15 @@ OPTIONS
+ 	reachable from any of our references, keep objects
+ 	reachable from listed <head>s.
+ 
++Configuration
++-------------
++
++The optional configurable variable 'gc.garbageexpire' controls how pruned
++objects are deleted. This can be overridden to move redundant and
++unreachable objects to the garbage directory. That leftover garbage will
++be deleted by 'git gc' after the specified grace period. The default
++value is "now", meaning garbage is deleted immediately.
++
+ EXAMPLE
+ -------
+ 
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 4786a78..d8e17de 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -139,6 +139,12 @@ need to set the configuration variable `repack.UseDeltaBaseOffset` to
+ is unaffected by this option as the conversion is performed on the fly
+ as needed in that case.
+ 
++The optional configurable variable 'gc.garbageexpire' controls how
++packs are deleted. This can be overridden to move redundant and unused
++packs to the garbage directory. That leftover garbage will be deleted
++by 'git gc' after the specified grace period. The default value is "now",
++meaning garbage is deleted immediately.
++
+ SEE ALSO
+ --------
+ linkgit:git-pack-objects[1]
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 9202010..4cbc582 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -764,6 +764,12 @@ Git so take care if using Cogito etc.
+ 	of Git object directories which can be used to search for Git
+ 	objects. New objects will not be written to these directories.
+ 
++'GIT_GARBAGE_DIRECTORY'::
++	If garbage collection is configured to move pruned objects and
++	packs to the garbage directory (rather than immediately deleting
++	them), they will be stored at this path. Otherwise, the default
++	`$GIT_DIR/garbage` directory is used.
++
+ 'GIT_DIR'::
+ 	If the 'GIT_DIR' environment variable is set then it
+ 	specifies a path to use instead of the default `.git`
+diff --git a/Makefile b/Makefile
+index 827006b..048369c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -687,6 +687,7 @@ LIB_OBJS += ewah/ewah_rlw.o
+ LIB_OBJS += exec_cmd.o
+ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fsck.o
++LIB_OBJS += gc.o
+ LIB_OBJS += gettext.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+@@ -852,6 +853,7 @@ BUILTIN_OBJS += builtin/pack-objects.o
+ BUILTIN_OBJS += builtin/pack-redundant.o
+ BUILTIN_OBJS += builtin/pack-refs.o
+ BUILTIN_OBJS += builtin/patch-id.o
++BUILTIN_OBJS += builtin/prune-garbage.o
+ BUILTIN_OBJS += builtin/prune-packed.o
+ BUILTIN_OBJS += builtin/prune.o
+ BUILTIN_OBJS += builtin/push.o
+diff --git a/builtin.h b/builtin.h
+index b87df70..c2a7858 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -97,6 +97,7 @@ extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
+ extern int cmd_pack_redundant(int argc, const char **argv, const char *prefix);
+ extern int cmd_patch_id(int argc, const char **argv, const char *prefix);
+ extern int cmd_prune(int argc, const char **argv, const char *prefix);
++extern int cmd_prune_garbage(int argc, const char **argv, const char *prefix);
+ extern int cmd_prune_packed(int argc, const char **argv, const char *prefix);
+ extern int cmd_push(int argc, const char **argv, const char *prefix);
+ extern int cmd_read_tree(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 005adbe..31756ac 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -33,11 +33,13 @@ static int gc_auto_threshold = 6700;
+ static int gc_auto_pack_limit = 50;
+ static int detach_auto = 1;
+ static const char *prune_expire = "2.weeks.ago";
++static const char *garbage_expire = NULL;
+ 
+ static struct argv_array pack_refs_cmd = ARGV_ARRAY_INIT;
+ static struct argv_array reflog = ARGV_ARRAY_INIT;
+ static struct argv_array repack = ARGV_ARRAY_INIT;
+ static struct argv_array prune = ARGV_ARRAY_INIT;
++static struct argv_array prune_garbage = ARGV_ARRAY_INIT;
+ static struct argv_array rerere = ARGV_ARRAY_INIT;
+ 
+ static char *pidfile;
+@@ -81,6 +83,17 @@ static void gc_config(void)
+ 			}
+ 		}
+ 	}
++
++	if (!git_config_get_string_const("gc.garbageexpire", &garbage_expire)) {
++		if (strcmp(garbage_expire, "now")) {
++			unsigned long now = approxidate("now");
++			if (approxidate(garbage_expire) >= now) {
++				git_die_config("gc.garbageexpire", _("Invalid gc.garbageexpire: '%s'"),
++						garbage_expire);
++			}
++		}
++	}
++
+ 	git_config(git_default_config, NULL);
+ }
+ 
+@@ -288,6 +301,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	argv_array_pushl(&reflog, "reflog", "expire", "--all", NULL);
+ 	argv_array_pushl(&repack, "repack", "-d", "-l", NULL);
+ 	argv_array_pushl(&prune, "prune", "--expire", NULL );
++	argv_array_pushl(&prune_garbage, "prune-garbage", "--expire", NULL );
+ 	argv_array_pushl(&rerere, "rerere", "gc", NULL);
+ 
+ 	gc_config();
+@@ -364,5 +378,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		warning(_("There are too many unreachable loose objects; "
+ 			"run 'git prune' to remove them."));
+ 
++	if (garbage_expire) {
++		argv_array_push(&prune_garbage, garbage_expire);
++		if (run_command_v_opt(prune_garbage.argv, RUN_GIT_CMD))
++			return error(FAILED_RUN, prune_garbage.argv[0]);
++	}
++
+ 	return 0;
+ }
+diff --git a/builtin/prune-garbage.c b/builtin/prune-garbage.c
+new file mode 100644
+index 0000000..1641f13
+--- /dev/null
++++ b/builtin/prune-garbage.c
+@@ -0,0 +1,77 @@
++#include "cache.h"
++#include "builtin.h"
++#include "parse-options.h"
++#include "dir.h"
++
++static const char * const prune_garbage_usage[] = {
++	N_("git prune-garbage [-n] [-v] [--expire <time>]"),
++	NULL
++};
++static int show_only;
++static int verbose;
++static unsigned long expire;
++
++static int prune_dir(struct strbuf *path, int remove_dir)
++{
++	size_t baselen = path->len;
++	DIR *dir = opendir(path->buf);
++	struct dirent *de;
++	struct stat st;
++
++	if (!dir)
++		return 0;
++
++	while ((de = readdir(dir)) != NULL) {
++		if (is_dot_or_dotdot(de->d_name))
++			continue;
++
++		strbuf_addf(path, "/%s", de->d_name);
++
++		if (lstat(path->buf, &st))
++			return error("Could not stat '%s'", path->buf);
++
++		if (st.st_mode & S_IFDIR)
++			prune_dir(path, 1);
++		else if (st.st_mtime <= expire) {
++			if (show_only || verbose)
++				printf("Removing garbage file %s\n",
++				       path->buf);
++			if (!show_only)
++				unlink_or_warn(path->buf);
++		}
++
++		strbuf_setlen(path, baselen);
++	}
++	closedir(dir);
++	if (!show_only && remove_dir)
++		rmdir(path->buf);
++	return 0;
++}
++
++static void prune_garbage_dir(const char *path)
++{
++	struct strbuf buf = STRBUF_INIT;
++
++	strbuf_addstr(&buf, path);
++	prune_dir(&buf, 0);
++}
++
++int cmd_prune_garbage(int argc, const char **argv, const char *prefix)
++{
++	const struct option options[] = {
++		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
++		OPT__VERBOSE(&verbose, N_("report pruned garbage")),
++		OPT_EXPIRY_DATE(0, "expire", &expire,
++				N_("expire objects older than <time>")),
++		OPT_END()
++	};
++
++	expire = ULONG_MAX;
++
++	argc = parse_options(argc, argv, prefix, options, prune_garbage_usage,
++			     0);
++
++	prune_garbage_dir(get_garbage_directory());
++
++	return 0;
++}
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index f24a2c2..a1427e8 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "cache.h"
++#include "gc.h"
+ #include "progress.h"
+ #include "parse-options.h"
+ 
+@@ -30,7 +31,7 @@ static int prune_object(const unsigned char *sha1, const char *path,
+ 	if (*opts & PRUNE_PACKED_DRY_RUN)
+ 		printf("rm -f %s\n", path);
+ 	else
+-		unlink_or_warn(path);
++		gc_unlink_or_warn(path);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 04d3b12..6ba0670 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -7,6 +7,7 @@
+ #include "parse-options.h"
+ #include "progress.h"
+ #include "dir.h"
++#include "gc.h"
+ 
+ static const char * const prune_usage[] = {
+ 	N_("git prune [-n] [-v] [--expire <time>] [--] [<head>...]"),
+@@ -27,7 +28,7 @@ static int prune_tmp_file(const char *fullpath)
+ 	if (show_only || verbose)
+ 		printf("Removing stale temporary file %s\n", fullpath);
+ 	if (!show_only)
+-		unlink_or_warn(fullpath);
++		gc_unlink_or_warn(fullpath);
+ 	return 0;
+ }
+ 
+@@ -56,7 +57,7 @@ static int prune_object(const unsigned char *sha1, const char *fullpath,
+ 		       (type > 0) ? typename(type) : "unknown");
+ 	}
+ 	if (!show_only)
+-		unlink_or_warn(fullpath);
++		gc_unlink_or_warn(fullpath);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 2845620..c696ba6 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -7,6 +7,7 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "argv-array.h"
++#include "gc.h"
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+@@ -61,7 +62,7 @@ static void remove_temporary_files(void)
+ 			continue;
+ 		strbuf_setlen(&buf, dirlen);
+ 		strbuf_addstr(&buf, e->d_name);
+-		unlink(buf.buf);
++		gc_unlink(buf.buf);
+ 	}
+ 	closedir(dir);
+ 	strbuf_release(&buf);
+@@ -115,7 +116,7 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
+ 	for (i = 0; i < ARRAY_SIZE(exts); i++) {
+ 		strbuf_setlen(&buf, plen);
+ 		strbuf_addstr(&buf, exts[i]);
+-		unlink(buf.buf);
++		gc_unlink(buf.buf);
+ 	}
+ 	strbuf_release(&buf);
+ }
+@@ -295,7 +296,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 			fname_old = mkpath("%s/old-%s%s", packdir,
+ 						item->string, exts[ext].name);
+ 			if (file_exists(fname_old))
+-				if (unlink(fname_old))
++				if (gc_unlink(fname_old))
+ 					failed = 1;
+ 
+ 			if (!failed && rename(fname, fname_old)) {
+diff --git a/cache.h b/cache.h
+index 99ed096..cc66ef5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -382,6 +382,7 @@ static inline enum object_type object_type(unsigned int mode)
+ #define GIT_PREFIX_ENVIRONMENT "GIT_PREFIX"
+ #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
+ #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
++#define GARBAGE_ENVIRONMENT "GIT_GARBAGE_DIRECTORY"
+ #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
+ #define GRAFT_ENVIRONMENT "GIT_GRAFT_FILE"
+ #define GIT_SHALLOW_FILE_ENVIRONMENT "GIT_SHALLOW_FILE"
+@@ -432,6 +433,7 @@ extern int is_inside_work_tree(void);
+ extern const char *get_git_dir(void);
+ extern int is_git_directory(const char *path);
+ extern char *get_object_directory(void);
++extern char *get_garbage_directory(void);
+ extern char *get_index_file(void);
+ extern char *get_graft_file(void);
+ extern int set_git_dir(const char *path);
+diff --git a/command-list.txt b/command-list.txt
+index f1eae08..dbbf045 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -89,6 +89,7 @@ git-pack-refs                           ancillarymanipulators
+ git-parse-remote                        synchelpers
+ git-patch-id                            purehelpers
+ git-prune                               ancillarymanipulators
++git-prune-garbage                       plumbingmanipulators
+ git-prune-packed                        plumbingmanipulators
+ git-pull                                mainporcelain common
+ git-push                                mainporcelain common
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2fece98..2946389 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -702,6 +702,7 @@ __git_list_porcelain_commands ()
+ 		parse-remote)     : plumbing;;
+ 		patch-id)         : plumbing;;
+ 		prune)            : plumbing;;
++		prune-garbage)    : plumbing;;
+ 		prune-packed)     : plumbing;;
+ 		quiltimport)      : import;;
+ 		read-tree)        : plumbing;;
+@@ -2082,6 +2083,7 @@ _git_config ()
+ 		gc.aggressiveWindow
+ 		gc.auto
+ 		gc.autopacklimit
++		gc.garbageexpire
+ 		gc.packrefs
+ 		gc.pruneexpire
+ 		gc.reflogexpire
+diff --git a/environment.c b/environment.c
+index 565f652..1148041 100644
+--- a/environment.c
++++ b/environment.c
+@@ -82,7 +82,8 @@ static const char *namespace;
+ static size_t namespace_len;
+ 
+ static const char *git_dir;
+-static char *git_object_dir, *git_index_file, *git_graft_file;
++static char *git_object_dir, *git_garbage_dir, *git_index_file,
++	*git_graft_file;
+ 
+ /*
+  * Repository-local GIT_* environment variables; see cache.h for details.
+@@ -100,6 +101,7 @@ const char * const local_repo_env[] = {
+ 	NO_REPLACE_OBJECTS_ENVIRONMENT,
+ 	GIT_PREFIX_ENVIRONMENT,
+ 	GIT_SHALLOW_FILE_ENVIRONMENT,
++	GARBAGE_ENVIRONMENT,
+ 	NULL
+ };
+ 
+@@ -141,6 +143,7 @@ static void setup_git_env(void)
+ 	gitfile = read_gitfile(git_dir);
+ 	git_dir = xstrdup(gitfile ? gitfile : git_dir);
+ 	git_object_dir = git_path_from_env(DB_ENVIRONMENT, "objects");
++	git_garbage_dir = git_path_from_env(GARBAGE_ENVIRONMENT, "garbage");
+ 	git_index_file = git_path_from_env(INDEX_ENVIRONMENT, "index");
+ 	git_graft_file = git_path_from_env(GRAFT_ENVIRONMENT, "info/grafts");
+ 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
+@@ -212,6 +215,13 @@ char *get_object_directory(void)
+ 	return git_object_dir;
+ }
+ 
++char *get_garbage_directory(void)
++{
++	if (!git_garbage_dir)
++		setup_git_env();
++	return git_garbage_dir;
++}
++
+ int odb_mkstemp(char *template, size_t limit, const char *pattern)
+ {
+ 	int fd;
+diff --git a/gc.c b/gc.c
+new file mode 100644
+index 0000000..811e83d
+--- /dev/null
++++ b/gc.c
+@@ -0,0 +1,60 @@
++#include "cache.h"
++#include "git-compat-util.h"
++#include "gc.h"
++
++static int unlink_now(void)
++{
++	const char *garbage_expire = "now";
++	if (!git_config_get_string_const("gc.garbageexpire", &garbage_expire))
++		return !strcmp(garbage_expire, "now");
++	return 1;
++}
++
++static char *garbage_path(const char *path, struct strbuf *buf)
++{
++	const char *rel_path;
++	struct strbuf rel_path_buf = STRBUF_INIT;
++
++	rel_path = relative_path(path, get_git_dir(), &rel_path_buf);
++	strbuf_addstr(buf, get_garbage_directory());
++	strbuf_addch(buf, '/');
++	strbuf_addstr(buf, rel_path);
++	return buf->buf;
++}
++
++static int move_garbage(const char *path)
++{
++	struct strbuf new_path_buf = STRBUF_INIT;
++	char *new_path;
++
++	new_path = garbage_path(path, &new_path_buf);
++	if (safe_create_leading_directories(new_path))
++		return -1;
++
++	return rename(path, new_path);
++}
++
++static int move_garbage_or_warn(const char *path)
++{
++	int err;
++
++	if ((err = move_garbage(path)))
++		warning("unable to rename %s", path);
++	return err;
++}
++
++int gc_unlink(const char *path)
++{
++	if (unlink_now())
++		return unlink(path);
++	else
++		return move_garbage(path);
++}
++
++int gc_unlink_or_warn(const char *path)
++{
++	if (unlink_now())
++		return unlink_or_warn(path);
++	else
++		return move_garbage_or_warn(path);
++}
+diff --git a/gc.h b/gc.h
+new file mode 100644
+index 0000000..5095ac1
+--- /dev/null
++++ b/gc.h
+@@ -0,0 +1,16 @@
++#ifndef GC_H
++#define GC_H
++
++/*
++ * Like unlink(), but moves the file to the garbage directory instead of
++ * unlinking if appropriate.
++ */
++int gc_unlink(const char *path);
++
++/*
++ * Like unlink_or_warn(), but moves the file to the garbage directory
++ * instead of unlinking if appropriate.
++ */
++int gc_unlink_or_warn(const char *path);
++
++#endif /* GC_H */
+diff --git a/git.c b/git.c
+index 18fbf79..be01eb0 100644
+--- a/git.c
++++ b/git.c
+@@ -445,6 +445,7 @@ static struct cmd_struct commands[] = {
+ 	{ "patch-id", cmd_patch_id },
+ 	{ "pickaxe", cmd_blame, RUN_SETUP },
+ 	{ "prune", cmd_prune, RUN_SETUP },
++	{ "prune-garbage", cmd_prune_garbage, RUN_SETUP },
+ 	{ "prune-packed", cmd_prune_packed, RUN_SETUP },
+ 	{ "push", cmd_push, RUN_SETUP },
+ 	{ "read-tree", cmd_read_tree, RUN_SETUP },
+diff --git a/t/t6502-gc-garbage-expire.sh b/t/t6502-gc-garbage-expire.sh
+new file mode 100755
+index 0000000..07dc7bd
+--- /dev/null
++++ b/t/t6502-gc-garbage-expire.sh
+@@ -0,0 +1,60 @@
++#!/bin/sh
++
++test_description='git gc garbageexpire tests
++'
++
++. ./test-lib.sh
++
++test_expect_success 'gc prune respects gc.garbageexpire' '
++	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
++	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
++	GC_BLOB_FILE=.git/garbage/objects/$(echo $BLOB | sed "s/^../&\//") &&
++	TMP_FILE=.git/objects/tmp_1.pack &&
++	GC_TMP_FILE=.git/garbage/objects/tmp_1.pack &&
++	echo $BLOB | git pack-objects --stdout > $TMP_FILE &&
++	test-chmtime =-86500 $BLOB_FILE $TMP_FILE &&
++	git -c gc.garbageexpire=1.day prune &&
++	test ! -f $BLOB_FILE &&
++	test -f $GC_BLOB_FILE &&
++	test ! -f $TMP_FILE &&
++	test -f $GC_TMP_FILE
++'
++
++test_expect_success 'gc prune-packed respects gc.garbageexpire' '
++	echo content1 > file1 &&
++	git add . &&
++	test_tick &&
++	git commit -m initial_commit &&
++	PACK_SHA1=$(git pack-objects --all .git/objects/pack/pack) &&
++	PACK_IDX=.git/objects/pack/pack-$PACK_SHA1.idx &&
++	PACK_FILE=.git/objects/pack/pack-$PACK_SHA1.pack &&
++	OBJ=$(git rev-parse HEAD) &&
++	OBJ_FILE=.git/objects/$(echo $OBJ | sed "s/^../&\//") &&
++	GC_OBJ_FILE=.git/garbage/objects/$(echo $OBJ | sed "s/^../&\//") &&
++	git -c gc.garbageexpire=1.day prune-packed &&
++	test ! -f $OBJ_FILE &&
++	test -f $GC_OBJ_FILE
++'
++
++test_expect_success 'gc repack respects gc.garbageexpire' '
++	PACK2_SHA1=$(git rev-list --objects --all | grep -v file1 |
++		git pack-objects .git/objects/pack/pack2) &&
++	PACK2_IDX=.git/objects/pack/pack2-$PACK2_SHA1.idx &&
++	PACK2_FILE=.git/objects/pack/pack2-$PACK2_SHA1.pack &&
++	GC_PACK2_IDX=.git/garbage/objects/pack/pack2-$PACK2_SHA1.idx &&
++	GC_PACK2_FILE=.git/garbage/objects/pack/pack2-$PACK2_SHA1.pack &&
++	git -c gc.garbageexpire=1.day repack -A -d -l &&
++	test ! -f $PACK2_IDX &&
++	test -f $GC_PACK2_IDX &&
++	test ! -f $PACK2_FILE &&
++	test -f $GC_PACK2_FILE
++'
++
++test_expect_success 'gc runs prune-garbage' '
++	git -c gc.garbageexpire=1.day gc &&
++	test ! -f $GC_BLOB_FILE &&
++	test ! -f $GC_TMP_FILE &&
++	test -f $GC_OBJ_FILE
++'
++
++test_done
+-- 
+2.1.3
