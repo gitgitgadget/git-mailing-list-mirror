@@ -1,59 +1,78 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH v2] allow TTY tests to run under recent Mac OS
-Date: Fri, 14 Nov 2014 05:43:27 -0500
-Message-ID: <CAEBDL5VgxTMyxx6FTxocuJ3hJ+yK-VF+RycFi5Fitc+V==UEnw@mail.gmail.com>
-References: <1415918419-20807-1-git-send-email-blume.mike@gmail.com>
+From: Olaf Hering <olaf@aepfle.de>
+Subject: Re: how to reduce disk usage for large .git dirs?
+Date: Fri, 14 Nov 2014 11:54:18 +0100
+Message-ID: <20141114105417.GA8954@aepfle.de>
+References: <20141113111444.GA15503@aepfle.de>
+ <20141113154457.GA31624@aepfle.de>
+ <20141113160325.GA24351@paksenarrion.iveqy.com>
+ <20141114101427.GA1548@aepfle.de>
+ <20141114102423.GB24351@paksenarrion.iveqy.com>
+ <20141114103013.GC2549@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Mike Blume <blume.mike@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 11:43:36 2014
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 11:54:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpELm-0004mD-CG
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 11:43:34 +0100
+	id 1XpEWJ-0001RJ-FD
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 11:54:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934579AbaKNKna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 05:43:30 -0500
-Received: from mail-la0-f52.google.com ([209.85.215.52]:59590 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934432AbaKNKn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 05:43:29 -0500
-Received: by mail-la0-f52.google.com with SMTP id pv20so14531093lab.39
-        for <git@vger.kernel.org>; Fri, 14 Nov 2014 02:43:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=vfdraXaad1jm67vV0GV3pWRhGnuPWxG69fB0OZUFTLY=;
-        b=WhiCCrJmomuSkHFCZN8Rj8ARQ17qFcBMIaAM6tZBDX+BWOFVBeu/GcNKLeIvNGYoIA
-         r8TUqHmeDQ9cmPSH5LkQSbJmDwlKTvU87QsMbWEQqpSPwkmozKHq7yCtFVaF1K2IsUSK
-         EZPAgBwH9dUpA7oRDVnNG9z1e11Jt5bfxPZKc86hYmne33x39O71Sw0hwTWmFACmapDf
-         wqtFHkr++feSEr48s9EEjABq52EQCCHGjC0/tpB2mZ8NfV3Zn0okL19Fu88eMSJ9Sym1
-         Vuf7bRNUk99Lq7Gv5QdNNxzOw2uY4SqK4uFTRIM9pYPRolWDrvEAeNNo9bDFuVlCvEYb
-         uD/Q==
-X-Received: by 10.112.73.39 with SMTP id i7mr7573520lbv.8.1415961807524; Fri,
- 14 Nov 2014 02:43:27 -0800 (PST)
-Received: by 10.25.166.20 with HTTP; Fri, 14 Nov 2014 02:43:27 -0800 (PST)
-In-Reply-To: <1415918419-20807-1-git-send-email-blume.mike@gmail.com>
-X-Google-Sender-Auth: 9J0CQcs1OeeMalgGVV_Gu_esKwE
+	id S965360AbaKNKyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 05:54:22 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.160]:62663 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965194AbaKNKyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 05:54:20 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415962458; l=993;
+	s=domk; d=aepfle.de;
+	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Subject:Cc:To:From:Date;
+	bh=BROkDWZLnUtfDRODS0Xznk3LjLk=;
+	b=UUA5KSrQsMDn/EvJc6IsDPN86F+Dpk38Rw8iKQ/AAfW40fTqw/DL4qgnJiSl1EmVDj8
+	GvzSQRxtl1V6LoCvXGzDV3E46QoKs4fSekiNptWIUqLxKKAiJkho085nmpggWlO3WBQM2
+	gUh+Pshh3q0O69Gyg0h8w7HuomWh27xAAps=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
+	by smtp.strato.de (RZmta 35.11 AUTH)
+	with ESMTPSA id 604750qAEAsIwCR
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate);
+	Fri, 14 Nov 2014 11:54:18 +0100 (CET)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id 4804250172; Fri, 14 Nov 2014 11:54:18 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20141114103013.GC2549@aepfle.de>
+User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 5:40 PM, Mike Blume <blume.mike@gmail.com> wrote:
-> listed bug doesn't reproduce on Mac OS Yosemite. For now, just enable
-> TTY on Yosemite and higher
+On Fri, Nov 14, Olaf Hering wrote:
 
-I've tried the reproduction recipe on Mavericks (`uname -r` => 13.4.0)
-and it works fine--still going after 12,000 iterations.  Trying the
-same thing on Snow Leopard shows that it still fails there--it died
-after 182 iterations.
+> On Fri, Nov 14, Fredrik Gustafsson wrote:
+> 
+> > On Fri, Nov 14, 2014 at 11:14:27AM +0100, Olaf Hering wrote:
+> > > So my repo-master is now "bare". I pushed from repo-branchA into
+> > > repo-master and see my commits in both repos. But pushing from
+> > > repo-master to the remote fails because repo-master does not have
+> > > outstanding remote commits. However, git fetch doesnt do anything:
+> > 
+> > Are you mixing up your branches? So that you're updating one branch in
+> > your master repo but trying to push an other branch to your remote repo?
+> 
+> I dont think so. I have branchA in repo-branchA, and a 'git push origin
+> branchA' puts it into repo-master. 
+> How is a bare repo supposed to be updated? Is a simple 'git fetch --all'
+> supposed to work?
 
-So I think the check can be relaxed to `-ge 13`.
+Is there s a slim chance that I have to fetch in repo-master before
+doing a git push in repo-branchA? git remote show origin shows that some
+branches are out of date.
 
--John
+Olaf
