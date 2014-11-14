@@ -1,66 +1,80 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Fri, 14 Nov 2014 16:06:18 +0100
-Message-ID: <8761ehom8l.fsf@igel.home>
-References: <20141113111444.GA15503@aepfle.de>
-	<20141113154457.GA31624@aepfle.de>
-	<20141113160325.GA24351@paksenarrion.iveqy.com>
-	<20141114112428.GA12702@aepfle.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: Question about chapter "3.1 Git Branching - Branches in a
+ Nutshell" in git docu
+Date: Fri, 14 Nov 2014 10:15:21 -0500
+Message-ID: <20141114151521.GA21950@peff.net>
+References: <OF6CCD47D8.ABB2F49C-ONC1257D90.004E1845-C1257D90.005084C1@de.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Olaf Hering <olaf@aepfle.de>
-X-From: git-owner@vger.kernel.org Fri Nov 14 16:06:40 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Axel Magard <axel_magard@de.ibm.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 16:15:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpISN-0003XS-Ce
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 16:06:39 +0100
+	id 1XpIau-00083W-JO
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 16:15:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935321AbaKNPGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 10:06:23 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:58180 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935211AbaKNPGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 10:06:21 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3jfNL33sRHz3hjMm;
-	Fri, 14 Nov 2014 16:06:19 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3jfNL33D9FzvjMt;
-	Fri, 14 Nov 2014 16:06:19 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id 5Ow6yNOu2jMA; Fri, 14 Nov 2014 16:06:18 +0100 (CET)
-X-Auth-Info: BpYpqvgjyC2324KHUosrUGgbkF8AoWF6zuhp7LsUsMR6/XI19pgydEoTUCCzyBMc
-Received: from igel.home (ppp-93-104-156-1.dynamic.mnet-online.de [93.104.156.1])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Fri, 14 Nov 2014 16:06:18 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-	id 637962C16E8; Fri, 14 Nov 2014 16:06:18 +0100 (CET)
-X-Yow: This PORCUPINE knows his ZIPCODE..  And he has ``VISA''!!
-In-Reply-To: <20141114112428.GA12702@aepfle.de> (Olaf Hering's message of
-	"Fri, 14 Nov 2014 12:24:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+	id S965297AbaKNPPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 10:15:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40361 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964875AbaKNPPY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 10:15:24 -0500
+Received: (qmail 1857 invoked by uid 102); 14 Nov 2014 15:15:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Nov 2014 09:15:23 -0600
+Received: (qmail 12392 invoked by uid 107); 14 Nov 2014 15:15:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Nov 2014 10:15:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Nov 2014 10:15:21 -0500
+Content-Disposition: inline
+In-Reply-To: <OF6CCD47D8.ABB2F49C-ONC1257D90.004E1845-C1257D90.005084C1@de.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olaf Hering <olaf@aepfle.de> writes:
+On Fri, Nov 14, 2014 at 03:39:29PM +0100, Axel Magard wrote:
 
-> Even if I do a fresh clone with --bare, the result can not be updated
-> anymore with git fetch. What I'm doing wrong?
+> Hi folks,
+> either I still didn't grasp it or there is a mistake in chapter 3.1 "3.1 
+> Git Branching - Branches in a Nutshell" 
+> (http://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+> 
+> The last figure on that page shows that branch 'master' and HEAD are 
+> pointing to patch 87ab2, branch 'testing' to c2b9e.
+>  
+> But the output from git log --oneline --decorate --graph --all 
+> shows this:
+> 
+> * c2b9e (HEAD, master) made other changes
+> | * 87ab2 (testing) made a change
+> |/
+> * f30ab add feature #32 - ability to add new formats to the
+> * 34ac2 fixed bug #1328 - stack overflow under certain conditions
+> * 98ca9 initial commit of my project
+> 
+> Shouldn't it look like this ?
+> 
+> * 87ab2 (HEAD, master) made a change
+> | * c2b9e (testing) made other changes
+> |/
+> * f30ab add feature #32 - ability to add new formats to the
+> * 34ac2 fixed bug #1328 - stack overflow under certain conditions
+> * 98ca9 initial commit of my project
 
-A --bare clone has no connection to its origin (there are no remotes).
-You want a --mirror.
+I think that the git-log output is right. In the examples above, it
+shows "made a change" on the "testing" branch, and "made other changes"
+on the master branch.
 
-Andreas.
+But it is the figure directly above it that is wrong. Even if you look
+at the other figures, it is clear that 87ab2 is on the "testing" branch.
+But in the final diagram, the two are swapped. Looks like somebody has
+reported this upstream already:
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+  https://github.com/progit/progit2/issues/136
+
+-Peff
