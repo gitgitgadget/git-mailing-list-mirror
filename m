@@ -1,78 +1,80 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: Re: how to reduce disk usage for large .git dirs?
-Date: Fri, 14 Nov 2014 11:54:18 +0100
-Message-ID: <20141114105417.GA8954@aepfle.de>
-References: <20141113111444.GA15503@aepfle.de>
- <20141113154457.GA31624@aepfle.de>
- <20141113160325.GA24351@paksenarrion.iveqy.com>
- <20141114101427.GA1548@aepfle.de>
- <20141114102423.GB24351@paksenarrion.iveqy.com>
- <20141114103013.GC2549@aepfle.de>
+From: 0xAX <kuleshovmail@gmail.com>
+Subject: [PATCH 1/1] gitk: po/ru.po russian translation typo fixed
+Date: Fri, 14 Nov 2014 17:05:28 +0600
+Message-ID: <1415963128-14221-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 11:54:28 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	0xAX <kuleshovmail@gmail.com>
+To: Paul Mackerras <paulus@samba.org>, Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Fri Nov 14 12:05:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpEWJ-0001RJ-FD
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 11:54:27 +0100
+	id 1XpEhM-0006wz-Aa
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 12:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965360AbaKNKyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 05:54:22 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.160]:62663 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965194AbaKNKyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 05:54:20 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1415962458; l=993;
-	s=domk; d=aepfle.de;
-	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Subject:Cc:To:From:Date;
-	bh=BROkDWZLnUtfDRODS0Xznk3LjLk=;
-	b=UUA5KSrQsMDn/EvJc6IsDPN86F+Dpk38Rw8iKQ/AAfW40fTqw/DL4qgnJiSl1EmVDj8
-	GvzSQRxtl1V6LoCvXGzDV3E46QoKs4fSekiNptWIUqLxKKAiJkho085nmpggWlO3WBQM2
-	gUh+Pshh3q0O69Gyg0h8w7HuomWh27xAAps=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIZST8ulOSUJqstS8YMAWN1YEmXTnspMxV9Qxw==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:1088:9901:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 35.11 AUTH)
-	with ESMTPSA id 604750qAEAsIwCR
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate);
-	Fri, 14 Nov 2014 11:54:18 +0100 (CET)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 4804250172; Fri, 14 Nov 2014 11:54:18 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20141114103013.GC2549@aepfle.de>
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S965263AbaKNLFs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Nov 2014 06:05:48 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:58236 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964781AbaKNLFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 06:05:47 -0500
+Received: by mail-lb0-f180.google.com with SMTP id z11so5770302lbi.39
+        for <git@vger.kernel.org>; Fri, 14 Nov 2014 03:05:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=yf7fYxBYvx0TLu3Eqk1Q/OszXMKjcYA0XgLlrOhklEM=;
+        b=y8OdNPp2wlXESxQYXKrqleAPOJzQ6eU9fFsWxHIZadxY1moense8yikzmOWzQPEdui
+         ppXW/y057DaQm9qD6L5HsRmKSAMPlUoXPMWnaScz28Cf8VCfM5itp4PTLtD8XfY7Vvuf
+         LganiRs8K/PTvjhICTW+VMU7K9vnS5IbD6aKUPReafP27Zdpp08kGx5JpP1qTK6Okx2M
+         v5iUfWAVzKD7OmU+z83h7YbOR2yusEOUJs6PkzIK6AB0xPQ9gOOqTyCGsmYD0jOuT3oL
+         cpUAdzotk3h5LyxrV4pImJQbbh/PW1pqZ5GffEESK8FIDGWxmQqAjcT2v4DywLVKSuQz
+         TAHw==
+X-Received: by 10.152.2.41 with SMTP id 9mr7445966lar.47.1415963145921;
+        Fri, 14 Nov 2014 03:05:45 -0800 (PST)
+Received: from localhost.localdomain ([95.59.92.217])
+        by mx.google.com with ESMTPSA id x8sm8111211lae.24.2014.11.14.03.05.44
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 14 Nov 2014 03:05:45 -0800 (PST)
+X-Mailer: git-send-email 2.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 14, Olaf Hering wrote:
+Signed-off-by: 0xAX <kuleshovmail@gmail.com>
+---
+ po/ru.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On Fri, Nov 14, Fredrik Gustafsson wrote:
-> 
-> > On Fri, Nov 14, 2014 at 11:14:27AM +0100, Olaf Hering wrote:
-> > > So my repo-master is now "bare". I pushed from repo-branchA into
-> > > repo-master and see my commits in both repos. But pushing from
-> > > repo-master to the remote fails because repo-master does not have
-> > > outstanding remote commits. However, git fetch doesnt do anything:
-> > 
-> > Are you mixing up your branches? So that you're updating one branch in
-> > your master repo but trying to push an other branch to your remote repo?
-> 
-> I dont think so. I have branchA in repo-branchA, and a 'git push origin
-> branchA' puts it into repo-master. 
-> How is a bare repo supposed to be updated? Is a simple 'git fetch --all'
-> supposed to work?
-
-Is there s a slim chance that I have to fetch in repo-master before
-doing a git push in repo-branchA? git remote show origin shows that some
-branches are out of date.
-
-Olaf
+diff --git a/po/ru.po b/po/ru.po
+index 5987303..0a0754d 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -863,7 +863,7 @@ msgid ""
+ "(discard ALL local changes)"
+ msgstr ""
+ "=D0=96=D0=B5=D1=81=D1=82=D0=BA=D0=B8=D0=B9: =D0=BF=D0=B5=D1=80=D0=B5=D0=
+=BF=D0=B8=D1=81=D0=B0=D1=82=D1=8C =D0=B8=D0=BD=D0=B4=D0=B5=D0=BA=D1=81 =
+=D0=B8 =D1=80=D0=B0=D0=B1=D0=BE=D1=87=D0=B8=D0=B9 =D0=BA=D0=B0=D1=82=D0=
+=B0=D0=BB=D0=BE=D0=B3\n"
+-"(=D0=B2=D1=81=D0=B5 =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=D0=B8=D1=
+=8F =D0=B2 =D1=80=D0=B0=D0=B1=D0=BE=D1=87=D0=B5=D0=BC =D0=BA=D0=B0=D1=82=
+=D0=B0=D0=BB=D0=BE=D0=B3=D0=B8 =D0=B1=D1=83=D0=B4=D1=83=D1=82 =D0=BF=D0=
+=BE=D1=82=D0=B5=D1=80=D1=8F=D0=BD=D1=8B)"
++"(=D0=B2=D1=81=D0=B5 =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=D0=B8=D1=
+=8F =D0=B2 =D1=80=D0=B0=D0=B1=D0=BE=D1=87=D0=B5=D0=BC =D0=BA=D0=B0=D1=82=
+=D0=B0=D0=BB=D0=BE=D0=B3=D0=B5 =D0=B1=D1=83=D0=B4=D1=83=D1=82 =D0=BF=D0=
+=BE=D1=82=D0=B5=D1=80=D1=8F=D0=BD=D1=8B)"
+=20
+ #: gitk:8492
+ msgid "Resetting"
+--=20
+2.1.3
