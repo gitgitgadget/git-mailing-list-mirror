@@ -1,78 +1,114 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] allow TTY tests to run under recent Mac OS
-Date: Fri, 14 Nov 2014 06:24:44 +0100
-Message-ID: <5465921C.7000904@web.de>
-References: <1415916087-18953-1-git-send-email-blume.mike@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [RFC] git checkout $tree -- $path always rewrites files
+Date: Thu, 13 Nov 2014 21:44:41 -0800
+Message-ID: <20141114054440.GA54304@gmail.com>
+References: <20141107081324.GA19845@peff.net>
+ <xmqqegtfgcfx.fsf@gitster.dls.corp.google.com>
+ <20141107191745.GB5695@peff.net>
+ <CANiSa6hufp=80TaesNpo1CxCbwVq3LPXvYaUSbcmzPE5pj_GGw@mail.gmail.com>
+ <CANiSa6ggX-DJSXLzjYwv1K2nF1ZrpJ3bHvPjh6gFnqSLQaqZFQ@mail.gmail.com>
+ <CAPc5daWdzrHr8Rdksr3HycMRQu0=Ji7h=BPYjzZj7MH6Ko0VgQ@mail.gmail.com>
+ <20141108083040.GA15833@peff.net>
+ <xmqqbnoge1ci.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Mike Blume <blume.mike@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 14 06:25:41 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 06:44:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xp9O8-000254-0a
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 06:25:40 +0100
+	id 1Xp9gj-0000XZ-8j
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 06:44:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287AbaKNFZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 00:25:36 -0500
-Received: from mout.web.de ([212.227.15.14]:49509 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751885AbaKNFZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 00:25:35 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0LrpKY-1XzZnm2BO2-013cuP; Fri, 14 Nov 2014 06:25:32
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.2.0
-In-Reply-To: <1415916087-18953-1-git-send-email-blume.mike@gmail.com>
-X-Provags-ID: V03:K0:Uao+cTtoZjRTKzgtmpKRtaEF8lgvvmu4PZ2I3mokysIql1anNj8
- TI1vs3Yr9l5qrXL8thlHRojZFrzWGNxce0ksiowitWl8ohsSLWVSKH1Sgzfh67XG3MCx7Kx
- 8LUbpd0K4jTjp/xn68/DwPmy4YX6oNKaPjOeJUfsiuFDMa6cSapVTvISKTWs2k170hbxMiA
- XqLgFloDCCD0+Cae+aJpg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752515AbaKNFot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 00:44:49 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:53346 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751836AbaKNFos (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 00:44:48 -0500
+Received: by mail-pa0-f47.google.com with SMTP id kx10so16850792pab.20
+        for <git@vger.kernel.org>; Thu, 13 Nov 2014 21:44:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=IwqxzB659z81jIaxKwK+VTqoSUEEKKQ8y4FpWQhCnIk=;
+        b=j7mtlMLuls6dpTbK9lm8dr9YV190tODLeDjfRTZb9/eRZI1vDEaDcc79WIeWM9C6Hr
+         3Rxgq5/08+YwdaFl3e5gXNTDyDR1DgX6xtwFozvam8HHWJwDe7ZN4FwxDvJuZr9zJBy5
+         kmNikbSiWbdbSWTytuMVpw12N/iqo2iL3ViJW3sEeLTRTjHs+/lcDmux7bEfdJzAxoks
+         JAWbAkTrdYZuskresZR0EHVnDnMV6aNTTy979E/GeJHefQYhyNQNoNKQqZL17gw3zs3D
+         dGPoMOONFbx4cGH35SIVR+UJKVubnzEWtcdMRibJb9S8M6fyY4q/Z8Af4+OSP9gG/ctu
+         6OyQ==
+X-Received: by 10.66.66.196 with SMTP id h4mr7585539pat.127.1415943887979;
+        Thu, 13 Nov 2014 21:44:47 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id hc10sm2033203pbd.78.2014.11.13.21.44.46
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 13 Nov 2014 21:44:47 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqbnoge1ci.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/13/2014 11:01 PM, Mike Blume wrote:
-> listed bug doesn't reproduce on Mac OS Yosemite. For now, just enable
-> TTY on Yosemite and higher
->
-> Signed-off-by: Mike Blume <blume.mike@gmail.com>
-> ---
->   t/lib-terminal.sh | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/t/lib-terminal.sh b/t/lib-terminal.sh
-> index 5184549..1311ce0 100644
-> --- a/t/lib-terminal.sh
-> +++ b/t/lib-terminal.sh
-> @@ -29,7 +29,10 @@ test_lazy_prereq TTY '
->   	# After 2000 iterations or so it hangs.
->   	# https://rt.cpan.org/Ticket/Display.html?id=65692
->   	#
-> -	test "$(uname -s)" != Darwin &&
-> +	# Under Mac OS X 10.10.1 and Perl 5.18.2, this problem
-> +	# appears to be gone.
-> +	#
-> +	[[ test "$(uname -s)" != Darwin || test "$(uname -r | cut -d. -f1") -ge 14 ]] &&
-This seems to be bash syntax (the "[[" can (and should) be easily avoided)
+On Sun, Nov 09, 2014 at 09:21:49AM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > So just to be clear, the behavior we want is that:
+> >
+> >   echo foo >some-new-path
+> >   git add some-new-path
+> >   git checkout HEAD -- .
+> >
+> > will delete some-new-path (whereas the current code turns it into an
+> > untracked file).
+> 
+> With the updated semantics proposed in the old thread, yes, that is
+> what should happen.
+> 
+> >   git checkout HEAD -- some-new-path
+> >
+> > do in that case?
+> 
+> Likewise.  And if some-new-path were a directory, with existing path
+> O and new path N both in the index but only the former in HEAD, the
+> operation would revert some-new-path/O to that of HEAD and remove
+> some-new-path/N.  That is the only logical thing we could do if we
+> were to take the updated sematics.
+> 
+> That is one of the reasons why I am not 100% convinced that the
+> proposed updated semantics is better, even though I was fairly
+> positive in the old discussion and also I kept the topic in the
+> "leftover bits" list.  The above command is a fairly common way to
+> say "I started refactoring the existing path some-path/O and
+> sprinkled its original contents spread into new files A, B and C in
+> the same directory.  Now I no longer have O in the working tree, but
+> let me double check by grabbing it out of the state recoded in the
+> commit".  You expect that "git checkout HEAD -- some-path" would not
+> lose A, B or C, knowing "some-path" only had O.  That expectation
+> would even be stronger if you are used to the current semantics, but
+> that is something we could fix, if we decide that the proposed
+> updated semantics is better, with a careful transition plan.
+> 
+> It might be less risky if the updated semantics were to make the
+> paths that are originally in the index but not in $tree untracked
+> (as opposed to "reset --hard" emulation where they will be lost)
+> unless they need to be removed to make room for D/F conflict issues,
+> but I haven't thought it through.
 
-Another question:
-Is this related to perl or Mac OS ?
-The commit message is indicating that the combination of Mac OS 10.10.1 
-and perl 5.18.2
-is working, but the code does not reflect this.
-Does it make sense to test for the perl version in the code?
-Or is it OK to mention
 
-  Under Mac OS X 10.10.1 which ships with Perl 5.18.2, this problem....
+Git has always been really careful to not lose data.
 
-
-
->   
->   	perl "$TEST_DIRECTORY"/test-terminal.perl \
->   		sh -c "test -t 1 && test -t 2"
+One way to avoid the problem of changing existing semantics is
+to make the new semantics accessible behind a flag, e.g.
+"git checkout --hard HEAD -- some-new-path".
+-- 
+David
