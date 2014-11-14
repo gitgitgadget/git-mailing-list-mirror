@@ -1,149 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] replace: fix replacing object with itself
-Date: Fri, 14 Nov 2014 14:45:55 -0800
-Message-ID: <xmqqppcp1jvg.fsf@gitster.dls.corp.google.com>
-References: <1415887559-16585-1-git-send-email-manzurmm@gmail.com>
+Subject: Re: [PATCH] gc: support temporarily preserving garbage
+Date: Fri, 14 Nov 2014 15:01:05 -0800
+Message-ID: <xmqqlhnd1j66.fsf@gitster.dls.corp.google.com>
+References: <1415927805-53644-1-git-send-email-brodie@sf.io>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Manzur Mukhitdinov <manzurmm@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 23:46:06 2014
+Cc: git@vger.kernel.org, Bryan Turner <bturner@atlassian.com>
+To: Brodie Rao <brodie@sf.io>
+X-From: git-owner@vger.kernel.org Sat Nov 15 00:01:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpPcx-00074H-GG
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 23:46:03 +0100
+	id 1XpPrf-0005NL-N5
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 00:01:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755202AbaKNWp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 17:45:59 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65302 "EHLO
+	id S1422752AbaKNXBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 18:01:11 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61526 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755135AbaKNWp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 17:45:58 -0500
+	with ESMTP id S1422637AbaKNXBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 18:01:10 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CB881E1B6;
-	Fri, 14 Nov 2014 17:45:57 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DE631E495;
+	Fri, 14 Nov 2014 18:01:09 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3uuJkaaa0OZL5kx8Dw5nzhzP7DI=; b=OZdY7S
-	2ftLrd+kM3dykNcluUw6nHGVeb/ymYkB6VwJ8hroRP+qeHRBOlNhNpLhy4OhKwqp
-	uiSjl16NWZ5FaQtGBCfWxLLxJMiq6X4oU4DYRriz7BhhnFEkNFxaylneSnwSf9U4
-	Jtp04ewoEjBXMZIhqBVeBi4Jztlzz10i8TOoI=
+	:content-type; s=sasl; bh=qKEdUEFYjk5f5bI0FEQ4vke4GlA=; b=AHEIUl
+	ZM56VgAKb9kmvWDmmrNU4iduxp65zR9D6T3hayAYE6SYl9R7HqH+uN3L+2L+9ZOP
+	1Bv8SQ7aeDcWtQd4G11DXJCExpN06f7FNhnRo2WGqBvkDRAbIMZEen6H0fdJKben
+	sFh841YcGqdwzxJiWQL0UNL+X0DQkF0l0l/Dg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oj//dzE7j6bkumXbwJzHgghrWpxBTfvm
-	rHccCgAexmczR0IYdlr0FeU134JJdi6tx0BCKTTQAOPuJmrXAvDw6/a2mEK92tkf
-	lgBj+b7OFdWFEeoP9TioNuv0MloU54X1OB8f3Z59VEN8Hc+lNbZ76/XeFCYyr1bg
-	DQ4IJs1k2Q0=
+	:content-type; q=dns; s=sasl; b=Uc9654vuho9Dxkug+OSuLM16NSoCeV1/
+	bdxvDMKFkbtqLIX7AjXCUDfSt/wyoimNiXXTVsw3YIwD4vFZ+ClYpMqfEwl3TXOq
+	OcHrIyafebVlyKqpb4tuu3y7DG43jXrlVquB87hE31LCK8CO5gdTIQWItPkZOFsd
+	m/8xCg3tOAE=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 61BB91E1B5;
-	Fri, 14 Nov 2014 17:45:57 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 769E01E494;
+	Fri, 14 Nov 2014 18:01:09 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD1FB1E1B4;
-	Fri, 14 Nov 2014 17:45:56 -0500 (EST)
-In-Reply-To: <1415887559-16585-1-git-send-email-manzurmm@gmail.com> (Manzur
-	Mukhitdinov's message of "Thu, 13 Nov 2014 15:05:59 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85BB01E493;
+	Fri, 14 Nov 2014 18:01:06 -0500 (EST)
+In-Reply-To: <1415927805-53644-1-git-send-email-brodie@sf.io> (Brodie Rao's
+	message of "Thu, 13 Nov 2014 17:16:45 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FF3F7694-6C4F-11E4-90B5-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1D798E54-6C52-11E4-AA62-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Manzur Mukhitdinov <manzurmm@gmail.com> writes:
+Brodie Rao <brodie@sf.io> writes:
 
-> When object is replaced with itself git shows unhelpful messages like(git log):
->     "fatal: replace depth too high for object <SHA1>"
+> This patch adds a gc.garbageexpire setting that, when not set to "now",
+> makes gc (and prune, prune-packed, and repack) move garbage into a
+> temporary garbage directory instead of deleting it immediately. The
+> garbage directory is then cleared out based on gc.garbageexpire.
 >
-> Prevents user from replacing object with itself(with test for checking
-> this case).
+> The motivation for this setting is to work around various NFS servers
+> not supporting delete-on-last-close semantics between NFS clients.
+> Without proper support for that, gc could potentially delete objects
+> and packs that are in use by git processes on other NFS clients. If
+> another git process has a deleted pack file mmap()ed, it could crash
+> with a SIGBUS error on Linux.
 >
-> Signed-off-by: Manzur Mukhitdinov <manzurmm@gmail.com>
+> Signed-off-by: Brodie Rao <brodie@sf.io>
 > ---
+>  .gitignore                             |  1 +
+>  Documentation/config.txt               | 20 +++++++++
+>  Documentation/git-gc.txt               |  7 ++++
+>  Documentation/git-prune-garbage.txt    | 55 ++++++++++++++++++++++++
+>  Documentation/git-prune-packed.txt     |  9 ++++
+>  Documentation/git-prune.txt            |  9 ++++
+>  Documentation/git-repack.txt           |  6 +++
+>  Documentation/git.txt                  |  6 +++
+>  Makefile                               |  2 +
+>  builtin.h                              |  1 +
+>  builtin/gc.c                           | 20 +++++++++
+>  builtin/prune-garbage.c                | 77 ++++++++++++++++++++++++++++++++++
+>  builtin/prune-packed.c                 |  3 +-
+>  builtin/prune.c                        |  5 ++-
+>  builtin/repack.c                       |  7 ++--
+>  cache.h                                |  2 +
+>  command-list.txt                       |  1 +
+>  contrib/completion/git-completion.bash |  2 +
+>  environment.c                          | 12 +++++-
+>  gc.c                                   | 60 ++++++++++++++++++++++++++
+>  gc.h                                   | 16 +++++++
+>  git.c                                  |  1 +
+>  t/t6502-gc-garbage-expire.sh           | 60 ++++++++++++++++++++++++++
+>  23 files changed, 375 insertions(+), 7 deletions(-)
+>  create mode 100644 Documentation/git-prune-garbage.txt
+>  create mode 100644 builtin/prune-garbage.c
+>  create mode 100644 gc.c
+>  create mode 100644 gc.h
+>  create mode 100755 t/t6502-gc-garbage-expire.sh
 
-The patch is not wrong per-se, but I wonder how useful this "do not
-replace itself but all other forms of loops are not checked at all"
-would be in practice.  If your user did this:
-
-	git replace A B ;# pretend as if what is in B is in A
-        git replace B C ;# pretend as if what is in C is in B
-        git replace C A ;# pretend as if we have loop
-	git log C
-
-she would not be helped with this patch at all, no?
-
-We have the "replace depth" thing, which is a poor-man's substitute
-for loop detection, primarily because we do not want to incur high
-cost of loop detection at runtime.  Shouldn't we be doing at least
-the same amount of loop-avoidance check, if we really want to avoid
-triggering the "replace depth" check at runtime?
-
->  builtin/replace.c  |  8 +++-----
->  t/t6050-replace.sh | 11 +++++++++--
->  2 files changed, 12 insertions(+), 7 deletions(-)
->
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index 294b61b..628377a 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -157,6 +157,9 @@ static int replace_object_sha1(const char *object_ref,
->  	char ref[PATH_MAX];
->  	struct ref_lock *lock;
->  
-> +	if (!hashcmp(object, repl))
-> +		return error("new object is the same as the old one: '%s'", sha1_to_hex(object));
-> +
->  	obj_type = sha1_object_info(object, NULL);
->  	repl_type = sha1_object_info(repl, NULL);
->  	if (!force && obj_type != repl_type)
-> @@ -295,9 +298,6 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
->  
->  	free(tmpfile);
->  
-> -	if (!hashcmp(old, new))
-> -		return error("new object is the same as the old one: '%s'", sha1_to_hex(old));
-> -
->  	return replace_object_sha1(object_ref, old, "replacement", new, force);
->  }
->  
-> @@ -406,8 +406,6 @@ static int create_graft(int argc, const char **argv, int force)
->  
->  	strbuf_release(&buf);
->  
-> -	if (!hashcmp(old, new))
-> -		return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
->  
->  	return replace_object_sha1(old_ref, old, "replacement", new, force);
->  }
-> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-> index 4d5a25e..5f96374 100755
-> --- a/t/t6050-replace.sh
-> +++ b/t/t6050-replace.sh
-> @@ -369,9 +369,8 @@ test_expect_success '--edit with and without already replaced object' '
->  	git cat-file commit "$PARA3" | grep "A fake Thor"
->  '
->  
-> -test_expect_success '--edit and change nothing or command failed' '
-> +test_expect_success '--edit with failed editor' '
->  	git replace -d "$PARA3" &&
-> -	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
->  	test_must_fail env GIT_EDITOR="./fakeeditor;false" git replace --edit "$PARA3" &&
->  	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
->  	git replace -l | grep "$PARA3" &&
-> @@ -440,4 +439,12 @@ test_expect_success GPG '--graft on a commit with a mergetag' '
->  	git replace -d $HASH10
->  '
->  
-> +test_expect_success 'replacing object with itself must fail' '
-> +    test_must_fail git replace $HASH1 $HASH1 &&
-> +    HASH8=$(git rev-parse --verify HEAD) &&
-> +    test_must_fail git replace HEAD $HASH8 &&
-> +    test_must_fail git replace --graft HEAD HEAD^ &&
-> +    test_must_fail env GIT_EDITOR=true git replace --edit HEAD
-> +'
-> +
->  test_done
+I am not sure if this much of code churn is warranted to work around
+issues that only happen on repositories on NFS servers that do not
+keep open-but-deleted files available.  Is it an option to instead
+have a copy of repository locally off NFS?
