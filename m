@@ -1,87 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git archiving only branch work
-Date: Fri, 14 Nov 2014 10:32:23 -0500
-Message-ID: <20141114153222.GA23077@peff.net>
-References: <5464a4e8.4a0.2bfa0e00.3067f800@geldenhuys.co.uk>
- <20141113133615.GA28346@lanh>
- <20141113200640.GB3869@peff.net>
- <xmqqvbmizu12.fsf@gitster.dls.corp.google.com>
- <20141113213318.GA7563@peff.net>
- <xmqqa93uzssv.fsf@gitster.dls.corp.google.com>
- <20141113213937.GD7563@peff.net>
- <xmqq61eizs9v.fsf@gitster.dls.corp.google.com>
+From: Adria Farres <14farresa@gmail.com>
+Subject: --trust-exit-code not working
+Date: Fri, 14 Nov 2014 17:12:35 +0100
+Message-ID: <20141114161235.GA30086@vimeitor>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Graeme Geldenhuys <mailinglists@geldenhuys.co.uk>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 16:32:48 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 14 17:11:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpIrd-0000X3-VQ
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 16:32:46 +0100
+	id 1XpJSj-0005BL-PP
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 17:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965756AbaKNPc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 10:32:27 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40367 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965730AbaKNPcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 10:32:25 -0500
-Received: (qmail 2560 invoked by uid 102); 14 Nov 2014 15:32:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Nov 2014 09:32:24 -0600
-Received: (qmail 12688 invoked by uid 107); 14 Nov 2014 15:32:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Nov 2014 10:32:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Nov 2014 10:32:23 -0500
+	id S935261AbaKNQLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 11:11:00 -0500
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:49819 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934727AbaKNQK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 11:10:59 -0500
+Received: by mail-wg0-f47.google.com with SMTP id a1so19843769wgh.34
+        for <git@vger.kernel.org>; Fri, 14 Nov 2014 08:10:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=ZI8qs1Eclw5aIzoBUvDdwq6th183Cahcec9n+W4bmqM=;
+        b=x0UVvu/sdoYwb0cTcp6faMq+rPkCk5tLU4xABrK7rS027YLmnLtDSZy30xyanr5eX+
+         uG/K3ED4p/TpaEaqUHplJk/seys77U9fWvqXcfAKYUXcXLFmd1FWjZ9HWRnZQMH19TAy
+         UoSeCh4XPPOHAeVrDMtOdIyx9ARSMC0TnvbvIiIplyjgMew2354vjoOWm8NFHIlYdcEW
+         jDS/0DSuXzpFDTuha1FqivOY/adnZYM2BEMd6kpFyTd++HeZ9bhltd8KxQ0360pFD6QN
+         uqy2WoVV0tLHouBsj6kEtH7suXRvWyB8L6HMoIALX6/hCohOdF7qsEGIiCFum1T06aSB
+         Wjbw==
+X-Received: by 10.180.93.37 with SMTP id cr5mr9062476wib.76.1415981458431;
+        Fri, 14 Nov 2014 08:10:58 -0800 (PST)
+Received: from vimeitor (194.Red-88-17-200.dynamicIP.rima-tde.net. [88.17.200.194])
+        by mx.google.com with ESMTPSA id pf4sm29094819wjb.36.2014.11.14.08.10.57
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 14 Nov 2014 08:10:57 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqq61eizs9v.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 13, 2014 at 01:48:12PM -0800, Junio C Hamano wrote:
+Hello!,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I agree they are technically orthogonal, but I cannot think of a case
-> > where I have ever generated actual _pathspecs_, which might have
-> > wildcards, and needed to use "-z". The point of using "-z" is that you
-> > do not know what crap you are feeding.
-> 
-> You do not have to generate, i.e. you should be allowed to do this:
-> 
->     $ git cmd --stdin -z <list-of-patterns
+I sent an email last week, but I'm not sure if I sent it incorrectly, or the
+formatting was very bad, or it went unnoticed. A few days ago a great soul was
+kind enough to create the --trust-exit-code option that made git respect the
+exit code of the difftool. Unfortunately, I haven't been able to make it work.
+Exiting vimdiff with :cq doesn't seem to make git quit, as it keeps pushing new
+files to be diffed. I tried meld and the exact same thing. I'm confident that
+exiting with :cq gives an error, as I have checked it, and I'm using git
+2.2.0.rc1.
 
-Right. My point is that I am not sure anybody ever really _wants_ to do
-this, versus:
+Am I missing something important? Has anyone managed to make it work with
+vimdiff and meld? Sorry for bringing that up so late and for being a
+disturbance.
 
-  git cmd -- "$pattern1" "$pattern2"
+Thank you,
 
-Because patterns tend to be small in number and made with predictable
-characters known to the script writer. It is sets of arbitrary filenames
-that tend to be long and contain random junk.
-
-> And this is not about "flexibility".  Unless your plan is to forbid
-> a corner case you do not anticipate and always disable pathspec
-> globbing, you would need to say something like:
-
-I had just assumed we would forbid, but yeah, you could have a switch to
-handle either case. That is much nicer to the corner case people.
-
-> Which is awkward.  And "--stdin -z" is most likely used in scripts;
-> we are not forcing people to keep typing --literal-pathspecs by
-> leaving them orthogonal *and* people do not have to remember one
-> more exception (the default of --literal-pathspecs is flipped only
-> when --stdin -z is in use) to the rule.
-
-It is not about "forcing to type". It is about "did not realize this was
-a potential pitfall and did not write it in the script in the first
-place".
-
--Peff
+Adria
