@@ -1,77 +1,92 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] t1410: fix breakage on case-insensitive filesystems
-Date: Fri, 14 Nov 2014 22:04:19 +0100
-Message-ID: <87zjbtlcj0.fsf@igel.home>
-References: <CAO2U3QiFvwMiwVCdVju_vJKK_HVndpQf4VyrEaHeeVVN6rgYgA@mail.gmail.com>
-	<20141109014354.GA23883@peff.net> <20141109015918.GA24736@peff.net>
-	<5463C106.5090803@kdbg.org> <20141112215923.GB6801@peff.net>
-	<546470D0.3080809@kdbg.org> <20141113090832.GA8329@peff.net>
-	<546653D6.7040505@kdbg.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: --trust-exit-code not working
+Date: Fri, 14 Nov 2014 13:07:12 -0800
+Message-ID: <20141114210711.GA55473@gmail.com>
+References: <20141114161235.GA30086@vimeitor>
+ <xmqq389l347n.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Michael Blume <blume.mike@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Nov 14 22:04:36 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Adria Farres <14farresa@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 22:07:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpO2f-0000Lq-A6
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 22:04:29 +0100
+	id 1XpO5Q-0001nD-Cj
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 22:07:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161709AbaKNVEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 16:04:25 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:43998 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754337AbaKNVEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 16:04:25 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3jfXH86HBfz3hjGK;
-	Fri, 14 Nov 2014 22:04:20 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3jfXH85Yk4zvh3q;
-	Fri, 14 Nov 2014 22:04:20 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id p04yp_01h_aj; Fri, 14 Nov 2014 22:04:19 +0100 (CET)
-X-Auth-Info: f+8AXrdS6OHb1yicW5nrMp0tTzZ5D/vBqZXOBLdBADe8YMbnaNtbP2+1yD9Gu9Ve
-Received: from igel.home (ppp-93-104-156-1.dynamic.mnet-online.de [93.104.156.1])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Fri, 14 Nov 2014 22:04:19 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-	id A1F2B2C30D7; Fri, 14 Nov 2014 22:04:19 +0100 (CET)
-X-Yow: Is this my STOP??
-In-Reply-To: <546653D6.7040505@kdbg.org> (Johannes Sixt's message of "Fri, 14
-	Nov 2014 20:11:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+	id S1161796AbaKNVHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 16:07:14 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:51376 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754306AbaKNVHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 16:07:12 -0500
+Received: by mail-pa0-f48.google.com with SMTP id rd3so4662808pab.7
+        for <git@vger.kernel.org>; Fri, 14 Nov 2014 13:07:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=muuLb9UTAldMEWTk6uBIdD9mZZx0/IDSpssCOiyRnDA=;
+        b=YoEDsHEGg0Oh6eAEJXXpTPHCvqx2+nq7ARFtH6mrhy5X89OwxRX/pdf+t9e4rGUccZ
+         tOnwJA2X3wuv5/KdQ/T45sA8dwIIhFyTQ73Nz/9EP/L5fmQO1jXkCewWVxMFQicbuJ89
+         p5NveGKdgEnMO+fnFeK5jQWzCZawzYAaeca64N1E4x1iJJ58LA4bqwZyO8tsdictT3lN
+         dQZj4S13jiEIu0M3bce3fi1xsP9zzjwA7aLqBi3PpavU7A6dryU4qSSoqZzMsWGrKSnn
+         tQM2c92PHFqjrGue6HjhLllkVeAZSJm5QEtqhv747+8/tMq4wJRn/b2mutEvIfzrAkQj
+         nrpw==
+X-Received: by 10.66.191.135 with SMTP id gy7mr12704302pac.95.1415999231888;
+        Fri, 14 Nov 2014 13:07:11 -0800 (PST)
+Received: from gmail.com (wdas-1.disneyanimation.com. [198.187.190.1])
+        by mx.google.com with ESMTPSA id gn11sm21445367pbd.32.2014.11.14.13.07.10
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Nov 2014 13:07:10 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqq389l347n.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Nov 14, 2014 at 12:41:16PM -0800, Junio C Hamano wrote:
+> David, I think this is about your 2b52123f (difftool: add support
+> for --trust-exit-code, 2014-10-26).  If you have time can you help
+> Adria?
+> 
+> Thanks.
 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 2ee3fe3..fc64b73 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -312,7 +312,7 @@ int mingw_open (const char *filename, int oflags, ...)
->  		return -1;
->  	fd = _wopen(wfilename, oflags, mode);
->  
-> -	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
-> +	if (fd < 0 && (oflags & (O_WRONLY|O_RDWR)) && errno == EACCES) {
 
-O_WRONLY and O_RDWR aren't flags, but two values of a 2-bit field
-(O_ACCMODE).
+Yup, I'll take a look when I have a chance.
+My first guess would be that the vim scriptlet is not passing
+down the status, but I'll have to take a closer look.
 
-Andreas.
+FWIW, I thought I had actually tested using vim,
+but I'll re-test and verify.
+
+
+> Adria Farres <14farresa@gmail.com> writes:
+> 
+> > Hello!,
+> >
+> > I sent an email last week, but I'm not sure if I sent it incorrectly, or the
+> > formatting was very bad, or it went unnoticed. A few days ago a great soul was
+> > kind enough to create the --trust-exit-code option that made git respect the
+> > exit code of the difftool. Unfortunately, I haven't been able to make it work.
+> > Exiting vimdiff with :cq doesn't seem to make git quit, as it keeps pushing new
+> > files to be diffed. I tried meld and the exact same thing. I'm confident that
+> > exiting with :cq gives an error, as I have checked it, and I'm using git
+> > 2.2.0.rc1.
+> >
+> > Am I missing something important? Has anyone managed to make it work with
+> > vimdiff and meld? Sorry for bringing that up so late and for being a
+> > disturbance.
+> >
+> > Thank you,
+> >
+> > Adria
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+David
