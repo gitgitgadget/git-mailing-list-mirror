@@ -1,122 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] difftool: honor --trust-exit-code for builtin tools
-Date: Fri, 14 Nov 2014 13:51:39 -0800
-Message-ID: <xmqqy4rd1mdw.fsf@gitster.dls.corp.google.com>
-References: <1416000835-79274-1-git-send-email-davvid@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: --trust-exit-code not working
+Date: Fri, 14 Nov 2014 13:55:28 -0800
+Message-ID: <20141114215527.GA93845@gmail.com>
+References: <20141114161235.GA30086@vimeitor>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Adri Farr <14farresa@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 22:51:58 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Adria Farres <14farresa@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 14 22:55:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpOmb-0007TS-FH
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 22:51:57 +0100
+	id 1XpOq5-0000ow-Ug
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 22:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161861AbaKNVvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 16:51:43 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56120 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1161484AbaKNVvm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 16:51:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 97DDC1E592;
-	Fri, 14 Nov 2014 16:51:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=stZyBdXGxtJ50Z7blX3UadRQzds=; b=Z8GwVC
-	m6lX1eWAhN8rwLOcSBY4y7NVCacLsAd9xu5qPl2GrXqMjzkgSM/Vb3LzwMnKKDkx
-	HUtTqtOzsikxv2Uo+hX/cNepUMMdiNxr/IlOwKdXhERXcophFgTcScXCG3gcqwRF
-	1we+wQAGdOoTRXStD10Fedf/ICi7ZdCHFaIe8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wPqoEEjiW7IznVhwA8cOGSc8xTe5F9lH
-	utx1o3yYkyxJ4g/Qyhva2C3gtJhonkb79vGI3ZchCDwTWF+Fc+SArSvacKLwpZIr
-	0Be3cU68tt4XjscTN7sdObXSXMtuaB5iIz8PmxwGRhreRdV6NNaCuHTw1PRfdhOq
-	lMPsMR6sL/M=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DD6D1E590;
-	Fri, 14 Nov 2014 16:51:41 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 135951E58F;
-	Fri, 14 Nov 2014 16:51:41 -0500 (EST)
-In-Reply-To: <1416000835-79274-1-git-send-email-davvid@gmail.com> (David
-	Aguilar's message of "Fri, 14 Nov 2014 13:33:55 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6AA99D36-6C48-11E4-AFC4-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1422677AbaKNVza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 16:55:30 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:49282 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754335AbaKNVz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 16:55:29 -0500
+Received: by mail-pd0-f181.google.com with SMTP id z10so154643pdj.26
+        for <git@vger.kernel.org>; Fri, 14 Nov 2014 13:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=fKHRGFD3SHy22PIjiEhKeTwoi7fkbllwSJlycObLJZk=;
+        b=d6ORABiQhCvr9gP5877quxu2S0Mu86aIIv1puvxh75CB7exaPItT/PUksYgulcPgGx
+         NES/2KekN+aqvCu1yAg+quhwuX6yyFd1vTe5XQzG/L1M+Jw50N48BmHc38tRAPTKdnR4
+         +BoMtPoSlV9uWcqtrqTZTdf71cI1y/+8tdxleZ4i9BTVQMktVZ8l9ZLq5vNOXwvOuzoV
+         ZU1wDTWlZ2rhKXWI9hJh7pro5D69A+D33SH4NXo+E5WJXkH5rzgwxlLyn0j5FxXI7KWl
+         m7S5ZEnchGQgDwuvpzNvG+bsd21HKAJ2aQ49iWyPwm4IKs6rxGZxkspkl9SI/rCCNCJt
+         0SwQ==
+X-Received: by 10.68.93.1 with SMTP id cq1mr12818062pbb.145.1416002129083;
+        Fri, 14 Nov 2014 13:55:29 -0800 (PST)
+Received: from gmail.com (wdas-1.disneyanimation.com. [198.187.190.1])
+        by mx.google.com with ESMTPSA id i12sm5706179pbq.64.2014.11.14.13.55.27
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Nov 2014 13:55:28 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20141114161235.GA30086@vimeitor>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Aguilar <davvid@gmail.com> writes:
+On Fri, Nov 14, 2014 at 05:12:35PM +0100, Adria Farres wrote:
+> Hello!,
+> 
+> I sent an email last week, but I'm not sure if I sent it incorrectly, or the
+> formatting was very bad, or it went unnoticed. A few days ago a great soul was
 
-> run_merge_tool() was not setting $status, which prevented the
-> exit code for builtin tools from being forwarded to the caller.
->
-> Capture the exit status and add a test to guarantee the behavior.
->
-> Reported-by: Adria Farres <14farresa@gmail.com>
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
->  git-mergetool--lib.sh | 1 +
->  t/t7800-difftool.sh   | 5 +++++
->  2 files changed, 6 insertions(+)
->
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> index a40d3df..2b66351 100644
-> --- a/git-mergetool--lib.sh
-> +++ b/git-mergetool--lib.sh
-> @@ -221,6 +221,7 @@ run_merge_tool () {
->  	else
->  		run_diff_cmd "$1"
->  	fi
-> +	status=$?
->  	return $status
->  }
+Nah, I was just very busy and it slipped through the cracks.
+Sorry 'bout that ~ I was meaning to get back to it.
 
-Thanks for a quick turn-around.  As a hot-fix for what is already in
--rc I am fine with this fix but the patch makes me wonder if $status
-as a global shell variable has any significance.
+> kind enough to create the --trust-exit-code option that made git respect the
+> exit code of the difftool. Unfortunately, I haven't been able to make it work.
+> Exiting vimdiff with :cq doesn't seem to make git quit, as it keeps pushing new
+> files to be diffed. I tried meld and the exact same thing. I'm confident that
+> exiting with :cq gives an error, as I have checked it, and I'm using git
+> 2.2.0.rc1.
+> 
+> Am I missing something important? Has anyone managed to make it work with
+> vimdiff and meld? Sorry for bringing that up so late and for being a
+> disturbance.
+> 
+> Thank you,
 
-I see that this shell function in its early part does this:
+Thanks for testing, Adria.
 
-	status=0
-        setup_tool "$1" || return 1
+If you could test my new patch we would very much appreciate it;
+adding a Tested-by: attribution line to the commit with your
+name would be very nice.
 
-which means that the caller of this function, instead of checking
-what is returned as the return value of the function like:
-
-	if run_merge_tool ...
-        then
-		...
-
-relies on the value of $status in its later part of the code like:
-
-	run_merge_tool ...
-	...
-	if test "$status" = 0
-	then
-		...
-
-then we are already in trouble.  And the latter form, if we had such
-a flow in the code, is simply a bad taste.
-
-A cleaner fix might be to get rid of the extra $status variable from
-this function and let the function return the result of its last
-command, either run_merge_cmd or run_diff_cmd, by either explicitly
-having "return $?" at the end, or not having that "return $status"
-line.  But that relies on us not having any caller that relies on
-the $status carried as a global variable around, so it will be more
-work to convince ourselves that such a fix is correctly done.  From
-my cursory look, what I suggested above should be safe and correct,
-but I do not want to risk an unnecessary and silly breakage this
-late in the cycle.
-
-So I'll queue this patch as-is for upcoming 2.2, but I think we
-would want to revisit this issue after the release is done.
+cheers,
+-- 
+David
