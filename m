@@ -1,129 +1,90 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] difftool: honor --trust-exit-code for builtin tools
-Date: Fri, 14 Nov 2014 13:57:47 -0800
-Message-ID: <20141114215746.GB93845@gmail.com>
-References: <1416000835-79274-1-git-send-email-davvid@gmail.com>
- <xmqqy4rd1mdw.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] approxidate: allow ISO-like dates far in the future
+Date: Fri, 14 Nov 2014 14:15:19 -0800
+Message-ID: <xmqqtx211lag.fsf@gitster.dls.corp.google.com>
+References: <20141113110325.GD8329@peff.net> <20141113110722.GB4386@peff.net>
+	<CA+EOSBn0-ZFOPaeU92a0YWPW_S9kenoRUjJMp-Nhm-azftrEfA@mail.gmail.com>
+	<20141114084725.GA16030@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Adri Farr <14farresa@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 14 22:57:52 2014
+Content-Type: text/plain
+Cc: Elia Pinto <gitter.spiros@gmail.com>,
+	Colin Smith <colin.webdev@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 14 23:15:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpOsJ-0001xv-Fk
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 22:57:51 +0100
+	id 1XpP9L-0001nH-9T
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 23:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161942AbaKNV5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 16:57:48 -0500
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:35857 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754389AbaKNV5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 16:57:47 -0500
-Received: by mail-pd0-f180.google.com with SMTP id ft15so17316512pdb.25
-        for <git@vger.kernel.org>; Fri, 14 Nov 2014 13:57:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=m0qJEnZ+Dek2lVoiodZndNGQW/cZEe/CDxinW7+QR+c=;
-        b=hys2ryZhULEoL+ROlN9KyV7TjsA6KB4EhTW5MgF0S5aiGyODba3ZorqN8o0FcLGRld
-         txi0BqAtDV826Lq2lTG6UmS5c7oePWvdKHcPNq3rwBA30qzhZHYPt8tE25jkKtWQNEJA
-         gfBjJtLOSrXD5ETb3BftN/wxp/iz2sKfiIBESUqs1FkisUsxlq0mRMWMB9FT9SB1S/X2
-         v1PIBKcrBm3TvH0HePSe8onTl4nJ8Lp3DWZnEanbFESC1BuReaftuX2iFFDsSnNk9tR2
-         3S2nYC8lYq9j0M6ak+y4KGXTNDGtsy6rFoHg8hJRFFFS8azeqJQNGPnFf8UT1PB4cHuM
-         JYpg==
-X-Received: by 10.66.222.100 with SMTP id ql4mr12850308pac.123.1416002266661;
-        Fri, 14 Nov 2014 13:57:46 -0800 (PST)
-Received: from gmail.com (wdas-1.disneyanimation.com. [198.187.190.1])
-        by mx.google.com with ESMTPSA id j5sm28508164pdp.9.2014.11.14.13.57.44
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 14 Nov 2014 13:57:45 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqqy4rd1mdw.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755072AbaKNWPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 17:15:23 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57937 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754484AbaKNWPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 17:15:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5867B1EABA;
+	Fri, 14 Nov 2014 17:15:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XRdOnkVkvGv1AGIFoasPWe+vSPA=; b=XY2QPn
+	pTOlVPrgyyADAsZeBT9xoY41Lr1CIfcx0RO+QV5hoHp5hLEHO2OF8LAcel3wvfHK
+	bkKDA0rskaZdesD84gNZRy5EDrcLZTNOVb65ctHNXLE+DHwpaNw0gffWx1uZ1e5h
+	zR6wKk7FK1nsgozRNwMMNijaBH09LpPZaC6vY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jpfr8Cb05ooLqFyLP5LGY3Q4Y7vyjiKU
+	YMqBC0ZzUgsuDakm9nWKgUOtkpgXbT21eSCS3dbDV33AYB/wO3U19WD2X8FZo/11
+	Pp1NoQvVSa6CXNYG/cwVs1UWf1S3ZhHR7Y9C5sONyhYuL9fxZXhf9efyLUgN/BXI
+	hZRk+qbh9qs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4AECD1EAB9;
+	Fri, 14 Nov 2014 17:15:21 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BAF0E1EAB8;
+	Fri, 14 Nov 2014 17:15:20 -0500 (EST)
+In-Reply-To: <20141114084725.GA16030@peff.net> (Jeff King's message of "Fri,
+	14 Nov 2014 03:47:25 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B8DC8484-6C4B-11E4-A629-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 14, 2014 at 01:51:39PM -0800, Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
-> 
-> > run_merge_tool() was not setting $status, which prevented the
-> > exit code for builtin tools from being forwarded to the caller.
-> >
-> > Capture the exit status and add a test to guarantee the behavior.
-> >
-> > Reported-by: Adria Farres <14farresa@gmail.com>
-> > Signed-off-by: David Aguilar <davvid@gmail.com>
-> > ---
-> >  git-mergetool--lib.sh | 1 +
-> >  t/t7800-difftool.sh   | 5 +++++
-> >  2 files changed, 6 insertions(+)
-> >
-> > diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> > index a40d3df..2b66351 100644
-> > --- a/git-mergetool--lib.sh
-> > +++ b/git-mergetool--lib.sh
-> > @@ -221,6 +221,7 @@ run_merge_tool () {
-> >  	else
-> >  		run_diff_cmd "$1"
-> >  	fi
-> > +	status=$?
-> >  	return $status
-> >  }
-> 
-> Thanks for a quick turn-around.  As a hot-fix for what is already in
-> -rc I am fine with this fix but the patch makes me wonder if $status
-> as a global shell variable has any significance.
-> 
-> I see that this shell function in its early part does this:
-> 
-> 	status=0
->         setup_tool "$1" || return 1
-> 
-> which means that the caller of this function, instead of checking
-> what is returned as the return value of the function like:
-> 
-> 	if run_merge_tool ...
->         then
-> 		...
-> 
-> relies on the value of $status in its later part of the code like:
-> 
-> 	run_merge_tool ...
-> 	...
-> 	if test "$status" = 0
-> 	then
-> 		...
-> 
-> then we are already in trouble.  And the latter form, if we had such
-> a flow in the code, is simply a bad taste.
-> 
-> A cleaner fix might be to get rid of the extra $status variable from
-> this function and let the function return the result of its last
-> command, either run_merge_cmd or run_diff_cmd, by either explicitly
-> having "return $?" at the end, or not having that "return $status"
-> line.  But that relies on us not having any caller that relies on
-> the $status carried as a global variable around, so it will be more
-> work to convince ourselves that such a fix is correctly done.  From
-> my cursory look, what I suggested above should be safe and correct,
-> but I do not want to risk an unnecessary and silly breakage this
-> late in the cycle.
-> 
-> So I'll queue this patch as-is for upcoming 2.2, but I think we
-> would want to revisit this issue after the release is done.
+Jeff King <peff@peff.net> writes:
 
+> On Fri, Nov 14, 2014 at 06:46:19AM +0100, Elia Pinto wrote:
+>
+>> > [1] http://en.wikipedia.org/wiki/Date_and_time_representation_by_country
+>> > [2] http://en.wikipedia.org/wiki/Calendar_date
+>> 
+>> Isn't not so good to refer to external resources  in a commit message ?
+>
+> It is not good to omit any explanation and just include a link, like:
+>
+>   Fixes the bug reported in http://...
+>
+> because people who are reading "git log" have to follow that link to
+> even see what you are talking about (and the link might go away, or they
+> might not have access at the time).
+>
+> It is fine, and even desirable, to summarize the relevant content of a
+> resource and provide a link for people who want to dig further. In this
+> case, I am saying "Wikipedia claims that nobody uses this format" and
+> backing it up with a link to indicate which pages I checked. You do not
+> have to follow the link to know what I am saying, but if you want to
+> dig deeper, you at least know where I left off my research.
+>
+> Does that make sense?
 
-Thanks for the sug, I totally agree with that.
-I'll put a $status audit/rework for mergetool+difftool on my
-todo list.
+What you wrote matches the level of details I have been trying to
+stick to when writing references in my own log messages and when
+tweaking others' log messages.
 
-cheers,
--- 
-David
+Thanks.
