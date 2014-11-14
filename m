@@ -1,128 +1,91 @@
-From: Alex Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH 1/1] git-config: git-config --list fixed when GIT_CONFIG value starts with ~/
-Date: Sat, 15 Nov 2014 01:38:36 +0600
-Message-ID: <87vbmh8syq.fsf@gmail.com>
-References: <1415989760-20259-1-git-send-email-kuleshovmail@gmail.com> <CAPig+cTpUyfKYj4VTK1AT-ga6UvupJrERsTHWTEzNP-Ogc4ujQ@mail.gmail.com> <20141114193049.GB10860@peff.net>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Re: [PATCH v2] allow TTY tests to run under recent Mac OS
+Date: Fri, 14 Nov 2014 11:48:36 -0800
+Message-ID: <CAO2U3QgmuwatfDDO8f461cwq2SctPx+owL8gDMBpNyDcaxaWGQ@mail.gmail.com>
+References: <1415918419-20807-1-git-send-email-blume.mike@gmail.com> <546656C8.3070009@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	0xAX <kuleshovmail@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 14 20:47:54 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Nov 14 20:49:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpMqV-0003q4-GG
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 20:47:51 +0100
+	id 1XpMre-0004PU-2F
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Nov 2014 20:49:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161455AbaKNTrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Nov 2014 14:47:47 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:42436 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752607AbaKNTrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Nov 2014 14:47:47 -0500
-Received: by mail-lb0-f181.google.com with SMTP id l4so13581071lbv.12
-        for <git@vger.kernel.org>; Fri, 14 Nov 2014 11:47:45 -0800 (PST)
+	id S1161830AbaKNTs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Nov 2014 14:48:58 -0500
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:41616 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161304AbaKNTs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Nov 2014 14:48:58 -0500
+Received: by mail-ob0-f170.google.com with SMTP id nt9so14243561obb.15
+        for <git@vger.kernel.org>; Fri, 14 Nov 2014 11:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=references:from:to:cc:subject:date:in-reply-to:message-id
-         :mime-version:content-type;
-        bh=VkfS5VCRiz+fVoTfO6D8knYzaIzEHXnOS0lykRd/Ml8=;
-        b=tQ/gjuJJmZDutEU1Ye0w1Tv74c2FsO+d10p6X70FKMOcl8yc51e2R/zc5ePy0YMkro
-         YlVRxAbT2J//Xv567B5myOk9eVaQOd+2VjGzsZuQ6h30JQHVYQI8MZglxVuV3P2RZWnZ
-         Royc9Zvf/1qyvmwQ9bL26XriEHTf1b2H42XH6GohLqtbHCue9HE2u9tC1WnTCi+E26rR
-         4x4kRcB3nvQSfwIAsJQTFnjh3Iveu/ZEUBshyA/ALKkP7J2OPVxYsBsKzVKm+XUF4imd
-         EiH6TXuG+uC2cjHfrNdUqxxSrEgqU7q8aWk5BQOp/4p0vNb3tG16w/+emGUk1sTydXEi
-         RwRA==
-X-Received: by 10.112.132.34 with SMTP id or2mr4251645lbb.75.1415994465351;
-        Fri, 14 Nov 2014 11:47:45 -0800 (PST)
-Received: from alex-desktop ([2.133.4.138])
-        by mx.google.com with ESMTPSA id lu5sm7251329lac.0.2014.11.14.11.47.43
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 14 Nov 2014 11:47:44 -0800 (PST)
-In-reply-to: <20141114193049.GB10860@peff.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ON18wyQkv9pozZx2gsDvrdZph9WBDa3uBxDqAGN5PJQ=;
+        b=I65knC5zSNmz7zeh68SOFaU3BX1fulZo/zDh7BzMLRQ02oqp2NdmK/I9hGGEs/zQZ1
+         jFxO+IqDZu4iD1oOFhImA+cp/wkHR+scIC4VK+nUlvfGlCXMrHFtfGDsjbI6LQm8qgU5
+         sHlsJbnZaOSDONCggOvyHKR/v1o3psn9Go8yuOM2SLXQoF8f7Ce9qZ57Lyjrv0KGbxkG
+         yhMdA1k6siyp9VYrBExk1CuB1Rw7OOSpW2HRhC0iWR/jPFMnEmI0rtbMk+uwtngWauuO
+         p8CyrPABTQXk1JSOajLud5BVQiqbxRM/zd9aeNr+jYKoxF1FbBDqj3nsPIt0Nx/dFeEE
+         y2Lg==
+X-Received: by 10.182.125.3 with SMTP id mm3mr9297285obb.7.1415994537305; Fri,
+ 14 Nov 2014 11:48:57 -0800 (PST)
+Received: by 10.202.18.132 with HTTP; Fri, 14 Nov 2014 11:48:36 -0800 (PST)
+In-Reply-To: <546656C8.3070009@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+My understanding is that && and || have equal precedence, and this
+seems to be borne out in testing at my shell. If the if/then method is
+clearer I'm happy to go with that.
 
-Hello Eric and Jeff,
-
->Eric Sunshine
->A few issues:
+On Fri, Nov 14, 2014 at 11:23 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 13.11.2014 um 23:40 schrieb Mike Blume:
+>> listed bug doesn't reproduce on Mac OS Yosemite. For now, just enable
+>> TTY on Yosemite and higher
+>>
+>> Signed-off-by: Mike Blume <blume.mike@gmail.com>
+>> Improved-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  t/lib-terminal.sh | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/t/lib-terminal.sh b/t/lib-terminal.sh
+>> index 5184549..6395a34 100644
+>> --- a/t/lib-terminal.sh
+>> +++ b/t/lib-terminal.sh
+>> @@ -29,7 +29,10 @@ test_lazy_prereq TTY '
+>>       # After 2000 iterations or so it hangs.
+>>       # https://rt.cpan.org/Ticket/Display.html?id=65692
+>>       #
+>> -     test "$(uname -s)" != Darwin &&
+>> +     # Under Mac OS X 10.10.1 and Perl 5.18.2, this problem
+>> +     # appears to be gone.
+>> +     #
+>> +     test "$(uname -s)" != Darwin || test "$(uname -r | cut -d. -f1)" -ge 14 &&
 >
->(1) Style: s/char* /char */
+> This is part of an &&-chain; you can't just throw in a || in the middle.
 >
->(2) Avoid declaration (of 'newpath') after statement.
+> How about
 >
->(3) You can drop 'newpath' altogether and just assign the result of
->expand_user_path() directly to given_config_source.file.
+>         if test "$(uname -s)" = Darwin
+>         then
+>                 test "$(uname -r | cut -d. -f1)" -ge 14
+>         fi &&
 >
->This code is potentially leaking the old value of
->given_config_source.file, and (later) the new value, however, as
->given_config_source.file is already being leaked elsewhere, it
->probably does not make the situation much worse.
-
-It is my first patch to git's code base, so many thanks for your
-feedback, i'll fix these issues if there will be need in this patch.
-
->Jeff King <peff@peff.net>
+>>
+>>       perl "$TEST_DIRECTORY"/test-terminal.perl \
+>>               sh -c "test -t 1 && test -t 2"
+>>
 >
-> Yeah, I'd agree it is a little unexpected to expand here. The "~" is
-> mostly a shell thing, and doing:
+> -- Hannes
 >
->   GIT_CONFIG=~/.gitconfig git config --list
->
-> from the shell generally works, because the shell will expand the "~"
-> before it even hits git. If you're not using a shell to set the
-> variable, you probably should be pre-expanding it yourself.
-
-Yes, you're right here, but i put GIT_CONFIG=~/.gitconfig to my .bashrc
-and it doesn't work so.
-
->
-> Note that this code path affects "git config --file=~/.gitconfig", too.
-> At least there it would be a little bit useful because the shell will
-> not expand for you, but it still feels a bit unconventional to me.
->
->> >  builtin/config.c | 2 ++
->> >  1 file changed, 2 insertions(+)
->> >
->> > diff --git a/builtin/config.c b/builtin/config.c
->> > index 7bba516..df1bee0 100644
->> > --- a/builtin/config.c
->> > +++ b/builtin/config.c
->> > @@ -540,6 +540,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->> >
->> >         if (actions == ACTION_LIST) {
->> >                 check_argc(argc, 0, 0);
->> > +               const char* newpath = expand_user_path(given_config_source.file);
->> > +               given_config_source.file = newpath;
->
-> If we _were_ going to do such an expansion, this is absolutely the wrong
-> place for it. It works only for the "--list" action; if we are going to
-> expand it, we would want to do so everywhere. And we do not even know if
-> given_config_source.file is non-NULL here (we could be reading from
-> stdin, or a blob). Fortunately expand_user_path will pass through a NULL
-> without segfaulting.
->
-> Probably the right place would be the if/else chain around
-> builtin/config.c:514, where we convert a relative path into an absolute
-> one. But I'm not convinced it's a good thing to be doing in the first
-> place.
->
-> -Peff
-
-What if we'll put path expanding right after getting value of file path,
-after given_config_source.file = getenv(CONFIG_ENVIRONMENT); at 451?
-
-Thank you.
-
---
-Best regards.
-0xAX
