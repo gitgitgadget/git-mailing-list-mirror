@@ -1,121 +1,93 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [RFC] On watchman support
-Date: Sat, 15 Nov 2014 08:24:44 +0100
-Message-ID: <5466FFBC.6020207@web.de>
-References: <20141111124901.GA6011@lanh> <54643C30.6010204@web.de> <CACsJy8AKsvL2XcBMGG1Jy_W2KaOCuYm16Ffk529KDOARr68XNQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twopensource.com>
-To: Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Nov 15 08:25:07 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 2/2] config: clear the executable bits (if any) on $GIT_DIR/config
+Date: Sat, 15 Nov 2014 08:26:19 +0100
+Message-ID: <1416036379-4994-3-git-send-email-mhagger@alum.mit.edu>
+References: <1416036379-4994-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Karsten Blees <karsten.blees@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 15 08:26:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpXjG-0001dL-Qd
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 08:25:07 +0100
+	id 1XpXkr-0002Cw-LU
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 08:26:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752717AbaKOHY4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Nov 2014 02:24:56 -0500
-Received: from mout.web.de ([212.227.17.12]:53361 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752003AbaKOHYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2014 02:24:55 -0500
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MOilO-1XsGkn11Gw-0066UZ; Sat, 15 Nov 2014 08:24:51
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <CACsJy8AKsvL2XcBMGG1Jy_W2KaOCuYm16Ffk529KDOARr68XNQ@mail.gmail.com>
-X-Provags-ID: V03:K0:mKNqJmlt5S74gz63VO4o8WrCb5dyCrDP6A7A0OFELHgoTLHWQPa
- v2ms1F76WCVQhCBjgE4IxNCZkUtn1QK6DdUadDE3zs7CDi3IIYG+xvV5YjIU+30624SZ/vd
- Y4q+nh5xCfwGCnwIpaWdDFhE68Wh9hG9fHkVkap/RHdXed3Xo2dvn8cgyuYprHYbYQXcH9Y
- vdS/zezR1Vg5+aptR/UsA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754464AbaKOH0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2014 02:26:40 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:59413 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752003AbaKOH0j (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Nov 2014 02:26:39 -0500
+X-AuditID: 12074414-f79246d000000c4d-ce-5467002a937c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id F8.45.03149.A2007645; Sat, 15 Nov 2014 02:26:34 -0500 (EST)
+Received: from michael.fritz.box (p5DDB2373.dip0.t-ipconnect.de [93.219.35.115])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAF7QTan011566
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sat, 15 Nov 2014 02:26:33 -0500
+X-Mailer: git-send-email 2.1.1
+In-Reply-To: <1416036379-4994-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqKvFkB5icOiOkEXXlW4mi4beK8wW
+	C/8dZbe4vWI+s8X+piQHVo+/7z8weeycdZfd4+IlZY/Pm+Q8mqecZw1gjeK2SUosKQvOTM/T
+	t0vgzpjVdoK1YCV3xdJNXawNjN84uhg5OSQETCSm9pxghrDFJC7cW8/WxcjFISRwmVGid0EL
+	I4Rzgkni/MEGdpAqNgFdiUU9zUwgtoiAmsTEtkMsIEXMAlMZJfY8Ws4CkhAWCJJYdn4jWBGL
+	gKrEvBc7wJp5BZwlTs77DLVOTmLv5NVg9ZwCLhIds16C1QgB1exe/4l9AiPvAkaGVYxyiTml
+	ubq5iZk5xanJusXJiXl5qUW6Fnq5mSV6qSmlmxghQSWyg/HISblDjAIcjEo8vBpT00KEWBPL
+	iitzDzFKcjApifIW3AEK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuE98h0ox5uSWFmVWpQPk5Lm
+	YFES5/22WN1PSCA9sSQ1OzW1ILUIJivDwaEkwSv7H6hRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4
+	NS8ltSixtCQjHhQd8cXA+ABJ8QDtDQJp5y0uSMwFikK0nmJUlBLnlQFJCIAkMkrz4MbCUsUr
+	RnGgL4V5i0GqeIBpBq77FdBgJqDBjMdSQQaXJCKkpBoYI8UzuzaKLFASzLH4uXeWcvEiE4lC
+	hT97kyu/lbNbWr2SUK1c/465KmTCRT2N/zusMubu79oo7Fa2YcPDe1P9TWWnXH2b1zBNrVRV
+	5tjsjlf+sp+E0lfr1DAvyj8puKpe9szCXJU/T0NmiLacXfUv5+/7HDfzt9fvN9nq 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/13/2014 01:22 PM, Duy Nguyen wrote:
-> On Thu, Nov 13, 2014 at 12:05 PM, Torsten B=C3=B6gershausen <tboegi@w=
-eb.de> wrote:
->> From a Git user perspective it could be good to have something like =
-this:
->>
->> a) git status -u
->> b) git status -uno
->> c) git status -umtime
->> d) git status -uwatchman
->>
->> We know that a) and b) already exist.
->> c) Can be convenient to have, in order to do benchmarking and testin=
-g.
->>   When the UNTR extension is not found, Git can give an error,
->>   saying something like this:
->>   No mtime information found, use "git update-index --untracked-cach=
-e"
->> d) does not yet exist
->>
->> Of course we may want to configure the default for "git status" in a=
- default variable,
->> like status.findUntrackedFiles, which can be empty "", "mtime" or "w=
-atchman",
->> and we may add other backends later.
-> While "git status" is in the spotlight, these optimizations have wide=
-r
-> impact. Faster index read/refresh/write helps the majority of
-> commands. Faster untracked listing hits git-status, git-add,
-> git-commit -A... This is why I go with environment variable for
-> temporarily disabling something, or we'll need many config and comman=
-d
-> line options, one per command.
->
->> A short test showed that watchman compiles under Mac OS.
->> The patch did not compile out of the box (both Git and watchman decl=
-are
->> there own version of usage(), some C99 complaints from the compiler =
-in watchman,
->> nothing that can not be fixed easily)
-> Yeah it's not perfect. It's mainly to show speeding up refresh with
-> watchman could be done easily and with low impact
->
->> I will test the mtime patch under networked file systems the next we=
-eks.
+There is no reason for $GIT_DIR/config to be executable, plus this
+change will help clean up repositories affected by the bug that was
+fixed by the previous commit.
 
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ config.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-Thinks become to get a little bit clearer.
-What I can understand is that we have 2 different "update-helpers" for =
-Git,
-thanks for that.
-
-just in case there is re-roll, does the following makes sense:
-We want to enable them (probably only one at a time) either by command =
-line or
-persistent in a repo.
-
-As I think we have 2 different update helpers
-(and may be more in the future)
-GIT_UPDATE_HELPER=3Ddirmtime git status
-GIT_UPDATE_HELPER=3Dwatchman git status
-GIT_UPDATE_HELPER=3Dnone git status
-
-of course we want to be able to configure it:
-git config core.updatehelper dirmtime
-
-
-After configuring we may want to override it:
-GIT_UPDATE_HELPER=3Dnone git status
-or
-git -c core.updatehelper=3Dnone status
-
-> Hmm.. you remind me mtime series may have this as an advantage over w=
-atchman..
-I had the time to do a short test, sharing a copy of git.git under NFS:
-The time for git status dropped from 0.4 seconds to 0.15 seconds or so.
-Very nice.
-The next test will be to share the same repo under samba to Windows
-and Mac OS and see how this works.
+diff --git a/config.c b/config.c
+index 9e42d38..0942e5f 100644
+--- a/config.c
++++ b/config.c
+@@ -1653,7 +1653,15 @@ int git_config_set_multivar_in_file(const char *config_filename,
+ 			MAP_PRIVATE, in_fd, 0);
+ 		close(in_fd);
+ 
+-		if (chmod(lock->filename, st.st_mode & 07777) < 0) {
++		/*
++		 * We make of the executable bits because (a) it
++		 * doesn't make sense to have executable bits set on
++		 * the config file, and (b) there was a bug in git 2.1
++		 * which caused the config file to be created with u+x
++		 * set, so this will help repair repositories created
++		 * with that version.
++		 */
++		if (chmod(lock->filename, st.st_mode & 07666) < 0) {
+ 			error("chmod on %s failed: %s",
+ 				lock->filename, strerror(errno));
+ 			ret = CONFIG_NO_WRITE;
+@@ -1832,7 +1840,7 @@ int git_config_rename_section_in_file(const char *config_filename,
+ 
+ 	fstat(fileno(config_file), &st);
+ 
+-	if (chmod(lock->filename, st.st_mode & 07777) < 0) {
++	if (chmod(lock->filename, st.st_mode & 07666) < 0) {
+ 		ret = error("chmod on %s failed: %s",
+ 				lock->filename, strerror(errno));
+ 		goto out;
+-- 
+2.1.1
