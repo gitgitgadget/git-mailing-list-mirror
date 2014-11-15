@@ -1,75 +1,84 @@
-From: Gabriele Mazzotta <gabriele.mzt@gmail.com>
-Subject: [PATCH] gitk: Enable mouse horizontal scrolling in diff pane
-Date: Sat, 15 Nov 2014 15:05:06 +0100
-Message-ID: <1416060306-4048-1-git-send-email-gabriele.mzt@gmail.com>
-Cc: paulus@samba.org, Gabriele Mazzotta <gabriele.mzt@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 15 15:07:44 2014
+From: Adri Farr <14farresa@gmail.com>
+Subject: Re: [PATCH] difftool: honor --trust-exit-code for builtin tools
+Date: Sat, 15 Nov 2014 15:22:31 +0100
+Message-ID: <CAPfWmhiPgka9ok30eXswcy1jb+g4pcNV80QM-YVvn5r-KebAUQ@mail.gmail.com>
+References: <20141115002710.GA72216@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 15 15:22:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xpe0t-0001yG-8S
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 15:07:43 +0100
+	id 1XpeFI-0003YS-Qq
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 15:22:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753990AbaKOOFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2014 09:05:23 -0500
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:44118 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753972AbaKOOFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2014 09:05:22 -0500
-Received: by mail-wi0-f172.google.com with SMTP id hi2so342301wib.5
-        for <git@vger.kernel.org>; Sat, 15 Nov 2014 06:05:21 -0800 (PST)
+	id S1754431AbaKOOWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2014 09:22:34 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:41190 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753972AbaKOOWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2014 09:22:33 -0500
+Received: by mail-lb0-f170.google.com with SMTP id w7so5483078lbi.29
+        for <git@vger.kernel.org>; Sat, 15 Nov 2014 06:22:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=3/mIp+/pIKVX6C7iEw4p1MJ0Wo/QG79sjbp0EWM862A=;
-        b=mE+eflfFwBp2l1l/+UfVeh2bMJrDS6tb876v+iOMcvesZfucPGSUABB+IOSYjGkLkM
-         YYa4EiNQy8XUJixiwcvmYixA5tr/K7dR86RLahErLIvu2u/oCivH4bWQNCbrqjOGltKA
-         W8/8eqxv9hS+yzImV/ZJlRnlesJaEgmGSA9eW2vCbWlncP/jkBjeh2qPipqPnjrFxYsc
-         Jje3nurnBQP+ND160PrnOuEqhpL8uACLHSI4xJDE2K746WiA/u1qpFyREvvTCpMj2RS0
-         Fb2lK5ZvhQi6C9AGE3sZL9PK7yOpEW2adaVcg4pv5wewgkEqmm6yQo9xCO2+KOGYmiMC
-         6TSA==
-X-Received: by 10.194.184.75 with SMTP id es11mr22868994wjc.35.1416060321051;
-        Sat, 15 Nov 2014 06:05:21 -0800 (PST)
-Received: from xps13.homenet (2-235-140-64.ip228.fastwebnet.it. [2.235.140.64])
-        by mx.google.com with ESMTPSA id t9sm43442082wjf.41.2014.11.15.06.05.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Nov 2014 06:05:20 -0800 (PST)
-X-Mailer: git-send-email 2.1.3
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UOPl2M5uRMotHi3AzTBJBHqyxMXNBZdNm+I1CnhNSU4=;
+        b=uqMSp5wnbnzXlJ3eVqDtunVUWIgZ13kBuvmC1qojUKHelCO/4iT5J8W9BEsDqqYNsE
+         iZQi3ZTYUsHTqO+CqJ2IlEgUeuMlclF5oOKLLPSzQXGYBIPzxfGxSylmuyUlmDffz9rz
+         mzvWCP1m5gSpjlGS+bTSO2W/I88Gq3mozKtHXfbZDoofFXJ8uWQWgn8Muy53nzmSMbgw
+         Tg75fCw4WFCeHOL4QRPflJVfJ9Q9lYtC0JTxW3VggbqwpHoos8m3b+Z3WobURLMbw+++
+         2dcstCD5WgiiHHFs9EBtn9QKT0XyEsaWgBTA1YP5FyHwtSsIVrj0Xr6D6xBqUmBJnnMC
+         0Jew==
+X-Received: by 10.112.63.133 with SMTP id g5mr14031636lbs.33.1416061351749;
+ Sat, 15 Nov 2014 06:22:31 -0800 (PST)
+Received: by 10.114.181.40 with HTTP; Sat, 15 Nov 2014 06:22:31 -0800 (PST)
+In-Reply-To: <20141115002710.GA72216@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently it's required to hold Shift and scroll up and down to move
-horizontally. Listen to Button-6 and Button-7 events too to make
-horizontal scrolling handier with touchpads and some mice.
+Oh, sorry about that. I didn't realize I was directly responding to
+you. Apologizes. Hopefully I'm doing it right this time. I don't have
+much experience with mailing lists, and Gmail doesn't seem to help.
+You don't need to add the 'Tested-by' line. Testing is the least I can
+do. If you still want to add that line, my full name is 'Adria
+Farres'. Thank you!
 
-Signed-off-by: Gabriele Mazzotta <gabriele.mzt@gmail.com>
----
- gitk-git/gitk | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 78358a7..95a98e3 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2516,6 +2516,13 @@ proc makewindow {} {
-     } else {
- 	bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
- 	bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+        bind $ctext <Button> {
-+            if {"%b" eq 6} {
-+                $ctext xview scroll -5 units
-+            } elseif {"%b" eq 7} {
-+                $ctext xview scroll 5 units
-+            }
-+        }
-         if {[tk windowingsystem] eq "aqua"} {
-             bindall <MouseWheel> {
-                 set delta [expr {- (%D)}]
--- 
-2.1.3
+2014-11-15 1:27 GMT+01:00 David Aguilar <davvid@gmail.com>:
+>
+> Adri sent me this directly but I think it should have gone to the list.
+>
+> Adri, if you don't mind, Junio can add:
+>
+> Tested-by: Adri Farr <14farresa@gmail.com>
+>
+> ...to the commit message trailer since it looks like it's happy.
+>
+> Thanks for testing!
+>
+> cheers,
+> David
+>
+> ----- Forwarded message from Adri Farr <14farresa@gmail.com> -----
+>
+> Date: Sat, 15 Nov 2014 00:10:12 +0100
+> From: Adri Farr <14farresa@gmail.com>
+> To: David Aguilar <davvid@gmail.com>
+> Subject: Re: [PATCH] difftool: honor --trust-exit-code for builtin tools
+>
+> I have tested this patch both in vim and meld and it works
+> wonderfully. Thank you for the time put into this. I should have
+> provided feedback back when the patch was proposed. I guess it's never
+> too late :).
+>
+> 2014-11-14 22:57 GMT+01:00 David Aguilar <davvid@gmail.com>:
+>> [snip]
+>
+> ----- End forwarded message -----
