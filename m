@@ -1,113 +1,182 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] t1410: fix breakage on case-insensitive filesystems
-Date: Sat, 15 Nov 2014 09:27:58 +0100
-Message-ID: <54670E8E.5040901@kdbg.org>
-References: <CAO2U3QiFvwMiwVCdVju_vJKK_HVndpQf4VyrEaHeeVVN6rgYgA@mail.gmail.com>	<20141109014354.GA23883@peff.net> <20141109015918.GA24736@peff.net>	<5463C106.5090803@kdbg.org> <20141112215923.GB6801@peff.net>	<546470D0.3080809@kdbg.org> <20141113090832.GA8329@peff.net>	<546653D6.7040505@kdbg.org> <87zjbtlcj0.fsf@igel.home>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] Introduce a hook to run after formatting patches
+Date: Sat, 15 Nov 2014 10:44:43 -0000
+Organization: OPDS
+Message-ID: <B4E02729E7DE4F90BC6F1A065A7D4D5D@PhilipOakley>
+References: <1416012460-4459-1-git-send-email-sbeller@google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Michael Blume <blume.mike@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>,
- git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: msysgit+bncBCJYV6HBKQIJJHM4UMCRUBEPEYCZK@googlegroups.com Sat Nov 15 09:28:06 2014
-Return-path: <msysgit+bncBCJYV6HBKQIJJHM4UMCRUBEPEYCZK@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f63.google.com ([209.85.215.63])
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Stefan Beller" <sbeller@google.com>
+To: "Stefan Beller" <sbeller@google.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 15 11:44:08 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIJJHM4UMCRUBEPEYCZK@googlegroups.com>)
-	id 1XpYiE-0006QA-4V
-	for gcvm-msysgit@m.gmane.org; Sat, 15 Nov 2014 09:28:06 +0100
-Received: by mail-la0-f63.google.com with SMTP id q1sf1551704lam.18
-        for <gcvm-msysgit@m.gmane.org>; Sat, 15 Nov 2014 00:28:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=5qSK7qHm20kFbb7qYRRPvOb+P4ZXEbwQ6sZzzPhvH8w=;
-        b=cG2v06FsYzHUODqNmtfr72B9EngYYbRpq8AoTaPQejaagSdESRahQ30NoHJtwlCDnJ
-         NLJOJm+bkyDys9b+lbI5HUZe8SVhqVnJpZbqbZEtGYLGFIKeoq+nJx8lXHFsp9RZt6dy
-         9oZBHKy/vFa6628iPCG0Bc/CcFAObYyYJ0+LXPjggZqDbbD3N9YrXJAxu8VDV3O3b3yM
-         azyAfQcyFcJhKW+7s05DkQvLZIzy/fTusmuy35IlqzGXaMgLrx1jBrDiw7m/V8ydSrKa
-         B/GQntNFnsnevYks0uuMueorNOGHsBfKUDdR2zUfsO1Qw6MtBEP51T0uKiWWU2gEyqm2
-         bMXw==
-X-Received: by 10.152.2.135 with SMTP id 7mr2238lau.19.1416040085943;
-        Sat, 15 Nov 2014 00:28:05 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.27.41 with SMTP id q9ls825815lag.67.gmail; Sat, 15 Nov
- 2014 00:28:04 -0800 (PST)
-X-Received: by 10.112.62.226 with SMTP id b2mr194620lbs.11.1416040084124;
-        Sat, 15 Nov 2014 00:28:04 -0800 (PST)
-Received: from bsmtp.bon.at (bsmtp3.bon.at. [213.33.87.17])
-        by gmr-mx.google.com with ESMTPS id jw5si276392wid.2.2014.11.15.00.28.04
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Nov 2014 00:28:04 -0800 (PST)
-Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.17;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jfqS23mB5z5tlB;
-	Sat, 15 Nov 2014 09:28:02 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 5A98419F730;
-	Sat, 15 Nov 2014 09:27:59 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <87zjbtlcj0.fsf@igel.home>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=none
- (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Xpapr-00079u-F3
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 11:44:07 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753286AbaKOKoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2014 05:44:01 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:57939 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752191AbaKOKn7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Nov 2014 05:43:59 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApMJAE8tZ1QCYJEfPGdsb2JhbABbgw5VWYhBxFOHRAQEAoEVFwEBAQEBAQUBAQEBODuDfQYBAQQIAQEdER4BASELAgMFAgEDDgcMJRQBBBoGBwMUBgESCAIBAgMBiDQJwX2PHgEBAQEGAQEBAQEZBJEigzSBHgWFJQKGLIZ0ZoN1iF6RPIgGPTCCSwEBAQ
+X-IPAS-Result: ApMJAE8tZ1QCYJEfPGdsb2JhbABbgw5VWYhBxFOHRAQEAoEVFwEBAQEBAQUBAQEBODuDfQYBAQQIAQEdER4BASELAgMFAgEDDgcMJRQBBBoGBwMUBgESCAIBAgMBiDQJwX2PHgEBAQEGAQEBAQEZBJEigzSBHgWFJQKGLIZ0ZoN1iF6RPIgGPTCCSwEBAQ
+X-IronPort-AV: E=Sophos;i="5.07,391,1413241200"; 
+   d="scan'208";a="763028482"
+Received: from host-2-96-145-31.as13285.net (HELO PhilipOakley) ([2.96.145.31])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 15 Nov 2014 10:43:54 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-Am 14.11.2014 um 22:04 schrieb Andreas Schwab:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> diff --git a/compat/mingw.c b/compat/mingw.c
->> index 2ee3fe3..fc64b73 100644
->> --- a/compat/mingw.c
->> +++ b/compat/mingw.c
->> @@ -312,7 +312,7 @@ int mingw_open (const char *filename, int oflags, ...)
->>  		return -1;
->>  	fd = _wopen(wfilename, oflags, mode);
->>  
->> -	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
->> +	if (fd < 0 && (oflags & (O_WRONLY|O_RDWR)) && errno == EACCES) {
-> 
-> O_WRONLY and O_RDWR aren't flags, but two values of a 2-bit field
-> (O_ACCMODE).
+From: "Stefan Beller" <sbeller@google.com>
+> This comes in handy if you want to post-process formatted patches.
+> One examplary use case would be removing ChangeIds, which are used
+> in Gerrit, a program sitting on top of Git, used for tracking
+> different versions of a patch.
+>
+> Another use case would be checking if all your commits are signed off,
+> or have another kind of property.
+>
+> So in my case a hook like the following will help a lot.
+>
+> # Run with on formatted patches. The first argument is the filename to 
+> the patch.
+> sed --in-place '/^Change-Id:/d' $1
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+> Hi Git people,
+> I haven't sent a patch for some time now, but I intend to change that
+> soon, as I'll be overtaking the transactions series from Ronnie 
+> Sahlberg.
+>
+> The patch series I intend to overtake has been reviewed on this list
+> as well as https://code-review.googlesource.com/#/q/project:git
+> using Gerrit. Gerrit uses Change-Ids, which I want to reliably
+> remove before sending them on the list. And for reliability
+> you better trust a machine than a human like me.
+>
+> Documentation/githooks.txt |  9 +++++++++
+> builtin/log.c              | 17 +++++++++++++----
+> 2 files changed, 22 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 9ef2469..b4f06a9 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -69,6 +69,15 @@ and is invoked after the patch is applied and a 
+> commit is made.
+> This hook is meant primarily for notification, and cannot affect
+> the outcome of 'git am'.
+>
+> +post-format-patch
+> +~~~~~~~~~~~~
+> +
+> +This hook is called after format-patch created a patch and it is
+> +invoked with the filename of the patch as the first parameter.
+> +
+> +This hook can be used to alter the created patch, such as removing
+> +or adding Sign-Offs or similar information.
 
-Hrm... I wondered why O_RDONLY can be zero. If I find O_ACCMODE on
-Windows, I'll use it, otherwise, the patch as is will have to do - we
-don't have to be particularly portable in this corner of the code.
+surely   s/adding/checking/  as described in the commit message.
+We wouldn't want unthinking sign-offs being applied;-)
 
--- Hannes
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> +
+> pre-commit
+> ~~~~~~~~~~
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 734aab3..863fcef 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -761,7 +761,8 @@ static const char *output_directory = NULL;
+> static int outdir_offset;
+>
+> static int reopen_stdout(struct commit *commit, const char *subject,
+> - struct rev_info *rev, int quiet)
+> + struct rev_info *rev, int quiet,
+> + struct strbuf *choosen_filename)
+> {
+>  struct strbuf filename = STRBUF_INIT;
+>  int suffix_len = strlen(rev->patch_suffix) + 1;
+> @@ -788,6 +789,11 @@ static int reopen_stdout(struct commit *commit, 
+> const char *subject,
+>  if (freopen(filename.buf, "w", stdout) == NULL)
+>  return error(_("Cannot open patch file %s"), filename.buf);
+>
+> + if (choosen_filename) {
+> + strbuf_reset(choosen_filename);
+> + strbuf_addstr(choosen_filename, filename.buf);
+> + }
+> +
+>  strbuf_release(&filename);
+>  return 0;
+> }
+> @@ -921,7 +927,7 @@ static void make_cover_letter(struct rev_info 
+> *rev, int use_stdout,
+>  committer = git_committer_info(0);
+>
+>  if (!use_stdout &&
+> -     reopen_stdout(NULL, rev->numbered_files ? NULL : "cover-letter", 
+> rev, quiet))
+> +     reopen_stdout(NULL, rev->numbered_files ? NULL : "cover-letter", 
+> rev, quiet, NULL))
+>  return;
+>
+>  log_write_email_headers(rev, head, &pp.subject, &pp.after_subject,
+> @@ -1176,6 +1182,7 @@ int cmd_format_patch(int argc, const char 
+> **argv, const char *prefix)
+>  const char *in_reply_to = NULL;
+>  struct patch_ids ids;
+>  struct strbuf buf = STRBUF_INIT;
+> + struct strbuf filename = STRBUF_INIT;
+>  int use_patch_format = 0;
+>  int quiet = 0;
+>  int reroll_count = -1;
+> @@ -1531,7 +1538,7 @@ int cmd_format_patch(int argc, const char 
+> **argv, const char *prefix)
+>  }
+>
+>  if (!use_stdout &&
+> -     reopen_stdout(rev.numbered_files ? NULL : commit, NULL, &rev, 
+> quiet))
+> +     reopen_stdout(rev.numbered_files ? NULL : commit, NULL, &rev, 
+> quiet, &filename))
+>  die(_("Failed to create output files"));
+>  shown = log_tree_commit(&rev, commit);
+>  free_commit_buffer(commit);
+> @@ -1552,8 +1559,10 @@ int cmd_format_patch(int argc, const char 
+> **argv, const char *prefix)
+>  else
+>  print_signature();
+>  }
+> - if (!use_stdout)
+> + if (!use_stdout) {
+>  fclose(stdout);
+> + run_hook_le(NULL, "post-format-patch", filename.buf, NULL);
+> + }
+>  }
+>  free(list);
+>  free(branch_name);
+> -- 
+> 2.2.0.rc1.24.g562add4
+>
+> --
+Philip 
