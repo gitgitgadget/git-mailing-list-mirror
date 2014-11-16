@@ -1,103 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] replace: fix replacing object with itself
-Date: Sun, 16 Nov 2014 10:59:57 -0800
-Message-ID: <xmqqr3x3ynrm.fsf@gitster.dls.corp.google.com>
-References: <1415887559-16585-1-git-send-email-manzurmm@gmail.com>
-	<xmqqppcp1jvg.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD3dZMmGJp1p=ttVUoUkiwh7oYL3gqgsGZ+D8Bd16FiKjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] create_default_files(): don't set u+x bit on $GIT_DIR/config
+Date: Sun, 16 Nov 2014 11:08:27 -0800
+Message-ID: <xmqqk32vyndg.fsf@gitster.dls.corp.google.com>
+References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
+	<1416122508-30654-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Manzur Mukhitdinov <manzurmm@gmail.com>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 16 20:00:10 2014
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Stefan Beller <stefanbeller@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Nov 16 20:08:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xq53S-0007tE-Bw
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 20:00:10 +0100
+	id 1Xq5Ba-0002bH-7y
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 20:08:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632AbaKPTAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2014 14:00:03 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61974 "EHLO
+	id S1755484AbaKPTIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2014 14:08:30 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62112 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751152AbaKPTAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2014 14:00:01 -0500
+	with ESMTP id S1751448AbaKPTI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2014 14:08:29 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 94D861A8BE;
-	Sun, 16 Nov 2014 14:00:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E1A031AA24;
+	Sun, 16 Nov 2014 14:08:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YnFaHFvQQA0em2KahNDL+lqZCVQ=; b=io92z9
-	8+t/ZEFDmyac3shvO0ZJwt1eZ6UWhkja84R3oGMfLZnRi0tJw9UOsJN1uCoSQj2R
-	BpJs2Zj34FCKs1k5gik19YYJULIRmmVtzye3BHyJFjlEliuKUZWUP6jLW3o47UQ9
-	YZwXTepK6A1xFRG/n+b8OLOIj8IceWHcH34Ck=
+	:content-type; s=sasl; bh=4h3GNKmV2FbVyXKOIFP8AMOkYs0=; b=LT0s3W
+	DM41TM0ILH+r7gbCOMMJKcgIiVD20dsg7F4ZHME/Ymj9XLrjx7HItzm11GUny7/Z
+	dWIGIPnUIFZG1HaBigBbFAmxuOx6iO/DgS411OHCuvSpJL6vqfJ3659jSAsBzHNP
+	DpX6WAAQU0hS8Soq0LVlUKjYZySDW4wQS/of0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hokUsOv+fOpfk2n7SyRJJdDoxbUFHMIb
-	cLzAhd1Xefnl8Pf5XlDdx5cO1z+lFSCEHp6KA63g4g1CKNFnnLUKUQoEwDqdAfUV
-	lHpCKyFj844dQ+HD5QsaDds74PTiEcaQNOrtMJ9V0C98gNjMzViZqC+vp347iTDT
-	V2qd2b7tWpk=
+	:content-type; q=dns; s=sasl; b=D8av/ieSUq7P4s7r4GtLKsVpen30TSaj
+	b9VtqyRdOUlIkautQ7lz5gCn0181BFctwjtpRWHczNBLaWC8Z9JogO7Dw5D4c1me
+	ISaWsz/jX64+jbsNGxCAShYLDsAAIbE0BvQ89DAEnjSC8D5PnlUy4NyHVLAkstrz
+	qC3r95579rI=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F9431A8BA;
-	Sun, 16 Nov 2014 14:00:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D83191AA23;
+	Sun, 16 Nov 2014 14:08:30 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A47341A8AE;
-	Sun, 16 Nov 2014 14:00:00 -0500 (EST)
-In-Reply-To: <CAP8UFD3dZMmGJp1p=ttVUoUkiwh7oYL3gqgsGZ+D8Bd16FiKjQ@mail.gmail.com>
-	(Christian Couder's message of "Sat, 15 Nov 2014 12:55:11 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4529D1AA21;
+	Sun, 16 Nov 2014 14:08:30 -0500 (EST)
+In-Reply-To: <1416122508-30654-2-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Sun, 16 Nov 2014 08:21:47 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C4203304-6DC2-11E4-9ACC-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F3C3BD6E-6DC3-11E4-B447-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
->> The patch is not wrong per-se, but I wonder how useful this "do not
->> replace itself but all other forms of loops are not checked at all"
->> would be in practice.  If your user did this:
->>
->>         git replace A B ;# pretend as if what is in B is in A
->>         git replace B C ;# pretend as if what is in C is in B
->>         git replace C A ;# pretend as if we have loop
->>         git log C
->>
->> she would not be helped with this patch at all, no?
->
-> Yeah, but such loops are much less likely mistakes and are more
-> difficult to detect, so I think this patch is at least a good first
-> step.
+> Since time immemorial, the test of whether to set "core.filemode" has
+> been done by trying to toggle the u+x bit on $GIT_DIR/config and then
+> testing whether the change "took". It is somewhat odd to use the
+> config file for this test, but whatever.
 
-More difficult to notice by humans, hence deserves more help from
-the tool.
+The last sentence should read "We could create a test file and use
+it for this purpose and then remove it, but config is a file we know
+exists at this point in the code (and it is the only file we know
+that exists), so it was a very sensible trick".
 
-When these two are both mistakes, which one do you think is easier
-to notice (thusly unlikely to happen)?
+Or remove it altogether.  In other words, do not sound as if you do
+not know what you are doing in your log message.  That would rob
+confidence in the change from the person who is reading "git log"
+output later.
 
-	git replace A A
-        git replace C A
+> @@ -255,6 +255,7 @@ static int create_default_files(const char *template_path)
+>  		filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+>  				!lstat(path, &st2) &&
+>  				st1.st_mode != st2.st_mode);
+> +		filemode &= !chmod(path, st1.st_mode);
 
-Of course, the former is immediately obvious to the human who is
-typing that it is a typo.
+Sounds good.
 
-The latter would be harder to spot as a mistake as the invoker has
-to know that there is an existing "pretend as if what is in A is in
-C" aka "replace A C" done earlier in the repository.
+You could also &&-chain this "flip it back" to the above statement.
+If filemode is not trustable on a filesytem, doing one extra chmod()
+to correct would not help us anyway, no?
 
-And the cost of detecting such a possible "too deep replace chain"
-(do not call that a loop---the runtime barfs if you have too deep a
-replace chain without any loop) wouldn't be too high.  You only need
-to look at existing refs/replace/* refs, their contents, and the two
-object names that form the proposed new replacement <old,new>.
 
-Even a kludge (read: I am not suggesting that you solve it this way)
-like "first install the replacement as proposed, then enumerate all
-the replacement refs and their values and try to see if the runtime
-check would barf, and if it would, fail the operation and revert the
-change" would catch a mistake to cause the repository in trouble.
+>  	}
+>  	git_config_set("core.filemode", filemode ? "true" : "false");
