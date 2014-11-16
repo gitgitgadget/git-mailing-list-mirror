@@ -1,171 +1,98 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 2/2] config: clear the executable bits (if any) on $GIT_DIR/config
-Date: Sun, 16 Nov 2014 08:21:48 +0100
-Message-ID: <1416122508-30654-3-git-send-email-mhagger@alum.mit.edu>
-References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+Subject: [PATCH] cmd_config(): Make a copy of path obtained from git_path()
+Date: Sun, 16 Nov 2014 08:37:44 +0100
+Message-ID: <1416123464-22874-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 16 08:33:59 2014
+X-From: git-owner@vger.kernel.org Sun Nov 16 08:38:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpuLO-0000TR-O7
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 08:33:59 +0100
+	id 1XpuPZ-0001fN-UU
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 08:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbaKPH3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2014 02:29:10 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:50262 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751656AbaKPH3J (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Nov 2014 02:29:09 -0500
-X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Nov 2014 02:29:08 EST
-X-AuditID: 12074412-f79866d000000bd1-8d-546850981554
+	id S1752916AbaKPHiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2014 02:38:07 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60494 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751656AbaKPHiG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Nov 2014 02:38:06 -0500
+X-AuditID: 1207440f-f79f06d000000bbf-54-546854503216
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 37.3E.03025.89058645; Sun, 16 Nov 2014 02:22:00 -0500 (EST)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 4F.B4.03007.05458645; Sun, 16 Nov 2014 02:37:52 -0500 (EST)
 Received: from michael.fritz.box (p4FC97A4A.dip0.t-ipconnect.de [79.201.122.74])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAG7Lrk8002608
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAG7bn7l003203
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 16 Nov 2014 02:21:58 -0500
+	Sun, 16 Nov 2014 02:37:51 -0500
 X-Mailer: git-send-email 2.1.1
-In-Reply-To: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrGIsWRmVeSWpSXmKPExsUixO6iqDsjICPEYP8zYYuuK91MFg29V5gt
-	Fv47ym7xf8cCFovbK+YzW+xvSrJY072DyaKz4yujA4fH3/cfmDx2zrrL7nHsWCuzx8VLyh6f
-	N8l53H62jcWjecp51gD2KG6bpMSSsuDM9Dx9uwTujAlXm5kKbslX7J9wnK2BsVmyi5GTQ0LA
-	ROLS3V2MELaYxIV769m6GLk4hAQuM0rsmXGQEcI5wSRx5ulvJpAqNgFdiUU9zWC2iICaxMS2
-	QywgRcwC25gkvs37xw6SEBYIlZj39x0biM0ioCqx6WQ/WJxXwEXi86ZJTBDr5CT2Tl7NAmJz
-	CrhKnHy5GKxeCKhmVcdv1gmMvAsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zrp5WaW6KWm
-	lG5ihISh0A7G9SflDjEKcDAq8fBusMgIEWJNLCuuzD3EKMnBpCTKG+oEFOJLyk+pzEgszogv
-	Ks1JLT7EKMHBrCTCu8YUKMebklhZlVqUD5OS5mBREuf9uVjdT0ggPbEkNTs1tSC1CCYrw8Gh
-	JMEb6w/UKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+KjvhiYHyApHiA9k4Eaect
-	LkjMBYpCtJ5iVJQS580HSQiAJDJK8+DGwpLLK0ZxoC+FeX+DVPEAExNc9yugwUxAgxmPpYIM
-	LklESEk1MOYnlO+d5C5UcmR2zDXuCK4Wx/IIj8WdgjM+nRH/VXFkzfLHZ54qrosUagsx/XH9
-	2GrmDMuMsM2c0aYKh84tT3pYwHsmIXDHZjODw93Hujm+W37kllrwxWFN8b59BQJ6 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFIsWRmVeSWpSXmKPExsUixO6iqBsQkhFicOGvpUXXlW4mi4beK8wW
+	/3csYLG4vWI+swOLx9/3H5g8jh1rZfa4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujPZ76xgL
+	nvJWvHi7kamBsY+7i5GTQ0LARGLdwr3MELaYxIV769m6GLk4hAQuM0rs3feaFcI5wSTR+6SR
+	HaSKTUBXYlFPMxOILSKgJjGx7RALiM0skCfxa3IbYxcjB4ewgLfEuQ3CIGEWAVWJxx3L2UBs
+	XgEXiSXHT7BCLJOT2Dt5NcsERu4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9HIzS/RS
+	U0o3MULCgX8HY9d6mUOMAhyMSjy8GywyQoRYE8uKK3MPMUpyMCmJ8oY6AYX4kvJTKjMSizPi
+	i0pzUosPMUpwMCuJ8K4xBcrxpiRWVqUW5cOkpDlYlMR51Zeo+wkJpCeWpGanphakFsFkZTg4
+	lCR4dwcBNQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDAj2+GBjqICkeoL3JIO28
+	xQWJuUBRiNZTjIpS4rxrQBICIImM0jy4sbAof8UoDvSlMC9bMFAVDzBBwHW/AhrMBDSY8Vgq
+	yOCSRISUVAMjQ4Rd6PZGj8MTPwW1/bLxDjWwe/NsYrDq+x85xatz2ysdOJ9KWl4SXOwUJMD+
+	69Prdf+WSwgL/XdYdWaSmnMm76ride1a4o0FoluO9Pm6abxR4Xyx2qmVTz/0jdZJb+V48SrT
+	r4ZhPlmXQ+/kTXnPcT0z+sP2UtsXN5fVTYoKucLtf8REyVuJpTgj0VCLuag4EQCs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is no reason for $GIT_DIR/config to be executable, plus there
-used to be a bug (fixed by the previous commit) that caused "git init"
-to set the u+x bit on that file. So whenever rewriting the config
-file, take the opportunity to remove any executable bits that the file
-might have.
+The strings returned by git_path() are recycled after a while. So make
+a copy of the config filename rather than holding onto the return
+value from git_path().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/config.c       | 21 ++++++++++++++++++---
- config.c               | 12 ++++++++++--
- t/t1300-repo-config.sh | 13 +++++++++++++
- 3 files changed, 41 insertions(+), 5 deletions(-)
+This patch is an improvement by itself, and it also eases the merging
+to master of my fix for the incorrectly set config file executable
+bit [1].
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/259644
+
+ builtin/config.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 7bba516..1a7c17e 100644
+index 8cc2604..606a3c0 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -551,6 +551,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+@@ -568,8 +568,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
  		}
  	}
  	else if (actions == ACTION_EDIT) {
+-		const char *config_file = given_config_source.file ?
+-			given_config_source.file : git_path("config");
 +		char *config_file;
-+		struct stat st;
 +
  		check_argc(argc, 0, 0);
  		if (!given_config_source.file && nongit)
  			die("not in a git directory");
-@@ -559,9 +562,21 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+@@ -578,6 +578,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
  		if (given_config_source.blob)
  			die("editing blobs is not supported");
  		git_config(git_default_config, NULL);
--		launch_editor(given_config_source.file ?
--			      given_config_source.file : git_path("config"),
--			      NULL, NULL);
 +		config_file = xstrdup(given_config_source.file ?
 +				      given_config_source.file : git_path("config"));
-+		launch_editor(config_file, NULL, NULL);
-+
-+		/*
-+		 * In git 2.1, there was a bug in "git init" that left
-+		 * the u+x bit set on the config file. To clean up any
-+		 * repositories affected by that bug, and just because
-+		 * it doesn't make sense for a config file to be
-+		 * executable anyway, clear any executable bits from
-+		 * the file (on a "best effort" basis):
-+		 */
-+		if (!lstat(config_file, &st) && (st.st_mode & 0111))
-+			chmod(config_file, st.st_mode & 07666);
+ 		if (use_global_config) {
+ 			int fd = open(config_file, O_CREAT | O_EXCL | O_WRONLY, 0666);
+ 			if (fd) {
+@@ -590,6 +592,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 				die_errno(_("cannot create configuration file %s"), config_file);
+ 		}
+ 		launch_editor(config_file, NULL, NULL);
 +		free(config_file);
  	}
  	else if (actions == ACTION_SET) {
  		int ret;
-diff --git a/config.c b/config.c
-index 9e42d38..47eaef4 100644
---- a/config.c
-+++ b/config.c
-@@ -1653,7 +1653,15 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 			MAP_PRIVATE, in_fd, 0);
- 		close(in_fd);
- 
--		if (chmod(lock->filename, st.st_mode & 07777) < 0) {
-+		/*
-+		 * We mask off the executable bits because (a) it
-+		 * doesn't make sense to have executable bits set on
-+		 * the config file, and (b) there was a bug in git 2.1
-+		 * which caused the config file to be created with u+x
-+		 * set, so this will help repair repositories created
-+		 * with that version.
-+		 */
-+		if (chmod(lock->filename, st.st_mode & 07666) < 0) {
- 			error("chmod on %s failed: %s",
- 				lock->filename, strerror(errno));
- 			ret = CONFIG_NO_WRITE;
-@@ -1832,7 +1840,7 @@ int git_config_rename_section_in_file(const char *config_filename,
- 
- 	fstat(fileno(config_file), &st);
- 
--	if (chmod(lock->filename, st.st_mode & 07777) < 0) {
-+	if (chmod(lock->filename, st.st_mode & 07666) < 0) {
- 		ret = error("chmod on %s failed: %s",
- 				lock->filename, strerror(errno));
- 		goto out;
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 46f6ae2..7637701 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -7,6 +7,12 @@ test_description='Test git config in different settings'
- 
- . ./test-lib.sh
- 
-+test_expect_success POSIXPERM 'any executable bits cleared' '
-+	chmod u+x .git/config &&
-+	git config test.me foo &&
-+	test ! -x .git/config
-+'
-+
- test_expect_success 'clear default config' '
- 	rm -f .git/config
- '
-@@ -1078,6 +1084,13 @@ test_expect_success 'git config --edit respects core.editor' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success POSIXPERM 'git config --edit clears executable bits' '
-+	git config -f tmp test.value no &&
-+	chmod u+x tmp &&
-+	GIT_EDITOR="echo [test]value=yes >" git config -f tmp --edit &&
-+	test ! -x tmp
-+'
-+
- # malformed configuration files
- test_expect_success 'barf on syntax error' '
- 	cat >.git/config <<-\EOF &&
 -- 
 2.1.1
