@@ -1,100 +1,108 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] difftool: honor --trust-exit-code for builtin tools
-Date: Sat, 15 Nov 2014 18:36:10 -0800
-Message-ID: <20141116023609.GA74487@gmail.com>
-References: <1416000835-79274-1-git-send-email-davvid@gmail.com>
- <xmqqy4rd1mdw.fsf@gitster.dls.corp.google.com>
- <CAHYJk3Q9tcS+o0hDnDz24ysSKkL6m16OmhyHuj=W88VQjTximw@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 1/2] create_default_files(): don't set u+x bit on $GIT_DIR/config
+Date: Sun, 16 Nov 2014 06:23:57 +0100
+Message-ID: <546834ED.6050403@alum.mit.edu>
+References: <1416036379-4994-1-git-send-email-mhagger@alum.mit.edu> <1416036379-4994-2-git-send-email-mhagger@alum.mit.edu> <546741AC.9030107@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Adri Farr <14farresa@gmail.com>
-To: Mikael Magnusson <mikachu@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 16 03:36:17 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Karsten Blees <karsten.blees@gmail.com>, git@vger.kernel.org
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 16 06:25:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpphI-0003Ag-IJ
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 03:36:16 +0100
+	id 1XpsKn-0007Pf-IN
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 06:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755186AbaKPCgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2014 21:36:12 -0500
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:39423 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755095AbaKPCgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2014 21:36:12 -0500
-Received: by mail-pd0-f173.google.com with SMTP id v10so19066706pde.32
-        for <git@vger.kernel.org>; Sat, 15 Nov 2014 18:36:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=YxsicfhN+79oGUMJQho+AzCC/6pdb5lcKWBE1pX/ChA=;
-        b=D4meiNe1Bsy8kyC5XtBcmvWuFiD+Ohfr8P8vrnyuSWww4yUrBeeoth+V2bseirFbd+
-         DSZUCJnemdetUplgPYKFPrO5hRUpNbFM9plIwt44YbVHaAahOomCXYJX5MyrOisnZNM9
-         7N/fw6GLhuaSNWe4sIOCCDMAlEEWjWXWKON0crIDq87LU6uOxp+XVFRauGDMA0vE7CoP
-         mBo15vDcAuVpSnZyqSNTPt1MS2d1PTpFn87wXCXPOK58PSQTkXhay+kJR66pHFlZhY+F
-         3HFRs77VntxiErparRSxD3Mv6Vi+tB9K8c5EnIKVeckdlh9YsB8JayYQJgLky3VoFWyT
-         DKOw==
-X-Received: by 10.68.231.33 with SMTP id td1mr20675387pbc.26.1416105371801;
-        Sat, 15 Nov 2014 18:36:11 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id ev8sm31410446pdb.28.2014.11.15.18.36.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 15 Nov 2014 18:36:10 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAHYJk3Q9tcS+o0hDnDz24ysSKkL6m16OmhyHuj=W88VQjTximw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751147AbaKPFYO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Nov 2014 00:24:14 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:61405 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750825AbaKPFYN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Nov 2014 00:24:13 -0500
+X-AuditID: 1207440c-f798a6d000000bdc-83-546834f0ff0a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id D6.6F.03036.0F438645; Sun, 16 Nov 2014 00:24:00 -0500 (EST)
+Received: from [192.168.69.130] (p4FC97A4A.dip0.t-ipconnect.de [79.201.122.74])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAG5NwoV030557
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 16 Nov 2014 00:23:59 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <546741AC.9030107@web.de>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqPvBJCPEoGe1pUXXlW4mi4beK8wW
+	C/8dZbfY35Rk0dnxldGB1WPnrLvsHhcvKXt83iTncfvZNhaP5innWQNYo7htkhJLyoIz0/P0
+	7RK4Mxr2dbEXfOSt+HrvG1sDYx93FyMnh4SAicScn7/ZIWwxiQv31rN1MXJxCAlcZpRovrCH
+	EcI5zySxuu0VE0gVr4C2xJ/3Z1hBbBYBVYljx56xgdhsAroSi3qawWpEBYIkTu65zg5RLyhx
+	cuYTFhBbRCBL4tunL2C9zAI5Eg8+fgCrERYIlbg6cyPUsqmMEscXHwcbxCmgJtH+5D0zRIOe
+	xI7rv6Ca5SWat85mnsAoMAvJjllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdQ
+	LzezRC81pXQTIyTIeXYwflsnc4hRgINRiYf3wqS0ECHWxLLiytxDjJIcTEqivAJn00OE+JLy
+	UyozEosz4otKc1KLDzFKcDArifBG62WECPGmJFZWpRblw6SkOViUxHlVl6j7CQmkJ5akZqem
+	FqQWwWRlODiUJHgXGQM1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIOiNb4YGK8g
+	KR6gvZImIHuLCxJzgaIQracYFaXEeX+CzBUASWSU5sGNhaWuV4ziQF8K8z4DqeIBpj247ldA
+	g5mABjMeSwUZXJKIkJJqYJRbVylgv/RmtOHnH/skXtuIWOZ5MwlU39Pb+MHIKGFX9mvOKU9v
+	u9U0bFvW0mn4jfEYd0LtkzVXFQUmtPJ+Z7jjq1J0of2SBq9/f+r9y8x69YskT4hJ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 16, 2014 at 02:51:11AM +0100, Mikael Magnusson wrote:
-> On Fri, Nov 14, 2014 at 10:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > David Aguilar <davvid@gmail.com> writes:
-> >
-> >> run_merge_tool() was not setting $status, which prevented the
-> >> exit code for builtin tools from being forwarded to the caller.
-> >>
-> >> Capture the exit status and add a test to guarantee the behavior.
-> >>
-> >> Reported-by: Adria Farres <14farresa@gmail.com>
-> >> Signed-off-by: David Aguilar <davvid@gmail.com>
-> >> ---
-> >>  git-mergetool--lib.sh | 1 +
-> >>  t/t7800-difftool.sh   | 5 +++++
-> >>  2 files changed, 6 insertions(+)
-> >>
-> >> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> >> index a40d3df..2b66351 100644
-> >> --- a/git-mergetool--lib.sh
-> >> +++ b/git-mergetool--lib.sh
-> >> @@ -221,6 +221,7 @@ run_merge_tool () {
-> >>       else
-> >>               run_diff_cmd "$1"
-> >>       fi
-> >> +     status=$?
-> >>       return $status
-> >>  }
-> >
-> > Thanks for a quick turn-around.  As a hot-fix for what is already in
-> > -rc I am fine with this fix but the patch makes me wonder if $status
-> > as a global shell variable has any significance.
-> 
-> $status is an alias for $? in zsh, and so cannot be assigned to. But
-> other than that I don't think it holds any meaning and should be fine
-> in a .sh script.
+On 11/15/2014 01:06 PM, Torsten B=F6gershausen wrote:
+> On 2014-11-15 08.26, Michael Haggerty wrote:
+> The whole thing looks good to me, some minor comments below
+>> git_config_set() copies the permissions from the old config file to
+>> the new one. This is a good change in and of itself, but it interact=
+s
+>> badly with create_default_files()'s sloppiness, causing "git init" t=
+o
+>> leave the executable bit set on $GIT_DIR/config.
+>>
+>> So change create_default_files() to reset the permissions on
+> s/permissions/executable bit/ ?
+>> $GIT_DIR/config after its test.
 
+The code literally resets all of the permissions to their values before
+the test, so I think the existing text is more accurate (even though
+your version would have been fine, too).
 
-Thanks for the heads-up ~ this is even more reason to cleanup
-the script a bit.
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  builtin/init-db.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/builtin/init-db.c b/builtin/init-db.c
+>> index 56f85e2..95ca5e4 100644
+>> --- a/builtin/init-db.c
+>> +++ b/builtin/init-db.c
+>> @@ -255,6 +255,7 @@ static int create_default_files(const char *temp=
+late_path)
+>>  		filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+>>  				!lstat(path, &st2) &&
+>>  				st1.st_mode !=3D st2.st_mode);
+>> +		chmod(path, st1.st_mode);
+> A "blind" chmod() is good, but I think checking the return code is be=
+tter.
+>=20
+>                 filemode &=3D (!chmod(path, st1.st_mode));
 
-If we still need a local variable for it in a few places then I'll
-call it $rc instead, but it'll only be used for local things
-rather than its current global usage.
--- 
-David
+I guess it is better to include this test, even though it is mostly
+redundant with what was already determined by the previous line. I
+suppose the only alternative would be to
+
+    die("Your chmod() support is bonkers")
+
+I will change this in v2.
+
+Thanks for your comments!
+
+Michael
+
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
