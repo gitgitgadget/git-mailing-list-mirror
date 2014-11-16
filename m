@@ -1,8 +1,10 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 1/2] create_default_files(): don't set u+x bit on $GIT_DIR/config
-Date: Sun, 16 Nov 2014 08:21:47 +0100
-Message-ID: <1416122508-30654-2-git-send-email-mhagger@alum.mit.edu>
-References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 0/2] Don't make $GIT_DIR executable
+Date: Sun, 16 Nov 2014 08:21:46 +0100
+Message-ID: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Eric Wong <normalperson@yhbt.net>,
 	Karsten Blees <karsten.blees@gmail.com>,
 	Stefan Beller <stefanbeller@gmail.com>,
@@ -10,86 +12,86 @@ Cc: Eric Wong <normalperson@yhbt.net>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 16 08:22:15 2014
+X-From: git-owner@vger.kernel.org Sun Nov 16 08:22:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpuA1-0005pX-Bt
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 08:22:13 +0100
+	id 1XpuAB-0005sK-BU
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 08:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752251AbaKPHWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2014 02:22:00 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60428 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751656AbaKPHV7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Nov 2014 02:21:59 -0500
-X-AuditID: 1207440f-f79f06d000000bbf-5c-54685096f9aa
+	id S1753022AbaKPHWL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Nov 2014 02:22:11 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:51100 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752393AbaKPHWK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Nov 2014 02:22:10 -0500
+X-AuditID: 1207440e-f79806d000000bb4-26-54685094288c
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id C0.94.03007.69058645; Sun, 16 Nov 2014 02:21:58 -0500 (EST)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id C6.66.02996.49058645; Sun, 16 Nov 2014 02:21:56 -0500 (EST)
 Received: from michael.fritz.box (p4FC97A4A.dip0.t-ipconnect.de [79.201.122.74])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAG7Lrk7002608
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAG7Lrk6002608
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 16 Nov 2014 02:21:57 -0500
+	Sun, 16 Nov 2014 02:21:54 -0500
 X-Mailer: git-send-email 2.1.1
-In-Reply-To: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKIsWRmVeSWpSXmKPExsUixO6iqDstICPEYNNidYuuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqDslICPE4PFyS4uuK91MFg29V5gt
 	Fv47ym7xf8cCFovbK+YzW+xvSrJY072DyaKz4yujA4fH3/cfmDx2zrrL7nHsWCuzx8VLyh6f
-	N8l53H62jcWjecp51gD2KG6bpMSSsuDM9Dx9uwTujOmX+1kLznBX9Nx6wNLAuIuzi5GTQ0LA
-	ROLqt2YmCFtM4sK99WwgtpDAZUaJ30/Nuxi5gOwTTBJT5p8EK2IT0JVY1APRICKgJjGx7RAL
-	SBGzwDYmiW/z/rGDJIQFQiROLbnGCGKzCKhKbLq6FMzmFXCRaFy9G2qbnMTeyatZQGxOAVeJ
-	ky8XQ212kVjV8Zt1AiPvAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Jnq5mSV6qSmlmxgh
-	Qci/g7FrvcwhRgEORiUe3g0WGSFCrIllxZW5hxglOZiURHlDnYBCfEn5KZUZicUZ8UWlOanF
-	hxglOJiVRHjXmALleFMSK6tSi/JhUtIcLErivOpL1P2EBNITS1KzU1MLUotgsjIcHEoSvK/8
-	gBoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQbERXwyMDpAUD9DeQH+QvcUFiblA
-	UYjWU4yKUuK8+SAJAZBERmke3FhYannFKA70pTBvHUgVDzAtwXW/AhrMBDSY8VgqyOCSRISU
-	VAOjQ4G631Sj/ZVPV029pVrw6aiPnop14fWHEv177XJiZv/ZWsHwVnHmy5bpylrt1vmWD9hs
-	U+JyPL8pWOoWWcmd8lao9pnwx4fjSOGPgg13nNW3XenPnzfbVlDqi3t6F++6nifL 
+	N8l53H62jcWjecp51gD2KG6bpMSSsuDM9Dx9uwTujG9ThAueclXcOBbZwHiNo4uRk0NCwESi
+	69YPRghbTOLCvfVsILaQwGVGiQnTpLoYuYDsE0wSz3ZeYQJJsAnoSizqaQazRQTUJCa2HWIB
+	KWIW2MYk8W3eP3aQhLCAmcSvqfdYQGwWAVWJVauXgm3gFXCRmNLexAaxTU5i7+TVLBBxQYmT
+	M58A2RxAg9Ql1s8TAgkzC8hLNG+dzTyBkW8WkqpZCFWzkFQtYGRexSiXmFOaq5ubmJlTnJqs
+	W5ycmJeXWqRrrJebWaKXmlK6iRES3Hw7GNvXyxxiFOBgVOLh3WCRESLEmlhWXJl7iFGSg0lJ
+	lDfUCSjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhHeNKVCONyWxsiq1KB8mJc3BoiTOq7ZE3U9I
+	ID2xJDU7NbUgtQgmK8PBoSTBG+sP1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEP
+	irn4YmDUgaR4gPZOBGnnLS5IzAWKQrSeYlSUEufNB0kIgCQySvPgxsJS1itGcaAvhXl3gVTx
+	ANMdXPcroMFMQIMZj6WCDC5JREhJNTCWWdnP27w7U0dS7VzNZe/wG6/89ZsrH1ZPl2CNjnxe
+	061n7bYwnnXpjxu2bRc22NUKrVwQeLtX9dhFdekMqSXb9wWaPpoY8S77n4jvu01r 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since time immemorial, the test of whether to set "core.filemode" has
-been done by trying to toggle the u+x bit on $GIT_DIR/config and then
-testing whether the change "took". It is somewhat odd to use the
-config file for this test, but whatever.
+Changes since v1 [1]:
 
-The test code didn't set the u+x bit back to its original state
-itself, instead relying on the subsequent call to git_config_set() to
-re-write the config file with correct permissions.
+* Check the chmod() return result in create_default_files(), as
+  suggested by Torsten B=C3=B6gershausen.
 
-But ever since
+* Fix a comment typo found by Stefan Beller.
 
-    daa22c6f8d config: preserve config file permissions on edits (2014-05-06)
+* Extend patch 2/2 to also clearing the executable bits when "git
+  config --edit" is run.
 
-git_config_set() copies the permissions from the old config file to
-the new one. This is a good change in and of itself, but it interacts
-badly with create_default_files()'s sloppiness, causing "git init" to
-leave the executable bit set on $GIT_DIR/config.
+* Add test cases to patch 2/2 that the executable bits really are
+  cleaned up when they should be.
 
-So change create_default_files() to reset the permissions on
-$GIT_DIR/config after its test.
+Thanks to Stefan Beller, Torsten B=C3=B6gershausen, and Eric Wong for t=
+heir
+feedback about v1.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- builtin/init-db.c | 1 +
- 1 file changed, 1 insertion(+)
+I have also pushed this series to my GitHub fork [2].
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 56f85e2..4c8021d 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -255,6 +255,7 @@ static int create_default_files(const char *template_path)
- 		filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
- 				!lstat(path, &st2) &&
- 				st1.st_mode != st2.st_mode);
-+		filemode &= !chmod(path, st1.st_mode);
- 	}
- 	git_config_set("core.filemode", filemode ? "true" : "false");
- 
--- 
+Please remember that this patch series applies to maint. This version
+has a couple of conflicts with master; I have pushed my proposed
+conflict resolution to GitHub [3], including a preparatory commit that
+I recommend for master.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/259620/focus=
+=3D259620
+[2] https://github.com/mhagger/git branch "config-non-executable"
+[3] https://github.com/mhagger/git branch "config-non-executable-merge"
+
+Michael Haggerty (2):
+  create_default_files(): don't set u+x bit on $GIT_DIR/config
+  config: clear the executable bits (if any) on $GIT_DIR/config
+
+ builtin/config.c       | 21 ++++++++++++++++++---
+ builtin/init-db.c      |  1 +
+ config.c               | 12 ++++++++++--
+ t/t1300-repo-config.sh | 13 +++++++++++++
+ 4 files changed, 42 insertions(+), 5 deletions(-)
+
+--=20
 2.1.1
