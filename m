@@ -1,78 +1,71 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git push --all --tags
-Date: Sat, 15 Nov 2014 19:33:30 +0100
-Message-ID: <87389kb9fp.fsf@igel.home>
-References: <loom.20141115T054352-272@post.gmane.org>
-	<20141115185836.103fc4f493ad55725eab38f0@domain007.com>
-	<20141115175655.GA27247@odin.ulthar.us>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.2.0
+Date: Sun, 16 Nov 2014 08:56:39 +0800
+Message-ID: <CANYiYbFXMU2HrV8B6nfN38pD6pYsWb2q-0NgXj_yAYJCJ5YnsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ryan Jacobs <ryan.mjacobs@gmail.com>, git@vger.kernel.org
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Nov 15 19:33:42 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Ralf Thielow <ralf.thielow@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 16 01:56:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XpiAH-0006O0-6z
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Nov 2014 19:33:41 +0100
+	id 1Xpo98-0004S4-VF
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Nov 2014 01:56:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754314AbaKOSdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Nov 2014 13:33:36 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:57819 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754243AbaKOSdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Nov 2014 13:33:35 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3jg4tg4n5mz3hjXq;
-	Sat, 15 Nov 2014 19:33:31 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3jg4tg4HPFzvh1r;
-	Sat, 15 Nov 2014 19:33:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id q8ScMMcC4S_V; Sat, 15 Nov 2014 19:33:30 +0100 (CET)
-X-Auth-Info: 3EsHCADFgb+MXtI3eWCQxk/bfaFfvYacpuagMzKi6rwc9k31qhdKKWhH3Deqrb2Q
-Received: from igel.home (ppp-93-104-152-230.dynamic.mnet-online.de [93.104.152.230])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat, 15 Nov 2014 19:33:30 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-	id 8EA1A2C2513; Sat, 15 Nov 2014 19:33:30 +0100 (CET)
-X-Yow: Yow!  It's some people inside the wall!  This is better than mopping!
-In-Reply-To: <20141115175655.GA27247@odin.ulthar.us> (Scott Schmit's message
-	of "Sat, 15 Nov 2014 12:56:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+	id S1754816AbaKPA4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Nov 2014 19:56:43 -0500
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:48671 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754768AbaKPA4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Nov 2014 19:56:42 -0500
+Received: by mail-wg0-f49.google.com with SMTP id x13so22141489wgg.8
+        for <git@vger.kernel.org>; Sat, 15 Nov 2014 16:56:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=VLqWX7m5ZqemtcMPausTQhsUsXNSrK47NVDj17mwh6E=;
+        b=KCQpggIFcXMv7L/CodhlUz39zESbirFNS7jLIZY26WfPQfJkwTSegrgNlOsQO7tRiq
+         6ULFrVsJcH7IgXGWEzvU4B3Xiu3u6eF9eRPk3PRI8bNKXzAhYjqW3Q3rk9IOgIz2YtPF
+         FzKTJJMxpiCxYGB7R2caqG7WbJr90otl5PVXP026meTq7MtlZYcgNv8M/pjVIGWBqtk3
+         IBlcb9gbLEwu++d6E3PbZevnNUttp3CoGpZpLwUHr4L3lMTvZ6u9jXA8Deer1mbNREr+
+         6RR7oyPYhCjVbNUKt5RQBA/9rPkjUy4mzGsQu/B+ELyvGxjEjQYp+nnjLxrTYKTZpA1S
+         5vgg==
+X-Received: by 10.194.119.230 with SMTP id kx6mr20521585wjb.80.1416099400654;
+ Sat, 15 Nov 2014 16:56:40 -0800 (PST)
+Received: by 10.194.169.105 with HTTP; Sat, 15 Nov 2014 16:56:39 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Scott Schmit <i.grok@comcast.net> writes:
+Hi Junio,
 
-> On Sat, Nov 15, 2014 at 06:58:36PM +0300, Konstantin Khomoutov wrote:
->> On Sat, 15 Nov 2014 04:44:19 +0000 (UTC) Ryan Jacobs wrote:
->> > $ git push --all --tags
->> > error: --all and --tags are incompatible
->> > 
->> > Why are these flags incompatible? Just wondering 'cause I think that
->> > it would be a good feature to be able to push all of your branches
->> > and all of your tags to the server in one quick and simple command.
->> 
->>   git push --mirror
->> 
->> should do this.
->
-> Except that mirror also deletes anything removed locally.  --all and
-> --tags don't.
+Translations for German is ready, please pull.
 
-And --mirror pushes really all refs, including remote-tracking ones,
-mirroring all ref namespaces as is.
+The following changes since commit 6c31a5e94af1036bb29da8a75f1e735e662aee92:
 
-Andreas.
+  l10n: Updated Bulgarian translation of git (2296t,0f,0u) (2014-11-02
+19:11:08 +0200)
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+are available in the git repository at:
+
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to d544b2d495295142cb3418b13b5a106d415d2216:
+
+  l10n: de.po: translate 62 new messages (2014-11-15 18:22:05 +0100)
+
+----------------------------------------------------------------
+Ralf Thielow (2):
+      l10n: de.po: use imperative form for command options
+      l10n: de.po: translate 62 new messages
+
+Stefan Beller (1):
+      l10n: de.po: Fixup one translation
+
+ po/de.po | 4229 +++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 2239 insertions(+), 1990 deletions(-)
