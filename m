@@ -1,105 +1,183 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 2/2] config: clear the executable bits (if any) on
- $GIT_DIR/config
-Date: Mon, 17 Nov 2014 10:03:58 +0100
-Message-ID: <5469B9FE.5070001@alum.mit.edu>
-References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu> <1416122508-30654-3-git-send-email-mhagger@alum.mit.edu> <54685B05.90007@kdbg.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/2] create_default_files(): don't set u+x bit on $GIT_DIR/config
+Date: Mon, 17 Nov 2014 10:08:10 +0100
+Message-ID: <5469BAFA.7070709@web.de>
+References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>	<1416122508-30654-2-git-send-email-mhagger@alum.mit.edu> <CAPig+cQ6j-3_Ng8DVT3FYk8T6DippEbYDhQq5v3DTJhGgBhPDQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Eric Wong <normalperson@yhbt.net>,
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
 	Karsten Blees <karsten.blees@gmail.com>,
 	Stefan Beller <stefanbeller@gmail.com>,
-	=?ISO-8859-15?Q?Torsten_B=F6ge?= =?ISO-8859-15?Q?rshausen?= 
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGE=?= =?UTF-8?B?dXNlbg==?= 
 	<tboegi@web.de>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 10:04:14 2014
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Nov 17 10:09:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqIEH-0005cn-7o
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 10:04:13 +0100
+	id 1XqIJA-0007p4-RR
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 10:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636AbaKQJEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 04:04:08 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60663 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751489AbaKQJEG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Nov 2014 04:04:06 -0500
-X-AuditID: 1207440d-f79676d0000046cb-3f-5469ba027193
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id E8.36.18123.20AB9645; Mon, 17 Nov 2014 04:04:02 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB383E.dip0.t-ipconnect.de [93.219.56.62])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAH93x9r026553
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 17 Nov 2014 04:04:00 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
-In-Reply-To: <54685B05.90007@kdbg.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsUixO6iqMu0KzPE4MUzTYuuK91MFg29V5gt
-	nsy9y2yx8N9Rdov/OxawWOxvSrJY072DyaKz4yujA4fHzll32T2OHWtl9nj4qovd4+IlZY/P
-	m+Q8bj/bxuLRPOU8awB7FLdNUmJJWXBmep6+XQJ3xsztO1kL1vBVPD1xg72BcQJ3FyMnh4SA
-	iUTb1EY2CFtM4sK99UA2F4eQwGVGifN3FkM555gkVnVPYQep4hXQlpjWtZUFxGYRUJWY9vsg
-	mM0moCuxqKeZCcQWFQiSOLnnOlS9oMTJmU/AakQEXCT+Lf0ONpRZYBYTUOIO2GphgWiJ/sYt
-	rBDbpjNKbHrQxwiS4BRQk5i6+grQVA6gDl2JtjUyIGFmAXmJ5q2zmScwCsxCsmMWQtUsJFUL
-	GJlXMcol5pTm6uYmZuYUpybrFicn5uWlFuka6eVmluilppRuYoREBe8Oxv/rZA4xCnAwKvHw
-	7sjODBFiTSwrrsw9xCjJwaQkyjt9B1CILyk/pTIjsTgjvqg0J7X4EKMEB7OSCK/yNqAcb0pi
-	ZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mC1xVkqGBRanpqRVpmTglCmomD
-	E2Q4l5RIcWpeSmpRYmlJRjwoVuOLgdEKkuIB2rsRpJ23uCAxFygK0XqKUVFKnLcOJCEAksgo
-	zYMbC0t1rxjFgb4U5l0JUsUDTJNw3a+ABjMBDZ6zAWxwSSJCSqqBcWp5ZvRDzQ3LVmx5b/V/
-	jsJ81XRusV/TLy68zf/84r661IfHj7Yl88hejEnxvTRj1lkdywsxFn8sFnPMNX+6 
+	id S1751820AbaKQJJK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Nov 2014 04:09:10 -0500
+Received: from mout.web.de ([212.227.15.14]:61967 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751768AbaKQJJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 04:09:09 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MCqmp-1XhjRv2Pqt-009hiS; Mon, 17 Nov 2014 10:09:00
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <CAPig+cQ6j-3_Ng8DVT3FYk8T6DippEbYDhQq5v3DTJhGgBhPDQ@mail.gmail.com>
+X-Provags-ID: V03:K0:YVJrnEfjNCzYWrJCQ0wdGpS+/bVIglZOwBCjzQiv7tlRbKlBWB6
+ e5fj0QsOlurQCAMpeSOcJnCneOIHWoi9ZRK5C2NQYb80zD0e5ZC7ae1AsyublW3nnmyy8q1
+ gIVL5+UPvrUVSzZ0AfhRjmA3Q4CNKXvRjZE0Y8Rco5ioK3uGDi8Rj9TxmSFSwitSMbhEar0
+ AAU7apvSYjaqHlHNCfxbA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/16/2014 09:06 AM, Johannes Sixt wrote:
-> Am 16.11.2014 um 08:21 schrieb Michael Haggerty:
->> @@ -559,9 +562,21 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->>  		if (given_config_source.blob)
->>  			die("editing blobs is not supported");
->>  		git_config(git_default_config, NULL);
->> -		launch_editor(given_config_source.file ?
->> -			      given_config_source.file : git_path("config"),
->> -			      NULL, NULL);
->> +		config_file = xstrdup(given_config_source.file ?
->> +				      given_config_source.file : git_path("config"));
->> +		launch_editor(config_file, NULL, NULL);
->> +
->> +		/*
->> +		 * In git 2.1, there was a bug in "git init" that left
->> +		 * the u+x bit set on the config file. To clean up any
->> +		 * repositories affected by that bug, and just because
->> +		 * it doesn't make sense for a config file to be
->> +		 * executable anyway, clear any executable bits from
->> +		 * the file (on a "best effort" basis):
->> +		 */
->> +		if (!lstat(config_file, &st) && (st.st_mode & 0111))
-> 
-> At this point we cannot be sure that config_file is a regular file, can
-> we? It could also be a symbolic link. Wouldn't plain stat() be more
-> correct then?
+On 11/17/2014 02:40 AM, Eric Sunshine wrote:
+> On Sun, Nov 16, 2014 at 2:21 AM, Michael Haggerty <mhagger@alum.mit.e=
+du> wrote:
+>> Since time immemorial, the test of whether to set "core.filemode" ha=
+s
+>> been done by trying to toggle the u+x bit on $GIT_DIR/config and the=
+n
+>> testing whether the change "took". It is somewhat odd to use the
+>> config file for this test, but whatever.
+>>
+>> The test code didn't set the u+x bit back to its original state
+>> itself, instead relying on the subsequent call to git_config_set() t=
+o
+>> re-write the config file with correct permissions.
+>>
+>> But ever since
+>>
+>>      daa22c6f8d config: preserve config file permissions on edits (2=
+014-05-06)
+>>
+>> git_config_set() copies the permissions from the old config file to
+>> the new one. This is a good change in and of itself, but it interact=
+s
+>> badly with create_default_files()'s sloppiness, causing "git init" t=
+o
+>> leave the executable bit set on $GIT_DIR/config.
+>>
+>> So change create_default_files() to reset the permissions on
+>> $GIT_DIR/config after its test.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+> Should this patch include a test in t1300 to ensure that this bug doe=
+s
+> not resurface (and to prove that this patch indeed fixes it)?
+>
+>>   builtin/init-db.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/builtin/init-db.c b/builtin/init-db.c
+>> index 56f85e2..4c8021d 100644
+>> --- a/builtin/init-db.c
+>> +++ b/builtin/init-db.c
+>> @@ -255,6 +255,7 @@ static int create_default_files(const char *temp=
+late_path)
+>>                  filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &=
+&
+>>                                  !lstat(path, &st2) &&
+>>                                  st1.st_mode !=3D st2.st_mode);
+>> +               filemode &=3D !chmod(path, st1.st_mode);
+>>          }
+>>          git_config_set("core.filemode", filemode ? "true" : "false"=
+);
+>>
+>> --
+Sorry for the late reply, I actually had prepared a complete different =
+patch
+for a different problem, but it touches the very same lines of code.
 
-You make a good point. But I'm a little nervous about following symlinks
-and changing permissions on some distant file. Also, the bug that we are
-trying clean up after would not have created a symlink in this place, so
-I think the cleanup is not so important if "config" is a symlink.
+(And we may want to add a
+!chmod(path, st1.st_mode & ~S_IXUSR)
+at the end of the operation)
 
-So I suggest that we stick with lstat(), but add S_ISREG(st.st_mode) to
-the && chain above. Does that sound reasonable?
+There are systems when a file created with 666 have 766, and we
+do not handle this situation yet.
 
->> +			chmod(config_file, st.st_mode & 07666);
->> +		free(config_file);
->>  	}
->>  	else if (actions == ACTION_SET) {
->>  		int ret;
+Michael, if there is a chance that you integrate my small code changes=20
+in your patch ?
 
-Michael
+-------------
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+commit 3228bedef6d45bfaf8986b6367f9388738476345
+Author: Torsten B=C3=B6gershausen <tboegi@web.de>
+Date:   Sun Oct 19 00:15:00 2014 +0200
+
+     Improve the filemode trustability check
+
+     Some file systems do not fully support the executable bit:
+     a) The user executable bit is always 0
+     b) The user executable bit is always 1
+     c) Is similar to b):
+        When a file is created with mode 0666 the file mode on disc is =
+766
+        and the user executable bit is 1 even if it should be 0 like b)
+
+        There are smbfs implementations where the file mode can be=20
+maintained
+        locally and chmod -x changes the file mode from 0766 to 0666.
+        When the file system is unmounted and remounted,
+        the file mode is 0766 and executable bit is 1 again.
+
+     A typical example for a) is a VFAT drive mounted with -onoexec,
+     or cifs with -ofile_mode=3D0644.
+     b) is VFAT mounted with -oexec or cifs is mounted with -ofile_mode=
+=3D0755
+
+     The behaviour described in c) has been observed when a Windows=20
+machine with
+     NTFS exports a share via smb (or afp) to Mac OS X.
+     (CIFS is an enhanced version of SMB
+      The command to mount on the command line may differ,
+      e.g mount.cifs under Linux or mount_smbfs under Mac OS X)
+
+     Case a) and b) are detected by the current code.
+     Case c) qualifies as "non trustable executable bit",
+     and core.filemode should be false by default.
+
+     Solution:
+     Detect when ".git/config" has the user executable bit set after
+     creat(".git/config", 0666) and set core.filemode to false.
+
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 587a505..d3e4fb3 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -249,13 +249,11 @@ static int create_default_files(const char=20
+*template_path)
+      strcpy(path + len, "config");
+
+      /* Check filemode trustability */
+-    filemode =3D TEST_FILEMODE;
+-    if (TEST_FILEMODE && !lstat(path, &st1)) {
+-        struct stat st2;
+-        filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+-                !lstat(path, &st2) &&
+-                st1.st_mode !=3D st2.st_mode);
+-    }
++    filemode =3D TEST_FILEMODE &&
++        !lstat(path, &st1) &&    !(st1.st_mode & S_IXUSR) &&
++        !chmod(path, st1.st_mode | S_IXUSR) &&
++        !lstat(path, &st1) && (st1.st_mode & S_IXUSR);
++
+      git_config_set("core.filemode", filemode ? "true" : "false");
+
+      if (is_bare_repository())
