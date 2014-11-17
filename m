@@ -1,110 +1,106 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH v2 1/2] create_default_files(): don't set u+x bit on $GIT_DIR/config
-Date: Mon, 17 Nov 2014 10:35:18 +0100
-Message-ID: <5469C156.7000907@alum.mit.edu>
-References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>	<1416122508-30654-2-git-send-email-mhagger@alum.mit.edu> <xmqqk32vyndg.fsf@gitster.dls.corp.google.com>
+Date: Mon, 17 Nov 2014 10:46:51 +0100
+Message-ID: <5469C40B.4080601@alum.mit.edu>
+References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>	<1416122508-30654-2-git-send-email-mhagger@alum.mit.edu> <CAPig+cQ6j-3_Ng8DVT3FYk8T6DippEbYDhQq5v3DTJhGgBhPDQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Cc: Eric Wong <normalperson@yhbt.net>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
 	Karsten Blees <karsten.blees@gmail.com>,
 	Stefan Beller <stefanbeller@gmail.com>,
-	=?windows-1252?Q?Torsten_B=F6g?= =?windows-1252?Q?ershausen?= 
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGE=?= =?UTF-8?B?dXNlbg==?= 
 	<tboegi@web.de>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 10:35:34 2014
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Nov 17 10:47:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqIib-00034A-OA
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 10:35:34 +0100
+	id 1XqItk-0000lp-AZ
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 10:47:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbaKQJfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 04:35:30 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:57268 "EHLO
+	id S1752111AbaKQJq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 04:46:59 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:57313 "EHLO
 	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751547AbaKQJf3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Nov 2014 04:35:29 -0500
-X-AuditID: 1207440e-f79836d000000b8c-9d-5469c159089b
+	by vger.kernel.org with ESMTP id S1751993AbaKQJq6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Nov 2014 04:46:58 -0500
+X-AuditID: 1207440e-f79836d000000b8c-51-5469c40eec53
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 8D.56.02956.951C9645; Mon, 17 Nov 2014 04:35:21 -0500 (EST)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id EA.76.02956.E04C9645; Mon, 17 Nov 2014 04:46:54 -0500 (EST)
 Received: from [192.168.69.130] (p5DDB383E.dip0.t-ipconnect.de [93.219.56.62])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAH9ZJxA027792
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAH9kqOn028228
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 17 Nov 2014 04:35:20 -0500
+	Mon, 17 Nov 2014 04:46:53 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
-In-Reply-To: <xmqqk32vyndg.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqBt5MDPE4H+njkXXlW4mi4beK8wW
-	C/8dZbf4v2MBi8X+piSLNd07mCw6O74yOrB77Jx1l93j2LFWZo+Ll5Q9Pm+S87j9bBuLR/OU
-	86wBbFHcNkmJJWXBmel5+nYJ3Bm7Hi9hLDgtVPFvjUUD41W+LkZODgkBE4mlG7cxQ9hiEhfu
-	rWfrYuTiEBK4zCix4etJJgjnHJPEylWdbCBVvALaEqt3rWXvYuTgYBFQldi/EKyZTUBXYlFP
-	MxOILSoQJHFyz3V2iHJBiZMzn7CA2CICahIT2w6xgMxkFpjDJHF68jGwImGBCIkp245BLVvD
-	KDHl2EqwBKeAtcS1nX1gi5kF9CR2XP/FCmHLSzRvnc08gVFgFpIls5CUzUJStoCReRWjXGJO
-	aa5ubmJmTnFqsm5xcmJeXmqRrrFebmaJXmpK6SZGSATw7WBsXy9ziFGAg1GJh3dHdmaIEGti
-	WXFl7iFGSQ4mJVHehD1AIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8ytuAcrwpiZVVqUX5MClp
-	DhYlcV61Jep+QgLpiSWp2ampBalFMFkZDg4lCV7XA0CNgkWp6akVaZk5JQhpJg5OkOFcUiLF
-	qXkpqUWJpSUZ8aBYjS8GRitIigdoryNIO29xQWIuUBSi9RSjopQ4rxtIQgAkkVGaBzcWltZe
-	MYoDfSnMawFSxQNMiXDdr4AGMwENnrMBbHBJIkJKqoFxfvJU4YX/J15cv2t3vJds0ZLczksi
-	8gzC6X8XPozZuVNm1e+598WyfPRTfs//cP/ZU2MTo6v827Z7Hcxb9PT0i+KKdXFr 
+In-Reply-To: <CAPig+cQ6j-3_Ng8DVT3FYk8T6DippEbYDhQq5v3DTJhGgBhPDQ@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsUixO6iqMt/JDPEYKODRdeVbiaLht4rzBYL
+	/x1lt/i/YwGLxf6mJIs13TuYLM68aWS06Oz4yujA4bFz1l12j2PHWpk9Ll5S9lj8wMvj8yY5
+	j9vPtrF4NE85zxrAHsVtk5RYUhacmZ6nb5fAnbH53ULGgqMCFRe2dTE2MC7j7WLk5JAQMJH4
+	vHgjG4QtJnHh3nogm4tDSOAyo8TXX51MEM45Jol/s56ygFTxCmhL7Ph2iRHEZhFQlZj6+B1Y
+	N5uArsSinmYmEFtUIEji5J7r7BD1ghInZz4B6xUB6v2wYRMjyFBmgQtMEkt3/2cGSQgLREhM
+	2XYMatshRok/P9eAdXMKBEqcez0NbBuzgLrEn3mXmCFseYnmrbOZJzAKzEKyZBaSsllIyhYw
+	Mq9ilEvMKc3VzU3MzClOTdYtTk7My0st0jXWy80s0UtNKd3ECIkKvh2M7etlDjEKcDAq8fDu
+	yM4MEWJNLCuuzD3EKMnBpCTKm7AHKMSXlJ9SmZFYnBFfVJqTWgx0Mgezkgiv8jagHG9KYmVV
+	alE+TEqag0VJnFdtibqfkEB6YklqdmpqQWoRTFaGg0NJgvfdIaBGwaLU9NSKtMycEoQ0Ewcn
+	yHAuKZHi1LyU1KLE0pKMeFC8xhcDIxYkxQO0l+MwyN7igsRcoChE6ylGRSlx3hsgcwVAEhml
+	eXBjYanuFaM40JfCvLwg7TzANAnX/QpoMBPQ4DkbwAaXJCKkpBoYvU51qndtz644Z63R156p
+	oSG09/qHv6IR7xRO/7nz13b6bm/lOEn1PW21zxzKVhd4aW/w0+P6yZgUebNeVMSg 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/16/2014 08:08 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
+On 11/17/2014 02:40 AM, Eric Sunshine wrote:
+> On Sun, Nov 16, 2014 at 2:21 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
 >> Since time immemorial, the test of whether to set "core.filemode" has
 >> been done by trying to toggle the u+x bit on $GIT_DIR/config and then
 >> testing whether the change "took". It is somewhat odd to use the
 >> config file for this test, but whatever.
+>>
+>> The test code didn't set the u+x bit back to its original state
+>> itself, instead relying on the subsequent call to git_config_set() to
+>> re-write the config file with correct permissions.
+>>
+>> But ever since
+>>
+>>     daa22c6f8d config: preserve config file permissions on edits (2014-05-06)
+>>
+>> git_config_set() copies the permissions from the old config file to
+>> the new one. This is a good change in and of itself, but it interacts
+>> badly with create_default_files()'s sloppiness, causing "git init" to
+>> leave the executable bit set on $GIT_DIR/config.
+>>
+>> So change create_default_files() to reset the permissions on
+>> $GIT_DIR/config after its test.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
 > 
-> The last sentence should read "We could create a test file and use
-> it for this purpose and then remove it, but config is a file we know
-> exists at this point in the code (and it is the only file we know
-> that exists), so it was a very sensible trick".
-> 
-> Or remove it altogether.  In other words, do not sound as if you do
-> not know what you are doing in your log message.  That would rob
-> confidence in the change from the person who is reading "git log"
-> output later.
+> Should this patch include a test in t1300 to ensure that this bug does
+> not resurface (and to prove that this patch indeed fixes it)?
 
-The sentence is not meant to rob confidence in this change, but rather
-to stimulate the reader's critical thinking about nearby code that I am
-*not* changing.
+This seems like a one-off bug caused by a specific instance of odd code.
+It could only recur if somebody were to remove the line that I added,
+which would be a *very* odd mistake to make given that its purpose is
+pretty obvious.
 
-By making this change without changing the function to use a temporary
-file for its chmod experiments, I might otherwise give future readers
-the impression that I like this shortcut, which I do not. For example,
-if the original code had used a temporary file rather than "config",
-then we would never have had the bug that I'm fixing. The "but whatever"
-is meant to indicate that I don't disagree so strongly with the choice
-of tradeoffs made by the original author that I think it is worth changing.
+I tested manually that this patch fixes the problem. Admittedly, my
+manual testing was only on one particular version of Linux. But it seems
+to me that the function being used is sufficiently portable to be
+trusted, and the fact that the same function is being used a few lines
+earlier suggests that any portability problems would have wider
+ramifications anyway.
 
-So maybe I am a coward (or lazy) for not proposing to change to using a
-temporary file instead. But since this patch is suggested for maint, I
-wanted to make the smallest change that would fix the bug.
-
-Feel free to delete the controversial sentence if you prefer.
-
->> @@ -255,6 +255,7 @@ static int create_default_files(const char *template_path)
->>  		filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
->>  				!lstat(path, &st2) &&
->>  				st1.st_mode != st2.st_mode);
->> +		filemode &= !chmod(path, st1.st_mode);
-> 
-> Sounds good.
-> 
-> You could also &&-chain this "flip it back" to the above statement.
-> If filemode is not trustable on a filesytem, doing one extra chmod()
-> to correct would not help us anyway, no?
-
-Yes, that would be better. I will fix it.
+So in summary, I think the chance that such a test would ever catch a
+new problem is too small to justify the effort of writing and
+maintaining it.
 
 Michael
 
