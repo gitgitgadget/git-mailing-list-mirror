@@ -1,80 +1,140 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: Add git ignore as builtin
-Date: Mon, 17 Nov 2014 15:59:57 -0500
-Message-ID: <20141117205957.GB15880@peff.net>
-References: <CA+mQAOXPZSv2B8tVfC=4eJ7X_2j8Di4BkuE=z43=U2+VNpdQQg@mail.gmail.com>
- <CA+mQAOU_UnPuSk0f9d1sUnxBj8M4zEX7bwa4Dw_z_PJV3Lp4LA@mail.gmail.com>
- <loom.20141117T010932-213@post.gmane.org>
+Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
+ safer?
+Date: Mon, 17 Nov 2014 16:26:57 -0500
+Message-ID: <20141117212657.GC15880@peff.net>
+References: <5468C33E.2080108@whonix.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Ryan Jacobs <ryan.mjacobs@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 22:00:11 2014
+Cc: git@vger.kernel.org, whonix-devel@whonix.org, mikegerwitz@gnu.org
+To: Patrick Schleizer <patrick-mailinglists@whonix.org>
+X-From: git-owner@vger.kernel.org Mon Nov 17 22:27:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqTP5-000330-Hx
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 22:00:07 +0100
+	id 1XqTpA-00088U-8L
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 22:27:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879AbaKQVAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 16:00:01 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41278 "HELO cloud.peff.net"
+	id S1752399AbaKQV1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 16:27:00 -0500
+Received: from cloud.peff.net ([50.56.180.127]:41285 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751297AbaKQVAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 16:00:00 -0500
-Received: (qmail 1601 invoked by uid 102); 17 Nov 2014 20:59:59 -0000
+	id S1752025AbaKQV07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 16:26:59 -0500
+Received: (qmail 2727 invoked by uid 102); 17 Nov 2014 21:26:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 14:59:59 -0600
-Received: (qmail 1796 invoked by uid 107); 17 Nov 2014 21:00:11 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 15:26:59 -0600
+Received: (qmail 2084 invoked by uid 107); 17 Nov 2014 21:27:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 16:00:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Nov 2014 15:59:57 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 16:27:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Nov 2014 16:26:57 -0500
 Content-Disposition: inline
-In-Reply-To: <loom.20141117T010932-213@post.gmane.org>
+In-Reply-To: <5468C33E.2080108@whonix.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 17, 2014 at 12:12:25AM +0000, Ryan Jacobs wrote:
+On Sun, Nov 16, 2014 at 03:31:10PM +0000, Patrick Schleizer wrote:
 
-> Alberto Fanjul Alonso <albertofanjul <at> gmail.com> writes:
+> How safe are signed git tags? Especially because git uses SHA-1. There
+> is contradictory information around.
 > 
+> So if one verifies a git tag (`git tag -v tagname`), then `checksout`s
+> the tag, and checks that `git status` reports no untracked/modified
+> files, without further manually auditing the code, how secure is this
+> actually? Is it only as safe as SHA-1?
+
+Yes, it is only as "safe as SHA-1" in the sense that you have GPG-signed
+only a SHA-1 hash. If somebody can find a collision with a hash you have
+signed, they can substitute the colliding data for the data you signed.
+
+Of course, "safe as SHA-1" and "find a collision" are vague. If
+pre-image attacks are feasible (i.e., given already-published SHA-1, I
+can find a different input with the same SHA-1), then attacks are
+trivial. But when people talk about attacks on SHA-1, they are usually
+referring to finding a collision between two new pieces of data. You can
+also use that in an attack, but it's much less straightforward
+(basically, you need to get somebody to sign one of the colliding pieces
+of data and then replace it with the other).
+
+And of course there is the question of getting the colliding data to the
+victim. Git does collision checks whenever a remote (e.g., from a "git
+fetch") gives us data that we already have. So you could poison new
+cloners with bad data, but you could not convince a repository with the
+existing "good" half of the collision to fetch the "evil" half.
+
+> > Git uses SHA-1 not for security
 > 
-> > git ignore <whatever> adds <whatever> to .git/info/exclude
+> And goes on.
 > 
-> This should be "git exclude" not "git ignore".
-> Difference between the two: http://stackoverflow.com/questions/10066749/git-
-> excludes-vs-ignores
+> > The security parts are elsewhere
+> 
+> Could you please elaborate on this? Where are the security parts? Can
+> you please briefly explain how these work? Where can I read more about this?
 
-I am not sure that the name difference is all that meaningful. Yes, we
-call the repo-wide file .git/info/exclude and the in-tree ones
-.gitignore, but I do not know if the distinction is more than historical
-accident.
+I cannot speak for Linus, but I would not agree that SHA-1 is not part
+of Git's security model. If we consider the GPG signature as a black box
+(and we largely do in Git), then we _never_ sign the tree contents
+itself. We always sign the SHA-1 of the tree, along with some metadata
+(whether you are signing a tag or a commit). If an attacker can create
+SHA-1 collisions (either by pre-image, or if you agree to sign a tree
+containing a potential collision from an attacker), then you are
+vulnerable to having the tree contents swapped out after the fact (and
+the signature still checking out).
 
-> I'd second the notion of a "git ignore", however it would have to modify the 
-> `.gitignore` not `.git/info/exclude`.
+I am not sure that is what Linus is saying, though. In the paragraph you
+quote:
 
-And I think this is a good reason why we do not have a "git ignore" tool
-to write such things. If I say "git ignore foo" should it go into
-.git/info/exclude or .gitignore? If the latter, should it be "foo" to
-match everywhere, or "/foo" to match only the single path at the root?
-If the file is "subdir/foo", should it go as "/subdir/foo" into the
-top-level ".gitignore", or as "foo" into "subdir/.gitignore"? If you
-ignore "foo.o" and "bar.o", should we suggest that you ignore "*.o"
-instead?
+> > "The source control management system Git uses SHA-1 not for security
+> but for ensuring that the data has not changed due to accidental
+> corruption. Linus Torvalds has said, "If you have disk corruption, if
+> you have DRAM corruption, if you have any kind of problems at all, Git
+> will notice them. It's not a question of if, it's a guarantee. You can
+> have people who try to be malicious. They won't succeed. [...] Nobody
+> has been able to break SHA-1, but the point is the SHA-1, as far as Git
+> is concerned, isn't even a security feature. It's purely a consistency
+> check. The security parts are elsewhere, so a lot of people assume that
+> since Git uses SHA-1 and SHA-1 is used for cryptographically secure
+> stuff, they think that, OK, it's a huge security feature. It has nothing
+> at all to do with security, it's just the best hash you can get. [...] I
+> guarantee you, if you put your data in Git, you can trust the fact that
+> five years later, after it was converted from your hard disk to DVD to
+> whatever new technology and you copied it along, five years later you
+> can verify that the data you get back out is the exact same data you put
+> in. [...] One of the reasons I care is for the kernel, we had a break in
+> on one of the BitKeeper sites where people tried to corrupt the kernel
+> source code repositories." [6]
 
-Trying to accomodate all of those possibilities in a command-line tool
-is hard, and probably counter-productive. We already have a simple
-domain-specific language for specifying .gitignore files.  You can just
-try to cover a common case, like "always put the full slash-prefixed
-path into the top-level .gitignore". But then I wonder if "git ignore"
-is really adding much value, as it is just a thin wrapper around "echo".
+I think he is saying more "SHA-1 is about data integrity, not about
+authenticity; if you want authenticity, that's elsewhere [handled by
+gpg]". Unsaid there is that you can't really have authenticity without
+the integrity, and that I think he was assuming that SHA-1 works (he
+says "Nobody has been able to break SHA-1..").
+
+> If (!) I understand Mike Gerwitz ([...] GNU [...]) 's opinion, his
+> opinion is, that for best security each and every commit should be
+> signed for best possible git verification security.
+
+I think it would depend on your threat model. You haven't defined "best
+security".
+
+Even without a break in SHA-1, there is value to signing every commit
+versus signing just tags. If Linus signs a tag, all it says is "I think
+this tree state and the history leading up to it is called v3.16". But
+Linus can lie all he likes about who made each commit, and what happened
+in each one. Signing commits is more about authenticating individual
+commits: who made them, what was the state they were based on, and what
+was the end state (and between the two, you can calculate the introduced
+changes).
+
+Of course, that comes with its own headaches, too. E.g., in mailing-list
+development, the patch is picked up and applied by a maintainer, who
+does not necessarily commit it on the same state you used to create it.
+And even if they did, the committer information is different than what
+you would create locally.  You inherently _can't_ sign that ahead of
+time.
 
 -Peff
-
-PS The more interesting case to automate (to me, anyway) is _checking_
-   paths against the hand-written .gitignore rules, which is complicated
-   to do by hand.  You can do that already with "git check-ignore".
