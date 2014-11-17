@@ -1,81 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git merge a b when a == b but neither == o is always a
- successful merge?
-Date: Mon, 17 Nov 2014 15:53:04 -0500
-Message-ID: <20141117205304.GA15880@peff.net>
-References: <21610.16623.746985.383838@perdition.linnaean.org>
+Subject: Re: Fwd: Add git ignore as builtin
+Date: Mon, 17 Nov 2014 15:59:57 -0500
+Message-ID: <20141117205957.GB15880@peff.net>
+References: <CA+mQAOXPZSv2B8tVfC=4eJ7X_2j8Di4BkuE=z43=U2+VNpdQQg@mail.gmail.com>
+ <CA+mQAOU_UnPuSk0f9d1sUnxBj8M4zEX7bwa4Dw_z_PJV3Lp4LA@mail.gmail.com>
+ <loom.20141117T010932-213@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Daniel Hagerty <hag@linnaean.org>
-X-From: git-owner@vger.kernel.org Mon Nov 17 21:53:13 2014
+To: Ryan Jacobs <ryan.mjacobs@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 17 22:00:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqTIO-000827-Hm
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 21:53:12 +0100
+	id 1XqTP5-000330-Hx
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 22:00:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753091AbaKQUxI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Nov 2014 15:53:08 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41271 "HELO cloud.peff.net"
+	id S1752879AbaKQVAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 16:00:01 -0500
+Received: from cloud.peff.net ([50.56.180.127]:41278 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752663AbaKQUxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 15:53:07 -0500
-Received: (qmail 1312 invoked by uid 102); 17 Nov 2014 20:53:07 -0000
+	id S1751297AbaKQVAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 16:00:00 -0500
+Received: (qmail 1601 invoked by uid 102); 17 Nov 2014 20:59:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 14:53:07 -0600
-Received: (qmail 1705 invoked by uid 107); 17 Nov 2014 20:53:18 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 14:59:59 -0600
+Received: (qmail 1796 invoked by uid 107); 17 Nov 2014 21:00:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 15:53:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Nov 2014 15:53:04 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 16:00:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Nov 2014 15:59:57 -0500
 Content-Disposition: inline
-In-Reply-To: <21610.16623.746985.383838@perdition.linnaean.org>
+In-Reply-To: <loom.20141117T010932-213@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 17, 2014 at 01:39:43PM -0500, Daniel Hagerty wrote:
+On Mon, Nov 17, 2014 at 12:12:25AM +0000, Ryan Jacobs wrote:
 
-> "git merge b" produces a successful merge, as both branches perform
-> the "same" work.
+> Alberto Fanjul Alonso <albertofanjul <at> gmail.com> writes:
+> 
+> 
+> > git ignore <whatever> adds <whatever> to .git/info/exclude
+> 
+> This should be "git exclude" not "git ignore".
+> Difference between the two: http://stackoverflow.com/questions/10066749/git-
+> excludes-vs-ignores
 
-Just to be clear, you were expecting "git merge b" to produce a
-conflict?
+I am not sure that the name difference is all that meaningful. Yes, we
+call the repo-wide file .git/info/exclude and the in-tree ones
+.gitignore, but I do not know if the distinction is more than historical
+accident.
 
-> For the body of content in question, this is a merge conflict.  Git
-> seems to have the hard-coded assumption otherwise.  I had to change
-> three source files to get the result I expected, and wasn't seeing
-> any indications of parameterization.
+> I'd second the notion of a "git ignore", however it would have to modify the 
+> `.gitignore` not `.git/info/exclude`.
 
-I can imagine there might be times you would like to notice this case
-and visit it manually (e.g., even though the conflict would show both
-sides with the same content, you might want the resolution to take the
-two sides sequentially, duplicating them).  But there are also cases
-where choosing the new content is helpful (e.g., one side cherry-picks =
-a
-commit from the other, then later merges; you would not want to see a
-conflict there).
+And I think this is a good reason why we do not have a "git ignore" tool
+to write such things. If I say "git ignore foo" should it go into
+.git/info/exclude or .gitignore? If the latter, should it be "foo" to
+match everywhere, or "/foo" to match only the single path at the root?
+If the file is "subdir/foo", should it go as "/subdir/foo" into the
+top-level ".gitignore", or as "foo" into "subdir/.gitignore"? If you
+ignore "foo.o" and "bar.o", should we suggest that you ignore "*.o"
+instead?
 
-> Am I missing some means of getting the results I need?  Thanks!
-
-I don't think there is an easy way to get what you want. You would have
-to write a new merge 3-way strategy that handles this case differently.
-And most of the file-level heavy lifting in merge strategies is done by
-the low-level unpack_trees code, which handles this case. From "git hel=
-p
-read-tree", which describes the index-level 3-way merge:
-
-  =C2=B7   stage 2 and 3 are the same; take one or the other (it makes =
-no
-      difference - the same work has been done on our branch in stage 2
-      and their branch in stage 3)
-
-So I think you would have to add an option to git to handle this, unles=
-s
-you want to reimplement quite a lot of code in your merge strategy.
+Trying to accomodate all of those possibilities in a command-line tool
+is hard, and probably counter-productive. We already have a simple
+domain-specific language for specifying .gitignore files.  You can just
+try to cover a common case, like "always put the full slash-prefixed
+path into the top-level .gitignore". But then I wonder if "git ignore"
+is really adding much value, as it is just a thin wrapper around "echo".
 
 -Peff
+
+PS The more interesting case to automate (to me, anyway) is _checking_
+   paths against the hand-written .gitignore rules, which is complicated
+   to do by hand.  You can do that already with "git check-ignore".
