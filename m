@@ -1,117 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce a hook to run after formatting patches
-Date: Mon, 17 Nov 2014 11:06:12 -0800
-Message-ID: <xmqqlhn9y7dn.fsf@gitster.dls.corp.google.com>
-References: <1416012460-4459-1-git-send-email-sbeller@google.com>
-	<xmqqzjbryonp.fsf@gitster.dls.corp.google.com>
+Subject: Re: Doing a git add '' will add more files then expected
+Date: Mon, 17 Nov 2014 11:08:26 -0800
+Message-ID: <xmqqh9xxy79x.fsf@gitster.dls.corp.google.com>
+References: <CAMDzUtyhNKdzHQK2zLEutJRcRUibhO-U6Zh0yJhrx-YxBqP5cQ@mail.gmail.com>
+	<87lhn91ynu.fsf@igel.home> <vpqa93p8y9n.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 20:06:27 2014
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Guilherme <guibufolo@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 17 20:10:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqRd4-0005Ew-LF
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 20:06:27 +0100
+	id 1XqRhG-0007fs-F0
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 20:10:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbaKQTGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 14:06:22 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57997 "EHLO
+	id S1753163AbaKQTKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 14:10:34 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64220 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751836AbaKQTGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 14:06:21 -0500
+	with ESMTP id S1752859AbaKQTIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 14:08:30 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91BFA1F38B;
-	Mon, 17 Nov 2014 14:06:17 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D8581F405;
+	Mon, 17 Nov 2014 14:08:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wpt8oSik4EUc1D/SLNwg+gmFjic=; b=fwcc7A
-	5j2bP0/7RjYNtmC/4Ie9RWSx3mx5vbCimB65ZeZFhPWS3PUepCqbid9Fep7YCSUI
-	qI2kINkqWC/i0oos8StFZJ0FAoilBfqfUTCFhXt+BPgF7Wt9lfebm3jyajvcD5gE
-	1mcCU60i23i4N5ryOfgAoNE441Qj90XqRAydY=
+	:content-type; s=sasl; bh=yls1fl+/Yg8B3SgXSzEc0puVGyA=; b=ICp+Es
+	fl+qcaiwNHE0fj18u88dRKiQgttHM6XUxJpvF9N70Ypprzac9YPXwC3YjXph/zEi
+	xYL82gBMhDVAhcoatFLUoKWe41r2tKAgbxs8iAQ7F8rzOSVBiXbfAU4o0I+DqpyX
+	5U8WtQKk8Xwz6LEKI4fenTfc+DyAH2R7bIyd0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L9AXRxQAY4MMyXIunDq+qBD2L15HEaAi
-	sjyDaq/MFBEcfwki+8mJ7RLU0IZJ2En2eZC7dblzzI2hPkTuFMpXyo5ddWArUO9P
-	bMnHtu1s957viOH5wlxXLh41ScHdZpTGKvW1VmDTyc4IdPj/CyXThUXr2ZDJGHum
-	siD2KN7xJJg=
+	:content-type; q=dns; s=sasl; b=guHs8uRJLt7cqgTBqNLbKA8TzuWIykGk
+	zkGDZ5OQyu7EIxQ1S+vRFlVnbckb6zYBAbvfUSnqfSrxer+P9qYS0xHUIq1hHx1k
+	P4j8/yFd77h8E00LA9r97R5N8Q8PJMGIbwa8pCbdWdRgVH2oA5IXQT7+xELepaxo
+	WKpAJiY2L84=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 882161F38A;
-	Mon, 17 Nov 2014 14:06:17 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 54D631F404;
+	Mon, 17 Nov 2014 14:08:31 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D3471F389;
-	Mon, 17 Nov 2014 14:06:16 -0500 (EST)
-In-Reply-To: <xmqqzjbryonp.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 16 Nov 2014 10:40:42 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 075581F401;
+	Mon, 17 Nov 2014 14:08:29 -0500 (EST)
+In-Reply-To: <vpqa93p8y9n.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	17 Nov 2014 19:42:12 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CEB883D2-6E8C-11E4-B982-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1DFB16BC-6E8D-11E4-9D58-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Stefan Beller <sbeller@google.com> writes:
+> Andreas Schwab <schwab@linux-m68k.org> writes:
 >
->> +post-format-patch
->> +~~~~~~~~~~~~
->> +
->> +This hook is called after format-patch created a patch and it is 
->> +invoked with the filename of the patch as the first parameter.
+>> The argument to git add is a pathspec, and the empty pathspec matches
+>> all files.
 >
-> Such an interface would not work well with --stdout mode, would it?
->
-> And if this only works with output generated into the files, then
->
->     $ git format-patch $range | xargs -n1 $your_post_processing_script
->
-> would do the same without any change to Git, I would imagine.
->
-> So I would have to say that I am fairly negative on this change in
-> the presented form.
->
-> An alternative design to implement this as a post-processing filter
-> to work for both "to individual files" and "to standard output
-> stream" output filter may be possible, but even in that case I am
-> not sure if it is worth the churn.
->
-> In general I'd look at post-anything hook that works locally with a
-> great suspicion, so that may partly be where my comment above is
-> coming from.  I dunno.
+> Err, why does the empty pathspec match all files? Isn't that a bug?
 
-Another reason, in addition to that this only works on the already
-created output files, why I find this particular design distasteful
-(I am not saying that there should be an easy way to drop cruft left
-by third-party systems such as "Change-id:" line) is because the
-mechanism the patch adds does not attempt to take advantage of being
-inside Git, so the "xargs -n1" above is strictly an equivalent.  You
-have a chance to make the life better for users, but not you are not
-doing so.
+That is debatable.
 
-The design of this feature could be made to allow the user to
-specify a filter to munge _ONLY_ the log message part.  For example,
-just after logmsg_reencode() returns the proposed commit log message
-to msg in pretty.c::pretty_print_commit(), you can detect a request
-to use some external filter program and let the program munge the
-message.  With such a design:
+    cd Documentation
+    git add "a"
 
- * The external filter your users would write does not have to worry
-   about limiting its damage only to the log message part, as it
-   will never see the patch text part; and
+would be equivalent to typing
 
- * The same mechanism would work just as well for --stdout mode.
+    git add Documentation/"a"
 
-The former is what I mean by "to take advantage of being inside".
-Incidentally, it falls into #2 of "5 valid reasons to admit a new
-hook" [*1*].
+so
 
+    cd Documentation
+    git add ""
 
-[Reference]
+would be equivalent to typing
 
-*1* http://thread.gmane.org/gmane.comp.version-control.git/232809/focus=71069
+    git add Documentation/""
+
+And doing the same from the top-level of the working tree can be
+argued to be a natural extension.
