@@ -1,56 +1,64 @@
-From: Ryan Jacobs <ryan.mjacobs@gmail.com>
-Subject: Re: Fwd: Add git ignore as builtin
-Date: Mon, 17 Nov 2014 00:12:25 +0000 (UTC)
-Message-ID: <loom.20141117T010932-213@post.gmane.org>
-References: <CA+mQAOXPZSv2B8tVfC=4eJ7X_2j8Di4BkuE=z43=U2+VNpdQQg@mail.gmail.com> <CA+mQAOU_UnPuSk0f9d1sUnxBj8M4zEX7bwa4Dw_z_PJV3Lp4LA@mail.gmail.com>
+From: Slavomir Vlcek <svlc@inventati.org>
+Subject: [PATCH] apply: fix typo in an error message
+Date: Mon, 17 Nov 2014 01:38:26 +0100
+Message-ID: <54694382.7020203@inventati.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 17 01:12:50 2014
+X-From: git-owner@vger.kernel.org Mon Nov 17 01:35:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xq9w2-0007N4-G5
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 01:12:50 +0100
+	id 1XqAI2-0006F2-6k
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 01:35:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751588AbaKQAMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2014 19:12:40 -0500
-Received: from plane.gmane.org ([80.91.229.3]:45673 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751565AbaKQAMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2014 19:12:39 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Xq9vp-0007Kh-Ot
-	for git@vger.kernel.org; Mon, 17 Nov 2014 01:12:38 +0100
-Received: from 107-132-54-136.lightspeed.frokca.sbcglobal.net ([107.132.54.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 01:12:37 +0100
-Received: from ryan.mjacobs by 107-132-54-136.lightspeed.frokca.sbcglobal.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 01:12:37 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 107.132.54.136 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.94 Safari/537.36)
+	id S1751555AbaKQAfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2014 19:35:22 -0500
+Received: from latitanza.investici.org ([82.94.249.234]:27828 "EHLO
+	latitanza.investici.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750956AbaKQAfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2014 19:35:21 -0500
+Received: from [82.94.249.234] (latitanza [82.94.249.234]) (Authenticated sender: svlc@inventati.org) by localhost (Postfix) with ESMTPSA id 32BD4121F20;
+	Mon, 17 Nov 2014 00:35:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inventati.org;
+	s=stigmate; t=1416184519;
+	bh=PH91hmYt5wO+gQ8tXc9hb74M6m/GkaQ460U/g+C6/7s=;
+	h=Date:From:To:CC:Subject;
+	b=NvGsGpvqBrPysELyjtcazX/GrqIy8Amld+ZyrhhVpqSgjacVaJEu2cQ5SDyiNq2hu
+	 65Y8ZHxUR9UcFlabzKSNuCbxNsLJev6ej9PvFw1qF0UWW9HQsedDZxxoDzOgdG7PiT
+	 DWZXHPMMXmQiBtvfEcsH3TvlH4PFm92q0WFp5Ba0=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alberto Fanjul Alonso <albertofanjul <at> gmail.com> writes:
+s/submoule/submodule
 
+Signed-off-by: Slavomir Vlcek <svlc@inventati.org>
+---
 
-> git ignore <whatever> adds <whatever> to .git/info/exclude
+For the 'master'. Thank you.
 
-This should be "git exclude" not "git ignore".
-Difference between the two: http://stackoverflow.com/questions/10066749/git-
-excludes-vs-ignores
+ builtin/apply.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'd second the notion of a "git ignore", however it would have to modify the 
-`.gitignore` not `.git/info/exclude`.
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 6696ea4..28d24f8 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3728,7 +3728,7 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+ 			if (!preimage_sha1_in_gitlink_patch(patch, sha1))
+ 				; /* ok, the textual part looks sane */
+ 			else
+-				die("sha1 information is lacking or useless for submoule %s",
++				die("sha1 information is lacking or useless for submodule %s",
+ 				    name);
+ 		} else if (!get_sha1_blob(patch->old_sha1_prefix, sha1)) {
+ 			; /* ok */
+-- 
+2.2.0.rc1.dirty
