@@ -1,100 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] create_default_files(): don't set u+x bit on $GIT_DIR/config
-Date: Mon, 17 Nov 2014 07:42:29 -0800
-Message-ID: <xmqqbno5zvdm.fsf@gitster.dls.corp.google.com>
-References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
-	<1416122508-30654-2-git-send-email-mhagger@alum.mit.edu>
-	<CAPig+cQ6j-3_Ng8DVT3FYk8T6DippEbYDhQq5v3DTJhGgBhPDQ@mail.gmail.com>
-	<5469C40B.4080601@alum.mit.edu>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 2/2] config: clear the executable bits (if any) on $GIT_DIR/config
+Date: Mon, 17 Nov 2014 17:00:18 +0100
+Message-ID: <546A1B92.90900@alum.mit.edu>
+References: <1416036379-4994-1-git-send-email-mhagger@alum.mit.edu>	<1416036379-4994-3-git-send-email-mhagger@alum.mit.edu>	<xmqqvbmfyo8w.fsf@gitster.dls.corp.google.com>	<5469B134.1050306@alum.mit.edu> <xmqqfvdhzvsp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Nov 17 16:42:41 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Karsten Blees <karsten.blees@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 17 17:00:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqORq-0007D9-2o
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 16:42:38 +0100
+	id 1XqOjI-0007Sy-Ui
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 17:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180AbaKQPme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 10:42:34 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64230 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750964AbaKQPmd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 10:42:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EBFD21ED69;
-	Mon, 17 Nov 2014 10:42:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+nQG5Agi9mVn+x2sCugBqu43lLE=; b=edg7/K
-	9bMOSvXUa9XMcxf6rk0IYZ5ibDU2YOqqvVEWFMbejjJOjHGTG1iLYCRXUV3Vb9IO
-	SIN8iKGSCYIcLUVcxGLkB79XKKzqwCCsa/iVkRJKiPThOlPV5pjZ3UqdZ5Fqq5tp
-	cVhfVQZXcGx07jOTDdz+Ncj45ZIwPIJfOoSTQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iUcUNUi0oDQUbwTY2u3dEWiZSCkP+5oq
-	Fp7pRxlbII22seOSkYQshiUBC3pOJbRmP4f/AfiDDguRwbftCBkMxZz2idgGrJZg
-	BJBBErC3Hqb/eBQGgIWLqWZJOdv1XFmK0/U1lZTLHy+rBmQOsce3E/yB8FUEm5Xt
-	i7DQxMLVlYY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E1EFF1ED68;
-	Mon, 17 Nov 2014 10:42:34 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 35FCE1ED67;
-	Mon, 17 Nov 2014 10:42:34 -0500 (EST)
-In-Reply-To: <5469C40B.4080601@alum.mit.edu> (Michael Haggerty's message of
-	"Mon, 17 Nov 2014 10:46:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5964BEBE-6E70-11E4-8F73-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751541AbaKQQAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 11:00:37 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:55230 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750983AbaKQQAg (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Nov 2014 11:00:36 -0500
+X-AuditID: 12074411-f795a6d000005d31-42-546a1b951fe8
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 50.00.23857.59B1A645; Mon, 17 Nov 2014 11:00:21 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB383E.dip0.t-ipconnect.de [93.219.56.62])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAHG0JZ7011479
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 17 Nov 2014 11:00:20 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <xmqqfvdhzvsp.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqDtVOivEYNVhEYuuK91MFg29V5gt
+	Fv47ym6xvynJgcVj56y77B4XLyl7fN4k59E85TxrAEsUt01SYklZcGZ6nr5dAnfG/F9rGAtm
+	81b0fPdvYNzM1cXIwSEhYCLxaH1pFyMnkCkmceHeerYuRi4OIYHLjBKNn3pZIJxzTBKvDv5j
+	BqniFdCUuLH/AzuIzSKgKtE3by4biM0moCuxqKeZCcQWFQiSOLnnOjtEvaDEyZlPWEBsEQE1
+	iYlth8BsZoEciQcfIeYIC4RJTJ9wEmrzT0aJO+emMIIkOAWsJSY/3MQG0aAnseP6L1YIW16i
+	eets5gmMArOQ7JiFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9XIzS/RSU0o3
+	MUKCWXAH44yTcocYBTgYlXh4d2RnhgixJpYVV+YeYpTkYFIS5V0vmhUixJeUn1KZkVicEV9U
+	mpNafIhRgoNZSYQ35iJQOW9KYmVValE+TEqag0VJnJdvibqfkEB6YklqdmpqQWoRTFaGg0NJ
+	gjdDCmioYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChS44uBsQqS4gHaqwXSzltc
+	kJgLFIVoPcWoKCXOGwmSEABJZJTmwY2FpahXjOJAXwrzsgATlhAPML3Bdb8CGswENHjOBpCH
+	iksSEVJSDYzLtun6961ev2C6S0mwWXnTuwPG4lXhRYrZKok+FTY7+lWs0kVa5L8lJ0zgqk7V
+	Nf0c0PVslcPZZcu+v81JXPjq5gQXLpHiOW9cTk4vnnrt7sFp65dXephod2qV5Qne 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 11/17/2014 04:33 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> On 11/16/2014 07:49 PM, Junio C Hamano wrote:
+>> ...
+>>> So I would suggest not to spend any cycle or any code complexity to
+>>> "repair" existing repositories.  Having that bit on does not hurt
+>>> anybody.  Those who found it curious can flip that bit off and then
+>>> Git with "preserve existing permissions" fix will keep that bit off
+>>> from then on.
+>>
+>> I disagree. The point of "preserve existing permissions" was to allow
+>> people to make their config files more readable/writable than the
+>> default,...
+> 
+> s/more/less/, I think, was the original motivation. Having to limit
+> more tightly than usual was what made the "config" unusual among
+> files under $GIT_DIR.  If it were to loosen, Eric's change should
+> not have been done in the first place. The sharedRepository setting
+> to defeat the default umask is there for that kind of thing.
 
-> This seems like a one-off bug caused by a specific instance of odd code.
-> It could only recur if somebody were to remove the line that I added,
-> which would be a *very* odd mistake to make given that its purpose is
-> pretty obvious.
+Oops, you are right. I actually meant to type "less or more", but I see
+that "more" would be pretty useless.
 
-Or some other code that comes _after_ your new code touches the
-file.
+>> That being said, I still believe that executable config files are not a
+>> significant risk ...
+> 
+> It is merely an annoyance, to the same degree of annoyance we find
+> when we see all files appear executable on a FAT floppy mounted on
+> Linux ;-)  I do not think it is a risk at all, and I do not see a
+> point in going into people's repository and actively "fixing" it.
+> People who notice can fix, and people who do not care do not care
+> and are not harmed.
 
-You cannot anticipate what mistake others make.
+OK, then, I'll send a new copy of patch 1/2 and drop 2/2.
 
-Shouldn't something like this be sufficient?
+Michael
 
- t/t0001-init.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index e62c0ff..acdc1df 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -12,6 +12,13 @@ check_config () {
- 		echo "expected a directory $1, a file $1/config and $1/refs"
- 		return 1
- 	fi
-+
-+	if ! test_have_prereq POSIXPERM || test -x "$1/config"
-+	then
-+		echo "$1/config is executable?"
-+		return 1
-+	fi
-+
- 	bare=$(cd "$1" && git config --bool core.bare)
- 	worktree=$(cd "$1" && git config core.worktree) ||
- 	worktree=unset
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
