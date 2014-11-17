@@ -1,99 +1,60 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/2] create_default_files(): don't set u+x bit on $GIT_DIR/config
-Date: Sun, 16 Nov 2014 20:40:12 -0500
-Message-ID: <CAPig+cQ6j-3_Ng8DVT3FYk8T6DippEbYDhQq5v3DTJhGgBhPDQ@mail.gmail.com>
-References: <1416122508-30654-1-git-send-email-mhagger@alum.mit.edu>
-	<1416122508-30654-2-git-send-email-mhagger@alum.mit.edu>
+From: Alex Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: [PATCH 1/1] gitk: po/ru.po russian translation typo fixed
+Date: Mon, 17 Nov 2014 13:59:28 +0600
+Message-ID: <87d28mb6jb.fsf@gmail.com>
+References: <1415963128-14221-1-git-send-email-kuleshovmail@gmail.com> <20141114211609.GA4808@wheezy.local> <CALxABCbZCy_DY-JkO+PuS9d6VUnaBSb68aDFyv9usR5gKjicvA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Nov 17 02:40:22 2014
+Content-Type: text/plain
+Cc: Max Kirillov <max@max630.net>, Paul Mackerras <paulus@samba.org>,
+	Git <git@vger.kernel.org>, 0xAX <kuleshovmail@gmail.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 17 09:00:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqBIj-0003QX-7K
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 02:40:21 +0100
+	id 1XqHEx-0004s4-DF
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 09:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292AbaKQBkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2014 20:40:14 -0500
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:52512 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753285AbaKQBkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2014 20:40:13 -0500
-Received: by mail-yh0-f46.google.com with SMTP id t59so4693495yho.33
-        for <git@vger.kernel.org>; Sun, 16 Nov 2014 17:40:12 -0800 (PST)
+	id S1751604AbaKQIAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 03:00:47 -0500
+Received: from mail-la0-f49.google.com ([209.85.215.49]:55323 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597AbaKQIAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 03:00:46 -0500
+Received: by mail-la0-f49.google.com with SMTP id ge10so17405153lab.8
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 00:00:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=DLomgIvjnf0VZEHSJc5tVty0ta70lWiEb5tj7Ktgm0s=;
-        b=NFCeTVMx1pyBHkkS+x5RZV2HTqfcpuGjKJUGfyr4zRKr9HqHpBD+4JqfaLFM0lJ0vB
-         uMpjN0HA28uCRuhEBU2cJ7fblk9YfJxIX0fUPwrkGCAr+5NDOzgAhAN+8LJx/kGcHhXq
-         9D2XC3jsRakjyobo/7KbTREXe+ALugLxT/8uYEy90qZF/LhZ9/oGVfcZuC9q2zndPo1r
-         qCyUWKylySGvz8RtDgVOJAVR6VCHbc+SddOaNmFC5mHm8NGU+qC/7eN07ish93l+h4V7
-         FAujXNDgcNyKxpNWuidqrkGO51Afbz8igMqz/cIGJQ/OE15wrPqmreVGezAtEZXm9+0Y
-         JMCQ==
-X-Received: by 10.236.104.196 with SMTP id i44mr21942753yhg.12.1416188412698;
- Sun, 16 Nov 2014 17:40:12 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Sun, 16 Nov 2014 17:40:12 -0800 (PST)
-In-Reply-To: <1416122508-30654-2-git-send-email-mhagger@alum.mit.edu>
-X-Google-Sender-Auth: m70WzZg2DhRoazy-C5l1DH0CrF4
+        h=references:from:to:cc:subject:date:in-reply-to:message-id
+         :mime-version:content-type;
+        bh=gPtS9oBVe3Y+szqkS8rwYc8ffOuT5Mx4V/5Nngl7LF0=;
+        b=Uuq1y53RQndU0WRwLB4VgUXw/V/tV8JTH1/OuFnUVqs4XaxwMG1nsDugbnhhIbYbme
+         F9gixDC+z8h5rVFm1I5C8RsrTQHmNPde6vW2K5UofYj8Xaf1aNHxNEe7TMnOMhCsjtOR
+         o6lIFD84k5w8SPiON+JEizlBrvjefCk1AIDk0ldNDQATqHQlj3Bj2S4AaoooE+Mjpemx
+         9E8MGG2va0/SibrgWBx1TIC+2n65ZaNrmBA2as9YVBsnzyUj1CNpwbDWJUqsNixwGA6U
+         T2jm/yfIKAQK08NKXSdRymGGKOX4NyHEpUTC5gTzoFEwRcPKkMsVXf3296jp+FWMtXUN
+         E7dw==
+X-Received: by 10.112.170.99 with SMTP id al3mr25766781lbc.17.1416211244677;
+        Mon, 17 Nov 2014 00:00:44 -0800 (PST)
+Received: from alex-desktop ([2.133.4.26])
+        by mx.google.com with ESMTPSA id lt8sm10049925lac.35.2014.11.17.00.00.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Nov 2014 00:00:43 -0800 (PST)
+In-reply-to: <CALxABCbZCy_DY-JkO+PuS9d6VUnaBSb68aDFyv9usR5gKjicvA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 16, 2014 at 2:21 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Since time immemorial, the test of whether to set "core.filemode" has
-> been done by trying to toggle the u+x bit on $GIT_DIR/config and then
-> testing whether the change "took". It is somewhat odd to use the
-> config file for this test, but whatever.
->
-> The test code didn't set the u+x bit back to its original state
-> itself, instead relying on the subsequent call to git_config_set() to
-> re-write the config file with correct permissions.
->
-> But ever since
->
->     daa22c6f8d config: preserve config file permissions on edits (2014-05-06)
->
-> git_config_set() copies the permissions from the old config file to
-> the new one. This is a good change in and of itself, but it interacts
-> badly with create_default_files()'s sloppiness, causing "git init" to
-> leave the executable bit set on $GIT_DIR/config.
->
-> So change create_default_files() to reset the permissions on
-> $GIT_DIR/config after its test.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
 
-Should this patch include a test in t1300 to ensure that this bug does
-not resurface (and to prove that this patch indeed fixes it)?
+Hello Max and Paul,
 
->  builtin/init-db.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 56f85e2..4c8021d 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -255,6 +255,7 @@ static int create_default_files(const char *template_path)
->                 filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
->                                 !lstat(path, &st2) &&
->                                 st1.st_mode != st2.st_mode);
-> +               filemode &= !chmod(path, st1.st_mode);
->         }
->         git_config_set("core.filemode", filemode ? "true" : "false");
->
-> --
-> 2.1.1
+thank you for your feedback, so what's must be my next workflow? Resend
+patch with "Reviewed-By:..." or somethine else?
+
+--
+Best regards.
+0xAX
