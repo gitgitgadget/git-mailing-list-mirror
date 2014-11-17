@@ -1,96 +1,56 @@
-From: Slavomir Vlcek <svlc@inventati.org>
-Subject: Re: [PATCH/RFC] builtin: move builtin retrieval to get_builtin()
-Date: Mon, 17 Nov 2014 00:33:40 +0100
-Message-ID: <54693454.1040704@inventati.org>
-References: <5463DA20.3080703@inventati.org> <xmqq389n2cac.fsf@gitster.dls.corp.google.com>
+From: Ryan Jacobs <ryan.mjacobs@gmail.com>
+Subject: Re: Fwd: Add git ignore as builtin
+Date: Mon, 17 Nov 2014 00:12:25 +0000 (UTC)
+Message-ID: <loom.20141117T010932-213@post.gmane.org>
+References: <CA+mQAOXPZSv2B8tVfC=4eJ7X_2j8Di4BkuE=z43=U2+VNpdQQg@mail.gmail.com> <CA+mQAOU_UnPuSk0f9d1sUnxBj8M4zEX7bwa4Dw_z_PJV3Lp4LA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 17 00:32:33 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 17 01:12:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xq9Iz-00046t-Jg
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 00:32:29 +0100
+	id 1Xq9w2-0007N4-G5
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Nov 2014 01:12:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751108AbaKPXaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Nov 2014 18:30:35 -0500
-Received: from latitanza.investici.org ([82.94.249.234]:52384 "EHLO
-	latitanza.investici.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884AbaKPXaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Nov 2014 18:30:35 -0500
-Received: from [82.94.249.234] (latitanza [82.94.249.234]) (Authenticated sender: svlc@inventati.org) by localhost (Postfix) with ESMTPSA id 1B64C121E0E;
-	Sun, 16 Nov 2014 23:30:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inventati.org;
-	s=stigmate; t=1416180633;
-	bh=osqNOVEbszsN0ODovscNzs4iykhRArH4hrstzIB0P9s=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=PsIwISqDLa95es4s6EXViELReer0XU72iWt/eKDZ4EzLgKzBdEL7QEdf5YLphNdB8
-	 DW61fHkac1lhlpCYaqOXLhKRnD+eJ6hdtyGFJXAdqXVPwBJvURGUZIrxhQ69c087CL
-	 fQdC6bWaS4mTM0xKKvk5QN+YtasUg20gXAaOUa2s=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq389n2cac.fsf@gitster.dls.corp.google.com>
+	id S1751588AbaKQAMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Nov 2014 19:12:40 -0500
+Received: from plane.gmane.org ([80.91.229.3]:45673 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751565AbaKQAMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Nov 2014 19:12:39 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Xq9vp-0007Kh-Ot
+	for git@vger.kernel.org; Mon, 17 Nov 2014 01:12:38 +0100
+Received: from 107-132-54-136.lightspeed.frokca.sbcglobal.net ([107.132.54.136])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 01:12:37 +0100
+Received: from ryan.mjacobs by 107-132-54-136.lightspeed.frokca.sbcglobal.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 01:12:37 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 107.132.54.136 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.94 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/13/2014 07:19 PM, Junio C Hamano wrote:
->>  git.c | 27 +++++++++++++++------------
->>  1 file changed, 15 insertions(+), 12 deletions(-)
->>
->> diff --git a/git.c b/git.c
->> index 18fbf79..e32c5b8 100644
->> --- a/git.c
->> +++ b/git.c
->> @@ -487,15 +487,20 @@ static struct cmd_struct commands[] = {
->>  	{ "write-tree", cmd_write_tree, RUN_SETUP },
->>  };
->>  
->> -int is_builtin(const char *s)
->> +struct cmd_struct *get_builtin(const char *s)
-> 
-> I do not think this has to be extern.
-> 
-> 	static struct cmd_struct *get_builtin(const char *s)
-> 
-> perhaps.
-> 
->> @@ -519,15 +525,12 @@ static void handle_builtin(int argc, const char **argv)
->>  		argv[0] = cmd = "help";
->>  	}
->>  
->> -	for (i = 0; i < ARRAY_SIZE(commands); i++) {
->> -		struct cmd_struct *p = commands+i;
->> -		if (strcmp(p->cmd, cmd))
->> -			continue;
->> -		if (saved_environment && (p->option & NO_SETUP)) {
->> +	builtin = get_builtin(cmd);
-> 
-> Nice.
-> 
->> +	if (builtin) {
->> +		if (saved_environment && (builtin->option & NO_SETUP))
->>  			restore_env();
->> -			break;
->> -		}
->> -		exit(run_builtin(p, argc, argv));
->> +		else
->> +			exit(run_builtin(builtin, argc, argv));
-> 
-> This change does not seem to have anything to do with the topic of
-> the change.  Why is it necessary?
+Alberto Fanjul Alonso <albertofanjul <at> gmail.com> writes:
 
-Does the commit message lack some explanation
-or the patch would better be divided into several parts?
 
-I noticed that the patch has been modified (suggested 'static'
-scope modification, commit message) and added
-to the 'next' branch. So does this mean my task is done
-or is there still something I should explain?
+> git ignore <whatever> adds <whatever> to .git/info/exclude
 
-Thank you for your corrections.
+This should be "git exclude" not "git ignore".
+Difference between the two: http://stackoverflow.com/questions/10066749/git-
+excludes-vs-ignores
+
+I'd second the notion of a "git ignore", however it would have to modify the 
+`.gitignore` not `.git/info/exclude`.
