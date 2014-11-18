@@ -1,150 +1,62 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: [PATCH] git-new-workdir: Don't fail if the target directory is empty
-Date: Tue, 18 Nov 2014 14:36:48 -0500
-Message-ID: <1416339408.3899.22.camel@mad-scientist.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] date.c: phrase a comment gender neutral
+Date: Tue, 18 Nov 2014 11:42:42 -0800
+Message-ID: <20141118194242.GJ6527@google.com>
+References: <1416338668-30683-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 18 20:43:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Nov 18 20:44:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xqogs-0008Qf-Bo
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 20:43:54 +0100
+	id 1XqohQ-0000D1-4v
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 20:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755833AbaKRTnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 14:43:41 -0500
-Received: from qproxy4-pub.mail.unifiedlayer.com ([66.147.248.250]:56713 "HELO
-	qproxy4-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755824AbaKRTnj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Nov 2014 14:43:39 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Nov 2014 14:43:39 EST
-Received: (qmail 6171 invoked by uid 0); 18 Nov 2014 19:36:59 -0000
-Received: from unknown (HELO cmgw3) (10.0.90.84)
-  by qproxy4.mail.unifiedlayer.com with SMTP; 18 Nov 2014 19:36:59 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-	by cmgw3 with 
-	id H7cw1p00X2qhmhE017czCm; Tue, 18 Nov 2014 12:36:59 -0700
-X-Authority-Analysis: v=2.1 cv=W++rC3mk c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
- a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
- a=2NV5t7OSZ7cA:10 a=5y4faFyK3SkA:10 a=V6TWb17wjVuPg6hANYEA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:Date:To:From:Subject:Message-ID; bh=BhdwcyvjAOxGOCa1kCY92TK5YmV3gBjoQ/+buGoIkEw=;
-	b=OuPRhN+1XThty2kYWhsnoj5ezknsbaXSakmsLwa1KEeIfAAwdHaRe9EJim3QPqRl4x2X1mXspZ8YhOJPgU/3YL+cSKyF/wvrez+kAaKOTu/9QojVuxc82eqOXxRIT7eJ;
-Received: from [173.9.45.73] (port=34993 helo=pdsdesk)
-	by box531.bluehost.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-	(Exim 4.82)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1Xqoa7-00031Y-Vg
-	for git@vger.kernel.org; Tue, 18 Nov 2014 12:36:56 -0700
-X-Mailer: Evolution 3.12.7-0ubuntu1 
-X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 173.9.45.73 authed with paul@mad-scientist.us}
+	id S1755725AbaKRTnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 14:43:21 -0500
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:47346 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755183AbaKRTmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 14:42:42 -0500
+Received: by mail-ie0-f171.google.com with SMTP id rl12so4291404iec.30
+        for <git@vger.kernel.org>; Tue, 18 Nov 2014 11:42:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=JsY4K9Wmn7F5/cX+REnFOabA0oJ0aQ36tn+W+jWZPXQ=;
+        b=JxdpWT1xHZr81MFs+acjsqfubJRUI6YoyNV6J/io6BTlJ2WKd8tkcKlZhxVKruZw9r
+         +mt1kwk1piSLitLON/MAMWPYc/6Q/Vho6XEkowZ/d4yrzrSxNN3UkCtKvybh0fjvhKSq
+         JwFM0uCrXUFNpLNk3MHpuGMSGTNkKeZYcDOOZa/JFUIMoF4vetZqm/JANKrxjpmjOsb2
+         EqlqXLInwf5sh/OT9EtybHdWLxikcxQPLYC1OFjCMAzkiRRk4DLhjOIjfBu7smtBNDeW
+         Q1TX4t2ZRSdc6fXU8w3/VKBHoitoD5fytL/vuBK2cySUeinm79qUSxZ1jnGyN2TLS82d
+         Blxw==
+X-Received: by 10.50.50.228 with SMTP id f4mr35794102igo.49.1416339761675;
+        Tue, 18 Nov 2014 11:42:41 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:1d6d:1067:602d:d9c7])
+        by mx.google.com with ESMTPSA id mf8sm8171305igb.22.2014.11.18.11.42.39
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Nov 2014 11:42:40 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1416338668-30683-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow new workdirs to be created in an empty directory (similar to "git
-clone").  Provide more error checking and clean up on failure.
+Stefan Beller wrote:
 
-Signed-off-by: Paul Smith <paul@mad-scientist.net>
----
+> When looking for suitable functions to print dates,
+> I found this gem. Let's make it gender neutral as
+> nowadays people get upset by this gender debate.
 
-Getting rid of ls/wc was not as simple as I'd hoped, due to glob
-pathname expansion (can't rely on nullglob e.g.)  If you want this let
-me know; it will require some yucky code to do the whole thing in native
-shell.  Since new-workdir only works on systems with "ln -s" I think we
-can feel confident requiring "ls" and "wc" as well.
+Eh, I'm not upset.
 
- contrib/workdir/git-new-workdir | 55 +++++++++++++++++++++++++++--------------
- 1 file changed, 36 insertions(+), 19 deletions(-)
-
-diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
-index 75e8b25..aef632d 100755
---- a/contrib/workdir/git-new-workdir
-+++ b/contrib/workdir/git-new-workdir
-@@ -10,6 +10,10 @@ die () {
- 	exit 128
- }
- 
-+failed () {
-+	die "unable to create new workdir \"$new_workdir\"!"
-+}
-+
- if test $# -lt 2 || test $# -gt 3
- then
- 	usage "$0 <repository> <new_workdir> [<branch>]"
-@@ -48,35 +52,48 @@ then
- 		"a complete repository."
- fi
- 
--# don't recreate a workdir over an existing repository
--if test -e "$new_workdir"
-+# make sure the links in the workdir have full paths to the original repo
-+git_dir=$(cd "$git_dir"; pwd)
-+
-+# don't recreate a workdir over an existing directory, unless it's empty
-+if test -d "$new_workdir"
- then
--	die "destination directory '$new_workdir' already exists."
-+	if test $(ls -a1 "$new_workdir/." | wc -l) -ne 2
-+	then
-+		die "destination directory '$new_workdir' is not empty."
-+	fi
-+	cleandir="$new_workdir"/.git
-+else
-+	mkdir -p "$new_workdir" || failed
-+	cleandir="$new_workdir"
- fi
- 
--# make sure the links use full paths
--git_dir=$(cd "$git_dir"; pwd)
-+cleanup () {
-+	rm -rf "$cleandir"
-+}
-+siglist="0 1 2 15"
-+trap cleanup $siglist
- 
--# create the workdir
--mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
-+# create embedded directories
-+for x in logs
-+do
-+	mkdir -p "$new_workdir/.git/$x" || failed
-+done
- 
- # create the links to the original repo.  explicitly exclude index, HEAD and
- # logs/HEAD from the list since they are purely related to the current working
- # directory, and should not be shared.
- for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn
- do
--	case $x in
--	*/*)
--		mkdir -p "$(dirname "$new_workdir/.git/$x")"
--		;;
--	esac
--	ln -s "$git_dir/$x" "$new_workdir/.git/$x"
-+	ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
- done
- 
--# now setup the workdir
--cd "$new_workdir"
- # copy the HEAD from the original repository as a default branch
--cp "$git_dir/HEAD" .git/HEAD
--# checkout the branch (either the same as HEAD from the original repository, or
--# the one that was asked for)
--git checkout -f $branch
-+cp "$git_dir/HEAD" "$new_workdir"/.git/HEAD || failed
-+
-+# the workdir is set up.  if the checkout fails, the user can fix it.
-+trap - $siglist
-+
-+# checkout the branch (either the same as HEAD from the original repository,
-+# or the one that was asked for)
-+git --git-dir="$new_workdir"/.git --work-tree="$new_workdir" checkout -f $branch
--- 
-1.8.5.3
+Hope that helps,
+Jonathan
