@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 09/16] refs.c: write updates to packed refs when a transaction has more than one ref
-Date: Mon, 17 Nov 2014 17:44:50 -0800
-Message-ID: <1416275097-3616-10-git-send-email-sbeller@google.com>
+Subject: [PATCH v4 15/16] refs.c: make lock_packed_refs take an err argument
+Date: Mon, 17 Nov 2014 17:44:56 -0800
+Message-ID: <1416275097-3616-16-git-send-email-sbeller@google.com>
 References: <1416275097-3616-1-git-send-email-sbeller@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	Stefan Beller <sbeller@google.com>
@@ -12,46 +12,46 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqXri-00040h-BR
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 02:45:58 +0100
+	id 1XqXrj-00040h-3M
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 02:45:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbaKRBpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 20:45:18 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:35076 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753642AbaKRBpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 20:45:14 -0500
-Received: by mail-ie0-f179.google.com with SMTP id rp18so3100816iec.10
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 17:45:13 -0800 (PST)
+	id S1753718AbaKRBpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 20:45:39 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:49402 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753675AbaKRBpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 20:45:21 -0500
+Received: by mail-ie0-f176.google.com with SMTP id ar1so1104883iec.7
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 17:45:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fhBZJCTyMrqP4/7nYeFxbSKSiHqxQOP6WOJ7XyYCCM0=;
-        b=EoeEuM4jXiTBHg7VRQM5vPz/PTqx1lmYTpx4d2/ZO5aKazdB0TwmJkDMR09nefqZ34
-         s5bniP754LvOmCYwQ9pokHGyUTBbABdABQ9NdF4pNsFmbkac2EMfeFnkKMczHOVuQkoJ
-         FGcVso/6HEsQEeW8OL4cD2qZaChnkBiwQEvtjDgCwI6hTMnVzUUVPt9WbpwTB7GMJQDQ
-         k3xFiepuWkkdqHGyDa/7yZiZNEz8TPMoolToBnXyo6uhg/lV3GF0wCote4OnBpVQpLxk
-         LbCusu4r+KmIHIsPEw5ug5RiUUXb1/Zeh3djrxd/S/OANGD3TUa5PcQwJg2GV71Je/cE
-         vcCA==
+        bh=RyGx1PBe2ntad4h7QoxbBbYyoQnV4OGEUvLXkuXBJcM=;
+        b=FXJx8g2rYDhtQoItM2R21DzFmXUWml36ymO/S1kAZTl9ogmI0LdeIY1Bj2ElnC3bpG
+         1HXWSCg9Q+dv5EpimMWq6NM7IYaC2IBvsDlG9MyH2IxsX3Hp2fQk63G70L0Wy9JFCgwU
+         UTw0g7vkVjqjK1EkHFDDamzK0jNDWvVmCVJ+r1wpEIMpPIqs7qeVf/KNPTa/rdTfBW2b
+         w+G9bZCAkMvmzQ/8pysA4+/GJlKpdxWPQ+gQmz1PFCWGT3Lc+avuEsfkVfZHgOfi8nqU
+         IW1cJDo7R9Ngca8UfIV5dujmZUh2BXbm2CvKxcXRql7Fw3fGKj8/sRJGMEMUxht3XItK
+         aoPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fhBZJCTyMrqP4/7nYeFxbSKSiHqxQOP6WOJ7XyYCCM0=;
-        b=USgDM8GPCsTIC2Nh5/t42AgVzPebq1F1MTvysaCEPAq2d5VqurdLXY4w8AYT3RLkn9
-         /Btt3FlhuvXhu66mRz26dH4H7DKKZg5tIBQ4VTCVTMyejEQGvqGx9f8HaDrn8+KXuFVX
-         fTK3gzJ/Ozq0ikptTI+re/IBTFkfBpyqHdge6iWJXiHA2iygljHgW1DJ/ymunK5NaK4u
-         NBspf6ltmQATD/rqYymZcKJojGSrkr93hm8uh2eKsU3exRWowm5K3TKKCGSTZSLFKyE9
-         eG6yO3SNmeN6KVgSbqoib8665JIDzfjLjIrludFQj8HESNSUZIB3JJ0Mf5K7DRqypq9Z
-         Ngnw==
-X-Gm-Message-State: ALoCoQnbSKXeB80SRr5b2abFAZHnYz/1LNFW1X5vQ6DOI9iXxmRtSph6qVDPtMJ6QV0YLJu+gAdg
-X-Received: by 10.107.172.68 with SMTP id v65mr6711467ioe.60.1416275113280;
-        Mon, 17 Nov 2014 17:45:13 -0800 (PST)
+        bh=RyGx1PBe2ntad4h7QoxbBbYyoQnV4OGEUvLXkuXBJcM=;
+        b=lxNyLMsDlpGrHFWdv9eibZFHLhA9UVOV94jxI+MIBCsw9xrLEG6ZasW0gSDlI2ImND
+         O2SoLi+A9UiBHGP1oUPjrfSIsovCQ9nFlYl3gYPsTWN6kO/Wa4SoRzJY9hw2zHnX/FYe
+         9ZkE9cbMRLjLySpnmXNV2Y1E1iPbOh0Ss9NgfCpbRn4AxEwqR4XHmkJQBfIbp5Z0UFIE
+         XKikpir7F0ViWetZvonokSv3z2K9qTIrbKWDag+KRafQ0QLuEXYDeZoEljwvA5sGDJTa
+         7YGkVpiMOSD2r4A3K/aOT2IcL0Kde7PDNUHYPE7j5xWKnJPhL3RV6ztJqCpWmdAjRV0L
+         jn0Q==
+X-Gm-Message-State: ALoCoQmHRqrxqYoMjU4/Wp2tuDE4XWVT5a89tR/Nc/tf0GEqup+ZhXgbCXDjOPJTLgiyDEOxW1UT
+X-Received: by 10.50.88.69 with SMTP id be5mr1786147igb.21.1416275121040;
+        Mon, 17 Nov 2014 17:45:21 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:c9d9:b6de:cff4:3fc7])
-        by mx.google.com with ESMTPSA id zy11sm6883868igc.4.2014.11.17.17.45.12
+        by mx.google.com with ESMTPSA id am5sm132751igc.12.2014.11.17.17.45.20
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Nov 2014 17:45:12 -0800 (PST)
+        Mon, 17 Nov 2014 17:45:20 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.rc2.5.gf7b9fb2
 In-Reply-To: <1416275097-3616-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
@@ -61,264 +61,76 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
-When we are updating more than one single ref, i.e. not a commit, then
-write the updated refs directly to the packed refs file instead of writing
-them as loose refs.
-
-Change clone to use a transaction instead of using the packed refs API.
-This changes the behavior of clone slightly. Previously clone would always
-clone all refs into a packed refs file. With this change clone will only
-clone into packed refs iff there are two or more refs being cloned.
-If the repository we are cloning from only contains exactly one single ref
-then clone will now store this as a loose ref. The benefit here is that
-we no longer need to export a bunch of API functions to clone to access
-packed refs directly. Clone can now just use a normal transaction and all
-the packed refs goodness will happen automatically.
-
-Update the t5516 test to cope with the fact that clone now only uses
-packed refs if there are more than one ref being cloned.
-
-We still use loose refs for single ref transactions, such as are used
-by 'git commit' and friends. The reason for this is that if you have very
-many refs then having to re-write the whole packed refs file for every
-common operation like commit would have a performance impact.
-That said, with these changes it should now be fairly straightforward to
-add support to optionally start using packed refs for ALL updates
-which could solve existing issues with name clashes in case insensitive
-filesystems.
-
-This change also means that multi-ref updates will now appear as a single
-atomic change to any external observers instead of a sequence of discreete
-changes.
-
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/clone.c       | 16 ++++++---
- refs.c                | 89 ++++++++++++++++++++++++++++++++++-----------------
- t/t5516-fetch-push.sh |  2 +-
- 3 files changed, 72 insertions(+), 35 deletions(-)
+ refs.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index d5e7532..9e4c42b 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -495,17 +495,25 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
- static void write_remote_refs(const struct ref *local_refs)
- {
- 	const struct ref *r;
-+	struct transaction *transaction;
-+	struct strbuf err = STRBUF_INIT;
- 
--	lock_packed_refs(LOCK_DIE_ON_ERROR);
-+	transaction = transaction_begin(&err);
-+	if (!transaction)
-+		die("%s", err.buf);
- 
- 	for (r = local_refs; r; r = r->next) {
- 		if (!r->peer_ref)
- 			continue;
--		add_packed_ref(r->peer_ref->name, r->old_sha1);
-+		if (transaction_update_ref(transaction, r->peer_ref->name,
-+					   r->old_sha1, NULL, 0, 0, NULL,
-+					   &err))
-+			die("%s", err.buf);
- 	}
- 
--	if (commit_packed_refs())
--		die_errno("unable to overwrite old ref-pack file");
-+	if (transaction_commit(transaction, &err))
-+		die("%s", err.buf);
-+	transaction_free(transaction);
- }
- 
- static void write_followtags(const struct ref *refs, const char *msg)
 diff --git a/refs.c b/refs.c
-index 75c6d3b..130d240 100644
+index c59cc3f..725945e 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2673,36 +2673,15 @@ int repack_without_refs(struct string_list *without, struct strbuf *err)
- 	struct ref_dir *packed;
- 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
- 	struct string_list_item *ref_to_delete;
--	int count, ret, removed = 0;
-+	int ret;
+@@ -2398,13 +2398,17 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
+ 	return 0;
+ }
  
- 	assert(err);
- 
--	/* Look for a packed ref */
--	count = 0;
--	for_each_string_list_item(ref_to_delete, without)
--		if (get_packed_ref(ref_to_delete->string))
--			count++;
--
--	/* No refname exists in packed refs */
--	if (!count) {
--		rollback_packed_refs();
--		return 0;
--	}
--
- 	packed = get_packed_refs(&ref_cache);
- 
- 	/* Remove refnames from the cache */
- 	for_each_string_list_item(ref_to_delete, without)
--		if (remove_entry(packed, ref_to_delete->string) != -1)
--			removed = 1;
--	if (!removed) {
--		/*
--		 * All packed entries disappeared while we were
--		 * acquiring the lock.
--		 */
--		rollback_packed_refs();
--		return 0;
--	}
-+		remove_entry(packed, ref_to_delete->string);
- 
- 	/* Remove any other accumulated cruft */
- 	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn, &refs_to_delete);
-@@ -3791,6 +3770,7 @@ int transaction_commit(struct transaction *transaction,
- 		       struct strbuf *err)
+-/* This should return a meaningful errno on failure */
+-static int lock_packed_refs(int flags)
++static int lock_packed_refs(struct strbuf *err)
  {
- 	int ret = 0, i, need_repack = 0;
-+	int num_updates = 0;
- 	int n = transaction->nr;
  	struct packed_ref_cache *packed_ref_cache;
- 	struct ref_update **updates = transaction->updates;
-@@ -3824,14 +3804,30 @@ int transaction_commit(struct transaction *transaction,
+ 
+-	if (hold_lock_file_for_update(&packlock, git_path("packed-refs"), flags) < 0)
++	if (hold_lock_file_for_update(&packlock, git_path("packed-refs"),
++				      0) < 0) {
++		if (err)
++			unable_to_lock_message(git_path("packed-refs"),
++					       errno, err);
+ 		return -1;
++	}
+ 	/*
+ 	 * Get the current packed-refs while holding the lock.  If the
+ 	 * packed-refs file has been modified since we last read it,
+@@ -2592,11 +2596,14 @@ static void prune_refs(struct ref_to_prune *r)
+ int pack_refs(unsigned int flags)
+ {
+ 	struct pack_refs_cb_data cbdata;
++	struct strbuf err = STRBUF_INIT;
+ 
+ 	memset(&cbdata, 0, sizeof(cbdata));
+ 	cbdata.flags = flags;
+ 
+-	lock_packed_refs(LOCK_DIE_ON_ERROR);
++	if (lock_packed_refs(&err))
++		die("%s", err.buf);
++
+ 	cbdata.packed_refs = get_packed_refs(&ref_cache);
+ 
+ 	do_for_each_entry_in_dir(get_loose_refs(&ref_cache), 0,
+@@ -3789,10 +3796,7 @@ int transaction_commit(struct transaction *transaction,
+ 	}
+ 
+ 	/* Lock packed refs during commit */
+-	if (lock_packed_refs(0)) {
+-		if (err)
+-			unable_to_lock_message(git_path("packed-refs"),
+-					       errno, err);
++	if (lock_packed_refs(err)) {
+ 		ret = -1;
  		goto cleanup;
  	}
- 
--	/* any loose refs are to be deleted are first copied to packed refs */
-+	/* count how many refs we are updating (not deleting) */
-+	for (i = 0; i < n; i++) {
-+		struct ref_update *update = updates[i];
-+
-+		if (update->update_type != UPDATE_SHA1)
-+			continue;
-+		if (is_null_sha1(update->new_sha1))
-+			continue;
-+
-+		num_updates++;
-+	}
-+
-+	/*
-+	 * Always copy loose refs that are to be deleted to the packed refs.
-+	 * If we are updating multiple refs then copy all refs to the packed
-+	 * refs file.
-+	 */
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 		unsigned char sha1[20];
- 
- 		if (update->update_type != UPDATE_SHA1)
- 			continue;
--		if (!is_null_sha1(update->new_sha1))
-+		if (num_updates < 2 && !is_null_sha1(update->new_sha1))
- 			continue;
- 		if (get_packed_ref(update->refname))
- 			continue;
-@@ -3843,7 +3839,7 @@ int transaction_commit(struct transaction *transaction,
- 		need_repack = 1;
- 	}
- 	if (need_repack) {
--		packed = get_packed_refs(&ref_cache);;
-+		packed = get_packed_refs(&ref_cache);
- 		sort_ref_dir(packed);
- 		if (commit_packed_refs()){
- 			strbuf_addf(err, "unable to overwrite old ref-pack "
-@@ -3860,13 +3856,15 @@ int transaction_commit(struct transaction *transaction,
+@@ -3847,10 +3851,7 @@ int transaction_commit(struct transaction *transaction,
  			goto cleanup;
  		}
- 	}
-+	need_repack = 0;
- 
- 	/*
- 	 * At this stage any refs that are to be deleted have been moved to the
--	 * packed refs file anf the packed refs file is deleted. We can now
-+	 * packed refs file and the packed refs file is committed. We can now
- 	 * safely delete these loose refs.
-+	 * If we are updating multiple refs then those will also be in the
-+	 * packed refs file so we can delete those too.
- 	 */
--
- 	/* Unlink any loose refs scheduled for deletion */
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
-@@ -3905,7 +3903,10 @@ int transaction_commit(struct transaction *transaction,
- 		update->lock = NULL;
- 	}
- 
--	/* Acquire all ref locks for updates while verifying old values */
-+	/*
-+	 * Acquire all ref locks for updates while verifying old values.
-+	 * If we are multi-updating then update them in packed refs.
-+	 */
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 
-@@ -3928,6 +3929,30 @@ int transaction_commit(struct transaction *transaction,
- 				    update->refname);
+ 		/* lock the packed refs again so no one can change it */
+-		if (lock_packed_refs(0)) {
+-			if (err)
+-				unable_to_lock_message(git_path("packed-refs"),
+-						       errno, err);
++		if (lock_packed_refs(err)) {
+ 			ret = -1;
  			goto cleanup;
  		}
-+		if (num_updates < 2)
-+			continue;
-+
-+		if (delete_ref_loose(update->lock, update->type, err)) {
-+			ret = -1;
-+			goto cleanup;
-+		}
-+		if (write_sha1_update_reflog(update->lock, update->new_sha1,
-+					     update->msg)) {
-+			if (err)
-+				strbuf_addf(err, "Failed to update log '%s'.",
-+					    update->refname);
-+			ret = -1;
-+			goto cleanup;
-+		}
-+		unlock_ref(update->lock);
-+		update->lock = NULL;
-+
-+		packed = get_packed_refs(&ref_cache);
-+		remove_entry(packed, update->refname);
-+		add_packed_ref(update->refname, update->new_sha1);
-+		need_repack = 1;
-+
-+		try_remove_empty_parents((char *)update->refname);
- 	}
- 
- 	/* delete reflog for all deleted refs */
-@@ -3976,7 +4001,7 @@ int transaction_commit(struct transaction *transaction,
- 
- 		if (update->update_type != UPDATE_SHA1)
- 			continue;
--		if (!is_null_sha1(update->new_sha1)) {
-+		if (update->lock && !is_null_sha1(update->new_sha1)) {
- 			if (write_ref_sha1(update->lock, update->new_sha1,
- 					   update->msg)) {
- 				update->lock = NULL; /* freed by write_ref_sha1 */
-@@ -4049,6 +4074,10 @@ int transaction_commit(struct transaction *transaction,
- 		}
- 	}
- 
-+	if (need_repack) {
-+		packed = get_packed_refs(&ref_cache);
-+		sort_ref_dir(packed);
-+	}
- 	if (repack_without_refs(&refs_to_delete, err))
- 		ret = TRANSACTION_GENERIC_ERROR;
- 	clear_loose_ref_cache(&ref_cache);
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index f4da20a..5d422a8 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -593,7 +593,7 @@ test_expect_success 'push updates up-to-date local refs' '
- 
- test_expect_success 'push preserves up-to-date packed refs' '
- 
--	mk_test testrepo heads/master &&
-+	mk_test testrepo heads/master heads/foo heads/bar &&
- 	mk_child testrepo child &&
- 	(
- 		cd child &&
 -- 
 2.2.0.rc2.5.gf7b9fb2
