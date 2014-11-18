@@ -1,65 +1,67 @@
-From: Jeff King <peff@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] t0090: mark add-interactive test with PERL prerequisite
-Date: Tue, 18 Nov 2014 13:49:24 -0500
-Message-ID: <20141118184924.GB13479@peff.net>
+Date: Tue, 18 Nov 2014 10:51:48 -0800
+Message-ID: <20141118185148.GF6527@google.com>
 References: <20141118172231.GA16387@peff.net>
- <20141118174309.GB31672@peff.net>
- <20141118183838.GD6527@google.com>
- <20141118184347.GE6527@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Pete Wyckoff <pw@padd.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 19:49:31 2014
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 18 19:51:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqnqE-0002ZC-Bm
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 19:49:30 +0100
+	id 1XqnsV-0003U6-Pl
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 19:51:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755000AbaKRSt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 13:49:26 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41850 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754994AbaKRSt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 13:49:26 -0500
-Received: (qmail 24603 invoked by uid 102); 18 Nov 2014 18:49:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 12:49:26 -0600
-Received: (qmail 19276 invoked by uid 107); 18 Nov 2014 18:49:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 13:49:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Nov 2014 13:49:24 -0500
+	id S1754131AbaKRSvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 13:51:48 -0500
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:39208 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753736AbaKRSvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 13:51:47 -0500
+Received: by mail-ig0-f170.google.com with SMTP id r2so4537659igi.3
+        for <git@vger.kernel.org>; Tue, 18 Nov 2014 10:51:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=BTyXCHDX/0kcJD5RyxgMWfpXeHv7QoRgsivpF9ILZsw=;
+        b=cuFE5aUyLvkJSB87eGgLXmY26Wr1q43EB0nZI6VOrThPwg1f6eFsO+7gb2ZwTQBABM
+         BNTr5wvAa+/68T1FO8iA34/7pmQSvBDno4PP9iV5SWrlQ5kbytzGE9ZhbTzbTJ0LAfVs
+         E61xDSBaLukq+/Xh2qXIsLnMSModz0VuDhbTvqYkKKfRpTj2cdmYosBtXjvi0OUAs6LG
+         GMrQBZuDvRWelRNgpJqDZ1rSGqLes3R/4zpX99R3pQh0GhgKN2Hk5R06e5ZweDOZB0NZ
+         RaRYVUrn/a0ymb29Xom4nhPwDQt2j5OD6bsQgh0Ig/YuHvfPZiy7ELDdQ15qEep69SGJ
+         pUcw==
+X-Received: by 10.42.137.9 with SMTP id w9mr36649326ict.20.1416336707160;
+        Tue, 18 Nov 2014 10:51:47 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:1d6d:1067:602d:d9c7])
+        by mx.google.com with ESMTPSA id j142sm19380969ioe.16.2014.11.18.10.51.45
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Nov 2014 10:51:45 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20141118184347.GE6527@google.com>
+In-Reply-To: <20141118172231.GA16387@peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 18, 2014 at 10:43:47AM -0800, Jonathan Nieder wrote:
+Jeff King wrote:
 
-> ... and here's a patch on top to give git-p4 the same treatment.
-> 
-> -- >8 --
-> Subject: Makefile: have python scripts depend on NO_PYTHON setting
-> 
-> Like the perl scripts, python scripts need a dependency to ensure they
-> are rebuilt when switching between the "dummy" versions that run
-> without Python and the real thing.
+> The add-interactive system is built in perl. If you build
+> with NO_PERL, running "git commit --interactive" will exit
+> with an error and the test will fail.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Noticed by Michael while working around gitweb failures by setting
+> NO_PERL. :)
 
-Thanks, I didn't think to look for similar cases. It seems python is the
-only other thing that gets the "unimplemented" treatment. If you do:
+Heh.
 
-  make
-  make NO_TCLTK=Yes
-
-I think you'll still end up with a crufty gitk build, but the fix there
-is much more involved (it would have to create a "Sorry, gitk wasn't
-built" script). I don't think it's worth the effort.
-
--Peff
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
