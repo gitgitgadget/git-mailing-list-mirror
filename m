@@ -1,103 +1,136 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gc: support temporarily preserving garbage
-Date: Mon, 17 Nov 2014 19:21:30 -0500
-Message-ID: <20141118002130.GA3031@peff.net>
-References: <1415927805-53644-1-git-send-email-brodie@sf.io>
- <xmqqlhnd1j66.fsf@gitster.dls.corp.google.com>
- <20141117213442.GD15880@peff.net>
- <CADoxLGMFzujP6kKNpExsCSzQrUrpsgPOcgLmFA_yU7S=NhQorQ@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [RFC] On watchman support
+Date: Mon, 17 Nov 2014 19:25:36 -0500
+Organization: Twitter
+Message-ID: <1416270336.13653.23.camel@leckie>
+References: <20141111124901.GA6011@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Brodie Rao <brodie@sf.io>,
-	Git Mailing List <git@vger.kernel.org>,
-	Bryan Turner <bturner@atlassian.com>
-To: Stefan Saasen <ssaasen@atlassian.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 01:21:39 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 18 01:25:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqWY5-00051W-Oy
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 01:21:38 +0100
+	id 1XqWc5-0006YB-LV
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 01:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752164AbaKRAVd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Nov 2014 19:21:33 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41406 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752064AbaKRAVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 19:21:33 -0500
-Received: (qmail 10011 invoked by uid 102); 18 Nov 2014 00:21:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 18:21:32 -0600
-Received: (qmail 5077 invoked by uid 107); 18 Nov 2014 00:21:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 17 Nov 2014 19:21:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Nov 2014 19:21:30 -0500
-Content-Disposition: inline
-In-Reply-To: <CADoxLGMFzujP6kKNpExsCSzQrUrpsgPOcgLmFA_yU7S=NhQorQ@mail.gmail.com>
+	id S1753271AbaKRAZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 19:25:42 -0500
+Received: from mail-qa0-f52.google.com ([209.85.216.52]:45259 "EHLO
+	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753179AbaKRAZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 19:25:41 -0500
+Received: by mail-qa0-f52.google.com with SMTP id dc16so709330qab.25
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 16:25:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=+BNhXi2/vSt8V6PUeCzEgoUdUvO+l0Tkx0tb4X7H8Ic=;
+        b=OXceo8W29HT6tUQGx8UEPwLrVlYbwwnlPBnsIZv9FFZqX8P9D1QFSb9NfRwJN3zKCt
+         Myo+S/mcJ6C7Eu/iX6/sVe1dQglmlGtEaeIRNHOcL5G3+klN7zcUKK1khzuZB8E5UTLK
+         8x31IR96oLMXNeJeLyf+r/0ZAGsn9jCsBs5BpMQEamWm8wWSIN/OrGkVLuSkMzHeI4mP
+         uQ6InkSPCRt//KYIZuBzNFLpNL9n1GR5x/7m0Kw3ahndLi5zXVUuVUxHRCF6DBONwCEW
+         mUwW7rXFsI0aXtdUlq5ZFxYFaNS9XX5KkF2hlvJ0mO7xglVQRuugSQbf4kfCxw7WyRa2
+         HDgw==
+X-Gm-Message-State: ALoCoQkoIbjJBA1vfSuMCgjmTiY9oBeRENBRQ1uHp4ZO9qFSCkGqsCt9x3RJplAxP8/AsUCb+cYt
+X-Received: by 10.224.136.194 with SMTP id s2mr11277163qat.82.1416270340366;
+        Mon, 17 Nov 2014 16:25:40 -0800 (PST)
+Received: from [172.18.25.176] ([8.25.196.25])
+        by mx.google.com with ESMTPSA id t44sm658877qgd.39.2014.11.17.16.25.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Nov 2014 16:25:39 -0800 (PST)
+In-Reply-To: <20141111124901.GA6011@lanh>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 18, 2014 at 10:59:14AM +1100, Stefan Saasen wrote:
+On Tue, 2014-11-11 at 19:49 +0700, Duy Nguyen wrote:
+> I've come to the last piece to speed up "git status", watchman
+> support. And I realized it's not as good as I thought.
+> 
+> Watchman could be used for two things: to avoid refreshing the index,
+> and to avoid searching for ignored files. The first one can be done
+> (with the patch below as demonstration). And it should keep refresh
+> cost to near zero in the best case, the cost is proportional to the
+> number of modified files.
+> 
+> For avoiding searching for ignored files. My intention was to build on
+> top of untracked cache. If watchman can tell me what files are added
+> or deleted since last observed time, then I can invalidate just
+> directories that contain them, or even better, calculate ignore status
+> for those files only.
+> 
+> This is important because in reality compilers and editors tend to
+> update files by creating a new version then rename them, updating
+> directory mtime and invalidating untracked cache as a consequence. As
+> you edit more files (or your rebuild touches more dirs), untracked
+> cache performance drops (until the next "git status"). The numbers I
+> posted so far are the best case.
+> 
+> The problem with watchman is it cannot tell me "new" files since the
+> last observed time (let's say 'T'). If a file exists at 'T', gets
+> deleted then recreated, then watchman tells me it's a new file. I want
+> to separate those from ones that do not exist before 'T'.
+> 
+> David's watchman approach does not have this problem because he keeps
+> track of all entries under $GIT_WORK_TREE and knows which files are
+> truely new. But I don't really want to keep the whole file list around,
+> especially when watchman already manages the same list.
+> 
+> So we got a few options:
+> 
+> 1) Convince watchman devs to add something to make it work
 
-> >> I am not sure if this much of code churn is warranted to work arou=
-nd
-> >> issues that only happen on repositories on NFS servers that do not
-> >> keep open-but-deleted files available.  Is it an option to instead
-> >> have a copy of repository locally off NFS?
-> >
-> > I think it is also not sufficient. This patch seems to cover only
-> > objects. But we assume that we can atomically rename() new versions=
- of
-> > files into place whenever we like without disrupting existing reade=
-rs.
-> > This is the case for ref updates (and packed-refs), as well as the =
-index
-> > file.  The destination end of the rename is an unlink() in disguise=
-, and
-> > would be susceptible to the same problems.
->=20
-> I=E2=80=99m going out on a limb here as my NFS knowledge is rather sh=
-allow but a
-> rename should be atomic even on NFS.
->=20
-> "The RENAME operation must be atomic to the client.=E2=80=9D
-> (https://www.ietf.org/rfc/rfc1813.txt: 3.3.14)
->=20
-> Does git do something differently here for that not to be the case?
+Based on the thread on the watchman github it looks like this won't
+happen. 
 
-I don't mean the atomicity of the rename itself. But rather what happen=
-s
-to an existing file at the destination of the rename, and processes tha=
-t
-have it open. E.g., consider this sequence of events:
+> 2) Fork watchman
+> 
+> 3) Make another daemon to keep file list around, or put it in a shared
+>    memory.
+> 
+> 4) Move David's watchman series forward (and maybe make use of shared
+>    mem for fs_cache).
+> 
+> 5) Go with something similar to the patch below and accept untracked
+>    cache performance degrades from time to time
+> 
+> 6) ??
+> 
+> I'm working on 1). 2) is just bad taste, listed for completeness
+> only. If we go with 3) and watchman starts to support Windows (seems
+> to be in their plan), we'll need to rework some how. And I really
+> don't like 3)
+> 
+> If 1-3 does not work out, we're left without 4) and 5). We could
+> support both, but proobably not worth the code complexity and should
+> just go with one.
+> 
+> And if we go with 4) we should probably think of dropping untracked
+> cache if watchman will support Windows in the end. 4) also has another
+> advantage over untracked cache, that it could speed up listing ignored
+> files as well as untracked files.
+> 
+> Comments?
 
-  1. Process A calls open("index", O_RDONLY). Possibly it also mmap()s
-     the result.
+I don't think it would be impossible to add Windows support to watchman;
+the necessary functions exist, although I don't know how well they work.
+My experience with watchman is that it is something of a stress test of
+a filesystem's notification layer.  It has exposed bugs in inotify, and
+caused system instability on OS X.
 
-  2. Process B calls open("index.lock", O_WRONLY|O_CREAT|O_EXCL),
-     write()s some data to it, and close()s it.
-
-  3. Process B calls rename("index.lock", "index");
-
-Normally, process A's descriptor continues to point to the old "index",
-and it does not see the new version unless it calls open() again. But o=
-n
-NFS, what happens to process A when it tries to read?  I could imagine
-one of:
-
-  a. It acts like the "unlink" call under discussion. The old file has
-     gone away, and anybody who had it mmap'd is going to SIGBUS.
-
-  b. We silently read data from the replacement file. This is bad,
-     because we may be in the middle of reading a data structure. We
-     expect to get an atomic view of the file once we've opened it.
-
-I don't know which happens, or if it all just works. But it seems like
-another potential problem point of the same type.
-
--Peff
+My patches are not the world's most beautiful, but they do work.  I
+think some improvement might be possible by keeping info about tracked
+files in the index, and only storing the tree of ignored and untracked
+files separately.  But I have not thought this through fully.  In any
+case, making use of shared memory for the fs_cache (as some of your
+other patches do for the index) would definitely save time.
