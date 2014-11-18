@@ -1,84 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-new-workdir: Don't fail if the target directory is empty
-Date: Tue, 18 Nov 2014 11:32:38 -0800
-Message-ID: <xmqq8uj8wbhl.fsf@gitster.dls.corp.google.com>
-References: <1416073760.9305.174.camel@homebase>
-	<xmqqy4r9yc5u.fsf@gitster.dls.corp.google.com>
-	<s934mtwo0zv.fsf@mad-scientist.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Reachability lists in git
+Date: Tue, 18 Nov 2014 11:41:29 -0800
+Message-ID: <20141118194129.GI6527@google.com>
+References: <Pine.LNX.4.44L0.1411181354320.4374-100000@iolanthe.rowland.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Paul Smith <paul@mad-scientist.net>
-X-From: git-owner@vger.kernel.org Tue Nov 18 20:32:46 2014
+To: Alan Stern <stern@rowland.harvard.edu>
+X-From: git-owner@vger.kernel.org Tue Nov 18 20:41:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqoW5-0003Yr-Ux
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 20:32:46 +0100
+	id 1Xqoeb-0007Te-JP
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 20:41:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131AbaKRTcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 14:32:42 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58130 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753829AbaKRTcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 14:32:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E55D1DD29;
-	Tue, 18 Nov 2014 14:32:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ptOizAX5+j2Dy7mhjLiymGBMBMY=; b=SRpfNB
-	byvIVmtjf3Rw5kStv2T3AyKc7iWfIcjVAl4o4ZXd1mSicSyACLMs0meSYcpuEji9
-	cEFth5DDkzw+0jRowY2OiWQ2BOTyn2hlaYv2qTLotfj1XhCiZWcI1GQavldPDFsJ
-	7E6vdIqtPdt3gVMXkesR4C51wwDvmLDnzFcC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Zv8Lu+scxirH8i0nYqparQr4smbrSYnR
-	hECj8kMAp1oCy5X7bmA9WgPDZnEwL3YwrShx+u4bT3h4uLqqF830iHkuBTfYezQG
-	koBVoh3MttxxJ2i5rR17VQCXjd80awhTqVSxc6FmpX64/d6cf1rSG4W+3Az6UpGA
-	UDcT72RYA8k=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 253C31DD28;
-	Tue, 18 Nov 2014 14:32:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 97A0B1DD26;
-	Tue, 18 Nov 2014 14:32:41 -0500 (EST)
-In-Reply-To: <s934mtwo0zv.fsf@mad-scientist.net> (Paul Smith's message of
-	"Tue, 18 Nov 2014 12:46:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A99C4D18-6F59-11E4-A285-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754820AbaKRTl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 14:41:29 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:62453 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754708AbaKRTl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 14:41:29 -0500
+Received: by mail-ie0-f181.google.com with SMTP id tp5so5265266ieb.12
+        for <git@vger.kernel.org>; Tue, 18 Nov 2014 11:41:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=9BggAnb79orTxigGY6S0vux+tdfHSfpPvydakG7pkxE=;
+        b=HsrLJJWo0BMU+HREukp5839tDueDowfIfG7Ujq78oB9rbYFhAqBm8j7s0BDtgSunhV
+         JlTKO6jvE4h/Wu1gi5s3s1wnh1OzGg1+ydzUy0Tq8X0UJW11LWqZ17mkApj+D0tSrDGN
+         sxbA8iPGVaZpHp44OOKW2UbxYGNDh/OojRhlXOr+Igc/Xzx0x0/za1Aj5NkwpJtGar67
+         Tfmt26BY+7teJWXnOlns8InD4LZwC/qd3nv63FsZnWRf54qYNVn0ftVxNb+TZMhAYGr5
+         El+zXp/Wdwhv+E0XSDLnTR96SoHK7vobfMxhh4ec7sGLPyqZmKZWlAHaiSdNFIGM04Lx
+         bhTw==
+X-Received: by 10.107.25.20 with SMTP id 20mr2006915ioz.90.1416339688276;
+        Tue, 18 Nov 2014 11:41:28 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:1d6d:1067:602d:d9c7])
+        by mx.google.com with ESMTPSA id d7sm21078628iod.34.2014.11.18.11.41.26
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Nov 2014 11:41:27 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.44L0.1411181354320.4374-100000@iolanthe.rowland.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul Smith <paul@mad-scientist.net> writes:
+Hi,
 
->>> +	if test $(ls -a1 "$new_workdir/." | wc -l) -ne 2
+Alan Stern wrote:
+
+> The "git rev-list A ^B" command lists all the commits that are
+> reachable from A but not from B.  Is there a comparable command for the
+> converse relation, that is, a command to list all the commits that A is
+> reachable from but B isn't?
 >
->> I wonder if this check is portable for all platforms we care about,
->> but that is OK, as it should be so for the ones I think of and care
->> about ;-)
->
-> Do you mean "." and ".." representing an empty directory?  That will
-> work on any system where /bin/sh works, for sure.
+> And if there is such a command, can the output be limited to just the
+> latest commits?  That is, list commit X if and only if A is reachable
+> from X, B isn't reachable from X, and B is reachable from each of X's
+> children?
 
-Even on network mounts from esoteric filesystems and such?  When
+Someone else can answer your direct question, but you've got my
+curiosity.  What is the application?
 
-    http://pubs.opengroup.org/onlinepubs/9699919799/utilities/ls.html
+--ancestry-path is my current favorite tool for walking-forward needs.
 
-mentions the "-A" option, it says:
-
-    -A
-        Write out all directory entries, including those whose names
-        begin with a <period> ( '.' ) but excluding the entries dot
-        and dot-dot (if they exist).
-
-The "if they exist" part suggests, at least to me, that it is valid
-for a POSIX filesystem to lack these two (I suspect that one may be
-able to find a more definitive answer from other parts of the POSIX
-but I didn't bother).
+Curious,
+Jonathan
