@@ -1,76 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] copy.c: make copy_fd preserve meaningful errno
-Date: Tue, 18 Nov 2014 09:08:32 -0800
-Message-ID: <xmqqk32swi5r.fsf@gitster.dls.corp.google.com>
-References: <1416262453-30349-1-git-send-email-sbeller@google.com>
-	<20141117233525.GC4336@google.com>
-	<xmqqtx1wwjtv.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] gitweb: hack around CGI's list-context param() handling
+Date: Tue, 18 Nov 2014 12:10:22 -0500
+Message-ID: <20141118171022.GA18799@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 18:08:43 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 18 18:10:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqmGh-0000Qz-0x
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 18:08:43 +0100
+	id 1XqmIT-0001KK-Kx
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 18:10:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754630AbaKRRIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 12:08:38 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52702 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753677AbaKRRIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 12:08:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F82F1D6AC;
-	Tue, 18 Nov 2014 12:08:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IWC2sn48Loz+2xeJvvz3Pc0Fb2g=; b=kQlH3d
-	/W3KqL9I5CU5SbLv1/ciwUi37NHC4eXdF8GhbuMMRI+qlab/nePa4FX7qU8Hybj8
-	oBoYdRK4N+h/ApnZwnokG7NZeQgRHRgt/JUD3lL0Ioz593NOe4oV/btPnAMHtGkB
-	qMcT1FBFKRjSoWjYXIBKNnpXA/lpKwMApqa+w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NLzoHCLcIZAGK2XL7StFT6BMIllPvYV+
-	i6UgGsGTWVYVTxY+bC/3ZYV52ME4e46K/9uleQoiBI2ETBqEThuwmS+3uc64DXW4
-	w2cGt9m3ABRQ9Ts/uWlZiiaHCn/ynkyDrAHFHgOOkeW4RLIFD8fTFOhrqW5xfkr3
-	HuJHLen/t5c=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 749741D6A9;
-	Tue, 18 Nov 2014 12:08:37 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 913C91D6A7;
-	Tue, 18 Nov 2014 12:08:35 -0500 (EST)
-In-Reply-To: <xmqqtx1wwjtv.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 18 Nov 2014 08:32:28 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 882D591A-6F45-11E4-9A4C-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754784AbaKRRK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 12:10:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:41752 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754445AbaKRRKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 12:10:25 -0500
+Received: (qmail 20423 invoked by uid 102); 18 Nov 2014 17:10:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 11:10:24 -0600
+Received: (qmail 17680 invoked by uid 107); 18 Nov 2014 17:10:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 12:10:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Nov 2014 12:10:22 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+As of CGI.pm's 4.08 release, the behavior to call
+CGI::param() in a list context is deprecated (because it can
+be potentially unsafe if called inside a hash constructor).
+This cause gitweb to issue a warning for some of our code,
+which in turn causes the tests to fail.
 
-> In short I am not a very big fan of passing around strbuf *err to
-> low level helper API functions myself.
->
-> But the approach does not make things much worse than it currently
-> is, other than code churns to pass an extra pointer around.
+Our use is in fact _not_ one of the dangerous cases, as we
+are intentionally using a list context. The recommended
+route by 4.08 is to use the new CGI::multi_param() call to
+make it explicit that we know what we are doing.
+However, that function is only available in 4.08, which is
+about a month old; we cannot rely on having it.
 
-Sorry I left the conclusion out of the message.
+One option would be to set $CGI::LIST_CONTEXT_WARN globally,
+which turns off the warning. However, that would eliminate
+the protection these newer releases are trying to provide.
+We want to annotate each site as OK using the new function.
 
-As it does not make things much worse, and does give slightly better
-flexibility on error message emission to the callers, let's go with
-the "strbuf *err" arpporach for now.
+So instead, let's check whether CGI provides the
+multi_param() function, and if not, provide an
+implementation that just wraps param(). That will work on
+both old and new versions of CGI. Sadly, we cannot just
+check defined(\&CGI::multi_param), because CGI uses the
+autoload feature, which claims that all functions are
+defined. Instead, we just do a version check.
 
-Until we hit a wall we cannot climb over, at which time we may need
-to redo it, but let's first see how it goes.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Without this patch, all of the gitweb tests consistently fail on Debian
+testing/unstable when you have libcgi-pm-perl installed (it works
+without that package installed, because an older version of CGI.pm is in
+the perl base). I tested with both versions.
+
+Another approach would be to live with the warning, but teach the tests
+to be less meticulous. I think it probably makes sense to keep them
+pedantic, though, because it can catch potential errors.
+
+ gitweb/gitweb.perl | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ccf7516..7a5b23a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -20,6 +20,10 @@ use File::Basename qw(basename);
+ use Time::HiRes qw(gettimeofday tv_interval);
+ binmode STDOUT, ':utf8';
+ 
++if (!defined($CGI::VERSION) || $CGI::VERSION < 4.08) {
++	eval 'sub CGI::multi_param { CGI::param(@_) }'
++}
++
+ our $t0 = [ gettimeofday() ];
+ our $number_of_git_cmds = 0;
+ 
+@@ -871,7 +875,7 @@ sub evaluate_query_params {
+ 
+ 	while (my ($name, $symbol) = each %cgi_param_mapping) {
+ 		if ($symbol eq 'opt') {
+-			$input_params{$name} = [ map { decode_utf8($_) } $cgi->param($symbol) ];
++			$input_params{$name} = [ map { decode_utf8($_) } $cgi->multi_param($symbol) ];
+ 		} else {
+ 			$input_params{$name} = decode_utf8($cgi->param($symbol));
+ 		}
+-- 
+2.1.2.596.g7379948
