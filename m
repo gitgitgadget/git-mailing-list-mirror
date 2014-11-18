@@ -1,90 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Mike Hommey <mh@glandium.org>
 Subject: Re: Getting a commit sha1 from fast-import in a remote-helper
-Date: Mon, 17 Nov 2014 18:53:59 -0800
-Message-ID: <20141118025359.GI4336@google.com>
+Date: Tue, 18 Nov 2014 12:11:47 +0900
+Message-ID: <20141118031147.GA15358@glandium.org>
 References: <20141118003426.GA6528@glandium.org>
- <20141118022137.GA8418@glandium.org>
+ <20141118014028.GF4336@google.com>
+ <20141118023112.GA14034@glandium.org>
+ <20141118025131.GH4336@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Nov 18 03:54:04 2014
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 18 04:12:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqYva-0000bp-QH
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 03:54:03 +0100
+	id 1XqZD6-0005nh-2L
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 04:12:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770AbaKRCx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 21:53:59 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:41210 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752212AbaKRCx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 21:53:58 -0500
-Received: by mail-ie0-f177.google.com with SMTP id tr6so4239204ieb.22
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 18:53:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Ir3RfhrlMdakNNvvWsIvLICaxqAduzKuy3N7EBqglYA=;
-        b=kAfE41g58UHMdc2ekayE+XyMuhggKG7awrDV+fuS+qyscX/rzVJ+rEP4CWWTQB4+pH
-         uRk8sl7kLKeop3alfBhrsF75pm2neyOfrhnAl1uEKS96nU1kaV4lyGx/26QWR7zFgL4+
-         CrvN7+mcjqBXq3tkz5kZCZttF7lNK07sZrYDOgDU2o4NZvV0rX0a32p3kJaqM5pnp24i
-         kKAOmXnuDq1ZURKqnbpTKFdOjVJtMuzwSXWsAR84cUYanCPyxcqtIuOZnwtyjMe8yf/F
-         66/xVSm0piMaYacFJ0huCtUz43mtVRuwlZg618+S5D5hw6WCB/ghV30x7OfXql3Tmacb
-         CVxw==
-X-Received: by 10.107.15.15 with SMTP id x15mr1799826ioi.61.1416279238033;
-        Mon, 17 Nov 2014 18:53:58 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:1d6d:1067:602d:d9c7])
-        by mx.google.com with ESMTPSA id hz2sm6566962igb.15.2014.11.17.18.53.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Nov 2014 18:53:57 -0800 (PST)
+	id S1752783AbaKRDMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 22:12:03 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:46331 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751213AbaKRDMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 22:12:01 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1XqZCl-00041H-Kb; Tue, 18 Nov 2014 12:11:47 +0900
 Content-Disposition: inline
-In-Reply-To: <20141118022137.GA8418@glandium.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20141118025131.GH4336@google.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mike Hommey wrote:
+On Mon, Nov 17, 2014 at 06:51:31PM -0800, Jonathan Nieder wrote:
+> Mike Hommey wrote:
+> > On Mon, Nov 17, 2014 at 05:40:28PM -0800, Jonathan Nieder wrote:
+> 
+> >> How did you get that "Not a blob" message?
+> >
+> > When trying to *create* a tree with a commit in it, so instead of giving
+> > the mark for a blob to a filemodify command, giving a mark for a commit.
+> > That is what fails with "Not a blob".
+> 
+> Ah, I see what you were trying now.  It's complaining that the data
+> and mode don't match up.  See <mode> under 'filemodify' in the manual.
+> 
+> Something like
+> 
+> 	M 160000 :1 mycommit
+> 
+> should work fine, though that's a pretty ugly workaround for the
+> inability to do
+> 
+> 	ls :1
 
-> BTW, if it so happens that all the operations that were done end up
-> creating objects that already existed for some reason, checkpoint
-> doesn't do anything, which is fine for the pack and tags, but not
-> necessarily so for export-marks.
+Actually, for my use, that ugly workaround actually improves things for
+me, avoiding to use blobs in some of the stuff I want to store :) How
+did I miss that? Thanks a lot for the enlightenment.
 
-Does something like this help?
+> [...]
+> >> I think a good fix would be to teach parse_ls a mode with no <path>
+> >> parameter.  Something like this (untested; needs cleanup and tests):
+> >
+> > This would make both your commands output the same thing, right? It
+> > wouldn't help my case :)
+> 
+> It's easily possible my patch has a typo somewhere, but the expected
+> output format would be
+> 
+> 	commit 6066a7eac4b2bcdb86971783b583e4e408b32e81
+> 
+> That wouldn't help?
 
-Do you have a short script that can demonstrate the failure?
+Oh, so `ls <dataref>` would print out what <dataref> is? That would
+definitely help, although with the trick above, I probably wouldn't
+actually need it anymore.
 
-Lazily,
-Jonathan
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-
-diff --git i/fast-import.c w/fast-import.c
-index d0bd285..c3d53c8 100644
---- i/fast-import.c
-+++ w/fast-import.c
-@@ -3088,12 +3088,11 @@ static void parse_ls(const char *p, struct branch *b)
- static void checkpoint(void)
- {
- 	checkpoint_requested = 0;
--	if (object_count) {
-+	if (object_count)
- 		cycle_packfile();
--		dump_branches();
--		dump_tags();
--		dump_marks();
--	}
-+	dump_branches();
-+	dump_tags();
-+	dump_marks();
- }
- 
- static void parse_checkpoint(void)
+Mike
