@@ -1,136 +1,114 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [RFC] On watchman support
-Date: Mon, 17 Nov 2014 19:25:36 -0500
-Organization: Twitter
-Message-ID: <1416270336.13653.23.camel@leckie>
-References: <20141111124901.GA6011@lanh>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] copy.c: make copy_fd preserve meaningful errno
+Date: Mon, 17 Nov 2014 16:48:41 -0800
+Message-ID: <20141118004841.GE4336@google.com>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com>
+ <20141117233525.GC4336@google.com>
+ <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 01:25:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Nov 18 01:48:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqWc5-0006YB-LV
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 01:25:46 +0100
+	id 1XqWyL-0006Ph-DQ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 01:48:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753271AbaKRAZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 19:25:42 -0500
-Received: from mail-qa0-f52.google.com ([209.85.216.52]:45259 "EHLO
-	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179AbaKRAZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 19:25:41 -0500
-Received: by mail-qa0-f52.google.com with SMTP id dc16so709330qab.25
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 16:25:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=+BNhXi2/vSt8V6PUeCzEgoUdUvO+l0Tkx0tb4X7H8Ic=;
-        b=OXceo8W29HT6tUQGx8UEPwLrVlYbwwnlPBnsIZv9FFZqX8P9D1QFSb9NfRwJN3zKCt
-         Myo+S/mcJ6C7Eu/iX6/sVe1dQglmlGtEaeIRNHOcL5G3+klN7zcUKK1khzuZB8E5UTLK
-         8x31IR96oLMXNeJeLyf+r/0ZAGsn9jCsBs5BpMQEamWm8wWSIN/OrGkVLuSkMzHeI4mP
-         uQ6InkSPCRt//KYIZuBzNFLpNL9n1GR5x/7m0Kw3ahndLi5zXVUuVUxHRCF6DBONwCEW
-         mUwW7rXFsI0aXtdUlq5ZFxYFaNS9XX5KkF2hlvJ0mO7xglVQRuugSQbf4kfCxw7WyRa2
-         HDgw==
-X-Gm-Message-State: ALoCoQkoIbjJBA1vfSuMCgjmTiY9oBeRENBRQ1uHp4ZO9qFSCkGqsCt9x3RJplAxP8/AsUCb+cYt
-X-Received: by 10.224.136.194 with SMTP id s2mr11277163qat.82.1416270340366;
-        Mon, 17 Nov 2014 16:25:40 -0800 (PST)
-Received: from [172.18.25.176] ([8.25.196.25])
-        by mx.google.com with ESMTPSA id t44sm658877qgd.39.2014.11.17.16.25.38
+	id S1752728AbaKRAsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 19:48:41 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:47839 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483AbaKRAsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 19:48:40 -0500
+Received: by mail-ie0-f170.google.com with SMTP id tr6so4116839ieb.29
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 16:48:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/WhKQeKzDEWhvnQCNLJTr7N3M9LkMIT5pbc5ewtdKO4=;
+        b=UYVqHSdm9a+3rlezxpVqg7eRiLzh9lCXJXIItiLncF1wCjtlJM7ZX61IUbN9k0BDUL
+         AG2qxSp7ttnbNhqBkDUV4amHbgp25Pmj2jd9fhbu+uIFHxpxFWbJ5CspRQ4t6a089UDZ
+         m4B0DYEpKxJN/0TCuB575xNpDihS+mi2nf1nuj2Ke8fjF6XxJEL0qECRz/N+lb8fGWLZ
+         3BwcF45+iEbBTMgUJYPxy3C2IrRBVY9y9UXuH94lZuUYFelT77NoDKmfbNy04muDOc8i
+         f9nc9MsMMEz1Bk7GSa9unOycK1UdBy4ubKpmqgvKUy5bWUvkLEZPpIa5gUix31zGaw9S
+         7Y8g==
+X-Received: by 10.50.39.67 with SMTP id n3mr29921742igk.43.1416271720316;
+        Mon, 17 Nov 2014 16:48:40 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:8c00:16f4:9f72:d6ec])
+        by mx.google.com with ESMTPSA id oq10sm6819182igb.0.2014.11.17.16.48.39
         for <multiple recipients>
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Nov 2014 16:25:39 -0800 (PST)
-In-Reply-To: <20141111124901.GA6011@lanh>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 17 Nov 2014 16:48:39 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2014-11-11 at 19:49 +0700, Duy Nguyen wrote:
-> I've come to the last piece to speed up "git status", watchman
-> support. And I realized it's not as good as I thought.
-> 
-> Watchman could be used for two things: to avoid refreshing the index,
-> and to avoid searching for ignored files. The first one can be done
-> (with the patch below as demonstration). And it should keep refresh
-> cost to near zero in the best case, the cost is proportional to the
-> number of modified files.
-> 
-> For avoiding searching for ignored files. My intention was to build on
-> top of untracked cache. If watchman can tell me what files are added
-> or deleted since last observed time, then I can invalidate just
-> directories that contain them, or even better, calculate ignore status
-> for those files only.
-> 
-> This is important because in reality compilers and editors tend to
-> update files by creating a new version then rename them, updating
-> directory mtime and invalidating untracked cache as a consequence. As
-> you edit more files (or your rebuild touches more dirs), untracked
-> cache performance drops (until the next "git status"). The numbers I
-> posted so far are the best case.
-> 
-> The problem with watchman is it cannot tell me "new" files since the
-> last observed time (let's say 'T'). If a file exists at 'T', gets
-> deleted then recreated, then watchman tells me it's a new file. I want
-> to separate those from ones that do not exist before 'T'.
-> 
-> David's watchman approach does not have this problem because he keeps
-> track of all entries under $GIT_WORK_TREE and knows which files are
-> truely new. But I don't really want to keep the whole file list around,
-> especially when watchman already manages the same list.
-> 
-> So we got a few options:
-> 
-> 1) Convince watchman devs to add something to make it work
+(meta-comment: please snip out the context you are not responding to,
+ to make reading easier)
+Stefan Beller wrote:
+> On Mon, Nov 17, 2014 at 3:35 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Stefan Beller wrote:
 
-Based on the thread on the watchman github it looks like this won't
-happen. 
+>>> Update copy_fd to return a meaningful errno on failure and also
+>>> preserve the existing errno variable.
+>>
+>> Some functions in git make errno meaningful on error and others don't.
+>> In general, the more we only use errno immediately after a system
+>> call, the better, so based on the above description this seems like a
+>> step in the wrong direction.
+>
+> I did reword the commit message badly. Before it just read
+> "Update copy_fd to return a meaningful errno".
+>
+> In fact the proposed patch doesn't guarantee the errno, which is set
+> at the beginning of the function to be the same at the end.
+>
+> What it really should preserve is the errno from xread, while
+> evaluating error("copy-fd: read returned %s", strerror(errno));
+> So the function call of error(...) or strerror(...) may change the errno.
 
-> 2) Fork watchman
-> 
-> 3) Make another daemon to keep file list around, or put it in a shared
->    memory.
-> 
-> 4) Move David's watchman series forward (and maybe make use of shared
->    mem for fs_cache).
-> 
-> 5) Go with something similar to the patch below and accept untracked
->    cache performance degrades from time to time
-> 
-> 6) ??
-> 
-> I'm working on 1). 2) is just bad taste, listed for completeness
-> only. If we go with 3) and watchman starts to support Windows (seems
-> to be in their plan), we'll need to rework some how. And I really
-> don't like 3)
-> 
-> If 1-3 does not work out, we're left without 4) and 5). We could
-> support both, but proobably not worth the code complexity and should
-> just go with one.
-> 
-> And if we go with 4) we should probably think of dropping untracked
-> cache if watchman will support Windows in the end. 4) also has another
-> advantage over untracked cache, that it could speed up listing ignored
-> files as well as untracked files.
-> 
-> Comments?
+A successful call to strerror() is guaranteed not to change errno, but
+a call to error() does I/O so it can clobber errno.
 
-I don't think it would be impossible to add Windows support to watchman;
-the necessary functions exist, although I don't know how well they work.
-My experience with watchman is that it is something of a stress test of
-a filesystem's notification layer.  It has exposed bugs in inotify, and
-caused system instability on OS X.
+The basic question is whether errno is and should be part of
+copy_fd()'s contract.  Until v2.2.0-rc0~53^2~2 (2014-10-01), it
+wasn't.  Even after that change, there's no user-visible effect to
+clobbering errno (so this patch is about maintainability, as opposed
+to fixing a user-visible bad behavior).
 
-My patches are not the world's most beautiful, but they do work.  I
-think some improvement might be possible by keeping info about tracked
-files in the index, and only storing the tree of ignored and untracked
-files separately.  But I have not thought this through fully.  In any
-case, making use of shared memory for the fs_cache (as some of your
-other patches do for the index) would definitely save time.
+[...]
+>> Can we do better?  E.g., if the signature were
+>>
+>>         int copy_fd(int ifd, int ofd, struct strbuf *err);
+>>
+>> then we could write the error message to the err strbuf for the
+>> caller to print.  The error handling would be more explicit so
+>> there would be no need to protect errno from clobbering by other
+>> system calls (both here and in callers).
+>>
+>> Something like this:
+>
+> I like this approach, though your patch is not about the original
+> intention as this one
+> (having strerror(...) not messing with the errno), but rather
+> accumulating the errors not
+> in numbers but string buffers?
+
+After this patch, setting errno is not part of the contract of
+copy_fd, so the bug Ronnie was fixing is gone.
+
+But it's a little more invasive.  What do you think?
+
+Thanks,
+Jonathan
