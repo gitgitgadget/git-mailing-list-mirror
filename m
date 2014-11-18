@@ -1,72 +1,74 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: ag, **, and the GPL
-Date: Tue, 18 Nov 2014 12:57:36 -0500
-Organization: Twitter
-Message-ID: <1416333456.27401.1.camel@leckie>
-References: <CACr0F2iGY_vxWzsNaPQNJ2cLUDRZPS70i79EhyA9OkA7qLaUQQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthew Kaniaris <mkaniaris@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 18:57:46 2014
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] builtin/push.c: fix description of --recurse-submodules option
+Date: Tue, 18 Nov 2014 18:57:46 +0100
+Message-ID: <1416333466-27186-1-git-send-email-ralf.thielow@gmail.com>
+Cc: gitster@pobox.com, hvoigt@hvoigt.net, phillip.szelat@gmail.com,
+	worldhello.net@gmail.com, Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 18 18:57:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xqn27-0005VN-Pn
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 18:57:44 +0100
+	id 1Xqn2I-0005a6-NG
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 18:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754079AbaKRR5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 12:57:40 -0500
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:52344 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753932AbaKRR5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 12:57:39 -0500
-Received: by mail-qg0-f41.google.com with SMTP id j5so3061536qga.14
-        for <git@vger.kernel.org>; Tue, 18 Nov 2014 09:57:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=fed0YfE4/6C+mwQzJoffmhrlnvNoRr2LymlOVHngYcA=;
-        b=Mrue2uWBK0VHiSph38Tp15wN+vFaRq5c8Ri05FXqRnzlgNGQL5i7ERgCDMrioE1Dmi
-         zooQl+gha4IoTHUnG/O/fA/ej8HNsvkz1LO+1a0lahX7pX8l0cAyiuvDjPru+xl2LK/o
-         yobn38X0uaPEcJxWiZGpYHUDbSXQ2h4lzItW0lw/qyHtK7a0eRIZnFSuxJM+bfTtXPR7
-         6uMPdWcpqqrIrhUL+XoGog/wvL4Dc0XK7Hao33+tVVNIJL7vzc5lhbqZWaebOJQnvcOU
-         drJYLbL8IzRz0XHQoHrGXHhyxXR1zI9Bq5O5Pzpj+e2WKhPbey8bwdtyV4nlrBxJiXRI
-         ewuw==
-X-Gm-Message-State: ALoCoQkKBwTTH/f/yj1LHK6Ab9nRHlBrwMsz0DmwJHbJjc1dQMdhZFBbblOSjgZoBs94vVP617Ee
-X-Received: by 10.224.13.145 with SMTP id c17mr15785352qaa.96.1416333458350;
-        Tue, 18 Nov 2014 09:57:38 -0800 (PST)
-Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
-        by mx.google.com with ESMTPSA id m39sm37477965qgd.28.2014.11.18.09.57.37
+	id S1754409AbaKRR5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 12:57:50 -0500
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:37430 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753323AbaKRR5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 12:57:50 -0500
+Received: by mail-wg0-f49.google.com with SMTP id x12so530964wgg.36
+        for <git@vger.kernel.org>; Tue, 18 Nov 2014 09:57:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=2zrP+9WaH1TaWBM1V0kEipiGmMVshudEZmRcZz0rxPY=;
+        b=ny4LpF/T4kMTWIRdrZGFLD25b7BMD47sosHvvCpl+91U2cagQZdE1NH8zhthK21DF4
+         eLVUIGZPVYoMHqcvFN9I2+CAsrLtTGOWtL3ZoqC9q4vcDWhd14RACjaIK1sbNoCSc9yf
+         aAzEFFFvtofft4BZ/kwCqrib8xfqoGQ3EbW333/QZWx3q11cmxXpCo536KQDB9Xz3jPg
+         oEnVCysDdHOH/k6UN9gkD5ukq1rDsPdc34GylNQsIje5jnNIs4HJ1fRpOyNupymj0L0q
+         U7hElBArLTmrm1CtlPLeeuVPLoOIpURwtIc2/Vmvsk066s0Qxg53QXsAAkEFwOlPCETd
+         fplg==
+X-Received: by 10.180.91.49 with SMTP id cb17mr5987579wib.30.1416333469004;
+        Tue, 18 Nov 2014 09:57:49 -0800 (PST)
+Received: from localhost (dslb-088-073-192-130.088.073.pools.vodafone-ip.de. [88.73.192.130])
+        by mx.google.com with ESMTPSA id h2sm9393913wix.5.2014.11.18.09.57.48
         for <multiple recipients>
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Nov 2014 09:57:37 -0800 (PST)
-In-Reply-To: <CACr0F2iGY_vxWzsNaPQNJ2cLUDRZPS70i79EhyA9OkA7qLaUQQ@mail.gmail.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Nov 2014 09:57:48 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.rc2.258.gc851c5b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2014-11-17 at 20:50 -0800, Matthew Kaniaris wrote:
-> The Silver Search (https://github.com/ggreer/the_silver_searcher), is
-> a small, open source, cross platform searching utility written as a
-> replacement for ack.  One of the major benefits of Ag (and a source
-> for much of its speed) is that it obeys .gitignore.  However, Ag
-> currently treats gitignores as regexs which produces incorrect results
-> for e.g. **.  I'd like to add support to ag to obey the .gitignore
-> spec but I'm not keen on implementing yet another fnmatch clone.  Ag
-> is licensed under the Apache License Version 2.0 which to the best of
-> my understanding is incompatible with the GPLv2.  Would you grant me
-> permission to reuse wildmatch.c (and necessary includes) for use in
-> Ag?
+The description of the option for argument "recurse-submodules"
+is marked for translation even if it expects the untranslated
+string and it's missing the option "on-demand" which was introduced
+in eb21c73 (2014-03-29, push: teach --recurse-submodules the on-demand
+option). Fix this by unmark the string for translation and add the
+missing option.
 
-I already implemented this without using any git code at
-https://github.com/novalis/the_silver_searcher.  The patch was rejected
-because it slowed down ag slightly (or perhaps because it was overly
-complex). 
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ builtin/push.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/push.c b/builtin/push.c
+index a076b19..cfa20c2 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -503,7 +503,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
+ 		  N_("require old value of ref to be at this value"),
+ 		  PARSE_OPT_OPTARG, parseopt_push_cas_option },
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, N_("check"),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, "check|on-demand",
+ 			N_("control recursive pushing of submodules"),
+ 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_BOOL( 0 , "thin", &thin, N_("use thin pack")),
+-- 
+2.2.0.rc2.258.gc851c5b
