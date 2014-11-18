@@ -1,74 +1,105 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] builtin/push.c: fix description of --recurse-submodules option
-Date: Tue, 18 Nov 2014 18:57:46 +0100
-Message-ID: <1416333466-27186-1-git-send-email-ralf.thielow@gmail.com>
-Cc: gitster@pobox.com, hvoigt@hvoigt.net, phillip.szelat@gmail.com,
-	worldhello.net@gmail.com, Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 18 18:57:57 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: hack around CGI's list-context param() handling
+Date: Tue, 18 Nov 2014 09:58:26 -0800
+Message-ID: <xmqqfvdgwful.fsf@gitster.dls.corp.google.com>
+References: <20141118171022.GA18799@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 18 18:58:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xqn2I-0005a6-NG
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 18:57:55 +0100
+	id 1Xqn2w-0005uO-8I
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 18:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754409AbaKRR5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 12:57:50 -0500
-Received: from mail-wg0-f49.google.com ([74.125.82.49]:37430 "EHLO
-	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753323AbaKRR5u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 12:57:50 -0500
-Received: by mail-wg0-f49.google.com with SMTP id x12so530964wgg.36
-        for <git@vger.kernel.org>; Tue, 18 Nov 2014 09:57:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=2zrP+9WaH1TaWBM1V0kEipiGmMVshudEZmRcZz0rxPY=;
-        b=ny4LpF/T4kMTWIRdrZGFLD25b7BMD47sosHvvCpl+91U2cagQZdE1NH8zhthK21DF4
-         eLVUIGZPVYoMHqcvFN9I2+CAsrLtTGOWtL3ZoqC9q4vcDWhd14RACjaIK1sbNoCSc9yf
-         aAzEFFFvtofft4BZ/kwCqrib8xfqoGQ3EbW333/QZWx3q11cmxXpCo536KQDB9Xz3jPg
-         oEnVCysDdHOH/k6UN9gkD5ukq1rDsPdc34GylNQsIje5jnNIs4HJ1fRpOyNupymj0L0q
-         U7hElBArLTmrm1CtlPLeeuVPLoOIpURwtIc2/Vmvsk066s0Qxg53QXsAAkEFwOlPCETd
-         fplg==
-X-Received: by 10.180.91.49 with SMTP id cb17mr5987579wib.30.1416333469004;
-        Tue, 18 Nov 2014 09:57:49 -0800 (PST)
-Received: from localhost (dslb-088-073-192-130.088.073.pools.vodafone-ip.de. [88.73.192.130])
-        by mx.google.com with ESMTPSA id h2sm9393913wix.5.2014.11.18.09.57.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 18 Nov 2014 09:57:48 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc2.258.gc851c5b
+	id S1753848AbaKRR6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 12:58:30 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64168 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753650AbaKRR6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 12:58:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 34AF21E308;
+	Tue, 18 Nov 2014 12:58:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZPbAMKdgATKhBsCM2Fy36jgYuHs=; b=DmRU71
+	wTpvJxPwT/ljN27zQabn8uR0aKxQ1QGu3RsfYfE4nxrz1zwESouZ7oT6zdALMWYh
+	+OgVHiXivHGP3xaBAlyNjE/XKzLEdICgAuRSxJuTQ6PQitYpQZGSwfA4nnjKiVD7
+	UC7mQu6nxghRGIBznJuwPlCFSaeZ6gMQR6FRM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J7KrKiDLqrY3BxP3Zahsh28QUUZ68/Ae
+	EgyApqNX5U/+Vqwrr+RB60hWkNWe91Hkj3gicNSybL54XYysifyk3e1Ajp3WntiL
+	xhRCdTXg7lP0KEOKhCD0mB36ha/7VqWVL1Q2A7LwoAKCtzlZONGQVEtxtb3/T7bR
+	tPAXgB9ZJH0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A8D61E306;
+	Tue, 18 Nov 2014 12:58:31 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C5381E303;
+	Tue, 18 Nov 2014 12:58:30 -0500 (EST)
+In-Reply-To: <20141118171022.GA18799@peff.net> (Jeff King's message of "Tue,
+	18 Nov 2014 12:10:22 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 815D2E10-6F4C-11E4-94B0-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The description of the option for argument "recurse-submodules"
-is marked for translation even if it expects the untranslated
-string and it's missing the option "on-demand" which was introduced
-in eb21c73 (2014-03-29, push: teach --recurse-submodules the on-demand
-option). Fix this by unmark the string for translation and add the
-missing option.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- builtin/push.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> As of CGI.pm's 4.08 release, the behavior to call
+> CGI::param() in a list context is deprecated (because it can
+> be potentially unsafe if called inside a hash constructor).
+> This cause gitweb to issue a warning for some of our code,
+> which in turn causes the tests to fail.
+>
+> Our use is in fact _not_ one of the dangerous cases, as we
+> are intentionally using a list context. The recommended
+> route by 4.08 is to use the new CGI::multi_param() call to
+> make it explicit that we know what we are doing.
+> However, that function is only available in 4.08, which is
+> about a month old; we cannot rely on having it.
+>
+> One option would be to set $CGI::LIST_CONTEXT_WARN globally,
+> which turns off the warning. However, that would eliminate
+> the protection these newer releases are trying to provide.
+> We want to annotate each site as OK using the new function.
+>
+> So instead, let's check whether CGI provides the
+> multi_param() function, and if not, provide an
+> implementation that just wraps param(). That will work on
+> both old and new versions of CGI. Sadly, we cannot just
+> check defined(\&CGI::multi_param), because CGI uses the
+> autoload feature, which claims that all functions are
+> defined. Instead, we just do a version check.
 
-diff --git a/builtin/push.c b/builtin/push.c
-index a076b19..cfa20c2 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -503,7 +503,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
- 		  N_("require old value of ref to be at this value"),
- 		  PARSE_OPT_OPTARG, parseopt_push_cas_option },
--		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, N_("check"),
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, "check|on-demand",
- 			N_("control recursive pushing of submodules"),
- 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
- 		OPT_BOOL( 0 , "thin", &thin, N_("use thin pack")),
--- 
-2.2.0.rc2.258.gc851c5b
+The solution does look like the best in the messy situation.  Thanks
+for looking into it.
+
+
+> +if (!defined($CGI::VERSION) || $CGI::VERSION < 4.08) {
+> +	eval 'sub CGI::multi_param { CGI::param(@_) }'
+> +}
+> +
+>  our $t0 = [ gettimeofday() ];
+>  our $number_of_git_cmds = 0;
+>  
+> @@ -871,7 +875,7 @@ sub evaluate_query_params {
+>  
+>  	while (my ($name, $symbol) = each %cgi_param_mapping) {
+>  		if ($symbol eq 'opt') {
+> -			$input_params{$name} = [ map { decode_utf8($_) } $cgi->param($symbol) ];
+> +			$input_params{$name} = [ map { decode_utf8($_) } $cgi->multi_param($symbol) ];
+>  		} else {
+>  			$input_params{$name} = decode_utf8($cgi->param($symbol));
+>  		}
