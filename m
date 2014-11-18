@@ -1,83 +1,103 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [RFC] On watchman support
-Date: Tue, 18 Nov 2014 16:12:03 -0500
-Organization: Twitter
-Message-ID: <1416345123.27401.11.camel@leckie>
-References: <20141111124901.GA6011@lanh> <1416270336.13653.23.camel@leckie>
-	 <CACsJy8BfxP7KF1XF29BOgC6XhO8iAy-ycEoLkDG5rn6TYH_DrA@mail.gmail.com>
-	 <1416334360.27401.10.camel@leckie>
-	 <xmqqioicut32.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 00/14] ref-transactions-reflog
+Date: Tue, 18 Nov 2014 22:16:18 +0100
+Message-ID: <546BB722.5020901@alum.mit.edu>
+References: <1416274550-2827-1-git-send-email-sbeller@google.com>	<546B2CE0.6020208@alum.mit.edu>	<CAL=YDWn1x9TMGOWrmT5KMpQ_iBR0AQ5Ej1yr1pBb4==k0-vchw@mail.gmail.com>	<546BA21C.9030803@alum.mit.edu> <xmqqr3x0uu81.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 18 22:12:15 2014
+X-From: git-owner@vger.kernel.org Tue Nov 18 22:16:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xqq4L-0002X7-Dv
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 22:12:13 +0100
+	id 1Xqq8V-0004Ju-FB
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 22:16:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932500AbaKRVMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 16:12:08 -0500
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:49002 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932287AbaKRVMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 16:12:07 -0500
-Received: by mail-qc0-f176.google.com with SMTP id i17so4990516qcy.35
-        for <git@vger.kernel.org>; Tue, 18 Nov 2014 13:12:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=sE5CA0dA3s+CnJBaFF8oUEJx6H5hODPDqHTEPWowANM=;
-        b=ldUZLpcOTtiRXuRv73yKWUw8HucTWzDm4cbGz439AenI5yxIYf9bw/mbuL23fz1EZF
-         K6ybcDQJE7jiaa9BT1bm8khh+zK94f4+0Q6FHjXtt3ifP144QkIkcBzkCF+5o6qzmMlY
-         m2JPTGrD4yw5MzWdAQa9JpULSPU52AHGmzq/6pHdyr9h1KHeEUtGkzQ3eDX+yAOWlEfu
-         GRFpqUbMyPvaRhhKjjohphkYK5wgPmP97CCIbY9tZky9G5a8/xtqq8ExneTh2MhJ9BaF
-         mwdL5Dv+xm/rfPgi+5Tst2UPin6wgm+Z5vl2GnCjlzZc4v7oVBtqMBBVvGRBA6PuzMfr
-         sYdQ==
-X-Gm-Message-State: ALoCoQmgU+uZOO/MrTEmjsxk3xB3kOfgUADtAWALmnO1ah8FYLCquLNK3nP9AgL7JA5s+ou8lxJG
-X-Received: by 10.224.98.148 with SMTP id q20mr42665685qan.18.1416345126432;
-        Tue, 18 Nov 2014 13:12:06 -0800 (PST)
-Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
-        by mx.google.com with ESMTPSA id j10sm3720328qai.18.2014.11.18.13.12.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Nov 2014 13:12:05 -0800 (PST)
-In-Reply-To: <xmqqioicut32.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S932422AbaKRVQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 16:16:27 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:60423 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932145AbaKRVQZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Nov 2014 16:16:25 -0500
+X-AuditID: 12074413-f79f26d0000030e7-50-546bb724ccf3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B7.0E.12519.427BB645; Tue, 18 Nov 2014 16:16:21 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB3D42.dip0.t-ipconnect.de [93.219.61.66])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAILGIaQ026803
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 18 Nov 2014 16:16:20 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <xmqqr3x0uu81.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqKu6PTvEoGsNk0XXlW4mi4beK8wW
+	/ybUWGze3M7iwOKxYFOpx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGecv3mXqWAxX8XZbxsZ
+	GxjvcnUxcnJICJhITFq6gQXCFpO4cG89G4gtJHCZUeL6fyCbC8g+xyRxY9VLVpAEr4C2xJGT
+	lxlBbBYBVYmFc7vZQWw2AV2JRT3NTCC2qECQxMk919kh6gUlTs58ArZAREBNYmLbIRaQocwC
+	zYwSKzb9BhrEwSEsYCrRvJ0RYtlXRon3006CNXAKWEsc7psCdhGzgJ7Ejuu/WCFseYnmrbOZ
+	JzAKzEKyYxaSsllIyhYwMq9ilEvMKc3VzU3MzClOTdYtTk7My0st0jXXy80s0UtNKd3ECAlh
+	4R2Mu07KHWIU4GBU4uFNmJoVIsSaWFZcmXuIUZKDSUmUN2BTdogQX1J+SmVGYnFGfFFpTmrx
+	IUYJDmYlEV7BbqAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCl2Ub
+	UKNgUWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KFbji4HRCpLiAdobDNLOW1yQmAsU
+	hWg9xagoJc7rCZIQAElklObBjYUlpleM4kBfCvOWbAWq4gEmNbjuV0CDmYAGz9mQCTK4JBEh
+	JdXAGCQgfKF2e48ko+xalsf+ZqvmdM5j4m0z5fKUsfuVZybusCrut5t61ubYhqoEnwsBPxeV
+	BgTaM3z/9GKnkMeDDyuizMytcp7zNj2Muq64otve11ljUdvzy+kpp0X1GK+8kbP/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2014-11-18 at 12:55 -0800, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
+On 11/18/2014 09:30 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
-> > On Tue, 2014-11-18 at 17:48 +0700, Duy Nguyen wrote:
-> >> > My patches are not the world's most beautiful, but they do work.  I
-> >> > think some improvement might be possible by keeping info about tracked
-> >> > files in the index, and only storing the tree of ignored and untracked
-> >> > files separately.  But I have not thought this through fully.  In any
-> >> > case, making use of shared memory for the fs_cache (as some of your
-> >> > other patches do for the index) would definitely save time.
-> >> 
-> >> By the way, what happened to your sse optimization in refs.c? I see
-> >> it's reverted but I didn't follow closely to know why. 
-> >
-> > I don't know why either -- it works just fine.  There was a bug, but I
-> > fixed it.  Junio?
+>> I'm still not convinced. For me, "reflog_expire()" is an unusual outlier
+>> operation, much like "git gc" or "git pack-refs" or "git fsck". None of
+>> these are part of the beautiful Git data model; they are messy
+>> maintenance operations. Forcing reference transactions to be general
+>> enough to allow reflog expiration to be implemented *outside* the refs
+>> API sacrificies their simplicity for lots of infrastructure that will
+>> probably only be used to implement this single operation. Better to
+>> implement reflog expiration *inside* the refs API.
 > 
-> I vaguely recall that the reason why we dropped it was because it
-> was too much code churn in an area that was being worked on in
-> parallel, but you may need to go back to the list archive for
-> details.
+> Sorry, but I lost track---which one is inside and which one is
+> outside?
 
-OK, in that case I'll try to remember to reroll it once the rest of the
-refs stuff lands.
+By "inside" I mean the code that would be within the reference-handling
+library if we had such a thing; i.e., implemented in refs.c. By
+"outside" I mean in the code that calls the library; in this case the
+"outside" code would live in builtin/reflog.c.
+
+In other words, I'd prefer the "outside" code in builtin/reflog.c to
+look vaguely like
+
+    expire_reflogs_for_me_please(refname,
+                                 should_expire_cb, cbdata, flags)
+
+rather than
+
+    transaction = ...
+    for_each_reflog_entry {
+        if should_expire()
+            adjust neighbor reflog entries if necessary (actually,
+                   they're transaction entries so we would have to
+                   preprocess them before putting them in the
+                   transaction)
+        else
+            add reflog entry to transaction
+    }
+    ref_transaction_commit()
+
+and instead handle as much of the iteration, bookkeeping, and rewriting
+as possible inside expire_reflogs_for_me_please().
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
