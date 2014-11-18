@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4 5/7] t5543-atomic-push.sh: add basic tests for atomic pushes
-Date: Mon, 17 Nov 2014 18:00:38 -0800
-Message-ID: <1416276040-5303-6-git-send-email-sbeller@google.com>
+Subject: [PATCH v4 3/7] receive-pack.c: use a single transaction when atomic-push is negotiated
+Date: Mon, 17 Nov 2014 18:00:36 -0800
+Message-ID: <1416276040-5303-4-git-send-email-sbeller@google.com>
 References: <1416276040-5303-1-git-send-email-sbeller@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	Stefan Beller <sbeller@google.com>
@@ -12,46 +12,46 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqY6M-0000v6-1X
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 03:01:06 +0100
+	id 1XqY6L-0000v6-GJ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 03:01:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753681AbaKRCAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 21:00:52 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:46915 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753670AbaKRCAu (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753674AbaKRCAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 17 Nov 2014 21:00:50 -0500
-Received: by mail-ie0-f179.google.com with SMTP id rp18so3109933iec.38
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 18:00:49 -0800 (PST)
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:41688 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753660AbaKRCAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 21:00:48 -0500
+Received: by mail-ie0-f170.google.com with SMTP id tr6so4206622ieb.15
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 18:00:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RgXP/VSYGg1W/0E+bnZw+JRjkSJTDy8jUttr7bcxVk0=;
-        b=b2ZL2fAs2rnEQ+gGWj3q4MMwotrcIVnAEBuuiNFwHrLKuZZ+ksE89pogR0ZegPrbpr
-         8492tvj75KY7JIbiV+CABZN2PftvyuogDuE/lK8KPU9Lpagk6EiocRKXd4DuKbAubj/f
-         k5wzec1QfzSdaW5ijgrUwlx5pXBbodS6i91N9CKAdpRo/7cFMiG9b8IbUJui88bVEIXW
-         CcgFr4a3EG/FadNJCanpO4QbL9VGNDQj83BxyGU3KcPC/QcowXeRrihL/kaea6fMe9yh
-         pnhWRNlMAzvEAMy983qdwV0uqAnpZyYsFQMjoFiOTJ78gWtf9N0RgjHO91yb62ShRcjm
-         vdPA==
+        bh=sDVGqSamEzPn7UJkYqRifZoVfGk89F7DRK5y44Suo6c=;
+        b=Ulx/1UoGPakvJH3TKzdJKm/WbGrwU2iJLR5kfhog9v2tvLL+O4F4ZcqTKD4omIuhre
+         TB7dqjot7zVq5YDV5kzGX/lNedv0AU/yHIf6mKibZAHqkmL9VTAP9M9S/780XuiE8Eim
+         6+/rls01RuQnsY5z5K7ID9jlCu1LCuCFQBsq9j+gemSkt60I3yoZ0Io2Dd2zw9zHqxpD
+         KgNxSDXU689G9NvYgVNWCi01dK7DW7XO694jaXZu4tYqFpOizsdGtUw8QRUEIk60DzEd
+         ZkFCrLCG9Gq0s0NawOhDAyguEwB0D0ZetO0ArQ8EYt1YsV3RzhqEMKuzv7Ht38x+rPXg
+         FGVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RgXP/VSYGg1W/0E+bnZw+JRjkSJTDy8jUttr7bcxVk0=;
-        b=msoba0Q8aSAm5OOU2GMM0cDXVkB+7k6tMy0JXCe+gtWcr6efm9z2+k/BYAHIxs0aA2
-         bLepA5vbdA7gjevQcwao4dMqL/IZ2LhP4XOR+yg5YxS7RvG34aKiNlGUkloioZ0Pwhqm
-         buPJIMMmTeUkO71eI6AbDJbg9+zcGdPIU1Mv471mAWTQO9Q8BdbFfw/0fkyyK4P7ykBr
-         7XOrKa5+i9QdZR8aCaa8NADlg9H2TC0u3lULCETFRVUK2wXhI0UJ6/q7+fDqBjijFPjY
-         XBkyeNdzMV1xtYORdlXEuwbPcHxWseNtAcYPliIbJsGno9dGrQp0KNE7120WjVAg6XyD
-         3j6A==
-X-Gm-Message-State: ALoCoQnh9B9U7n3cpUSFoYoMf+XMyq+QlYIC7IQJNaeOH6U89AzoYIxapA+VJar8r1Sf57bTxp8u
-X-Received: by 10.107.149.203 with SMTP id x194mr33702193iod.22.1416276049662;
-        Mon, 17 Nov 2014 18:00:49 -0800 (PST)
+        bh=sDVGqSamEzPn7UJkYqRifZoVfGk89F7DRK5y44Suo6c=;
+        b=BQc/lbgancBW5P6qSebO/Q0Gowzh8HoUIDzLvoKj6QXjfKWy2hHR5EmWCnyDzN0gO0
+         20vR1iwsKQ+uylFxjQO7VTC03hZipIV7gMN4EEqpRrn4hPYVknFmOpZFvRC0gRrvwdgo
+         ZJA5yB3tgdlbH6d584QqDLHVNQ+Ub+LuVHmL46W/h50/XqjffC+E20Jt4YOByrwb9gjO
+         3J88FFWaGpQU3u29xK2vNYFwyaizSAfFjg29+jjRnaBuNqnXRKtyEwBHCTLmHfRsrrcC
+         OrMkeF3MpQaLzOEay6YSti3lj2VsytdDc4a+dInI3Y9K5H3GEvM7XaMN0KS9tUGDVsrQ
+         ZwxQ==
+X-Gm-Message-State: ALoCoQkRqmj7bFA7rhOfzs9KymX1K0Z1s8ufEj1x3yReDEqZG71Zf4fGHh+DomnqLFxcBzrJGcde
+X-Received: by 10.42.128.81 with SMTP id l17mr31490961ics.8.1416276047246;
+        Mon, 17 Nov 2014 18:00:47 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:c9d9:b6de:cff4:3fc7])
-        by mx.google.com with ESMTPSA id fy5sm6901372igd.3.2014.11.17.18.00.49
+        by mx.google.com with ESMTPSA id 3sm7792657ion.37.2014.11.17.18.00.46
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Nov 2014 18:00:49 -0800 (PST)
+        Mon, 17 Nov 2014 18:00:46 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.rc2.5.gf7b9fb2
 In-Reply-To: <1416276040-5303-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
@@ -61,119 +61,149 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
+Update receive-pack to use an atomic transaction iff the client negotiated
+that it wanted atomic-push.
+This leaves the default behavior to be the old non-atomic one ref at a
+time update. This is to cause as little disruption as possible to existing
+clients. It is unknown if there are client scripts that depend on the old
+non-atomic behavior so we make it opt-in for now.
+
+Later patch in this series also adds a configuration variable where you can
+override the atomic push behavior on the receiving repo and force it
+to use atomic updates always.
+
+If it turns out over time that there are no client scripts that depend on the
+old behavior we can change git to default to use atomic pushes and instead
+offer an opt-out argument for people that do not want atomic pushes.
+
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/t5543-atomic-push.sh | 101 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
- create mode 100755 t/t5543-atomic-push.sh
+ builtin/receive-pack.c | 73 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 58 insertions(+), 15 deletions(-)
 
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-new file mode 100755
-index 0000000..4903227
---- /dev/null
-+++ b/t/t5543-atomic-push.sh
-@@ -0,0 +1,101 @@
-+#!/bin/sh
-+
-+test_description='pushing to a mirror repository'
-+
-+. ./test-lib.sh
-+
-+D=`pwd`
-+
-+invert () {
-+	if "$@"; then
-+		return 1
-+	else
-+		return 0
-+	fi
-+}
-+
-+mk_repo_pair () {
-+	rm -rf master mirror &&
-+	mkdir mirror &&
-+	(
-+		cd mirror &&
-+		git init &&
-+		git config receive.denyCurrentBranch warn
-+	) &&
-+	mkdir master &&
-+	(
-+		cd master &&
-+		git init &&
-+		git remote add $1 up ../mirror
-+	)
-+}
-+
-+
-+test_expect_success 'atomic push works for a single branch' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git push --mirror up
-+		echo two >foo && git add foo && git commit -m two &&
-+		git push --atomic-push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" = "$mirror_master"
-+
-+'
-+
-+test_expect_success 'atomic push works for two branches' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git branch second &&
-+		git push --mirror up
-+		echo two >foo && git add foo && git commit -m two &&
-+		git checkout second &&
-+		echo three >foo && git add foo && git commit -m three &&
-+		git checkout master &&
-+		git push --atomic-push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" = "$mirror_master"
-+
-+	master_second=$(cd master && git show-ref -s --verify refs/heads/second) &&
-+	mirror_second=$(cd mirror && git show-ref -s --verify refs/heads/second) &&
-+	test "$master_second" = "$mirror_second"
-+'
-+
-+# set up two branches where master can be pushed but second can not
-+# (non-fast-forward). Since second can not be pushed the whole operation
-+# will fail and leave master untouched.
-+test_expect_success 'atomic push fails if one branch fails' '
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git branch second &&
-+		git checkout second &&
-+		echo two >foo && git add foo && git commit -m two &&
-+		echo three >foo && git add foo && git commit -m three &&
-+		echo four >foo && git add foo && git commit -m four &&
-+		git push --mirror up
-+		git reset --hard HEAD~2 &&
-+		git checkout master
-+		echo five >foo && git add foo && git commit -m five &&
-+		! git push --atomic-push --all up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" != "$mirror_master" &&
-+
-+	master_second=$(cd master && git show-ref -s --verify refs/heads/second) &&
-+	mirror_second=$(cd mirror && git show-ref -s --verify refs/heads/second) &&
-+	test "$master_second" != "$mirror_second"
-+'
-+
-+test_done
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 63acebf..aa43a5e 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -67,6 +67,8 @@ static const char *NONCE_SLOP = "SLOP";
+ static const char *nonce_status;
+ static long nonce_stamp_slop;
+ static unsigned long nonce_stamp_slop_limit;
++struct strbuf err = STRBUF_INIT;
++struct transaction *transaction;
+ 
+ static enum deny_action parse_deny_action(const char *var, const char *value)
+ {
+@@ -832,33 +834,55 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 				cmd->did_not_exist = 1;
+ 			}
+ 		}
+-		if (delete_ref(namespaced_name, old_sha1, 0)) {
+-			rp_error("failed to delete %s", name);
+-			return "failed to delete";
++		if (!use_atomic_push) {
++			if (delete_ref(namespaced_name, old_sha1, 0)) {
++				rp_error("failed to delete %s", name);
++				return "failed to delete";
++			}
++		} else {
++			if (transaction_delete_ref(transaction,
++						   namespaced_name,
++						   old_sha1,
++						   0, old_sha1 != NULL,
++						   "push", &err)) {
++				rp_error("%s", err.buf);
++				strbuf_release(&err);
++				return "failed to delete";
++			}
+ 		}
+ 		return NULL; /* good */
+ 	}
+ 	else {
+-		struct strbuf err = STRBUF_INIT;
+-		struct transaction *transaction;
+-
+ 		if (shallow_update && si->shallow_ref[cmd->index] &&
+ 		    update_shallow_ref(cmd, si))
+ 			return "shallow error";
+ 
+-		transaction = transaction_begin(&err);
+-		if (!transaction ||
+-		    transaction_update_ref(transaction, namespaced_name,
+-					   new_sha1, old_sha1, 0, 1, "push",
+-					   &err) ||
+-		    transaction_commit(transaction, &err)) {
+-			transaction_free(transaction);
++		if (!use_atomic_push) {
++			transaction = transaction_begin(&err);
++			if (!transaction) {
++				rp_error("%s", err.buf);
++				strbuf_release(&err);
++				return "failed to start transaction";
++			}
++		}
++		if (transaction_update_ref(transaction,
++					   namespaced_name,
++					   new_sha1, old_sha1,
++					   0, 1, "push",
++					   &err)) {
+ 			rp_error("%s", err.buf);
+ 			strbuf_release(&err);
+ 			return "failed to update ref";
+ 		}
+-
+-		transaction_free(transaction);
++		if (!use_atomic_push) {
++			if (transaction_commit(transaction, &err)) {
++				transaction_free(transaction);
++				rp_error("%s", err.buf);
++				strbuf_release(&err);
++				return "failed to update ref";
++			}
++			transaction_free(transaction);
++		}
+ 		strbuf_release(&err);
+ 		return NULL; /* good */
+ 	}
+@@ -1058,6 +1082,16 @@ static void execute_commands(struct command *commands,
+ 		return;
+ 	}
+ 
++	if (use_atomic_push) {
++		transaction = transaction_begin(&err);
++		if (!transaction) {
++			error("%s", err.buf);
++			strbuf_release(&err);
++			for (cmd = commands; cmd; cmd = cmd->next)
++				cmd->error_string = "transaction error";
++			return;
++		}
++	}
+ 	data.cmds = commands;
+ 	data.si = si;
+ 	if (check_everything_connected(iterate_receive_command_list, 0, &data))
+@@ -1095,6 +1129,14 @@ static void execute_commands(struct command *commands,
+ 		}
+ 	}
+ 
++	if (use_atomic_push) {
++		if (transaction_commit(transaction, &err)) {
++			rp_error("%s", err.buf);
++			for (cmd = commands; cmd; cmd = cmd->next)
++				cmd->error_string = err.buf;
++		}
++		transaction_free(transaction);
++	}
+ 	if (shallow_update && !checked_connectivity)
+ 		error("BUG: run 'git fsck' for safety.\n"
+ 		      "If there are errors, try to remove "
+@@ -1542,5 +1584,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	sha1_array_clear(&shallow);
+ 	sha1_array_clear(&ref);
+ 	free((void *)push_cert_nonce);
++	strbuf_release(&err);
+ 	return 0;
+ }
 -- 
 2.2.0.rc2.5.gf7b9fb2
