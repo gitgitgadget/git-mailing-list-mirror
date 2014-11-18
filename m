@@ -1,125 +1,81 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: Re: [PATCH] git-new-workdir: Don't fail if the target directory is empty
-Date: Tue, 18 Nov 2014 12:46:28 -0500
-Message-ID: <s934mtwo0zv.fsf@mad-scientist.net>
-References: <1416073760.9305.174.camel@homebase>
-	<xmqqy4r9yc5u.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 18 20:20:18 2014
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] date.c: phrase a comment gender neutral
+Date: Tue, 18 Nov 2014 11:24:28 -0800
+Message-ID: <1416338668-30683-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 18 20:24:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqoJz-0006cn-BG
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 20:20:15 +0100
+	id 1XqoOC-0008UU-Ku
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 20:24:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754301AbaKRTUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 14:20:09 -0500
-Received: from plane.gmane.org ([80.91.229.3]:34012 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753829AbaKRTUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 14:20:08 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1XqoJp-0006Zw-AJ
-	for git@vger.kernel.org; Tue, 18 Nov 2014 20:20:05 +0100
-Received: from 173-9-45-73-newengland.hfc.comcastbusiness.net ([173.9.45.73])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 18 Nov 2014 20:20:05 +0100
-Received: from paul by 173-9-45-73-newengland.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 18 Nov 2014 20:20:05 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 173-9-45-73-newengland.hfc.comcastbusiness.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-Cancel-Lock: sha1:+wOwr0OK0aw8vknKHigXejeqWo4=
+	id S1754379AbaKRTYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 14:24:32 -0500
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:45704 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753903AbaKRTYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 14:24:32 -0500
+Received: by mail-ig0-f180.google.com with SMTP id h15so7685385igd.1
+        for <git@vger.kernel.org>; Tue, 18 Nov 2014 11:24:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=VMbqJfnbSzKyvIsIcTTC92h0GcplH9w3qkKOdBUIt7o=;
+        b=S4E+3+KFhdvaAWL9nkrFqXxs7o96Czmp96vGJtFW5Uv4GRQh/LrEiGjz0Rq+DOuYyh
+         po9dQSK8QvvUFAS+Z+uehRQYUgAf7TpHu6L3YRyMvAg4Cephq/1aM6z/903HtEnAo04D
+         DOzaNmvMpA8MlvEVeg3yzxaaz3Ml2aaxNMZwCpL2N95TeLkUngAa6B44TA4tou22bKec
+         SuAAfoo0KTdhegZGt9nRBbEG2acvyYUoSvU7mmNjRx9rteqvmPeJk9t8BUuh0X/aqpJu
+         r/RABB8C+/INJrzerur5cFEm8OXEHD9eoypBcbi3YzbE8pDxoiSSfGlqNwul0pR/Qgeh
+         3cJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=VMbqJfnbSzKyvIsIcTTC92h0GcplH9w3qkKOdBUIt7o=;
+        b=X7yHeEHKLfzJolEAL9TYBrueCMFX/dTQhibeDI5tlC1vB2ERBJFCONKdUcpUOsgKcq
+         7avKhQePzw/tRA4RS1h+FJZqG2Fj5XrtLrSFYuMvL8+JPAT+FwBBMe5CHcfg8UJOqjK1
+         3BhPFyxb+9pdp9HwtzQvQslYLQWkKw7RO/YxNM+YHGxIzE8lBxl42f1TkG+DN7GIuL1J
+         b+MALqdkoukBxE86z/K8OrqkiEnfrqAF050umNfjgwuIMaL1tezYRx+MxvZhBQP11sM/
+         JtK0FUeGyciZ3GnAwbLzF+jUazpOhQhyeF8fpfVcs07UAB9KdVYDJO9AFPkUjv0824v7
+         1mYQ==
+X-Gm-Message-State: ALoCoQlfNTLguMdyO80xQ5cbEWObiR/ofP2u9eS/Hd0+3QAh5umfVz7IoBdzfdETNAEEH2b4VBdZ
+X-Received: by 10.50.4.102 with SMTP id j6mr611154igj.37.1416338671502;
+        Tue, 18 Nov 2014 11:24:31 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:d130:77f5:c37c:28a8])
+        by mx.google.com with ESMTPSA id c17sm7805973ioc.9.2014.11.18.11.24.30
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Nov 2014 11:24:31 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.rc2.5.gf7b9fb2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Paul Smith <paul@mad-scientist.net> writes:
+When looking for suitable functions to print dates,
+I found this gem. Let's make it gender neutral as
+nowadays people get upset by this gender debate.
 
-> No need to resend only to correct the above, even though there may
-> be comments on the patch itself from me or others that may make you
-> want to reroll this patch, in which case I'd like to see these nits
-> gone.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ date.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'll fix in the next iteration.
-
->> -# don't recreate a workdir over an existing repository
->> -if test -e "$new_workdir"
->> +# make sure the links use full paths
->> +git_dir=$(cd "$git_dir"; pwd)
->
-> With this change, the comment gets much harder to understand.  "What
-> links?"  would be the reaction from those who are reading the patch.
-
-I just moved this line; I don't think it had much more context
-beforehand, but I'll definitely rewrite the comment to be more clear.
-
->> +	if test $(ls -a1 "$new_workdir/." | wc -l) -ne 2
-
-> I wonder if this check is portable for all platforms we care about,
-> but that is OK, as it should be so for the ones I think of and care
-> about ;-)
-
-Do you mean "." and ".." representing an empty directory?  That will
-work on any system where /bin/sh works, for sure.
-
-Or do you mean using "ls" and "wc"?  I can easily avoid this.
-
-Recall that new-workdir itself only works on systems that support
-symlinks; this limits its portability.  For example it doesn't work on
-Windows (unfortunately).  I spent the better part of a day a few months
-ago playing with the various "symlink-ish" capabilities of Windows NTFS
-and couldn't find any reliable way to make this work (although I have
-virtually no Windows fu).
-
-> The script chdirs around; did you turn $new_workdir into an absolute
-> path already, or given a relative $new_workdir this is attempting to
-> remove a hierarchy that is different from what you created?
-
-Good point, I'll fix this up
-
->> +}
->> +siglist="0 1 2 15"
->> +trap cleanup $siglist
->>  
->> -# create the workdir
->> -mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
->> +# create embedded directories
->> +for x in logs
->> +do
->> +	mkdir -p "$new_workdir/.git/$x" || failed
->> +done
->>  
->>  # create the links to the original repo.  explicitly exclude index, HEAD and
->>  # logs/HEAD from the list since they are purely related to the current
->> working
->>  # directory, and should not be shared.
->>  for x in config refs logs/refs objects info hooks packed-refs remotes
->> rr-cache svn
->>  do
->> -	case $x in
->> -	*/*)
->> -		mkdir -p "$(dirname "$new_workdir/.git/$x")"
->> -		;;
->> -	esac
->
-> What's this removal about?  If $new_workdir/.git/logs does not
-> exist, would "ln -s $there/logs/refs $new_workdir/.git/logs/refs"
-> succeed without first creating $new_workdir/.git/logs directory?
-
-I split the creation of the directories from the symlinks: see the new
-loop above.  This allows us to avoid the icky dirname stuff.
-
-New iteration will follow shortly.
-
-Cheers!
+diff --git a/date.c b/date.c
+index 59dfe57..19fb439 100644
+--- a/date.c
++++ b/date.c
+@@ -732,7 +732,7 @@ int parse_expiry_date(const char *date, unsigned long *timestamp)
+ 		/*
+ 		 * We take over "now" here, which usually translates
+ 		 * to the current timestamp.  This is because the user
+-		 * really means to expire everything she has done in
++		 * really means to expire everything they have done in
+ 		 * the past, and by definition reflogs are the record
+ 		 * of the past, and there is nothing from the future
+ 		 * to be kept.
+-- 
+2.2.0.rc2.5.gf7b9fb2
