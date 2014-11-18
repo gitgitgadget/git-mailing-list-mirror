@@ -1,11 +1,8 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH v3 02/14] refs.c: make ref_transaction_delete a wrapper for ref_transaction_update
-Date: Mon, 17 Nov 2014 17:35:38 -0800
-Message-ID: <1416274550-2827-3-git-send-email-sbeller@google.com>
-References: <1416274550-2827-1-git-send-email-sbeller@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stefan Beller <sbeller@google.com>
+Subject: [PATCH v3 00/14] ref-transactions-reflog
+Date: Mon, 17 Nov 2014 17:35:36 -0800
+Message-ID: <1416274550-2827-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu
 X-From: git-owner@vger.kernel.org Tue Nov 18 02:36:07 2014
 Return-path: <git-owner@vger.kernel.org>
@@ -13,108 +10,118 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqXi9-0000BI-2R
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 02:36:05 +0100
+	id 1XqXi8-0000BI-Gg
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 02:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbaKRBf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 20:35:58 -0500
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37512 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753250AbaKRBf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 20:35:56 -0500
-Received: by mail-ig0-f179.google.com with SMTP id r2so2430260igi.12
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 17:35:56 -0800 (PST)
+	id S1753215AbaKRBfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 20:35:55 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:43890 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753156AbaKRBfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 20:35:54 -0500
+Received: by mail-ie0-f172.google.com with SMTP id ar1so8499930iec.3
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 17:35:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bE7sRN618wWSYS8dkoQ1hjn257ZmDvZbgGaw8bOT49A=;
-        b=LzJ74EL1noQSzL4l2M7raZFWNgo9KfboXkiwNRPtMxcS4xUCXAimb9uLSNX2nqHUJB
-         IUS9Z2EFMAPHwFlq5Ql1y82hytnA0Re1LAthBEy4XymitLwGP57jzyO4DQ5eowMzO/du
-         F3tXwP/xYMaqmpdbbg5Y1A5YrsM+Qc+zMrQnbWuLgIkNMSbQEJHAkEyAlLPTX1teau7n
-         Y07BvnMOhOT+EV+eQR81N5ZeGbQ6hoUJhoy+kvJUA07vpEc5XsyX1mTDkJGABNiiSuqS
-         2/s0rZ+YXpGSm7FlC6NRtHKpaY4GIKmrSAtaC9DWdxQ9K+5V8oto8I8lpfgQOTnInSPx
-         ruhA==
+        h=from:to:cc:subject:date:message-id;
+        bh=ueJgf0OrocoXNbPxUJLKLHW6j4ovW2DCHLu2Kb8RfNQ=;
+        b=dh5RLbD8bdjSx7NDaSlkF16v/fgb5Awj4Wl2eYQ6W5AiWk78LSHYn1oBtaxrny0zMq
+         NzTZZhfEk2FBd0/90jYCrZnEwKEqMIl9ueOhug61Zu067oidmLff3r2fGJ7YBoXH7p5y
+         +bqBC39T0CfLOegZrGHbBoTpRhKPiS3lKyDWsRJT03ruxh5ewk5cqaRupsPjzwz5ChYK
+         iZ7rmt1kH2jVTUpKQQr/EfwAVeOxPo5nc+RHNN2AP+bt2VE7cCHXoN/KbTN/UmmcOt4Y
+         Qq8rdxslFic2neRXO3blW1AZT82XBotgrCROgUZqNIYzgRT+yvmjWa5rhmPWMAqWvv0o
+         x29g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bE7sRN618wWSYS8dkoQ1hjn257ZmDvZbgGaw8bOT49A=;
-        b=PlwVLh6JvJ0i8xQsg4VOZ+VqMeVw45MaCkiAGiwYzJ+//hvZARTiS+dXqFwAH5EvHf
-         ByRn+6TixPGvb5mHbNj2RL2RtKsA5FnGXfrAjO+jiA9zZXq05A7r6ywpUVsbTKk1n5bC
-         dZGxMYeXEypUOShwlnc0O2E5+PeUwsnFT7CCYyEfrHQ6o/bz62c/otwsu/PhLKQzeObD
-         pV5j1Whf/QFDUam0PltIx77Y6zYY3tUKZ+9Yz9+izvAmnK3qBDBe0mH93alIRpvV3fzC
-         R+/CiZzsA4w+S4F/F++nn6idxovEgPJ+n9ecpe+LY3U4zcLnpCWBUtzyOidUX4OK+TV+
-         YVXg==
-X-Gm-Message-State: ALoCoQmLRgsKp0pP20ANYsk0a6zW0/2zoZFIiE5rm4qv/E4ZZFoWFZujwUXRqi2V37aiR+O24tW0
-X-Received: by 10.107.47.89 with SMTP id j86mr33309243ioo.32.1416274556215;
-        Mon, 17 Nov 2014 17:35:56 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ueJgf0OrocoXNbPxUJLKLHW6j4ovW2DCHLu2Kb8RfNQ=;
+        b=KVVlJM7Xf7d9lm/x1T4pdtd5pHTgPDx19xPGMAMoHYOl/lAuwkOl5i2oeHUc/Thszw
+         sKZoHLpYXxU7jEXsb/dZI8oqsZZRXzCmGoM2IB+MNOt0fyAfjpNpRBLIIs4jMvYnf+bA
+         991Qv+LbzwDkw6aywnYQvy8Ofq5TK5aO3a4tSLq/EqJShr6gaYmkk+uiud3bXV4peFNU
+         1cdFaTW4nh2JC9jQaI6B182fNaREqF6veGL8J0W72avrK284F7qTDB0/nkuuw98TUNtz
+         80lKD5K/oeEXfxcQRFndJg+NDN6RAK1qRrATiAQneNOsNd6DHnm9yxZ5LDGFGUu+pRmz
+         rUJg==
+X-Gm-Message-State: ALoCoQmmNYgXbS0+24hsg9NqWyxcbXSxqGi+MVEuDRBZVdj28KwZMhtdpCoF3ltyOfX8giQ5NLK7
+X-Received: by 10.107.152.135 with SMTP id a129mr34399426ioe.39.1416274553720;
+        Mon, 17 Nov 2014 17:35:53 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:c9d9:b6de:cff4:3fc7])
-        by mx.google.com with ESMTPSA id i11sm6854750igf.21.2014.11.17.17.35.55
+        by mx.google.com with ESMTPSA id a4sm6863787igx.10.2014.11.17.17.35.53
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Nov 2014 17:35:55 -0800 (PST)
+        Mon, 17 Nov 2014 17:35:53 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.rc2.5.gf7b9fb2
-In-Reply-To: <1416274550-2827-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+Hi,
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- refs.c | 22 ++--------------------
- refs.h |  2 +-
- 2 files changed, 3 insertions(+), 21 deletions(-)
+The following patch series updates the reflog handling to use transactions.
+This patch series has previously been sent to the list[1].
 
-diff --git a/refs.c b/refs.c
-index 005eb18..05cb299 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3633,26 +3633,8 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- 			   int flags, int have_old, const char *msg,
- 			   struct strbuf *err)
- {
--	struct ref_update *update;
--
--	assert(err);
--
--	if (transaction->state != REF_TRANSACTION_OPEN)
--		die("BUG: delete called for transaction that is not open");
--
--	if (have_old && !old_sha1)
--		die("BUG: have_old is true but old_sha1 is NULL");
--
--	update = add_update(transaction, refname);
--	update->flags = flags;
--	update->have_old = have_old;
--	if (have_old) {
--		assert(!is_null_sha1(old_sha1));
--		hashcpy(update->old_sha1, old_sha1);
--	}
--	if (msg)
--		update->msg = xstrdup(msg);
--	return 0;
-+	return ref_transaction_update(transaction, refname, null_sha1,
-+				      old_sha1, flags, have_old, msg, err);
- }
- 
- int update_ref(const char *action, const char *refname,
-diff --git a/refs.h b/refs.h
-index 2bc3556..7d675b7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -283,7 +283,7 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
- 
- /*
-  * Add a reference update to transaction.  new_sha1 is the value that
-- * the reference should have after the update, or zeros if it should
-+ * the reference should have after the update, or null_sha1 if it should
-  * be deleted.  If have_old is true, then old_sha1 holds the value
-  * that the reference should have had before the update, or zeros if
-  * it must not have existed beforehand.
+This series converts the reflog handling and builtin/reflog.c to use
+a transaction for both the ref as well as the reflog updates.
+As a side effect of this it simplifies the reflog marshalling code so that we
+only have one place where we marshall the entry.
+It also means that we can remove several functions from the public api
+towards the end of the series since we no longer need those functions.
+
+This series can also be found at github[2] or at googlesource[3].
+Feel free to review, where it suits you best.
+
+
+Version 3:
+ * Go over the commit messages and reword them slightly where appropriate.
+   (only cosmetics, like missing/double words, spelling, clarify)
+ * As Ronnie announced to change employers soon, he'll have only limited 
+   time to work on git in the near future. As this is a rather large patch
+   series, he is handing this work over to me. That's why I'm sending the
+   patches this time.
+
+Thanks,
+Stefan
+
+[1] http://www.spinics.net/lists/git/msg241186.html
+[2] https://github.com/stefanbeller/git/tree/ref-transactions-reflog
+[3] https://code-review.googlesource.com/#/q/topic:ref-transaction-reflog
+
+Ronnie Sahlberg (14):
+  refs.c: make ref_transaction_create a wrapper for
+    ref_transaction_update
+  refs.c: make ref_transaction_delete a wrapper for
+    ref_transaction_update
+  refs.c: rename the transaction functions
+  refs.c: add a function to append a reflog entry to a fd
+  refs.c: add a new update_type field to ref_update
+  refs.c: add a transaction function to append a reflog entry
+  refs.c: add a flag to allow reflog updates to truncate the log
+  refs.c: only write reflog update if msg is non-NULL
+  refs.c: allow multiple reflog updates during a single transaction
+  reflog.c: use a reflog transaction when writing during expire
+  refs.c: rename log_ref_setup to create_reflog
+  refs.c: Remove unlock_ref/close_ref/commit_ref from the refs api
+  refs.c: remove lock_any_ref_for_update
+  refs.c: allow deleting refs with a broken sha1
+
+ branch.c                    |  13 +-
+ builtin/branch.c            |   5 +-
+ builtin/checkout.c          |   8 +-
+ builtin/commit.c            |  10 +-
+ builtin/fetch.c             |  12 +-
+ builtin/receive-pack.c      |  13 +-
+ builtin/reflog.c            |  85 ++++------
+ builtin/replace.c           |  10 +-
+ builtin/tag.c               |  10 +-
+ builtin/update-ref.c        |  26 +--
+ cache.h                     |   7 +
+ fast-import.c               |  22 +--
+ refs.c                      | 403 +++++++++++++++++++++++++++++---------------
+ refs.h                      |  87 +++++-----
+ sequencer.c                 |  12 +-
+ t/t1402-check-ref-format.sh |   8 +
+ walker.c                    |  10 +-
+ 17 files changed, 440 insertions(+), 301 deletions(-)
+
 -- 
 2.2.0.rc2.5.gf7b9fb2
