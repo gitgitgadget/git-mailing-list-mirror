@@ -1,127 +1,180 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH v3 00/14] ref-transactions-reflog
-Date: Mon, 17 Nov 2014 17:35:36 -0800
-Message-ID: <1416274550-2827-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
+Subject: [PATCH v3 05/14] refs.c: add a new update_type field to ref_update
+Date: Mon, 17 Nov 2014 17:35:41 -0800
+Message-ID: <1416274550-2827-6-git-send-email-sbeller@google.com>
+References: <1416274550-2827-1-git-send-email-sbeller@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Nov 18 02:36:07 2014
+X-From: git-owner@vger.kernel.org Tue Nov 18 02:36:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqXi8-0000BI-Gg
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 02:36:04 +0100
+	id 1XqXiD-0000BI-DQ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Nov 2014 02:36:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215AbaKRBfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Nov 2014 20:35:55 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:43890 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753156AbaKRBfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Nov 2014 20:35:54 -0500
-Received: by mail-ie0-f172.google.com with SMTP id ar1so8499930iec.3
-        for <git@vger.kernel.org>; Mon, 17 Nov 2014 17:35:53 -0800 (PST)
+	id S1753390AbaKRBgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Nov 2014 20:36:05 -0500
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:64199 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753250AbaKRBgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Nov 2014 20:36:00 -0500
+Received: by mail-ig0-f171.google.com with SMTP id uq10so190753igb.16
+        for <git@vger.kernel.org>; Mon, 17 Nov 2014 17:36:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=ueJgf0OrocoXNbPxUJLKLHW6j4ovW2DCHLu2Kb8RfNQ=;
-        b=dh5RLbD8bdjSx7NDaSlkF16v/fgb5Awj4Wl2eYQ6W5AiWk78LSHYn1oBtaxrny0zMq
-         NzTZZhfEk2FBd0/90jYCrZnEwKEqMIl9ueOhug61Zu067oidmLff3r2fGJ7YBoXH7p5y
-         +bqBC39T0CfLOegZrGHbBoTpRhKPiS3lKyDWsRJT03ruxh5ewk5cqaRupsPjzwz5ChYK
-         iZ7rmt1kH2jVTUpKQQr/EfwAVeOxPo5nc+RHNN2AP+bt2VE7cCHXoN/KbTN/UmmcOt4Y
-         Qq8rdxslFic2neRXO3blW1AZT82XBotgrCROgUZqNIYzgRT+yvmjWa5rhmPWMAqWvv0o
-         x29g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=eVlixMkRkGVSbgXR5OiNU2rY8s2XODlKG5RIAon06CM=;
+        b=drVU1o3aV21Z9kF36Ar+/7u5ZCB5Y+EDDkK9Wgf8KTCzCGy6d/RMKumkX/7Z3C+3Mn
+         1sQadITGf+32ILtnRExY63Xwbtog6F3zAP+9QZOx0iooe8kas0N7djjBztStyM1iNdiK
+         3XMddp5CjLdZgCJO66rEDfBOeNSY5kkSYDrtmHvV2q5iVy140tpHg5gpR3eEbjeDvd08
+         IX/KbiAHg8eYtwtN6GEgoIhrE+O/yeX5p7FDBpCKQxVcvDErj7LkGKKKRjRlj1WXVEyG
+         uTebuQDt4iRkJ1vtMEUd3fTiXRMV9Li21rBF/JTcv1NiMcDpZrCtkhR5q77SQj5rYLVV
+         y2Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=ueJgf0OrocoXNbPxUJLKLHW6j4ovW2DCHLu2Kb8RfNQ=;
-        b=KVVlJM7Xf7d9lm/x1T4pdtd5pHTgPDx19xPGMAMoHYOl/lAuwkOl5i2oeHUc/Thszw
-         sKZoHLpYXxU7jEXsb/dZI8oqsZZRXzCmGoM2IB+MNOt0fyAfjpNpRBLIIs4jMvYnf+bA
-         991Qv+LbzwDkw6aywnYQvy8Ofq5TK5aO3a4tSLq/EqJShr6gaYmkk+uiud3bXV4peFNU
-         1cdFaTW4nh2JC9jQaI6B182fNaREqF6veGL8J0W72avrK284F7qTDB0/nkuuw98TUNtz
-         80lKD5K/oeEXfxcQRFndJg+NDN6RAK1qRrATiAQneNOsNd6DHnm9yxZ5LDGFGUu+pRmz
-         rUJg==
-X-Gm-Message-State: ALoCoQmmNYgXbS0+24hsg9NqWyxcbXSxqGi+MVEuDRBZVdj28KwZMhtdpCoF3ltyOfX8giQ5NLK7
-X-Received: by 10.107.152.135 with SMTP id a129mr34399426ioe.39.1416274553720;
-        Mon, 17 Nov 2014 17:35:53 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=eVlixMkRkGVSbgXR5OiNU2rY8s2XODlKG5RIAon06CM=;
+        b=eGX76t66u9AHSodD1aQoPP54+fcZ4unbPDfCNsRaTmJX/5cEiSCRf46iLq0oVcz8P1
+         wNKaZLo1bkxI6wOa7/Vgz3krjWYz/jeQ6cb3J++c17hv+wVUA4NEncB/0FazzvxyWNP8
+         ce25fPrcjXcl8gOjvmaNmjXXueOm6zabGP2JsR/ulw5crx3ccBcoD75JPAM75HVN4wxj
+         p3HB9QPi8CxVYYarinvxVRV5SiDm1C+RAAsQ5N5DRbOc97C/fA1TMPh+lwsEaMAN7jI1
+         ZWDITPzuu7yjyKCBbZpZqb/o2nMz15GxilERXEXZvjNKqtJCnUfAJ07+whd1V1NL4V9S
+         Hccw==
+X-Gm-Message-State: ALoCoQk00t5tjbgpV63axM04tyFwsDjwL0HwsWqY9h/s52+r3yvDGCSnpNi7jkDPe1l5CfuXGV1v
+X-Received: by 10.50.98.105 with SMTP id eh9mr30250875igb.31.1416274560201;
+        Mon, 17 Nov 2014 17:36:00 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:c9d9:b6de:cff4:3fc7])
-        by mx.google.com with ESMTPSA id a4sm6863787igx.10.2014.11.17.17.35.53
+        by mx.google.com with ESMTPSA id b77sm19780952ioe.35.2014.11.17.17.35.59
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Nov 2014 17:35:53 -0800 (PST)
+        Mon, 17 Nov 2014 17:35:59 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.rc2.5.gf7b9fb2
+In-Reply-To: <1416274550-2827-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-The following patch series updates the reflog handling to use transactions.
-This patch series has previously been sent to the list[1].
+Add a field that describes what type of update this refers to. For now
+the only type is UPDATE_SHA1 but we will soon add more types.
 
-This series converts the reflog handling and builtin/reflog.c to use
-a transaction for both the ref as well as the reflog updates.
-As a side effect of this it simplifies the reflog marshalling code so that we
-only have one place where we marshall the entry.
-It also means that we can remove several functions from the public api
-towards the end of the series since we no longer need those functions.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ refs.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-This series can also be found at github[2] or at googlesource[3].
-Feel free to review, where it suits you best.
-
-
-Version 3:
- * Go over the commit messages and reword them slightly where appropriate.
-   (only cosmetics, like missing/double words, spelling, clarify)
- * As Ronnie announced to change employers soon, he'll have only limited 
-   time to work on git in the near future. As this is a rather large patch
-   series, he is handing this work over to me. That's why I'm sending the
-   patches this time.
-
-Thanks,
-Stefan
-
-[1] http://www.spinics.net/lists/git/msg241186.html
-[2] https://github.com/stefanbeller/git/tree/ref-transactions-reflog
-[3] https://code-review.googlesource.com/#/q/topic:ref-transaction-reflog
-
-Ronnie Sahlberg (14):
-  refs.c: make ref_transaction_create a wrapper for
-    ref_transaction_update
-  refs.c: make ref_transaction_delete a wrapper for
-    ref_transaction_update
-  refs.c: rename the transaction functions
-  refs.c: add a function to append a reflog entry to a fd
-  refs.c: add a new update_type field to ref_update
-  refs.c: add a transaction function to append a reflog entry
-  refs.c: add a flag to allow reflog updates to truncate the log
-  refs.c: only write reflog update if msg is non-NULL
-  refs.c: allow multiple reflog updates during a single transaction
-  reflog.c: use a reflog transaction when writing during expire
-  refs.c: rename log_ref_setup to create_reflog
-  refs.c: Remove unlock_ref/close_ref/commit_ref from the refs api
-  refs.c: remove lock_any_ref_for_update
-  refs.c: allow deleting refs with a broken sha1
-
- branch.c                    |  13 +-
- builtin/branch.c            |   5 +-
- builtin/checkout.c          |   8 +-
- builtin/commit.c            |  10 +-
- builtin/fetch.c             |  12 +-
- builtin/receive-pack.c      |  13 +-
- builtin/reflog.c            |  85 ++++------
- builtin/replace.c           |  10 +-
- builtin/tag.c               |  10 +-
- builtin/update-ref.c        |  26 +--
- cache.h                     |   7 +
- fast-import.c               |  22 +--
- refs.c                      | 403 +++++++++++++++++++++++++++++---------------
- refs.h                      |  87 +++++-----
- sequencer.c                 |  12 +-
- t/t1402-check-ref-format.sh |   8 +
- walker.c                    |  10 +-
- 17 files changed, 440 insertions(+), 301 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index f0f0d23..84e086f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3516,6 +3516,10 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ 	return retval;
+ }
+ 
++enum transaction_update_type {
++	UPDATE_SHA1 = 0
++};
++
+ /**
+  * Information needed for a single ref update.  Set new_sha1 to the
+  * new value or to zero to delete the ref.  To check the old value
+@@ -3523,6 +3527,7 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+  * value or to zero to ensure the ref does not exist before update.
+  */
+ struct ref_update {
++	enum transaction_update_type update_type;
+ 	unsigned char new_sha1[20];
+ 	unsigned char old_sha1[20];
+ 	int flags; /* REF_NODEREF? */
+@@ -3583,12 +3588,14 @@ void transaction_free(struct transaction *transaction)
+ }
+ 
+ static struct ref_update *add_update(struct transaction *transaction,
+-				     const char *refname)
++				     const char *refname,
++				     enum transaction_update_type update_type)
+ {
+ 	size_t len = strlen(refname);
+ 	struct ref_update *update = xcalloc(1, sizeof(*update) + len + 1);
+ 
+ 	strcpy((char *)update->refname, refname);
++	update->update_type = update_type;
+ 	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
+ 	transaction->updates[transaction->nr++] = update;
+ 	return update;
+@@ -3618,7 +3625,7 @@ int transaction_update_ref(struct transaction *transaction,
+ 		return -1;
+ 	}
+ 
+-	update = add_update(transaction, refname);
++	update = add_update(transaction, refname, UPDATE_SHA1);
+ 	hashcpy(update->new_sha1, new_sha1);
+ 	update->flags = flags;
+ 	update->have_old = have_old;
+@@ -3696,13 +3703,17 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ 
+ 	assert(err);
+ 
+-	for (i = 1; i < n; i++)
++	for (i = 1; i < n; i++) {
++		if (updates[i - 1]->update_type != UPDATE_SHA1 ||
++		    updates[i]->update_type != UPDATE_SHA1)
++			continue;
+ 		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
+ 			strbuf_addf(err,
+ 				    "Multiple updates for ref '%s' not allowed.",
+ 				    updates[i]->refname);
+ 			return 1;
+ 		}
++	}
+ 	return 0;
+ }
+ 
+@@ -3734,13 +3745,17 @@ int transaction_commit(struct transaction *transaction,
+ 		goto cleanup;
+ 	}
+ 
+-	/* Acquire all locks while verifying old values */
++	/* Acquire all ref locks while verifying old values */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 		int flags = update->flags;
+ 
++		if (update->update_type != UPDATE_SHA1)
++			continue;
++
+ 		if (is_null_sha1(update->new_sha1))
+ 			flags |= REF_DELETING;
++
+ 		update->lock = lock_ref_sha1_basic(update->refname,
+ 						   (update->have_old ?
+ 						    update->old_sha1 :
+@@ -3762,6 +3777,8 @@ int transaction_commit(struct transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
++		if (update->update_type != UPDATE_SHA1)
++			continue;
+ 		if (!is_null_sha1(update->new_sha1)) {
+ 			if (write_ref_sha1(update->lock, update->new_sha1,
+ 					   update->msg)) {
+@@ -3779,6 +3796,8 @@ int transaction_commit(struct transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
++		if (update->update_type != UPDATE_SHA1)
++			continue;
+ 		if (update->lock) {
+ 			if (delete_ref_loose(update->lock, update->type, err)) {
+ 				ret = TRANSACTION_GENERIC_ERROR;
 -- 
 2.2.0.rc2.5.gf7b9fb2
