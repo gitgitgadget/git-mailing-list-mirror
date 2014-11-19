@@ -1,320 +1,158 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH v4] refs.c: use a stringlist for repack_without_refs
-Date: Wed, 19 Nov 2014 13:59:59 -0800
-Message-ID: <1416434399-2303-1-git-send-email-sbeller@google.com>
-References: <1416434088-1472-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, sahlberg@google.com, git@vger.kernel.org,
-	jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Wed Nov 19 23:00:20 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] lock_ref_sha1_basic: simplify error code path
+Date: Wed, 19 Nov 2014 17:28:52 -0500
+Message-ID: <20141119222852.GA12236@peff.net>
+References: <20141119013532.GA861@peff.net>
+ <20141119013739.GC2135@peff.net>
+ <20141119020009.GR6527@google.com>
+ <20141119020451.GA2734@peff.net>
+ <20141119020713.GT6527@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>, sahlberg@google.com,
+	gitster@pobox.com, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 23:29:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrDIN-00085N-H8
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 23:00:16 +0100
+	id 1XrDkC-0002Y5-2M
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 23:29:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933448AbaKSWAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 17:00:07 -0500
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:33419 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933226AbaKSWAC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 17:00:02 -0500
-Received: by mail-ig0-f180.google.com with SMTP id h15so1758471igd.13
-        for <git@vger.kernel.org>; Wed, 19 Nov 2014 14:00:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z6TcPRY6Rj0kO7NebqDh14FmWoIWA/RgfS1R9USYhw4=;
-        b=Fg0K/HVfJmbn+5w9MPoEgDd6ZAT/ML+/h/6RoQm/hRoj35Lm5rKuPA6OmzUi0MYXvn
-         NqcYowj5CU+ZnSYQPrEjv2trqjSoR2RCy4WK8X7lmhqNR1e9JShlh+ozQKjyB7OFpdz1
-         OG50UvbCpR/16WPpUZ473nK0b6DAyGQU49vYhBncl+SJMFBFO3UK57BJ5ThgSBAWgyQE
-         BwFMMa8i3/Jro2g38sRXX8lzw27KBhux0EpZ271F42PyIw4zultKQdUZjXwNcYqi5I41
-         FwojVy5RgNTIpsHlOkG/BIeR9gNkm/mxWotr9z4rFpupCZ37xdR0a23tUG3RYsGlipCw
-         53zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Z6TcPRY6Rj0kO7NebqDh14FmWoIWA/RgfS1R9USYhw4=;
-        b=LRsFCOsdaGBC6kZ6rZ40tv/W6IhnBtTjBDsxv4QV394n6CsAY2ltbli274mcvA93gQ
-         mGrFsKVvD/qwVdkvyjMQ9ocC0YiKSRncqONiv0b20cjMANzSAx+Sj+ug+NPITvZ28Gj9
-         pwcl4n3sZq8RCWR19wz7Zv5pzsTAdwf0oYr2yosFZ63vbb6fe/GsHa2OmdgtfRVxPGif
-         3/qyK+wLXvxjVP2RbjwMQjt4uWaFaG+qxkPzUN5HUShrnZWCLRtkyPc7OMgYTzIE6w4q
-         2b2eJdOm67JcTDpakA8HMq6jLj6htTszs6YFZJbX34HLQAs2wOBQQjSmA+X60KWfvhT4
-         WcVg==
-X-Gm-Message-State: ALoCoQmeAyPV/1EfyHAlggmEPxKnhnZn7QvzSIzFcknzzSdLuJv4H0TbK+WZ3uOOqtHxNz5B/zb8
-X-Received: by 10.50.164.193 with SMTP id ys1mr5759698igb.38.1416434402075;
-        Wed, 19 Nov 2014 14:00:02 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:7876:7c52:1268:8374])
-        by mx.google.com with ESMTPSA id 36sm268641iok.3.2014.11.19.14.00.01
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 19 Nov 2014 14:00:01 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc2.13.g0786cdb
-In-Reply-To: <1416434088-1472-1-git-send-email-sbeller@google.com>
+	id S932511AbaKSW24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 17:28:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42552 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932493AbaKSW2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 17:28:54 -0500
+Received: (qmail 1743 invoked by uid 102); 19 Nov 2014 22:28:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 16:28:54 -0600
+Received: (qmail 8496 invoked by uid 107); 19 Nov 2014 22:29:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 17:29:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Nov 2014 17:28:52 -0500
+Content-Disposition: inline
+In-Reply-To: <20141119020713.GT6527@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+On Tue, Nov 18, 2014 at 06:07:13PM -0800, Jonathan Nieder wrote:
 
-This patch doesn't intend any functional changes. It is just
-a refactoring, which replaces a char** array by a stringlist
-in the function repack_without_refs.
-This is easier to read and maintain as it delivers the same
-functionality with less lines of code and less pointers.
+> Jeff King wrote:
+> 
+> > Hmph. Should we just abandon my series in favor of taking Ronnie's
+> > original patch, then? We can apply the "save/restore errno in error()"
+> > patch independently if we like.
+> 
+> I liked patches 1 and 2 and the explanation from patch 4.  Perhaps
+> patch 3 should be replaced with a patch renaming unlock_ref to
+> free_ref_lock or something.
 
-[sb: ported this patch from a larger patch series to the master branch,
-added documentary comments in refs.h]
+I took a look at this, and it ends up not being very useful.
+
+The "return NULL" from the final patch has to become a "goto
+error_return", so that it can call unlock_ref(). But that means it
+cannot save and restore errno itself, because unlock_ref may clobber
+errno[1].
+
+So we still have to keep the last_errno handling in error_return.
+Meaning that we need to drop patch 2 (even though the other cases don't
+need errno saved/restore, since the goto does it unconditionally, we
+still need to set last_errno). And therefore patch 1 is not helping
+anyone (we could still apply it, but there's no immediate benefit).
+
+I also looked at renaming unlock_ref, but it is called from other places
+where they _do_ care about unlocking. So renaming is out. We could build
+a free_ref_lock that unlock_ref builds on, but that brings up another
+confusion: can we or can we not free the "struct lockfile" pointer it
+contains (and which should free_ref_lock do)? Whether it is safe to do
+so depends on whether we have actually fed it to hold_lock_file_for_update
+or not (even if it fails, it takes ownership of the lock). So we
+actually leak it in some cases, but the only case we could fix is when
+safe_create_leading_directories the _first_ time (before we have ever
+tried to lock and failed, at which point we loop). Yeesh.
+
+So I really think we are better off leaving it as-is, and just applying
+some form of Ronnie's patch (which does the right thing with errno). The
+other cleanups end up making things worse, and the unlock_ref thing was
+just my misunderstanding.
+
+So here is that patch, with my explanation. Thanks for your patience in
+my running around in circles. :)
+
+-- >8 --
+Subject: lock_ref_sha1_basic: do not die on locking errors
+
+lock_ref_sha1_basic is inconsistent about when it calls
+die() and when it returns NULL to signal an error. This is
+annoying to any callers that want to recover from a locking
+error.
+
+This seems to be mostly historical accident. It was added in
+4bd18c4 (Improve abstraction of ref lock/write.,
+2006-05-17), which returned an error in all cases except
+calling safe_create_leading_directories, in which case it
+died.  Later, 40aaae8 (Better error message when we are
+unable to lock the index file, 2006-08-12) asked
+hold_lock_file_for_update to die for us, leaving the
+resolve_ref code-path the only one which returned NULL.
+
+We tried to correct that in 5cc3cef (lock_ref_sha1(): do not
+sometimes error() and sometimes die()., 2006-09-30),
+by converting all of the die() calls into returns. But we
+missed the "die" flag passed to the lock code, leaving us
+inconsistent. This state persisted until e5c223e
+(lock_ref_sha1_basic(): if locking fails with ENOENT, retry,
+2014-01-18). Because of its retry scheme, it does not ask
+the lock code to die, but instead manually dies with
+unable_to_lock_die().
+
+We can make this consistent with the other return paths by
+converting this to use unable_to_lock_message(), and
+returning NULL. This is safe to do because all callers
+already needed to check the return value of the function,
+since it could fail (and return NULL) for other reasons.
+
+[jk: Added excessive history explanation]
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+ refs.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-Changes to version 1:
- * removed the double blank line
- * rename delete_refs_list to delete_refs
- * add back comments dropped by accident
- * use STRING_LIST_INIT_NODUP instead of the _DUP version in ref_transaction_commit
- * add documentary comments on the repack_without_refs function
- * user string_list_append instead of string_list_insert as it follows the previous
-   behavior more closely.
- * put back the early exit of the loop in repack_without_refs
-   
-Changes to version 2:
- * fixed commit message (comments after the three dashes)
- * fixed the curiosity Junio pointed out as it was just wrong code.
-   Now it actually builds a list of all states.stale.items[i].util items.
-   
-Changes in version 3:
-
- * reword commit message
- * sort delete_refs before passing it to warn_dangling_symrefs
- * change the comments (get back the one jrn complained about) 
-   in repack_without_refs
- * use the suggestion of jonathan for documenting repack_without_refs in the
-   header. Add a note about the arguments.
-
-Changes in version 4:
- * I lied, when saying I had all the nits from Jonathan. 
-   I messed up the documentation in the header.
-   This includes the documentary comment in the header.
-   
----
- builtin/remote.c | 32 ++++++++++++--------------------
- refs.c           | 38 ++++++++++++++++++++------------------
- refs.h           | 11 +++++++++--
- 3 files changed, 41 insertions(+), 40 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 7f28f92..b37ed3d 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -750,16 +750,11 @@ static int mv(int argc, const char **argv)
- static int remove_branches(struct string_list *branches)
- {
- 	struct strbuf err = STRBUF_INIT;
--	const char **branch_names;
- 	int i, result = 0;
- 
--	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
--	for (i = 0; i < branches->nr; i++)
--		branch_names[i] = branches->items[i].string;
--	if (repack_without_refs(branch_names, branches->nr, &err))
-+	if (repack_without_refs(branches, &err))
- 		result |= error("%s", err.buf);
- 	strbuf_release(&err);
--	free(branch_names);
- 
- 	for (i = 0; i < branches->nr; i++) {
- 		struct string_list_item *item = branches->items + i;
-@@ -1316,8 +1311,8 @@ static int prune_remote(const char *remote, int dry_run)
- {
- 	int result = 0, i;
- 	struct ref_states states;
--	struct string_list delete_refs_list = STRING_LIST_INIT_NODUP;
--	const char **delete_refs;
-+	struct string_list delete_refs = STRING_LIST_INIT_NODUP;
-+	struct string_list_item *ref;
- 	const char *dangling_msg = dry_run
- 		? _(" %s will become dangling!")
- 		: _(" %s has become dangling!");
-@@ -1325,6 +1320,9 @@ static int prune_remote(const char *remote, int dry_run)
- 	memset(&states, 0, sizeof(states));
- 	get_remote_ref_states(remote, &states, GET_REF_STATES);
- 
-+	for (i = 0; i < states.stale.nr; i++)
-+		string_list_append(&delete_refs, states.stale.items[i].util);
-+
- 	if (states.stale.nr) {
- 		printf_ln(_("Pruning %s"), remote);
- 		printf_ln(_("URL: %s"),
-@@ -1332,23 +1330,16 @@ static int prune_remote(const char *remote, int dry_run)
- 		       ? states.remote->url[0]
- 		       : _("(no URL)"));
- 
--		delete_refs = xmalloc(states.stale.nr * sizeof(*delete_refs));
--		for (i = 0; i < states.stale.nr; i++)
--			delete_refs[i] = states.stale.items[i].util;
- 		if (!dry_run) {
- 			struct strbuf err = STRBUF_INIT;
--			if (repack_without_refs(delete_refs, states.stale.nr,
--						&err))
-+			if (repack_without_refs(&delete_refs, &err))
- 				result |= error("%s", err.buf);
- 			strbuf_release(&err);
- 		}
--		free(delete_refs);
- 	}
- 
--	for (i = 0; i < states.stale.nr; i++) {
--		const char *refname = states.stale.items[i].util;
--
--		string_list_insert(&delete_refs_list, refname);
-+	for_each_string_list_item(ref, &delete_refs) {
-+		const char *refname = ref->string;
- 
- 		if (!dry_run)
- 			result |= delete_ref(refname, NULL, 0);
-@@ -1361,8 +1352,9 @@ static int prune_remote(const char *remote, int dry_run)
- 			       abbrev_ref(refname, "refs/remotes/"));
- 	}
- 
--	warn_dangling_symrefs(stdout, dangling_msg, &delete_refs_list);
--	string_list_clear(&delete_refs_list, 0);
-+	sort_string_list(&delete_refs);
-+	warn_dangling_symrefs(stdout, dangling_msg, &delete_refs);
-+	string_list_clear(&delete_refs, 0);
- 
- 	free_remote_ref_states(&states);
- 	return result;
 diff --git a/refs.c b/refs.c
-index 5ff457e..ebcd90f 100644
+index 5ff457e..0347328 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2639,23 +2639,26 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
- 	return 0;
- }
+@@ -2318,6 +2318,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
  
--int repack_without_refs(const char **refnames, int n, struct strbuf *err)
-+int repack_without_refs(struct string_list *without, struct strbuf *err)
- {
- 	struct ref_dir *packed;
- 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
- 	struct string_list_item *ref_to_delete;
--	int i, ret, removed = 0;
-+	int ret, needs_repacking = 0, removed = 0;
- 
- 	assert(err);
- 
- 	/* Look for a packed ref */
--	for (i = 0; i < n; i++)
--		if (get_packed_ref(refnames[i]))
-+	for_each_string_list_item(ref_to_delete, without) {
-+		if (get_packed_ref(ref_to_delete->string)) {
-+			needs_repacking = 1;
- 			break;
+ 	lock->lock_fd = hold_lock_file_for_update(lock->lk, ref_file, lflags);
+ 	if (lock->lock_fd < 0) {
++		last_errno = errno;
+ 		if (errno == ENOENT && --attempts_remaining > 0)
+ 			/*
+ 			 * Maybe somebody just deleted one of the
+@@ -2325,8 +2326,13 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 			 * again:
+ 			 */
+ 			goto retry;
+-		else
+-			unable_to_lock_die(ref_file, errno);
++		else {
++			struct strbuf err = STRBUF_INIT;
++			unable_to_lock_message(ref_file, errno, &err);
++			error("%s", err.buf);
++			strbuf_reset(&err);
++			goto error_return;
 +		}
-+	}
- 
- 	/* Avoid locking if we have nothing to do */
--	if (i == n)
--		return 0; /* no refname exists in packed refs */
-+	if (!needs_repacking)
-+		return 0;
- 
- 	if (lock_packed_refs(0)) {
- 		unable_to_lock_message(git_path("packed-refs"), errno, err);
-@@ -2664,8 +2667,8 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
- 	packed = get_packed_refs(&ref_cache);
- 
- 	/* Remove refnames from the cache */
--	for (i = 0; i < n; i++)
--		if (remove_entry(packed, refnames[i]) != -1)
-+	for_each_string_list_item(ref_to_delete, without)
-+		if (remove_entry(packed, ref_to_delete->string) != -1)
- 			removed = 1;
- 	if (!removed) {
- 		/*
-@@ -3738,10 +3741,11 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
--	int ret = 0, delnum = 0, i;
--	const char **delnames;
-+	int ret = 0, i;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
-+	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
-+	struct string_list_item *ref_to_delete;
- 
- 	assert(err);
- 
-@@ -3753,9 +3757,6 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		return 0;
  	}
- 
--	/* Allocate work space */
--	delnames = xmalloc(sizeof(*delnames) * n);
--
- 	/* Copy, sort, and reject duplicate refs */
- 	qsort(updates, n, sizeof(*updates), ref_update_compare);
- 	if (ref_update_reject_duplicates(updates, n, err)) {
-@@ -3815,16 +3816,17 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 			}
- 
- 			if (!(update->flags & REF_ISPRUNING))
--				delnames[delnum++] = update->lock->ref_name;
-+				string_list_append(&refs_to_delete,
-+						   update->lock->ref_name);
- 		}
- 	}
- 
--	if (repack_without_refs(delnames, delnum, err)) {
-+	if (repack_without_refs(&refs_to_delete, err)) {
- 		ret = TRANSACTION_GENERIC_ERROR;
- 		goto cleanup;
- 	}
--	for (i = 0; i < delnum; i++)
--		unlink_or_warn(git_path("logs/%s", delnames[i]));
-+	for_each_string_list_item(ref_to_delete, &refs_to_delete)
-+		unlink_or_warn(git_path("logs/%s", ref_to_delete->string));
- 	clear_loose_ref_cache(&ref_cache);
- 
- cleanup:
-@@ -3833,7 +3835,7 @@ cleanup:
- 	for (i = 0; i < n; i++)
- 		if (updates[i]->lock)
- 			unlock_ref(updates[i]->lock);
--	free(delnames);
-+	string_list_clear(&refs_to_delete, 0);
- 	return ret;
- }
- 
-diff --git a/refs.h b/refs.h
-index 2bc3556..5a0cd21 100644
---- a/refs.h
-+++ b/refs.h
-@@ -163,8 +163,15 @@ extern void rollback_packed_refs(void);
-  */
- int pack_refs(unsigned int flags);
- 
--extern int repack_without_refs(const char **refnames, int n,
--			       struct strbuf *err);
-+/*
-+ * Remove the refs listed in 'without' from the packed-refs file.
-+ * On error, packed-refs will be unchanged, the return value is
-+ * nonzero, and a message about the error is written to the 'err'
-+ * strbuf.
-+ *
-+ * The refs in 'without' may have any order, the err buffer must not be ommited.
-+ */
-+extern int repack_without_refs(struct string_list *without, struct strbuf *err);
- 
- extern int ref_exists(const char *);
+ 	return old_sha1 ? verify_lock(lock, old_sha1, mustexist) : lock;
  
 -- 
-2.2.0.rc2.13.g0786cdb
+2.1.2.596.g7379948
