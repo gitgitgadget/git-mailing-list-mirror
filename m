@@ -1,91 +1,60 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH] Improve the filemode trustability check
-Date: Wed, 19 Nov 2014 16:10:48 +0100
-Message-ID: <546CB2F8.7040501@web.de>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: Re: [RFC] On watchman support
+Date: Wed, 19 Nov 2014 16:26:19 +0100
+Message-ID: <CAHVLzcnb6_rYPqKNFvnqrnwuToCeRp8NPY31Y-cbOEyY=wYvvg@mail.gmail.com>
+References: <20141111124901.GA6011@lanh> <1416270336.13653.23.camel@leckie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 19 16:10:56 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 16:26:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xr6uF-0002VZ-IF
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 16:10:55 +0100
+	id 1Xr79b-0000KK-00
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 16:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754473AbaKSPKv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2014 10:10:51 -0500
-Received: from mout.web.de ([212.227.17.11]:58636 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752512AbaKSPKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 10:10:50 -0500
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0Ldn2d-1YI9z12aCx-00ixuQ; Wed, 19 Nov 2014 16:10:48
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-Provags-ID: V03:K0:YjSj02LvWWp1mWfYaIuCGvTNRA3jg080CXfQjaHWrf2q+TMX0XD
- s1H4VqPTVil88nmoUsiLdFI5ujZ8AeEZ2m35rpnekOviY8f9ZBsZew4vaNoo5XbGW340j9i
- M4MAOp3qRh8PAvNfCgorD5TauU79WBtHu7b7xLRD0ZdpzqBxC9vPQSqxdSCdbd+gjcqRa7G
- j3B4w9/Kb6lHIPBVGXOvQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753718AbaKSP0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 10:26:43 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:42238 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750759AbaKSP0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 10:26:42 -0500
+Received: by mail-la0-f46.google.com with SMTP id gd6so705372lab.33
+        for <git@vger.kernel.org>; Wed, 19 Nov 2014 07:26:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=CgnZQKOFJXnsONUkBLu70cKlPQgduG2EwDtkS1As89Y=;
+        b=CTEtyyfhU6k93yDBlMEu4NQq+RYurAehOBOP8fty6FUnzYaMFvQz/p/jeWax3x6Vho
+         9vFTciVfgtJzaeeAIOVn1hUArUPyja7R6FH4Ys6+g7VBL3sfK0RSbW48wcWbQyAm5bkR
+         fXX5uwA3PMrz32pyXjjuOXp6hbOjrn+V7eiRAiizyaA+8JrbXtRzvHozie+IcacICbcU
+         4pRlvlDOmSzheIpiLD8R/WNB/CgJ/t2FcHLPKubSdDJozPHPh0wBtA9mv/D16jsFf7PZ
+         8/PaZG8DWIDJeZ0SDY6OdqH7KnEgykSPg7vgxBaNnmY8HeM+yNYr8w9CSJwY69htaciX
+         /RxQ==
+X-Received: by 10.152.88.8 with SMTP id bc8mr6009081lab.64.1416410800659; Wed,
+ 19 Nov 2014 07:26:40 -0800 (PST)
+Received: by 10.25.132.215 with HTTP; Wed, 19 Nov 2014 07:26:19 -0800 (PST)
+In-Reply-To: <1416270336.13653.23.camel@leckie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some file systems do not support the executable bit:
-a) The user executable bit is always 0, e.g. VFAT mounted with -onoexec
-b) The user executable bit is always 1, e.g. cifs mounted with -ofile_m=
-ode=3D0755
-c) There are system where user executable bit is 1 even if it should be=
- 0
-   like b), but the file mode can be maintained locally. chmod -x chang=
-es the
-   file mode from 0766 to 0666, until the file system is unmounted and
-   remounted and the file mode is 0766 again.
-   This been observed when a Windows machine with NTFS exports a share =
-to
-   Mac OS X via smb or afp.
+On Tue, Nov 18, 2014 at 1:25 AM, David Turner <dturner@twopensource.com> wrote:
+>
+> My patches are not the world's most beautiful, but they do work.
 
-Case a) and b) are handled by the current code.
-Case c) qualifies as "non trustable executable bit" and core.filemode
-should be false, but this is not done.
+Out of curiosity: do you run the patches at twitter?
 
-Solution:
-Detect when ".git/config" has the user executable bit set after
-creat(".git/config", 0666) and set core.filemode to false.
+Thanks.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
+-- Paolo
 
-This should go on top of "mh/config-flip-xbit-back-after-checking"
 
-Michael, thanks for the test case.
-And no, I havent seen any systems with behaving like d)
-
- builtin/init-db.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index aab44d2..9b50dde 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -252,10 +252,10 @@ static int create_default_files(const char *templ=
-ate_path)
- 	filemode =3D TEST_FILEMODE;
- 	if (TEST_FILEMODE && !lstat(path, &st1)) {
- 		struct stat st2;
--		filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
-+		filemode =3D (!chmod(path, st1.st_mode | S_IXUSR) &&
- 				!lstat(path, &st2) &&
- 				st1.st_mode !=3D st2.st_mode &&
--				!chmod(path, st1.st_mode));
-+				!chmod(path, st1.st_mode & (~S_IXUSR)));
- 	}
- 	git_config_set("core.filemode", filemode ? "true" : "false");
-=20
---=20
-1.9.1.dirty
+-- 
+Paolo
