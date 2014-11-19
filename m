@@ -1,121 +1,112 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/4] error: save and restore errno
-Date: Tue, 18 Nov 2014 17:41:17 -0800
-Message-ID: <CAGZ79kbNatX51P3kocndyR+UVeACQR_u3OhkZiJmZrq_UBoJxg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 4/4] lock_ref_sha1_basic: do not die on locking errors
+Date: Tue, 18 Nov 2014 20:41:12 -0500
+Message-ID: <20141119014112.GA2305@peff.net>
 References: <20141119013532.GA861@peff.net>
-	<20141119013710.GA2135@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=utf-8
+Cc: sahlberg@google.com, jrnieder@gmail.com, gitster@pobox.com,
+	git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
 X-From: git-owner@vger.kernel.org Wed Nov 19 02:41:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XquGp-0002Wj-A1
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 02:41:23 +0100
+	id 1XquGk-0002Vf-Ck
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 02:41:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932788AbaKSBlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 20:41:19 -0500
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:39339 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932547AbaKSBlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 20:41:18 -0500
-Received: by mail-ob0-f173.google.com with SMTP id uy5so5986731obc.4
-        for <git@vger.kernel.org>; Tue, 18 Nov 2014 17:41:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=buIM6w/QpoDUCpqNGmlTTUy7kanNaBZs4jQRZK9mfz4=;
-        b=Ry04ifTagXaUP9GcqZNhMMh4n1R9KyG+gN4yz5bxHsufGq/3nNSfPGKDySohR/TeUv
-         jEV4KeGgXHiZC/9vuWD/OpmlvFW77z/7wi9SwwEAmqQM7jIy+lgOgxkGWsG7MKu2dm3L
-         Kn7pJuWl+EMu++V54NS1uE4PvcJVv+nIoaYYaAibIjvDI73R07UhVm8tIBkBzvHCPyVz
-         0bczAoGPMVGdab4+dgxV2m8deopUihLIsyP/grgaD2CEaHkUS5TSgREdEQ3VVOa0eBgJ
-         9awQkSbrG5qJT/pllsZBsoHVdt+FVuI+3xh+FNqYV2rZVDkgJNWDGnoZZfna6RpdxIVG
-         QG3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=buIM6w/QpoDUCpqNGmlTTUy7kanNaBZs4jQRZK9mfz4=;
-        b=Mva+34m0HZXJVsbVmlhoWwtXzhYIbugogSTPivE104jiZsGiZ4g/woYJSP2xmvWwj9
-         /47jBw5Uy42Xvw/9MBN1z8lCSLW8qze0ZF3cm+GhXiUPGNW2fNGGkcTBP3+/G4qAVlX2
-         5PTlaAjp36Je7AnDhMrUnJGuGlCXGvRNUL1YM343vhkCsqYZWY8Hz4xjE33DrVIxa7qp
-         jWvipgOyUhh0N7qxMqab5e5nh8eqBt2cvyHp6aI65m07YxRoiNkx9fyi8ZN787r5r3yj
-         R1LUse/s+iczaEPCFaPkYCZy240sr+xznPKx6kF6+1tfiy+HjHTvBRc8M8QhLYBFZIWA
-         FGuA==
-X-Gm-Message-State: ALoCoQkiELfzdFvj+KacKGdwgJOoQq+ggrCOLyvobkWj3i/u0/Sf7Gv8ZEozMPbD7miyuPZX5i/N
-X-Received: by 10.182.79.10 with SMTP id f10mr33664036obx.4.1416361278037;
- Tue, 18 Nov 2014 17:41:18 -0800 (PST)
-Received: by 10.76.101.203 with HTTP; Tue, 18 Nov 2014 17:41:17 -0800 (PST)
-In-Reply-To: <20141119013710.GA2135@peff.net>
+	id S932680AbaKSBlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 20:41:14 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42071 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932547AbaKSBlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 20:41:14 -0500
+Received: (qmail 10011 invoked by uid 102); 19 Nov 2014 01:41:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 19:41:14 -0600
+Received: (qmail 25502 invoked by uid 107); 19 Nov 2014 01:41:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 20:41:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Nov 2014 20:41:12 -0500
+Content-Disposition: inline
+In-Reply-To: <20141119013532.GA861@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This one makes my day.
-A really good fix as it minimizes maintenance burden for checking
-incoming patches for that pattern.
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+lock_ref_sha1_basic is inconsistent about when it calls
+die() and when it returns NULL to signal an error. This is
+annoying to any callers that want to recover from a locking
+error.
 
+This seems to be mostly historical accident. It was added in
+4bd18c4 (Improve abstraction of ref lock/write.,
+2006-05-17), which returned an error in all cases except
+calling safe_create_leading_directories, in which case it
+died.  Later, 40aaae8 (Better error message when we are
+unable to lock the index file, 2006-08-12) asked
+hold_lock_file_for_update to die for us, leaving the
+resolve_ref code-path the only one which returned NULL.
 
-On Tue, Nov 18, 2014 at 5:37 PM, Jeff King <peff@peff.net> wrote:
-> It's common to use error() to return from a function, like:
->
->         if (open(...) < 0)
->                 return error("open failed");
->
-> Unfortunately this may clobber the errno from the open()
-> call. So we often end up with code like this:
->
->         if (open(...) < 0) {
->                 int saved_errno = errno;
->                 error("open failed");
->                 errno = saved_errno;
->                 return -1;
->         }
->
-> which is less nice. Let's teach error() to save and restore
-> errno in each call, so that the original errno is preserved.
-> This is slightly less efficient for callers which do not
-> care, but error code paths are generally not performance
-> critical anyway.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> It's pretty minor to just handle errno in the callers, but I feel like
-> I've wanted this at least a dozen times, and it seems like it cannot
-> possibly hurt (i.e., I imagine there are callers where we _should_ be
-> doing the errno dance but have not realized it).
->
->  usage.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/usage.c b/usage.c
-> index ed14645..ee44d57 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -142,10 +142,13 @@ void NORETURN die_errno(const char *fmt, ...)
->  int error(const char *err, ...)
->  {
->         va_list params;
-> +       int saved_errno = errno;
->
->         va_start(params, err);
->         error_routine(err, params);
->         va_end(params);
-> +
-> +       errno = saved_errno;
->         return -1;
->  }
->
-> --
-> 2.1.2.596.g7379948
->
+We tried to correct that in 5cc3cef (lock_ref_sha1(): do not
+sometimes error() and sometimes die()., 2006-09-30),
+by converting all of the die() calls into returns. But we
+missed the "die" flag passed to the lock code, leaving us
+inconsistent. This state persisted until e5c223e
+(lock_ref_sha1_basic(): if locking fails with ENOENT, retry,
+2014-01-18). Because of its retry scheme, it does not ask
+the lock code to die, but instead manually dies with
+unable_to_lock_die().
+
+We can make this consistent with the other return paths by
+converting this to use unable_to_lock_message(), and
+returning NULL. This is safe to do because all callers
+already needed to check the return value of the function,
+since it could fail (and return NULL) for other reasons.
+
+[jk: Added excessive history explanation and rebased on
+ nearby cleanups.]
+
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+It's a little sad to have to do the errno dance here after our earlier
+cleanups. But while error() is safe, unable_to_lock_message is anything
+but (the original patch from Ronnie did not need this, because it leaves
+the goto and last_errno in place). So I dunno. Maybe my cleanups were
+all for naught, and this end result is worse.
+
+ refs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index fafae7e..1f7e136 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2321,8 +2321,15 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 			 * again:
+ 			 */
+ 			goto retry;
+-		else
+-			unable_to_lock_die(ref_file, errno);
++		else {
++			int saved_errno = errno;
++			struct strbuf buf = STRBUF_INIT;
++			unable_to_lock_message(ref_file, errno, &buf);
++			error("%s", buf.buf);
++			strbuf_release(&buf);
++			errno = saved_errno;
++			return NULL;
++		}
+ 	}
+ 	return old_sha1 ? verify_lock(lock, old_sha1, mustexist) : lock;
+ }
+-- 
+2.1.2.596.g7379948
