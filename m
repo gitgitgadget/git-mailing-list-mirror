@@ -1,106 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Peter Wu <peter@lekensteyn.nl>
 Subject: Re: [RFC] [PATCH] remote: add new --fetch option for set-url
-Date: Wed, 19 Nov 2014 13:18:56 -0800
-Message-ID: <xmqqsiherirj.fsf@gitster.dls.corp.google.com>
-References: <6997784.RuzRO1AFsK@al> <20141119190800.GB9908@peff.net>
-	<xmqq1toysyak.fsf@gitster.dls.corp.google.com>
+Date: Wed, 19 Nov 2014 22:28:35 +0100
+Message-ID: <12667112.uUCmIHHWmi@al>
+References: <6997784.RuzRO1AFsK@al> <xmqq1toysyak.fsf@gitster.dls.corp.google.com> <xmqqsiherirj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Peter Wu <peter@lekensteyn.nl>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 19 22:19:11 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 22:28:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrCec-0000Nq-Uo
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 22:19:11 +0100
+	id 1XrCny-0004D6-Qs
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 22:28:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933567AbaKSVTC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 16:19:02 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63256 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933046AbaKSVS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 16:18:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E9331E712;
-	Wed, 19 Nov 2014 16:18:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RXJdHaVEQpc3cvZi/zT1raEeTqM=; b=MZtDXk
-	Uq8b83n7AQ86JTVXUBSqAHwaoenOXRXX3K0pVt8op1Wvda4TNFpzQ1y+6be9D6sB
-	rbIq8pajLBo6ZqzTHvbuS/X2BX83EDHZC1egNZmLdM8lp2vPm3wvJhjwsDqP1yII
-	/VrUZF6QgUjb7rOy+v4Vb89Pr7hN7gQ55Q81Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HeDwWLmf0unVcGEQtGYzSNoFD5IbwsVL
-	PlOpGRthwKdSsHQANfwweqNxUZd1YS8yHDLVo9TgbdpPPUXje0UIG4bwqy9jN3mV
-	ZfKRwAS2I4QdAclW+xmMn8cKcCw9w0J8Nz0+OHkc3d3slEs4bpREnDEpyKiOh3jx
-	MPMtA8p2544=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 95C641E710;
-	Wed, 19 Nov 2014 16:18:58 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1B7641E70F;
-	Wed, 19 Nov 2014 16:18:58 -0500 (EST)
-In-Reply-To: <xmqq1toysyak.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 19 Nov 2014 12:58:11 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ACB5A336-7031-11E4-8326-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S934313AbaKSV2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 16:28:47 -0500
+Received: from lekensteyn.nl ([178.21.112.251]:42151 "EHLO lekensteyn.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932735AbaKSV2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 16:28:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lekensteyn.nl; s=s2048-2014-q3;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From; bh=1+1NsHQvKqevKA5YmHrc+fJFedJjo1HAcSReI9eRoxA=;
+	b=ILKLwq1rtMHpKa6YjjFpYeYAHT8S2WY3Gw56jVTBo4dntHZqp1oE6MEeFTNmOmHww2+yuMmNB9OmhAzQknAGUM82vpdzjPanbOxcdW/NY70wNbXPxNPovmbYOzaN2IXkzrq5h++tMKPxmvbrcHRdQvV6os40zsvwutTbex5JOJDmWQroi8JmfvoVgI4iopWI6uclpJz8w/Vu9DPvWVOXILSsA1bvfFdHunqkFBY+oiAdtfyMXWCXrfk7tuuMIvejpOzRgnx6Ed6hHbZwdwor+OrF+eG/cP31z3CUoINlxtjF9lGFt52IjKKbd/MvNd+9RTeg8AQGmn89bvWwdclhSg==;
+Received: by lekensteyn.nl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
+	(Exim 4.80)
+	(envelope-from <peter@lekensteyn.nl>)
+	id 1XrCnk-00005L-O4; Wed, 19 Nov 2014 22:28:37 +0100
+User-Agent: KMail/4.13.3 (Linux/3.17.0-rc4-custom-00168-g7ec62d4; KDE/4.14.2; x86_64; ; )
+In-Reply-To: <xmqqsiherirj.fsf@gitster.dls.corp.google.com>
+X-Spam-Score: 0.0 (/)
+X-Spam-Status: No, hits=0.0 required=5.0 tests=NO_RELAYS=-0.001,URIBL_BLOCKED=0.001 autolearn=no autolearn_force=no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wednesday 19 November 2014 13:18:56 Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Jeff King <peff@peff.net> writes:
+> > If you are fetching from somebody else and then pushing into your
+> > own publishing repository (i.e. fork of that upstream), why isn't
+> > the sequence of event like this, instead?
+> >
+> >     $ git clone $upstream
+> >     $ browser github.com
+> >     ... fork upstream to your own publishing repository ...
+> >     $ git remote set-url --push mine <url for your publish repo>
+> >
+> > Isn't this one of those bad workflows encouraged by GitHub, for
+> > which you guys have to be punished ;-)?
 
-> Jeff King <peff@peff.net> writes:
->
->> But here you do not have a pushurl defined in the first place. So I
->> guess this is really just a shortcut for swapping the two, like:
->>
->>   git remote set-url --push gh $(git config remote.gh.url)
->>   git remote set-url gh new-fetch-url
->
-> It seems that this swapping is only necessary because the repository
-> is set up in this way:
->
->     $ browser github.com
->     ... fork upstream to your own publishing repository ...
->     $ git clone <your publish repo>
->     ... oops, I am set up to fetch from myself ...
->     $ git remote set-url --push mine <url for your publish repo>
->     $ git remote set-url <url for your upstream repo>
->
-> If you are fetching from somebody else and then pushing into your
-> own publishing repository (i.e. fork of that upstream), why isn't
-> the sequence of event like this, instead?
->
->     $ git clone $upstream
->     $ browser github.com
->     ... fork upstream to your own publishing repository ...
->     $ git remote set-url --push mine <url for your publish repo>
->
-> Isn't this one of those bad workflows encouraged by GitHub, for
-> which you guys have to be punished ;-)?
+For "forks", it usually goes like this:
 
-I re-read the original and Peter is really accessing the same
-repository, only over different transports.  Cloning via ssh:// but
-later deciding to push via ssh:// but to fetch via https:// (or vice
-versa; the important point is that clone was done over a transport
-that is "wrong" for future fetching).
+    git clone $upstream
+    ... realizes that is has a bug which I want to fix ...
+    ... creates a new repo ...
+    git remote rename origin upstream
+    git remote add origin git@$personal_repo
+    # "--fetch" is what I need
+    git remote add --fetch https://$personal_repo
 
-Of course, if you cloned via a wrong transport that is not suitable
-for whatever reason for later fetching, you would need to have a way
-to "swap", so the observation I made in the message I am following
-up on does not apply to this thread at all.  Please scratch all of
-the above.
+I often start by entering/copying the ssh URL which is what I need for
+pushing. Later ssh-agent forget about my key and I realize that push
+works fine over https, so would like to set that... only to observe that
+is not possible in an straightforward way through 'git remote'.
 
-Coming back to the topic, how common would this "oops, I cloned via
-a wrong transport" be?  I am not opposed to giving a recovery method
-for gotcha that does not happen very often, but if such an addition
-adds undue confusion factor for people who use "set-url" for more
-common cases, that would be a bad trade-off.
+> Coming back to the topic, how common would this "oops, I cloned via
+> a wrong transport" be?  I am not opposed to giving a recovery method
+> for gotcha that does not happen very often, but if such an addition
+> adds undue confusion factor for people who use "set-url" for more
+> common cases, that would be a bad trade-off.
+
+Well, people rarely need to use 'git remote' except when, well, they
+need to modify the remotes. Where does the confusion come from? I might
+be biased now that I know the internals. Maybe the https/ssh case above
+needs to be mentioned in the documentation? What do you think of the
+updated documentation by the way?
+-- 
+Kind regards,
+Peter
+https://lekensteyn.nl
