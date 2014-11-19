@@ -1,91 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFD/PATCH] add: ignore only ignored files
-Date: Wed, 19 Nov 2014 15:52:33 +0100
-Message-ID: <3f78d6c1e35c87049daaac6cb1257ea8310a90bb.1416408015.git.git@drmicha.warpmail.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH] Improve the filemode trustability check
+Date: Wed, 19 Nov 2014 16:10:48 +0100
+Message-ID: <546CB2F8.7040501@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 19 15:52:41 2014
+X-From: git-owner@vger.kernel.org Wed Nov 19 16:10:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xr6ca-0003ut-NN
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 15:52:41 +0100
+	id 1Xr6uF-0002VZ-IF
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 16:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755080AbaKSOwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 09:52:36 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33009 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754004AbaKSOwg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Nov 2014 09:52:36 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 54AAE206F9
-	for <git@vger.kernel.org>; Wed, 19 Nov 2014 09:52:35 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 19 Nov 2014 09:52:35 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:from:to:subject:date
-	:message-id; s=smtpout; bh=LwVjvmSPk5+N9kMzCltFnHJ8EO0=; b=U18aA
-	WWT/j4EAD2pHLLwpS3kdnNTURpQriVrMjFiM1SEkGojK9ATyrWRFRALmnUrIiECW
-	61pQo0FarepinxHPzbJA1RwyBWK9OqiaA0h9aDcnndoULukL+CVx7sdi5tBcHEgk
-	+R7QQ2wnDYc1+I5gAXVjoJTg4ABoZlf8uli9fg=
-X-Sasl-enc: ISb67wE54hbzXwBR2Y7UZ63JuB21MxmjMuF6W3vgmfYh 1416408754
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id E3369C0000E;
-	Wed, 19 Nov 2014 09:52:34 -0500 (EST)
-X-Mailer: git-send-email 2.2.0.rc2.293.gc05a35d
+	id S1754473AbaKSPKv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2014 10:10:51 -0500
+Received: from mout.web.de ([212.227.17.11]:58636 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752512AbaKSPKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 10:10:50 -0500
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0Ldn2d-1YI9z12aCx-00ixuQ; Wed, 19 Nov 2014 16:10:48
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+X-Provags-ID: V03:K0:YjSj02LvWWp1mWfYaIuCGvTNRA3jg080CXfQjaHWrf2q+TMX0XD
+ s1H4VqPTVil88nmoUsiLdFI5ujZ8AeEZ2m35rpnekOviY8f9ZBsZew4vaNoo5XbGW340j9i
+ M4MAOp3qRh8PAvNfCgorD5TauU79WBtHu7b7xLRD0ZdpzqBxC9vPQSqxdSCdbd+gjcqRa7G
+ j3B4w9/Kb6lHIPBVGXOvQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git add foo bar" adds neither foo nor bar when bar is ignored, but dies
-to let the user recheck their command invocation. This becomes less
-helpful when "git add foo.*" is subject to shell expansion and some of
-the expanded files are ignored.
+Some file systems do not support the executable bit:
+a) The user executable bit is always 0, e.g. VFAT mounted with -onoexec
+b) The user executable bit is always 1, e.g. cifs mounted with -ofile_m=
+ode=3D0755
+c) There are system where user executable bit is 1 even if it should be=
+ 0
+   like b), but the file mode can be maintained locally. chmod -x chang=
+es the
+   file mode from 0766 to 0666, until the file system is unmounted and
+   remounted and the file mode is 0766 again.
+   This been observed when a Windows machine with NTFS exports a share =
+to
+   Mac OS X via smb or afp.
 
-"git add --ignore-errors" is supposed to ignore errors when indexing
-some files and adds the others. It does ignore errors from actual
-indexing attempts, but does not ignore the error "file is ignored" as
-outlined above.
+Case a) and b) are handled by the current code.
+Case c) qualifies as "non trustable executable bit" and core.filemode
+should be false, but this is not done.
 
-Change "git add --ignore-errors foo bar" to add foo when bar is ignored,
-i.e. to ignore the ignore error.
+Solution:
+Detect when ".git/config" has the user executable bit set after
+creat(".git/config", 0666) and set core.filemode to false.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
-Thus buggs me whenever I add a new TeX project when there are *.aux and
-*.log around also[*]. Aside from that personal itch: For a user reading the
-documentation, the difference between "thinking about indexing a file"
-and "technically indexing a file" is probably irrelevant, and most would
-expect "git add --ignore-errors" to ignore the "file is ignored" error
-as well and continue adding the remaining files.
 
-This is a behaviour change, though (albeit only for the option/config case),
-so it's RFD. If the direction is OK a test would be in order.
+This should go on top of "mh/config-flip-xbit-back-after-checking"
 
-We could add yet another ignore option, of course, which just screams to be called
---ignore-ignored, along with a config add.ignoreIgnored. I dunno...
+Michael, thanks for the test case.
+And no, I havent seen any systems with behaving like d)
 
-[*] And who wants to quote their *, really? ;)
+ builtin/init-db.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- builtin/add.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index ae6d3e2..8cadb71 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -284,7 +284,9 @@ static int add_files(struct dir_struct *dir, int flags)
- 		for (i = 0; i < dir->ignored_nr; i++)
- 			fprintf(stderr, "%s\n", dir->ignored[i]->name);
- 		fprintf(stderr, _("Use -f if you really want to add them.\n"));
--		die(_("no files added"));
-+		if (!ignore_add_errors)
-+			die(_("no files added"));
-+		exit_status = 1;
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index aab44d2..9b50dde 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -252,10 +252,10 @@ static int create_default_files(const char *templ=
+ate_path)
+ 	filemode =3D TEST_FILEMODE;
+ 	if (TEST_FILEMODE && !lstat(path, &st1)) {
+ 		struct stat st2;
+-		filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
++		filemode =3D (!chmod(path, st1.st_mode | S_IXUSR) &&
+ 				!lstat(path, &st2) &&
+ 				st1.st_mode !=3D st2.st_mode &&
+-				!chmod(path, st1.st_mode));
++				!chmod(path, st1.st_mode & (~S_IXUSR)));
  	}
- 
- 	for (i = 0; i < dir->nr; i++)
--- 
-2.2.0.rc2.293.gc05a35d
+ 	git_config_set("core.filemode", filemode ? "true" : "false");
+=20
+--=20
+1.9.1.dirty
