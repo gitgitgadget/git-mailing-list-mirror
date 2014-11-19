@@ -1,125 +1,72 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] refs.c: make ref_transaction_delete a wrapper for ref_transaction_update
-Date: Wed, 19 Nov 2014 13:40:24 -0800
-Message-ID: <1416433224-29763-3-git-send-email-sbeller@google.com>
-References: <1416433224-29763-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, sahlberg@google.com, git@vger.kernel.org,
-	mhagger@alum.mit.edu, jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Wed Nov 19 22:40:55 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] lock_ref_sha1_basic: simplify error code path
+Date: Wed, 19 Nov 2014 13:41:18 -0800
+Message-ID: <xmqqfvderhq9.fsf@gitster.dls.corp.google.com>
+References: <20141119013532.GA861@peff.net> <20141119013739.GC2135@peff.net>
+	<20141119020009.GR6527@google.com> <20141119020451.GA2734@peff.net>
+	<20141119020713.GT6527@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	sahlberg@google.com, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 22:41:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrCzc-0000TG-9w
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 22:40:52 +0100
+	id 1XrD0F-0000iS-JD
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 22:41:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757266AbaKSVkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 16:40:46 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:60130 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757260AbaKSVkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 16:40:33 -0500
-Received: by mail-ig0-f173.google.com with SMTP id r2so3699040igi.0
-        for <git@vger.kernel.org>; Wed, 19 Nov 2014 13:40:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2vIJmaOqzgvMRz5G8nLohDJkCGWGKKSAoPRCb08C/XA=;
-        b=i8O11CZECokevlHqADw2auKb6cD2JwLi3at7Jw1/96p6OXz3l4k2QgtUipJqe3l0V0
-         PhQRxAgwHeM0Cs/4d096feOZ28KmdC+ZAweJ9uuLRd/3XEdOpkzQJBI5wgbLbhSqWlKO
-         NYWGSb07LsVrQaqeT86YPimAEIIj0nAR30EEcgNsaDRk7uQgOiGvrwGyaXGeVf1VFm94
-         rsWpHaJVCS6p1RtozatqT7adwU5QepGaF4NNlJQW6bvOGNnFgUi3LLmkDoo+ySQA8iz8
-         gqT08vr6htN9DpJY8+3bhWHynLJ2CUXv0UHG3pZewDhfVkmHfnhJAqUzWPhIff/qcL4A
-         Xz+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=2vIJmaOqzgvMRz5G8nLohDJkCGWGKKSAoPRCb08C/XA=;
-        b=aLAIipYvdWKDAAF7f7vqzkGtf+OjqzV5iX4PI5H1jsqoWvFBKI3fUP1HqwoIAEZ8kb
-         DIJAqZ1wEIFiW+/ZDov2JhYtz/4BF+/Eb0dhIPZc27ygy37bdp/0iSwmwv+DeOtB+et0
-         DVQHrJZWmiUxsA2XwJzoGMY7QHiSf17AQwEEvidgLWFgCaQiKKFVrizGyjyp/VhoG10K
-         W0XsSRIXj3npiiQnEk4NjBbWt/7hcuP6fTOUacsBW/z/e8neTak1bF3Oa/UK83ltXpIR
-         5/rEooRV8hg5/5C1qWu/6ZvAhasXbrJQAKj2Ldld5D1MX1FiqnoJiECjA95KIJVgV/hY
-         vW6Q==
-X-Gm-Message-State: ALoCoQlqYdmrhU//+pp4Jdl13KbMedP+dEVCXOX3ICZ+07thOwbvJr4S5PKYy4Ob02eZxI3S3Jaf
-X-Received: by 10.42.176.66 with SMTP id bd2mr1519744icb.84.1416433233191;
-        Wed, 19 Nov 2014 13:40:33 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:7876:7c52:1268:8374])
-        by mx.google.com with ESMTPSA id d140sm223428ioe.38.2014.11.19.13.40.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 19 Nov 2014 13:40:32 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc2.13.g0786cdb
-In-Reply-To: <1416433224-29763-1-git-send-email-sbeller@google.com>
+	id S1757305AbaKSVlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 16:41:24 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54066 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757301AbaKSVlU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 16:41:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0677D1EDA7;
+	Wed, 19 Nov 2014 16:41:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+WPiA1RY0Y6F7sEz89HvD6g6MyE=; b=axAmmx
+	WSo8G5X1Zo7QM8+ZElqoxLQku6HZATYPSkNH1R4hAnUA8DtYjcOP40svJTZQNn7b
+	UpZeI25dJS6Kl66mErkZ+kGQU106i4N+DeBFjWVqDcmjTlPnUtrZE+gzQJ1YPl7I
+	0oPyANh1lqP1MknHp0Txh/XcOoK8SOBs5oszw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EXXN4Iu5bP6MFqhalu0j+nNNVlxPKX29
+	Y+aav5XNNkgvYeKvw/3ir9Ep+s8tRYFQnC+Zdr+PocuSwSPRUgcrYGr3pRMTss7V
+	fYg707sUZB+BTMptiXCsxuNWDnQ6T4xIP2YWzAWE65SSPn4xmIumFQgSUxF3M0SJ
+	6u0KCVEg4zs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EF2AA1EDA3;
+	Wed, 19 Nov 2014 16:41:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EAE71EDA2;
+	Wed, 19 Nov 2014 16:41:19 -0500 (EST)
+In-Reply-To: <20141119020713.GT6527@google.com> (Jonathan Nieder's message of
+	"Tue, 18 Nov 2014 18:07:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CC35EFD8-7034-11E4-AE9D-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+> Jeff King wrote:
+>
+>> Hmph. Should we just abandon my series in favor of taking Ronnie's
+>> original patch, then? We can apply the "save/restore errno in error()"
+>> patch independently if we like.
+>
+> I liked patches 1 and 2 and the explanation from patch 4.  Perhaps
+> patch 3 should be replaced with a patch renaming unlock_ref to
+> free_ref_lock or something.
 
- The same as sent 2 days before as part of the ref-transactions-reflog series
- http://thread.gmane.org/gmane.comp.version-control.git/259712
- 
- no changes since then.
-
- refs.c | 22 ++--------------------
- refs.h |  2 +-
- 2 files changed, 3 insertions(+), 21 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 005eb18..05cb299 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3633,26 +3633,8 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- 			   int flags, int have_old, const char *msg,
- 			   struct strbuf *err)
- {
--	struct ref_update *update;
--
--	assert(err);
--
--	if (transaction->state != REF_TRANSACTION_OPEN)
--		die("BUG: delete called for transaction that is not open");
--
--	if (have_old && !old_sha1)
--		die("BUG: have_old is true but old_sha1 is NULL");
--
--	update = add_update(transaction, refname);
--	update->flags = flags;
--	update->have_old = have_old;
--	if (have_old) {
--		assert(!is_null_sha1(old_sha1));
--		hashcpy(update->old_sha1, old_sha1);
--	}
--	if (msg)
--		update->msg = xstrdup(msg);
--	return 0;
-+	return ref_transaction_update(transaction, refname, null_sha1,
-+				      old_sha1, flags, have_old, msg, err);
- }
- 
- int update_ref(const char *action, const char *refname,
-diff --git a/refs.h b/refs.h
-index 2bc3556..7d675b7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -283,7 +283,7 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
- 
- /*
-  * Add a reference update to transaction.  new_sha1 is the value that
-- * the reference should have after the update, or zeros if it should
-+ * the reference should have after the update, or null_sha1 if it should
-  * be deleted.  If have_old is true, then old_sha1 holds the value
-  * that the reference should have had before the update, or zeros if
-  * it must not have existed beforehand.
--- 
-2.2.0.rc2.13.g0786cdb
+Concurred.
