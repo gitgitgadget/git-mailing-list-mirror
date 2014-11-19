@@ -1,153 +1,136 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-fetch: default globally to --no-tags
-Date: Wed, 19 Nov 2014 13:42:20 -0500
-Message-ID: <20141119184220.GA9569@peff.net>
+Date: Wed, 19 Nov 2014 10:45:48 -0800
+Message-ID: <xmqqr3wzrpur.fsf@gitster.dls.corp.google.com>
 References: <20141119030523.GO22361@norris-Latitude-E6410>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Brian Norris <computersforpeace@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 19 19:42:30 2014
+X-From: git-owner@vger.kernel.org Wed Nov 19 19:45:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrACw-0005Bw-OY
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 19:42:27 +0100
+	id 1XrAGK-0006Rl-AO
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 19:45:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756482AbaKSSmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 13:42:22 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42362 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755145AbaKSSmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 13:42:22 -0500
-Received: (qmail 24749 invoked by uid 102); 19 Nov 2014 18:42:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 12:42:21 -0600
-Received: (qmail 6125 invoked by uid 107); 19 Nov 2014 18:42:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 13:42:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Nov 2014 13:42:20 -0500
-Content-Disposition: inline
-In-Reply-To: <20141119030523.GO22361@norris-Latitude-E6410>
+	id S1755576AbaKSSpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 13:45:52 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64986 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755334AbaKSSpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 13:45:51 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 749FD1DA5B;
+	Wed, 19 Nov 2014 13:45:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Xokk9xv3mMjZ6xbuaGOa8JCzuJI=; b=BBat6b
+	hEfdBi1gsRW5zkSazS9BNcIfI+xZLjmGj1ykCFVl+zhb02r47O481+ahaC9DoMGn
+	1BONb9MVrkFfHu/aN8XqXepNgtQ3Q65/31/i5vNt9h8vl26IRmeK7RJR4C+7Pd5k
+	oQwWYsqzzgPDf9khlEtkFHJbrmJRWLAPODSBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TgOUpdUs4zkMxgd2Qwh4aPIBfcLeqvdP
+	BPAoN/fxC6OVqs7M0ij61JPIvDi2eBRcOJ6K9jgI68OPvngQm4/YbTU1fc7Xuw2Q
+	Ol/nPWFpplTNL791KCTnmN9UstSAgRH2edrcvmWstzgEhgJ1OpcoU27wpkU5RjG/
+	gyokPzWBmIw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A5271DA5A;
+	Wed, 19 Nov 2014 13:45:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E43FB1DA59;
+	Wed, 19 Nov 2014 13:45:49 -0500 (EST)
+In-Reply-To: <20141119030523.GO22361@norris-Latitude-E6410> (Brian Norris's
+	message of "Tue, 18 Nov 2014 19:05:23 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 48206DBC-701C-11E4-93B4-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 18, 2014 at 07:05:23PM -0800, Brian Norris wrote:
+Brian Norris <computersforpeace@gmail.com> writes:
 
-> When I fetch from a remote repository, the only ways to
-> prevent fetching tags are:
-> 
->   1) git fetch --no-tags <name>
-> 
->   2) git config remote.<name>.tagopt --no-tags; git fetch <name>
+> --- TL;DR ---
 
-Yes, there is no way to globally specify --no-tags. I don't see it as a
-problem to add something like that.
-
-> The former requires extra typing for a case that (arguably) should be
-> the default.
-
-I don't understand this assumption, though. Why don't you want to fetch
-tags from the remote side? Wouldn't this break something as simple as:
-
-  git clone git://git.kernel.org/pub/scm/git/git.git
-  cd git
-  git checkout v2.1.3
-
-(Actually, no, it wouldn't, because clone side-steps the usual
-tag-following procedure, but wouldn't you expect the same thing to work
-after a fetch in an existing repository?)
-
-(And now having read all the way to the bottom of your email, I at least
-see why you dislike tags. But I am not convinced that turning them off
-completely does not come with its own set of usability problems).
-
-> I'd prefer something like this, to change the default tag-fetching
-> behavior globally:
-> 
->   git config --global remote.tagopt --no-tags
-
-Yeah, that would make sense to me (I do not know _why_ you would want to
-do it, but it would be consistent with other parts of git). If you are
-adding a new config option, though, please do not follow the odd and
-confusing "tagopt" config value, and make a boolean remote.autofollowtags
-or something.
-
-> --- Bug ---
-> 
-> When trying to use the remote.<name>.tagopt configuration option
-> globally, I get something like this:
-> 
->   $ git config --global remote.test.tagopt --no-tags
->   $ git remote update
->   ...
->   Fetching test
->   fatal: 'test' does not appear to be a git repository
->   fatal: Could not read from remote repository.
-> 
->   Please make sure you have the correct access rights
->   and the repository exists.
->   error: Could not fetch test
->   ...
-> 
-> Expected behavior: if the local repository does not have a remote named
-> 'test', then no additional output should be printed. If the local
-> repository has a remote named test, then it should be fetched with the
-> --no-tags option.
-> 
-> Actual behavior: git prints warnings about the 'test' remote, just
-> because there is no remote named 'test.'
-
-That is the expected behavior (sort of). Any time you define a single
-key in a remote, that remote "exists", whether there is a remote.*.url
-key for it or not. You can use that to set options for remotes you
-specify only as a URL, though I do not know how widely-used that feature
-is.
-
-IOW, git is not complaining here that there is no remote named 'test'.
-It is complaining that you have defined a remote called 'test', whose
-URL defaults to 'test' (because you did not specify one in the config),
-and that there is no repo called test. If you defined it as:
-
-  git config --global remote.git://github.com/git/git.tagopt --no-tags
-
-that would "work" in the sense that "git remote update" would download
-git in every repository. ;)
-
-I think one could argue that "git remote update" should probably skip
-remotes for which no url is defined (but we _do_ still want to treat
-them as remotes internally, so that when you "git fetch ...", we apply
-the config correctly).
-
-> --- Motivations ---
-> 
-> This is all motivated by the fact that tag namespacing is completely
-> broken in git. Tags are globally namespaced, and in a true DVCS
-> environment, any particular developer has no control over another
-> developer's tag naming conventions. So this namespace can easily become
-> polluted, reducing the usefulness of tags as a whole [1]. This problem
-> seems to have been acknowledged, and proposals appeared a few years ago
-> [2]. But I don't see any solution for tag namespacing.
-
-I don't know if I would say "completely broken", as it mostly gets the
-job done. But yes, there are other ways of doing it that would have
-advantages.
+You usually have TL;DR at the beginning to help people save time;
+having it at the end forces the whole thing to be read and would not
+help anybody. ;-)
 
 > My email boils down to two questions:
-> 
+>
 >   (A) Has there been progress on implementing a proposal like in [2]?
 
-Not really, no. If you'd like to work on it, I'm sure people would be
-happy to review patches.
+I do not think so, and also I do not agree that "mirror everybody
+else's ref hierarchy into separate namespaces" is necessarily a good
+idea, especially for tags, whose reason of existence is to give
+people a way to have anchoring points they agree on to have a shared
+world view necessary to move things forward.
+
+In other words, talks in [2] are attempting to solve a wrong
+problem.  The problem people want to solve is to have a mechanism to
+keep private anchoring points that are not necessarily shared
+project wide, which tags in refs/tags hierarchy is *not*.
+
+Like it or not, tags are meant to be used for globally shared
+anchoring points and the whole machinery (e.g. "fetch" that
+auto-follows tags, "clone" that gives refs/tags*:refs/tags/*
+refspec) is geared towards supporting that use pattern, which will
+be broken by moving tags to per-remote namespace.
+
+I can see "git tag --local foo" that creates refs/local-tags/foo
+and also adding a mechanism to propagate local-tags/ hierarchy just
+like heads/ hierarchy is propagated per-remote as a solution to that
+problem that does not break the "release tags" use case, though.
 
 >   (B) Can we allow disabling (auto)tag-fetching globally? Like:
-> 
+>
 >         git config --global remote.tagopt --no-tags
 
-That seems reasonable to me to use remote.* as defaults for all remotes.
+Using remote.<variable> as a fallback for remote.<remote>.<variable>
+may be a useful addition, not limited to <variable>==tagopt case.
 
--Peff
+This is a tangent, but it is an important one because we are talking
+about "tagopt" specifically.  I think we should start deprecating
+"*.tagopt --[no-]tags".  It started as a quick-and-dirty hack back
+when "git fetch" was a shell script Porcelain, where it made it easy
+to write things like this in its implementation:
+
+	tagOpt=$(git config "remote.$name.tagopt")
+        git fetch $tagOpt $name $args
+
+which gives an impression that any command line option can go there
+(e.g.  as if you could set "remote.*.tagopt = --frotz --no-tags")
+and "git fetch" implementation, even after it is redone in C, must
+forever parse it as if it is part of a shell command line
+(e.g. splitting at $IFS, unquoting the shell quotes and interpreting
+as if they came in argv[]).
+
+This is ugly and simply unmaintainable, and we should transition
+away from that, by doing something like:
+
+ (1) Add remote.*.tags configuration, which defaults to 'follow',
+     but can be set to 'true' or 'false'.  Accept '--tags' as a
+     synonym to 'true' and '--no-tags' as a synonym to 'false'.
+
+     * when set to 'follow', allow auto-following tags (the default).
+     * when set to 'true', act as if --tags is given.
+     * when set to 'false', act as if --no-tags is given.
+
+ (2) Deprecate remote.*.tagopt configuration.  When it is used, give
+     a warning about deprecation and encourage users to move to
+     remote.*.tags setting.
+
+ (3) Wait for several release cycles.
+
+ (4) Remove remote.*.tags configuration support at a major version
+     boundary.
+
+Needless to say, support for remote.<variable> as a fallback for
+remote.<remote>.<variable> for any <variable> can be done in
+parallel to this tangent topic.
