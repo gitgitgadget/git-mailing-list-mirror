@@ -1,86 +1,168 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-fetch: default globally to --no-tags
-Date: Wed, 19 Nov 2014 15:32:09 -0500
-Message-ID: <20141119203208.GA11053@peff.net>
-References: <20141119030523.GO22361@norris-Latitude-E6410>
- <xmqqr3wzrpur.fsf@gitster.dls.corp.google.com>
- <20141119185708.GA9908@peff.net>
- <xmqqa93nrldf.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] refs.c: use a stringlist for repack_without_refs
+Date: Wed, 19 Nov 2014 12:44:50 -0800
+Message-ID: <20141119204450.GX6527@google.com>
+References: <xmqq4mtvt6jj.fsf@gitster.dls.corp.google.com>
+ <1416423000-4323-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Norris <computersforpeace@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 19 21:32:19 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, sahlberg@google.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 21:45:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrBvG-0006EG-Bk
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 21:32:18 +0100
+	id 1XrC7X-0002Lh-Gy
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 21:44:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756483AbaKSUcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 15:32:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42463 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756694AbaKSUcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 15:32:10 -0500
-Received: (qmail 29405 invoked by uid 102); 19 Nov 2014 20:32:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 14:32:10 -0600
-Received: (qmail 7321 invoked by uid 107); 19 Nov 2014 20:32:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 15:32:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Nov 2014 15:32:09 -0500
+	id S932147AbaKSUov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 15:44:51 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:52528 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756683AbaKSUot (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 15:44:49 -0500
+Received: by mail-ie0-f179.google.com with SMTP id rp18so1407414iec.10
+        for <git@vger.kernel.org>; Wed, 19 Nov 2014 12:44:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=uqGN+6fDexK4efI5KDMhI8CKs37O56z6Eaorqxp3zWk=;
+        b=uWqTKruzZ2MHdQrOuNwrSnaHqXSbhTT7fxYypeWE5610lhZomal7thphZrx5IMs8K4
+         jA7BJcDOi6W7MPGZQsrvax/RFdaJNNYf0aP4J9pEGCXDa+qPuzbvCghDcGWOFW0ChwBU
+         mY+2KTauD4tKmaC4CWRjaHRWmK3Hc1RwnOWzGpY0Z53mtne4wbOP/HztvyhUdgI5zQYY
+         7AMY26evjOlmr0t0ImsEBVm2cTsbW70jXdtVpl6IULk6K6oP8EFNP6WE8EgazytvrsTc
+         NQAfCWihP8ZwkvVkd/aWYPa6e4C9W8KYXa22yHjJESVI+pyx5DA1Xv62x2VzPgbC3ei6
+         6aHQ==
+X-Received: by 10.43.128.71 with SMTP id hd7mr4520720icc.36.1416429889036;
+        Wed, 19 Nov 2014 12:44:49 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:48de:79f7:30eb:4507])
+        by mx.google.com with ESMTPSA id am5sm446827igc.12.2014.11.19.12.44.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 19 Nov 2014 12:44:47 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqqa93nrldf.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <1416423000-4323-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 19, 2014 at 12:22:36PM -0800, Junio C Hamano wrote:
+Stefan Beller wrote:
 
-> With a separate local-tags hierarchy, the look-up part still has to
-> be enhanced.  After doing "git tag v2.0" and "git tag -l snapshot00",
-> you would want to be able to say "git log snapshot00..v2.0" and have
-> these found.
-> 
-> If you don't allow a private local-tags hierarchy, then those who
-> make releases are burdened to be very careful not to contaminate
-> their public repository --- "git tag snapshot00" cannot be used by
-> them lightly just to mark their private state, if their day
-> typically is concluded with "git push --follow-tags", as that will
-> push out the "tags" that are meant to be private.
+> This patch doesn't intend any functional changes.
 
-It's not that I want to disallow a private local-tags hierarchy. It's
-just that I consider it a completely orthogonal feature. In other words,
-the problem of tags in a global namespace is not solved at all by
-local-tags. It just helps people keep things out of the global namespace
-that they did not want to be there in the first place[1]. It does
-nothing for viewers who need to coalesce multiple global tag namespaces
-(either from multiple projects, or "proposals" of global tags they have
-pulled in from other non-canonical repositories).
+Yay. :)
 
-> > But the superproject is pulling them both together; if it uses
-> > refs/tags, the global namespaces will clash. Instead, it would be more
-> > convenitn to have refs/remotes/project1/tags and so on.
-> 
-> Yeah, but isn't it an orthogonal issue?  refs/tags/project{1,2}/*
-> would be what I would recommend to use for "global" stuff whose
-> purpose is to give people a shared world view.
+> a refactoring, which replaces a char** array by a stringlist
+> in the function repack_without_refs.
+> This is easier to read and maintain as it delivers the same
+> functionality with less lines of code and less pointers.
 
-How do they get that split? They cannot use tag auto-following, which
-puts the tags in the global refs/tags.
+Please wrap to a consistent width and add a blank line between
+paragraphs.  So, either:
 
-Certainly it can be done with git _today_ by setting up the appropriate
-refspecs. I think this is more about making things useful out of the
-box. 
+	... repack_without_refs.  This is easier to read and ...
 
--Peff
+or:
 
-[1] I am actually not convinced that the mixing of local and global tags
-    is a huge problem in practice. We do not push tags by default, so
-    local tags tend to stay local. OTOH, I think the world would be a
-    better place if "git push --follow-tags" were the default, which
-    would entail somehow separating global from local tags.
+	... repack_without_refs.
+
+	This is easier to read and ...
+
+[...]
+> +++ b/builtin/remote.c
+> @@ -750,16 +750,11 @@ static int mv(int argc, const char **argv)
+[...]
+> @@ -1325,6 +1320,9 @@ static int prune_remote(const char *remote, int dry_run)
+>  	memset(&states, 0, sizeof(states));
+>  	get_remote_ref_states(remote, &states, GET_REF_STATES);
+>  
+> +	for (i = 0; i < states.stale.nr; i++)
+> +		string_list_append(&delete_refs, states.stale.items[i].util);
+
+warn_dangling_symref requires a sorted list.  Possible fixes:
+
+ (a) switch to string_list_insert, or
+ (b) [nicer] call sort_string_list before the warn_dangling_symrefs
+     call.
+
+[...]
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2639,23 +2639,26 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
+>  	return 0;
+>  }
+>  
+> -int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+> +int repack_without_refs(struct string_list *without, struct strbuf *err)
+>  {
+>  	struct ref_dir *packed;
+>  	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+>  	struct string_list_item *ref_to_delete;
+> -	int i, ret, removed = 0;
+> +	int ret, needs_repacking = 0, removed = 0;
+>  
+>  	assert(err);
+>  
+>  	/* Look for a packed ref */
+> -	for (i = 0; i < n; i++)
+> -		if (get_packed_ref(refnames[i]))
+> +	for_each_string_list_item(ref_to_delete, without) {
+> +		if (get_packed_ref(ref_to_delete->string)) {
+> +			needs_repacking = 1;
+>  			break;
+> +		}
+> +	}
+>  
+> -	/* Avoid locking if we have nothing to do */
+
+This comment was helpful --- it's sad to lose it (but if you feel
+strongly about it then I don't mind).
+
+> -	if (i == n)
+> -		return 0; /* no refname exists in packed refs */
+> +	/* No refname exists in packed refs */
+> +	if (!needs_repacking)
+> +		return 0;
+
+I kind of liked the 'i == n' test that avoided needing a new auxiliary
+variable.  This is fine and probably a little clearer, though.
+
+[...]
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -163,8 +163,14 @@ extern void rollback_packed_refs(void);
+>   */
+>  int pack_refs(unsigned int flags);
+>  
+> -extern int repack_without_refs(const char **refnames, int n,
+> -			       struct strbuf *err);
+> +/*
+> + * Repacks the refs pack file excluding the refs given
+> + * without: The refs to be excluded from the new refs pack file,
+> + *          May be unsorted
+> + * err: String buffer, which will be used for reporting errors,
+> + *      Must not be NULL
+> + */
+> +extern int repack_without_refs(struct string_list *without, struct strbuf *err);
+
+(nit) Other comments in this file use the imperative mood to describe
+what a function does, so it would be a little clearer to do that here,
+too ("Repack the ..." instead of "Repacks the ...").
+
+It might be just me, but I find this formatted comment with everything
+jammed together hard to read.  I'd prefer a simple paragraph, like:
+
+	/*
+	 * Remove the refs listed in 'without' from the packed-refs file.
+	 * On error, packed-refs will be unchanged, the return value is
+	 * nonzero, and a message about the error is written to the 'err'
+	 * strbuf.
+	 */
+
+Thanks,
+Jonathan
