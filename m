@@ -1,78 +1,63 @@
-From: Phil Pennock <phil-gitml@phil.spodhuis.org>
-Subject: .gitignore sub-dir exclusions not overriding '*'
-Date: Wed, 19 Nov 2014 03:40:11 +0000
-Message-ID: <20141119034010.GA18145@tower.spodhuis.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: .gitignore sub-dir exclusions not overriding '*'
+Date: Wed, 19 Nov 2014 16:48:16 +0700
+Message-ID: <CACsJy8BHvucnEAW065OXOe5NBQkxp7+8HJb7XCGYgOa=pkxLVA@mail.gmail.com>
+References: <20141119034010.GA18145@tower.spodhuis.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 19 04:48:59 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Phil Pennock <phil-gitml@phil.spodhuis.org>
+X-From: git-owner@vger.kernel.org Wed Nov 19 10:48:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XqwGJ-0003IR-3V
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 04:48:59 +0100
+	id 1Xr1sb-0006mU-UN
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 10:48:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754198AbaKSDsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 22:48:55 -0500
-Received: from mx.spodhuis.org ([94.142.241.89]:39387 "EHLO mx.spodhuis.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754175AbaKSDsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 22:48:32 -0500
-X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Nov 2014 22:48:31 EST
-Received: from authenticated user by smtp.spodhuis.org with esmtpa 
-	id 1Xqw7p-0004oA-6d; Wed, 19 Nov 2014 03:40:13 +0000
-Content-Disposition: inline
-OpenPGP: url=https://www.security.spodhuis.org/PGP/keys/0x4D1E900E14C1CC04.asc
+	id S1755093AbaKSJst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 04:48:49 -0500
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:39591 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751265AbaKSJss (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 04:48:48 -0500
+Received: by mail-ig0-f174.google.com with SMTP id hn15so2606842igb.13
+        for <git@vger.kernel.org>; Wed, 19 Nov 2014 01:48:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=C41F+5kyhzxbMbtVYNBX9AJr3NEvjba7qIMYg2px8ZI=;
+        b=cEBA1xM8Hcp5VG2umkEQrsJY3feHJ17tmSPwUF7pqwPlqC06nUWkctd1Y0R7xc5jBH
+         U/SGWnfE9aWySDzSWUGbAsA3DSBoW3YpfXrd35SCGVJdjVEuSM9hMdBi3wNhVuEh+4YD
+         rWHXx96msL5H5O9zoTvZSpZRD7ui7A0Rw52/5e/SVyCJDCuOvTN5JFkcV2lVsUkZkDup
+         A969AtT6SVdwXwU8gu99wuNWFAr8OEoavcXJUi0tHm8lpymTADvrQLroPhzvXlZEHVkF
+         MEExx9Xf6Oz1uNO4j2Q1DZcT1qeVsjW4OmoaSgfTxHLTXzHcOosFQ31TWl0iNNC49730
+         82jw==
+X-Received: by 10.42.153.131 with SMTP id m3mr1972231icw.28.1416390527375;
+ Wed, 19 Nov 2014 01:48:47 -0800 (PST)
+Received: by 10.107.176.8 with HTTP; Wed, 19 Nov 2014 01:48:16 -0800 (PST)
+In-Reply-To: <20141119034010.GA18145@tower.spodhuis.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The behaviour below is seen with both git 1.8.3.2 and git 2.1.3; I am
-not subscribed to the vger list, please keep me in the CC list.
+On Wed, Nov 19, 2014 at 10:40 AM, Phil Pennock
+<phil-gitml@phil.spodhuis.org> wrote:
+> Expected to work as .gitignore in top-level of repo:
+>
+>     *
+>     !**/*.asc
+>     !.gitignore
+>
 
-Use-case: git repo which only holds PGP-encrypted files with a .asc
-extension, no matter which sub-directory they're in, or if in the top
-directory.
-
-Simple layout; for demo purposes names starting 'incl' should end up
-included, those starting 'excl' should end up excluded, but not based on
-those prefices: they're success result indicators; so:
-
-    cd wherever
-    git init
-    mkdir foo
-    touch incl.asc excl excl.txt foo/incl.asc foo/excl.txt foo/excl
-    $EDITOR .gitignore
-
-Expected to work as .gitignore in top-level of repo:
-
-    *
-    !**/*.asc
-    !.gitignore
-
-With that, `git status` ignores the contents of foo/ thusly:
-
-    $ git check-ignore -v foo/incl.asc
-    .gitignore:1:*	foo/incl.asc
-
-Commenting out the '*' line and removing the '!' from the second, the
-**/*.asc clearly matches.  The only way I can make this style work is to
-set the first line to '**/*.*' which fails to exclude the plain 'excl'
-files (no extension).
-
-It seems that there's some magic around '*' as the entire final path
-component of a pattern which causes it to match against the entire
-directory, and excludes of the directory can not be overriden by matches
-against '*.ext' within the directory, even when they come later in the
-same config file at the same precedence.
-
-This does not seem to my reading to match the behaviour described by
-`git help gitignore` (checked in both versions of git) and so seems to
-me to be a bug, but if it's a failure of my understanding, please help
-me to understand where I messed up.
-
-Thanks,
--Phil
+gitignore man page has this "It is not possible to re-include a file
+if a parent directory of that file is excluded". In this case,
+directory "foo" is ignored by "*". Although it makes sense for this
+particular case to re-include something in foo because we can clearly
+see there are rules to re-include. It's on my todo list, but I don't
+know when it will be implemented.
+-- 
+Duy
