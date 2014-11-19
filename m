@@ -1,100 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-fetch: default globally to --no-tags
-Date: Wed, 19 Nov 2014 13:57:09 -0500
-Message-ID: <20141119185708.GA9908@peff.net>
-References: <20141119030523.GO22361@norris-Latitude-E6410>
- <xmqqr3wzrpur.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improve the filemode trustability check
+Date: Wed, 19 Nov 2014 10:58:54 -0800
+Message-ID: <xmqqegszrp8x.fsf@gitster.dls.corp.google.com>
+References: <546CB2F8.7040501@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Brian Norris <computersforpeace@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 19 19:57:16 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Nov 19 19:59:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrARI-0002T0-Bk
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 19:57:16 +0100
+	id 1XrAT3-0003GF-AV
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 19:59:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756030AbaKSS5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 13:57:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42377 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754814AbaKSS5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 13:57:11 -0500
-Received: (qmail 25377 invoked by uid 102); 19 Nov 2014 18:57:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 12:57:10 -0600
-Received: (qmail 6260 invoked by uid 107); 19 Nov 2014 18:57:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Nov 2014 13:57:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Nov 2014 13:57:09 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqr3wzrpur.fsf@gitster.dls.corp.google.com>
+	id S1756504AbaKSS7A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2014 13:59:00 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50810 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755039AbaKSS67 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Nov 2014 13:58:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F3611DD54;
+	Wed, 19 Nov 2014 13:58:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=fYyP1AEdZrUs
+	1b6MH9XnhalkOJg=; b=Cx/g/nS0DhrVViF2PK5r3Hk+PFeO/2w9kovAjrZU60B7
+	5hnvH6jUFhZ6QbvbiH+MDFutGHbv41+ov8/LsU7V6C2bPBSlQm7kCEcJ9sTviBuq
+	vkX5pkU+FPiKTudw5gY3LENKCvFrqlCMXuPUHhQQwSG7gI/We0FV7tqhlruQs6A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EZGayr
+	wHDbDDLEgR5diPrgTafK0/XX5IeHptUUfOdcQstfiAuPd7GKdwdjUKHGB1fh/x2I
+	078+Qd1Vo64IKvQMGL8WWZVplO13wTQk/q/d4fMYyq33KYYGOXpC4yC4y0E6AGGR
+	H6+WhmHT5wPo/DnraROvCZulCjiCXI5xBOSnA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 355351DD51;
+	Wed, 19 Nov 2014 13:58:59 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4819E1DD4E;
+	Wed, 19 Nov 2014 13:58:56 -0500 (EST)
+In-Reply-To: <546CB2F8.7040501@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Wed, 19 Nov 2014 16:10:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1CD5C240-701E-11E4-B56C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 19, 2014 at 10:45:48AM -0800, Junio C Hamano wrote:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> > My email boils down to two questions:
-> >
-> >   (A) Has there been progress on implementing a proposal like in [2]?
-> 
-> I do not think so, and also I do not agree that "mirror everybody
-> else's ref hierarchy into separate namespaces" is necessarily a good
-> idea, especially for tags, whose reason of existence is to give
-> people a way to have anchoring points they agree on to have a shared
-> world view necessary to move things forward.
-> 
-> In other words, talks in [2] are attempting to solve a wrong
-> problem.  The problem people want to solve is to have a mechanism to
-> keep private anchoring points that are not necessarily shared
-> project wide, which tags in refs/tags hierarchy is *not*.
-> 
-> Like it or not, tags are meant to be used for globally shared
-> anchoring points and the whole machinery (e.g. "fetch" that
-> auto-follows tags, "clone" that gives refs/tags*:refs/tags/*
-> refspec) is geared towards supporting that use pattern, which will
-> be broken by moving tags to per-remote namespace.
-> 
-> I can see "git tag --local foo" that creates refs/local-tags/foo
-> and also adding a mechanism to propagate local-tags/ hierarchy just
-> like heads/ hierarchy is propagated per-remote as a solution to that
-> problem that does not break the "release tags" use case, though.
+> Some file systems do not support the executable bit:
+> a) The user executable bit is always 0, e.g. VFAT mounted with -onoex=
+ec
+> b) The user executable bit is always 1, e.g. cifs mounted with -ofile=
+_mode=3D0755
+> c) There are system where user executable bit is 1 even if it should =
+be 0
+>    like b), but the file mode can be maintained locally. chmod -x cha=
+nges the
+>    file mode from 0766 to 0666, until the file system is unmounted an=
+d
+>    remounted and the file mode is 0766 again.
+>    This been observed when a Windows machine with NTFS exports a shar=
+e to
+>    Mac OS X via smb or afp.
+>
+> Case a) and b) are handled by the current code.
+> Case c) qualifies as "non trustable executable bit" and core.filemode
+> should be false, but this is not done.
+>
+> Solution:
+> Detect when ".git/config" has the user executable bit set after
+> creat(".git/config", 0666) and set core.filemode to false.
 
-I am not sure I agree here that the discussions in [2] were not handling
-this case. Here you are arguing for the tag-writer to distinguish
-between two separate namespaces: global and local.
+The readers have been following along a nicely flowing prose; let
+them keep going by dropping that abrupt "Solution:" line and instead
+doing s/to false./to false to solve this./ or something like that.
 
-But I think the proposals in [2] were about pushing that logic into the
-lookup phase. That is, pulling in all of the remote's tags as
-"refs/remotes/origin/tags/*", and then at lookup time checking multiple
-locations for tags (and preferring your local "refs/tags" to what is
-pulled from a remote).
+The change does not seem to match the above design of the solution,
+though.  We've run stat(path, &st1), and I would have expected from
+the description that (st1.st_mode & S_IXUSR) without any chmod()
+would be the "does the file have executable bit without us asking?"
+Either the explanation or the code is wrong.  I cannot tell which.
 
-I think that system is better because it gives flexibility in resolution
-to the viewer of the tags, not the writer. E.g., consider a project that
-is merging two different sub-projects, project1 and project2. Each of
-the sub-projects has their own global namespace with v1.0, v2.0, etc.
-They would never use local-tags; these are meant to be in a per-project
-global namespace.
-
-But the superproject is pulling them both together; if it uses
-refs/tags, the global namespaces will clash. Instead, it would be more
-convenitn to have refs/remotes/project1/tags and so on. And then a
-lookup of "v1.0" can either prefer project1 to project2, vice-versa, or
-even respect neither. But the point is that the desired outcome is in
-the eye of the beholder, not the writer.
-
-> This is a tangent, but it is an important one because we are talking
-> about "tagopt" specifically.  I think we should start deprecating
-> "*.tagopt --[no-]tags".
-
-Thanks for writing this out. I touched on it in the other email I sent,
-but did not explain it very well. The transition you mentioned here is
-exactly what I was thinking of.
-
--Peff
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+>
+> This should go on top of "mh/config-flip-xbit-back-after-checking"
+>
+> Michael, thanks for the test case.
+> And no, I havent seen any systems with behaving like d)
+>
+>  builtin/init-db.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index aab44d2..9b50dde 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -252,10 +252,10 @@ static int create_default_files(const char *tem=
+plate_path)
+>  	filemode =3D TEST_FILEMODE;
+>  	if (TEST_FILEMODE && !lstat(path, &st1)) {
+>  		struct stat st2;
+> -		filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+> +		filemode =3D (!chmod(path, st1.st_mode | S_IXUSR) &&
+>  				!lstat(path, &st2) &&
+>  				st1.st_mode !=3D st2.st_mode &&
+> -				!chmod(path, st1.st_mode));
+> +				!chmod(path, st1.st_mode & (~S_IXUSR)));
+>  	}
+>  	git_config_set("core.filemode", filemode ? "true" : "false");
