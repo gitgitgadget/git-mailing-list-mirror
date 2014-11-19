@@ -1,71 +1,75 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] On watchman support
-Date: Tue, 18 Nov 2014 20:46:00 -0500
-Message-ID: <20141119014600.GA2337@peff.net>
-References: <20141111124901.GA6011@lanh>
- <1416270336.13653.23.camel@leckie>
- <CACsJy8BfxP7KF1XF29BOgC6XhO8iAy-ycEoLkDG5rn6TYH_DrA@mail.gmail.com>
- <1416334360.27401.10.camel@leckie>
- <xmqqioicut32.fsf@gitster.dls.corp.google.com>
- <1416345123.27401.11.camel@leckie>
- <xmqqwq6std27.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 1/4] error: save and restore errno
+Date: Tue, 18 Nov 2014 20:47:23 -0500
+Message-ID: <20141119014722.GB2337@peff.net>
+References: <20141119013532.GA861@peff.net>
+ <20141119013710.GA2135@peff.net>
+ <20141119014344.GP6527@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: David Turner <dturner@twopensource.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 19 02:46:08 2014
+Cc: Stefan Beller <sbeller@google.com>, sahlberg@google.com,
+	gitster@pobox.com, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 19 02:47:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XquLP-0003yY-S6
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 02:46:08 +0100
+	id 1XquMi-0004Nk-Vv
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Nov 2014 02:47:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755825AbaKSBqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Nov 2014 20:46:03 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42086 "HELO cloud.peff.net"
+	id S1754492AbaKSBrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Nov 2014 20:47:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42089 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754737AbaKSBqC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Nov 2014 20:46:02 -0500
-Received: (qmail 10406 invoked by uid 102); 19 Nov 2014 01:46:01 -0000
+	id S1753850AbaKSBrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Nov 2014 20:47:25 -0500
+Received: (qmail 10467 invoked by uid 102); 19 Nov 2014 01:47:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 19:46:01 -0600
-Received: (qmail 25629 invoked by uid 107); 19 Nov 2014 01:46:14 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 19:47:24 -0600
+Received: (qmail 25656 invoked by uid 107); 19 Nov 2014 01:47:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 20:46:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Nov 2014 20:46:00 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Nov 2014 20:47:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Nov 2014 20:47:23 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqwq6std27.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20141119014344.GP6527@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 18, 2014 at 01:26:56PM -0800, Junio C Hamano wrote:
+On Tue, Nov 18, 2014 at 05:43:44PM -0800, Jonathan Nieder wrote:
 
-> It is not check_refname_format() that is the real problem. It's the
-> fact that we do O(# of refs) work whenever we have to access the
-> packed-refs file. check_refname_format() is part of that, surely,
-> but so is reading the file, creating all of the refname structs in
-> memory, etc. (credit to peff@).
+> Jeff King wrote:
+> 
+> > It's common to use error() to return from a function, like:
+> >
+> > 	if (open(...) < 0)
+> > 		return error("open failed");
+> >
+> > Unfortunately this may clobber the errno from the open()
+> > call. So we often end up with code like this:
+> >
+> >         if (open(...) < 0) {
+> > 		int saved_errno = errno;
+> > 		error("open failed");
+> > 		errno = saved_errno;
+> > 		return -1;
+> > 	}
+> >
+> > which is less nice.
+> 
+> What the above doesn't explain is why the caller cares about errno.
+> Are they going to print another message with strerror(errno)?  Or are
+> they going to consider some errors non-errors (like ENOENT when trying
+> to unlink a file), in which case why is printing a message to stderr
+> okay?
 
-Yeah, I'd agree very much with that. I am not sure if I am cc'd here
-because of my general complaining about packed-refs, or if I have said
-something clever on the subject.
+I guess the unsaid bit is:
 
-I did implement at one point a packed-refs reader that does a binary
-search on the mmap'd packed-refs file, and can return a single value or
-even locate the first entry matching a prefix (like "refs/tags/") and
-iterate until we're out of the prefix. Unfortunately this runs very
-contrary to the caching design of the refs.c code. It is focused on
-caching _loose_ refs, where we may read an outer directory (like
-"refs/"), and would like to avoid descending into an inner directory
-(likes "refs/foo/") unless we are interested in what is in it. But
-caching partial reads of packed-refs like this is "inside out"; we might
-read all of "refs/tags/*", but have no clue what else is in "refs/". So
-integrating it into refs.c would take pretty major surgery.
+  Unfortunately this may clobber the errno from the open() call. Even
+  though error() sees the correct errno, the caller to which we are
+  returning may see a bogus errno value.
 
 -Peff
