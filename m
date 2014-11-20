@@ -1,62 +1,74 @@
-From: Peter Krefting <peter@softwolves.pp.se>
+From: Jiang Xin <worldhello.net@gmail.com>
 Subject: Re: [L10N] please review a batch l10n update for Git 2.2.0 final
-Date: Thu, 20 Nov 2014 08:48:11 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1411200847410.21018@ds9.cixit.se>
+Date: Thu, 20 Nov 2014 16:04:37 +0800
+Message-ID: <CANYiYbEt7r1Bjx9VA29Vk5FL9Qu0nTeXVZWAaggrcM=eNsY7Rg@mail.gmail.com>
 References: <CANYiYbFrNCqxfrcaOWjeEZ2no=DRHVoDic8Qg989=U_VUTWiWA@mail.gmail.com>
+	<CAN0XMOLZw+btduQkQwMLykYFgFuZzTfMwnexyGR0FBdbG=qFmA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Alexander Shopov <ash@kambanaria.org>,
 	Alex Henrie <alexhenrie24@gmail.com>,
 	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?ISO-8859-15?Q?Jean-No=EBl_Avila?= <jn.avila@free.fr>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
 	Marco Paolone <marcopaolone@gmail.com>,
 	Marco Sousa <marcomsousa@gmail.com>,
-	=?VISCII?Q?Tr=A5n_Ng=F7c_Qu=E2n?= <vnwildman@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
 	Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 08:53:57 2014
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 09:04:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrMYr-0006cQ-SO
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 08:53:54 +0100
+	id 1XrMjL-00027Q-2k
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 09:04:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbaKTHxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 02:53:50 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:49802 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750780AbaKTHxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 02:53:49 -0500
-X-Greylist: delayed 313 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Nov 2014 02:53:48 EST
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id sAK7mDew021108
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 20 Nov 2014 08:48:13 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id sAK7mBiU021104;
-	Thu, 20 Nov 2014 08:48:11 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <CANYiYbFrNCqxfrcaOWjeEZ2no=DRHVoDic8Qg989=U_VUTWiWA@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 20 Nov 2014 08:48:13 +0100 (CET)
+	id S1756717AbaKTIEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 03:04:39 -0500
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:34520 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756711AbaKTIEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 03:04:38 -0500
+Received: by mail-wg0-f51.google.com with SMTP id k14so2913282wgh.38
+        for <git@vger.kernel.org>; Thu, 20 Nov 2014 00:04:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=HSOrpz4fsmxUmKWwAvGRIZX5soPsQwlTwkfe2H6hHEo=;
+        b=k4mH6mHtMn92BUbI+2yOVvfYkpvz1+DH/iVpZRM3VJf7xniPOwoOHMkdKahf58XalK
+         rAFGJqGI3KL76+VDdHvGwlYZbXQwLiH2DjwGD1vTJg4bN1hZeMyn+ZLM3SsL3QKkwtfq
+         3pFIEISCwuyc19Q8WHvH3BrgpFlWMQeKO1a36uOvf7Q4QSqHtf5kCZTeBDSSREbZRVsU
+         mgmzzUOLva3tVTXZxLM4J8n0gwP81XZ5XV2VaYeUfc4MI3PclP5LSAIKIrBf8ogq3DOc
+         yQvp4zfwf788ybZeguB4WD8eN+KtcSQ/3iW4AAGw+eqxfKzFHkQl3ERn9MykK9A4sEcO
+         zifQ==
+X-Received: by 10.180.39.106 with SMTP id o10mr13266906wik.54.1416470677250;
+ Thu, 20 Nov 2014 00:04:37 -0800 (PST)
+Received: by 10.194.56.8 with HTTP; Thu, 20 Nov 2014 00:04:37 -0800 (PST)
+In-Reply-To: <CAN0XMOLZw+btduQkQwMLykYFgFuZzTfMwnexyGR0FBdbG=qFmA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin:
+2014-11-20 14:31 GMT+08:00 Ralf Thielow <ralf.thielow@gmail.com>:
+>>
+>> NOTE for Ralf:  After I updated de.po, there are 3 fuzzies instead of one.
+>> I can only fix one of them.
+>>
+>
+> I just send a pull-request to you. It seems I have forgotten one git.pot update.
 
-> Because I update the .po files with msgmerge, this update also
-> brings some format changes, so not panic. :)  What I changed are:
+Merged.  I also see a nice workaround in your commit.  It's a fix for the issue
+you reported [1] yesterday on our side. ;-)
 
-Swedish (sv) looks fine, thanks!
+     msgid "check"
+    +msgstr "check|on-demand"
+
+[1]: http://www.spinics.net/lists/git/msg241964.html
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+Jiang Xin
