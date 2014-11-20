@@ -1,7 +1,7 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [RFC 3/4] engine.pl: split the .o and .obj processing
-Date: Thu, 20 Nov 2014 23:38:01 +0000
-Message-ID: <1416526682-6024-4-git-send-email-philipoakley@iee.org>
+Subject: [RFC 1/4] Fix i18n -o option in msvc engine.pl
+Date: Thu, 20 Nov 2014 23:37:59 +0000
+Message-ID: <1416526682-6024-2-git-send-email-philipoakley@iee.org>
 References: <1416526682-6024-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,48 +12,48 @@ Cc: Marius Storm-Olsen <mstormo@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Msysgit <msysgit@googlegroups.com>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com Fri Nov 21 00:37:46 2014
-Return-path: <msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBRXWXGRQKGQERQXTYHQ@googlegroups.com Fri Nov 21 00:37:46 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBBRXWXGRQKGQERQXTYHQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f189.google.com ([209.85.212.189])
+Received: from mail-wg0-f63.google.com ([74.125.82.63])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com>)
-	id 1XrbII-0002YG-8d
-	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 00:37:46 +0100
-Received: by mail-wi0-f189.google.com with SMTP id r20sf371302wiv.26
-        for <gcvm-msysgit@m.gmane.org>; Thu, 20 Nov 2014 15:37:46 -0800 (PST)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBRXWXGRQKGQERQXTYHQ@googlegroups.com>)
+	id 1XrbIF-0002Ws-CM
+	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 00:37:43 +0100
+Received: by mail-wg0-f63.google.com with SMTP id b13sf327058wgh.18
+        for <gcvm-msysgit@m.gmane.org>; Thu, 20 Nov 2014 15:37:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
          :references:x-original-sender:x-original-authentication-results
          :content-type:precedence:mailing-list:list-id:list-post:list-help
          :list-archive:sender:list-subscribe:list-unsubscribe;
-        bh=/YHhT2qtBlecivDuMifKnm7/qdkfh5DVAcFlXQnWlgE=;
-        b=YHr+xNMl7KpFYIToJCt0vykoNj+/4YUkHR5feYS0kamNOIsEHj8xtwfe4EKnNlhQEK
-         rI6nJNNITki6wMg9zJCc0SQvXwKm7TBshS2Opz4ZWo+6c6I+pB1RL+6sZN7X7tW+Mczm
-         yBASkH2OTPz/fPXmFvqThPKgYw6z0p741HbUCES348yEPqlqmZgQNXSngzUAguWr7VNe
-         cHxN58w+8g3E0D2vcNrjpXXBmZqzoMO0EHlLg6cnpjR1u+U/HOQVaj7ChUxdE6j4k/tc
-         L51PwOVFufpaqTaZ8BCjZYpCw0WCPg4USPTkRVTZ2jzsNjc4MWw2ahgAxOsw0R5avtUl
-         u+cQ==
-X-Received: by 10.152.29.228 with SMTP id n4mr13425lah.16.1416526666071;
-        Thu, 20 Nov 2014 15:37:46 -0800 (PST)
+        bh=IMQrvIO/DZO+oA3SiC8aBhAmUe1OvXZf+rQ173XWMgU=;
+        b=ETyK0HbN+TPP3ZnAnxFJDiuh5i4MBC14orTVq149hwjIqI3QlDmkUwLeREs8ke0WWK
+         bFicAEps4/cai4OgRyDxE/O3SbjlEpW2RXO1pROxbgRmhh0VY1regdrpBYWe++fWosnr
+         ct5JmgYoAnOOPfwQpexChbXgg3+8SKv7MLli5rpM4FeF4lCZD0iWIFzJaPf4W/B5oIsi
+         R/h0iuQMlumE9lIqi5a0JnlKKqSX4uaoO39+HMR2JhHJk6IUCzXRgh16tWVC0LL86Ayj
+         s0M32Z844SisusyYawFuNg0/0q8RkM726LVWEBi4x1LSwLlS2Exy+9kLiEWFx7uC3iCA
+         sn+g==
+X-Received: by 10.180.14.33 with SMTP id m1mr103536wic.20.1416526663204;
+        Thu, 20 Nov 2014 15:37:43 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.206.102 with SMTP id ln6ls118368lac.95.gmail; Thu, 20 Nov
- 2014 15:37:44 -0800 (PST)
-X-Received: by 10.112.204.71 with SMTP id kw7mr351108lbc.13.1416526664237;
-        Thu, 20 Nov 2014 15:37:44 -0800 (PST)
+Received: by 10.180.90.146 with SMTP id bw18ls76481wib.23.canary; Thu, 20 Nov
+ 2014 15:37:42 -0800 (PST)
+X-Received: by 10.181.12.37 with SMTP id en5mr9855198wid.6.1416526662465;
+        Thu, 20 Nov 2014 15:37:42 -0800 (PST)
 Received: from out1.ip06ir2.opaltelecom.net (out1.ip06ir2.opaltelecom.net. [62.24.128.242])
-        by gmr-mx.google.com with ESMTP id jv2si90840wid.1.2014.11.20.15.37.44
+        by gmr-mx.google.com with ESMTP id jv2si90840wid.1.2014.11.20.15.37.42
         for <msysgit@googlegroups.com>;
-        Thu, 20 Nov 2014 15:37:44 -0800 (PST)
+        Thu, 20 Nov 2014 15:37:42 -0800 (PST)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.242 as permitted sender) client-ip=62.24.128.242;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAEBAQEGAiCRCAeESwWXNYkcmQY9MIJLAQEB
-X-IPAS-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAEBAQEGAiCRCAeESwWXNYkcmQY9MIJLAQEB
+X-IronPort-Anti-Spam-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAELIJEIB4RLBZc1iRyZBj0wgksBAQE
+X-IPAS-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAELIJEIB4RLBZc1iRyZBj0wgksBAQE
 X-IronPort-AV: E=Sophos;i="5.07,426,1413241200"; 
-   d="scan'208";a="651403030"
+   d="scan'208";a="651403018"
 Received: from host-78-151-115-240.as13285.net (HELO localhost) ([78.151.115.240])
-  by out1.ip06ir2.opaltelecom.net with ESMTP; 20 Nov 2014 23:37:43 +0000
+  by out1.ip06ir2.opaltelecom.net with ESMTP; 20 Nov 2014 23:37:42 +0000
 X-Mailer: git-send-email 1.9.4.msysgit.0
 In-Reply-To: <1416526682-6024-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
@@ -72,87 +72,40 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-Commit 4b623d80f7352 added an .obj file (invalidcontinue.obj) which was not
-processed correctly.
+    The i18n 5e9637c6 introduced an extra '-o' option
+    into the make file, which broke engine.pl code for
+    extracting the git.sln for msvc gui-IDE.
+    add tests for 'msgfmt' and its precursor 'mkdir'
+    (in same vein as 74cf9bdda6).
 
-The generate engine then mistakenly did a s/.o/.c/  to create a request
-to compile invalidcontinue.cbj.
-
-Split the '/\.(o|obj)$' in engine.pl#L353 into:
-
-        } elsif ($part =~ /\.o$/) { # was '/\.(o|obj)$'
-            push(@objfiles, $part);
-        } elsif ($part =~ /\.obj$/) { # was '/\.(o|obj)$'
-            # push(@objfiles, $part); # do nothing
-        } else {
-
-And correct the substitution to only operate on .o files.
-
-Also report all errors rather than dieing on the first
-
- $ git describe 4b623d80f7352
- v1.9.1-1-g4b623d8
-The problem exists for V1.9.2 onward
-
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
+    Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
- contrib/buildsystems/engine.pl | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ contrib/buildsystems/engine.pl | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 8e41808..16c3dd5 100755
+index 23da787..9144ea7 100755
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -264,7 +264,9 @@ sub handleCompileLine
-         } elsif ($part =~ /\.(c|cc|cpp)$/) {
-             $sourcefile = $part;
-         } else {
--            die "Unhandled compiler option @ line $lineno: $part";
-+            print "full line: $line\n";
-+            print "A:-Unhandled compiler option @ line $lineno: $part\n"; # die (if !DEBUG)
-+#            die "Unhandled compiler option @ line $lineno: $part";
+@@ -140,6 +140,18 @@ sub parseMakeOutput
+             next;
          }
-     }
-     @{$compile_options{"${sourcefile}_CFLAGS"}} = @cflags;
-@@ -290,14 +292,15 @@ sub handleLibLine
-             $libout = $part;
-             $libout =~ s/\.a$//;
-         } else {
--            die "Unhandled lib option @ line $lineno: $part";
-+            print "A:-Unhandled lib option @ line $lineno: $part\n"; # die (if !DEBUG)
-+#           die "Unhandled lib option @ line $lineno: $part";
-         }
-     }
- #    print "LibOut: '$libout'\nLFlags: @lflags\nOfiles: @objfiles\n";
- #    exit(1);
-     foreach (@objfiles) {
-         my $sourcefile = $_;
--        $sourcefile =~ s/\.o/.c/;
-+        $sourcefile =~ s/\.o$/.c/;
-         push(@sources, $sourcefile);
-         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
-         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
-@@ -343,8 +346,10 @@ sub handleLinkLine
-         } elsif ($part =~ /\.(a|lib)$/) {
-             $part =~ s/\.a$/.lib/;
-             push(@libs, $part);
--        } elsif ($part =~ /\.(o|obj)$/) {
-+        } elsif ($part =~ /\.o$/) { # was '/\.(o|obj)$'
-             push(@objfiles, $part);
-+        } elsif ($part =~ /\.obj$/) { # was '/\.(o|obj)$'
-+            # push(@objfiles, $part); # do nothing
-         } else {
-             die "Unhandled lib option @ line $lineno: $part";
-         }
-@@ -353,7 +358,7 @@ sub handleLinkLine
- #    exit(1);
-     foreach (@objfiles) {
-         my $sourcefile = $_;
--        $sourcefile =~ s/\.o/.c/;
-+        $sourcefile =~ s/\.o$/.c/;
-         push(@sources, $sourcefile);
-         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
-         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+ 
++        if ($text =~ /^mkdir /) {
++            # options to the Portable Object translations in the line
++            # mkdir -p po/... && msgfmt ... (eg -o) may be mistaken for linker options
++            next;
++        }
++
++        if ($text =~ /^msgfmt /) {
++            # options to the Portable Object translations in the line
++            # mkdir -p po/... && msgfmt ... (eg -o) may be mistaken for linker options
++            next;
++        }
++
+         if($text =~ / -c /) {
+             # compilation
+             handleCompileLine($text, $line);
 -- 
 1.9.4.msysgit.0
 
