@@ -1,78 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCH v5 1/1] refs.c: use a stringlist for repack_without_refs
-Date: Thu, 20 Nov 2014 11:01:33 -0800
-Message-ID: <xmqqppch3dde.fsf@gitster.dls.corp.google.com>
+Date: Thu, 20 Nov 2014 11:05:40 -0800
+Message-ID: <CAGZ79kYogEQuynukSkb9La+7DZxOQonAyuYD=kWB7KRdsXLHOA@mail.gmail.com>
 References: <20141120021540.GF6527@google.com>
 	<1416506666-5989-1-git-send-email-sbeller@google.com>
+	<xmqqppch3dde.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: sahlberg@google.com, git@vger.kernel.org, jrnieder@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 20:02:49 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 20:05:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrX0B-0006JU-0o
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 20:02:47 +0100
+	id 1XrX34-0007WT-79
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 20:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757268AbaKTTCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 14:02:43 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65255 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755664AbaKTTCm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 14:02:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 943FF1FAA2;
-	Thu, 20 Nov 2014 14:02:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HE/dOm62H1GekwwpLw4M5LSA5EY=; b=jOaGsD
-	g7VGnSnWmZoQlx8abKBCOVa73ZXgdvevnm/7ygqWCDSMNthuLm68gTejgxiCne2Z
-	VYU1ePLmLgpo8SFxvFLv2Hn7MRfDs0ZhKQ6UFNiEhOqebdHBbQVG434Z9NuQXMIg
-	psXahfDn9c0a+C0GAM+pi9k8BxJRQDpojkkBw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WRUPo0i52ytyIJzz5rjFiM6Ux7GZDFlp
-	0RWS4pXAvHr3qGZx5/Flb/QOSAoggttC0oiSpwLXDMBzCCS0XQUXZIGnHMdtqTe4
-	rX0DJGch1IhsmP1pIM/wAdREZEyMT4hjJFC/885yrm3hQCPo2FeCL5EimoBfurz5
-	hwFWbWRTIWI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A2EA1FAA0;
-	Thu, 20 Nov 2014 14:02:41 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D42DE1FA43;
-	Thu, 20 Nov 2014 14:01:34 -0500 (EST)
-In-Reply-To: <1416506666-5989-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Thu, 20 Nov 2014 10:04:26 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A5C3F698-70E7-11E4-AE41-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1757459AbaKTTFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 14:05:42 -0500
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:47826 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757084AbaKTTFl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 14:05:41 -0500
+Received: by mail-ie0-f175.google.com with SMTP id at20so3312223iec.6
+        for <git@vger.kernel.org>; Thu, 20 Nov 2014 11:05:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=TScnIu2XY07E/Qv7yd4yv/bwe5huXmhe5KaS4UfPytI=;
+        b=f527xvDxmFMkuewX0/EgXNvLT9ZG+tJTffE4ph0UD6LmYGsxrFnMUe6Ou+K2ptiktp
+         y6U+C+o98uoi/AOTWKHkSyIMTKbkjwRUui7g7NYP02kwYb12Odu4jK2A8jFVxZWOtu21
+         Ln08RkFdB3fZEu17pe8F16JjZPMavSnR1dPcwAJHLcMxbeRNKNOkQozPP3sBb7R2yEcz
+         naThAMI9VG1kZG9yZlLH19O9PJkFjwHARs+Hf2NJJrFcZ9CRJYSBS9mtAKkgXknF5CXl
+         kYoXduBFrrb8v3v0Enom1novatVq5ag2ezmF8rgSPj2SLy+5xjj27x1QyWc4Qo3t7auH
+         kApg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=TScnIu2XY07E/Qv7yd4yv/bwe5huXmhe5KaS4UfPytI=;
+        b=YolWpNL0CzGtID+M5tT1G4Nqeut1Kxwz+LGS04XEanfcBEIk4WjFwAp9EFDgXrioxW
+         s2Je17uxi4X8/pB20URakrzR5n8PSF9r2vbXtsMxHnAi0x9+kv5yOKN4nqGKd+QPago4
+         Gnjp/zz8QKwlERFb5TkBQWpt9a62sqt0O7CypU6rtT8dZ5RmfG4tqJ2ZS6UDU8hQWmAM
+         uaH57t++XkNGJ8+8DZ5H7VSATBUQcbwpvVRN9gp3z9J0cOvG6eN4dfRvS2PUYdFWfe7D
+         imW0OhqHZaIXz9RXjWOQijXBjnCQw0P+D3o3DfafpGRf+/2Cr5mLzkbIP2uKXHyoz8C5
+         NpCA==
+X-Gm-Message-State: ALoCoQnCrGzSjxBcUC41ex0kOqaPAqDHLse+v8FWbu//LF7ZapbZ79BB4Jd/DMf5LfqFP3YsTkHx
+X-Received: by 10.42.129.140 with SMTP id q12mr1875451ics.68.1416510340968;
+ Thu, 20 Nov 2014 11:05:40 -0800 (PST)
+Received: by 10.107.1.199 with HTTP; Thu, 20 Nov 2014 11:05:40 -0800 (PST)
+In-Reply-To: <xmqqppch3dde.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, Nov 20, 2014 at 11:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I think this matches more-or-less what I've locally tweaked after
+> following the discussion between you and Jonathan.  Thanks.
 
->  Junio, I'll address your proposed changes in a different patch. 
->  If err is passed in as NULL, we'll just skip all the error string 
->  formatting and return silent and fast.
+Do you want me to resend the patch with Jonathans nits fixed?
 
-Huh, I lost track, but I never meant to say "the functions should
-return silently with error code when err == NULL".  I said that it
-is another plausible expectation, hence justifies the comment to
-clarify, but wished that there were no need to clarify in the first
-place.
+Jonathan wrote:
+>> Change-Id: Id7eaa821331f2ab89df063e1e76c8485dbcc3aed
+> Change-id snuck in.
 
-If everybody required err != NULL, there would be no need to clarify
-which functions require err != NULL.  If everybody accepted err ==
-NULL as a more efficient way to do "--quiet", that is another way to
-remove the need to clarify.
-
-Either way is fine and I did not "propose" anything ;-).
-
-I think this matches more-or-less what I've locally tweaked after
-following the discussion between you and Jonathan.  Thanks.
+I need to get the format patch hook running, I was talking about
+earlier this week.
