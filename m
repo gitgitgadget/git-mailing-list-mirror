@@ -1,129 +1,120 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-Subject: Minimum required version of subversion for git-svn?
-Date: Fri, 9 Jan 2009 11:11:27 +0100
-Message-ID: <496722CF.1060802@statsbiblioteket.dk>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] Introduce a hook to run after formatting patches
+Date: Thu, 20 Nov 2014 15:26:28 -0800
+Message-ID: <20141120232628.GA30554@google.com>
+References: <1416012460-4459-1-git-send-email-sbeller@google.com>
+ <xmqqzjbryonp.fsf@gitster.dls.corp.google.com>
+ <xmqqlhn9y7dn.fsf@gitster.dls.corp.google.com>
+ <xmqqd28ly6p1.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD3m9aouYKXfk-vE4AGbTxdyH6=k8ey5n-kF1OLux2Ah0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 9 Jan 2009 10:21:55 +0000 (UTC)
-To: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 20 Nov 2014 23:26:44 +0000 (UTC)
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-X-Greylist: delayed 604 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Jan 2009 05:21:34 EST
-User-Agent: Thunderbird 2.0.0.18 (X11/20081124)
+Envelope-to: gcvg-git-2@plane.gmane.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=kKppxVxc9MrwarpmfyhTthN9f7iBOG6Ay3EnLz4EIgQ=;
+        b=VdMEKDNK5bnX1I5RjcFqYgykXInseJx7xcVPgfokQz0KIxaQT667GDa6K5jDF2wxQN
+         Ky4EuhyERAhyw1taJl6IgggkkMR1z2XpcEbvCD2o56ioDjvBYUuuoDAW+C8mUXBWTgJi
+         wpWimRphsRWm4kcNtm4YfMM+CRjHmi5XpTQBUQC2lV1VfCBfbkik4b/5MysnVyRS7rJV
+         RAREgWYe4RJ7E42Lg5He+3F/E81j9kFrEPQVLvaAsJ18ZJrwyNwWLoF6FrHX7XMbbZvJ
+         fQ3TmUEEwRZsAFnXbz/DCpCBN0PN7ebw9Pz2OWgjmRElYUFTYMVBebNxBTpUXUVvByU/
+         Wmkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=kKppxVxc9MrwarpmfyhTthN9f7iBOG6Ay3EnLz4EIgQ=;
+        b=ipBX/hgdI78GBN+K7zjZ6JerXxWgYjz8pwIb3fWMI0RadEiH9aJVAho0ScyEhqvRGK
+         BqeV1+HsMBdmKqXnbHjYtK9OsqA3waWgTlFqg5fxRrg4k9soKb3zc5QtGXQFPjW6HxzG
+         ybd8dITODa1DYMFYmMjbhOpRVjCpiSjI6uo9fyXYAklVB3G3hK93d1QnYcpHeM4IW6u8
+         n2bmxuqHVznUfgSKU3qN2GwA42z9Z6t4XWqH8JjSJqBaiD6nZJcPsMOX2FZt9KX2vMHV
+         D/5oaQ0+dsfsO5pjOVWyjFCqEm6FvUEuLNud5qRpJBmzmMfcxGo+wuCmbpO0JW88aJvd
+         tpLg==
+X-Gm-Message-State: ALoCoQmu+xxp6LX0+crBBiEPF0dOMIuhJyS3sIVx1ZMi3cjzaPfQRt0238anxnVDITGfJ1aiRNeu
+X-Received: by 10.43.104.66 with SMTP id dl2mr11779638icc.9.1416525989779;
+        Thu, 20 Nov 2014 15:26:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD3m9aouYKXfk-vE4AGbTxdyH6=k8ey5n-kF1OLux2Ah0g@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105000>
-Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
- (Exim 4.50) id 1LLEW3-0003Np-Vc for gcvg-git-2@gmane.org; Fri, 09 Jan 2009
- 11:23:00 +0100
+Received: from vger.kernel.org ([209.132.180.67]) by plane.gmane.org with
+ esmtp (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id
+ 1Xrb7T-0006db-4y for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 00:26:35
+ +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754506AbZAIKVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jan 2009
- 05:21:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753658AbZAIKVf
- (ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 05:21:35 -0500
-Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:22186 "EHLO
- sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
- with ESMTP id S1753446AbZAIKVe (ORCPT <rfc822;git@vger.kernel.org>); Fri, 9
- Jan 2009 05:21:34 -0500
-Received: from [130.225.25.159] (130.225.25.159) by
- sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
- 8.1.336.0; Fri, 9 Jan 2009 11:11:27 +0100
+ S1757484AbaKTX0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Nov 2014
+ 18:26:31 -0500
+Received: from mail-oi0-f74.google.com ([209.85.218.74]:50238 "EHLO
+ mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1756935AbaKTX0a (ORCPT <rfc822;git@vger.kernel.org>); Thu, 20 Nov
+ 2014 18:26:30 -0500
+Received: by mail-oi0-f74.google.com with SMTP id e131so528887oig.3 for
+ <git@vger.kernel.org>; Thu, 20 Nov 2014 15:26:29 -0800 (PST)
+Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104]) by
+ gmr-mx.google.com with ESMTPS id kb8si920645qcb.1.2014.11.20.15.26.29 for
+ <multiple recipients> (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256
+ bits=128/128); Thu, 20 Nov 2014 15:26:29 -0800 (PST)
+Received: from sbeller.mtv.corp.google.com ([172.27.69.125]) by
+ corpmail-nozzle1-1.hot.corp.google.com with ESMTP id oTSYBdYV.1; Thu, 20 Nov
+ 2014 15:26:29 -0800
+Received: by sbeller.mtv.corp.google.com (Postfix, from userid 279346) id
+ 89CA51411F5; Thu, 20 Nov 2014 15:26:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 
-Hello,
+On Tue, Nov 18, 2014 at 07:40:07AM +0100, Christian Couder wrote:
+> On Mon, Nov 17, 2014 at 8:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> >> (I am not saying that there should be an easy way to drop cruft left
+> >> by third-party systems such as "Change-id:" line) ...
+> >
+> > Heh, that was "should not be", but I guess it was probably obvious.
+> >
+> > Sorry for the noise.
+> 
+> I am not sure it is very easy yet but as Change-id: ... line are
+> trailers, you can do that with git interpret-trailers.
+> 
+> For example:
+> 
+> $ echo -e "\nChange-id: stuff\nOther: thing"  | git -c
+> trailer.Change-id.ifexists=replace interpret-trailers --trim-empty
+> --trailer Change-id=
+> >
+> > Other: thing
+> 
+> The idea is that the above command replaces an existing "Change-id:
+> stuff" trailer with an empty "Change-id:" trailer and then removes all
+> the empty trailers.
+> 
 
-With git 1.6.0.5 I was able to run git-svn with subversion 1.1.4 on
-RHEL4/i386 but with 1.6.0.6 and 1.6.1 the testsuite now fails in the new
-test t9104.10:
-* FAIL 10: follow-parent is atomic
+So I have read the man page on the trailers and it seems like the solution
+to my problem in removing parts from the commit message.
+However I did not find out, if it can be run automatically, whenever
+calling format-patch
 
-                 (
-                         cd wc &&
-                         svn up &&
-                         svn mkdir stunk &&
-                         echo "trunk stunk" > stunk/readme &&
-                         svn add stunk/readme &&
-                         svn ci -m "trunk stunk" &&
-                         echo "stunk like junk" >> stunk/readme &&
-                         svn ci -m "really stunk" &&
-                         echo "stink stank stunk" >> stunk/readme &&
-                         svn ci -m "even the grinch agrees"
-                 ) &&
-                 svn copy -m "stunk flunked" "$svnrepo"/stunk
-"$svnrepo"/flunk &&
-                 { svn cp -m "early stunk flunked too" \
-                         "$svnrepo"/stunk@17 "$svnrepo"/flunked ||
-                 svn cp -m "early stunk flunked too" \
-                         -r17 "$svnrepo"/stunk "$svnrepo"/flunked; } &&
-                 git svn init --minimize-url -i stunk "$svnrepo"/stunk &&
-                 git svn fetch -i stunk &&
-                 git update-ref refs/remotes/flunk@18
-refs/remotes/stunk~2 &&
-                 git update-ref -d refs/remotes/stunk &&
-                 git config --unset svn-remote.svn.fetch stunk &&
-                 mkdir -p "$GIT_DIR"/svn/flunk@18 &&
-                 rev_map=$(cd "$GIT_DIR"/svn/stunk && ls .rev_map*) &&
-                 dd if="$GIT_DIR"/svn/stunk/$rev_map \
-                    of="$GIT_DIR"/svn/flunk@18/$rev_map bs=24 count=1 &&
-                 rm -rf "$GIT_DIR"/svn/stunk &&
-                 git svn init --minimize-url -i flunk "$svnrepo"/flunk &&
-                 git svn fetch -i flunk &&
-                 git svn init --minimize-url -i stunk "$svnrepo"/stunk &&
-                 git svn fetch -i stunk &&
-                 git svn init --minimize-url -i flunked
-"$svnrepo"/flunked &&
-                 git svn fetch -i flunked
-                 test "`git rev-parse --verify refs/remotes/flunk@18`" \
-                    = "`git rev-parse --verify refs/remotes/stunk`" &&
-                 test "`git rev-parse --verify refs/remotes/flunk~1`" \
-                    = "`git rev-parse --verify refs/remotes/stunk`" &&
-                 test "`git rev-parse --verify refs/remotes/flunked~1`" \
-                    = "`git rev-parse --verify refs/remotes/stunk~1`"
+Maybe all that is missing here is an option
 
+	git config format.enable_trailers 
+?
 
-With 1.6.1 I also see t9129.10-12 failing with subversion 1.1.4:
-* FAIL 10: ISO-8859-1 should match UTF-8 in svn
+Best,
+Stefan
 
-                 (
-                         cd ISO-8859-1 &&
-                         compare_svn_head_with
-"$TEST_DIRECTORY"/t3900/1-UTF-8.txt
-                 )
-
-* FAIL 11: $H should match UTF-8 in svn
-
-                         (
-                                 cd $H &&
-                                 compare_svn_head_with
-"$TEST_DIRECTORY"/t3900/2-UTF-8.txt
-                         )
-
-* FAIL 12: $H should match UTF-8 in svn
-
-                         (
-                                 cd $H &&
-                                 compare_svn_head_with
-"$TEST_DIRECTORY"/t3900/2-UTF-8.txt
-                         )
-
-* failed 3 among 12 test(s)
-make[2]: Leaving directory `/builddir/build/BUILD/git-1.6.1/t'
-make[2]: *** [t9129-git-svn-i18n-commitencoding.sh] Error 1
-
-I see in git-svn.perl that only SVN::Core 1.1.0 is required. Is it still
-the intention that git-svn should work with subversion 1.1.x?
-
-If you're going to bump the minimum requirement I would ask that you
-atleast keep 1.3.x as supported. This is the last release of subversion
-where RHEL3 can satisfy the dependencies out of the box and I've
-verified that the testsuite will pass with 1.3.2.
-
--tgc
+> Best,
