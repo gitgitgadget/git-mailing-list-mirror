@@ -1,293 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC] t0027: check the eol conversion warnings
-Date: Thu, 20 Nov 2014 14:37:14 -0800
-Message-ID: <xmqqr3wx1oth.fsf@gitster.dls.corp.google.com>
-References: <546E5D26.8030109@web.de>
+Subject: Re: [L10N] please review a batch l10n update for Git 2.2.0 final
+Date: Thu, 20 Nov 2014 15:00:50 -0800
+Message-ID: <xmqqmw7l1nq5.fsf@gitster.dls.corp.google.com>
+References: <CANYiYbFrNCqxfrcaOWjeEZ2no=DRHVoDic8Qg989=U_VUTWiWA@mail.gmail.com>
+	<CAN0XMOLZw+btduQkQwMLykYFgFuZzTfMwnexyGR0FBdbG=qFmA@mail.gmail.com>
+	<CANYiYbEt7r1Bjx9VA29Vk5FL9Qu0nTeXVZWAaggrcM=eNsY7Rg@mail.gmail.com>
+	<CANYiYbH5-eDSkq8LQsyixMsDh6e9ZA7nTVib_GbdK5BQ6vE6OA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Nov 20 23:37:27 2014
+Content-Type: text/plain
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 21 00:01:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XraLs-0004lN-6f
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 23:37:25 +0100
+	id 1Xraii-0005dU-RV
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 00:01:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756664AbaKTWhS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Nov 2014 17:37:18 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57452 "EHLO
+	id S1757472AbaKTXA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 18:00:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61860 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756409AbaKTWhQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2014 17:37:16 -0500
+	with ESMTP id S1756866AbaKTXAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 18:00:55 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 177D31ECE4;
-	Thu, 20 Nov 2014 17:37:16 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E8A21F20D;
+	Thu, 20 Nov 2014 18:00:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=VACsuHfktL7H
-	VgEBH0B1zmX+EU0=; b=sgwvbqXgQVNBDojKLPp6bqEUY9MgT4Bz4YKr167OyI22
-	SjzDB3FrXXqSVmwbwUhwanewIB8XulBSwsRODFEEHcG32Cc8eQ75YWcgsiaVLPxR
-	LJbB619DIAwfoXkmvGXKRY4Bs9U3HzhcDWLqAvYsXX6toskdn7pxnYT2FscO664=
+	:content-type; s=sasl; bh=U4D+i7B1E1ob3sazx9Qbu3BKjb4=; b=ltESsz
+	34qhIGU0vPjr/bsSLRdU1cdzwEm3rxPYzUFl7lFowwX9H/c8Bg73zdaxIUmMfQ0s
+	9IQ9Ygqgja5BQRmjdNvZeEWZri/moTPA6xHPx9hFzz8hBcLlMN/6js9ch0253EsL
+	CQJJG2Ot1xJpMIEJX+LIeORPaPWxFLiiJqmrM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gw6HYO
-	6MAObhsAPsqfu4man/+r1CE7+OCMjlrwy8KNrj1KGmHyWug2PhMjYk7wEyPmzHhF
-	OY+RtcTl3koCavbKg3KqPYsYCyU85Rxcx04+OeyOX7TVK5+HSSffPK808tezTH8M
-	4cup3WxTyDobfp8+qVk5tFQVA5AAG//OUEZB0=
+	:content-type; q=dns; s=sasl; b=rM8Id6yo8sHqLnIXP3e496/bqmeJOV7U
+	K9gc1RhFEHM6nAl4wzpbVVtAP3BK3CIavYTKBPURW7UTQkXBa4tbJqXIxEMwAwHX
+	dkSCnpMVUEgW1G1uyfzy60YyJaB0khKVPGHIJ1r0W0puPReHcqrnUgg2Se4+1/JY
+	5er7okxWwGc=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0ECB51ECE3;
-	Thu, 20 Nov 2014 17:37:16 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 842841F20B;
+	Thu, 20 Nov 2014 18:00:53 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D4601ECE2;
-	Thu, 20 Nov 2014 17:37:15 -0500 (EST)
-In-Reply-To: <546E5D26.8030109@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Thu, 20 Nov 2014 22:29:10 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2AAD1F209;
+	Thu, 20 Nov 2014 18:00:52 -0500 (EST)
+In-Reply-To: <CANYiYbH5-eDSkq8LQsyixMsDh6e9ZA7nTVib_GbdK5BQ6vE6OA@mail.gmail.com>
+	(Jiang Xin's message of "Thu, 20 Nov 2014 16:30:44 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C6F34602-7105-11E4-9143-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 13D9EC8E-7109-11E4-AB8C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> Add tests to check the warnings when adding file with eol=3Dlf and eo=
-l=3Dcrlf.
+> 2014-11-20 16:04 GMT+08:00 Jiang Xin <worldhello.net@gmail.com>:
+>> 2014-11-20 14:31 GMT+08:00 Ralf Thielow <ralf.thielow@gmail.com>:
+>>>>
+>>>> NOTE for Ralf:  After I updated de.po, there are 3 fuzzies instead of one.
+>>>> I can only fix one of them.
+>>>>
+>>>
+>>> I just send a pull-request to you. It seems I have forgotten one git.pot update.
+>>
+>> Merged.  I also see a nice workaround in your commit.  It's a fix for the issue
+>> you reported [1] yesterday on our side. ;-)
+>>
+>>      msgid "check"
+>>     +msgstr "check|on-demand"
+>>
+>> [1]: http://www.spinics.net/lists/git/msg241964.html
 >
-> Add a function check_warning() to check the warnings on stderr
-> "CRLF will be replaced..." or "LF will be replaced..."
+> Another batch update:
 >
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
+> commit 7ba2ba7d12163a8f9a9947d7880bd26f2970d4c5
+> ...
 
-At a glance it is very hard to see what we might be _losing_ with this
-change that claims to "add" new kinds of tests on top of existing ones.
+I've pushed out what should be -rc3 minus l10n changes and try to
+make sure there will be no N_() and _() changes.
 
-I am guessing that add-check-warn roughly corresponds to the old
-create-file-in-repo but they have different calling conventions, or
-something?
+Let's do a 2.2-rc3 as the last round of this cycle tomorrow.  I've
+fetched up to your 7ba2ba7 but haven't merged it yet, just in case
+you will have further updates.  Otherwise, 2.2-rc3 will be what is
+at the tip of 'master' today with 7ba2ba7 merged in.
 
-Perhaps split it into two patches (or more), each of which does one
-thing and one thing well?  I suspect that even with a two-patch
-split (e.g. the first of which only renames the function without
-adding the new "grep in error messages that could be localized and
-give false failures" code, and the second adds the lf/crlf stuff)
-might make this at least readable.
-
-I dunno.
-
->  t/t0027-auto-crlf.sh | 103 +++++++++++++++++++++++++++++++++++++++--=
-----------
->  1 file changed, 80 insertions(+), 23 deletions(-)
->
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index 2a4a6c1..9570947 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -55,16 +55,36 @@ create_gitattributes () {
->  	esac
->  }
-> =20
-> -create_file_in_repo () {
-> +check_warning () {
-> +	case "$1" in
-> +	LF_CRLF) grep "LF will be replaced by CRLF" $2;;
-> +	CRLF_LF) grep "CRLF will be replaced by LF" $2;;
-> +	*) test_cmp /dev/null $2;;
-> +	esac
-> +}
-> +
-> +add_check_warn () {
->  	crlf=3D$1
->  	attr=3D$2
-> +	lfname=3D$3
-> +	crlfname=3D$4
-> +	lfmixcrlf=3D$5
-> +	lfmixcr=3D$6
-> +	crlfnul=3D$7
->  	create_gitattributes "$attr" &&
-> +	pfx=3Dcrlf_${crlf}_attr_${attr}
->  	for f in LF CRLF LF_mix_CR CRLF_mix_LF CRLF_nul
->  	do
-> -		pfx=3Dcrlf_${crlf}_attr_${attr}_$f.txt &&
-> -		cp $f $pfx && git -c core.autocrlf=3D$crlf add $pfx
-> +		fname=3D${pfx}_$f.txt &&
-> +		cp $f $fname &&
-> +		git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err"
->  	done &&
-> -	git commit -m "core.autocrlf $crlf"
-> +	git commit -m "core.autocrlf $crlf" &&
-> +	check_warning "$lfname" ${pfx}_LF.err &&
-> +	check_warning "$crlfname" ${pfx}_CRLF.err &&
-> +	check_warning "$lfmixcrlf" ${pfx}_LF_mix_CR.err &&
-> +	check_warning "$lfmixcr" ${pfx}_LF_mix_CR.err &&
-> +	check_warning "$crlfnul" ${pfx}_CRLF_nul.err
->  }
-> =20
->  check_files_in_repo () {
-> @@ -140,50 +160,87 @@ test_expect_success 'setup master' '
->  '
-> =20
-> =20
-> -test_expect_success 'create files' '
-> -	create_file_in_repo false "" &&
-> -	create_file_in_repo true  "" &&
-> -	create_file_in_repo input "" &&
-> =20
-> -	create_file_in_repo false "auto" &&
-> -	create_file_in_repo true  "auto" &&
-> -	create_file_in_repo input "auto" &&
-> +warn_LF_CRLF=3D"LF will be replaced by CRLF"
-> +warn_CRLF_LF=3D"CRLF will be replaced by LF"
-> +
-> +test_expect_success 'add files empty attr' '
-> +	add_check_warn false ""     ""        ""        ""        ""       =
- "" &&
-> +	add_check_warn true  ""     "LF_CRLF" ""        ""        ""       =
- "" &&
-> +	add_check_warn input ""     ""        "CRLF_LF" ""        ""       =
- ""
-> +'
-> =20
-> -	create_file_in_repo false "text" &&
-> -	create_file_in_repo true  "text" &&
-> -	create_file_in_repo input "text" &&
-> +test_expect_success 'add files attr=3Dauto' '
-> +	add_check_warn false "auto" ""        "CRLF_LF" ""        ""       =
- "" &&
-> +	add_check_warn true  "auto" "LF_CRLF" ""        ""        ""       =
- "" &&
-> +	add_check_warn input "auto" ""        "CRLF_LF" ""        ""       =
- ""
-> +'
-> =20
-> -	create_file_in_repo false "-text" &&
-> -	create_file_in_repo true  "-text" &&
-> -	create_file_in_repo input "-text" &&
-> +test_expect_success 'add files attr=3Dtext' '
-> +	add_check_warn false "text" ""        "CRLF_LF" ""        ""       =
- "CRLF_LF" &&
-> +	add_check_warn true  "text" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF"=
- ""        &&
-> +	add_check_warn input "text" ""        "CRLF_LF" ""        ""       =
- "CRLF_LF"
-> +'
-> +
-> +test_expect_success 'add files attr=3D-text' '
-> +	add_check_warn false "-text" ""       ""        ""        ""       =
- "" &&
-> +	add_check_warn true  "-text" ""       ""        ""        ""       =
- "" &&
-> +	add_check_warn input "-text" ""       ""        ""        ""       =
- ""
-> +'
-> +
-> +test_expect_success 'add files attr=3Dlf' '
-> +	add_check_warn false "lf"    ""       "CRLF_LF" ""         ""      =
- "CRLF_LF" &&
-> +	add_check_warn true  "lf"    ""       "CRLF_LF" ""         ""      =
- "CRLF_LF" &&
-> +	add_check_warn input "lf"    ""       "CRLF_LF" ""         ""      =
- "CRLF_LF"
-> +'
-> +
-> +test_expect_success 'add files attr=3Dcrlf' '
-> +	add_check_warn false "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF"=
- "" &&
-> +	add_check_warn true  "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF"=
- "" &&
-> +	add_check_warn input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF"=
- ""
-> +'
-> +
-> +test_expect_success 'create files cleanup' '
->  	rm -f *.txt &&
->  	git reset --hard
->  '
-> =20
-> -test_expect_success 'commit empty gitattribues' '
-> +test_expect_success 'check file in repo empty gitattribues' '
->  	check_files_in_repo false ""      LF CRLF CRLF_mix_LF LF_mix_CR CRL=
-=46_nul &&
->  	check_files_in_repo true  ""      LF LF   LF          LF_mix_CR CRL=
-=46_nul &&
->  	check_files_in_repo input ""      LF LF   LF          LF_mix_CR CRL=
-=46_nul
->  '
-> =20
-> -test_expect_success 'commit text=3Dauto' '
-> +test_expect_success 'check file in repo text=3Dauto' '
->  	check_files_in_repo false "auto"  LF LF   LF          LF_mix_CR CRL=
-=46_nul &&
->  	check_files_in_repo true  "auto"  LF LF   LF          LF_mix_CR CRL=
-=46_nul &&
->  	check_files_in_repo input "auto"  LF LF   LF          LF_mix_CR CRL=
-=46_nul
->  '
-> =20
-> -test_expect_success 'commit text' '
-> +test_expect_success 'check file in repo text' '
->  	check_files_in_repo false "text"  LF LF   LF          LF_mix_CR LF_=
-nul &&
->  	check_files_in_repo true  "text"  LF LF   LF          LF_mix_CR LF_=
-nul &&
->  	check_files_in_repo input "text"  LF LF   LF          LF_mix_CR LF_=
-nul
->  '
-> =20
-> -test_expect_success 'commit -text' '
-> +test_expect_success 'check file in repo -text' '
->  	check_files_in_repo false "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRL=
-=46_nul &&
->  	check_files_in_repo true  "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRL=
-=46_nul &&
->  	check_files_in_repo input "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRL=
-=46_nul
->  '
-> =20
-> +test_expect_success 'check file in repo lf' '
-> +	check_files_in_repo false "lf"    LF LF   LF          LF_mix_CR LF_=
-nul &&
-> +	check_files_in_repo true  "lf"    LF LF   LF          LF_mix_CR LF_=
-nul &&
-> +	check_files_in_repo input "lf"    LF LF   LF          LF_mix_CR LF_=
-nul
-> +'
-> +
-> +test_expect_success 'check file in repo crlf' '
-> +	check_files_in_repo false "crlf"  LF LF   LF          LF_mix_CR LF_=
-nul &&
-> +	check_files_in_repo true  "crlf"  LF LF   LF          LF_mix_CR LF_=
-nul &&
-> +	check_files_in_repo input "crlf"  LF LF   LF          LF_mix_CR LF_=
-nul
-> +'
-> +
->  ####################################################################=
-############
->  # Check how files in the repo are changed when they are checked out
->  # How to read the table below:
-> @@ -199,8 +256,8 @@ test_expect_success 'commit -text' '
->  # - parameter $8 : reference for a file with CRLF and a NUL (should =
-be handled as binary when auto)
-> =20
->  #                                            What we have in the rep=
-o:
-> -#                														 ----------------- EOL in repo ------=
-----------
-> -#                														 LF    CRLF  CRLF_mix_LF  LF_mix_CR  =
-  CRLF_nul
-> +#                                            ----------------- EOL i=
-n repo ----------------
-> +#                                            LF    CRLF  CRLF_mix_LF=
-  LF_mix_CR    CRLF_nul
->  #                   settings with checkout:
->  #                   core.   core.   .gitattr
->  #                    eol     acrlf
+Thanks.
