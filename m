@@ -1,112 +1,166 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] dir.c: allow re-include after a dir is excluded in some cases
-Date: Thu, 20 Nov 2014 07:27:06 +0700
-Message-ID: <CACsJy8DyPoXwAKF4h1sj2QOevN96QSUcJqOBmm1FSim8MKT4_A@mail.gmail.com>
-References: <CACsJy8BHvucnEAW065OXOe5NBQkxp7+8HJb7XCGYgOa=pkxLVA@mail.gmail.com>
- <1416393058-5497-1-git-send-email-pclouds@gmail.com> <xmqqmw7nrpqh.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: phil-gitml@phil.spodhuis.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 01:27:43 2014
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] refs.c: add a function to append a reflog entry to a fd
+Date: Wed, 19 Nov 2014 16:42:22 -0800
+Message-ID: <1416444142-28042-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: sahlberg@google.com, jrnieder@gmail.com, gitster@pobox.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 20 01:42:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrFb5-0006Mw-4v
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 01:27:43 +0100
+	id 1XrFpS-0003AW-LA
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 01:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756211AbaKTA1i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Nov 2014 19:27:38 -0500
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:45438 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755487AbaKTA1h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Nov 2014 19:27:37 -0500
-Received: by mail-ie0-f181.google.com with SMTP id tp5so1747116ieb.12
-        for <git@vger.kernel.org>; Wed, 19 Nov 2014 16:27:36 -0800 (PST)
+	id S1756228AbaKTAma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 19:42:30 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:56861 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754986AbaKTAm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 19:42:29 -0500
+Received: by mail-ie0-f170.google.com with SMTP id rd18so1772894iec.29
+        for <git@vger.kernel.org>; Wed, 19 Nov 2014 16:42:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HRDvJbxamDdlU2ga02cIoPVxRH+g93I7cwMhWHiAXYU=;
-        b=KfsCMqX+OYpHLnv1ZDwiFHz7YImNQml+WmbEHphizMi7/c55pgyaCJ8I/75gHboiIv
-         MhOt9jUTjkxG4MgFeEwlFm8NtdSMRXv2yeg4+FjU6Hv6zwNKLCUSrvSH1B2f+dkVYSN6
-         UzCDPT9nGWMrbx+i9/ONzUFVx71nGRMC2tnkbtT6BOqk/6yEgnYRpB4P24j3nsnJJdKf
-         X4zBZswXs2HKK+lknmOZxsPKPOB0S1AZIRvI46MqxQg8Z8HP/rrJbGqVo91nYgQ3NGMW
-         ocW4MzQ8IvCbAsTNPEIi+Mt+oXaymiY+ciwgBQ0b+LZLfqVqN1ur2jNMxykZnpBvoP4M
-         xsbA==
-X-Received: by 10.42.88.2 with SMTP id a2mr5377897icm.11.1416443256455; Wed,
- 19 Nov 2014 16:27:36 -0800 (PST)
-Received: by 10.107.176.8 with HTTP; Wed, 19 Nov 2014 16:27:06 -0800 (PST)
-In-Reply-To: <xmqqmw7nrpqh.fsf@gitster.dls.corp.google.com>
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=yveqnGjI8sSfHgDl7EFjkqhWYJ9omKz0rEbETaP4BaA=;
+        b=S+R02CoKWkq2qdkt7GXl+weVJak1Ge36UWL2b9e23gIC9rwAtmsIw1MumkQIb+L9DF
+         kaJuYGD36X9/Tvye5Zh/YK2s2Glxlh6g9QOdgKIUPSqIKFFgjRD0274HiryKKMyoBdb4
+         j31PHX/g3lrlkt80SYPGg2uF/V9Kh2QzxCYhpEy586P2eju3+mfQR1QHD/UvHUY/6iXT
+         PKuOhqxcRwgpmUekiTUiIQqbxuiOs0A+CFk5ZjEDpL9zI//6GNjlNFkH6asJEzUK6z12
+         u9uzHp2fooDfBUy018gFFQuogyX4UR5AYq48ZrSYJTH66wGoJVAWFVwU4/QCGSR9LFnr
+         ashA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=yveqnGjI8sSfHgDl7EFjkqhWYJ9omKz0rEbETaP4BaA=;
+        b=FWFFn9sG0mtz+aeZMnDfsqREX03D89retLTeP6xN+IO+LQGgKOWLKab8edjqWu3+CL
+         0Qu+7G+nBFYykNXD17GB5yaSG2wVIVvuiOBFvDN2n/QF5mFSTkUVElcYjSrI8+pdvE4S
+         mgg9GxBS1/PR5Yhbxzqwn6ShjhZrNYHRV02uwYn22T5GIh/kCuGBFGeC67MZnJGWKtKi
+         nE3MK9PDie0cEJHFgds5dXqStzYoQfOaM2ZfM1n5YIY0Dtp9CpKmKu+Liq9fSyag6skf
+         adpevWAqOpDrxn6g5FP47s5mQAuZ6Rzjh+bDjpDkbfVS6ocKypgwc2RKNGsGSRTN3xNk
+         E+GQ==
+X-Gm-Message-State: ALoCoQlU/j6mPdBCpE9DszX1foTfr+njl11OcnNBHcEBgTOg73b36i+5IZtEaA7STF9bRu0vTr1r
+X-Received: by 10.50.114.97 with SMTP id jf1mr6370394igb.29.1416444149284;
+        Wed, 19 Nov 2014 16:42:29 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:7876:7c52:1268:8374])
+        by mx.google.com with ESMTPSA id p198sm436697iop.36.2014.11.19.16.42.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 19 Nov 2014 16:42:28 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.rc2.13.g0786cdb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 20, 2014 at 1:48 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.t=
-xt
->> index 09e82c3..0340c44 100644
->> --- a/Documentation/gitignore.txt
->> +++ b/Documentation/gitignore.txt
->> @@ -82,10 +82,9 @@ PATTERN FORMAT
->>
->>   - An optional prefix "`!`" which negates the pattern; any
->>     matching file excluded by a previous pattern will become
->> -   included again. It is not possible to re-include a file if a par=
-ent
->> -   directory of that file is excluded. Git doesn't list excluded
->> -   directories for performance reasons, so any patterns on containe=
-d
->> -   files have no effect, no matter where they are defined.
->> +   included again.
->> +   It is usually not possible to re-include a file if a parent
->> +   directory of that file is excluded. See NOTES for details.
->>     Put a backslash ("`\`") in front of the first "`!`" for patterns
->>     that begin with a literal "`!`", for example, "`\!important!.txt=
-`".
->>
->> @@ -144,6 +143,12 @@ use 'git update-index {litdd}assume-unchanged'.
->>  To stop tracking a file that is currently tracked, use
->>  'git rm --cached'.
->>
->> +It is usually not possible to re-include a file if a parent directo=
-ry
->> +of that file is excluded because of performance reasons. However, i=
-f
->> +there are negative rules in the same .gitignore file that contains =
-the
->> +rule to ignore a specific directory, and those negative rules conta=
-in
->> +a slash, then re-inclusion is possible.
->
-> Does that mean "performance reasons" goes out the window???
->
-> What trade-off are the users making by choosing to do so?  Is it
-> explained in the documentation well enough to allow them to make an
-> informed decision?
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-If they put "!**/foo" there, I think it's obvious for users that all
-dirs must be looked at. "!a*/**/foo" may be expected to only look at a
-subset of dirs recursively, instead of everything. "!*/def" may be
-expected that only one more level of directories are looked at. I
-didn't cover the last two cases well and I don't think it'll be easy
-to do. Which makes this patch less appealing. (so much for a
-not-thoroughly-thought-through quick prototype)
+Break out the code to create the string and writing it to the file
+descriptor from log_ref_write and add it into a dedicated function
+log_ref_write_fd. For now this is only used from log_ref_write,
+but later on we will call this function from reflog transactions too,
+which means that we will end up with only a single place,
+where we write a reflog entry to a file instead of the current two
+places (log_ref_write and builtin/reflog.c).
 
-Perhaps I look at it from a wrong angle. If we have a way to say
-"these patterns do not apply to directories", then the user can
-selectively exclude certain directories and let others through. It
-would give the user more control and make the travelling cost more
-apparent (assuming we mention somewhere that the more dirs we examine,
-the longer it will take).
---=20
-Duy
+[sb: replaced sprintf by snprintf for security reasons, 
+     which was there in the beginning (6de08ae688b9f2, 2006-06-17, 
+     Log ref updates to logs/refs/<ref>), but got lost in (8ac65937d032ad, 
+     2007-01-26, Make sure we do not write bogus reflog entries.)
+]
+
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ refs.c | 48 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 18 deletions(-)
+
+This is also part of the ref-transaction-reflog series, but is 
+sufficiently independant, that I'd argue it's a general code hygiene thing,
+we can use in any case.
+
+Applies on master.
+
+Compared to the last send of this patch[1], there was one change in the print
+function. Replaced sprintf by snprintf for security reasons. 
+
+[1] part of the ref-transaction-reflog series 
+    http://permalink.gmane.org/gmane.comp.version-control.git/259714
+ 
+
+diff --git a/refs.c b/refs.c
+index 5ff457e..f9b42e5 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2990,15 +2990,37 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 	return 0;
+ }
+ 
++static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
++			    const unsigned char *new_sha1,
++			    const char *committer, const char *msg)
++{
++	int msglen, written;
++	unsigned maxlen, len;
++	char *logrec;
++
++	msglen = msg ? strlen(msg) : 0;
++	maxlen = strlen(committer) + msglen + 100;
++	logrec = xmalloc(maxlen);
++	len = snprintf(logrec, maxlen, "%s %s %s\n",
++		       sha1_to_hex(old_sha1),
++		       sha1_to_hex(new_sha1),
++		       committer);
++	if (msglen)
++		len += copy_msg(logrec + len - 1, msg) - 1;
++
++	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
++	free(logrec);
++	if (written != len)
++		return -1;
++
++	return 0;
++}
++
+ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 			 const unsigned char *new_sha1, const char *msg)
+ {
+-	int logfd, result, written, oflags = O_APPEND | O_WRONLY;
+-	unsigned maxlen, len;
+-	int msglen;
++	int logfd, result, oflags = O_APPEND | O_WRONLY;
+ 	char log_file[PATH_MAX];
+-	char *logrec;
+-	const char *committer;
+ 
+ 	if (log_all_ref_updates < 0)
+ 		log_all_ref_updates = !is_bare_repository();
+@@ -3010,19 +3032,9 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 	logfd = open(log_file, oflags);
+ 	if (logfd < 0)
+ 		return 0;
+-	msglen = msg ? strlen(msg) : 0;
+-	committer = git_committer_info(0);
+-	maxlen = strlen(committer) + msglen + 100;
+-	logrec = xmalloc(maxlen);
+-	len = sprintf(logrec, "%s %s %s\n",
+-		      sha1_to_hex(old_sha1),
+-		      sha1_to_hex(new_sha1),
+-		      committer);
+-	if (msglen)
+-		len += copy_msg(logrec + len - 1, msg) - 1;
+-	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
+-	free(logrec);
+-	if (written != len) {
++	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
++				  git_committer_info(0), msg);
++	if (result) {
+ 		int save_errno = errno;
+ 		close(logfd);
+ 		error("Unable to append to %s", log_file);
+-- 
+2.2.0.rc2.13.g0786cdb
