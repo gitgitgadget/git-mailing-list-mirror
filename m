@@ -1,106 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/7] parse_color: support 24-bit RGB values
-Date: Thu, 20 Nov 2014 12:25:29 -0800
-Message-ID: <xmqq8uj539hi.fsf@gitster.dls.corp.google.com>
-References: <20141120151418.GA23607@peff.net>
-	<20141120152539.GE23680@peff.net>
-	<xmqqh9xt3bdx.fsf@gitster.dls.corp.google.com>
-	<20141120201026.GA4779@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v6] refs.c: use a string_list for repack_without_refs
+Date: Thu, 20 Nov 2014 12:36:48 -0800
+Message-ID: <20141120203648.GI6527@google.com>
+References: <CAGZ79kYogEQuynukSkb9La+7DZxOQonAyuYD=kWB7KRdsXLHOA@mail.gmail.com>
+ <1416514066-17049-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Scott Baker <bakers@canbytel.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 20 21:25:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 21:36:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrYIN-0000EI-Un
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 21:25:40 +0100
+	id 1XrYTB-0004og-N8
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 21:36:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757939AbaKTUZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 15:25:35 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61675 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755664AbaKTUZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 15:25:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C255B1EFD9;
-	Thu, 20 Nov 2014 15:25:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LuhaqLnwgPW2O10lnXixrsDF7ic=; b=m1lcww
-	0lgEfhY8MJUeufvOT/pCG6uJScGY5C1q6TUDf3f36gE2v3xQMSAXdE3NaxKKmvqP
-	BKD6E6MgcMBd7BD6JwkpsVM4qtU0P+/guK6vneJEBTP1eaNQEAY92yxuMgLpMsi6
-	28Pk33k1gAOdApxvwtD5XBspvKb3+rVM28RhM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PK6mgG26eElXI+a/Xaz8dK0RTfdumQYw
-	0Ql1BQjyJDorXxx+roy5kpAiKGFlHTDjWAuQlu777rEBAYGMZXC4+hIR0U49EcQe
-	6QdDm+X9K984Xps8xKaK0cyi/0+Q5gsu1QalDhCWrLAsDIOBI3hoU9hWXqgkwBXb
-	CZSiVFJE+d4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B70C71EFD8;
-	Thu, 20 Nov 2014 15:25:33 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB7641EFC7;
-	Thu, 20 Nov 2014 15:25:31 -0500 (EST)
-In-Reply-To: <20141120201026.GA4779@peff.net> (Jeff King's message of "Thu, 20
-	Nov 2014 15:10:27 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6023F834-70F3-11E4-91A7-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1758146AbaKTUgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 15:36:45 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:38710 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758143AbaKTUgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 15:36:44 -0500
+Received: by mail-ie0-f176.google.com with SMTP id ar1so3585582iec.35
+        for <git@vger.kernel.org>; Thu, 20 Nov 2014 12:36:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=wR8X3p7VN1XgGKZGMQm4oBKlGh4xsdsT9/Kh/8pSduk=;
+        b=gunXqCQ6Rm70N8pJpiA/XG+z6YpEn6RPxsIz8MjCdh+drBiM7bNyBhCUW0XJrw4DBR
+         hmFN4fvq2HLRh3Tz1SZUpVYRGmRpoiB7kGRr2VdtFew0TOYwLzQb0wpX72isIBk+dBeE
+         aXuEU8Wot5LoFEuZ//JI6Om8sIyILu+2R1JB8lkZqC6/nw4aM1my+8/B0qT6+A4UoIaX
+         x+Hf5iJ5XnUVc4ZjDf2+VmQXwHkKGgeAtUpc59jmTzB8Nsh1v9aPA9+hKLFBi6tbJAiX
+         RgNZxV/2ELbUeXfNgZaOCM/VOoIqfjAeHl/uOIiN7znpkcMDs8sPAZM5kjA0bs3EZGax
+         3ggw==
+X-Received: by 10.50.30.132 with SMTP id s4mr11437137igh.24.1416515804136;
+        Thu, 20 Nov 2014 12:36:44 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:31da:72d3:8c17:80bd])
+        by mx.google.com with ESMTPSA id v84sm1731839ioe.41.2014.11.20.12.36.43
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 20 Nov 2014 12:36:43 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1416514066-17049-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Stefan Beller wrote:
 
-> On Thu, Nov 20, 2014 at 11:44:26AM -0800, Junio C Hamano wrote:
->
->> > @@ -32,10 +32,13 @@ struct color {
->> >  		COLOR_UNSPECIFIED = 0,
->> >  		COLOR_NORMAL,
->> >  		COLOR_ANSI, /* basic 0-7 ANSI colors */
->> > -		COLOR_256
->> > +		COLOR_256,
->> > +		COLOR_RGB
->> >  	} state;
->> >  	/* The numeric value for ANSI and 256-color modes */
->> >  	unsigned char value;
->> > +	/* 24-bit RGB color values */
->> > +	unsigned char red, green, blue;
->> 
->> Do value and rgb have to be both valid at the same time, or is this
->> "we are not wasting a byte by not using a union because it will be
->> in the padding of the outer struct anyway"?
->
-> The latter. I started with a union, and then realized that COLOR_ANSI
-> and COLOR_256 shared the value, so the union was not saving space and
-> just getting in the way (mostly because I had to think of useful names
-> for each of the members).
->
-> I'd be happy to do it as a union if you think that makes it clearer.
->
-> Also, the name "state" should perhaps be "type". It originally
-> started as "unspecified or an actual value", which is a state, but
-> as I worked, it grew into something more.
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
 
-I think use of union might be more "kosher", e.g.
+Yep, looks good now.  Thanks for bearing with me.
 
-	struct color_spec {
-        	enum { ... } type;
-                union {
-                	struct { unsigned char r, g, b; } rgb;
-                        unsigned char ansi;
-		} u;
-	} c;
+[...]
+> +++ b/refs.h
+> @@ -163,8 +163,16 @@ extern void rollback_packed_refs(void);
+[...]
+> +/*
+> + * Remove the refs listed in the unsorted string list 'without' from
+> + * the packed-refs file. On error, packed-refs will be unchanged, the
+> + * return value is nonzero, and a message about the error is written
+> + * to the 'err' strbuf.
+> + *
+> + * The refs in 'without' may be unsorted.
+> + * 'err' must not be NULL.
 
-but it is not like you have an array of these things for each slot,
-and with the intervening ".u.<type>" you have to write every time
-you refer to these fields, the result is probably much uglier and
-harder to read.  So let's only do s/state/type/ and leave these
-"ought to be union but that will be uglier" ones as they are.
+I think we've gone back and forth enough on this text and it's not
+worth the transactional cost to tweak it further, so I'm not
+suggesting a change --- just explaining how I read it for future
+reference.
+
+"may be unsorted" is confusing to me.  It sounds like the reader of
+this comment (someone calling repack_without_refs) has to be prepared
+for that possibility.  But we are saying the opposite --- not "be
+prepared", but "don't worry about sorting 'without', since
+repack_without_refs can handle it".
+
+It's also redundant, since the paragraph above already says that
+'without' is an unsorted string list.
+
+The way I see it, there are four types that for various reasons (lack
+of language-level support for subclassing, etc) are conflated into a
+single struct in the string-list API:
+
+ * sorted string list that owns its items (i.e., created with DUP)
+ * sorted string list that does not own its items (i.e., created with NODUP)
+ * unsorted string list that owns its items
+ * unsorted string list that does not own its items
+
+Different functions are valid to call on each type, as documented in
+the comments in string-list.h.
+
+repack_without_refs accepts all 4 types of string-list.  That's what
+it means when the documentation says its argument is unsorted.
+
+Thanks,
+Jonathan
