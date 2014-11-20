@@ -1,151 +1,78 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: [PATCH] git-new-workdir: Don't fail if the target directory is empty
-Date: Thu, 20 Nov 2014 10:46:35 -0500
-Message-ID: <1416498395.23953.8.camel@mad-scientist.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFD/PATCH] add: ignore only ignored files
+Date: Thu, 20 Nov 2014 10:56:21 -0500
+Message-ID: <20141120155621.GA30273@peff.net>
+References: <3f78d6c1e35c87049daaac6cb1257ea8310a90bb.1416408015.git.git@drmicha.warpmail.net>
+ <20141119191502.GC9908@peff.net>
+ <xmqqbno2rhlz.fsf@gitster.dls.corp.google.com>
+ <546DB778.2000000@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 20 16:53:38 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Nov 20 16:56:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrU37-0005HM-4Y
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 16:53:37 +0100
+	id 1XrU5u-0006uo-MF
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 16:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757488AbaKTPxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 10:53:31 -0500
-Received: from gproxy4-pub.mail.unifiedlayer.com ([69.89.23.142]:45418 "HELO
-	gproxy4-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757481AbaKTPx3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2014 10:53:29 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Nov 2014 10:53:29 EST
-Received: (qmail 1458 invoked by uid 0); 20 Nov 2014 15:46:48 -0000
-Received: from unknown (HELO cmgw3) (10.0.90.84)
-  by gproxy4.mail.unifiedlayer.com with SMTP; 20 Nov 2014 15:46:48 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-	by cmgw3 with 
-	id Hrmj1p00t2qhmhE01rmmrP; Thu, 20 Nov 2014 08:46:48 -0700
-X-Authority-Analysis: v=2.1 cv=W++rC3mk c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
- a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
- a=2NV5t7OSZ7cA:10 a=5y4faFyK3SkA:10 a=V6TWb17wjVuPg6hANYEA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:Date:To:From:Subject:Message-ID; bh=aSaNEcrrD88zMPfGG/GwbEBwYdcRbfARWSWVQlVbF6s=;
-	b=nsJAoBszfjxnq0XZ7SBNMEY+xurhrjcM2UzrNQI2zaGJe//fCNBue2NSr+4WLnZo5jeEsHMAydn/9aVIGHKoXpwYaoq2WG9c415iU7CnBuSIFoMkGjMDJipfyErVTs7q;
-Received: from [173.9.45.73] (port=50446 helo=pdsdesk)
-	by box531.bluehost.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-	(Exim 4.82)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1XrTwR-0004dd-4l
-	for git@vger.kernel.org; Thu, 20 Nov 2014 08:46:43 -0700
-X-Mailer: Evolution 3.12.7-0ubuntu1 
-X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 173.9.45.73 authed with paul@mad-scientist.us}
+	id S1757572AbaKTP4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 10:56:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42796 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757564AbaKTP4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 10:56:24 -0500
+Received: (qmail 13407 invoked by uid 102); 20 Nov 2014 15:56:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 09:56:23 -0600
+Received: (qmail 13290 invoked by uid 107); 20 Nov 2014 15:56:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 10:56:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Nov 2014 10:56:21 -0500
+Content-Disposition: inline
+In-Reply-To: <546DB778.2000000@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow new workdirs to be created in an empty directory (similar to "git
-clone").  Provide more error checking and clean up on failure.
+On Thu, Nov 20, 2014 at 10:42:16AM +0100, Michael J Gruber wrote:
 
-Signed-off-by: Paul Smith <paul@mad-scientist.net>
----
- contrib/workdir/git-new-workdir | 54 +++++++++++++++++++++++++++--------------
- 1 file changed, 36 insertions(+), 18 deletions(-)
+> >> Perhaps we could do a hybrid: add the files that were not ignored, but
+> >> then still exit non-zero. Careful scripts need to check the exit status
+> >> of "git add" anyway, and sloppy humans with over-broad wildcards
+> >> typically do not care about the exit status.
+> > 
+> > ;-)
+> > 
+> 
+> You can simply say "Michael" in your last subclause above :)
+> 
+> I'm wondering whether that behaviour change (without --ignore-errors) is
+> OK - I don't mind, but hey, I usually don't.
 
-diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
-index 75e8b25..7334720 100755
---- a/contrib/workdir/git-new-workdir
-+++ b/contrib/workdir/git-new-workdir
-@@ -10,6 +10,10 @@ die () {
- 	exit 128
- }
+I can't think of a case that it really hurts, but then I have not
+thought too hard on it. If you want to play with it, I think the patch
+is as simple as:
+
+diff --git a/builtin/add.c b/builtin/add.c
+index ae6d3e2..1074e32 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -284,7 +284,7 @@ static int add_files(struct dir_struct *dir, int flags)
+ 		for (i = 0; i < dir->ignored_nr; i++)
+ 			fprintf(stderr, "%s\n", dir->ignored[i]->name);
+ 		fprintf(stderr, _("Use -f if you really want to add them.\n"));
+-		die(_("no files added"));
++		exit_status = 1;
+ 	}
  
-+failed () {
-+	die "unable to create new workdir \"$new_workdir\"!"
-+}
-+
- if test $# -lt 2 || test $# -gt 3
- then
- 	usage "$0 <repository> <new_workdir> [<branch>]"
-@@ -35,7 +39,7 @@ esac
- 
- # don't link to a configured bare repository
- isbare=$(git --git-dir="$git_dir" config --bool --get core.bare)
--if test ztrue = z$isbare
-+if test ztrue = "z$isbare"
- then
- 	die "\"$git_dir\" has core.bare set to true," \
- 		" remove from \"$git_dir/config\" to use $0"
-@@ -48,35 +52,49 @@ then
- 		"a complete repository."
- fi
- 
--# don't recreate a workdir over an existing repository
--if test -e "$new_workdir"
-+# make sure the links in the workdir have full paths to the original repo
-+git_dir=$(cd "$git_dir" && pwd) || exit 1
-+
-+# don't recreate a workdir over an existing directory, unless it's empty
-+if test -d "$new_workdir"
- then
--	die "destination directory '$new_workdir' already exists."
-+	if test $(ls -a1 "$new_workdir"/. | wc -l) -ne 2
-+	then
-+		die "destination directory '$new_workdir' is not empty."
-+	fi
-+	cleandir="$new_workdir"/.git
-+else
-+	cleandir="$new_workdir"
- fi
- 
--# make sure the links use full paths
--git_dir=$(cd "$git_dir"; pwd)
-+mkdir -p "$new_workdir"/.git || failed
-+cleandir=$(cd "$cleandir" && pwd) || failed
- 
--# create the workdir
--mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
-+cleanup () {
-+	rm -rf "$cleandir"
-+}
-+siglist="0 1 2 15"
-+trap cleanup $siglist
- 
- # create the links to the original repo.  explicitly exclude index, HEAD and
- # logs/HEAD from the list since they are purely related to the current working
- # directory, and should not be shared.
- for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn
- do
-+	# Create a containing directory if needed
- 	case $x in
--	*/*)
--		mkdir -p "$(dirname "$new_workdir/.git/$x")"
--		;;
-+		*/*) mkdir -p "$new_workdir/.git/${x%/*}" ;;
- 	esac
--	ln -s "$git_dir/$x" "$new_workdir/.git/$x"
-+
-+	ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
- done
- 
--# now setup the workdir
--cd "$new_workdir"
- # copy the HEAD from the original repository as a default branch
--cp "$git_dir/HEAD" .git/HEAD
--# checkout the branch (either the same as HEAD from the original repository, or
--# the one that was asked for)
--git checkout -f $branch
-+cp "$git_dir"/HEAD "$new_workdir"/.git/HEAD || failed
-+
-+# the workdir is set up.  if the checkout fails, the user can fix it.
-+trap - $siglist
-+
-+# checkout the branch (either the same as HEAD from the original repository,
-+# or the one that was asked for)
-+git -C "$new_workdir" checkout -f $branch
--- 
-1.8.5.3
+ 	for (i = 0; i < dir->nr; i++)
+
+It needs a tweak to t3700.35, which expects the "fatal:" line on stderr.
+But other than that, it passes all tests. So it must be good, right? :)
+
+-Peff
