@@ -1,90 +1,98 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/2] refs.c: make ref_transaction_create a wrapper for ref_transaction_update
-Date: Wed, 19 Nov 2014 17:12:17 -0800
-Message-ID: <CAGZ79kaW3xGjepcXFZYYUTuDqbEixVA4rH-FMcG0hyEoCVqizQ@mail.gmail.com>
-References: <1416433224-29763-1-git-send-email-sbeller@google.com>
-	<1416433224-29763-2-git-send-email-sbeller@google.com>
-	<20141120011038.GB6527@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] refs.c: add a function to append a reflog entry to a fd
+Date: Wed, 19 Nov 2014 17:22:42 -0800
+Message-ID: <xmqqzjbm4qe5.fsf@gitster.dls.corp.google.com>
+References: <1416444142-28042-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 02:12:36 2014
+Content-Type: text/plain
+Cc: sahlberg@google.com, jrnieder@gmail.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 02:22:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrGIV-0004Tv-6Q
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 02:12:35 +0100
+	id 1XrGSQ-0007lh-0Z
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 02:22:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756646AbaKTBMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Nov 2014 20:12:31 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:61432 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754910AbaKTBMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Nov 2014 20:12:18 -0500
-Received: by mail-ie0-f174.google.com with SMTP id rl12so1769249iec.5
-        for <git@vger.kernel.org>; Wed, 19 Nov 2014 17:12:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TjxprgO7ouJezogcgi50/uD11q27DPYOngnmM+igdk4=;
-        b=GQSGH7C4rvVRvKFBWtId9tVKV5EPJYD7Vo5CQZAMuUQebJ0n07hCyUddjYc0fRmTys
-         rJGmDv1FdfmyXQVXfvIYrilcDa58Cn7Ms7qzs+tuZxOe3CwN3EXCDDTi+pxiZqN0oi7f
-         RLrprSNFsnGXyKwKQIqyci2DaJxrwzbqrI9ORHmXX+cazAD2GPyw/OI5W+QK5cp2O6Hx
-         NsiJ3r940I7zvAtnsGd1PdsDQCM0LAiaBAmzScEYXJ3/f9pYWooLgqsCovUxQdHq0CyX
-         KDfC0WoMdNaYXCZaOmuxSkV/ImUFso1EdMaFF1C7AagMvpd+GhoGR+cHlE1m/tyuOm6Y
-         VpIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=TjxprgO7ouJezogcgi50/uD11q27DPYOngnmM+igdk4=;
-        b=Of0SbO5pAYPXAkTH2M9yLaDh9LRqchOuH7wprVgUOdu0k54HV9QPdhe4TfRqVGnHIa
-         A9XN6M0IS+CtUyaV7e/9g3WgTrTSGRWtcmAXbt0ZP+zTOZakM4rNeBA9qxpNKQSqYRlm
-         7UyZ35alpdkY6nFh3fcKME8keTvI7uNsNiSVe1b4QsHPWM/ud/8L7IubD+57FSNYI1Iq
-         wcAZtH3VBP4cNA63qj9GZdp8Qb3K95eFTtkJZZeTJ1M9r4rPix0sZ/5zlsKI38cxQ6LQ
-         tAya6kCi9zwUhWnQS6D5Yjf66Z9wpWt15I0BsQRzGuE5XfFqNN8fiUQkigVboxW0AphH
-         k6hQ==
-X-Gm-Message-State: ALoCoQl1gCjFI9PXaQ1Y+Ia6HqwHWRRz+zKIqA2CKR8aaKxkwinUTDJzo/MggQ29gttnQ+QREO2x
-X-Received: by 10.50.79.229 with SMTP id m5mr6555107igx.10.1416445938055; Wed,
- 19 Nov 2014 17:12:18 -0800 (PST)
-Received: by 10.107.1.199 with HTTP; Wed, 19 Nov 2014 17:12:17 -0800 (PST)
-In-Reply-To: <20141120011038.GB6527@google.com>
+	id S1756246AbaKTBWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Nov 2014 20:22:45 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754910AbaKTBWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Nov 2014 20:22:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F055209EC;
+	Wed, 19 Nov 2014 20:22:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LUanlM6rvfhURVC2ARTpU4x7KjQ=; b=EY6P2R
+	xH0svib2AHF8wVanbpnAo7OxBtXDLAAB3pQuyvYO4U+NcOvc4taRKru/uW+W+vIU
+	ebWl7RmNXJ8Yh3unirNWQ4c8d5kf/27xvO4KvdmZzVPPoja54VJTcLQR0t4GIgRG
+	gUprfWc1+uYa9Leh6/w6CSkIMS1Z8HT7ryVJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jXoLaca3jM0nNLeFaiy65Kw5ytCJHzm0
+	PfsvJLTS1fCxspWGwnlF44WyW6Hn02oDs9GNOaWDrqdIp41v8nGl7wql+Zq1gYal
+	dLyKO9navv9TfdH+Y7rTssa4Z6ke4rcQJIVE5w7iT0Y7qMXwOkp+/KcFHpDGu3q/
+	teFRaOQWAHU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3699A209EB;
+	Wed, 19 Nov 2014 20:22:44 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B3906209EA;
+	Wed, 19 Nov 2014 20:22:43 -0500 (EST)
+In-Reply-To: <1416444142-28042-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Wed, 19 Nov 2014 16:42:22 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BA4C901E-7053-11E4-9466-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am sorry for not having asked before.
-As I picked up the patches, you had sign offs pretty much at any patch.
-I'll remove them from future patches when sending to the list.
+Stefan Beller <sbeller@google.com> writes:
 
-On Wed, Nov 19, 2014 at 5:10 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Stefan Beller wrote:
->
->> From: Ronnie Sahlberg <sahlberg@google.com>
->>
->> The ref_transaction_update function can already be used to create refs by
->> passing null_sha1 as the old_sha1 parameter. Simplify by replacing
->> transaction_create with a thin wrapper.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  refs.c | 27 ++-------------------------
->>  1 file changed, 2 insertions(+), 25 deletions(-)
->
-> I feel a bit ashamed to have my sign-off peppering all these patches
-> that I didn't have anything to do with except preparing to send them
-> to the list once or twice.  I'd be happier if my sign-off weren't
-> there.
->
-> Except for that,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> Compared to the last send of this patch[1], there was one change in the print
+> function. Replaced sprintf by snprintf for security reasons. 
+
+Careful.  I despise people who blindly think strlcpy() and
+snprintf() are good solutions for for security.  They are by
+themselves not.
+
+Surely, the use of them lets you avoid stomping on pieces of memory
+that you did not intend to write to.  I'd call that "protecting
+other people's data".
+
+But what about your own data?  If you are thinking that you are
+trying to write "this and that", but by mistake (either by your or
+by a careless future change) if you did not allocate enough, you
+would stop at "this and th".  You may have protected other people's
+data, but your result is still broken.  If you gave that to others
+without checking that you produced an incomplete piece of data, what
+guarantee are you getting that you are not creating a security hole
+there (imagine you intended to copy "rm -fr ./tmpdir" and by mistake
+you stopped at "rm -fr ./" @~@).
+
+> +	msglen = msg ? strlen(msg) : 0;
+> +	maxlen = strlen(committer) + msglen + 100;
+> +	logrec = xmalloc(maxlen);
+> +	len = snprintf(logrec, maxlen, "%s %s %s\n",
+> +		       sha1_to_hex(old_sha1),
+> +		       sha1_to_hex(new_sha1),
+> +		       committer);
+> +	if (msglen)
+> +		len += copy_msg(logrec + len - 1, msg) - 1;
+
+In this codepath, you are allocating enough buffer to hold the whole
+message; there is no difference between sprintf() and snprintf().
+If the difference mattered, you would have chopped the reflog entry
+too short, and produced a wrong result, but you then discard the
+whole record (the code that follows the above), losing data.
+
+So use of snprintf() is not really buying you much here, not in the
+current code certainly, but not as a future-proofing measure,
+either.
