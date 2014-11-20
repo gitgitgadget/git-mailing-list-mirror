@@ -1,176 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-new-workdir: Don't fail if the target directory is empty
-Date: Thu, 20 Nov 2014 09:13:27 -0800
-Message-ID: <xmqqioi94wy0.fsf@gitster.dls.corp.google.com>
-References: <1416498395.23953.8.camel@mad-scientist.net>
+Subject: Re: [RFD/PATCH] add: ignore only ignored files
+Date: Thu, 20 Nov 2014 09:23:21 -0800
+Message-ID: <xmqqegsx4whi.fsf@gitster.dls.corp.google.com>
+References: <3f78d6c1e35c87049daaac6cb1257ea8310a90bb.1416408015.git.git@drmicha.warpmail.net>
+	<20141119191502.GC9908@peff.net>
+	<xmqqbno2rhlz.fsf@gitster.dls.corp.google.com>
+	<546DB778.2000000@drmicha.warpmail.net>
+	<20141120155621.GA30273@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Paul Smith <paul@mad-scientist.net>
-X-From: git-owner@vger.kernel.org Thu Nov 20 18:13:46 2014
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 20 18:23:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrVIa-0001Ur-2F
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 18:13:40 +0100
+	id 1XrVSX-0006Rh-Bs
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 18:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757459AbaKTRNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 12:13:35 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51607 "EHLO
+	id S1757411AbaKTRXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 12:23:48 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59242 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755212AbaKTRNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 12:13:34 -0500
+	with ESMTP id S1757356AbaKTRXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 12:23:45 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6ACA41E04A;
-	Thu, 20 Nov 2014 12:13:33 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A27D1E2C0;
+	Thu, 20 Nov 2014 12:23:44 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hwfFiGla83O15zO/6sbjqQe1TMo=; b=K4n7jX
-	1UGUCJJxEk2KV6T1twLu38ffwEZy0i6oR/6hPxJAPuyhfRM5nkAFPn4GTeTPhN6w
-	BH4ijfj8guWgVbO8GkL67DsmmTdg5O0yaCQomcvIawpzUoqnSxqZlkssx9QFv5Xn
-	AVhwFShagjd1ZMIqo8SvCMcpuAhvd3OS1yE7I=
+	:content-type; s=sasl; bh=Kajt4TuSeegIFpuMwNsmNn3kWI4=; b=oiUgbG
+	CKTIl0kK4zJ350qUOlyVpXvC1dseJahSiFmRHurkbqoee1mRsoJx0lSrnByoc9kA
+	akQfdhl5lY1lY5o3Iu1XJGgDPBhzYhAk3TBGQH5zsStbL8JdJZOo77UVwu5BE9UO
+	2q/SN+z5Sp6qzi7LUwFiTP2dloXfbv+k3xt9g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G+OKjDuYH3lavFdlb+gVlV0RzV/nr3q8
-	dEjwbdjNy8efdp5H5iarg+TovW8JU4iKcaf8xJGNtDuW+4OREPz4cOPtbXWpAs08
-	jvdNU2Z0UhmkqcQaDjn+LfWbJaVFcY+ZFqlx4sljsP70utBXM+7bflDPECY0VGvR
-	kxwgfGG+gMM=
+	:content-type; q=dns; s=sasl; b=baez6+oMtCj6XUnABz4IM6lzTCE8SijG
+	8G2U3JTDwFQJiqfiOlEYGDnpkQ+KrwgkrmSMhCz+xE3+DMVCDYdpIlfr0XpI2DVC
+	kQabVMjC2dtx4LT2iTClKXl1c9NSWHWXodQ9Fx2JI6aaaODVPqYRESBNA9kPwQ53
+	6LmUDqQCI1I=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 61B0A1E049;
-	Thu, 20 Nov 2014 12:13:33 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EF3A1E2BF;
+	Thu, 20 Nov 2014 12:23:44 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9081F1E048;
-	Thu, 20 Nov 2014 12:13:32 -0500 (EST)
-In-Reply-To: <1416498395.23953.8.camel@mad-scientist.net> (Paul Smith's
-	message of "Thu, 20 Nov 2014 10:46:35 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2B941E2AC;
+	Thu, 20 Nov 2014 12:23:23 -0500 (EST)
+In-Reply-To: <20141120155621.GA30273@peff.net> (Jeff King's message of "Thu,
+	20 Nov 2014 10:56:21 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8E06C152-70D8-11E4-841D-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: EE74065C-70D9-11E4-BDAF-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul Smith <paul@mad-scientist.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> Allow new workdirs to be created in an empty directory (similar to "git
-> clone").  Provide more error checking and clean up on failure.
+> On Thu, Nov 20, 2014 at 10:42:16AM +0100, Michael J Gruber wrote:
 >
-> Signed-off-by: Paul Smith <paul@mad-scientist.net>
-> ---
->  contrib/workdir/git-new-workdir | 54 +++++++++++++++++++++++++++--------------
->  1 file changed, 36 insertions(+), 18 deletions(-)
-
-Thanks.  I would have liked [PATCH v$n] on the subject line but
-that's minor.
-
-I also see you made a few small improvements here and there, like...
-
->  # don't link to a configured bare repository
->  isbare=$(git --git-dir="$git_dir" config --bool --get core.bare)
-> -if test ztrue = z$isbare
-> +if test ztrue = "z$isbare"
-
-... this bit, which I think is a good idea.  We are asking "--bool"
-so we know we will never get anything other than true/false to cause
-trouble by not quoting, but the dq-pair there does not cost anything
-and it is a good discipline.
-
-> +# make sure the links in the workdir have full paths to the original repo
-> +git_dir=$(cd "$git_dir" && pwd) || exit 1
-
-... so is this bit, which used to just go even if cd failed.
-
-> +# don't recreate a workdir over an existing directory, unless it's empty
-> +if test -d "$new_workdir"
->  then
-> -	die "destination directory '$new_workdir' already exists."
-> +	if test $(ls -a1 "$new_workdir"/. | wc -l) -ne 2
-
-You used to quote this as
-
-	if test $(ls -a1 "$new_workdir/." | wc -l) -ne 2
-
-and I think that made a lot more sense than the new quoting.
-
-The ultimate reason we quote here is because "$new_workdir/." is the
-single directory path we want to give "ls", and quoting the whole
-thing shows that intention far clearer than the new one, which says
-"there may be an $IFS character in $new_workdir so I am quoting to
-keep them together as a single string and then appending /. to that
-single string will still be a single string", which is not wrong
-per-se in that it is saying the same thing, but it is a roundabout
-way to do so.
-
-> +	then
-> +		die "destination directory '$new_workdir' is not empty."
-> +	fi
-> +	cleandir="$new_workdir"/.git
-> +else
-> +	cleandir="$new_workdir"
->  fi
+>> >> Perhaps we could do a hybrid: add the files that were not ignored, but
+>> >> then still exit non-zero. Careful scripts need to check the exit status
+>> >> of "git add" anyway, and sloppy humans with over-broad wildcards
+>> >> typically do not care about the exit status.
+>> > 
+>> > ;-)
+>> > 
+>> 
+>> You can simply say "Michael" in your last subclause above :)
+>> 
+>> I'm wondering whether that behaviour change (without --ignore-errors) is
+>> OK - I don't mind, but hey, I usually don't.
+>
+> I can't think of a case that it really hurts, but then I have not
+> thought too hard on it. If you want to play with it, I think the patch
+> is as simple as:
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index ae6d3e2..1074e32 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -284,7 +284,7 @@ static int add_files(struct dir_struct *dir, int flags)
+>  		for (i = 0; i < dir->ignored_nr; i++)
+>  			fprintf(stderr, "%s\n", dir->ignored[i]->name);
+>  		fprintf(stderr, _("Use -f if you really want to add them.\n"));
+> -		die(_("no files added"));
+> +		exit_status = 1;
+>  	}
 >  
-> -# make sure the links use full paths
-> -git_dir=$(cd "$git_dir"; pwd)
-> +mkdir -p "$new_workdir"/.git || failed
-> +cleandir=$(cd "$cleandir" && pwd) || failed
->  
-> -# create the workdir
-> -mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
-> +cleanup () {
-> +	rm -rf "$cleandir"
-> +}
-> +siglist="0 1 2 15"
-> +trap cleanup $siglist
->  
->  # create the links to the original repo.  explicitly exclude index, HEAD and
->  # logs/HEAD from the list since they are purely related to the current working
->  # directory, and should not be shared.
->  for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn
->  do
-> +	# Create a containing directory if needed
->  	case $x in
-> -	*/*)
-> -		mkdir -p "$(dirname "$new_workdir/.git/$x")"
-> -		;;
-> +		*/*) mkdir -p "$new_workdir/.git/${x%/*}" ;;
+>  	for (i = 0; i < dir->nr; i++)
+>
+> It needs a tweak to t3700.35, which expects the "fatal:" line on stderr.
+> But other than that, it passes all tests. So it must be good, right? :)
 
-Case arms come at the same indentation level as "case/esac".
+;-)
 
->  	esac
-> -	ln -s "$git_dir/$x" "$new_workdir/.git/$x"
-> +
-> +	ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
->  done
->  
-> -# now setup the workdir
-> -cd "$new_workdir"
->  # copy the HEAD from the original repository as a default branch
-> -cp "$git_dir/HEAD" .git/HEAD
-> -# checkout the branch (either the same as HEAD from the original repository, or
-> -# the one that was asked for)
-> -git checkout -f $branch
-> +cp "$git_dir"/HEAD "$new_workdir"/.git/HEAD || failed
-> +
-
-Why these changes?  I thought you are making sure $cleandir is
-absolute so that you do not have to do this and can just "cd" into
-the new working tree, the same way the user would do once it is set
-up.
-
-Puzzled...  Before seeing this bit, I was about to say "but all the
-above nits are minor so no need to resend---I'll locally fix them up
-while queueing", but I suspect that I may be missing some obvious
-reason why you avoid "cd" and I am reluctant to "fix" this part up
-myself without seeing a response, so I'd swallow that "no need to
-resend" X-<.
-
-> +# the workdir is set up.  if the checkout fails, the user can fix it.
-> +trap - $siglist
-> +
-> +# checkout the branch (either the same as HEAD from the original repository,
-> +# or the one that was asked for)
-> +git -C "$new_workdir" checkout -f $branch
+It indeed is a behaviour change, but I do not expect it would be too
+heavy a change to require us a transition period or major version
+bump.  But because that is just my expectation, which is not what
+real world users would expect, so I'd prefer to cook such a change
+for at least a cycle and a half in 'next'.
