@@ -1,75 +1,72 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v5 1/1] refs.c: use a stringlist for repack_without_refs
-Date: Thu, 20 Nov 2014 11:05:40 -0800
-Message-ID: <CAGZ79kYogEQuynukSkb9La+7DZxOQonAyuYD=kWB7KRdsXLHOA@mail.gmail.com>
-References: <20141120021540.GF6527@google.com>
-	<1416506666-5989-1-git-send-email-sbeller@google.com>
-	<xmqqppch3dde.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/7] parse_color: refactor color storage
+Date: Thu, 20 Nov 2014 11:37:31 -0800
+Message-ID: <xmqqlhn53bpg.fsf@gitster.dls.corp.google.com>
+References: <20141120151418.GA23607@peff.net>
+	<20141120151704.GD23680@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 20:05:48 2014
+Content-Type: text/plain
+Cc: Scott Baker <bakers@canbytel.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 20 20:37:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrX34-0007WT-79
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 20:05:46 +0100
+	id 1XrXY2-0004zr-UI
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 20:37:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757459AbaKTTFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 14:05:42 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:47826 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757084AbaKTTFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 14:05:41 -0500
-Received: by mail-ie0-f175.google.com with SMTP id at20so3312223iec.6
-        for <git@vger.kernel.org>; Thu, 20 Nov 2014 11:05:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TScnIu2XY07E/Qv7yd4yv/bwe5huXmhe5KaS4UfPytI=;
-        b=f527xvDxmFMkuewX0/EgXNvLT9ZG+tJTffE4ph0UD6LmYGsxrFnMUe6Ou+K2ptiktp
-         y6U+C+o98uoi/AOTWKHkSyIMTKbkjwRUui7g7NYP02kwYb12Odu4jK2A8jFVxZWOtu21
-         Ln08RkFdB3fZEu17pe8F16JjZPMavSnR1dPcwAJHLcMxbeRNKNOkQozPP3sBb7R2yEcz
-         naThAMI9VG1kZG9yZlLH19O9PJkFjwHARs+Hf2NJJrFcZ9CRJYSBS9mtAKkgXknF5CXl
-         kYoXduBFrrb8v3v0Enom1novatVq5ag2ezmF8rgSPj2SLy+5xjj27x1QyWc4Qo3t7auH
-         kApg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=TScnIu2XY07E/Qv7yd4yv/bwe5huXmhe5KaS4UfPytI=;
-        b=YolWpNL0CzGtID+M5tT1G4Nqeut1Kxwz+LGS04XEanfcBEIk4WjFwAp9EFDgXrioxW
-         s2Je17uxi4X8/pB20URakrzR5n8PSF9r2vbXtsMxHnAi0x9+kv5yOKN4nqGKd+QPago4
-         Gnjp/zz8QKwlERFb5TkBQWpt9a62sqt0O7CypU6rtT8dZ5RmfG4tqJ2ZS6UDU8hQWmAM
-         uaH57t++XkNGJ8+8DZ5H7VSATBUQcbwpvVRN9gp3z9J0cOvG6eN4dfRvS2PUYdFWfe7D
-         imW0OhqHZaIXz9RXjWOQijXBjnCQw0P+D3o3DfafpGRf+/2Cr5mLzkbIP2uKXHyoz8C5
-         NpCA==
-X-Gm-Message-State: ALoCoQnCrGzSjxBcUC41ex0kOqaPAqDHLse+v8FWbu//LF7ZapbZ79BB4Jd/DMf5LfqFP3YsTkHx
-X-Received: by 10.42.129.140 with SMTP id q12mr1875451ics.68.1416510340968;
- Thu, 20 Nov 2014 11:05:40 -0800 (PST)
-Received: by 10.107.1.199 with HTTP; Thu, 20 Nov 2014 11:05:40 -0800 (PST)
-In-Reply-To: <xmqqppch3dde.fsf@gitster.dls.corp.google.com>
+	id S1757547AbaKTThm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 14:37:42 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56727 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757268AbaKTThm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 14:37:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D7191E35B;
+	Thu, 20 Nov 2014 14:37:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3rMvr+R456PWYxS0N72KrUaOh0E=; b=nR8kdg
+	LBai+q7ib3cWFjD0xA+zlnxQgGDOOv8+85Dr/9TkvXu8Y0hIi8kx2xN3hPpQgTL0
+	+jzv1VM8tfKXKPJgPkF2VtCazu5ix7ymGdeSW5ojtqsvaywUhcVShyE2TgqlpRIk
+	m6om0SA0Dy98gYZbgPyuYIRT1Ez161kWaVwJU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kMcHJVVuHj86u1vi+KaPDM3QaiiJAe55
+	tyOPEIF6FPWDysTmTI3OMvdzlce/DYVULE2RDxp34dCqOYfXy8Hb9OGRrUc3YFQo
+	a5QTpJLNmk3YnJWUP4hsRqSJpZIoQC3Yx4g6yF9OoM+6W7Gwawu63W83ub8dzyBQ
+	mzmen3EIYJk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 441241E35A;
+	Thu, 20 Nov 2014 14:37:39 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76D851E359;
+	Thu, 20 Nov 2014 14:37:38 -0500 (EST)
+In-Reply-To: <20141120151704.GD23680@peff.net> (Jeff King's message of "Thu,
+	20 Nov 2014 10:17:05 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AF620564-70EC-11E4-993F-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 20, 2014 at 11:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> I think this matches more-or-less what I've locally tweaked after
-> following the discussion between you and Jonathan.  Thanks.
+Jeff King <peff@peff.net> writes:
 
-Do you want me to resend the patch with Jonathans nits fixed?
+> The result is also slightly less efficient to store, but
+> that's OK; we only store this intermediate state during the
+> parse, after which we write out the actual ANSI bytes.
 
-Jonathan wrote:
->> Change-Id: Id7eaa821331f2ab89df063e1e76c8485dbcc3aed
-> Change-id snuck in.
+You need up to 24 bits for the value and then 2 bits for what type
+of color specification you have (what you called "state"), for which
+32-bit should be sufficient.  That would mean it is more efficient
+than a single int on 64-bit archs, and you can arrange the struct
+to be packed if we ever need to keep dozens of these things.  Until
+then, the updated simple struct is just fine, and either way it is
+much easier to read ;-)
 
-I need to get the format patch hook running, I was talking about
-earlier this week.
+Thanks.
