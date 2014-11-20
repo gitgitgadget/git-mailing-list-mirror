@@ -1,75 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFD/PATCH] add: ignore only ignored files
-Date: Thu, 20 Nov 2014 13:20:13 -0500
-Message-ID: <20141120182012.GD2559@peff.net>
-References: <3f78d6c1e35c87049daaac6cb1257ea8310a90bb.1416408015.git.git@drmicha.warpmail.net>
- <20141119191502.GC9908@peff.net>
- <xmqqbno2rhlz.fsf@gitster.dls.corp.google.com>
- <546DB778.2000000@drmicha.warpmail.net>
- <20141120155621.GA30273@peff.net>
- <xmqqegsx4whi.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5 1/1] refs.c: use a stringlist for repack_without_refs
+Date: Thu, 20 Nov 2014 10:29:01 -0800
+Message-ID: <20141120182901.GC15945@google.com>
+References: <20141120021540.GF6527@google.com>
+ <1416506666-5989-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 19:20:24 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, sahlberg@google.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 19:29:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrWL9-0005gJ-7N
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 19:20:23 +0100
+	id 1XrWTg-0000u6-Ul
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 19:29:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757084AbaKTSUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 13:20:16 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42891 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751406AbaKTSUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 13:20:15 -0500
-Received: (qmail 20102 invoked by uid 102); 20 Nov 2014 18:20:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 12:20:15 -0600
-Received: (qmail 14607 invoked by uid 107); 20 Nov 2014 18:20:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 13:20:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Nov 2014 13:20:13 -0500
+	id S1757806AbaKTS3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 13:29:08 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:64556 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757077AbaKTS3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 13:29:07 -0500
+Received: by mail-ig0-f178.google.com with SMTP id hl2so3300964igb.11
+        for <git@vger.kernel.org>; Thu, 20 Nov 2014 10:29:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=c4t3lal1b/i5Z5IdUYqTDlukD3TxKlZvSzU2Hhg+kao=;
+        b=JJ9e6vogWkDWYk4SgNSmpCZLa2VWGCcVm1SXFIpPEBi/Vn9Lb/kAhVOaoegVUy3Zk4
+         GFBDwo6EDhJFL5GBes15W81HMhBnKjHAgALGNkbmiyxR9zxL5AhHOseXfio+RQz8wymm
+         U/+kBzKxolh5wrwYwjjroHs4BvdcxYaajEX/RIbuW367wUWgowWmcf9r8UXlGBKH+S0A
+         P5HwNgNWqKRv7jpR4FH+ccM7hgP7WlaIauqfVXiGpnluoIAvIIkgir5ee59Fr1gVz+OG
+         cFVmvxqnOhafl0itFhDiggusFUMTfPqoiITa14R8Sx0vVYatmOYz5qEoCyeBmVrU/cOJ
+         WuXw==
+X-Received: by 10.42.216.77 with SMTP id hh13mr9331245icb.31.1416508146135;
+        Thu, 20 Nov 2014 10:29:06 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:31da:72d3:8c17:80bd])
+        by mx.google.com with ESMTPSA id a4sm2852016igx.10.2014.11.20.10.29.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 20 Nov 2014 10:29:02 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqqegsx4whi.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <1416506666-5989-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 20, 2014 at 09:23:21AM -0800, Junio C Hamano wrote:
+Stefan Beller wrote:
 
-> > diff --git a/builtin/add.c b/builtin/add.c
-> > index ae6d3e2..1074e32 100644
-> > --- a/builtin/add.c
-> > +++ b/builtin/add.c
-> > @@ -284,7 +284,7 @@ static int add_files(struct dir_struct *dir, int flags)
-> >  		for (i = 0; i < dir->ignored_nr; i++)
-> >  			fprintf(stderr, "%s\n", dir->ignored[i]->name);
-> >  		fprintf(stderr, _("Use -f if you really want to add them.\n"));
-> > -		die(_("no files added"));
-> > +		exit_status = 1;
-> >  	}
-> >  
-> >  	for (i = 0; i < dir->nr; i++)
-> >
-> > It needs a tweak to t3700.35, which expects the "fatal:" line on stderr.
-> > But other than that, it passes all tests. So it must be good, right? :)
-> 
-> ;-)
-> 
-> It indeed is a behaviour change, but I do not expect it would be too
-> heavy a change to require us a transition period or major version
-> bump.  But because that is just my expectation, which is not what
-> real world users would expect, so I'd prefer to cook such a change
-> for at least a cycle and a half in 'next'.
+> Change-Id: Id7eaa821331f2ab89df063e1e76c8485dbcc3aed
 
-Oh, definitely. Showing the patch at all was my not-so-subtle attempt to
-convince Michael to take over the topic so I did not have to worry about
-such things. :)
+Change-id snuck in.
 
--Peff
+[...]
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -163,8 +163,16 @@ extern void rollback_packed_refs(void);
+>   */
+>  int pack_refs(unsigned int flags);
+>  
+> -extern int repack_without_refs(const char **refnames, int n,
+> -			       struct strbuf *err);
+> +/*
+> + * Remove the refs listed in 'without' from the packed-refs file.
+> + * On error, packed-refs will be unchanged, the return value is
+> + * nonzero, and a message about the error is written to the 'err'
+> + * strbuf.
+> + *
+> + * The refs in 'without' may have any order.
+
+Tiny nit: this makes me wonder what the order represents --- how do
+I pick which order for the refs in without to have?
+
+I think the idea is just that 'without' doesn't have to be sorted (it's
+a shame we don't have separate sorted string list and unsorted string
+list types or a string_list_sorted() helper to catch bad callers early
+to functions that care).  One way to say that would be
+
+	Remove the refs listed in the unsorted string list 'without' from the
+	packed-refs file.  On error, [...]
+
+> + * The err buffer must not be omitted.
+
+s/buffer/strbuf/, or s/The err buffer/'err'/
+s/omitted/NULL/
+
+With the Change-Id dropped, and with or without the above comment nits
+addressed,
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
