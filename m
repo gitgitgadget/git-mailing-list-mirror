@@ -1,88 +1,157 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFD/PATCH] add: ignore only ignored files
-Date: Thu, 20 Nov 2014 10:42:16 +0100
-Message-ID: <546DB778.2000000@drmicha.warpmail.net>
-References: <3f78d6c1e35c87049daaac6cb1257ea8310a90bb.1416408015.git.git@drmicha.warpmail.net>	<20141119191502.GC9908@peff.net> <xmqqbno2rhlz.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 00/14] ref-transactions-reflog
+Date: Thu, 20 Nov 2014 11:56:41 +0100
+Message-ID: <546DC8E9.6090504@alum.mit.edu>
+References: <1416274550-2827-1-git-send-email-sbeller@google.com>	<546B2CE0.6020208@alum.mit.edu>	<CAL=YDWn1x9TMGOWrmT5KMpQ_iBR0AQ5Ej1yr1pBb4==k0-vchw@mail.gmail.com>	<546BA21C.9030803@alum.mit.edu>	<xmqqr3x0uu81.fsf@gitster.dls.corp.google.com>	<546BB722.5020901@alum.mit.edu>	<xmqqsihgtcyx.fsf@gitster.dls.corp.google.com> <CAGZ79kb3DOrL_txW-qxzd0=4sKrOiPTdSg-17_0+__wuj0TBaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 20 10:42:28 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 11:56:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrOFv-0006hl-Pt
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 10:42:28 +0100
+	id 1XrPQ3-0004Eo-FF
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 11:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757075AbaKTJmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 04:42:21 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:41547 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757030AbaKTJmS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2014 04:42:18 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id F1847209C0
-	for <git@vger.kernel.org>; Thu, 20 Nov 2014 04:42:17 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 20 Nov 2014 04:42:17 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=VlW5xcJqBt1OY4YRX/Ieh7
-	ZBi0Q=; b=hUQ6X11nX0kOelrtIeyx16czBxS5zTKVuABLN3wKnYuKP8f6r+9E1q
-	Dl0kOVj2J3Kq1B+/5dGvA8vWTrQb5oWPxiPZd2UsrWADM21OdZcPIc0vndtq9mlt
-	hGV3xGpZWnBd5J3g7feQUExf8xE+2yLe+XRjrf0NELwcdjKGZrPbU=
-X-Sasl-enc: RyciIWBn3JvR1s4OLhMQi639h4cd5WkinBoaqrw93Dk9 1416476537
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 55EBF680157;
-	Thu, 20 Nov 2014 04:42:17 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <xmqqbno2rhlz.fsf@gitster.dls.corp.google.com>
+	id S1750953AbaKTK4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 05:56:55 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:46751 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750780AbaKTK4x (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2014 05:56:53 -0500
+X-AuditID: 12074413-f79f26d0000030e7-76-546dc8ec3578
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 62.3D.12519.CE8CD645; Thu, 20 Nov 2014 05:56:45 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB3256.dip0.t-ipconnect.de [93.219.50.86])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sAKAugYt028870
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 20 Nov 2014 05:56:43 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <CAGZ79kb3DOrL_txW-qxzd0=4sKrOiPTdSg-17_0+__wuj0TBaQ@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMKsWRmVeSWpSXmKPExsUixO6iqPv2RG6Iwf9Ei64r3UwWDb1XmC3+
+	Taix2Ly5ncWBxWPBplKPi5eUPT5vkgtgjuK2SUosKQvOTM/Tt0vgznhy9ihzwV/FihenNrI0
+	MK6X7mLk5JAQMJGYOmkDM4QtJnHh3nq2LkYuDiGBy4wSm6ceY4FwzjFJzD7YDVbFK6Atsfnm
+	VTCbRUBVYsmE+YwgNpuArsSinmYmEFtUIEji5J7r7BD1ghInZz5hAbFFBLwkTq2bAdbLLBAv
+	8ej5WaBtHBzCAqYSzdsZIXZ1MkssnXUDbA6nQKDEyr5lrBD16hJ/5l2C6pWXaN46m3kCo8As
+	JCtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdc73czBK91JTSTYyQABbewbjr
+	pNwhRgEORiUe3gSL3BAh1sSy4srcQ4ySHExKorz3lgOF+JLyUyozEosz4otKc1KLDzFKcDAr
+	ifBq7ATK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeC8fB2oULEpN
+	T61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB8VqfDEwWkFSPEB7f4K08xYXJOYCRSFaTzEq
+	SonzCgITi5AASCKjNA9uLCwtvWIUB/pSmPc9SDsPMKXBdb8CGswENPjvUrDBJYkIKakGRpG4
+	i9s+/TXcGV99JuFPxiz/iL3qjHMeTeDL5P2pWFGzNfOki1DKidtbcha2PFfyZmv0eX3B33lG
+	5DzeiAN/lGXXvsxMqmCaEjGT6/010f7U8quXH7NkH+3+wPTtKVu/WODOjxr23Z8v 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano schrieb am 19.11.2014 um 22:43:
-> Jeff King <peff@peff.net> writes:
+On 11/20/2014 12:22 AM, Stefan Beller wrote:
+> Sorry for the long delay.
+> Thanks for the explanation and discussion.
 > 
->> Typically I keep a very neat .gitignore file and just use "git add .",
->> which _does_ ignore those files. The real problem here is that git
->> cannot tell the difference between "the user explicitly asked for
->> foo.aux, so we should complain" and "oops, foo.aux got caught in a shell
->> expansion".
+> So do I understand it right, that you are not opposing
+> the introduction of "everything should go through transactions"
+> but rather the detail and abstraction level of the API?
+
+Correct.
+
+> So starting from Michaels proposal in the first response:
 > 
-> Yup.  I also find myself doing "git cmd -- \*.ext" to let Git, not
-> my shell, handle the patterns.
-
-That is the correct way, of course.
-
->> I almost wonder if skipping ignored files should _always_ be a warning,
->> not a hard error. I guess that has unpleasant side effects for scripts
->> which call "git add XXX" and check the exit code, who may be
->> unpleasantly surprised that they missed out on some content.
->>
->> Perhaps we could do a hybrid: add the files that were not ignored, but
->> then still exit non-zero. Careful scripts need to check the exit status
->> of "git add" anyway, and sloppy humans with over-broad wildcards
->> typically do not care about the exit status.
+> 1. Add a reflog entry when a reference is updated in a transaction.
 > 
-> ;-)
+> ok
 > 
+> 2. Rename a reflog file when the corresponding reference is renamed.
+> 
+> This should happen within the same transaction as the reference is
+> renamed, right?
 
-You can simply say "Michael" in your last subclause above :)
+Yes. Maybe there should be a "rename reference" operation that can be
+added to a transaction, and it simply knows to rename any associated
+reflogs. Then the calling code wouldn't have to worry about reflogs
+explicitly in this case at all.
 
-I'm wondering whether that behaviour change (without --ignore-errors) is
-OK - I don't mind, but hey, I usually don't.
+> So we don't have a multistep process here, which may abort in between having the
+> reference updated and a broken reflog or vice versa. We want to either
+> have both
+> the ref and the reflog updated or neither.
 
-I think it all comes down to the fact whether specifying an ignored file
-on the command line is considered an error or only "possibly a user
-error" we should dwim around. "git add" being plumbing, I'm somehow
-hesitant to change behaviour unless git is asked to ignore error. And if
-I'm hesitant already... oh wait. git add is declared porcelain? I would
-not have guessed without looking it up.
+Yes.
+
+> 3. Delete the reflog when the corresponding reference is deleted [1].
+> 
+> also as one transaction?
+
+It would be a side-effect of committing a transaction that contains a
+reference deletion. The deletion of the reflog would be done at the same
+time that the rest of the transaction is committed, and again the
+calling code wouldn't have to explicitly worry about the reflogs.
+
+> 4. Configure a reference to be reflogged.
+> 5. Configure a reference to not be reflogged anymore and delete any
+>    existing reflog.
+> 
+> Why do we need 4 and 5 here? Wouldn't all refs be reflog by default and
+> why do I want to exclude some?
+> 
+> 6. Selectively expire old reflog entries, e.g., based on their age.
+> 
+> This is the maintenance operation, which you were talking about.
+> In my vision, this also should go into one transaction. So you have the
+> business logic figuring out all the changes ("drop reflog entry a b and d")
+> and within one transaction we can perform all of the changes.
+
+But if we take the approach described above, AFAICT this operation is
+the only one that would require the caller to manipulate reflog entries
+explicitly. And it has to iterate through the old reflog entries, decide
+which ones to keep, possibly change its neighbors to eliminate gaps in
+the chain, then stuff each of the reflog entries into a transaction one
+by one. To allow this to be implemented on the caller side, the
+transaction API has to be complicated in the following ways:
+
+* Add a transaction_update_type (UPDATE_SHA1 vs. UPDATE_LOG).
+* Add reflog_fd, reflog_lock, and committer members to struct ref_update.
+* New function transaction_update_reflog().
+* A new flag REFLOG_TRUNCATE that allows the reflog file to be truncated
+before writing.
+* Machinery that recognizes that a transaction contains multiple reflog
+updates for the same reference and processes them specially to avoid
+locking and rewriting the reflog file multiple times.
+
+So this design has the caller serializing all reflog entries into
+separate ref_update structs (which implies that they are held in RAM!)
+only for ref_transaction_commit() to scan through all ref_updates
+looking for reflog updates that go together so that they can be
+processed as a whole. In other words, the caller picks the reflog apart
+and then ref_transaction_commit() glues it back together. It's all very
+contrived.
+
+I suggest that the caller only be responsible for deciding which reflog
+entries to keep (by supplying a callback function), and a new
+expire_reflogs_for_me_please() API function be responsible for taking
+out a lock, feeding the old reflog entries to the callback, expiring the
+unwanted entries, optionally eliminating gaps in the chain (for the use
+of "reflog [expire|delete] --rewrite"), writing the new reflog entries,
+and optionally updating the reference itself (for the use of "reflog
+[expire|delete] --updateref").
+
+The benefit will be simpler code, a better separation of
+responsibilities, and a simpler VTABLE that future reference backends
+have to implement.
+
+I would love to work on this but unfortunately have way too much on my
+plate right now.
 
 Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
