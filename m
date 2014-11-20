@@ -1,124 +1,129 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 2/2] refs.c: make ref_transaction_delete a wrapper for ref_transaction_update
-Date: Thu, 20 Nov 2014 09:39:10 -0800
-Message-ID: <1416505150-1913-1-git-send-email-sbeller@google.com>
-References: <20141120011136.GC6527@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, sahlberg@google.com, git@vger.kernel.org,
-	mhagger@alum.mit.edu, jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Thu Nov 20 18:39:25 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Improve the filemode trustability check
+Date: Thu, 20 Nov 2014 09:55:53 -0800
+Message-ID: <xmqq61e94uza.fsf@gitster.dls.corp.google.com>
+References: <546DD52F.90302@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Nov 20 18:56:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrVhV-0004yZ-1v
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 18:39:25 +0100
+	id 1XrVxb-00044h-3u
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 18:56:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757807AbaKTRjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 12:39:17 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:63606 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757788AbaKTRjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 12:39:16 -0500
-Received: by mail-ie0-f171.google.com with SMTP id rl12so3227729iec.30
-        for <git@vger.kernel.org>; Thu, 20 Nov 2014 09:39:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FuC+NxHaNS5z6XDKqPJSDdzyynXY+sO8Kn8jPWTG030=;
-        b=GGm0pov+gagwh7lIxrmgqnHQyTeDieGr2oykj4HbRFd6A/UnyYF0MwaGznj6bOjhlW
-         RH5jueYPlQOlftqDitzUWH3ugF9Fk2HGjNl+Le3Swasog4aVBLqCpXS/4OvvbHwfpK00
-         BYIPZ+YB8a6S9hCQ8P9kb8ODgG9KfdHD1ZSH4jpEQHkTpDXS3uw8Py62vQaTZYS9n1QO
-         /1jsohR4cJuwaQEgubhtr+T1zVRhlDzzYjYGYENRY41Id1jIsWz4huAlndnRmD7Fh5Xn
-         92D3po/VO0mooFDFkomVj9Qf5Gp5vTox9edn0zYAeMdHSbNC34oEkT2AwyobjxGLGnRj
-         Qe7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=FuC+NxHaNS5z6XDKqPJSDdzyynXY+sO8Kn8jPWTG030=;
-        b=XeWVPDhZ/iPTmHif5LOZP4qbgx4qfa8EpRfyZRc405G8k6ECePPDEMhbSDQUGnH9j7
-         TAAKxbcwkiiH8BLgcmO+erAuRsbGNyKhIbPbRkeFaNFZ/ob0KfZ1PUA2Wy0bIXapavGe
-         DddK3PbUC2A8wMqFlS7/LCNtxiB96+SHbrKXb3MVkH2Zu1FW0yR19RXXFzrZP14mwWEA
-         8aZGmnlVBYrVKcX7DIHcNyS8ddXnMkhxELmJiWT7No+p0tg2dVixbxZ0vZiibVUDtw+p
-         mHWSIIdD64QgoT7fr9dD9z2KKZayie9dmszXiefGlb9Pw7jSnjK571Xvi6jCSK5Z1PmJ
-         AQ4Q==
-X-Gm-Message-State: ALoCoQkpD4obRArhlc0anplIrzNSMNaoQnARhwm5FQEnbj0LYO/6jkHdGdptQhR+bhvqdiznldWB
-X-Received: by 10.50.164.226 with SMTP id yt2mr3794734igb.22.1416505155195;
-        Thu, 20 Nov 2014 09:39:15 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:2878:9312:86d2:4f27])
-        by mx.google.com with ESMTPSA id ga3sm784884igd.10.2014.11.20.09.39.14
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 20 Nov 2014 09:39:14 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc2.23.gca0107e
-In-Reply-To: <20141120011136.GC6527@google.com>
+	id S1757870AbaKTRz7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Nov 2014 12:55:59 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57165 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757837AbaKTRz6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2014 12:55:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 262E41EB49;
+	Thu, 20 Nov 2014 12:55:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=22vIa4YIdZOL
+	PHoO7osafZt8DHM=; b=gFdmSVAWQunNWrc/66+RFuixXIOYJcahIe0tSq0rKmYk
+	AfDPoPpSlIwm4O8DN5LBrPgb0EOm9OprqW3c86kHA9sEjJewySlT9deKkkWGSl43
+	w7t5I79rMRv58j4oq6ZdUBwH3/93CTxLXZFwTXDAcpkVcb0LUnQ8kJJopV2/kfs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YtGTCl
+	TntpGROwj2MfqixU1vRBfULn82Nd/zt/Gl3AckINxs5UmHnUUynW/3w9gLG4Dii+
+	HTvK6bNxzkNSBiJxxqiovbCSZBgf+mGPjTKmjjsypD/NncPwZaWtQwPfYlMBdil0
+	x+oatUhG8H0EmZtNmNDz7+aDMOx3Il6YRjneQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 12B7E1EB48;
+	Thu, 20 Nov 2014 12:55:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C2261EB47;
+	Thu, 20 Nov 2014 12:55:56 -0500 (EST)
+In-Reply-To: <546DD52F.90302@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
+ =?utf-8?Q?=22's?= message of
+	"Thu, 20 Nov 2014 12:49:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7A5B7C96-70DE-11E4-8F8B-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
----
+> Some file systems do not support the executable bit:
+> a) The user executable bit is always 0, e.g. VFAT mounted with -onoex=
+ec
+> b) The user executable bit is always 1, e.g. cifs mounted with -ofile=
+_mode=3D0755
+> c) There are system where user executable bit is 1 even if it should =
+be 0
+>    like b), but the file mode can be maintained locally. chmod -x cha=
+nges the
+>    file mode from 0766 to 0666, until the file system is unmounted an=
+d
+>    remounted and the file mode is 0766 again.
+>    This been observed when a Windows machine with NTFS exports a shar=
+e to
+>    Mac OS X via smb or afp.
+>
+> Case a) and b) are handled by the current code.
+> Case c) qualifies as "non trustable executable bit" and core.filemode
+> should be false, but this is currently not done.
+>
+> Detect when ".git/config" has the user executable bit set after
+> creat(".git/config", 0666) and set core.filemode to false.
 
-no changes in code, just removing Jonathans sign off, adding reviewed-by 
-by Michael and Jonathan
+Is this codepath reached _only_ and immediately after creat(0666) of
+the config file in the same process?  The function has a local
+variable reinit, which is returned to the caller to help it decide
+if we are re-initializing an existing repository, so I suspect that
+the call to git_config_set() before this part of the code may not
+necessarily be creating the file [*1*].
 
- refs.c | 22 ++--------------------
- refs.h |  2 +-
- 2 files changed, 3 insertions(+), 21 deletions(-)
+I _think_ in the reinit case that makes us rewrite an existing
+config file, the mode bits are propagated to the new file we just
+wrote from the old one; checking st1.st_mode is therefore seeing
+not what create(0666) gave us but whatever random bits the user had
+on the original.
 
-diff --git a/refs.c b/refs.c
-index 005eb18..05cb299 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3633,26 +3633,8 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- 			   int flags, int have_old, const char *msg,
- 			   struct strbuf *err)
- {
--	struct ref_update *update;
--
--	assert(err);
--
--	if (transaction->state != REF_TRANSACTION_OPEN)
--		die("BUG: delete called for transaction that is not open");
--
--	if (have_old && !old_sha1)
--		die("BUG: have_old is true but old_sha1 is NULL");
--
--	update = add_update(transaction, refname);
--	update->flags = flags;
--	update->have_old = have_old;
--	if (have_old) {
--		assert(!is_null_sha1(old_sha1));
--		hashcpy(update->old_sha1, old_sha1);
--	}
--	if (msg)
--		update->msg = xstrdup(msg);
--	return 0;
-+	return ref_transaction_update(transaction, refname, null_sha1,
-+				      old_sha1, flags, have_old, msg, err);
- }
- 
- int update_ref(const char *action, const char *refname,
-diff --git a/refs.h b/refs.h
-index 2bc3556..7d675b7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -283,7 +283,7 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
- 
- /*
-  * Add a reference update to transaction.  new_sha1 is the value that
-- * the reference should have after the update, or zeros if it should
-+ * the reference should have after the update, or null_sha1 if it should
-  * be deleted.  If have_old is true, then old_sha1 holds the value
-  * that the reference should have had before the update, or zeros if
-  * it must not have existed beforehand.
--- 
-2.2.0.rc2.23.gca0107e
+Which is probably not a useful source of information to gauge the
+characterisic of the filesystem, no?
+
+[Footnote]
+
+*1* We may have been asked to reinitialize and update an existing
+repository that was created with the same or older repository format
+number.
+
+
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+> Changes since V1:
+> - Improved commit msg (hopefully)
+> - Simplified the patch
+>  builtin/init-db.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index aab44d2..195a88b 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -252,7 +252,8 @@ static int create_default_files(const char *templ=
+ate_path)
+>  	filemode =3D TEST_FILEMODE;
+>  	if (TEST_FILEMODE && !lstat(path, &st1)) {
+>  		struct stat st2;
+> -		filemode =3D (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+> +		filemode =3D (!(st1.st_mode & S_IXUSR) &&
+> +				!chmod(path, st1.st_mode ^ S_IXUSR) &&
+>  				!lstat(path, &st2) &&
+>  				st1.st_mode !=3D st2.st_mode &&
+>  				!chmod(path, st1.st_mode));
