@@ -1,7 +1,8 @@
 From: Philip Oakley <philipoakley@iee.org>
-Subject: [RFC 0/4] Fix the Visual Studio 2008 .sln generator
-Date: Thu, 20 Nov 2014 23:37:58 +0000
-Message-ID: <1416526682-6024-1-git-send-email-philipoakley@iee.org>
+Subject: [RFC 3/4] engine.pl: split the .o and .obj processing
+Date: Thu, 20 Nov 2014 23:38:01 +0000
+Message-ID: <1416526682-6024-4-git-send-email-philipoakley@iee.org>
+References: <1416526682-6024-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Marius Storm-Olsen <mstormo@gmail.com>,
@@ -11,49 +12,50 @@ Cc: Marius Storm-Olsen <mstormo@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Msysgit <msysgit@googlegroups.com>
 To: GitList <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBRXWXGRQKGQERQXTYHQ@googlegroups.com Fri Nov 21 00:37:46 2014
-Return-path: <msysgit+bncBDSOTWHYX4PBBRXWXGRQKGQERQXTYHQ@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com Fri Nov 21 00:37:46 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f192.google.com ([209.85.217.192])
+Received: from mail-wi0-f189.google.com ([209.85.212.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBRXWXGRQKGQERQXTYHQ@googlegroups.com>)
-	id 1XrbIE-0002Wq-W6
-	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 00:37:43 +0100
-Received: by mail-lb0-f192.google.com with SMTP id 10sf27139lbg.9
-        for <gcvm-msysgit@m.gmane.org>; Thu, 20 Nov 2014 15:37:42 -0800 (PST)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com>)
+	id 1XrbII-0002YG-8d
+	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 00:37:46 +0100
+Received: by mail-wi0-f189.google.com with SMTP id r20sf371302wiv.26
+        for <gcvm-msysgit@m.gmane.org>; Thu, 20 Nov 2014 15:37:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
-         :x-original-authentication-results:content-type:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=EccZiVoOM0eEyZOw+d/9DRjxKqtj5h9eLXV0brGSPEQ=;
-        b=AOHiFPks+Pkfx0vfREFgWREQYQwXyKfSC5VJnW60T5HuMJu3xNelUMY+36HnGUsXLK
-         jg/mEc0ws0rvHyMRJIQkXbFw0ba67gsZWMHQGJvL4Le0IjVBsla5VaEG9VcP7tC1n+YJ
-         5ujxnKYKVdsqU65VQdD2JJm1TcqoMc59Pqki0Z5AKLYu6lngVnPaPVlwRpa62ecfz80L
-         xpLsq4XUottZzHvCFbVunKCFmmQXi24cjFmLU/p8+/R2lVT6XsblTx9jfterV3gsKvJu
-         XAS6qLfmW2N+gZYTHaQw7G5wl7bPQRHToG0CghR1W7FFDGQp5hiypBgn21EBhORUkaEl
-         XLCQ==
-X-Received: by 10.180.104.162 with SMTP id gf2mr144400wib.15.1416526662838;
-        Thu, 20 Nov 2014 15:37:42 -0800 (PST)
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :content-type:precedence:mailing-list:list-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe;
+        bh=/YHhT2qtBlecivDuMifKnm7/qdkfh5DVAcFlXQnWlgE=;
+        b=YHr+xNMl7KpFYIToJCt0vykoNj+/4YUkHR5feYS0kamNOIsEHj8xtwfe4EKnNlhQEK
+         rI6nJNNITki6wMg9zJCc0SQvXwKm7TBshS2Opz4ZWo+6c6I+pB1RL+6sZN7X7tW+Mczm
+         yBASkH2OTPz/fPXmFvqThPKgYw6z0p741HbUCES348yEPqlqmZgQNXSngzUAguWr7VNe
+         cHxN58w+8g3E0D2vcNrjpXXBmZqzoMO0EHlLg6cnpjR1u+U/HOQVaj7ChUxdE6j4k/tc
+         L51PwOVFufpaqTaZ8BCjZYpCw0WCPg4USPTkRVTZ2jzsNjc4MWw2ahgAxOsw0R5avtUl
+         u+cQ==
+X-Received: by 10.152.29.228 with SMTP id n4mr13425lah.16.1416526666071;
+        Thu, 20 Nov 2014 15:37:46 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.96.99 with SMTP id dr3ls1613697wib.18.canary; Thu, 20 Nov
- 2014 15:37:41 -0800 (PST)
-X-Received: by 10.180.85.97 with SMTP id g1mr8033484wiz.0.1416526661859;
-        Thu, 20 Nov 2014 15:37:41 -0800 (PST)
+Received: by 10.152.206.102 with SMTP id ln6ls118368lac.95.gmail; Thu, 20 Nov
+ 2014 15:37:44 -0800 (PST)
+X-Received: by 10.112.204.71 with SMTP id kw7mr351108lbc.13.1416526664237;
+        Thu, 20 Nov 2014 15:37:44 -0800 (PST)
 Received: from out1.ip06ir2.opaltelecom.net (out1.ip06ir2.opaltelecom.net. [62.24.128.242])
-        by gmr-mx.google.com with ESMTP id jv2si90840wid.1.2014.11.20.15.37.41
+        by gmr-mx.google.com with ESMTP id jv2si90840wid.1.2014.11.20.15.37.44
         for <msysgit@googlegroups.com>;
-        Thu, 20 Nov 2014 15:37:41 -0800 (PST)
+        Thu, 20 Nov 2014 15:37:44 -0800 (PST)
 Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.242 as permitted sender) client-ip=62.24.128.242;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvoZAPx5blROl3PwPGdsb2JhbABagw0BAVRZgja5HY9+C4dHBAKBCBcBAQEBAQEFAQEBATg7hF8jGIECCgYBE4hYCdRzASuOaoIehFIFlzWJHJkGPTCCSwEBAQ
-X-IPAS-Result: AvoZAPx5blROl3PwPGdsb2JhbABagw0BAVRZgja5HY9+C4dHBAKBCBcBAQEBAQEFAQEBATg7hF8jGIECCgYBE4hYCdRzASuOaoIehFIFlzWJHJkGPTCCSwEBAQ
+X-IronPort-Anti-Spam-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAEBAQEGAiCRCAeESwWXNYkcmQY9MIJLAQEB
+X-IPAS-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAEBAQEGAiCRCAeESwWXNYkcmQY9MIJLAQEB
 X-IronPort-AV: E=Sophos;i="5.07,426,1413241200"; 
-   d="scan'208";a="651403011"
+   d="scan'208";a="651403030"
 Received: from host-78-151-115-240.as13285.net (HELO localhost) ([78.151.115.240])
-  by out1.ip06ir2.opaltelecom.net with ESMTP; 20 Nov 2014 23:37:41 +0000
+  by out1.ip06ir2.opaltelecom.net with ESMTP; 20 Nov 2014 23:37:43 +0000
 X-Mailer: git-send-email 1.9.4.msysgit.0
+In-Reply-To: <1416526682-6024-1-git-send-email-philipoakley@iee.org>
 X-Original-Sender: philipoakley@iee.org
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
  (google.com: domain of transitioning philipoakley@iee.org does not designate
@@ -70,52 +72,87 @@ List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msys
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
 
-Potential Windows developers are likely to be using Visual Studio as
-their IDE. The tool stack required for Windows can be tortuous as it
-crosses the boundaries between platforms and philosophies. This RFC
-seeks to maintain the tools that could assist such developers. In
-particular, those tools that generate an initial Visual Studio project
-(.sln ) file.
+Commit 4b623d80f7352 added an .obj file (invalidcontinue.obj) which was not
+processed correctly.
 
-The .sln generator in contrib began to break when internationalisation
-introduced an extra -o option. This recently worsened with the addition
-of invalidcontinue.obj for 'improved POSIX compatibility'.
+The generate engine then mistakenly did a s/.o/.c/  to create a request
+to compile invalidcontinue.cbj.
 
-I hacked a bit when I first attempted to use the VS IDE and noticed the
-i18n issue. I didn't completely solve all my issues because of further
-issues with VS2010 Express, so no patches were submitted at the time.
+Split the '/\.(o|obj)$' in engine.pl#L353 into:
 
-Now, with a fresh copy of VS20008 Express, I see the additional problem
-of the addition of the invalidcontinue.obj reference causing the .sln
-generation to fail.
+        } elsif ($part =~ /\.o$/) { # was '/\.(o|obj)$'
+            push(@objfiles, $part);
+        } elsif ($part =~ /\.obj$/) { # was '/\.(o|obj)$'
+            # push(@objfiles, $part); # do nothing
+        } else {
 
-Are the patches going in the right direction?
-Is the processing of the .obj file in engine.pl sensible?
-and the extra care with s/\.o$/.c/ avoiding s/obj/cbj/.
-Does it affect the Qmake capability? (I've no idea)
-Is the quoting of filenames correct? (my perl foo is cargo cult!)
+And correct the substitution to only operate on .o files.
 
-I've also updated the vcbuild/README to mention Msysgit (which
-will be replaced soon by the newer/better Git-for-windows/SDK
-(https://github.com/git-for-windows/sdk), but the benefits still
-apply.
+Also report all errors rather than dieing on the first
 
-I've cc'd those who have contributed or patched the engine.pl, or
-appear to be interested via a $gmane search, who can hopefully comment.
+ $ git describe 4b623d80f7352
+ v1.9.1-1-g4b623d8
+The problem exists for V1.9.2 onward
 
-Obviously, the patches will need squashing together, and the commit
-message(s) tidied after inclusion of comments.
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ contrib/buildsystems/engine.pl | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-Philip Oakley (4):
-  Fix i18n -o option in msvc engine.pl
-  Properly accept quoted space in filenames
-  engine.pl: split the .o and .obj processing
-  Improve layout and reference msvc-build script
-
- compat/vcbuild/README          | 29 +++++++++++++++++++++--------
- contrib/buildsystems/engine.pl | 38 ++++++++++++++++++++++++++++++--------
- 2 files changed, 51 insertions(+), 16 deletions(-)
-
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index 8e41808..16c3dd5 100755
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -264,7 +264,9 @@ sub handleCompileLine
+         } elsif ($part =~ /\.(c|cc|cpp)$/) {
+             $sourcefile = $part;
+         } else {
+-            die "Unhandled compiler option @ line $lineno: $part";
++            print "full line: $line\n";
++            print "A:-Unhandled compiler option @ line $lineno: $part\n"; # die (if !DEBUG)
++#            die "Unhandled compiler option @ line $lineno: $part";
+         }
+     }
+     @{$compile_options{"${sourcefile}_CFLAGS"}} = @cflags;
+@@ -290,14 +292,15 @@ sub handleLibLine
+             $libout = $part;
+             $libout =~ s/\.a$//;
+         } else {
+-            die "Unhandled lib option @ line $lineno: $part";
++            print "A:-Unhandled lib option @ line $lineno: $part\n"; # die (if !DEBUG)
++#           die "Unhandled lib option @ line $lineno: $part";
+         }
+     }
+ #    print "LibOut: '$libout'\nLFlags: @lflags\nOfiles: @objfiles\n";
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+@@ -343,8 +346,10 @@ sub handleLinkLine
+         } elsif ($part =~ /\.(a|lib)$/) {
+             $part =~ s/\.a$/.lib/;
+             push(@libs, $part);
+-        } elsif ($part =~ /\.(o|obj)$/) {
++        } elsif ($part =~ /\.o$/) { # was '/\.(o|obj)$'
+             push(@objfiles, $part);
++        } elsif ($part =~ /\.obj$/) { # was '/\.(o|obj)$'
++            # push(@objfiles, $part); # do nothing
+         } else {
+             die "Unhandled lib option @ line $lineno: $part";
+         }
+@@ -353,7 +358,7 @@ sub handleLinkLine
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
 -- 
 1.9.4.msysgit.0
 
