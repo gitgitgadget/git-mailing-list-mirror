@@ -1,66 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/7] t4026: test "normal" color
-Date: Thu, 20 Nov 2014 14:00:48 -0500
-Message-ID: <20141120190048.GA3741@peff.net>
-References: <20141120151418.GA23607@peff.net>
- <20141120151609.GC23680@peff.net>
- <xmqqwq6p3dq3.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 1/1] refs.c: use a stringlist for repack_without_refs
+Date: Thu, 20 Nov 2014 11:01:33 -0800
+Message-ID: <xmqqppch3dde.fsf@gitster.dls.corp.google.com>
+References: <20141120021540.GF6527@google.com>
+	<1416506666-5989-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Scott Baker <bakers@canbytel.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 20:00:57 2014
+Content-Type: text/plain
+Cc: sahlberg@google.com, git@vger.kernel.org, jrnieder@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 20:02:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrWyN-0005Zx-ES
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 20:00:55 +0100
+	id 1XrX0B-0006JU-0o
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 20:02:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757959AbaKTTAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 14:00:51 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42923 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757955AbaKTTAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 14:00:50 -0500
-Received: (qmail 21822 invoked by uid 102); 20 Nov 2014 19:00:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 13:00:50 -0600
-Received: (qmail 15077 invoked by uid 107); 20 Nov 2014 19:01:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 14:01:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Nov 2014 14:00:48 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqwq6p3dq3.fsf@gitster.dls.corp.google.com>
+	id S1757268AbaKTTCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 14:02:43 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65255 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755664AbaKTTCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 14:02:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 943FF1FAA2;
+	Thu, 20 Nov 2014 14:02:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HE/dOm62H1GekwwpLw4M5LSA5EY=; b=jOaGsD
+	g7VGnSnWmZoQlx8abKBCOVa73ZXgdvevnm/7ygqWCDSMNthuLm68gTejgxiCne2Z
+	VYU1ePLmLgpo8SFxvFLv2Hn7MRfDs0ZhKQ6UFNiEhOqebdHBbQVG434Z9NuQXMIg
+	psXahfDn9c0a+C0GAM+pi9k8BxJRQDpojkkBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WRUPo0i52ytyIJzz5rjFiM6Ux7GZDFlp
+	0RWS4pXAvHr3qGZx5/Flb/QOSAoggttC0oiSpwLXDMBzCCS0XQUXZIGnHMdtqTe4
+	rX0DJGch1IhsmP1pIM/wAdREZEyMT4hjJFC/885yrm3hQCPo2FeCL5EimoBfurz5
+	hwFWbWRTIWI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A2EA1FAA0;
+	Thu, 20 Nov 2014 14:02:41 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D42DE1FA43;
+	Thu, 20 Nov 2014 14:01:34 -0500 (EST)
+In-Reply-To: <1416506666-5989-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Thu, 20 Nov 2014 10:04:26 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A5C3F698-70E7-11E4-AE41-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 20, 2014 at 10:53:56AM -0800, Junio C Hamano wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > If the user specifiers "normal" for a foreground color, this
+>  Junio, I'll address your proposed changes in a different patch. 
+>  If err is passed in as NULL, we'll just skip all the error string 
+>  formatting and return silent and fast.
 
-Argh, s/specifiers/specifies/
+Huh, I lost track, but I never meant to say "the functions should
+return silently with error code when err == NULL".  I said that it
+is another plausible expectation, hence justifies the comment to
+clarify, but wished that there were no need to clarify in the first
+place.
 
-> > We also check that color "-1" does the same thing. This is
-> > not documented, but has worked forever, so let's make sure
-> > we keep supporting it.
-> 
-> YLNTED, really?  I do not object to the conclusion, but I am
-> mildly surprised ;-)
+If everybody required err != NULL, there would be no need to clarify
+which functions require err != NULL.  If everybody accepted err ==
+NULL as a more efficient way to do "--quiet", that is another way to
+remove the need to clarify.
 
-I was surprised by it, too, when writing the refactoring patch that
-comes next in the series. :)
+Either way is fine and I did not "propose" anything ;-).
 
-I was also surprised that we further check that "-2" is _not_ valid in
-the tests.  I do not mind declaring everything negative to be the same
-(either invalid, or "normal"), but I decided that there was really no
-benefit to breaking compatibility in this case. And I suppose if you are
-using 256-color mode, then "-1 255" is perhaps a natural way to write
-it.
-
--Peff
+I think this matches more-or-less what I've locally tweaked after
+following the discussion between you and Jonathan.  Thanks.
