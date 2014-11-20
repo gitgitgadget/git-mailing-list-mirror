@@ -1,107 +1,66 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] refs.c: repack_without_refs may be called without error
- string buffer
-Date: Thu, 20 Nov 2014 10:56:02 -0800
-Message-ID: <CAGZ79kZZfjqhRyFsyPmgBv5bz70TxmStXnHnAV8aMHessEfeWg@mail.gmail.com>
-References: <1416506666-5989-1-git-send-email-sbeller@google.com>
-	<1416507040-6576-1-git-send-email-sbeller@google.com>
-	<20141120183523.GD15945@google.com>
-	<CAL=YDWkZcoXBreoPyf1EnSmYcaUPFCPW8tGkCNaD+is2hOiR_g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/7] t4026: test "normal" color
+Date: Thu, 20 Nov 2014 14:00:48 -0500
+Message-ID: <20141120190048.GA3741@peff.net>
+References: <20141120151418.GA23607@peff.net>
+ <20141120151609.GC23680@peff.net>
+ <xmqqwq6p3dq3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 19:56:13 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Scott Baker <bakers@canbytel.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 20 20:00:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrWtl-0003RF-CJ
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 19:56:09 +0100
+	id 1XrWyN-0005Zx-ES
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 20:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757371AbaKTS4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 13:56:04 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:57849 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756899AbaKTS4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 13:56:03 -0500
-Received: by mail-ig0-f172.google.com with SMTP id hl2so5264293igb.11
-        for <git@vger.kernel.org>; Thu, 20 Nov 2014 10:56:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wdIJfWS2GZ9Gy4nvvjoMKviClSBYyaX5YAS9mSewvBQ=;
-        b=miV4P348u2zhaOaRC5HznXrNZOJ95MdCpdEtyxj1QevGV55P3ItWCYtj4RnW1hNels
-         j1r1NfwZEq/D7gWgqi1GStcMXdhhMG0xBrBthnNfl/kC+FUmf/6TJh/di/j/yd4RGArh
-         IZ9Qj1cZqsN0qs8dvx7Iq36GTtQ5lInrtSjvfu2F9sxuVglQLLZyoy7cPB39aufEAyxn
-         8wMNFxkIZfxYOSpkias7o0RUf3UPZ0LCkxWjuCuIyy+7xSgyZyabn6RmoHMqUbnq/9Sz
-         pbpSn8y1LyEsn3SOOEz/FXrAcoVWT5BZCBqqSGCQ2XSQNBnvHeYCQzRgAJHfVckYhWpC
-         Tltw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=wdIJfWS2GZ9Gy4nvvjoMKviClSBYyaX5YAS9mSewvBQ=;
-        b=ZQGI+1n9Y6hgE/HYeDvskde5VXYO4AE3BOZotb9XpwYIzJGvMAMQ9XVnydGvcn/aZE
-         uY6SOkLsUZJ0Wu+w8uAb5FwHHkInWH1f2UqI8hmb8VcpTv441Ut44+/hA8Ol6hnW/A81
-         e7pBi8L1D9kSE0cm1i/Z+GvIsMX1Fzwx1OMZ2ZwRG2gT8kNgd/NElVVCA1XEH0uNSOLA
-         5FVJ2IUBzS/FsehWnv3yEoddxzL22ZOJ4IwyzMIBjXYDNlMoYJMjmr2GNdAvSaTJeeEr
-         2eh0LvkK0yDVb1tlYZTAc6dk3GlTuM0pDCuzKTwN5e5Rm/MKmToUI8ns33uUlNnwwGJY
-         /p/Q==
-X-Gm-Message-State: ALoCoQluRM5vx25PM5OC1TsbDgmC5retf9tA4idIVgZRwKjOATwuUXuglQtJyz4VDTPhIUQ12hMX
-X-Received: by 10.43.158.197 with SMTP id lv5mr1232205icc.88.1416509762096;
- Thu, 20 Nov 2014 10:56:02 -0800 (PST)
-Received: by 10.107.1.199 with HTTP; Thu, 20 Nov 2014 10:56:02 -0800 (PST)
-In-Reply-To: <CAL=YDWkZcoXBreoPyf1EnSmYcaUPFCPW8tGkCNaD+is2hOiR_g@mail.gmail.com>
+	id S1757959AbaKTTAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 14:00:51 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42923 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757955AbaKTTAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Nov 2014 14:00:50 -0500
+Received: (qmail 21822 invoked by uid 102); 20 Nov 2014 19:00:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 13:00:50 -0600
+Received: (qmail 15077 invoked by uid 107); 20 Nov 2014 19:01:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Nov 2014 14:01:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Nov 2014 14:00:48 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqwq6p3dq3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ok, will drop the patch due to bad design.
+On Thu, Nov 20, 2014 at 10:53:56AM -0800, Junio C Hamano wrote:
 
-On Thu, Nov 20, 2014 at 10:36 AM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> On Thu, Nov 20, 2014 at 10:35 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Stefan Beller wrote:
->>
->>> If we don't pass in the error string buffer, we skip over all
->>> parts dealing with preparing error messages.
->>
->> Please no.
->>
->> We tried this with the ref transaction code.  When someone wants
->> to silence the message, it is cheap enough to do
->>
->>         struct strbuf ignore = STRBUF_INIT;
->>
->>         if (thing_that_can_fail_in_an_ignorable_way(..., &ignore)) {
->>                 ... handle the failure ...
->>         }
->>
->> The extra lines of code make it obvious that the error message is
->> being dropped, which is a very good thing.  The extra work to format a
->> message in the error case is not so bad and can be mitigated if the
->> error is a common normal case by passing a flag to not consider it an
->> error.
->>
->> Silently losing good diagnostic messages when err == NULL would have
->> the opposite effect: when there isn't a spare strbuf to put errors in
->> around, it would be tempting for people coding in a hurry to just pass
->> NULL, and to readers it would look at first glance like "oh, an
->> optional paramter was not passed and we are getting the good default
->> behavior".
->>
->> This is not a theoretical concern --- it actually happened.
->>
->
-> Fair enough.
-> Un-LGTM my message above.
->
->
->
->> My two cents,
->> Jonathan
+> Jeff King <peff@peff.net> writes:
+> 
+> > If the user specifiers "normal" for a foreground color, this
+
+Argh, s/specifiers/specifies/
+
+> > We also check that color "-1" does the same thing. This is
+> > not documented, but has worked forever, so let's make sure
+> > we keep supporting it.
+> 
+> YLNTED, really?  I do not object to the conclusion, but I am
+> mildly surprised ;-)
+
+I was surprised by it, too, when writing the refactoring patch that
+comes next in the series. :)
+
+I was also surprised that we further check that "-2" is _not_ valid in
+the tests.  I do not mind declaring everything negative to be the same
+(either invalid, or "normal"), but I decided that there was really no
+benefit to breaking compatibility in this case. And I suppose if you are
+using 256-color mode, then "-1 255" is perhaps a natural way to write
+it.
+
+-Peff
