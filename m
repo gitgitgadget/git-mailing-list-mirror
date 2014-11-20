@@ -1,87 +1,148 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce a hook to run after formatting patches
-Date: Thu, 20 Nov 2014 15:33:26 -0800
-Message-ID: <xmqqioi91m7t.fsf@gitster.dls.corp.google.com>
-References: <1416012460-4459-1-git-send-email-sbeller@google.com>
-	<xmqqzjbryonp.fsf@gitster.dls.corp.google.com>
-	<xmqqlhn9y7dn.fsf@gitster.dls.corp.google.com>
-	<xmqqd28ly6p1.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD3m9aouYKXfk-vE4AGbTxdyH6=k8ey5n-kF1OLux2Ah0g@mail.gmail.com>
-	<20141120232628.GA30554@google.com>
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [RFC 2/4] Properly accept quoted space in filenames
+Date: Thu, 20 Nov 2014 23:38:00 +0000
+Message-ID: <1416526682-6024-3-git-send-email-philipoakley@iee.org>
+References: <1416526682-6024-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Nov 21 00:33:35 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Marius Storm-Olsen <mstormo@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael Wookey <michaelwookey@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Msysgit <msysgit@googlegroups.com>
+To: GitList <git@vger.kernel.org>
+X-From: msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com Fri Nov 21 00:37:46 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f184.google.com ([209.85.212.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrbEE-0000vp-KI
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 00:33:34 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757431AbaKTXda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 18:33:30 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63094 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757371AbaKTXda (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 18:33:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 603CB1F8D5;
-	Thu, 20 Nov 2014 18:33:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GLgmFekBR6A7N66jCEXAL5XXTw8=; b=Q+hMDa
-	XgZ9Ogg/iiCJBJuspS/6Fntf2vjPRDhKDvcw4pEhy6PTHiUzTE0J71X5uiS3xQrm
-	mo6K6AwFeJQObl8KZirA9pddWjqtZOgja8EcJl5z2+21bY6Y3Bo4sL4WO10jQoFb
-	soTKJVnfn050xIGJp16PPRvN0/ZxtrdXRoK/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ERYeftbLS0SwuFclvBdBwuXeZ1e1aKdi
-	nky1+gUGcDg+SRBC0IYpOpS0s3859icVlHdrbLBELAauk1KV7LZIERlt/9Ayff8n
-	eT19wftowFdtSR8HRQsNlCcQ9z3ZGSGRfna4/npnWEpwgu7ExTt9dxYa5o3Z+gE7
-	6dZHpnI4c8s=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 56EC31F8D4;
-	Thu, 20 Nov 2014 18:33:28 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D61AC1F8D3;
-	Thu, 20 Nov 2014 18:33:27 -0500 (EST)
-In-Reply-To: <20141120232628.GA30554@google.com> (Stefan Beller's message of
-	"Thu, 20 Nov 2014 15:26:28 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A11326B6-710D-11E4-9DF7-42529F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBSHWXGRQKGQENSCOJ5Y@googlegroups.com>)
+	id 1XrbIH-0002XW-K9
+	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 00:37:45 +0100
+Received: by mail-wi0-f184.google.com with SMTP id ho1sf389230wib.21
+        for <gcvm-msysgit@m.gmane.org>; Thu, 20 Nov 2014 15:37:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :content-type:precedence:mailing-list:list-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe;
+        bh=KVffLinYWZDxWwA8jRtJxwvd9E4M9WoHzFbFAr6EYDA=;
+        b=Wf44dYDwVQRrYBMEJ6CMt+mZvahbah47pveKSnVKbDkeOQCdKvXdu2S71/95CrI02e
+         1xcKZdDhtC7/t5dQZhtQ1LBzbIHMX4zby6p/r9bZy5tdpFCDAh1aFxQjkKV+V2iVXbTM
+         8XdBJvacywCw3ovzf7AQJJ58NUR7RxRbuKp2ZKukSL51bLOGo8iQ3DUWwWUf2PRZXSMz
+         Uxh862VZMnfqn1OCDS0VVC/ZvcinipmiggYI+CqTaCKLz5/oHzAva/nQZsV7vjGlbUL1
+         xJr67MS8gPUHoF1vZ1SND2yXm+rRqe2eZi5GXw2M8C4W4FDIHOP4JBhGpRfFz5fDwMC+
+         C6xw==
+X-Received: by 10.152.29.228 with SMTP id n4mr13424lah.16.1416526665429;
+        Thu, 20 Nov 2014 15:37:45 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.234.133 with SMTP id ue5ls134886lac.6.gmail; Thu, 20 Nov
+ 2014 15:37:43 -0800 (PST)
+X-Received: by 10.112.151.38 with SMTP id un6mr377270lbb.0.1416526663326;
+        Thu, 20 Nov 2014 15:37:43 -0800 (PST)
+Received: from out1.ip06ir2.opaltelecom.net (out1.ip06ir2.opaltelecom.net. [62.24.128.242])
+        by gmr-mx.google.com with ESMTP id jv2si90840wid.1.2014.11.20.15.37.43
+        for <msysgit@googlegroups.com>;
+        Thu, 20 Nov 2014 15:37:43 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.242 as permitted sender) client-ip=62.24.128.242;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAEBAQEGAiCRCAeESwWXNYkcmQY9MIJLAQEB
+X-IPAS-Result: AmoOAPx5blROl3PwPGdsb2JhbABagw5VWYI2hFPET4dLBAICgQYXAQEBAQEBBQEBAQE4O4QDAQVWIxAISTkKFAYTiEXUfAEBAQEGAiCRCAeESwWXNYkcmQY9MIJLAQEB
+X-IronPort-AV: E=Sophos;i="5.07,426,1413241200"; 
+   d="scan'208";a="651403026"
+Received: from host-78-151-115-240.as13285.net (HELO localhost) ([78.151.115.240])
+  by out1.ip06ir2.opaltelecom.net with ESMTP; 20 Nov 2014 23:37:43 +0000
+X-Mailer: git-send-email 1.9.4.msysgit.0
+In-Reply-To: <1416526682-6024-1-git-send-email-philipoakley@iee.org>
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.242 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-Stefan Beller <sbeller@google.com> writes:
+    the engine.pl script barfs on the properly quoted space
+    in filename options prevalent on Windows. Use quotewords()
+    rather than split() to separate such options.
 
-> So I have read the man page on the trailers and it seems like the solution
-> to my problem in removing parts from the commit message.
-> However I did not find out, if it can be run automatically, whenever
-> calling format-patch
->
-> Maybe all that is missing here is an option
->
-> 	git config format.enable_trailers 
-> ?
+    Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ contrib/buildsystems/engine.pl | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-The idea has been to first give a standalone text transmonger as a
-filter for let people to try out, so that we know what kind of
-changes are useful (e.g. "insert s-o-b at the very end") and make
-sure the configuration language to specify the changes is easy and
-expressive enough, which is more or less what we have in 'master'.
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index 9144ea7..8e41808 100755
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -12,6 +12,7 @@ use File::Basename;
+ use File::Spec;
+ use Cwd;
+ use Generators;
++use Text::ParseWords;
+ 
+ my (%build_structure, %compile_options, @makedry);
+ my $out_dir = getcwd();
+@@ -243,7 +244,8 @@ sub removeDuplicates
+ sub handleCompileLine
+ {
+     my ($line, $lineno) = @_;
+-    my @parts = split(' ', $line);
++    # my @parts = split(' ', $line);
++    my @parts = quotewords('\s+', 0, $line);
+     my $sourcefile;
+     shift(@parts); # ignore cmd
+     while (my $part = shift @parts) {
+@@ -277,7 +279,8 @@ sub handleLibLine
+     my (@objfiles, @lflags, $libout, $part);
+     # kill cmd and rm 'prefix'
+     $line =~ s/^rm -f .* && .* rcs //;
+-    my @parts = split(' ', $line);
++    # my @parts = split(' ', $line);
++    my @parts = quotewords('\s+', 0, $line);
+     while ($part = shift @parts) {
+         if ($part =~ /^-/) {
+             push(@lflags, $part);
+@@ -318,7 +321,9 @@ sub handleLinkLine
+ {
+     my ($line, $lineno) = @_;
+     my (@objfiles, @lflags, @libs, $appout, $part);
+-    my @parts = split(' ', $line);
++    # my @parts = split(' ', $line);
++    my @parts = quotewords('\s+', 0, $line);
++
+     shift(@parts); # ignore cmd
+     while ($part = shift @parts) {
+         if ($part =~ /^-IGNORE/) {
+-- 
+1.9.4.msysgit.0
 
-Once we gain experience (and that may result in updates to what is
-in 'master'), in the second phase, we would figure out what code
-paths can make use of this text transmonger (e.g. your configuration
-variable "format.trailers" to affect the format-patch code path) and
-integrate it more tightly to the codebase.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-We are not there yet.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
