@@ -1,50 +1,46 @@
 From: Paul Smith <paul@mad-scientist.net>
-Subject: Re: [PATCH] git-new-workdir: Don't fail if the target directory is
- empty
-Date: Thu, 20 Nov 2014 10:41:37 -0500
-Message-ID: <1416498097.23953.5.camel@mad-scientist.net>
-References: <1416339408.3899.22.camel@mad-scientist.net>
-	 <xmqqd28jt7tb.fsf@gitster.dls.corp.google.com>
+Subject: [PATCH] git-new-workdir: Don't fail if the target directory is empty
+Date: Thu, 20 Nov 2014 10:46:35 -0500
+Message-ID: <1416498395.23953.8.camel@mad-scientist.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 20 16:48:36 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 20 16:53:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrTyF-0002vI-Gt
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 16:48:35 +0100
+	id 1XrU37-0005HM-4Y
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Nov 2014 16:53:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756062AbaKTPsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 10:48:31 -0500
-Received: from qproxy2-pub.mail.unifiedlayer.com ([69.89.16.161]:37611 "HELO
-	qproxy2.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S1751257AbaKTPsa (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2014 10:48:30 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Nov 2014 10:48:30 EST
-Received: (qmail 13309 invoked by uid 0); 20 Nov 2014 15:41:50 -0000
-Received: from unknown (HELO cmgw2) (10.0.90.83)
-  by qproxy2.mail.unifiedlayer.com with SMTP; 20 Nov 2014 15:41:50 -0000
+	id S1757488AbaKTPxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Nov 2014 10:53:31 -0500
+Received: from gproxy4-pub.mail.unifiedlayer.com ([69.89.23.142]:45418 "HELO
+	gproxy4-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1757481AbaKTPx3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Nov 2014 10:53:29 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Nov 2014 10:53:29 EST
+Received: (qmail 1458 invoked by uid 0); 20 Nov 2014 15:46:48 -0000
+Received: from unknown (HELO cmgw3) (10.0.90.84)
+  by gproxy4.mail.unifiedlayer.com with SMTP; 20 Nov 2014 15:46:48 -0000
 Received: from box531.bluehost.com ([74.220.219.131])
-	by cmgw2 with 
-	id Hrhm1p00Z2qhmhE01rhpRM; Thu, 20 Nov 2014 08:41:50 -0700
-X-Authority-Analysis: v=2.1 cv=Hd2HEE08 c=1 sm=1 tr=0
+	by cmgw3 with 
+	id Hrmj1p00t2qhmhE01rmmrP; Thu, 20 Nov 2014 08:46:48 -0700
+X-Authority-Analysis: v=2.1 cv=W++rC3mk c=1 sm=1 tr=0
  a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
  a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
- a=2NV5t7OSZ7cA:10 a=5y4faFyK3SkA:10 a=PtAkvS83V1K660kFbvEA:9 a=QEXdDO2ut3YA:10
+ a=2NV5t7OSZ7cA:10 a=5y4faFyK3SkA:10 a=V6TWb17wjVuPg6hANYEA:9 a=QEXdDO2ut3YA:10
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID; bh=h2VQkwNCUQMokI2T1CcNQjz5/Fik/MYAxjpN7CELlWo=;
-	b=YKZMZna/3ShqIHEmzTEL/yvGfMlG1lcglUJY5feDBDljS2wNGhCPRB0DUIsVY2lXSVRsUTpsgtUA/plqYktLMYsbULF2nwoLnYYsMYrg7Ii/W7Cn8Z9Ylv/4UbHK5srI;
-Received: from [173.9.45.73] (port=50438 helo=pdsdesk)
+	h=Content-Transfer-Encoding:Mime-Version:Content-Type:Date:To:From:Subject:Message-ID; bh=aSaNEcrrD88zMPfGG/GwbEBwYdcRbfARWSWVQlVbF6s=;
+	b=nsJAoBszfjxnq0XZ7SBNMEY+xurhrjcM2UzrNQI2zaGJe//fCNBue2NSr+4WLnZo5jeEsHMAydn/9aVIGHKoXpwYaoq2WG9c415iU7CnBuSIFoMkGjMDJipfyErVTs7q;
+Received: from [173.9.45.73] (port=50446 helo=pdsdesk)
 	by box531.bluehost.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
 	(Exim 4.82)
 	(envelope-from <paul@mad-scientist.net>)
-	id 1XrTrd-0005kh-WB; Thu, 20 Nov 2014 08:41:46 -0700
-In-Reply-To: <xmqqd28jt7tb.fsf@gitster.dls.corp.google.com>
+	id 1XrTwR-0004dd-4l
+	for git@vger.kernel.org; Thu, 20 Nov 2014 08:46:43 -0700
 X-Mailer: Evolution 3.12.7-0ubuntu1 
 X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 173.9.45.73 authed with paul@mad-scientist.us}
 Sender: git-owner@vger.kernel.org
@@ -52,38 +48,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2014-11-19 at 09:32 -0800, Junio C Hamano wrote:
-> Paul Smith <paul@mad-scientist.net> writes:
-> I took a look at this again, and I do not agree with one design
-> decision it makes, namely:
-> 
-> >> I split the creation of the directories from the symlinks: see the new
-> >> loop above.  This allows us to avoid the icky dirname stuff.
-> 
-> which forces those who maintain the script to make sure that these
-> two loops
-> kept consistent with each other.  If you forget to add frotz to the
-> upper loop when adding frotz/nitfol to the latter, you are breaking
-> it.
+Allow new workdirs to be created in an empty directory (similar to "git
+clone").  Provide more error checking and clean up on failure.
 
-Yes, but this mistake won't live past even a single attempt to run the
-script, since it will immediately cause a fatal error.  So this doesn't
-bother me.
+Signed-off-by: Paul Smith <paul@mad-scientist.net>
+---
+ contrib/workdir/git-new-workdir | 54 +++++++++++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
 
-> I find it much more icky than computing what is necessary on the fly.
-
-OK, I'll go back to the previous way.
-
-> Aversion to turning $cleandir to an absolute path?  Why?
-
-In some situations switching to absolute can cause unexpected behaviors,
-where relative paths are no longer where you expect them etc.  However
-in this case it's not a problem: I'll change it.
-
-> These uses of --git-dir/--work-tree look somewhat funny.  You want
-> to say "I want to run checkout in that $new_workdir", so say it in a
-> more direct way, i.e.
-> 
->     git -C "$new_workdir" checkout -f "$branch"
-
-Good idea.
+diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+index 75e8b25..7334720 100755
+--- a/contrib/workdir/git-new-workdir
++++ b/contrib/workdir/git-new-workdir
+@@ -10,6 +10,10 @@ die () {
+ 	exit 128
+ }
+ 
++failed () {
++	die "unable to create new workdir \"$new_workdir\"!"
++}
++
+ if test $# -lt 2 || test $# -gt 3
+ then
+ 	usage "$0 <repository> <new_workdir> [<branch>]"
+@@ -35,7 +39,7 @@ esac
+ 
+ # don't link to a configured bare repository
+ isbare=$(git --git-dir="$git_dir" config --bool --get core.bare)
+-if test ztrue = z$isbare
++if test ztrue = "z$isbare"
+ then
+ 	die "\"$git_dir\" has core.bare set to true," \
+ 		" remove from \"$git_dir/config\" to use $0"
+@@ -48,35 +52,49 @@ then
+ 		"a complete repository."
+ fi
+ 
+-# don't recreate a workdir over an existing repository
+-if test -e "$new_workdir"
++# make sure the links in the workdir have full paths to the original repo
++git_dir=$(cd "$git_dir" && pwd) || exit 1
++
++# don't recreate a workdir over an existing directory, unless it's empty
++if test -d "$new_workdir"
+ then
+-	die "destination directory '$new_workdir' already exists."
++	if test $(ls -a1 "$new_workdir"/. | wc -l) -ne 2
++	then
++		die "destination directory '$new_workdir' is not empty."
++	fi
++	cleandir="$new_workdir"/.git
++else
++	cleandir="$new_workdir"
+ fi
+ 
+-# make sure the links use full paths
+-git_dir=$(cd "$git_dir"; pwd)
++mkdir -p "$new_workdir"/.git || failed
++cleandir=$(cd "$cleandir" && pwd) || failed
+ 
+-# create the workdir
+-mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
++cleanup () {
++	rm -rf "$cleandir"
++}
++siglist="0 1 2 15"
++trap cleanup $siglist
+ 
+ # create the links to the original repo.  explicitly exclude index, HEAD and
+ # logs/HEAD from the list since they are purely related to the current working
+ # directory, and should not be shared.
+ for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn
+ do
++	# Create a containing directory if needed
+ 	case $x in
+-	*/*)
+-		mkdir -p "$(dirname "$new_workdir/.git/$x")"
+-		;;
++		*/*) mkdir -p "$new_workdir/.git/${x%/*}" ;;
+ 	esac
+-	ln -s "$git_dir/$x" "$new_workdir/.git/$x"
++
++	ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
+ done
+ 
+-# now setup the workdir
+-cd "$new_workdir"
+ # copy the HEAD from the original repository as a default branch
+-cp "$git_dir/HEAD" .git/HEAD
+-# checkout the branch (either the same as HEAD from the original repository, or
+-# the one that was asked for)
+-git checkout -f $branch
++cp "$git_dir"/HEAD "$new_workdir"/.git/HEAD || failed
++
++# the workdir is set up.  if the checkout fails, the user can fix it.
++trap - $siglist
++
++# checkout the branch (either the same as HEAD from the original repository,
++# or the one that was asked for)
++git -C "$new_workdir" checkout -f $branch
+-- 
+1.8.5.3
