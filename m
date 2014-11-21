@@ -1,9 +1,9 @@
 From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC 3/4] engine.pl: split the .o and .obj processing
-Date: Fri, 21 Nov 2014 20:35:47 -0000
+Subject: Re: [RFC 4/4] Improve layout and reference msvc-build script
+Date: Fri, 21 Nov 2014 21:05:48 -0000
 Organization: OPDS
-Message-ID: <622F65684C63407184D58ED19385AFD4@PhilipOakley>
-References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <1416526682-6024-4-git-send-email-philipoakley@iee.org> <alpine.DEB.1.00.1411211043050.13845@s15462909.onlinehome-server.info>
+Message-ID: <6D7BD7DD7E3A49EE8D7B04BC86F88F74@PhilipOakley>
+References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <1416526682-6024-5-git-send-email-philipoakley@iee.org> <alpine.DEB.1.00.1411211049100.13845@s15462909.onlinehome-server.info>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
@@ -14,16 +14,16 @@ Cc: "GitList" <git@vger.kernel.org>,
 	"Michael Wookey" <michaelwookey@gmail.com>,
 	"Msysgit" <msysgit@googlegroups.com>
 To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBDSOTWHYX4PBB7WDX2RQKGQE2L5NPGY@googlegroups.com Fri Nov 21 21:35:11 2014
-Return-path: <msysgit+bncBDSOTWHYX4PBB7WDX2RQKGQE2L5NPGY@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBB4WRX2RQKGQEQNIVFAQ@googlegroups.com Fri Nov 21 22:04:51 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBB4WRX2RQKGQEQNIVFAQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f57.google.com ([74.125.83.57])
+Received: from mail-la0-f58.google.com ([209.85.215.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBB7WDX2RQKGQE2L5NPGY@googlegroups.com>)
-	id 1Xruv9-0003BG-B0
-	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 21:35:11 +0100
-Received: by mail-ee0-f57.google.com with SMTP id e53sf519790eek.12
-        for <gcvm-msysgit@m.gmane.org>; Fri, 21 Nov 2014 12:35:11 -0800 (PST)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBB4WRX2RQKGQEQNIVFAQ@googlegroups.com>)
+	id 1XrvNq-000622-SU
+	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 22:04:50 +0100
+Received: by mail-la0-f58.google.com with SMTP id q1sf532279lam.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 21 Nov 2014 13:04:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:reply-to:from:to:cc:references:subject:date:organization
@@ -31,32 +31,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe;
-        bh=kX61xevQU38IHkm7QmrrtwULH1LfPgsxhfcqzyW+P7M=;
-        b=Dk5NyvxUGNAGOG9Rf+UmYEs6E2ibsHriL/tGfNdoosBXuwyHfczzst/AmD8O165tWO
-         gnYmXn9s6/4yeHV/+wka57uHWXYYf45l8xDW3xAdryY7PrHdKlw34HXyi5zSV5g0/0YE
-         UizmuVKbG+jFrhnmXek9YIrPmb1WRbNd5fEOPBMN1Vb1ZzRM7G9HjXl1vWESES6z7Ybr
-         O+wqfs2R5IykiZhHT1RMTKYiFbT4+/inPc/1D1arJoUcIupalpqE/Xz2lS6zu6V/IAUK
-         byETATNQOff5WkvwjFtkd9M7vLpjMQFVzN2y86SVmZ/RDfybPtb9agwzlnaZj7rCVwIx
-         mk5Q==
-X-Received: by 10.180.14.33 with SMTP id m1mr1702wic.20.1416602111117;
-        Fri, 21 Nov 2014 12:35:11 -0800 (PST)
+        bh=8urbaV2qmbUOryoaqpvPzeVCbswnE96P4Jty0dnNwCo=;
+        b=lAnZKxjE5py2Qhqlfxf1fVfwrw9vAdtfdUslemF1KfEbDYqNq+oVqMx34CFI0e1PGy
+         OERIuFfXWF9TFRvW2GlOVYXgGHdiUP7JCa5qETpKZXZXmFYdZtS2rOuT3PWrJSW/l97w
+         QYnqTSayy58hrH4fUB78kEjf9i5x7Ad50/+DXmR0dP2OCvF8TdKt2jNQ7p6VGninX4gu
+         ODwD3ykwWoXT2Uw+nmHgkm9ERjEc7lfDy2unBj0uRkEh2bypCFZoY5u8rjeHFeHYxm5Z
+         Ybm7WlQ3LG5KGRmhXnKdrVbCN87VU1vIbx7a6/iirYZPGIC1CLr1Qd3VDkLU6Wlr4KuE
+         uxcQ==
+X-Received: by 10.180.20.203 with SMTP id p11mr2628wie.13.1416603890718;
+        Fri, 21 Nov 2014 13:04:50 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.8.170 with SMTP id s10ls23360wia.30.gmail; Fri, 21 Nov
- 2014 12:35:10 -0800 (PST)
-X-Received: by 10.180.219.66 with SMTP id pm2mr50901wic.7.1416602110438;
-        Fri, 21 Nov 2014 12:35:10 -0800 (PST)
-Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id ed6si17857wib.3.2014.11.21.12.35.10
+Received: by 10.180.79.165 with SMTP id k5ls29847wix.4.canary; Fri, 21 Nov
+ 2014 13:04:50 -0800 (PST)
+X-Received: by 10.180.102.228 with SMTP id fr4mr96191wib.1.1416603890037;
+        Fri, 21 Nov 2014 13:04:50 -0800 (PST)
+Received: from out1.ip03ir2.opaltelecom.net (out1.ip03ir2.opaltelecom.net. [62.24.128.239])
+        by gmr-mx.google.com with ESMTP id d18si36204wiv.0.2014.11.21.13.04.49
         for <msysgit@googlegroups.com>;
-        Fri, 21 Nov 2014 12:35:10 -0800 (PST)
-Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
+        Fri, 21 Nov 2014 13:04:50 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.239 as permitted sender) client-ip=62.24.128.239;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApYQAMKhb1RZ8YpUPGdsb2JhbABcgw5VWYgNw2kdCoZlAQMBAYEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuFggBARwFCwIDBQIBAxUDCSUUAQQYAgYHAxQGCAsIAgECAwEMBIgLAwkNCb1RkBUBCyCOToI9gzaBHwWLaIZ8a4N6iSSZHUgwAYJKAQEB
-X-IPAS-Result: ApYQAMKhb1RZ8YpUPGdsb2JhbABcgw5VWYgNw2kdCoZlAQMBAYEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuFggBARwFCwIDBQIBAxUDCSUUAQQYAgYHAxQGCAsIAgECAwEMBIgLAwkNCb1RkBUBCyCOToI9gzaBHwWLaIZ8a4N6iSSZHUgwAYJKAQEB
+X-IronPort-Anti-Spam-Result: AlMLADSnb1RZ8YpUPGdsb2JhbABSCoMOgS6HCYEEynUEAoEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuHgEBIQsCAwUCAQMVAwklFAEEGgYHAwYBDQYTCAIBAgMBCogRAwkNvW+QPY5OgWFcgzaBHwWFL4Y5hnxrjF+DWZYDSDCCSwEBAQ
+X-IPAS-Result: AlMLADSnb1RZ8YpUPGdsb2JhbABSCoMOgS6HCYEEynUEAoEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuHgEBIQsCAwUCAQMVAwklFAEEGgYHAwYBDQYTCAIBAgMBCogRAwkNvW+QPY5OgWFcgzaBHwWFL4Y5hnxrjF+DWZYDSDCCSwEBAQ
 X-IronPort-AV: E=Sophos;i="5.07,432,1413241200"; 
-   d="scan'208";a="16965927"
+   d="scan'208";a="533206421"
 Received: from host-89-241-138-84.as13285.net (HELO PhilipOakley) ([89.241.138.84])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 21 Nov 2014 20:34:48 +0000
+  by out1.ip03ir2.opaltelecom.net with SMTP; 21 Nov 2014 21:04:49 +0000
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
@@ -64,7 +64,7 @@ X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 X-Original-Sender: philipoakley@iee.org
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
  (google.com: domain of transitioning philipoakley@iee.org does not designate
- 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
+ 62.24.128.239 as permitted sender) smtp.mail=philipoakley@iee.org
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -82,99 +82,44 @@ From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 >
 > On Thu, 20 Nov 2014, Philip Oakley wrote:
 >
->> Commit 4b623d80f7352 added an .obj file (invalidcontinue.obj) which 
->> was not
->> processed correctly.
->>
->> The generate engine then mistakenly did a s/.o/.c/  to create a 
->> request
->> to compile invalidcontinue.cbj.
+>> [...]
+>> +Or, use the msvc-build script; also in /msysgit/bin/msvc-build
 >
-> This is good. However, this:
->
->> Split the '/\.(o|obj)$' in engine.pl#L353 into:
->>
->>         } elsif ($part =~ /\.o$/) { # was '/\.(o|obj)$'
->>             push(@objfiles, $part);
->>         } elsif ($part =~ /\.obj$/) { # was '/\.(o|obj)$'
->>             # push(@objfiles, $part); # do nothing
->>         } else {
->
-> just repeats what the diff says, so it is unnecessary in the commit
-> message.
-OK.
+> As I mentioned before, from a Git Bash on Windows, the path is
+> /bin/msvc-build (no /msysgit/). That is quite likely to stay the same 
+> with
+> the upcoming Git for Windows SDK, too (once I add the file to the 
+> SDK).
 
+I was trying to identify the source file (as I see it in my Msysgit 
+install). However it will all need tidying to distinguish what is seen 
+if you have G4W-SDK, rather just installing the new G4W (when ready)
 >
->> diff --git a/contrib/buildsystems/engine.pl 
->> b/contrib/buildsystems/engine.pl
->> index 8e41808..16c3dd5 100755
->> --- a/contrib/buildsystems/engine.pl
->> +++ b/contrib/buildsystems/engine.pl
->> @@ -264,7 +264,9 @@ sub handleCompileLine
->>          } elsif ($part =~ /\.(c|cc|cpp)$/) {
->>              $sourcefile = $part;
->>          } else {
->> -            die "Unhandled compiler option @ line $lineno: $part";
->> +            print "full line: $line\n";
->> +            print "A:-Unhandled compiler option @ line $lineno: 
->> $part\n"; # die (if !DEBUG)
->> +#            die "Unhandled compiler option @ line $lineno: $part";
->
-> This needs to be backed out. I agree that it is nice to get going and 
+> By the way, I think we should also start thinking about a Jenkins job 
 > to
-> debug, so I would split it out into its own commit while working on 
+> verify that upstream changes such as invalidcontinue.obj do not break 
 > the
-> branch, but then drop it before submitting.
+> MSVC build. Please let me know if you want to give it a try, I have a
+> Windows Azure instance with a Jenkins instance, sponsored by 
+> Microsoft.
 
-I'll probably split this "improvement in error reporting" (by providing 
-the full offending line) into a separate patch, on the basis that we 
-want (Windows) folks to start helping, so let's make the error messages 
-more useful to those who don't know these scripting languages yet.
+This is not something I'm familiar with, but it's something I could have 
+a look at.
+On my list is also the 'git bundle' symref problem, which we've got a 
+solution for that 'just' needs coding, along with thoughts about 
+narrow/sparse checkout/clone/fetch.
 
->
->> @@ -290,14 +292,15 @@ sub handleLibLine
->>[...]
->>      foreach (@objfiles) {
->>          my $sourcefile = $_;
->> -        $sourcefile =~ s/\.o/.c/;
->> +        $sourcefile =~ s/\.o$/.c/;
->
-> Ah, I see from the context that my earlier comment about the 
-> white-space
-> delimiter was wrong: at this stage, we already have split the list. So
-> this is groovy.
->
->> @@ -343,8 +346,10 @@ sub handleLinkLine
->>          } elsif ($part =~ /\.(a|lib)$/) {
->>              $part =~ s/\.a$/.lib/;
->>              push(@libs, $part);
->> -        } elsif ($part =~ /\.(o|obj)$/) {
->> +        } elsif ($part =~ /\.o$/) { # was '/\.(o|obj)$'
->>              push(@objfiles, $part);
->> +        } elsif ($part =~ /\.obj$/) { # was '/\.(o|obj)$'
->> +            # push(@objfiles, $part); # do nothing
->
-> How about the following instead?
->
-> + } elsif ($part eq 'invalidcontinue.obj') {
-> + # ignore
->  } elsif ($part =~ /\.(o|obj)$/) {
+One of the confusions I have is the distinction between building with 
+the MSVC compiler (cl command line) and building within VS2008, and 
+whether they are different things (i.e. does VS2008 bring extra 
+baggage?).
+--
+Philip
 
-Looks good, I'll use that (after deciding whether .obj files should be 
-expected in a 'make' output anyway)
-
->
-> ? After all, this change is really only about handling the newly
-> introduced invalidcontinue.obj correctly.
-Did it ever handle .obj's correctly (rhet) - I dunno.
 
 >
 > Ciao,
 > Johannes
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 > 
 
 -- 
