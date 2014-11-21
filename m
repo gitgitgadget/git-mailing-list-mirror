@@ -1,129 +1,184 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/6] repack_without_refs(): convert to string_list
-Date: Fri, 21 Nov 2014 11:57:22 -0800
-Message-ID: <CAGZ79kaGuMNO7_ynRMO_8T2shRn=S-gctos6WJL=gMOsDitM+w@mail.gmail.com>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com>
-	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>
-	<546F4B5B.2060508@alum.mit.edu>
-	<xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC 0/4] Fix the Visual Studio 2008 .sln generator
+Date: Fri, 21 Nov 2014 20:22:55 -0000
+Organization: OPDS
+Message-ID: <7E90FA1615514FA1B47B268DCBCA9534@PhilipOakley>
+References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <alpine.DEB.1.00.1411211032060.13845@s15462909.onlinehome-server.info>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 21 20:57:30 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
+Cc: "GitList" <git@vger.kernel.org>,
+	"Marius Storm-Olsen" <mstormo@gmail.com>,
+	"Ramsay Jones" <ramsay@ramsay1.demon.co.uk>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	"Michael Wookey" <michaelwookey@gmail.com>,
+	"Msysgit" <msysgit@googlegroups.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBDSOTWHYX4PBBZN5X2RQKGQEAALMAQA@googlegroups.com Fri Nov 21 21:22:01 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBBZN5X2RQKGQEAALMAQA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ee0-f56.google.com ([74.125.83.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XruKe-0006aC-3t
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 20:57:28 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbaKUT5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2014 14:57:24 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:54646 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750918AbaKUT5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2014 14:57:23 -0500
-Received: by mail-ie0-f174.google.com with SMTP id rl12so5618341iec.33
-        for <git@vger.kernel.org>; Fri, 21 Nov 2014 11:57:22 -0800 (PST)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBZN5X2RQKGQEAALMAQA@googlegroups.com>)
+	id 1XruiM-00074s-6j
+	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 21:21:58 +0100
+Received: by mail-ee0-f56.google.com with SMTP id c41sf562584eek.21
+        for <gcvm-msysgit@m.gmane.org>; Fri, 21 Nov 2014 12:21:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vAzrhO1VtQJSBSgl+PgDBxdmpqs1Sl0TJ66+YxGQRrw=;
-        b=Yf2NBiy3XrsA88kfKbhqXgLhEHz94jvyl0HzlO861MM00lyf9iIzkroLK+3u0N8jwY
-         M36Hr884qAbFnEI3vcyxstvh3STXFmM5KqmKP/d05q0qqOeJzRrNC1Q4YrdY11hqWxAI
-         K65YcMduGCQ1oHfYgQA+nmSILfGIWOw2VD9r4hbrXDJYg2LtmD+6BYU83nxZErOIjLox
-         z9JLR6e3etB5fk5R71AwEaNvJfMua0Zh34gCGp1EnTEo1K/c4/h7+oQI+/bbC95uUwOo
-         bQXSOCYivcL6vvdtYxkAbRV20Yn6UBC9wOV30j6vfP92C6RhMFk726TX9lY8eAayJzj6
-         DVtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vAzrhO1VtQJSBSgl+PgDBxdmpqs1Sl0TJ66+YxGQRrw=;
-        b=NjlBMZ0C62uUemZDbqnY+KtBFSJ09rK4oANVvjCkBkY/gpgFFFTdGKqIjzukunsxAe
-         sOs89d5XcM4vw6ol2WjwELANxi9RbRdSDMcC20ZMnB6fAOQESdbnMBzxP6r6r1m222RI
-         ExKL0npU/HMLZqDJJYLR9RLYbVDFvrFUvlkkc6Tm02YmmTYlpLCpto4elIf/Q4jCBy8A
-         2gGRjarA+fIDpPYPxDhAmt2PbKAbV8joh3904lOsm4p1gxyCttwd+BC79nCg1lW/mx/1
-         3h5OrPzSIKaYZQDcEjFHdWCGVUHyR/mI7MON7uy5XxhXTgBeEnqgQURojCtGmvPrYnmn
-         PGqw==
-X-Gm-Message-State: ALoCoQkBjlwWR5r6OjsGYfdYFzBvbye6Q+LVLZVP/78k6exiSHFenEZ7ATqekmyo8oMzqprxeWd6
-X-Received: by 10.42.212.83 with SMTP id gr19mr4202897icb.95.1416599842846;
- Fri, 21 Nov 2014 11:57:22 -0800 (PST)
-Received: by 10.107.1.199 with HTTP; Fri, 21 Nov 2014 11:57:22 -0800 (PST)
-In-Reply-To: <xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+        d=googlegroups.com; s=20120806;
+        h=message-id:reply-to:from:to:cc:references:subject:date:organization
+         :mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=CIcGxssbakwH+ro+jj0USQvtX2QNqZFEssd7F38J2tU=;
+        b=fEt7JUp6ZelAcN5Ma66a0tH91Uf8iCUcCFnLMNsayLDhiCLATX/AnNBryHwZqv25qw
+         wlWFfHL5hO2k373iplEhg2v6w/tpSXK6MV8p1FLc0D4s+c9oeG56h/VWGtkrrU/Wasm2
+         YoW9wZkuXTno/squwXezdJ9zgvEv+rX5y951KYf+cfKRwwso+2tE1W56afWYJmz8Wm4w
+         xV18+SN1Jw5iS5Qpyy75jvazLfDeQNo9Ow87F/q2Re+mcZsITvJ04bnQqoP+wNX8tp0O
+         bNT/LASzzCU7CXGPxykyowb0GZKta7sGOZhQBT0MWPzSr7WDyxKU/Eln615fCd0xRMDs
+         8vcw==
+X-Received: by 10.181.27.135 with SMTP id jg7mr1208wid.1.1416601317966;
+        Fri, 21 Nov 2014 12:21:57 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.181.29.33 with SMTP id jt1ls21319wid.45.canary; Fri, 21 Nov
+ 2014 12:21:57 -0800 (PST)
+X-Received: by 10.180.75.78 with SMTP id a14mr49429wiw.0.1416601317088;
+        Fri, 21 Nov 2014 12:21:57 -0800 (PST)
+Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
+        by gmr-mx.google.com with ESMTP id p14si22996wie.1.2014.11.21.12.21.56
+        for <msysgit@googlegroups.com>;
+        Fri, 21 Nov 2014 12:21:57 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApYQADueb1RZ8YpUPGdsb2JhbABcgw5VWYgNw2YfCoZlAQMBAYEHFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuFggBASEFBgIDBQIBAxUDCSUUAQQYAgYHAwYOBggLCAIBAgMBDASICwMJDQm9V5AUAQsBH4pxg10dgiCDNoEfBYtohnxrg3qIZT+DGpYDSDABgkoBAQE
+X-IPAS-Result: ApYQADueb1RZ8YpUPGdsb2JhbABcgw5VWYgNw2YfCoZlAQMBAYEHFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuFggBASEFBgIDBQIBAxUDCSUUAQQYAgYHAwYOBggLCAIBAgMBDASICwMJDQm9V5AUAQsBH4pxg10dgiCDNoEfBYtohnxrg3qIZT+DGpYDSDABgkoBAQE
+X-IronPort-AV: E=Sophos;i="5.07,432,1413241200"; 
+   d="scan'208";a="16965562"
+Received: from host-89-241-138-84.as13285.net (HELO PhilipOakley) ([89.241.138.84])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 21 Nov 2014 20:21:56 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
-On Fri, Nov 21, 2014 at 10:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> Hi Philip,
 >
->> I don't think that those iterations changed anything substantial that
->> overlaps with my version, but TBH it's such a pain in the ass working
->> with patches in email that I don't think I'll go to the effort of
->> checking for sure unless somebody shows interest in actually using my
->> version.
->>
->> Sorry for being grumpy today :-(
+> On Thu, 20 Nov 2014, Philip Oakley wrote:
+>
+>> Are the patches going in the right direction?
+>
+> Yes.
+Magic. Glad of the confirmation
+>
+> A couple of general comments:
+>
+> - please do not comment out code. Just remove it.
+It's my debugging style until I get it working ;-0
+>
+> - the first three commit messages look funny, being indented by 4
+>  spaces... unintentional?
+I think that was from one of the tools I was using at the time. They'll 
+be tidied and reflowed for the final version(s).
+>
+>> Is the processing of the .obj file in engine.pl sensible?
+>
+> Yes, but instead of adding dead code, it would be better to use the
+> comment "# ignore". I would also strongly suggest to hard-code the
+> complete file name instead of just the extension.
+True, I realised that after posting (isnt it always the way).
 
-Sorry for causing the grumpyness.
-I have compared the versions, and they do look pretty similar.
-In refs.{c,h} we're just talking about variable names and comments,
-that are different.
+> We know exactly which
+> file name we want to ignore, and if there should be another .obj file
+> eventually, it would be wrong to ignore it, too.
 
-In remote.c prune_remote however we did have slight differences,
-* early exit vs a large body below an if
-* your approach seems more elegant to me as you seem to know what you're doing:
-       for_each_string_list_item(item, &states.stale)
-               string_list_append(&refs_to_prune, item->util);
- instead of
-       for (i = 0; i < states.stale.nr; i++)
-               string_list_append(&delete_refs, states.stale.items[i].util);
-* You do not have a sort_string_list at the end before warn_dangling_symrefs,
-   but you explained that it is not necessary.
-
-On my continued journey on this mailing list I'll try to follow your
-example and write lots of
-small easy to review patches, as they are indeed way easier to follow.
-
-However as Junio mentioned, we get other problems having too small changes.
-In the review for the [PATCH v3 00/14] ref-transactions-reflog series you said:
-
-> I was reviewing this patch series (I left some comments in Gerrit about
-> the first few patches) when I realized that I'm having trouble
-> understanding the big picture of where you want to go with this.
-
-Maybe that was just my fault, not having stated the intentions in
-the cover letter explicit enough. But having many patches will also not help
-on presenting the big picture easily.
-
-Thanks for bearing with me,
-Stefan
+My concern was more about why a 'make' would produce .obj files (rather 
+than .o files) in the first place. As I understand it we should never 
+see .obj files generated from make with the exception of these ones that 
+are library files implicitly known to MSVC - any thoughts?
 
 >
-> Is the above meant as a grumpy rant to be ignored, or as a
-> discussion starter to improve the colaboration to allow people to
-> work better together instead of stepping on each other's patches?
+>> and the extra care with s/\.o$/.c/ avoiding s/obj/cbj/.
 >
-> FWIW, I liked your rationale for "many smaller steps".
+> Technically, you need to use a group \($\|[ \t]\), but I think that 
+> that
+> would be overkill.
 >
-> One small uncomfort in that approach is that it often is not very
-> obvious by reading "log -p master.." alone how well the end result
-> fits together.  Each individual step may make sense, or at least it
-> may not make it any worse than the original, but until you apply the
-> whole series and read "diff master..." in a sitting, it is somewhat
-> hard to tell where you are going.  But this is not "risk" or "bad
-> thing"; just something that may make readers feel uncomfortable---we
-> are not losing anything by splitting a series into small logical
-> chunks.
+>> Does it affect the Qmake capability? (I've no idea)
 >
-> Thanks.
+> Frankly, neither do I ;-) But since you touched only engine.pl, I 
+> would
+> expect Qmake not to be affected at all, right?
+
+As I understood the call sequence merry go round, the engine can pull in 
+either function depending on command line options, hence the open 
+question. But like you say, why expect it to be affected, and no-one has 
+mentioned on list for years;-)
+
 >
+>> Is the quoting of filenames correct? (my perl foo is cargo cult!)
 >
+> IANAPME (I am not a Perl Monk either), but it looks good to me.
+OK.
+>
+>> I've also updated the vcbuild/README to mention Msysgit (which
+>> will be replaced soon by the newer/better Git-for-windows/SDK
+>> (https://github.com/git-for-windows/sdk), but the benefits still
+>> apply.
+>
+> The path you used is /msysgit/bin/msvc-build, but the real path would 
+> be
+> /bin/msvc-build.
+>
+>> Obviously, the patches will need squashing together,
+>
+> To the contrary, I like the current separation of concerns.
+At the moment the first patch doesn't fully cure the .sln build, but 
+there's no test anyway so bisecting would be problematic.
+
+I'm happy to keep them small separate and clean ;-)
+
+>
+> Ciao,
+> Johannes
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
