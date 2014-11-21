@@ -1,146 +1,129 @@
-From: Fahad Ashfaque <fahadash@gmail.com>
-Subject: Re: Cannot set the commit-message editor
-Date: Fri, 21 Nov 2014 14:51:23 -0500
-Message-ID: <CAOmRNZ5PGWNM_+c_G_3ZfBnYqXTM-5WRBpK_z7Px6Jkae+CvRw@mail.gmail.com>
-References: <CAOmRNZ4uJEoxroyCRUSDwSC3OAMKTSO0s91_uFDaUit3k8eJLg@mail.gmail.com>
-	<F248C92A32904678A4E8E158A3518AA3@PhilipOakley>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 0/6] repack_without_refs(): convert to string_list
+Date: Fri, 21 Nov 2014 11:57:22 -0800
+Message-ID: <CAGZ79kaGuMNO7_ynRMO_8T2shRn=S-gctos6WJL=gMOsDitM+w@mail.gmail.com>
+References: <1416423000-4323-1-git-send-email-sbeller@google.com>
+	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>
+	<546F4B5B.2060508@alum.mit.edu>
+	<xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Git Users <git-users@googlegroups.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Nov 21 20:51:28 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 21 20:57:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XruEp-0004Uw-VL
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 20:51:28 +0100
+	id 1XruKe-0006aC-3t
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 20:57:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752145AbaKUTvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2014 14:51:25 -0500
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:62871 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751466AbaKUTvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2014 14:51:23 -0500
-Received: by mail-ob0-f177.google.com with SMTP id va2so4340841obc.8
-        for <git@vger.kernel.org>; Fri, 21 Nov 2014 11:51:23 -0800 (PST)
+	id S1751360AbaKUT5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2014 14:57:24 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:54646 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750918AbaKUT5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2014 14:57:23 -0500
+Received: by mail-ie0-f174.google.com with SMTP id rl12so5618341iec.33
+        for <git@vger.kernel.org>; Fri, 21 Nov 2014 11:57:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=BSy5JcyZST3KR+JiK7ubfQp7O1H3RXINpJQZDEPu9IE=;
-        b=qjAANpRcx/Rgnc13Ms/0NNSKP2Gzs36s0ZbO2aBZQkddMvMBNkozqqeBOqCRN5Jzar
-         gwBPQg5SiziOOrzVFMxfKtcuqFSfPlnyLOPK1Bz3aaipoicM3Y0qbYvSZ/wpl/oXNAbs
-         d58rTHH3DM5v6Rhu0YMTQ3UE7gbaB7NZBBHmgVI+Lj2qyKhyODM18UB9+wavc+dx0tqV
-         rT4zAu2wdMdM/rXVde5fcvxkNxxqF5SHCNlI98UB+qQJoKShkmXntkXA3jHVA2hFk4Js
-         dWYLP/navuoKGk0VQD72VkDcK0FgSu7vaMSdZYGZTZqWN6S3BnREsxZpzRcptPpISIzP
-         tSvg==
-X-Received: by 10.202.211.204 with SMTP id k195mr4004636oig.53.1416599483249;
- Fri, 21 Nov 2014 11:51:23 -0800 (PST)
-Received: by 10.202.75.5 with HTTP; Fri, 21 Nov 2014 11:51:23 -0800 (PST)
-In-Reply-To: <F248C92A32904678A4E8E158A3518AA3@PhilipOakley>
+        bh=vAzrhO1VtQJSBSgl+PgDBxdmpqs1Sl0TJ66+YxGQRrw=;
+        b=Yf2NBiy3XrsA88kfKbhqXgLhEHz94jvyl0HzlO861MM00lyf9iIzkroLK+3u0N8jwY
+         M36Hr884qAbFnEI3vcyxstvh3STXFmM5KqmKP/d05q0qqOeJzRrNC1Q4YrdY11hqWxAI
+         K65YcMduGCQ1oHfYgQA+nmSILfGIWOw2VD9r4hbrXDJYg2LtmD+6BYU83nxZErOIjLox
+         z9JLR6e3etB5fk5R71AwEaNvJfMua0Zh34gCGp1EnTEo1K/c4/h7+oQI+/bbC95uUwOo
+         bQXSOCYivcL6vvdtYxkAbRV20Yn6UBC9wOV30j6vfP92C6RhMFk726TX9lY8eAayJzj6
+         DVtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=vAzrhO1VtQJSBSgl+PgDBxdmpqs1Sl0TJ66+YxGQRrw=;
+        b=NjlBMZ0C62uUemZDbqnY+KtBFSJ09rK4oANVvjCkBkY/gpgFFFTdGKqIjzukunsxAe
+         sOs89d5XcM4vw6ol2WjwELANxi9RbRdSDMcC20ZMnB6fAOQESdbnMBzxP6r6r1m222RI
+         ExKL0npU/HMLZqDJJYLR9RLYbVDFvrFUvlkkc6Tm02YmmTYlpLCpto4elIf/Q4jCBy8A
+         2gGRjarA+fIDpPYPxDhAmt2PbKAbV8joh3904lOsm4p1gxyCttwd+BC79nCg1lW/mx/1
+         3h5OrPzSIKaYZQDcEjFHdWCGVUHyR/mI7MON7uy5XxhXTgBeEnqgQURojCtGmvPrYnmn
+         PGqw==
+X-Gm-Message-State: ALoCoQkBjlwWR5r6OjsGYfdYFzBvbye6Q+LVLZVP/78k6exiSHFenEZ7ATqekmyo8oMzqprxeWd6
+X-Received: by 10.42.212.83 with SMTP id gr19mr4202897icb.95.1416599842846;
+ Fri, 21 Nov 2014 11:57:22 -0800 (PST)
+Received: by 10.107.1.199 with HTTP; Fri, 21 Nov 2014 11:57:22 -0800 (PST)
+In-Reply-To: <xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-still don't get it.
+On Fri, Nov 21, 2014 at 10:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>
+>> I don't think that those iterations changed anything substantial that
+>> overlaps with my version, but TBH it's such a pain in the ass working
+>> with patches in email that I don't think I'll go to the effort of
+>> checking for sure unless somebody shows interest in actually using my
+>> version.
+>>
+>> Sorry for being grumpy today :-(
 
-I run /c/path/to/npp.sh just fine,.... Its only 'git commit' that is
-teleporting me to a different world. So there is NO way I can refer to
-folders outside of my repository in a shell script when it is used in
-a config param ?
+Sorry for causing the grumpyness.
+I have compared the versions, and they do look pretty similar.
+In refs.{c,h} we're just talking about variable names and comments,
+that are different.
 
-I will try setting the core.editor to the value you suggested.
+In remote.c prune_remote however we did have slight differences,
+* early exit vs a large body below an if
+* your approach seems more elegant to me as you seem to know what you're doing:
+       for_each_string_list_item(item, &states.stale)
+               string_list_append(&refs_to_prune, item->util);
+ instead of
+       for (i = 0; i < states.stale.nr; i++)
+               string_list_append(&delete_refs, states.stale.items[i].util);
+* You do not have a sort_string_list at the end before warn_dangling_symrefs,
+   but you explained that it is not necessary.
 
-On Fri, Nov 21, 2014 at 12:48 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Fahad Ashfaque" <fahadash@gmail.com>
->>
->> I have downloaded the latest git from git-scm on my windows machine.
->>
->> I am using git on windows, I am having trouble trying to get notepad++
->> as my commit message editor.
->>
->> I have created a shell script called npp.sh which has the following
->> content
->>
->> /c/Program\ Files\ \(x86\)/Notepad++/notepad++.exe -multiInst
->> -nosession -noPlugin $1
->>
->>
->> I figured this is how paths are accepted in git-bash
->>
->> Now I configured core.editor this way
->>
->> git config --global core.editor /c/path/to/npp.sh
->>
+On my continued journey on this mailing list I'll try to follow your
+example and write lots of
+small easy to review patches, as they are indeed way easier to follow.
+
+However as Junio mentioned, we get other problems having too small changes.
+In the review for the [PATCH v3 00/14] ref-transactions-reflog series you said:
+
+> I was reviewing this patch series (I left some comments in Gerrit about
+> the first few patches) when I realized that I'm having trouble
+> understanding the big picture of where you want to go with this.
+
+Maybe that was just my fault, not having stated the intentions in
+the cover letter explicit enough. But having many patches will also not help
+on presenting the big picture easily.
+
+Thanks for bearing with me,
+Stefan
+
 >
-> I simply have (from 'git config -l'):
-> core.editor='C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar
-> -nosession -noplugin
+> Is the above meant as a grumpy rant to be ignored, or as a
+> discussion starter to improve the colaboration to allow people to
+> work better together instead of stepping on each other's patches?
 >
->>
->> when I try to commit, using the following command
->>
->> git commit
->>
->> I get the following error
->> $ git commit
->> error: cannot spawn c:/path/to/npp.sh: No such file or directory
->> error: unable to start editor 'c:/dev/tools/cmd/npp.sh'
->> Please supply the message using either -m or -F option.
->>
->> when I run the following command
->>
->> ls c:/
->>
->> I get the directory for my repository's root, not C drive's root
->>
->> When I run the following command through git-bash
->>
->> /c/path/to/npp.sh
->>
->> It works
->>
->> but when git commit invokes, it does not.
->>
->> Here is more of what I found
->>
->> when 'git commit' launches npp.sh, it changes /c/path/to/npp.sh to
->> c:/path/to/npp.sh
->>
->> c:/ is not the root of my C drive according to git-bash,
+> FWIW, I liked your rationale for "many smaller steps".
 >
-> Correct. The "Linux" bash is rooted, _usually_, at the base of your personal
-> 'c:/documents and settings' (or whatever on your Windows version), with the
-> MS drives under /c/ and /d/ etc. i.e. a load of virtualisation.
+> One small uncomfort in that approach is that it often is not very
+> obvious by reading "log -p master.." alone how well the end result
+> fits together.  Each individual step may make sense, or at least it
+> may not make it any worse than the original, but until you apply the
+> whole series and read "diff master..." in a sitting, it is somewhat
+> hard to tell where you are going.  But this is not "risk" or "bad
+> thing"; just something that may make readers feel uncomfortable---we
+> are not losing anything by splitting a series into small logical
+> chunks.
 >
-> use 'pwd -W' to get the true (Windows) path of your current/present working
-> directory. (I had to ask just a few days ago ;-)
->
->> c:/ is root
->> of my repository because when I run 'ls c:/' I get files from root of
->> my repository.
->
-> I wouldn't have expected that to play nice (confusion between windows and
-> linux path styles).
->
->>
->> so may be if 'git commit' does not change /c/path/to/npp.sh to
->> c:/path/to/npp.sh, it would work... Or if git-bash does not mount c:/
->> to /c/path/to/myrepository and keep it to /c it would work too.
->>
->> Please let me know if you need more info on this
->
->
-> I've also copied in the Git user / Git for Human beings list (for reference)
-> which can be useful for Windows based issues.
->
->>
->> Thanks
->>
->> Fahad
->> --
+> Thanks.
 >
 >
