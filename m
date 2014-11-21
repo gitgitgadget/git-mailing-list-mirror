@@ -1,108 +1,106 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] Introduce a hook to run after formatting patches
-Date: Fri, 21 Nov 2014 05:31:57 +0100
-Message-ID: <CAP8UFD3kaFNoPdGVFwfBVZasdUJSn=04bmWoXbmRva0aiA-kyw@mail.gmail.com>
-References: <1416012460-4459-1-git-send-email-sbeller@google.com>
-	<xmqqzjbryonp.fsf@gitster.dls.corp.google.com>
-	<xmqqlhn9y7dn.fsf@gitster.dls.corp.google.com>
-	<xmqqd28ly6p1.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD3m9aouYKXfk-vE4AGbTxdyH6=k8ey5n-kF1OLux2Ah0g@mail.gmail.com>
-	<20141120232628.GA30554@google.com>
-	<xmqqioi91m7t.fsf@gitster.dls.corp.google.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [L10N] please review a batch l10n update for Git 2.2.0 final
+Date: Fri, 21 Nov 2014 16:59:55 +0800
+Message-ID: <CANYiYbEa_p6q9iTS6Rys5dmZNhfZYngNFXGK-gYJFfzODg+B5g@mail.gmail.com>
+References: <CANYiYbFrNCqxfrcaOWjeEZ2no=DRHVoDic8Qg989=U_VUTWiWA@mail.gmail.com>
+	<CAN0XMOLZw+btduQkQwMLykYFgFuZzTfMwnexyGR0FBdbG=qFmA@mail.gmail.com>
+	<CANYiYbEt7r1Bjx9VA29Vk5FL9Qu0nTeXVZWAaggrcM=eNsY7Rg@mail.gmail.com>
+	<CANYiYbH5-eDSkq8LQsyixMsDh6e9ZA7nTVib_GbdK5BQ6vE6OA@mail.gmail.com>
+	<xmqqmw7l1nq5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Josh Triplett <josh@joshtriplett.org>
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 21 05:32:03 2014
+X-From: git-owner@vger.kernel.org Fri Nov 21 10:00:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xrft5-0007u4-Ce
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 05:32:03 +0100
+	id 1Xrk4P-0001vk-HT
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 10:00:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756947AbaKUEb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Nov 2014 23:31:59 -0500
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:38238 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751368AbaKUEb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Nov 2014 23:31:58 -0500
-Received: by mail-ie0-f181.google.com with SMTP id tp5so4067161ieb.26
-        for <git@vger.kernel.org>; Thu, 20 Nov 2014 20:31:57 -0800 (PST)
+	id S1754778AbaKUI75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2014 03:59:57 -0500
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:47445 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752836AbaKUI74 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2014 03:59:56 -0500
+Received: by mail-wi0-f180.google.com with SMTP id n3so8075641wiv.1
+        for <git@vger.kernel.org>; Fri, 21 Nov 2014 00:59:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=txRg3PH6u7T6sgDqbJYNxJZB41Dqq6gHCLv8hnjWWYQ=;
-        b=U14YPtMT78KC+e6HZPFqCUis1UM0ZZePjP1CavHKwKA2oGzs4oUf/X6SnHZKV8JSkr
-         IAaojTjvZxIt3gIEMPM90DHmGY2Ry1JTwGFVl3dxViEWNyDbbb1rpwXYjxQiZOQwPLPr
-         RiLQGbkLkFVbdcw94uLbsTnvMKuCg6Ad7Aw+U3MUF1x1Jn0aAZE2tsQcOJFB4SbO6IND
-         o2eMPwPbZ1WLx3qJBvWsy+k2sevoJR2DaO3TOJzOdGsFUSa1WLBauGTeq8ZdD3hV23pE
-         M90Wz9EvsXzGZTgw9C+23b6hiI96RSvT4MCgZe+evwYJxH9vzsc7cvKL4HdXIMk5ADAO
-         ef0A==
-X-Received: by 10.50.118.35 with SMTP id kj3mr13234094igb.30.1416544317807;
- Thu, 20 Nov 2014 20:31:57 -0800 (PST)
-Received: by 10.50.250.179 with HTTP; Thu, 20 Nov 2014 20:31:57 -0800 (PST)
-In-Reply-To: <xmqqioi91m7t.fsf@gitster.dls.corp.google.com>
+        bh=GmftX7LuCyWpYGbkWomlj2lPa/+JcBp7mwkztQNvgS8=;
+        b=ltcrU9rF6c7676URncX3tkDTE5SM3AvnZRoy/aXHGZbajomLbkEG8GpP+WBczgCkBd
+         5ZlSIwMveGEnvss450u3T503T+Xz/C7l3xz20F6bmnUVmzHh6A+JhCJC6rv0lqUBJCxn
+         WrG2cI6o/8jq1nt6/4rKza9lbW3UVdRiR7DScBmV+qTK43hoMbt5HRN/jIQIqT+f596z
+         wAdRreduPeut9t5MibfqII6SjZo0hr5XgZegnA6qT7fbMT0cLxVBlWThlnInO0ce96Io
+         UTJLmTwLXg+01ZDPYWeTc2iOhXVvJIaMdA2zoPfdbs1HHWtGFskxQhlHaIKNVFz+Th9N
+         vE6Q==
+X-Received: by 10.180.72.199 with SMTP id f7mr5710129wiv.53.1416560395551;
+ Fri, 21 Nov 2014 00:59:55 -0800 (PST)
+Received: by 10.194.56.101 with HTTP; Fri, 21 Nov 2014 00:59:55 -0800 (PST)
+In-Reply-To: <xmqqmw7l1nq5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 21, 2014 at 12:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+2014-11-21 7:00 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> I've pushed out what should be -rc3 minus l10n changes and try to
+> make sure there will be no N_() and _() changes.
 >
->> So I have read the man page on the trailers and it seems like the solution
->> to my problem in removing parts from the commit message.
->> However I did not find out, if it can be run automatically, whenever
->> calling format-patch
->>
->> Maybe all that is missing here is an option
->>
->>       git config format.enable_trailers
->> ?
+> Let's do a 2.2-rc3 as the last round of this cycle tomorrow.  I've
+> fetched up to your 7ba2ba7 but haven't merged it yet, just in case
+> you will have further updates.  Otherwise, 2.2-rc3 will be what is
+> at the tip of 'master' today with 7ba2ba7 merged in.
 
-Yeah, we could use config variables or command options or both to make
-it easier to enable it and pass it arguments.
 
-For example we could add:
+Hi Junio,
 
-1) an "--interpret-trailers" option to "git commit", "git
-format-patch", "git am" and maybe others too, so that "git
-interpret-trailers" is called (without arguments),
-2) an "--trailer <trailer>" option (that can be repeated) to the same
-commands, so that "git interpret-trailers" is called with the
-"--trailer <trailer>" arguments,
-3) a "trailer.enable_commands =  'format-patch, commit'" config
-variable, so that "git interpret-trailers" is called (without
-arguments) every time one of the specified command is used,
-4) your suggested "format.enable_trailers" and maybe
-"commit.enable_trailers" and others like that,
-5) a "trailer" command for rebase -i todo lists.
+Please pull the following changes since commit
+ca0107e279df1465946970113d68b4ee26ffbcc4:
 
-My preference would be for 1), 2), 3) and 5).
+  Merge branch 'sv/submitting-final-patch' (2014-11-19 13:48:01 -0800)
 
-> The idea has been to first give a standalone text transmonger as a
-> filter for let people to try out, so that we know what kind of
-> changes are useful (e.g. "insert s-o-b at the very end") and make
-> sure the configuration language to specify the changes is easy and
-> expressive enough, which is more or less what we have in 'master'.
->
-> Once we gain experience (and that may result in updates to what is
-> in 'master'), in the second phase, we would figure out what code
-> paths can make use of this text transmonger (e.g. your configuration
-> variable "format.trailers" to affect the format-patch code path) and
-> integrate it more tightly to the codebase.
->
-> We are not there yet.
+are available in the git repository at:
 
-Yeah, "interpret-trailers" will be in Git 2.2 without the above
-suggested features, but maybe, if we can get  some feedback from users
-about which features they would use, we can aim to have some in Git
-2.3.
+  git://github.com/git-l10n/git-po master
 
-Thanks,
-Christian.
+for you to fetch changes up to 7ba2ba7d12163a8f9a9947d7880bd26f2970d4c5:
+
+  l10n: remove a superfluous translation for push.c (2014-11-20 16:23:43 +0800)
+
+----------------------------------------------------------------
+Jiang Xin (3):
+      l10n: git.pot: v2.2.0 round 2 (1 updated)
+      l10n: batch updates for one trivial change
+      l10n: remove a superfluous translation for push.c
+
+Ralf Thielow (2):
+      l10n: de.po: translate 2 new messages
+      l10n: de.po: translate 2 messages
+
+ po/bg.po    | 114 ++++++-----
+ po/ca.po    |  60 +++---
+ po/de.po    | 631 +++++++++++++++++++++++++++++++-----------------------------
+ po/fr.po    |  94 +++++----
+ po/git.pot  |  48 ++---
+ po/sv.po    |  80 ++++----
+ po/vi.po    |  60 +++---
+ po/zh_CN.po |  60 +++---
+ 8 files changed, 578 insertions(+), 569 deletions(-)
+
+-- 
+Jiang Xin
