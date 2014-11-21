@@ -1,29 +1,25 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC 4/4] Improve layout and reference msvc-build script
-Date: Fri, 21 Nov 2014 21:05:48 -0000
+From: "Philip Oakley" <philipoakley-7KbaBNvhQFM@public.gmane.org>
+Subject: Re: Cannot set the commit-message editor
+Date: Fri, 21 Nov 2014 21:14:39 -0000
 Organization: OPDS
-Message-ID: <6D7BD7DD7E3A49EE8D7B04BC86F88F74@PhilipOakley>
-References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <1416526682-6024-5-git-send-email-philipoakley@iee.org> <alpine.DEB.1.00.1411211049100.13845@s15462909.onlinehome-server.info>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Message-ID: <ADA906CC4DD040DF9F1F2DFA9EEF69BF@PhilipOakley>
+References: <CAOmRNZ4uJEoxroyCRUSDwSC3OAMKTSO0s91_uFDaUit3k8eJLg@mail.gmail.com><F248C92A32904678A4E8E158A3518AA3@PhilipOakley> <CAOmRNZ5PGWNM_+c_G_3ZfBnYqXTM-5WRBpK_z7Px6Jkae+CvRw@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
-Cc: "GitList" <git@vger.kernel.org>,
-	"Marius Storm-Olsen" <mstormo@gmail.com>,
-	"Ramsay Jones" <ramsay@ramsay1.demon.co.uk>,
-	"Jonathan Nieder" <jrnieder@gmail.com>,
-	"Michael Wookey" <michaelwookey@gmail.com>,
-	"Msysgit" <msysgit@googlegroups.com>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBDSOTWHYX4PBB4WRX2RQKGQEQNIVFAQ@googlegroups.com Fri Nov 21 22:04:51 2014
-Return-path: <msysgit+bncBDSOTWHYX4PBB4WRX2RQKGQEQNIVFAQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f58.google.com ([209.85.215.58])
+Cc: <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,
+	"Git Users" <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+To: "Fahad Ashfaque" <fahadash-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBDSOTWHYX4PBBGGWX2RQKGQEVIZ2B6Q-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Nov 21 22:14:04 2014
+Return-path: <git-users+bncBDSOTWHYX4PBBGGWX2RQKGQEVIZ2B6Q-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-ee0-f60.google.com ([74.125.83.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBB4WRX2RQKGQEQNIVFAQ@googlegroups.com>)
-	id 1XrvNq-000622-SU
-	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 22:04:50 +0100
-Received: by mail-la0-f58.google.com with SMTP id q1sf532279lam.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 21 Nov 2014 13:04:50 -0800 (PST)
+	(envelope-from <git-users+bncBDSOTWHYX4PBBGGWX2RQKGQEVIZ2B6Q-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1XrvWm-0000rY-6v
+	for gcggu-git-users@m.gmane.org; Fri, 21 Nov 2014 22:14:04 +0100
+Received: by mail-ee0-f60.google.com with SMTP id c13sf549382eek.25
+        for <gcggu-git-users@m.gmane.org>; Fri, 21 Nov 2014 13:14:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:reply-to:from:to:cc:references:subject:date:organization
@@ -31,113 +27,178 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe;
-        bh=8urbaV2qmbUOryoaqpvPzeVCbswnE96P4Jty0dnNwCo=;
-        b=lAnZKxjE5py2Qhqlfxf1fVfwrw9vAdtfdUslemF1KfEbDYqNq+oVqMx34CFI0e1PGy
-         OERIuFfXWF9TFRvW2GlOVYXgGHdiUP7JCa5qETpKZXZXmFYdZtS2rOuT3PWrJSW/l97w
-         QYnqTSayy58hrH4fUB78kEjf9i5x7Ad50/+DXmR0dP2OCvF8TdKt2jNQ7p6VGninX4gu
-         ODwD3ykwWoXT2Uw+nmHgkm9ERjEc7lfDy2unBj0uRkEh2bypCFZoY5u8rjeHFeHYxm5Z
-         Ybm7WlQ3LG5KGRmhXnKdrVbCN87VU1vIbx7a6/iirYZPGIC1CLr1Qd3VDkLU6Wlr4KuE
-         uxcQ==
-X-Received: by 10.180.20.203 with SMTP id p11mr2628wie.13.1416603890718;
-        Fri, 21 Nov 2014 13:04:50 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.79.165 with SMTP id k5ls29847wix.4.canary; Fri, 21 Nov
- 2014 13:04:50 -0800 (PST)
-X-Received: by 10.180.102.228 with SMTP id fr4mr96191wib.1.1416603890037;
-        Fri, 21 Nov 2014 13:04:50 -0800 (PST)
+        bh=u4H8usMT+23T0YOJdt1f7m5tFBwPilkWsbd8DWU3Grg=;
+        b=vijP8Ke6jYaDwI00A8iV7LbeBk5bxnKSJT6hJCq2he/1jx62gVCsxv/juQQQNLzx6+
+         jmJWQ/8ikegrPP4v9xh5GrCJk/zzFtTy++/SdNxJBzw0AGYqJzGwjjZMGs+pK23zNf1w
+         XyIvCEpiQuCPjAhQYpbaE344EsxwoYh1NWTOo2LF2FOroJrHSHIK2Kl3iuR7TrMGG1rs
+         szKa6RfC2aECNXrkwTqjTCRr2aMC5OsDNXpx2WsPGPdqWOIeGPsulm6RN7OsMEf4KPse
+         vaLTn3Q9qZdTYiwxKzbbTjYyKSWNqmPojDfU0I52jW1xX63PUjrqQRS/Z57GG+wGswEr
+         Y9Pg==
+X-Received: by 10.152.36.135 with SMTP id q7mr28319laj.29.1416604444022;
+        Fri, 21 Nov 2014 13:14:04 -0800 (PST)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.152.22.130 with SMTP id d2ls271538laf.32.gmail; Fri, 21 Nov
+ 2014 13:14:00 -0800 (PST)
+X-Received: by 10.112.147.131 with SMTP id tk3mr2234056lbb.2.1416604440131;
+        Fri, 21 Nov 2014 13:14:00 -0800 (PST)
 Received: from out1.ip03ir2.opaltelecom.net (out1.ip03ir2.opaltelecom.net. [62.24.128.239])
-        by gmr-mx.google.com with ESMTP id d18si36204wiv.0.2014.11.21.13.04.49
-        for <msysgit@googlegroups.com>;
-        Fri, 21 Nov 2014 13:04:50 -0800 (PST)
-Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.239 as permitted sender) client-ip=62.24.128.239;
+        by gmr-mx.google.com with ESMTP id el8si28746wib.3.2014.11.21.13.13.59
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>;
+        Fri, 21 Nov 2014 13:14:00 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley-7KbaBNvhQFM@public.gmane.org does not designate 62.24.128.239 as permitted sender) client-ip=62.24.128.239;
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlMLADSnb1RZ8YpUPGdsb2JhbABSCoMOgS6HCYEEynUEAoEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuHgEBIQsCAwUCAQMVAwklFAEEGgYHAwYBDQYTCAIBAgMBCogRAwkNvW+QPY5OgWFcgzaBHwWFL4Y5hnxrjF+DWZYDSDCCSwEBAQ
-X-IPAS-Result: AlMLADSnb1RZ8YpUPGdsb2JhbABSCoMOgS6HCYEEynUEAoEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEuHgEBIQsCAwUCAQMVAwklFAEEGgYHAwYBDQYTCAIBAgMBCogRAwkNvW+QPY5OgWFcgzaBHwWFL4Y5hnxrjF+DWZYDSDCCSwEBAQ
+X-IronPort-Anti-Spam-Result: AusQAKmqb1RZ8YpUPGdsb2JhbABcgw5VWYMGhQfDaR0KhhZPAQMBAYEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEZFRYIAQEhBQYCAwUCAQMVAwICBSECAhQBBAgQAgYHAwYBDQYICwgCAQIDAQwEiAsDCQ0JtmeGfolADYZCDAEfgS2NIYI9gwA2gR8FhS8CjTNrg3qFHYNIP4MaiEqCQ4JwiAZIMAGCSgEBAQ
+X-IPAS-Result: AusQAKmqb1RZ8YpUPGdsb2JhbABcgw5VWYMGhQfDaR0KhhZPAQMBAYEGFwEBAQEBAQUBAQEBODuDfQUBAQEBAgEIAQEZFRYIAQEhBQYCAwUCAQMVAwICBSECAhQBBAgQAgYHAwYBDQYICwgCAQIDAQwEiAsDCQ0JtmeGfolADYZCDAEfgS2NIYI9gwA2gR8FhS8CjTNrg3qFHYNIP4MaiEqCQ4JwiAZIMAGCSgEBAQ
 X-IronPort-AV: E=Sophos;i="5.07,432,1413241200"; 
-   d="scan'208";a="533206421"
+   d="scan'208";a="533208314"
 Received: from host-89-241-138-84.as13285.net (HELO PhilipOakley) ([89.241.138.84])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 21 Nov 2014 21:04:49 +0000
+  by out1.ip03ir2.opaltelecom.net with SMTP; 21 Nov 2014 21:13:39 +0000
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Original-Sender: philipoakley@iee.org
+X-Original-Sender: philipoakley-7KbaBNvhQFM@public.gmane.org
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
- (google.com: domain of transitioning philipoakley@iee.org does not designate
- 62.24.128.239 as permitted sender) smtp.mail=philipoakley@iee.org
+ (google.com: domain of transitioning philipoakley-7KbaBNvhQFM@public.gmane.org does not designate
+ 62.24.128.239 as permitted sender) smtp.mail=philipoakley-7KbaBNvhQFM@public.gmane.org
 Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>,
+ <http://groups.google.com/group/git-users/subscribe>
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> Hi Philip,
+From: "Fahad Ashfaque" <fahadash-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+> still don't get it.
 >
-> On Thu, 20 Nov 2014, Philip Oakley wrote:
+
+Do check each instance of bash separately. Each can have a different 
+virtual root.
+
+I was caught by this just last week on Msysgit (the msys.bat) where that 
+has a different base address to the Git bash version in "C:\program 
+files".
+https://groups.google.com/d/msg/msysgit/prLaAOCF9Ig/l1zRsYfVrqwJ
+
+> I run /c/path/to/npp.sh just fine,.... Its only 'git commit' that is
+> teleporting me to a different world. So there is NO way I can refer to
+> folders outside of my repository in a shell script when it is used in
+> a config param ?
 >
->> [...]
->> +Or, use the msvc-build script; also in /msysgit/bin/msvc-build
+> I will try setting the core.editor to the value you suggested.
 >
-> As I mentioned before, from a Git Bash on Windows, the path is
-> /bin/msvc-build (no /msysgit/). That is quite likely to stay the same 
-> with
-> the upcoming Git for Windows SDK, too (once I add the file to the 
-> SDK).
-
-I was trying to identify the source file (as I see it in my Msysgit 
-install). However it will all need tidying to distinguish what is seen 
-if you have G4W-SDK, rather just installing the new G4W (when ready)
->
-> By the way, I think we should also start thinking about a Jenkins job 
-> to
-> verify that upstream changes such as invalidcontinue.obj do not break 
-> the
-> MSVC build. Please let me know if you want to give it a try, I have a
-> Windows Azure instance with a Jenkins instance, sponsored by 
-> Microsoft.
-
-This is not something I'm familiar with, but it's something I could have 
-a look at.
-On my list is also the 'git bundle' symref problem, which we've got a 
-solution for that 'just' needs coding, along with thoughts about 
-narrow/sparse checkout/clone/fetch.
-
-One of the confusions I have is the distinction between building with 
-the MSVC compiler (cl command line) and building within VS2008, and 
-whether they are different things (i.e. does VS2008 bring extra 
-baggage?).
---
-Philip
-
-
->
-> Ciao,
-> Johannes
+> On Fri, Nov 21, 2014 at 12:48 PM, Philip Oakley <philipoakley-7KbaBNvhQFM@public.gmane.org> 
+> wrote:
+>> From: "Fahad Ashfaque" <fahadash-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+>>>
+>>> I have downloaded the latest git from git-scm on my windows machine.
+>>>
+>>> I am using git on windows, I am having trouble trying to get 
+>>> notepad++
+>>> as my commit message editor.
+>>>
+>>> I have created a shell script called npp.sh which has the following
+>>> content
+>>>
+>>> /c/Program\ Files\ \(x86\)/Notepad++/notepad++.exe -multiInst
+>>> -nosession -noPlugin $1
+>>>
+>>>
+>>> I figured this is how paths are accepted in git-bash
+>>>
+>>> Now I configured core.editor this way
+>>>
+>>> git config --global core.editor /c/path/to/npp.sh
+>>>
+>>
+>> I simply have (from 'git config -l'):
+>> core.editor='C:/Program 
+>> Files/Notepad++/notepad++.exe' -multiInst -notabbar
+>> -nosession -noplugin
+>>
+>>>
+>>> when I try to commit, using the following command
+>>>
+>>> git commit
+>>>
+>>> I get the following error
+>>> $ git commit
+>>> error: cannot spawn c:/path/to/npp.sh: No such file or directory
+>>> error: unable to start editor 'c:/dev/tools/cmd/npp.sh'
+>>> Please supply the message using either -m or -F option.
+>>>
+>>> when I run the following command
+>>>
+>>> ls c:/
+>>>
+>>> I get the directory for my repository's root, not C drive's root
+>>>
+>>> When I run the following command through git-bash
+>>>
+>>> /c/path/to/npp.sh
+>>>
+>>> It works
+>>>
+>>> but when git commit invokes, it does not.
+>>>
+>>> Here is more of what I found
+>>>
+>>> when 'git commit' launches npp.sh, it changes /c/path/to/npp.sh to
+>>> c:/path/to/npp.sh
+>>>
+>>> c:/ is not the root of my C drive according to git-bash,
+>>
+>> Correct. The "Linux" bash is rooted, _usually_, at the base of your 
+>> personal
+>> 'c:/documents and settings' (or whatever on your Windows version), 
+>> with the
+>> MS drives under /c/ and /d/ etc. i.e. a load of virtualisation.
+>>
+>> use 'pwd -W' to get the true (Windows) path of your current/present 
+>> working
+>> directory. (I had to ask just a few days ago ;-)
+>>
+>>> c:/ is root
+>>> of my repository because when I run 'ls c:/' I get files from root 
+>>> of
+>>> my repository.
+>>
+>> I wouldn't have expected that to play nice (confusion between windows 
+>> and
+>> linux path styles).
+>>
+>>>
+>>> so may be if 'git commit' does not change /c/path/to/npp.sh to
+>>> c:/path/to/npp.sh, it would work... Or if git-bash does not mount 
+>>> c:/
+>>> to /c/path/to/myrepository and keep it to /c it would work too.
+>>>
+>>> Please let me know if you need more info on this
+>>
+>>
+>> I've also copied in the Git user / Git for Human beings list (for 
+>> reference)
+>> which can be useful for Windows based issues.
+>>
+>>>
+>>> Thanks
+>>>
+>>> Fahad
+>>> --
+>>
+>>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 > 
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
 For more options, visit https://groups.google.com/d/optout.
