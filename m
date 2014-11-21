@@ -1,87 +1,100 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC 1/4] Fix i18n -o option in msvc engine.pl
-Date: Fri, 21 Nov 2014 10:41:36 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1411211038570.13845@s15462909.onlinehome-server.info>
-References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <1416526682-6024-2-git-send-email-philipoakley@iee.org>
+Subject: Re: [RFC 2/4] Properly accept quoted space in filenames
+Date: Fri, 21 Nov 2014 10:42:41 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1411211041560.13845@s15462909.onlinehome-server.info>
+References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <1416526682-6024-3-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GitList <git@vger.kernel.org>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Wookey <michaelwookey@gmail.com>,
-	Msysgit <msysgit@googlegroups.com>
+Cc: GitList <git@vger.kernel.org>, Marius Storm-Olsen <mstormo@gmail.com>, 
+    Ramsay Jones <ramsay@ramsay1.demon.co.uk>, 
+    Jonathan Nieder <jrnieder@gmail.com>, 
+    Michael Wookey <michaelwookey@gmail.com>, 
+    Msysgit <msysgit@googlegroups.com>
 To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Nov 21 10:42:21 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+X-From: msysgit+bncBCZPH74Q5YNRBF4SXSRQKGQEZ66IQ6A@googlegroups.com Fri Nov 21 10:42:50 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBF4SXSRQKGQEZ66IQ6A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ee0-f59.google.com ([74.125.83.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrkjM-0002WR-Ci
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 10:42:20 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758405AbaKUJln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2014 04:41:43 -0500
-Received: from mout.gmx.net ([212.227.15.19]:63462 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758391AbaKUJlk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2014 04:41:40 -0500
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBF4SXSRQKGQEZ66IQ6A@googlegroups.com>)
+	id 1Xrkjn-0002kM-QG
+	for gcvm-msysgit@m.gmane.org; Fri, 21 Nov 2014 10:42:47 +0100
+Received: by mail-ee0-f59.google.com with SMTP id e49sf449261eek.24
+        for <gcvm-msysgit@m.gmane.org>; Fri, 21 Nov 2014 01:42:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=OXn9AkcmAIfdL6uV5RqqKjZYy0VWAdlTXQ5cb/QdMRs=;
+        b=cbsPOhnI8BvVqij4LmrxGriIEKq8iqgEwxw8yJZrHcjnhzSEAHVMeuTU4U+OnTQGlX
+         AHdbKSWJ0228JCtDX9cjEQFubRl1/12+kCzYrB4FxC4Kq9kXE+B5jkR4Xr+yeF1f8GHx
+         fjjqL6zGcFnwKenBlBIVHEl+avOu0WVAdJWSoEnrZ6dnVDSaAaMJVVtSu275UouWGvuh
+         VF7HVDGzQuiCDx8VyDcjg+rXT0mN0SFT/NhrmRIfcuyfolZiFMdA7pHfIyfYSdqMN+/i
+         YDv8CJTtV02e9ns5HlMdh5cCS2FJZHle2tvd+R5UnCR7NgX9b+qUBTxJ4VRuTNQh0gyr
+         MfRQ==
+X-Received: by 10.180.19.130 with SMTP id f2mr89718wie.7.1416562967346;
+        Fri, 21 Nov 2014 01:42:47 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.23.101 with SMTP id l5ls1597613wif.8.canary; Fri, 21 Nov
+ 2014 01:42:46 -0800 (PST)
+X-Received: by 10.194.104.227 with SMTP id gh3mr489512wjb.7.1416562966767;
+        Fri, 21 Nov 2014 01:42:46 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id p14si465962wie.1.2014.11.21.01.42.46
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Nov 2014 01:42:46 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LztHH-1Y4O3f3HRz-0153b5;
- Fri, 21 Nov 2014 10:41:36 +0100
+ mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id 0Lw285-1Y1d9g273t-017mqg;
+ Fri, 21 Nov 2014 10:42:41 +0100
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <1416526682-6024-2-git-send-email-philipoakley@iee.org>
+In-Reply-To: <1416526682-6024-3-git-send-email-philipoakley@iee.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:6KLR3gWiyr+rIlJcceY0hDMK071hutTwddtit+x+CnTJveU+88q
- IlAe0oczgllVrBSP26kBCXZaD2m1iWTALYid69Y65RnXw7YwUNDdwfV42PGMcQdLME/4k8q
- JTfetB9kuQ+aZ6QZHIKmMHx6V9V0y2YCf4M6E/+/2G2tdZnYW98wlNH+nwImLyLPNkNZdWh
- JwKXoArzFovcBL4wyNHNA==
+X-Provags-ID: V03:K0:HHoub0SB1up1ubQkC/wtgiEHutVptFzLQwomR99fTDyeJxxX3aD
+ 2RnLZOCkloxhOp3QGde/kz4eGFNOrQYGjC+mu1b/srA7L9iXqM2aNN1xaBfRxAdS3iVJAMZ
+ xrOuqgibjtfjLoZt4MzrchAee+AAvl4v4lLy9kdJA/4HezxsOXcaqDaxvuSfEbY3VTPXoq7
+ FLYX918/rXZGgaZxBEv9g==
 X-UI-Out-Filterresults: notjunk:1;
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
 
 Hi Philip,
 
+apart from adding dead code:
+
 On Thu, 20 Nov 2014, Philip Oakley wrote:
 
->     The i18n 5e9637c6 introduced an extra '-o' option
->     into the make file,
-
-I take it you are referring to
-
-	https://github.com/git/git/commit/5e9637c6#diff-b67911656ef5d18c4ae36cb6741b7965R2195
-
 > diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-> index 23da787..9144ea7 100755
+> index 9144ea7..8e41808 100755
 > --- a/contrib/buildsystems/engine.pl
 > +++ b/contrib/buildsystems/engine.pl
-> @@ -140,6 +140,18 @@ sub parseMakeOutput
->              next;
->          }
->  
-> +        if ($text =~ /^mkdir /) {
-> +            # options to the Portable Object translations in the line
-> +            # mkdir -p po/... && msgfmt ... (eg -o) may be mistaken for linker options
+> @@ -243,7 +244,8 @@ sub removeDuplicates
+>  sub handleCompileLine
+>  {
+>      my ($line, $lineno) = @_;
+> -    my @parts = split(' ', $line);
+> +    # my @parts = split(' ', $line);
+> +    my @parts = quotewords('\s+', 0, $line);
+>      my $sourcefile;
 
-Maybe better
-
-		# the line "mkdir ... && msgfmt ..." contains no linker options
-
-> +            next;
-> +        }
-> +
-> +        if ($text =~ /^msgfmt /) {
-> +            # options to the Portable Object translations in the line
-> +            # mkdir -p po/... && msgfmt ... (eg -o) may be mistaken for linker options
-> +            next;
-> +        }
-
-These two if clauses do the same, maybe call it
-
-	if ($test =~ /^(mkdir|msgfmt) /)
+(i.e. the commented-out line) it looks good to me.
 
 Ciao,
 Johannes
