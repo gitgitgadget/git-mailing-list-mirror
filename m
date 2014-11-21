@@ -1,164 +1,72 @@
-From: "Philip Oakley" <philipoakley-7KbaBNvhQFM@public.gmane.org>
-Subject: Re: Cannot set the commit-message editor
-Date: Fri, 21 Nov 2014 17:48:20 -0000
-Organization: OPDS
-Message-ID: <F248C92A32904678A4E8E158A3518AA3@PhilipOakley>
-References: <CAOmRNZ4uJEoxroyCRUSDwSC3OAMKTSO0s91_uFDaUit3k8eJLg@mail.gmail.com>
-Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] copy.c: make copy_fd preserve meaningful errno
+Date: Fri, 21 Nov 2014 09:48:19 -0800
+Message-ID: <xmqqa93k1m3g.fsf@gitster.dls.corp.google.com>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com>
+	<546F0284.7050904@alum.mit.edu> <546F033F.7030201@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
-Cc: "Git Users" <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-To: "Fahad Ashfaque" <fahadash-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,
-	<git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-X-From: git-users+bncBDSOTWHYX4PBBZXVXWRQKGQEVASLHUI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Nov 21 18:48:26 2014
-Return-path: <git-users+bncBDSOTWHYX4PBBZXVXWRQKGQEVASLHUI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcggu-git-users@m.gmane.org
-Received: from mail-la0-f60.google.com ([209.85.215.60])
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Nov 21 18:48:48 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-users+bncBDSOTWHYX4PBBZXVXWRQKGQEVASLHUI-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
-	id 1XrsJm-000168-3U
-	for gcggu-git-users@m.gmane.org; Fri, 21 Nov 2014 18:48:26 +0100
-Received: by mail-la0-f60.google.com with SMTP id pv20sf462937lab.5
-        for <gcggu-git-users@m.gmane.org>; Fri, 21 Nov 2014 09:48:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:reply-to:from:to:cc:references:subject:date:organization
-         :mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=9FdRVuAOY5qZiJbdXOruBFFCne/jckT/TMDQvM2aXTQ=;
-        b=GoPOyaExqg2ok0pouQBWTJ3oRnyaApS3Ewc7A0iCcB9oNpIAJltAs/KU6Pypr5vEtL
-         0LphrMDewTnCthHrk2odA3Z+NVqJLygi60lIQ32DYwp4XrPHlhaZy1UC5DqkDRMETxHU
-         5DOatVkURNvn92uSjEZStnQXFvljKuwfUP3kNDT2x+Bjw/FqnBkiBgFrGitQJ95kJOLn
-         eBqQ1IBKfRx5PI7dya9r+ufWbh8aJdg8cbDiN3RJ9sVjmvtCm7md+B/3GjUTWYANLlYI
-         2YRvJhR1CuHfYoyJuul4rkMHcwDoa/Oxc79TwVY30/B90pTwP3ybUoCNIS4mvF9HJ6/h
-         bBfw==
-X-Received: by 10.152.36.135 with SMTP id q7mr17390laj.29.1416592105953;
-        Fri, 21 Nov 2014 09:48:25 -0800 (PST)
-X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.152.19.98 with SMTP id d2ls236162lae.19.gmail; Fri, 21 Nov
- 2014 09:48:21 -0800 (PST)
-X-Received: by 10.112.89.195 with SMTP id bq3mr1987702lbb.9.1416592101552;
-        Fri, 21 Nov 2014 09:48:21 -0800 (PST)
-Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
-        by gmr-mx.google.com with ESMTP id l9si268620wix.1.2014.11.21.09.48.19
-        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>;
-        Fri, 21 Nov 2014 09:48:19 -0800 (PST)
-Received-SPF: temperror (google.com: error in processing during lookup of philipoakley-7KbaBNvhQFM@public.gmane.org: DNS timeout) client-ip=62.24.128.238;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AnMPALZ5b1RZ8YpUPGdsb2JhbABcgw5VWYMGhAOBBMNTh0sEAoEEFwEBAQEBAQUBAQEBOCAbg30FAQEBAQIBCAEBGRUeAQEhBQYCAwUCAQMVBQIFIQICFAEECBIGBwMGAQ0GARIIAgECAwGIGwMJDbZBhn+JEg2GTwwggS2NIB2CHoJ+NoEeBZJXZ4N3hRiDR4NViDuCQoJtiAQ9MIJLAQEB
-X-IPAS-Result: AnMPALZ5b1RZ8YpUPGdsb2JhbABcgw5VWYMGhAOBBMNTh0sEAoEEFwEBAQEBAQUBAQEBOCAbg30FAQEBAQIBCAEBGRUeAQEhBQYCAwUCAQMVBQIFIQICFAEECBIGBwMGAQ0GARIIAgECAwGIGwMJDbZBhn+JEg2GTwwggS2NIB2CHoJ+NoEeBZJXZ4N3hRiDR4NViDuCQoJtiAQ9MIJLAQEB
-X-IronPort-AV: E=Sophos;i="5.07,432,1413241200"; 
-   d="scan'208";a="16958670"
-Received: from host-89-241-138-84.as13285.net (HELO PhilipOakley) ([89.241.138.84])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 21 Nov 2014 17:48:19 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Original-Sender: philipoakley-7KbaBNvhQFM@public.gmane.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=temperror
- (google.com: error in processing during lookup of philipoakley-7KbaBNvhQFM@public.gmane.org: DNS
- timeout) smtp.mail=philipoakley-7KbaBNvhQFM@public.gmane.org
-Precedence: list
-Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-ID: <git-users.googlegroups.com>
-X-Google-Group-Id: 934228491576
-List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Archive: <http://groups.google.com/group/git-users
-Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>,
- <http://groups.google.com/group/git-users/subscribe>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XrsK5-0001Ek-BD
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 18:48:45 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751253AbaKURs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2014 12:48:26 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50840 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751204AbaKURsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2014 12:48:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 159461F470;
+	Fri, 21 Nov 2014 12:48:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TH9VlRbHvxRqUGlIBUIxKll/vDo=; b=x2La4a
+	m1/TcEl4nqau621F0JDSl9hcVAyfjnumGOKdgxHxvU5ny3v9Q3IVK7BxlrIRAdtp
+	1lMACqQn0g/fTEo1gLyvQUqTmyS/SFCtTS1LzVtzCyKXOBe6mg40Xw+jBS7Q9cHX
+	J4J4e7SfBnPQ4olsrcm0K4GvXcVj+LwZqQQnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xEBNaHkAJqy7w5mzPwCiSwUNPLV8d1Fo
+	S3U6sJE3vDkqxMQL1V+0Rj0W1bfXr0jse528kjJJq19o1RBKBR3uKYwtHlDmAhBG
+	//soU4sDYqZPvRt5DZ2b0/rmQahwGPbHfwu3wnqXM8pcDNHLbpJd9/xZmVHZAakQ
+	v/SH13Y6SRM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 07E441F46F;
+	Fri, 21 Nov 2014 12:48:22 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6E8C71F46C;
+	Fri, 21 Nov 2014 12:48:21 -0500 (EST)
+In-Reply-To: <546F033F.7030201@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 21 Nov 2014 10:17:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9589F786-71A6-11E4-97AA-42529F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
 
-From: "Fahad Ashfaque" <fahadash-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
->I have downloaded the latest git from git-scm on my windows machine.
->
-> I am using git on windows, I am having trouble trying to get notepad++
-> as my commit message editor.
->
-> I have created a shell script called npp.sh which has the following 
-> content
->
-> /c/Program\ Files\ \(x86\)/Notepad++/notepad++.exe -multiInst
-> -nosession -noPlugin $1
->
->
-> I figured this is how paths are accepted in git-bash
->
-> Now I configured core.editor this way
->
-> git config --global core.editor /c/path/to/npp.sh
->
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I simply have (from 'git config -l'):
-core.editor='C:/Program 
-Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noplugin
+> On 11/21/2014 10:14 AM, Michael Haggerty wrote:
+>> Couldn't we save ourselves a lot of this "save_errno" boilerplate by
+>> making error() and warning() preserve errno? [...]
+>
+> Never mind; I see that Peff already submitted a patch to this effect.
 
->
-> when I try to commit, using the following command
->
-> git commit
->
-> I get the following error
-> $ git commit
-> error: cannot spawn c:/path/to/npp.sh: No such file or directory
-> error: unable to start editor 'c:/dev/tools/cmd/npp.sh'
-> Please supply the message using either -m or -F option.
->
-> when I run the following command
->
-> ls c:/
->
-> I get the directory for my repository's root, not C drive's root
->
-> When I run the following command through git-bash
->
-> /c/path/to/npp.sh
->
-> It works
->
-> but when git commit invokes, it does not.
->
-> Here is more of what I found
->
-> when 'git commit' launches npp.sh, it changes /c/path/to/npp.sh to
-> c:/path/to/npp.sh
->
-> c:/ is not the root of my C drive according to git-bash,
-Correct. The "Linux" bash is rooted, _usually_, at the base of your 
-personal 'c:/documents and settings' (or whatever on your Windows 
-version), with the MS drives under /c/ and /d/ etc. i.e. a load of 
-virtualisation.
+My understanding of the conclusion of those four patches was that
+only a single updated one is needed, and "moving save/restore inside
+error()" did not have to survive.
 
-use 'pwd -W' to get the true (Windows) path of your current/present 
-working directory. (I had to ask just a few days ago ;-)
-
-> c:/ is root
-> of my repository because when I run 'ls c:/' I get files from root of
-> my repository.
-I wouldn't have expected that to play nice (confusion between windows 
-and linux path styles).
-
->
-> so may be if 'git commit' does not change /c/path/to/npp.sh to
-> c:/path/to/npp.sh, it would work... Or if git-bash does not mount c:/
-> to /c/path/to/myrepository and keep it to /c it would work too.
->
-> Please let me know if you need more info on this
-
-I've also copied in the Git user / Git for Human beings list (for 
-reference) which can be useful for Windows based issues.
-
->
-> Thanks
->
-> Fahad
-> --
-
--- 
-You received this message because you are subscribed to the Google Groups "Git for human beings" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
-For more options, visit https://groups.google.com/d/optout.
+  http://article.gmane.org/gmane.comp.version-control.git/259911
