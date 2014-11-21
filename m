@@ -1,106 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git merge a b when a == b but neither == o is always a
- successful merge?
-Date: Fri, 21 Nov 2014 13:15:40 -0500
-Message-ID: <20141121181539.GC26650@peff.net>
-References: <21610.16623.746985.383838@perdition.linnaean.org>
- <20141117205304.GA15880@peff.net>
- <21610.29903.366230.851787@perdition.linnaean.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] copy.c: make copy_fd preserve meaningful errno
+Date: Fri, 21 Nov 2014 10:31:16 -0800
+Message-ID: <xmqq1tow1k3v.fsf@gitster.dls.corp.google.com>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com>
+	<546F0284.7050904@alum.mit.edu> <546F033F.7030201@alum.mit.edu>
+	<xmqqa93k1m3g.fsf@gitster.dls.corp.google.com>
+	<20141121175446.GA26650@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Daniel Hagerty <hag@linnaean.org>
-X-From: git-owner@vger.kernel.org Fri Nov 21 19:15:55 2014
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 21 19:31:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XrskH-0003IK-IJ
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 19:15:49 +0100
+	id 1XrszQ-0000kd-P7
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 19:31:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751649AbaKUSPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2014 13:15:44 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43304 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751463AbaKUSPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2014 13:15:42 -0500
-Received: (qmail 15829 invoked by uid 102); 21 Nov 2014 18:15:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Nov 2014 12:15:41 -0600
-Received: (qmail 25849 invoked by uid 107); 21 Nov 2014 18:15:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Nov 2014 13:15:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Nov 2014 13:15:40 -0500
-Content-Disposition: inline
-In-Reply-To: <21610.29903.366230.851787@perdition.linnaean.org>
+	id S1751923AbaKUSbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2014 13:31:22 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751913AbaKUSbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2014 13:31:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE9A12007C;
+	Fri, 21 Nov 2014 13:31:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6T7HHG4/kbcb7LVx/brmQwRybLE=; b=YmCY6W
+	3nPCzo0xLvJ/Xqu+1r7aMXErsRRDJBes7E+SHV2UmNEnfowF9y1UmNgyknj+z2kl
+	L9A3/xLw4e9oP9TdXAIIm+Edb3dEXyDC1fP8Ujy5XfQ/P9GAjDKbnve4/l8z+nwp
+	RbC00e6cwUJR2+lxeI40vba9bJkFH1T/AgP8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EAi2g/Mk9q7SaKkAMniFpbbQjOItJn/L
+	x9H/WDloT5cg386EdXFwPFeVGFheKdZFdbl/dJ23PmIIo60h/AYtzDxGm5fewf38
+	mK/u/g6XqR0HthBh4bdUFZ7kl7xiHFT7bASIH9sQ11dHPh2JsP6woXE07/7pDDVH
+	7ZPkrlYDZ/E=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C55442007B;
+	Fri, 21 Nov 2014 13:31:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E9052007A;
+	Fri, 21 Nov 2014 13:31:18 -0500 (EST)
+In-Reply-To: <20141121175446.GA26650@peff.net> (Jeff King's message of "Fri,
+	21 Nov 2014 12:54:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 95665064-71AC-11E4-9FE8-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 17, 2014 at 05:21:03PM -0500, Daniel Hagerty wrote:
+Jeff King <peff@peff.net> writes:
 
->  > I don't think there is an easy way to get what you want. You would have
->  > to write a new merge 3-way strategy that handles this case differently.
->  > And most of the file-level heavy lifting in merge strategies is done by
->  > the low-level unpack_trees code, which handles this case. From "git help
-> 
->     I have a very rough draft that seems to do what I want, exposed
-> through .gitattributes (below).  Given that this is something you probably
-> want tightly scoped, does it make sense to expose it anywhere else?
+> On Fri, Nov 21, 2014 at 09:48:19AM -0800, Junio C Hamano wrote:
+>
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>> > On 11/21/2014 10:14 AM, Michael Haggerty wrote:
+>> >> Couldn't we save ourselves a lot of this "save_errno" boilerplate by
+>> >> making error() and warning() preserve errno? [...]
+>> >
+>> > Never mind; I see that Peff already submitted a patch to this effect.
+>> 
+>> My understanding of the conclusion of those four patches was that
+>> only a single updated one is needed, and "moving save/restore inside
+>> error()" did not have to survive.
+>> 
+>>   http://article.gmane.org/gmane.comp.version-control.git/259911
+>
+> Yeah, the callsite I had intended ended up needing to save it across
+> more than just error(). And I think that is probably why we have never
+> done any errno-handling inside error() before (it is certainly not the
+> first time I thought of doing such a thing): real-world cases tend to be
+> a little more complicated.
+>
+> That being said, if this copy() case is one that could benefit, I do not
+> have any problem with picking up (or just reusing the concept of) my
+> 1/4 from that series. It probably does not _hurt_ anything, and if it
+> can help in even a few cases, it may be worth it.
 
-This is the first use of gitattributes in the unpack-trees code path. I
-cannot think offhand of any philosophical reason that should not be OK,
-but it is something worth considering (i.e., this code path is deep
-plumbing; are there cases where we would not want to support
-gitattributes?).
-
->     Is it accurate to speak of this as exposing merge minimal?
-
-I am not 100% sure they are not orthogonal concepts. The tree-diff is
-about "just because two separate changes ended at the same place does
-not mean they should be merged into the same change". I am actually not
-sure what XDL_MERGE_MINIMAL entails exactly. Is it only about coalescing
-overlapping endpoints in the merge? Documentation is sparse.
-
-The patch itself doesn't look too bad. It covers the file-level case and
-the content-level case. Is there additional code needed to handle the
-directory-level case? That is, if I have a tree that starts at
-sha1 X, and ends up at sha1 Y in both sides of the merge, do we still
-descend into it to make the file-level comparisons, or do we optimize
-that out?
-
-> diff --git a/ll-merge.c b/ll-merge.c
-> index da59738..2a06ac9 100644
-> --- a/ll-merge.c
-> +++ b/ll-merge.c
-> @@ -84,7 +84,16 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
->  	}
-> 
->  	memset(&xmp, 0, sizeof(xmp));
-> -	xmp.level = XDL_MERGE_ZEALOUS;
-> +
-> +	struct git_attr_check check;
-> +	check.attr = git_attr("merge-minimal");
-> +	(void) git_check_attr(path, 1, &check);
-
-Please void C99 decl-after-statement, as we build on older compilers
-that do not like it.
-
-We also do not typically annotate ignored return values.
-
-> +	if(ATTR_TRUE(check.value))
-> +	  xmp.level = XDL_MERGE_MINIMAL;
-> +	else
-> +	  xmp.level = XDL_MERGE_ZEALOUS;
-
-..and indentations should be a single tab.
-
-Other than those minor style nits, I do not see anything obviously
-_wrong_ with the patch, but I am far from an expert in the area. It
-would need documentation and tests, of course. The next step may be to
-wrap it up with those things and post it to the list, which will likely
-get more attention.
-
--Peff
+Yeah, I agree.  My summary was "did not have to survive", not "had
+to die".  Like you, I do not mind the change as long as other code
+paths benefit from it.
