@@ -1,106 +1,94 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [L10N] please review a batch l10n update for Git 2.2.0 final
-Date: Fri, 21 Nov 2014 16:59:55 +0800
-Message-ID: <CANYiYbEa_p6q9iTS6Rys5dmZNhfZYngNFXGK-gYJFfzODg+B5g@mail.gmail.com>
-References: <CANYiYbFrNCqxfrcaOWjeEZ2no=DRHVoDic8Qg989=U_VUTWiWA@mail.gmail.com>
-	<CAN0XMOLZw+btduQkQwMLykYFgFuZzTfMwnexyGR0FBdbG=qFmA@mail.gmail.com>
-	<CANYiYbEt7r1Bjx9VA29Vk5FL9Qu0nTeXVZWAaggrcM=eNsY7Rg@mail.gmail.com>
-	<CANYiYbH5-eDSkq8LQsyixMsDh6e9ZA7nTVib_GbdK5BQ6vE6OA@mail.gmail.com>
-	<xmqqmw7l1nq5.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ralf Thielow <ralf.thielow@gmail.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Git List <git@vger.kernel.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] mergetools: stop setting $status in merge_cmd()
+Date: Fri, 21 Nov 2014 01:03:10 -0800
+Message-ID: <1416560590-26088-1-git-send-email-davvid@gmail.com>
+References: <1416532829-68662-4-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 21 10:00:03 2014
+X-From: git-owner@vger.kernel.org Fri Nov 21 10:03:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xrk4P-0001vk-HT
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 10:00:01 +0100
+	id 1Xrk7g-0003FU-FM
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Nov 2014 10:03:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778AbaKUI75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Nov 2014 03:59:57 -0500
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:47445 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752836AbaKUI74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Nov 2014 03:59:56 -0500
-Received: by mail-wi0-f180.google.com with SMTP id n3so8075641wiv.1
-        for <git@vger.kernel.org>; Fri, 21 Nov 2014 00:59:55 -0800 (PST)
+	id S1754753AbaKUJDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Nov 2014 04:03:17 -0500
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:59072 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752547AbaKUJDO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Nov 2014 04:03:14 -0500
+Received: by mail-pa0-f41.google.com with SMTP id rd3so4461965pab.28
+        for <git@vger.kernel.org>; Fri, 21 Nov 2014 01:03:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GmftX7LuCyWpYGbkWomlj2lPa/+JcBp7mwkztQNvgS8=;
-        b=ltcrU9rF6c7676URncX3tkDTE5SM3AvnZRoy/aXHGZbajomLbkEG8GpP+WBczgCkBd
-         5ZlSIwMveGEnvss450u3T503T+Xz/C7l3xz20F6bmnUVmzHh6A+JhCJC6rv0lqUBJCxn
-         WrG2cI6o/8jq1nt6/4rKza9lbW3UVdRiR7DScBmV+qTK43hoMbt5HRN/jIQIqT+f596z
-         wAdRreduPeut9t5MibfqII6SjZo0hr5XgZegnA6qT7fbMT0cLxVBlWThlnInO0ce96Io
-         UTJLmTwLXg+01ZDPYWeTc2iOhXVvJIaMdA2zoPfdbs1HHWtGFskxQhlHaIKNVFz+Th9N
-         vE6Q==
-X-Received: by 10.180.72.199 with SMTP id f7mr5710129wiv.53.1416560395551;
- Fri, 21 Nov 2014 00:59:55 -0800 (PST)
-Received: by 10.194.56.101 with HTTP; Fri, 21 Nov 2014 00:59:55 -0800 (PST)
-In-Reply-To: <xmqqmw7l1nq5.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=7IfMMe6ZJtd7VBqcsgrnZamz0L2YZeh+QQs6myeejJ0=;
+        b=BLiUva/AaVJe4yNoQrSwYk9WeW079Ifrf76Z/2p1kLXgJevnV7OxT2VVKDiiHdvIH0
+         KS/ktVjM4tCtQxDifpZE2grSnQm3cZ8VIVZRic2WZaLJloGLqFZXfF6vTE47gD3nXOjY
+         EgMBnAfIAyjB77N/vNv+zB55uPmbsMeIKPO8Y7Lc3B8jyZaL+oRs9w6qhBmqCLFWhs3E
+         HDYCrN+fobtRuMXDK2MTf3EMujwLJ2UaOs1lwspv3ZSRUAdesWaHtKxQW0nQZkFKVXRV
+         YWobYwYL+9jOqd6ajfj8AANPn1ukuBFE6z2GJKXl/apLOMkD++WDm4BjbzcIXn/kF+fW
+         2W+A==
+X-Received: by 10.68.98.196 with SMTP id ek4mr4997448pbb.150.1416560594162;
+        Fri, 21 Nov 2014 01:03:14 -0800 (PST)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id i11sm4201691pbq.23.2014.11.21.01.03.12
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 21 Nov 2014 01:03:12 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.rc2.26.g6d3471d.dirty
+In-Reply-To: <1416532829-68662-4-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2014-11-21 7:00 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
-> I've pushed out what should be -rc3 minus l10n changes and try to
-> make sure there will be no N_() and _() changes.
->
-> Let's do a 2.2-rc3 as the last round of this cycle tomorrow.  I've
-> fetched up to your 7ba2ba7 but haven't merged it yet, just in case
-> you will have further updates.  Otherwise, 2.2-rc3 will be what is
-> at the tip of 'master' today with 7ba2ba7 merged in.
+No callers rely on $status so there's don't need to set
+it during merge_cmd() for diffmerge, emerge, and kdiff3.
 
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+This is based on the mergetool/difftool cleanup patches.
 
-Hi Junio,
+ mergetools/diffmerge | 1 -
+ mergetools/emerge    | 1 -
+ mergetools/kdiff3    | 1 -
+ 3 files changed, 3 deletions(-)
 
-Please pull the following changes since commit
-ca0107e279df1465946970113d68b4ee26ffbcc4:
-
-  Merge branch 'sv/submitting-final-patch' (2014-11-19 13:48:01 -0800)
-
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po master
-
-for you to fetch changes up to 7ba2ba7d12163a8f9a9947d7880bd26f2970d4c5:
-
-  l10n: remove a superfluous translation for push.c (2014-11-20 16:23:43 +0800)
-
-----------------------------------------------------------------
-Jiang Xin (3):
-      l10n: git.pot: v2.2.0 round 2 (1 updated)
-      l10n: batch updates for one trivial change
-      l10n: remove a superfluous translation for push.c
-
-Ralf Thielow (2):
-      l10n: de.po: translate 2 new messages
-      l10n: de.po: translate 2 messages
-
- po/bg.po    | 114 ++++++-----
- po/ca.po    |  60 +++---
- po/de.po    | 631 +++++++++++++++++++++++++++++++-----------------------------
- po/fr.po    |  94 +++++----
- po/git.pot  |  48 ++---
- po/sv.po    |  80 ++++----
- po/vi.po    |  60 +++---
- po/zh_CN.po |  60 +++---
- 8 files changed, 578 insertions(+), 569 deletions(-)
-
+diff --git a/mergetools/diffmerge b/mergetools/diffmerge
+index 85ac720..f138cb4 100644
+--- a/mergetools/diffmerge
++++ b/mergetools/diffmerge
+@@ -11,5 +11,4 @@ merge_cmd () {
+ 		"$merge_tool_path" --merge \
+ 			--result="$MERGED" "$LOCAL" "$REMOTE"
+ 	fi
+-	status=$?
+ }
+diff --git a/mergetools/emerge b/mergetools/emerge
+index f96d9e5..7b895fd 100644
+--- a/mergetools/emerge
++++ b/mergetools/emerge
+@@ -15,7 +15,6 @@ merge_cmd () {
+ 			"$LOCAL" "$REMOTE" \
+ 			"$(basename "$MERGED")"
+ 	fi
+-	status=$?
+ }
+ 
+ translate_merge_tool_path() {
+diff --git a/mergetools/kdiff3 b/mergetools/kdiff3
+index a30034f..793d129 100644
+--- a/mergetools/kdiff3
++++ b/mergetools/kdiff3
+@@ -20,5 +20,4 @@ merge_cmd () {
+ 			-o "$MERGED" "$LOCAL" "$REMOTE" \
+ 		>/dev/null 2>&1
+ 	fi
+-	status=$?
+ }
 -- 
-Jiang Xin
+2.2.0.rc2.26.g6d3471d.dirty
