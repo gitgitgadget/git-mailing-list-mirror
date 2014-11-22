@@ -1,64 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
- safer?
-Date: Sat, 22 Nov 2014 14:48:42 -0500
-Message-ID: <20141122194841.GA13665@peff.net>
-References: <5468C33E.2080108@whonix.org>
- <20141117212657.GC15880@peff.net>
- <546FC446.50101@whonix.org>
- <1B02B87E88254A4A95EE138C9D2C4B8B@black>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/6] prune_remote(): exit early if there are no stale
+ references
+Date: Sat, 22 Nov 2014 13:07:25 -0800
+Message-ID: <20141122210725.GB15320@google.com>
+References: <1416423000-4323-1-git-send-email-sbeller@google.com>
+ <1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>
+ <1416578950-23210-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org,
-	Patrick Schleizer <patrick-mailinglists@whonix.org>,
-	whonix-devel@whonix.org, mikegerwitz@gnu.org
-X-From: git-owner@vger.kernel.org Sat Nov 22 20:48:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Nov 22 22:07:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsGfo-0001pl-8P
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Nov 2014 20:48:48 +0100
+	id 1XsHtv-0003ex-J2
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Nov 2014 22:07:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752758AbaKVTso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Nov 2014 14:48:44 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43541 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752752AbaKVTsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Nov 2014 14:48:43 -0500
-Received: (qmail 15043 invoked by uid 102); 22 Nov 2014 19:48:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Nov 2014 13:48:43 -0600
-Received: (qmail 1283 invoked by uid 107); 22 Nov 2014 19:48:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Nov 2014 14:48:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 22 Nov 2014 14:48:42 -0500
+	id S1752772AbaKVVHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Nov 2014 16:07:22 -0500
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:49257 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752688AbaKVVHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Nov 2014 16:07:19 -0500
+Received: by mail-ig0-f181.google.com with SMTP id l13so1503013iga.2
+        for <git@vger.kernel.org>; Sat, 22 Nov 2014 13:07:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8eaz7KmuzzlnWJF6oD+SPIVg0qQSG9D0OM3kTr8ZQAw=;
+        b=mH0f0awwFOxWENZZtppSN83ByUpd1znLpRyYdqtx3JEkIb4mCcfyThIcZFGEAfGSdz
+         Bwa0SNXfK/ZykAzxsp8jdmth6g4iGtcQkTIpCrfArTI1ZpGSXzv8IjzSJgGM01Nc8daZ
+         SnSVB8feKghDsIce+jwayMpY1SECwmPSY+wU2Bbmh93n2p5rePgSVwN7pGQy0azLRC8u
+         iPz5BpehpOraUsFGMy0WzxBLjIvH1WaOALdFvosL4AzT98Lhp5m7oJbid8TQmIit9nO1
+         4xhoJXfkDkM6hXrHAKKkrXmAyYzMA5M1HPLqQdcth7uQUU3T2EIaZoXRhvL5SnrtOtem
+         ZwnQ==
+X-Received: by 10.107.130.30 with SMTP id e30mr9555517iod.87.1416690438809;
+        Sat, 22 Nov 2014 13:07:18 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:8d62:add2:ab4d:c706])
+        by mx.google.com with ESMTPSA id f4sm5055576ioe.11.2014.11.22.13.07.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 22 Nov 2014 13:07:18 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1B02B87E88254A4A95EE138C9D2C4B8B@black>
+In-Reply-To: <1416578950-23210-2-git-send-email-mhagger@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260076>
 
-On Fri, Nov 21, 2014 at 06:32:46PM -0500, Jason Pyeron wrote:
+Michael Haggerty wrote:
 
-> The whole issue is a lot better than this makes it sound. Yes it is
-> just a SHA1 hash, but it is a hash of a structured data format.
-> 
-> You have very observable parts of that well structured data providede to the hash.
+> Aside from making the logic clearer, this avoids a call to
+> warn_dangling_symrefs(), which always does a for_each_rawref()
+> iteration.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  builtin/remote.c | 39 +++++++++++++++++++++------------------
+>  1 file changed, 21 insertions(+), 18 deletions(-)
 
-Yeah, I glossed over that because I don't know enough about the specific
-attacks.  In the worst case, you have a binary file format that lets
-people stick arbitrary bits of data in the middle (like the MD5 attacks
-on Postscript and PDF files), and you do the collision on the blobs.
+I had been wondering about this but didn't chase it down far enough.
+Thanks for noticing and cleaning it up.
 
-But even with that, the sha1s are taken over "blob <n>\0<content>" where
-<n> is the number of bytes of <content>. Depending on the exact scheme
-for generating probable collisions is less than brute force time, even
-that amount of structure may prove problematic. I don't know whether
-that is the case for the best-known attacks or not (remember that nobody
-has _actually_ generated a sha-1 collision at all yet).
-
--Peff
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
