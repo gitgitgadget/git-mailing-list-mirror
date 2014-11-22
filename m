@@ -1,103 +1,121 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2] add: ignore only ignored files
-Date: Sat, 22 Nov 2014 14:19:33 -0500
-Message-ID: <20141122191932.GA13340@peff.net>
-References: <546F5CC7.8060904@drmicha.warpmail.net>
- <b4834f562679d7ccad683463edc61db5ea962d8d.1416585536.git.git@drmicha.warpmail.net>
- <20141121180105.GB26650@peff.net>
- <5470A4C0.3070501@web.de>
+Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
+ safer?
+Date: Sat, 22 Nov 2014 14:43:13 -0500
+Message-ID: <20141122194313.GB13340@peff.net>
+References: <5468C33E.2080108@whonix.org>
+ <20141117212657.GC15880@peff.net>
+ <546FC446.50101@whonix.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Nov 22 20:19:41 2014
+Cc: git@vger.kernel.org, whonix-devel@whonix.org, mikegerwitz@gnu.org
+To: Patrick Schleizer <patrick-mailinglists@whonix.org>
+X-From: git-owner@vger.kernel.org Sat Nov 22 20:43:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsGDc-00075H-2r
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Nov 2014 20:19:40 +0100
+	id 1XsGaW-0006NI-0b
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Nov 2014 20:43:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752449AbaKVTTg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Nov 2014 14:19:36 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43526 "HELO cloud.peff.net"
+	id S1752106AbaKVTnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Nov 2014 14:43:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43532 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752254AbaKVTTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Nov 2014 14:19:35 -0500
-Received: (qmail 13841 invoked by uid 102); 22 Nov 2014 19:19:34 -0000
+	id S1751860AbaKVTnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Nov 2014 14:43:15 -0500
+Received: (qmail 14778 invoked by uid 102); 22 Nov 2014 19:43:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Nov 2014 13:19:34 -0600
-Received: (qmail 1118 invoked by uid 107); 22 Nov 2014 19:19:48 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Nov 2014 13:43:14 -0600
+Received: (qmail 1179 invoked by uid 107); 22 Nov 2014 19:43:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Nov 2014 14:19:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 22 Nov 2014 14:19:33 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 22 Nov 2014 14:43:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 22 Nov 2014 14:43:13 -0500
 Content-Disposition: inline
-In-Reply-To: <5470A4C0.3070501@web.de>
+In-Reply-To: <546FC446.50101@whonix.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260074>
 
-On Sat, Nov 22, 2014 at 03:59:12PM +0100, Torsten B=C3=B6gershausen wro=
-te:
+On Fri, Nov 21, 2014 at 11:01:26PM +0000, Patrick Schleizer wrote:
 
-> >> +test_expect_success 'error out when attempting to add ignored one=
-s but add others' '
-> >> +	touch a.if &&
-> >> +	test_must_fail git add a.?? &&
-> >> +	! (git ls-files | grep "\\.ig") &&
-> >> +	(git ls-files | grep a.if)
-> >> +'
-> [...]
->=20
-> 2 small comments:
-> Why the escaped "\\.ig" and the unescaped "a.if"  ?
+> > Yes, it is only as "safe as SHA-1" in the sense that you have GPG-signed
+> > only a SHA-1 hash. If somebody can find a collision with a hash you have
+> > signed, they can substitute the colliding data for the data you signed.
+> [..]
+> Sounds pretty sad. Isn't this a security issue that should be fixed?
 
-I agree that is inconsistent, and I don't see any reason for it.
+Sure, for some definition of "should". It's not a problem today. It may
+be a problem in the future. If we were designing git from scratch today,
+it would probably make sense to use a different hash, or to somehow
+parameterize the hash.
 
-> The other question, this is a more general one, strikes me every time=
- I see
-> ! grep
->=20
-> Should we avoid it by writing "test_must_fail" instead of "!" ?
+But we're not starting from scratch. A change like that needs to
+consider a transition plan. What happens to the existing history? Do we
+just rewrite it all using the new hash in all object references? If so,
+what do we do with non-object references to sha1s (in external systems,
+or even partial sha1s mentioned in commit message)? What do we do with
+signed tags which are now invalid?  Or do we graft history with the new
+hashes onto the old, letting the two coexist in the same repository? How
+do we expand the data structures to handle the extra information needed
+to specify the hash type?
 
-No. The point of test_must_fail over "!" is to check that not only does
-the command fail, but it fails with a clean exit rather than a signal
-death.  The general philosophy is that this is useful for git (which we
-are testing), and not for third-party tools that we are using to check
-our outputs. In other words, we do not expect grep to segfault, and do
-not need to bother checking it.
+None of these problems is insurmountable, but it's going to take real
+work on the development side, and is going to create incompatibilities
+and headaches on the user side. It's probably something we'll need to
+deal with in the next 10-15 years, but nobody knows quite when.
 
-I do not think there is a real _downside_ to using test_must_fail for
-grep, except that it is a bit more verbose.
+If you'd like to start working on it, I'd be happy to review your
+patches. :) But in the meantime, I don't know that anybody considers it
+an extremely high priority to work on, versus other fixes and features.
 
-And that describes the goal, of course; actual implementation has been
-less consistent. Possibly because I do not know that those instructions
-are written down anywhere. We usually catch such things in review these
-days, but there are many inconsistent spots in the existing suite.
+> Rather than discussing how feasible collisions in SHA-1 are... Attacks
+> on SHA-1 are only getting worse, no?
 
-> The following came into my mind when working on another grepy thing,
-> and it may be unnecessary clumsy:
->=20
-> test_expect_success 'error out when attempting to add ignored ones bu=
-t add others' '
-> 	touch a.if &&
-> 	test_must_fail git add a.?? &&
-> 	git ls-files >files.txt &&
-> 	test_must_fail grep a.ig files.txt >/dev/null &&
-> 	grep a.if files.txt >/dev/null &&
-> 	rm files.txt
+Actually, not really. I do not keep up terribly well with the academic
+literature, but I don't think that attacks have gotten any worse in the
+last few years. Computers _are_ getting faster, though, so a number like
+2^61 (which is what Wikipedia claims as the best widely accepted value
+for producing a collision) gets more and more feasible as time passes.
 
-Right, my "allergic to pipes" was basically advocating using a tempfile=
-=2E
-But as noted above, it should remain "! grep" here. And there is no nee=
-d
-to redirect the output of grep, as the test suite does it already (in
-fact, it is preferable not to, because somebody debugging the test with
-"-v" will get more output).
+Of course, we might find worse attacks (or if you want to put on your
+tinfoil hat, perhaps certain government organizations already have and
+are keeping them secret). 2^61 is a best case.
+
+> > And of course there is the question of getting the colliding data to the
+> > victim. Git does collision checks whenever a remote (e.g., from a "git
+> > fetch") gives us data that we already have. So you could poison new
+> > cloners with bad data, but you could not convince a repository with the
+> > existing "good" half of the collision to fetch the "evil" half.
+> 
+> Poison git cloners with bad data is exactly my point here. Because
+> sometimes I am a cloner of my own code - cloning it on a separate
+> machine - then verify it using gpg - but don't check it any further. In
+> such cases, I'd prefer if security wouldn't depend on SHA-1.
+
+I agree that cloners are an important category of users to clone. But it
+also means that a single fetcher can detect tampering quite easily.
+Think about it this way: let's say the Walker/Schneier estimate is
+right, and in 2021 it will cost ~$43K to find a collision. You spend the
+money, find a collision on some binary blob that's in the kernel,
+convince Linus to accept your "good" version, he signs, and then you
+hack into kernel.org and replace the blob with your evil version. Now
+the first time somebody fetches the evil version, their git complains
+about the collision, kernel.org admins investigate, and the problem is
+fixed. There's some damage, but ultimately you didn't accomplish much.
+
+Or you could spend that $43K hiring somebody to break into Linus's house
+and manipulate the local copy of the kernel on his computer that he's
+going to sign. Or buy a zero-day exploit for his browser that gives you
+remote code execution on his workstation.
+
+Don't get me wrong. I think moving away from SHA-1 is a good idea, and
+something we're going to want to do for security reasons eventually. But
+we're definitely not at the point of "well, all of our signatures are
+worthless now", and I'm not sure we'll be there sooner than a decade
+from now.
 
 -Peff
