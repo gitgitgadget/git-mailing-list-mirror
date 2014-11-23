@@ -1,86 +1,82 @@
-From: Javier Domingo Cansino <javierdo1@gmail.com>
-Subject: Re: Fwd: Add git ignore as builtin
-Date: Sun, 23 Nov 2014 20:25:15 +0100
-Message-ID: <CALZVapm0VJ9JsT3Ur86F-vYFMoRtKgDiJ3PO_aYPRyNFgz6iEw@mail.gmail.com>
-References: <CA+mQAOXPZSv2B8tVfC=4eJ7X_2j8Di4BkuE=z43=U2+VNpdQQg@mail.gmail.com>
- <CA+mQAOU_UnPuSk0f9d1sUnxBj8M4zEX7bwa4Dw_z_PJV3Lp4LA@mail.gmail.com>
- <loom.20141117T010932-213@post.gmane.org> <20141117205957.GB15880@peff.net> <xmqq8uj9y0ck.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] exec_cmd: system_path memory leak fix
+Date: Sun, 23 Nov 2014 14:42:47 -0500
+Message-ID: <20141123194247.GA16605@peff.net>
+References: <1416750981-24446-1-git-send-email-kuleshovmail@gmail.com>
+ <1416750981-24446-2-git-send-email-kuleshovmail@gmail.com>
+ <xmqqioi5ycme.fsf@gitster.dls.corp.google.com>
+ <87sih9en65.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Ryan Jacobs <ryan.mjacobs@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 23 20:25:42 2014
+To: Alex Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 23 20:43:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xscmz-0004Z5-7e
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Nov 2014 20:25:41 +0100
+	id 1Xsd4c-0000GQ-2d
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Nov 2014 20:43:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070AbaKWTZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Nov 2014 14:25:37 -0500
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:48588 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751559AbaKWTZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Nov 2014 14:25:37 -0500
-Received: by mail-wi0-f179.google.com with SMTP id ex7so3857141wid.0
-        for <git@vger.kernel.org>; Sun, 23 Nov 2014 11:25:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=EBI/V8b24zdbglsSfH5H4jHulmcCbbk86Ds6yH1bWOc=;
-        b=c9pD2DNwPFDo9M5Vmplv5G3Xc6AKO30jEWyb6m2Mk+ExP0/xL8e18+Qo8n/CchvqQz
-         D07ztEYY5kSgpEufiPfKvIMcmjZ0ZpOCLt+Xkv2Rr6OZA3bbpppJuxZDP+NpPPyGBWXa
-         q323VVPZ56Yf5BrJSREKXCn6GafAKrSW7JyjYg3reRF284PRqBBHKcptbXvS7Rol5QSj
-         WUokGQrpr2E+3RvlJmJWuxBxLE95gppFuhtxqGJFZUgdlNh25CTvKZwx/g3iDfx4fqX+
-         hoFD5j5Pe6DRxbCCpHQ/EcTvJNhZQYExDTyPdzQSAoyYk0DCfEI3HS62VvOtmP0G9PE4
-         1j0g==
-X-Received: by 10.180.96.42 with SMTP id dp10mr5617923wib.38.1416770735903;
- Sun, 23 Nov 2014 11:25:35 -0800 (PST)
-Received: by 10.27.203.85 with HTTP; Sun, 23 Nov 2014 11:25:15 -0800 (PST)
-In-Reply-To: <xmqq8uj9y0ck.fsf@gitster.dls.corp.google.com>
+	id S1751884AbaKWTmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Nov 2014 14:42:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43726 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751419AbaKWTmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Nov 2014 14:42:49 -0500
+Received: (qmail 10216 invoked by uid 102); 23 Nov 2014 19:42:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 23 Nov 2014 13:42:49 -0600
+Received: (qmail 9316 invoked by uid 107); 23 Nov 2014 19:43:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 23 Nov 2014 14:43:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Nov 2014 14:42:47 -0500
+Content-Disposition: inline
+In-Reply-To: <87sih9en65.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260101>
 
-I would love to have such tool included in the toolchain, but being
-able to use it to edit all the ignore chain, defaulting to .gitignore.
-Explain the reason in my case.
+On Mon, Nov 24, 2014 at 01:19:29AM +0600, Alex Kuleshov wrote:
 
-Usually, when ignoring stuff, you will probable ignore already your
-IDE/Editor files using a global gitignore. And most of the times in a
-per-project basis, you will be ignoring their output files. I only use
-.git/info/exclude when I have something really special that I don't
-want to share publicly, such as a data/ folder to run the project or
-so.
+> 
+> Signed-off-by: Alex Kuleshov <kuleshovmail@gmail.com>
+> ---
+>  exec_cmd.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/exec_cmd.c b/exec_cmd.c
+> index 698e752..7ed9bcc 100644
+> --- a/exec_cmd.c
+> +++ b/exec_cmd.c
+> @@ -13,7 +13,7 @@ const char *system_path(const char *path)
+>  #else
+>  	static const char *prefix = PREFIX;
+>  #endif
+> -	struct strbuf d = STRBUF_INIT;
+> +	static struct strbuf d = STRBUF_INIT;
+> 
+>  	if (is_absolute_path(path))
+>  		return path;
+> @@ -34,8 +34,7 @@ const char *system_path(const char *path)
+>  #endif
+> 
+>  	strbuf_addf(&d, "%s/%s", prefix, path);
+> -	path = strbuf_detach(&d, NULL);
+> -	return path;
+> +	return d.buf;
+>  }
 
-That way, most of the times I will be modifying .gitignore, sometimes
-my global gitignore and very occasionally, .git/info/exclude.
+If I am reading this right, calls to system_path() will always reuse the
+same buffer, even if they are called with another "path" argument. So
+all callers must make sure to make a copy if they are going to hold on
+to it for a long time. Grepping for callers shows us saving the result
+to a static variable in at least git_etc_gitattributes, copy_templates,
+and get_html_page_path. Don't these all need to learn to xstrdup the
+return value?
 
-That's my case, and that I know of, people have that usage order,
-.gitignore > global gitignore > local gitignore.
-
-For sake of uniformity, I would use the same context specifiers as in
-git-config. Defaulting to --repo for .gitignore, using --local for the
-.git/info/exclue, using --global for the global gitignore, and
---system for the system one.
-
-Also, about adding and excluding, I would recommend using verbs
-instead of arguments, which would be in consonance with git remote.
-
-git ignore exclude ....
-git ignore include ....
-
-You could also make it "smart" by allowing to use it as the Cisco
-managing commands, or the ip tool (ip a == ip address, ip a a == ip
-addr add, etc.), resulting in the following:
-git ignore e ....
-git ignore i ....
-
--- 
-Javier Domingo Cansino
+-Peff
