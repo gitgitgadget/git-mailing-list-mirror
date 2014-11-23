@@ -1,98 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] exec_cmd: system_path memory leak fix
-Date: Sun, 23 Nov 2014 13:58:48 -0800
-Message-ID: <xmqq7fyly3xj.fsf@gitster.dls.corp.google.com>
-References: <1416750981-24446-1-git-send-email-kuleshovmail@gmail.com>
-	<1416750981-24446-2-git-send-email-kuleshovmail@gmail.com>
-	<xmqqioi5ycme.fsf@gitster.dls.corp.google.com>
-	<87sih9en65.fsf@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Re: [RFC 3/4] engine.pl: split the .o and .obj processing
+Date: Sun, 23 Nov 2014 22:50:55 -0000
+Organization: OPDS
+Message-ID: <0DE9992936544B43BD4B7FC2CC4388AD@PhilipOakley>
+References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <1416526682-6024-4-git-send-email-philipoakley@iee.org> <alpine.DEB.1.00.1411211043050.13845@s15462909.onlinehome-server.info> <622F65684C63407184D58ED19385AFD4@PhilipOakley> <alpine.DEB.1.00.1411231624230.13845@s15462909.onlinehome-server.info>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Alex Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 23 22:59:02 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
+Cc: "GitList" <git@vger.kernel.org>,
+	"Marius Storm-Olsen" <mstormo@gmail.com>,
+	"Ramsay Jones" <ramsay@ramsay1.demon.co.uk>,
+	"Jonathan Nieder" <jrnieder@gmail.com>,
+	"Michael Wookey" <michaelwookey@gmail.com>,
+	"Msysgit" <msysgit@googlegroups.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBDSOTWHYX4PBBUWJZGRQKGQEXLSSKJY@googlegroups.com Sun Nov 23 23:51:01 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBBUWJZGRQKGQEXLSSKJY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f185.google.com ([209.85.212.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsfBN-000715-53
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Nov 2014 22:59:01 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752357AbaKWV6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Nov 2014 16:58:51 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64498 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752089AbaKWV6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Nov 2014 16:58:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 183C91DE57;
-	Sun, 23 Nov 2014 16:58:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=msVUiLFtin3CfrUNvLr5DXQCc+4=; b=IeN4UD
-	7WUkDK2EV3NYDX6x8U5tDPTqaIpH06gZSBSS5wawtArUL/nWNDXoKvRjOa8aUIWc
-	SB5U3Uby6/5YkVdH8sZjvhdu+zB94Ew+O2sx0UoCGPLNT35JGXFqFgW4anlYqX7p
-	bvNFynzNB7fIC4Da9mBscYclAjYAeY00cxHoU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G/VLvj55xAwVdboW1cPV+ERukpqx6IpO
-	GcsBrwsiKL1TLKznoXsvXEePiC8IiEn9lXSH7AwIrwc/yOJLp5dRwpkcQihbQAFi
-	K4MDliIoPMWY22PhK8Tbqco2eo1KOxkPa8lehx5SYhVH2d1TwjYr5k+yki/5y7V3
-	ltTSU1NpJLQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E4ED1DE56;
-	Sun, 23 Nov 2014 16:58:50 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 94AF41DE53;
-	Sun, 23 Nov 2014 16:58:49 -0500 (EST)
-In-Reply-To: <87sih9en65.fsf@gmail.com> (Alex Kuleshov's message of "Mon, 24
-	Nov 2014 01:19:29 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E7CDE564-735B-11E4-BF88-42529F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260105>
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBUWJZGRQKGQEXLSSKJY@googlegroups.com>)
+	id 1Xsfzf-0005x1-Rz
+	for gcvm-msysgit@m.gmane.org; Sun, 23 Nov 2014 23:50:59 +0100
+Received: by mail-wi0-f185.google.com with SMTP id ex7sf227826wid.22
+        for <gcvm-msysgit@m.gmane.org>; Sun, 23 Nov 2014 14:50:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:reply-to:from:to:cc:references:subject:date:organization
+         :mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=SBGdqCQ2wXFJU3UmXxjel9loRgsQ7ZamZSdRrYvG9vI=;
+        b=nCR/p30kE3fhgUHwmGLam+SQBIZ1DOO1Z5kMZI3mWYpWWZ3hES7GJhbulZFxJouF/+
+         GSUtdLlGqN+GoYiGVXOhbOdH4dk8ajfNcM9rNxU4PogUPBU6GzLGw/1at3KjbOr9MYW0
+         LVcfwgmfXZwTW/ygZCT9GyMwXnbULyViDVevRJFL7Ot9SHUgWDl0n8noVttYyMAWW3lD
+         unJYvXq0dsGUY8UnOCDfavQZ54D0dznlsUD2Nio1JGN3QveCS57Pc0pyRhPuufOaPcrC
+         Lz61Y05t+7OdmCXox9ChFTi0NTlbXwt1VbnVEmCj/dZjQhq/ISOx8cKC5I8RZojzQoOC
+         eMmw==
+X-Received: by 10.152.7.143 with SMTP id j15mr279510laa.0.1416783059535;
+        Sun, 23 Nov 2014 14:50:59 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.88.1 with SMTP id bc1ls404069lab.24.gmail; Sun, 23 Nov
+ 2014 14:50:57 -0800 (PST)
+X-Received: by 10.112.14.2 with SMTP id l2mr507341lbc.5.1416783057288;
+        Sun, 23 Nov 2014 14:50:57 -0800 (PST)
+Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
+        by gmr-mx.google.com with ESMTP id d5si322858wib.2.2014.11.23.14.50.57
+        for <msysgit@googlegroups.com>;
+        Sun, 23 Nov 2014 14:50:57 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvQQALRjclRZ8Yh/PGdsb2JhbABbgw5VWYgNw0kfCoZkAQMBAYEKFwEBAQEBAQUBAQEBOCAbg30GAQEBAwECBQEBLh4BASELAgMFAgEDFQwlFAEEDwsGBwMUBhMIAgECAwGIGwMWCb5ijmKOToI9gzaBHwWLaYZ/a4ZMgVWeJEgwAYJKAQEB
+X-IPAS-Result: AvQQALRjclRZ8Yh/PGdsb2JhbABbgw5VWYgNw0kfCoZkAQMBAYEKFwEBAQEBAQUBAQEBOCAbg30GAQEBAwECBQEBLh4BASELAgMFAgEDFQwlFAEEDwsGBwMUBhMIAgECAwGIGwMWCb5ijmKOToI9gzaBHwWLaYZ/a4ZMgVWeJEgwAYJKAQEB
+X-IronPort-AV: E=Sophos;i="5.07,445,1413241200"; 
+   d="scan'208";a="17226524"
+Received: from host-89-241-136-127.as13285.net (HELO PhilipOakley) ([89.241.136.127])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 23 Nov 2014 22:50:57 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260106>
 
-Alex Kuleshov <kuleshovmail@gmail.com> writes:
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+>> > How about the following instead?
+>> >
+>> > + } elsif ($part eq 'invalidcontinue.obj') {
+>> > + # ignore
+>> >  } elsif ($part =~ /\.(o|obj)$/) {
+>>
+>> Looks good, I'll use that (after deciding whether .obj files should
+>> be
+>> expected in a 'make' output anyway)
+>
+> My idea to hardcode invalidcontinue.obj was that I'd rather see a
+> failure
+> if an unexpected .obj is seen there. But I realize that my suggested
+> change does not exactly accomplish that.
+>
+I've decided to include the hard code suggested, and after a few tests
+decided it was probably worth keeping the .obj processing, even though
+we don't expect any.
 
-> Signed-off-by: Alex Kuleshov <kuleshovmail@gmail.com>
+At least I've now managed to generate a .sln project, though it won't
+compile because of a number of other changes, and I haven't got to the
+bottom of them all.
 
-So this one does not change the contract between the caller and the
-callee.  It does not change the fact that you need to explain your
-change, though.  The story should read something like this:
+Notes:
+Revert "Windows: correct detection of EISDIR in mingw_open()"
+git\compat\mingw.c(315) : error C2065: 'O_ACCMODE' : undeclared
+identifier (neither VS2008 nor VS2010 declare 'O_ACCMODE'). add an 
+#ifdef
+_MSC_VER to define this if we are in MSVC.
 
-    system_path(): always return a volatile result
+Revert "mingw.h: add dummy functions for sigset_t operations" commit
+4e6d207c45. the Additional Note: to
+http://www.spinics.net/lists/git/msg240248.html indicates that this
+breaks MSVC. I think it will also need an #ifdef to see if we are in 
+MSVC.
 
-    The function sometimes returns a newly allocated string and
-    sometimes returns a borrowed string, the latter of which the
-    callers must not free().
+I've also found a problem with my setup (msysgit 1.7.9 for make) barfing
+on the commit/ee9be06 "perl: detect new files in MakeMaker builds" which
+'make -n' says 'No rule to make target `PM.stamp', needed by `perl.mak'.
 
-    The existing callers all assume that the return value belongs to
-    the callee and most of them copy it with strdup() when they want
-    to keep it around.  They end up leaking the returned copy when
-    the callee returned a new string.
+There was also LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts
+with use of other libs; use /NODEFAULTLIB:library.
 
-    Make sure all callers receive a volatile result, so that they do
-    not have to be worried about freeing the returned string.
+I've also got notes from way back that there was build order problem
+with 'vcs-svn_lib.lib' - probably a sort order issue. IIRC at that time,
+I had to compile the project twice so that the lib was visible the
+second time.
 
-    There however are existing callers that are already broken, for
-    example, ...
+So there's plenty to go at ;-) I'm going to be away this coming week, So
+at least I have the whole next cycle to make some progress.
 
-    Fixing these callers are done as separate patches, that can be
-    applied either before or after this patch.
+--
 
-Personally, as I already said, I think the approach the previous
-version took (but not the implementation) to change the contract
-between the callers and this function is probably a good idea in
-the longer term.  Leaking a bit by forgetting to convert a few
-callers to free the returned values will not affect the correctness,
-but making the returned value consistently more volatile will
-expose existing breakage more often and will break codepaths that
-happened to be working by accident.
+Philip
 
-Thanks.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
