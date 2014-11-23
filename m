@@ -1,75 +1,111 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH RFC] CYGWIN: avoid implicit declaration warning
-Date: Sun, 23 Nov 2014 15:16:06 +0100
-Message-ID: <5471EC26.3040705@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC 3/4] engine.pl: split the .o and .obj processing
+Date: Sun, 23 Nov 2014 16:28:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1411231624230.13845@s15462909.onlinehome-server.info>
+References: <1416526682-6024-1-git-send-email-philipoakley@iee.org> <1416526682-6024-4-git-send-email-philipoakley@iee.org> <alpine.DEB.1.00.1411211043050.13845@s15462909.onlinehome-server.info> <622F65684C63407184D58ED19385AFD4@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: ramsay@ramsay1.demon.co.uk, tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 23 15:16:34 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: GitList <git@vger.kernel.org>, Marius Storm-Olsen <mstormo@gmail.com>, 
+    Ramsay Jones <ramsay@ramsay1.demon.co.uk>, 
+    Jonathan Nieder <jrnieder@gmail.com>, 
+    Michael Wookey <michaelwookey@gmail.com>, 
+    Msysgit <msysgit@googlegroups.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: msysgit+bncBCZPH74Q5YNRBOH2Y6RQKGQE4SU4JOY@googlegroups.com Sun Nov 23 16:28:57 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBOH2Y6RQKGQE4SU4JOY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f187.google.com ([209.85.216.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsXxX-0005y5-1H
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Nov 2014 15:16:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328AbaKWOQL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Nov 2014 09:16:11 -0500
-Received: from mout.web.de ([212.227.15.14]:58315 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751116AbaKWOQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Nov 2014 09:16:10 -0500
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0MQf2z-1XV3gQ2vZV-00U0U1; Sun, 23 Nov 2014 15:16:07
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-Provags-ID: V03:K0:ykmkRif9aRy9jwnRMwAx7rRCNo7fEOdgoD/iHAME9KRWmPGNXNh
- ARuNCNqTGgDbBO9W6qk8Mm0RrRB6O0XJEr8hamJwW9QMFlebajyxtlCzRY+sXUotvcu9Fsr
- uTM3wbulFlZjhA5J4fj63aHUiFMdJSV4pAu3WnPFfOuMeQzCPKJaHma5XQeVCz1rjw1OHsF
- R3sBlehah2Ds6CQ4Osz3A==
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBOH2Y6RQKGQE4SU4JOY@googlegroups.com>)
+	id 1XsZ5t-0002je-7o
+	for gcvm-msysgit@m.gmane.org; Sun, 23 Nov 2014 16:28:57 +0100
+Received: by mail-qc0-f187.google.com with SMTP id r5sf1167820qcx.14
+        for <gcvm-msysgit@m.gmane.org>; Sun, 23 Nov 2014 07:28:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=TA26FiCREdr086VGyq6GTI5S52oUNt4sQziytj5jkPw=;
+        b=tAM0No01pghfi6I6bYDQxKhMp0YuQvTMQusK/25v7XKfZ21m4xpN+OQrLfkZo/fSVq
+         Lis5h1XOE2Icz761lH2ZeGwM4lezAOVx2YIjidJEBBEEQhSVKnvtkfZeVjluj9/HodWE
+         mBWsU43vO6kuJdPb0pc/pkoTD8fd6PTA3NQWt4B5ClHEq2uGbKMt4CSWoh0YDgSTzjlR
+         esZV3GWHizhzaa6VDv+4w/hSpAHB9CIL9ij25vpLu0JPIExmpzX9YKguaBx5JFpYVwtJ
+         ZDCRJBXppY/rZRpwRwwStBpS1tm9FOHigdz2Z45w67ssuhKudwVQcxjhAzorKJhRVvq2
+         R5Jg==
+X-Received: by 10.50.36.9 with SMTP id m9mr89244igj.2.1416756536715;
+        Sun, 23 Nov 2014 07:28:56 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.107.134.157 with SMTP id q29ls976455ioi.18.gmail; Sun, 23 Nov
+ 2014 07:28:56 -0800 (PST)
+X-Received: by 10.68.180.101 with SMTP id dn5mr5710093pbc.5.1416756536201;
+        Sun, 23 Nov 2014 07:28:56 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.19])
+        by gmr-mx.google.com with ESMTPS id u15si377452igr.3.2014.11.23.07.28.55
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 23 Nov 2014 07:28:56 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.19 as permitted sender) client-ip=212.227.15.19;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id 0MgLMU-1XY81f215i-00NkqN;
+ Sun, 23 Nov 2014 16:28:49 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <622F65684C63407184D58ED19385AFD4@PhilipOakley>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:SaEnOa4P/PXDBFT/ya8aVtNIGhc3ASBaO8zMGHsl+kR5icPURNQ
+ 81pnFApF+aOWiBYLdsryDTGfySDiumUeQdWkIY+oLfsFselw+PrIPSraYggf3USGWyx/Q+9
+ gUG/jIv8fubCWu6GmjVAfTL7qgNUvPmRyi9wrpgU2wpRotW2QrNoQoTt+Qdgagz50vJXEio
+ 92oKlwYpVeG61P1xxbBZQ==
 X-UI-Out-Filterresults: notjunk:1;
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260087>
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.19 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260088>
 
-gcc under cygwin reports several warnings like this:
- warning: implicit declaration of function 'memmem'
-  [-Wimplicit-function-declaration]
-This has been observed under CYGWIN-32 with GCC 4.7.3 as well
-as CYGWIN-64 with gcc v4.8.3-5 x86-64
+Hi,
 
-Do not #define _XOPEN_SOURCE 600 for CYGWIN.
+On Fri, 21 Nov 2014, Philip Oakley wrote:
 
-Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
-This may be a start for a patch, tested under CYGWIN-32,
-both Windows7 and XP
- git-compat-util.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+>
+> > On Thu, 20 Nov 2014, Philip Oakley wrote:
+> >
+> > > @@ -343,8 +346,10 @@ sub handleLinkLine
+> > >          } elsif ($part =~ /\.(a|lib)$/) {
+> > >              $part =~ s/\.a$/.lib/;
+> > >              push(@libs, $part);
+> > > -        } elsif ($part =~ /\.(o|obj)$/) {
+> > > +        } elsif ($part =~ /\.o$/) { # was '/\.(o|obj)$'
+> > >              push(@objfiles, $part);
+> > > +        } elsif ($part =~ /\.obj$/) { # was '/\.(o|obj)$'
+> > > +            # push(@objfiles, $part); # do nothing
+> >
+> > How about the following instead?
+> >
+> > + } elsif ($part eq 'invalidcontinue.obj') {
+> > + # ignore
+> >  } elsif ($part =~ /\.(o|obj)$/) {
+> 
+> Looks good, I'll use that (after deciding whether .obj files should be
+> expected in a 'make' output anyway)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 400e921..cef2691 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -75,7 +75,8 @@
- # endif
- #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC_=
-_) && \
-       !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) =
-&& \
--      !defined(__TANDEM) && !defined(__QNX__) && !defined(__MirBSD__)
-+      !defined(__TANDEM) && !defined(__QNX__) && !defined(__MirBSD__) =
-&& \
-+      !defined(__CYGWIN__)
- #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD nee=
-ds 600 for S_ISLNK() */
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
---=20
-1.9.1.dirty
+My idea to hardcode invalidcontinue.obj was that I'd rather see a failure
+if an unexpected .obj is seen there. But I realize that my suggested
+change does not exactly accomplish that.
+
+Ciao,
+Johannes
