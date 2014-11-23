@@ -1,89 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] add: ignore only ignored files
-Date: Sun, 23 Nov 2014 10:10:47 -0800
-Message-ID: <xmqqvbm5yehk.fsf@gitster.dls.corp.google.com>
-References: <546F5CC7.8060904@drmicha.warpmail.net>
-	<b4834f562679d7ccad683463edc61db5ea962d8d.1416585536.git.git@drmicha.warpmail.net>
-	<20141121180105.GB26650@peff.net> <5470A4C0.3070501@web.de>
-	<20141122191932.GA13340@peff.net>
+Subject: Re: recent cygwin breakage
+Date: Sun, 23 Nov 2014 10:13:25 -0800
+Message-ID: <xmqqr3wtyed6.fsf@gitster.dls.corp.google.com>
+References: <5470B9F9.2060008@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 23 19:11:11 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sun Nov 23 19:13:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xsbcq-0002zs-RD
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Nov 2014 19:11:09 +0100
+	id 1XsbfB-0004e5-W4
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Nov 2014 19:13:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648AbaKWSK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Nov 2014 13:10:57 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63651 "EHLO
+	id S1751506AbaKWSN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Nov 2014 13:13:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62698 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751419AbaKWSK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Nov 2014 13:10:56 -0500
+	with ESMTP id S1751273AbaKWSN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Nov 2014 13:13:28 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EF2418515;
-	Sun, 23 Nov 2014 13:10:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D636C1859A;
+	Sun, 23 Nov 2014 13:13:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k6OghUEbW/AXP1v4IzU/cECrjrg=; b=ZPgtqY
-	Tlpdkgsl8YeWO+XSTP7PMlN/1lBYbiw97GCV2GZw91P1+QpiAFpar57lA39IKAZt
-	YuP62Tc3iXDz9E8j1srLj3EtvOElQB7KTz6DWgD08hpKpOeUi4Bin70/L6MT3tUJ
-	QNXeYxzNe9Ns74qf4/dTYpSfU/w+Xpp9bhi0g=
+	:content-type; s=sasl; bh=vJjO9CevZrZtPNAR0IY+7eYONTQ=; b=Xx96Kb
+	SDHqQIGluN6QtFN5iBSsICRjz0Jxp3C1FNDCMS/ObhHAdglbLfDSkKxQ3NhBqc4q
+	e6d6JSi51ExyD6M+lYZ6yNaeWamTkvVKP4+xQDjbPwKQH5/Kn0PJMI6xL8fzGFa5
+	yQEZJvmhbkocCK3KmSCl8Z3MVkKaGBxSutL08=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VCXSkHs9STY6X6TjTz6TU4yjSN0voOY8
-	FsjG1jQDwSCNrGQlBTNRUHvxoBfYShOF+5ycLCjUaLdiY5S6v4zFb7VX+jxizyqF
-	JD7pqCUXg7u1Ioi/0SF6di2ZYkRADu+PKoakfLFLKq/0Nn2DxGlu9oD7uNLnvnaZ
-	dN2OdrrNud8=
+	:content-type; q=dns; s=sasl; b=nB/7F09as3YBjHSEcUuvVnyhihHKjWVp
+	zGYXiBGVDrkh+0qbo0i+JhNQKK3NAXbD4ipv6XRbVmBk2Zg2aC10tTdW7a5lcbQr
+	vnoOIWnj3C7ZfTVZ62FJ4G2srlgLGGfq6NuXP8tORzWnow3E3AqnlBVzOLAZfyrs
+	0pzQtK8IZko=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8415418514;
-	Sun, 23 Nov 2014 13:10:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CC77518595;
+	Sun, 23 Nov 2014 13:13:26 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D2C018513;
-	Sun, 23 Nov 2014 13:10:48 -0500 (EST)
-In-Reply-To: <20141122191932.GA13340@peff.net> (Jeff King's message of "Sat,
-	22 Nov 2014 14:19:33 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 546B918593;
+	Sun, 23 Nov 2014 13:13:26 -0500 (EST)
+In-Reply-To: <5470B9F9.2060008@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Sat, 22 Nov 2014 16:29:45 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0D90FA72-733C-11E4-817F-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6B4F5898-733C-11E4-B0A0-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260093>
 
-Jeff King <peff@peff.net> writes:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> ... Possibly because I do not know that those instructions
-> are written down anywhere. We usually catch such things in review these
-> days, but there are many inconsistent spots in the existing suite.
+> Just a quick heads-up on a recent cygwin breakage.
+> 
+> I updated my (64-bit) cygwin installation yesterday and (along
+> with many other packages) I noticed a new version of gcc (and
+> presumably libc) was installed (gcc v4.8.3-5 x86-64).
+> ...
+> However, I haven't run any tests yet. Also, I would need to check
+> this out on 32-bit cygwin (I haven't booted that laptop into Win XP
+> for quite some time!).
+>
+> Hmm, I don't really know if this is an unintended side-effect of a
+> recent change to cygwin (or a bug), but I couldn't see any mention
+> of this on the cygwin mailing list. (I don't intend to report this
+> to that mailing list; I don't want to subscribe to (yet another)
+> busy list). :(
 
-t/README has this
+Thanks.
 
-    Don't:
-
-     - use '! git cmd' when you want to make sure the git command exits
-       with failure in a controlled way by calling "die()".  Instead,
-       use 'test_must_fail git cmd'.  This will signal a failure if git
-       dies in an unexpected way (e.g. segfault).
-
-       On the other hand, don't use test_must_fail for running regular
-       platform commands; just use '! cmd'.
-
-Though it can be improved by justifying "just use '! cmd'" further
-with a bit of rationale (e.g. "We are not in the business of
-verifying that world given to us sanely works."), I think the
-current text is sufficient.
-
-Do we refer to t/README from CodingGuidelines where we tell the
-developers to always write tests to prevent other people from
-breaking tomorrow what you did today?  If not, perhaps that is what
-needs to be added.
+I wonder if it is safe to unconditionally drop XOPEN_SOURCE; would
+it cause problems for older Cygwin to those who have not updated to
+the recent one yet?  The proposed change looks trivially correct
+otherwise.
