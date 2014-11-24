@@ -1,71 +1,77 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] send-email: handle adjacent RFC 2047-encoded words
- properly
-Date: Mon, 24 Nov 2014 10:44:04 -0500
-Message-ID: <20141124154404.GB25912@peff.net>
-References: <1416786604-4988-1-git-send-email-dpb@corrigendum.ru>
- <CAPc5daVjNDg5CcWsMwfn=DZhwpCBdU2LYXOpFWZwhx2p8hLRww@mail.gmail.com>
+Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
+ safer?
+Date: Mon, 24 Nov 2014 10:51:08 -0500
+Message-ID: <20141124155108.GC25912@peff.net>
+References: <5468C33E.2080108@whonix.org>
+ <20141117212657.GC15880@peff.net>
+ <CACsJy8D-W_YrxMgUDScSmkNBKMVpRu_Kc0k6nsfyhmoLg5HBjg@mail.gmail.com>
+ <54730546.7000200@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?0KDQvtC80LDQvSDQlNC+0L3Rh9C10L3QutC+?= 
-	<dpb@corrigendum.ru>, Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 24 16:44:36 2014
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Patrick Schleizer <patrick-mailinglists@whonix.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	whonix-devel@whonix.org, mikegerwitz@gnu.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Nov 24 16:51:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsvoZ-0001eR-J8
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 16:44:35 +0100
+	id 1Xsvv0-00077X-SZ
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 16:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754159AbaKXPo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 10:44:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44081 "HELO cloud.peff.net"
+	id S1753439AbaKXPvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 10:51:11 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44106 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754037AbaKXPoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 10:44:05 -0500
-Received: (qmail 28624 invoked by uid 102); 24 Nov 2014 15:44:05 -0000
+	id S1753138AbaKXPvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 10:51:09 -0500
+Received: (qmail 28955 invoked by uid 102); 24 Nov 2014 15:51:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 09:44:05 -0600
-Received: (qmail 17490 invoked by uid 107); 24 Nov 2014 15:44:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 09:51:09 -0600
+Received: (qmail 17860 invoked by uid 107); 24 Nov 2014 15:51:08 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 10:44:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Nov 2014 10:44:04 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 10:51:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Nov 2014 10:51:08 -0500
 Content-Disposition: inline
-In-Reply-To: <CAPc5daVjNDg5CcWsMwfn=DZhwpCBdU2LYXOpFWZwhx2p8hLRww@mail.gmail.com>
+In-Reply-To: <54730546.7000200@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260130>
 
-On Sun, Nov 23, 2014 at 11:27:51PM -0800, Junio C Hamano wrote:
+On Mon, Nov 24, 2014 at 11:15:34AM +0100, Michael J Gruber wrote:
 
-> Was the change to the test to use Cyrillic really necessary, or did it
-> suffice if you simply extended the existsing "Funny Name" spelled with
-> strange accents, but you substituted the whole string anyway?
+> > I wonder if we can have an option to sign all blob content of the tree
+> > associated to a commit, and the content of parent commit(s). It's more
+> > expensive than signing just commit/tag content. But it's also safer
+> > without completely ditching SHA-1.
+> > 
 > 
-> Until I found out what the new string says by running web-based
-> translation on it, I felt somewhat uneasy. As I do not read
-> Cyrillic/Russian, we may have been adding some profanity without
-> knowing. It turns out that the string just says "Cyrillic Name", so I am
-> not against using the new string, but it simply looked odd to replace the
-> string whole-sale when you merely need a longer string. It made it look
-> as if a bug was specific to Cyrillic when it wasn't.
+> This amounts to hashing the blob content with whatever hash you told
+> your gpg to use (hopefully not sha1 ;) ) and signing that.
 
-I do not mind hidden Cyrillic profanity[1], but I found the new text
-much harder to verify, because the shapes are very unfamiliar to my
-eyes. I'd prefer if we can stick to accented Roman letters.  I realize
-this is me being totally Anglo-centric. But for Cyrillic readers,
-consider how much more difficult it would be to manually verify the test
-if it were written in an unfamiliar script (e.g., Hangul).  The
-surrounding code is already written in Roman characters (and English),
-so it probably makes sense as a common denominator.
+Right. You could also create a graph of SHA-256 (or whatever) object
+hashes and sign that. I.e., create a parallel to git's trees using
+SHA-256 and include a single:
+
+  object-256 ....
+
+line in the tag header. That still involves re-hashing all of the data,
+but it would at least be possible to cache (i.e., a mapping of SHA-1 to
+SHA-256 hashes). Of course one way to keep that caching layer up to date
+would be to just calculate the SHA-256 along with the SHA-1 whenever we
+create an object. And then you can sprinkle SHA-256 links in other
+places, too, like commit objects.
+
+And now you are halfway down the road to a combined SHA-1/SHA-256 git.
+:)
+
+The tricky thing is fitting the extra hash into the tree objects. And of
+course the rules for actually generating and/or sending extra objects.
 
 -Peff
-
-[1] As long as it is only crude and not mean. :)
