@@ -1,118 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] add: ignore only ignored files
-Date: Mon, 24 Nov 2014 09:41:00 -0800
-Message-ID: <xmqqzjbgwl77.fsf@gitster.dls.corp.google.com>
-References: <546F5CC7.8060904@drmicha.warpmail.net>
-	<b4834f562679d7ccad683463edc61db5ea962d8d.1416585536.git.git@drmicha.warpmail.net>
-	<20141121180105.GB26650@peff.net> <5470A4C0.3070501@web.de>
-	<20141122191932.GA13340@peff.net>
-	<xmqqvbm5yehk.fsf@gitster.dls.corp.google.com>
-	<20141123194624.GB16605@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH RFC] CYGWIN: avoid implicit declaration warning
+Date: Mon, 24 Nov 2014 09:59:47 -0800
+Message-ID: <20141124175947.GN6527@google.com>
+References: <5471EC26.3040705@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 24 18:41:21 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, ramsay@ramsay1.demon.co.uk
+To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Nov 24 18:59:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsxdO-0004ZJ-Ur
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 18:41:11 +0100
+	id 1XsxvN-0002lK-LF
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 18:59:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753604AbaKXRlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 12:41:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61087 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752662AbaKXRlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 12:41:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3400A21465;
-	Mon, 24 Nov 2014 12:41:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BF9NgT+aFKujfkqdEfdDCXgcVFg=; b=YhepnL
-	eodJjasHtNnWYUUekLa3VAZoLvhQ4lz6fUlBTi1h47pk6GGEzamJgmsz3v7naU/4
-	NmmD3/MEwqD32XedkNdf6wzWNiUGoc00ihAMuoeDyQd0zpgq61R2DsSJmdnxlctd
-	5NlxTyRP09wks1IHF41wjbzNuvWEqVZesv7rM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mzk2G14HB0mItR9YNhc0Er77RvaB3X/r
-	+GoWQljWaIqenRrIQKlADULjKDo9xdVtmILTmiHMZHOSiXddNO6QkTuvMc1eawz5
-	MDmHtK0pg4AhyFr8rttX8KCeEkB1jv/05avk4v/Z4CPSCeobEDObpjulRboZvHTz
-	zWSDQsMppZ4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B2B821464;
-	Mon, 24 Nov 2014 12:41:03 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B0CD21462;
-	Mon, 24 Nov 2014 12:41:02 -0500 (EST)
-In-Reply-To: <20141123194624.GB16605@peff.net> (Jeff King's message of "Sun,
-	23 Nov 2014 14:46:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0F2E4FEA-7401-11E4-9C2E-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754043AbaKXR7m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2014 12:59:42 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:63092 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753449AbaKXR7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 12:59:41 -0500
+Received: by mail-ie0-f177.google.com with SMTP id rd18so9298531iec.22
+        for <git@vger.kernel.org>; Mon, 24 Nov 2014 09:59:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ygO37/AsQw65+GD6I5ldfsI6eG6C2H4r04cMj5uQWPc=;
+        b=IfadLIlXHd7HbwN0vaQ/2IPzeEqPGat8qnSqoGgnra/w9lm8yNfPlNDIJ8AHy6RUgW
+         HWrwjfpWbO9nGkp7iASCndYgIpJLpVhwzBn0YoqtguhzPTZlbP8cpxE/wcaE3rZUoMxC
+         Q2hMO6nLveHf6solKn/wg/xi6gGNJMfBuVXiry1IbBLpeYqyaV3Wh1nMHFxnxm13F1bW
+         GfWgk4rZ3YQh5viqIYwP3zLspbB6O2+IgxVx1PfB7MT5V7R+QC1O5YTnu1VEXtJZnp2t
+         Y+osRHCg70YcfBrVZgkchu6psTMOCduFwsQgGjOmMr48YY16+1H/ZT5+PPXRedJgjLb9
+         Kefw==
+X-Received: by 10.50.56.15 with SMTP id w15mr12901670igp.39.1416851980712;
+        Mon, 24 Nov 2014 09:59:40 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:98f9:2c53:2892:25d0])
+        by mx.google.com with ESMTPSA id h199sm7900471ioh.0.2014.11.24.09.59.39
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 24 Nov 2014 09:59:39 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <5471EC26.3040705@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260133>
 
-Jeff King <peff@peff.net> writes:
+Torsten B=F6gershausen wrote:
 
-> On Sun, Nov 23, 2014 at 10:10:47AM -0800, Junio C Hamano wrote:
+> gcc under cygwin reports several warnings like this:
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > ... Possibly because I do not know that those instructions
->> > are written down anywhere. We usually catch such things in review these
->> > days, but there are many inconsistent spots in the existing suite.
->> 
->> t/README has this
->> 
->>     Don't:
->> 
->>      - use '! git cmd' when you want to make sure the git command exits
->>        with failure in a controlled way by calling "die()".  Instead,
->>        use 'test_must_fail git cmd'.  This will signal a failure if git
->>        dies in an unexpected way (e.g. segfault).
->> 
->>        On the other hand, don't use test_must_fail for running regular
->>        platform commands; just use '! cmd'.
+>  warning: implicit declaration of function 'memmem'
+>   [-Wimplicit-function-declaration]
 >
-> Thanks, I did not actually look and relied on my memory, which was
-> obviously wrong. I agree that the instructions there are sufficient.
+> This has been observed under CYGWIN-32 with GCC 4.7.3 as well
+> as CYGWIN-64 with gcc v4.8.3-5 x86-64
 >
->> Do we refer to t/README from CodingGuidelines where we tell the
->> developers to always write tests to prevent other people from
->> breaking tomorrow what you did today?  If not, perhaps that is what
->> needs to be added.
+> Do not #define _XOPEN_SOURCE 600 for CYGWIN.
 >
-> That might make sense. It might also be that Torsten simply overlooked
-> it when asking his question (i.e., there is nothing to fix,
-> documentation is not always read completely, and we can move on).
+> Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> Signed-off-by: Torsten B=F6gershausen <tboegi@web.de>
+> ---
+> This may be a start for a patch, tested under CYGWIN-32,
+> both Windows7 and XP
 
-We actually do not have a reference to it anywhere.  For now, this
-should suffice.
+The "tested under" part would also be a good addition to the commit
+message.
 
- Documentation/SubmittingPatches | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+>  git-compat-util.h | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index fa71b5f..a3861a6 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -57,7 +57,8 @@ change, the approach taken by the change, and if relevant how this
- differs substantially from the prior version, are all good things
- to have.
- 
--Make sure that you have tests for the bug you are fixing.
-+Make sure that you have tests for the bug you are fixing.  See
-+t/README for guidance of writing tests.
- 
- When adding a new feature, make sure that you have new tests to show
- the feature triggers the new behaviour when it should, and to show the
+Patch looks good to me.  Do you know if this has been reported to the
+Cygwin maintainers?  The behavior seems counterintuitive --- I would
+expect _GNU_SOURCE to override everything else (since I thought that
+was the point of _GNU_SOURCE).
+
+Thanks,
+Jonathan
