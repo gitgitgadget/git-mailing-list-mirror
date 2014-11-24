@@ -1,64 +1,58 @@
-From: Alex Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH] exec_cmd: system_path memory leak fix
-Date: Mon, 24 Nov 2014 20:00:40 +0600
-Message-ID: <87mw7gae8k.fsf@gmail.com>
-References: <1416750981-24446-1-git-send-email-kuleshovmail@gmail.com> <1416750981-24446-2-git-send-email-kuleshovmail@gmail.com> <xmqqioi5ycme.fsf@gitster.dls.corp.google.com> <87sih9en65.fsf@gmail.com> <xmqq7fyly3xj.fsf@gitster.dls.corp.google.com> <87mw7haxdp.fsf@gmail.com> <CAPc5daWnJCGPTMA0Hyg8QEAmsnF17ZQ9njGq8xVaUAfuwCRQDA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+From: 0xAX <kuleshovmail@gmail.com>
+Subject: [PATCH] change contract between system_path and it's callers
+Date: Mon, 24 Nov 2014 20:07:43 +0600
+Message-ID: <1416838063-16797-1-git-send-email-kuleshovmail@gmail.com>
+References: <87mw7gae8k.fsf@gmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
+	Eric Sunshine <sunshine@sunshineco.com>,
+	0xAX <kuleshovmail@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 24 15:02:36 2014
+X-From: git-owner@vger.kernel.org Mon Nov 24 15:08:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsuDq-0000ko-Pz
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 15:02:35 +0100
+	id 1XsuJ7-0005Og-Pu
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 15:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753657AbaKXOC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 09:02:29 -0500
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:45556 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753627AbaKXOC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 09:02:26 -0500
-Received: by mail-lb0-f172.google.com with SMTP id u10so7418595lbd.31
-        for <git@vger.kernel.org>; Mon, 24 Nov 2014 06:02:24 -0800 (PST)
+	id S1753443AbaKXOH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 09:07:58 -0500
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:42007 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751005AbaKXOH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 09:07:57 -0500
+Received: by mail-lb0-f181.google.com with SMTP id 10so2646307lbg.26
+        for <git@vger.kernel.org>; Mon, 24 Nov 2014 06:07:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=references:from:to:cc:subject:date:in-reply-to:message-id
-         :mime-version:content-type;
-        bh=wdbhoFusu/T5ZrM9OzL9aEbC6yE8de7RKFmacB3J0OI=;
-        b=I1d7mmqQLaWqvtWtzlnIycbdkp/eoSrcyROtvea7wPkwx+w2vZ/4hwFA2air0RiEwb
-         cMiuXzMOr4UCK8lUKxbPPBOlcHpk0v7+q9L0IRLVmK4gCdAJV82UCSA1eb5xW4s2YQBr
-         Gz2IbaXcKMcC9HDKkpVVWmYRN4vRHLaxA8fNhraTMEqRhX3T8jA04IiFOBT1USkPKra1
-         RpgHdFsAlbv6SfsG89nJ/ql4BTFXIPoJektxo15ENNz68yA3yOBf/0AKgcOvC1+hg3V5
-         82qNLVd6jd+muFAxgUeZmuPW4tgOkmuITBC8FHRNep5Y3CHtXIpnGwkeWHliDE/yrFdh
-         YvKA==
-X-Received: by 10.112.38.4 with SMTP id c4mr4914623lbk.46.1416837744431;
-        Mon, 24 Nov 2014 06:02:24 -0800 (PST)
-Received: from alex-desktop ([95.59.100.64])
-        by mx.google.com with ESMTPSA id vr7sm3564704lbb.21.2014.11.24.06.02.21
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=asdf9rTnwe2czlY0kEovJnpchufK+Ljtn3mQxFjU0AY=;
+        b=NM6zmy2Ml+q2CF++iemeuRvwxHdILOwE9ZIJTwJLruY3/E/BXfgnpyg39vfmd7Vr3P
+         z8QD9d/B3ujdMytddwy0keiLVTo8BcGDwkVi1owIzU5Wa2XGziAcWc5Nk0nj2RtYJ/qC
+         N6/inQclpx+3MNXGI3SUaVh3+qWbVoQ0luezRMaXfm4P+G6kzlLesUmbK9BJG+aUgYAO
+         hnqghKRTaXEojf4pknAPBsiLS26AGX2ZzUh4H86kFCjUZtoasAC868w39YoD/ya4VVar
+         jUbKfuIhtaGei715HhW0kmBF7adGYG6Kmra5Bk6V6S9k1tXbs5BgnqgzfxGTrym7GCho
+         YvCw==
+X-Received: by 10.112.199.40 with SMTP id jh8mr20831841lbc.5.1416838073266;
+        Mon, 24 Nov 2014 06:07:53 -0800 (PST)
+Received: from localhost.localdomain ([95.59.100.64])
+        by mx.google.com with ESMTPSA id b4sm3568333lbp.17.2014.11.24.06.07.50
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Nov 2014 06:02:23 -0800 (PST)
-In-reply-to: <CAPc5daWnJCGPTMA0Hyg8QEAmsnF17ZQ9njGq8xVaUAfuwCRQDA@mail.gmail.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 24 Nov 2014 06:07:52 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.rc3.191.g70a3888.dirty
+In-Reply-To: <87mw7gae8k.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260126>
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260127>
 
 Now system_path returns path which is allocated string to callers;
 It prevents memory leaks in some places. All callers of system_path
 are owners of path string and they must release it.
-
-Added new parameter to wrapper.c/int access_or_die - etc_config, because
-only etc_config in this case use system_path and we don't know do we
-need to free path or not.
 
 Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 ---
@@ -82,7 +76,7 @@ index cd54697..f96ddb4 100644
 @@ -462,9 +462,9 @@ static void drop_attr_stack(void)
  	}
  }
-
+ 
 -static const char *git_etc_gitattributes(void)
 +static char *git_etc_gitattributes(void)
  {
@@ -93,7 +87,7 @@ index cd54697..f96ddb4 100644
  	return system_wide;
 @@ -489,7 +489,9 @@ static void bootstrap_attr_stack(void)
  	attr_stack = elem;
-
+ 
  	if (git_attr_system()) {
 -		elem = read_attr_from_file(git_etc_gitattributes(), 1);
 +		char *etc_attributes = git_etc_gitattributes();
@@ -251,11 +245,11 @@ index b3c818e..20ffbb1 100644
  		strbuf_addstr(&new_path, old_path);
 @@ -334,6 +335,7 @@ static void setup_man_path(void)
  	setenv("MANPATH", new_path.buf, 1);
-
+ 
  	strbuf_release(&new_path);
 +	free(git_man_path);
  }
-
+ 
  static void exec_viewer(const char *name, const char *page)
 @@ -372,22 +374,25 @@ static void show_man_page(const char *git_cmd)
  static void show_info_page(const char *git_cmd)
@@ -268,14 +262,14 @@ index b3c818e..20ffbb1 100644
  	execlp("info", "info", "gitman", page, (char *)NULL);
  	die(_("no info viewer handled the request"));
  }
-
+ 
 -static void get_html_page_path(struct strbuf *page_path, const char *page)
 +static void get_html_page_path(struct strbuf *page_path, const char *page, char *html_path)
  {
  	struct stat st;
 -	if (!html_path)
 -		html_path = system_path(GIT_HTML_PATH);
-
+ 
  	/* Check that we have a git documentation directory. */
  	if (!strstr(html_path, "://")) {
  		if (stat(mkpath("%s/git.html", html_path), &st)
@@ -287,7 +281,7 @@ index b3c818e..20ffbb1 100644
 +			exit(1);
 +		}
  	}
-
+ 
  	strbuf_init(page_path, 0);
 @@ -400,9 +405,10 @@ static void get_html_page_path(struct strbuf *page_path, const char *page)
   * HTML.
@@ -300,7 +294,7 @@ index b3c818e..20ffbb1 100644
 +	free(path);
  }
  #endif
-
+ 
 @@ -410,8 +416,12 @@ static void show_html_page(const char *git_cmd)
  {
  	const char *page = cmd_to_page(git_cmd);
@@ -309,14 +303,14 @@ index b3c818e..20ffbb1 100644
 +
 +	if (!html_path)
 +		html_path = system_path(GIT_HTML_PATH);
-
+ 
 -	get_html_page_path(&page_path, page);
 +	get_html_page_path(&page_path, page, html_path);
-
+ 
  	open_html(page_path.buf);
  }
 @@ -512,3 +522,5 @@ int cmd_help(int argc, const char **argv, const char *prefix)
-
+ 
  	return 0;
  }
 +
@@ -352,7 +346,7 @@ index 2619ca5..6f36f3f 100644
 +		free((char*)template_dir);
  		return;
  	}
-
+ 
 @@ -155,6 +162,7 @@ static void copy_templates(const char *template_dir)
  			"a wrong format version %d from '%s'"),
  			repository_format_version,
@@ -366,14 +360,14 @@ index 1b05115..7048e7a 100644
 --- a/cache.h
 +++ b/cache.h
 @@ -1354,7 +1354,7 @@ extern int update_server_info(int);
-
+ 
  struct git_config_source {
  	unsigned int use_stdin:1;
 -	const char *file;
 +	char *file;
  	const char *blob;
  };
-
+ 
 @@ -1386,7 +1386,7 @@ extern int git_config_set_multivar(const char *, const char *, const char *, int
  extern int git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
  extern int git_config_rename_section(const char *, const char *);
@@ -390,7 +384,7 @@ index ae1398f..b71c0fb 100644
 @@ -122,7 +122,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
  		path = buf.buf;
  	}
-
+ 
 -	if (!access_or_die(path, R_OK, 0)) {
 +	if (!access_or_die(path, R_OK, 0, 0)) {
  		if (++inc->depth > MAX_INCLUDE_DEPTH)
@@ -399,7 +393,7 @@ index ae1398f..b71c0fb 100644
 @@ -1132,9 +1132,9 @@ static int git_config_from_blob_ref(config_fn_t fn,
  	return git_config_from_blob_sha1(fn, name, sha1, data);
  }
-
+ 
 -const char *git_etc_gitconfig(void)
 +char *git_etc_gitconfig(void)
  {
@@ -413,9 +407,9 @@ index ae1398f..b71c0fb 100644
  	char *xdg_config = NULL;
  	char *user_config = NULL;
 +	char *git_etc_config = git_etc_gitconfig();
-
+ 
  	home_config_paths(&user_config, &xdg_config, "config");
-
+ 
 -	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
 -		ret += git_config_from_file(fn, git_etc_gitconfig(),
 -					    data);
@@ -424,19 +418,19 @@ index ae1398f..b71c0fb 100644
  		found += 1;
 +		free(git_etc_config);
  	}
-
+ 
 -	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK)) {
 +	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK, 0)) {
  		ret += git_config_from_file(fn, xdg_config, data);
  		found += 1;
  	}
-
+ 
 -	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK)) {
 +	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK, 0)) {
  		ret += git_config_from_file(fn, user_config, data);
  		found += 1;
  	}
-
+ 
 -	if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
 +	if (repo_config && !access_or_die(repo_config, R_OK, 0, 0)) {
  		ret += git_config_from_file(fn, repo_config, data);
@@ -449,7 +443,7 @@ index 698e752..d35ecac 100644
 @@ -6,7 +6,7 @@
  static const char *argv_exec_path;
  static const char *argv0_path;
-
+ 
 -const char *system_path(const char *path)
 +char *system_path(const char *path)
  {
@@ -457,70 +451,70 @@ index 698e752..d35ecac 100644
  	static const char *prefix;
 @@ -16,7 +16,7 @@ const char *system_path(const char *path)
  	struct strbuf d = STRBUF_INIT;
-
+ 
  	if (is_absolute_path(path))
 -		return path;
 +		return strdup(path);
-
+ 
  #ifdef RUNTIME_PREFIX
  	assert(argv0_path);
 @@ -34,8 +34,7 @@ const char *system_path(const char *path)
  #endif
-
+ 
  	strbuf_addf(&d, "%s/%s", prefix, path);
 -	path = strbuf_detach(&d, NULL);
 -	return path;
 +	return d.buf;
  }
-
+ 
  const char *git_extract_argv0_path(const char *argv0)
 @@ -68,17 +67,16 @@ void git_set_argv_exec_path(const char *exec_path)
-
-
+ 
+ 
  /* Returns the highest-priority, location to look for git programs. */
 -const char *git_exec_path(void)
 +char *git_exec_path(void)
  {
 -	const char *env;
 +	char *env;
-
+ 
  	if (argv_exec_path)
 -		return argv_exec_path;
 +		return strdup(argv_exec_path);
-
+ 
  	env = getenv(EXEC_PATH_ENVIRONMENT);
 -	if (env && *env) {
 -		return env;
 -	}
 +	if (env && *env)
 +		return strdup(env);
-
+ 
  	return system_path(GIT_EXEC_PATH);
  }
 @@ -96,7 +94,8 @@ void setup_path(void)
  	const char *old_path = getenv("PATH");
  	struct strbuf new_path = STRBUF_INIT;
-
+ 
 -	add_path(&new_path, git_exec_path());
 +	char *exec_path = git_exec_path();
 +	add_path(&new_path, exec_path);
  	add_path(&new_path, argv0_path);
-
+ 
  	if (old_path)
 @@ -107,6 +106,7 @@ void setup_path(void)
  	setenv("PATH", new_path.buf, 1);
-
+ 
  	strbuf_release(&new_path);
 +	free(exec_path);
  }
-
+ 
  const char **prepare_git_cmd(const char **argv)
 diff --git a/exec_cmd.h b/exec_cmd.h
 index e4c9702..03c8599 100644
 --- a/exec_cmd.h
 +++ b/exec_cmd.h
 @@ -3,12 +3,12 @@
-
+ 
  extern void git_set_argv_exec_path(const char *exec_path);
  extern const char *git_extract_argv0_path(const char *path);
 -extern const char *git_exec_path(void);
@@ -532,7 +526,7 @@ index e4c9702..03c8599 100644
  extern int execl_git_cmd(const char *cmd, ...);
 -extern const char *system_path(const char *path);
 +extern char *system_path(const char *path);
-
+ 
  #endif /* GIT_EXEC_CMD_H */
 diff --git a/git-compat-util.h b/git-compat-util.h
 index 400e921..fcc88db 100644
@@ -544,7 +538,7 @@ index 400e921..fcc88db 100644
  int access_or_warn(const char *path, int mode, unsigned flag);
 -int access_or_die(const char *path, int mode, unsigned flag);
 +int access_or_die(const char *path, int mode, unsigned flag, unsigned etc_config);
-
+ 
  /* Warn on an inaccessible file that ought to be accessible */
  void warn_on_inaccessible(const char *path);
 diff --git a/git.c b/git.c
@@ -588,7 +582,7 @@ index 007ec0d..f97adbc 100644
 @@ -523,11 +523,14 @@ int access_or_warn(const char *path, int mode, unsigned flag)
  	return ret;
  }
-
+ 
 -int access_or_die(const char *path, int mode, unsigned flag)
 +int access_or_die(const char *path, int mode, unsigned flag, unsigned etc_config)
  {
@@ -601,6 +595,6 @@ index 007ec0d..f97adbc 100644
 +	}
  	return ret;
  }
-
---
+ 
+-- 
 2.2.0.rc3.191.g70a3888.dirty
