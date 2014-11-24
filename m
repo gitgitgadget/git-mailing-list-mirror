@@ -1,65 +1,183 @@
-From: Nico Williams <nico@cryptonector.com>
-Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow safer?
-Date: Mon, 24 Nov 2014 12:14:34 -0600
-Message-ID: <CAK3OfOgko5Fb5FMGCKw3+12fAzMVEHuUriaiBNGi8nb28bNTQA@mail.gmail.com>
-References: <5468C33E.2080108@whonix.org>
-	<20141117212657.GC15880@peff.net>
+From: =?utf-8?B?0KDQvtC80LDQvSDQlNC+0L3Rh9C10L3QutC+?= 
+	<dpb@corrigendum.ru>
+Subject: Re: [PATCH] send-email: handle adjacent RFC 2047-encoded words
+ properly
+Date: Mon, 24 Nov 2014 21:26:22 +0300
+Message-ID: <op.xpudh8c3nngjn5@freezie>
+References: <1416786604-4988-1-git-send-email-dpb@corrigendum.ru>
+ <20141124153609.GA25912@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 24 19:14:44 2014
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+	=?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjar?= =?utf-8?Q?mason?= 
+	<avarab@gmail.com>, "Jay Soffian" <jaysoffian@gmail.com>,
+	"Thomas Rast" <tr@thomasrast.ch>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 24 19:26:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xsy9p-0005v3-2n
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 19:14:41 +0100
+	id 1XsyLI-0007dB-Kh
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 19:26:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbaKXSOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 13:14:37 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:47572 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753170AbaKXSOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 13:14:36 -0500
-Received: from homiemail-a55.g.dreamhost.com (sub4.mail.dreamhost.com [69.163.253.135])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 5018A8762C
-	for <git@vger.kernel.org>; Mon, 24 Nov 2014 10:14:36 -0800 (PST)
-Received: from homiemail-a55.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a55.g.dreamhost.com (Postfix) with ESMTP id E2C70E0B
-	for <git@vger.kernel.org>; Mon, 24 Nov 2014 10:14:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
-	mime-version:in-reply-to:references:date:message-id:subject:from
-	:to:content-type; s=cryptonector.com; bh=lEplofg9+OrnJ2NlDixQz7u
-	q5Vk=; b=AzT4HpxVbRmwQkyt/YIZ67W8ftWsDJp/sI16ZQaZUwe2lvWxduJvn6H
-	22Ci2YRtmpA3ymHvxE6B40ek8QQ1pXGaVLahioYPSOW5+bQVwFRofPSfKZhdxzr/
-	LYSTSIKxYpzKakpRNVy/lBt4GgjpTgYviMreFnJ+p2J4RgM8TtZg=
-Received: from mail-wg0-f48.google.com (mail-wg0-f48.google.com [74.125.82.48])
-	(using TLSv1 with cipher ECDHE-RSA-RC4-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by homiemail-a55.g.dreamhost.com (Postfix) with ESMTPSA id B8096E10
-	for <git@vger.kernel.org>; Mon, 24 Nov 2014 10:14:35 -0800 (PST)
-Received: by mail-wg0-f48.google.com with SMTP id y19so13025713wgg.7
-        for <git@vger.kernel.org>; Mon, 24 Nov 2014 10:14:34 -0800 (PST)
-X-Received: by 10.195.11.68 with SMTP id eg4mr35377118wjd.18.1416852874882;
- Mon, 24 Nov 2014 10:14:34 -0800 (PST)
-Received: by 10.216.32.136 with HTTP; Mon, 24 Nov 2014 10:14:34 -0800 (PST)
-In-Reply-To: <20141117212657.GC15880@peff.net>
+	id S1753598AbaKXS02 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2014 13:26:28 -0500
+Received: from forward9l.mail.yandex.net ([84.201.143.142]:34212 "EHLO
+	forward9l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751537AbaKXS01 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Nov 2014 13:26:27 -0500
+Received: from smtp2m.mail.yandex.net (smtp2m.mail.yandex.net [77.88.61.129])
+	by forward9l.mail.yandex.net (Yandex) with ESMTP id 20D52E610C9;
+	Mon, 24 Nov 2014 21:26:24 +0300 (MSK)
+Received: from smtp2m.mail.yandex.net (localhost [127.0.0.1])
+	by smtp2m.mail.yandex.net (Yandex) with ESMTP id 55E934208B9;
+	Mon, 24 Nov 2014 21:26:23 +0300 (MSK)
+Received: from cs7-mts-1-124.dialup.mts-nn.ru (cs7-mts-1-124.dialup.mts-nn.ru [82.208.71.124])
+	by smtp2m.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id i2S17R8nAN-QMauC98n;
+	Mon, 24 Nov 2014 21:26:22 +0300
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(Client certificate not present)
+X-Yandex-Uniq: d832ac02-4e78-4b40-8d42-34912e4a4479
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
+	t=1416853582; bh=2cyqjyARzZNkUvGOHyRQ/9eJUeKlWxpe1qOiEjUDjwE=;
+	h=Content-Type:To:Cc:Subject:References:Date:MIME-Version:
+	 Content-Transfer-Encoding:From:Message-ID:In-Reply-To:User-Agent;
+	b=z/+ePKy31nUXei2knHhRrMOjvQyk+kvDHZsvQdDNkB7ekUCR2QsPlM2JqiQ+yvVFe
+	 UBAKh6yEi2Z8EIa2KdrVQAdgC+uf1zw/a3uLYbnIJxs/aw6Vd+0QIEPGRvGux4+H++
+	 aMN3mgjf1SVNQGx4FrNO+H6A2knISflDJMJDgeuE=
+Authentication-Results: smtp2m.mail.yandex.net; dkim=pass header.i=@corrigendum.ru
+In-Reply-To: <20141124153609.GA25912@peff.net>
+User-Agent: Opera Mail/12.17 (Win64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260136>
 
-Is there a plan for upgrading to a better hash function in the future?
- (E.g., should it become an urgent need.)
+Jeff King <peff@peff.net> =D0=BF=D0=B8=D1=81=D0=B0=D0=BB =D0=B2 =D1=81=D0=
+=B2=D0=BE=D1=91=D0=BC =D0=BF=D0=B8=D1=81=D1=8C=D0=BC=D0=B5 Mon, 24 Nov =
+2014 18:36:09 =20
++0300:
 
-What are the roadblocks to adoption of a replacement hash function?
-Just documenting this would go a long way towards making it possible
-to upgrade some day.
+> On Mon, Nov 24, 2014 at 02:50:04AM +0300, =D0=A0=D0=BE=D0=BC=D0=B0=D0=
+=BD =D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE wrote:
+>
+>> The RFC says that they are to be concatenated after decoding (i.e. t=
+he
+>> intervening whitespace is ignored).
+>>
+>> I change the sender's name to an all-Cyrillic string in the tests so=
+ =20
+>> that
+>> its encoded form goes over the 76 characters in a line limit, forcin=
+g
+>> format-patch to split it into multiple encoded words.
+>>
+>> Since I have to modify the regular expression for an encoded word =20
+>> anyway,
+>> I take the opportunity to bring it closer to the spec, most notably
+>> disallowing embedded spaces and making it case-insensitive (thus =20
+>> allowing
+>> the encoding to be specified as both "q" and "Q").
+>
+> The overall goal makes sense to me. Thanks for working on this. I hav=
+e a
+> few questions/comments, though.
+>
+>>  sub unquote_rfc2047 {
+>>  	local ($_) =3D @_;
+>> +
+>> +	my $et =3D qr/[!->@-~]+/; # encoded-text from RFC 2047
+>> +	my $sep =3D qr/[ \t]+/;
+>> +	my $encoded_word =3D qr/=3D\?($et)\?q\?($et)\?=3D/i;
+>
+> The first $et in $encoded_word is actually the charset, which is defi=
+ned
+> by RFC 2047 as:
+>
+>      charset =3D token    ; see section 3
+>
+>      token =3D 1*<Any CHAR except SPACE, CTLs, and especials>
+>
+>      especials =3D "(" / ")" / "<" / ">" / "@" / "," / ";" / ":" / "
+> 	               <"> / "/" / "[" / "]" / "?" / "." / "=3D"
+>
+> Your regex is a little more liberal. I doubt that it is a big deal in
+> practice (actually, in practice, I suspect [a-zA-Z0-9-] would be fine=
+).
+> But if we are tightening things up in general, it may make sense to d=
+o
+> so here (and I notice that is_rfc2047_quoted does a more thorough $to=
+ken
+> definition, and it probably makes sense for the two functions to be
+> consistent).
 
-Thanks,
+Yeah, I did realize that token is more restrictive than encoded-text, b=
+ut =20
+I didn't want to stray too far from the subject line of the patch. What=
+ =20
+I'll probably do is split the patch into two, one for regex tweaking an=
+d =20
+one for multiple-word handling. And yeah, I'll try to make the two =20
+functions use the same regexes.
 
-Nico
---
+>
+> For your definition of encoded-text, RFC 2047 says:
+>
+>      encoded-text =3D 1*<Any printable ASCII character other than "?"
+>                           or SPACE>
+>
+> It looks like you pulled the definition of $et from is_rfc2047_quoted=
+,
+> but I am not clear on where that original came from (it is from a3a82=
+62,
+> but that commit message does not explain the regex).
+
+No, it's actually an independent discovery. :-) I don't think it needs =
+=20
+explanation, though - it's just a character class with two ranges cover=
+ing =20
+every printable character but the question mark.
+
+> Also, I note that we handle 'q'-style encodings here, but not 'b'. I
+> wonder if it is worth adding that in while we are in the area (it is =
+not
+> a big deal if you always send-email git-generated patches, as we neve=
+r
+> generate it).
+
+I could add "b" decoding, but since format-patch never generates "b" =20
+encodings, testing would be a problem. And I'd rather not do it without=
+ =20
+any tests.
+
+>
+>> +	s{$encoded_word(?:$sep$encoded_word)+}{
+>
+> If I am reading this right, it requires at least two $encoded_words.
+> Should this "+" be a "*"?
+
+I hang my head in shame. Looks like I'll have to add more tests...
+
+>
+>> +		my @words =3D split $sep, $&;
+>> +		foreach (@words) {
+>> +			m/$encoded_word/;
+>> +			$encoding =3D $1;
+>> +			$_ =3D $2;
+>> +			s/_/ /g;
+>> +			s/=3D([0-9A-F]{2})/chr(hex($1))/eg;
+>
+> In the spirit of your earlier change, should this final regex be
+> case-insensitive? RFC 2047 says only "Upper case should be used for
+> hexadecimal digits "A" through "F." but that does not seem like a "MU=
+ST"
+> to me.
+
+Sounds reasonable.
+
+Roman.
