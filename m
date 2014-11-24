@@ -1,115 +1,115 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [PATCHv2] add: ignore only ignored files
-Date: Mon, 24 Nov 2014 11:23:49 +0100
-Message-ID: <54730735.1080500@drmicha.warpmail.net>
-References: <546F5CC7.8060904@drmicha.warpmail.net> <b4834f562679d7ccad683463edc61db5ea962d8d.1416585536.git.git@drmicha.warpmail.net> <20141121180105.GB26650@peff.net>
+Date: Mon, 24 Nov 2014 11:29:43 +0100
+Message-ID: <54730897.3000507@drmicha.warpmail.net>
+References: <546F5CC7.8060904@drmicha.warpmail.net> <b4834f562679d7ccad683463edc61db5ea962d8d.1416585536.git.git@drmicha.warpmail.net> <20141121180105.GB26650@peff.net> <5470A4C0.3070501@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Nov 24 11:23:58 2014
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 24 11:29:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsqoG-0002sD-QI
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 11:23:57 +0100
+	id 1Xsqtx-0007Ul-UR
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 11:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752943AbaKXKXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 05:23:53 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:59118 "EHLO
+	id S1753207AbaKXK3q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2014 05:29:46 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:59316 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751227AbaKXKXw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Nov 2014 05:23:52 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 23220205EF
-	for <git@vger.kernel.org>; Mon, 24 Nov 2014 05:23:52 -0500 (EST)
+	by vger.kernel.org with ESMTP id S1751033AbaKXK3p (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Nov 2014 05:29:45 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 51A8F20795
+	for <git@vger.kernel.org>; Mon, 24 Nov 2014 05:29:45 -0500 (EST)
 Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Mon, 24 Nov 2014 05:23:52 -0500
+  by compute3.internal (MEProxy); Mon, 24 Nov 2014 05:29:45 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=x-sasl-enc:message-id:date:from
 	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=isdwo9JrOmMhiuv2wS6daU
-	PW+oI=; b=dWuxupOtq2hK/bLGR93eYhvoVTWvNkiEzZrJOLValWy72Ubz/Nwz+R
-	agS1GIUCS1VNIqVj256fxTwvuGt/QxYAYHZ+q7E1ib/n/fZSyRBRpFo2l3xCfLiZ
-	1G1C7ojzfeFO79ACzcG3N3HrHZcBLE/CjkbUmXYTiws0tZhm0/cQs=
-X-Sasl-enc: hOCDLKwADBwm0Tp5pIzqvbLGbwBgLZzmkZqjUuWbUVRD 1416824631
+	:content-transfer-encoding; s=smtpout; bh=tle3qA9XbhcovPAOhnnSSz
+	EQSfc=; b=cfhd+nxFZo3YtrdWXb74pWrDzNi9hytVufmMIhGxI2jnldJs/MpgmW
+	O5AfLpgXtiqmc6RceUcGNenkWzu0joYALK374O1ivM0cuVu+qwMIkKlQF3bKt5AO
+	CgJf/LgqC6ubYkvLcbvTObCXnIGARrTY4BwCan0u3phvQjelOnTCs=
+X-Sasl-enc: rP/QfewE/VdxU6XdY1BmOAv+EkFhXDOsXJXBCiF/DNEr 1416824985
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 614D8680116;
-	Mon, 24 Nov 2014 05:23:51 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 926056800BB;
+	Mon, 24 Nov 2014 05:29:44 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20141121180105.GB26650@peff.net>
+In-Reply-To: <5470A4C0.3070501@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260121>
 
-Jeff King schrieb am 21.11.2014 um 19:01:
-> On Fri, Nov 21, 2014 at 05:08:19PM +0100, Michael J Gruber wrote:
-> 
->> "git add foo bar" adds neither foo nor bar when bar is ignored, but dies
->> to let the user recheck their command invocation. This becomes less
->> helpful when "git add foo.*" is subject to shell expansion and some of
->> the expanded files are ignored.
+Torsten B=C3=B6gershausen schrieb am 22.11.2014 um 15:59:
+>>> +test_expect_success 'error out when attempting to add ignored ones=
+ but add others' '
+>>> +	touch a.if &&
+>>> +	test_must_fail git add a.?? &&
+>>> +	! (git ls-files | grep "\\.ig") &&
+>>> +	(git ls-files | grep a.if)
+>>> +'
 >>
->> "git add --ignore-errors" is supposed to ignore errors when indexing
->> some files and adds the others. It does ignore errors from actual
->> indexing attempts, but does not ignore the error "file is ignored" as
->> outlined above. This is unexpected.
+>> I am somewhat allergic to pipes in our test suite, because they can =
+mask
+>> errors (especially with a negated grep, because we do not know if th=
+ey
+>> correctly produced any output at all). But I guess this is matching =
+the
+>> surrounding code, and it is quite unlikely for `ls-files` to fail in=
+ any
+>> meaningful way here. So I think it's fine.
 >>
->> Change "git add foo bar" to add foo when bar is ignored, but issue
->> a warning and return a failure code as before the change.
->>
->> That is, in the case of trying to add ignored files we now act the same
->> way (with or without "--ignore-errors") in which we act for more
->> severe indexing errors when "--ignore-errors" is specified.
-> 
-> Thanks, this looks pretty good to me. I agree with Junio's sense that we
-> should cook it extra long to give people time to react.
-> 
->> My sincere thanks go out to Jeff without whom I could not possibly
->> have come up with a patch like this :)
-> 
-> :) Sorry if I was being obnoxious before. Sometimes contributors need a
-> gentle push to keep going, but I should know by now that you are not
-> such a person.
+>> -Peff
+>=20
+> 2 small comments:
+> Why the escaped "\\.ig" and the unescaped "a.if"  ?
 
-We were just having fun with each other ;)
+Well, the first one is copied straight from another test and the second
+one is by me. ;)
 
->> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
->> index fe274e2..f7ff1f5 100755
->> --- a/t/t3700-add.sh
->> +++ b/t/t3700-add.sh
->> @@ -91,6 +91,13 @@ test_expect_success 'error out when attempting to add ignored ones without -f' '
->>  	! (git ls-files | grep "\\.ig")
->>  '
->>  
->> +test_expect_success 'error out when attempting to add ignored ones but add others' '
->> +	touch a.if &&
->> +	test_must_fail git add a.?? &&
->> +	! (git ls-files | grep "\\.ig") &&
->> +	(git ls-files | grep a.if)
->> +'
-> 
-> I am somewhat allergic to pipes in our test suite, because they can mask
-> errors (especially with a negated grep, because we do not know if they
-> correctly produced any output at all). But I guess this is matching the
-> surrounding code, and it is quite unlikely for `ls-files` to fail in any
-> meaningful way here. So I think it's fine.
-> 
-> -Peff
-> 
+I want to test that no files ending in .ig are added, but that one file
+a.if is added. Knowing how the test is structured, it is higly unlikely
+that other people will add a file where the dot in a.if matches
+something other than a dot, but in the case of .ig I wouldn't be so
+sure. We could take the extra safety measure and quote "a\\.if" also,
+but to me that seems to make the test less readable.
 
-I do prefer test_cmp myself, also because it tells you much more in case
-of a broken test - a failed boolean chain doesn't even tell you where it
-broke.
+> The other question, this is a more general one, strikes me every time=
+ I see
+> ! grep
+>=20
+> Should we avoid it by writing "test_must_fail" instead of "!" ?
+> (The current code base has a mixture of both)
+>=20
+> The following came into my mind when working on another grepy thing,
+> and it may be unnecessary clumsy:
+>=20
+> test_expect_success 'error out when attempting to add ignored ones bu=
+t add others' '
+> 	touch a.if &&
+> 	test_must_fail git add a.?? &&
+> 	git ls-files >files.txt &&
+> 	test_must_fail grep a.ig files.txt >/dev/null &&
+> 	grep a.if files.txt >/dev/null &&
+> 	rm files.txt
+> '
+>=20
+> (It feels as if there should be a "grepnot" ;-)
+>=20
 
-In this specific case, many more tests would need to be rewriten,
-though, so I preferred to keep the style of the surrounding code.
+I guess that was clarified in the ongoing discussion.
+
+> The 3rd comment:
+> Thanks for taking this up!
+
+Just scratching my own itches mostly these days :)
 
 Michael
