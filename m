@@ -1,600 +1,130 @@
-From: 0xAX <kuleshovmail@gmail.com>
-Subject: [PATCH] change contract between system_path and it's callers
-Date: Mon, 24 Nov 2014 20:07:43 +0600
-Message-ID: <1416838063-16797-1-git-send-email-kuleshovmail@gmail.com>
-References: <87mw7gae8k.fsf@gmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	0xAX <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 24 15:08:04 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] send-email: handle adjacent RFC 2047-encoded words
+ properly
+Date: Mon, 24 Nov 2014 10:36:09 -0500
+Message-ID: <20141124153609.GA25912@peff.net>
+References: <1416786604-4988-1-git-send-email-dpb@corrigendum.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Thomas Rast <tr@thomasrast.ch>
+To: =?utf-8?B?0KDQvtC80LDQvSDQlNC+0L3Rh9C10L3QutC+?= 
+	<dpb@corrigendum.ru>
+X-From: git-owner@vger.kernel.org Mon Nov 24 16:36:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XsuJ7-0005Og-Pu
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 15:08:02 +0100
+	id 1XsvgX-0003Ef-5K
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 16:36:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443AbaKXOH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 09:07:58 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:42007 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005AbaKXOH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 09:07:57 -0500
-Received: by mail-lb0-f181.google.com with SMTP id 10so2646307lbg.26
-        for <git@vger.kernel.org>; Mon, 24 Nov 2014 06:07:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=asdf9rTnwe2czlY0kEovJnpchufK+Ljtn3mQxFjU0AY=;
-        b=NM6zmy2Ml+q2CF++iemeuRvwxHdILOwE9ZIJTwJLruY3/E/BXfgnpyg39vfmd7Vr3P
-         z8QD9d/B3ujdMytddwy0keiLVTo8BcGDwkVi1owIzU5Wa2XGziAcWc5Nk0nj2RtYJ/qC
-         N6/inQclpx+3MNXGI3SUaVh3+qWbVoQ0luezRMaXfm4P+G6kzlLesUmbK9BJG+aUgYAO
-         hnqghKRTaXEojf4pknAPBsiLS26AGX2ZzUh4H86kFCjUZtoasAC868w39YoD/ya4VVar
-         jUbKfuIhtaGei715HhW0kmBF7adGYG6Kmra5Bk6V6S9k1tXbs5BgnqgzfxGTrym7GCho
-         YvCw==
-X-Received: by 10.112.199.40 with SMTP id jh8mr20831841lbc.5.1416838073266;
-        Mon, 24 Nov 2014 06:07:53 -0800 (PST)
-Received: from localhost.localdomain ([95.59.100.64])
-        by mx.google.com with ESMTPSA id b4sm3568333lbp.17.2014.11.24.06.07.50
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 24 Nov 2014 06:07:52 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc3.191.g70a3888.dirty
-In-Reply-To: <87mw7gae8k.fsf@gmail.com>
+	id S1753458AbaKXPgN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2014 10:36:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44061 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752589AbaKXPgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 10:36:12 -0500
+Received: (qmail 28262 invoked by uid 102); 24 Nov 2014 15:36:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 09:36:11 -0600
+Received: (qmail 17207 invoked by uid 107); 24 Nov 2014 15:36:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 10:36:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Nov 2014 10:36:09 -0500
+Content-Disposition: inline
+In-Reply-To: <1416786604-4988-1-git-send-email-dpb@corrigendum.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260128>
 
-Now system_path returns path which is allocated string to callers;
-It prevents memory leaks in some places. All callers of system_path
-are owners of path string and they must release it.
+On Mon, Nov 24, 2014 at 02:50:04AM +0300, =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=
+ =D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE wrote:
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- attr.c            |  8 +++---
- builtin/config.c  | 73 +++++++++++++++++++++++++++++++++++++++++--------------
- builtin/help.c    | 30 ++++++++++++++++-------
- builtin/init-db.c | 12 +++++++--
- cache.h           |  4 +--
- config.c          | 19 ++++++++-------
- exec_cmd.c        | 22 ++++++++---------
- exec_cmd.h        |  4 +--
- git-compat-util.h |  2 +-
- git.c             | 16 +++++++++---
- wrapper.c         |  7 ++++--
- 11 files changed, 134 insertions(+), 63 deletions(-)
+> The RFC says that they are to be concatenated after decoding (i.e. th=
+e
+> intervening whitespace is ignored).
+>=20
+> I change the sender's name to an all-Cyrillic string in the tests so =
+that
+> its encoded form goes over the 76 characters in a line limit, forcing
+> format-patch to split it into multiple encoded words.
+>=20
+> Since I have to modify the regular expression for an encoded word any=
+way,
+> I take the opportunity to bring it closer to the spec, most notably
+> disallowing embedded spaces and making it case-insensitive (thus allo=
+wing
+> the encoding to be specified as both "q" and "Q").
 
-diff --git a/attr.c b/attr.c
-index cd54697..f96ddb4 100644
---- a/attr.c
-+++ b/attr.c
-@@ -462,9 +462,9 @@ static void drop_attr_stack(void)
- 	}
- }
- 
--static const char *git_etc_gitattributes(void)
-+static char *git_etc_gitattributes(void)
- {
--	static const char *system_wide;
-+	static char *system_wide;
- 	if (!system_wide)
- 		system_wide = system_path(ETC_GITATTRIBUTES);
- 	return system_wide;
-@@ -489,7 +489,9 @@ static void bootstrap_attr_stack(void)
- 	attr_stack = elem;
- 
- 	if (git_attr_system()) {
--		elem = read_attr_from_file(git_etc_gitattributes(), 1);
-+		char *etc_attributes = git_etc_gitattributes();
-+		elem = read_attr_from_file(etc_attributes, 1);
-+		free(etc_attributes);
- 		if (elem) {
- 			elem->origin = NULL;
- 			elem->prev = attr_stack;
-diff --git a/builtin/config.c b/builtin/config.c
-index 15a7bea..266d42b 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -575,8 +575,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		if (given_config_source.blob)
- 			die("editing blobs is not supported");
- 		git_config(git_default_config, NULL);
--		config_file = xstrdup(given_config_source.file ?
--				      given_config_source.file : git_path("config"));
-+
-+		if (use_system_config)
-+			config_file = given_config_source.file ?
-+							given_config_source.file : git_path("config");
-+		else
-+			config_file = xstrdup(given_config_source.file ?
-+								  given_config_source.file : git_path("config"));
-+
- 		if (use_global_config) {
- 			int fd = open(config_file, O_CREAT | O_EXCL | O_WRONLY, 0666);
- 			if (fd) {
-@@ -600,29 +606,43 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		if (ret == CONFIG_NOTHING_SET)
- 			error("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s.", argv[0]);
-+
-+		if (use_system_config)
-+			free(given_config_source.file);
- 		return ret;
- 	}
- 	else if (actions == ACTION_SET_ALL) {
-+		int ret;
- 		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], value, argv[2], 0);
-+		ret = git_config_set_multivar_in_file(given_config_source.file,
-+											  argv[0], value, argv[2], 0);
-+		if (use_system_config)
-+			free(given_config_source.file);
-+		return ret;
- 	}
- 	else if (actions == ACTION_ADD) {
-+		int ret;
- 		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], value,
--						       CONFIG_REGEX_NONE, 0);
-+		ret = git_config_set_multivar_in_file(given_config_source.file, argv[0],
-+											  value, CONFIG_REGEX_NONE, 0);
-+		if (use_system_config)
-+			free(given_config_source.file);
-+		return ret;
- 	}
- 	else if (actions == ACTION_REPLACE_ALL) {
-+		int ret;
- 		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], value, argv[2], 1);
-+		ret = git_config_set_multivar_in_file(given_config_source.file, argv[0],
-+											  value, argv[2], 1);
-+		if (use_system_config)
-+			free(given_config_source.file);
-+		return ret;
- 	}
- 	else if (actions == ACTION_GET) {
- 		check_argc(argc, 1, 2);
-@@ -645,27 +665,42 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		return get_urlmatch(argv[0], argv[1]);
- 	}
- 	else if (actions == ACTION_UNSET) {
-+		int ret;
- 		check_write();
- 		check_argc(argc, 1, 2);
--		if (argc == 2)
--			return git_config_set_multivar_in_file(given_config_source.file,
--							       argv[0], NULL, argv[1], 0);
--		else
--			return git_config_set_in_file(given_config_source.file,
--						      argv[0], NULL);
-+		if (argc == 2){
-+			ret = git_config_set_multivar_in_file(given_config_source.file,
-+												  argv[0], NULL, argv[1], 0);
-+			if (use_system_config)
-+				free(given_config_source.file);
-+			return ret;
-+		}
-+		else{
-+			ret = git_config_set_in_file(given_config_source.file,
-+										 argv[0], NULL);
-+			if (use_system_config)
-+				free(given_config_source.file);
-+			return ret;
-+		}
- 	}
- 	else if (actions == ACTION_UNSET_ALL) {
-+		int ret;
- 		check_write();
- 		check_argc(argc, 1, 2);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], NULL, argv[1], 1);
-+		ret = git_config_set_multivar_in_file(given_config_source.file,
-+											  argv[0], NULL, argv[1], 1);
-+		if (use_system_config)
-+			free(given_config_source.file);
-+		return ret;
- 	}
- 	else if (actions == ACTION_RENAME_SECTION) {
- 		int ret;
- 		check_write();
- 		check_argc(argc, 2, 2);
- 		ret = git_config_rename_section_in_file(given_config_source.file,
--							argv[0], argv[1]);
-+												argv[0], argv[1]);
-+		if (use_system_config)
-+			free(given_config_source.file);
- 		if (ret < 0)
- 			return ret;
- 		if (ret == 0)
-@@ -677,6 +712,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 1, 1);
- 		ret = git_config_rename_section_in_file(given_config_source.file,
- 							argv[0], NULL);
-+		if (use_system_config)
-+			free(given_config_source.file);
- 		if (ret < 0)
- 			return ret;
- 		if (ret == 0)
-diff --git a/builtin/help.c b/builtin/help.c
-index b3c818e..20ffbb1 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -326,7 +326,8 @@ static void setup_man_path(void)
- 	 * old_path, the ':' at the end will let 'man' to try
- 	 * system-wide paths after ours to find the manual page. If
- 	 * there is old_path, we need ':' as delimiter. */
--	strbuf_addstr(&new_path, system_path(GIT_MAN_PATH));
-+	char *git_man_path = system_path(GIT_MAN_PATH);
-+	strbuf_addstr(&new_path, git_man_path);
- 	strbuf_addch(&new_path, ':');
- 	if (old_path)
- 		strbuf_addstr(&new_path, old_path);
-@@ -334,6 +335,7 @@ static void setup_man_path(void)
- 	setenv("MANPATH", new_path.buf, 1);
- 
- 	strbuf_release(&new_path);
-+	free(git_man_path);
- }
- 
- static void exec_viewer(const char *name, const char *page)
-@@ -372,22 +374,25 @@ static void show_man_page(const char *git_cmd)
- static void show_info_page(const char *git_cmd)
- {
- 	const char *page = cmd_to_page(git_cmd);
--	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
-+	char *git_info_path = system_path(GIT_INFO_PATH);
-+	setenv("INFOPATH", git_info_path, 1);
-+	free(git_info_path);
- 	execlp("info", "info", "gitman", page, (char *)NULL);
- 	die(_("no info viewer handled the request"));
- }
- 
--static void get_html_page_path(struct strbuf *page_path, const char *page)
-+static void get_html_page_path(struct strbuf *page_path, const char *page, char *html_path)
- {
- 	struct stat st;
--	if (!html_path)
--		html_path = system_path(GIT_HTML_PATH);
- 
- 	/* Check that we have a git documentation directory. */
- 	if (!strstr(html_path, "://")) {
- 		if (stat(mkpath("%s/git.html", html_path), &st)
--		    || !S_ISREG(st.st_mode))
--			die("'%s': not a documentation directory.", html_path);
-+				|| !S_ISREG(st.st_mode)){
-+			printf("'%s': not a documentation directory.\n", html_path);
-+			free(html_path);
-+			exit(1);
-+		}
- 	}
- 
- 	strbuf_init(page_path, 0);
-@@ -400,9 +405,10 @@ static void get_html_page_path(struct strbuf *page_path, const char *page)
-  * HTML.
-  */
- #ifndef open_html
--static void open_html(const char *path)
-+static void open_html(char *path)
- {
- 	execl_git_cmd("web--browse", "-c", "help.browser", path, (char *)NULL);
-+	free(path);
- }
- #endif
- 
-@@ -410,8 +416,12 @@ static void show_html_page(const char *git_cmd)
- {
- 	const char *page = cmd_to_page(git_cmd);
- 	struct strbuf page_path; /* it leaks but we exec bellow */
-+	char* html_path = NULL;
-+
-+	if (!html_path)
-+		html_path = system_path(GIT_HTML_PATH);
- 
--	get_html_page_path(&page_path, page);
-+	get_html_page_path(&page_path, page, html_path);
- 
- 	open_html(page_path.buf);
- }
-@@ -512,3 +522,5 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 
- 	return 0;
- }
-+
-+// git help --web commit
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 2619ca5..6f36f3f 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -126,11 +126,17 @@ static void copy_templates(const char *template_dir)
- 		template_dir = init_db_template_dir;
- 	if (!template_dir)
- 		template_dir = system_path(DEFAULT_GIT_TEMPLATE_DIR);
--	if (!template_dir[0])
-+	if (!template_dir[0]){
-+		if (!template_dir)
-+			free((char*)template_dir);
- 		return;
-+	}
- 	template_len = strlen(template_dir);
--	if (PATH_MAX <= (template_len+strlen("/config")))
-+	if (PATH_MAX <= (template_len+strlen("/config"))){
-+		if (!template_dir)
-+			free((char*)template_dir);
- 		die(_("insanely long template path %s"), template_dir);
-+	}
- 	strcpy(template_path, template_dir);
- 	if (template_path[template_len-1] != '/') {
- 		template_path[template_len++] = '/';
-@@ -139,6 +145,7 @@ static void copy_templates(const char *template_dir)
- 	dir = opendir(template_path);
- 	if (!dir) {
- 		warning(_("templates not found %s"), template_dir);
-+		free((char*)template_dir);
- 		return;
- 	}
- 
-@@ -155,6 +162,7 @@ static void copy_templates(const char *template_dir)
- 			"a wrong format version %d from '%s'"),
- 			repository_format_version,
- 			template_dir);
-+		free((char*)template_dir);
- 		closedir(dir);
- 		return;
- 	}
-diff --git a/cache.h b/cache.h
-index 1b05115..7048e7a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1354,7 +1354,7 @@ extern int update_server_info(int);
- 
- struct git_config_source {
- 	unsigned int use_stdin:1;
--	const char *file;
-+	char *file;
- 	const char *blob;
- };
- 
-@@ -1386,7 +1386,7 @@ extern int git_config_set_multivar(const char *, const char *, const char *, int
- extern int git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
- extern int git_config_rename_section(const char *, const char *);
- extern int git_config_rename_section_in_file(const char *, const char *, const char *);
--extern const char *git_etc_gitconfig(void);
-+extern char *git_etc_gitconfig(void);
- extern int check_repository_format_version(const char *var, const char *value, void *cb);
- extern int git_env_bool(const char *, int);
- extern unsigned long git_env_ulong(const char *, unsigned long);
-diff --git a/config.c b/config.c
-index ae1398f..b71c0fb 100644
---- a/config.c
-+++ b/config.c
-@@ -122,7 +122,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		path = buf.buf;
- 	}
- 
--	if (!access_or_die(path, R_OK, 0)) {
-+	if (!access_or_die(path, R_OK, 0, 0)) {
- 		if (++inc->depth > MAX_INCLUDE_DEPTH)
- 			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
- 			    cf && cf->name ? cf->name : "the command line");
-@@ -1132,9 +1132,9 @@ static int git_config_from_blob_ref(config_fn_t fn,
- 	return git_config_from_blob_sha1(fn, name, sha1, data);
- }
- 
--const char *git_etc_gitconfig(void)
-+char *git_etc_gitconfig(void)
- {
--	static const char *system_wide;
-+	static char *system_wide;
- 	if (!system_wide)
- 		system_wide = system_path(ETC_GITCONFIG);
- 	return system_wide;
-@@ -1172,26 +1172,27 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 	int ret = 0, found = 0;
- 	char *xdg_config = NULL;
- 	char *user_config = NULL;
-+	char *git_etc_config = git_etc_gitconfig();
- 
- 	home_config_paths(&user_config, &xdg_config, "config");
- 
--	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
--		ret += git_config_from_file(fn, git_etc_gitconfig(),
--					    data);
-+	if (git_etc_config && !access_or_die(git_etc_config, R_OK, 0, 1)) {
-+		ret += git_config_from_file(fn, git_etc_config, data);
- 		found += 1;
-+		free(git_etc_config);
- 	}
- 
--	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK)) {
-+	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK, 0)) {
- 		ret += git_config_from_file(fn, xdg_config, data);
- 		found += 1;
- 	}
- 
--	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK)) {
-+	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK, 0)) {
- 		ret += git_config_from_file(fn, user_config, data);
- 		found += 1;
- 	}
- 
--	if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
-+	if (repo_config && !access_or_die(repo_config, R_OK, 0, 0)) {
- 		ret += git_config_from_file(fn, repo_config, data);
- 		found += 1;
- 	}
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 698e752..d35ecac 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -6,7 +6,7 @@
- static const char *argv_exec_path;
- static const char *argv0_path;
- 
--const char *system_path(const char *path)
-+char *system_path(const char *path)
- {
- #ifdef RUNTIME_PREFIX
- 	static const char *prefix;
-@@ -16,7 +16,7 @@ const char *system_path(const char *path)
- 	struct strbuf d = STRBUF_INIT;
- 
- 	if (is_absolute_path(path))
--		return path;
-+		return strdup(path);
- 
- #ifdef RUNTIME_PREFIX
- 	assert(argv0_path);
-@@ -34,8 +34,7 @@ const char *system_path(const char *path)
- #endif
- 
- 	strbuf_addf(&d, "%s/%s", prefix, path);
--	path = strbuf_detach(&d, NULL);
--	return path;
-+	return d.buf;
- }
- 
- const char *git_extract_argv0_path(const char *argv0)
-@@ -68,17 +67,16 @@ void git_set_argv_exec_path(const char *exec_path)
- 
- 
- /* Returns the highest-priority, location to look for git programs. */
--const char *git_exec_path(void)
-+char *git_exec_path(void)
- {
--	const char *env;
-+	char *env;
- 
- 	if (argv_exec_path)
--		return argv_exec_path;
-+		return strdup(argv_exec_path);
- 
- 	env = getenv(EXEC_PATH_ENVIRONMENT);
--	if (env && *env) {
--		return env;
--	}
-+	if (env && *env)
-+		return strdup(env);
- 
- 	return system_path(GIT_EXEC_PATH);
- }
-@@ -96,7 +94,8 @@ void setup_path(void)
- 	const char *old_path = getenv("PATH");
- 	struct strbuf new_path = STRBUF_INIT;
- 
--	add_path(&new_path, git_exec_path());
-+	char *exec_path = git_exec_path();
-+	add_path(&new_path, exec_path);
- 	add_path(&new_path, argv0_path);
- 
- 	if (old_path)
-@@ -107,6 +106,7 @@ void setup_path(void)
- 	setenv("PATH", new_path.buf, 1);
- 
- 	strbuf_release(&new_path);
-+	free(exec_path);
- }
- 
- const char **prepare_git_cmd(const char **argv)
-diff --git a/exec_cmd.h b/exec_cmd.h
-index e4c9702..03c8599 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -3,12 +3,12 @@
- 
- extern void git_set_argv_exec_path(const char *exec_path);
- extern const char *git_extract_argv0_path(const char *path);
--extern const char *git_exec_path(void);
-+extern char *git_exec_path(void);
- extern void setup_path(void);
- extern const char **prepare_git_cmd(const char **argv);
- extern int execv_git_cmd(const char **argv); /* NULL terminated */
- LAST_ARG_MUST_BE_NULL
- extern int execl_git_cmd(const char *cmd, ...);
--extern const char *system_path(const char *path);
-+extern char *system_path(const char *path);
- 
- #endif /* GIT_EXEC_CMD_H */
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 400e921..fcc88db 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -813,7 +813,7 @@ int remove_or_warn(unsigned int mode, const char *path);
-  */
- #define ACCESS_EACCES_OK (1U << 0)
- int access_or_warn(const char *path, int mode, unsigned flag);
--int access_or_die(const char *path, int mode, unsigned flag);
-+int access_or_die(const char *path, int mode, unsigned flag, unsigned etc_config);
- 
- /* Warn on an inaccessible file that ought to be accessible */
- void warn_on_inaccessible(const char *path);
-diff --git a/git.c b/git.c
-index 82d7a1c..d01c4f1 100644
---- a/git.c
-+++ b/git.c
-@@ -95,17 +95,25 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			if (*cmd == '=')
- 				git_set_argv_exec_path(cmd + 1);
- 			else {
--				puts(git_exec_path());
-+				char *exec_path = git_exec_path();
-+				puts(exec_path);
-+				free(exec_path);
- 				exit(0);
- 			}
- 		} else if (!strcmp(cmd, "--html-path")) {
--			puts(system_path(GIT_HTML_PATH));
-+			char *git_html_path = system_path(GIT_HTML_PATH);
-+			puts(git_html_path);
-+			free(git_html_path);
- 			exit(0);
- 		} else if (!strcmp(cmd, "--man-path")) {
--			puts(system_path(GIT_MAN_PATH));
-+			char *git_man_path = system_path(GIT_MAN_PATH);
-+			puts(git_man_path);
-+			free(git_man_path);
- 			exit(0);
- 		} else if (!strcmp(cmd, "--info-path")) {
--			puts(system_path(GIT_INFO_PATH));
-+			char *git_info_path = system_path(GIT_INFO_PATH);
-+			puts(git_info_path);
-+			free(git_info_path);
- 			exit(0);
- 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
- 			use_pager = 1;
-diff --git a/wrapper.c b/wrapper.c
-index 007ec0d..f97adbc 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -523,11 +523,14 @@ int access_or_warn(const char *path, int mode, unsigned flag)
- 	return ret;
- }
- 
--int access_or_die(const char *path, int mode, unsigned flag)
-+int access_or_die(const char *path, int mode, unsigned flag, unsigned etc_config)
- {
- 	int ret = access(path, mode);
--	if (ret && !access_error_is_ok(errno, flag))
-+	if (ret && !access_error_is_ok(errno, flag)){
-+		if (etc_config)
-+			free((char*)path);
- 		die_errno(_("unable to access '%s'"), path);
-+	}
- 	return ret;
- }
- 
--- 
-2.2.0.rc3.191.g70a3888.dirty
+The overall goal makes sense to me. Thanks for working on this. I have =
+a
+few questions/comments, though.
+
+>  sub unquote_rfc2047 {
+>  	local ($_) =3D @_;
+> +
+> +	my $et =3D qr/[!->@-~]+/; # encoded-text from RFC 2047
+> +	my $sep =3D qr/[ \t]+/;
+> +	my $encoded_word =3D qr/=3D\?($et)\?q\?($et)\?=3D/i;
+
+The first $et in $encoded_word is actually the charset, which is define=
+d
+by RFC 2047 as:
+
+     charset =3D token    ; see section 3
+
+     token =3D 1*<Any CHAR except SPACE, CTLs, and especials>
+
+     especials =3D "(" / ")" / "<" / ">" / "@" / "," / ";" / ":" / "
+	               <"> / "/" / "[" / "]" / "?" / "." / "=3D"
+
+Your regex is a little more liberal. I doubt that it is a big deal in
+practice (actually, in practice, I suspect [a-zA-Z0-9-] would be fine).
+But if we are tightening things up in general, it may make sense to do
+so here (and I notice that is_rfc2047_quoted does a more thorough $toke=
+n
+definition, and it probably makes sense for the two functions to be
+consistent).
+
+=46or your definition of encoded-text, RFC 2047 says:
+
+     encoded-text =3D 1*<Any printable ASCII character other than "?"
+                          or SPACE>
+
+It looks like you pulled the definition of $et from is_rfc2047_quoted,
+but I am not clear on where that original came from (it is from a3a8262=
+,
+but that commit message does not explain the regex).
+
+Also, I note that we handle 'q'-style encodings here, but not 'b'. I
+wonder if it is worth adding that in while we are in the area (it is no=
+t
+a big deal if you always send-email git-generated patches, as we never
+generate it).
+
+> +	s{$encoded_word(?:$sep$encoded_word)+}{
+
+If I am reading this right, it requires at least two $encoded_words.
+Should this "+" be a "*"?
+
+> +		my @words =3D split $sep, $&;
+> +		foreach (@words) {
+> +			m/$encoded_word/;
+> +			$encoding =3D $1;
+> +			$_ =3D $2;
+> +			s/_/ /g;
+> +			s/=3D([0-9A-F]{2})/chr(hex($1))/eg;
+
+In the spirit of your earlier change, should this final regex be
+case-insensitive? RFC 2047 says only "Upper case should be used for
+hexadecimal digits "A" through "F." but that does not seem like a "MUST=
+"
+to me.
+
+-Peff
