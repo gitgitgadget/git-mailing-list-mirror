@@ -1,100 +1,77 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH RFC] CYGWIN: avoid implicit declaration warning
-Date: Mon, 24 Nov 2014 21:41:22 +0000
-Message-ID: <5473A602.30505@ramsay1.demon.co.uk>
-References: <5471EC26.3040705@web.de> <20141124175947.GN6527@google.com>
+Date: Mon, 24 Nov 2014 13:44:02 -0800
+Message-ID: <xmqq7fykw9y5.fsf@gitster.dls.corp.google.com>
+References: <5471EC26.3040705@web.de> <5472159B.4060905@ramsay1.demon.co.uk>
+	<xmqqegstychq.fsf@gitster.dls.corp.google.com>
+	<54726A8C.4040600@ramsay1.demon.co.uk> <5472DC24.9010008@web.de>
+	<5473A2D0.5010101@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	=?windows-1252?Q?Torsten_B=F6?= =?windows-1252?Q?gershausen?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Nov 24 22:41:37 2014
+Content-Type: text/plain
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Nov 24 22:44:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xt1O3-0007rf-2v
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 22:41:35 +0100
+	id 1Xt1Qa-0001bL-3v
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 22:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbaKXVlb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2014 16:41:31 -0500
-Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:34629 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750734AbaKXVla (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 16:41:30 -0500
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 6566DAC40E4;
-	Mon, 24 Nov 2014 21:41:29 +0000 (GMT)
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 1ED9AAC40BF;
-	Mon, 24 Nov 2014 21:41:29 +0000 (GMT)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1750961AbaKXVoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 16:44:07 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63546 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750782AbaKXVoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 16:44:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 80F5821389;
+	Mon, 24 Nov 2014 16:44:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3JOPzESrw0N6zOzrV6CRrHDXkg4=; b=WuGng4
+	jAof0P9wtkWa65e/ljeUTJgHPku/B9l9YaRjbey3n/rgugQsksexYtf/rJ8i2OMV
+	Ys/89dXJ9HEDfKlBxXk4rT+MluDT6XuMw9qPzYpOzcEmJgOFNIbvJTT08eAh+qZG
+	yJu0v5OThmjQy2g05cRUfVSr4jPUgPduWvI68=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dkgAUg44FFdc/qS1sGXhUia35/MfM9mp
+	GBqj8pif61dQ/+BmT9I23tnHro9Md3NovNWVT9xED2mB6cPps7KFMOc6NkkEyaeA
+	T7fYs+ciBVenWtxb9RW7xmfimfDgPt1YBxWP/WFgXULEurT/9/slp3Wa+SdKDi8G
+	ZXB2RvxwNUc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 672F421388;
+	Mon, 24 Nov 2014 16:44:04 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
-	Mon, 24 Nov 2014 21:41:28 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <20141124175947.GN6527@google.com>
-X-MDF-HostID: 17
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBF4B21387;
+	Mon, 24 Nov 2014 16:44:03 -0500 (EST)
+In-Reply-To: <5473A2D0.5010101@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Mon, 24 Nov 2014 21:27:44 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 024B08B4-7423-11E4-8F7C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260153>
 
-On 24/11/14 17:59, Jonathan Nieder wrote:
-> Torsten B=F6gershausen wrote:
->=20
->> gcc under cygwin reports several warnings like this:
->>
->>  warning: implicit declaration of function 'memmem'
->>   [-Wimplicit-function-declaration]
->>
->> This has been observed under CYGWIN-32 with GCC 4.7.3 as well
->> as CYGWIN-64 with gcc v4.8.3-5 x86-64
->>
->> Do not #define _XOPEN_SOURCE 600 for CYGWIN.
->>
->> Reported-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->> Signed-off-by: Torsten B=F6gershausen <tboegi@web.de>
->> ---
->> This may be a start for a patch, tested under CYGWIN-32,
->> both Windows7 and XP
->=20
-> The "tested under" part would also be a good addition to the commit
-> message.
->=20
->>  git-compat-util.h | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->=20
-> Patch looks good to me.  Do you know if this has been reported to the
-> Cygwin maintainers?
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-As I said in an earlier email, I have searched the cygwin mailing list
-(a few days ago now), but this issue had not been mentioned (modulo my
-poor list searching fu!).
+> I updated from cygwin 1.5 to cygwin 1.7 at the beginning of the year.
+> Since it is no longer supported, I don't think we need to worry about
+> version 1.5. When I said 'old installation' I meant my old version 1.7
+> 32-bit installation.
+>
+>> One netbook was converted from XP to Linux, the other machine needs to be
+>> re-installed and CYGWIN 1.5 is no longer available for download.
+>> 
+>> I can confirm that Ramsays patch works with CYGWIN 1.7 32 Bit.
+>
+> Thanks!
 
-However, since I don't want to subscribe to (yet another) busy mailing
-list, I won't be reporting this issue there. (If someone on this list
-is already subscribed to that list, then ... ;-) ).
-
->                       The behavior seems counterintuitive --- I would
-> expect _GNU_SOURCE to override everything else (since I thought that
-> was the point of _GNU_SOURCE).
-
-I had that impression too, but I need to read some more first.
-
-Also, my theory about the cause of the problem has changed slightly
-this evening, after booting up my old laptop and looking at an old
-32-bit cygwin installation.
-
-Rather than a change to '..../sys/cdefs.h' which changed the priority
-of _XOPEN_SOURCE, it seems that it was the <string.h> header that
-changed; those functions used to be declared unconditionally, whereas
-the new headers have them within preprocessor conditionals.
-
-ATB,
-Ramsay Jones
+Thanks.  So the unconditional version of the patch is good to go, I
+take?
