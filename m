@@ -1,79 +1,60 @@
-From: bancfc@openmailbox.org
-Subject: Re: How safe are signed git =?UTF-8?Q?tags=3F=20Only=20as=20safe?=
- =?UTF-8?Q?=20as=20SHA-=31=20or=20somehow=20safer=3F?=
-Date: Mon, 24 Nov 2014 00:52:42 +0000
-Message-ID: <6246f36ca7006d29b97f2e453c9e52c8@openmailbox.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow safer?
+Date: Mon, 24 Nov 2014 08:23:27 +0700
+Message-ID: <CACsJy8D-W_YrxMgUDScSmkNBKMVpRu_Kc0k6nsfyhmoLg5HBjg@mail.gmail.com>
+References: <5468C33E.2080108@whonix.org> <20141117212657.GC15880@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 24 02:01:04 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Patrick Schleizer <patrick-mailinglists@whonix.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	whonix-devel@whonix.org, mikegerwitz@gnu.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 24 02:24:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xsi1X-0000ld-Iv
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 02:01:03 +0100
+	id 1XsiNp-0000uU-US
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 02:24:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750781AbaKXBAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Nov 2014 20:00:55 -0500
-Received: from mail2.openmailbox.org ([62.4.1.33]:52108 "EHLO
-	mail2.openmailbox.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750758AbaKXBAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Nov 2014 20:00:54 -0500
-X-Greylist: delayed 488 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Nov 2014 20:00:53 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail2.openmailbox.org (Postfix) with ESMTP id 897D82022FD
-	for <git@vger.kernel.org>; Mon, 24 Nov 2014 01:52:44 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=openmailbox.org;
-	 h=user-agent:message-id:subject:subject:from:from:date:date
-	:content-transfer-encoding:content-type:content-type
-	:mime-version:received:received; s=openmailbox; t=1416790362;
-	 bh=KFQ183elyR7BHeI4+EpksT5FC8NsqC909IaAuEJz2pw=; b=F6f6tOLKTLKs
-	0n1C2FeHPjaAkwnSEvJIRH3RjHEAVbY9PIVwW0WfbYIp7wY5LuyXpHAWI0/SmSNC
-	OYRZoZzs8IYVl4x2EGkeP6RqrTOjryBNrY+ebsjmnGQgFXCHI/WFIUMvdxhTOe9D
-	dVeEV8hNKBk3Ci1NZUIQXe8LukYWPYE=
-X-Virus-Scanned: at openmailbox.org
-Received: from mail2.openmailbox.org ([62.4.1.33])
-	by localhost (mail.openmailbox.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Xx68v5qJa57g for <git@vger.kernel.org>;
-	Mon, 24 Nov 2014 01:52:42 +0100 (CET)
-Received: from www.openmailbox.org (localhost [127.0.0.1])
-	by mail2.openmailbox.org (Postfix) with ESMTP id A9F0D202C02
-	for <git@vger.kernel.org>; Mon, 24 Nov 2014 01:52:42 +0100 (CET)
-X-Sender: bancfc@openmailbox.org
-User-Agent: Roundcube Webmail/1.0.2
+	id S1751606AbaKXBX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Nov 2014 20:23:59 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:58022 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359AbaKXBX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Nov 2014 20:23:58 -0500
+Received: by mail-ie0-f181.google.com with SMTP id tp5so7749522ieb.26
+        for <git@vger.kernel.org>; Sun, 23 Nov 2014 17:23:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=r2EwP44qnER7oFy1UfKOeu8yZ5vXSF3rwGUQSh6wXX8=;
+        b=RPrMcaIZWhaH0oRS7y60Oy9EZAIRVwoc1lMa4cR3V9pLToWvJY7f7QenbKDjZO+p8f
+         YQTcaJe3kj+HdCOk5DSFubPLmUNyWT1hxVAnCDhdC9xpl2LdM9uw3wbOaEq5w+UOMGbC
+         8pMLjpGWq6Bv0HLJvLWo87jRBgQQVHbPNyHAsnkgGDy4Oj6zCMSXHggBXHHBECBlTGs4
+         6l4HdXB71UAD7qAVuMuWPN5hwGC14VS+1ewQwlKucYGhzFVE8HBfdXvFrPPz1sB2q5nP
+         G782FBVWAApVGkyuHNVEdduYVSVnWLSVbWqKPu2SWrO5hyy75E/yj/L5W6F9aiHn7zhy
+         TT+Q==
+X-Received: by 10.42.167.1 with SMTP id q1mr22127423icy.48.1416792237781; Sun,
+ 23 Nov 2014 17:23:57 -0800 (PST)
+Received: by 10.107.176.8 with HTTP; Sun, 23 Nov 2014 17:23:27 -0800 (PST)
+In-Reply-To: <20141117212657.GC15880@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260111>
 
-Hi, I wanted to chime in on the topic of SHA1 weaknesses and breaks. The 
-problem is idea that SHA1 breaks are theoretical and will only  be 
-relevant in a decade or two.
+On Tue, Nov 18, 2014 at 4:26 AM, Jeff King <peff@peff.net> wrote:
+> Yes, it is only as "safe as SHA-1" in the sense that you have GPG-signed
+> only a SHA-1 hash. If somebody can find a collision with a hash you have
+> signed, they can substitute the colliding data for the data you signed.
 
-I think its a telling sign when even companies like Google [1] and 
-Microsoft [2] who collaborate with spy agencies are moving away from 
-SHA1 in verifying browser certs and the estimates by reputable 
-cryptographers already put us in the realm of feasible breaks at this 
-time, with the bar going lower with every passing year [3]. In three 
-years common cyber criminals will be able to crack it using moderate 
-sized computer clusters or by renting some AWS cycles.
-
-Please reconsider the urgency of moving away from SHA1 for security 
-functions in Git.
-
-
-References:
-
-[1] 
-http://thenextweb.com/google/2014/09/05/google-will-start-sunsetting-sha-1-cryptographic-hash-algorithm-chrome-month-finish-q1-2015/
-
-[2] https://www.schneier.com/blog/archives/2013/11/microsoft_retir.html 
-(Schneier on Security: Microsoft Retiring SHA-1 in 2016)
-
-[3] https://www.schneier.com/blog/archives/2012/10/when_will_we_se.html 
-(When Will We See Collisions for SHA-1?)
+I wonder if we can have an option to sign all blob content of the tree
+associated to a commit, and the content of parent commit(s). It's more
+expensive than signing just commit/tag content. But it's also safer
+without completely ditching SHA-1.
+-- 
+Duy
