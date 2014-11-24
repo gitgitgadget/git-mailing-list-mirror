@@ -1,7 +1,7 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
+From: Alex Kuleshov <kuleshovmail@gmail.com>
 Subject: Re: [PATCH] exec_cmd: system_path memory leak fix
-Date: Mon, 24 Nov 2014 19:11:40 +0600
-Message-ID: <87fvd891fy.fsf@gmail.com>
+Date: Mon, 24 Nov 2014 20:00:40 +0600
+Message-ID: <87mw7gae8k.fsf@gmail.com>
 References: <1416750981-24446-1-git-send-email-kuleshovmail@gmail.com> <1416750981-24446-2-git-send-email-kuleshovmail@gmail.com> <xmqqioi5ycme.fsf@gitster.dls.corp.google.com> <87sih9en65.fsf@gmail.com> <xmqq7fyly3xj.fsf@gitster.dls.corp.google.com> <87mw7haxdp.fsf@gmail.com> <CAPc5daWnJCGPTMA0Hyg8QEAmsnF17ZQ9njGq8xVaUAfuwCRQDA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -9,52 +9,56 @@ Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 24 14:24:18 2014
+X-From: git-owner@vger.kernel.org Mon Nov 24 15:02:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xstcn-00027K-Gy
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 14:24:18 +0100
+	id 1XsuDq-0000ko-Pz
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 15:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547AbaKXNYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 08:24:11 -0500
-Received: from mail-la0-f41.google.com ([209.85.215.41]:40132 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753202AbaKXNYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 08:24:09 -0500
-Received: by mail-la0-f41.google.com with SMTP id gf13so7524446lab.14
-        for <git@vger.kernel.org>; Mon, 24 Nov 2014 05:24:07 -0800 (PST)
+	id S1753657AbaKXOC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 09:02:29 -0500
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:45556 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753627AbaKXOC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 09:02:26 -0500
+Received: by mail-lb0-f172.google.com with SMTP id u10so7418595lbd.31
+        for <git@vger.kernel.org>; Mon, 24 Nov 2014 06:02:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=references:from:to:cc:subject:date:in-reply-to:message-id
          :mime-version:content-type;
-        bh=aWhuXLJh/HPCaqbb1wHXaSq3iUn/NpYge1lT07uWAZ4=;
-        b=IALBzkCBhdzpKTFOVLFpj8XYGiWDN/YeBzqur6uavz1oPNp1cwfx1g3g0RB3EtrFIH
-         GwIMku8Ale4DpE3vnA9KXfQfl75wH7DI3Rd+oSnNv9yRcRHm2iy9K6XL2EkswkoyOXxh
-         1S9TFQW4LvGRejSCZGKtoqhEOoUgQupOCtSf6leBRU9HFZxjZDCR1Go+RhDKb7ooukf6
-         nL15+IJLJrXyodV28b9blu1+yzIAtS5a1+5l0h1h+m6u80w6pH6aR8njLkWDMRTFfE1L
-         dQyMnOqmZc85wREJhU89U7SrRKEjpz9fpgXf3VAxVB7JpjmVIb5ljm7LwAoSPxn7qKwK
-         +9AA==
-X-Received: by 10.152.87.42 with SMTP id u10mr20614653laz.0.1416835447278;
-        Mon, 24 Nov 2014 05:24:07 -0800 (PST)
+        bh=wdbhoFusu/T5ZrM9OzL9aEbC6yE8de7RKFmacB3J0OI=;
+        b=I1d7mmqQLaWqvtWtzlnIycbdkp/eoSrcyROtvea7wPkwx+w2vZ/4hwFA2air0RiEwb
+         cMiuXzMOr4UCK8lUKxbPPBOlcHpk0v7+q9L0IRLVmK4gCdAJV82UCSA1eb5xW4s2YQBr
+         Gz2IbaXcKMcC9HDKkpVVWmYRN4vRHLaxA8fNhraTMEqRhX3T8jA04IiFOBT1USkPKra1
+         RpgHdFsAlbv6SfsG89nJ/ql4BTFXIPoJektxo15ENNz68yA3yOBf/0AKgcOvC1+hg3V5
+         82qNLVd6jd+muFAxgUeZmuPW4tgOkmuITBC8FHRNep5Y3CHtXIpnGwkeWHliDE/yrFdh
+         YvKA==
+X-Received: by 10.112.38.4 with SMTP id c4mr4914623lbk.46.1416837744431;
+        Mon, 24 Nov 2014 06:02:24 -0800 (PST)
 Received: from alex-desktop ([95.59.100.64])
-        by mx.google.com with ESMTPSA id z2sm1583709lal.45.2014.11.24.05.24.04
+        by mx.google.com with ESMTPSA id vr7sm3564704lbb.21.2014.11.24.06.02.21
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Nov 2014 05:24:06 -0800 (PST)
+        Mon, 24 Nov 2014 06:02:23 -0800 (PST)
 In-reply-to: <CAPc5daWnJCGPTMA0Hyg8QEAmsnF17ZQ9njGq8xVaUAfuwCRQDA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260126>
 
 
 Now system_path returns path which is allocated string to callers;
 It prevents memory leaks in some places. All callers of system_path
 are owners of path string and they must release it.
+
+Added new parameter to wrapper.c/int access_or_die - etc_config, because
+only etc_config in this case use system_path and we don't know do we
+need to free path or not.
 
 Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 ---
@@ -63,12 +67,13 @@ Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
  builtin/help.c    | 30 ++++++++++++++++-------
  builtin/init-db.c | 12 +++++++--
  cache.h           |  4 +--
- config.c          | 10 +++++---
+ config.c          | 19 ++++++++-------
  exec_cmd.c        | 22 ++++++++---------
  exec_cmd.h        |  4 +--
+ git-compat-util.h |  2 +-
  git.c             | 16 +++++++++---
- wrapper.c         |  4 ++-
- 10 files changed, 127 insertions(+), 56 deletions(-)
+ wrapper.c         |  7 ++++--
+ 11 files changed, 134 insertions(+), 63 deletions(-)
 
 diff --git a/attr.c b/attr.c
 index cd54697..f96ddb4 100644
@@ -98,7 +103,7 @@ index cd54697..f96ddb4 100644
  			elem->origin = NULL;
  			elem->prev = attr_stack;
 diff --git a/builtin/config.c b/builtin/config.c
-index 15a7bea..8ab3179 100644
+index 15a7bea..266d42b 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
 @@ -575,8 +575,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
@@ -110,7 +115,7 @@ index 15a7bea..8ab3179 100644
 +
 +		if (use_system_config)
 +			config_file = given_config_source.file ?
-+						  given_config_source.file : git_path("config");
++							given_config_source.file : git_path("config");
 +		else
 +			config_file = xstrdup(given_config_source.file ?
 +								  given_config_source.file : git_path("config"));
@@ -379,9 +384,18 @@ index 1b05115..7048e7a 100644
  extern int git_env_bool(const char *, int);
  extern unsigned long git_env_ulong(const char *, unsigned long);
 diff --git a/config.c b/config.c
-index ae1398f..0ed8890 100644
+index ae1398f..b71c0fb 100644
 --- a/config.c
 +++ b/config.c
+@@ -122,7 +122,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 		path = buf.buf;
+ 	}
+
+-	if (!access_or_die(path, R_OK, 0)) {
++	if (!access_or_die(path, R_OK, 0, 0)) {
+ 		if (++inc->depth > MAX_INCLUDE_DEPTH)
+ 			die(include_depth_advice, MAX_INCLUDE_DEPTH, path,
+ 			    cf && cf->name ? cf->name : "the command line");
 @@ -1132,9 +1132,9 @@ static int git_config_from_blob_ref(config_fn_t fn,
  	return git_config_from_blob_sha1(fn, name, sha1, data);
  }
@@ -394,7 +408,7 @@ index ae1398f..0ed8890 100644
  	if (!system_wide)
  		system_wide = system_path(ETC_GITCONFIG);
  	return system_wide;
-@@ -1172,13 +1172,15 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+@@ -1172,26 +1172,27 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
  	int ret = 0, found = 0;
  	char *xdg_config = NULL;
  	char *user_config = NULL;
@@ -404,14 +418,30 @@ index ae1398f..0ed8890 100644
 
 -	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
 -		ret += git_config_from_file(fn, git_etc_gitconfig(),
-+	if (git_etc_config && !access_or_die(git_etc_config, R_OK, 0)) {
-+		ret += git_config_from_file(fn, git_etc_config,
- 					    data);
+-					    data);
++	if (git_etc_config && !access_or_die(git_etc_config, R_OK, 0, 1)) {
++		ret += git_config_from_file(fn, git_etc_config, data);
  		found += 1;
 +		free(git_etc_config);
  	}
 
- 	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK)) {
+-	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK)) {
++	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK, 0)) {
+ 		ret += git_config_from_file(fn, xdg_config, data);
+ 		found += 1;
+ 	}
+
+-	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK)) {
++	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK, 0)) {
+ 		ret += git_config_from_file(fn, user_config, data);
+ 		found += 1;
+ 	}
+
+-	if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
++	if (repo_config && !access_or_die(repo_config, R_OK, 0, 0)) {
+ 		ret += git_config_from_file(fn, repo_config, data);
+ 		found += 1;
+ 	}
 diff --git a/exec_cmd.c b/exec_cmd.c
 index 698e752..d35ecac 100644
 --- a/exec_cmd.c
@@ -504,6 +534,19 @@ index e4c9702..03c8599 100644
 +extern char *system_path(const char *path);
 
  #endif /* GIT_EXEC_CMD_H */
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 400e921..fcc88db 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -813,7 +813,7 @@ int remove_or_warn(unsigned int mode, const char *path);
+  */
+ #define ACCESS_EACCES_OK (1U << 0)
+ int access_or_warn(const char *path, int mode, unsigned flag);
+-int access_or_die(const char *path, int mode, unsigned flag);
++int access_or_die(const char *path, int mode, unsigned flag, unsigned etc_config);
+
+ /* Warn on an inaccessible file that ought to be accessible */
+ void warn_on_inaccessible(const char *path);
 diff --git a/git.c b/git.c
 index 82d7a1c..d01c4f1 100644
 --- a/git.c
@@ -539,20 +582,25 @@ index 82d7a1c..d01c4f1 100644
  		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
  			use_pager = 1;
 diff --git a/wrapper.c b/wrapper.c
-index 007ec0d..ede9268 100644
+index 007ec0d..f97adbc 100644
 --- a/wrapper.c
 +++ b/wrapper.c
-@@ -526,8 +526,10 @@ int access_or_warn(const char *path, int mode, unsigned flag)
- int access_or_die(const char *path, int mode, unsigned flag)
+@@ -523,11 +523,14 @@ int access_or_warn(const char *path, int mode, unsigned flag)
+ 	return ret;
+ }
+
+-int access_or_die(const char *path, int mode, unsigned flag)
++int access_or_die(const char *path, int mode, unsigned flag, unsigned etc_config)
  {
  	int ret = access(path, mode);
 -	if (ret && !access_error_is_ok(errno, flag))
 +	if (ret && !access_error_is_ok(errno, flag)){
-+		free((char*)path);
++		if (etc_config)
++			free((char*)path);
  		die_errno(_("unable to access '%s'"), path);
 +	}
  	return ret;
  }
 
 --
-2.2.0-rc3
+2.2.0.rc3.191.g70a3888.dirty
