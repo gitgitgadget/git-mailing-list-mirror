@@ -1,109 +1,168 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 3/3] string_list: Remove string_list_insert_at_index from its API
-Date: Mon, 24 Nov 2014 13:22:04 -0800
-Message-ID: <1416864124-15231-3-git-send-email-sbeller@google.com>
-References: <1416864124-15231-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, marius@trolltech.com, julian@quantumfyre.co.uk,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 24 22:22:28 2014
+Subject: Re: [PATCH] refs.c: move reflog updates into its own function
+Date: Mon, 24 Nov 2014 13:24:50 -0800
+Message-ID: <CAGZ79kY8FagM_RPMZ9AchBmSK=BWR1A+4JQ7DiG2JmvyvtsPiw@mail.gmail.com>
+References: <1416530282-13192-1-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 24 22:24:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xt15X-0006lk-OI
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 22:22:28 +0100
+	id 1Xt17v-0000ex-Uz
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 22:24:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856AbaKXVWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 16:22:17 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:39261 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750761AbaKXVWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 16:22:15 -0500
-Received: by mail-ig0-f172.google.com with SMTP id hl2so3892430igb.5
-        for <git@vger.kernel.org>; Mon, 24 Nov 2014 13:22:15 -0800 (PST)
+	id S1750774AbaKXVYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 16:24:52 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:61781 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750729AbaKXVYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 16:24:51 -0500
+Received: by mail-ie0-f172.google.com with SMTP id tr6so2077957ieb.17
+        for <git@vger.kernel.org>; Mon, 24 Nov 2014 13:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TgIGdBs0hsgu3MKHf1uoBV2Vn/gbeiOg6443A9/yWVA=;
-        b=EWIVgz3wFfHV4aAY2kob4VrjNxmbLS25j88tBa3OV0W5nsMd0nNOG3Boc/Lm38rrWO
-         y7QCYL05qneTJiAfaZP2y0oNhlMpg0Szu1CU24MT2mMruPnq2OzbF7KjsfgLWKBSS1I6
-         AMwV9BoO9SVLccophxasq5z8hT48ZaBtVqNJAUWVvcuWDiprpUUWk+Nr4WAOYaonWgwT
-         rgQoCjF8/oDalQcZjELDLyImzJG8t94QFn35q/lonNcS/Ow2WEGqwnV+c4lGs6TuAvMQ
-         fyGhVxweM1ukOZjAxAQZn0r/egfj1lJ8cbH3zTpVxR1mZ6nlPdMe2Ftfokez9DI3KuKK
-         xSEA==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=hkK1rv76+JWDvXROvKumocAgvAAHZA5kLKHm+MayIt4=;
+        b=kBPlDKq7yp5ZOvDJjDXC9zoIrOPBBFjrLF7PEb7so09xvzUpoEg4o1ehx8hWq2WdgA
+         vfKCalG4LYshAp7P56vg+QhQ79+B48Gf/4hat1QaXPeBGFMvpn9rDxLwwIb3XPN598ku
+         56SEKgUfAs6bXq1Y6w8mhrw5K+Y/9mRfFhS6/RrwnNH6nvjFaJK/U2rFx9Vu7PE5XAwm
+         OOhp1OwEGjg3mv5XcoDt1UMVlxLCzy+tICH95YplIu7inEmGLM1aIf5DKQoxQGyhDT88
+         p+NGRiAtaYTlyioENeC5+tGvSYdIKNVUEJqiOt2qjVrDr8SVxMzL0R5LM4rprh26NVxe
+         xNBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=TgIGdBs0hsgu3MKHf1uoBV2Vn/gbeiOg6443A9/yWVA=;
-        b=I5RKarE4Uy9ktMmdDWEXlTKWmrISg1r7LQfVXaHF1TB6oHsJsnoSC2l0m0qg5VAAKA
-         mTlI7CsxIhTHakFgHgKqqYrKyWSLbjduP5pezyylKKeULFl6znxybUFHV7eSsdxlYntX
-         9mSLzNlOaibvf83uvSC+aUUxQoD6D4v9m5tieeOinlCp1v92/tcx2ARkkmZbrnotwq0m
-         Bn48o8RVEU44QkDFPgwzTekSaKLeMYgd+OjdO/zpy0iC41S+EUthHUJLnqLw51qvpqTu
-         jzkrIEnFSYKLZGxtDEYFO+lUeL9Sh8BdaCVsxIOUMfkHOTKmJ0VB0AKU724tyMElmBeC
-         uDZQ==
-X-Gm-Message-State: ALoCoQlLZecmNIMJ7Z1k2QfYYlPWW1LMJdEIMPneLWm4BsU1AXc3nTAAshIawRHhOWdFsNPk5Kj9
-X-Received: by 10.50.78.164 with SMTP id c4mr12636269igx.1.1416864135178;
-        Mon, 24 Nov 2014 13:22:15 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:413f:9e9a:731:9749])
-        by mx.google.com with ESMTPSA id c1sm5045386igo.17.2014.11.24.13.22.14
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Nov 2014 13:22:14 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc3
-In-Reply-To: <1416864124-15231-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=hkK1rv76+JWDvXROvKumocAgvAAHZA5kLKHm+MayIt4=;
+        b=J+gIwge3iGB7ncBmbLS8kmuU4e+jBEzxVHmgmoTEeaZFqgtjHMnYyGyL7ZPVMa0UI2
+         4GWvU15wFSoW9YgFvuyZjLAgX8lnO2thpT+UZT7C7vr+ENXFlVv3Vh+yc/fsWCv1/OnN
+         HDSS2IW9LsXtkQGsjthk3BWoZ3ih6+Hr/ZxgCE7GRQgrGNiViFqg7rUdaAdgO1uh2eS+
+         tf78C9Dgnhqwio2gSDH11F4UaSNzRwN6CwbBQKYBN0H2eF9SBPhtqg0yF9I0g6YFUH/G
+         vqeohFuXH3PFAYFcH2ofngh1xtgjei+0FaklSjqFhHq4Yd/8J3CnqP2eL1kYJ7u0qhEG
+         QwyQ==
+X-Gm-Message-State: ALoCoQkacMtacu9Of+5lK3MabGxzbkOMHzFZUj6GtiA1/evbJP/Ek2+4OrqFEFTsF4AFNFpcntDN
+X-Received: by 10.43.82.72 with SMTP id ab8mr5911228icc.76.1416864290586; Mon,
+ 24 Nov 2014 13:24:50 -0800 (PST)
+Received: by 10.107.1.199 with HTTP; Mon, 24 Nov 2014 13:24:50 -0800 (PST)
+In-Reply-To: <1416530282-13192-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260150>
 
-This function behaves the same as string_list_insert, just the
-starting indexes for searching, where to insert into the list is also
-a parameter. So if you have knowledge on where to search for the string
-to be inserted, you may have a speed up version of string_list_insert.
+Anything holding this back?
 
-As we're not using this function throughout the codebase, get rid of it.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- string-list.c | 8 +-------
- string-list.h | 2 --
- 2 files changed, 1 insertion(+), 9 deletions(-)
-
-diff --git a/string-list.c b/string-list.c
-index c5aa076..9584fa6 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -59,13 +59,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
- 
- struct string_list_item *string_list_insert(struct string_list *list, const char *string)
- {
--	return string_list_insert_at_index(list, -1, string);
--}
--
--struct string_list_item *string_list_insert_at_index(struct string_list *list,
--						     int insert_at, const char *string)
--{
--	int index = add_entry(insert_at, list, string);
-+	int index = add_entry(-1, list, string);
- 
- 	if (index < 0)
- 		index = -1 - index;
-diff --git a/string-list.h b/string-list.h
-index 40ffe0c..ee9b100 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -61,8 +61,6 @@ int string_list_find_insert_index(const struct string_list *list, const char *st
-  * Returns the string_list_item, the string is part of.
-  */
- struct string_list_item *string_list_insert(struct string_list *list, const char *string);
--struct string_list_item *string_list_insert_at_index(struct string_list *list,
--						     int insert_at, const char *string);
- 
- /*
-  * Checks if the given string is part of a sorted list. If it is part of the list,
--- 
-2.2.0.rc3
+On Thu, Nov 20, 2014 at 4:38 PM, Stefan Beller <sbeller@google.com> wrote:
+> From: Ronnie Sahlberg <sahlberg@google.com>
+>
+> write_ref_sha1 tries to update the reflog while updating the ref.
+> Move these reflog changes out into its own function so that we can do the
+> same thing if we write a sha1 ref differently, for example by writing a ref
+> to the packed refs file instead.
+>
+> No functional changes intended. We only move some code out into a separate
+> function.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+>  Examining the refs-transaction-reflog series a bit closer, this seems to be
+>  one of the last independant patches, which make sense to rip out on a per-patch
+>  basis.
+>
+>
+>  refs.c | 60 +++++++++++++++++++++++++++++++++++-------------------------
+>  1 file changed, 35 insertions(+), 25 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 005eb18..6837367 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3043,6 +3043,40 @@ int is_branch(const char *refname)
+>         return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
+>  }
+>
+> +static int write_sha1_update_reflog(struct ref_lock *lock,
+> +       const unsigned char *sha1, const char *logmsg)
+> +{
+> +       if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
+> +           (strcmp(lock->ref_name, lock->orig_ref_name) &&
+> +            log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
+> +               unlock_ref(lock);
+> +               return -1;
+> +       }
+> +       if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
+> +               /*
+> +                * Special hack: If a branch is updated directly and HEAD
+> +                * points to it (may happen on the remote side of a push
+> +                * for example) then logically the HEAD reflog should be
+> +                * updated too.
+> +                * A generic solution implies reverse symref information,
+> +                * but finding all symrefs pointing to the given branch
+> +                * would be rather costly for this rare event (the direct
+> +                * update of a branch) to be worth it.  So let's cheat and
+> +                * check with HEAD only which should cover 99% of all usage
+> +                * scenarios (even 100% of the default ones).
+> +                */
+> +               unsigned char head_sha1[20];
+> +               int head_flag;
+> +               const char *head_ref;
+> +               head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+> +                                             head_sha1, &head_flag);
+> +               if (head_ref && (head_flag & REF_ISSYMREF) &&
+> +                   !strcmp(head_ref, lock->ref_name))
+> +                       log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
+> +       }
+> +       return 0;
+> +}
+> +
+>  /*
+>   * Write sha1 into the ref specified by the lock. Make sure that errno
+>   * is sane on error.
+> @@ -3086,34 +3120,10 @@ static int write_ref_sha1(struct ref_lock *lock,
+>                 return -1;
+>         }
+>         clear_loose_ref_cache(&ref_cache);
+> -       if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
+> -           (strcmp(lock->ref_name, lock->orig_ref_name) &&
+> -            log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
+> +       if (write_sha1_update_reflog(lock, sha1, logmsg)) {
+>                 unlock_ref(lock);
+>                 return -1;
+>         }
+> -       if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
+> -               /*
+> -                * Special hack: If a branch is updated directly and HEAD
+> -                * points to it (may happen on the remote side of a push
+> -                * for example) then logically the HEAD reflog should be
+> -                * updated too.
+> -                * A generic solution implies reverse symref information,
+> -                * but finding all symrefs pointing to the given branch
+> -                * would be rather costly for this rare event (the direct
+> -                * update of a branch) to be worth it.  So let's cheat and
+> -                * check with HEAD only which should cover 99% of all usage
+> -                * scenarios (even 100% of the default ones).
+> -                */
+> -               unsigned char head_sha1[20];
+> -               int head_flag;
+> -               const char *head_ref;
+> -               head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+> -                                             head_sha1, &head_flag);
+> -               if (head_ref && (head_flag & REF_ISSYMREF) &&
+> -                   !strcmp(head_ref, lock->ref_name))
+> -                       log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
+> -       }
+>         if (commit_ref(lock)) {
+>                 error("Couldn't set %s", lock->ref_name);
+>                 unlock_ref(lock);
+> --
+> 2.2.0.rc2.23.gca0107e
+>
