@@ -1,96 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC] CYGWIN: avoid implicit declaration warning
-Date: Mon, 24 Nov 2014 14:50:01 -0800
-Message-ID: <xmqqlhn0usbq.fsf@gitster.dls.corp.google.com>
-References: <5471EC26.3040705@web.de> <5472159B.4060905@ramsay1.demon.co.uk>
-	<xmqqegstychq.fsf@gitster.dls.corp.google.com>
-	<54726A8C.4040600@ramsay1.demon.co.uk>
-	<5473B0E4.9090900@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] [PATCH] remote: add new --fetch option for set-url
+Date: Mon, 24 Nov 2014 17:54:57 -0500
+Message-ID: <20141124225457.GA9942@peff.net>
+References: <6997784.RuzRO1AFsK@al>
+ <27811375.1kgEM3BV3q@al>
+ <20141124222243.GA9055@peff.net>
+ <1660121.8PEbpzfRYH@al>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Mon Nov 24 23:50:14 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Peter Wu <peter@lekensteyn.nl>
+X-From: git-owner@vger.kernel.org Mon Nov 24 23:55:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xt2SS-0004OB-H8
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 23:50:13 +0100
+	id 1Xt2X9-00081p-3y
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 23:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750968AbaKXWuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 17:50:06 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62524 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750878AbaKXWuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 17:50:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A5878210BA;
-	Mon, 24 Nov 2014 17:50:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kJ4d5VRePfJBGLW8zln8WpBwe6Y=; b=E+k+Ra
-	P3JcdM1RyP/ivIiBgx1r5k34h+YA0Q28pPLCzIhlW0qLC0JZ669Mz3L2O9U7xPr7
-	pWaPcHVoUeKX8p2LdSk8p4o3OP4nFHWzSQ/yA0z3L/x6gGPQVAUnBPf4vdyW8444
-	UCnOS79Xfvq0T8Pud7nOj9NbU/e7lu+WJqeEI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=htnz15AKSOV6L8OwqYrCyB6KabZWQUxW
-	vVCpL/OiVKm/UHXZHo4S/yx2i8VQJavuGfkQBf9PwxQJxrLJAsFGUhS7TRXxTAmS
-	7fu0EkFcLBMbk0pkXp8j9e/66405PpoH1WZzPDT0VFEkbrhS2IaeaymNXpRlmH4i
-	jALt77iNMkE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9662E210B8;
-	Mon, 24 Nov 2014 17:50:03 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 09A5F210B5;
-	Mon, 24 Nov 2014 17:50:02 -0500 (EST)
-In-Reply-To: <5473B0E4.9090900@ramsay1.demon.co.uk> (Ramsay Jones's message of
-	"Mon, 24 Nov 2014 22:27:48 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3A1FAF3E-742C-11E4-AF55-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1750938AbaKXWy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 17:54:59 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44418 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750784AbaKXWy6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 17:54:58 -0500
+Received: (qmail 14878 invoked by uid 102); 24 Nov 2014 22:54:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 16:54:58 -0600
+Received: (qmail 23119 invoked by uid 107); 24 Nov 2014 22:54:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 17:54:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Nov 2014 17:54:57 -0500
+Content-Disposition: inline
+In-Reply-To: <1660121.8PEbpzfRYH@al>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260163>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+On Mon, Nov 24, 2014 at 11:47:30PM +0100, Peter Wu wrote:
 
-> ...
-> Although I have not done an actual diff of the various cdef.h files, they
-> do appear to be more or less the same. In other words, I no longer think
-> that the change results from a 'change in priority of _XOPEN_SOURCE'. The
-> issue is simply that in the old <string.h> header these functions were
-> declared unconditionally; in the new headers the are contained within
-> preprocessor conditionals using the __GNU_VISIBLE and __BSD_VISIBLE macros
-> which are not set when _XOPEN_SOURCE is set (despite _GNU_SOURCE and
-> _BSD_SOURCE being set).
+> > Right. My original complaint was only that "--fetch" is not as
+> > orthogonal to "--push" (and an optionless set-url) as it could be. I
+> > think the alternatives for going forward are basically:
+> > 
+> >   1. Name it something besides --fetch (but that's rather clunky).
+> 
+> It is not orthogonal to --push in the config, but the behavior exposed
+> to the user is orthogonal unless I am missing something?
 
-So I can take your version [*1*], drop this bit from the log:
+My complaint is that you have three possible options to provide: --push,
+--fetch, or no option at all. And "--fetch" sometimes behaves like no
+option, and sometimes not. Which is the confusing/non-orthogonal part.
 
-    This seems to be caused by a change to the system headers which
-    results in the _XOPEN_SOURCE macro now having prioity over the
-    _GNU_SOURCE and _BSD_SOURCE macros (they are simply ignored).
-    This in turn leads to the declarations of the above functions
-    to be suppressed.
+> I can understand that --fetch sounds a bit weird, what about this
+> natural translation:
+> 
+>     "git remote: set the URL (only the fetch one) for NAME to URL"
+>     git remote set-url --only=fetch NAME URL
+> 
+>     "git remote: set the URL (only the push one) for NAME to URL"
+>     git remote set-url --only=push NAME URL
+>     (obsoletes --push)
+> 
+>     "git remote: set the URL (both) for NAME to URL"
+>     git remote set-url --only=both NAME URL
+>     (it would be nice if --only=both (weird!) can be removed in the
+>     future such that the option is more natural)
+> 
+>     "git remote: set the URL for NAME to URL"
+>     git remote set-url NAME URL
+>     (current behavior: YOU git guru knows what I do right?)
 
-and replace it with something like:
+Yeah, I think that addresses my concern (because it explicitly leaves
+no-option as a historical curiosity, and not as an implicit version of
+"--both").
 
-    <string.h> on Cygwin used to always declare the above functions,
-    but a recent version of it no longer make them visible when
-    _XOPEN_SOURCE is set (even if _GNU_SOURCE and _BSD_SOURCE is
-    set).
+> >   3. Live with it. Probably address the weirdness in the documentation.
+> > 
+> >   4. Do nothing, drop the patch.
+> > 
+> > I think I'd be OK with (3), with an appropriate documentation update.
+> 
+> I prefer 1 for now as it avoids the extra manual action I have to take
+> when changing URLs.
 
-and keep the rest, I think.
+I'm not sure if I was clear on (3), but "live with it" was "live with
+your original patch". Which I think you would also be happy with.
 
-Thanks for digging this thoroughly.
-
-
-[Reference]
-
-*1* http://article.gmane.org/gmane.comp.version-control.git/260091
+-Peff
