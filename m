@@ -1,113 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] send-email: handle adjacent RFC 2047-encoded words
- properly
-Date: Mon, 24 Nov 2014 18:03:47 -0500
-Message-ID: <20141124230346.GA10064@peff.net>
-References: <1416786604-4988-1-git-send-email-dpb@corrigendum.ru>
- <20141124153609.GA25912@peff.net>
- <op.xpudh8c3nngjn5@freezie>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH RFC] CYGWIN: avoid implicit declaration warning
+Date: Mon, 24 Nov 2014 23:04:57 +0000
+Message-ID: <5473B999.2050604@ramsay1.demon.co.uk>
+References: <5471EC26.3040705@web.de> <5472159B.4060905@ramsay1.demon.co.uk>	<xmqqegstychq.fsf@gitster.dls.corp.google.com>	<54726A8C.4040600@ramsay1.demon.co.uk>	<5473B0E4.9090900@ramsay1.demon.co.uk> <xmqqlhn0usbq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Thomas Rast <tr@thomasrast.ch>
-To: =?utf-8?B?0KDQvtC80LDQvSDQlNC+0L3Rh9C10L3QutC+?= 
-	<dpb@corrigendum.ru>
-X-From: git-owner@vger.kernel.org Tue Nov 25 00:03:57 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 00:05:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xt2fj-0006bJ-HE
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 00:03:55 +0100
+	id 1Xt2gy-0007YV-0B
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 00:05:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbaKXXDu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2014 18:03:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44436 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751628AbaKXXDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 18:03:48 -0500
-Received: (qmail 15289 invoked by uid 102); 24 Nov 2014 23:03:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 17:03:48 -0600
-Received: (qmail 23310 invoked by uid 107); 24 Nov 2014 23:03:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 18:03:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Nov 2014 18:03:47 -0500
-Content-Disposition: inline
-In-Reply-To: <op.xpudh8c3nngjn5@freezie>
+	id S1751434AbaKXXFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 18:05:04 -0500
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:39744 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751375AbaKXXFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 18:05:03 -0500
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id BF7161280E0;
+	Mon, 24 Nov 2014 23:05:00 +0000 (GMT)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 7006F1280BF;
+	Mon, 24 Nov 2014 23:05:00 +0000 (GMT)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
+	Mon, 24 Nov 2014 23:05:00 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <xmqqlhn0usbq.fsf@gitster.dls.corp.google.com>
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260167>
 
-On Mon, Nov 24, 2014 at 09:26:22PM +0300, =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=
- =D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE wrote:
+On 24/11/14 22:50, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
+>> ...
+>> Although I have not done an actual diff of the various cdef.h files, they
+>> do appear to be more or less the same. In other words, I no longer think
+>> that the change results from a 'change in priority of _XOPEN_SOURCE'. The
+>> issue is simply that in the old <string.h> header these functions were
+>> declared unconditionally; in the new headers the are contained within
+>> preprocessor conditionals using the __GNU_VISIBLE and __BSD_VISIBLE macros
+>> which are not set when _XOPEN_SOURCE is set (despite _GNU_SOURCE and
+>> _BSD_SOURCE being set).
+> 
+> So I can take your version [*1*], drop this bit from the log:
+> 
+>     This seems to be caused by a change to the system headers which
+>     results in the _XOPEN_SOURCE macro now having prioity over the
+>     _GNU_SOURCE and _BSD_SOURCE macros (they are simply ignored).
+>     This in turn leads to the declarations of the above functions
+>     to be suppressed.
+> 
+> and replace it with something like:
+> 
+>     <string.h> on Cygwin used to always declare the above functions,
+>     but a recent version of it no longer make them visible when
+>     _XOPEN_SOURCE is set (even if _GNU_SOURCE and _BSD_SOURCE is
+>     set).
+> 
+> and keep the rest, I think.
 
-> Yeah, I did realize that token is more restrictive than encoded-text,=
- but I
-> didn't want to stray too far from the subject line of the patch. What=
- I'll
-> probably do is split the patch into two, one for regex tweaking and o=
-ne for
-> multiple-word handling. And yeah, I'll try to make the two functions =
-use the
-> same regexes.
+Perfect! Thanks! (actually, another minor typo: the second warning
+message, indent the ^ by two spaces - it should be pointing to the
+= symbol).
 
-Thanks, I think that sounds like a good plan.
-
-> >For your definition of encoded-text, RFC 2047 says:
-> >
-> >     encoded-text =3D 1*<Any printable ASCII character other than "?=
-"
-> >                          or SPACE>
-> >
-> >It looks like you pulled the definition of $et from is_rfc2047_quote=
-d,
-> >but I am not clear on where that original came from (it is from a3a8=
-262,
-> >but that commit message does not explain the regex).
->=20
-> No, it's actually an independent discovery. :-) I don't think it need=
-s
-> explanation, though - it's just a character class with two ranges cov=
-ering
-> every printable character but the question mark.
-
-And now it is my turn to hang my head in shame. I viewed that as a set
-of characters, rather than ranges. The "-" just blended into the mass o=
-f
-punctuation, and I mistook the "!" for negation.
-
-I wonder if it would be more readable as:
-
-  [\x21-\x3e\x40-\x7e]
-
-or something. I guess perl even has classes pre-made for "printable
-ascii". I dunno. It may be OK as-is, too, and I just need to read more
-carefully. :)
-
-> >Also, I note that we handle 'q'-style encodings here, but not 'b'. I
-> >wonder if it is worth adding that in while we are in the area (it is=
- not
-> >a big deal if you always send-email git-generated patches, as we nev=
-er
-> >generate it).
->=20
-> I could add "b" decoding, but since format-patch never generates "b"
-> encodings, testing would be a problem. And I'd rather not do it witho=
-ut any
-> tests.
-
-I think you could include some literal fixtures in the test suite (t510=
-0
-already does this for mailinfo). But I don't think handling 'b' is a
-requirement here. It's really orthogonal to your patches, and nobody ha=
-s
-actually asked for it, so I don't mind leaving it for another day.
-
--Peff
+ATB,
+Ramsay Jones
