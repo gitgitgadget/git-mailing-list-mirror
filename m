@@ -1,93 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] [PATCH] remote: add new --fetch option for set-url
-Date: Mon, 24 Nov 2014 17:54:57 -0500
-Message-ID: <20141124225457.GA9942@peff.net>
-References: <6997784.RuzRO1AFsK@al>
- <27811375.1kgEM3BV3q@al>
- <20141124222243.GA9055@peff.net>
- <1660121.8PEbpzfRYH@al>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH RFC] CYGWIN: avoid implicit declaration warning
+Date: Mon, 24 Nov 2014 22:59:34 +0000
+Message-ID: <5473B856.5000205@ramsay1.demon.co.uk>
+References: <5471EC26.3040705@web.de> <5472159B.4060905@ramsay1.demon.co.uk>	<xmqqegstychq.fsf@gitster.dls.corp.google.com>	<54726A8C.4040600@ramsay1.demon.co.uk> <5472DC24.9010008@web.de>	<5473A2D0.5010101@ramsay1.demon.co.uk> <xmqq7fykw9y5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Peter Wu <peter@lekensteyn.nl>
-X-From: git-owner@vger.kernel.org Mon Nov 24 23:55:03 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 24 23:59:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xt2X9-00081p-3y
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 23:55:03 +0100
+	id 1Xt2bl-0003La-BC
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Nov 2014 23:59:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750938AbaKXWy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 17:54:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44418 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750784AbaKXWy6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 17:54:58 -0500
-Received: (qmail 14878 invoked by uid 102); 24 Nov 2014 22:54:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 16:54:58 -0600
-Received: (qmail 23119 invoked by uid 107); 24 Nov 2014 22:54:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 17:54:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Nov 2014 17:54:57 -0500
-Content-Disposition: inline
-In-Reply-To: <1660121.8PEbpzfRYH@al>
+	id S1750848AbaKXW7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 17:59:45 -0500
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:38125 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750813AbaKXW7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 17:59:44 -0500
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id F301C1280E0;
+	Mon, 24 Nov 2014 22:59:42 +0000 (GMT)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id ABAE01280BF;
+	Mon, 24 Nov 2014 22:59:42 +0000 (GMT)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
+	Mon, 24 Nov 2014 22:59:42 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <xmqq7fykw9y5.fsf@gitster.dls.corp.google.com>
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260164>
 
-On Mon, Nov 24, 2014 at 11:47:30PM +0100, Peter Wu wrote:
-
-> > Right. My original complaint was only that "--fetch" is not as
-> > orthogonal to "--push" (and an optionless set-url) as it could be. I
-> > think the alternatives for going forward are basically:
-> > 
-> >   1. Name it something besides --fetch (but that's rather clunky).
+On 24/11/14 21:44, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 > 
-> It is not orthogonal to --push in the config, but the behavior exposed
-> to the user is orthogonal unless I am missing something?
-
-My complaint is that you have three possible options to provide: --push,
---fetch, or no option at all. And "--fetch" sometimes behaves like no
-option, and sometimes not. Which is the confusing/non-orthogonal part.
-
-> I can understand that --fetch sounds a bit weird, what about this
-> natural translation:
+>> I updated from cygwin 1.5 to cygwin 1.7 at the beginning of the year.
+>> Since it is no longer supported, I don't think we need to worry about
+>> version 1.5. When I said 'old installation' I meant my old version 1.7
+>> 32-bit installation.
+>>
+>>> One netbook was converted from XP to Linux, the other machine needs to be
+>>> re-installed and CYGWIN 1.5 is no longer available for download.
+>>>
+>>> I can confirm that Ramsays patch works with CYGWIN 1.7 32 Bit.
+>>
+>> Thanks!
 > 
->     "git remote: set the URL (only the fetch one) for NAME to URL"
->     git remote set-url --only=fetch NAME URL
+> Thanks.  So the unconditional version of the patch is good to go, I
+> take?
 > 
->     "git remote: set the URL (only the push one) for NAME to URL"
->     git remote set-url --only=push NAME URL
->     (obsoletes --push)
-> 
->     "git remote: set the URL (both) for NAME to URL"
->     git remote set-url --only=both NAME URL
->     (it would be nice if --only=both (weird!) can be removed in the
->     future such that the option is more natural)
-> 
->     "git remote: set the URL for NAME to URL"
->     git remote set-url NAME URL
->     (current behavior: YOU git guru knows what I do right?)
 
-Yeah, I think that addresses my concern (because it explicitly leaves
-no-option as a historical curiosity, and not as an implicit version of
-"--both").
+Hmm, I don't know what you mean by 'unconditional version'. ;-)
 
-> >   3. Live with it. Probably address the weirdness in the documentation.
-> > 
-> >   4. Do nothing, drop the patch.
-> > 
-> > I think I'd be OK with (3), with an appropriate documentation update.
-> 
-> I prefer 1 for now as it avoids the extra manual action I have to take
-> when changing URLs.
+Anyway, the commit message of my patch needs some edits to reflect
+my new 'theory' of the cause. I suppose I should try to track down
+the changes to the cygwin headers to be more confident that I have
+actually identified the correct cause. (Like Jonathan, I'm still a
+bit surprised that _GNU_SOURCE doesn't trump _XOPEN_SOURCE, but I
+can't say that it is a bug).
 
-I'm not sure if I was clear on (3), but "live with it" was "live with
-your original patch". Which I think you would also be happy with.
+However, I suspect that the patch as is, modulo commit message edits,
+should be sufficient to fix this up (at least for now).
 
--Peff
+ATB,
+Ramsay Jones
