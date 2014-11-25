@@ -1,114 +1,84 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3 2/3] mailmap: use higher level string list functions
-Date: Mon, 24 Nov 2014 19:44:14 -0800
-Message-ID: <1416887054-27204-1-git-send-email-sbeller@google.com>
-References: <CAPig+cQ_4A-0LOgXXG5qLeHOev+g8KMq5osKz34AFijGuyRidQ@mail.gmail.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: marius@trolltech.com, gitster@pobox.com, julian@quantumfyre.co.uk,
-	sunshine@sunshineco.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 25 04:44:24 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] commit: inform pre-commit if --amend is used
+Date: Mon, 24 Nov 2014 22:44:24 -0500
+Message-ID: <20141125034424.GA19161@peff.net>
+References: <1416828111-4567-1-git-send-email-oystwa@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 04:44:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xt739-0005Yy-R8
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 04:44:24 +0100
+	id 1Xt73F-0005e9-TR
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 04:44:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751304AbaKYDoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 22:44:19 -0500
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:33936 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750841AbaKYDoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 22:44:18 -0500
-Received: by mail-ie0-f180.google.com with SMTP id rp18so10273919iec.39
-        for <git@vger.kernel.org>; Mon, 24 Nov 2014 19:44:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rFxi6YqTdQemnR/ns5Sd9HkDDWg5sNe5dUxRQwclHMo=;
-        b=RNxlqiO6inE3tedrGG8GQpI2MP1aw7XEqS1W7j5JhuywJ0HhzzvbllyGR8lPlCxGyF
-         q1SFmX6lrtf34/nSG0jHRvWaX2oFr+mwNl6XBK/9YZLCBbDPcPNPh0eGJ/GTpybLg84y
-         w0OlTZ5vSi++gXWuBYWS9fWpLV8Z0mxkyf9xsHgoJPFEaIZ4wHovHflwExBGfWAkeVet
-         l4i9T/723352hhMkdMYNyol4OJHk2v70fDmRM3ZcrMWN+k8DyVL0Nsf9kjPlqmC2wxa0
-         eZummNooeflUVsD+IjRyDp8MeFOjKCG2KGMtI4qKmqU5bCJW7zSrxTkfdIZN7EW5efaR
-         iO2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=rFxi6YqTdQemnR/ns5Sd9HkDDWg5sNe5dUxRQwclHMo=;
-        b=SoE+E6MD8n3gntBKHtMz489CT2ptp5A9KMKRfBlzNDurVefwOex5C2PNvWfwvpokLS
-         yeWxNbZm7j1htzhtofAwpAQ7MPNt24DRmpxf40IDBig4X6OkyGqW3mzxckZojLZoOwMD
-         5HBsMISXPdZk7IutlJvdwj58vqn/2W2ohBML73Q68JO7lZyKTHZNsYp3ZznnNBHsh2JO
-         3yGB5uIwxS9rbc4zQ1NoydVzdhZGbF5NZpO1/Y/xqH0Sbhe5pSPBi4iTCgJVKf1fWuTN
-         S20T4ZIMQSz6BN2fXcA8f+izMbY0GTiCwfHUeFjR/buc1Wf+yjhNCwOso5JM4rtp8ejM
-         kyTw==
-X-Gm-Message-State: ALoCoQnRrRHA5xd6npDVD37n3EjXjvO72bZIV9CDgrxdoHNjDsjf4X/prVv6zBvsBXYB8881VFNK
-X-Received: by 10.107.7.91 with SMTP id 88mr20705467ioh.70.1416887057826;
-        Mon, 24 Nov 2014 19:44:17 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:79de:6365:bed8:92ea])
-        by mx.google.com with ESMTPSA id k191sm27082iok.1.2014.11.24.19.44.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Nov 2014 19:44:17 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc3
-In-Reply-To: <CAPig+cQ_4A-0LOgXXG5qLeHOev+g8KMq5osKz34AFijGuyRidQ@mail.gmail.com>
+	id S1751614AbaKYDo0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Nov 2014 22:44:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44598 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750852AbaKYDoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 22:44:25 -0500
+Received: (qmail 27074 invoked by uid 102); 25 Nov 2014 03:44:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 21:44:25 -0600
+Received: (qmail 26343 invoked by uid 107); 25 Nov 2014 03:44:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Nov 2014 22:44:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Nov 2014 22:44:24 -0500
+Content-Disposition: inline
+In-Reply-To: <1416828111-4567-1-git-send-email-oystwa@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260186>
 
-No functional changes intended. This commit makes use of higher level
-and better documented functions of the string list API, so the code is
-more understandable.
+On Mon, Nov 24, 2014 at 12:21:51PM +0100, =C3=98ystein Walle wrote:
 
-Note that also the required computational amount should not change
-in principal as we need to look up the item no matter if it is already
-part of the list or not. Once looked up, insertion comes for free.
+>  This hook is invoked by 'git commit', and can be bypassed
+> -with `--no-verify` option.  It takes no parameter, and is
+> +with `--no-verify` option.  It takes one parameter which is "amend" =
+if
+> +`--amend` was used when committing and empty otherwise. It is
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-Changes since Version 1:
-* Remove declaration-after-statement.
+This interface change is OK for backwards compatibility, since existing
+scripts would not look at the arguments (which are always empty
+currently). And I think it is OK for adding new options in the future,
+too, because the option is always present (just sometimes as an empty
+string).  Can we make the non-amend option something more verbose than
+the empty string (like "noamend")? I have two reasons:
 
-Changes Version 1 to Version 2:
-* typo in commit message
+  1. It is a bit more obvious when debugging or dumping arguments (e.g.=
+,
+     via GIT_TRACE), especially if new options are added after the
+     first.
 
- mailmap.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+  2. It makes it easier for a script to work on old and new versions of
+     git. It sees either "amend" or "noamend" for the two obvious cases=
+,
+     and if it sees no argument, then it knows that it does not know
+     either way (it is running on an old version of git).
 
-diff --git a/mailmap.c b/mailmap.c
-index 81890a6..3b00a65 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -71,6 +71,7 @@ static void add_mapping(struct string_list *map,
- 			char *old_name, char *old_email)
- {
- 	struct mailmap_entry *me;
-+	struct string_list_item *item;
- 	int index;
- 
- 	if (old_email == NULL) {
-@@ -78,15 +79,10 @@ static void add_mapping(struct string_list *map,
- 		new_email = NULL;
- 	}
- 
--	if ((index = string_list_find_insert_index(map, old_email, 1)) < 0) {
--		/* mailmap entry exists, invert index value */
--		index = -1 - index;
--		me = (struct mailmap_entry *)map->items[index].util;
-+	item = string_list_insert(map, old_email);
-+	if (item->util) {
-+		me = (struct mailmap_entry *)item->util;
- 	} else {
--		/* create mailmap entry */
--		struct string_list_item *item;
--
--		item = string_list_insert_at_index(map, index, old_email);
- 		me = xcalloc(1, sizeof(struct mailmap_entry));
- 		me->namemap.strdup_strings = 1;
- 		me->namemap.cmp = namemap_cmp;
--- 
-2.2.0.rc3
+     Technically one can tell the difference in shell between an empty
+     string and a missing argument, but it is sufficiently subtle that =
+I
+     think "noamend" is a better route.
+
+> +# a hook that checks if "amend" is passed as an argument
+> +cat > "$HOOK" <<EOF
+> +#!/bin/sh
+> +test "\$1" =3D amend
+> +EOF
+
+Eric mentioned write_script already (and it would be nice to convert th=
+e
+existing uses in t7503 to use it). You may also want to use "\EOF" to
+inhibit interpolation in the here-document, which means you do not have
+to quote variables inside the script.
+
+-Peff
