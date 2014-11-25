@@ -1,130 +1,140 @@
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH 2/2] commit: inform pre-commit that --amend was used
-Date: Tue, 25 Nov 2014 23:51:29 +0100
-Message-ID: <b9ef551633329702559e4cee6528b68ab757b531.1416955873.git.oystwa@gmail.com>
-References: <cover.1416953772.git.oystwa@gmail.com>
+From: Peter Wu <peter@lekensteyn.nl>
+Subject: Re: [PATCH v3] remote: add --fetch and --both options to set-url
+Date: Tue, 25 Nov 2014 23:53:56 +0100
+Message-ID: <2086201.pfQdnB4m0z@al>
+References: <1416916106-19892-1-git-send-email-peter@lekensteyn.nl> <CAPig+cS1rFpFO4YsNEi2Fjzfj+qH7Oat+PR+0GUo32=MFTNRiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 25 23:52:11 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 23:54:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtOxt-000682-Qu
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 23:52:10 +0100
+	id 1XtOzo-0007eM-B7
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 23:54:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751528AbaKYWvt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 17:51:49 -0500
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:53671 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750951AbaKYWvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 17:51:48 -0500
-Received: by mail-wi0-f177.google.com with SMTP id l15so3098636wiw.16
-        for <git@vger.kernel.org>; Tue, 25 Nov 2014 14:51:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=f9RoXEP+7XM/pqVdEi+fOI+QXbjadDGg8nwdddnhfAQ=;
-        b=i6kf3z0FIrezzOoEScR6yOJbpw1623n1zeRnt7pVdTrw5O9D62XnTRNW7hKneDhBhl
-         JmSZzUl6g9+pFGL4ALHeMDGsIHguNORYGVnW+nTNnrudL9Ml9bWxgAwXbX/d1Cml2YAT
-         VMcy1Bk+9m7T43Cf7+KB1oENe+FfMqxwclkzgsFm2cHG9rv58IcCPsm5Iv5ba0ZkCt8w
-         Yi21DVMkzbTgJW7+EwFweYzbFhfKgSB5gK+EOL0AINOcp9U3c4eT1gRaW5UobZsT+oQH
-         CbyX+s6gtmdK6rr++7qA3fG35dZ29gW/NZ98ZmzbGhxnxmz2GAWP4e1FH8ipw5D1+b8U
-         XQuA==
-X-Received: by 10.180.21.166 with SMTP id w6mr35777075wie.43.1416955906982;
-        Tue, 25 Nov 2014 14:51:46 -0800 (PST)
-Received: from bigge.localdomain (80.156.189.109.customer.cdi.no. [109.189.156.80])
-        by mx.google.com with ESMTPSA id ry19sm3830783wjb.3.2014.11.25.14.51.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Nov 2014 14:51:46 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.rc3
-In-Reply-To: <cover.1416953772.git.oystwa@gmail.com>
-In-Reply-To: <cover.1416955873.git.oystwa@gmail.com>
-References: <cover.1416955873.git.oystwa@gmail.com>
+	id S1751564AbaKYWyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 17:54:04 -0500
+Received: from lekensteyn.nl ([178.21.112.251]:37852 "EHLO lekensteyn.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751210AbaKYWyC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 17:54:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lekensteyn.nl; s=s2048-2014-q3;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From; bh=yR4YCh3NbhwmS8sPplBuY+4HwVc1+2QG+wj2oSWCuoM=;
+	b=yW3iT81Kq3S14LAap3QZoR/nlGa7k7YgH1x9lIGTPSnTqnNUjDMVt78wU4KFD0QR4BCg3mZEV5V7/fQHrSSzbW8XZ4OcEG4Ti410TD8oSNl8FDBX8IsXNiuT3hxJFwyHslSdqdlbz2s5IrmRWOj7e2sgotoUl3sLJdCEuA0bbdoPB2EtSKx1HkIAB0OgSsloemTMRcxF0Czh/bnuikG33TA8XQJFTk2lVnSd933avO8g5VnYsXx/LhqBIS9AcHGZ1TXzKtvAAdoeKrocYRdCnMEVq9eldhOA8RXuHUFlCWQMdoeCwfwJCKeNbc7htP3fLqFUF5iicOTp6mRTaReBTg==;
+Received: by lekensteyn.nl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
+	(Exim 4.80)
+	(envelope-from <peter@lekensteyn.nl>)
+	id 1XtOzd-000317-PJ; Tue, 25 Nov 2014 23:53:58 +0100
+User-Agent: KMail/4.14.3 (Linux/3.17.0-rc4-custom-00168-g7ec62d4; KDE/4.14.3; x86_64; ; )
+In-Reply-To: <CAPig+cS1rFpFO4YsNEi2Fjzfj+qH7Oat+PR+0GUo32=MFTNRiA@mail.gmail.com>
+X-Spam-Score: -0.0 (/)
+X-Spam-Status: No, hits=-0.0 required=5.0 tests=NO_RELAYS=-0.001 autolearn=no autolearn_force=no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260248>
 
-When a commit is amended a pre-commit hook that verifies the commit's
-contents might not find what it's looking for if it looks at the
-differences against HEAD when HEAD~1 might be more appropriate. Inform
-the commit hook that --amend is being used so that hook authors can do
-e.g.
+On Tuesday 25 November 2014 17:09:04 Eric Sunshine wrote:
+> On Tue, Nov 25, 2014 at 6:48 AM, Peter Wu <peter@lekensteyn.nl> wrote:
+> > git remote set-url knew about the '--push' option to update just the
+> > pushurl, but it does not have a similar option for "update fetch URL and
+> > leave whatever was in place for the push URL".
+> >
+> > This patch adds support for a '--fetch' option which implements that use
+> > case in a backwards compatible way: if no --both, --push or --fetch
+> > options are given, then the push URL is modified too if it was not set
+> > before. This is the case since the push URL is implicitly based on the
+> > fetch URL.
+> >
+> > A '--both' option is added to make the command independent of previous
+> > pushurl settings. For the --add and --delete set operations, it will
+> > always set the push and/ or the fetch URLs. For the primary mode of
+> > operation (without --add or --delete), it will drop pushurl as the
+> > implicit push URL is the (fetch) URL.
+> 
+> I've read (though perhaps not fully digested) the other email thread
+> which led up to this version of the patch, as well as the
+> documentation update in this patch, but I still don't understand the
+> need for the --both option. Intuitively, I would expect that
+> specifying --fetch and --push on the command line would have the same
+> effect as the proposed --both option. Thus, why is a separate (and
+> exclusive) --both option needed? Is it to reduce typing? What am I
+> missing?
 
-    if test "$1" =3D amend; then
-        ...
-    else
-        ...
-    fi
+The initial version just added --fetch and let --fetch --push behave
+like the current --both. Here you can see the most recent discussion
+leading to the --both option:
+http://www.spinics.net/lists/git/msg242336.html
 
-to handle these situations.
+There was an overlapping discussion about the confusing historic
+behavior (default vs. --fetch vs. --push --fetch), and an alternative
+(less verbose form) of --push --fetch. The reason that --both is
+introduced probably has something to do with it being less verbose.
+I am not too attached to either option by the way.
 
-Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
----
- Documentation/githooks.txt |  3 ++-
- builtin/commit.c           |  3 ++-
- t/t7503-pre-commit-hook.sh | 11 +++++++++++
- 3 files changed, 15 insertions(+), 2 deletions(-)
+> > The documentation has also been updated and a missing '--push' option
+> > is added to the 'git remote -h' command.
+> >
+> > Tests are also added to verify the documented behavior.
+> >
+> > Signed-off-by: Peter Wu <peter@lekensteyn.nl>
+> > ---
+> >
+> >  v2: fixed test case
+> >  v3: added --both option, changed --fetch --push behavior, added more tests for
+> >      --add/--delete cases, refactored to reduce duplication (not special-casing
+> >      add_mode without oldurl, just skip initially setting oldurl).
+> >
+> > Translators note: the help text gained more translatable strings and some
+> > strings got additional options.
+> > ---
+> > diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+> > index cb103c8..bdd0305 100644
+> > --- a/Documentation/git-remote.txt
+> > +++ b/Documentation/git-remote.txt
+> > @@ -134,7 +134,16 @@ Changes URL remote points to. Sets first URL remote points to matching
+> >  regex <oldurl> (first URL if no <oldurl> is given) to <newurl>. If
+> >  <oldurl> doesn't match any URL, error occurs and nothing is changed.
+> >  +
+> > -With '--push', push URLs are manipulated instead of fetch URLs.
+> > +With '--both', both the fetch and push URLs are manipulated.
+> > ++
+> > +With '--fetch', only fetch URLs are manipulated.
+> > ++
+> > +With '--push', only push URLs are manipulated.
+> > ++
+> > +If none of the '--both', '--fetch' or --push' options are given, then
+> > +'--both' applies only if no push URL was set before. Otherwise '--fetch'
+> > +is assumed for historical reasons. This default may change in the
+> > +future to '--both' to avoid surprises depending on the configuration.
+> 
+> This explanation is somewhat tortuous. Assuming that the --both option
+> is superfluous, perhaps this could be explained more clearly along
+> these lines:
+> 
+> --- 8< ---
+> `--fetch` changes fetch URLs, and --push changes push URLs. Specified
+> together, both fetch and push URLs are changed.
+> 
+> For historical reasons, if neither --fetch nor --push is specified,
+> then the fetch URL is changed, as well as the push URL if not already
+> set.
+> --- 8< ---
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 9ef2469..fb3e71e 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -73,7 +73,8 @@ pre-commit
- ~~~~~~~~~~
-=20
- This hook is invoked by 'git commit', and can be bypassed
--with `--no-verify` option.  It takes no parameter, and is
-+with `--no-verify` option.  It takes one parameter which is "amend" if
-+`--amend` was used when committing and "noamend" if not. It is
- invoked before obtaining the proposed commit log message and
- making a commit.  Exiting with non-zero status from this script
- causes the 'git commit' to abort.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e108c53..f9e5d27 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -694,7 +694,8 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix,
- 	/* This checks and barfs if author is badly specified */
- 	determine_author_info(author_ident);
-=20
--	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit=
-", NULL))
-+	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit=
-",
-+					  amend ? "amend" : "noamend", NULL))
- 		return 0;
-=20
- 	if (squash_message) {
-diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
-index 99ed967..b400afe 100755
---- a/t/t7503-pre-commit-hook.sh
-+++ b/t/t7503-pre-commit-hook.sh
-@@ -133,4 +133,15 @@ test_expect_success 'check the author in hook' '
- 	git show -s
- '
-=20
-+# a hook that checks if "amend" is passed as an argument
-+write_script "$HOOK" <<EOF
-+test "\$1" =3D amend
-+EOF
-+
-+test_expect_success 'check that "amend" argument is given' '
-+       git commit --amend --allow-empty
-+'
-+
-+test_must_fail git commit --allow-empty
-+
- test_done
---=20
-2.2.0.rc3
+Excellent, short and concise. If this path is taken, I would still add
+the note about the future change.
+
+I am also interested in opinions about the suggested default behavior.
+Should it become --both (--push --fetch)? In that case '--both' will be
+a pretty useless option in the future (when it becomes the default).
+
+> >  +
+> >  With '--add', instead of changing some URL, new URL is added.
+> >  +
