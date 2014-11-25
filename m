@@ -1,96 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow safer?
-Date: Tue, 25 Nov 2014 09:23:10 -0800
-Message-ID: <xmqqfvd7tcsh.fsf@gitster.dls.corp.google.com>
-References: <5468C33E.2080108@whonix.org> <20141117212657.GC15880@peff.net>
-	<CAK3OfOgko5Fb5FMGCKw3+12fAzMVEHuUriaiBNGi8nb28bNTQA@mail.gmail.com>
-	<CACsJy8BMNXUinfK=YcJPkx98tYv_e40N0_mqqnzMLxDN6hkruA@mail.gmail.com>
-	<20141125012359.GR6527@google.com>
-	<CACsJy8C3Bfruy=usn9MajmLP_10s2zf8AFZJmxyeGSPDS9SwVQ@mail.gmail.com>
-	<20141125034730.GB19161@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Nico Williams <nico@cryptonector.com>,
-	git discussion list <git@vger.kernel.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 25 18:23:19 2014
+From: debugging data <debugging.data@gmail.com>
+Subject: push rejected (non-fast-forward)
+Date: Tue, 25 Nov 2014 12:45:45 -0500
+Message-ID: <C2E11014-CFE8-490E-A21A-DB42CC8E4175@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 25 18:43:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtJpd-000477-N5
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 18:23:18 +0100
+	id 1XtK9Q-0003ir-PF
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 18:43:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861AbaKYRXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 12:23:13 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61267 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750784AbaKYRXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 12:23:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 327B71EB64;
-	Tue, 25 Nov 2014 12:23:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ube3XOZrK6bRgNFqHaU9CJl21fU=; b=oiuxQH
-	8Z++EMrjCWxcvJ/mHbiCQmgJ7C4/fft2cqQqm/PL9W462ILPmFflSMsLhrth11b9
-	LfteWzI9CEZyX5YxdZopO0vWZXUEh9aTt3k0dPOvtt13ut/f6xMB6//3/5Eu6qn6
-	sZS1zkl7y9dq47CGqe1vRiJ4HrdnWNBYzdAbk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wZ9bIS8UPs4RQLhOJYskwjuj986ZkUFz
-	RMOKffTo5Bk9XLKH4WVT7ZS9zp9PYWRBf70segGUvLETcOwuNNFxjNp6i7+sy7yn
-	StsznjnVPK/Qfbx/UwylgTkvs4aygrd9gba2ekLbnSgKetp6gcCjAIXo+gba+rHQ
-	6m3V8oyGiwk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 27E0D1EB63;
-	Tue, 25 Nov 2014 12:23:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 943CC1EB60;
-	Tue, 25 Nov 2014 12:23:11 -0500 (EST)
-In-Reply-To: <20141125034730.GB19161@peff.net> (Jeff King's message of "Mon,
-	24 Nov 2014 22:47:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BB406E82-74C7-11E4-BAC1-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1750834AbaKYRnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 12:43:40 -0500
+Received: from mail-yh0-f67.google.com ([209.85.213.67]:51110 "EHLO
+	mail-yh0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780AbaKYRnk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 12:43:40 -0500
+Received: by mail-yh0-f67.google.com with SMTP id a41so107199yho.10
+        for <git@vger.kernel.org>; Tue, 25 Nov 2014 09:43:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version;
+        bh=KvAkSgi3A3Hy9BrqnciRl44VGGV9RxkUS67os9Mppp8=;
+        b=Kbqk73sJguQ3jgyHmphpXyP82f53iA7uC2ETCuu/30rvtTwlG2CiF05TbpRJiCu++p
+         3GAQJUXqoK96GTpOFd8O7fyaaA3KW+AaCNdFQcqpZMy8QV+sKHdNjA+4JjWhz3NgyeL8
+         W3kx6ZcKjgS0/0q1k0nQquew7jN365I04nSzbkfjVz/7VAgzTl3aDk/9DMSZqENFxgLK
+         gSQwilFR2ni5t9Mdp0Cb1CFm+tCCaY3TaD4X6nRc8HQq3V/Y5v8vEWjDtG7b4UuFeNNe
+         y1j9mij6M9mk7+y1PpyzSQCJUcUrRGgOs0NzOvKfBAm06ZZfdbe7IF4iKDMUrpcZ+OC2
+         TtMg==
+X-Received: by 10.170.72.7 with SMTP id o7mr28150686yko.73.1416937419355;
+        Tue, 25 Nov 2014 09:43:39 -0800 (PST)
+Received: from [10.0.0.15] (c-69-136-29-70.hsd1.fl.comcast.net. [69.136.29.70])
+        by mx.google.com with ESMTPSA id e35sm945886yhq.45.2014.11.25.09.43.38
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 25 Nov 2014 09:43:39 -0800 (PST)
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260227>
 
-Jeff King <peff@peff.net> writes:
+Changes to a remote branch causes a user not to be able to push their
+changes because their tip is behind its remote counterpart.
 
-> On Tue, Nov 25, 2014 at 08:52:58AM +0700, Duy Nguyen wrote:
->
->> On Tue, Nov 25, 2014 at 8:23 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> > I think the biggest obstacle is the upgrade path. ;-)
->> 
->> In the worst case we can always treat new repos as a different VCS. So
->> people will need a migration from SHA-1 to the new format, just like
->> they migrate from SVN/CVS to Git. Painful but simple.
->
-> Maybe we can fix the tree-sorting order while we are at it. :)
->
-> More seriously, there may come a day when we are ready to break
-> compatibility completely with a new "Git v3.0" (2.0 is already taken, of
-> course). I do not have immediate plans for it, but it's possible that
-> multiple factors may make such a move desirable sometime in the next 10
-> years, and that would be a good time to jump hash algorithms, as well.
 
-As the fundamental data model of Git is built around "given the
-object name, the same data is retrieved, and equally importantly,
-given the same data, the same object name is used, so that we can
-say two objects with different names record different contents
-without looking at the data", it does not mesh with the use of
-tagged hash where object name consists of a pair of <what hash is
-used> and <what the hash value is> at all.  It is a proper mindset
-to treat it as a different VCS to give us a clean break when (I did
-not say "if") we need to switch hashes, I think.
+Here are the git repos:
 
-Thanks.
+github.com/user-one/project
+github.com/user-two/project
+
+Here's what happened:
+
+1. user-one creates a project and adds file-one.txt to the repo with
+contents "file one"
+
+2. user-one commits and pushes to master
+
+3. user-one creates directory "foo/" with a file named "foo.txt". "foo.txt"
+contains text "foo"
+
+4. user-one commits and pushes to master
+
+5. user-two forks github.com/user-one/project
+
+6. user-two creates new branch called "so-much-foo" and changes the text of
+foo/foo.txt to "so much foo"
+
+7. user-two commit, pushes, to origin/master, and creates a pull request
+
+8. user-one creates "file-two.txt" with contents "file two", commits, and
+pushes to master
+
+9. user-two changes the contents of "foo/foo.txt" from "so much foo" to
+"foo\nfoo", then commits the file
+
+10. user-two types this command: `git remote add user-one git@github.com:
+user-one/project.git`
+
+11. user-two types another command: git pull --rebase user-one master
+
+12. user-two attempts to push changes to the branch so-much-foo but is
+denied as seen here:
+
+$ git push origin so-much-foo
+To git@github.com:user-two/project.git
+ ! [rejected]        so-much-foo -> so-much-foo (non-fast-forward)
+error: failed to push some refs to 'git@github.com:user-two/project.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+
+
+It doesn't look like the tip is behind though:
+
+
+/project$ git log
+commit dd240b6ba15d27d074726e9b1b0e665e3507a2fd
+Author: User Two <debugging.data+user2@gmail.com>
+Date:   Mon Nov 24 22:55:45 2014 +0000
+
+    foo/foo.txt from "so much foo" to "foo\nfoo"
+
+commit 5cd55b8775750c2631b3c1f249f541402cc38c27
+Author: User Two <debugging.data+user2@gmail.com>
+Date:   Mon Nov 24 22:51:12 2014 +0000
+
+    changed foo/foo.txt contents to "so much foo"
+
+commit 75fca5dfa5157a18b55bb89fba70aee8680cfbf2
+Author: User One <debugging.data+user1@gmail.com>
+Date:   Mon Nov 24 22:52:42 2014 +0000
+
+    file-two.txt with contents "file two"
+
+commit faf9ccfbde95158b2b4a3e291a1e32789381a37e
+Author: User One <debugging.data+user1@gmail.com>
+Date:   Mon Nov 24 22:46:28 2014 +0000
+
+    foo/ and foo/foo.txt with contents "foo"
+
+commit 17471484163127daaf5233eccf5fac89e9d7a53e
+Author: User One <debugging.data+user1@gmail.com>
+Date:   Mon Nov 24 22:43:08 2014 +0000
+
+    file-one.txt with contents "file one"
+
+
+I have struggled with this today, and I'm not sure what to do, so I've
+resorted to asking for help here. I guess someone here has dealt with this
+at least once.
+
+Are there tools that would help make this process easier?
