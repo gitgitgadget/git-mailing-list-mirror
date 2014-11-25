@@ -1,108 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: push rejected (non-fast-forward)
-Date: Tue, 25 Nov 2014 11:16:41 -0800
-Message-ID: <xmqqsih7rsyu.fsf@gitster.dls.corp.google.com>
-References: <C2E11014-CFE8-490E-A21A-DB42CC8E4175@gmail.com>
+Subject: Re: [PATCH 0/2] git-am: add --message-id/--no-message-id options
+Date: Tue, 25 Nov 2014 12:05:59 -0800
+Message-ID: <xmqqoarvrqoo.fsf@gitster.dls.corp.google.com>
+References: <1416924056-29993-1-git-send-email-bonzini@gnu.org>
+	<xmqqwq6jruyd.fsf@gitster.dls.corp.google.com>
+	<5474D582.9060604@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: debugging data <debugging.data@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 25 20:16:55 2014
+Cc: git@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Nov 25 21:06:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtLba-0002VN-OI
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 20:16:55 +0100
+	id 1XtMNG-0007mr-UB
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 21:06:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751799AbaKYTQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 14:16:46 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63565 "EHLO
+	id S1750869AbaKYUGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 15:06:06 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56495 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751602AbaKYTQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 14:16:44 -0500
+	with ESMTP id S1750812AbaKYUGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 15:06:04 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C8541205F7;
-	Tue, 25 Nov 2014 14:16:43 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DE881E0BF;
+	Tue, 25 Nov 2014 15:06:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=83IQBXsnjJLjxevRTY9xta8Lwxc=; b=wTTm/o
-	eslXqnJv7e853OueeVljR5dE2P2JukrFFVOS41vtGDgIOWMzZO5D9XRI69R7E3XO
-	VN6B9bTZBw4LViT+/V+VgPH6+zuyYsvCI1Y8Lq3cK8nwVVPuCa3O3/ZrQBzeemoQ
-	M/8hWmN3CL2Vz998+NtTWXS+3i9fPtM8zgpoY=
+	:content-type; s=sasl; bh=b+d/F3Piu5WtJ3kNaHeZpZHGNgw=; b=R1/6Ej
+	Czd5BlrYdipFgRpgufkFotP5t9JMH8+DjQsxs8tUHzgS89CKM2UcYMibPFHzRuvk
+	R1bE6b7JMVk6rbQ9pmTxkE0bDZ17PypjUPSrr5fWov3Cn/0jZqIR5zM+CxfWFnBp
+	625KygMVqnupSawxx267L9LrztEXinSubo0dY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uRFwHGkXrr5+Rqow4faIxyCgxR7D9s+5
-	fMiIW3t4kIthX8eIii7Sp64bFqXiIXu5aT42B7IxrZWjAijbcKPpeJPrIvgTV6f8
-	6M7z48irw5ucVjdcfOgG4blKtLOrfPFFNtcF4DZNxtp2Mx/8wUguPQKutrPHINgM
-	YlR5DsgD618=
+	:content-type; q=dns; s=sasl; b=q+7SlAT+nw75ExtNxx3nmZj1sDm5HiVx
+	yiwZ6P+TUZxaiHv1XPAauKQuZmUanxTuaIxGFhc0Vwze9zRmNkbq76DevCE+R8Yi
+	Sz4kjnc/LsgMV92j1CPg03HIt7fioRBUynLL9bAQC8Bjsa89WOaWhpwpfLUYVXN+
+	OZdtvT69xtY=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BD47D205F6;
-	Tue, 25 Nov 2014 14:16:43 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 100291E0BD;
+	Tue, 25 Nov 2014 15:06:02 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4070A205F5;
-	Tue, 25 Nov 2014 14:16:43 -0500 (EST)
-In-Reply-To: <C2E11014-CFE8-490E-A21A-DB42CC8E4175@gmail.com> (debugging
-	data's message of "Tue, 25 Nov 2014 12:45:45 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 724071E0BA;
+	Tue, 25 Nov 2014 15:06:01 -0500 (EST)
+In-Reply-To: <5474D582.9060604@gnu.org> (Paolo Bonzini's message of "Tue, 25
+	Nov 2014 20:16:18 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9746B940-74D7-11E4-99A1-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7A823EF4-74DE-11E4-ADD9-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260238>
 
-debugging data <debugging.data@gmail.com> writes:
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-> $ git push origin so-much-foo
-> To git@github.com:user-two/project.git
->  ! [rejected]        so-much-foo -> so-much-foo (non-fast-forward)
-> error: failed to push some refs to 'git@github.com:user-two/project.git'
-> hint: Updates were rejected because the tip of your current branch is behind
-> hint: its remote counterpart. Integrate the remote changes (e.g.
-> hint: 'git pull ...') before pushing again.
+> On 25/11/2014 19:33, Junio C Hamano wrote:
+>>> > If both --message-id and -s are specified, the Signed-off-by goes
+>>> > last.  This is coming out more or less naturally out of the git-am
+>>> > implementation, but is also tested in t4150-am.sh.
+>> Nice.  So if you apply a message whose last sign-off is yourself
+>> with both of these options, what would we see?
+>> 
+>>     1. S-o-b: you and then M-id: and then another S-o-b: you?
+>>     2. M-id: and then S-o-b: you?
+>>     3. S-o-b: you and then M-id:?
+>> 
+>> I do not offhand know which one of the above possibilities to favor
+>> more over others myself.  Just asking to find out more about the
+>> thinking behind the design.
 >
+> You currently get (1), which is arguably the most precise but definitely
+> the ugliest.
 >
-> It doesn't look like the tip is behind though:
+> In this case (posting as maintainer), I would probably not use "git am
+> --message-id"; instead I would use an alias to add the Message-Id (with
+> git interpret-trailers!) after posting to the mailing list, resulting in
+> either (2) or (3).
 >
->
-> /project$ git log
-> commit dd240b6ba15d27d074726e9b1b0e665e3507a2fd
-> Author: User Two <debugging.data+user2@gmail.com>
-> ...
-> Date:   Mon Nov 24 22:43:08 2014 +0000
->
->     file-one.txt with contents "file one"
+> I think (but I am not sure) that git-am could use a hook to rewrite (1)
+> into (2) or (3).
 
-I do not think anybody can say "It doesn't look like the tip is
-behind" by looking only at the above.  I am assuming that you are on
-your "so-much-foo" branch, but that shows only your state.  You are
-not inspecting what is actually on the remote branch you are pushing
-to, so...
+I actually do not think (1) is more (or less for that matter) ugly
+compared to either of the others.
 
-After the failed "git push origin so-much-foo", try "git fetch
-origin so-much-foo", which will make the tip of the so-much-foo
-branch over there temporarily available in your FETCH_HEAD.  And
-then do something like:
-
-    $ git show-branch FETCH_HEAD so-much-foo
-
-and see how they have diverged.  If you want to merge your work with
-the updated origin, you can do
-
-    $ git merge FETCH_HEAD
-
-after that, or follow the hint given by the failed push, i.e.
-
-> hint: its remote counterpart. Integrate the remote changes (e.g.
-> hint: 'git pull ...') before pushing again.
-
-and do
-
-    $ git pull origin so-much-foo
-
-(which by the way can be done without the "git fetch origin ..."
-and "git show-branch ..." steps above).
+Thanks.  Let's queue these two series for the next cycle.
