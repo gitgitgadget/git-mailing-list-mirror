@@ -1,446 +1,161 @@
-From: Peter Wu <peter@lekensteyn.nl>
-Subject: [PATCH v3] remote: add --fetch and --both options to set-url
-Date: Tue, 25 Nov 2014 12:48:26 +0100
-Message-ID: <1416916106-19892-1-git-send-email-peter@lekensteyn.nl>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 25 12:48:40 2014
+From: Fedor Brunner <fedor.brunner@azet.sk>
+Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
+ safer?
+Date: Tue, 25 Nov 2014 13:59:00 +0100
+Message-ID: <54747D14.2020406@azet.sk>
+References: <5468C33E.2080108@whonix.org> <20141117212657.GC15880@peff.net> <546FC446.50101@whonix.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, whonix-devel@whonix.org, mikegerwitz@gnu.org
+To: Patrick Schleizer <patrick-mailinglists@whonix.org>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 25 14:08:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtEbm-000390-Bn
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 12:48:39 +0100
+	id 1XtFqc-0006vX-Oe
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 14:08:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755948AbaKYLsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 06:48:33 -0500
-Received: from lekensteyn.nl ([178.21.112.251]:49732 "EHLO lekensteyn.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752980AbaKYLsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 06:48:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lekensteyn.nl; s=s2048-2014-q3;
-	h=Message-Id:Date:Subject:Cc:To:From; bh=+bxZovWP8o/AHkO9O/LXLeO3/iAYDYKYSA8U8yf3u0s=;
-	b=vKhAEsavIcBBa+7jMtChS4HlcQgwD/nTweK8qnKuSCt6en5w/dHyUDxGVDo6qxrKNKMwwTN025PaHAIbU65i4UiZUVy6UAPJgiAbzOcRBA/szk6cmbytcRTukM6x45wnqV30Dk2Hoeo9HBG85nTZ8qNOAnGL4fHSkXE9sNNKmt+jaaTzxQ80DEierC+J8ByMq4BLaelXH5ZnAHT59EjPquVtX+ELO3KOgfIPaLgBFhp25tGh+Xpv7eOgDarBxl/1SVwmThjS22LFT2CDysrLBeRGPGPedm/RAu3Eo4ixnrFcUXln7hF2A6NWBxWMWH7KtMTHkCSsY//e3ih/QabqVg==;
-Received: by lekensteyn.nl with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA256:128)
-	(Exim 4.80)
-	(envelope-from <peter@lekensteyn.nl>)
-	id 1XtEbc-0000Ch-4S; Tue, 25 Nov 2014 12:48:28 +0100
-X-Mailer: git-send-email 2.1.3
-X-Spam-Score: -0.0 (/)
-X-Spam-Status: No, hits=-0.0 required=5.0 tests=NO_RELAYS=-0.001 autolearn=no autolearn_force=no
+	id S1752386AbaKYNH6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 08:07:58 -0500
+Received: from smtp-06-out.s.azet.sk ([91.235.53.31]:35351 "EHLO
+	smtp-01-out.s.azet.sk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751837AbaKYNH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 08:07:57 -0500
+X-Greylist: delayed 520 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Nov 2014 08:07:57 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=azet.sk; s=azet;
+	t=1416920354; bh=IPWw9m0MXVdROY6pGRvidnzVQ6I4CiJXPNC3Y1qo3SM=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To:From;
+	b=tzkz1z+cfxyKCPvbVxUGjHMBSODOZ2Lmdarx3PKhGH3mAhGh32l7d9Trm4WmdY5Kk
+	 VxKzvwWtAZLczhwVh40taBvzQW8stmX8l/hd17OxZV9M4zmJwiX+FdpwdGV2koAodC
+	 3yVvI7BSvbke6rOhNa9BH771W3u0r2f06unHaWOY=
+X-Virus-Scanned: by AntiSpam at azet.sk
+X-Spam-Flag: NO
+Received: from [0.0.0.0] (root457.ip-projects.de [82.211.0.201])
+	(Authenticated sender: fedor.brunner@azet.sk)
+	by smtp.azet.sk (Postfix) with ESMTPA id 32C7486;
+	Tue, 25 Nov 2014 13:59:02 +0100 (CET)
+X-SenderID: Sendmail Sender-ID Filter v1.0.0 smtp.azet.sk 32C7486
+Authentication-Results: smtp.azet.sk; sender-id=fail (NotPermitted) header.from=fedor.brunner@azet.sk; auth=pass (PLAIN); spf=fail (NotPermitted) smtp.mfrom=fedor.brunner@azet.sk
+In-Reply-To: <546FC446.50101@whonix.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260214>
 
-git remote set-url knew about the '--push' option to update just the
-pushurl, but it does not have a similar option for "update fetch URL and
-leave whatever was in place for the push URL".
+On 22.11.2014 00:01, Patrick Schleizer wrote:
+> Dear git developers!
+>=20
+> Jeff King wrote:
+>> On Sun, Nov 16, 2014 at 03:31:10PM +0000, Patrick Schleizer wrote:
+>>
+>>> How safe are signed git tags? Especially because git uses SHA-1. Th=
+ere
+>>> is contradictory information around.
+>>>
+>>> So if one verifies a git tag (`git tag -v tagname`), then `checksou=
+t`s
+>>> the tag, and checks that `git status` reports no untracked/modified
+>>> files, without further manually auditing the code, how secure is th=
+is
+>>> actually? Is it only as safe as SHA-1?
+>>
+>> Yes, it is only as "safe as SHA-1" in the sense that you have GPG-si=
+gned
+>> only a SHA-1 hash. If somebody can find a collision with a hash you =
+have
+>> signed, they can substitute the colliding data for the data you sign=
+ed.
+>>
+>> Of course, "safe as SHA-1" and "find a collision" are vague. If
+>> pre-image attacks are feasible (i.e., given already-published SHA-1,=
+ I
+>> can find a different input with the same SHA-1), then attacks are
+>> trivial. But when people talk about attacks on SHA-1, they are usual=
+ly
+>> referring to finding a collision between two new pieces of data. You=
+ can
+>> also use that in an attack, but it's much less straightforward
+>> (basically, you need to get somebody to sign one of the colliding pi=
+eces
+>> of data and then replace it with the other).
+>=20
+> Sounds pretty sad. Isn't this a security issue that should be fixed?
+>=20
+> Rather than discussing how feasible collisions in SHA-1 are... Attack=
+s
+> on SHA-1 are only getting worse, no? Since the Snowden revelations we
+> know that powerful adversaries that are working on such things and wo=
+uld
+> use such weaknesses to exploit users.
+>=20
+> Dear git developers, could you please make a long story short? Change=
+ to
+> some stronger hash algorithm? (sha256, sha512, or so?) Or provide an
+> option for that?
+>=20
+>> And of course there is the question of getting the colliding data to=
+ the
+>> victim. Git does collision checks whenever a remote (e.g., from a "g=
+it
+>> fetch") gives us data that we already have. So you could poison new
+>> cloners with bad data, but you could not convince a repository with =
+the
+>> existing "good" half of the collision to fetch the "evil" half.
+>=20
+> Poison git cloners with bad data is exactly my point here. Because
+> sometimes I am a cloner of my own code - cloning it on a separate
+> machine - then verify it using gpg - but don't check it any further. =
+In
+> such cases, I'd prefer if security wouldn't depend on SHA-1.
+>=20
+> Cheers,
+> Patrick
+>=20
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
 
-This patch adds support for a '--fetch' option which implements that use
-case in a backwards compatible way: if no --both, --push or --fetch
-options are given, then the push URL is modified too if it was not set
-before. This is the case since the push URL is implicitly based on the
-fetch URL.
+Dear git developers,
+how about skipping SHA-2 and moving to SHA-3 finalist BLAKE.
 
-A '--both' option is added to make the command independent of previous
-pushurl settings. For the --add and --delete set operations, it will
-always set the push and/ or the fetch URLs. For the primary mode of
-operation (without --add or --delete), it will drop pushurl as the
-implicit push URL is the (fetch) URL.
+NIST, in the final report of the SHA-3 competition, said this about the
+finalists (which included BLAKE, Keccak, Skein, and Gr=C3=B8stl):
 
-The documentation has also been updated and a missing '--push' option
-is added to the 'git remote -h' command.
+    BLAKE had a security margin =E2=80=94 the gap between a known-weak =
+reduced
+version and the full version =E2=80=94 comparable to Keccak and superio=
+r to the
+other finalists. (=C2=A74.3: =E2=80=9CBLAKE and Keccak have very large =
+security
+margins.=E2=80=9D)
+    BLAKE had a depth of analysis =E2=80=94 the amount of published res=
+earch
+analyzing its security =E2=80=94 comparable to Gr=C3=B8stl and Skein an=
+d superior to
+the other finalists. (=C2=A73.1: =E2=80=9CKeccak received a significant=
+ amount of
+cryptanalysis, although not quite the depth of analysis applied to
+BLAKE, Gr=C3=B8stl, or Skein=E2=80=9D)
+    BLAKE had performance (in software) comparable to Skein and superio=
+r
+to the other finalists. (=C2=A75.1.4: =E2=80=9CSkein and BLAKE [=E2=80=A6=
+] have the best
+overall software performance.=E2=80=9D)
 
-Tests are also added to verify the documented behavior.
+http://nvlpubs.nist.gov/nistpubs/ir/2012/NIST.IR.7896.pdf
 
-Signed-off-by: Peter Wu <peter@lekensteyn.nl>
----
 
- v2: fixed test case
- v3: added --both option, changed --fetch --push behavior, added more tests for
-     --add/--delete cases, refactored to reduce duplication (not special-casing
-     add_mode without oldurl, just skip initially setting oldurl).
 
-Translators note: the help text gained more translatable strings and some
-strings got additional options.
----
- Documentation/git-remote.txt |  17 ++++--
- builtin/remote.c             | 140 +++++++++++++++++++++++++++----------------
- t/t5505-remote.sh            | 125 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 228 insertions(+), 54 deletions(-)
+Measurements of SHA-3 finalists, indexed by machine
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index cb103c8..bdd0305 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -15,9 +15,9 @@ SYNOPSIS
- 'git remote remove' <name>
- 'git remote set-head' <name> (-a | --auto | -d | --delete | <branch>)
- 'git remote set-branches' [--add] <name> <branch>...
--'git remote set-url' [--push] <name> <newurl> [<oldurl>]
--'git remote set-url --add' [--push] <name> <newurl>
--'git remote set-url --delete' [--push] <name> <url>
-+'git remote set-url' [--both | --fetch | --push] <name> <newurl> [<oldurl>]
-+'git remote set-url' [--both | --fetch | --push] '--add' <name> <newurl>
-+'git remote set-url' [--both | --fetch | --push] '--delete' <name> <url>
- 'git remote' [-v | --verbose] 'show' [-n] <name>...
- 'git remote prune' [-n | --dry-run] <name>...
- 'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
-@@ -134,7 +134,16 @@ Changes URL remote points to. Sets first URL remote points to matching
- regex <oldurl> (first URL if no <oldurl> is given) to <newurl>. If
- <oldurl> doesn't match any URL, error occurs and nothing is changed.
- +
--With '--push', push URLs are manipulated instead of fetch URLs.
-+With '--both', both the fetch and push URLs are manipulated.
-++
-+With '--fetch', only fetch URLs are manipulated.
-++
-+With '--push', only push URLs are manipulated.
-++
-+If none of the '--both', '--fetch' or --push' options are given, then
-+'--both' applies only if no push URL was set before. Otherwise '--fetch'
-+is assumed for historical reasons. This default may change in the
-+future to '--both' to avoid surprises depending on the configuration.
- +
- With '--add', instead of changing some URL, new URL is added.
- +
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 7f28f92..a250b23 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -18,9 +18,9 @@ static const char * const builtin_remote_usage[] = {
- 	N_("git remote prune [-n | --dry-run] <name>"),
- 	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]"),
- 	N_("git remote set-branches [--add] <name> <branch>..."),
--	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
--	N_("git remote set-url --add <name> <newurl>"),
--	N_("git remote set-url --delete <name> <url>"),
-+	N_("git remote set-url [--both | --fetch | --push] <name> <newurl> [<oldurl>]"),
-+	N_("git remote set-url [--both | --fetch | --push] --add <name> <newurl>"),
-+	N_("git remote set-url [--both | --fetch | --push] --delete <name> <url>"),
- 	NULL
- };
- 
-@@ -66,9 +66,9 @@ static const char * const builtin_remote_update_usage[] = {
- };
- 
- static const char * const builtin_remote_seturl_usage[] = {
--	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
--	N_("git remote set-url --add <name> <newurl>"),
--	N_("git remote set-url --delete <name> <url>"),
-+	N_("git remote set-url [--both | --fetch | --push] <name> <newurl> [<oldurl>]"),
-+	N_("git remote set-url [--both | --fetch | --push] --add <name> <newurl>"),
-+	N_("git remote set-url [--both | --fetch | --push] --delete <name> <url>"),
- 	NULL
- };
- 
-@@ -1503,21 +1503,35 @@ static int set_branches(int argc, const char **argv)
- 	return set_remote_branches(argv[0], argv + 1, add_mode);
- }
- 
-+#define MODIFY_TYPE_FETCH       (1 << 0)
-+#define MODIFY_TYPE_PUSH        (1 << 1)
-+#define MODIFY_TYPE_BOTH        (MODIFY_TYPE_FETCH | MODIFY_TYPE_PUSH)
-+#define MODIFY_TYPE_HISTORIC    (MODIFY_TYPE_FETCH | (1 << 2))
-+
- static int set_url(int argc, const char **argv)
- {
--	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
-+	int i, add_mode = 0, delete_mode = 0;
-+	int modify_type = MODIFY_TYPE_HISTORIC;
- 	int matches = 0, negative_matches = 0;
- 	const char *remotename = NULL;
- 	const char *newurl = NULL;
- 	const char *oldurl = NULL;
- 	struct remote *remote;
- 	regex_t old_regex;
--	const char **urlset;
--	int urlset_nr;
--	struct strbuf name_buf = STRBUF_INIT;
-+	struct strbuf name_buf_fetch = STRBUF_INIT;
-+	struct strbuf name_buf_push = STRBUF_INIT;
- 	struct option options[] = {
--		OPT_BOOL('\0', "push", &push_mode,
--			 N_("manipulate push URLs")),
-+		OPT_GROUP(""),
-+		OPT_SET_INT('\0', "fetch", &modify_type,
-+			N_("manipulate just fetch URLs"),
-+			MODIFY_TYPE_FETCH),
-+		OPT_SET_INT('\0', "push", &modify_type,
-+			N_("manipulate just push URLs"),
-+			MODIFY_TYPE_PUSH),
-+		OPT_SET_INT('\0', "both", &modify_type,
-+			N_("manipulate both push and fetch URLs"),
-+			MODIFY_TYPE_BOTH),
-+		OPT_GROUP(""),
- 		OPT_BOOL('\0', "add", &add_mode,
- 			 N_("add URL")),
- 		OPT_BOOL('\0', "delete", &delete_mode,
-@@ -1535,7 +1549,8 @@ static int set_url(int argc, const char **argv)
- 
- 	remotename = argv[1];
- 	newurl = argv[2];
--	if (argc > 3)
-+	/* The old URL is only meaningful for the primary non-set operation. */
-+	if (argc > 3 && !add_mode && !delete_mode)
- 		oldurl = argv[3];
- 
- 	if (delete_mode)
-@@ -1545,47 +1560,72 @@ static int set_url(int argc, const char **argv)
- 		die(_("No such remote '%s'"), remotename);
- 	remote = remote_get(remotename);
- 
--	if (push_mode) {
--		strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
--		urlset = remote->pushurl;
--		urlset_nr = remote->pushurl_nr;
--	} else {
--		strbuf_addf(&name_buf, "remote.%s.url", remotename);
--		urlset = remote->url;
--		urlset_nr = remote->url_nr;
-+	strbuf_addf(&name_buf_fetch, "remote.%s.url", remotename);
-+	strbuf_addf(&name_buf_push, "remote.%s.pushurl", remotename);
-+
-+	if (oldurl && !add_mode) {
-+		/* Old URL specified, or deletion. Demand that one matches. */
-+		if (regcomp(&old_regex, oldurl, REG_EXTENDED))
-+			die(_("Invalid old URL pattern: %s"), oldurl);
-+
-+		if (modify_type & MODIFY_TYPE_FETCH)
-+			for (i = 0; i < remote->url_nr; i++)
-+				if (!regexec(&old_regex, remote->url[i], 0, NULL, 0))
-+					matches++;
-+				else
-+					negative_matches++;
-+		if (delete_mode && !negative_matches && modify_type & MODIFY_TYPE_FETCH)
-+			die(_("Will not delete all non-push URLs"));
-+		if (modify_type & MODIFY_TYPE_PUSH)
-+			for (i = 0; i < remote->pushurl_nr; i++)
-+				if (!regexec(&old_regex, remote->pushurl[i], 0, NULL, 0))
-+					matches++;
-+				else
-+					negative_matches++;
-+		if (!delete_mode && !matches)
-+			die(_("No such URL found: %s"), oldurl);
-+
-+		regfree(&old_regex);
- 	}
- 
--	/* Special cases that add new entry. */
--	if ((!oldurl && !delete_mode) || add_mode) {
--		if (add_mode)
--			git_config_set_multivar(name_buf.buf, newurl,
--				"^$", 0);
--		else
--			git_config_set(name_buf.buf, newurl);
--		strbuf_release(&name_buf);
--		return 0;
-+	/* If --fetch was explicitly given, then ensure that the push
-+	 * URL does not change by copying the fetch URL to it. */
-+	if (modify_type == MODIFY_TYPE_FETCH &&
-+			remote->pushurl_nr == 0 && remote->url_nr > 0)
-+		for (i = 0; i < remote->url_nr; i++)
-+			git_config_set_multivar(name_buf_push.buf,
-+				remote->url[i], "^$", 0);
-+
-+	/* Set the new entry value (not a --add or --delete operation). */
-+	if (!add_mode && !delete_mode && !oldurl) {
-+		if (modify_type & MODIFY_TYPE_FETCH)
-+			git_config_set(name_buf_fetch.buf, newurl);
-+		/* URLs will be the same, so remove pushurl. */
-+		if (modify_type == MODIFY_TYPE_BOTH)
-+			git_config_set(name_buf_push.buf, NULL);
-+		else if (modify_type == MODIFY_TYPE_PUSH)
-+			git_config_set(name_buf_push.buf, newurl);
-+
-+		goto cleanup_ok;
- 	}
- 
--	/* Old URL specified. Demand that one matches. */
--	if (regcomp(&old_regex, oldurl, REG_EXTENDED))
--		die(_("Invalid old URL pattern: %s"), oldurl);
--
--	for (i = 0; i < urlset_nr; i++)
--		if (!regexec(&old_regex, urlset[i], 0, NULL, 0))
--			matches++;
--		else
--			negative_matches++;
--	if (!delete_mode && !matches)
--		die(_("No such URL found: %s"), oldurl);
--	if (delete_mode && !negative_matches && !push_mode)
--		die(_("Will not delete all non-push URLs"));
--
--	regfree(&old_regex);
--
--	if (!delete_mode)
--		git_config_set_multivar(name_buf.buf, newurl, oldurl, 0);
--	else
--		git_config_set_multivar(name_buf.buf, NULL, oldurl, 1);
-+	/* Set operations (--add, --delete) or change request (oldurl given). */
-+	if (delete_mode) {
-+		if (modify_type & MODIFY_TYPE_FETCH)
-+			git_config_set_multivar(name_buf_fetch.buf, NULL, oldurl, 1);
-+		if (modify_type & MODIFY_TYPE_PUSH)
-+			git_config_set_multivar(name_buf_push.buf, NULL, oldurl, 1);
-+	} else {
-+		if (add_mode) /* Do not replace oldurl, but add a new one. */
-+			oldurl = "^$";
-+		if (modify_type & MODIFY_TYPE_FETCH)
-+			git_config_set_multivar(name_buf_fetch.buf, newurl, oldurl, 0);
-+		if (modify_type & MODIFY_TYPE_PUSH)
-+			git_config_set_multivar(name_buf_push.buf, newurl, oldurl, 0);
-+	}
-+cleanup_ok:
-+	strbuf_release(&name_buf_fetch);
-+	strbuf_release(&name_buf_push);
- 	return 0;
- }
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index ac79dd9..390281a 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -961,6 +961,59 @@ test_expect_success 'remote set-url --push zot' '
- 	cmp expect actual
- '
- 
-+test_expect_success 'remote set-url --fetch zox' '
-+	git remote set-url --fetch someremote zox &&
-+	echo zox >expect &&
-+	echo "YYY" >>expect &&
-+	echo zot >>expect &&
-+	git config --get-all remote.someremote.url >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.pushurl >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --both foo' '
-+	git remote set-url --both someremote foo &&
-+	echo "YYY" >expect &&
-+	echo foo >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --delete --push foo' '
-+	git remote set-url --delete --push someremote foo &&
-+	echo "YYY" >expect &&
-+	echo foo >>expect &&
-+	test_must_fail git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --push zot' '
-+	git remote set-url --push someremote zot &&
-+	echo zot >expect &&
-+	echo "YYY" >>expect &&
-+	echo foo >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --fetch baz foo' '
-+	git remote set-url --fetch someremote baz foo &&
-+	echo zot >expect &&
-+	echo "YYY" >>expect &&
-+	echo baz >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
- test_expect_success 'remote set-url --push qux zot' '
- 	git remote set-url --push someremote qux zot &&
- 	echo qux >expect &&
-@@ -1091,6 +1144,78 @@ test_expect_success 'remote set-url --delete baz' '
- 	cmp expect actual
- '
- 
-+test_expect_success 'remote set-url --fetch --add bar' '
-+	git remote set-url --fetch --add someremote bar &&
-+	echo ccc >expect &&
-+	echo "YYY" >>expect &&
-+	echo ccc >>expect &&
-+	echo bar >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --both --add foo' '
-+	git remote set-url --both --add someremote foo &&
-+	echo ccc >expect &&
-+	echo foo >>expect &&
-+	echo "YYY" >>expect &&
-+	echo ccc >>expect &&
-+	echo bar >>expect &&
-+	echo foo >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --both --delete ccc' '
-+	git remote set-url --both --delete someremote ccc &&
-+	echo foo >expect &&
-+	echo "YYY" >>expect &&
-+	echo bar >>expect &&
-+	echo foo >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --fetch --delete bar' '
-+	git remote set-url --fetch --delete someremote bar &&
-+	echo foo >expect &&
-+	echo "YYY" >>expect &&
-+	echo foo >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --push --add baz' '
-+	git remote set-url --push --add someremote baz &&
-+	echo foo >expect &&
-+	echo baz >>expect &&
-+	echo "YYY" >>expect &&
-+	echo foo >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'remote set-url --push --delete foo' '
-+	git remote set-url --push --delete someremote foo &&
-+	echo baz >expect &&
-+	echo "YYY" >>expect &&
-+	echo foo >>expect &&
-+	git config --get-all remote.someremote.pushurl >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.url >>actual &&
-+	cmp expect actual
-+'
-+
- test_expect_success 'extra args: setup' '
- 	# add a dummy origin so that this does not trigger failure
- 	git remote add origin .
--- 
-2.1.3
+http://bench.cr.yp.to/results-sha3.html
+
+
+=46edor
