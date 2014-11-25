@@ -1,141 +1,147 @@
-From: debugging data <debugging.data@gmail.com>
-Subject: push rejected (non-fast-forward)
-Date: Tue, 25 Nov 2014 12:45:45 -0500
-Message-ID: <C2E11014-CFE8-490E-A21A-DB42CC8E4175@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 25 18:43:47 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Re*: [PATCH] change contract between system_path and it's callers
+Date: Tue, 25 Nov 2014 09:55:39 -0800
+Message-ID: <xmqqbnnvtbac.fsf@gitster.dls.corp.google.com>
+References: <87mw7gae8k.fsf@gmail.com>
+	<1416838063-16797-1-git-send-email-kuleshovmail@gmail.com>
+	<xmqqoarwwfz1.fsf@gitster.dls.corp.google.com>
+	<87ppcc4b2g.fsf@gmail.com>
+	<xmqqbnnwwcg0.fsf@gitster.dls.corp.google.com>
+	<CANCZXo7yDJCuhKVFG3QfSSoem+KN_9VCbGerTd+5tqQuzA7dbg@mail.gmail.com>
+	<CANCZXo4C_6Zfob9VnxjGxPbsRnUioVqC10z3Hhv09_xtrx-Pog@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 18:55:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtK9Q-0003ir-PF
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 18:43:45 +0100
+	id 1XtKL5-0004pt-Kg
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 18:55:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834AbaKYRnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 12:43:40 -0500
-Received: from mail-yh0-f67.google.com ([209.85.213.67]:51110 "EHLO
-	mail-yh0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbaKYRnk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 12:43:40 -0500
-Received: by mail-yh0-f67.google.com with SMTP id a41so107199yho.10
-        for <git@vger.kernel.org>; Tue, 25 Nov 2014 09:43:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=KvAkSgi3A3Hy9BrqnciRl44VGGV9RxkUS67os9Mppp8=;
-        b=Kbqk73sJguQ3jgyHmphpXyP82f53iA7uC2ETCuu/30rvtTwlG2CiF05TbpRJiCu++p
-         3GAQJUXqoK96GTpOFd8O7fyaaA3KW+AaCNdFQcqpZMy8QV+sKHdNjA+4JjWhz3NgyeL8
-         W3kx6ZcKjgS0/0q1k0nQquew7jN365I04nSzbkfjVz/7VAgzTl3aDk/9DMSZqENFxgLK
-         gSQwilFR2ni5t9Mdp0Cb1CFm+tCCaY3TaD4X6nRc8HQq3V/Y5v8vEWjDtG7b4UuFeNNe
-         y1j9mij6M9mk7+y1PpyzSQCJUcUrRGgOs0NzOvKfBAm06ZZfdbe7IF4iKDMUrpcZ+OC2
-         TtMg==
-X-Received: by 10.170.72.7 with SMTP id o7mr28150686yko.73.1416937419355;
-        Tue, 25 Nov 2014 09:43:39 -0800 (PST)
-Received: from [10.0.0.15] (c-69-136-29-70.hsd1.fl.comcast.net. [69.136.29.70])
-        by mx.google.com with ESMTPSA id e35sm945886yhq.45.2014.11.25.09.43.38
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Nov 2014 09:43:39 -0800 (PST)
-X-Mailer: Apple Mail (2.1878.6)
+	id S1751042AbaKYRzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 12:55:45 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750816AbaKYRzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 12:55:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B882F1F2D7;
+	Tue, 25 Nov 2014 12:55:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CTFc5rywdh11M7TQIrHKX0r5ABI=; b=m1+0Y1
+	AdT0RF766fJ2YkAt/NoJpTDNpB5vmwVe/xVkoHk2xw6ekTd7w1NuK09ji22uxS1y
+	MRhaOrJo7cuHVVnyJQXAzagTFaifR87okfCjBQTNEDthyK/VtwQ7ej0Rx2JfBgpI
+	MSxSkIi9c6T7EZBz8pNIpeAYc9WWcd4ri7Sq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iSdpCN2uoGGatl3+hvpHtJLD04bt511X
+	aQNaFo21Od53tZ5lll/z3IxOukEZgdtoY5KZfV7k1HqX2lLJIry6bFRnPbW/OdUa
+	XXyfkYLQZsGu7nM8OOO5qWLL3Pjqz4kyrDE9QqFvlTnQWg6JHrks3qzuwTDqQFgH
+	3RJBP/8aa2Y=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A34B91F2D4;
+	Tue, 25 Nov 2014 12:55:42 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC6821F2D1;
+	Tue, 25 Nov 2014 12:55:41 -0500 (EST)
+In-Reply-To: <CANCZXo4C_6Zfob9VnxjGxPbsRnUioVqC10z3Hhv09_xtrx-Pog@mail.gmail.com>
+	(Alexander Kuleshov's message of "Tue, 25 Nov 2014 13:04:46 +0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 45B8EC66-74CC-11E4-80B8-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260228>
 
-Changes to a remote branch causes a user not to be able to push their
-changes because their tip is behind its remote counterpart.
+Alexander Kuleshov <kuleshovmail@gmail.com> writes:
 
+> But if we still static const char* for git_etc_gitattributes and will
+> not free it in bootstrap_attr_stack there will no memory leak, just
+> tested it, so i'll remove free for it.
 
-Here are the git repos:
+Leak or no leak, freeing there is wrong.  It will free the piece of
+memory the next caller will obtain from the git_etc_gitattributes()
+function.  In other words, the return value from that function is
+owned by git_etc_gitattributes(), not by the caller.
 
-github.com/user-one/project
-github.com/user-two/project
+As to "leak", in the strictest sense of the word, i.e. "do we
+allocate on the heap and exit without freeing?", it _is_ leaking,
+and your above "just tested it" probably means "the tool I used did
+not find/report it".  But as I said, it is not something worth
+bothering about [*1*].
 
-Here's what happened:
+Think of it this way.
 
-1. user-one creates a project and adds file-one.txt to the repo with
-contents "file one"
+The git_etc_gitattributes() function goes like this with your patch
+(and there is no fundamental difference in the original version,
+which uses "const char *" where appropriate):
 
-2. user-one commits and pushes to master
+         static char *git_etc_gitattributes(void)
+         {
+                static char *system_wide;
+                if (!system_wide)
+                        system_wide = system_path(ETC_GITATTRIBUTES);
+                return system_wide;
+         }
 
-3. user-one creates directory "foo/" with a file named "foo.txt". "foo.txt"
-contains text "foo"
+If you knew that the pathname for /etc/gitattributes substitute will
+never be longer than 256 bytes, you may have coded the above like so
+instead:
 
-4. user-one commits and pushes to master
+        static char system_wide[256];
+        static char *git_etc_gitattributes(void)
+        {
+                if (!system_wide[0]) {
+                        char *ret = system_path(ETC_GITATTRIBUTES);
+                        if (strncpy(system_wide, ret, 256) >= 256)
+                                die("ETC_GITATTRIBUTES too long ");
+                }       
+                return system_wide;
+        }
 
-5. user-two forks github.com/user-one/project
+Even though we used the memory occupied by system_wide[] and did not
+clean up before exit(), nobody would complain about leaking.
 
-6. user-two creates new branch called "so-much-foo" and changes the text of
-foo/foo.txt to "so much foo"
+The existing code is the moral equivalent of the "up to 256 bytes"
+illustration, but for a string whose size is not known at compile
+time.  It is using and keeping the memory until program exit.
+Nobody should complain about leaking.
 
-7. user-two commit, pushes, to origin/master, and creates a pull request
-
-8. user-one creates "file-two.txt" with contents "file two", commits, and
-pushes to master
-
-9. user-two changes the contents of "foo/foo.txt" from "so much foo" to
-"foo\nfoo", then commits the file
-
-10. user-two types this command: `git remote add user-one git@github.com:
-user-one/project.git`
-
-11. user-two types another command: git pull --rebase user-one master
-
-12. user-two attempts to push changes to the branch so-much-foo but is
-denied as seen here:
-
-$ git push origin so-much-foo
-To git@github.com:user-two/project.git
- ! [rejected]        so-much-foo -> so-much-foo (non-fast-forward)
-error: failed to push some refs to 'git@github.com:user-two/project.git'
-hint: Updates were rejected because the tip of your current branch is behind
-hint: its remote counterpart. Integrate the remote changes (e.g.
-hint: 'git pull ...') before pushing again.
-
-
-It doesn't look like the tip is behind though:
-
-
-/project$ git log
-commit dd240b6ba15d27d074726e9b1b0e665e3507a2fd
-Author: User Two <debugging.data+user2@gmail.com>
-Date:   Mon Nov 24 22:55:45 2014 +0000
-
-    foo/foo.txt from "so much foo" to "foo\nfoo"
-
-commit 5cd55b8775750c2631b3c1f249f541402cc38c27
-Author: User Two <debugging.data+user2@gmail.com>
-Date:   Mon Nov 24 22:51:12 2014 +0000
-
-    changed foo/foo.txt contents to "so much foo"
-
-commit 75fca5dfa5157a18b55bb89fba70aee8680cfbf2
-Author: User One <debugging.data+user1@gmail.com>
-Date:   Mon Nov 24 22:52:42 2014 +0000
-
-    file-two.txt with contents "file two"
-
-commit faf9ccfbde95158b2b4a3e291a1e32789381a37e
-Author: User One <debugging.data+user1@gmail.com>
-Date:   Mon Nov 24 22:46:28 2014 +0000
-
-    foo/ and foo/foo.txt with contents "foo"
-
-commit 17471484163127daaf5233eccf5fac89e9d7a53e
-Author: User One <debugging.data+user1@gmail.com>
-Date:   Mon Nov 24 22:43:08 2014 +0000
-
-    file-one.txt with contents "file one"
+That is, unless (1) the held memory is expected to be very large and
+(2) you can prove that after the point you decide to insert free(),
+nobody will ever need that information again.
 
 
-I have struggled with this today, and I'm not sure what to do, so I've
-resorted to asking for help here. I guess someone here has dealt with this
-at least once.
+[Footnote]
 
-Are there tools that would help make this process easier?
+*1* The leaks we care about are of this form:
+
+    void silly_leaker(void)
+    {
+        printf("%s\n", system_path(ETC_GITATTRIBUTES));
+    }
+
+    where each invocation allocates memory, uses it and then loses
+    the reference to it without doing anything to clean-up.  You can
+    call such a function unbounded number of times and waste
+    unbounded amount of memory.
+
+    The implementation of git_etc_gitattributes() is not of that
+    kind.  An invocation of it allocates, uses and keeps.  The
+    second and subsequent invocation does not allocate.  When you
+    call it unbounded number of times, it does not waste unbounded
+    amount of memory.  It just keeps what it needs to answer the
+    next caller with.
+
+    The pattern needs to be made thread-safe, but that is a separate
+    topic.
