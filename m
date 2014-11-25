@@ -1,182 +1,85 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
- safer?
-Date: Tue, 25 Nov 2014 17:41:52 +0700
-Message-ID: <20141125104152.GA13038@lanh>
-References: <5468C33E.2080108@whonix.org>
- <20141117212657.GC15880@peff.net>
- <CACsJy8D-W_YrxMgUDScSmkNBKMVpRu_Kc0k6nsfyhmoLg5HBjg@mail.gmail.com>
- <54730546.7000200@drmicha.warpmail.net>
- <CACsJy8B5dbYZm25019avX2q0Ymp=f4jt=jt898M_znE8eEcOVg@mail.gmail.com>
+From: Peter Wu <peter@lekensteyn.nl>
+Subject: Re: [RFC] [PATCH] remote: add new --fetch option for set-url
+Date: Tue, 25 Nov 2014 12:43:36 +0100
+Message-ID: <2050939.TNKsWtkNmu@al>
+References: <6997784.RuzRO1AFsK@al> <20141125050101.GA20805@peff.net> <CAPc5daWh4hnKsTMpaW-TvCmVDfU+rzCezrAHcLgXDG6RVvzXHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Patrick Schleizer <patrick-mailinglists@whonix.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	whonix-devel@whonix.org, mikegerwitz@gnu.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Nov 25 12:41:40 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 12:44:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtEV0-00066R-Hu
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 12:41:38 +0100
+	id 1XtEXq-0008NY-2A
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 12:44:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753691AbaKYLlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 06:41:31 -0500
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:57364 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753164AbaKYKlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 05:41:25 -0500
-Received: by mail-pd0-f178.google.com with SMTP id g10so330029pdj.23
-        for <git@vger.kernel.org>; Tue, 25 Nov 2014 02:41:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=1YswMmVffx2PV3r4BcViQ2WfDORl3jpmu4ZjIk85Pyo=;
-        b=yJ3m9VnJLctf9gjIm3XNy/fdCalXg/7EcoHdfoMNbPjeIY0uWw/KpS6MzxGmIOVZEX
-         /ja3qRjauW0fr0m9v69pwutiHArmUisWbJrt86GCkaePsQh+jEEQp4d+9VEq0eNC7Y7B
-         +vYOkYxoswj17+G7nmMD9pAEhiQ1rZylVHO8yV6RjEC0fvZsR7NXYdbGrmKWleKfjcw8
-         5a3VfVOAmo9yDi7yu8onFBbSePfZRu//oh6mS9hKjHDgAC3ZAqZ7zempG6c1xYc0CC+N
-         DmWlsOni2+J6Rhj4gR45G9Lo6weFaHoVjJLusjuDBy/e41JY/9vvmezsOLPvgjilt1l9
-         ccjA==
-X-Received: by 10.66.66.76 with SMTP id d12mr41503980pat.111.1416912085101;
-        Tue, 25 Nov 2014 02:41:25 -0800 (PST)
-Received: from lanh ([115.73.236.26])
-        by mx.google.com with ESMTPSA id g8sm1091972pdn.80.2014.11.25.02.41.21
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Nov 2014 02:41:24 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 25 Nov 2014 17:41:52 +0700
-Content-Disposition: inline
-In-Reply-To: <CACsJy8B5dbYZm25019avX2q0Ymp=f4jt=jt898M_znE8eEcOVg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753724AbaKYLoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 06:44:32 -0500
+Received: from lekensteyn.nl ([178.21.112.251]:37460 "EHLO lekensteyn.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753631AbaKYLnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 06:43:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lekensteyn.nl; s=s2048-2014-q3;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From; bh=YUIfY6R0NhUxL9pq6f7r/2KgQscgFOiWw1yh5Sddp+U=;
+	b=Uc/nw4dpcovHd/EtVglSICzC1aAoKzyE6x3X1SLR4jYXrYLtKuFPcfuuMorFzACybLF1znspw5gPlBatDbnfTQJCShNqbNqF61NT09UB1Z47eh2VqhD6My9rwRkb17hxf7UmTbCuwFFWRcYx215z+xdecjyJp3+PLplAlKRjg8MeJY5Lg1YWJ+7dglI/lPNLMV5JFAHdqaCm4BTCMkOn5NBJTE6AaC/f/Proy00E8pM8Xjgqi59KzXLZon9DPQMgOcJ7CyPTHVHVKvnEm/f7+sAug/y4ItifPgdDHba+V7Uje4N1thFlMSyh7fo0C1LZ0khfV4MTNNDZueNgN4g8Gg==;
+Received: by lekensteyn.nl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
+	(Exim 4.80)
+	(envelope-from <peter@lekensteyn.nl>)
+	id 1XtEWv-0000C0-B8; Tue, 25 Nov 2014 12:43:37 +0100
+User-Agent: KMail/4.14.3 (Linux/3.17.0-rc4-custom-00168-g7ec62d4; KDE/4.14.3; x86_64; ; )
+In-Reply-To: <CAPc5daWh4hnKsTMpaW-TvCmVDfU+rzCezrAHcLgXDG6RVvzXHA@mail.gmail.com>
+X-Spam-Score: -0.0 (/)
+X-Spam-Status: No, hits=-0.0 required=5.0 tests=NO_RELAYS=-0.001 autolearn=no autolearn_force=no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260212>
 
-On Mon, Nov 24, 2014 at 06:44:10PM +0700, Duy Nguyen wrote:
-> >> I wonder if we can have an option to sign all blob content of the tree
-> >> associated to a commit, and the content of parent commit(s). It's more
-> >> expensive than signing just commit/tag content. But it's also safer
-> >> without completely ditching SHA-1.
-> >>
-> >
-> > This amounts to hashing the blob content with whatever hash you told
-> > your gpg to use (hopefully not sha1 ;) ) and signing that.
-> >
-> > You're free to do that now and store the signature wherever your
-> > toolchain deems fit, say in a note or an annotated tag. But that
-> > approach won't sign the history, that is: If you are concerned about the
-> > breakability of sha1, then history is "possibly broken" no matter how
-> > you sign a commit object whose "parent" entry is based on the sha1 of
-> > its parent object.
+On Monday 24 November 2014 21:19:16 Junio C Hamano wrote:
+> On Mon, Nov 24, 2014 at 9:01 PM, Jeff King <peff@peff.net> wrote:
+> > We could also stop making push fall back to fetch. But I think people
+> > would find that irritating.
+
+The common case is probably having the same fetch and push URL, so I
+think that this should not be changed.
+
+> > I dunno. I think there has always been an implicit "subordinate"
+> > relationship between fetch and push URLs, with fetch being the "main"
+> > one. Maybe that is so ingrained in me at this point that I do not see a
+> > problem with the asymmetry.
 > 
-> If you store the singature in commit message, and if you hash the
-> parent commit messages as well, which are also signed, then you have
-> the same chaining effect that we have with SHA-1. I think this could
-> be done with some hooks already, except maybe for the verification
-> part.
+> I actually do not have problem with asymmetry/subordinate
+> relationship myself, but then why are we adding --fetch to
+> complement --push in the first place?
+> 
+> Or perhaps I am misunderstanding the suggested semantics
+> of --both. That "subordinate" relationship really means that
+> remote.nick.URL is the one that is used for both directions
+> when pushURL is not set.
+> 
+> I misunderstood that --both would add identical value to both
+> remote.nick.URL and remote.nick.pushURL, but that would
+> break the implicit subordinate relationship. Is the suggested
+> semantics of "set-url --both" to first delete remote.nick.pushURL
+> if exists and then to set remote.nick.URL?
+> 
+> If that is what is being proposed, then I think it makes sense.
 
-To demonstrate, a hook like this can take commit object from stdin and
-produce some hash lines, which are appended at the end of the commit
-message before the new commit object is created. So if I commit "foo"
-the final commit message would be
+Yes, your last understanding is correct. For this feature, try to think
+as the user who does not know about the configuration implementation.
+That is why the --fetch option was proposed, earlier it did not make
+sense to me why a --push option exists, but a --fetch option is missing.
 
-  foo
-
-  SHA512: <long hash>
-
-This script uses sha512sum, but you can add as many hashes as you want
-(and pay the penalty at commit time, of course). I think it covers
-enough content to validate history up to the last signed commit.
-
--- 8< --
-#!/bin/bash
-# commit content
-cat >$GIT_DIR/tmp
-# parent commit content
-sed '/^$/q' $GIT_DIR/tmp |
-    grep '^parent ' |
-    cut -c 8- |
-    xargs -n1 git cat-file commit >>$GIT_DIR/tmp
-# all blobs
-sed '/^$/q' $GIT_DIR/tmp |
-    grep '^tree ' |
-    cut -c 6- |
-    xargs -n1 git ls-tree -r |
-    cut -c 13-52 |
-    git cat-file --batch >>$GIT_DIR/tmp
-echo
-echo "SHA512: `sha512sum < $GIT_DIR/tmp`"
--- 8< --
-
-An extra patch is required to hook this in final commit steps.
-
--- 8< --
-diff --git a/commit.c b/commit.c
-index 19cf8f9..c447c1d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -11,6 +11,8 @@
- #include "commit-slab.h"
- #include "prio-queue.h"
- #include "sha1-lookup.h"
-+#include "run-command.h"
-+#include "sigchain.h"
- 
- static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- 
-@@ -1064,6 +1066,36 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 	return result;
- }
- 
-+static int run_sign_commit_hook(struct strbuf *buf)
-+{
-+	struct child_process hook = CHILD_PROCESS_INIT;
-+	const char *p = find_hook("sign-commit");
-+	int len;
-+
-+	if (!p)
-+		return 0;
-+
-+	argv_array_push(&hook.args, p);
-+	hook.in = -1;
-+	hook.out = -1;
-+	if (start_command(&hook))
-+		return error(_("could not run sign-commit hook"));
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+	if (write_in_full(hook.in, buf->buf, buf->len) != buf->len) {
-+		close(hook.in);
-+		close(hook.out);
-+		finish_command(&hook);
-+		return error(_("sign-commit hook did not accept the data"));
-+	}
-+	close(hook.in);
-+	len = strbuf_read(buf, hook.out, 1024);
-+	close(hook.out);
-+	sigchain_pop(SIGPIPE);
-+	if (finish_command(&hook) || len <= 0)
-+		return error(_("sign-commit hook failed to sign the data"));
-+	return 0;
-+}
-+
- static const char gpg_sig_header[] = "gpgsig";
- static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
- 
-@@ -1555,6 +1587,9 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 	if (encoding_is_utf8 && !verify_utf8(&buffer))
- 		fprintf(stderr, commit_utf8_warn);
- 
-+	if (run_sign_commit_hook(&buffer))
-+		return -1;
-+
- 	if (sign_commit && do_sign_commit(&buffer, sign_commit))
- 		return -1;
- 
--- 8< --
+Option '--both' will drop the push URL and result in an implicit
+fallback to the fetch URL. It becomes slightly more hairy in the
+presence of URL sets (using --add and --delete), but I have also tried
+to make that act sensibly).
+-- 
+Kind regards,
+Peter
+https://lekensteyn.nl
