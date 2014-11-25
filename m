@@ -1,324 +1,185 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] git-send-email: add --transfer-encoding option
-Date: Tue, 25 Nov 2014 15:44:19 -0500
-Message-ID: <CAPig+cQ_jm1W3n7KqrRihuj7ie=wGTRMupyAnfLHXqFAAnhv4Q@mail.gmail.com>
-References: <1416924027-29862-1-git-send-email-bonzini@gnu.org>
-	<1416924027-29862-3-git-send-email-bonzini@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] change contract between system_path and it's callers
+Date: Tue, 25 Nov 2014 13:13:24 -0800
+Message-ID: <xmqqfvd7rnkb.fsf@gitster.dls.corp.google.com>
+References: <CANCZXo4=D=RPnGeAfcvD0O1hX0B43z1b11gyzjbJYGXzusfFYg@mail.gmail.com>
+	<1416939854-29930-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, lersek@redhat.com,
-	Paolo Bonzini <pbonzini@redhat.com>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Nov 25 21:44:27 2014
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 22:13:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtMyI-0005AF-OE
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 21:44:27 +0100
+	id 1XtNQT-0003iy-Hu
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 22:13:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbaKYUoW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 15:44:22 -0500
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:42216 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093AbaKYUoU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2014 15:44:20 -0500
-Received: by mail-yh0-f50.google.com with SMTP id 29so725907yhl.37
-        for <git@vger.kernel.org>; Tue, 25 Nov 2014 12:44:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=RzPw2A6vPpOwDznM0Ak0jfHrrYTP6SZ38voryol2Z6o=;
-        b=gakjEKR8Z8z0OME5Grk5VmV+ZRG6q33UQjfPpcryG8TuKsqo39MSq3Z1Hm/ar51kMa
-         HnVjX1HApnm1Ufy9VpyHVJcSdjsmuE5R1DIt+PMrWW4q8Ydb9MjtFT3sUQa6pzoMLrCS
-         dy9IDDcUuJHd1kzYHRLODd5CVlbesLyWZ44LGhyMN11EYELW3q/GXgFCwgmi6OhAQ2/F
-         Gi0/YFlmkV6rWUq9DdfwlN5BXq3G0xcImu51PS1266RVwo975V7jNns8PmJai4un0a/x
-         v2IqT2wt6v9Sfx6b+6jULA3NRLaS99dENcfjbkZpaGl8dA3U+aou36/mwJXDdBaIorlM
-         4UFg==
-X-Received: by 10.236.199.78 with SMTP id w54mr26401659yhn.148.1416948259683;
- Tue, 25 Nov 2014 12:44:19 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Tue, 25 Nov 2014 12:44:19 -0800 (PST)
-In-Reply-To: <1416924027-29862-3-git-send-email-bonzini@gnu.org>
-X-Google-Sender-Auth: tXnaFpWwEytSRreXr1WP5u2tzi0
+	id S1751045AbaKYVN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 16:13:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63009 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750875AbaKYVN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 16:13:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE5D51EEF7;
+	Tue, 25 Nov 2014 16:13:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rbz4DXGiSZSm6wjC7DzvtgCVelQ=; b=OkRqZF
+	pDjOPwsOR1pBTPEFycB/iAI8uEgveo9bUfRBNkOW2r+7XxaJ/EEWinzSjMx2Z+1U
+	1TbyCvHeS+RxMvlA4gL5t1DjUp9L1Ke40bifZCUhweblA5iUwKRIfUFudY9O55sF
+	dcNvm2LpTKSMBhLW3uatpQ+IekHTxqqYNGY+0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Q2LB5TiP6ei2Q3YWsnx7rhjs8bx8Ti0V
+	B5GHvCzNnhZgUefGmyta3YqMv9cOdmARlp788xbkvQFia2zXSF45r6kPKZ6u5tn8
+	TShFPxosZnzJQg6urxnUsQvJPEnN+Gpw0FKMmm2cXngtygMuy4967MuBxeBSYOXI
+	5XgO4A1Ng6E=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5AFB1EEF6;
+	Tue, 25 Nov 2014 16:13:26 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B5FA61EEF5;
+	Tue, 25 Nov 2014 16:13:25 -0500 (EST)
+In-Reply-To: <1416939854-29930-1-git-send-email-kuleshovmail@gmail.com>
+	(Alexander Kuleshov's message of "Wed, 26 Nov 2014 00:24:14 +0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E51496A0-74E7-11E4-AAC7-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260241>
 
-On Tue, Nov 25, 2014 at 9:00 AM, Paolo Bonzini <bonzini@gnu.org> wrote:
-> From: Paolo Bonzini <pbonzini@redhat.com>
+Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+
+> Now system_path returns path which is allocated string to callers;
+> It prevents memory leaks in some places. All callers of system_path
+> are owners of path string and they must release it.
 >
-> The thread at http://thread.gmane.org/gmane.comp.version-control.git/=
-257392
-> details problems when applying patches with "git am" in a repository =
-with
-> CRLF line endings.  In the example in the thread, the repository orig=
-inated
-> from "git-svn" so it is not possible to use core.eol and friends on i=
-t.
->
-> Right now, the best option is to use "git am --keep-cr".  However, wh=
-en
-> a patch create new files, the patch application process will reject t=
-he
-> new file because it finds a "/dev/null\r" string instead of "/dev/nul=
-l".
->
-> The problem is that SMTP transport is CRLF-unsafe.  Sending a patch b=
-y
-> email is the same as passing it through "dos2unix | unix2dos".  The n=
-ewly
-> introduced CRLFs are normally transparent because git-am strips them.=
- The
-> keepcr=3Dtrue setting preserves them, but it is mostly working by cha=
-nce
-> and it would be very problematic to have a "git am" workflow in a
-> repository with mixed LF and CRLF line endings.
->
-> The MIME solution to this is the quoted-printable transfer enconding.
-> This is not something that we want to enable by default, since it mak=
-es
-> received emails horrible to look at.  However, it is a very good matc=
-h
-> for projects that store CRLF line endings in the repository.
->
-> The only disadvantage of quoted-printable is that quoted-printable
-> patches fail to apply if the maintainer uses "git am --keep-cr".  Thi=
-s
-> is because the decoded patch will have two carriage returns at the en=
-d
-> of the line.  Therefore, add support for base64 transfer encoding too=
-,
-> which makes received emails downright impossible to look at outside
-> a MUA, but really just works.
->
-> The patch covers all bases, including users that still live in the la=
-te
-> 80s, by also providing a 7bit content transfer encoding that refuses
-> to send emails with non-ASCII character in them.  And finally, "8bit"
-> will add a Content-Transfer-Encoding header but otherwise do nothing.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 > ---
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 19a3ced..e5016f4 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1298,6 +1298,163 @@ test_expect_success $PREREQ '--8bit-encoding =
-also treats subject' '
->         test_cmp expected actual
->  '
+
+Comparing this with what I sent out...
+
+>  builtin/help.c | 10 +++++++---
+>  exec_cmd.c     | 17 +++++++++--------
+>  exec_cmd.h     |  4 ++--
+>  git.c          | 16 ++++++++++++----
+>  4 files changed, 30 insertions(+), 17 deletions(-)
 >
-> +test_expect_success $PREREQ 'setup expect' '
-> +cat >email-using-8bit <<EOF
+> @@ -372,7 +373,9 @@ static void show_man_page(const char *git_cmd)
+>  static void show_info_page(const char *git_cmd)
+>  {
+>  	const char *page = cmd_to_page(git_cmd);
+> -	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
+> +	char *git_info_path = system_path(GIT_INFO_PATH);
+> +	setenv("INFOPATH", git_info_path, 1);
+> +	free(git_info_path);
 
-The test title says "setup expect", but this is creating an 8-bit
-email message for input to git-send-email rather than expected output.
-Perhaps the test title should be adjusted.
+We are just about to exec; does this warrant the code churn?
 
-> +From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 20=
-01
-> +Message-Id: <bogus-message-id@example.com>
-> +From: A U Thor <author@example.com>
-> +Date: Sat, 12 Jun 2010 15:53:58 +0200
-> +Content-Type: text/plain; charset=3DUTF-8
-> +Subject: Nothing to see here.
-> +
-> +Dieser Betreff enth=C3=A4lt auch einen Umlaut!
-> +EOF
-> +'
-> +
-> +test_expect_success $PREREQ 'sendemail.transferencoding=3D7bit fails=
- on 8bit data' '
-> +       clean_fake_sendmail &&
-> +       git config sendemail.transferEncoding 7bit &&
+>  	execlp("info", "info", "gitman", page, (char *)NULL);
+>  	die(_("no info viewer handled the request"));
 
-test_config here and elsewhere perhaps?
+> @@ -34,8 +34,7 @@ const char *system_path(const char *path)
+>  #endif
+>  
+>  	strbuf_addf(&d, "%s/%s", prefix, path);
+> -	path = strbuf_detach(&d, NULL);
+> -	return path;
+> +	return d.buf;
 
-> +       test_must_fail git send-email \
-> +         --transfer-encoding=3D7bit \
+These happens to be the same with the current strbuf implementation,
+but it is a good manner to use strbuf_detach(&d, NULL) here.  We
+don't know what other de-initialization tomorrow's implementation of
+the strbuf API may have to do in strbuf_detach().
 
-Redundant 7bit request.
+> @@ -68,16 +67,16 @@ void git_set_argv_exec_path(const char *exec_path)
+>  
+>  
+>  /* Returns the highest-priority, location to look for git programs. */
+> -const char *git_exec_path(void)
+> +char *git_exec_path(void)
+>  {
+>  	const char *env;
+>  
+>  	if (argv_exec_path)
+> -		return argv_exec_path;
+> +		return strdup(argv_exec_path);
+>  
+>  	env = getenv(EXEC_PATH_ENVIRONMENT);
+>  	if (env && *env) {
+> -		return env;
+> +		return strdup(env);
+>  	}
 
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-8bit \
-> +         2>errors >out &&
-> +       grep "cannot send message as 7bit" errors &&
-> +       test -z "$(ls msgtxt*)"
-> +'
-> +
-> +test_expect_success $PREREQ '--transfer-encoding overrides sendemail=
-=2EtransferEncoding' '
-> +       clean_fake_sendmail &&
-> +       git config sendemail.transferEncoding 8bit
+Now you are making callers of git_exec_path() responsible for
+freeing the result they receive.
 
-Broken &&-chain.
+git_exec_path() may be called quite a lot, which means we may end up
+calling system_path() many times during the life of a process
+without freeing its return value, so this change may be worth doing,
+but this patch is insufficient, isn't it?
 
-> +       test_must_fail git send-email \
-> +         --transfer-encoding=3D7bit \
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-8bit \
-> +         2>errors >out &&
-> +       grep "cannot send message as 7bit" errors &&
-> +       test -z "$(ls msgtxt*)"
-> +'
-> +
-> +test_expect_success $PREREQ 'sendemail.transferencoding=3D8bit' '
-> +       clean_fake_sendmail &&
-> +       git send-email \
-> +         --transfer-encoding=3D8bit \
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-8bit \
-> +         2>errors >out &&
+You just added load_command_list() in help.c a new leak or two, for
+example.  There probably are other callers of this function but I
+don't have time to look at all of them myself right now.
 
-Is it necessary here to capture stdout and stderr rather than allowing
-them to be handled automatically by the testing framework? In the two
-prior tests, you do consult 'error' so it makes send to capture it,
-but this test does not, nor do any following tests which capture those
-streams. (The same question applies to the capture of stdout in the
-above two tests. Is it necessary?)
+> @@ -95,8 +94,10 @@ void setup_path(void)
+>  {
+>  	const char *old_path = getenv("PATH");
+>  	struct strbuf new_path = STRBUF_INIT;
+> +	char* exec_path = git_exec_path();
+>  
+> -	add_path(&new_path, git_exec_path());
+> +	add_path(&new_path, exec_path);
+> +	free(exec_path);
+>  	add_path(&new_path, argv0_path);
 
-> +       sed '1,/^$/d' msgtxt1 >actual &&
-> +       sed '1,/^$/d' email-using-8bit >expected &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success $PREREQ 'setup expect' '
-> +cat >expected <<EOF
-> +Dieser Betreff enth=3DC3=3DA4lt auch einen Umlaut!
-> +EOF
+This part by itself is good, provided if we make it the caller's
+responsiblity to free string returned by git_exec_path().
 
-This "expected" file is used only by the following test. It might be
-clearer and more robust (in case someone inserts new tests in between
-these) to create the "expected" file directly in the test which uses
-it. The same comment applies to other "expected" files each used by
-only a single test.
+> diff --git a/git.c b/git.c
+> index 82d7a1c..d01c4f1 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -95,17 +95,25 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+>  			if (*cmd == '=')
+>  				git_set_argv_exec_path(cmd + 1);
+>  			else {
+> -				puts(git_exec_path());
+> +				char *exec_path = git_exec_path();
+> +				puts(exec_path);
+> +				free(exec_path);
+>  				exit(0);
+>  			}
+>  		} else if (!strcmp(cmd, "--html-path")) {
+> -			puts(system_path(GIT_HTML_PATH));
+> +			char *git_html_path = system_path(GIT_HTML_PATH);
+> +			puts(git_html_path);
+> +			free(git_html_path);
+>  			exit(0);
+>  		} else if (!strcmp(cmd, "--man-path")) {
+> -			puts(system_path(GIT_MAN_PATH));
+> +			char *git_man_path = system_path(GIT_MAN_PATH);
+> +			puts(git_man_path);
+> +			free(git_man_path);
+>  			exit(0);
+>  		} else if (!strcmp(cmd, "--info-path")) {
+> -			puts(system_path(GIT_INFO_PATH));
+> +			char *git_info_path = system_path(GIT_INFO_PATH);
+> +			puts(git_info_path);
+> +			free(git_info_path);
+>  			exit(0);
+>  		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+>  			use_pager = 1;
 
-> +'
-> +
-> +test_expect_success $PREREQ '8-bit and sendemail.transferencoding=3D=
-quoted-printable' '
-> +       clean_fake_sendmail &&
-> +       git send-email \
-> +         --transfer-encoding=3Dquoted-printable \
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-8bit \
-> +         2>errors >out &&
-> +       sed '1,/^$/d' msgtxt1 >actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success $PREREQ 'setup expect' '
-> +cat >expected <<EOF
-> +RGllc2VyIEJldHJlZmYgZW50aMOkbHQgYXVjaCBlaW5lbiBVbWxhdXQhCg=3D=3D
-> +EOF
-> +'
-> +
-> +test_expect_success $PREREQ '8-bit and sendemail.transferencoding=3D=
-base64' '
-> +       clean_fake_sendmail &&
-> +       git send-email \
-> +         --transfer-encoding=3Dbase64 \
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-8bit \
-> +         2>errors >out &&
-> +       sed '1,/^$/d' msgtxt1 >actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success $PREREQ 'setup expect' '
-> +cat >email-using-qp <<EOF
-
-Test title says "setup expect" but it's really setting up a
-quoted-printable email.
-
-> +From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 20=
-01
-> +Message-Id: <bogus-message-id@example.com>
-> +From: A U Thor <author@example.com>
-> +Date: Sat, 12 Jun 2010 15:53:58 +0200
-> +MIME-Version: 1.0
-> +Content-Transfer-Encoding: quoted-printable
-> +Content-Type: text/plain; charset=3DUTF-8
-> +Subject: Nothing to see here.
-> +
-> +Dieser Betreff enth=3DC3=3DA4lt auch einen Umlaut!
-> +EOF
-> +'
-> +
-> +test_expect_success $PREREQ 'convert from quoted-printable to base64=
-' '
-> +       clean_fake_sendmail &&
-> +       git send-email \
-> +         --transfer-encoding=3Dbase64 \
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-qp \
-> +         2>errors >out &&
-> +       sed '1,/^$/d' msgtxt1 >actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success $PREREQ 'setup expect' "
-> +tr -d '\\015' | tr '%' '\\015' > email-using-crlf <<EOF
-
-Ditto: Test title says "setup expect" but it's setting up a CRLF email.
-
-> +From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 20=
-01
-> +Message-Id: <bogus-message-id@example.com>
-> +From: A U Thor <author@example.com>
-> +Date: Sat, 12 Jun 2010 15:53:58 +0200
-> +Content-Type: text/plain; charset=3DUTF-8
-> +Subject: Nothing to see here.
-> +
-> +Look, I have a CRLF and an =3D sign!%
-> +EOF
-> +"
-> +
-> +test_expect_success $PREREQ 'setup expect' '
-> +cat >expected <<EOF
-> +Look, I have a CRLF and an =3D3D sign!=3D0D
-> +EOF
-> +'
-> +
-> +test_expect_success $PREREQ 'CRLF and sendemail.transferencoding=3Dq=
-uoted-printable' '
-> +       clean_fake_sendmail &&
-> +       git send-email \
-> +         --transfer-encoding=3Dquoted-printable \
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-crlf \
-> +         2>errors >out &&
-> +       sed '1,/^$/d' msgtxt1 >actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success $PREREQ 'setup expect' '
-> +cat >expected <<EOF
-> +TG9vaywgSSBoYXZlIGEgQ1JMRiBhbmQgYW4gPSBzaWduIQ0K
-> +EOF
-> +'
-> +
-> +test_expect_success $PREREQ 'CRLF and sendemail.transferencoding=3Db=
-ase64' '
-> +       clean_fake_sendmail &&
-> +       git send-email \
-> +         --transfer-encoding=3Dbase64 \
-> +         --smtp-server=3D"$(pwd)/fake.sendmail" \
-> +         email-using-crlf \
-> +         2>errors >out &&
-> +       sed '1,/^$/d' msgtxt1 >actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +
->  # Note that the patches in this test are deliberately out of order; =
-we
->  # want to make sure it works even if the cover-letter is not in the
->  # first mail.
-> --
-> 2.1.0
+None of these warrant the code churn, I would say.
