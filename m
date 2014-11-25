@@ -1,161 +1,84 @@
-From: Fedor Brunner <fedor.brunner@azet.sk>
-Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
- safer?
-Date: Tue, 25 Nov 2014 13:59:00 +0100
-Message-ID: <54747D14.2020406@azet.sk>
-References: <5468C33E.2080108@whonix.org> <20141117212657.GC15880@peff.net> <546FC446.50101@whonix.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, whonix-devel@whonix.org, mikegerwitz@gnu.org
-To: Patrick Schleizer <patrick-mailinglists@whonix.org>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 25 14:08:08 2014
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH 0/2] git-send-email: add --transfer-encoding option for conversion to specified encoding
+Date: Tue, 25 Nov 2014 15:00:25 +0100
+Message-ID: <1416924027-29862-1-git-send-email-bonzini@gnu.org>
+Cc: lersek@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 25 15:00:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtFqc-0006vX-Oe
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 14:08:03 +0100
+	id 1XtGfZ-0007Jb-6u
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 15:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752386AbaKYNH6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 08:07:58 -0500
-Received: from smtp-06-out.s.azet.sk ([91.235.53.31]:35351 "EHLO
-	smtp-01-out.s.azet.sk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751837AbaKYNH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 08:07:57 -0500
-X-Greylist: delayed 520 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Nov 2014 08:07:57 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=azet.sk; s=azet;
-	t=1416920354; bh=IPWw9m0MXVdROY6pGRvidnzVQ6I4CiJXPNC3Y1qo3SM=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To:From;
-	b=tzkz1z+cfxyKCPvbVxUGjHMBSODOZ2Lmdarx3PKhGH3mAhGh32l7d9Trm4WmdY5Kk
-	 VxKzvwWtAZLczhwVh40taBvzQW8stmX8l/hd17OxZV9M4zmJwiX+FdpwdGV2koAodC
-	 3yVvI7BSvbke6rOhNa9BH771W3u0r2f06unHaWOY=
-X-Virus-Scanned: by AntiSpam at azet.sk
-X-Spam-Flag: NO
-Received: from [0.0.0.0] (root457.ip-projects.de [82.211.0.201])
-	(Authenticated sender: fedor.brunner@azet.sk)
-	by smtp.azet.sk (Postfix) with ESMTPA id 32C7486;
-	Tue, 25 Nov 2014 13:59:02 +0100 (CET)
-X-SenderID: Sendmail Sender-ID Filter v1.0.0 smtp.azet.sk 32C7486
-Authentication-Results: smtp.azet.sk; sender-id=fail (NotPermitted) header.from=fedor.brunner@azet.sk; auth=pass (PLAIN); spf=fail (NotPermitted) smtp.mfrom=fedor.brunner@azet.sk
-In-Reply-To: <546FC446.50101@whonix.org>
+	id S1751110AbaKYOAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 09:00:36 -0500
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:33286 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbaKYOAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 09:00:35 -0500
+Received: by mail-wg0-f53.google.com with SMTP id l18so908457wgh.26
+        for <git@vger.kernel.org>; Tue, 25 Nov 2014 06:00:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=nsqquoE6ZKqo2H/vkbkGVnoJnke7aY6OY2tQ+PhKdgg=;
+        b=y+4AtuhPo9dkxynkuczwlC7f4/lLRLRqO+lffleCWRP6/b43g58OWCeQoO7UGpSSS5
+         GqHJF3FM4lWJMWJ7+dH1i5yetEWt7eb1smtSVcSSw9bJDrHHG3OB2x9T/D91gKbYY3X8
+         lRI5Q9mmiYmHWP3hB3Fkwr0ce+vXIqtSKGRFvqDCCN/739lNwsDHG7fPEyWmav/d5byD
+         XoWSLEkcDqZelYP8ck3pISgJHCAYaB417R6bqdrtSik9MK87/eoHCiBaxA8Y8puSxnIG
+         /TsCEAFdz1TCA9SJvndofExf3WZcTv0qydPRCrjvqaqztu5huh+h3iqydqkMMYYAHhw9
+         DItA==
+X-Received: by 10.180.21.210 with SMTP id x18mr32000214wie.19.1416924034442;
+        Tue, 25 Nov 2014 06:00:34 -0800 (PST)
+Received: from donizetti.redhat.com (net-93-146-133-240.cust.vodafonedsl.it. [93.146.133.240])
+        by mx.google.com with ESMTPSA id cq4sm2005989wjc.35.2014.11.25.06.00.32
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Nov 2014 06:00:33 -0800 (PST)
+X-Mailer: git-send-email 2.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260215>
 
-On 22.11.2014 00:01, Patrick Schleizer wrote:
-> Dear git developers!
->=20
-> Jeff King wrote:
->> On Sun, Nov 16, 2014 at 03:31:10PM +0000, Patrick Schleizer wrote:
->>
->>> How safe are signed git tags? Especially because git uses SHA-1. Th=
-ere
->>> is contradictory information around.
->>>
->>> So if one verifies a git tag (`git tag -v tagname`), then `checksou=
-t`s
->>> the tag, and checks that `git status` reports no untracked/modified
->>> files, without further manually auditing the code, how secure is th=
-is
->>> actually? Is it only as safe as SHA-1?
->>
->> Yes, it is only as "safe as SHA-1" in the sense that you have GPG-si=
-gned
->> only a SHA-1 hash. If somebody can find a collision with a hash you =
-have
->> signed, they can substitute the colliding data for the data you sign=
-ed.
->>
->> Of course, "safe as SHA-1" and "find a collision" are vague. If
->> pre-image attacks are feasible (i.e., given already-published SHA-1,=
- I
->> can find a different input with the same SHA-1), then attacks are
->> trivial. But when people talk about attacks on SHA-1, they are usual=
-ly
->> referring to finding a collision between two new pieces of data. You=
- can
->> also use that in an attack, but it's much less straightforward
->> (basically, you need to get somebody to sign one of the colliding pi=
-eces
->> of data and then replace it with the other).
->=20
-> Sounds pretty sad. Isn't this a security issue that should be fixed?
->=20
-> Rather than discussing how feasible collisions in SHA-1 are... Attack=
-s
-> on SHA-1 are only getting worse, no? Since the Snowden revelations we
-> know that powerful adversaries that are working on such things and wo=
-uld
-> use such weaknesses to exploit users.
->=20
-> Dear git developers, could you please make a long story short? Change=
- to
-> some stronger hash algorithm? (sha256, sha512, or so?) Or provide an
-> option for that?
->=20
->> And of course there is the question of getting the colliding data to=
- the
->> victim. Git does collision checks whenever a remote (e.g., from a "g=
-it
->> fetch") gives us data that we already have. So you could poison new
->> cloners with bad data, but you could not convince a repository with =
-the
->> existing "good" half of the collision to fetch the "evil" half.
->=20
-> Poison git cloners with bad data is exactly my point here. Because
-> sometimes I am a cloner of my own code - cloning it on a separate
-> machine - then verify it using gpg - but don't check it any further. =
-In
-> such cases, I'd prefer if security wouldn't depend on SHA-1.
->=20
-> Cheers,
-> Patrick
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Dear git developers,
-how about skipping SHA-2 and moving to SHA-3 finalist BLAKE.
+The thread at http://thread.gmane.org/gmane.comp.version-control.git/257392
+details problems when applying patches with "git am" in a repository with
+CRLF line endings.  In the example in the thread, the repository originated
+from "git-svn" so it is not possible to use core.eol and friends on it.
 
-NIST, in the final report of the SHA-3 competition, said this about the
-finalists (which included BLAKE, Keccak, Skein, and Gr=C3=B8stl):
+Right now, the best option is to use "git am --keep-cr".  However, when
+a patch create new files, the patch application process will reject the
+new file because it finds a "/dev/null\r" string instead of "/dev/null".
 
-    BLAKE had a security margin =E2=80=94 the gap between a known-weak =
-reduced
-version and the full version =E2=80=94 comparable to Keccak and superio=
-r to the
-other finalists. (=C2=A74.3: =E2=80=9CBLAKE and Keccak have very large =
-security
-margins.=E2=80=9D)
-    BLAKE had a depth of analysis =E2=80=94 the amount of published res=
-earch
-analyzing its security =E2=80=94 comparable to Gr=C3=B8stl and Skein an=
-d superior to
-the other finalists. (=C2=A73.1: =E2=80=9CKeccak received a significant=
- amount of
-cryptanalysis, although not quite the depth of analysis applied to
-BLAKE, Gr=C3=B8stl, or Skein=E2=80=9D)
-    BLAKE had performance (in software) comparable to Skein and superio=
-r
-to the other finalists. (=C2=A75.1.4: =E2=80=9CSkein and BLAKE [=E2=80=A6=
-] have the best
-overall software performance.=E2=80=9D)
+The problem is that SMTP transport is CRLF-unsafe; "git am --keep-cr" is
+mostly working by chance and it would be very problematic to have a "git
+am" workflow in a repository with mixed LF and CRLF line endings.  It is
+more robust to forgo readable patch files[1] and use the quoted-printable
+transfer enconding.  This series adds an option and configuration key
+to git-send-email that lets it automatically produce quoted-printable
+or base64 messages.
 
-http://nvlpubs.nist.gov/nistpubs/ir/2012/NIST.IR.7896.pdf
+Paolo
 
+[1] A useful oneliner to decode quoted-printable files is the following:
+    perl -pe 'use MIME::QuotedPrint; $_=MIME::QuotedPrint::decode($_);'
 
+Paolo Bonzini (2):
+  git-send-email: delay creation of MIME headers
+  git-send-email: add --transfer-encoding option
 
-Measurements of SHA-3 finalists, indexed by machine
+ Documentation/config.txt               |   1 +
+ Documentation/git-send-email.txt       |  10 +++
+ contrib/completion/git-completion.bash |   4 +
+ git-send-email.perl                    |  61 +++++++++++--
+ t/t9001-send-email.sh                  | 157 +++++++++++++++++++++++++++++++++
+ 5 files changed, 227 insertions(+), 6 deletions(-)
 
-http://bench.cr.yp.to/results-sha3.html
-
-
-=46edor
+-- 
+2.1.0
