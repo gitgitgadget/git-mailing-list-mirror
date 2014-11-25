@@ -1,67 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/7] prune_remote(): exit early if there are no stale references
-Date: Tue, 25 Nov 2014 10:09:23 -0800
-Message-ID: <xmqq61e3tang.fsf@gitster.dls.corp.google.com>
-References: <1416902555-10748-1-git-send-email-mhagger@alum.mit.edu>
-	<1416902555-10748-2-git-send-email-mhagger@alum.mit.edu>
+From: sixpence13872@gmail.com
+Subject: Fix Penguin Penalty 17th October2014 ( mail-archive.com )
+Date: Tue, 25 Nov 2014 23:42:23 +0530
+Message-ID: <5474c685.ebac420a.67ee.567c@mx.google.com>
+Reply-To: julia.kites@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Nov 25 19:09:40 2014
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 25 19:12:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtKYV-0007Xt-QC
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 19:09:40 +0100
+	id 1XtKbH-0001Si-Om
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 19:12:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751181AbaKYSJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 13:09:28 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56286 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751111AbaKYSJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 13:09:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1490A1F681;
-	Tue, 25 Nov 2014 13:09:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ustTtZRspivj8WLGAY6L708rjtM=; b=v5Bjw8
-	6bsk+g0FlF5XMYzMytqzsd8PG83JeU4ZzlprTItdrZOmIAnEobseMcHSVhttnttl
-	GXtFz8o97iY1tdDKkVSChPdgf5WDfe5Wwmh/9w/TU/NrpSpX72n6iOeqgkr0FCur
-	ckXqYQkrtYyOqq+z4PbCuE1PNNJOYfUeap9+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lYaM0wSeNnXR7MSKX2ebDspH8XjBArez
-	Hfnrwgwcs23jdclm+U9WPNFpp4DGL/ARyUVlWDp0acGOXj48omZzMsqkIkP9BJpL
-	Kf/7rA4IDer3XddJKEDOq+Gf5rfEZ20skRQ0V38ERIAjgpUCVM6mNDXwI+7eBRJ3
-	14025M0ow88=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09A801F680;
-	Tue, 25 Nov 2014 13:09:26 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 78EC31F67F;
-	Tue, 25 Nov 2014 13:09:25 -0500 (EST)
-In-Reply-To: <1416902555-10748-2-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Tue, 25 Nov 2014 09:02:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 309487B2-74CE-11E4-8945-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1750901AbaKYSM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 13:12:27 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:43787 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbaKYSM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 13:12:26 -0500
+Received: by mail-pa0-f67.google.com with SMTP id lj1so337132pab.6
+        for <git@vger.kernel.org>; Tue, 25 Nov 2014 10:12:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:from:to:reply-to:subject:date;
+        bh=IKX1ulqMG5ahJrjudIIjRzhMPYUxS/BSTM2RDuT08wU=;
+        b=txzTq1MpowF/gy4JrNvuZNIkSxkHmXbwVUrufad9XKbEQbYrzx5X3uAaNLyTWasKoj
+         HtYn6r9rlq0e+x0xhUNgdwYIgKtTjksgfmbbkKkYOZuxC7GikM9NSJNqPsE1OSPdiAmB
+         z82AU7Bcls1YzuDLtkjU3NSDJnYPQW9HS6pkJCQT8ydgTOVp3mTCKqyej2ZNN7Y/4y9W
+         CBKsQGMIuJMAuEDJ7E//1hl9/SL56+OJUjZ7iDiT1KQ8tjubQvbvI+kLTUVUkywl+P9B
+         1HZdR9D75sIpIB26CfZUatFk8xGrkWMXIogYg4HBjSIVwaA3MQ1s69hoA3Jnzbdg+/PV
+         nW4w==
+X-Received: by 10.70.90.11 with SMTP id bs11mr46800955pdb.16.1416939141854;
+        Tue, 25 Nov 2014 10:12:21 -0800 (PST)
+Received: from localhost.localdomain ([124.253.10.7])
+        by mx.google.com with ESMTPSA id bf11sm2087526pac.43.2014.11.25.10.12.20
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 25 Nov 2014 10:12:21 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260232>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Dear Sir
 
-> Aside from making the logic clearer, this avoids a call to
-> warn_dangling_symrefs(), which always does a for_each_rawref()
-> iteration.
+Did your website get hit by Google Penguin update on October 17th 2014?=
+ What basically is Google Penguin Update? It is actually a code name fo=
+r Google algorithm which aims at decreasing your websites search engine=
+ rankings that violate Google=92s guidelines by using black hat SEO tec=
+hniques to rank your webpage by giving number of spammy links to the pa=
+ge.
+=20
+We are one of those few SEO companies that can help you avoid penalties=
+ from Google Updates like Penguin and Panda. Our clients have survived =
+all the previous and present updates with ease. They have never been hi=
+t because we use 100% white hat SEO techniques to rank Webpages.  Simpl=
+e thing that we do to keep websites away from any Penguin or Panda pena=
+lties is follow Google guidelines and we give Google users the best ans=
+wers to their queries.
 
-Makes sense.  Thanks.
+If you are looking to increase the quality of your websites and to get =
+more targeted traffic or save your websites from these Google penalties=
+ email us back with your interest.=20
+
+We will be glad to serve you and help you grow your business.
+
+Regards
+
+Julia kites
+
+SEO Manager ( TOB )
+B7 Green Avenue, Amritsar 143001 Punjab
+____________________________
+NO CLICK in the subject to STOP EMAILS
