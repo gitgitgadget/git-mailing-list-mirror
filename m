@@ -1,93 +1,123 @@
-From: Peter Wu <peter@lekensteyn.nl>
-Subject: Re: [RFC] [PATCH] remote: add new --fetch option for set-url
-Date: Tue, 25 Nov 2014 00:27:31 +0100
-Message-ID: <283403992.8FOSVk7RPR@al>
-References: <6997784.RuzRO1AFsK@al> <1660121.8PEbpzfRYH@al> <20141124225457.GA9942@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] string_list: Remove string_list_insert_at_index from its API
+Date: Mon, 24 Nov 2014 16:25:59 -0800
+Message-ID: <xmqq7fykunvs.fsf@gitster.dls.corp.google.com>
+References: <1416864124-15231-1-git-send-email-sbeller@google.com>
+	<1416864124-15231-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 25 00:27:44 2014
+Content-Type: text/plain
+Cc: marius@trolltech.com, julian@quantumfyre.co.uk, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 01:26:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xt32l-0007sY-TI
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 00:27:44 +0100
+	id 1Xt3xJ-00029Z-UA
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 01:26:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750774AbaKXX1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Nov 2014 18:27:39 -0500
-Received: from lekensteyn.nl ([178.21.112.251]:42001 "EHLO lekensteyn.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750747AbaKXX1j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Nov 2014 18:27:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lekensteyn.nl; s=s2048-2014-q3;
-	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From; bh=lxevziFnacK/v5ci7xI8cP0TsWPTE+um7hw+rVvqgEk=;
-	b=yosFicO/crWFQpugHSDcTukh57Sk1h0i4TGA1YzvnxY/eSMpV4hW+oby4/Y6NY9WYvlR1NegDaWwxjMrfC/dSvwOyvDtiVKuKuV21AffL2Cjt9nZ/DtMBrf30UKpF5CJuP6aLlOvTwFHMZAJ9icY+4BRm7/0RKYtE65heXqviMWJth5+9FbHkLBOlRvNBL0sj37Sw/wqilyU1dqq046LNHMGgbbsuC3nz/N08jrfQjUEErHEXa1fK0CMu7KIc9wpvtSM5g611k9v+25dOrXJeO4hPwDO+0E0tGFv1M/pvC4scO1RekqZFBqnOT7cnQdhrGna3SlWyMYe3Fo/F4um2A==;
-Received: by lekensteyn.nl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
-	(Exim 4.80)
-	(envelope-from <peter@lekensteyn.nl>)
-	id 1Xt32a-0006Z8-4b; Tue, 25 Nov 2014 00:27:32 +0100
-User-Agent: KMail/4.14.3 (Linux/3.17.0-rc4-custom-00168-g7ec62d4; KDE/4.14.3; x86_64; ; )
-In-Reply-To: <20141124225457.GA9942@peff.net>
-X-Spam-Score: 0.0 (/)
-X-Spam-Status: No, hits=0.0 required=5.0 tests=NO_RELAYS=-0.001,URIBL_BLOCKED=0.001 autolearn=no autolearn_force=no
+	id S1751012AbaKYA0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Nov 2014 19:26:05 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63651 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750891AbaKYA0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Nov 2014 19:26:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96C3F211A2;
+	Mon, 24 Nov 2014 19:26:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oXLFR0WWGcE/Icnp5wSlAwX0BNc=; b=ee2aAv
+	cg+BUrc52YFI+nqTQR4JYIhpRFAtLCEbhwtbwff+kHXeCB5tfd3XS3DJKuBHYsEG
+	Hrov0VBSdCJREgnIrmh+YP9RwbHkXsCpNPY/SyUOO2iQh9v8wRNKst8zOkHL3gwZ
+	vilu7EQmO0n9MD65tKf+9tGe3lZoHrceDpteo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GJYnmlBzZSF2Nwl7eiS5OLvkK6bW7/uN
+	PCQ+Jt/s2mwtxrEXFjDr11lPNQHkHgmRw/okdWGPKOCiiKV/MIX6FbM+1KKv7I2c
+	szHiUBrhyMxjKdGYQtHJhg9PXpmD4CKnFKuhDF97SK5HVkV4iOf5lINpwqz2fP+T
+	fI9Mll5ZIl8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C2A0211A1;
+	Mon, 24 Nov 2014 19:26:02 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9CDB211A0;
+	Mon, 24 Nov 2014 19:26:01 -0500 (EST)
+In-Reply-To: <1416864124-15231-3-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 24 Nov 2014 13:22:04 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A2B66094-7439-11E4-B741-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260174>
 
-On Monday 24 November 2014 17:54:57 Jeff King wrote:
-> On Mon, Nov 24, 2014 at 11:47:30PM +0100, Peter Wu wrote:
-> > I can understand that --fetch sounds a bit weird, what about this
-> > natural translation:
-> > 
-> >     "git remote: set the URL (only the fetch one) for NAME to URL"
-> >     git remote set-url --only=fetch NAME URL
-> > 
-> >     "git remote: set the URL (only the push one) for NAME to URL"
-> >     git remote set-url --only=push NAME URL
-> >     (obsoletes --push)
-> > 
-> >     "git remote: set the URL (both) for NAME to URL"
-> >     git remote set-url --only=both NAME URL
-> >     (it would be nice if --only=both (weird!) can be removed in the
-> >     future such that the option is more natural)
-> > 
-> >     "git remote: set the URL for NAME to URL"
-> >     git remote set-url NAME URL
-> >     (current behavior: YOU git guru knows what I do right?)
-> 
-> Yeah, I think that addresses my concern (because it explicitly leaves
-> no-option as a historical curiosity, and not as an implicit version of
-> "--both").
+Stefan Beller <sbeller@google.com> writes:
 
-Ok, I will make a clear note about the default (without --only) behavior
-having weird behavior for historical reasons. Are you really OK with
---only=both? It sounds a bit odd (mathematically speaking it is correct
-as fetch and push are both partitions that form the whole set if you
-ignore the historical behavior).
+> This function behaves the same as string_list_insert, just the
+> starting indexes for searching, where to insert into the list is also
+> a parameter. So if you have knowledge on where to search for the string
+> to be inserted, you may have a speed up version of string_list_insert.
 
-> > >   3. Live with it. Probably address the weirdness in the documentation.
-> > > 
-> > >   4. Do nothing, drop the patch.
-> > > 
-> > > I think I'd be OK with (3), with an appropriate documentation update.
-> > 
-> > I prefer 1 for now as it avoids the extra manual action I have to take
-> > when changing URLs.
-> 
-> I'm not sure if I was clear on (3), but "live with it" was "live with
-> your original patch". Which I think you would also be happy with.
+The last half-sentence I am having trouble parsing.  If you have
+that knowledge where the item should go, you can insert it at the
+right location faster than calling string_list_insert()?
 
-Oh yes, I misunderstood this one ;)
+That sounds like a useful feature to me.
 
-What about the translations? Should I send a separate patch for that or
-can I update all translations at once?
--- 
-Kind regards,
-Peter
-https://lekensteyn.nl
+But if nobody uses that feature, there is no point keeping it, no
+matter how useful it may sound.  So,... I am not sure.
+
+The function would be error prone if used on a string-list that is
+accessed via string_list_insert() API, which makes it only useful if
+the user of the API is in full control of the sort order, so I do
+not mind removing it and won't be saying "that is useful, we should
+keep it and use it more."
+
+But your log message confuses me....
+
+>
+> As we're not using this function throughout the codebase, get rid of it.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  string-list.c | 8 +-------
+>  string-list.h | 2 --
+>  2 files changed, 1 insertion(+), 9 deletions(-)
+>
+> diff --git a/string-list.c b/string-list.c
+> index c5aa076..9584fa6 100644
+> --- a/string-list.c
+> +++ b/string-list.c
+> @@ -59,13 +59,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
+>  
+>  struct string_list_item *string_list_insert(struct string_list *list, const char *string)
+>  {
+> -	return string_list_insert_at_index(list, -1, string);
+> -}
+> -
+> -struct string_list_item *string_list_insert_at_index(struct string_list *list,
+> -						     int insert_at, const char *string)
+> -{
+> -	int index = add_entry(insert_at, list, string);
+> +	int index = add_entry(-1, list, string);
+>  
+>  	if (index < 0)
+>  		index = -1 - index;
+> diff --git a/string-list.h b/string-list.h
+> index 40ffe0c..ee9b100 100644
+> --- a/string-list.h
+> +++ b/string-list.h
+> @@ -61,8 +61,6 @@ int string_list_find_insert_index(const struct string_list *list, const char *st
+>   * Returns the string_list_item, the string is part of.
+>   */
+>  struct string_list_item *string_list_insert(struct string_list *list, const char *string);
+> -struct string_list_item *string_list_insert_at_index(struct string_list *list,
+> -						     int insert_at, const char *string);
+>  
+>  /*
+>   * Checks if the given string is part of a sorted list. If it is part of the list,
