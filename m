@@ -1,103 +1,88 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: How safe are signed git tags? Only as safe as SHA-1 or somehow
- safer?
-Date: Tue, 25 Nov 2014 11:07:11 +0000
-Message-ID: <20141125110711.GF28310@vauxhall.crustytoothpaste.net>
-References: <5468C33E.2080108@whonix.org>
- <20141117212657.GC15880@peff.net>
- <CAK3OfOgko5Fb5FMGCKw3+12fAzMVEHuUriaiBNGi8nb28bNTQA@mail.gmail.com>
- <CACsJy8BMNXUinfK=YcJPkx98tYv_e40N0_mqqnzMLxDN6hkruA@mail.gmail.com>
+From: Peter Wu <peter@lekensteyn.nl>
+Subject: Re: [RFC] [PATCH] remote: add new --fetch option for set-url
+Date: Tue, 25 Nov 2014 12:36:43 +0100
+Message-ID: <8034833.1FhY2A8KSQ@al>
+References: <6997784.RuzRO1AFsK@al> <283403992.8FOSVk7RPR@al> <20141125040826.GC19301@peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3607uds81ZQvwCD0"
-Cc: Nico Williams <nico@cryptonector.com>,
-	git discussion list <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 25 12:07:35 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 25 12:36:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtDy0-0004Aa-Ao
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 12:07:32 +0100
+	id 1XtEQR-0002KS-Ft
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 12:36:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbaKYLHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 06:07:24 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:54760 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751959AbaKYLHS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2014 06:07:18 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:7842:6890:c244:fad8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E7D272808F;
-	Tue, 25 Nov 2014 11:07:14 +0000 (UTC)
-Mail-Followup-To: Duy Nguyen <pclouds@gmail.com>,
-	Nico Williams <nico@cryptonector.com>,
-	git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BMNXUinfK=YcJPkx98tYv_e40N0_mqqnzMLxDN6hkruA@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.17-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1755656AbaKYLgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 06:36:51 -0500
+Received: from lekensteyn.nl ([178.21.112.251]:54104 "EHLO lekensteyn.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753700AbaKYLgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 06:36:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lekensteyn.nl; s=s2048-2014-q3;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From; bh=2u7hg5ImxqT1O92BSs0ZU25yGNwM3KzinOxYFp1HOxc=;
+	b=U3LRzafFOblsoTFBxIwjwm+ftbrrekF+OKKJiGHrOf3ZGVYlsBMMVOVEUik4TomMESGeXi92efJm7a7iXgonh1RNEZSoLDrh1XfG1VFWXJNBjgi0boQyDVIcHGXyUVT0xXnaf4UI9itvh1r0csPiL6zDgpcoJUSrTbS0vcUWVJGnAKAtt1GzXwrKVhZRk6XA5a1TTcujc8FaUo/UXWrl+0jAR2hxgzsx6AiKFJ/IbtYW05RsgIc4s4/JqrMRRODj4pInjlWsf9iXMMrvBBPrrNQJSJ9MXv33GI5RbxLWndmC9w55LZ9zdyym/NttDv4rrgJReTSHWQe/mMz+lbK2kg==;
+Received: by lekensteyn.nl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
+	(Exim 4.80)
+	(envelope-from <peter@lekensteyn.nl>)
+	id 1XtEQG-0000Az-9r; Tue, 25 Nov 2014 12:36:44 +0100
+User-Agent: KMail/4.14.3 (Linux/3.17.0-rc4-custom-00168-g7ec62d4; KDE/4.14.3; x86_64; ; )
+In-Reply-To: <20141125040826.GC19301@peff.net>
+X-Spam-Score: -0.0 (/)
+X-Spam-Status: No, hits=-0.0 required=5.0 tests=NO_RELAYS=-0.001 autolearn=no autolearn_force=no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260210>
 
+On Monday 24 November 2014 23:08:26 Jeff King wrote:
+> However, I think what removed the confusion for me in your --only=both
+> proposal was the presence of a "both" option, since it made it more
+> clear that is not what no-option means. So what about just "--push",
+> "--fetch", and "--both"? Explain the current behavior of no-options in
+> the documentation as a historical oddity.
 
---3607uds81ZQvwCD0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ok, this sounds even better. I have dropped the --only part and made the
+options --push, --fetch and --both disjoint (overriding each other). A
+patch will follow soon. Maybe it should warn when you try to specify
+both options though.
 
-On Tue, Nov 25, 2014 at 08:16:15AM +0700, Duy Nguyen wrote:
-> On Tue, Nov 25, 2014 at 1:14 AM, Nico Williams <nico@cryptonector.com> wr=
-ote:
-> > Is there a plan for upgrading to a better hash function in the future?
-> >  (E.g., should it become an urgent need.)
-> >
-> > What are the roadblocks to adoption of a replacement hash function?
-> > Just documenting this would go a long way towards making it possible
-> > to upgrade some day.
->=20
-> The biggest obstacle is the assumption of SHA-1 everywhere in the
-> source code (e.g. assume the object name always takes 20 bytes). Brian
-> started on cleaning that up [1] but I think it's stalled. Then we need
-> to deal with upgrade path for SHA-1 repos.
+> That also gives us an easy path forward for changing the behavior.
+> During the transition period, people should use --push, --fetch, or
+> --both. Using no-options provides a warning. After a settling period,
+> the no-option behavior will switch to one of those (presumably --both),
+> and drop the warning.
+> 
+> You do not have to do the migration path if you don't want to. Adding
+> "--fetch" and "--both" scratches your itch and sets us up to migrate
+> later.
 
-Yes, it is stalled.  It ended up being a Herculean task, so when I pick
-up the patch series again, I'll probably submit changes in chunks to
-avoid the huge amount of code churn required.  I feel the list and Junio
-in particular will appreciate that more.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+I have documented the historic behavior and mentioned that it is
+/possible/ that the option --both becomes default in the future.
 
---3607uds81ZQvwCD0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> > What about the translations? Should I send a separate patch for that or
+> > can I update all translations at once?
+> 
+> You do not have to update the translations. When we near a release, the
+> l10n coordinator will run "make pot" to update po/git.pot with the
+> strings marked for translation, and then the translators will write
+> translations for the new strings. You are of course welcome to help with
+> the translation effort at that stage. 
+> 
+> Details are in po/README.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJUdGLeAAoJEL9TXYEfUvaLFG4P/2AYpWyzQOkn7tDEedRTy/z1
-vfgyRaviCJKoOh0fjLAusPzvCICgM7ILredmvLa25uy6IHBEK38q+NIgXzYdwxP6
-YlnKdTBUdYigrMa9fGRJNZjyt21myYXElPsH98lR6l2TD7oAy1IcZF5cepOBaQYc
-j27sZhxKSy1Df3C6NECWk7GdLybePa1U5BSNlwgcD8hV0Kl2U5NU+exFva0MqlD9
-X1CUg+NoNwHHJ23972f8CN7G9tuz7xR5tyLACtfnnEChxTTagD87Y5Oz9lOnrs/P
-SLdJLo4cchasQljcBEAnZNK2GGVxf5twUnAlwKQpC/J66LqO7JtBUpCXIUfdb9Eb
-gKmSzNT9AQsRsUw3/9nmgUpdHoQIvsdDZbMwvffEOKWUjsTMwzIHdFwm9a2g/Ffk
-5AhDEvPR0x4zkCWqU9XuQ4vPzfpSAsSRJLGY2vg9JRA001aZnLQhjoPQpiB1HRkH
-FT5iN5jtK3EbnmQDeZukyeuoZg5FYj+FiYsrtMitYt/KAmtLrAV0ymJ2Zgyrp/4d
-qgI7ClSoFNfdt8KWI3nep8eUaA9uy1qxsYe4i/Qc0Xb1IhYE3rk+Aw94+DXUUafW
-vEGHkA1KEXHEF3k1hpwWcKpbPM1qSG9z1KXY9xrYZidI33wogRStx2l4W4aub8lG
-8azwOmjByA2oNUWzhL4X
-=dolz
------END PGP SIGNATURE-----
-
---3607uds81ZQvwCD0--
+Well, it is not necessary the translations, but the format of them. The
+format
+"git remote set-url --delete <name> <url>" has changed to
+"git remote set-url [--both | --fetch | --push] --delete <name> <url>"
+for example. The old strings are still usable, so I wonder whether I can
+make it easier for the i10n maintainer to recognize this change?
+-- 
+Kind regards,
+Peter
+https://lekensteyn.nl
