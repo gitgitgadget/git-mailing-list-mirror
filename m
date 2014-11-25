@@ -1,185 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] change contract between system_path and it's callers
-Date: Tue, 25 Nov 2014 13:13:24 -0800
-Message-ID: <xmqqfvd7rnkb.fsf@gitster.dls.corp.google.com>
-References: <CANCZXo4=D=RPnGeAfcvD0O1hX0B43z1b11gyzjbJYGXzusfFYg@mail.gmail.com>
-	<1416939854-29930-1-git-send-email-kuleshovmail@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 0/2] git-am: add --message-id/--no-message-id options
+Date: Tue, 25 Nov 2014 22:21:56 +0100
+Message-ID: <CAP8UFD0WcSM4NP8XHQe5pg0bwC5-C19OdcNoPWFFz7Ngrfbg8g@mail.gmail.com>
+References: <1416924056-29993-1-git-send-email-bonzini@gnu.org>
+	<CAP8UFD0+Ef9JbbkZ+LBHcD6DVZiMGxFdrMnjLEViHHMERY5wuw@mail.gmail.com>
+	<5474B5EE.1030406@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 25 22:13:34 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Paolo Bonzini <bonzini@gnu.org>, git <git@vger.kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Nov 25 22:22:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtNQT-0003iy-Hu
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 22:13:34 +0100
+	id 1XtNYg-0001yk-K9
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Nov 2014 22:22:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045AbaKYVN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 16:13:29 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63009 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750875AbaKYVN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 16:13:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE5D51EEF7;
-	Tue, 25 Nov 2014 16:13:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rbz4DXGiSZSm6wjC7DzvtgCVelQ=; b=OkRqZF
-	pDjOPwsOR1pBTPEFycB/iAI8uEgveo9bUfRBNkOW2r+7XxaJ/EEWinzSjMx2Z+1U
-	1TbyCvHeS+RxMvlA4gL5t1DjUp9L1Ke40bifZCUhweblA5iUwKRIfUFudY9O55sF
-	dcNvm2LpTKSMBhLW3uatpQ+IekHTxqqYNGY+0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q2LB5TiP6ei2Q3YWsnx7rhjs8bx8Ti0V
-	B5GHvCzNnhZgUefGmyta3YqMv9cOdmARlp788xbkvQFia2zXSF45r6kPKZ6u5tn8
-	TShFPxosZnzJQg6urxnUsQvJPEnN+Gpw0FKMmm2cXngtygMuy4967MuBxeBSYOXI
-	5XgO4A1Ng6E=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5AFB1EEF6;
-	Tue, 25 Nov 2014 16:13:26 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B5FA61EEF5;
-	Tue, 25 Nov 2014 16:13:25 -0500 (EST)
-In-Reply-To: <1416939854-29930-1-git-send-email-kuleshovmail@gmail.com>
-	(Alexander Kuleshov's message of "Wed, 26 Nov 2014 00:24:14 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E51496A0-74E7-11E4-AAC7-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751469AbaKYVV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 16:21:58 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:46039 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951AbaKYVV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 16:21:57 -0500
+Received: by mail-ie0-f176.google.com with SMTP id tr6so1421678ieb.21
+        for <git@vger.kernel.org>; Tue, 25 Nov 2014 13:21:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=oEDYNVDlCwaZfqwvDBkb3exQqJvCJ7Zj0uJWlufHXlM=;
+        b=NR1NwV1OPsJ9bGdl2eLg2idMXV+gTYQFCbyI+JFVO/6gviRX2qlyCGjDlx6HebeA1A
+         d4T5KdLoTCZB9f+1nfNV2VL0yVzYmbZSkBDXPu0EA9gyi/NJZ928/qIzBZz6jG0NLOEq
+         EARaxtLN55/2sQ6+HRp6systm4ibZ6J4lNqC2vBZ7zt66/kkrnDtRBBDUiaixneUJdaV
+         tsk/4mP96Qr1Aih0QuhFx1FpibDVhGuNVDz4+joKzZepQfYK0LrI8jxMFQUz6DMk9Gls
+         JX9CemRpPKMDVcT7SJN7apr8snCVwjmN5QK1ODGczfO9cSyovLWO5lTux4nX1qwnVKLO
+         1FLg==
+X-Received: by 10.51.17.73 with SMTP id gc9mr19462991igd.24.1416950516870;
+ Tue, 25 Nov 2014 13:21:56 -0800 (PST)
+Received: by 10.50.30.40 with HTTP; Tue, 25 Nov 2014 13:21:56 -0800 (PST)
+In-Reply-To: <5474B5EE.1030406@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260242>
 
-Alexander Kuleshov <kuleshovmail@gmail.com> writes:
-
-> Now system_path returns path which is allocated string to callers;
-> It prevents memory leaks in some places. All callers of system_path
-> are owners of path string and they must release it.
+On Tue, Nov 25, 2014 at 6:01 PM, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> ---
-
-Comparing this with what I sent out...
-
->  builtin/help.c | 10 +++++++---
->  exec_cmd.c     | 17 +++++++++--------
->  exec_cmd.h     |  4 ++--
->  git.c          | 16 ++++++++++++----
->  4 files changed, 30 insertions(+), 17 deletions(-)
 >
-> @@ -372,7 +373,9 @@ static void show_man_page(const char *git_cmd)
->  static void show_info_page(const char *git_cmd)
->  {
->  	const char *page = cmd_to_page(git_cmd);
-> -	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
-> +	char *git_info_path = system_path(GIT_INFO_PATH);
-> +	setenv("INFOPATH", git_info_path, 1);
-> +	free(git_info_path);
+> On 25/11/2014 17:27, Christian Couder wrote:
+>>> > From: Paolo Bonzini <pbonzini@redhat.com>
+>>> >
+>>> > This series adds a --message-id option to git-mailinfo and git-am.
+>>> > git-am also gets an am.messageid configuration key to set the default,
+>>> > and a --no-message-id option to override the configuration key.
+>>> > (I'm not sure of the usefulness of a mailinfo.messageid option, so
+>>> > I left it out; this follows the example of -k instead of --scissors).
+>>> >
+>>> > This option can be useful in order to associate commit messages with
+>>> > mailing list discussions.
+>>> >
+>>> > If both --message-id and -s are specified, the Signed-off-by goes
+>>> > last.  This is coming out more or less naturally out of the git-am
+>>> > implementation, but is also tested in t4150-am.sh.
+>> Did you have a look at git interpret-trailers currently in master?
+>
+> Hmm, now I have.
+>
+> As far as I understand, all the git-am hooks are called on the commit
+> rather than the incoming email: all headers are lost by the time
+> git-mailinfo exits, including the Message-Id.  And you cannot call any
+> hook before git-mailinfo because git-mailinfo is where the
+> Content-Transfer-Encoding is processed.
+>
+> How would you integrate git-interpret-trailers in git-mailinfo?
 
-We are just about to exec; does this warrant the code churn?
+I don't know exactly, but people may want to add trailers when they
+run git-am, see:
 
->  	execlp("info", "info", "gitman", page, (char *)NULL);
->  	die(_("no info viewer handled the request"));
+http://thread.gmane.org/gmane.comp.version-control.git/251412/
 
-> @@ -34,8 +34,7 @@ const char *system_path(const char *path)
->  #endif
->  
->  	strbuf_addf(&d, "%s/%s", prefix, path);
-> -	path = strbuf_detach(&d, NULL);
-> -	return path;
-> +	return d.buf;
+and we decided that it was better to let something like git
+interpret-trailers decide how they should be handled.
 
-These happens to be the same with the current strbuf implementation,
-but it is a good manner to use strbuf_detach(&d, NULL) here.  We
-don't know what other de-initialization tomorrow's implementation of
-the strbuf API may have to do in strbuf_detach().
+Maybe if git-interpret-trailers could be called from git-mailinfo with
+some arguments coming from git-am, it could be configured with
+something like:
 
-> @@ -68,16 +67,16 @@ void git_set_argv_exec_path(const char *exec_path)
->  
->  
->  /* Returns the highest-priority, location to look for git programs. */
-> -const char *git_exec_path(void)
-> +char *git_exec_path(void)
->  {
->  	const char *env;
->  
->  	if (argv_exec_path)
-> -		return argv_exec_path;
-> +		return strdup(argv_exec_path);
->  
->  	env = getenv(EXEC_PATH_ENVIRONMENT);
->  	if (env && *env) {
-> -		return env;
-> +		return strdup(env);
->  	}
+git config trailer.Message-Id.command 'perl -ne '\''print $1 if
+m/^Message-Id: (.*)$/'\'' $ARG'
 
-Now you are making callers of git_exec_path() responsible for
-freeing the result they receive.
+So "git am --trailer 'Message-Id: msg-file' msg-file" would call "git
+mailinfo ..." that would call "git interpret-trailers --trailer
+'Message-Id: msg-file'" that would call "perl -ne 'print $1 if
+m/^Message-Id: (.*)$/' msg-file" and the output of this command, let's
+call it $id, would be put into a "Message-Id: $id" trailer in the
+commit message.
 
-git_exec_path() may be called quite a lot, which means we may end up
-calling system_path() many times during the life of a process
-without freeing its return value, so this change may be worth doing,
-but this patch is insufficient, isn't it?
+This way there is nothing specific to Message-Id in the code and
+people can decide using other trailer.Message-Id.* config variables
+exactly where the Message-Id trailer would be in the commit message.
 
-You just added load_command_list() in help.c a new leak or two, for
-example.  There probably are other callers of this function but I
-don't have time to look at all of them myself right now.
-
-> @@ -95,8 +94,10 @@ void setup_path(void)
->  {
->  	const char *old_path = getenv("PATH");
->  	struct strbuf new_path = STRBUF_INIT;
-> +	char* exec_path = git_exec_path();
->  
-> -	add_path(&new_path, git_exec_path());
-> +	add_path(&new_path, exec_path);
-> +	free(exec_path);
->  	add_path(&new_path, argv0_path);
-
-This part by itself is good, provided if we make it the caller's
-responsiblity to free string returned by git_exec_path().
-
-> diff --git a/git.c b/git.c
-> index 82d7a1c..d01c4f1 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -95,17 +95,25 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
->  			if (*cmd == '=')
->  				git_set_argv_exec_path(cmd + 1);
->  			else {
-> -				puts(git_exec_path());
-> +				char *exec_path = git_exec_path();
-> +				puts(exec_path);
-> +				free(exec_path);
->  				exit(0);
->  			}
->  		} else if (!strcmp(cmd, "--html-path")) {
-> -			puts(system_path(GIT_HTML_PATH));
-> +			char *git_html_path = system_path(GIT_HTML_PATH);
-> +			puts(git_html_path);
-> +			free(git_html_path);
->  			exit(0);
->  		} else if (!strcmp(cmd, "--man-path")) {
-> -			puts(system_path(GIT_MAN_PATH));
-> +			char *git_man_path = system_path(GIT_MAN_PATH);
-> +			puts(git_man_path);
-> +			free(git_man_path);
->  			exit(0);
->  		} else if (!strcmp(cmd, "--info-path")) {
-> -			puts(system_path(GIT_INFO_PATH));
-> +			char *git_info_path = system_path(GIT_INFO_PATH);
-> +			puts(git_info_path);
-> +			free(git_info_path);
->  			exit(0);
->  		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
->  			use_pager = 1;
-
-None of these warrant the code churn, I would say.
+Best,
+Christian.
