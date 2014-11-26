@@ -1,79 +1,72 @@
-From: debugging data <debugging.data@gmail.com>
-Subject: Re: push rejected (non-fast-forward)
-Date: Tue, 25 Nov 2014 19:16:11 -0500
-Message-ID: <443C531A-FD94-40F2-B661-209F6327A1A0@gmail.com>
-References: <C2E11014-CFE8-490E-A21A-DB42CC8E4175@gmail.com> <xmqqsih7rsyu.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 01:14:10 2014
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t1402: check to delete broken refs
+Date: Tue, 25 Nov 2014 16:35:06 -0800
+Message-ID: <20141126003506.GA19239@google.com>
+References: <1416956166-20341-1-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: mhagger@alum.mit.edu, gitster@pobox.com, git@vger.kernel.org,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 01:35:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtQFF-0001m6-Tl
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 01:14:10 +0100
+	id 1XtQZl-0000nA-C5
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 01:35:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636AbaKZAOF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 19:14:05 -0500
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:38816 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002AbaKZAOE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2014 19:14:04 -0500
-Received: by mail-yk0-f169.google.com with SMTP id 79so799713ykr.28
-        for <git@vger.kernel.org>; Tue, 25 Nov 2014 16:14:02 -0800 (PST)
+	id S1751891AbaKZAfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 19:35:15 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:57265 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639AbaKZAfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 19:35:14 -0500
+Received: by mail-ie0-f172.google.com with SMTP id tr6so1715568ieb.3
+        for <git@vger.kernel.org>; Tue, 25 Nov 2014 16:35:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date
-         :content-transfer-encoding:message-id:references:to;
-        bh=d32vu/pDotAtZ9cAthmiG9gNVL3X+jMGcoUwPCsRtOw=;
-        b=w8vmYP4LIraSqNar5ljGSVM1NvA+PIzYY/ee/EyvDoobffH27CAgMgic5CwoEeY0yO
-         9wE16ZBVycDz9C2iLsG2Az772/o77eC9IJUTa3PoHyz1Rwl+3vxNP7xC8iZ98mREVaB7
-         MeSK0kew5KhQ1OD6d3jgBQUtTuFKd9Lq2sidvXiSf1h3ov6GlnupwrLeC4LhJwOW3TlN
-         k6UGUUPdqiSXyT5FJvIds/SmNqtLeefe666shZx2ATNR+8R1Ys0zvIO46Vm2E29ZIqRE
-         ogQukGDRoV8Lu0UKRowm5GyW3WyMBCx9g2moY8fvzJJMSGPm+CZUBa9DY05AGgO5Mhdx
-         gcZg==
-X-Received: by 10.236.230.40 with SMTP id i38mr27767533yhq.34.1416960842805;
-        Tue, 25 Nov 2014 16:14:02 -0800 (PST)
-Received: from [10.0.0.15] (c-69-136-29-70.hsd1.fl.comcast.net. [69.136.29.70])
-        by mx.google.com with ESMTPSA id c76sm1442082yho.12.2014.11.25.16.14.02
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Nov 2014 16:14:02 -0800 (PST)
-In-Reply-To: <xmqqsih7rsyu.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1878.6)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dWN7BPSkEmuFJKSoXNJG9z+S0H5XrxP+caS/OZ31vKQ=;
+        b=eKmXeXHlYv9J0ieUva+0Nb84bW+ZOkyIwgAn+nWRLszxENkUjHp99ifbVE84T3702N
+         Upuijq4tR/PRgaqYzSsj5mSJHwubyRaW+jhNQ3q+YDpQXoIifwb1IO8dA+m4lTuX4NvC
+         aZ/kqvJ3OHTw39xmcM+ksQYdwb0pXIlD21KUgA9aejmHuJEZeWsi/S3QFZjkADVjhyoA
+         ylWPm8YVyU+oZOXQ76zAU5BTGLDQH5l0d88roBnu7WmpfKcLWcEgsTHhrTqd8j2hC0Rf
+         f71xKYRZrl+SB9+R6XZRbKWxf+0yEK3jquTfK8pWIJy/DScECOJDCWgegBr5tJPrcOi6
+         r9HQ==
+X-Received: by 10.107.132.78 with SMTP id g75mr26708315iod.21.1416962113788;
+        Tue, 25 Nov 2014 16:35:13 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:31d4:43f9:cf9a:f63a])
+        by mx.google.com with ESMTPSA id l2sm1122294ioe.34.2014.11.25.16.35.12
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 25 Nov 2014 16:35:13 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1416956166-20341-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260254>
 
-Thank you Junio.
+Hi,
 
-Do you know how the
+Stefan Beller wrote:
 
-    $ git pull origin so-much-foo`=20
+> This was also part of the ongoing series from Ronnie.
+> But I think the patch in this form is rather independant,
+> documenting the current state of "git branch -d", so it's
+> fine to have it in now.
 
-command manages to keep user-two=92s branch up-to-date with remote?
+Is there a patch adding the feature this patch describes that this
+could be squashed into?
 
-It seems counterintuitive since I am pulling from origin and not explic=
-itly working with remote.
-=20
-Would what you see here been an acceptable scenario?
-https://github.com/user-one/project/pull/1
+>  t/t1402-check-ref-format.sh | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
-I performed a `git pull` and merged the changes manually. This looks li=
-ke an awful lot to keep track of, and I=92m not sure if it=92s acceptab=
-le for larger projects.
-
-My goal here is to prepare myself to help out with a large open source =
-project.
-
-Also, if anyone has the patience, would you mind explaining what=92s go=
-ing on here?
-
-$ git show-branch FETCH_HEAD so-much-foo
-! [FETCH_HEAD] changed foo/foo.txt contents to "so much foo"
- * [so-much-foo] foo/foo.txt from "so much foo" to "foo\nfoo"
+This doesn't have anything to do with check-ref-format --- it's about
+how easy it is to recover from a repository with corrupt files in it.
+Would it fit somewhere like t3200-branch.sh?
