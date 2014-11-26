@@ -1,87 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: "git notes show" is orders of magnitude slower than doing it
- manually with ls-tree and cat-file
-Date: Tue, 25 Nov 2014 20:24:49 -0500
-Message-ID: <20141126012448.GA11183@peff.net>
-References: <20141126004242.GA13915@glandium.org>
- <20141126010051.GA29830@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] t7503: use write_script to generate hook scripts
+Date: Tue, 25 Nov 2014 20:25:18 -0500
+Message-ID: <CAPig+cRjwt1NhT1=cqndNihhHzwh7Cc1DWQik=g8MxJV6wWfXw@mail.gmail.com>
+References: <cover.1416955873.git.oystwa@gmail.com>
+	<cover.1416953772.git.oystwa@gmail.com>
+	<78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Nov 26 02:24:55 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 02:25:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtRLi-0003sD-4Q
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 02:24:54 +0100
+	id 1XtRMB-0004Eh-I6
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 02:25:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750981AbaKZBYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 20:24:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45056 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750844AbaKZBYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 20:24:50 -0500
-Received: (qmail 18096 invoked by uid 102); 26 Nov 2014 01:24:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 19:24:50 -0600
-Received: (qmail 3309 invoked by uid 107); 26 Nov 2014 01:24:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 20:24:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Nov 2014 20:24:49 -0500
-Content-Disposition: inline
-In-Reply-To: <20141126010051.GA29830@peff.net>
+	id S1751356AbaKZBZU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 20:25:20 -0500
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:45461 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234AbaKZBZT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2014 20:25:19 -0500
+Received: by mail-yk0-f177.google.com with SMTP id 9so833721ykp.22
+        for <git@vger.kernel.org>; Tue, 25 Nov 2014 17:25:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=AsyZlMxXdFjTi7Vuo6sYl+dsSuRRSEs9VLfjgaYiwGU=;
+        b=tehHC90+9tAhI9JpSmT5hrRrTXcMiNwmdfV0qm57eB9CcpPug8S9L/R+Zx05Zhko5R
+         WjC8zQED8Bi1GpaTPuUPUJyeigq//3aKbAcH8/bWWVBtjmc+SIQi9/30hMyQTFZaIlZB
+         pky9k4U2ZGe6SZrPGh0tcpTNhRbvcr8Wc9wLq8G/Wzn6Ib9xmWWV1f4rRIl5thGzvu2f
+         mVoKwo5iSr0EGq04bvmM+os574oIXv0hjLFXzAMlsnkfPgxVA6sgGxXDn8ZwbwW2uDah
+         ra6de/B5AJ04yPXECmgVNa8RTUzXarX2AX/i1ZG5M6swBstoimu7x4RQUj1q3aJqYG+D
+         VpkA==
+X-Received: by 10.236.53.69 with SMTP id f45mr28652248yhc.65.1416965118795;
+ Tue, 25 Nov 2014 17:25:18 -0800 (PST)
+Received: by 10.170.68.68 with HTTP; Tue, 25 Nov 2014 17:25:18 -0800 (PST)
+In-Reply-To: <78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
+X-Google-Sender-Auth: CSXivEcvtgHxGRBIjbzune-RzyE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260261>
 
-On Tue, Nov 25, 2014 at 08:00:51PM -0500, Jeff King wrote:
+On Tue, Nov 25, 2014 at 5:51 PM, =C3=98ystein Walle <oystwa@gmail.com> =
+wrote:
+> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
+> ---
+>  t/t7503-pre-commit-hook.sh | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
+> index 984889b..99ed967 100755
+> --- a/t/t7503-pre-commit-hook.sh
+> +++ b/t/t7503-pre-commit-hook.sh
+> @@ -24,8 +24,7 @@ test_expect_success '--no-verify with no hook' '
+>  HOOKDIR=3D"$(git rev-parse --git-dir)/hooks"
+>  HOOK=3D"$HOOKDIR/pre-commit"
+>  mkdir -p "$HOOKDIR"
+> -cat > "$HOOK" <<EOF
+> -#!/bin/sh
+> +write_script "$HOOK" <<EOF
+>  exit 0
+>  EOF
+>  chmod +x "$HOOK"
 
-> On Wed, Nov 26, 2014 at 09:42:42AM +0900, Mike Hommey wrote:
-> 
-> > I have a note tree with a bit more than 200k notes.
-> >
-> > $ time git notes --ref foo show $sha1 > /dev/null
-> > real    0m0.147s
-> > user    0m0.136s
-> > sys     0m0.008s
-> > 
-> > That's a lot of time, especially when you have a script that does that
-> > on a fair amount of sha1s.
-> 
-> IIRC, the notes code populates an in-memory data structure, which gives
-> faster per-commit lookup at the cost of some setup time. Obviously for a
-> single lookup, that's going to be a bad tradeoff (but it does make sense
-> for "git log --notes"). I don't know offhand how difficult it would be
-> to tune the data structure differently (or avoid it altogether) if we
-> know ahead of time we are only going to do a small number of lookups.
-> But Johan (cc'd) might.
+You can drop the 'chmod' too since write_script does that for you.
 
-One other question: how were your notes created?
-
-I tried to replicate your setup by creating one note per commit in
-linux.git (over 400k notes total). I did it with one big mktree,
-creating a single top-level notes tree. Doing a single "git notes show"
-lookup on the tree was something like 800ms.
-
-However, this is not what trees created by git-notes look like. It
-shards the object sha1s into subtrees (1a/2b/{36}), and I think does so
-dynamically in a way that keeps each individual tree size low. The
-in-memory data structure then only "faults in" tree objects as they are
-needed. So a single lookup should only hit a small part of the total
-tree.
-
-Doing a single "git notes edit HEAD" in my case caused the notes code to
-write the result using its sharding algorithm. Subsequent "git notes
-show" invocations were only 14ms.
-
-Did you use something besides git-notes to create the tree? From your
-examples, it looks like you were accounting for the sharding during
-lookup, so maybe this is leading in the wrong direction (but if so, I
-could not reproduce your times at all even with a much larger case).
-
--Peff
+> @@ -47,8 +46,7 @@ test_expect_success '--no-verify with succeeding ho=
+ok' '
+>  '
+>
+>  # now a hook that fails
+> -cat > "$HOOK" <<EOF
+> -#!/bin/sh
+> +write_script "$HOOK" <<EOF
+>  exit 1
+>  EOF
+>
+> @@ -88,8 +86,7 @@ chmod +x "$HOOK"
+>
+>  # a hook that checks $GIT_PREFIX and succeeds inside the
+>  # success/ subdirectory only
+> -cat > "$HOOK" <<EOF
+> -#!/bin/sh
+> +write_script "$HOOK" <<EOF
+>  test \$GIT_PREFIX =3D success/
+>  EOF
+>
+> --
+> 2.2.0.rc3
