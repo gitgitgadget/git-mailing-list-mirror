@@ -1,89 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t7503: use write_script to generate hook scripts
-Date: Wed, 26 Nov 2014 12:07:35 -0800
-Message-ID: <xmqqy4qxpvy0.fsf@gitster.dls.corp.google.com>
-References: <cover.1416955873.git.oystwa@gmail.com>
-	<78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
-	<20141126045127.GC15252@peff.net>
-	<xmqqk32hrfuv.fsf@gitster.dls.corp.google.com>
-	<20141126190315.GB1734@peff.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v4] Support updating working trees when pushing into non-bare
+ repos
+Date: Wed, 26 Nov 2014 21:21:32 +0100 (CET)
+Message-ID: <cover.1417033080.git.johannes.schindelin@gmx.de>
+References: <cover.1415876330.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 26 21:07:43 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Nov 26 21:21:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtisI-0000Bx-Sn
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 21:07:43 +0100
+	id 1Xtj5q-0005LI-1q
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 21:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344AbaKZUHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2014 15:07:39 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55083 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751107AbaKZUHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2014 15:07:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 60F7021384;
-	Wed, 26 Nov 2014 15:07:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nsYrN1KMSPkJDhGqSXBul7U++mI=; b=domVGS
-	1Se4zQ/jJE0J/nY+QoSb458Unepzs4ucZQZhUexUgHozUgXrxdRBjGjetEGSBypt
-	hQHFCKjZtzE1D+zXjiWVrU2HA0Q/K5aCGjC2YYVUDwdYWVxmy96vsqP6e/SagNNR
-	PIsCL0xJlRAJPKX6ujnBjFpbDVGyXM1T3LMVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MPOqUBVpsjy/hvpIOsg3fOyVcV7mEBp7
-	GNUB9FqSArrXfz9LzGH2jnUBZfqKhr8yoJgePNbWpqTCHK+2gTFbWtziynLD4Qy5
-	0NjCX02LUrIF8Ha4leYN8th7/OI8NVtN60jxOB03wPYpFqmiOPkB1ONTp+cmb9Es
-	gXqR4NUGznA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 583B621383;
-	Wed, 26 Nov 2014 15:07:37 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C96AF21382;
-	Wed, 26 Nov 2014 15:07:36 -0500 (EST)
-In-Reply-To: <20141126190315.GB1734@peff.net> (Jeff King's message of "Wed, 26
-	Nov 2014 14:03:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DDC0D07E-75A7-11E4-A1AF-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1750811AbaKZUVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2014 15:21:37 -0500
+Received: from mout.gmx.net ([212.227.15.15]:50206 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750770AbaKZUVg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2014 15:21:36 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MDQI1-1Xhr8K1gZZ-00Gms9;
+ Wed, 26 Nov 2014 21:21:33 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <cover.1415876330.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:6OV+mZuSbkbD2fSzhyXRi81PyrliHpK2U+eCKgAsCmllC9HOCus
+ NF+YzuWhvAtQmiFx7S1Z+429R3RgiUbDQ1MMw7kRKoAp/t2SVqiuA3K9rZsfJ6kS5HyibTq
+ z1dxkEieEMrQxZab6ZGfyKVdroyJcryAdhfBFxruTRoeV4VmfpHqDNcyzPRLX3SKR0ghNz+
+ KeVRAk26RhLEl3/YYQ7/w==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260299>
 
-Jeff King <peff@peff.net> writes:
+This patch "series" adds support for a new receive.denyCurrentBranch setting
+to update the working directory (which must be clean, i.e. there must not be
+any uncommitted changes) when pushing into the current branch.
 
-> On Wed, Nov 26, 2014 at 10:12:08AM -0800, Junio C Hamano wrote:
->
->> >> +write_script "$HOOK" <<EOF
->> >
->> > While you are touching this line, please make it "<<\EOF". It does not
->> > matter for these simple cases, but as a style, we try to avoid
->> > interpolation unless it is necessary.
->> 
->> Thanks.  It is more about reducing cognitive burden from the
->> readers.  An unquoted <<EOF signals you that your eyes need to scan
->> carefully for $subsitutions to understand what is going on, instead
->> of coasting it over.
->
-> While we are talking about it, do we have a style preference on
-> always/never using "<<-" unless necessary? I do not think it is as
-> important as preventing interpolation, because it does not introduce a
-> cognitive load in the same way. But consistently using "<<-" is one less
-> thing for shell newbies to be confused by, and to get wrong when
-> cargo-culting.
+The scenario in which the 'updateInstead' setting became a boon in this
+developer's daily work is when trying to get a bug fix from a Windows
+computer, a virtual machine, or when getting a bug fix from a user's machine
+onto his main machine (in all of those cases it is only possible to connect
+via ssh in one direction, but not in the reverse direction). It also comes
+in handy when updating a live web site via push (in which case a clean
+working directory is an absolute must).
 
-Not using "<<-" is a sign of another problem that is bigger, namely,
-the test vector is prepared outside of a test_expect_success setup
-block.  Inside test_expect_success, I'd prefer "<<-" to make it
-clear where each test begins and next test begins, which would make
-it easier for our to coast over.
+As to the name 'updateInstead': since I do not want the option to perform
+the equivalent of a checkout (where staged changes would be okay), I stuck
+to the name I use in all of my $HOME/.gitconfigs. Hopefully you don't
+mind.
+
+Interdiff vs v3 below the diffstat
+
+Johannes Schindelin (1):
+  Add another option for receive.denyCurrentBranch
+
+ Documentation/config.txt |  7 ++++
+ builtin/receive-pack.c   | 94 ++++++++++++++++++++++++++++++++++++++++++++++--
+ t/t5516-fetch-push.sh    | 21 +++++++++++
+ 3 files changed, 120 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c384515..0519073 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2133,7 +2133,9 @@ receive.denyCurrentBranch::
+ Another option is "updateInstead" which will update the working
+ directory (must be clean) if pushing into the current branch. This option is
+ intended for synchronizing working directories when one side is not easily
+-accessible via ssh (e.g. inside a VM).
++accessible via interactive ssh (e.g. a live web site, hence the requirement
++that the working directory be clean). This mode also comes in handy when
++developing inside a VM to test and fix code on different Operating Systems.
+ 
+ receive.denyNonFastForwards::
+ 	If set to true, git-receive-pack will deny a ref update which is
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 836720f..1b05e4e 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -736,7 +736,10 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ static const char *update_worktree(unsigned char *sha1)
+ {
+ 	const char *update_refresh[] = {
+-		"update-index", "--ignore-submodules", "--refresh", NULL
++		"update-index", "--ignore-submodules", "--refresh", "-q", NULL
++	};
++	const char *diff_files[] = {
++		"diff-files", "--quiet", "--ignore-submodules", "--", NULL
+ 	};
+ 	const char *diff_index[] = {
+ 		"diff-index", "--quiet", "--cached", "--ignore-submodules",
+@@ -767,6 +770,19 @@ static const char *update_worktree(unsigned char *sha1)
+ 
+ 	/* run_command() does not clean up completely; reinitialize */
+ 	child_process_init(&child);
++	child.argv = diff_files;
++	child.env = env.argv;
++	child.dir = work_tree;
++	child.no_stdin = 1;
++	child.stdout_to_stderr = 1;
++	child.git_cmd = 1;
++	if (run_command(&child)) {
++		argv_array_clear(&env);
++		return "Working directory not clean";
++	}
++
++	/* run_command() does not clean up completely; reinitialize */
++	child_process_init(&child);
+ 	child.argv = diff_index;
+ 	child.env = env.argv;
+ 	child.no_stdin = 1;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index ba002a9..b8df39c 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1343,8 +1343,12 @@ test_expect_success 'receive.denyCurrentBranch = updateInstead' '
+ 	(cd testrepo &&
+ 		git update-index --refresh &&
+ 		git diff-files --quiet &&
+-		git diff-index --cached HEAD --
+-	)
++		git diff-index --cached HEAD -- &&
++		echo changed > path2 &&
++		git add path2
++	) &&
++	test_commit fourth path2 &&
++	test_must_fail git push testrepo master
+ '
+ 
+ test_done
+
+-- 
+2.0.0.rc3.9669.g840d1f9
