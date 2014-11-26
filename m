@@ -1,111 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Extended splitting for "git add --interactive"
-Date: Wed, 26 Nov 2014 10:57:38 -0800
-Message-ID: <xmqq3895rdr1.fsf@gitster.dls.corp.google.com>
-References: <5475F7E7020000A100018050@gwsmtp1.uni-regensburg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] t7503: use write_script to generate hook scripts
+Date: Wed, 26 Nov 2014 14:03:15 -0500
+Message-ID: <20141126190315.GB1734@peff.net>
+References: <cover.1416955873.git.oystwa@gmail.com>
+ <78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
+ <20141126045127.GC15252@peff.net>
+ <xmqqk32hrfuv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Wed Nov 26 19:57:45 2014
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 20:03:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xthmb-0006Ib-4D
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 19:57:45 +0100
+	id 1Xths0-0002CX-W9
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 20:03:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751508AbaKZS5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2014 13:57:41 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58756 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751199AbaKZS5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2014 13:57:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 358F221511;
-	Wed, 26 Nov 2014 13:57:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vVqqGSZtYE3fc/68ZXMuLmGeGrQ=; b=ct6gQD
-	COrpqm1Cu4DvLndVOJBJ2h05QX1NDGG+Iy2eX9uluNLQVegbok85bZh8RVtxz3th
-	rNf3Rb8Drk5qIEax3g4nWv/jGdHb0f94okeUax5fzEYxfQkvSZVozpdF5KqV4zq1
-	LVUXQOv65KNFbRV8AphvbA0UY75bE47VJvSZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eSElXgC3Pe1nDpqTLSVXwAUCWDPMx1cs
-	asGsZkOenD8e/Gr6uSUYR8wA3y4mi8hxV5UJQ/YsMOfT8e3ZNJyYh31OaE/hBcYs
-	OifPBABszm0W+3155NUqN81yIHQmG+FrM4G3EFD1G06wE+TKQu+GuIyrjexkKpaV
-	cXN6LOJRXbQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BF0521510;
-	Wed, 26 Nov 2014 13:57:40 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A66222150E;
-	Wed, 26 Nov 2014 13:57:39 -0500 (EST)
-In-Reply-To: <5475F7E7020000A100018050@gwsmtp1.uni-regensburg.de> (Ulrich
-	Windl's message of "Wed, 26 Nov 2014 15:55:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 18101992-759E-11E4-AC43-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751186AbaKZTDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2014 14:03:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45388 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750812AbaKZTDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2014 14:03:16 -0500
+Received: (qmail 30503 invoked by uid 102); 26 Nov 2014 19:03:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Nov 2014 13:03:15 -0600
+Received: (qmail 9401 invoked by uid 107); 26 Nov 2014 19:03:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Nov 2014 14:03:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Nov 2014 14:03:15 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqk32hrfuv.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260295>
 
-"Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
+On Wed, Nov 26, 2014 at 10:12:08AM -0800, Junio C Hamano wrote:
 
-> This is for git-1.7.12 (an older version from the SLES11 SP3 SDK). If
-> the issue is solved meanwhile, I'll be happy, and I apologize for
-> being too lazy to find out.
+> >> +write_script "$HOOK" <<EOF
+> >
+> > While you are touching this line, please make it "<<\EOF". It does not
+> > matter for these simple cases, but as a style, we try to avoid
+> > interpolation unless it is necessary.
+> 
+> Thanks.  It is more about reducing cognitive burden from the
+> readers.  An unquoted <<EOF signals you that your eyes need to scan
+> carefully for $subsitutions to understand what is going on, instead
+> of coasting it over.
 
-The answer is no ;-).
+While we are talking about it, do we have a style preference on
+always/never using "<<-" unless necessary? I do not think it is as
+important as preventing interpolation, because it does not introduce a
+cognitive load in the same way. But consistently using "<<-" is one less
+thing for shell newbies to be confused by, and to get wrong when
+cargo-culting.
 
-> Currently Git cannot split a block of changes like
->
-> -AAA
-> -BBB
-> +CCC
-> +DDD
->
-> Into
-> -AAA
-> +CCC
-> and
-> -BBB
-> +DDD
-
-And it is unlikely to do so ever, because it is a wrong thing to do.
-
-What makes the user happy to see above split when the user is
-expecting this instead?
-
--AAA
-and
--BBB
-+CCC
-+DDD
-
-> Another split that is not possible is a split across an empty line, like:
->
-> +AAA
-> +     <empty line (in reality)>
-> +BBB
-
-Likewise.  An empty line is not that special.  AAA may be adding one
-block of lines "if (condition) { ... }" and BBB may be another, and
-it often happens that you would want to separate these into two
-changes, with or without an empty line in between.
-
-   +if (foo) {
-   +  do foo thing
-   +}
-   +if (bar) {
-   +  do bar thing
-   +}
-   
-Having said all that, I am not opposed to a usable idea to allow the
-user to specify where in a contiguous block of -*+* to break a hunk
-and how.
+-Peff
