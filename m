@@ -1,69 +1,143 @@
-From: Adam Williamson <awilliam@redhat.com>
-Subject: Re: 'simple' push check that branch name matches does not work if
- push.default is unset (and hence implicitly simple)
-Date: Wed, 26 Nov 2014 14:38:20 -0800
-Organization: Red Hat
-Message-ID: <1417041500.12457.79.camel@redhat.com>
-References: <1417040968.12457.78.camel@redhat.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v5] Support updating working trees when pushing into non-bare
+ repos
+Date: Wed, 26 Nov 2014 23:44:13 +0100 (CET)
+Message-ID: <cover.1417041787.git.johannes.schindelin@gmx.de>
+References: <cover.1417033080.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 23:38:28 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Nov 26 23:44:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtlEB-00047f-UJ
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 23:38:28 +0100
+	id 1XtlK2-0006Bv-2h
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 23:44:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724AbaKZWiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2014 17:38:23 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:40945 "EHLO mx1.redhat.com"
+	id S1753818AbaKZWoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2014 17:44:25 -0500
+Received: from mout.gmx.net ([212.227.15.19]:52796 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750804AbaKZWiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2014 17:38:23 -0500
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id sAQMcMlP025436
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
-	for <git@vger.kernel.org>; Wed, 26 Nov 2014 17:38:22 -0500
-Received: from mail.happyassassin.net (ovpn-113-42.phx2.redhat.com [10.3.113.42])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id sAQMcLjB010031
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 26 Nov 2014 17:38:21 -0500
-Authentication-Results: mail.happyassassin.net; dmarc=none header.from=redhat.com
-In-Reply-To: <1417040968.12457.78.camel@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1753807AbaKZWoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2014 17:44:24 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LeuUB-1YGjz82AJD-00qfnp;
+ Wed, 26 Nov 2014 23:44:13 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <cover.1417033080.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:9AaVRO84XIBSlu4SDlx9niN0n9+wZ8jYa/+Hm7oW9mUCvizuKR3
+ SqBuGVbcdZuzjiYjoMYB+lJKuKUf2E0lML6Y7VN14rRQEWUC3DwRsYkTvAHuiPnsakwPFFy
+ 4Xw+FJNjvumIj7TOSa5Ds93+Y/GR6m5GAAibtq6BjSKDRqbWMv4hA8/0FNZEDE9KC05AGtL
+ cMf+1YK6GVs/nRsyZEkTg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260318>
 
-On Wed, 2014-11-26 at 14:29 -0800, Adam Williamson wrote:
-> Hi, folks. Ran into an unfortunate issue with git which helped me mess
-> up a Fedora package repo today :/
-> 
-> The problem can be reproduced thus:
+This patch series adds support for a new receive.denyCurrentBranch setting
+to update the working directory (which must be clean, i.e. there must not be
+any uncommitted changes) when pushing into the current branch.
 
-Whoops, I missed step 0:
+The scenario in which the 'updateInstead' setting became a boon in this
+developer's daily work is when trying to get a bug fix from a Windows
+computer, a virtual machine, or when getting a bug fix from a user's machine
+onto his main machine (in all of those cases it is only possible to connect
+via ssh in one direction, but not in the reverse direction). It also comes
+in handy when updating a live web site via push (in which case a clean
+working directory is an absolute must).
 
-0. Ensure push.default is not configured globally
+Interdiff vs v4 below diffstat.
 
-> 1. Create an empty repo, clone it
-> 2. Push its master branch with something in it (just to get started)
-> 3. git branch --track moo origin/master
-> 4. git checkout moo
-> 5. echo moo >> moo && git commit -a -m "create moo"
-> 6. git push
-> ** BUG HAPPENS - CHANGES ARE PUSHED TO origin/master **
-> 7. git config --local push.default simple
-> 8. echo moo2 >> moo && git commit -a -m "update moo"
-> 9. git push
-> ** PUSH IS CORRECTLY REJECTED **
+Johannes Schindelin (1):
+  Add another option for receive.denyCurrentBranch
+
+ Documentation/config.txt |  7 ++++
+ builtin/receive-pack.c   | 93 ++++++++++++++++++++++++++++++++++++++++++++++--
+ t/t5516-fetch-push.sh    | 26 ++++++++++++++
+ 3 files changed, 124 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 7ff8be5..bbd9ba3 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -736,7 +736,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ static const char *update_worktree(unsigned char *sha1)
+ {
+ 	const char *update_refresh[] = {
+-		"update-index", "--ignore-submodules", "--refresh", "-q", NULL
++		"update-index", "-q", "--ignore-submodules", "--refresh", NULL
+ 	};
+ 	const char *diff_files[] = {
+ 		"diff-files", "--quiet", "--ignore-submodules", "--", NULL
+@@ -746,7 +746,7 @@ static const char *update_worktree(unsigned char *sha1)
+ 		"HEAD", "--", NULL
+ 	};
+ 	const char *read_tree[] = {
+-		"read-tree", "-u", "-m", sha1_to_hex(sha1), NULL
++		"read-tree", "-u", "-m", NULL, NULL
+ 	};
+ 	const char *work_tree = git_work_tree_cfg ? git_work_tree_cfg : "..";
+ 	struct argv_array env = ARGV_ARRAY_INIT;
+@@ -778,10 +778,9 @@ static const char *update_worktree(unsigned char *sha1)
+ 	child.git_cmd = 1;
+ 	if (run_command(&child)) {
+ 		argv_array_clear(&env);
+-		return "Working directory not clean";
++		return "Working directory has unstaged changes";
+ 	}
+ 
+-	/* run_command() does not clean up completely; reinitialize */
+ 	child_process_init(&child);
+ 	child.argv = diff_index;
+ 	child.env = env.argv;
+@@ -791,10 +790,10 @@ static const char *update_worktree(unsigned char *sha1)
+ 	child.git_cmd = 1;
+ 	if (run_command(&child)) {
+ 		argv_array_clear(&env);
+-		return "Working directory not clean";
++		return "Working directory has staged changes";
+ 	}
+ 
+-	/* run_command() does not clean up completely; reinitialize */
++	read_tree[3] = sha1_to_hex(sha1);
+ 	child_process_init(&child);
+ 	child.argv = read_tree;
+ 	child.env = env.argv;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index b8df39c..7b353d0 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1341,14 +1341,19 @@ test_expect_success 'receive.denyCurrentBranch = updateInstead' '
+ 	test $(git rev-parse HEAD) = $(cd testrepo && git rev-parse HEAD) &&
+ 	test third = "$(cat testrepo/path2)" &&
+ 	(cd testrepo &&
+-		git update-index --refresh &&
+-		git diff-files --quiet &&
+-		git diff-index --cached HEAD -- &&
+-		echo changed > path2 &&
++		git update-index -q --refresh &&
++		git diff-files --quiet -- &&
++		git diff-index --quiet --cached HEAD -- &&
++		echo changed >path2 &&
+ 		git add path2
+ 	) &&
+ 	test_commit fourth path2 &&
+-	test_must_fail git push testrepo master
++	test_must_fail git push testrepo master &&
++	test $(git rev-parse HEAD^) = $(git -C testrepo rev-parse HEAD) &&
++	(cd testrepo &&
++		git diff --quiet &&
++		test changed = "$(cat path2)"
++	)
+ '
+ 
+ test_done
+
 -- 
-Adam Williamson
-Fedora QA Community Monkey
-IRC: adamw | Twitter: AdamW_Fedora | XMPP: adamw AT happyassassin . net
-http://www.happyassassin.net
+2.0.0.rc3.9669.g840d1f9
