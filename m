@@ -1,94 +1,69 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/2] pre-commit hook updates
-Date: Tue, 25 Nov 2014 20:32:27 -0500
-Message-ID: <CAPig+cS76GWES3hXF4Bdjg5G7QFcTKhzLyjM55LPMSD0zEinPQ@mail.gmail.com>
-References: <cover.1416953772.git.oystwa@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git notes show" is orders of magnitude slower than doing it
+ manually with ls-tree and cat-file
+Date: Tue, 25 Nov 2014 20:34:57 -0500
+Message-ID: <20141126013456.GA13622@peff.net>
+References: <20141126004242.GA13915@glandium.org>
+ <20141126010051.GA29830@peff.net>
+ <20141126012448.GA11183@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 02:32:39 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Nov 26 02:35:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtRT6-0000zZ-Sg
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 02:32:33 +0100
+	id 1XtRVW-0002sW-Aj
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 02:35:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbaKZBc3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 20:32:29 -0500
-Received: from mail-yh0-f52.google.com ([209.85.213.52]:42465 "EHLO
-	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750864AbaKZBc2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2014 20:32:28 -0500
-Received: by mail-yh0-f52.google.com with SMTP id z6so857910yhz.39
-        for <git@vger.kernel.org>; Tue, 25 Nov 2014 17:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=b/NtbtkzpphOpdD+sbvhO1vGC/Y9Dd3sq9LX7hKiZMM=;
-        b=hM79idcDjTX2HeA6i08RVetAwSlhik8KENLjMH6OlMc+6TOclFAuBG8TpHmvc+3Yr8
-         GEvGxXE4dj0fThSeWckAgrDYsvPUuPtA05EnPA/LYwqNHB2b6+vtrBwWMpPCYLTNvmlj
-         Borx9kyZvppEbvS8II9xklOHozHO6GPPfvXgVrvnO/NjqfShr5k/BrrnGHYTwoHVTYJu
-         pmd4hptehBbNZL2EHinoWcSU76UjoE5pZqnw5VY1GV0ZStFFmBUJ+yutbvCB/8ohbVm6
-         xGhyfR6dBRU3P9kbPY1bSGDGemmZL6TZbcoWOHOq7AF0d2+3wK40ChYJdVS6KteLRC3x
-         BETg==
-X-Received: by 10.170.128.207 with SMTP id u198mr30726407ykb.51.1416965548049;
- Tue, 25 Nov 2014 17:32:28 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Tue, 25 Nov 2014 17:32:27 -0800 (PST)
-In-Reply-To: <cover.1416953772.git.oystwa@gmail.com>
-X-Google-Sender-Auth: 1wMzaYVkzvI2dOYJgVDk6WyQhno
+	id S1751289AbaKZBe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Nov 2014 20:34:58 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45066 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750929AbaKZBe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 20:34:57 -0500
+Received: (qmail 18514 invoked by uid 102); 26 Nov 2014 01:34:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 19:34:57 -0600
+Received: (qmail 3397 invoked by uid 107); 26 Nov 2014 01:34:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 20:34:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Nov 2014 20:34:57 -0500
+Content-Disposition: inline
+In-Reply-To: <20141126012448.GA11183@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260263>
 
-On Tue, Nov 25, 2014 at 5:51 PM, =C3=98ystein Walle <oystwa@gmail.com> =
-wrote:
-> The first patch changes t/t7503-pre-commit-hook.sh to use write_scrip=
-t
-> everywhere, as was suggested by Jeff King in the discussion of the
-> previous patch.
->
-> The second patch is v2 of the patch I sent earlier. I've incorporated
-> Eric Sunshine's suggestions. I didn't do enough digging; I found
-> test_expect_failure and assumed this was test_expect_success's twin
-> brother, but it marked stuff as known breakages so I went with the '!=
-'.
-> I also found it a bit strange that test_must_fail has a different
-> signature (to the extent a shell function has one at all). Is my use =
-of
-> test_must_fail correct?
+On Tue, Nov 25, 2014 at 08:24:48PM -0500, Jeff King wrote:
 
-Your use is not correct (as I'll explain when responding to the patch).
+> However, this is not what trees created by git-notes look like. It
+> shards the object sha1s into subtrees (1a/2b/{36}), and I think does so
+> dynamically in a way that keeps each individual tree size low. The
+> in-memory data structure then only "faults in" tree objects as they are
+> needed. So a single lookup should only hit a small part of the total
+> tree.
+> 
+> Doing a single "git notes edit HEAD" in my case caused the notes code to
+> write the result using its sharding algorithm. Subsequent "git notes
+> show" invocations were only 14ms.
+> 
+> Did you use something besides git-notes to create the tree? From your
+> examples, it looks like you were accounting for the sharding during
+> lookup, so maybe this is leading in the wrong direction (but if so, I
+> could not reproduce your times at all even with a much larger case).
 
-> I agree with Junio Hamano that it's better to provide no argument at =
-all
-> rather than an empty one. I also agree with Jeff King that "noamend" =
-is
-> better than an empty argument. I went with the second one since Jeff
-> seemed to get the last word :)
+Hmph. Having just written all that, I looked at your example again, and
+you are running "git ls-tree -r", which would read the whole tree
+anyway. So "git notes" should be _faster_ for a single lookup.
 
-=46or what it's worth (probably not much), I agree with Junio.
+Something weird is definitely going on. Can you use "strace" or "perf"
+to get a sense of where the time is going? Has your repository been
+packed recently?
 
-> I'm not sure I like the ternary inside the function call like that, b=
-ut
-> I went with it because it gave the smallest footprint (which is proba=
-bly
-> not a good argument). I suppose I could have done:
->
-> if (amend)
->         hook_arg1 =3D "amend"
-> else
->         hook_arg1 =3D "noamend"
-> ...
-> ... run_commit_hook(use_editor, index_file, "pre-commit", hook_arg1, =
-NULL);
->
-> or create a hook_amend variable.
->
-> I'm happy to send a v3.
+-Peff
