@@ -1,100 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git-new-workdir: Don't fail if the target directory is empty
-Date: Wed, 26 Nov 2014 13:55:02 -0800
-Message-ID: <xmqq8uixpqyx.fsf@gitster.dls.corp.google.com>
-References: <1417034308.23650.51.camel@homebase>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git file listing is inconsistent
+Date: Wed, 26 Nov 2014 13:55:20 -0800
+Message-ID: <20141126215520.GS6527@google.com>
+References: <CAGOJM6+DTSn2qa-KTWceqyraaugX_YVZhirkdc+t+cDfFB4OyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: paul@mad-scientist.net
-X-From: git-owner@vger.kernel.org Wed Nov 26 22:55:15 2014
+To: Woody Gilk <woody.gilk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 22:55:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtkYM-0005vk-Dk
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 22:55:14 +0100
+	id 1XtkYc-00063V-RH
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 22:55:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540AbaKZVzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2014 16:55:06 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56209 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751114AbaKZVzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2014 16:55:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A5E3B210DF;
-	Wed, 26 Nov 2014 16:55:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tbgLsvNAiQX9JHs3ME8BAndpiEo=; b=F+uRik
-	QTYxkSS5YTpGccHiybo2W80G8L4OzOKL9rPvUgInS1D7SfLHqEaY9anMRR6pCbr4
-	YTZf4vtp7pKvyAOXcivd/s4l7UeWPjgcfxBpLttmio8JePwtNU43ERZ2uhJckvbM
-	BHdL0lGYabOiflbwot1QehRLoFzokLAzKD1jY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w1JMFUxrmicWkq2u2ihLS6Pzk7ENX8oX
-	B54tDI+IIVsNPsb/QI9nTfNfdBpcYkGmj8dfzxrPGExAUgqrsnHP2bsbUBWHNLq6
-	BxthjPJv8FxwC+cwp9cDyRk/BSJlSDPewZLGukRGBudntdIoInvelr1o34sE7yBJ
-	O4jrdVlrIy8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CFBF210DE;
-	Wed, 26 Nov 2014 16:55:04 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19E50210DD;
-	Wed, 26 Nov 2014 16:55:04 -0500 (EST)
-In-Reply-To: <1417034308.23650.51.camel@homebase> (Paul Smith's message of
-	"Wed, 26 Nov 2014 15:38:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E0A1C348-75B6-11E4-8798-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752736AbaKZVz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2014 16:55:27 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:39002 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752664AbaKZVz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2014 16:55:26 -0500
+Received: by mail-ie0-f179.google.com with SMTP id rp18so3369404iec.24
+        for <git@vger.kernel.org>; Wed, 26 Nov 2014 13:55:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0n2vu7RqNU+IDJQc+/5YJin439q0dv3s5RFdpcyddRE=;
+        b=Ng0ZsgPBoaH1IRktzb40AuRcNBzepx9hLVGXm0fNnzVFRPXEeh0QnxwHb2qzFV7GUT
+         8HBedxa/tkj9myj4dmrFfw+BEmCBBbps8bmxAuik8mo1KyJEXzp+yfw0jnbpaxGv9/4R
+         J+YrMCRpbs1k8Lukf5reLa0x33BHY0K3tajDPdwxXpzuiv0ugNXuBGsXHMmDJ3dPfJTa
+         Ws4Cqk9GZbk8y/Cx4/Auw9knlYJfCbVCytoMRonBIadRJiKAvTqjxmE9AQ4X77+OgNp4
+         PHZ4S6UMPQ/Z61e3ZNq0DneIdHDEvj7Cm9kf1I+4f2Hsm0xO1yFM938q8I3hh558CDre
+         T2Vg==
+X-Received: by 10.42.179.132 with SMTP id bq4mr28364067icb.61.1417038922785;
+        Wed, 26 Nov 2014 13:55:22 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:31d4:43f9:cf9a:f63a])
+        by mx.google.com with ESMTPSA id zy11sm3164962igc.4.2014.11.26.13.55.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 26 Nov 2014 13:55:22 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAGOJM6+DTSn2qa-KTWceqyraaugX_YVZhirkdc+t+cDfFB4OyQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260312>
 
-Paul Smith <paul@mad-scientist.net> writes:
+Hi Woody,
 
-> Allow new workdirs to be created in an empty directory (similar to "git
-> clone").  Provide more error checking and clean up on failure.
+Woody Gilk wrote:
+
+> git diff --name-only
+> git grep --files-with-matches
 >
-> Signed-off-by: Paul Smith <paul@mad-scientist.net>
-> ---
->
-> Hopefully this doesn't contain unwanted stylistic changes.
+> I think --files-with-matches should be deprecated and replaced with
+> --name-only for consistency.
 
-;-)
+See the (non-git) diff(1) and grep(1) manpages.
 
-Unwanted, no, but unrelated yes.
+It might make sense for 'git grep' to learn --name-only too as a
+synonym to help muscle memory, though.
 
->  
-> +failed () {
-> +	die "unable to create new workdir \"$new_workdir\"!"
-> +}
+*looks*
 
-Use '$new_workdir' instead to match the existing message below?
+Actually, 'git grep -h' tells me that git grep --name-only is already
+accepted as a synonym for --files-with-matches, ever since
 
-> -# don't recreate a workdir over an existing repository
-> -if test -e "$new_workdir"
-> +# make sure the links in the workdir have full paths to the original repo
-> +git_dir=$(cd "$git_dir" && pwd) || exit 1
-> +
-> +# don't recreate a workdir over an existing directory, unless it's empty
-> +if test -d "$new_workdir"
->  then
-> -	die "destination directory '$new_workdir' already exists."
-> +	if test $(ls -a1 "$new_workdir/." | wc -l) -ne 2
-> +	then
-> +		die "destination directory '$new_workdir' is not empty."
-> +	fi
-> +	cleandir="$new_workdir/.git"
-> +else
-> +	cleandir="$new_workdir"
->  fi
+ $ git log -Sname-only -- builtin-grep.c
+[...]
+ commit 2cd5dfd240ecb63c77bcb2532664984e3b69ae47
+ Author: Shawn O. Pearce <spearce@spearce.org>
+ Date:   Wed Feb 20 23:28:07 2008 -0500
 
-The comment in the original is somewhat misleading, but "test -e"
-was "test -e" and not "test -d" to stop when an existing file was
-given by mistake as $new_workdir, I think.  I do not know what
-happens in the new code in that case.
+     Teach git-grep --name-only as synonym for -l
+
+     I expected git grep --name-only to give me only the file names,
+     much as git diff --name-only only generates filenames.  Alas the
+     option is -l, which matches common external greps but doesn't match
+     other parts of the git UI.
+
+     Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+(v1.5.5-rc0~171).  Have you tried it?
+
+Would something like the following patch help?
+
+-- >8 --
+Subject: grep doc: add reminder about --name-only option
+
+Since v1.5.5-rc0~171 (2008-02-20), "git grep" accepts --name-only
+as a synonym for the GNU-style --files-with-matches, but because the
+synonym is not mentioned in the manpage synopsis it is hard to find.
+
+Reported-by: Woody Gilk <woody.gilk@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-grep.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 31811f1..8060efe 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 	   [-E | --extended-regexp] [-G | --basic-regexp]
+ 	   [-P | --perl-regexp]
+ 	   [-F | --fixed-strings] [-n | --line-number]
+-	   [-l | --files-with-matches] [-L | --files-without-match]
++	   [-l | --files-with-matches | --name-only] [-L | --files-without-match]
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+ 	   [-c | --count] [--all-match] [-q | --quiet]
+-- 
+2.2.0.rc0.207.ga3a616c
