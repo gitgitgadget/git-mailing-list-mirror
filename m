@@ -1,98 +1,94 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] t7503: use write_script to generate hook scripts
-Date: Tue, 25 Nov 2014 20:25:18 -0500
-Message-ID: <CAPig+cRjwt1NhT1=cqndNihhHzwh7Cc1DWQik=g8MxJV6wWfXw@mail.gmail.com>
-References: <cover.1416955873.git.oystwa@gmail.com>
-	<cover.1416953772.git.oystwa@gmail.com>
-	<78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
+Subject: Re: [PATCH 0/2] pre-commit hook updates
+Date: Tue, 25 Nov 2014 20:32:27 -0500
+Message-ID: <CAPig+cS76GWES3hXF4Bdjg5G7QFcTKhzLyjM55LPMSD0zEinPQ@mail.gmail.com>
+References: <cover.1416953772.git.oystwa@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
 To: =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 02:25:25 2014
+X-From: git-owner@vger.kernel.org Wed Nov 26 02:32:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtRMB-0004Eh-I6
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 02:25:23 +0100
+	id 1XtRT6-0000zZ-Sg
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 02:32:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356AbaKZBZU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 20:25:20 -0500
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:45461 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234AbaKZBZT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2014 20:25:19 -0500
-Received: by mail-yk0-f177.google.com with SMTP id 9so833721ykp.22
-        for <git@vger.kernel.org>; Tue, 25 Nov 2014 17:25:18 -0800 (PST)
+	id S1751146AbaKZBc3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 20:32:29 -0500
+Received: from mail-yh0-f52.google.com ([209.85.213.52]:42465 "EHLO
+	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750864AbaKZBc2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Nov 2014 20:32:28 -0500
+Received: by mail-yh0-f52.google.com with SMTP id z6so857910yhz.39
+        for <git@vger.kernel.org>; Tue, 25 Nov 2014 17:32:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=AsyZlMxXdFjTi7Vuo6sYl+dsSuRRSEs9VLfjgaYiwGU=;
-        b=tehHC90+9tAhI9JpSmT5hrRrTXcMiNwmdfV0qm57eB9CcpPug8S9L/R+Zx05Zhko5R
-         WjC8zQED8Bi1GpaTPuUPUJyeigq//3aKbAcH8/bWWVBtjmc+SIQi9/30hMyQTFZaIlZB
-         pky9k4U2ZGe6SZrPGh0tcpTNhRbvcr8Wc9wLq8G/Wzn6Ib9xmWWV1f4rRIl5thGzvu2f
-         mVoKwo5iSr0EGq04bvmM+os574oIXv0hjLFXzAMlsnkfPgxVA6sgGxXDn8ZwbwW2uDah
-         ra6de/B5AJ04yPXECmgVNa8RTUzXarX2AX/i1ZG5M6swBstoimu7x4RQUj1q3aJqYG+D
-         VpkA==
-X-Received: by 10.236.53.69 with SMTP id f45mr28652248yhc.65.1416965118795;
- Tue, 25 Nov 2014 17:25:18 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Tue, 25 Nov 2014 17:25:18 -0800 (PST)
-In-Reply-To: <78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
-X-Google-Sender-Auth: CSXivEcvtgHxGRBIjbzune-RzyE
+        bh=b/NtbtkzpphOpdD+sbvhO1vGC/Y9Dd3sq9LX7hKiZMM=;
+        b=hM79idcDjTX2HeA6i08RVetAwSlhik8KENLjMH6OlMc+6TOclFAuBG8TpHmvc+3Yr8
+         GEvGxXE4dj0fThSeWckAgrDYsvPUuPtA05EnPA/LYwqNHB2b6+vtrBwWMpPCYLTNvmlj
+         Borx9kyZvppEbvS8II9xklOHozHO6GPPfvXgVrvnO/NjqfShr5k/BrrnGHYTwoHVTYJu
+         pmd4hptehBbNZL2EHinoWcSU76UjoE5pZqnw5VY1GV0ZStFFmBUJ+yutbvCB/8ohbVm6
+         xGhyfR6dBRU3P9kbPY1bSGDGemmZL6TZbcoWOHOq7AF0d2+3wK40ChYJdVS6KteLRC3x
+         BETg==
+X-Received: by 10.170.128.207 with SMTP id u198mr30726407ykb.51.1416965548049;
+ Tue, 25 Nov 2014 17:32:28 -0800 (PST)
+Received: by 10.170.68.68 with HTTP; Tue, 25 Nov 2014 17:32:27 -0800 (PST)
+In-Reply-To: <cover.1416953772.git.oystwa@gmail.com>
+X-Google-Sender-Auth: 1wMzaYVkzvI2dOYJgVDk6WyQhno
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260262>
 
 On Tue, Nov 25, 2014 at 5:51 PM, =C3=98ystein Walle <oystwa@gmail.com> =
 wrote:
-> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
-> ---
->  t/t7503-pre-commit-hook.sh | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
+> The first patch changes t/t7503-pre-commit-hook.sh to use write_scrip=
+t
+> everywhere, as was suggested by Jeff King in the discussion of the
+> previous patch.
 >
-> diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
-> index 984889b..99ed967 100755
-> --- a/t/t7503-pre-commit-hook.sh
-> +++ b/t/t7503-pre-commit-hook.sh
-> @@ -24,8 +24,7 @@ test_expect_success '--no-verify with no hook' '
->  HOOKDIR=3D"$(git rev-parse --git-dir)/hooks"
->  HOOK=3D"$HOOKDIR/pre-commit"
->  mkdir -p "$HOOKDIR"
-> -cat > "$HOOK" <<EOF
-> -#!/bin/sh
-> +write_script "$HOOK" <<EOF
->  exit 0
->  EOF
->  chmod +x "$HOOK"
+> The second patch is v2 of the patch I sent earlier. I've incorporated
+> Eric Sunshine's suggestions. I didn't do enough digging; I found
+> test_expect_failure and assumed this was test_expect_success's twin
+> brother, but it marked stuff as known breakages so I went with the '!=
+'.
+> I also found it a bit strange that test_must_fail has a different
+> signature (to the extent a shell function has one at all). Is my use =
+of
+> test_must_fail correct?
 
-You can drop the 'chmod' too since write_script does that for you.
+Your use is not correct (as I'll explain when responding to the patch).
 
-> @@ -47,8 +46,7 @@ test_expect_success '--no-verify with succeeding ho=
-ok' '
->  '
+> I agree with Junio Hamano that it's better to provide no argument at =
+all
+> rather than an empty one. I also agree with Jeff King that "noamend" =
+is
+> better than an empty argument. I went with the second one since Jeff
+> seemed to get the last word :)
+
+=46or what it's worth (probably not much), I agree with Junio.
+
+> I'm not sure I like the ternary inside the function call like that, b=
+ut
+> I went with it because it gave the smallest footprint (which is proba=
+bly
+> not a good argument). I suppose I could have done:
 >
->  # now a hook that fails
-> -cat > "$HOOK" <<EOF
-> -#!/bin/sh
-> +write_script "$HOOK" <<EOF
->  exit 1
->  EOF
+> if (amend)
+>         hook_arg1 =3D "amend"
+> else
+>         hook_arg1 =3D "noamend"
+> ...
+> ... run_commit_hook(use_editor, index_file, "pre-commit", hook_arg1, =
+NULL);
 >
-> @@ -88,8 +86,7 @@ chmod +x "$HOOK"
+> or create a hook_amend variable.
 >
->  # a hook that checks $GIT_PREFIX and succeeds inside the
->  # success/ subdirectory only
-> -cat > "$HOOK" <<EOF
-> -#!/bin/sh
-> +write_script "$HOOK" <<EOF
->  test \$GIT_PREFIX =3D success/
->  EOF
->
-> --
-> 2.2.0.rc3
+> I'm happy to send a v3.
