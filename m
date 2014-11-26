@@ -1,88 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] pre-commit hook updates
-Date: Wed, 26 Nov 2014 10:35:22 -0800
-Message-ID: <xmqqfvd5res5.fsf@gitster.dls.corp.google.com>
-References: <cover.1416953772.git.oystwa@gmail.com>
-	<20141126045246.GD15252@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 26 19:35:31 2014
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv3] branch -d: test if we can delete broken refs
+Date: Wed, 26 Nov 2014 10:37:04 -0800
+Message-ID: <1417027024-17054-1-git-send-email-sbeller@google.com>
+References: <54755F7C.3010803@web.de>
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	Stefan Beller <sbeller@google.com>
+To: mhagger@alum.mit.edu, gitster@pobox.com, tboegi@web.de,
+	jrnieder@gmail.com, ronniesahlberg@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 26 19:37:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XthR4-0005iX-H6
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 19:35:30 +0100
+	id 1XthSn-00074k-Aa
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 19:37:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070AbaKZSf0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2014 13:35:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52459 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750736AbaKZSf0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Nov 2014 13:35:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B163210C3;
-	Wed, 26 Nov 2014 13:35:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ZyvEW3MG9Wux
-	Exz9bHfIUkOpEIc=; b=dwJHjnBz0w4nCWsBsdO7n/tWRIF+NryWpnThbBB0hV/Y
-	4hLN/lBgwYXxFn9eGC1ESuZZQXYKZ2KmS2fvp29sNC3cLrgJnbDdgdBSUPeHToJG
-	7Z4wOHA5PgNo7isTEGLZUUPQ7Sdnnc+TG3qJPQr4mCMvsw6QFTEJaMIjasQzFiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XBICD1
-	yi+QDCg7hTmc8RCtrCe634yL1N+uwhbhiJg0j5fW5y6zkjapRR6MxQj03q2uRiS4
-	U/llXtVZxsaURysbhg6fURg/SBnt0ppIisiWVQfUzp6CN+jDo8HdTHulJ3dPyWU6
-	VaDlK3iZJHEMKRixhmKAPGIIs/UJthIVe0EH8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3210B210C2;
-	Wed, 26 Nov 2014 13:35:25 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAD6D210C1;
-	Wed, 26 Nov 2014 13:35:23 -0500 (EST)
-In-Reply-To: <20141126045246.GD15252@peff.net> (Jeff King's message of "Tue,
-	25 Nov 2014 23:52:46 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FBC0C550-759A-11E4-90F3-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753110AbaKZShK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2014 13:37:10 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:37056 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752812AbaKZShI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2014 13:37:08 -0500
+Received: by mail-ie0-f177.google.com with SMTP id rd18so3170919iec.36
+        for <git@vger.kernel.org>; Wed, 26 Nov 2014 10:37:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=wp0xcPsz9R1HrWr+Xm+eEpfeU8nOHHyoqU4v/7U+OFE=;
+        b=DVCLg0Wai0B99/I5eKVtYbCS1RcqSGz8zLs44027eoibMeGTIkbWB9XKEwjXllkFe9
+         e715EWN6FrU3FJ5wuo+3ddJ+yMbdKqiz4cyBSZVS9YilWsq2zjXcBpxokL1NgLKkZiB9
+         tKpdjfvy+cvKkBPqhqGp/Tj876l6o7ztm8/kn8rdQlp58r+xsS384cQEFI3LNOZonVua
+         G78QaeWvCEJcnVxFMEIfzx27DVM/GaFlr6IAmw2fPZ8aTB0UzcJ8YTHISDMAVXeN6vVA
+         rzeBY6puY3KVZl5ssnULGDj7LyYihhv3tUEuWycRS8+Y/SL67XX14C6uRJsvo8nfhIA+
+         JM+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=wp0xcPsz9R1HrWr+Xm+eEpfeU8nOHHyoqU4v/7U+OFE=;
+        b=U/4S/+3kAv933F+zwLmgLfjf2OQShWvNpTAlP43EC94F9TajE8tFKVcaiKxcMonMwm
+         gfeK5yKP82LrajwKdnXF2wonCds38gmcCFthDISv1yQqPLFBVQGiTln4OvXaY6nsrwWr
+         SsbZ3cKw98PgBY4vNzGOw9Bnn2HXlewKseotzVSTUfzpfoIN9Vw5zVQ30yhu2acW3aVh
+         36d4EZE97GgHDWZCTjrTB/lnBBKPhJStj9ecZqaglFWBWiW7jvYf+MEy/Id++J5qdo4r
+         spuSFgcC0l64L8Dh6unuZymr6Ljf+nKn3P59ut83YHFnY7Iq9Q/nBvUhgsYD5EUOKzW0
+         rvCA==
+X-Gm-Message-State: ALoCoQkFYJb9AGnrJy+A8VuRL8PzZIRyydnH0A2j4KQtTJrIM3AWAaGC5KN6GNYAWKgg/0Cxoxi+
+X-Received: by 10.42.136.133 with SMTP id u5mr35357616ict.33.1417027028080;
+        Wed, 26 Nov 2014 10:37:08 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:6d15:6789:c0e7:ce68])
+        by mx.google.com with ESMTPSA id kd5sm7939579igb.20.2014.11.26.10.37.07
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 26 Nov 2014 10:37:07 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.rc3
+In-Reply-To: <54755F7C.3010803@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260290>
 
-Jeff King <peff@peff.net> writes:
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-> On Tue, Nov 25, 2014 at 11:51:27PM +0100, =C3=98ystein Walle wrote:
->
->> I agree with Junio Hamano that it's better to provide no argument at=
- all
->> rather than an empty one. I also agree with Jeff King that "noamend"=
- is
->> better than an empty argument. I went with the second one since Jeff
->> seemed to get the last word :)
->
-> I am not sure the last word counts for much. :) We'll see if Junio
-> responds (there, or to your patch). I do not feel _too_ strongly eith=
-er
-> way, and I don't have much else to say besides what was said.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+Changes v1->v2
+ * relocated the test from t1402 to t3200
+ * reword the commit message title to fit in with similar commits touching 
+   t/t3200-branch.sh 
 
-I _think_ "give only info that is necessary" is cleaner as an
-interface in theory, but have two niggles myself:
+Changes v2 -> v3
+ * remove space nit pointed out by Michael
+ * simplified grep expression as pointed out by Torsten
+ 
+ I don't mind applying this one later as part of the series, where we actually
+ introduce the feature. Thanks for all the feedback! 
 
- 1. the hooks must do the "argument parsing" loop (you already
-    mentioned this);
+Michael writes 
+> On the other hand, this is kind of an "aspirational test"; I don't
+> know that the tested functionality has ever worked or that anybody has
+> ever claimed that it works. So my feeling is that the addition of the
+> test would feel more natural in the patch series that implements the new
+> feature. But I don't feel strongly about it.
 
- 2. the hooks cannot tell if the lack of "amending" argument is
-    because the version of Git predates that "amending" hint
-    support, or because the user action is a straight "commit" not
-    an "commit --amend".
+ I don't have a strong oppinion on this one either. It's just my impression, that
+ small single patches are digested easier by the mailing list rather than large series.
+ So as the feedback is in, I'll put this patch at the end of the series, where the actual
+ feature will be introduced.
+ 
 
-In any case, I do not have strong preference myself.
+ t/t3200-branch.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 432921b..fa7d7bd 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -163,6 +163,14 @@ test_expect_success 'git branch --list -d t should fail' '
+ 	test_path_is_missing .git/refs/heads/t
+ '
+ 
++test_expect_failure 'git branch -d can delete ref with broken sha1' '
++	echo "pointing nowhere" >.git/refs/heads/brokensha1 &&
++	test_when_finished "rm -f .git/refs/heads/brokensha1" &&
++	git branch -d brokensha1 &&
++	git branch >output &&
++	! grep brokensha1 output
++'
++
+ test_expect_success 'git branch --column' '
+ 	COLUMNS=81 git branch --column=column >actual &&
+ 	cat >expected <<\EOF &&
+-- 
+2.2.0.rc3
