@@ -1,59 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: "git notes show" is orders of magnitude slower than doing it
- manually with ls-tree and cat-file
-Date: Tue, 25 Nov 2014 23:49:35 -0500
-Message-ID: <20141126044935.GB15252@peff.net>
-References: <20141126004242.GA13915@glandium.org>
- <20141126010051.GA29830@peff.net>
- <20141126012448.GA11183@peff.net>
- <20141126013456.GA13622@peff.net>
- <20141126023039.GA19401@glandium.org>
+Subject: Re: [PATCH 1/2] t7503: use write_script to generate hook scripts
+Date: Tue, 25 Nov 2014 23:51:27 -0500
+Message-ID: <20141126045127.GC15252@peff.net>
+References: <cover.1416955873.git.oystwa@gmail.com>
+ <78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Nov 26 05:49:44 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 26 05:51:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtUXs-000698-BK
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 05:49:40 +0100
+	id 1XtUZh-0007Td-Si
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 05:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbaKZEth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Nov 2014 23:49:37 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45104 "HELO cloud.peff.net"
+	id S1752242AbaKZEv3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 23:51:29 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45109 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751795AbaKZEtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 23:49:36 -0500
-Received: (qmail 26445 invoked by uid 102); 26 Nov 2014 04:49:36 -0000
+	id S1752055AbaKZEv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Nov 2014 23:51:28 -0500
+Received: (qmail 26535 invoked by uid 102); 26 Nov 2014 04:51:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 22:49:36 -0600
-Received: (qmail 4176 invoked by uid 107); 26 Nov 2014 04:49:35 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 22:51:28 -0600
+Received: (qmail 4201 invoked by uid 107); 26 Nov 2014 04:51:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 23:49:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Nov 2014 23:49:35 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 23:51:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Nov 2014 23:51:27 -0500
 Content-Disposition: inline
-In-Reply-To: <20141126023039.GA19401@glandium.org>
+In-Reply-To: <78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260270>
 
-On Wed, Nov 26, 2014 at 11:30:39AM +0900, Mike Hommey wrote:
+On Tue, Nov 25, 2014 at 11:51:28PM +0100, =C3=98ystein Walle wrote:
 
-> > Hmph. Having just written all that, I looked at your example again, and
-> > you are running "git ls-tree -r", which would read the whole tree
-> > anyway. So "git notes" should be _faster_ for a single lookup.
-> 
-> The -r actually doesn't matter, since what's being listed is a blob, not
-> a tree, so there is no recursion.
+> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
+> ---
+>  t/t7503-pre-commit-hook.sh | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
+> index 984889b..99ed967 100755
+> --- a/t/t7503-pre-commit-hook.sh
+> +++ b/t/t7503-pre-commit-hook.sh
+> @@ -24,8 +24,7 @@ test_expect_success '--no-verify with no hook' '
+>  HOOKDIR=3D"$(git rev-parse --git-dir)/hooks"
+>  HOOK=3D"$HOOKDIR/pre-commit"
+>  mkdir -p "$HOOKDIR"
+> -cat > "$HOOK" <<EOF
+> -#!/bin/sh
+> +write_script "$HOOK" <<EOF
 
-Ah, right. I should have looked more carefully. I took the "-r" and the
-patterns to mean "recursively list the tree, and I will grep for these
-elements". But you were actually generating a set of pathspecs, which
-git could then use to limit some of the walk.
+While you are touching this line, please make it "<<\EOF". It does not
+matter for these simple cases, but as a style, we try to avoid
+interpolation unless it is necessary.
 
 -Peff
