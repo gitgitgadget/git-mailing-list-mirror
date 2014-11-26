@@ -1,160 +1,91 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: RCS Keywords in Git done right
-Date: Wed, 26 Nov 2014 10:10:16 -0800
-Message-ID: <CAGZ79kZz4_q+p91e7fn8uS--DRqEUPj_eeQPf2WPOWEk=R8fkw@mail.gmail.com>
-References: <CAMsgyKbTRY5=cHj8Ar8zHDd5WdbcNwZC5caGV-snvZU4aek=YQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t7503: use write_script to generate hook scripts
+Date: Wed, 26 Nov 2014 10:12:08 -0800
+Message-ID: <xmqqk32hrfuv.fsf@gitster.dls.corp.google.com>
+References: <cover.1416955873.git.oystwa@gmail.com>
+	<78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
+	<20141126045127.GC15252@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Derek Moore <derek.p.moore@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 19:10:25 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 26 19:12:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xth2m-0003Sy-TB
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 19:10:25 +0100
+	id 1Xth4a-0004xT-RL
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 19:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbaKZSKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2014 13:10:19 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:61293 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751975AbaKZSKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2014 13:10:17 -0500
-Received: by mail-ig0-f178.google.com with SMTP id hl2so3028965igb.17
-        for <git@vger.kernel.org>; Wed, 26 Nov 2014 10:10:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ID1Tv2p44CEgLZrRHgN5UlNDby1h+JQt0ZXT+PV54cs=;
-        b=GbSDPjVeLC6wEsC/2a9YE+mXQ39t/X8zXJ8fqGZ32sEV4l6WgvAFGKPf2GuhJPxY+i
-         eAPRTV/Lyx9uuHZ55PToiwTedF1bpARicUi72AFW7xoefLKckaOnpGR41E0gGw2+7GAV
-         uBgqAC1yJ5zSe+scNEBAh/Tol7BUVft3TtmdcsbAMHSOsU3YDLoiSI0l7SXFZsMGCzOA
-         IG53jnjaqfM88r49wksoVzdPfdIB1f0qZuAA+5LnRHPOm0+b5tTTGYOI68jL24FTibiJ
-         T1WtEQ9+8yrURp3pjhLxCUWKP7RxDnXyqmvYYLDNGmwVUrZdwSXZ8ouaaQ9KLVqhcwg0
-         8tFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ID1Tv2p44CEgLZrRHgN5UlNDby1h+JQt0ZXT+PV54cs=;
-        b=JASR9y1EA6hi68B/s8Y68vlmPViWVjsCOFNMH9/F2fbVEBd6I+D5eAlL9HHbPJAc28
-         gaRYsPqAVYt+/L6eLS5dQAehXd6uSvNdswMjZ/mzru38hNBYfo3WK+4a/nvipHSiBomy
-         ZQvpDeR9/Y9PYg9B+s1UnCIdkzD6wqFmPkQO1TSfskvqhj/5nj0hUAmNlGI9bferV2rR
-         W4pXbPHBbkD4Jq1OcK4uWYtrAxR2oXiaTcUtBYWUbkzgCfMboMQdnzNdUvHPDhI1dxu4
-         2zwz5Lpr2cREwmaTC7oI+ZKgqOTQXnrgbPETtdRMfRLQrxk9lrucIYKXVXgy3HPk5Rxs
-         6Y7w==
-X-Gm-Message-State: ALoCoQmrpgm1yqYHclF4yzrK/i+hC99NBXFQvjFILAY/Aebi6zUQe/VOSMuIrDma/zj2/zrGmvzh
-X-Received: by 10.50.82.102 with SMTP id h6mr24469532igy.25.1417025416399;
- Wed, 26 Nov 2014 10:10:16 -0800 (PST)
-Received: by 10.107.1.199 with HTTP; Wed, 26 Nov 2014 10:10:16 -0800 (PST)
-In-Reply-To: <CAMsgyKbTRY5=cHj8Ar8zHDd5WdbcNwZC5caGV-snvZU4aek=YQ@mail.gmail.com>
+	id S1753390AbaKZSMN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Nov 2014 13:12:13 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61684 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752070AbaKZSMM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Nov 2014 13:12:12 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 87F3720B14;
+	Wed, 26 Nov 2014 13:12:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4Lz2w4FmL1//
+	6bCaC2y+dCmCHPg=; b=K8GIG7MUKpbx6Aug4wIHm0dMLyS553SJ+6q5qOizKGfK
+	drv9N0OKPT1DizDlhXmiCVgOwH9ZJa8BcdHhXtjwJK2A1QJESlvjyg1T7iQIveiv
+	vqypZnRpwfV21X3O6Opn2rrSV6zBiccZXtI+7KqeixxlQ1DwLUsEkSpuvvFfzLM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AstKT4
+	nRubB8Sr4zCTlH/Oi6kYvhr+dNbJTa4vhN9uwUEj7BWu8ZswqA6oT18ZvTplvrXF
+	z2Wy/x49PquRcArtYMp1qZECNL7/ytdr45h4RBi5XT/Gys0l+3lPXYv7iH4pepRw
+	WzOSnQkisKqp1vI0rRtFNDwbFeWls+t6DoEks=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EB5C20B13;
+	Wed, 26 Nov 2014 13:12:10 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 07B5A20B12;
+	Wed, 26 Nov 2014 13:12:09 -0500 (EST)
+In-Reply-To: <20141126045127.GC15252@peff.net> (Jeff King's message of "Tue,
+	25 Nov 2014 23:51:27 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BD107AA6-7597-11E4-BEC6-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260288>
 
-On Wed, Nov 26, 2014 at 8:44 AM, Derek Moore <derek.p.moore@gmail.com> wrote:
-> Junio, et al.,
->
-> I've completed my first pass at RCS Keywords in Git. I believe I've
-> come up with a solution that is accurate, performant and complete (but
-> I have not tested it on big repos yet, I'm doing that today...).
->
-> https://github.com/derekm/git-keywords
->
-> This work basically takes advantage of all the state-machine
-> transitions in git to surgically perform "git update-index $(git
-> archive $(git log -1 --format=%H @ -- $path) -- $path | tar vx)"
-> overwrites in the work tree. (It also exposes some state transitions
-> that are entirely absent from git, creating a few edge cases, but they
-> are relatively unimportant edge cases if your deployed git repos will
-> be managed by an automated system [humans doing development workflows
-> can trigger the edge cases when cancelling certain operations, all
-> edge cases just leave you with un-substituted files, which will become
-> substituted again after checkouts, commits, merges, rewrites, etc.].)
+Jeff King <peff@peff.net> writes:
 
-Now knowing the edge cases won't work, I did not get an idea about the
-standard case of what should work with this. Would you mind to write
-a more detailed example or a more advertising paragraph of what this can do?
-Not getting the big picture may be related to me having not worked with RCS yet.
+> On Tue, Nov 25, 2014 at 11:51:28PM +0100, =C3=98ystein Walle wrote:
+>
+>> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
+>> ---
+>>  t/t7503-pre-commit-hook.sh | 9 +++------
+>>  1 file changed, 3 insertions(+), 6 deletions(-)
+>>=20
+>> diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
+>> index 984889b..99ed967 100755
+>> --- a/t/t7503-pre-commit-hook.sh
+>> +++ b/t/t7503-pre-commit-hook.sh
+>> @@ -24,8 +24,7 @@ test_expect_success '--no-verify with no hook' '
+>>  HOOKDIR=3D"$(git rev-parse --git-dir)/hooks"
+>>  HOOK=3D"$HOOKDIR/pre-commit"
+>>  mkdir -p "$HOOKDIR"
+>> -cat > "$HOOK" <<EOF
+>> -#!/bin/sh
+>> +write_script "$HOOK" <<EOF
+>
+> While you are touching this line, please make it "<<\EOF". It does no=
+t
+> matter for these simple cases, but as a style, we try to avoid
+> interpolation unless it is necessary.
 
-Thanks,
-Stefan
-
-> Only $Author$, $Date$ and $Revision$ can be emulated presently. $Id$
-> and other tags requiring filename paths or basenames are possible, but
-> would require changes internal to git allowing "pretty format" codes
-> inside a file to triangulate filenames from blob hash and commit hash
-> pairs.
->
-> I believe this work fundamentally proves that the theory of RCS
-> keywords is sound in the context of Git, and that full support in
-> git-core is entirely achievable in short order. In fact, other areas
-> in git would become improved for several reasons if git devs ingested
-> some of the results of this work.
->
-> There is a lot of gainsaying and kneejerk reaction to the idea of
-> keywords under the assumption of distributed development because of
-> the fallacy of thinking in terms of shared/universal linear history
-> instead of in terms of relative spacetime events.
->
-> Keyword substitution can be done accurately relative to the history of
-> the possessor of that history. Last edit timestamps and last authors
-> and revision IDs are important to many workflows inside and outside
-> development.
->
-> Of the keywords emulated, the only thing I couldn't achieve
-> (obviously) were monotonically increasing revision numbers, instead I
-> went with the file's most recent commit short hash (which is more
-> proper for git anyway).
->
-> To test it out...
->
-> 1) clone the repo:
->
-> git clone https://github.com/derekm/git-keywords
->
-> 2) cd into the repo and setup the hooks:
->
-> ln -sf ../../post-checkout-filter.pl .git/hooks/post-checkout
-> ln -sf ../../pre-commit-check.pl .git/hooks/pre-commit
-> ln -sf ../../post-commit-filter.pl .git/hooks/post-commit
-> ln -sf ../../post-merge-filter.pl .git/hooks/post-merge
-> ln -sf ../../post-rewrite-filter.pl .git/hooks/post-rewrite
->
-> 3) edit .git/config and setup the filters:
->
-> [filter "keywords"]
->         smudge = ./keyword-smudge.pl %f
->         clean = ./keyword-clean.pl
->
-> 4) inspect the lack of substitutions:
->
-> head -4 *
->
-> 5) initialize the repo with first substitutions:
->
-> for i in $(git ls-tree --name-only @); do
->  git update-index \
->   $(git archive \
->    $(git log -1 --format=%H @ -- $i) -- $i | tar vx)
-> done
->
-> 6) inspect the presence of substitutions:
->
-> head -4 *
->
-> 7) ??? (start hacking, try to break it, etc.)
->
-> 8) PROFIT!
->
-> PS: I may consider rewriting the hooks in Bash, but I need to audit
-> what commands are available under msys-git.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks.  It is more about reducing cognitive burden from the
+readers.  An unquoted <<EOF signals you that your eyes need to scan
+carefully for $subsitutions to understand what is going on, instead
+of coasting it over.
