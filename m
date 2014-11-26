@@ -1,81 +1,89 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: Why does git merge --squash fail when merge.ff is set to only?
-Date: Wed, 26 Nov 2014 14:42:57 -0500
-Organization: GNU's Not UNIX!
-Message-ID: <1417030977.23650.42.camel@homebase>
-Reply-To: paul@mad-scientist.net
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t7503: use write_script to generate hook scripts
+Date: Wed, 26 Nov 2014 12:07:35 -0800
+Message-ID: <xmqqy4qxpvy0.fsf@gitster.dls.corp.google.com>
+References: <cover.1416955873.git.oystwa@gmail.com>
+	<78f25aaa60554f7e3b917c565df0f89fb9c08921.1416955873.git.oystwa@gmail.com>
+	<20141126045127.GC15252@peff.net>
+	<xmqqk32hrfuv.fsf@gitster.dls.corp.google.com>
+	<20141126190315.GB1734@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 26 20:46:22 2014
+Content-Type: text/plain
+Cc: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 26 21:07:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtiXb-0001Jc-OJ
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 20:46:20 +0100
+	id 1XtisI-0000Bx-Sn
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 21:07:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbaKZTqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2014 14:46:14 -0500
-Received: from qproxy1-pub.mail.unifiedlayer.com ([173.254.64.10]:42993 "HELO
-	qproxy1-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751062AbaKZTqN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Nov 2014 14:46:13 -0500
-Received: (qmail 29967 invoked by uid 0); 26 Nov 2014 19:42:59 -0000
-Received: from unknown (HELO cmgw3) (10.0.90.84)
-  by qproxy1.mail.unifiedlayer.com with SMTP; 26 Nov 2014 19:42:59 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-	by cmgw3 with 
-	id LKiv1p00V2qhmhE01KiyP7; Wed, 26 Nov 2014 12:42:59 -0700
-X-Authority-Analysis: v=2.1 cv=W++rC3mk c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
- a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
- a=qenwzdlAJUAA:10 a=5y4faFyK3SkA:10 a=a2qg_i203ghgJXeBkK4A:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:Date:To:Reply-To:From:Subject:Message-ID; bh=yv6gkGm4J+wTFnWi6L1ia5I+03VIbRafC48+lZjy2/Y=;
-	b=pNvbbaDRbFwZZM9iphhkWiH2ZQu6oZmmE0PoUviHXhX4oMfeK/t29tIK2PJHydJHk9Ty6ZiT7b1hLWo+dlSscEg3MBe3dBa3KfJ+JP7VhwcwsGPgjsLGa1J27w9U6SHR;
-Received: from [72.74.248.26] (port=38425 helo=homebase.home)
-	by box531.bluehost.com with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
-	(Exim 4.82)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1XtiUJ-0007kl-4g
-	for git@vger.kernel.org; Wed, 26 Nov 2014 12:42:55 -0700
-X-Mailer: Evolution 3.11.3-fta1~13.10 
-X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 72.74.248.26 authed with paul@mad-scientist.us}
+	id S1751344AbaKZUHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2014 15:07:39 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55083 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751107AbaKZUHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2014 15:07:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 60F7021384;
+	Wed, 26 Nov 2014 15:07:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nsYrN1KMSPkJDhGqSXBul7U++mI=; b=domVGS
+	1Se4zQ/jJE0J/nY+QoSb458Unepzs4ucZQZhUexUgHozUgXrxdRBjGjetEGSBypt
+	hQHFCKjZtzE1D+zXjiWVrU2HA0Q/K5aCGjC2YYVUDwdYWVxmy96vsqP6e/SagNNR
+	PIsCL0xJlRAJPKX6ujnBjFpbDVGyXM1T3LMVs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MPOqUBVpsjy/hvpIOsg3fOyVcV7mEBp7
+	GNUB9FqSArrXfz9LzGH2jnUBZfqKhr8yoJgePNbWpqTCHK+2gTFbWtziynLD4Qy5
+	0NjCX02LUrIF8Ha4leYN8th7/OI8NVtN60jxOB03wPYpFqmiOPkB1ONTp+cmb9Es
+	gXqR4NUGznA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 583B621383;
+	Wed, 26 Nov 2014 15:07:37 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C96AF21382;
+	Wed, 26 Nov 2014 15:07:36 -0500 (EST)
+In-Reply-To: <20141126190315.GB1734@peff.net> (Jeff King's message of "Wed, 26
+	Nov 2014 14:03:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DDC0D07E-75A7-11E4-A1AF-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260298>
 
-In our development process we always want to do rebase and only rarely
-create merge commits, and so we have a recommendation to set the
-merge.ff configuration attribute to "only".
+Jeff King <peff@peff.net> writes:
 
-This is great, however it appears to break git merge --squash (which we
-also use constantly).
+> On Wed, Nov 26, 2014 at 10:12:08AM -0800, Junio C Hamano wrote:
+>
+>> >> +write_script "$HOOK" <<EOF
+>> >
+>> > While you are touching this line, please make it "<<\EOF". It does not
+>> > matter for these simple cases, but as a style, we try to avoid
+>> > interpolation unless it is necessary.
+>> 
+>> Thanks.  It is more about reducing cognitive burden from the
+>> readers.  An unquoted <<EOF signals you that your eyes need to scan
+>> carefully for $subsitutions to understand what is going on, instead
+>> of coasting it over.
+>
+> While we are talking about it, do we have a style preference on
+> always/never using "<<-" unless necessary? I do not think it is as
+> important as preventing interpolation, because it does not introduce a
+> cognitive load in the same way. But consistently using "<<-" is one less
+> thing for shell newbies to be confused by, and to get wrong when
+> cargo-culting.
 
-If I'm squash-merging from a branch which is not based on HEAD (cannot
-use fast-forwarding) then I get the extremely cryptic error:
-
-  $ git checkout master
-  $ git pull
-  $ git merge --squash my-branch
-  fatal: Not possible to fast-forward, aborting.
-
-I couldn't even understand what this error meant for a while: what was
-being fast-forwarded here anyway?  It took me a lot of thought to
-realize it was related to the merge.ff config setting.
-
-Eventually I figured it out, and now have this workaround:
-
-  $ git merge --ff --squash my-branch
-
-But, shouldn't we consider this a bug?  I don't see any reason why
---squash should pay attention to the ff config setting, or command line
-flags either for that matter.  IMHO when you add the --squash flag, the
-ff options/config should be ignored.
-
-Or, am I missing some subtle issue here?
+Not using "<<-" is a sign of another problem that is bigger, namely,
+the test vector is prepared outside of a test_expect_success setup
+block.  Inside test_expect_success, I'd prefer "<<-" to make it
+clear where each test begins and next test begins, which would make
+it easier for our to coast over.
