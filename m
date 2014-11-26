@@ -1,54 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] pre-commit hook updates
-Date: Tue, 25 Nov 2014 23:52:46 -0500
-Message-ID: <20141126045246.GD15252@peff.net>
-References: <cover.1416953772.git.oystwa@gmail.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] t1402: check to delete broken refs
+Date: Wed, 26 Nov 2014 06:05:00 +0100
+Message-ID: <54755F7C.3010803@web.de>
+References: <1416956166-20341-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 26 05:52:53 2014
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: Stefan Beller <sbeller@google.com>, mhagger@alum.mit.edu,
+	gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 26 06:06:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtUax-0008NX-H1
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 05:52:51 +0100
+	id 1XtUnx-0000of-6K
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Nov 2014 06:06:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbaKZEwr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Nov 2014 23:52:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45114 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752202AbaKZEwr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Nov 2014 23:52:47 -0500
-Received: (qmail 26581 invoked by uid 102); 26 Nov 2014 04:52:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 22:52:47 -0600
-Received: (qmail 4218 invoked by uid 107); 26 Nov 2014 04:52:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Nov 2014 23:52:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Nov 2014 23:52:46 -0500
-Content-Disposition: inline
-In-Reply-To: <cover.1416953772.git.oystwa@gmail.com>
+	id S1751843AbaKZFGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Nov 2014 00:06:12 -0500
+Received: from mout.web.de ([212.227.17.12]:54072 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751821AbaKZFGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Nov 2014 00:06:11 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0Lp71s-1YNJEn0abE-00et6a; Wed, 26 Nov 2014 06:06:05
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <1416956166-20341-1-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:opXIW+IFV6oi0NMIIGD09Plf410XBdfzXqlLEksIkfa+0lVVIkM
+ a6e9+gFRtojo04HYWFAUsxZ3t28qBeYF6wh/OOGvE57BCKGkj3fCAdKlYd6jFn9BAIdL3e5
+ Ere31qOPZHNlJ53plEHtfYJLopJBRC1gdouG6d75ScLor4IGk0nLd9yuKfHMQiKukYbEhTV
+ S/2q6CRcivxAclghrXIaQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260272>
 
-On Tue, Nov 25, 2014 at 11:51:27PM +0100, =C3=98ystein Walle wrote:
+On 11/25/2014 11:56 PM, Stefan Beller wrote:
+> From: Ronnie Sahlberg <sahlberg@google.com>
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>   
+>   This was also part of the ongoing series from Ronnie.
+>   But I think the patch in this form is rather independant,
+>   documenting the current state of "git branch -d", so it's
+>   fine to have it in now.
+>
+>   t/t1402-check-ref-format.sh | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+>
+> diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+> index e5dc62e..08af156 100755
+> --- a/t/t1402-check-ref-format.sh
+> +++ b/t/t1402-check-ref-format.sh
+> @@ -197,4 +197,12 @@ invalid_ref_normalized 'heads///foo.lock'
+>   invalid_ref_normalized 'foo.lock/bar'
+>   invalid_ref_normalized 'foo.lock///bar'
+>   
+> +test_expect_failure 'git branch -d can delete ref with broken sha1' '
+> +	echo "pointing nowhere" > .git/refs/heads/brokensha1 &&
+> +	test_when_finished "rm -f .git/refs/heads/brokensha1" &&
+> +	git branch -d brokensha1 &&
+> +	git branch >output &&
+> +	! grep -e "brokensha1" output
+> +'
+Do we need grep -e here ?
+It does not give us anything in the pattern we are using.
 
-> I agree with Junio Hamano that it's better to provide no argument at =
-all
-> rather than an empty one. I also agree with Jeff King that "noamend" =
-is
-> better than an empty argument. I went with the second one since Jeff
-> seemed to get the last word :)
+   -e PATTERN, --regexp=PATTERN
+               Use  PATTERN  as  the pattern.  This can be used to 
+specify multiple search patterns, or to protect a pattern beginning
+               with a hyphen (-).  (-e is specified by POSIX.)
 
-I am not sure the last word counts for much. :) We'll see if Junio
-responds (there, or to your patch). I do not feel _too_ strongly either
-way, and I don't have much else to say besides what was said.
+(And we do not need the "" either, there is no space in brokensha1)
+We can simply use:
+! grep brokensha1 output
 
--Peff
+
+
+
+
+> +
+>   test_done
