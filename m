@@ -1,100 +1,121 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: What's cooking in git.git (Nov 2014, #04; Wed, 26)
-Date: Thu, 27 Nov 2014 18:39:01 +0000
-Message-ID: <20141127183901.GD4744@vauxhall.crustytoothpaste.net>
-References: <xmqqoarto8xy.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv3 2/3] mailmap: use higher level string list functions
+Date: Thu, 27 Nov 2014 14:57:10 -0500
+Message-ID: <CAPig+cRNuuDDBV0-TwANuiv+f_c1mfXp2Q4rF1Sj5mtJoLoqHQ@mail.gmail.com>
+References: <CAPig+cQ_4A-0LOgXXG5qLeHOev+g8KMq5osKz34AFijGuyRidQ@mail.gmail.com>
+	<1416887054-27204-1-git-send-email-sbeller@google.com>
+	<CAO2U3QjNua2HvJKLnq80mPFEp931yLzHKENKo-LHm4CFZWRhBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="C+ts3FVlLX8+P6JN"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 27 19:39:15 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Git List <git@vger.kernel.org>
+To: Michael Blume <blume.mike@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 27 20:57:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xu3yD-0004cK-OB
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 19:39:14 +0100
+	id 1Xu5Bk-0002PO-MU
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 20:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750981AbaK0SjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2014 13:39:09 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:54833 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750895AbaK0SjI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Nov 2014 13:39:08 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9D7792808F;
-	Thu, 27 Nov 2014 18:39:04 +0000 (UTC)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqqoarto8xy.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.17-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1751209AbaK0T5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2014 14:57:12 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:55705 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043AbaK0T5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2014 14:57:11 -0500
+Received: by mail-ie0-f180.google.com with SMTP id rp18so5041707iec.39
+        for <git@vger.kernel.org>; Thu, 27 Nov 2014 11:57:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=DfaSpRCHgb55c6HN/V56VbHQuSVSPdr9yFyVyzM/Udw=;
+        b=XOfKqew00oQxz8uoHbD97q4q6z6w92nhgbWL1t7KMxrS80SdttZlcT2gz8czzps0H+
+         GfFRq27K0lfi2/Mr8PlIk+ZVo0t20057jMMessU7YFrDaUZFkvnQ+NZ0+dsE/r1H1T4e
+         Uf9Si8fOE/UgIzslKPGsPgLoX3wcBdDdbceTvcveJWHc1iCCLCObsNP+L5+WFCKCkjbl
+         G0nvEWCSK0S1UDqiB50d4TeCxxPfteS/MamZbmzOvhD30/VD3d8rJXdq95uM8N3FWxpg
+         UrADYQ+0PWeM+eQlQFEuR+kbStck7DetskqtiVJICGq0wA2ystMJuo/CRImX2D/4PbiL
+         aaOA==
+X-Received: by 10.107.46.167 with SMTP id u39mr21891271iou.82.1417118230600;
+ Thu, 27 Nov 2014 11:57:10 -0800 (PST)
+Received: by 10.107.137.66 with HTTP; Thu, 27 Nov 2014 11:57:10 -0800 (PST)
+In-Reply-To: <CAO2U3QjNua2HvJKLnq80mPFEp931yLzHKENKo-LHm4CFZWRhBA@mail.gmail.com>
+X-Google-Sender-Auth: xw5VoFtAkKBTNsvU_4bPwBimTV0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260352>
+
+On Thu, Nov 27, 2014 at 1:44 PM, Michael Blume <blume.mike@gmail.com> wrote:
+> The variable index seems to be unused/uninitialized now -- it's still
+> printed in debug messages, but if I'm reading correctly, its contents are
+> going to be nonsense.
+
+Nice catch.
+
+(Aside: Please don't top-post on this list [1].)
+
+[1]: https://lkml.org/lkml/2005/1/11/111
 
 
---C+ts3FVlLX8+P6JN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Nov 26, 2014 at 03:09:45PM -0800, Junio C Hamano wrote:
-> * nd/untracked-cache (2014-10-27) 19 commits
->  - t7063: tests for untracked cache
->  - update-index: test the system before enabling untracked cache
->  - update-index: manually enable or disable untracked cache
->  - status: enable untracked cache
->  - untracked cache: mark index dirty if untracked cache is updated
->  - untracked cache: print stats with $GIT_TRACE_UNTRACKED_STATS
->  - untracked cache: avoid racy timestamps
->  - read-cache.c: split racy stat test to a separate function
->  - untracked cache: invalidate at index addition or removal
->  - untracked cache: load from UNTR index extension
->  - untracked cache: save to an index extension
->  - untracked cache: don't open non-existent .gitignore
->  - untracked cache: mark what dirs should be recursed/saved
->  - untracked cache: record/validate dir mtime and reuse cached output
->  - untracked cache: make a wrapper around {open,read,close}dir()
->  - untracked cache: invalidate dirs recursively if .gitignore changes
->  - untracked cache: initial untracked cache validation
->  - untracked cache: record .gitignore information and dir hierarchy
->  - dir.c: optionally compute sha-1 of a .gitignore file
-
-You didn't comment on the status of this branch, and I'm interested.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---C+ts3FVlLX8+P6JN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJUd2/FAAoJEL9TXYEfUvaLk0cQAIPy7QBOTQwjx2wB139CVhEf
-ncXeg0oPP7YmxQTzCHBm+c0BqJuHuGLFd69bky8uAoKjb7DxQmF2Stlwb+YRPbog
-qOV6Zonr+QpTpOB96kWjcj7+eCWguHzo9XWI+aQekCEBDIPyKnEW6Iky27et6ASV
-KeBeXLKstqcr+KBkhfiL0cNSsX0STIzf3ij1RcTqFNe5E/zrHamC31rzQ+j9T6/I
-b3EYWJmKJBMfr/WDKeWqxDCxXKLjGL9tgooiKvgM/vmcWcKWixn1lt6GTw0M0ZyF
-8Oa4cW82zzr3L2PM4BdEklVjudd51MV8q1XkzMIypvOq6fi3Wz2LGnJLYY4Mv2l+
-IPNz/D243XCh6n4MgodK/mPsAIqz/6jcSevCMaa1K2XFQ0REpCx3Mc/0WxVeMgUr
-a6Yq9+ZY/7VD9d2EITyqIclmCKaIITaMFBl+yU8UCbgH/LAwuQNbFbrQCdlFyQXh
-aCjk8iIL6oU+FuLCWia7rLMhkCaG/unb5eedlGhtCcFoKpedvQxHd0hzKOmJZFct
-jYC8IFf7CJTUnoT4Vw2gwRL/aQ+JNE1FzPuQV6fIz6P5fl26WwzVlWJgMXIrJIXR
-dCM+kSPVOElVBCz7eRxtR6TxkodJynsMK2zsYlfvAHcNhzypG7qaJCyKFgAjZF0q
-jZsorEhA/wqLEuH/v9++
-=ec/w
------END PGP SIGNATURE-----
-
---C+ts3FVlLX8+P6JN--
+> On Mon Nov 24 2014 at 7:48:27 PM Stefan Beller <sbeller@google.com> wrote:
+>>
+>> No functional changes intended. This commit makes use of higher level
+>> and better documented functions of the string list API, so the code is
+>> more understandable.
+>>
+>> Note that also the required computational amount should not change
+>> in principal as we need to look up the item no matter if it is already
+>> part of the list or not. Once looked up, insertion comes for free.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>> Changes since Version 1:
+>> * Remove declaration-after-statement.
+>>
+>> Changes Version 1 to Version 2:
+>> * typo in commit message
+>>
+>>  mailmap.c | 12 ++++--------
+>>  1 file changed, 4 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/mailmap.c b/mailmap.c
+>> index 81890a6..3b00a65 100644
+>> --- a/mailmap.c
+>> +++ b/mailmap.c
+>> @@ -71,6 +71,7 @@ static void add_mapping(struct string_list *map,
+>>                         char *old_name, char *old_email)
+>>  {
+>>         struct mailmap_entry *me;
+>> +       struct string_list_item *item;
+>>         int index;
+>>
+>>         if (old_email == NULL) {
+>> @@ -78,15 +79,10 @@ static void add_mapping(struct string_list *map,
+>>                 new_email = NULL;
+>>         }
+>>
+>> -       if ((index = string_list_find_insert_index(map, old_email, 1)) <
+>> 0) {
+>> -               /* mailmap entry exists, invert index value */
+>> -               index = -1 - index;
+>> -               me = (struct mailmap_entry *)map->items[index].util;
+>> +       item = string_list_insert(map, old_email);
+>> +       if (item->util) {
+>> +               me = (struct mailmap_entry *)item->util;
+>>         } else {
+>> -               /* create mailmap entry */
+>> -               struct string_list_item *item;
+>> -
+>> -               item = string_list_insert_at_index(map, index, old_email);
+>>                 me = xcalloc(1, sizeof(struct mailmap_entry));
+>>                 me->namemap.strdup_strings = 1;
+>>                 me->namemap.cmp = namemap_cmp;
+>> --
+>> 2.2.0.rc3
