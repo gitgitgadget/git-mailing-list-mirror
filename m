@@ -1,234 +1,231 @@
-From: Adam Williamson <awilliam@redhat.com>
-Subject: Re: 'simple' push check that branch name matches does not work if push.default is unset (and hence implicitly simple)
-Date: Wed, 26 Nov 2014 20:24:04 -0800
-Message-ID: <A90836FF-3EF7-48CC-83C0-4DD09D0F022D@redhat.com>
-References: <1417040968.12457.78.camel@redhat.com> <20141127034306.GA5341@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] pack-bitmap: do not use gcc packed attribute
+Date: Thu, 27 Nov 2014 00:24:01 -0500
+Message-ID: <20141127052400.GA16211@peff.net>
+References: <xmqqoarto8xy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 27 05:25:07 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Karsten Blees <karsten.blees@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 27 06:24:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xtqde-0005JD-Om
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 05:25:07 +0100
+	id 1XtrYm-0002DG-5r
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 06:24:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452AbaK0EYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Nov 2014 23:24:17 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:41993 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753222AbaK0EYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Nov 2014 23:24:17 -0500
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id sAR4OCqK028951
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Wed, 26 Nov 2014 23:24:12 -0500
-Received: from mail.happyassassin.net (ovpn-113-42.phx2.redhat.com [10.3.113.42])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id sAR4OBCP029342
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Wed, 26 Nov 2014 23:24:12 -0500
-User-Agent: K-9 Mail for Android
-Authentication-Results: mail.happyassassin.net; dmarc=none header.from=redhat.com
-In-Reply-To: <20141127034306.GA5341@peff.net>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1751703AbaK0FYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2014 00:24:03 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45658 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751476AbaK0FYC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2014 00:24:02 -0500
+Received: (qmail 24413 invoked by uid 102); 27 Nov 2014 05:24:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 26 Nov 2014 23:24:01 -0600
+Received: (qmail 14148 invoked by uid 107); 27 Nov 2014 05:24:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Nov 2014 00:24:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Nov 2014 00:24:01 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqoarto8xy.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260334>
 
-On November 26, 2014 7:43:06 PM PST, Jeff King <peff@peff.net> wrote:
->On Wed, Nov 26, 2014 at 02:29:28PM -0800, Adam Williamson wrote:
->
->> Hi, folks. Ran into an unfortunate issue with git which helped me
->mess
->> up a Fedora package repo today :/
->> 
->> The problem can be reproduced thus:
->> 
->> 1. Create an empty repo, clone it
->> 2. Push its master branch with something in it (just to get started)
->> 3. git branch --track moo origin/master
->> 4. git checkout moo
->> 5. echo moo >> moo && git commit -a -m "create moo"
->> 6. git push
->> ** BUG HAPPENS - CHANGES ARE PUSHED TO origin/master **
->> 7. git config --local push.default simple
->> 8. echo moo2 >> moo && git commit -a -m "update moo"
->> 9. git push
->> ** PUSH IS CORRECTLY REJECTED **
->> 
->> In both those cases, the push behaviour is supposed to be 'simple' -
->at
->> step 6 it's *implicitly* set to 'simple' (according to the
->> documentation), while at step 9 it's *explicitly* set to 'simple'. At
->> step 6, a warning is printed to the console:
->
->Ugh. Yeah, this never worked properly, even in the original v2.0.0
->release. Worse, our tests did not notice it at all.  Patch is below.
->
->
->-- >8 --
->Subject: push: truly use "simple" as default, not "upstream"
->
->The plan for the push.default transition had all along been
->to use the "simple" method rather than "upstream" as a
->default if the user did not specify their own push.default
->value. Commit 11037ee (push: switch default from "matching"
->to "simple", 2013-01-04) tried to implement that by moving
->PUSH_DEFAULT_UNSPECIFIED in our switch statement to
->fall-through to the PUSH_DEFAULT_SIMPLE case.
->
->When the commit that became 11037ee was originally written,
->that would have been enough. We would fall through to
->calling setup_push_upstream() with the "simple" parameter
->set to 1. However, it was delayed for a while until we were
->ready to make the transition in Git 2.0.
->
->And in the meantime, commit ed2b182 (push: change `simple`
->to accommodate triangular workflows, 2013-06-19) threw a
->monkey wrench into the works. That commit drops the "simple"
->parameter to setup_push_upstream, and instead checks whether
->the global "push_default" is PUSH_DEFAULT_SIMPLE. This is
->right when the user has explicitly configured push.default
->to simple, but wrong when we are a fall-through for the
->"unspecified" case.
->
->We never noticed because our push.default tests do not cover
->the case of the variable being totally unset; they only
->check the "simple" behavior itself.
->
->Signed-off-by: Jeff King <peff@peff.net>
->---
->ed2b182 comes from Ram, but the suggestion for this bit of code
->actually
->comes from Junio in:
->
->http://thread.gmane.org/gmane.comp.version-control.git/228383/focus=228436
->
->I am not sure I understand the reason for dropping the "simple"
->parameter in that commit in the first place. If we are in triangular
->mode, then we would not get to setup_push_upstream from "simple" (or
->the
->default) in the first place (we would use "current" instead). The only
->time "triangular" matters to setup_push_upstream is when push.default
->really has been set to "upstream", but in that case, "simple" would
->always be 0 (and likewise, the equality check that replaces it would
->also be false).
->
->So I have a vague concern that I'm missing something. Maybe one of you
->who worked on it can recall more.
->
-> builtin/push.c          |  8 ++++----
-> t/t5528-push-default.sh | 32 ++++++++++++++++++++++++++++++--
-> 2 files changed, 34 insertions(+), 6 deletions(-)
->
->diff --git a/builtin/push.c b/builtin/push.c
->index a076b19..7aedf6f 100644
->--- a/builtin/push.c
->+++ b/builtin/push.c
->@@ -161,7 +161,7 @@ static const char message_detached_head_die[] =
-> 	   "    git push %s HEAD:<name-of-remote-branch>\n");
-> 
->static void setup_push_upstream(struct remote *remote, struct branch
->*branch,
->-				int triangular)
->+				int triangular, int simple)
-> {
-> 	struct strbuf refspec = STRBUF_INIT;
-> 
->@@ -184,7 +184,7 @@ static void setup_push_upstream(struct remote
->*remote, struct branch *branch,
-> 		      "to update which remote branch."),
-> 		    remote->name, branch->name);
-> 
->-	if (push_default == PUSH_DEFAULT_SIMPLE) {
->+	if (simple) {
-> 		/* Additional safety */
-> 		if (strcmp(branch->refname, branch->merge[0]->src))
-> 			die_push_simple(branch, remote);
->@@ -257,11 +257,11 @@ static void setup_default_push_refspecs(struct
->remote *remote)
-> 		if (triangular)
-> 			setup_push_current(remote, branch);
-> 		else
->-			setup_push_upstream(remote, branch, triangular);
->+			setup_push_upstream(remote, branch, triangular, 1);
-> 		break;
-> 
-> 	case PUSH_DEFAULT_UPSTREAM:
->-		setup_push_upstream(remote, branch, triangular);
->+		setup_push_upstream(remote, branch, triangular, 0);
-> 		break;
-> 
-> 	case PUSH_DEFAULT_CURRENT:
->diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
->index 6a5ac3a..cc74519 100755
->--- a/t/t5528-push-default.sh
->+++ b/t/t5528-push-default.sh
->@@ -26,7 +26,7 @@ check_pushed_commit () {
-> # $2 = expected target branch for the push
-> # $3 = [optional] repo to check for actual output (repo1 by default)
-> test_push_success () {
->-	git -c push.default="$1" push &&
->+	git ${1:+-c push.default="$1"} push &&
-> 	check_pushed_commit HEAD "$2" "$3"
-> }
-> 
->@@ -34,7 +34,7 @@ test_push_success () {
-> # check that push fails and does not modify any remote branch
-> test_push_failure () {
-> 	git --git-dir=repo1 log --no-walk --format='%h %s' --all >expect &&
->-	test_must_fail git -c push.default="$1" push &&
->+	test_must_fail git ${1:+-c push.default="$1"} push &&
-> 	git --git-dir=repo1 log --no-walk --format='%h %s' --all >actual &&
-> 	test_cmp expect actual
-> }
->@@ -172,4 +172,32 @@ test_pushdefault_workflow success simple master
->triangular
-> # master is updated (parent2 does not have foo)
-> test_pushdefault_workflow success matching master triangular
-> 
->+# default tests, when no push-default is specified. This
->+# should behave the same as "simple" in non-triangular
->+# settings, and as "current" otherwise.
->+
->+test_expect_success 'default behavior allows "simple" push' '
->+	test_config branch.master.remote parent1 &&
->+	test_config branch.master.merge refs/heads/master &&
->+	test_config remote.pushdefault parent1 &&
->+	test_commit default-master-master &&
->+	test_push_success "" master
->+'
->+
->+test_expect_success 'default behavior rejects non-simple push' '
->+	test_config branch.master.remote parent1 &&
->+	test_config branch.master.merge refs/heads/foo &&
->+	test_config remote.pushdefault parent1 &&
->+	test_commit default-master-foo &&
->+	test_push_failure ""
->+'
->+
->+test_expect_success 'default triangular behavior acts like "current"'
->'
->+	test_config branch.master.remote parent1 &&
->+	test_config branch.master.merge refs/heads/foo &&
->+	test_config remote.pushdefault parent2 &&
->+	test_commit default-triangular &&
->+	test_push_success "" master repo2
->+'
->+
-> test_done
+On Wed, Nov 26, 2014 at 03:09:45PM -0800, Junio C Hamano wrote:
 
-Yeah, I've gone down pretty much exactly the same avenues of investigation, but had to suspend it to go out to dinner. I wanted to try and completely grok the whole history of this particular bit of behavior before suggesting a patch. So far my guess is that junio just got a bit mixed up with working on top of ram's changes and didn't catch that the check wouldn't work in the implicit case, but I wanted to look into it a bit more.
+> * jk/pack-bitmap (2014-08-04) 1 commit
+>  - pack-bitmap: do not use gcc packed attribute
+> 
+>  Hold, waiting for Karsten's replacement.
+
+I got tired of waiting, so here it is, I hope good enough for inclusion.
+
+-- >8 --
+From: Karsten Blees <blees@dcon.de>
+Subject: pack-bitmap: do not use gcc packed attribute
+
+The "__attribute__" flag may be a noop on some compilers.
+That's OK as long as the code is correct without the
+attribute, but in this case it is not. We would typically
+end up with a struct that is 2 bytes too long due to struct
+padding, breaking both reading and writing of bitmaps.
+
+Instead of marshalling the data in a struct, let's just
+provide helpers for reading and writing the appropriate
+types. Besides being correct on all platforms, the result is
+more efficient and simpler to read.
+
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+From Karsten's original, the three changes I made (aside from the commit
+message) were:
+
+  1. The _u32 helpers are now _be32, to make it clear that they are
+     dealing with big-endian integers (and it matches get/put_be32;
+     dropping the "u" is OK as it is implied by dealing with byte
+     ordering). I left the _u8 variants as-is; I do not think there is
+     precedent for a similar name for single bytes (and the "u" is
+     meaningful there). Technically you can accomplish the same thing
+     with a single call to sha1write, but I think the helper makes the
+     calling code flow better.
+
+  2. I moved the sha1write_* helpers into csum-file.h. It's possible
+     we will find other callers. I left the read_* variants as local
+     to pack-bitmap.c. In theory we could use them elsewhere, but I
+     could not find any other location that used the same "mmap base +
+     pos" pattern. Some similar code uses a simple pointer which is
+     updated, which would yield something like:
+
+       uint32_t read_be32(unsigned char **data)
+       {
+               uint32_t ret = get_be32(*data);
+               (*data) += sizeof(ret);
+               return ret;
+       }
+
+     In theory we could adapt the bitmap code here to use a similar
+     system, but it would involve a bit of surgery (we push the "pos"
+     pointer forward in a lot of places, not just here, and they would
+     all need to be converted). I don't think it's worth the trouble.
+
+     The original discussion also raised the question of whether we
+     could do a straight open/read on the bitmap file rather than
+     mmap-ing it. The answer is yes, though it would similarly involve a
+     lot of surgery. Moreover, it's possible that future versions of the
+     bitmap format would benefit from being mmap'd (this one does not).
+     So unless there is a compelling reason to switch away from mmap,
+     I think it makes sense to keep the code as-is.
+
+  3. I dropped casts from uint8_t to int in the assignment of
+     xor_offset, etc.  These aren't doing anything (the compiler knows
+     both types and handles the conversion fine, and we know that a
+     uint8_t will always fit into an int on any sane platform).
+
+ csum-file.h         | 11 +++++++++++
+ pack-bitmap-write.c |  8 +++-----
+ pack-bitmap.c       | 22 +++++++++++++++-------
+ pack-bitmap.h       |  6 ------
+ 4 files changed, 29 insertions(+), 18 deletions(-)
+
+diff --git a/csum-file.h b/csum-file.h
+index bb543d5..7530927 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -39,4 +39,15 @@ extern void sha1flush(struct sha1file *f);
+ extern void crc32_begin(struct sha1file *);
+ extern uint32_t crc32_end(struct sha1file *);
+ 
++static inline void sha1write_u8(struct sha1file *f, uint8_t data)
++{
++	sha1write(f, &data, sizeof(data));
++}
++
++static inline void sha1write_be32(struct sha1file *f, uint32_t data)
++{
++	data = htonl(data);
++	sha1write(f, &data, sizeof(data));
++}
++
+ #endif
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 8029ae3..c05d138 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -472,7 +472,6 @@ static void write_selected_commits_v1(struct sha1file *f,
+ 
+ 	for (i = 0; i < writer.selected_nr; ++i) {
+ 		struct bitmapped_commit *stored = &writer.selected[i];
+-		struct bitmap_disk_entry on_disk;
+ 
+ 		int commit_pos =
+ 			sha1_pos(stored->commit->object.sha1, index, index_nr, sha1_access);
+@@ -480,11 +479,10 @@ static void write_selected_commits_v1(struct sha1file *f,
+ 		if (commit_pos < 0)
+ 			die("BUG: trying to write commit not in index");
+ 
+-		on_disk.object_pos = htonl(commit_pos);
+-		on_disk.xor_offset = stored->xor_offset;
+-		on_disk.flags = stored->flags;
++		sha1write_be32(f, commit_pos);
++		sha1write_u8(f, stored->xor_offset);
++		sha1write_u8(f, stored->flags);
+ 
+-		sha1write(f, &on_disk, sizeof(on_disk));
+ 		dump_bitmap(f, stored->write_as);
+ 	}
+ }
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index a1f3c0d..6a81841 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -197,13 +197,24 @@ static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
+ 	return stored;
+ }
+ 
++static inline uint32_t read_be32(const unsigned char *buffer, size_t *pos)
++{
++	uint32_t result = get_be32(buffer + *pos);
++	(*pos) += sizeof(result);
++	return result;
++}
++
++static inline uint8_t read_u8(const unsigned char *buffer, size_t *pos)
++{
++	return buffer[(*pos)++];
++}
++
+ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ {
+ 	static const size_t MAX_XOR_OFFSET = 160;
+ 
+ 	uint32_t i;
+ 	struct stored_bitmap **recent_bitmaps;
+-	struct bitmap_disk_entry *entry;
+ 
+ 	recent_bitmaps = xcalloc(MAX_XOR_OFFSET, sizeof(struct stored_bitmap));
+ 
+@@ -214,15 +225,12 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ 		uint32_t commit_idx_pos;
+ 		const unsigned char *sha1;
+ 
+-		entry = (struct bitmap_disk_entry *)(index->map + index->map_pos);
+-		index->map_pos += sizeof(struct bitmap_disk_entry);
++		commit_idx_pos = read_be32(index->map, &index->map_pos);
++		xor_offset = read_u8(index->map, &index->map_pos);
++		flags = read_u8(index->map, &index->map_pos);
+ 
+-		commit_idx_pos = ntohl(entry->object_pos);
+ 		sha1 = nth_packed_object_sha1(index->pack, commit_idx_pos);
+ 
+-		xor_offset = (int)entry->xor_offset;
+-		flags = (int)entry->flags;
+-
+ 		bitmap = read_bitmap_1(index);
+ 		if (!bitmap)
+ 			return -1;
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 8b7f4e9..487600b 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -5,12 +5,6 @@
+ #include "khash.h"
+ #include "pack-objects.h"
+ 
+-struct bitmap_disk_entry {
+-	uint32_t object_pos;
+-	uint8_t xor_offset;
+-	uint8_t flags;
+-} __attribute__((packed));
+-
+ struct bitmap_disk_header {
+ 	char magic[4];
+ 	uint16_t version;
 -- 
-Adam Williamson
-Fedora QA Community Monkey
-IRC: adamw | Twitter: AdamW_Fedora | XMPP: adamw AT happyassassin DOT net
-http://www.happyassassin.net
+2.2.0.rc2.402.g4519813
