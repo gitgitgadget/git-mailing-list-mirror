@@ -1,70 +1,105 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/1] cat-file: fix a memory leak in cat_one_file
-Date: Thu, 27 Nov 2014 01:18:30 -0500
-Message-ID: <CAPig+cSnOc42msPYsBSv+PTgFsDyBqeL7yhSutuRQUkezpTdmw@mail.gmail.com>
-References: <CANCZXo7CKz2bOM=6ehed-VLUGtyThuBbwtd_QaBMm2KKhEo=Bw@mail.gmail.com>
-	<20141127002417.GT6527@google.com>
+From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+Subject: Antw: Re: Extended splitting for "git add --interactive"
+Date: Thu, 27 Nov 2014 09:55:06 +0100
+Message-ID: <5476F4FA020000A100018078@gwsmtp1.uni-regensburg.de>
+References: <5475F7E7020000A100018050@gwsmtp1.uni-regensburg.de><5475F7E7020000A100018050@gwsmtp1.uni-regensburg.de>
+ (Ulrich Windl's message of "Wed, 26 Nov 2014 15:55:19 +0100")
+ <xmqq3895rdr1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 27 07:18:40 2014
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 27 09:55:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XtsPX-00086Z-Uf
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 07:18:40 +0100
+	id 1XturA-0007sv-IU
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 09:55:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834AbaK0GSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2014 01:18:31 -0500
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:63844 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbaK0GSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2014 01:18:30 -0500
-Received: by mail-yh0-f45.google.com with SMTP id f10so1999771yha.18
-        for <git@vger.kernel.org>; Wed, 26 Nov 2014 22:18:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=n04Ac14qSgrgokcCrKvkZHQFhAQOgjJ9fahQLFC1+Cs=;
-        b=C5Qbl9mDdBudDyPDFdywgD91Ox/nKSZJtMjZ04Q6rVDOryGc5WJkOIS0uMuMblKfbg
-         MMqxfC0qeJopy618WhxL5REVLjQ7VTMK7W20NawQGXBbTKt/tL2GD246voO5VdWKSeT5
-         KupZDWnuUk7HYbgG3S/WJd+XZ3njI8dmnuljAxRr1Dy9AufFbcyu4s4rnxF8YTnWorKa
-         RBAZpTmxnKYCIf54jvcl3huJiWRoJaUQtLvJ909TezokC5v15LDt1upqHovz32gPfnx4
-         OYf7j6+ffw+aY+4cJI+bZFjEr1k45gtS/H3kgEoQmKjC/vPrEfJRptrr/Uz1+/GxVKVt
-         PnQw==
-X-Received: by 10.170.128.207 with SMTP id u198mr38880262ykb.51.1417069110152;
- Wed, 26 Nov 2014 22:18:30 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Wed, 26 Nov 2014 22:18:30 -0800 (PST)
-In-Reply-To: <20141127002417.GT6527@google.com>
-X-Google-Sender-Auth: zF8-7BxD-3L2YZRJo-HM03KSNf0
+	id S1755391AbaK0IzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2014 03:55:12 -0500
+Received: from rrzmta2.uni-regensburg.de ([194.94.155.52]:50061 "EHLO
+	rrzmta2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755386AbaK0IzK convert rfc822-to-8bit (ORCPT
+	<rfc822;groupwise-git@vger.kernel.org:2:1>);
+	Thu, 27 Nov 2014 03:55:10 -0500
+Received: from rrzmta2.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 0CB7152F2A
+	for <git@vger.kernel.org>; Thu, 27 Nov 2014 09:55:09 +0100 (CET)
+Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+	by rrzmta2.uni-regensburg.de (Postfix) with ESMTP id E049B52D67
+	for <git@vger.kernel.org>; Thu, 27 Nov 2014 09:55:08 +0100 (CET)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
+	with Novell_GroupWise; Thu, 27 Nov 2014 09:55:08 +0100
+X-Mailer: Novell GroupWise Internet Agent 14.0.1 
+In-Reply-To: <xmqq3895rdr1.fsf@gitster.dls.corp.google.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260341>
 
-On Wed, Nov 26, 2014 at 7:24 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Alexander Kuleshov wrote:
-> [...]
->> +++ b/builtin/cat-file.c
->> @@ -68,9 +69,14 @@ static int cat_one_file(int opt, const char
->> +        buf_must_free = 1;
->> +
->> -        if (!buf)
->> +        if (!buf) {
->> +            free(buf);
->>              die("Cannot read object %s", obj_name);
->
-> Is this free() needed?  The program die()s right afterward, which
-> would free all memory automatically as part of exiting.  Tools like
-> valgrind would understand that nothing is wrong since buf is still
-> reachable through the stack.
+I probably forgot to mention the obvious: My enhancement request was for cases where git would reject so split a junk. I don't want to change the default split (if it finds a point to split).
+So maybe call it a "2nd-level-split". Only if split refuses to split, you could avoid using "edit" to manually split.
+Iknow that in gerneral such things can't be right, but you can eith reject the new junks or use "edit". I just guessed the feature could save some time on the average.
 
-Moreover, 'buf' can only be NULL inside the conditional, so the free()
-is pointless.
+>>> Junio C Hamano <gitster@pobox.com> schrieb am 26.11.2014 um 19:57 in Nachricht
+<xmqq3895rdr1.fsf@gitster.dls.corp.google.com>:
+> "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
+> 
+>> This is for git-1.7.12 (an older version from the SLES11 SP3 SDK). If
+>> the issue is solved meanwhile, I'll be happy, and I apologize for
+>> being too lazy to find out.
+> 
+> The answer is no ;-).
+> 
+>> Currently Git cannot split a block of changes like
+>>
+>> -AAA
+>> -BBB
+>> +CCC
+>> +DDD
+>>
+>> Into
+>> -AAA
+>> +CCC
+>> and
+>> -BBB
+>> +DDD
+> 
+> And it is unlikely to do so ever, because it is a wrong thing to do.
+> 
+> What makes the user happy to see above split when the user is
+> expecting this instead?
+> 
+> -AAA
+> and
+> -BBB
+> +CCC
+> +DDD
+> 
+>> Another split that is not possible is a split across an empty line, like:
+>>
+>> +AAA
+>> +     <empty line (in reality)>
+>> +BBB
+> 
+> Likewise.  An empty line is not that special.  AAA may be adding one
+> block of lines "if (condition) { ... }" and BBB may be another, and
+> it often happens that you would want to separate these into two
+> changes, with or without an empty line in between.
+> 
+>    +if (foo) {
+>    +  do foo thing
+>    +}
+>    +if (bar) {
+>    +  do bar thing
+>    +}
+>    
+> Having said all that, I am not opposed to a usable idea to allow the
+> user to specify where in a contiguous block of -*+* to break a hunk
+> and how.
