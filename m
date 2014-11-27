@@ -1,156 +1,82 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Our cumbersome mailing list workflow
-Date: Thu, 27 Nov 2014 18:46:15 +0100
-Message-ID: <54776367.1010104@web.de>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com>	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>	<546F4B5B.2060508@alum.mit.edu> <xmqq61e81ljq.fsf@gitster.dls.corp.google.com> <5473CD28.5020405@alum.mit.edu>
+Date: Thu, 27 Nov 2014 19:24:12 +0100
+Message-ID: <vpqoars7b8z.fsf@anie.imag.fr>
+References: <1416423000-4323-1-git-send-email-sbeller@google.com>
+	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>
+	<546F4B5B.2060508@alum.mit.edu>
+	<xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
+	<5473CD28.5020405@alum.mit.edu> <54776367.1010104@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <sbeller@google.com>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 27 18:46:41 2014
+To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Nov 27 19:24:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xu39J-0007Hr-Kn
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 18:46:38 +0100
+	id 1Xu3jw-0006gR-M1
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 19:24:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750871AbaK0RqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Nov 2014 12:46:25 -0500
-Received: from mout.web.de ([212.227.15.4]:51492 "EHLO mout.web.de"
+	id S1751115AbaK0SYY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Nov 2014 13:24:24 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:45928 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750830AbaK0RqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2014 12:46:24 -0500
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0Mcnuz-1Xc6cX3luD-00HudQ; Thu, 27 Nov 2014 18:46:21
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <5473CD28.5020405@alum.mit.edu>
-X-Provags-ID: V03:K0:YH61WJSxnepT2D5rK9TSoFKDXO8OJD+cfFayZlpmzEjVyfwGtCR
- zzLOPA9awWN7fuf8AXbAY6xf43YAy64RjleEtbsAGu9hjEAE7uW+oi02rz+MXiTL/uJt4X8
- BkITSWNzV7btMX5GOClncXukJUzXiQ1MkUi6LuL7lGydztEeyMTslIRundmlWlt/g7sDpDU
- 6CdxOHc/x2KuqVC6sLP2w==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751041AbaK0SYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2014 13:24:24 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id sARIOABJ013028
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 27 Nov 2014 19:24:10 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id sARIOCe5006004;
+	Thu, 27 Nov 2014 19:24:12 +0100
+In-Reply-To: <54776367.1010104@web.de> ("Torsten \=\?iso-8859-1\?Q\?B\=F6gersha\?\=
+ \=\?iso-8859-1\?Q\?usen\=22's\?\= message of
+	"Thu, 27 Nov 2014 18:46:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 27 Nov 2014 19:24:11 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: sARIOABJ013028
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1417717452.04013@jih6VNklx2yynvrYX3dFEg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260350>
 
-On 2014-11-25 01.28, Michael Haggerty wrote:
-[]
-> Let me list the aspects of our mailing list workflow that I find
-> cumbersome as a contributor and reviewer:
-> 
-> * Submitting patches to the mailing list is an ordeal of configuring
-> format-patch and send-email and getting everything just right, using
-> instructions that depend on the local environment.
-Typically everything fits into ~/.gitconfig,
-which can be carried around on a USB-Stick.
-Is there any details which I miss, or howtows we can improve ?
-> We saw that hardly
-> any GSoC applicants were able to get it right on their first attempt.
-> Submitting a patch series should be as simple as "git push".
-> 
-> * Once patches are submitted, there is no assurance that you (Junio)
-> will apply them to your tree at the same point that the submitter
-> developed and tested them.
-> 
-> * The branch name that you choose for a patch series is not easily
-> derivable from the patches as they appeared in the mailing list. Trying
-> to figure out whether/where the patches exist in your tree is a largely
-> manual task. The reverse mapping, from in-tree commit to the email where
-> it was proposed, is even more difficult to infer.
-> 
-> * Your tree has no indication of which version of a patch series (v1,
-> v2, etc) is currently applied.
+Torsten B=F6gershausen <tboegi@web.de> writes:
 
-> 
-> The previous three points combine to make it awkward to get patches into
-> my local repository to review or test. There are two alternatives, both
-> cumbersome and imprecise:
-> 
->   * I do "git fetch gitster", then try to figure out whether the branch
-> I'm interested in is present, what its name is, and whether the version
-> in your tree is the latest version, then "git checkout xy/foobar".
-There are 12 branches from mh/, so it should be possible to find the name,
-und run git log gitster/xy/fix_this_bug or so.
-Even more important, this branch is the "single point of truth", because
-this branch may be merged eventually, and nothing else.
-> 
->   * Or I save the emails to a temporary directory (awkward because, Oh
-> Horror, I use Thunderbird and not mutt as email client), hope that I've
-> guessed the right place to apply them, run "git am", and later try to
-> remember to clean up the temporary directory.
-Is there a "mutt howto" somewhere?
-> 
-> * Once I've done that, the "supplemental" comments from the emails (the
-> cover letter and the text under the "---") are nowhere available in the
-> Git repository. So if I want to see the changes in context plus the
-> supplemental comments, I have to jump back and forth between email
-> client and Git repo. Plus I have to jump around the rest of the email
-> thread to see what comments other reviewers have already made about the
-> series.
-> 
-> * Following patch series across iterations is also awkward. To compare
-> two versions, I have to first get both patch series into my repo, which
-> involves digging through the ML history to find older versions, followed
-> by the "git am" steps. Often submitters are nice enough to put links to
-> previous versions of their patch series in their cover letters, but the
-> links are to a web-based email archive, from which it is even more
-> awkward to grab and apply patches. So in practice I then go back to my
-> email client and search my local archive for my copy of the same email
-> that was referenced in the archive, and apply the patch from there.
-> Finding comments about old versions of a patch series is nearly as much
-> work.
-In short:
-We can ask every contributor, if the patch send to the mailing list
-is available on a public Git-repo, and what the branch name is,
-like _V2.. Does this makes sense ?
+> On 2014-11-25 01.28, Michael Haggerty wrote:
+> []
+>> Let me list the aspects of our mailing list workflow that I find
+>> cumbersome as a contributor and reviewer:
+>>=20
+>> * Submitting patches to the mailing list is an ordeal of configuring
+>> format-patch and send-email and getting everything just right, using
+>> instructions that depend on the local environment.
+> Typically everything fits into ~/.gitconfig,
+> which can be carried around on a USB-Stick.
 
-As an alternative, you can save the branches locally, after running
-git-am once, just keep the branch.
-[]
+I personnally submit all my Git patches from a machine whose
+/usr/sbin/sendmail knows how to send emails, so for me configuration is
+super simple. But I can imagine the pain of someone working on various
+machines with various network configuration and normally using a webmai=
+l
+to send emails. Sharing ~/.gitconfig does not always work because on
+machine A you only can use one SMTP server, and on machine B only
+another ...
 
-> 
-> I did enjoy the variety of reviewing some patch series using Gerrit. It
-> is nice that it tracks the evolution of a patch from version to version,
-> and that the comments made on all versions of a patch are summarized in
-> a single place. This makes it easier to avoid commenting on issues that
-> other reviewers have already noted and easier to check that your own
-> comments have been addressed by later versions of the patch. On the
-> other hand, Gerrit seems strongly focused on individual patches rather
-> than on patch series (which might not match our workflow so well), the
-> UI is overwhelming (though I think one could get quite productive with
-> it if one used it every day), and the notification emails come in blizzards.
-> 
-> Michael
-> 
-> [1] Disclaimer: I work for GitHub.
-> 
-I like Gerrit as well.
-But it is less efficient to use, a WEB browser is slower (often), and
-you need to use the mouse...
-However, if you put your patches on Gerrit, and add the link in your cover-letter,
-it may be worth a trial.
-
-But there is another thing:
-Once a patch is send out, I would ask the sender to wait and collect comments
-at least 24 hours before sending a V2.
-We all living in different time zones, so please let the world spin once.
-
-My feeling is that a patch > 5 commits should have
-a waiting time > 5 days, otherwise I start reviewing V1, then V2 comes,
-then V3 before I am finished with V1. That is not ideal.
-
-What does it cost to push your branch to a public repo and
-include that information in the email ?
-
-And how feasable/nice/useful is it to ask contributers for a wait
-time between re-rolling ?
- 
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
