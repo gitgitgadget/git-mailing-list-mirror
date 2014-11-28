@@ -1,111 +1,81 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Our cumbersome mailing list workflow
-Date: Thu, 27 Nov 2014 22:53:34 +0000
-Message-ID: <20141127225334.GA29203@dcvr.yhbt.net>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com>
- <1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>
- <546F4B5B.2060508@alum.mit.edu>
- <xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
- <5473CD28.5020405@alum.mit.edu>
- <54776367.1010104@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] Git v2.2.0
+Date: Thu, 27 Nov 2014 23:46:56 -0500
+Message-ID: <20141128044656.GA19456@peff.net>
+References: <xmqqr3wpo8yl.fsf@gitster.dls.corp.google.com>
+ <20141127213224.GA27443@dispater.uplinklabs.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Nov 27 23:53:40 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Steven Noonan <steven@uplinklabs.net>
+X-From: git-owner@vger.kernel.org Fri Nov 28 05:47:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xu7wQ-0007l4-MD
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Nov 2014 23:53:39 +0100
+	id 1XuDSP-0001ou-Ep
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 05:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbaK0Wxe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Nov 2014 17:53:34 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:36722 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750756AbaK0Wxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Nov 2014 17:53:34 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B0A71FA80;
-	Thu, 27 Nov 2014 22:53:34 +0000 (UTC)
+	id S1751187AbaK1Eq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Nov 2014 23:46:57 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45808 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750994AbaK1Eq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Nov 2014 23:46:56 -0500
+Received: (qmail 19925 invoked by uid 102); 28 Nov 2014 04:46:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Nov 2014 22:46:56 -0600
+Received: (qmail 20317 invoked by uid 107); 28 Nov 2014 04:46:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Nov 2014 23:46:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Nov 2014 23:46:56 -0500
 Content-Disposition: inline
-In-Reply-To: <54776367.1010104@web.de>
+In-Reply-To: <20141127213224.GA27443@dispater.uplinklabs.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260356>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> wrote:
-> On 2014-11-25 01.28, Michael Haggerty wrote:
-> >   * Or I save the emails to a temporary directory (awkward because,=
- Oh
-> > Horror, I use Thunderbird and not mutt as email client), hope that =
-I've
-> > guessed the right place to apply them, run "git am", and later try =
-to
-> > remember to clean up the temporary directory.
->=20
-> Is there a "mutt howto" somewhere?
+[nit: when quoting in your replies, please trim quotes to a reasonable
+ length]
 
-Not that I'm aware of, but Documentation/email-clients.txt in
-the Linux kernel has some short notes...
+On Thu, Nov 27, 2014 at 01:32:24PM -0800, Steven Noonan wrote:
 
-My muttrc has had the following since my early days as a git user:
+> I'm sad to report that I'm getting test failures with this release.
+> Built from git and did 'make -C t prove NO_SVN_TESTS=1' and got this
+> result:
+> [...]
+> I suspect that gnupg v2.1 is to blame somehow (I've had similar bad behavior
+> with my own projects using GPG in automation). Running through several of the
+> git tests shows that gpg is failing to sign:
 
-  macro index A ":unset pipe_decode\n|git am -3\n:set pipe_decode\n"
-  macro pager A ":unset pipe_decode\n|git am -3\n:set pipe_decode\n"
+I can reproduce here on Debian by installing gnupg2 v2.1 from
+experimental (this gets installed as /usr/bin/gpg2, so I had to tweak
+the code to use "gpg2" by default). In my case, gpg2 repeatedly contacts
+the gpg-agent and pops up X dialogs asking to unlock keyrings in the
+test suite. Hitting "cancel" causes the tests to fail. Clicking "OK"
+with an empty passphrase lets the test pass.
 
-(Hit Shift-A while viewing/selecting a message to apply a patch,
- it requires you run mutt in your project working directory, though).
+The good news is that it is similarly broken on git v2.1.0. So this
+isn't something we broke; it's the new version of gnupg2.
 
-Perhaps there can be a similar document or reference to it in our
-Documentation/
+It's not clear to me whether this is a regression in gnupg, or if
+there's some magic configuration setting we need to get the old
+behavior. It seems like the new version is more aggressive in trying to
+use the agent to get a passphrase, even though the keyrings in the test
+are unencrypted, and do not need any passphrase. Which sounds like a bug
+to me.
 
-> In short:
-> We can ask every contributor, if the patch send to the mailing list
-> is available on a public Git-repo, and what the branch name is,
-> like _V2.. Does this makes sense ?
+You might have some luck talking with the gnupg folks about this
+possible bug. As a simple reproduction, doing:
 
-Not unreasonable.  I hope that won't give folks an excuse to refuse
-to mail patches, though.  Some folks read email offline and can't
-fetch repos until they're online again.
+  cd git/t/lib-gpg
+  export GNUPGHOME=$PWD
+  echo foo | gpg --sign -a
 
-> I like Gerrit as well.
-> But it is less efficient to use, a WEB browser is slower (often), and
-> you need to use the mouse...
+works fine with gnupg1, or earlier versions of gnupg2. But with gnupg
+2.1, it causes the agent to pop up a passphrase dialog.
 
-IMNSHO, development of non-graphical software should never depend on
-graphical software.  Also, I guess there is no way to comment on Gerrit
-via email (without registration/logins?).
-
-Lately, I've been trying to think of ways to make collaboration less
-centralized.  Moving to more centralized collaboration tools is a step
-back for decentralized VCS.
-
-> But there is another thing:
-> Once a patch is send out, I would ask the sender to wait and collect =
-comments
-> at least 24 hours before sending a V2.
-> We all living in different time zones, so please let the world spin o=
-nce.
->=20
-> My feeling is that a patch > 5 commits should have
-> a waiting time > 5 days, otherwise I start reviewing V1, then V2 come=
-s,
-> then V3 before I am finished with V1. That is not ideal.
->=20
-> What does it cost to push your branch to a public repo and
-> include that information in the email ?
->=20
-> And how feasable/nice/useful is it to ask contributers for a wait
-> time between re-rolling ?
-
-All that sounds good.
+-Peff
