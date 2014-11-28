@@ -1,182 +1,165 @@
-From: Brandon McCaig <bamccaig@gmail.com>
-Subject: Re: Unable to Revert Commit
-Date: Fri, 28 Nov 2014 08:37:10 -0500
-Message-ID: <20141128133709.GA28178@test-chamber-1.castopulence.org>
-References: <547752ED.8010208@macey.us>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Our cumbersome mailing list workflow
+Date: Fri, 28 Nov 2014 15:31:31 +0100
+Message-ID: <54788743.5090703@alum.mit.edu>
+References: <1416423000-4323-1-git-send-email-sbeller@google.com>	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>	<546F4B5B.2060508@alum.mit.edu> <xmqq61e81ljq.fsf@gitster.dls.corp.google.com> <5473CD28.5020405@alum.mit.edu> <54776367.1010104@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
-Cc: git@vger.kernel.org
-To: Rex Macey <rex@macey.us>
-X-From: git-owner@vger.kernel.org Fri Nov 28 14:37:21 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stefan Beller <sbeller@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 28 15:38:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuLjc-0005kf-3S
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 14:37:21 +0100
+	id 1XuMhC-0007xN-C7
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 15:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbaK1NhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2014 08:37:14 -0500
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:47495 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751434AbaK1NhM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2014 08:37:12 -0500
-Received: by mail-ie0-f173.google.com with SMTP id y20so6067043ier.32
-        for <git@vger.kernel.org>; Fri, 28 Nov 2014 05:37:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=dkDoVG7LM3Wq6ol8pYbEDyZMpApyJxtullZcbEExznk=;
-        b=wpJjp0Zd76mfThpnNwkzBwrZWjZYKiQfiNw8FP/RYoPpIKEB05E3ayk5zZALgNwRoq
-         EGY/4KqVWCM5f/Qi+6+LzZO19tQBaNOmTOYB400T0yuFwRoxW7p39oC9Lk/EJmGWABxB
-         M5TxZ12LdcMNvHE4FhdBjUujSgwXRZwbJgO4Z3x6fX5rGuBa4BL+Kp2zO5geBVAFhWhT
-         SoGWzyO+7zvZnMK4jJ6XrK6atCjc4BARRm97Ll5AZfbH35tRVPal/FXzQPh+8gq4zw6O
-         VoHdAGGTHK9OXTqn08eNtb2zG6a1Y46CXHcp3Rq9hyB3XzRXeMiRrsd0F41FolySYk82
-         yLrw==
-X-Received: by 10.42.167.1 with SMTP id q1mr42042126icy.48.1417181831549;
-        Fri, 28 Nov 2014 05:37:11 -0800 (PST)
-Received: from localhost (b03s17le.corenetworks.net. [64.85.162.126])
-        by mx.google.com with ESMTPSA id m63sm4988186ioe.40.2014.11.28.05.37.10
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 28 Nov 2014 05:37:10 -0800 (PST)
-Mail-Followup-To: Rex Macey <rex@macey.us>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <547752ED.8010208@macey.us>
-X-PGP-Key: https://castopulence.org/bamccaig/castopulence.asc
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751857AbaK1Oiu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Nov 2014 09:38:50 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:57078 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751846AbaK1Oit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Nov 2014 09:38:49 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Nov 2014 09:38:49 EST
+X-AuditID: 12074412-f79e46d0000036b4-ef-547887464128
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id EA.9A.14004.64788745; Fri, 28 Nov 2014 09:31:34 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB0216.dip0.t-ipconnect.de [93.219.2.22])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sASEVVAI026740
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 28 Nov 2014 09:31:33 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <54776367.1010104@web.de>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBKsWRmVeSWpSXmKPExsUixO6iqOvWXhFi8GaelkXXlW4mi4beK8wW
+	b28uYbT4N6HGYvPmdhaLzo6vjA5sHjtn3WX3WLCp1OPiJWWPz5vkPG4/28YSwBrFbZOUWFIW
+	nJmep2+XwJ3Rs+kfe8FluYoZNy4zNjCuluhi5OSQEDCRuLl4FQuELSZx4d56ti5GLg4hgcuM
+	Ejum/GEDSQgJnGWSeDDVG8TmFdCWWN24ixnEZhFQlehYuJsJxGYT0JVY1NMMZosKBEmc3HOd
+	HaJeUOLkzCdgC0QEsiS+ffrCCmIzC0xklNi8wQDEFhYwlHh0/xzU4mYmic4LPWALOAXUJNrv
+	NUI16EnsuP4LypaXaN46m3kCo8AsJDtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy8
+	1CJdM73czBK91JTSTYyQUBfawbj+pNwhRgEORiUe3gDGihAh1sSy4srcQ4ySHExKorwnaoBC
+	fEn5KZUZicUZ8UWlOanFhxglOJiVRHjTS4ByvCmJlVWpRfkwKWkOFiVx3p+L1f2EBNITS1Kz
+	U1MLUotgsjIcHEoSvF5tQI2CRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoFiNLwZG
+	K0iKB2jvEZB23uKCxFygKETrKUZFKXHeRpCEAEgiozQPbiwsgb1iFAf6UphXCqSKB5j84Lpf
+	AQ1mAhosNrUUZHBJIkJKqoFRpj3rw5Tn1T8zZVapTPrTatuWnrh2V/bJlccSWqdPl9B/PEvs
+	veM+9+dOe3a/fK5+M2CRSvzTx+WFHzjrsj/w7l3UyZV3fa3YligzxnzXbXVXJ9k/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260364>
 
+On 11/27/2014 06:46 PM, Torsten B=F6gershausen wrote:
+> On 2014-11-25 01.28, Michael Haggerty wrote:
+> []
+>> Let me list the aspects of our mailing list workflow that I find
+>> cumbersome as a contributor and reviewer:
+>>
+>> * Submitting patches to the mailing list is an ordeal of configuring
+>> format-patch and send-email and getting everything just right, using
+>> instructions that depend on the local environment.
+> Typically everything fits into ~/.gitconfig,
+> which can be carried around on a USB-Stick.
+> Is there any details which I miss, or howtows we can improve ?
 
---AqsLC8rIMeq19msA
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I used to need one setup at work and a different one at home (because o=
+f
+how my email was configured), and sometimes had to switch back and fort=
+h
+as I carried my notebook around.
 
-Rex:
+>> [...]
+>>   * I do "git fetch gitster", then try to figure out whether the bra=
+nch
+>> I'm interested in is present, what its name is, and whether the vers=
+ion
+>> in your tree is the latest version, then "git checkout xy/foobar".
+> There are 12 branches from mh/, so it should be possible to find the =
+name,
+> und run git log gitster/xy/fix_this_bug or so.
+> Even more important, this branch is the "single point of truth", beca=
+use
+> this branch may be merged eventually, and nothing else.
 
-On Thu, Nov 27, 2014 at 11:35:57AM -0500, Rex Macey wrote:
-> "Unable to Revert Commit ... Resolve the conflicts in your working
-> directory and commit them before trying the revert again".  Please
-> help me understand how to resolve the conflicts.  Here's what
-> happened (as best as I remember).
-> Created a windows folder "github_learn" (not under my
-> \documents\github  folder) ;
-> Created a file file1.r.
-> Dragged folder into Github for Windows.  Committed; I could see the
-> file in my directory, Github for Windows, and on the server
-> (github.com);
-> I modified the first file.  Checked that there were different
-> versions and then committed it.;
-> I created a second file, file2.r Committed it.  All good.;
-> Then I tested whether I could retrieve the first version of file1.r
-> (before modification).  In the History area of Github for Windows, I
-> can see this version.  I click on that, and then I click on "Revert"
-> which produces the error.
->=20
-> I am very new to Git and have read some of the documentation and
-> this exercise is my attempt to test myself.  So far my grade is not
-> good.  I appreciate any guidance including links to instructions.
+I know it's *possible*. The question is whether it could be made easier=
+=2E
 
-"GitHub" and "GitHub for Windows" are not "Git". I don't think
-you will find official support for those proprietary products on
-this mailing list (I may be wrong). It looks like you can request
-support for those products from the "contact" page on the GitHub
-Web site: https://github.com/contact.
+>> * Following patch series across iterations is also awkward. To compa=
+re
+>> two versions, I have to first get both patch series into my repo, wh=
+ich
+>> involves digging through the ML history to find older versions, foll=
+owed
+>> by the "git am" steps. Often submitters are nice enough to put links=
+ to
+>> previous versions of their patch series in their cover letters, but =
+the
+>> links are to a web-based email archive, from which it is even more
+>> awkward to grab and apply patches. So in practice I then go back to =
+my
+>> email client and search my local archive for my copy of the same ema=
+il
+>> that was referenced in the archive, and apply the patch from there.
+>> Finding comments about old versions of a patch series is nearly as m=
+uch
+>> work.
+> In short:
+> We can ask every contributor, if the patch send to the mailing list
+> is available on a public Git-repo, and what the branch name is,
+> like _V2.. Does this makes sense ?
 
-My personal recommendation would be to get rid of those anyway
-and learn to use the real Git. It's not very difficult, and it is
-likely to do things better in the long run. As a general rule,
-GUI programs are limited, clumsy, and try too hard to hide the
-details of what they are doing from you that you need to
-understand to effectively use the software. Do not fear the
-command line. It is just like writing code. If you are interested
-in Git then you are probably interested in code. Think of the
-command line interface as a more direct interface to tell the
-computer what you want with high-level code instead of expensive
-graphics and event loops and spaghetti code.
+That would be helpful, but it would put yet *another* requirement on th=
+e
+submitter (to send patch emails *and* push the branch to some accessibl=
+e
+repository). We regulars could script this pretty easily, but people wh=
+o
+only contribute occasionally or who are trying to get started will be
+even more overwhelmed.
 
-I can tell you that git-revert(1) basically means "create new
-commits that undo the changes introduced by the specified
-commits." That is likely accomplished by applying a reversed
-patch, and that is likely to fail if the tree (files) has changed
-much.
+> As an alternative, you can save the branches locally, after running
+> git-am once, just keep the branch.
+> []
 
-Conflicts are OK! They are normal when you work with version
-control software. You can manually resolve the conflicts and
-continue with the revert. Google can help you to understand how
-to resolve conflicts. You can do so manually (my preference, and
-a good thing to learn to help you understand why conflicts
-occurred in the first place) or you can use software tools to
-help. I recommend you create backups of your repository (.git)
-and working tree (...folder where your files are) using something
-like 7-zip (but a simple copy suffices) when you're new to Git so
-that if you make a wrong move it's easier to go back and try
-again with confidence.
+Yes, but it is even more unnecessary manual bookkeeping.
 
-That said, if you just want to *see* the state of the file at a
-particular point in history you can use git-cat-file(1). Another
-way would be (with a clean tree) git-checkout(1), though that
-will make changes to your tree (and if you aren't careful can
-destroy changes that you have already made) that you may not
-want. The file can be restored to the "latest" committed version
-using git-checkout(1) again (or git-reset(1) with the --hard
-option). Both of these options need to be used with care. In this
-case, git-reset(1) could also be used to reset the state of your
-working tree to a clean state if you do decide that git-revert(1)
-isn't what you wanted.
+> [...]
+> But there is another thing:
+> Once a patch is send out, I would ask the sender to wait and collect =
+comments
+> at least 24 hours before sending a V2.
+> We all living in different time zones, so please let the world spin o=
+nce.
 
-I recommend that you just find a plain Git tutorial and learn to
-the use the real thing. It's really not that hard. And "Git for
-Windows" works well without the need for GitHub's own
-proprietary, platform-specific solution. It even includes a Git
-GUI if you're still reluctant to use the command line (but my
-above wisdom regarding GUIs probably still applies).
+Yes, good idea.
 
-If you use the real Git then not only can we help you, but you
-can get real-time advice and guidance from the #git channel on
-irc.freenode.net.
+> My feeling is that a patch > 5 commits should have
+> a waiting time > 5 days, otherwise I start reviewing V1, then V2 come=
+s,
+> then V3 before I am finished with V1. That is not ideal.
 
-Regards,
+One day per patch might be exaggerated, but I agree that long series
+should be iterated more slowly than short ones.
 
+> What does it cost to push your branch to a public repo and
+> include that information in the email ?
+
+One has to run an additional command and add some information to the
+cover letter, every time a patch series is submitted. If it's scripted
+then it's relatively painless. But for a newcomer these will be manual
+steps that are easy to forget or to do incorrectly, making it more
+likely that the newcomer's first contribution to Git will end in mild
+embarrassment rather than success.
+
+Michael
 
 --=20
-Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bamccaig.com/>
-perl -E '$_=3Dq{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
-
-
---AqsLC8rIMeq19msA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJUeHqFAAoJEN2n1gIi5ZPyZtIP/0/k76e2xOMFtxO2LDOHGKXt
-NtYGnCBepJiMwTAPWNVpWZevGfunvf+8NeV2lEVH1P1Rb7RcFs9gQchyAmgdy+z+
-PQ413ahydJdU6y2uArODzn2HKGdft+Tq2cY3NZaKpm/8dXCBT/FGoZhkekMp5gE5
-iqt011Xv8E8ym0IWiF2/rlfVimqk/8KWwUG5LQH5WMRh/FkerjFHL28Rz/EbVWMK
-nYSo2+lx184gEtKM6FVO8l89Xia73eRyzR2GJUdtl4vTKFnNBN3qImbh0vRmflNt
-fc39KR8J69NK3llOS7wWv/PfG0EkOTfOCafpqrHIsx0UVBq4FAUzJH4b+d5u0T3Y
-mhwAjEo6MLId4rflfj8NxuXphZhfRZzi/hculiiiwPoEgT0P5+VuKuMYQKeTLWMq
-ZdEuDSIfiojJbcY6odRplwglsbQH4WA4cI24Wl0uJoDmlgmHEHK/+LtgHlGTQMju
-N/w0AlAOGR8Ijyf7hc76bt3WqeUQnUq0JCe70F8kbffMLDm2qUNueNoHFDMlY/2Y
-VCW4j7X3CHOhA3bckqz99DSpkT27D7Tll1cpO3MJ6G/P7QvB5mO6EhbIVK4PDTkO
-bkFuLkMt8xZt2b8gRE5zjbIhqNbmG3huEn9X0e4o5/YORP0xscyB/UWhkBHK7XTk
-dbljKgyH7hsPOup6EUf2
-=8lrc
------END PGP SIGNATURE-----
-
---AqsLC8rIMeq19msA--
+Michael Haggerty
+mhagger@alum.mit.edu
