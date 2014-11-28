@@ -1,139 +1,101 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Our cumbersome mailing list workflow
-Date: Fri, 28 Nov 2014 16:24:26 +0000
-Message-ID: <20141128162425.GE4744@vauxhall.crustytoothpaste.net>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com>
- <1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>
- <546F4B5B.2060508@alum.mit.edu>
- <xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
- <5473CD28.5020405@alum.mit.edu>
- <54776367.1010104@web.de>
- <20141127225334.GA29203@dcvr.yhbt.net>
- <547895F1.1010307@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: tests do not work with gpg 2.1
+Date: Fri, 28 Nov 2014 11:50:10 -0500
+Message-ID: <20141128165009.GA4728@peff.net>
+References: <xmqqr3wpo8yl.fsf@gitster.dls.corp.google.com>
+ <20141127213224.GA27443@dispater.uplinklabs.net>
+ <54784503.80108@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xJK8B5Wah2CMJs8h"
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Nov 28 17:24:41 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Steven Noonan <steven@uplinklabs.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Nov 28 17:50:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuOLY-00051h-No
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 17:24:41 +0100
+	id 1XuOkN-0008A7-HZ
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 17:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbaK1QYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2014 11:24:37 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:54868 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751111AbaK1QYg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Nov 2014 11:24:36 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5DEB92808F;
-	Fri, 28 Nov 2014 16:24:32 +0000 (UTC)
-Mail-Followup-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Wong <normalperson@yhbt.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+	id S1751787AbaK1QuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2014 11:50:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45938 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751166AbaK1QuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2014 11:50:10 -0500
+Received: (qmail 22662 invoked by uid 102); 28 Nov 2014 16:50:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Nov 2014 10:50:10 -0600
+Received: (qmail 23533 invoked by uid 107); 28 Nov 2014 16:50:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Nov 2014 11:50:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Nov 2014 11:50:10 -0500
 Content-Disposition: inline
-In-Reply-To: <547895F1.1010307@alum.mit.edu>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.17-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+In-Reply-To: <54784503.80108@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260370>
 
+[updated subject, as this is not specific to the v2.2.0 release at all]
 
---xJK8B5Wah2CMJs8h
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, Nov 28, 2014 at 10:48:51AM +0100, Michael J Gruber wrote:
 
-On Fri, Nov 28, 2014 at 04:34:09PM +0100, Michael Haggerty wrote:
-> My ideal would be to invert the procedure. Let the patches in a public
-> Git repository somewhere be the primary artifact, and let the review
-> process be focused there. Let email be an alternative interface to the
-> central review site:
->=20
-> * Generate patch emails (similar to the current format) when pull
-> requests are submitted.
->=20
-> * Generate notification emails when people comment on the patches.
->=20
-> * Allow people to respond to the patch and notification emails via
-> email. The central review site should associate those comments with the
-> patches that they apply to, and present them along with other review
-> comments received via other interfaces.
+> Are you running gnome_keyring_deamon by any chance? It think it runs by
+> default in Gnome, claims to offer gpg_agent functionality but does not
+> seem to do so fully. I.e., its presence may keep gpg2.1 from starting
+> its own gpg-agent. But gpg2.1 ("gnupg modern branch") needs a new
+> gpg-agent which knows how to handle secret keys for gpg2.1.
+> 
+> (I may take a shot at trying, but I'm on Fedora - they're slow and
+> special in all things gpg/crypto. And compiling gpg2.1 means compiling
+> all the bits and pieces that monster consists of these days...)
 
-I think these are good goals.  Even as a semi-regular contributor, I
-prefer to push branches around using Git rather than formatting patches
-and mailing them.
+I'm not running the gnome daemon (I do normally run gpg-agent, though),
+and I can reproduce.
 
-Also, I think that being able to comment on a patch or report a bug
-without a login (via email) is desirable.  I'm not a fan of having to
-have an account on every Bugzilla on the planet.  That's why I like
-debbugs.
+I wanted to try experimenting today with making sure GPG_AGENT_INFO was
+unset in the environment. But despite nothing changing (i.e., before I
+even cleared that variable), I'm getting totally different results.
 
-> It seems like a few desirable features are being talked about here, and
-> summarizing the discussion as "centralized" vs "decentralized" is too
-> simplistic. What is really important?
->=20
-> 1. Convenient and efficient, including for newcomers
-> 2. Usable while offline
-> 3. Usable in pure-text mode
-> 4. Decentralized
+Now when I run t4202, I get no agent prompt, and just:
 
-I think 1 is definitely important.  For me personally, 2 isn't very
-important, as all my email is via IMAP (so I have to be online).  I
-think 3 is important for accessibility reasons.  There are a lot of
-blind or low-sighted people for whom a GUI is infeasible or burdensome.
+    ok 40 - dotdot is a parent directory
+    
+    expecting success: 
+            test_when_finished "git reset --hard && git checkout master" &&
+            git checkout -b signed master &&
+            echo foo >foo &&
+            git add foo &&
+            git commit -S -m signed_commit &&
+            git log --graph --show-signature -n1 signed >actual &&
+            grep "^| gpg: Signature made" actual &&
+            grep "^| gpg: Good signature" actual
+    
+    Switched to a new branch 'signed'
+    gpg: skipped "C O Mitter <committer@example.com>": No secret key
+    gpg: signing failed: No secret key
+    error: gpg failed to sign the data
+    fatal: failed to write commit object
 
-> Something else?
+And then a subsequent run gives me:
 
-It might be useful to have a system that has a bug or issue tracker.  We
-often have posts to the mailing list that don't get a response, even
-though those may represent legitimate bugs (code or documentation).
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/19D48118D24877F59C2AE86FEC8C3E90694B2631.key': Permission denied
+    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/E0C803F8BC3BCC4990E174E05936A7636E888899.key': Permission denied
+    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/FCFAC48BF12AC0FCC32B69AB90AA7B1891382C29.key': Permission denied
+    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/D50A866904B91C0C49A3F6059584F4A09807D330.key': Permission denied
+    FATAL: Cannot prepare test area
 
---xJK8B5Wah2CMJs8h
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+It seems that it creates the private-keys directory without the 'x' bit:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+    $ ls -ld trash*/gpghome/private-keys-v1.d
+    drw------- 2 peff peff 4096 Nov 28 11:45 trash directory.t4202-log/gpghome/private-keys-v1.d/
 
-iQIcBAEBCgAGBQJUeKG5AAoJEL9TXYEfUvaLFBsP/iOjJg31/cwfa7BOsMaq1Hhq
-aOpFM2TQiupgVcwsdIkwnC05VfBQUvqxWUdYsnDDO16QJSyzOnBISnM8TvgZFWuh
-UvTlfkIZEzIhvQBkRHFPpld/q3SwyuZQsVHd/9HsnAYjz73dQ8D3b3fNgPEHut+8
-5jyeHGsOjkWoKFZTcUV9OzPGXXh/H0DpzmwfgXgukhlTwqVH3PUWv0E7GG19kWrd
-fI/JbsPgBio3eS1TOd9rEXZsWe6ZxokkfjyflPEvbRoDHJNzW/8eMzZ8j/PGmYly
-7i8FhTpvxH5jC1KoOiwahiK6UG9mJovg6EFdppDv3L6MxWVfmL5ycp3j43jERDT6
-KPebiSbhpTRYl+/wDNiGqUS5s2kBPPV5+BSLjbY+UEj0iMJuVNupgZpMmJL/E+eG
-dhAdGhHgsLJYHberKfq1LLnHh+Ywv56pJLNxoMT7hc3hhcO9exxT/IQK6FgnzXWG
-lAZtQPA1/34VR2N1oIDvQrUKe9mLfiSS35A2ciGFF8SrrF2vD+WZ/xSMamb6C5oj
-NH66VrfBGjJZG/oe0Nhw2GohgPrPiJtNea3TLg4SEjkCmgz4AjeLvJz4snRwOAuy
-wD2XPpgblvx8h7KkS0j0ySNpnKqusYH8qnnA9xeclHsJgAikXkjEsB+67SCokc2q
-r4MXKG4rfUtAwJGy1Ora
-=T9Xv
------END PGP SIGNATURE-----
+So that's weird, and doubly so that it is behaving differently than it
+was last night. Obviously _something_ must have change. Maybe something
+related to the state of my running agent, I guess.
 
---xJK8B5Wah2CMJs8h--
+-Peff
