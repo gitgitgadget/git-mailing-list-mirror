@@ -1,101 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: tests do not work with gpg 2.1
-Date: Fri, 28 Nov 2014 11:50:10 -0500
-Message-ID: <20141128165009.GA4728@peff.net>
-References: <xmqqr3wpo8yl.fsf@gitster.dls.corp.google.com>
- <20141127213224.GA27443@dispater.uplinklabs.net>
- <54784503.80108@drmicha.warpmail.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] t0050-*.sh: mark the rename (case change) test as passing
+Date: Fri, 28 Nov 2014 16:57:18 +0000
+Message-ID: <5478A96E.8030706@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Steven Noonan <steven@uplinklabs.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Nov 28 17:50:20 2014
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 28 17:57:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuOkN-0008A7-HZ
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 17:50:19 +0100
+	id 1XuOrF-0002tv-5V
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 17:57:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbaK1QuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2014 11:50:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45938 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751166AbaK1QuK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2014 11:50:10 -0500
-Received: (qmail 22662 invoked by uid 102); 28 Nov 2014 16:50:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Nov 2014 10:50:10 -0600
-Received: (qmail 23533 invoked by uid 107); 28 Nov 2014 16:50:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Nov 2014 11:50:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Nov 2014 11:50:10 -0500
-Content-Disposition: inline
-In-Reply-To: <54784503.80108@drmicha.warpmail.net>
+	id S1751715AbaK1Q5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2014 11:57:21 -0500
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:45070 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751302AbaK1Q5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2014 11:57:20 -0500
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 7BE886F9626;
+	Fri, 28 Nov 2014 16:57:10 +0000 (GMT)
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 37E2A6F95D3;
+	Fri, 28 Nov 2014 16:57:10 +0000 (GMT)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
+	Fri, 28 Nov 2014 16:57:10 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+X-MDF-HostID: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260371>
 
-[updated subject, as this is not specific to the v2.2.0 release at all]
 
-On Fri, Nov 28, 2014 at 10:48:51AM +0100, Michael J Gruber wrote:
+Since commit baa37bff ("mv: allow renaming to fix case on case
+insensitive filesystems", 08-05-2014), the 'git mv' command has
+been able to rename a file, to one which differs only in case,
+on a case insensitive filesystem.
 
-> Are you running gnome_keyring_deamon by any chance? It think it runs by
-> default in Gnome, claims to offer gpg_agent functionality but does not
-> seem to do so fully. I.e., its presence may keep gpg2.1 from starting
-> its own gpg-agent. But gpg2.1 ("gnupg modern branch") needs a new
-> gpg-agent which knows how to handle secret keys for gpg2.1.
-> 
-> (I may take a shot at trying, but I'm on Fedora - they're slow and
-> special in all things gpg/crypto. And compiling gpg2.1 means compiling
-> all the bits and pieces that monster consists of these days...)
+This results in the 'rename (case change)' test, which used to fail
+prior to this commit, to now (unexpectedly) pass. Mark this test as
+passing.
 
-I'm not running the gnome daemon (I do normally run gpg-agent, though),
-and I can reproduce.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-I wanted to try experimenting today with making sure GPG_AGENT_INFO was
-unset in the environment. But despite nothing changing (i.e., before I
-even cleared that variable), I'm getting totally different results.
+Hi Junio,
 
-Now when I run t4202, I get no agent prompt, and just:
+I noticed this last week while testing on cygwin. I have only tested
+this on (64-bit) cygwin/ntfs, but I would assume that other case
+insensitive filesystems would be OK, since there have been no complaints
+about t6039-merge-ignorecase.sh not working.
 
-    ok 40 - dotdot is a parent directory
-    
-    expecting success: 
-            test_when_finished "git reset --hard && git checkout master" &&
-            git checkout -b signed master &&
-            echo foo >foo &&
-            git add foo &&
-            git commit -S -m signed_commit &&
-            git log --graph --show-signature -n1 signed >actual &&
-            grep "^| gpg: Signature made" actual &&
-            grep "^| gpg: Good signature" actual
-    
-    Switched to a new branch 'signed'
-    gpg: skipped "C O Mitter <committer@example.com>": No secret key
-    gpg: signing failed: No secret key
-    error: gpg failed to sign the data
-    fatal: failed to write commit object
+Note that I didn't remove $test_case, despite having removed its last
+use in this test, in case there will be a future need. I'm not sure
+there will be a future need, of course, so if you would rather I got
+rid of it, just let me know.
 
-And then a subsequent run gives me:
+ATB,
+Ramsay Jones
 
-    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/19D48118D24877F59C2AE86FEC8C3E90694B2631.key': Permission denied
-    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/E0C803F8BC3BCC4990E174E05936A7636E888899.key': Permission denied
-    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/FCFAC48BF12AC0FCC32B69AB90AA7B1891382C29.key': Permission denied
-    rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/D50A866904B91C0C49A3F6059584F4A09807D330.key': Permission denied
-    FATAL: Cannot prepare test area
+ t/t0050-filesystem.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It seems that it creates the private-keys directory without the 'x' bit:
-
-    $ ls -ld trash*/gpghome/private-keys-v1.d
-    drw------- 2 peff peff 4096 Nov 28 11:45 trash directory.t4202-log/gpghome/private-keys-v1.d/
-
-So that's weird, and doubly so that it is behaving differently than it
-was last night. Obviously _something_ must have change. Maybe something
-related to the state of my running agent, I guess.
-
--Peff
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index 6b3cedc..988c392 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -64,7 +64,7 @@ test_expect_success "setup case tests" '
+ 	git checkout -f master
+ '
+ 
+-$test_case 'rename (case change)' '
++test_expect_success 'rename (case change)' '
+ 	git mv camelcase CamelCase &&
+ 	git commit -m "rename"
+ '
+-- 
+2.1.0
