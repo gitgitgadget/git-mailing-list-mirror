@@ -1,77 +1,102 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: Re: [PATCH v4] git-new-workdir: Don't fail if the target directory
- is empty
-Date: Fri, 28 Nov 2014 13:34:05 -0500
-Organization: GNU's Not UNIX!
-Message-ID: <1417199645.3562.6.camel@homebase>
-References: <1417034308.23650.51.camel@homebase>
-	 <xmqq8uixpqyx.fsf@gitster.dls.corp.google.com>
-	 <1417041115.23650.69.camel@homebase>
-	 <xmqqk32ho8mc.fsf@gitster.dls.corp.google.com>
-Reply-To: paul@mad-scientist.net
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] t0050-*.sh: mark the rename (case change) test as passing
+Date: Fri, 28 Nov 2014 16:13:49 -0500
+Message-ID: <CAPig+cRbdy6obKNvBWqvvEQD+MwXcNw+0T0c-f1AuPA+_c=8=Q@mail.gmail.com>
+References: <5478A96E.8030706@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 28 19:40:53 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Fri Nov 28 22:13:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuQTM-00051o-TW
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 19:40:53 +0100
+	id 1XuSrS-0004qC-Cu
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 22:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbaK1Skt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Nov 2014 13:40:49 -0500
-Received: from gproxy6-pub.mail.unifiedlayer.com ([67.222.39.168]:51784 "HELO
-	gproxy6-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750938AbaK1Sks (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Nov 2014 13:40:48 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Nov 2014 13:40:48 EST
-Received: (qmail 30788 invoked by uid 0); 28 Nov 2014 18:34:07 -0000
-Received: from unknown (HELO cmgw3) (10.0.90.84)
-  by gproxy6.mail.unifiedlayer.com with SMTP; 28 Nov 2014 18:34:07 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-	by cmgw3 with 
-	id M6a41p00r2qhmhE016a792; Fri, 28 Nov 2014 11:34:07 -0700
-X-Authority-Analysis: v=2.1 cv=W++rC3mk c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
- a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
- a=qenwzdlAJUAA:10 a=5y4faFyK3SkA:10 a=e-pWQmaM9HotdluOBcQA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:Message-ID; bh=XxhSHzNi7YZoyhTzWjqPDsIwnusfGPIL5QFVfumaQcA=;
-	b=MYYLViHgA5X4fNryRbF0DN9ke+7ivAJjnY0HhdZ1HmAVAK8TrpcRY5gTjqzwwSU6Yla+yjDpJDcIOzdt8LVBz0Kw4h3FfvN79IOVte1C1Z7dTh/7NllOdhPvmRC0zrxh;
-Received: from [72.74.248.26] (port=60440 helo=homebase.home)
-	by box531.bluehost.com with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
-	(Exim 4.82)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1XuQMm-0005Jq-AM; Fri, 28 Nov 2014 11:34:04 -0700
-In-Reply-To: <xmqqk32ho8mc.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.11.3-fta1~13.10 
-X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 72.74.248.26 authed with paul@mad-scientist.us}
+	id S1751298AbaK1VNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2014 16:13:50 -0500
+Received: from mail-yh0-f52.google.com ([209.85.213.52]:58666 "EHLO
+	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751113AbaK1VNu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2014 16:13:50 -0500
+Received: by mail-yh0-f52.google.com with SMTP id z6so3371401yhz.11
+        for <git@vger.kernel.org>; Fri, 28 Nov 2014 13:13:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=8TLuXr4F0XmDndADThGKa4C8MkC/36+uGQMwCzkqdLc=;
+        b=mXMd8DDiuxEtDD6ECOUsdiG9fSsNXEwWzqzHjYR5ibZY4xwZo1n0Qup4CkFdKJVcCV
+         jP4LOrdgMTRxDk/MES1Qih1SFNLevQLSdy6x5TZabBMFWeNoz2XGMb+J+//uwiSL77TJ
+         9VL15al6yL9gByxi3F6e/RCLUvAXOfTu3jNr+UnQTU4mBHrgy1QW+r+uggi8ESOK4GXq
+         OiiyNWB9Bq/zKoIyM/0iRFqzPc+bYv2tDYIJyA5LdzSGEfbpe1eQLg9RIJbCI/WlVgvX
+         qW4jBYToJU1PYB9NHazRyXppuHjiZI3hBjiOzgRmbCjQwRbf0yRmgFw6T28Y7kKxVIBK
+         pQ6A==
+X-Received: by 10.170.41.131 with SMTP id 125mr7523787ykj.85.1417209229358;
+ Fri, 28 Nov 2014 13:13:49 -0800 (PST)
+Received: by 10.170.68.68 with HTTP; Fri, 28 Nov 2014 13:13:49 -0800 (PST)
+In-Reply-To: <5478A96E.8030706@ramsay1.demon.co.uk>
+X-Google-Sender-Auth: 92PQJ15iRJ8utI3Q3b5rEQDcUAM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260376>
 
-On Wed, 2014-11-26 at 15:16 -0800, Junio C Hamano wrote:
-> > $ ./src/git/contrib/workdir/git-new-workdir src/git foo master
-> > mkdir: cannot create directory =E2=80=98foo=E2=80=99: Not a directo=
-ry
-> > unable to create new workdir "foo"!
->=20
-> ;-)  That comes from mkdir || fail which is indeed sufficient.
+On Fri, Nov 28, 2014 at 11:57 AM, Ramsay Jones
+<ramsay@ramsay1.demon.co.uk> wrote:
+> Since commit baa37bff ("mv: allow renaming to fix case on case
+> insensitive filesystems", 08-05-2014), the 'git mv' command has
+> been able to rename a file, to one which differs only in case,
+> on a case insensitive filesystem.
+>
+> This results in the 'rename (case change)' test, which used to fail
+> prior to this commit, to now (unexpectedly) pass. Mark this test as
+> passing.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+>
+> Hi Junio,
+>
+> I noticed this last week while testing on cygwin. I have only tested
+> this on (64-bit) cygwin/ntfs, but I would assume that other case
+> insensitive filesystems would be OK, since there have been no complaints
+> about t6039-merge-ignorecase.sh not working.
 
-Right.  Often I find it simpler/clearer to let the underlying commands
-give the errors: they use perror() and can often provide more specific
-error messages than my script can, unless I spend a lot of effort tryin=
-g
-to determine exactly what the problem is (permissions, disk space, bad
-symlink, existing file, whatever).
+I tested and verified that this patch is also needed on Mac OS X (as expected).
 
-Should I respin this with the \"$new_workdir\" -> '$new_workdir' change
-(I actually prefer the latter myself but the former was used somewhere
-so I kept it)?
+> Note that I didn't remove $test_case, despite having removed its last
+> use in this test, in case there will be a future need. I'm not sure
+> there will be a future need, of course, so if you would rather I got
+> rid of it, just let me know.
+>
+> ATB,
+> Ramsay Jones
+>
+>  t/t0050-filesystem.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+> index 6b3cedc..988c392 100755
+> --- a/t/t0050-filesystem.sh
+> +++ b/t/t0050-filesystem.sh
+> @@ -64,7 +64,7 @@ test_expect_success "setup case tests" '
+>         git checkout -f master
+>  '
+>
+> -$test_case 'rename (case change)' '
+> +test_expect_success 'rename (case change)' '
+>         git mv camelcase CamelCase &&
+>         git commit -m "rename"
+>  '
+> --
+> 2.1.0
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
