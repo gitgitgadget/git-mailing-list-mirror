@@ -1,89 +1,73 @@
-From: "Timothy M. Redaelli" <timothy.redaelli@gmail.com>
-Subject: Force git submodule update --remote for some branches
-Date: Fri, 28 Nov 2014 18:54:57 +0100
-Message-ID: <5478B6F1.6070200@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="0SaQUHRdLB9qeol9qCgu34jj9TwGDI7H9"
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] for-each-ref: correct spelling of Tcl in option description
+Date: Fri, 28 Nov 2014 19:00:11 +0100
+Message-ID: <1417197611-22418-1-git-send-email-ralf.thielow@gmail.com>
+Cc: hartmut_henkel@gmx.de, gitster@pobox.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 28 18:55:13 2014
+X-From: git-owner@vger.kernel.org Fri Nov 28 19:00:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuPl9-0002bU-BW
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 18:55:11 +0100
+	id 1XuPqC-0004qC-AN
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 19:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbaK1RzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2014 12:55:05 -0500
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:40077 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbaK1RzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2014 12:55:04 -0500
-Received: by mail-wi0-f170.google.com with SMTP id bs8so21756596wib.5
-        for <git@vger.kernel.org>; Fri, 28 Nov 2014 09:55:02 -0800 (PST)
+	id S1751091AbaK1SAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2014 13:00:20 -0500
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:47780 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750938AbaK1SAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2014 13:00:19 -0500
+Received: by mail-wi0-f175.google.com with SMTP id l15so19286781wiw.8
+        for <git@vger.kernel.org>; Fri, 28 Nov 2014 10:00:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type;
-        bh=jRxEo5dLmkAUJ3W+J3M084n17HmoxF9NhcHWgnZTSls=;
-        b=VlKqc1mf7L+tuyfotOeDcGhirieRfAAYJZLEDRKOqNVfdXYTL1am3y515w7L/Ia5Aj
-         0ANZscXiDhf1VBJs5l+hjZjmWECHq76NSEPCalvKsUdLNtM+gdRWl6aI7+vIGY0D89Ga
-         16fQRh1OAsy/Eu8hU9f30a+hGvrl4fSgk3cOjmMlUZ/Ocf8hwgGPwI+tkZNeHIRjMnp7
-         djw6z0ZacV+NMeSwAbgIX6t8WpAeeI1mHvr36BhHi6fa58ypKcdmNg3s7CaWuTrpHozE
-         OPTd44alp3gJQ8J+E/I9ihatnj9bHxSmusL35Bw5ei/PgtCfUSsSxiDrMSrhl3x09MY/
-         fQbg==
-X-Received: by 10.180.99.163 with SMTP id er3mr61706655wib.18.1417197302627;
-        Fri, 28 Nov 2014 09:55:02 -0800 (PST)
-Received: from [192.168.3.101] (93-57-16-194.ip162.fastwebnet.it. [93.57.16.194])
-        by mx.google.com with ESMTPSA id bc1sm30461637wib.16.2014.11.28.09.55.01
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Nov 2014 09:55:01 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+        h=from:to:cc:subject:date:message-id;
+        bh=U9nqYnPmGA7TMkD0t3goT06NdpPZyVdUIXQuOBLheS4=;
+        b=vFohU8Lb4OkyP1YRQ0UHqfIQ4fe9vTTr107MBh5OSg8UiQV3WhEdpjlHIpF2Wn5++d
+         9rcQYRCFFN6MoOcUoeYSbYDnCW9AUA6EEJFtPF1IpwXit488X78DBD8SkPgbyTzcwM4K
+         J0ZLUM5SlPpYXuUed1EAYdz4siXRtWTgbJcMhm1+q+d5nGHzjA4+Dcw9FxS+2mllbNCR
+         ww7c3lhIKd12vZmg7f7ARv3WNac6NNu0moqvmm2dPLkWcI5tXMXE1vHnQXH3deiM36jC
+         WTKIoWrKAYyv4H9lxtQy2UeJg/qPYl/iSvyDG+AxCXN/N+iVTdPjP04/K9d7lR6VX8p5
+         2h8A==
+X-Received: by 10.194.184.199 with SMTP id ew7mr72735047wjc.85.1417197618287;
+        Fri, 28 Nov 2014 10:00:18 -0800 (PST)
+Received: from localhost (dslb-088-073-192-130.088.073.pools.vodafone-ip.de. [88.73.192.130])
+        by mx.google.com with ESMTPSA id l10sm30470458wif.20.2014.11.28.10.00.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 28 Nov 2014 10:00:17 -0800 (PST)
+X-Mailer: git-send-email 2.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260373>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---0SaQUHRdLB9qeol9qCgu34jj9TwGDI7H9
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Tcl is conventionally spelled "Tcl". The description of
+option "--tcl", however, spells it "tcl". Let's follow
+the convention.
 
-Hi,
-I have a repository with a submodule and I'd like to force git to
-checkout the LAST version of the submodule and not the stored one (like
-git submodule update --remote), but only on some branches and without
-the need to remember to add --remote every time you are on this branch.
+Reported-by: Hartmut Henkel <hartmut_henkel@gmx.de>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ builtin/for-each-ref.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Is there any way to do it? Maybe using .gitmodules?
-
-Thanks
-
---=20
-Timothy M. Redaelli
-Arch Linux Trusted User
-
-
---0SaQUHRdLB9qeol9qCgu34jj9TwGDI7H9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCgAGBQJUeLbyAAoJEOcRMG48T4i8BNMIANErPJPJ458RH3Ljtpl7hgD3
-aMBeasVAGoCdDaadUWJFDt2sD0SCX8LJXfeg7uxL1pxN9JFcVG4y+OYrRCZV+4CG
-1375MblQ1kzYESXh6JkV1lEi2OoZQQvHYd7i05kk1ZykOq52el/dJv8IQUOnWKhl
-iucb/NkJ7Qi/GdztpNkcNT7qLchTgryKgBNKcxV7a+NidXXK6NsoDoCLO7zYoJ+X
-SGOk6VPLvYskbV2sGJw8TvsnOarm48h/XpRJC/t+sLbLKJqre1ARk/qRu5xVv8o5
-/bNwxyA6GQ2gzE9KvxjGu+OEIz2r6eg177xHb+ze60QRgI6boSw/M1HBgzgKEc0=
-=WWZ8
------END PGP SIGNATURE-----
-
---0SaQUHRdLB9qeol9qCgu34jj9TwGDI7H9--
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 603a90e..f3ce004 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -1075,7 +1075,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT(0 , "python", &quote_style,
+ 			N_("quote placeholders suitably for python"), QUOTE_PYTHON),
+ 		OPT_BIT(0 , "tcl",  &quote_style,
+-			N_("quote placeholders suitably for tcl"), QUOTE_TCL),
++			N_("quote placeholders suitably for Tcl"), QUOTE_TCL),
+ 
+ 		OPT_GROUP(""),
+ 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
+-- 
+2.2.0
