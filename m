@@ -1,73 +1,71 @@
 From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] for-each-ref: correct spelling of Tcl in option description
-Date: Fri, 28 Nov 2014 19:00:11 +0100
-Message-ID: <1417197611-22418-1-git-send-email-ralf.thielow@gmail.com>
-Cc: hartmut_henkel@gmx.de, gitster@pobox.com,
+Subject: Re: [PATCH] l10n: de.po: fix typos
+Date: Fri, 28 Nov 2014 19:20:47 +0100
+Message-ID: <CAN0XMO+wADBLqfeuauKyPDcQsi+H56LVwXUUnDG7c+oOL6ZG1w@mail.gmail.com>
+References: <1416760877-6050-1-git-send-email-ralf.thielow@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	Phillip Sz <phillip.szelat@gmail.com>,
+	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>,
+	Xin Jiang <worldhello.net@gmail.com>,
+	Hartmut Henkel <hartmut_henkel@gmx.de>,
 	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 28 19:00:27 2014
+To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 28 19:21:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuPqC-0004qC-AN
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 19:00:24 +0100
+	id 1XuQAb-0005MC-4S
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 19:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbaK1SAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2014 13:00:20 -0500
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:47780 "EHLO
+	id S1751027AbaK1SUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Nov 2014 13:20:49 -0500
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:33857 "EHLO
 	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750938AbaK1SAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2014 13:00:19 -0500
-Received: by mail-wi0-f175.google.com with SMTP id l15so19286781wiw.8
-        for <git@vger.kernel.org>; Fri, 28 Nov 2014 10:00:18 -0800 (PST)
+	with ESMTP id S1750960AbaK1SUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Nov 2014 13:20:48 -0500
+Received: by mail-wi0-f175.google.com with SMTP id l15so19344991wiw.2
+        for <git@vger.kernel.org>; Fri, 28 Nov 2014 10:20:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=U9nqYnPmGA7TMkD0t3goT06NdpPZyVdUIXQuOBLheS4=;
-        b=vFohU8Lb4OkyP1YRQ0UHqfIQ4fe9vTTr107MBh5OSg8UiQV3WhEdpjlHIpF2Wn5++d
-         9rcQYRCFFN6MoOcUoeYSbYDnCW9AUA6EEJFtPF1IpwXit488X78DBD8SkPgbyTzcwM4K
-         J0ZLUM5SlPpYXuUed1EAYdz4siXRtWTgbJcMhm1+q+d5nGHzjA4+Dcw9FxS+2mllbNCR
-         ww7c3lhIKd12vZmg7f7ARv3WNac6NNu0moqvmm2dPLkWcI5tXMXE1vHnQXH3deiM36jC
-         WTKIoWrKAYyv4H9lxtQy2UeJg/qPYl/iSvyDG+AxCXN/N+iVTdPjP04/K9d7lR6VX8p5
-         2h8A==
-X-Received: by 10.194.184.199 with SMTP id ew7mr72735047wjc.85.1417197618287;
-        Fri, 28 Nov 2014 10:00:18 -0800 (PST)
-Received: from localhost (dslb-088-073-192-130.088.073.pools.vodafone-ip.de. [88.73.192.130])
-        by mx.google.com with ESMTPSA id l10sm30470458wif.20.2014.11.28.10.00.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 28 Nov 2014 10:00:17 -0800 (PST)
-X-Mailer: git-send-email 2.2.0
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SfTf5FK+ELBteLgRXqf3rJECdtu6fNniVPXz+I4e90M=;
+        b=vihThMwRa32AWs+/IMm+KYv5f70j+qfs66QyQKjM0LtbmLemXIBpa2ZPyHUeAQTQM+
+         e5fUNgbI3o1cGTra9Cliwnj3XFzcUO99LjWOoYJY1ZwMWFHfBdJYIqFq2Zo4ilgt2xI1
+         Jp0keMnPwVeTpYsuESYAaVDj8U57qheRKOYe2gWw0qrAg8S98yZGlCe+ueode7Uj0xhD
+         yo059kqH/S4/Iu9qdortSqemnBB47XIAyfi+wd4BSRbcbYTlMgUJCGNP7LwdgOrDepaq
+         MqqhtlXhC3vxRWndwF81p+iP+nshEkxpN6KSB9vFFZpm8Z19F18dTsBE5wFZsuZxCnRB
+         6CAQ==
+X-Received: by 10.180.11.140 with SMTP id q12mr63444010wib.45.1417198847543;
+ Fri, 28 Nov 2014 10:20:47 -0800 (PST)
+Received: by 10.194.235.167 with HTTP; Fri, 28 Nov 2014 10:20:47 -0800 (PST)
+In-Reply-To: <1416760877-6050-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260374>
 
-Tcl is conventionally spelled "Tcl". The description of
-option "--tcl", however, spells it "tcl". Let's follow
-the convention.
+Am 23. November 2014 um 17:41 schrieb Ralf Thielow <ralf.thielow@gmail.com>:
+> From: Hartmut Henkel <hartmut_henkel@gmx.de>
+>
+> Signed-off-by: Hartmut Henkel <hartmut_henkel@gmx.de>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+> Junio,
+>
+> please apply this patch directly to your
+> tree.
 
-Reported-by: Hartmut Henkel <hartmut_henkel@gmx.de>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- builtin/for-each-ref.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 603a90e..f3ce004 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -1075,7 +1075,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0 , "python", &quote_style,
- 			N_("quote placeholders suitably for python"), QUOTE_PYTHON),
- 		OPT_BIT(0 , "tcl",  &quote_style,
--			N_("quote placeholders suitably for tcl"), QUOTE_TCL),
-+			N_("quote placeholders suitably for Tcl"), QUOTE_TCL),
- 
- 		OPT_GROUP(""),
- 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
--- 
-2.2.0
+I'll send a pull-request to the l10n coordinator with this change.
+No need to apply directly.
+
+Thanks
