@@ -1,57 +1,57 @@
-From: Damien Robert <damien.olivier.robert+gmane@gmail.com>
-Subject: Re: Our cumbersome mailing list workflow
-Date: Fri, 28 Nov 2014 21:39:40 +0000 (UTC)
-Message-ID: <m5aq2s$njj$1@ger.gmane.org>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com> <xmqq61e81ljq.fsf@gitster.dls.corp.google.com> <5473CD28.5020405@alum.mit.edu> <54776367.1010104@web.de> <54788743.5090703@alum.mit.edu> <547897F4.5000305@xiplink.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC] [PATCH] remote: add new --fetch option for set-url
+Date: Sat, 29 Nov 2014 13:31:18 -0000
+Organization: OPDS
+Message-ID: <D7697DE2C591421E8588920BD4FE0455@PhilipOakley>
+References: <6997784.RuzRO1AFsK@al> <1660121.8PEbpzfRYH@al> <20141124225457.GA9942@peff.net> <283403992.8FOSVk7RPR@al>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 28 22:39:57 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+To: "Peter Wu" <peter@lekensteyn.nl>, "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 29 15:05:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuTGf-0007uF-CV
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Nov 2014 22:39:57 +0100
+	id 1Xuidy-0004gy-Vb
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Nov 2014 15:05:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751374AbaK1Vjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Nov 2014 16:39:53 -0500
-Received: from plane.gmane.org ([80.91.229.3]:44661 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751174AbaK1Vjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Nov 2014 16:39:52 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1XuTGY-0007sF-ID
-	for git@vger.kernel.org; Fri, 28 Nov 2014 22:39:50 +0100
-Received: from quatramaran.salle-s.org ([188.165.201.225])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Nov 2014 22:39:50 +0100
-Received: from damien.olivier.robert+gmane by quatramaran.salle-s.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Nov 2014 22:39:50 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: quatramaran.salle-s.org
-X-Newsreader: Flrn (0.9.20070704)
-X-Start-date: Fri, 28 Nov 2014 22:36:39 +0100 
+	id S1751075AbaK2OE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2014 09:04:56 -0500
+Received: from b216.a.smtp2go.com ([216.22.18.216]:57235 "EHLO
+	b216.a.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbaK2OEy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2014 09:04:54 -0500
+X-Greylist: delayed 2059 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Nov 2014 09:04:54 EST
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260378>
 
-> A bot could subscribe to the list and create branches in a public repo.
-> (This idea feels familiar -- didn't somebody attempt this already?)
+From: "Peter Wu" <peter@lekensteyn.nl>
+> Ok, I will make a clear note about the default (without --only) 
+> behavior
+> having weird behavior for historical reasons. Are you really OK with
+> --only=both? It sounds a bit odd (mathematically speaking it is 
+> correct
+> as fetch and push are both partitions that form the whole set if you
+> ignore the historical behavior).
+>
+How about :
 
-Thomas Rast maintains git notes that link git commits to their gmane
-discussion, you can get them with
+s/--only/--direction/
 
-[remote "mailnotes"]
-  url = git://github.com/trast/git.git
-  fetch = refs/heads/notes/*:refs/notes/*
-
-There is gmane branch and a message-id branch, its pretty usefull.
+or some suitable abbreviation (--dirn ?)
+--
+Philip 
