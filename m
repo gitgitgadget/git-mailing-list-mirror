@@ -1,140 +1,265 @@
-From: Bryan Turner <bturner@atlassian.com>
-Subject: Re: git status / git diff -C not detecting file copy
-Date: Sun, 30 Nov 2014 12:54:53 +1100
-Message-ID: <CAGyf7-F9twCEUY-LN=xEf4=gfNW8oLEHJmTjHRQ2MncHZ2emZQ@mail.gmail.com>
-References: <CAJxwDJzzNV77cTP4nbzgCvFjjqp3C4X8d3j6uwhYvK4+g4r1YQ@mail.gmail.com>
-	<CAGyf7-E_y8zRUKh5RWvAhPXzSgpnVab6e=e1v92rSVVxf+LNJg@mail.gmail.com>
-	<CAJxwDJzxUEd3czHpwDtKaERKDhvyCGOzGbKO4X9z44ugTJ2q4w@mail.gmail.com>
+From: David Michael <fedora.dm0@gmail.com>
+Subject: [PATCH] compat: convert modes to use portable file type values
+Date: Sat, 29 Nov 2014 21:41:10 -0500
+Message-ID: <87vblxl8ah.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Pol Online <info@pol-online.net>
-X-From: git-owner@vger.kernel.org Sun Nov 30 03:06:47 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 30 03:41:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XutuQ-0005xq-JF
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 03:06:46 +0100
+	id 1XuuRa-0002eJ-VF
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 03:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751831AbaK3Byy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2014 20:54:54 -0500
-Received: from na3sys009aog114.obsmtp.com ([74.125.149.211]:35303 "HELO
-	na3sys009aog114.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751717AbaK3Byy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Nov 2014 20:54:54 -0500
-Received: from mail-ob0-f177.google.com ([209.85.214.177]) (using TLSv1) by na3sys009aob114.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKVHp47dO72gs9oQCbYWIZG58OHW9XCQeD@postini.com; Sat, 29 Nov 2014 17:54:53 PST
-Received: by mail-ob0-f177.google.com with SMTP id va2so6291379obc.36
-        for <git@vger.kernel.org>; Sat, 29 Nov 2014 17:54:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=3qqib+CjzmsQ6LCPYOqsBAuantSg4obVqskYv5sQ3k4=;
-        b=cvKi+y+/duEj5Q+7zDEsl58rJ39TzECKSMwNq2tNCADdmGdryY1omzs/1lwszeZfvM
-         gBvf3m+NKwkD/GLH8kUux/p7Mn87lRcCugzc7wUGOn/jGnCA6jskBXCIYyelVNDchjig
-         0qzrFje4P3ymjidC7wCzBa/NjMzBjkpQqIxlGZu8jgMf6+N+HhcENDQojDVWbqo0QXwT
-         MW9bUbA6fZoM/OmyHieFTUdwCgwlPpbgVPgl4/87d4URy9Gkr52qY2//4QIOJ+1JwfTw
-         a+ziiulWzbG+t8HHyoR5JliHnMxP6gEWsG8KCYETr4699CrBUayVMeW2qlec3QBVXLxB
-         fWKg==
-X-Gm-Message-State: ALoCoQnBavwKdJ3Qv2H6gc3Iigf0GIIPENKTF3kKE2tdXDN45gMXQ0nxs3ae0xVGc4Im9+LfXEBbjRGIclW/O/3PyCrSiSZfHKXFRTvxpvozkBU/pP1+qLSNES8ku7+ohXBCEvV/dBhjpzizXhlLfLceGl2+ZamB+Q==
-X-Received: by 10.182.50.168 with SMTP id d8mr31835028obo.2.1417312493206;
-        Sat, 29 Nov 2014 17:54:53 -0800 (PST)
-X-Received: by 10.182.50.168 with SMTP id d8mr31835023obo.2.1417312493061;
- Sat, 29 Nov 2014 17:54:53 -0800 (PST)
-Received: by 10.182.245.170 with HTTP; Sat, 29 Nov 2014 17:54:53 -0800 (PST)
-In-Reply-To: <CAJxwDJzxUEd3czHpwDtKaERKDhvyCGOzGbKO4X9z44ugTJ2q4w@mail.gmail.com>
+	id S1751743AbaK3Ckw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2014 21:40:52 -0500
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:46118 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbaK3Ckv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2014 21:40:51 -0500
+Received: by mail-qg0-f44.google.com with SMTP id z60so6281860qgd.3
+        for <git@vger.kernel.org>; Sat, 29 Nov 2014 18:40:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:mime-version:content-type;
+        bh=3k7Xe4ChQEz9gEgAWZfLM8GDHym+cJ6ETiQGZqoKRNU=;
+        b=T1xgHuRF0/Vg7j+DBrNZ2iRtJqPhKxBDE95OO4c30rCWcof6zqiiw7Zo18sNqBJ+Y8
+         5OkaG7U7zEQgZ2Vyhv6kZ7pePPtQf3ktAAt5TRcx8AyoqBlgI0mDpFWUt1XXgTXMaovu
+         g+R4A6fIofuE1DVEZwsqlunHWcDSUixuKPRfrMS6YNA5h6VFHPuZbSa7nxsAHDQ0dt7u
+         L37n2yHgRV33LnvUf4rePAUDYFTZfx80ifF9X9t03oYm/HPlETgJY5h3wdhm+3JgSiP0
+         0vPcNPAawNvf+IbE8yBGxgCXhG6lKN/tXJywh9HUK5d5DUL1TY3RP+FmXnO2ANA7scS+
+         3YZA==
+X-Received: by 10.140.22.201 with SMTP id 67mr73679746qgn.16.1417315250043;
+        Sat, 29 Nov 2014 18:40:50 -0800 (PST)
+Received: from callisto (c-68-81-204-146.hsd1.pa.comcast.net. [68.81.204.146])
+        by mx.google.com with ESMTPSA id z32sm13559657qgd.40.2014.11.29.18.40.48
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 29 Nov 2014 18:40:49 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260385>
 
-Pol,
+This adds simple wrapper functions around calls to stat(), fstat(),
+and lstat() that translate the operating system's native file type
+bits to those used by most operating systems.  It also rewrites the
+S_IF* macros to the common values, so all file type processing is
+performed using the translated modes.  This makes projects portable
+across operating systems that use different file type definitions.
 
-It's the same set of limitations. Git does not track renames or copies
-as such. It uses heuristics to compute a similarity index and then
-decide. All the tree stores for your copy is a file add, and that's
-the status you're seeing. I don't think there is any way to turn on
-aggressive copy detection for git status. However, before you run git
-commit, you could run git diff --find-copies-harder --cached instead
-and it should show the copy.
+Only the file type bits may be affected by these compatibility
+functions; the file permission bits are assumed to be 07777 and are
+passed through unchanged.
 
-I'll let someone a little more intimately familiar with the internals
-of git status comment on why the documentation for that mentions
-copies.
+Signed-off-by: David Michael <fedora.dm0@gmail.com>
+---
 
-Hope this helps,
-Bryan Turner
 
-On Sun, Nov 30, 2014 at 12:30 PM, Pol Online <info@pol-online.net> wrote:
-> Hi Bryan,
->
-> OK that explains the behavior of git diff, but what about git status?
-> The doc implies it should be able to detect copies in the index /
-> staging area since it has a "C" state.
->
-> - Pol
->
-> On Sun, Nov 30, 2014 at 10:03 AM, Bryan Turner <bturner@atlassian.com> wrote:
->> Pol,
->>
->> By default, -C only finds copies when the source file was also
->> modified in the same commit. Since you did not modify hello.txt in the
->> same commit where you copied it to copied.txt, it will not be
->> considered.
->>
->> If you pass -C -C (twice), or use --find-copies-harder, Git will
->> consider all files in the repository. Note that this can be slower,
->> which is the reason why it's not the default.
->>
->> The documentation for git diff describes the -C (--find-copies) and
->> --find-copies-harder flags and their limitations.
->>
->> Hope this helps,
->> Bryan Turner
->>
->> On Sun, Nov 30, 2014 at 11:35 AM, Pol Online <info@pol-online.net> wrote:
->>> Hi,
->>>
->>> The documentation for git status at http://git-scm.com/docs/git-status
->>> implies that it should be able to detect both renames and copies (with
->>> the R and C states). The command git diff -C should do it as well.
->>>
->>> However I can't get either to detect copies in this simple test case -
->>> what is happening?
->>>
->>>
->>> mkdir test
->>> cd test/
->>> git init
->>> echo 'Hello World!' > hello.txt
->>> echo 'Goodbye World!' > goodbye.txt
->>> git add -A
->>> git commit -m "Initial commit"
->>>
->>> cp hello.txt copied.txt
->>> mv goodbye.txt moved.txt
->>> git add -A
->>>
->>> $ git status --short
->>> A  copied.txt  <------------ NO COPY DETECTED
->>> R  goodbye.txt -> moved.txt
->>>
->>> $ git diff -M -C --summary --cached
->>>  create mode 100644 copied.txt  <------------ NO COPY DETECTED
->>>  rename goodbye.txt => moved.txt (100%)
->>>
->>> $ git commit -m Test
->>> $ git diff -M -C --summary HEAD~
->>>   create mode 100644 copied.txt  <------------ NO COPY DETECTED
->>>   rename goodbye.txt => moved.txt (100%)
->>>
->>>
->>> -Pol
->>> --
->>> To unsubscribe from this list: send the line "unsubscribe git" in
->>> the body of a message to majordomo@vger.kernel.org
->>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Hi,
+
+This is my most recent attempt at solving the problem of z/OS using
+different file type values than every other OS.  I believe it should be
+safe as long as the file type bits don't ever need to be converted back
+to their native values (and I didn't see any instances of that).
+
+I've been testing it by making commits to the same repositories on
+different operating systems and pushing those changes around, and so far
+there have been no issues.
+
+Can anyone foresee any problems with this method?
+
+Thanks.
+
+David
+
+
+ Makefile          |  8 ++++++++
+ cache.h           |  7 -------
+ compat/stat.c     | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ configure.ac      | 22 ++++++++++++++++++++++
+ git-compat-util.h | 32 ++++++++++++++++++++++++++++++++
+ 5 files changed, 111 insertions(+), 7 deletions(-)
+ create mode 100644 compat/stat.c
+
+diff --git a/Makefile b/Makefile
+index 827006b..cba3be1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -191,6 +191,10 @@ all::
+ # Define NO_TRUSTABLE_FILEMODE if your filesystem may claim to support
+ # the executable mode bit, but doesn't really do so.
+ #
++# Define NEEDS_MODE_TRANSLATION if your OS strays from the typical file type
++# bits in mode values (e.g. z/OS defines I_SFMT to 0xFF000000 as opposed to the
++# usual 0xF000).
++#
+ # Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
+ #
+ # Define NO_UNIX_SOCKETS if your system does not offer unix sockets.
+@@ -1230,6 +1234,10 @@ endif
+ ifdef NO_TRUSTABLE_FILEMODE
+ 	BASIC_CFLAGS += -DNO_TRUSTABLE_FILEMODE
+ endif
++ifdef NEEDS_MODE_TRANSLATION
++	COMPAT_CFLAGS += -DNEEDS_MODE_TRANSLATION
++	COMPAT_OBJS += compat/stat.o
++endif
+ ifdef NO_IPV6
+ 	BASIC_CFLAGS += -DNO_IPV6
+ endif
+diff --git a/cache.h b/cache.h
+index 99ed096..f8174fe 100644
+--- a/cache.h
++++ b/cache.h
+@@ -65,13 +65,6 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
+  *
+  * The value 0160000 is not normally a valid mode, and
+  * also just happens to be S_IFDIR + S_IFLNK
+- *
+- * NOTE! We *really* shouldn't depend on the S_IFxxx macros
+- * always having the same values everywhere. We should use
+- * our internal git values for these things, and then we can
+- * translate that to the OS-specific value. It just so
+- * happens that everybody shares the same bit representation
+- * in the UNIX world (and apparently wider too..)
+  */
+ #define S_IFGITLINK	0160000
+ #define S_ISGITLINK(m)	(((m) & S_IFMT) == S_IFGITLINK)
+diff --git a/compat/stat.c b/compat/stat.c
+new file mode 100644
+index 0000000..0ff1f2f
+--- /dev/null
++++ b/compat/stat.c
+@@ -0,0 +1,49 @@
++#define _POSIX_SOURCE
++#include <stddef.h>    /* NULL         */
++#include <sys/stat.h>  /* *stat, S_IS* */
++#include <sys/types.h> /* mode_t       */
++
++static inline mode_t mode_native_to_git(mode_t native_mode)
++{
++	if (S_ISREG(native_mode))
++		return 0100000 | (native_mode & 07777);
++	else if (S_ISDIR(native_mode))
++		return 0040000 | (native_mode & 07777);
++	else if (S_ISLNK(native_mode))
++		return 0120000 | (native_mode & 07777);
++	else if (S_ISBLK(native_mode))
++		return 0060000 | (native_mode & 07777);
++	else if (S_ISCHR(native_mode))
++		return 0020000 | (native_mode & 07777);
++	else if (S_ISFIFO(native_mode))
++		return 0010000 | (native_mode & 07777);
++	else /* Non-standard type bits were given. */
++		return native_mode & 07777;
++}
++
++int git_stat(const char *path, struct stat *buf)
++{
++	int rc;
++	rc = stat(path, buf);
++	if (buf != NULL)
++		buf->st_mode = mode_native_to_git(buf->st_mode);
++	return rc;
++}
++
++int git_fstat(int fd, struct stat *buf)
++{
++	int rc;
++	rc = fstat(fd, buf);
++	if (buf != NULL)
++		buf->st_mode = mode_native_to_git(buf->st_mode);
++	return rc;
++}
++
++int git_lstat(const char *path, struct stat *buf)
++{
++	int rc;
++	rc = lstat(path, buf);
++	if (buf != NULL)
++		buf->st_mode = mode_native_to_git(buf->st_mode);
++	return rc;
++}
+diff --git a/configure.ac b/configure.ac
+index 6af9647..b8eced4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -873,6 +873,28 @@ else
+ 	SNPRINTF_RETURNS_BOGUS=
+ fi
+ GIT_CONF_SUBST([SNPRINTF_RETURNS_BOGUS])
++#
++# Define NEEDS_MODE_TRANSLATION if your OS strays from the typical file type
++# bits in mode values.
++AC_CACHE_CHECK([whether the platform uses typical file type bits],
++ [ac_cv_sane_mode_bits], [
++AC_EGREP_CPP(yippeeyeswehaveit,
++	AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
++[#if S_IFMT == 0170000 && \
++	S_IFREG == 0100000 && S_IFDIR == 0040000 && S_IFLNK == 0120000 && \
++	S_IFBLK == 0060000 && S_IFCHR == 0020000 && S_IFIFO == 0010000
++yippeeyeswehaveit
++#endif
++]),
++	[ac_cv_sane_mode_bits=yes],
++	[ac_cv_sane_mode_bits=no])
++])
++if test $ac_cv_sane_mode_bits = yes; then
++	NEEDS_MODE_TRANSLATION=
++else
++	NEEDS_MODE_TRANSLATION=UnfortunatelyYes
++fi
++GIT_CONF_SUBST([NEEDS_MODE_TRANSLATION])
+ 
+ 
+ ## Checks for library functions.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 400e921..48f6910 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -474,6 +474,38 @@ extern int git_munmap(void *start, size_t length);
+ #define on_disk_bytes(st) ((st).st_blocks * 512)
+ #endif
+ 
++#ifdef NEEDS_MODE_TRANSLATION
++#undef S_IFMT
++#undef S_IFREG
++#undef S_IFDIR
++#undef S_IFLNK
++#undef S_IFBLK
++#undef S_IFCHR
++#undef S_IFIFO
++#define S_IFMT  0170000
++#define S_IFREG 0100000
++#define S_IFDIR 0040000
++#define S_IFLNK 0120000
++#define S_IFBLK 0060000
++#define S_IFCHR 0020000
++#define S_IFIFO 0010000
++#ifdef stat
++#undef stat
++#endif
++#define stat(path, buf) git_stat(path, buf)
++extern int git_stat(const char *, struct stat *);
++#ifdef fstat
++#undef fstat
++#endif
++#define fstat(fd, buf) git_fstat(fd, buf)
++extern int git_fstat(int, struct stat *);
++#ifdef lstat
++#undef lstat
++#endif
++#define lstat(path, buf) git_lstat(path, buf)
++extern int git_lstat(const char *, struct stat *);
++#endif
++
+ #define DEFAULT_PACKED_GIT_LIMIT \
+ 	((1024L * 1024L) * (sizeof(void*) >= 8 ? 8192 : 256))
+ 
+-- 
+1.9.3
