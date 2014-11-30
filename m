@@ -1,82 +1,104 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2014, #04; Wed, 26)
-Date: Sun, 30 Nov 2014 15:35:33 +0700
-Message-ID: <CACsJy8D7uf=TVDy1CYmQ8gO4KL=gSz=KMg6NmOEUzhjjjn=X_g@mail.gmail.com>
-References: <xmqqoarto8xy.fsf@gitster.dls.corp.google.com> <20141127183901.GD4744@vauxhall.crustytoothpaste.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/19] Add git-list-files
+Date: Sun, 30 Nov 2014 15:55:48 +0700
+Message-ID: <1417337767-4505-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sun Nov 30 09:36:14 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 30 09:56:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuzzH-00032Q-Mm
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 09:36:12 +0100
+	id 1Xv0Is-0002R2-Nu
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 09:56:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbaK3IgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Nov 2014 03:36:06 -0500
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:65238 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751893AbaK3IgF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 03:36:05 -0500
-Received: by mail-ie0-f176.google.com with SMTP id tr6so7608490ieb.7
-        for <git@vger.kernel.org>; Sun, 30 Nov 2014 00:36:03 -0800 (PST)
+	id S1752036AbaK3I4W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 03:56:22 -0500
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:50220 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846AbaK3I4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 03:56:21 -0500
+Received: by mail-pd0-f170.google.com with SMTP id fp1so9015666pdb.29
+        for <git@vger.kernel.org>; Sun, 30 Nov 2014 00:56:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Z+cnNm3fg5TKt0h4V1PHW2EjOOY5OlTKsBZryRtL7yg=;
-        b=fjNo/Mu1nCM7E4Q2yd5WAIawD7hhdphiuZdudKngnNGCgKW+N9Fl+R29fWGE3IhXAs
-         NMiSUCeBEBbBu4bYeb24G+Ii2eu7fEcQn1tm0GWDm+eoMV9mTZnSm8lgaOSpY0oOQApn
-         ohHWIJ2mt+v19EcV4WCZGgvxl+Pj2GsBjLz33LZfmIlzuSoSqQnfU64qiso8ziOE87FN
-         CQ2b7uD+scPps47ThCIfJz7cFKPU10mDQSXsXo7nXU1eSEekqUS2Llu3A9kZ6yIMZXfv
-         D6FJ51e9z/YV13b25aMZOCCoCQ8KO8dDNHgzvhdH1Sh5JilD0WK/LtUgH8FH8zgl+El7
-         OUjQ==
-X-Received: by 10.50.18.102 with SMTP id v6mr41147153igd.40.1417336563775;
- Sun, 30 Nov 2014 00:36:03 -0800 (PST)
-Received: by 10.107.176.3 with HTTP; Sun, 30 Nov 2014 00:35:33 -0800 (PST)
-In-Reply-To: <20141127183901.GD4744@vauxhall.crustytoothpaste.net>
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=dtwEf0d8BJ8UISGBBcUPQ4XGWRsU4y2xFzScUb+8y8A=;
+        b=CskEkAkpaXCSRifK+n0ObDS6LD//0AvyQF51KIQNCNrsxsKAZe0M+/t4GfY9eZanLx
+         ATWV0Otv5kf9xFphIpW29TvCdXt9E6y61ypPPMZlhdmI3WL7upibNzF5NdNtfPqG7FIG
+         GMCq9uIN8myVyyVt8B7UY5wGDJAegx4kO0rIEkbqC1hI60WlsJJhlEKalYlWmm+I8oIu
+         p4gWtfV8eDu216Fy7OFUVJpparJxJSuYSFOPaNZ5zzYkjcGEzLamkbfpWFjxDx7avqbx
+         hNJoOEzHiY5ia1Mi6+7WlpaFeS6T9ncqhhM/8O3NnZ9OxRpB2CvrO+936SpCFZ2wuRzW
+         6XqA==
+X-Received: by 10.70.37.35 with SMTP id v3mr28887738pdj.4.1417337781138;
+        Sun, 30 Nov 2014 00:56:21 -0800 (PST)
+Received: from lanh ([115.73.247.22])
+        by mx.google.com with ESMTPSA id sq2sm14287772pbc.73.2014.11.30.00.56.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 30 Nov 2014 00:56:20 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 15:56:19 +0700
+X-Mailer: git-send-email 2.2.0.60.gb7b3c64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260423>
 
-On Fri, Nov 28, 2014 at 1:39 AM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Wed, Nov 26, 2014 at 03:09:45PM -0800, Junio C Hamano wrote:
->> * nd/untracked-cache (2014-10-27) 19 commits
->>  - t7063: tests for untracked cache
->>  - update-index: test the system before enabling untracked cache
->>  - update-index: manually enable or disable untracked cache
->>  - status: enable untracked cache
->>  - untracked cache: mark index dirty if untracked cache is updated
->>  - untracked cache: print stats with $GIT_TRACE_UNTRACKED_STATS
->>  - untracked cache: avoid racy timestamps
->>  - read-cache.c: split racy stat test to a separate function
->>  - untracked cache: invalidate at index addition or removal
->>  - untracked cache: load from UNTR index extension
->>  - untracked cache: save to an index extension
->>  - untracked cache: don't open non-existent .gitignore
->>  - untracked cache: mark what dirs should be recursed/saved
->>  - untracked cache: record/validate dir mtime and reuse cached output
->>  - untracked cache: make a wrapper around {open,read,close}dir()
->>  - untracked cache: invalidate dirs recursively if .gitignore changes
->>  - untracked cache: initial untracked cache validation
->>  - untracked cache: record .gitignore information and dir hierarchy
->>  - dir.c: optionally compute sha-1 of a .gitignore file
->
-> You didn't comment on the status of this branch, and I'm interested.
+This is something else that's been sitting in my tree for a while now.
+It adds "git list-files", intended to be aliased as "ls" with your
+favourite display options.
 
-I'm not Junio :) but I think the core changes are done. I wanted to
-actually add watchman support on top of untracked cache as well to see
-if it needs any more changes. I think I can see how it could be done
-now (not easy, but not terribly hard). I'm going to resend soon to fix
-some minor bugs (in a reroll that Junio has not picked up) and change
-file format to be more compact.
--- 
-Duy
+As you can guess it's a friendlier version (and pretty close to GNU
+ls) of ls-files. On one hand, I think this is a nice addition. On the
+other hand, code bloat. Last version on the list is
+
+http://thread.gmane.org/gmane.comp.version-control.git/244530/focus=3D2=
+45464
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (19):
+  ls_colors.c: add $LS_COLORS parsing code
+  ls_colors.c: parse color.ls.* from config file
+  ls_colors.c: add a function to color a file name
+  ls_colors.c: highlight submodules like directories
+  ls-files: buffer full item in strbuf before printing
+  ls-files: add --color to highlight file names
+  ls-files: add --column
+  ls-files: support --max-depth
+  Add git-list-files, a user friendly version of ls-files and more
+  list-files: -u does not imply showing stages
+  list-files: add -R/--recursive short for --max-depth=3D-1
+  list-files: add -1 short for --no-column
+  list-files: add -t back
+  list-files: sort output and remove duplicates
+  list-files: do not show duplicate cached entries
+  list-files: show directories as well as files
+  list-files: add -F/--classify
+  list-files -F: show submodules with the new indicator '&'
+  list-files: -M aka diff-cached
+
+ .gitignore                             |   1 +
+ Documentation/config.txt               |  22 ++
+ Documentation/git-list-files.txt (new) |  99 +++++++
+ Documentation/git-ls-files.txt         |  20 ++
+ Makefile                               |   2 +
+ builtin/ls-files.c                     | 415 ++++++++++++++++++++++++-=
+--
+ color.h                                |  10 +
+ command-list.txt                       |   1 +
+ git.c                                  |   1 +
+ ls_colors.c (new)                      | 496 +++++++++++++++++++++++++=
+++++++++
+ 10 files changed, 1034 insertions(+), 33 deletions(-)
+ create mode 100644 Documentation/git-list-files.txt
+ create mode 100644 ls_colors.c
+
+--=20
+2.2.0.60.gb7b3c64
