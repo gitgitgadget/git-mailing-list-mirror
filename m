@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 16/19] list-files: show directories as well as files
-Date: Sun, 30 Nov 2014 15:56:04 +0700
-Message-ID: <1417337767-4505-17-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 17/19] list-files: add -F/--classify
+Date: Sun, 30 Nov 2014 15:56:05 +0700
+Message-ID: <1417337767-4505-18-git-send-email-pclouds@gmail.com>
 References: <1417337767-4505-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,146 +10,162 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 30 09:58:35 2014
+X-From: git-owner@vger.kernel.org Sun Nov 30 09:58:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xv0Kx-0003N6-7H
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 09:58:35 +0100
+	id 1Xv0L4-0003PX-LG
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 09:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094AbaK3I6b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 03:58:31 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:46242 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751982AbaK3I6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 03:58:31 -0500
-Received: by mail-pa0-f43.google.com with SMTP id kx10so9176552pab.30
-        for <git@vger.kernel.org>; Sun, 30 Nov 2014 00:58:30 -0800 (PST)
+	id S1752182AbaK3I6j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 03:58:39 -0500
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:59544 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751982AbaK3I6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 03:58:38 -0500
+Received: by mail-pd0-f175.google.com with SMTP id y10so9006111pdj.20
+        for <git@vger.kernel.org>; Sun, 30 Nov 2014 00:58:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=j5M3vRW1J6/fL74bial6RH1DoDOUYMyhW47ZHgrqGnI=;
-        b=SgYEK/0o2MrJ3bTdurbNJEektpMnr2CBTU+vV/XwU9hpmWcSyj8nHesUiFFcocKOdj
-         BQlAJI5f4ARy8KiGJYLfBdaMIU4MQ8GyuEaUBG9uNm648XdUgnbUcpbuPIYROpaHc4bN
-         U9hQqKUySeneOJTp4B+XHGu/bqGNIlO96gBftc29Ik8vVOsELcfTzXF63aHjyPQLatdL
-         4qjpk9Ceu1vBWZpbxdRkAiIRAJAu5Vk2pbl3sW0rLxJH+WuGg7/isbVzEizJfWPQzFNV
-         K80otd12cUKLfJ/7GydH+snUuqVMJ4j4DLBTqE6JsyxQa8HnjdSfTffQaNNkzJPtZ7zN
-         wDOQ==
-X-Received: by 10.68.227.104 with SMTP id rz8mr32667462pbc.4.1417337910846;
-        Sun, 30 Nov 2014 00:58:30 -0800 (PST)
+        bh=vZM2NDt4JdNqCUtT0ViXdyvGuUIhm0T81ZIy/gCTBrI=;
+        b=eXQVdINy4WbcADY4S/nOB8J4z+2fz5pSCz6egHF9PvL6+4hwmOy3php4Bac2mzd4uT
+         Oy5IImpqeqVocemgrRnAgMuH5wV0PFTyqkUGTjAgNFj4wlwkmWQPEalS8N0L4dLsD+C8
+         rE1wOPWFs505Qe4Nl2/KS5tppuUKZfRWCb5SrFqt/0rWtVDN1oVzby9nqSWCPkKvpVS6
+         GbI5aTgKgWafj2lpfuKMTvUHp+Qhdc9zWh/M52cf7UV4Ew9pRvBicjnuarMK9waQcVLs
+         2Yer0zj/7RbPoO5Wig+qmcZNOd5/KH3V3DT8YMmQb4FLNcfLo27xtAlzO42FUCutD6S6
+         r4wA==
+X-Received: by 10.70.31.35 with SMTP id x3mr88624050pdh.34.1417337917919;
+        Sun, 30 Nov 2014 00:58:37 -0800 (PST)
 Received: from lanh ([115.73.247.22])
-        by mx.google.com with ESMTPSA id wf5sm9186124pab.40.2014.11.30.00.58.27
+        by mx.google.com with ESMTPSA id zn2sm14323373pbb.41.2014.11.30.00.58.34
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Nov 2014 00:58:30 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 15:58:28 +0700
+        Sun, 30 Nov 2014 00:58:37 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 15:58:36 +0700
 X-Mailer: git-send-email 2.2.0.60.gb7b3c64
 In-Reply-To: <1417337767-4505-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260440>
 
-The index does not store directories explicitly (except submodules) so
-we have to figure them out from file list. The function
-show_directories() deliberately generates duplicate directories and
-expects the previous patch to remove duplicates.
+This appends an indicator after the file name if it's executable, a
+directory and so on, like in GNU ls. In fact append_indicator() is a
+rewrite from get_type_indicator() in coreutils.git commit
+7326d1f1a67edf21947ae98194f98c38b6e9e527.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/ls-files.c | 44 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ Documentation/git-list-files.txt |  6 ++++++
+ builtin/ls-files.c               | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
+diff --git a/Documentation/git-list-files.txt b/Documentation/git-list-=
+files.txt
+index 0ef616b..22084eb 100644
+--- a/Documentation/git-list-files.txt
++++ b/Documentation/git-list-files.txt
+@@ -51,6 +51,12 @@ OPTIONS
+ 	multiple file selections. See linkgit::git-ls-files[1] option
+ 	`-t` for more information.
+=20
++-F::
++--classify::
++	Append indicator (one of `*/=3D>@|`, which is executable,
++	directory, socket, Solaris door, symlink, or fifo
++	respectively) to entries.
++
+ -R::
+ --recursive::
+ 	Equivalent of `--max-depth=3D-1` (infinite recursion).
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index fc70265..41efdaa 100644
+index 41efdaa..28737cb 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -27,6 +27,8 @@ static int show_resolve_undo;
- static int show_modified;
- static int show_killed;
+@@ -29,6 +29,7 @@ static int show_killed;
  static int show_valid_bit;
-+static int show_tag;
-+static int show_dirs;
+ static int show_tag;
+ static int show_dirs;
++static int show_indicator;
  static int line_terminator =3D '\n';
  static int debug_mode;
  static int use_color;
-@@ -333,6 +335,43 @@ static void show_files(struct dir_struct *dir)
- 	}
+@@ -77,6 +78,28 @@ static void write_name(struct strbuf *sb, const char=
+ *name)
+ 		quote_path_relative(name, real_prefix, sb);
  }
 =20
-+static void show_directories(const struct cache_entry *ce)
++static void append_indicator(struct strbuf *sb, mode_t mode)
 +{
-+	static const char *last_directory;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	const char *p =3D ce->name + prefix_len;
-+	const char *sep;
-+
-+	if (last_directory) {
-+		int len =3D strlen(last_directory);
-+		if (!strncmp(ce->name, last_directory, len) &&
-+		    ce->name[len] =3D=3D '/')
-+			p +=3D len + 1;
-+	}
-+
-+	while (*p && (sep =3D strchr(p, '/'))) {
-+		struct strbuf sb2 =3D STRBUF_INIT;
-+		strbuf_reset(&sb);
-+		strbuf_add(&sb, ce->name, sep - ce->name);
-+		p =3D sep + 1;
-+		if (!match_pathspec(&pathspec, sb.buf, sb.len,
-+				    prefix_len, NULL, 1))
-+			continue;
-+		write_name(&sb2, sb.buf);
-+		if (want_color(use_color)) {
-+			struct strbuf sb3 =3D STRBUF_INIT;
-+			color_filename(&sb3, ce->name, sb2.buf, S_IFDIR, 1);
-+			strbuf_release(&sb2);
-+			sb2 =3D sb3;
-+		}
-+		if (show_tag)
-+			strbuf_insert(&sb2, 0, tag_cached, strlen(tag_cached));
-+		last_directory =3D strbuf_detach(&sb, NULL);
-+		strbuf_fputs(&sb2, last_directory, NULL);
-+		strbuf_release(&sb2);
-+	}
++	char c =3D 0;
++	if (S_ISREG(mode)) {
++		if (mode & (S_IXUSR | S_IXGRP | S_IXOTH))
++			c =3D '*';
++	} else if (S_ISDIR(mode))
++		c =3D '/';
++	else if (S_ISLNK(mode))
++		c =3D '@';
++	else if (S_ISFIFO(mode))
++		c =3D '|';
++	else if (S_ISSOCK(mode))
++		c =3D '=3D';
++#ifdef S_ISDOOR
++	else if (S_ISDOOR(mode))
++		c =3D '>';
++#endif
++	if (c)
++		strbuf_addch(sb, c);
 +}
 +
- static void show_files_compact(struct dir_struct *dir)
+ static void strbuf_fputs(struct strbuf *sb, const char *full_name, FIL=
+E *fp)
  {
- 	int i;
-@@ -353,6 +392,8 @@ static void show_files_compact(struct dir_struct *d=
-ir)
- 		const struct cache_entry *ce =3D active_cache[i];
- 		struct stat st;
- 		int err, shown =3D 0;
-+		if (show_dirs)
-+			show_directories(ce);
- 		if ((dir->flags & DIR_SHOW_IGNORED) &&
- 		    !ce_excluded(dir, ce))
- 			continue;
-@@ -575,7 +616,7 @@ static int git_ls_config(const char *var, const cha=
-r *value, void *cb)
-=20
- int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- {
--	int require_work_tree =3D 0, show_tag =3D 0, i;
-+	int require_work_tree =3D 0, i;
- 	int max_depth =3D -1;
- 	const char *max_prefix;
- 	struct dir_struct dir;
-@@ -696,6 +737,7 @@ int cmd_ls_files(int argc, const char **argv, const=
+ 	if (column_active(colopts) || porcelain) {
+@@ -99,6 +122,8 @@ static void write_dir_entry(struct strbuf *sb, const=
+ struct dir_entry *ent)
+ 		color_filename(sb, ent->name, quoted.buf, st.st_mode, 1);
+ 	else
+ 		strbuf_addbuf(sb, &quoted);
++	if (show_indicator && st.st_mode)
++		append_indicator(sb, st.st_mode);
+ 	strbuf_addch(sb, line_terminator);
+ 	strbuf_release(&quoted);
+ }
+@@ -189,6 +214,8 @@ static void write_ce_name(struct strbuf *sb, const =
+struct cache_entry *ce)
+ 		color_filename(sb, ce->name, quoted.buf, ce->ce_mode, 1);
+ 	else
+ 		strbuf_addbuf(sb, &quoted);
++	if (show_indicator)
++		append_indicator(sb, ce->ce_mode);
+ 	strbuf_addch(sb, line_terminator);
+ 	strbuf_release(&quoted);
+ }
+@@ -366,6 +393,8 @@ static void show_directories(const struct cache_ent=
+ry *ce)
+ 		}
+ 		if (show_tag)
+ 			strbuf_insert(&sb2, 0, tag_cached, strlen(tag_cached));
++		if (show_indicator)
++			append_indicator(&sb2, S_IFDIR);
+ 		last_directory =3D strbuf_detach(&sb, NULL);
+ 		strbuf_fputs(&sb2, last_directory, NULL);
+ 		strbuf_release(&sb2);
+@@ -701,6 +730,8 @@ int cmd_ls_files(int argc, const char **argv, const=
  char *cmd_prefix)
- 		use_color =3D -1;
- 		max_depth =3D 0;
- 		show_tag =3D -1;
-+		show_dirs =3D 1;
- 		git_config(git_ls_config, NULL);
- 	} else
- 		git_config(git_default_config, NULL);
+ 			DIR_SHOW_IGNORED),
+ 		OPT_BOOL('u', "unmerged", &show_unmerged,
+ 			N_("show unmerged files")),
++		OPT_BOOL('F', "classify", &show_indicator,
++			 N_("append indicator (one of */=3D>@|) to entries")),
+ 		OPT__COLOR(&use_color, N_("show color")),
+ 		OPT_COLUMN(0, "column", &colopts, N_("show files in columns")),
+ 		OPT_SET_INT('1', NULL, &colopts,
 --=20
 2.2.0.60.gb7b3c64
