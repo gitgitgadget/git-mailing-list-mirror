@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 2/3] ls-tree: remove path filtering logic in show_tree
-Date: Sun, 30 Nov 2014 16:05:01 +0700
-Message-ID: <1417338302-8208-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 3/3] ls-tree: disable negative pathspec because it's not supported
+Date: Sun, 30 Nov 2014 16:05:02 +0700
+Message-ID: <1417338302-8208-4-git-send-email-pclouds@gmail.com>
 References: <1417338302-8208-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,176 +11,70 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 30 10:05:34 2014
+X-From: git-owner@vger.kernel.org Sun Nov 30 10:05:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xv0Rf-00069l-E1
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 10:05:31 +0100
+	id 1Xv0Rr-0006FB-Sm
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 10:05:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180AbaK3JF1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 04:05:27 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:40807 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752179AbaK3JFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 04:05:24 -0500
-Received: by mail-pa0-f50.google.com with SMTP id bj1so9229351pad.9
-        for <git@vger.kernel.org>; Sun, 30 Nov 2014 01:05:24 -0800 (PST)
+	id S1752179AbaK3JFh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 04:05:37 -0500
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:47810 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752010AbaK3JFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 04:05:33 -0500
+Received: by mail-pd0-f174.google.com with SMTP id w10so8933647pde.19
+        for <git@vger.kernel.org>; Sun, 30 Nov 2014 01:05:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=iXB/DmLNeW0vrfsiY8rXFXS+XzzTf0jmGkYWSMT+/Hc=;
-        b=uBf02WX99vr90ZIOKBcHtFwy1qo1I5vUy8wyZfwCRmQc7OuYUsLyqvOO1w2LIc+wIC
-         gugB91KtvvqeywiZYT5rSXnJ2Q7ap21uLy1CQ/zNHsBUzJXQpsGGraUAV1qVvZLYom2s
-         rrbDf+OfeypqsuyWfLti2lQ2IwQNHI8ZY8bn+/RPuwtlxLWGaZmdYyLJnevyz9yo4B0c
-         dzNjI8oP41zp/zx7Hz6ldTfZmxRuy0oRk+9fXi95TPKZfoobpTQx65dNY2v83lQpyHpt
-         qGG4yhjIXl3L7WCnzhqEz2Z9X3xtvRO145KLm3cw6ADC1ItYwNy92X9IbJekHlSVeqHq
-         j8QQ==
-X-Received: by 10.70.37.79 with SMTP id w15mr43188372pdj.43.1417338324126;
-        Sun, 30 Nov 2014 01:05:24 -0800 (PST)
+        bh=geOcaPPunXC6NzjkpWwvUKFfilHVRKZBROxcHYTyhq4=;
+        b=lSv7pOrA52M7divgHoky5J0dNSMTiYby6Np/SCjeIikigHRXkw/vs4KbYy06CP/Mm8
+         vOfVkmb2uOKl66Hu/2lIrTp53tmfXybJWRG1Wl+j+79CVQ9wEjlrG+/OCtiF11+LatcJ
+         z4gSi5A7no58SN2zvE6d7DpiP1SuhNTCC865nNMdViiqMr5GiG5xVEkSu39rMk/bPF3n
+         yyjs76J4WxB1xcfNeZ2ZCUBRAOvrJm1t/3eLcs42C2yuyj0wW5mEt2CP0fwFuOawRFTC
+         jaEQVZXBhbuBBGIbB/32rPx/0x+TkgehpcOIhp/zRUgsJxJR04C7hRc1zeeC5BmeCsLr
+         pD+A==
+X-Received: by 10.67.22.162 with SMTP id ht2mr70831836pad.49.1417338333289;
+        Sun, 30 Nov 2014 01:05:33 -0800 (PST)
 Received: from lanh ([115.73.247.22])
-        by mx.google.com with ESMTPSA id z15sm14458366pdi.6.2014.11.30.01.05.20
+        by mx.google.com with ESMTPSA id ml5sm14467080pab.32.2014.11.30.01.05.29
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Nov 2014 01:05:23 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 16:05:21 +0700
+        Sun, 30 Nov 2014 01:05:32 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 16:05:30 +0700
 X-Mailer: git-send-email 2.2.0.60.gb7b3c64
 In-Reply-To: <1417338302-8208-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260445>
-
-ls-tree uses read_tree_recursive() which already does path filtering
-using pathspec. No need to filter one more time based on prefix
-only. "ls-tree ../somewhere" does not work because of
-this. write_name_quotedpfx() can now be retired because nobody else
-uses it.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260446>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/ls-tree.c            | 14 +++++++-------
- quote.c                      | 21 ---------------------
- quote.h                      |  2 --
- t/t3102-ls-tree-wildcards.sh |  8 ++++++++
- 4 files changed, 15 insertions(+), 30 deletions(-)
+ builtin/ls-tree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 1ab0381..053edb2 100644
+index 053edb2..3b04a0f 100644
 --- a/builtin/ls-tree.c
 +++ b/builtin/ls-tree.c
-@@ -65,6 +65,7 @@ static int show_tree(const unsigned char *sha1, struc=
-t strbuf *base,
- 		const char *pathname, unsigned mode, int stage, void *context)
- {
- 	int retval =3D 0;
-+	int baselen;
- 	const char *type =3D blob_type;
-=20
- 	if (S_ISGITLINK(mode)) {
-@@ -89,11 +90,6 @@ static int show_tree(const unsigned char *sha1, stru=
-ct strbuf *base,
- 	else if (ls_options & LS_TREE_ONLY)
- 		return 0;
-=20
--	if (chomp_prefix &&
--	    (base->len < chomp_prefix ||
--	     memcmp(ls_tree_prefix, base->buf, chomp_prefix)))
--		return 0;
--
- 	if (!(ls_options & LS_NAME_ONLY)) {
- 		if (ls_options & LS_SHOW_SIZE) {
- 			char size_text[24];
-@@ -113,8 +109,12 @@ static int show_tree(const unsigned char *sha1, st=
-ruct strbuf *base,
- 			printf("%06o %s %s\t", mode, type,
- 			       find_unique_abbrev(sha1, abbrev));
- 	}
--	write_name_quotedpfx(base->buf + chomp_prefix, base->len - chomp_pref=
-ix,
--			  pathname, stdout, line_termination);
-+	baselen =3D base->len;
-+	strbuf_addstr(base, pathname);
-+	write_name_quoted_relative(base->buf,
-+				   chomp_prefix ? ls_tree_prefix : NULL,
-+				   stdout, line_termination);
-+	strbuf_setlen(base, baselen);
- 	return retval;
- }
-=20
-diff --git a/quote.c b/quote.c
-index 45e3db1..7920e18 100644
---- a/quote.c
-+++ b/quote.c
-@@ -274,27 +274,6 @@ void write_name_quoted(const char *name, FILE *fp,=
- int terminator)
- 	fputc(terminator, fp);
- }
-=20
--void write_name_quotedpfx(const char *pfx, size_t pfxlen,
--			  const char *name, FILE *fp, int terminator)
--{
--	int needquote =3D 0;
--
--	if (terminator) {
--		needquote =3D next_quote_pos(pfx, pfxlen) < pfxlen
--			|| name[next_quote_pos(name, -1)];
--	}
--	if (needquote) {
--		fputc('"', fp);
--		quote_c_style_counted(pfx, pfxlen, NULL, fp, 1);
--		quote_c_style(name, NULL, fp, 1);
--		fputc('"', fp);
--	} else {
--		fwrite(pfx, pfxlen, 1, fp);
--		fputs(name, fp);
--	}
--	fputc(terminator, fp);
--}
--
- void write_name_quoted_relative(const char *name, const char *prefix,
- 				FILE *fp, int terminator)
- {
-diff --git a/quote.h b/quote.h
-index 71dcc3a..99e04d3 100644
---- a/quote.h
-+++ b/quote.h
-@@ -56,8 +56,6 @@ extern size_t quote_c_style(const char *name, struct =
-strbuf *, FILE *, int no_dq
- extern void quote_two_c_style(struct strbuf *, const char *, const cha=
-r *, int);
-=20
- extern void write_name_quoted(const char *name, FILE *, int terminator=
-);
--extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
--                                 const char *name, FILE *, int termina=
-tor);
- extern void write_name_quoted_relative(const char *name, const char *p=
-refix,
- 		FILE *fp, int terminator);
-=20
-diff --git a/t/t3102-ls-tree-wildcards.sh b/t/t3102-ls-tree-wildcards.s=
-h
-index c286854..83fca8d 100755
---- a/t/t3102-ls-tree-wildcards.sh
-+++ b/t/t3102-ls-tree-wildcards.sh
-@@ -19,4 +19,12 @@ EOF
- 	test_cmp expected actual
- '
-=20
-+test_expect_success 'ls-tree outside prefix' '
-+	cat >expected <<EOF &&
-+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	../a[a]/three
-+EOF
-+	( cd aa && git ls-tree -r HEAD "../a[a]"; ) >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+@@ -174,7 +174,8 @@ int cmd_ls_tree(int argc, const char **argv, const =
+char *prefix)
+ 	 * cannot be lifted until it is converted to use
+ 	 * match_pathspec() or tree_entry_interesting()
+ 	 */
+-	parse_pathspec(&pathspec, PATHSPEC_GLOB | PATHSPEC_ICASE,
++	parse_pathspec(&pathspec, PATHSPEC_GLOB | PATHSPEC_ICASE |
++				  PATHSPEC_EXCLUDE,
+ 		       PATHSPEC_PREFER_CWD,
+ 		       prefix, argv + 1);
+ 	for (i =3D 0; i < pathspec.nr; i++)
 --=20
 2.2.0.60.gb7b3c64
