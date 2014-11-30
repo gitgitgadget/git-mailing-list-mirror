@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/3] tree.c: update read_tree_recursive callback to pass strbuf as base
-Date: Sun, 30 Nov 2014 16:05:00 +0700
-Message-ID: <1417338302-8208-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 2/3] ls-tree: remove path filtering logic in show_tree
+Date: Sun, 30 Nov 2014 16:05:01 +0700
+Message-ID: <1417338302-8208-3-git-send-email-pclouds@gmail.com>
 References: <1417338302-8208-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,373 +11,176 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 30 10:05:32 2014
+X-From: git-owner@vger.kernel.org Sun Nov 30 10:05:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xv0Re-00069l-GO
+	id 1Xv0Rf-00069l-E1
 	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 10:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752172AbaK3JFX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 04:05:23 -0500
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:34774 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752013AbaK3JFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 04:05:15 -0500
-Received: by mail-pd0-f175.google.com with SMTP id y10so8994866pdj.34
-        for <git@vger.kernel.org>; Sun, 30 Nov 2014 01:05:15 -0800 (PST)
+	id S1752180AbaK3JF1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 04:05:27 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:40807 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179AbaK3JFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 04:05:24 -0500
+Received: by mail-pa0-f50.google.com with SMTP id bj1so9229351pad.9
+        for <git@vger.kernel.org>; Sun, 30 Nov 2014 01:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=wYYy1tkTEBnLCCSFMn9ED14KD7ok3mkrw/ifY4WqdFw=;
-        b=aM57zCi9JuJCx5OhJk4ulTAVrncZHzusAjLUk7Vw9UMnB1dp+Ya/lg+Fh06RTiRYjK
-         +xG52t7cSCahssUX9iWCy1BU8coKH9MdcryD2Mezeza5az1AE563Ddoj0bS+a/q/hoHi
-         ZX/LRce/H5y2hC1yPKz/F5bSpt/FzA4gG38ZP8V6f04OLMtcxiJm5qT9XI4tkC8WqWUP
-         KVdQsT9JPiT7vX9Z9TFPiSO49Dqa5nZ62OmS5CyV2+7ajERFhJdIGGMUI7rwQ2IFDK8/
-         diYI0D4b7G3nu/90AIDcD8iUGrTgfPf/y7zmb01Ve/d0/YlW6I2VNbU1x1fPfhZJdj5O
-         qbqQ==
-X-Received: by 10.66.140.102 with SMTP id rf6mr29127560pab.1.1417338315104;
-        Sun, 30 Nov 2014 01:05:15 -0800 (PST)
+        bh=iXB/DmLNeW0vrfsiY8rXFXS+XzzTf0jmGkYWSMT+/Hc=;
+        b=uBf02WX99vr90ZIOKBcHtFwy1qo1I5vUy8wyZfwCRmQc7OuYUsLyqvOO1w2LIc+wIC
+         gugB91KtvvqeywiZYT5rSXnJ2Q7ap21uLy1CQ/zNHsBUzJXQpsGGraUAV1qVvZLYom2s
+         rrbDf+OfeypqsuyWfLti2lQ2IwQNHI8ZY8bn+/RPuwtlxLWGaZmdYyLJnevyz9yo4B0c
+         dzNjI8oP41zp/zx7Hz6ldTfZmxRuy0oRk+9fXi95TPKZfoobpTQx65dNY2v83lQpyHpt
+         qGG4yhjIXl3L7WCnzhqEz2Z9X3xtvRO145KLm3cw6ADC1ItYwNy92X9IbJekHlSVeqHq
+         j8QQ==
+X-Received: by 10.70.37.79 with SMTP id w15mr43188372pdj.43.1417338324126;
+        Sun, 30 Nov 2014 01:05:24 -0800 (PST)
 Received: from lanh ([115.73.247.22])
-        by mx.google.com with ESMTPSA id my1sm14353779pbc.20.2014.11.30.01.05.10
+        by mx.google.com with ESMTPSA id z15sm14458366pdi.6.2014.11.30.01.05.20
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Nov 2014 01:05:14 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 16:05:12 +0700
+        Sun, 30 Nov 2014 01:05:23 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 16:05:21 +0700
 X-Mailer: git-send-email 2.2.0.60.gb7b3c64
 In-Reply-To: <1417338302-8208-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260445>
 
-This allows the callback to use 'base' as a temporary buffer to
-quickly assemble full path "without" extra allocation. The callback
-has to restore it afterwards of course.
+ls-tree uses read_tree_recursive() which already does path filtering
+using pathspec. No need to filter one more time based on prefix
+only. "ls-tree ../somewhere" does not work because of
+this. write_name_quotedpfx() can now be retired because nobody else
+uses it.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- archive.c          | 34 +++++++++++++++++++++-------------
- builtin/checkout.c |  8 ++++----
- builtin/log.c      |  2 +-
- builtin/ls-tree.c  |  9 +++++----
- merge-recursive.c  | 15 ++++++---------
- tree.c             | 16 +++++++++++-----
- tree.h             |  3 ++-
- 7 files changed, 50 insertions(+), 37 deletions(-)
+ builtin/ls-tree.c            | 14 +++++++-------
+ quote.c                      | 21 ---------------------
+ quote.h                      |  2 --
+ t/t3102-ls-tree-wildcards.sh |  8 ++++++++
+ 4 files changed, 15 insertions(+), 30 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 94a9981..9e30246 100644
---- a/archive.c
-+++ b/archive.c
-@@ -157,18 +157,26 @@ static int write_archive_entry(const unsigned cha=
-r *sha1, const char *base,
- 	return write_entry(args, sha1, path.buf, path.len, mode);
- }
-=20
-+static int write_archive_entry_buf(const unsigned char *sha1, struct s=
-trbuf *base,
-+		const char *filename, unsigned mode, int stage,
-+		void *context)
-+{
-+	return write_archive_entry(sha1, base->buf, base->len,
-+				     filename, mode, stage, context);
-+}
-+
- static void queue_directory(const unsigned char *sha1,
--		const char *base, int baselen, const char *filename,
-+		struct strbuf *base, const char *filename,
- 		unsigned mode, int stage, struct archiver_context *c)
- {
- 	struct directory *d;
--	d =3D xmallocz(sizeof(*d) + baselen + 1 + strlen(filename));
-+	d =3D xmallocz(sizeof(*d) + base->len + 1 + strlen(filename));
- 	d->up	   =3D c->bottom;
--	d->baselen =3D baselen;
-+	d->baselen =3D base->len;
- 	d->mode	   =3D mode;
- 	d->stage   =3D stage;
- 	c->bottom  =3D d;
--	d->len =3D sprintf(d->path, "%.*s%s/", baselen, base, filename);
-+	d->len =3D sprintf(d->path, "%.*s%s/", (int)base->len, base->buf, fil=
-ename);
- 	hashcpy(d->sha1, sha1);
- }
-=20
-@@ -191,28 +199,28 @@ static int write_directory(struct archiver_contex=
-t *c)
- }
-=20
- static int queue_or_write_archive_entry(const unsigned char *sha1,
--		const char *base, int baselen, const char *filename,
-+		struct strbuf *base, const char *filename,
- 		unsigned mode, int stage, void *context)
- {
- 	struct archiver_context *c =3D context;
-=20
- 	while (c->bottom &&
--	       !(baselen >=3D c->bottom->len &&
--		 !strncmp(base, c->bottom->path, c->bottom->len))) {
-+	       !(base->len >=3D c->bottom->len &&
-+		 !strncmp(base->buf, c->bottom->path, c->bottom->len))) {
- 		struct directory *next =3D c->bottom->up;
- 		free(c->bottom);
- 		c->bottom =3D next;
- 	}
-=20
- 	if (S_ISDIR(mode)) {
--		queue_directory(sha1, base, baselen, filename,
-+		queue_directory(sha1, base, filename,
- 				mode, stage, c);
- 		return READ_TREE_RECURSIVE;
- 	}
-=20
- 	if (write_directory(c))
- 		return -1;
--	return write_archive_entry(sha1, base, baselen, filename, mode,
-+	return write_archive_entry(sha1, base->buf, base->len, filename, mode=
-,
- 				   stage, context);
- }
-=20
-@@ -260,7 +268,7 @@ int write_archive_entries(struct archiver_args *arg=
-s,
- 	err =3D read_tree_recursive(args->tree, "", 0, 0, &args->pathspec,
- 				  args->pathspec.has_wildcard ?
- 				  queue_or_write_archive_entry :
--				  write_archive_entry,
-+				  write_archive_entry_buf,
- 				  &context);
- 	if (err =3D=3D READ_TREE_RECURSIVE)
- 		err =3D 0;
-@@ -286,14 +294,14 @@ static const struct archiver *lookup_archiver(con=
-st char *name)
- 	return NULL;
- }
-=20
--static int reject_entry(const unsigned char *sha1, const char *base,
--			int baselen, const char *filename, unsigned mode,
-+static int reject_entry(const unsigned char *sha1, struct strbuf *base=
-,
-+			const char *filename, unsigned mode,
- 			int stage, void *context)
- {
- 	int ret =3D -1;
- 	if (S_ISDIR(mode)) {
- 		struct strbuf sb =3D STRBUF_INIT;
--		strbuf_addstr(&sb, base);
-+		strbuf_addbuf(&sb, base);
- 		strbuf_addstr(&sb, filename);
- 		if (!match_pathspec(context, sb.buf, sb.len, 0, NULL, 1))
- 			ret =3D READ_TREE_RECURSIVE;
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 5410dac..8adf48d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -62,7 +62,7 @@ static int post_checkout_hook(struct commit *old, str=
-uct commit *new,
-=20
- }
-=20
--static int update_some(const unsigned char *sha1, const char *base, in=
-t baselen,
-+static int update_some(const unsigned char *sha1, struct strbuf *base,
- 		const char *pathname, unsigned mode, int stage, void *context)
- {
- 	int len;
-@@ -71,11 +71,11 @@ static int update_some(const unsigned char *sha1, c=
-onst char *base, int baselen,
- 	if (S_ISDIR(mode))
- 		return READ_TREE_RECURSIVE;
-=20
--	len =3D baselen + strlen(pathname);
-+	len =3D base->len + strlen(pathname);
- 	ce =3D xcalloc(1, cache_entry_size(len));
- 	hashcpy(ce->sha1, sha1);
--	memcpy(ce->name, base, baselen);
--	memcpy(ce->name + baselen, pathname, len - baselen);
-+	memcpy(ce->name, base->buf, base->len);
-+	memcpy(ce->name + base->len, pathname, len - base->len);
- 	ce->ce_flags =3D create_ce_flags(0) | CE_UPDATE;
- 	ce->ce_namelen =3D len;
- 	ce->ce_mode =3D create_ce_mode(mode);
-diff --git a/builtin/log.c b/builtin/log.c
-index 734aab3..f2a9f01 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -489,7 +489,7 @@ static int show_tag_object(const unsigned char *sha=
-1, struct rev_info *rev)
- }
-=20
- static int show_tree_object(const unsigned char *sha1,
--		const char *base, int baselen,
-+		struct strbuf *base,
- 		const char *pathname, unsigned mode, int stage, void *context)
- {
- 	printf("%s%s\n", pathname, S_ISDIR(mode) ? "/" : "");
 diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 51184df..1ab0381 100644
+index 1ab0381..053edb2 100644
 --- a/builtin/ls-tree.c
 +++ b/builtin/ls-tree.c
-@@ -61,7 +61,7 @@ static int show_recursive(const char *base, int basel=
-en, const char *pathname)
- 	}
- }
-=20
--static int show_tree(const unsigned char *sha1, const char *base, int =
-baselen,
-+static int show_tree(const unsigned char *sha1, struct strbuf *base,
+@@ -65,6 +65,7 @@ static int show_tree(const unsigned char *sha1, struc=
+t strbuf *base,
  		const char *pathname, unsigned mode, int stage, void *context)
  {
  	int retval =3D 0;
-@@ -79,7 +79,7 @@ static int show_tree(const unsigned char *sha1, const=
- char *base, int baselen,
- 		 */
- 		type =3D commit_type;
- 	} else if (S_ISDIR(mode)) {
--		if (show_recursive(base, baselen, pathname)) {
-+		if (show_recursive(base->buf, base->len, pathname)) {
- 			retval =3D READ_TREE_RECURSIVE;
- 			if (!(ls_options & LS_SHOW_TREES))
- 				return retval;
-@@ -90,7 +90,8 @@ static int show_tree(const unsigned char *sha1, const=
- char *base, int baselen,
++	int baselen;
+ 	const char *type =3D blob_type;
+=20
+ 	if (S_ISGITLINK(mode)) {
+@@ -89,11 +90,6 @@ static int show_tree(const unsigned char *sha1, stru=
+ct strbuf *base,
+ 	else if (ls_options & LS_TREE_ONLY)
  		return 0;
 =20
- 	if (chomp_prefix &&
--	    (baselen < chomp_prefix || memcmp(ls_tree_prefix, base, chomp_pre=
-fix)))
-+	    (base->len < chomp_prefix ||
-+	     memcmp(ls_tree_prefix, base->buf, chomp_prefix)))
- 		return 0;
-=20
+-	if (chomp_prefix &&
+-	    (base->len < chomp_prefix ||
+-	     memcmp(ls_tree_prefix, base->buf, chomp_prefix)))
+-		return 0;
+-
  	if (!(ls_options & LS_NAME_ONLY)) {
-@@ -112,7 +113,7 @@ static int show_tree(const unsigned char *sha1, con=
-st char *base, int baselen,
+ 		if (ls_options & LS_SHOW_SIZE) {
+ 			char size_text[24];
+@@ -113,8 +109,12 @@ static int show_tree(const unsigned char *sha1, st=
+ruct strbuf *base,
  			printf("%06o %s %s\t", mode, type,
  			       find_unique_abbrev(sha1, abbrev));
  	}
--	write_name_quotedpfx(base + chomp_prefix, baselen - chomp_prefix,
-+	write_name_quotedpfx(base->buf + chomp_prefix, base->len - chomp_pref=
+-	write_name_quotedpfx(base->buf + chomp_prefix, base->len - chomp_pref=
 ix,
- 			  pathname, stdout, line_termination);
+-			  pathname, stdout, line_termination);
++	baselen =3D base->len;
++	strbuf_addstr(base, pathname);
++	write_name_quoted_relative(base->buf,
++				   chomp_prefix ? ls_tree_prefix : NULL,
++				   stdout, line_termination);
++	strbuf_setlen(base, baselen);
  	return retval;
  }
-diff --git a/merge-recursive.c b/merge-recursive.c
-index fdb7d0f..25c067e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -275,23 +275,20 @@ struct tree *write_tree_from_memory(struct merge_=
-options *o)
+=20
+diff --git a/quote.c b/quote.c
+index 45e3db1..7920e18 100644
+--- a/quote.c
++++ b/quote.c
+@@ -274,27 +274,6 @@ void write_name_quoted(const char *name, FILE *fp,=
+ int terminator)
+ 	fputc(terminator, fp);
  }
 =20
- static int save_files_dirs(const unsigned char *sha1,
--		const char *base, int baselen, const char *path,
-+		struct strbuf *base, const char *path,
- 		unsigned int mode, int stage, void *context)
+-void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+-			  const char *name, FILE *fp, int terminator)
+-{
+-	int needquote =3D 0;
+-
+-	if (terminator) {
+-		needquote =3D next_quote_pos(pfx, pfxlen) < pfxlen
+-			|| name[next_quote_pos(name, -1)];
+-	}
+-	if (needquote) {
+-		fputc('"', fp);
+-		quote_c_style_counted(pfx, pfxlen, NULL, fp, 1);
+-		quote_c_style(name, NULL, fp, 1);
+-		fputc('"', fp);
+-	} else {
+-		fwrite(pfx, pfxlen, 1, fp);
+-		fputs(name, fp);
+-	}
+-	fputc(terminator, fp);
+-}
+-
+ void write_name_quoted_relative(const char *name, const char *prefix,
+ 				FILE *fp, int terminator)
  {
--	int len =3D strlen(path);
--	char *newpath =3D xmalloc(baselen + len + 1);
-+	int baselen =3D base->len;
- 	struct merge_options *o =3D context;
+diff --git a/quote.h b/quote.h
+index 71dcc3a..99e04d3 100644
+--- a/quote.h
++++ b/quote.h
+@@ -56,8 +56,6 @@ extern size_t quote_c_style(const char *name, struct =
+strbuf *, FILE *, int no_dq
+ extern void quote_two_c_style(struct strbuf *, const char *, const cha=
+r *, int);
 =20
--	memcpy(newpath, base, baselen);
--	memcpy(newpath + baselen, path, len);
--	newpath[baselen + len] =3D '\0';
-+	strbuf_addstr(base, path);
+ extern void write_name_quoted(const char *name, FILE *, int terminator=
+);
+-extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
+-                                 const char *name, FILE *, int termina=
+tor);
+ extern void write_name_quoted_relative(const char *name, const char *p=
+refix,
+ 		FILE *fp, int terminator);
 =20
- 	if (S_ISDIR(mode))
--		string_list_insert(&o->current_directory_set, newpath);
-+		string_list_insert(&o->current_directory_set, base->buf);
- 	else
--		string_list_insert(&o->current_file_set, newpath);
--	free(newpath);
-+		string_list_insert(&o->current_file_set, base->buf);
+diff --git a/t/t3102-ls-tree-wildcards.sh b/t/t3102-ls-tree-wildcards.s=
+h
+index c286854..83fca8d 100755
+--- a/t/t3102-ls-tree-wildcards.sh
++++ b/t/t3102-ls-tree-wildcards.sh
+@@ -19,4 +19,12 @@ EOF
+ 	test_cmp expected actual
+ '
 =20
-+	strbuf_setlen(base, baselen);
- 	return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
- }
-=20
-diff --git a/tree.c b/tree.c
-index bb02c1c..58ebfce 100644
---- a/tree.c
-+++ b/tree.c
-@@ -30,9 +30,12 @@ static int read_one_entry_opt(const unsigned char *s=
-ha1, const char *base, int b
- 	return add_cache_entry(ce, opt);
- }
-=20
--static int read_one_entry(const unsigned char *sha1, const char *base,=
- int baselen, const char *pathname, unsigned mode, int stage, void *con=
-text)
-+static int read_one_entry(const unsigned char *sha1, struct strbuf *ba=
-se,
-+			  const char *pathname, unsigned mode, int stage,
-+			  void *context)
- {
--	return read_one_entry_opt(sha1, base, baselen, pathname, mode, stage,
-+	return read_one_entry_opt(sha1, base->buf, base->len, pathname,
-+				  mode, stage,
- 				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
- }
-=20
-@@ -40,9 +43,12 @@ static int read_one_entry(const unsigned char *sha1,=
- const char *base, int basel
-  * This is used when the caller knows there is no existing entries at
-  * the stage that will conflict with the entry being added.
-  */
--static int read_one_entry_quick(const unsigned char *sha1, const char =
-*base, int baselen, const char *pathname, unsigned mode, int stage, voi=
-d *context)
-+static int read_one_entry_quick(const unsigned char *sha1, struct strb=
-uf *base,
-+				const char *pathname, unsigned mode, int stage,
-+				void *context)
- {
--	return read_one_entry_opt(sha1, base, baselen, pathname, mode, stage,
-+	return read_one_entry_opt(sha1, base->buf, base->len, pathname,
-+				  mode, stage,
- 				  ADD_CACHE_JUST_APPEND);
- }
-=20
-@@ -70,7 +76,7 @@ static int read_tree_1(struct tree *tree, struct strb=
-uf *base,
- 				continue;
- 		}
-=20
--		switch (fn(entry.sha1, base->buf, base->len,
-+		switch (fn(entry.sha1, base,
- 			   entry.path, entry.mode, stage, context)) {
- 		case 0:
- 			continue;
-diff --git a/tree.h b/tree.h
-index d84ac63..d24125f 100644
---- a/tree.h
-+++ b/tree.h
-@@ -4,6 +4,7 @@
- #include "object.h"
-=20
- extern const char *tree_type;
-+struct strbuf;
-=20
- struct tree {
- 	struct object object;
-@@ -22,7 +23,7 @@ void free_tree_buffer(struct tree *tree);
- struct tree *parse_tree_indirect(const unsigned char *sha1);
-=20
- #define READ_TREE_RECURSIVE 1
--typedef int (*read_tree_fn_t)(const unsigned char *, const char *, int=
-, const char *, unsigned int, int, void *);
-+typedef int (*read_tree_fn_t)(const unsigned char *, struct strbuf *, =
-const char *, unsigned int, int, void *);
-=20
- extern int read_tree_recursive(struct tree *tree,
- 			       const char *base, int baselen,
++test_expect_success 'ls-tree outside prefix' '
++	cat >expected <<EOF &&
++100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	../a[a]/three
++EOF
++	( cd aa && git ls-tree -r HEAD "../a[a]"; ) >actual &&
++	test_cmp expected actual
++'
++
+ test_done
 --=20
 2.2.0.60.gb7b3c64
