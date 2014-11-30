@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 04/19] ls_colors.c: highlight submodules like directories
-Date: Sun, 30 Nov 2014 15:55:52 +0700
-Message-ID: <1417337767-4505-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 05/19] ls-files: buffer full item in strbuf before printing
+Date: Sun, 30 Nov 2014 15:55:53 +0700
+Message-ID: <1417337767-4505-6-git-send-email-pclouds@gmail.com>
 References: <1417337767-4505-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,111 +10,162 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 30 09:56:58 2014
+X-From: git-owner@vger.kernel.org Sun Nov 30 09:57:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xv0JN-0002eJ-Jc
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 09:56:57 +0100
+	id 1Xv0Jg-0002nO-TI
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 09:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059AbaK3I4y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 03:56:54 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:64758 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752029AbaK3I4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 03:56:53 -0500
-Received: by mail-pa0-f49.google.com with SMTP id eu11so9135526pac.36
-        for <git@vger.kernel.org>; Sun, 30 Nov 2014 00:56:53 -0800 (PST)
+	id S1752098AbaK3I5D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 03:57:03 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:54373 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752076AbaK3I5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 03:57:00 -0500
+Received: by mail-pa0-f50.google.com with SMTP id bj1so9222706pad.9
+        for <git@vger.kernel.org>; Sun, 30 Nov 2014 00:57:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=WihzwMt0D1NPb1P6938nkXJm2aY5jesSEF/P6LxF6PU=;
-        b=P+9RRHE44QZyBQC/Je8PdCHZ1ODdjOz0AGqOYV2Vy99Lklwdj3X6twef4BAinC9j2C
-         wFXk39ILAcZsNCK9bUytlqADyysDbw42DTJm0W0w1/VBBRNpHmBttlqEpH/5+fe84y3G
-         5D/cvoy2yjFg5iKVsVffuxYPLcaCsvMj+rELHsYTbKPtXbPIFYzhl3+wlApjo0sLpSoy
-         mBuOxKxBlPZ5orpTHsbhGCnRl1XFCfP4nQV3sa50vlb9sAWSqFSRNCsUoN3nVgsD4nqA
-         YEO5P7TqdPJi+7tNmUGkDcbeLJCAg9M1VJ5C3qnirLUIbF1fyj3KUyoYRMvBWvE/zv2G
-         QBuQ==
-X-Received: by 10.66.221.168 with SMTP id qf8mr78230627pac.102.1417337813163;
-        Sun, 30 Nov 2014 00:56:53 -0800 (PST)
+        bh=78F6nIzl+EXQm6dyLEiKYliElV7jegKDzyp0V49+0Bo=;
+        b=rA2DpTZC4kMtui5YKucvCVdi+HtyD8MdmqKhN/diJA89RpnO+pxkWV5CqXFx8GKX3A
+         O3QM+gOuZb0K2dW3tlomun7HqzeqCqd/+cSd57kJHNgpY6Dooa5X91jsx0P8S/dbu2H9
+         Sc2Scm5Jz0Lz7gY7nOpHQW6kzOSHVD3V/mWlI31n2Y1xIG6+rlxCxSR0I006OerIXYnL
+         xM6D98glcht7NsxIXpZYUPWi4Mz+WFLX9q9QHzvgT2ha+3zvhucvlapYZwtl8lWUxjur
+         HdHRc4TvL5xF0iWuBSvWDAW1S3N6A7p/TbzSzI3hwPWPMKoXeUEedXfTwNYTDPdZ31e0
+         DbrQ==
+X-Received: by 10.68.226.6 with SMTP id ro6mr88766730pbc.31.1417337820398;
+        Sun, 30 Nov 2014 00:57:00 -0800 (PST)
 Received: from lanh ([115.73.247.22])
-        by mx.google.com with ESMTPSA id u4sm14301746pbs.60.2014.11.30.00.56.49
+        by mx.google.com with ESMTPSA id aq1sm14329330pbd.29.2014.11.30.00.56.57
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Nov 2014 00:56:52 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 15:56:51 +0700
+        Sun, 30 Nov 2014 00:56:59 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 15:56:59 +0700
 X-Mailer: git-send-email 2.2.0.60.gb7b3c64
 In-Reply-To: <1417337767-4505-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260428>
+
+Buffering so that we can manipulate the strings (e.g. coloring)
+further before finally printing them.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt | 3 ++-
- ls_colors.c              | 8 +++++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ builtin/ls-files.c | 48 +++++++++++++++++++++++++++++++++++-----------=
+--
+ 1 file changed, 35 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2090866..2290c47 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -944,7 +944,8 @@ color.ls.<slot>::
- 	Use customized color for file name colorization. If not set
- 	and the environment variable LS_COLORS is set, color settings
- 	from $LS_COLORS are used. `<slot>` can be `normal`, `file`,
--	`directory`, `symlink`, `fifo`, `socket`, `block`, `char`,
-+	`directory`, `submodule`,
-+	`symlink`, `fifo`, `socket`, `block`, `char`,
- 	`missing`, `orphan`, `executable`, `door`, `setuid`, `setgid`,
- 	`sticky`, `otherwritable`, `stickyotherwritable`, `cap`,
- 	`multihardlink`. The values of these variables may be
-diff --git a/ls_colors.c b/ls_colors.c
-index a58da9e..e62e74b 100644
---- a/ls_colors.c
-+++ b/ls_colors.c
-@@ -29,6 +29,8 @@ enum color_ls {
- 	LS_MH,			/* multi hardlink */
- 	LS_CL,			/* clear end of line */
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 99cee20..f20c0fd 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -47,18 +47,30 @@ static const char *tag_modified =3D "";
+ static const char *tag_skip_worktree =3D "";
+ static const char *tag_resolve_undo =3D "";
 =20
-+	LS_SUBMODULE,
+-static void write_name(const char *name)
++static void write_name(struct strbuf *sb, const char *name)
+ {
+ 	/*
+ 	 * With "--full-name", prefix_len=3D0; this caller needs to pass
+ 	 * an empty string in that case (a NULL is good for "").
+ 	 */
+-	write_name_quoted_relative(name, prefix_len ? prefix : NULL,
+-				   stdout, line_terminator);
++	const char *real_prefix =3D prefix_len ? prefix : NULL;
++	if (!line_terminator) {
++		struct strbuf sb2 =3D STRBUF_INIT;
++		strbuf_addstr(sb, relative_path(name, real_prefix, &sb2));
++		strbuf_release(&sb2);
++	} else
++		quote_path_relative(name, real_prefix, sb);
++	strbuf_addch(sb, line_terminator);
++}
 +
- 	MAX_LS
- };
++static void strbuf_fputs(struct strbuf *sb, FILE *fp)
++{
++	fwrite(sb->buf, sb->len, 1, fp);
+ }
 =20
-@@ -58,7 +60,8 @@ static char ls_colors[MAX_LS][COLOR_MAXLEN] =3D {
- 	GIT_COLOR_BLACK_ON_GREEN,
- 	"",
- 	"",
--	""
-+	"",
-+	GIT_COLOR_BOLD_BLUE
- };
+ static void show_dir_entry(const char *tag, struct dir_entry *ent)
+ {
++	static struct strbuf sb =3D STRBUF_INIT;
+ 	int len =3D max_prefix_len;
 =20
- static const char *const indicator_name[] =3D {
-@@ -73,6 +76,7 @@ static const char* const config_name[] =3D {
- 	"fifo", "socket", "block", "char", "missing", "orphan", "executable",
- 	"door", "setuid", "setgid", "sticky", "otherwritable",
- 	"stickyotherwritable", "cap", "multihardlink", "",
-+	"submodule",
- 	NULL
- };
+ 	if (len >=3D ent->len)
+@@ -67,8 +79,10 @@ static void show_dir_entry(const char *tag, struct d=
+ir_entry *ent)
+ 	if (!dir_path_match(ent, &pathspec, len, ps_matched))
+ 		return;
 =20
-@@ -448,6 +452,8 @@ void color_filename(struct strbuf *sb, const char *=
-name,
- 			type =3D LS_DI;
- 	} else if (S_ISLNK (mode))
- 		type =3D (!linkok && *ls_colors[LS_OR]) ? LS_OR : LS_LN;
-+	else if (S_ISGITLINK(mode))
-+		type =3D LS_SUBMODULE;
- 	else if (S_ISFIFO (mode))
- 		type =3D LS_PI;
- 	else if (S_ISSOCK (mode))
+-	fputs(tag, stdout);
+-	write_name(ent->name);
++	strbuf_reset(&sb);
++	strbuf_addstr(&sb, tag);
++	write_name(&sb, ent->name);
++	strbuf_fputs(&sb, stdout);
+ }
+=20
+ static void show_other_files(struct dir_struct *dir)
+@@ -134,6 +148,7 @@ static void show_killed_files(struct dir_struct *di=
+r)
+=20
+ static void show_ce_entry(const char *tag, const struct cache_entry *c=
+e)
+ {
++	static struct strbuf sb =3D STRBUF_INIT;
+ 	int len =3D max_prefix_len;
+=20
+ 	if (len >=3D ce_namelen(ce))
+@@ -161,16 +176,18 @@ static void show_ce_entry(const char *tag, const =
+struct cache_entry *ce)
+ 		tag =3D alttag;
+ 	}
+=20
++	strbuf_reset(&sb);
+ 	if (!show_stage) {
+-		fputs(tag, stdout);
++		strbuf_addstr(&sb, tag);
+ 	} else {
+-		printf("%s%06o %s %d\t",
+-		       tag,
+-		       ce->ce_mode,
+-		       find_unique_abbrev(ce->sha1,abbrev),
+-		       ce_stage(ce));
++		strbuf_addf(&sb, "%s%06o %s %d\t",
++			    tag,
++			    ce->ce_mode,
++			    find_unique_abbrev(ce->sha1,abbrev),
++			    ce_stage(ce));
+ 	}
+-	write_name(ce->name);
++	write_name(&sb, ce->name);
++	strbuf_fputs(&sb, stdout);
+ 	if (debug_mode) {
+ 		const struct stat_data *sd =3D &ce->ce_stat_data;
+=20
+@@ -206,7 +223,12 @@ static void show_ru_info(void)
+ 			printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
+ 			       find_unique_abbrev(ui->sha1[i], abbrev),
+ 			       i + 1);
+-			write_name(path);
++			/*
++			 * With "--full-name", prefix_len=3D0; this caller needs to pass
++			 * an empty string in that case (a NULL is good for "").
++			 */
++			write_name_quoted_relative(path, prefix_len ? prefix : NULL,
++						   stdout, line_terminator);
+ 		}
+ 	}
+ }
 --=20
 2.2.0.60.gb7b3c64
