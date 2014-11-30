@@ -1,265 +1,153 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: [PATCH] compat: convert modes to use portable file type values
-Date: Sat, 29 Nov 2014 21:41:10 -0500
-Message-ID: <87vblxl8ah.fsf@gmail.com>
+From: Arjun Sreedharan <arjun024@gmail.com>
+Subject: Re: [PATCH] introduce git root
+Date: Sun, 30 Nov 2014 10:05:37 +0530
+Message-ID: <CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
+References: <1417291211-32268-1-git-send-email-arjun024@gmail.com> <2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 30 03:41:03 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Nov 30 05:36:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XuuRa-0002eJ-VF
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 03:41:03 +0100
+	id 1XuwEu-0005K6-Q7
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 05:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbaK3Ckw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2014 21:40:52 -0500
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:46118 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679AbaK3Ckv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Nov 2014 21:40:51 -0500
-Received: by mail-qg0-f44.google.com with SMTP id z60so6281860qgd.3
-        for <git@vger.kernel.org>; Sat, 29 Nov 2014 18:40:50 -0800 (PST)
+	id S1751839AbaK3Ef7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2014 23:35:59 -0500
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:36050 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbaK3Ef6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2014 23:35:58 -0500
+Received: by mail-qc0-f180.google.com with SMTP id i8so6221667qcq.39
+        for <git@vger.kernel.org>; Sat, 29 Nov 2014 20:35:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:mime-version:content-type;
-        bh=3k7Xe4ChQEz9gEgAWZfLM8GDHym+cJ6ETiQGZqoKRNU=;
-        b=T1xgHuRF0/Vg7j+DBrNZ2iRtJqPhKxBDE95OO4c30rCWcof6zqiiw7Zo18sNqBJ+Y8
-         5OkaG7U7zEQgZ2Vyhv6kZ7pePPtQf3ktAAt5TRcx8AyoqBlgI0mDpFWUt1XXgTXMaovu
-         g+R4A6fIofuE1DVEZwsqlunHWcDSUixuKPRfrMS6YNA5h6VFHPuZbSa7nxsAHDQ0dt7u
-         L37n2yHgRV33LnvUf4rePAUDYFTZfx80ifF9X9t03oYm/HPlETgJY5h3wdhm+3JgSiP0
-         0vPcNPAawNvf+IbE8yBGxgCXhG6lKN/tXJywh9HUK5d5DUL1TY3RP+FmXnO2ANA7scS+
-         3YZA==
-X-Received: by 10.140.22.201 with SMTP id 67mr73679746qgn.16.1417315250043;
-        Sat, 29 Nov 2014 18:40:50 -0800 (PST)
-Received: from callisto (c-68-81-204-146.hsd1.pa.comcast.net. [68.81.204.146])
-        by mx.google.com with ESMTPSA id z32sm13559657qgd.40.2014.11.29.18.40.48
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Nov 2014 18:40:49 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Dl1rHDoGHm1Pruq0XnbqxK9Oo5WIePbnQfARYeKCTh0=;
+        b=HTRhGHipXzjLtLKpTVlDuwBiMtYnHMhTHuHvGrutX+r9glvchRoytuS/Cx5YnyjlYP
+         ef5xi7+T0UogOLElAnHRP4xsjHAJPP2GlbuQgGDTYBODQyMFGbkY+4LlJ165Afo1WhU0
+         q6bqmDeyqko/MTmz3aYVhmPhYc+dJh4mbN7fsh9f3mgIt61e070Al64ZJgfmsyE9vLXE
+         2JePwRMB1sj3EV7e3O+dfA1CYA2SNrszE4H4G8CVH1PtQ378CXeoirBqYyV8QgWW52Un
+         udisiD3hhaKDZm6RcxXoltM0n4QT1sf6oBfV836Bem/u0D2U13lFpS31XDBKtHcuG0oB
+         ej5A==
+X-Received: by 10.224.38.71 with SMTP id a7mr11082988qae.24.1417322157957;
+ Sat, 29 Nov 2014 20:35:57 -0800 (PST)
+Received: by 10.140.239.147 with HTTP; Sat, 29 Nov 2014 20:35:37 -0800 (PST)
+In-Reply-To: <2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260386>
 
-This adds simple wrapper functions around calls to stat(), fstat(),
-and lstat() that translate the operating system's native file type
-bits to those used by most operating systems.  It also rewrites the
-S_IF* macros to the common values, so all file type processing is
-performed using the translated modes.  This makes projects portable
-across operating systems that use different file type definitions.
+On 30 November 2014 at 04:38, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Arjun Sreedharan" <arjun024@gmail.com>
+>>
+>> This introduces `git root` which outputs the root directory
+>> (the directory that contains .git).
+>> The same can be accomplished by `git rev-parse --show-toplevel`.
+>> `git root` is much more intuitive and easy to remember.
+>> All it does is set the arguments for rev-parse
+>
+>
+> This may be better as an alias.
+> I've added it to my aliases list.
+>
 
-Only the file type bits may be affected by these compatibility
-functions; the file permission bits are assumed to be 07777 and are
-passed through unchanged.
+I know that. I am suggesting this to be a built-in command, without having the
+need to add as an alias.
 
-Signed-off-by: David Michael <fedora.dm0@gmail.com>
----
-
-
-Hi,
-
-This is my most recent attempt at solving the problem of z/OS using
-different file type values than every other OS.  I believe it should be
-safe as long as the file type bits don't ever need to be converted back
-to their native values (and I didn't see any instances of that).
-
-I've been testing it by making commits to the same repositories on
-different operating systems and pushing those changes around, and so far
-there have been no issues.
-
-Can anyone foresee any problems with this method?
-
-Thanks.
-
-David
-
-
- Makefile          |  8 ++++++++
- cache.h           |  7 -------
- compat/stat.c     | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- configure.ac      | 22 ++++++++++++++++++++++
- git-compat-util.h | 32 ++++++++++++++++++++++++++++++++
- 5 files changed, 111 insertions(+), 7 deletions(-)
- create mode 100644 compat/stat.c
-
-diff --git a/Makefile b/Makefile
-index 827006b..cba3be1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -191,6 +191,10 @@ all::
- # Define NO_TRUSTABLE_FILEMODE if your filesystem may claim to support
- # the executable mode bit, but doesn't really do so.
- #
-+# Define NEEDS_MODE_TRANSLATION if your OS strays from the typical file type
-+# bits in mode values (e.g. z/OS defines I_SFMT to 0xFF000000 as opposed to the
-+# usual 0xF000).
-+#
- # Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
- #
- # Define NO_UNIX_SOCKETS if your system does not offer unix sockets.
-@@ -1230,6 +1234,10 @@ endif
- ifdef NO_TRUSTABLE_FILEMODE
- 	BASIC_CFLAGS += -DNO_TRUSTABLE_FILEMODE
- endif
-+ifdef NEEDS_MODE_TRANSLATION
-+	COMPAT_CFLAGS += -DNEEDS_MODE_TRANSLATION
-+	COMPAT_OBJS += compat/stat.o
-+endif
- ifdef NO_IPV6
- 	BASIC_CFLAGS += -DNO_IPV6
- endif
-diff --git a/cache.h b/cache.h
-index 99ed096..f8174fe 100644
---- a/cache.h
-+++ b/cache.h
-@@ -65,13 +65,6 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
-  *
-  * The value 0160000 is not normally a valid mode, and
-  * also just happens to be S_IFDIR + S_IFLNK
-- *
-- * NOTE! We *really* shouldn't depend on the S_IFxxx macros
-- * always having the same values everywhere. We should use
-- * our internal git values for these things, and then we can
-- * translate that to the OS-specific value. It just so
-- * happens that everybody shares the same bit representation
-- * in the UNIX world (and apparently wider too..)
-  */
- #define S_IFGITLINK	0160000
- #define S_ISGITLINK(m)	(((m) & S_IFMT) == S_IFGITLINK)
-diff --git a/compat/stat.c b/compat/stat.c
-new file mode 100644
-index 0000000..0ff1f2f
---- /dev/null
-+++ b/compat/stat.c
-@@ -0,0 +1,49 @@
-+#define _POSIX_SOURCE
-+#include <stddef.h>    /* NULL         */
-+#include <sys/stat.h>  /* *stat, S_IS* */
-+#include <sys/types.h> /* mode_t       */
-+
-+static inline mode_t mode_native_to_git(mode_t native_mode)
-+{
-+	if (S_ISREG(native_mode))
-+		return 0100000 | (native_mode & 07777);
-+	else if (S_ISDIR(native_mode))
-+		return 0040000 | (native_mode & 07777);
-+	else if (S_ISLNK(native_mode))
-+		return 0120000 | (native_mode & 07777);
-+	else if (S_ISBLK(native_mode))
-+		return 0060000 | (native_mode & 07777);
-+	else if (S_ISCHR(native_mode))
-+		return 0020000 | (native_mode & 07777);
-+	else if (S_ISFIFO(native_mode))
-+		return 0010000 | (native_mode & 07777);
-+	else /* Non-standard type bits were given. */
-+		return native_mode & 07777;
-+}
-+
-+int git_stat(const char *path, struct stat *buf)
-+{
-+	int rc;
-+	rc = stat(path, buf);
-+	if (buf != NULL)
-+		buf->st_mode = mode_native_to_git(buf->st_mode);
-+	return rc;
-+}
-+
-+int git_fstat(int fd, struct stat *buf)
-+{
-+	int rc;
-+	rc = fstat(fd, buf);
-+	if (buf != NULL)
-+		buf->st_mode = mode_native_to_git(buf->st_mode);
-+	return rc;
-+}
-+
-+int git_lstat(const char *path, struct stat *buf)
-+{
-+	int rc;
-+	rc = lstat(path, buf);
-+	if (buf != NULL)
-+		buf->st_mode = mode_native_to_git(buf->st_mode);
-+	return rc;
-+}
-diff --git a/configure.ac b/configure.ac
-index 6af9647..b8eced4 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -873,6 +873,28 @@ else
- 	SNPRINTF_RETURNS_BOGUS=
- fi
- GIT_CONF_SUBST([SNPRINTF_RETURNS_BOGUS])
-+#
-+# Define NEEDS_MODE_TRANSLATION if your OS strays from the typical file type
-+# bits in mode values.
-+AC_CACHE_CHECK([whether the platform uses typical file type bits],
-+ [ac_cv_sane_mode_bits], [
-+AC_EGREP_CPP(yippeeyeswehaveit,
-+	AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-+[#if S_IFMT == 0170000 && \
-+	S_IFREG == 0100000 && S_IFDIR == 0040000 && S_IFLNK == 0120000 && \
-+	S_IFBLK == 0060000 && S_IFCHR == 0020000 && S_IFIFO == 0010000
-+yippeeyeswehaveit
-+#endif
-+]),
-+	[ac_cv_sane_mode_bits=yes],
-+	[ac_cv_sane_mode_bits=no])
-+])
-+if test $ac_cv_sane_mode_bits = yes; then
-+	NEEDS_MODE_TRANSLATION=
-+else
-+	NEEDS_MODE_TRANSLATION=UnfortunatelyYes
-+fi
-+GIT_CONF_SUBST([NEEDS_MODE_TRANSLATION])
- 
- 
- ## Checks for library functions.
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 400e921..48f6910 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -474,6 +474,38 @@ extern int git_munmap(void *start, size_t length);
- #define on_disk_bytes(st) ((st).st_blocks * 512)
- #endif
- 
-+#ifdef NEEDS_MODE_TRANSLATION
-+#undef S_IFMT
-+#undef S_IFREG
-+#undef S_IFDIR
-+#undef S_IFLNK
-+#undef S_IFBLK
-+#undef S_IFCHR
-+#undef S_IFIFO
-+#define S_IFMT  0170000
-+#define S_IFREG 0100000
-+#define S_IFDIR 0040000
-+#define S_IFLNK 0120000
-+#define S_IFBLK 0060000
-+#define S_IFCHR 0020000
-+#define S_IFIFO 0010000
-+#ifdef stat
-+#undef stat
-+#endif
-+#define stat(path, buf) git_stat(path, buf)
-+extern int git_stat(const char *, struct stat *);
-+#ifdef fstat
-+#undef fstat
-+#endif
-+#define fstat(fd, buf) git_fstat(fd, buf)
-+extern int git_fstat(int, struct stat *);
-+#ifdef lstat
-+#undef lstat
-+#endif
-+#define lstat(path, buf) git_lstat(path, buf)
-+extern int git_lstat(const char *, struct stat *);
-+#endif
-+
- #define DEFAULT_PACKED_GIT_LIMIT \
- 	((1024L * 1024L) * (sizeof(void*) >= 8 ? 8192 : 256))
- 
--- 
-1.9.3
+>>
+>> Signed-off-by: Arjun Sreedharan <arjun024@gmail.com>
+>> ---
+>>
+>>
+>> Hi,
+>> I don't know if I can just send a patch for a new "command" in git,
+>> I probably shouldn't. Well, i thought it's anyway better explaining
+>> this way than just asking for comments.
+>>
+>> With the kind of projects i have been involved with in the recent past, I
+>> have had to deal with subprojects inside projects and for many reasons had
+>> to find ways to find the root git folder and at times to "cd" to it.
+>>
+>> The obvious choice is to go for `git rev-parse --show-toplevel`. But, this
+>> to me doesn't seem very _intuitive_ and `git root` does.
+>> bzr has `bzr root`. hg has `hg root`. So, for programmers i am guessing
+>> this pattern would also be _instinctive_, and i am thinking why not `git
+>> root`?
+>> Arjun Sreedharan
+>>
+>>
+>>
+>> Makefile       |  1 +
+>> builtin.h      |  1 +
+>> builtin/root.c | 10 ++++++++++
+>> git.c          |  1 +
+>> 4 files changed, 13 insertions(+)
+>> create mode 100644 builtin/root.c
+>>
+>> diff --git a/Makefile b/Makefile
+>> index 827006b..7f28d13 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -869,6 +869,7 @@ BUILTIN_OBJS += builtin/rev-list.o
+>> BUILTIN_OBJS += builtin/rev-parse.o
+>> BUILTIN_OBJS += builtin/revert.o
+>> BUILTIN_OBJS += builtin/rm.o
+>> +BUILTIN_OBJS += builtin/root.o
+>> BUILTIN_OBJS += builtin/send-pack.o
+>> BUILTIN_OBJS += builtin/shortlog.o
+>> BUILTIN_OBJS += builtin/show-branch.o
+>> diff --git a/builtin.h b/builtin.h
+>> index b87df70..4672d72 100644
+>> --- a/builtin.h
+>> +++ b/builtin.h
+>> @@ -112,6 +112,7 @@ extern int cmd_rev_list(int argc, const char **argv,
+>> const char *prefix);
+>> extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
+>> extern int cmd_revert(int argc, const char **argv, const char *prefix);
+>> extern int cmd_rm(int argc, const char **argv, const char *prefix);
+>> +extern int cmd_root(int argc, const char **argv, const char *prefix);
+>> extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
+>> extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
+>> extern int cmd_show(int argc, const char **argv, const char *prefix);
+>> diff --git a/builtin/root.c b/builtin/root.c
+>> new file mode 100644
+>> index 0000000..c2eeca3
+>> --- /dev/null
+>> +++ b/builtin/root.c
+>> @@ -0,0 +1,10 @@
+>> +#include "builtin.h"
+>> +#include "argv-array.h"
+>> +
+>> +int cmd_root(int argc, const char **argv, const char *prefix)
+>> +{
+>> + struct argv_array root_args = ARGV_ARRAY_INIT;
+>> +
+>> + argv_array_pushl(&root_args, argv[0], "--show-toplevel", NULL);
+>> + return cmd_rev_parse(root_args.argc, root_args.argv, prefix);
+>> +}
+>> diff --git a/git.c b/git.c
+>> index 18fbf79..6a0be5f 100644
+>> --- a/git.c
+>> +++ b/git.c
+>> @@ -461,6 +461,7 @@ static struct cmd_struct commands[] = {
+>>  { "rev-parse", cmd_rev_parse },
+>>  { "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
+>>  { "rm", cmd_rm, RUN_SETUP },
+>> + { "root", cmd_root, RUN_SETUP },
+>>  { "send-pack", cmd_send_pack, RUN_SETUP },
+>>  { "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
+>>  { "show", cmd_show, RUN_SETUP },
+>> --
+>> 1.7.11.7
+>>
+>> --
+>
+> Philip
