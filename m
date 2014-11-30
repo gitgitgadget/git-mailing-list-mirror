@@ -1,111 +1,126 @@
-From: Bryan Turner <bturner@atlassian.com>
+From: Pol Online <info@pol-online.net>
 Subject: Re: git status / git diff -C not detecting file copy
-Date: Sun, 30 Nov 2014 12:03:35 +1100
-Message-ID: <CAGyf7-E_y8zRUKh5RWvAhPXzSgpnVab6e=e1v92rSVVxf+LNJg@mail.gmail.com>
+Date: Sun, 30 Nov 2014 10:30:10 +0900
+Message-ID: <CAJxwDJzxUEd3czHpwDtKaERKDhvyCGOzGbKO4X9z44ugTJ2q4w@mail.gmail.com>
 References: <CAJxwDJzzNV77cTP4nbzgCvFjjqp3C4X8d3j6uwhYvK4+g4r1YQ@mail.gmail.com>
+	<CAGyf7-E_y8zRUKh5RWvAhPXzSgpnVab6e=e1v92rSVVxf+LNJg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Users <git@vger.kernel.org>
-To: Pol Online <info@pol-online.net>
-X-From: git-owner@vger.kernel.org Sun Nov 30 02:03:49 2014
+To: Bryan Turner <bturner@atlassian.com>
+X-From: git-owner@vger.kernel.org Sun Nov 30 02:30:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XusvU-0003iV-Mc
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 02:03:49 +0100
+	id 1XutL8-0007DZ-Or
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 02:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751808AbaK3BDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Nov 2014 20:03:38 -0500
-Received: from na3sys009aog105.obsmtp.com ([74.125.149.75]:35132 "HELO
-	na3sys009aog105.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751804AbaK3BDh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Nov 2014 20:03:37 -0500
-Received: from mail-oi0-f51.google.com ([209.85.218.51]) (using TLSv1) by na3sys009aob105.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKVHps6PZkzqx/UQfRZ3DJpiD8kovtSEj7@postini.com; Sat, 29 Nov 2014 17:03:37 PST
-Received: by mail-oi0-f51.google.com with SMTP id e131so6018976oig.38
-        for <git@vger.kernel.org>; Sat, 29 Nov 2014 17:03:35 -0800 (PST)
+	id S1751846AbaK3BaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Nov 2014 20:30:12 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:41961 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751684AbaK3BaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Nov 2014 20:30:11 -0500
+Received: by mail-qc0-f174.google.com with SMTP id c9so6153688qcz.19
+        for <git@vger.kernel.org>; Sat, 29 Nov 2014 17:30:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pol-online.net; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=j0tL7kMCo5rzFjjD4jIMMOJCM/iMoflr08jL95OXW0c=;
+        b=R9dAZ4Oue5aViAxl3Y25kB517WPN7eyn3Et7bdo6X4O6qyPWNh3BqD603qNCPLfKF6
+         I9PodAKJf0betbzsm7Y3b5GMIKHSahyGdVDpX1gtnThOd/Wf0YN3tzVxsPSoZEqNY+IU
+         q8jmJrVyC0+dRVPIUFJVQuDCK1O6NPNqVR+Zc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=Qg4OXO1esQhFrEADAxlIoxSc2yqxgg7L/j4EtBA6A6o=;
-        b=jWl41x7qc3FDXsQCimwpQxFgOCAjclmLPzBFg/6hnapH6C4nKpWzByMJuHVnwpIaat
-         qAj3lU7us6VmkmKqNXrYVCjsP0juxY2JXW4RxhZHE0Q4Be07pOy5DdPzzqol2e2TKKYv
-         jM1RCiplvvHsaV3CGZ9ATzO7eEovQfKh5H+juu8bHo2vXBwMEhFyB5R8FfJAumdsurUD
-         myMZgioERrgcEsPjCN9ijr+K1a9URkHoU+k+cPmOT5TRcTgWRTHJrE2B/a04n9owRfUJ
-         54dI1/Tp/+1KnkwF22XRNHHIPPkMkuTGwbCKrGXjG8aM1Khy5dMRi9OVorToJE86vSmK
-         nuBw==
-X-Gm-Message-State: ALoCoQng9JMTTGqsMvW7jgu/3lIt2MeDs3Jlt4NuXAiZqa8hcfjMwefzP/uYmkOL7UTsNTp4RI3rRV4XkLq8+HJiGofrgQGdNLGvC7n4+lBkwoNhzoeX+kRpFL8bKvcHt7cZS3Wd9YsBbWEMbcY3iULWrv3Nd2gExQ==
-X-Received: by 10.202.204.208 with SMTP id c199mr30467838oig.42.1417309415768;
-        Sat, 29 Nov 2014 17:03:35 -0800 (PST)
-X-Received: by 10.202.204.208 with SMTP id c199mr30467828oig.42.1417309415616;
- Sat, 29 Nov 2014 17:03:35 -0800 (PST)
-Received: by 10.182.245.170 with HTTP; Sat, 29 Nov 2014 17:03:35 -0800 (PST)
-In-Reply-To: <CAJxwDJzzNV77cTP4nbzgCvFjjqp3C4X8d3j6uwhYvK4+g4r1YQ@mail.gmail.com>
+        bh=j0tL7kMCo5rzFjjD4jIMMOJCM/iMoflr08jL95OXW0c=;
+        b=T3caJRvMDMW2mPCTmOmx72HtNYh6VWL1cHGXPPE3kg2zldNJ1u9CrXADLDITqj9oio
+         2TLV83iH+q2nLr8Wy0WtNR+X3tQEnx+AXmLU+67PlKlakx/JBtZTlu3gIcIWvXZn/nLu
+         j/r1wINJ1BBueOw3PNr27mxO7GQixc+1TB5q6u9QHy7+YQnuVQmgZtnk63q9TCJf6Lrn
+         N0C4MPE54t4e7SWcXIXXHRiJRPuaFSJZn/1jBQJAeR0jQNzbFIs62tBPRC4DCxgjHIYq
+         ReudY7yUMuTI5k8bNviorHdiRxgM0QmC5kn9+J1xRlKyv45Tczdph7grAGnNTv29JKcR
+         70VA==
+X-Gm-Message-State: ALoCoQmYl4+M6vKKCrec+aB653TJ8H606yuPqiLIAccFRY/i4HBo/6wPeROIw/I3Nypy4m07pvsN
+X-Received: by 10.140.40.104 with SMTP id w95mr75178954qgw.14.1417311010188;
+ Sat, 29 Nov 2014 17:30:10 -0800 (PST)
+Received: by 10.140.97.5 with HTTP; Sat, 29 Nov 2014 17:30:10 -0800 (PST)
+X-Originating-IP: [221.186.131.72]
+In-Reply-To: <CAGyf7-E_y8zRUKh5RWvAhPXzSgpnVab6e=e1v92rSVVxf+LNJg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260383>
 
-Pol,
+Hi Bryan,
 
-By default, -C only finds copies when the source file was also
-modified in the same commit. Since you did not modify hello.txt in the
-same commit where you copied it to copied.txt, it will not be
-considered.
+OK that explains the behavior of git diff, but what about git status?
+The doc implies it should be able to detect copies in the index /
+staging area since it has a "C" state.
 
-If you pass -C -C (twice), or use --find-copies-harder, Git will
-consider all files in the repository. Note that this can be slower,
-which is the reason why it's not the default.
+- Pol
 
-The documentation for git diff describes the -C (--find-copies) and
---find-copies-harder flags and their limitations.
-
-Hope this helps,
-Bryan Turner
-
-On Sun, Nov 30, 2014 at 11:35 AM, Pol Online <info@pol-online.net> wrote:
-> Hi,
+On Sun, Nov 30, 2014 at 10:03 AM, Bryan Turner <bturner@atlassian.com> wrote:
+> Pol,
 >
-> The documentation for git status at http://git-scm.com/docs/git-status
-> implies that it should be able to detect both renames and copies (with
-> the R and C states). The command git diff -C should do it as well.
+> By default, -C only finds copies when the source file was also
+> modified in the same commit. Since you did not modify hello.txt in the
+> same commit where you copied it to copied.txt, it will not be
+> considered.
 >
-> However I can't get either to detect copies in this simple test case -
-> what is happening?
+> If you pass -C -C (twice), or use --find-copies-harder, Git will
+> consider all files in the repository. Note that this can be slower,
+> which is the reason why it's not the default.
 >
+> The documentation for git diff describes the -C (--find-copies) and
+> --find-copies-harder flags and their limitations.
 >
-> mkdir test
-> cd test/
-> git init
-> echo 'Hello World!' > hello.txt
-> echo 'Goodbye World!' > goodbye.txt
-> git add -A
-> git commit -m "Initial commit"
+> Hope this helps,
+> Bryan Turner
 >
-> cp hello.txt copied.txt
-> mv goodbye.txt moved.txt
-> git add -A
->
-> $ git status --short
-> A  copied.txt  <------------ NO COPY DETECTED
-> R  goodbye.txt -> moved.txt
->
-> $ git diff -M -C --summary --cached
->  create mode 100644 copied.txt  <------------ NO COPY DETECTED
->  rename goodbye.txt => moved.txt (100%)
->
-> $ git commit -m Test
-> $ git diff -M -C --summary HEAD~
->   create mode 100644 copied.txt  <------------ NO COPY DETECTED
->   rename goodbye.txt => moved.txt (100%)
->
->
-> -Pol
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> On Sun, Nov 30, 2014 at 11:35 AM, Pol Online <info@pol-online.net> wrote:
+>> Hi,
+>>
+>> The documentation for git status at http://git-scm.com/docs/git-status
+>> implies that it should be able to detect both renames and copies (with
+>> the R and C states). The command git diff -C should do it as well.
+>>
+>> However I can't get either to detect copies in this simple test case -
+>> what is happening?
+>>
+>>
+>> mkdir test
+>> cd test/
+>> git init
+>> echo 'Hello World!' > hello.txt
+>> echo 'Goodbye World!' > goodbye.txt
+>> git add -A
+>> git commit -m "Initial commit"
+>>
+>> cp hello.txt copied.txt
+>> mv goodbye.txt moved.txt
+>> git add -A
+>>
+>> $ git status --short
+>> A  copied.txt  <------------ NO COPY DETECTED
+>> R  goodbye.txt -> moved.txt
+>>
+>> $ git diff -M -C --summary --cached
+>>  create mode 100644 copied.txt  <------------ NO COPY DETECTED
+>>  rename goodbye.txt => moved.txt (100%)
+>>
+>> $ git commit -m Test
+>> $ git diff -M -C --summary HEAD~
+>>   create mode 100644 copied.txt  <------------ NO COPY DETECTED
+>>   rename goodbye.txt => moved.txt (100%)
+>>
+>>
+>> -Pol
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
