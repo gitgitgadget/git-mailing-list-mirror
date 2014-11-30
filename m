@@ -1,80 +1,95 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 3/3] ls-tree: disable negative pathspec because it's not supported
-Date: Sun, 30 Nov 2014 16:05:02 +0700
-Message-ID: <1417338302-8208-4-git-send-email-pclouds@gmail.com>
-References: <1417338302-8208-1-git-send-email-pclouds@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] introduce git root
+Date: Sun, 30 Nov 2014 12:58:54 +0100
+Message-ID: <vpqoaro99xd.fsf@anie.imag.fr>
+References: <1417291211-32268-1-git-send-email-arjun024@gmail.com>
+	<2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
+	<CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 30 10:05:45 2014
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Arjun Sreedharan <arjun024@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 30 12:59:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xv0Rr-0006FB-Sm
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 10:05:44 +0100
+	id 1Xv39k-0002Ap-QQ
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Nov 2014 12:59:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179AbaK3JFh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Nov 2014 04:05:37 -0500
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:47810 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752010AbaK3JFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 04:05:33 -0500
-Received: by mail-pd0-f174.google.com with SMTP id w10so8933647pde.19
-        for <git@vger.kernel.org>; Sun, 30 Nov 2014 01:05:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=geOcaPPunXC6NzjkpWwvUKFfilHVRKZBROxcHYTyhq4=;
-        b=lSv7pOrA52M7divgHoky5J0dNSMTiYby6Np/SCjeIikigHRXkw/vs4KbYy06CP/Mm8
-         vOfVkmb2uOKl66Hu/2lIrTp53tmfXybJWRG1Wl+j+79CVQ9wEjlrG+/OCtiF11+LatcJ
-         z4gSi5A7no58SN2zvE6d7DpiP1SuhNTCC865nNMdViiqMr5GiG5xVEkSu39rMk/bPF3n
-         yyjs76J4WxB1xcfNeZ2ZCUBRAOvrJm1t/3eLcs42C2yuyj0wW5mEt2CP0fwFuOawRFTC
-         jaEQVZXBhbuBBGIbB/32rPx/0x+TkgehpcOIhp/zRUgsJxJR04C7hRc1zeeC5BmeCsLr
-         pD+A==
-X-Received: by 10.67.22.162 with SMTP id ht2mr70831836pad.49.1417338333289;
-        Sun, 30 Nov 2014 01:05:33 -0800 (PST)
-Received: from lanh ([115.73.247.22])
-        by mx.google.com with ESMTPSA id ml5sm14467080pab.32.2014.11.30.01.05.29
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Nov 2014 01:05:32 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 30 Nov 2014 16:05:30 +0700
-X-Mailer: git-send-email 2.2.0.60.gb7b3c64
-In-Reply-To: <1417338302-8208-1-git-send-email-pclouds@gmail.com>
+	id S1752192AbaK3L7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Nov 2014 06:59:07 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:53977 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752073AbaK3L7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 06:59:05 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id sAUBwrNO002949
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 30 Nov 2014 12:58:53 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id sAUBwsFc005090;
+	Sun, 30 Nov 2014 12:58:54 +0100
+In-Reply-To: <CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
+	(Arjun Sreedharan's message of "Sun, 30 Nov 2014 10:05:37 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 30 Nov 2014 12:58:54 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: sAUBwrNO002949
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1417953537.43212@dolTj4GUu0g7w08rFkHfFg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260447>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/ls-tree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Arjun Sreedharan <arjun024@gmail.com> writes:
 
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 053edb2..3b04a0f 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -174,7 +174,8 @@ int cmd_ls_tree(int argc, const char **argv, const =
-char *prefix)
- 	 * cannot be lifted until it is converted to use
- 	 * match_pathspec() or tree_entry_interesting()
- 	 */
--	parse_pathspec(&pathspec, PATHSPEC_GLOB | PATHSPEC_ICASE,
-+	parse_pathspec(&pathspec, PATHSPEC_GLOB | PATHSPEC_ICASE |
-+				  PATHSPEC_EXCLUDE,
- 		       PATHSPEC_PREFER_CWD,
- 		       prefix, argv + 1);
- 	for (i =3D 0; i < pathspec.nr; i++)
---=20
-2.2.0.60.gb7b3c64
+> On 30 November 2014 at 04:38, Philip Oakley <philipoakley@iee.org> wrote:
+>> From: "Arjun Sreedharan" <arjun024@gmail.com>
+>>>
+>>> This introduces `git root` which outputs the root directory
+>>> (the directory that contains .git).
+>>> The same can be accomplished by `git rev-parse --show-toplevel`.
+>>> `git root` is much more intuitive and easy to remember.
+>>> All it does is set the arguments for rev-parse
+>>
+>>
+>> This may be better as an alias.
+>> I've added it to my aliases list.
+>>
+>
+> I know that. I am suggesting this to be a built-in command, without having the
+> need to add as an alias.
+
+Indeed, suggesting people to add an alias does not solve the
+discoverability issue. git rev-parse --show-toplevel is not just long,
+it's just not the place where people would look for (it's neither about
+revision nor about parsing, so clearly, "rev-parse" is not a good place
+to host the feature in the UI).
+
+If we were to rewrite Git from scratch, then I would be all for having a
+"git root" command. Given that we already have rev-parse
+--show-toplevel, and that we'll have to keep it anyway for backward
+compatibility, I'm a bit more hesitant ("Git is hard to use because it
+doesn't have enough commands" is not a complain I hear so often ;-) ),
+but still mostly positive.
+
+If we go this way, then the documentation must be updated too. I think
+the doc should still recommend "git rev-parse --show-toplevel" for
+scripting until Git versions implementing "git root" are widely deployed
+enough.
+
+Also, there are other options of git rev-parse which should be dealt
+with: at least --show-cdup (could be eg. "git root --relative") and
+--show-prefix, but probably also others from the "Options for Files" in
+the man of git-rev-parse.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
