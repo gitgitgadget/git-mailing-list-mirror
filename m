@@ -1,147 +1,259 @@
-From: Aarni Koskela <aarni.koskela@andersinnovations.com>
-Subject: [PATCH] git add -i: allow list (un)selection by regexp
-Date: Mon, 1 Dec 2014 09:31:22 +0000
-Message-ID: <DB3PR04MB25020F247555E521936E676EB7D0@DB3PR04MB250.eurprd04.prod.outlook.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Support for git-svn propset
+Date: Mon, 1 Dec 2014 09:49:11 +0000
+Message-ID: <20141201094911.GA13931@dcvr.yhbt.net>
+References: <20141201062420.GF99906@elvis.mu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "akx@iki.fi" <akx@iki.fi>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 01 10:46:58 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Michael G. Schwern" <schwern@pobox.com>,
+	David Fraser <davidf@sjsoft.com>
+To: Alfred Perlstein <alfred@freebsd.org>
+X-From: git-owner@vger.kernel.org Mon Dec 01 10:49:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvNZH-0007MG-Qr
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 10:46:56 +0100
+	id 1XvNbZ-00088M-1V
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 10:49:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783AbaLAJqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2014 04:46:52 -0500
-Received: from mail-am1on0062.outbound.protection.outlook.com ([157.56.112.62]:64544
-	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752741AbaLAJqv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2014 04:46:51 -0500
-X-Greylist: delayed 925 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Dec 2014 04:46:50 EST
-Received: from DB3PR04MB250.eurprd04.prod.outlook.com (10.242.130.14) by
- DB3PR04MB250.eurprd04.prod.outlook.com (10.242.130.14) with Microsoft SMTP
- Server (TLS) id 15.1.26.15; Mon, 1 Dec 2014 09:31:23 +0000
-Received: from DB3PR04MB250.eurprd04.prod.outlook.com ([169.254.2.138]) by
- DB3PR04MB250.eurprd04.prod.outlook.com ([169.254.2.138]) with mapi id
- 15.01.0026.003; Mon, 1 Dec 2014 09:31:22 +0000
-Thread-Topic: [PATCH] git add -i: allow list (un)selection by regexp
-Thread-Index: AdANSY4HwbHWiaTnRVO1IoZWMHUGow==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [213.157.91.17]
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:;SRVR:DB3PR04MB250;
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:;SRVR:DB3PR04MB250;
-x-forefront-prvs: 0412A98A59
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(199003)(189002)(52044002)(110136001)(101416001)(99396003)(64706001)(87936001)(76576001)(4396001)(2656002)(74316001)(19580395003)(120916001)(19580405001)(20776003)(77096004)(46102003)(97736003)(66066001)(229853001)(92726001)(92566001)(105586002)(77156002)(62966003)(2351001)(107046002)(575784001)(86362001)(95666004)(106356001)(50986999)(21056001)(33656002)(31966008)(40100003)(54356999);DIR:OUT;SFP:1101;SCL:1;SRVR:DB3PR04MB250;H:DB3PR04MB250.eurprd04.prod.outlook.com;FPR:;SPF:None;MLV:sfv;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-X-OriginatorOrg: andersinnovations.com
+	id S1752724AbaLAJtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2014 04:49:13 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:51066 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752039AbaLAJtM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2014 04:49:12 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 83FB51FAC7;
+	Mon,  1 Dec 2014 09:49:11 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20141201062420.GF99906@elvis.mu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260477>
 
-Hello!
+Alfred Perlstein <alfred@freebsd.org> wrote:
+> This change allows git-svn to support setting subversion properties.
+> 
+> Very useful for manually setting properties when committing to a
+> subversion repo that *requires* properties to be set without requiring
+> moving your changeset to separate subversion checkout in order to
+> set props.
 
-This patch makes it possible to select or unselect files in `git add -i`
-by regular expression instead of unique prefix only.
+Thanks Alfred, that's a good reason for supporting this feature
+(something I wasn't convinced of with the original).
 
-The command syntax is `/foo` for selection and `-/foo` for unselection.
-I don't think the syntax will conflict with any existing use cases, but feel
-free to prove me wrong.
+> This change is initially from David Fraser <davidf () sjsoft ! com>
+> Appearing here: http://marc.info/?l=git&m=125259772625008&w=2
 
-I'm not a Perl programmer, but I've tried to follow the style of the
-existing code as much as possible. :)
+I've added David to the Cc: (but I never heard back from him regarding
+comments from his original patch).
 
-Note I'm currently not on the mailing list, so please cc.
+Alfred: I had some comments on David's original patch here that
+were never addressed:
+  http://mid.gmane.org/20090923085812.GA20673@dcvr.yhbt.net
 
-Best regards,
+I suspect my concerns about .gitattributes in the source tree from
+2009 are less relevant now in 2014 as git-svn seems more socially
+acceptable in SVN-using projects.
 
-Aarni Koskela
+Some of my other concerns about mimicking existing Perl style still
+apply, and we have a Perl section in Documenting/CodingGuidelines
+nowadays.
 
->From 53c12d9c9928dc93a57595e92d785ecc0b245390 Mon Sep 17 00:00:00 2001
-From: Aarni Koskela <akx@iki.fi>
-Date: Mon, 1 Dec 2014 11:06:10 +0200
-Subject: [PATCH] git-add--interactive: allow list (un)selection by regular
- expression
+> They are now forward ported to most recent git along with fixes to
+> deal with files in subdirectories.
+> 
+>         Developer's Certificate of Origin 1.1
 
-Teach `list_and_choose` to allow `/regexp` and `-/regexp` syntax to
-select items based on regular expression match.
+<snip> no need for the whole DCO in the commit message.
+just the S-o-b:
 
-For instance, `/jpg$` will select all options whose display name ends with
-`jpg`.
+> Signed-off-by: Alfred Perlstein <alfred@freebsd.org>
 
-Signed-off-by: Aarni Koskela <akx@iki.fi>
----
- git-add--interactive.perl | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Since this was originally written by David, his sign-off from the
+original email should be here (Cc: for bigger changes)
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 1fadd69..34cc603 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -483,6 +483,8 @@ sub is_valid_prefix {
- 	    !($prefix =~ /[\s,]/) && # separators
- 	    !($prefix =~ /^-/) &&    # deselection
- 	    !($prefix =~ /^\d+/) &&  # selection
-+	    !($prefix =~ /^\//) &&   # regexp selection
-+	    !($prefix =~ /^-\//) &&  # regexp unselection
- 	    ($prefix ne '*') &&      # "all" wildcard
- 	    ($prefix ne '?');        # prompt help
- }
-@@ -585,6 +587,28 @@ sub list_and_choose {
- 			    prompt_help_cmd();
- 			next TOPLOOP;
- 		}
-+		if ($line =~ /^(-)*\/(.+)$/) {
-+			my $choose = !($1 && $1 eq '-');
-+			my $re = $2;
-+			my $found = 0;
-+			for ($i = 0; $i < @stuff; $i++) {
-+				my $val = $stuff[$i];
-+				my $ref = ref $val;
-+				if ($ref eq 'ARRAY') {
-+					$val = $val->[0];
-+				}
-+				elsif ($ref eq 'HASH') {
-+					$val = $val->{VALUE};
-+				}
-+				if ($val =~ /$re/) {
-+					$chosen[$i] = $choose;
-+					$found = 1;
-+					last if $opts->{SINGLETON};
-+				}
-+			}
-+			last if $found && ($opts->{IMMEDIATE});
-+			next TOPLOOP;
-+		}
- 		for my $choice (split(/[\s,]+/, $line)) {
- 			my $choose = 1;
- 			my ($bottom, $top);
-@@ -635,6 +659,7 @@ sub singleton_prompt_help_cmd {
- Prompt help:
- 1          - select a numbered item
- foo        - select item based on unique prefix
-+/regexp    - select item based on regular expression
-            - (empty) select nothing
- EOF
- }
-@@ -648,6 +673,8 @@ Prompt help:
- foo        - select item based on unique prefix
- -...       - unselect specified items
- *          - choose all items
-+/regexp    - select items based on regular expression
-+-/regexp   - unselect items based on regular expression
-            - (empty) finish selecting
- EOF
- }
--- 
-1.9.2.msysgit.0
+> ---
+>  git-svn.perl           | 50 +++++++++++++++++++++++++++++++++++++++++++++++++-
+>  perl/Git/SVN/Editor.pm | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+
+We need a test case written for this new feature.
+
+Most folks (including myself) who were ever involved with git-svn
+rarely use it anymore, and this will likely be rarely-used.
+
+>  2 files changed, 96 insertions(+), 1 deletion(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index b6e2186..91423a8 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -115,7 +115,7 @@ my ($_stdin, $_help, $_edit,
+>  	$_before, $_after,
+>  	$_merge, $_strategy, $_preserve_merges, $_dry_run, $_parents, $_local,
+>  	$_prefix, $_no_checkout, $_url, $_verbose,
+> -	$_commit_url, $_tag, $_merge_info, $_interactive);
+> +	$_commit_url, $_tag, $_merge_info, $_interactive, $_set_svn_props);
+>  
+>  # This is a refactoring artifact so Git::SVN can get at this git-svn switch.
+>  sub opt_prefix { return $_prefix || '' }
+> @@ -193,6 +193,7 @@ my %cmd = (
+>  			  'dry-run|n' => \$_dry_run,
+>  			  'fetch-all|all' => \$_fetch_all,
+>  			  'commit-url=s' => \$_commit_url,
+> +			  'set-svn-props=s' => \$_set_svn_props,
+>  			  'revision|r=i' => \$_revision,
+>  			  'no-rebase' => \$_no_rebase,
+>  			  'mergeinfo=s' => \$_merge_info,
+> @@ -228,6 +229,9 @@ my %cmd = (
+>          'propget' => [ \&cmd_propget,
+>  		       'Print the value of a property on a file or directory',
+>  		       { 'revision|r=i' => \$_revision } ],
+> +        'propset' => [ \&cmd_propset,
+> +		       'Set the value of a property on a file or directory - will be set on commit',
+> +		       {} ],
+>          'proplist' => [ \&cmd_proplist,
+>  		       'List all properties of a file or directory',
+>  		       { 'revision|r=i' => \$_revision } ],
+> @@ -1376,6 +1380,50 @@ sub cmd_propget {
+>  	print $props->{$prop} . "\n";
+>  }
+>  
+> +# cmd_propset (PROPNAME, PROPVAL, PATH)
+> +# ------------------------
+> +# Adjust the SVN property PROPNAME to PROPVAL for PATH.
+> +sub cmd_propset {
+> +	my ($propname, $propval, $path) = @_;
+> +	$path = '.' if not defined $path;
+> +	$path = $cmd_dir_prefix . $path;
+> +	usage(1) if not defined $propname;
+> +	usage(1) if not defined $propval;
+> +	my $file = basename($path);
+> +	my $dn = dirname($path);
+> +	# diff has check_attr locally, so just call direct
+> +	#my $current_properties = check_attr( "svn-properties", $path );
+
+I prefer leaving out dead code entirely instead of leaving it commented out.
+
+> +	my $current_properties = Git::SVN::Editor::check_attr( "svn-properties", $path );
+> +	my $new_properties = "";
+
+Since some lines are too long, local variables can be shortened
+to cur_props, new_props without being any less descriptive.
+
+> +	if ($current_properties eq "unset" || $current_properties eq "" || $current_properties eq "set") {
+> +		$new_properties = "$propname=$propval";
+> +	} else {
+> +		# TODO: handle combining properties better
+> +		my @props = split(/;/, $current_properties);
+> +		my $replaced_prop = 0;
+> +		foreach my $prop (@props) {
+> +			# Parse 'name=value' syntax and set the property.
+> +			if ($prop =~ /([^=]+)=(.*)/) {
+> +				my ($n,$v) = ($1,$2);
+> +				if ($n eq $propname)
+> +				{
+> +					$v = $propval;
+> +					$replaced_prop = 1;
+> +				}
+> +				if ($new_properties eq "") { $new_properties="$n=$v"; }
+> +				else { $new_properties="$new_properties;$n=$v"; }
+> +			}
+> +		}
+> +		if ($replaced_prop eq 0) {
+
+Generally, == is favored for numeric comparisons
+(but this is boolean)
+
+> +			$new_properties = "$new_properties;$propname=$propval";
+> +		}
+> +	}
+> +	my $attrfile = "$dn/.gitattributes";
+> +	open my $attrfh, '>>', $attrfile or die "Can't open $attrfile: $!\n";
+> +	# TODO: don't simply append here if $file already has svn-properties
+> +	print $attrfh "$file svn-properties=$new_properties\n";
+
+Would be good to have an explicit close and error checking on it in case
+of FS errors
+
+> +}
+> +
+>  # cmd_proplist (PATH)
+>  # -------------------
+>  # Print the list of SVN properties for PATH.
+> diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
+> index 34e8af9..5158c03 100644
+> --- a/perl/Git/SVN/Editor.pm
+> +++ b/perl/Git/SVN/Editor.pm
+> @@ -288,6 +288,49 @@ sub apply_autoprops {
+>  	}
+>  }
+>  
+> +sub check_attr
+> +{
+> +    my ($attr,$path) = @_;
+> +    if ( open my $fh, '-|', "git", "check-attr", $attr, "--", $path )
+
+Use Git.pm (command_output_pipe) for running git commands portably.
+(And formatting for this sub alone is really off).
+
+> +    {
+> +	my $val = <$fh>;
+> +	close $fh;
+> +	$val =~ s/^[^:]*:\s*[^:]*:\s*(.*)\s*$/$1/;
+> +	return $val;
+> +    }
+> +    else
+> +    {
+> +	return undef;
+> +    }
+> +}
+> +
+> +sub apply_manualprops {
+> +	my ($self, $file, $fbat) = @_;
+> +	my $pending_properties = check_attr( "svn-properties", $file );
+> +	if ($pending_properties eq "") { return; }
+> +	# Parse the list of properties to set.
+> +	my @props = split(/;/, $pending_properties);
+> +	# TODO: get existing properties to compare to - this fails for add so currently not done
+> +	# my $existing_props = ::get_svnprops($file);
+> +	my $existing_props = {};
+> +	# TODO: caching svn properties or storing them in .gitattributes would make that faster
+> +	foreach my $prop (@props) {
+> +		# Parse 'name=value' syntax and set the property.
+> +		if ($prop =~ /([^=]+)=(.*)/) {
+> +			my ($n,$v) = ($1,$2);
+> +			for ($n, $v) {
+> +				s/^\s+//; s/\s+$//;
+> +			}
+
+I'd probably rewrite the following hunk:
+
+> +			# FIXME: clearly I don't know perl and couldn't work out how to evaluate this better
+> +			if (defined $existing_props->{$n} && $existing_props->{$n} eq $v) {
+> +				my $needed = 0;
+> +			} else {
+> +				$self->change_file_prop($fbat, $n, $v);
+> +			}
+
+as:
+
+			my $existing = $existing_props->{$n};
+			if (!defined($existing) || $existing ne $v) {
+				$self->change_file_prop($fbat, $n, $v);
+			}
+
+No need for setting $needed = 0 from what I can tell.
+
+Rest of the patch looks fine.
+
+Thank you again for bringing this up and I look forward to a reroll
+of this with my comments addressed (maybe wait a few days for others
+to comment, holidays and all).
