@@ -1,119 +1,310 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Our cumbersome mailing list workflow
-Date: Sun, 30 Nov 2014 18:46:27 -0800
-Message-ID: <xmqqh9xgrssc.fsf@gitster.dls.corp.google.com>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com>
-	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>
-	<546F4B5B.2060508@alum.mit.edu>
-	<xmqq61e81ljq.fsf@gitster.dls.corp.google.com>
-	<5473CD28.5020405@alum.mit.edu> <54776367.1010104@web.de>
-	<20141127225334.GA29203@dcvr.yhbt.net> <547895F1.1010307@alum.mit.edu>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Deprecation warnings under XCode
+Date: Sun, 30 Nov 2014 19:02:56 -0800
+Message-ID: <CAO2U3Qg4DVxSk2u1eJwGqYoxVZTbWRV69J9HTo1rnjFCxSyi2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershause?= =?utf-8?Q?n?= 
-	<tboegi@web.de>, Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Dec 01 03:46:36 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 01 04:03:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvH0V-0001Zz-Qf
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 03:46:36 +0100
+	id 1XvHHA-00083F-5Q
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 04:03:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752614AbaLACqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Nov 2014 21:46:32 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51785 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752582AbaLACqb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 21:46:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 333F023912;
-	Sun, 30 Nov 2014 21:46:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DYz09Q+O9rJpcb7HPsI9BD5aSEU=; b=c+Vewj
-	VRMXEPwVkGXNpv6IfIRvd9N082oy6vQFJsqhgIEUK1vjOdSyVHeuL33Jd0iivYo4
-	DvTL9NIRSfCIceCWeR9sSo2LIcKNfV5omXyAo/CU5Wba1y+HCgyrW5fCTVGQAX6J
-	621yM3tvoYvRS+HEhCyML4xF7PXvr84HEloKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cKooaaWCIjEVIjOCca/yvNklYnXEzWrk
-	gD4Y8Aqla/JXSB2kyO7jbiLqERFntNjkrEsYs65pZlwIWeK8h+mUyuvksHM3meWb
-	+2hkc9XElVuDJpu0eCVE4Bk2TFFVJ/TyrQCthOKby2+0KiAzvuIIxTxf1MpPqgVL
-	0GCelJTyiMQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A10023911;
-	Sun, 30 Nov 2014 21:46:29 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4DEE23910;
-	Sun, 30 Nov 2014 21:46:28 -0500 (EST)
-In-Reply-To: <547895F1.1010307@alum.mit.edu> (Michael Haggerty's message of
-	"Fri, 28 Nov 2014 16:34:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3FF0B5C0-7904-11E4-A6A3-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752390AbaLADDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Nov 2014 22:03:18 -0500
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:33675 "EHLO
+	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752294AbaLADDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 22:03:17 -0500
+Received: by mail-oi0-f49.google.com with SMTP id i138so6742312oig.36
+        for <git@vger.kernel.org>; Sun, 30 Nov 2014 19:03:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=XC1z5PxHYDChz9PKU45Zgdzp7exPwzb1EWTLqTMAw6g=;
+        b=moh3rFJvFQpiGc95O/TF1tKcIS/kn5MN8VTD1sNHi/zJ1ZK6wIN1CySbgdmiBt5uDr
+         ZOcrAeO46hGoyBz/LwLVNvGxfs2roPmGM2VVHhRsTUIO/31SAAbTuiEl+J4k/5BeJgEN
+         /Vw9bj49gUXPDuH1JfOg8cHDyQhMaIGRIr3y2L/7D5C1qmZx8WfDnCe92eV/JD8TZhuS
+         2nZXWz1KDZDkV3fFnAlAMdQqD0+144Dw11nAsBmF7gROiuQZkk6XvuDQmjpPgLcA/7gs
+         6g6CevFau1mgBHV2ENfHqAU2FAZFhjV863dzk9XX1fnUNQY5IWq8xEo/gopR0wq68OL3
+         uApQ==
+X-Received: by 10.202.49.131 with SMTP id x125mr32348638oix.17.1417402997153;
+ Sun, 30 Nov 2014 19:03:17 -0800 (PST)
+Received: by 10.202.48.207 with HTTP; Sun, 30 Nov 2014 19:02:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260463>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+I have no idea whether this should concern anyone, but my mac build of git shows
 
-> It seems like a few desirable features are being talked about here, and
-> summarizing the discussion as "centralized" vs "decentralized" is too
-> simplistic. What is really important?
->
-> 1. Convenient and efficient, including for newcomers
-> 2. Usable while offline
-> 3. Usable in pure-text mode
-> 4. Decentralized
->
-> Something else?
-
-As a reviewer / contributor (not speaking as the top maintainer), I
-would say that everything in one place, and for that one place
-mailbox is preferrable.
-
-"Somebody commented on (this instance of | the central) Gerrit, come
-look at it" is not usable; sending that comment out to those who
-work in their MUA, and allowing them to respond via their MUA
-probably adding their response as a new comment to Gerrit) would be
-usable.
-
-When I had to view a large-ish series by Ronnie on Gerrit, it was
-fairly painful.  The interaction on an individual patch might be
-more convenient and efficient using a system like Gerrit than via
-e-mailed patch with reply messages, but as a vehicle to review a
-large series and see how the whole thing fits together, I did not
-find pages that made it usable (I am avoiding to say "I found it
-unusable", as that impression may be purely from that I couldn't
-find a more suitable pages that showed the same information in more
-usable form, i.e. user inexperience).
-
-Speaking of the "whole picture", I am hesitant to see us pushed into
-the "here is a central system (or here are federated systems) to
-handle only the patch reviews" direction; our changes result after
-discussing unrelated features, wishes, or bugs that happen outside
-of any specific patches with enough frequency, and that is why I
-prefer "everything in one place" aspect of the development based on
-the mailing list.  That is not to say that the "one place" has
-forever to be the mailing list, though.  But the tooling around an
-e-mail based workflow (e.g. marking threads as "worth revisiting"
-for later inspection, saving chosen messages into a mailbox and
-running "git am" on it) is already something I am used to.  Whatever
-system we might end up migrating to, the convenience it offers has
-to beat the convenience of existing workflow to be worth switching
-to, at least to me as a reviewer/contributor.
-
-As the maintainer, I am not worried too much.  As long as the
-mechanism can (1) reach "here is a series that is accepted by
-reviewers whose opinions are trusted" efficiently, and (2) allow
-me to queue the result without mistakes, I can go along with
-anything reasonable.
+    CC imap-send.o
+imap-send.c:183:36: warning: 'ERR_error_string' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        fprintf(stderr, "%s: %s\n", func,
+ERR_error_string(ERR_get_error(), NULL));
+                                          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/err.h:279:7:
+note: 'ERR_error_string' has been explicitly marked deprecated here
+char *ERR_error_string(unsigned long e,char *buf)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+      ^
+imap-send.c:183:53: warning: 'ERR_get_error' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        fprintf(stderr, "%s: %s\n", func,
+ERR_error_string(ERR_get_error(), NULL));
+                                                           ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/err.h:266:15:
+note: 'ERR_get_error' has been explicitly marked deprecated here
+unsigned long ERR_get_error(void) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+              ^
+imap-send.c:191:16: warning: 'SSL_get_error' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                int sslerr = SSL_get_error(sock->ssl, ret);
+                             ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1506:5:
+note: 'SSL_get_error' has been explicitly marked deprecated here
+int     SSL_get_error(const SSL *s,int ret_code)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:243:24: warning: 'X509_get_ext_d2i' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        if ((subj_alt_names = X509_get_ext_d2i(cert,
+NID_subject_alt_name, NULL, NULL))) {
+                              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/x509.h:1151:8:
+note: 'X509_get_ext_d2i' has been explicitly marked deprecated here
+void    *       X509_get_ext_d2i(X509 *x, int nid, int *crit, int
+*idx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+                ^
+imap-send.c:244:28: warning: 'sk_num' is deprecated: first deprecated
+in OS X 10.7 [-Wdeprecated-declarations]
+                int num_subj_alt_names = sk_GENERAL_NAME_num(subj_alt_names);
+                                         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/safestack.h:684:33:
+note: expanded from macro 'sk_GENERAL_NAME_num'
+#define sk_GENERAL_NAME_num(st) SKM_sk_num(GENERAL_NAME, (st))
+                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/safestack.h:168:2:
+note: expanded from macro 'SKM_sk_num'
+        sk_num(st)
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/stack.h:81:5:
+note: 'sk_num' has been explicitly marked deprecated here
+int sk_num(const STACK *) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+    ^
+imap-send.c:246:34: warning: 'sk_value' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                        GENERAL_NAME *subj_alt_name =
+sk_GENERAL_NAME_value(subj_alt_names, i);
+                                                      ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/safestack.h:685:38:
+note: expanded from macro 'sk_GENERAL_NAME_value'
+#define sk_GENERAL_NAME_value(st, i) SKM_sk_value(GENERAL_NAME, (st), (i))
+                                     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/safestack.h:170:11:
+note: expanded from macro 'SKM_sk_value'
+        ((type *)sk_value(st, i))
+                 ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/stack.h:82:7:
+note: 'sk_value' has been explicitly marked deprecated here
+char *sk_value(const STACK *, int)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+      ^
+imap-send.c:252:3: warning: 'sk_pop_free' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                sk_GENERAL_NAME_pop_free(subj_alt_names, GENERAL_NAME_free);
+                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/safestack.h:697:49:
+note: expanded from macro 'sk_GENERAL_NAME_pop_free'
+#define sk_GENERAL_NAME_pop_free(st, free_func)
+SKM_sk_pop_free(GENERAL_NAME, (st), (free_func))
+                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/safestack.h:193:2:
+note: expanded from macro 'SKM_sk_pop_free'
+        sk_pop_free(st, (void (*)(void *))free_func)
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/stack.h:89:6:
+note: 'sk_pop_free' has been explicitly marked deprecated here
+void sk_pop_free(STACK *st, void (*func)(void *))
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+     ^
+imap-send.c:258:15: warning: 'X509_get_subject_name' is deprecated:
+first deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        if (!(subj = X509_get_subject_name(cert)))
+                     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/x509.h:1013:13:
+note: 'X509_get_subject_name' has been explicitly marked deprecated
+here
+X509_NAME *     X509_get_subject_name(X509 *a)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+                ^
+imap-send.c:260:13: warning: 'X509_NAME_get_text_by_NID' is
+deprecated: first deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        if ((len = X509_NAME_get_text_by_NID(subj, NID_commonName,
+cname, sizeof(cname))) < 0)
+                   ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/x509.h:1098:7:
+note: 'X509_NAME_get_text_by_NID' has been explicitly marked
+deprecated here
+int             X509_NAME_get_text_by_NID(X509_NAME *name, int nid,
+                ^
+imap-send.c:279:2: warning: 'SSL_library_init' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        SSL_library_init();
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1558:5:
+note: 'SSL_library_init' has been explicitly marked deprecated here
+int SSL_library_init(void ) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+    ^
+imap-send.c:280:2: warning: 'SSL_load_error_strings' is deprecated:
+first deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        SSL_load_error_strings();
+        ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1421:6:
+note: 'SSL_load_error_strings' has been explicitly marked deprecated
+here
+void    SSL_load_error_strings(void )
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:283:10: warning: 'TLSv1_method' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                meth = TLSv1_method();
+                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1524:13:
+note: 'TLSv1_method' has been explicitly marked deprecated here
+SSL_METHOD *TLSv1_method(void)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;           /* TLSv1.0 */
+            ^
+imap-send.c:285:10: warning: 'SSLv23_method' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                meth = SSLv23_method();
+                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1520:13:
+note: 'SSLv23_method' has been explicitly marked deprecated here
+SSL_METHOD *SSLv23_method(void)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;  /* SSLv3 but can
+rollback to v2 */
+            ^
+imap-send.c:292:8: warning: 'SSL_CTX_new' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        ctx = SSL_CTX_new(meth);
+              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1351:10:
+note: 'SSL_CTX_new' has been explicitly marked deprecated here
+SSL_CTX *SSL_CTX_new(SSL_METHOD *meth)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+         ^
+imap-send.c:295:3: warning: 'SSL_CTX_set_verify' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
+                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1463:6:
+note: 'SSL_CTX_set_verify' has been explicitly marked deprecated here
+void SSL_CTX_set_verify(SSL_CTX *ctx,int mode,
+     ^
+imap-send.c:297:7: warning: 'SSL_CTX_set_default_verify_paths' is
+deprecated: first deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        if (!SSL_CTX_set_default_verify_paths(ctx)) {
+             ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1575:5:
+note: 'SSL_CTX_set_default_verify_paths' has been explicitly marked
+deprecated here
+int SSL_CTX_set_default_verify_paths(SSL_CTX *ctx)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+    ^
+imap-send.c:301:14: warning: 'SSL_new' is deprecated: first deprecated
+in OS X 10.7 [-Wdeprecated-declarations]
+        sock->ssl = SSL_new(ctx);
+                    ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1486:7:
+note: 'SSL_new' has been explicitly marked deprecated here
+SSL *   SSL_new(SSL_CTX *ctx) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:306:7: warning: 'SSL_set_rfd' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        if (!SSL_set_rfd(sock->ssl, sock->fd[0])) {
+             ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1376:5:
+note: 'SSL_set_rfd' has been explicitly marked deprecated here
+int     SSL_set_rfd(SSL *s, int fd)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:310:7: warning: 'SSL_set_wfd' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        if (!SSL_set_wfd(sock->ssl, sock->fd[1])) {
+             ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1377:5:
+note: 'SSL_set_wfd' has been explicitly marked deprecated here
+int     SSL_set_wfd(SSL *s, int fd)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:321:8: warning: 'SSL_ctrl' is deprecated: first deprecated
+in OS X 10.7 [-Wdeprecated-declarations]
+        ret = SSL_set_tlsext_host_name(sock->ssl, server.host);
+              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/tls1.h:149:42:
+note: expanded from macro 'SSL_set_tlsext_host_name'
+#define SSL_set_tlsext_host_name(s,name) \
+                                         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1501:6:
+note: 'SSL_ctrl' has been explicitly marked deprecated here
+long    SSL_ctrl(SSL *ssl,int cmd, long larg, void *parg)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:326:8: warning: 'SSL_connect' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+        ret = SSL_connect(sock->ssl);
+              ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1497:6:
+note: 'SSL_connect' has been explicitly marked deprecated here
+int     SSL_connect(SSL *ssl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:334:10: warning: 'SSL_get_peer_certificate' is deprecated:
+first deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                cert = SSL_get_peer_certificate(sock->ssl);
+                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1455:8:
+note: 'SSL_get_peer_certificate' has been explicitly marked deprecated
+here
+X509 *  SSL_get_peer_certificate(const SSL *s)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:350:7: warning: 'SSL_read' is deprecated: first deprecated
+in OS X 10.7 [-Wdeprecated-declarations]
+                n = SSL_read(sock->ssl, buf, len);
+                    ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1498:6:
+note: 'SSL_read' has been explicitly marked deprecated here
+int     SSL_read(SSL *ssl,void *buf,int num)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:368:7: warning: 'SSL_write' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                n = SSL_write(sock->ssl, buf, len);
+                    ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1500:6:
+note: 'SSL_write' has been explicitly marked deprecated here
+int     SSL_write(SSL *ssl,const void *buf,int num)
+DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+        ^
+imap-send.c:385:3: warning: 'SSL_shutdown' is deprecated: first
+deprecated in OS X 10.7 [-Wdeprecated-declarations]
+                SSL_shutdown(sock->ssl);
+                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1537:5:
+note: 'SSL_shutdown' has been explicitly marked deprecated here
+int SSL_shutdown(SSL *s) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
+    ^
+imap-send.c:386:3: warning: 'SSL_free' is deprecated: first deprecated
+in OS X 10.7 [-Wdeprecated-declarations]
+                SSL_free(sock->ssl);
+                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/openssl/ssl.h:1495:6:
+note: 'SSL_free' has been explicitly marked deprecated here
+void    SSL_free(SSL *ssl) DEPRECATED_IN_MAC_OS_X_VERSION_10_7_AND_LATER;
