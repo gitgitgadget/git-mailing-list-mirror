@@ -1,78 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'simple' push check that branch name matches does not work if push.default is unset (and hence implicitly simple)
-Date: Sun, 30 Nov 2014 18:21:20 -0800
-Message-ID: <xmqqmw78rty7.fsf@gitster.dls.corp.google.com>
-References: <1417040968.12457.78.camel@redhat.com>
-	<20141127034306.GA5341@peff.net> <1417108347.18654.4.camel@redhat.com>
-	<20141128045518.GB19456@peff.net>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCHv3 2/3] mailmap: use higher level string list functions
+Date: Sun, 30 Nov 2014 18:33:14 -0800
+Message-ID: <547BD36A.7050806@gmail.com>
+References: <CAPig+cQ_4A-0LOgXXG5qLeHOev+g8KMq5osKz34AFijGuyRidQ@mail.gmail.com>	<1416887054-27204-1-git-send-email-sbeller@google.com>	<CAO2U3QjNua2HvJKLnq80mPFEp931yLzHKENKo-LHm4CFZWRhBA@mail.gmail.com>	<CAPig+cRNuuDDBV0-TwANuiv+f_c1mfXp2Q4rF1Sj5mtJoLoqHQ@mail.gmail.com> <xmqq7fyctcur.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Adam Williamson <awilliam@redhat.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 01 03:21:32 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 03:33:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvGcF-0001Og-MK
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 03:21:32 +0100
+	id 1XvGni-0005RI-8q
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 03:33:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbaLACV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Nov 2014 21:21:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53755 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752526AbaLACVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Nov 2014 21:21:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B671A234A2;
-	Sun, 30 Nov 2014 21:21:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eVpq99+EX27PyyOfc8dyBA6EFpA=; b=oPw1nx
-	HNnQUb6rjkTubF+vmdc5pfKCfOBzBhEX9t51pHrUIIWwJ+A14u72taWGWw7ZsizO
-	PIb1ltS8YZ8ZWyGIENzKA3JpHSUzzz0Xayz7EERONFoJfOB+vb4siUQsTEE+hsCt
-	0jCx6IqjRSJ5oEbnpa6cRwFfkfPKGHXuksrow=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pJmP/B8SXctsFhzYn2wkHDNEAakRv6ps
-	MLc73iW22JYbn7qLssdfR3l/DJsBO7B8Pg/xgTWlDBYWaZp0ZSdLDCpC38YfRXKm
-	DWO7xC3AR1xByi5DgNwIZbLIMAfozLlg/v6F1oBxokAIZWZphwpAcoi0V9nQA2zv
-	dy/onIlEqdA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC3C8234A1;
-	Sun, 30 Nov 2014 21:21:22 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2AAD0234A0;
-	Sun, 30 Nov 2014 21:21:22 -0500 (EST)
-In-Reply-To: <20141128045518.GB19456@peff.net> (Jeff King's message of "Thu,
-	27 Nov 2014 23:55:18 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BDF52374-7900-11E4-97DB-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752631AbaLACdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Nov 2014 21:33:18 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:47321 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752308AbaLACdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Nov 2014 21:33:18 -0500
+Received: by mail-pd0-f179.google.com with SMTP id w10so9817807pde.24
+        for <git@vger.kernel.org>; Sun, 30 Nov 2014 18:33:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=t+SMhZMThU4ojQd2i904QRjQ0nKJYkRc08Yw1LqnGS0=;
+        b=A6VfPo1A9ZcIRT2tPmDMfIjzdL0eo24fOZeU4HLfXMfMESFvsrSSnuPGPwV63rj7VF
+         pToYS8duiTJ0Z2M794UYKpcp+04H47jb5Grog5v+CmmnwrXztnKcH8ZkMiAJXMEDyNBJ
+         8bWOJ8XNB/gh6VPi3t64QdwAOlILaUeLZgS7RdglGonZwrMhGLNOeb+wVbrXzAJUGXMw
+         Ce2O9TlHY0dr6TECpQWEC7UpXdU0M/p5wRl6Ty090+IdCiz0QraIhNRwV1dVq5IuOpQ5
+         Ek50NI0fL6CIrWFkWW/y+ASQ9x4tLKD1pMl3NLpKcTpGLxMqeiZi2fKLg65my/+JAhKW
+         v25Q==
+X-Received: by 10.68.217.231 with SMTP id pb7mr95965208pbc.124.1417401197595;
+        Sun, 30 Nov 2014 18:33:17 -0800 (PST)
+Received: from [192.168.2.3] (c-76-102-52-132.hsd1.ca.comcast.net. [76.102.52.132])
+        by mx.google.com with ESMTPSA id ae4sm16072876pad.16.2014.11.30.18.33.15
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 30 Nov 2014 18:33:16 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <xmqq7fyctcur.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260461>
 
-Jeff King <peff@peff.net> writes:
+On 30.11.2014 16:47, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>> On Thu, Nov 27, 2014 at 1:44 PM, Michael Blume <blume.mike@gmail.com> wrote:
+>>> The variable index seems to be unused/uninitialized now -- it's still
+>>> printed in debug messages, but if I'm reading correctly, its contents are
+>>> going to be nonsense.
+>>
+>> Nice catch.
+> 
+> Let's do something like this squashed in, then.
 
-> There is some other magic with "simple", too, around triangular
-> workflows. Describing it in detail would probably be too verbose in this
-> message, but we do refer to the description of push.default, which is
-> probably enough.  Technically this new bit you are adding here is
-> covered there, too. But since we can improve the description by adding
-> such a small amount of text in this case, it seems like a reasonable
-> tradeoff.
->
-> I suppose we could also customize the message based on the triangular
-> and non-triangular cases. I dunno.
+Michael, thanks for catching that!
 
-Yeah, I vaguely recall suggesting to polish advice message further
-to help users along a similar line, but probably that fell in the
-cracks.
+Junio, the squash-in looks fine with me.
 
-Thanks for a quick fix.
+> 
+>  mailmap.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/mailmap.c b/mailmap.c
+> index 3b00a65..cb26af0 100644
+> --- a/mailmap.c
+> +++ b/mailmap.c
+> @@ -90,8 +90,8 @@ static void add_mapping(struct string_list *map,
+>  	}
+>  
+>  	if (old_name == NULL) {
+> -		debug_mm("mailmap: adding (simple) entry for %s at index %d\n",
+> -			 old_email, index);
+> +		debug_mm("mailmap: adding (simple) entry for '%s'\n", old_email);
+> +
+>  		/* Replace current name and new email for simple entry */
+>  		if (new_name) {
+>  			free(me->name);
+> @@ -103,8 +103,7 @@ static void add_mapping(struct string_list *map,
+>  		}
+>  	} else {
+>  		struct mailmap_info *mi = xcalloc(1, sizeof(struct mailmap_info));
+> -		debug_mm("mailmap: adding (complex) entry for %s at index %d\n",
+> -			 old_email, index);
+> +		debug_mm("mailmap: adding (complex) entry for '%s'\n", old_email);
+>  		if (new_name)
+>  			mi->name = xstrdup(new_name);
+>  		if (new_email)
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
