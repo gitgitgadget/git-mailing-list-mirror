@@ -1,92 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] compat: convert modes to use portable file type values
-Date: Mon, 01 Dec 2014 09:57:16 -0800
-Message-ID: <xmqqsigzp81v.fsf@gitster.dls.corp.google.com>
-References: <87vblxl8ah.fsf@gmail.com>
-	<CACsJy8CKEwOVcB_MUaK8mmSmQuKHC6R6K0YymjCrTP3aYFdbPg@mail.gmail.com>
-	<CAEvUa7mhjG1xPoJedp4XYrxr39_EuzvGtONLv0B=uBw+vQB5pw@mail.gmail.com>
+Subject: Re: Deprecation warnings under XCode
+Date: Mon, 01 Dec 2014 10:04:57 -0800
+Message-ID: <xmqqoarnp7p2.fsf@gitster.dls.corp.google.com>
+References: <CAO2U3Qg4DVxSk2u1eJwGqYoxVZTbWRV69J9HTo1rnjFCxSyi2g@mail.gmail.com>
+	<547BFD42.3040104@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Michael <fedora.dm0@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 18:57:27 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Dec 01 19:05:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvVDx-0004py-Ro
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 18:57:26 +0100
+	id 1XvVLP-0000Q5-C5
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 19:05:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754178AbaLAR5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2014 12:57:22 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57934 "EHLO
+	id S1753623AbaLASFC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Dec 2014 13:05:02 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51837 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754154AbaLAR5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2014 12:57:21 -0500
+	with ESMTP id S1753103AbaLASFA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2014 13:05:00 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D059520E79;
-	Mon,  1 Dec 2014 12:57:19 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A0772213B2;
+	Mon,  1 Dec 2014 13:04:59 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vuqPmYA8Zfla2AcKYdDCpOqTwQA=; b=PUOTsI
-	GNWLEjazoULz3tcL+k1JWl0Qv9RSs4inT4+WpLPfJvgeI39JQ0Ul/MO5O2xJcjJn
-	/e8ESBS7+ba9i8guY2ILqZk1eeN8nvLftVyhFvIBHuexb0hnB3WWBc6PhllSdnbT
-	uUY8qdBsU8LYVfWe7eAsZGTrQWLcJZlocW0IY=
+	:content-type:content-transfer-encoding; s=sasl; bh=7DIoQpGnmMIw
+	p58+1uDHub9r1n4=; b=tG2zyC+Jj4h6m+P0e/TbZYqrU9kt/D/s5JsoTQlU/y2o
+	jePhJcY3HC7uzr2kybuwPfzKRJv/LaK46sKRbOi9KVmuxzgAUNIasr1VAA3nlEdU
+	D0Eg7Kz14W8rrwEqGt4Ni+s6f32/TPEXtqDQOQmi//nN2Q2vbdGxXutcvV7KDAw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eLJkWSOcDUqPAhi4lZOdO6Mth5/VArFE
-	L+An/B2akAbFe+8I2EZfG6MYj+/Oxd0rHXdWsp14i4GDy96aLbsmyi+JKYbuQU4d
-	Nzc0Lj5F41txwQZ6jI9lQj7teZ2S8ymP33/pdWXe/R2LbOLTcZVYE53+hmTgISIB
-	qf35+qoZfXs=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kBEylw
+	FTXCIhyEm7LAwOLSzHkJtu+sTd1sZPHauK4fVGd5juUnahLqkY3C1hRt51dnDXoR
+	hqsPhtbrbLYYRL3+OyUUHsk50KfY+ytsIuZ1AcAf63jdRGb/bUHMMFINZf+I3Mw5
+	NusRavnCOxIYoT3sWGYOfTS6KWH4gGM/U+sGU=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C7B9520E77;
-	Mon,  1 Dec 2014 12:57:19 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F46A213B1;
+	Mon,  1 Dec 2014 13:04:59 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5150320E69;
-	Mon,  1 Dec 2014 12:57:18 -0500 (EST)
-In-Reply-To: <CAEvUa7mhjG1xPoJedp4XYrxr39_EuzvGtONLv0B=uBw+vQB5pw@mail.gmail.com>
-	(David Michael's message of "Mon, 1 Dec 2014 12:49:59 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19CB9213B0;
+	Mon,  1 Dec 2014 13:04:59 -0500 (EST)
+In-Reply-To: <547BFD42.3040104@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Mon, 01 Dec 2014 06:31:46 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7DA24864-7983-11E4-949B-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9046FE14-7984-11E4-81E7-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260502>
 
-David Michael <fedora.dm0@gmail.com> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> On Mon, Dec 1, 2014 at 9:44 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Sun, Nov 30, 2014 at 9:41 AM, David Michael <fedora.dm0@gmail.com> wrote:
->>> +int git_stat(const char *path, struct stat *buf)
->>> +{
->>> +       int rc;
->>> +       rc = stat(path, buf);
->>> +       if (buf != NULL)
+> On 12/01/2014 04:02 AM, Michael Blume wrote:
+>> I have no idea whether this should concern anyone, but my mac build =
+of git shows
 >>
->> It's a minor thing, but maybe test "!rc" instead of "buf != NULL"?
->
-> Okay, it makes sense to only do the conversion for a successful return code.
->
-> Should it test for both a zero return code and a non-null pointer?  I
-> don't know if there are any cases where passing a null pointer is
-> legal.  The standard doesn't seem to explicitly forbid it.  z/OS
-> returns -1 and sets errno to EFAULT when stat() is given NULL, but
-> this patch should be able to be used on any platform.
+>>      CC imap-send.o
+>> imap-send.c:183:36: warning: 'ERR_error_string' is deprecated: first
+>> deprecated in OS X 10.7 [-Wdeprecated-declarations]
+>>          fprintf(stderr, "%s: %s\n", func,
+>> ERR_error_string(ERR_get_error(), NULL));
+>>                                            ^
+> []
+> Isn't the warning a warning ;-)
+> I don't see this warnings because my openssl comes from
+> /opt/local/include (Mac ports)
+> Does anybody know which new functions exist in Mac OS X versions >=3D=
+ 10.7  ?
 
-Huh?  I am confused.  Since when is it legal to give NULL as statbuf
-to (l)stat(2)?
+I am not a Mac person, but is this about APPLE_COMMON_CRYPTO support
+added in 4dcd7732 (Makefile: add support for Apple CommonCrypto
+facility, 2013-05-19) and be4c828b (imap-send: eliminate HMAC
+deprecation warnings on Mac OS X, 2013-05-19)?  Specifically, the
+log message for 4dcd7732 begins like so:
 
-Wouldn't something like this be sufficient and necessary?
+    Makefile: add support for Apple CommonCrypto facility
+   =20
+    As of Mac OS X 10.7, Apple deprecated all OpenSSL functions due to
+    OpenSSL ABI instability, thus leading to build warnings.  As a
+    replacement, Apple encourages developers to migrate to its own (sta=
+ble)
+    CommonCrypto facility.
 
-	int rc = stat(path, buf);
-        if (rc)
-		return rc;
+In the Makefile we seem to have this:
 
-That is, let the underlying stat(2) diagnose any and all problems
-(and leave clues in errno) and parrot its return value to the caller
-to signal the failure?
+    # Define NO_APPLE_COMMON_CRYPTO if you are building on Darwin/Mac O=
+S X
+    # and do not want to use Apple's CommonCrypto library.  This allows=
+ you
+    # to provide your own OpenSSL library, for example from MacPorts.
+
+which makes it sound like using APPLE_COMMON_CRYPTO is the default
+for Mac.  Perhaps those who do want to use CommonCrypto to avoid
+warnings should not define that macro?
