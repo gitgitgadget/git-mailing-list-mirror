@@ -1,97 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch: add a config option to always use the depth argument
-Date: Mon, 01 Dec 2014 12:58:16 -0800
-Message-ID: <xmqqvblvnl3r.fsf@gitster.dls.corp.google.com>
-References: <1417460823-17295-1-git-send-email-sbeller@google.com>
-	<xmqqzjb7nlyx.fsf@gitster.dls.corp.google.com>
+From: Christoph Mallon <mallon@cs.uni-saarland.de>
+Subject: Re: Bug in reflog of length 0x2BFF
+Date: Mon, 01 Dec 2014 23:30:00 +0100
+Message-ID: <547CEBE8.8070301@cs.uni-saarland.de>
+References: <547C8610.8080301@cs.uni-saarland.de> <547C9088.7000800@cs.uni-saarland.de> <CAGZ79kaLaWK57m9_1aFOkSubECUvFcEvGjid8EuUmYNUO5Z5jw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 21:58:24 2014
+X-From: git-owner@vger.kernel.org Mon Dec 01 23:30:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvY35-0000YO-2o
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 21:58:23 +0100
+	id 1XvZTy-0004nm-CG
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 23:30:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932452AbaLAU6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2014 15:58:19 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53671 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932112AbaLAU6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2014 15:58:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 163EB21CC5;
-	Mon,  1 Dec 2014 15:58:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wzcLlspgn2ej6TG1iGx+YQYlk18=; b=fnByuY
-	KM1j50aMODE8Sf6/aeeUZhexTb3jfEl2J762SQN64dnJi6bZaF8fsAjz6deIm4Kr
-	0v9TVdRSZP2+tDbR1kVSYuz74GelwC1eIK0Yr1Rk90CTzaWaBk1FjbTll0/D8DnQ
-	OVJahpOKKBU8C1BwBqarlWqZqskd9cTJL0VLM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QMxoe18jSEVUkuX1O8s4OklDi7D8VAJ2
-	F5IgXbSARzX7LC1G3Z30+a9plDF2spAnUhf/qQhdaPbtyDKtw89nzA09NfSDCBW5
-	nDWnFt3qnVEAPJzo5BDioV8bjzNvIJwQzOS0QU8h2U4R5YBKxrxS8SPgEMfHgfYj
-	hJPFfj6jD6o=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C61B21CC4;
-	Mon,  1 Dec 2014 15:58:18 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 73FC521CC3;
-	Mon,  1 Dec 2014 15:58:17 -0500 (EST)
-In-Reply-To: <xmqqzjb7nlyx.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 01 Dec 2014 12:39:34 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C62FD09C-799C-11E4-B343-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932421AbaLAWaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2014 17:30:08 -0500
+Received: from triton.rz.uni-saarland.de ([134.96.7.25]:15096 "EHLO
+	triton.rz.uni-saarland.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932160AbaLAWaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2014 17:30:07 -0500
+Received: from [192.168.2.100] (p549CD20E.dip0.t-ipconnect.de [84.156.210.14])
+	(authenticated bits=0)
+	by triton.rz.uni-saarland.de (8.14.1/8.14.0) with ESMTP id sB1MTxvb015178
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 1 Dec 2014 23:30:00 +0100
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.98.5 at HIZ-Mailrelay triton.rz.uni-saarland.de
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:10.0) Gecko/20120129 Thunderbird/10.0
+In-Reply-To: <CAGZ79kaLaWK57m9_1aFOkSubECUvFcEvGjid8EuUmYNUO5Z5jw@mail.gmail.com>
+X-Enigmail-Version: 1.4
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (triton.rz.uni-saarland.de [134.96.7.25]); Mon, 01 Dec 2014 23:30:00 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260514>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 01.12.14 19:53, schrieb Stefan Beller:
+> So I am running a 3.13.0-40-generic x86_64 linux (so its's amd64) and
+> git version 2.1.2
+> and I cannot reproduce the bug you are describing. :(
 
-> Stefan Beller <sbeller@google.com> writes:
->
->> +fetch.depth::
->> +	If set, fetch will automatically behave as if the `--depth`
->> +	option was given on the command line.  This allows users to keep
->> +	the git directory at low space requirements, and thus comes in handy
->> +	for users with large binary files in the repository.
->> +
->
-> Hmm, is this something a user would typically want repository-wide?
-> I am wondering if "remote.$nick.fetchDepth" or something scoped to
-> remote is more appropriate.
+):
 
-Regardless of what configuration variable is used, I think setting
-depth directly from the config will mean the user cannot defeat a
-configured value by passing --unshallow because of this code
-sequence in builtin/fetch.c; am I mistaken?
+I can reproduce it with
+* OS X, i386 binary, git 2.2.0
+* FreeBSD, amd64, git 2.1.0 and up (bisected it there)
+* FreeBSD, amd64, git 2.1.2 (different machine)
 
-	...
-	git_config(git_fetch_config, NULL);
-	argc = parse_options(argc, argv, prefix,
-			     builtin_fetch_options, builtin_fetch_usage, 0);
-	if (unshallow) {
-		if (depth)
-			die(_("--depth and --unshallow cannot be used together"));
-	...
+I cannot reproduce it with
+* Linux, amd64, git 2.1.0
 
-I think depth variable should be left alone.
+> $ git rev-parse 'master@{52}'
+> 0000000000000000000000000000000000000035
 
-The right solution may be to leave the above "unshallow and depth
-are incompatible" check done only for the command line options as
-the original code, and much later in the code path after you figure
-out which remote we are talking to, only when neither --depth nor
---unshallow is given, consult the configuration system to see if
-there is a default, perhaps in prepare_transport().  That approach
-will let you later support "remote.$nick.fetchDepth", even if you
-start with a repository-wide "fetch.depth" option, I would think.
+On a machine, where you see the bug, you get entry /0...036/.
+This btw causes havoc:
+git stash list shows all entries, but e.g. git stash drop drops the
+wrong stash after @{52}.
+
+> What I noticed though is there are 2 linefeeds at the end of each
+> line, is that intended or did it break during transmission?
+
+That broke.
+It should be a normal reflog file.
+Try this:
+	http://tron.yamagi.org/zeug/reflog.bad
+
+Still 4207ed285f31ad3e04f08254237c0c1a1609642b seems a plausible cause,
+because it's about reflogs.
+Though I suspect the actual bug was introduced before, because this
+commit only uses machinery, which was added earlier.
+
+	Christoph
