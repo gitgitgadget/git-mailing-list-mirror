@@ -1,80 +1,92 @@
-From: Christoph Mallon <mallon@cs.uni-saarland.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: Bug in reflog of length 0x2BFF
-Date: Mon, 01 Dec 2014 23:30:00 +0100
-Message-ID: <547CEBE8.8070301@cs.uni-saarland.de>
-References: <547C8610.8080301@cs.uni-saarland.de> <547C9088.7000800@cs.uni-saarland.de> <CAGZ79kaLaWK57m9_1aFOkSubECUvFcEvGjid8EuUmYNUO5Z5jw@mail.gmail.com>
+Date: Mon, 1 Dec 2014 15:35:15 -0800
+Message-ID: <20141201233515.GV6527@google.com>
+References: <547C8610.8080301@cs.uni-saarland.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Dec 01 23:30:15 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: Christoph Mallon <mallon@cs.uni-saarland.de>
+X-From: git-owner@vger.kernel.org Tue Dec 02 00:35:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvZTy-0004nm-CG
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 23:30:14 +0100
+	id 1XvaV9-0005Ch-Qc
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 00:35:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932421AbaLAWaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2014 17:30:08 -0500
-Received: from triton.rz.uni-saarland.de ([134.96.7.25]:15096 "EHLO
-	triton.rz.uni-saarland.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932160AbaLAWaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2014 17:30:07 -0500
-Received: from [192.168.2.100] (p549CD20E.dip0.t-ipconnect.de [84.156.210.14])
-	(authenticated bits=0)
-	by triton.rz.uni-saarland.de (8.14.1/8.14.0) with ESMTP id sB1MTxvb015178
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 1 Dec 2014 23:30:00 +0100
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.98.5 at HIZ-Mailrelay triton.rz.uni-saarland.de
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:10.0) Gecko/20120129 Thunderbird/10.0
-In-Reply-To: <CAGZ79kaLaWK57m9_1aFOkSubECUvFcEvGjid8EuUmYNUO5Z5jw@mail.gmail.com>
-X-Enigmail-Version: 1.4
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (triton.rz.uni-saarland.de [134.96.7.25]); Mon, 01 Dec 2014 23:30:00 +0100 (CET)
+	id S1754159AbaLAXfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2014 18:35:23 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:45437 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753284AbaLAXfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2014 18:35:19 -0500
+Received: by mail-ie0-f172.google.com with SMTP id tr6so10536509ieb.31
+        for <git@vger.kernel.org>; Mon, 01 Dec 2014 15:35:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=P59zML/beaOVUcWHwc9HxzoZKfVAUHDR2b0BHiTHFFY=;
+        b=K5w8gCjnbd8v5iL2t0FSxUu9tp394dKKMhlbx8Ob1olw0YCe4TfvOY6UX3V/vJMU2u
+         fC0OCAt4T/jTQU1xPJFkBjMrutON/0mbzcxbyvHkKObcDpMdK+14ZHP6shQAGXPE84Gy
+         vnjQ2LGJq4WuTXW++UTRlVSQooXS+vm5DHhT9io1k5+lGjWRsZ4FSNxSscc1y72lNk0s
+         8n85lsfvOzqzVt6CysiBn7kbCXTeQreqxpzl0q7D/J0WhZ7e0J8JTeNzwS5IcrtrhBrM
+         eWqXpwb72XzxTMsrxMEfOBb3iP0zbVgY/7DA2Yo+tNkOFMJD5zFEmI7lebKT3dcmR+QV
+         X3VQ==
+X-Received: by 10.50.134.101 with SMTP id pj5mr455546igb.28.1417476918548;
+        Mon, 01 Dec 2014 15:35:18 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:adae:4a7e:fb33:5785])
+        by mx.google.com with ESMTPSA id h77sm6412159ioe.35.2014.12.01.15.35.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Dec 2014 15:35:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <547C8610.8080301@cs.uni-saarland.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260515>
 
-Am 01.12.14 19:53, schrieb Stefan Beller:
-> So I am running a 3.13.0-40-generic x86_64 linux (so its's amd64) and
-> git version 2.1.2
-> and I cannot reproduce the bug you are describing. :(
+Hi Christoph,
 
-):
+Christoph Mallon wrote:
 
-I can reproduce it with
-* OS X, i386 binary, git 2.2.0
-* FreeBSD, amd64, git 2.1.0 and up (bisected it there)
-* FreeBSD, amd64, git 2.1.2 (different machine)
+> % git rev-parse 'master@{52}'
+> warning: Log for ref refs/heads/master has gap after Thu, 1 Jan 1970 00:00:01 +0000.
+> 0000000000000000000000000000000000000036
 
-I cannot reproduce it with
-* Linux, amd64, git 2.1.0
+Can you say more?  What output did you expect and how does this differ
+from it?
 
-> $ git rev-parse 'master@{52}'
-> 0000000000000000000000000000000000000035
+I tried, with git 2.2.0,
 
-On a machine, where you see the bug, you get entry /0...036/.
-This btw causes havoc:
-git stash list shows all entries, but e.g. git stash drop drops the
-wrong stash after @{52}.
+	git init gitbug &&
+	cd gitbug &&
+	git commit --allow-empty -m a &&
+	wget http://tron.yamagi.org/zeug/reflog.bad &&
+	mv reflog.bad .git/logs/refs/heads/master &&
+	sha1sum .git/logs/refs/heads/master &&
+	git rev-parse 'master@{52}'
 
-> What I noticed though is there are 2 linefeeds at the end of each
-> line, is that intended or did it break during transmission?
+The output:
 
-That broke.
-It should be a normal reflog file.
-Try this:
-	http://tron.yamagi.org/zeug/reflog.bad
+ 9ffe44715d0e542a60916255f144c74e6760ffd0  .git/logs/refs/heads/master
+ 0000000000000000000000000000000000000035
 
-Still 4207ed285f31ad3e04f08254237c0c1a1609642b seems a plausible cause,
-because it's about reflogs.
-Though I suspect the actual bug was introduced before, because this
-commit only uses machinery, which was added earlier.
+Could you make a test script that illustrates and reproduces the
+problem?  I.e., a patch to a file like t/t1410-reflog.sh, such that
+if I run
 
-	Christoph
+	cd git
+	make
+	cd t
+	./t1410-reflog.sh
+
+then I can reproduce the bug?
+
+Thanks,
+Jonathan
