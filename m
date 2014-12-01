@@ -1,98 +1,92 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: OpenSSL deprecation warnings under Xcode
-Date: Mon, 1 Dec 2014 09:51:00 -0800
-Message-ID: <5DF49984-B22E-4BC2-A4B6-8DC9EECEC8B4@gmail.com>
-References: <CAO2U3Qg4DVxSk2u1eJwGqYoxVZTbWRV69J9HTo1rnjFCxSyi2g@mail.gmail.com> <547BFD42.3040104@web.de>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Blume <blume.mike@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Dec 01 18:51:16 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] compat: convert modes to use portable file type values
+Date: Mon, 01 Dec 2014 09:57:16 -0800
+Message-ID: <xmqqsigzp81v.fsf@gitster.dls.corp.google.com>
+References: <87vblxl8ah.fsf@gmail.com>
+	<CACsJy8CKEwOVcB_MUaK8mmSmQuKHC6R6K0YymjCrTP3aYFdbPg@mail.gmail.com>
+	<CAEvUa7mhjG1xPoJedp4XYrxr39_EuzvGtONLv0B=uBw+vQB5pw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Michael <fedora.dm0@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 18:57:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvV7s-00019f-Q5
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 18:51:09 +0100
+	id 1XvVDx-0004py-Ro
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 18:57:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116AbaLARvF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Dec 2014 12:51:05 -0500
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:55804 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753990AbaLARvE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2014 12:51:04 -0500
-Received: by mail-pd0-f179.google.com with SMTP id w10so11387274pde.10
-        for <git@vger.kernel.org>; Mon, 01 Dec 2014 09:51:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=9KMw9vNxJogJafCpcWqmxY+/T9nWZkijE8ovzQxhNqc=;
-        b=wv+H2HvD3hepZp0dfsMqQRP8K5zxs7KMVQt2txZ1vmWL3Maj6NPsJKRy2j4VqlBZIk
-         /eivSr5RyWOGl/d6K24vnt4WpqvHc+aazhB7XsjN5ryMkS3BZi2ThTVKTKw9cfC4tLQr
-         y8l7OmsgJS4KnQTZT5a1j2S0m0Ak0IRRUQFwPM13qS4qHb2WsvkLO9Os5QLfwuB8UEM2
-         T+6ZbQDbflxOn0qsQBVaaKxoeyHzs/71Wer18+hIqZUxebzJpI3pAxit9XT2lzFEJD42
-         tlpmgGPzeCFdrH9pZiLOg3fhYJoo/vHM3JU80DN+13gtF3/R0aSrAapQRd4n5geTt4H/
-         Gqqw==
-X-Received: by 10.68.57.144 with SMTP id i16mr101898104pbq.86.1417456263749;
-        Mon, 01 Dec 2014 09:51:03 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id zw1sm18034501pbb.82.2014.12.01.09.51.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Dec 2014 09:51:03 -0800 (PST)
-In-Reply-To: <547BFD42.3040104@web.de>
-X-Mauler: Craptastic (2.936)
+	id S1754178AbaLAR5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2014 12:57:22 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57934 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754154AbaLAR5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2014 12:57:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D059520E79;
+	Mon,  1 Dec 2014 12:57:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vuqPmYA8Zfla2AcKYdDCpOqTwQA=; b=PUOTsI
+	GNWLEjazoULz3tcL+k1JWl0Qv9RSs4inT4+WpLPfJvgeI39JQ0Ul/MO5O2xJcjJn
+	/e8ESBS7+ba9i8guY2ILqZk1eeN8nvLftVyhFvIBHuexb0hnB3WWBc6PhllSdnbT
+	uUY8qdBsU8LYVfWe7eAsZGTrQWLcJZlocW0IY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eLJkWSOcDUqPAhi4lZOdO6Mth5/VArFE
+	L+An/B2akAbFe+8I2EZfG6MYj+/Oxd0rHXdWsp14i4GDy96aLbsmyi+JKYbuQU4d
+	Nzc0Lj5F41txwQZ6jI9lQj7teZ2S8ymP33/pdWXe/R2LbOLTcZVYE53+hmTgISIB
+	qf35+qoZfXs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C7B9520E77;
+	Mon,  1 Dec 2014 12:57:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5150320E69;
+	Mon,  1 Dec 2014 12:57:18 -0500 (EST)
+In-Reply-To: <CAEvUa7mhjG1xPoJedp4XYrxr39_EuzvGtONLv0B=uBw+vQB5pw@mail.gmail.com>
+	(David Michael's message of "Mon, 1 Dec 2014 12:49:59 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7DA24864-7983-11E4-949B-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260501>
 
-On Nov 30, 2014, at 21:31, Torsten B=F6gershausen wrote:
+David Michael <fedora.dm0@gmail.com> writes:
 
-> On 12/01/2014 04:02 AM, Michael Blume wrote:
->> I have no idea whether this should concern anyone, but my mac build =
-=20
->> of git shows
+> On Mon, Dec 1, 2014 at 9:44 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Sun, Nov 30, 2014 at 9:41 AM, David Michael <fedora.dm0@gmail.com> wrote:
+>>> +int git_stat(const char *path, struct stat *buf)
+>>> +{
+>>> +       int rc;
+>>> +       rc = stat(path, buf);
+>>> +       if (buf != NULL)
 >>
->>     CC imap-send.o
->> imap-send.c:183:36: warning: 'ERR_error_string' is deprecated: first
->> deprecated in OS X 10.7 [-Wdeprecated-declarations]
->>         fprintf(stderr, "%s: %s\n", func,
->> ERR_error_string(ERR_get_error(), NULL));
->>                                           ^
-> []
-> Isn't the warning a warning ;-)
-> I don't see this warnings because my openssl comes from /opt/local/=20
-> include (Mac ports)
-> Does anybody know which new functions exist in Mac OS X versions >=3D=
- =20
-> 10.7  ?
+>> It's a minor thing, but maybe test "!rc" instead of "buf != NULL"?
+>
+> Okay, it makes sense to only do the conversion for a successful return code.
+>
+> Should it test for both a zero return code and a non-null pointer?  I
+> don't know if there are any cases where passing a null pointer is
+> legal.  The standard doesn't seem to explicitly forbid it.  z/OS
+> returns -1 and sets errno to EFAULT when stat() is given NULL, but
+> this patch should be able to be used on any platform.
 
- From [1]:
+Huh?  I am confused.  Since when is it legal to give NULL as statbuf
+to (l)stat(2)?
 
-> In addition to these APIs, a number of open source tools use OpenSSL =
-=20
-> for secure networking. If you use OpenSSL in your publicly shipping =20
-> apps, you must provide your own copy of the OpenSSL libraries, =20
-> preferably as part of your app bundle; the OpenSSL libraries that OS =
-=20
-> X provides are deprecated.
+Wouldn't something like this be sufficient and necessary?
 
-So using the version from Mac Ports is the right idea to avoid the =20
-problem.  You can always define NO_OPENSSL.  imap-send.c has a --curl =20
-option now. (Which presumably automatically becomes the default if you =
-=20
-define NO_OPENSSL and not NO_CURL?)
+	int rc = stat(path, buf);
+        if (rc)
+		return rc;
 
---Kyle
-
-[1] <https://developer.apple.com/library/mac/documentation/security/Con=
-ceptual/cryptoservices/SecureNetworkCommunicationAPIs/SecureNetworkComm=
-unicationAPIs.html=20
- >
+That is, let the underlying stat(2) diagnose any and all problems
+(and leave clues in errno) and parrot its return value to the caller
+to signal the failure?
