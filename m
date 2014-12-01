@@ -1,92 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Bug in reflog of length 0x2BFF
-Date: Mon, 1 Dec 2014 15:35:15 -0800
-Message-ID: <20141201233515.GV6527@google.com>
-References: <547C8610.8080301@cs.uni-saarland.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5] Add another option for receive.denyCurrentBranch
+Date: Mon, 01 Dec 2014 15:49:38 -0800
+Message-ID: <xmqqr3wjnd65.fsf@gitster.dls.corp.google.com>
+References: <cover.1417033080.git.johannes.schindelin@gmx.de>
+	<cover.1417041787.git.johannes.schindelin@gmx.de>
+	<ff9c17b14b4418ae9743a094989d5478dab19701.1417041788.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Christoph Mallon <mallon@cs.uni-saarland.de>
-X-From: git-owner@vger.kernel.org Tue Dec 02 00:35:38 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 02 00:49:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvaV9-0005Ch-Qc
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 00:35:32 +0100
+	id 1Xvaiv-0002CJ-OE
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 00:49:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754159AbaLAXfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2014 18:35:23 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:45437 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753284AbaLAXfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2014 18:35:19 -0500
-Received: by mail-ie0-f172.google.com with SMTP id tr6so10536509ieb.31
-        for <git@vger.kernel.org>; Mon, 01 Dec 2014 15:35:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=P59zML/beaOVUcWHwc9HxzoZKfVAUHDR2b0BHiTHFFY=;
-        b=K5w8gCjnbd8v5iL2t0FSxUu9tp394dKKMhlbx8Ob1olw0YCe4TfvOY6UX3V/vJMU2u
-         fC0OCAt4T/jTQU1xPJFkBjMrutON/0mbzcxbyvHkKObcDpMdK+14ZHP6shQAGXPE84Gy
-         vnjQ2LGJq4WuTXW++UTRlVSQooXS+vm5DHhT9io1k5+lGjWRsZ4FSNxSscc1y72lNk0s
-         8n85lsfvOzqzVt6CysiBn7kbCXTeQreqxpzl0q7D/J0WhZ7e0J8JTeNzwS5IcrtrhBrM
-         eWqXpwb72XzxTMsrxMEfOBb3iP0zbVgY/7DA2Yo+tNkOFMJD5zFEmI7lebKT3dcmR+QV
-         X3VQ==
-X-Received: by 10.50.134.101 with SMTP id pj5mr455546igb.28.1417476918548;
-        Mon, 01 Dec 2014 15:35:18 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:adae:4a7e:fb33:5785])
-        by mx.google.com with ESMTPSA id h77sm6412159ioe.35.2014.12.01.15.35.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 01 Dec 2014 15:35:18 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <547C8610.8080301@cs.uni-saarland.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754183AbaLAXtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2014 18:49:42 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54198 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753284AbaLAXtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2014 18:49:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89F7522BF6;
+	Mon,  1 Dec 2014 18:49:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vczzFZfewRua7dqf62pNsTHmuUk=; b=MXuZHI
+	52kURft//yYyDnqHKi9ucFRyU3eydagXslTekQ2J3k8wCBNEV6yQqTY81buGQaZs
+	XDMXm37dLWdPix+FyRI8HUklCRQnbroGLRT5jiR71ioHrr6DIuA54EW4OLN+P6Fd
+	KfHb2SgELVcpsMzbbcdZnvsc/wfuqH5aPsCxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LRsz/VuKZTF4NR8triHwICKD+0PvUXw+
+	5+jwNUTbC5PTvsObpUJDquWq6lAh/bgbt8apJcNXWepvjPXtbkrjuIgQAYlk2p8d
+	y+bryDCYQVTCyZkDnaOW5J1kuV0dEMVn4yMQ0riw4jpUy0wMw3v7YpLFCQAu/K3m
+	9Iq3UiLUhds=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F92B22BF5;
+	Mon,  1 Dec 2014 18:49:40 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0993022BF2;
+	Mon,  1 Dec 2014 18:49:39 -0500 (EST)
+In-Reply-To: <ff9c17b14b4418ae9743a094989d5478dab19701.1417041788.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Wed, 26 Nov 2014 23:44:16 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B7131F20-79B4-11E4-9B28-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260516>
 
-Hi Christoph,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Christoph Mallon wrote:
+> +static const char *update_worktree(unsigned char *sha1)
+> +{
+> +...
+> +	const char *work_tree = git_work_tree_cfg ? git_work_tree_cfg : "..";
 
-> % git rev-parse 'master@{52}'
-> warning: Log for ref refs/heads/master has gap after Thu, 1 Jan 1970 00:00:01 +0000.
-> 0000000000000000000000000000000000000036
+I overlooked this one, but is there a reason why this has to look at
+an internal implementatino detail which is git_work_tree_cfg,
+instead of asking get_git_work_tree()?
 
-Can you say more?  What output did you expect and how does this differ
-from it?
+I am wondering if that reason is a valid rationale to fix whatever
+makes get_git_work_tree() unsuitable for this purpose.
 
-I tried, with git 2.2.0,
-
-	git init gitbug &&
-	cd gitbug &&
-	git commit --allow-empty -m a &&
-	wget http://tron.yamagi.org/zeug/reflog.bad &&
-	mv reflog.bad .git/logs/refs/heads/master &&
-	sha1sum .git/logs/refs/heads/master &&
-	git rev-parse 'master@{52}'
-
-The output:
-
- 9ffe44715d0e542a60916255f144c74e6760ffd0  .git/logs/refs/heads/master
- 0000000000000000000000000000000000000035
-
-Could you make a test script that illustrates and reproduces the
-problem?  I.e., a patch to a file like t/t1410-reflog.sh, such that
-if I run
-
-	cd git
-	make
-	cd t
-	./t1410-reflog.sh
-
-then I can reproduce the bug?
-
-Thanks,
-Jonathan
+Cc'ing Duy who has been working on the part of the system to
+determine and set-up work-tree and git-dir.
