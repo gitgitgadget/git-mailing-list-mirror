@@ -1,88 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Documentation: git log: --exit-code undocumented?
-Date: Mon, 01 Dec 2014 09:49:25 -0800
-Message-ID: <xmqqwq6bp8ey.fsf@gitster.dls.corp.google.com>
-References: <87zjb78u7g.fsf@osv.gnss.ru>
-	<xmqqegsjqqox.fsf@gitster.dls.corp.google.com>
-	<874mtfl1hx.fsf@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Dec 01 18:50:15 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: OpenSSL deprecation warnings under Xcode
+Date: Mon, 1 Dec 2014 09:51:00 -0800
+Message-ID: <5DF49984-B22E-4BC2-A4B6-8DC9EECEC8B4@gmail.com>
+References: <CAO2U3Qg4DVxSk2u1eJwGqYoxVZTbWRV69J9HTo1rnjFCxSyi2g@mail.gmail.com> <547BFD42.3040104@web.de>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Dec 01 18:51:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvV6z-0000xA-O9
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 18:50:14 +0100
+	id 1XvV7s-00019f-Q5
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 18:51:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753438AbaLARuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2014 12:50:04 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62150 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751868AbaLARuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2014 12:50:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E17020797;
-	Mon,  1 Dec 2014 12:50:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yx1eRYhhbS81x5sVWpcuopayqTk=; b=fOtxcr
-	JFRNOswGG6XfrPnfmXwZeLYv8iF7PEpfW3hMkVj8icGf0aqUC0Vfo/zXa73dAUOj
-	kooD3BC6BONb21NGr9NLPGcONB3ifrjCjpyaNj9qlnMP3wsYRgSVszl+kE15uw74
-	mDH9icxvOBz+Kt7WszkBw17b9T70OVbyYFC6s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B1MQhnqLHseZcAi/Ef1Rw0BUWA7GEkk5
-	9It2IJwQ/HXNpZAwORjl/6fjBoUFsICdYM8csdAgFzjYeAc1NSWtexfPD9hE+DYl
-	zBbRh3N9vdk0iteScR/LjhtPJ+9qhnkrkEA3qrrsHAvNW5CSUL61AekmeiEQq63z
-	oFDElVg2vww=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E88A20794;
-	Mon,  1 Dec 2014 12:50:01 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8A1B20694;
-	Mon,  1 Dec 2014 12:49:26 -0500 (EST)
-In-Reply-To: <874mtfl1hx.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Mon, 01 Dec 2014 18:32:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6483C084-7982-11E4-96C5-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754116AbaLARvF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Dec 2014 12:51:05 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:55804 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753990AbaLARvE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2014 12:51:04 -0500
+Received: by mail-pd0-f179.google.com with SMTP id w10so11387274pde.10
+        for <git@vger.kernel.org>; Mon, 01 Dec 2014 09:51:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=9KMw9vNxJogJafCpcWqmxY+/T9nWZkijE8ovzQxhNqc=;
+        b=wv+H2HvD3hepZp0dfsMqQRP8K5zxs7KMVQt2txZ1vmWL3Maj6NPsJKRy2j4VqlBZIk
+         /eivSr5RyWOGl/d6K24vnt4WpqvHc+aazhB7XsjN5ryMkS3BZi2ThTVKTKw9cfC4tLQr
+         y8l7OmsgJS4KnQTZT5a1j2S0m0Ak0IRRUQFwPM13qS4qHb2WsvkLO9Os5QLfwuB8UEM2
+         T+6ZbQDbflxOn0qsQBVaaKxoeyHzs/71Wer18+hIqZUxebzJpI3pAxit9XT2lzFEJD42
+         tlpmgGPzeCFdrH9pZiLOg3fhYJoo/vHM3JU80DN+13gtF3/R0aSrAapQRd4n5geTt4H/
+         Gqqw==
+X-Received: by 10.68.57.144 with SMTP id i16mr101898104pbq.86.1417456263749;
+        Mon, 01 Dec 2014 09:51:03 -0800 (PST)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id zw1sm18034501pbb.82.2014.12.01.09.51.02
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 01 Dec 2014 09:51:03 -0800 (PST)
+In-Reply-To: <547BFD42.3040104@web.de>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260500>
 
-David Kastrup <dak@gnu.org> writes:
+On Nov 30, 2014, at 21:31, Torsten B=F6gershausen wrote:
 
-> I disagree that --exit-code does nothing: it indicates whether the
-> listed log is empty.  So for example
->
-> git log -1 --exit-code a..b > /dev/null
->
-> can be used to figure out whether "a" is a proper ancestor of "b" or
-> not.
+> On 12/01/2014 04:02 AM, Michael Blume wrote:
+>> I have no idea whether this should concern anyone, but my mac build =
+=20
+>> of git shows
+>>
+>>     CC imap-send.o
+>> imap-send.c:183:36: warning: 'ERR_error_string' is deprecated: first
+>> deprecated in OS X 10.7 [-Wdeprecated-declarations]
+>>         fprintf(stderr, "%s: %s\n", func,
+>> ERR_error_string(ERR_get_error(), NULL));
+>>                                           ^
+> []
+> Isn't the warning a warning ;-)
+> I don't see this warnings because my openssl comes from /opt/local/=20
+> include (Mac ports)
+> Does anybody know which new functions exist in Mac OS X versions >=3D=
+ =20
+> 10.7  ?
 
-Hmph.
+ From [1]:
 
-    $ git log --exit-code master..maint >/dev/null; echo $?
-    0
-    $ git log --exit-code maint..master >/dev/null; echo $?
-    1
+> In addition to these APIs, a number of open source tools use OpenSSL =
+=20
+> for secure networking. If you use OpenSSL in your publicly shipping =20
+> apps, you must provide your own copy of the OpenSSL libraries, =20
+> preferably as part of your app bundle; the OpenSSL libraries that OS =
+=20
+> X provides are deprecated.
 
-That is a strange way to use --exit-code.  I suspect that if you did
-this, you will get 0 from the log between HEAD~..HEAD
+So using the version from Mac Ports is the right idea to avoid the =20
+problem.  You can always define NO_OPENSSL.  imap-send.c has a --curl =20
+option now. (Which presumably automatically becomes the default if you =
+=20
+define NO_OPENSSL and not NO_CURL?)
 
-    $ git checkout master^0
-    $ git commit --allow-empty -m empty
-    $ git log --exit-code HEAD~..HEAD
+--Kyle
 
-even though HEAD~ is a proper ancestor of HEAD, so it is not giving
-us anything useful.  Isn't it a mere artifact that "log" happens to
-share the underlying machinery with "diff" that --exit-code shows a
-non-zero exit when there is any single commit in the range that has
-any change?
+[1] <https://developer.apple.com/library/mac/documentation/security/Con=
+ceptual/cryptoservices/SecureNetworkCommunicationAPIs/SecureNetworkComm=
+unicationAPIs.html=20
+ >
