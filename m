@@ -1,49 +1,61 @@
-From: ydirson@free.fr
-Subject: HIstory simplification limited to requested refs ?
-Date: Mon, 1 Dec 2014 15:36:02 +0100 (CET)
-Message-ID: <1434502090.311776139.1417444562893.JavaMail.root@zimbra39-e7.priv.proxad.net>
-References: <448912770.311767091.1417444369251.JavaMail.root@zimbra39-e7.priv.proxad.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] compat: convert modes to use portable file type values
+Date: Mon, 1 Dec 2014 21:44:52 +0700
+Message-ID: <CACsJy8CKEwOVcB_MUaK8mmSmQuKHC6R6K0YymjCrTP3aYFdbPg@mail.gmail.com>
+References: <87vblxl8ah.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: dirson@bertin.fr, ydirson@free.fr
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 01 15:36:12 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Michael <fedora.dm0@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 01 15:45:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvS5E-0005do-8b
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 15:36:12 +0100
+	id 1XvSEC-0001yE-2J
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Dec 2014 15:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753841AbaLAOgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2014 09:36:08 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:55366 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753785AbaLAOgG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2014 09:36:06 -0500
-Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 9E999A635A;
-	Mon,  1 Dec 2014 15:35:53 +0100 (CET)
-In-Reply-To: <448912770.311767091.1417444369251.JavaMail.root@zimbra39-e7.priv.proxad.net>
-X-Originating-IP: [62.23.137.162]
-X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
-X-Authenticated-User: ydirson@free.fr
+	id S1753868AbaLAOpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2014 09:45:24 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:60500 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753802AbaLAOpX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2014 09:45:23 -0500
+Received: by mail-ie0-f180.google.com with SMTP id rp18so9165213iec.25
+        for <git@vger.kernel.org>; Mon, 01 Dec 2014 06:45:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=/Smpz3h3pn9R1Sb9CgSoqjS0IkVXTO1ZmaU3vbLtJQU=;
+        b=QbhW7D2MvHtV8lG2eHWvLlcN0MUQYmGb3yZddBnTXXFMyXEisjCTOt+eVEQhzmkiIm
+         3ljmknpRvtZaBj2b8GKND8hV8q4KRKilXXmiLgu2HdJG6wzFr/pmWBASDBM5O/5CXvdD
+         oHp670fVTRUFTfYb+61PYNsE6ftaO2830uj7Nyac5KEaQ8rbaWV3x0HUmfDlKFfbch1c
+         VeYsBstYiBUDsXUplShPNELdQ+rWoXT6tb+eDUjzwbPmoQuXwr4ilFnoMxuTBhxOfKYu
+         c4ocJLcCSA8yZOZVbJlhEGzkWC06MwiS6R5kJDXxFUaeRlS/v/W8d6yWtoboGCZK9ptT
+         jzmA==
+X-Received: by 10.50.47.102 with SMTP id c6mr46858451ign.27.1417445122513;
+ Mon, 01 Dec 2014 06:45:22 -0800 (PST)
+Received: by 10.107.176.3 with HTTP; Mon, 1 Dec 2014 06:44:52 -0800 (PST)
+In-Reply-To: <87vblxl8ah.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260484>
 
-Hello,
+On Sun, Nov 30, 2014 at 9:41 AM, David Michael <fedora.dm0@gmail.com> wrote:
+> +int git_stat(const char *path, struct stat *buf)
+> +{
+> +       int rc;
+> +       rc = stat(path, buf);
+> +       if (buf != NULL)
 
-I'm trying to get gitk to draw the relationship between a bunch of integration branches.
-What I'm looking for is a graph that would show which of those branches is included by
-others.  --simplify-by-decoration nearly does the job, but does not omit those heads
-merged into the requested branches.  Did I miss a particular git-log flag that would
-allow something like --simplify-by-commandline ?
+It's a minor thing, but maybe test "!rc" instead of "buf != NULL"?
 
-Best regards,
---
-Yann
+> +               buf->st_mode = mode_native_to_git(buf->st_mode);
+> +       return rc;
+> +}
+-- 
+Duy
