@@ -1,93 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git status / git diff -C not detecting file copy
-Date: Tue, 02 Dec 2014 09:57:07 -0800
-Message-ID: <xmqqvblukk98.fsf@gitster.dls.corp.google.com>
-References: <CAJxwDJzzNV77cTP4nbzgCvFjjqp3C4X8d3j6uwhYvK4+g4r1YQ@mail.gmail.com>
-	<CAGyf7-E_y8zRUKh5RWvAhPXzSgpnVab6e=e1v92rSVVxf+LNJg@mail.gmail.com>
-	<CAJxwDJzxUEd3czHpwDtKaERKDhvyCGOzGbKO4X9z44ugTJ2q4w@mail.gmail.com>
-	<CAGyf7-F9twCEUY-LN=xEf4=gfNW8oLEHJmTjHRQ2MncHZ2emZQ@mail.gmail.com>
-	<20141202065550.GB1948@peff.net>
+From: Kevin <ikke@ikke.info>
+Subject: Re: Git Bash for Mac
+Date: Tue, 2 Dec 2014 19:08:25 +0100
+Message-ID: <CAO54GHD-hSS5mSbNwz7BGLY3zxpJa6Ljay1jy4u5nXcg-8Do5g@mail.gmail.com>
+References: <F6CF2816-4FB8-4B6D-B00F-FECB67D43409@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Bryan Turner <bturner@atlassian.com>,
-	Pol Online <info@pol-online.net>,
-	Git Users <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 02 18:57:19 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Nizamuddin Chowdhury <mchowdhury57@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 19:08:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvrhO-0006lv-L2
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 18:57:19 +0100
+	id 1XvrsZ-0004jT-OF
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 19:08:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932784AbaLBR5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 12:57:13 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58505 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932778AbaLBR5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 12:57:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A217623F2A;
-	Tue,  2 Dec 2014 12:57:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W3qXsuXn6fXsDZj2SW+qsWkkjG8=; b=LBdEQ8
-	CUDSjVtHIVjo6EBBLiLMluG3Pt9E+qAOdsdYPmSmTeJAvwuyIzRstqCmk+mOxRjG
-	/nVv1rYg4E/IpbPr4ZMNbJQxgsUr5b25Cq+wkX0SJn3y5lyqJlfv8+/zGuup5oZJ
-	8I+bK28MvOq2L0xZj8Ymt7YoWNhmBDg5y/T7k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e4zE2g70hJVHJbJmIu5osWa6N5tu7tzT
-	rdBTuKb/ty7LFmZeW7fX1wh8rs5Fyb82JYNWrciBzPav6E3javIyBauIQg0cSFkF
-	os1mllECQD5ZZFxALOSPXyesAI2TPqP5XI/+ywj6twbiZ+BS6sY7r+xmN69E1p23
-	+a5Ev52hsPU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9125923F28;
-	Tue,  2 Dec 2014 12:57:11 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2D4B23F23;
-	Tue,  2 Dec 2014 12:57:09 -0500 (EST)
-In-Reply-To: <20141202065550.GB1948@peff.net> (Jeff King's message of "Tue, 2
-	Dec 2014 01:55:50 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A30083F4-7A4C-11E4-9682-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932668AbaLBSIr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Dec 2014 13:08:47 -0500
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:49783 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932356AbaLBSIq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 13:08:46 -0500
+Received: by mail-wg0-f44.google.com with SMTP id b13so17744504wgh.3
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 10:08:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=n80KfV1Mb7PFQ+06UJ3bgD8HTrBdSf+25xa3XmDUm0A=;
+        b=Jxqv69Hz7XcmuhfCOaQ2gT/b06aMbUgtSoP6i127ySkjZu69QBrN78QIpy3DWTDqXb
+         +tgJHhTTMuL/iDkooqej7KzkIcZIvM2CMawzvfL97Uy/UkkpdzduKqJ3H0z9/A1wXIXj
+         7j8zoZ2OtQOio9KxDR9nqkVVXPx0zGt44jrJGOIF+a89/fiVvQ3QZkhhIMC6F+JyHT1o
+         FRo1EyBP2jgbxAmHfO9ylcQk7SwNRUNN7ddih6KtoDHWWW5S74JRithWKr/Ed65HXauR
+         aRftLUW7SVd3DU+KEqDOLuZx0lA2tBeyLsvXaJ9IfF/9860xrD+kyP4KE051cVyvV6zA
+         50RA==
+X-Received: by 10.180.81.7 with SMTP id v7mr7197935wix.74.1417543725760; Tue,
+ 02 Dec 2014 10:08:45 -0800 (PST)
+Received: by 10.194.37.132 with HTTP; Tue, 2 Dec 2014 10:08:25 -0800 (PST)
+In-Reply-To: <F6CF2816-4FB8-4B6D-B00F-FECB67D43409@gmail.com>
+X-Google-Sender-Auth: _aPDnsOrcqEzToCVRQmlZmdVm7w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260588>
 
-Jeff King <peff@peff.net> writes:
-
-> Interestingly, the rename behavior dates all the way back to:
+On Tue, Dec 2, 2014 at 1:21 PM, Nizamuddin Chowdhury
+<mchowdhury57@gmail.com> wrote:
+> Good Morning,
 >
->   commit 753fd78458b6d7d0e65ce0ebe7b62e1bc55f3992
->   Author: Linus Torvalds <torvalds@ppc970.osdl.org>
->   Date:   Fri Jun 17 15:34:19 2005 -0700
+> My name is Sefath, and I was wondering when i could start using Git f=
+or Mac. I=E2=80=99m completely new to coding, and I wanted to start wit=
+h HTML. However, when I tried installing git bash on my mac, it doesn=E2=
+=80=99t work. Maybe it isn=E2=80=99t compatible with OS X Yosmite? I wo=
+uld really love to start learning code, and it sucks that I can=E2=80=99=
+t because of a reason like this.
 >
->   Use "-M" instead of "-C" for "git diff" and "git status"
->   
->   The "C" in "-C" may stand for "Cool", but it's also pretty slow, since
->   right now it leaves all unmodified files to be tested even if there are
->   no new files at all.  That just ends up being unacceptably slow for big
->   projects, especially if it's not all in the cache.
-> ...
-> To get a rough sense of how much effort is entailed in the various
-> options, here are "git log --raw" timings for git.git (all timings are
-> warm cache, best-of-five, wall clock time):
 
-The rationale of the change talks about "big projects" and your
-analysis and argument to advocate reversion of that change is based
-on "git.git"?  What is going on here?
+git bash is a windows port for git, so that's not suitable for OSX.
 
-Also our history is fairly unusual in that we do not have a lot of
-renames (there was one large "s|builtin-|builtin/|" rename event,
-but that is about it), which may not be a good example to base such
-a design decision on.
-
-It is a fine idea to make this configurable ("status.renames = -C"
-or something, perhaps?), though.
+You'll need to have a Mac build of git, which you can find here:
+http://git-scm.com/download/mac
