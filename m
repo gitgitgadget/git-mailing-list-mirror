@@ -1,144 +1,152 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: tests do not work with gpg 2.1
-Date: Tue, 02 Dec 2014 13:55:31 +0100
-Message-ID: <547DB6C3.5010704@drmicha.warpmail.net>
-References: <xmqqr3wpo8yl.fsf@gitster.dls.corp.google.com> <20141127213224.GA27443@dispater.uplinklabs.net> <54784503.80108@drmicha.warpmail.net> <20141128165009.GA4728@peff.net>
+Subject: Re: [PATCH 2/2] receive-pack: support push-to-checkout hook
+Date: Tue, 02 Dec 2014 14:03:16 +0100
+Message-ID: <547DB894.4040609@drmicha.warpmail.net>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de> <xmqqh9yag6mt.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411101400050.13845@s15462909.onlinehome-server.info> <xmqq1tpbawqe.fsf@gitster.dls.corp.google.com> <xmqq389qam25.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411121208250.13845@s15462909.onlinehome-server.info> <xmqqzjbw47vr.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411131123330.13845@s15462909.onlinehome-server.info> <alpine.DEB.1.00.1411131136200.13845@s15462909.onlinehome-server.info> <xmqqh9y32e36.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411131850510.13845@s15462909.onlinehome-server.info> <xmqq4mu2285w.fsf@gitster.dls.corp.google.com> <xmqqzjbuzu6t.fsf@gitster.dls.corp.google.com> <xmqq1tp643yb.fsf@gitster.dls.corp.google.com> <xmqqa9
+ 36ohs3.fsf@gitster.dls.corp.google.com> <xmqq61duohq7.fsf_-_@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412020929420.13845@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Steven Noonan <steven@uplinklabs.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 02 13:55:39 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 14:03:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvmzS-0007U4-Rj
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 13:55:39 +0100
+	id 1Xvn6x-0002tg-Mc
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 14:03:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754571AbaLBMzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 07:55:35 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:48498 "EHLO
+	id S932909AbaLBNDT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Dec 2014 08:03:19 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:52458 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754485AbaLBMze (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 07:55:34 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id F421C20C5F
-	for <git@vger.kernel.org>; Tue,  2 Dec 2014 07:55:33 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Tue, 02 Dec 2014 07:55:33 -0500
+	by vger.kernel.org with ESMTP id S932605AbaLBNDS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 08:03:18 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id A97DF20748
+	for <git@vger.kernel.org>; Tue,  2 Dec 2014 08:03:17 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Tue, 02 Dec 2014 08:03:17 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=x-sasl-enc:message-id:date:from
 	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=0p6t6k8muzU7vkRQ9uwO08
-	xsH9U=; b=nCv6osG3u84AA7Sn//basMxAPLYDV596NOwhR4dJPsOW5G+1kWB+LE
-	Y0Md1m7QjzzH+IgELob3PZnlyX8dxEejWpXKboJG9ncXYr5BI6w1nxmiik2Q8EFN
-	1FCA6Tkwzush/4nEyF3h6PgsXNjvL7rqbWi1yRwXgv9yXncj774Q8=
-X-Sasl-enc: n72/TKTyr7pfRyBZqTm9wNwuNZ2Dr/az6hogjhNsoWp0 1417524933
+	:content-transfer-encoding; s=smtpout; bh=CMzMXOdx49yPZq9vnZ3arg
+	xUecI=; b=kFWRe8e6AAPEhCn80jGpocSBeKx9v2tiZ7DJN4ghHKQjk2ZyFlPr5r
+	PjpplPgCl6dwQkdoeuZwosBwzkTw0PkcxxNQvihpG8v2/iF3N+UEfq5zbExwg74D
+	P1mPAPKbK7F8pmCMQmguaR1WkAXQZghdMEeVB9+o1tgV8rxsKcdf4=
+X-Sasl-enc: nWpbNrP0uzplx6A1UA0jY2YViuBGw5Xif0tBiXoDbsQJ 1417525397
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 3F0A96800CB;
-	Tue,  2 Dec 2014 07:55:33 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id D9596C0027D;
+	Tue,  2 Dec 2014 08:03:16 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20141128165009.GA4728@peff.net>
+In-Reply-To: <alpine.DEB.1.00.1412020929420.13845@s15462909.onlinehome-server.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260567>
 
-Jeff King schrieb am 28.11.2014 um 17:50:
-> [updated subject, as this is not specific to the v2.2.0 release at all]
-> 
-> On Fri, Nov 28, 2014 at 10:48:51AM +0100, Michael J Gruber wrote:
-> 
->> Are you running gnome_keyring_deamon by any chance? It think it runs by
->> default in Gnome, claims to offer gpg_agent functionality but does not
->> seem to do so fully. I.e., its presence may keep gpg2.1 from starting
->> its own gpg-agent. But gpg2.1 ("gnupg modern branch") needs a new
->> gpg-agent which knows how to handle secret keys for gpg2.1.
+Johannes Schindelin schrieb am 02.12.2014 um 09:47:
+> Hi Junio,
+>=20
+> On Mon, 1 Dec 2014, Junio C Hamano wrote:
+>=20
+>> When receive.denyCurrentBranch is set to updateInstead, this hook
+>> can be used to override the built-in "push-to-deploy" logic, which
+>> insists that the working tree and the index must be unchanged
+>> relative to HEAD.  The hook receives the commit with which the
+>> tip of the current is going to be updated, and is responsible to
+>> make any necessary changes to the working tree and to the index to
+>> bring them to the desired state when the tip of the current branch
+>> is updated to the new commit.
 >>
->> (I may take a shot at trying, but I'm on Fedora - they're slow and
->> special in all things gpg/crypto. And compiling gpg2.1 means compiling
->> all the bits and pieces that monster consists of these days...)
-> 
-> I'm not running the gnome daemon (I do normally run gpg-agent, though),
-> and I can reproduce.
+>> For example, the hook can simply run "git read-tree -u -m HEAD $1"
+>> to the workflow to emulate "'git fetch' going in the reverse
+>> direction with 'git push'" better than the push-to-deploy logic, as
+>> the two-tree form of "read-tree -u -m" is essentially the same as
+>> "git checkout" that switches branches while keeping the local
+>> changes in the working tree that do not interfere with the
+>> difference between the branches.
+>=20
+> I like it.
+>=20
+> The only sad part is that the already huge test suite is enlarged by =
+yet
+> another extensive set of test cases (and those tests might not really
+> need to be that extensive because they essentially only need to make =
+sure
+> that the hook is run successfully *instead* of trying to update the
+> working directory, i.e. a simple 'touch yep' hook would have been eno=
+ugh).
+> It starts to be painful to run the complete test suite, not only on
+> Windows (where this has been a multi-hour endeavor for me for ages
+> already). BuildHive (CloudBees' very kind offer of Jenkins CI for Ope=
+n
+> Source, integrated conveniently with GitHub) already takes over an ho=
+ur to
+> run the Git test suite =E2=80=93 and BuildHive runs on Linux, not Win=
+dows!
+>=20
+> That means that everytime I push into a GitHub Pull Request, I have t=
+o
+> wait for a full hour to know whether everything is groovy.
+>=20
+> Worse: when Git for Windows contributors (yes! they exist!) push into
+> their Pull Requests, I have to wait for a full hour before I can merg=
+e,
+> unless I want to merge something that the test suite did not validate=
+!
+>=20
+> So maybe it is time to start thinking about conciser tests that verif=
+y the
+> bare minimum, especially for rarely exercised functionality? I mean,
+> testing is always a balance between too much and too little. And at t=
+his
+> point, I am afraid that several well-intended, but overly extensive t=
+ests
+> increase the overall runtime of "make test" to a point where develope=
+rs
+> *avoid* running it, costing more time in the long run than necessary.
+>=20
+> In this particular case, I think that we really, really *just* need t=
+o
+> verify that the presence of the hook switches off the default behavio=
+r of
+> updateInstead. *Nothing* else is needed to verify that this particula=
+r
+> functionality hasn't regressed. I.e. something like:
+>=20
+> +test_expect_success 'updateInstead with push-to-checkout hook' '
+> +	rm -fr testrepo &&
+> +	git clone . testrepo &&
+> +	(
+> +		cd testrepo &&
+> +		echo unclean > path1 &&
+> +		git config receive.denyCurrentBranch updateInstead &&
+> +		echo 'touch yep' | write_script .git/hooks/push-to-checkout
+> +	) &&
+> +	git push testrepo HEAD^:refs/heads/master &&
+> +	test unclean =3D $(cat testrepo/path1) &&
+> +	test -f testrepo/yep
+> +'
+>=20
+> would be more appropriate (although it probably has one or three bugs=
+,
+> given that I wrote this in the mailer).
+>=20
+> Ciao,
+> Johannes
+>=20
 
-You get the passphrase prompt, Steven didn't, if I understood correctly.
-You can continue successfully by hitting OK, Steven coudn't hit anything...
-
-> I wanted to try experimenting today with making sure GPG_AGENT_INFO was
-> unset in the environment. But despite nothing changing (i.e., before I
-> even cleared that variable), I'm getting totally different results.
-> 
-> Now when I run t4202, I get no agent prompt, and just:
-> 
->     ok 40 - dotdot is a parent directory
->     
->     expecting success: 
->             test_when_finished "git reset --hard && git checkout master" &&
->             git checkout -b signed master &&
->             echo foo >foo &&
->             git add foo &&
->             git commit -S -m signed_commit &&
->             git log --graph --show-signature -n1 signed >actual &&
->             grep "^| gpg: Signature made" actual &&
->             grep "^| gpg: Good signature" actual
->     
->     Switched to a new branch 'signed'
->     gpg: skipped "C O Mitter <committer@example.com>": No secret key
->     gpg: signing failed: No secret key
->     error: gpg failed to sign the data
->     fatal: failed to write commit object
-
-That is how things turned for Steven, afaik.
-
-> And then a subsequent run gives me:
-> 
->     rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/19D48118D24877F59C2AE86FEC8C3E90694B2631.key': Permission denied
->     rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/E0C803F8BC3BCC4990E174E05936A7636E888899.key': Permission denied
->     rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/FCFAC48BF12AC0FCC32B69AB90AA7B1891382C29.key': Permission denied
->     rm: cannot remove '/home/peff/compile/git/t/trash directory.t4202-log/gpghome/private-keys-v1.d/D50A866904B91C0C49A3F6059584F4A09807D330.key': Permission denied
->     FATAL: Cannot prepare test area
-> 
-> It seems that it creates the private-keys directory without the 'x' bit:
-> 
->     $ ls -ld trash*/gpghome/private-keys-v1.d
->     drw------- 2 peff peff 4096 Nov 28 11:45 trash directory.t4202-log/gpghome/private-keys-v1.d/
-> 
-> So that's weird, and doubly so that it is behaving differently than it
-> was last night. Obviously _something_ must have change. Maybe something
-> related to the state of my running agent, I guess.
-> 
-> -Peff
-> 
-
-I think if you unset GPG_AGENT_INFO, gpg2.1 thinks there is no agent,
-starts it's own and talks to it via a socket directly (no env variable).
-Now that one seems come with different options (regarding pinentry) so
-that it can't even ask you for a passphrase.
-
-That private-keys directory is from the first run of gpg2.1 on a pre-2.1
-GPGHOME. It converts the old secring db to that new dir of entries and
-uses that instead.
-
-Regarding the umask: That may actually be fallout from
-
-e7f224f (t/lib-gpg: make gpghome files writable, 2014-10-24)
-
-where I didn't expect directories to be present in gpghome. Maybe i
-should change
-
-chmod 0700 gpghome
-chmod 0600 gpghome/*
-
-to
-
-chmod -R o+w gpghome/
-
-though I felt somehow safer with the explicit permissions.
+How about reusing the prerequisites feature for that? We could either
+mark the minimal tests, or mark the others similar to how we do with th=
+e
+(extra) expensive tests. Your config.mk would then determine which test=
+s
+are executed.
 
 Michael
