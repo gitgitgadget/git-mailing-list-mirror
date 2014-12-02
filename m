@@ -1,95 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] Add another option for receive.denyCurrentBranch
-Date: Tue, 02 Dec 2014 08:20:53 -0800
-Message-ID: <xmqqzjb6m3a2.fsf@gitster.dls.corp.google.com>
-References: <cover.1417033080.git.johannes.schindelin@gmx.de>
-	<cover.1417041787.git.johannes.schindelin@gmx.de>
-	<ff9c17b14b4418ae9743a094989d5478dab19701.1417041788.git.johannes.schindelin@gmx.de>
-	<xmqqr3wjnd65.fsf@gitster.dls.corp.google.com>
-	<xmqqk32aoowa.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412020909020.13845@s15462909.onlinehome-server.info>
+From: Derek Moore <derek.p.moore@gmail.com>
+Subject: Re: RCS Keywords in Git done right
+Date: Tue, 2 Dec 2014 10:31:02 -0600
+Message-ID: <CAMsgyKZWr-1isLvRXMFdzOYu0Yfm3vN_bdk4oRg6UhzSOMq_yQ@mail.gmail.com>
+References: <CAMsgyKbTRY5=cHj8Ar8zHDd5WdbcNwZC5caGV-snvZU4aek=YQ@mail.gmail.com>
+	<CAGZ79kZz4_q+p91e7fn8uS--DRqEUPj_eeQPf2WPOWEk=R8fkw@mail.gmail.com>
+	<CAMsgyKZywnac_b2RV0dGs9zOdemJDUQ8oR=bSydBuSxp1VDixQ@mail.gmail.com>
+	<CAGZ79kZLAHDG8h5DMQdOH2cQtaMs_iCtC-xsoKst966a+jaBNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 02 17:21:08 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 17:31:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvqCI-0007cA-PH
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 17:21:07 +0100
+	id 1XvqM1-0003yv-O2
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 17:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932601AbaLBQVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 11:21:01 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60304 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932596AbaLBQVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 11:21:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 505812321A;
-	Tue,  2 Dec 2014 11:20:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bBWVCbS3YxhF48do01YtmBcV2iE=; b=JqGeIA
-	0n5E9Pyv+VayLj4T6KSA7oA4a8OvJmJxkaZXD6F1AAEflsPB3IlGXwwuWqVDiayY
-	Ps6Ut8kNQUkOi663VIRu591cZFwopxo9F8XnKFkhx82Xv9Cb7OAtGsRcpp/F6s0l
-	CESG8nxnRSBrgben086y0l38EAp6prmnlOc8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Qd0Bdb7O3MmHdSlDCa25eTKCJ8Ojx2FE
-	zmJmKBlG8rmHiSY8ady8rujyGEcXDilows4vdijdutMg/XeIaCfN30JeOXKicoGj
-	Htx+0dJEzeVU39OS1R1wqAp0uYxUl2qePwh+Mxw8J6cVlmuwlBbQ8ClOGEznumJO
-	miLS1wY8Y6Q=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4753D23219;
-	Tue,  2 Dec 2014 11:20:59 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C91C023212;
-	Tue,  2 Dec 2014 11:20:54 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1412020909020.13845@s15462909.onlinehome-server.info>
-	(Johannes Schindelin's message of "Tue, 2 Dec 2014 09:21:01 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 30CEC352-7A3F-11E4-A951-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932469AbaLBQbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 11:31:05 -0500
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:61016 "EHLO
+	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932520AbaLBQbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 11:31:03 -0500
+Received: by mail-oi0-f52.google.com with SMTP id h136so9156938oig.25
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 08:31:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WSe7pKRLoxr2KU6O/ehHYPeIG7dDbsBpV9NSeteJm3U=;
+        b=VlJ+xwcval4eKYbVJMZiUHamw2TpNwkzR9YFNjeEtQXMErnisWPZgbl1uUb4nsSZMB
+         JPGHSZMkC7gs5vYnPsmf8I4yExYg72+uGdhbMJ08AwSr7kH7QVLi3FXZZSV4mvAADrpv
+         Mo6NdWmJJR1scgZ/xEXR+0tUBT4RqWqEGTUIgBnG0CzYUneh+aNnh+OQ+U02NtOTR0d4
+         PKbBm4katvRUMnz28a8XHwGW7L8cwf0dJo8mnolcqMqron017JLSalcIlbLdAxOkq/cI
+         Ao/oa8Q8D6S90bqiyJbRhTPkFgKk3br1hC1bmDyiAGNW/9nK9+e1uJ28Oc8QS7G5cZaY
+         y7Pw==
+X-Received: by 10.60.48.65 with SMTP id j1mr135879oen.42.1417537862808; Tue,
+ 02 Dec 2014 08:31:02 -0800 (PST)
+Received: by 10.76.33.68 with HTTP; Tue, 2 Dec 2014 08:31:02 -0800 (PST)
+In-Reply-To: <CAGZ79kZLAHDG8h5DMQdOH2cQtaMs_iCtC-xsoKst966a+jaBNA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260572>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I've finished testing this work in larger repositories.
 
->> This is because you know receive-pack runs inside the $GIT_DIR,
->> whether it is a bare or non-bare repository, so either core.worktree
->> points at a directory that is otherwise unrelated to the $GIT_DIR
->> (but is the correct $GIT_WORK_TREE), or the top of the working tree
->> must be ".." for a non-bare repository....
+While the approach is performant and works nicely in small repos, but
+in larger repos one of the requirements for the "correctness" of
+substitutions slows things down (1 or 2 minutes to perform checkouts
+between branches with 10,000+ files).
 
-And this reasoning may be broken, unfortunately.
+The operation that is slowing things down is discovering the relative
+complement of commits between the common files of two branches (i.e.,
+which files are common between two branches but differ in their latest
+commit).
 
-In a repository with separate-git-dir, we enter $GIT_DIR that is
-pointed by the "gitdir: $over_there" thing, and once we go there,
-we have no linkage back to find where the working tree is unless
-there is core.worktree set, do we?
+My current approach is:
+1) find files common between @ & @{-1}, "ls-tree --full-tree
+--name-only -r" both branches, take the intersection
+2) find current branch's commits for common files, for each file in
+intersection "log -1 --format=%H $current_branch -- $file"
+3) find common files where latest commits differ, for each file in
+intersection keep the file if current branche's latest commit does not
+equal prior branch's latest commit
+4) overwrite all kept files with the results of git-archive
 
-This feature (with or without the push-to-checkout hook, as that
-shares exactly the same logic that discovers, or fails to do so,
-where the working tree is) needs to be documented with an entry in
-the BUGS section, saying that it will not work in a repository that
-is tied to its working tree via the "gitdir:" mechanism.
+It is steps 2 & 3 that consume the most time in a large repo with
+large intersections of common files between branches.
 
-It actually is a lot worse than merely "it will not work", when this
-problem ever manifests itself.  The use of this mechanism in such a
-repository will destroy the contents of a wrong directory that
-happens to be the parent directory of a repository pointed by the
-"gitdir:" mechanism, unless core.worktree is set.  Fortunately, real
-submodule directories found in the ".git/modules/" directory of the
-superproject, even though they are bound to their checkout locations
-in the working tree of the superproject using "gitdir:" mechanism,
-do maintain their core.worktree when "git submodule" manages them,
-so the use of the mechanism in submodule setting may be safe.
+I've tried to conceive of other ways to arriving at the same
+"filename"/"latest current branch commit hash" pairs where filenames
+are common between branches and latest current branch commit hash
+differs from latest prior branch commit hash. I've thought maybe I
+could traverse commits starting from merge-base instead of traversing
+files, but that doesn't seem like it would be a huge improvement.
+
+I'm sure internal to git in C there would be a better/faster way (and
+it would probably look like writing Btrieve queries). Can anyone think
+of a good solution for the intersection of files and complement of
+commits using only the git CLI tools?
+
+Thanks,
+
+Derek
