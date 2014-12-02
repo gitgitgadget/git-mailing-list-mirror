@@ -1,66 +1,78 @@
-From: Mike Berry <mrberry@lanl.gov>
-Subject: configure failed to detect no asciidoc
-Date: Tue, 02 Dec 2014 16:32:56 -0700
-Message-ID: <547E4C28.7050407@lanl.gov>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t/lib-gpg: adjust permissions for gnupg 2.1
+Date: Tue, 02 Dec 2014 15:57:50 -0800
+Message-ID: <xmqqiohtli4h.fsf@gitster.dls.corp.google.com>
+References: <547DB6C3.5010704@drmicha.warpmail.net>
+	<9c28f16c677bbc774e5b8dfc79b6ffe2c55d1720.1417527514.git.git@drmicha.warpmail.net>
+	<20141202210753.GD23461@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 03 00:57:45 2014
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 03 00:58:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvxKD-0000x1-93
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 00:57:45 +0100
+	id 1XvxKS-00016I-MI
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 00:58:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933483AbaLBX5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 18:57:41 -0500
-Received: from proofpoint5.lanl.gov ([204.121.3.53]:47473 "EHLO
-	proofpoint5.lanl.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933309AbaLBX5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 18:57:41 -0500
-X-Greylist: delayed 1483 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Dec 2014 18:57:40 EST
-Received: from mailrelay1.lanl.gov (mailrelay1.lanl.gov [128.165.4.101])
-	by mailgate5.lanl.gov (8.14.7/8.14.7) with ESMTP id sB2NWu1P027398
-	for <git@vger.kernel.org>; Tue, 2 Dec 2014 16:32:56 -0700
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailrelay1.lanl.gov (Postfix) with ESMTP id B3C6A137314D
-	for <git@vger.kernel.org>; Tue,  2 Dec 2014 16:32:56 -0700 (MST)
-X-NIE-2-Virus-Scanner: amavisd-new at mailrelay1.lanl.gov
-Received: from kudu.lanl.gov (kudu.lanl.gov [128.165.45.183])
-	by mailrelay1.lanl.gov (Postfix) with ESMTP id A4A2F1373155
-	for <git@vger.kernel.org>; Tue,  2 Dec 2014 16:32:56 -0700 (MST)
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.13.68,1.0.33,0.0.0000
- definitions=2014-12-03_01:2014-12-02,2014-12-02,1970-01-01 signatures=0
+	id S933562AbaLBX54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 18:57:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63041 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933319AbaLBX5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 18:57:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 943ED23CCE;
+	Tue,  2 Dec 2014 18:57:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OxTdOt1umw0KF6gWf1jwSF9t9uA=; b=P5SZY+
+	IHsOiGq+qDU8huVhcsUoXbh129V6+ieesBBXn59bUU6U+6ukywk7T9DmawvhEEyI
+	7vRIHCwpOrtjx8FZZB+5AdNFpL7fKASdaXN7DZdR0eiWUL/z6WD8IsvN0pFyWsna
+	IONLU7o4dJMycoO1clm6U2DpdQXXSjkDlpJHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hWFgYlvcoF8wlR6IOLpfQjLytHsgtYdG
+	w4jILhhGuqFtPs+WUwGkZskewThCMkHSo2YonwaM+LXsQvhDEN+0tbkF2fJffQ0W
+	i2Y3FxqWQyJ5JP4o1IPzqq996M+6vYnVsrv2gZm1wv/nhmqzc5H4QYOr/FtK9A8/
+	OY928yoLSQs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AB2B23CCD;
+	Tue,  2 Dec 2014 18:57:52 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B41E23CCC;
+	Tue,  2 Dec 2014 18:57:51 -0500 (EST)
+In-Reply-To: <20141202210753.GD23461@peff.net> (Jeff King's message of "Tue, 2
+	Dec 2014 16:07:53 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 06BF1A4A-7A7F-11E4-980E-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260602>
 
+Jeff King <peff@peff.net> writes:
 
-I just downloaded the latest git, and tried to build with:
+> Taking a step back, though, I am not sure I understand the reasoning
+> behind the original e7f224f. The rationale in the commit message is that
+> we want to make sure that the files are writable. But why would they not
+> be? They are created by "cp -R",...
 
- > make configure
- > ./configure
- > make all doc
+Wait.  After doing this,
 
-build failed while "building" doc, asciidoc not found
+    $ mkdir -p src/a && >src/b 2>src/a/c && chmod a-w src/b src/a/c
+    $ cp -R src dst
+    $ ls -lR dst
 
-I would have thought the configure would have detected that.....
+dst/b and dst/a/c are 0440 (with umask 0027, which makes src/b and
+src/a/c also 0440, which is copied with "cp -R").
 
-
-I downloaded, built, and installed asciidoc, and re-built git, things 
-are mostly good.
-
-The documentation is still causing me trouble as my firewall doesn't 
-like the html in Documentation/docbook.xsl, but that's probably a 
-firewall issue.  Is there documentation method, not requiring active web 
-access?
-
-
-
-Mike
+I was primarily worried about t/lib-gpg/* being read-only from a
+src-tarball extract when we had a discussion that led to e7f224f7
+(t/lib-gpg: make gpghome files writable, 2014-10-24).
