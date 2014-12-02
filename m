@@ -1,77 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 24/34] checkout: reject if the branch is already checked out elsewhere
-Date: Tue, 02 Dec 2014 09:30:22 -0800
-Message-ID: <xmqq4mtem029.fsf@gitster.dls.corp.google.com>
-References: <1417335899-27307-1-git-send-email-pclouds@gmail.com>
-	<1417335899-27307-25-git-send-email-pclouds@gmail.com>
-	<547B5170.6050206@gmail.com> <20141201103818.GA20429@lanh>
-	<xmqq1tojqnfg.fsf@gitster.dls.corp.google.com>
-	<547D487B.4040502@gmail.com>
-	<CACsJy8DjbgNpbf9Z-OVCpv+YNmvsuHfcPW_Jfm3_gbq2VgYgkQ@mail.gmail.com>
+From: Derek Moore <derek.p.moore@gmail.com>
+Subject: Re: RCS Keywords in Git done right
+Date: Tue, 2 Dec 2014 11:36:08 -0600
+Message-ID: <CAMsgyKasQ=DZ77e6HJW6u03g9RHsJedG_SQDW0X=-V_9bAYA0w@mail.gmail.com>
+References: <CAMsgyKbTRY5=cHj8Ar8zHDd5WdbcNwZC5caGV-snvZU4aek=YQ@mail.gmail.com>
+	<CAGZ79kZz4_q+p91e7fn8uS--DRqEUPj_eeQPf2WPOWEk=R8fkw@mail.gmail.com>
+	<CAMsgyKZywnac_b2RV0dGs9zOdemJDUQ8oR=bSydBuSxp1VDixQ@mail.gmail.com>
+	<CAGZ79kZLAHDG8h5DMQdOH2cQtaMs_iCtC-xsoKst966a+jaBNA@mail.gmail.com>
+	<CAMsgyKZWr-1isLvRXMFdzOYu0Yfm3vN_bdk4oRg6UhzSOMq_yQ@mail.gmail.com>
+	<CAMsgyKbd8Eq07LUktaVy7zyFQwOJ3KOrkJCipp6P9F1_W=OYCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 18:30:34 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 18:36:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvrHT-0000oy-Vs
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 18:30:32 +0100
+	id 1XvrN8-0003zV-Q7
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 18:36:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932252AbaLBRa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 12:30:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65362 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932236AbaLBRaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 12:30:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E6672373C;
-	Tue,  2 Dec 2014 12:30:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jbF0EckPks40pMs6XMlXmQgxbQU=; b=ThW2XL
-	doShyq13Maj/aA3P3YZtmV5Bwub/q/Fuby2ejA54MGlp3Ek5udd9v+B50R1XlxJ/
-	DpuoAwWB/1wXyWUAgotD8+39o9zfIUOO9+mN3h48fXqzS+rcLK1qvOchO8OCmKQw
-	f11GM14X9DnWYKikMvUqYniaVbnWhtznxaHpI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Oqu6ilmBdPPPGqidjKOJF4vux407vJVP
-	QRhKZ1lARVBbxlr5v5IMJiVuJMZrMLTJRN/zwEwVm8HEGm+wTiQHYZ5Ef9uu4bHd
-	CNZTkPgA5K2woZyEagi+17cwi8gOvTSIN8iizcc7XeTfnhi1n1eo/URVQflVnwbP
-	fHmRviGxCIU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 332152373B;
-	Tue,  2 Dec 2014 12:30:24 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A72BD23739;
-	Tue,  2 Dec 2014 12:30:23 -0500 (EST)
-In-Reply-To: <CACsJy8DjbgNpbf9Z-OVCpv+YNmvsuHfcPW_Jfm3_gbq2VgYgkQ@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 2 Dec 2014 19:01:47 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E5A47908-7A48-11E4-852C-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932716AbaLBRgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 12:36:12 -0500
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:60306 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932313AbaLBRgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 12:36:09 -0500
+Received: by mail-oi0-f45.google.com with SMTP id a141so9416260oig.4
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 09:36:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UrmD/Fc5DpoPpUNnEyh0fNkigwt5XdIpZASlFWxDKbI=;
+        b=XwQ95XwbfVCABO/rrItHgB8TwWJ/8eKti8Eb1hcUt4wzC9m0ZuTGQwXNF5lgxsXKpr
+         +WVbgFVr7UN6PjPZA3YocUs8DghvdOrdgz5zPrBmzeekCry72yQqdwlPnjaQz2pZKcLF
+         uiOnb4ebejIiBS6Wibx7fY32ti+1RdtbTnyysj0B2he9Wk/qdqiJdUuUgRWjMxm/Bqp4
+         mZiqmPLQK892hsTTJnP4xxe4T+EOXa0Vi3XSOuSMxPQMRfvctso4J+UydXlMoJ8FGXbU
+         OH9ql72x8WkE0NSwJg8+Y4i4uFWAOlxqWEA2i7lH2Cf0IRsIE8QuMJIw72fJCg1UERVv
+         qjVw==
+X-Received: by 10.60.68.108 with SMTP id v12mr252896oet.69.1417541768700; Tue,
+ 02 Dec 2014 09:36:08 -0800 (PST)
+Received: by 10.76.33.68 with HTTP; Tue, 2 Dec 2014 09:36:08 -0800 (PST)
+In-Reply-To: <CAMsgyKbd8Eq07LUktaVy7zyFQwOJ3KOrkJCipp6P9F1_W=OYCg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260584>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> FWIW git-branch usually can show the original branch of detached head
-> (must not always). I don't think we have a plumbing equivalent for it
-> though. People can "tail -1 $GIT_DIR/logs/HEAD| sed .." but that seems
-> hacky.
-
-@{-1}, i.e. "the last branch I checked out"?
-
-> I do like "read-only" ref concept where we can keep ref name
-> (especially tags) in HEAD until the next commit. But it didn't go
-> anywhere
-
-Remind me.  That sounds somewhat interesting.
+PPS: Sounds like I need Peff's git-blame-tree from here:
+https://github.com/peff/git/compare/jk/faster-blame-tree
