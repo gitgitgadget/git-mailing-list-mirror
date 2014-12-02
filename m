@@ -1,65 +1,76 @@
-From: Kevin <ikke@ikke.info>
-Subject: Re: Git Bash for Mac
-Date: Tue, 2 Dec 2014 19:08:25 +0100
-Message-ID: <CAO54GHD-hSS5mSbNwz7BGLY3zxpJa6Ljay1jy4u5nXcg-8Do5g@mail.gmail.com>
-References: <F6CF2816-4FB8-4B6D-B00F-FECB67D43409@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: http-protocol question
+Date: Tue, 2 Dec 2014 14:50:51 -0500
+Message-ID: <20141202195050.GA23461@peff.net>
+References: <CAGyf7-HmvvHQZkyLgKAs2rrZTTLFkBa8s828hbS9LedLNb2fWA@mail.gmail.com>
+ <20141202033416.GY6527@google.com>
+ <CAGyf7-GZbRBN4O_yNgrmJCya=6f8XQ4O8m7WBa1k8Ve196ajYQ@mail.gmail.com>
+ <20141202044522.GZ6527@google.com>
+ <CAGyf7-Gx1VU-1OicCHG0sStUnNXy_0Y8VYUP+PZjpN6nz7dTrw@mail.gmail.com>
+ <20141202053331.GA31516@peff.net>
+ <xmqqzjb6kkt9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Nizamuddin Chowdhury <mchowdhury57@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 19:08:52 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Bryan Turner <bturner@atlassian.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 20:50:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvrsZ-0004jT-OF
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 19:08:52 +0100
+	id 1XvtTL-0006mi-Vy
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 20:50:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932668AbaLBSIr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Dec 2014 13:08:47 -0500
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:49783 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932356AbaLBSIq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 13:08:46 -0500
-Received: by mail-wg0-f44.google.com with SMTP id b13so17744504wgh.3
-        for <git@vger.kernel.org>; Tue, 02 Dec 2014 10:08:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=n80KfV1Mb7PFQ+06UJ3bgD8HTrBdSf+25xa3XmDUm0A=;
-        b=Jxqv69Hz7XcmuhfCOaQ2gT/b06aMbUgtSoP6i127ySkjZu69QBrN78QIpy3DWTDqXb
-         +tgJHhTTMuL/iDkooqej7KzkIcZIvM2CMawzvfL97Uy/UkkpdzduKqJ3H0z9/A1wXIXj
-         7j8zoZ2OtQOio9KxDR9nqkVVXPx0zGt44jrJGOIF+a89/fiVvQ3QZkhhIMC6F+JyHT1o
-         FRo1EyBP2jgbxAmHfO9ylcQk7SwNRUNN7ddih6KtoDHWWW5S74JRithWKr/Ed65HXauR
-         aRftLUW7SVd3DU+KEqDOLuZx0lA2tBeyLsvXaJ9IfF/9860xrD+kyP4KE051cVyvV6zA
-         50RA==
-X-Received: by 10.180.81.7 with SMTP id v7mr7197935wix.74.1417543725760; Tue,
- 02 Dec 2014 10:08:45 -0800 (PST)
-Received: by 10.194.37.132 with HTTP; Tue, 2 Dec 2014 10:08:25 -0800 (PST)
-In-Reply-To: <F6CF2816-4FB8-4B6D-B00F-FECB67D43409@gmail.com>
-X-Google-Sender-Auth: _aPDnsOrcqEzToCVRQmlZmdVm7w
+	id S933682AbaLBTuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 14:50:51 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47352 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932688AbaLBTuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 14:50:50 -0500
+Received: (qmail 27150 invoked by uid 102); 2 Dec 2014 19:50:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Dec 2014 13:50:49 -0600
+Received: (qmail 18276 invoked by uid 107); 2 Dec 2014 19:50:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Dec 2014 14:50:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Dec 2014 14:50:51 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqzjb6kkt9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260589>
 
-On Tue, Dec 2, 2014 at 1:21 PM, Nizamuddin Chowdhury
-<mchowdhury57@gmail.com> wrote:
-> Good Morning,
->
-> My name is Sefath, and I was wondering when i could start using Git f=
-or Mac. I=E2=80=99m completely new to coding, and I wanted to start wit=
-h HTML. However, when I tried installing git bash on my mac, it doesn=E2=
-=80=99t work. Maybe it isn=E2=80=99t compatible with OS X Yosmite? I wo=
-uld really love to start learning code, and it sucks that I can=E2=80=99=
-t because of a reason like this.
->
+On Tue, Dec 02, 2014 at 09:45:06AM -0800, Junio C Hamano wrote:
 
-git bash is a windows port for git, so that's not suitable for OSX.
+> Jeff King <peff@peff.net> writes:
+> 
+> > For a public repository, it might make sense to provide a config option
+> > to loosen the is_our_ref check completely (i.e., to just has_sha1_file).
+> > But such an option does not yet exist.
+> 
+> In principle, yes, but that cannot be has_sha1_file(); it has to
+> have a fully connected healthy history behind it.
 
-You'll need to have a Mac build of git, which you can find here:
-http://git-scm.com/download/mac
+I thought about that, but I wonder if it matters whether we check up
+front. We are not advertising it, but only trying our best to fulfill
+the "want" from the other side.  So either:
+
+  1. We check immediately whether we have the full history behind it,
+     and reject the "want" otherwise.
+
+  2. We start pack-objects on it, and the first thing it will do is
+     collect the full set of objects to send. If it doesn't have them,
+     it will barf.
+
+Probably (1) would produce nicer error messages, but (2) is a lot more
+efficient.
+
+I dunno. I am not volunteering to implement, so I will leave thinking on
+it more to somebody who wants to do so. :)
+
+-Peff
