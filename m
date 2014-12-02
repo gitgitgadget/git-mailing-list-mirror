@@ -1,329 +1,300 @@
-From: Yi EungJun <semtlenori@gmail.com>
-Subject: [PATCH v5 1/1] http: Add Accept-Language header if possible
-Date: Tue,  2 Dec 2014 21:12:36 +0900
-Message-ID: <1417522356-24212-2-git-send-email-eungjun.yi@navercorp.com>
-References: <1405792730-13539-1-git-send-email-eungjun.yi@navercorp.com>
- <1417522356-24212-1-git-send-email-eungjun.yi@navercorp.com>
-Cc: Yi EungJun <eungjun.yi@navercorp.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 02 13:13:05 2014
+From: Aarni Koskela <aarni.koskela@andersinnovations.com>
+Subject: RE: [PATCH] git add -i: allow list (un)selection by regexp
+Date: Tue, 2 Dec 2014 12:12:48 +0000
+Message-ID: <DB3PR04MB2509E51F1DE708549483845EB7A0@DB3PR04MB250.eurprd04.prod.outlook.com>
+References: <DB3PR04MB25020F247555E521936E676EB7D0@DB3PR04MB250.eurprd04.prod.outlook.com>
+ <xmqqiohvqqqv.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"akx@iki.fi" <akx@iki.fi>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 13:14:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvmKG-0004A3-1F
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 13:13:04 +0100
+	id 1XvmLZ-0004ko-Qx
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 13:14:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933097AbaLBMM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 07:12:59 -0500
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:65082 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932837AbaLBMM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 07:12:58 -0500
-Received: by mail-pd0-f180.google.com with SMTP id p10so13122552pdj.39
-        for <git@vger.kernel.org>; Tue, 02 Dec 2014 04:12:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UN4ieHbKo7V3k/U8reFCguhAW74EYVDCak9u71grp2Y=;
-        b=MyKQ3U+NkbVUmf4Lf3fbj9ys3Suph+0fRkg3BYKYuW56Q7BZ2SKKQ3ix7kbYdmpIhC
-         ecUoX8W8kdo8kG03gVHvp6KgZ8KQEQZ3jvxEw9/wbW/SZEyj8c6DMallG9/luiLbyDb+
-         2RbRJE9/caowAD2gF2tmvfEH3Ju7MmfKvLattXsbad7sbOEGzQSvQNaqapvBwxD+gDcz
-         aDzZvW78+Q9UQVwBwxRdJ7HqzklJ7uvH0ecpjJZzW5Ur4YtpGXHhBViz5JMETxf3tezA
-         sCxGmTpgXAVsnIbs9q5xvEE8Fu1VO0VnubkwJ21AmVdf1hSNbH/LTTBIr4pfSIrE4ZVR
-         CKKQ==
-X-Received: by 10.70.100.170 with SMTP id ez10mr108864875pdb.73.1417522378054;
-        Tue, 02 Dec 2014 04:12:58 -0800 (PST)
-Received: from gmail.com ([111.91.137.66])
-        by mx.google.com with ESMTPSA id f12sm17905394pat.43.2014.12.02.04.12.55
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 02 Dec 2014 04:12:57 -0800 (PST)
-X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
-X-Mailer: git-send-email 2.2.0
-In-Reply-To: <1417522356-24212-1-git-send-email-eungjun.yi@navercorp.com>
+	id S932961AbaLBMOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 07:14:22 -0500
+Received: from mail-am1on0063.outbound.protection.outlook.com ([157.56.112.63]:38185
+	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932257AbaLBMOU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 07:14:20 -0500
+Received: from DB3PR04MB250.eurprd04.prod.outlook.com (10.242.130.14) by
+ DB3PR04MB252.eurprd04.prod.outlook.com (10.242.130.26) with Microsoft SMTP
+ Server (TLS) id 15.1.26.15; Tue, 2 Dec 2014 12:12:48 +0000
+Received: from DB3PR04MB250.eurprd04.prod.outlook.com ([169.254.2.138]) by
+ DB3PR04MB250.eurprd04.prod.outlook.com ([169.254.2.138]) with mapi id
+ 15.01.0026.003; Tue, 2 Dec 2014 12:12:48 +0000
+Thread-Topic: [PATCH] git add -i: allow list (un)selection by regexp
+Thread-Index: AdANSY4HwbHWiaTnRVO1IoZWMHUGowAOkLHTAClH7RA=
+In-Reply-To: <xmqqiohvqqqv.fsf@gitster.dls.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [213.157.91.17]
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:;SRVR:DB3PR04MB252;
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:;SRVR:DB3PR04MB252;
+x-forefront-prvs: 0413C9F1ED
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(52044002)(199003)(51704005)(189002)(95666004)(33656002)(46102003)(101416001)(110136001)(76576001)(54206007)(4396001)(31966008)(62966003)(77156002)(122556002)(68736005)(77096004)(19580405001)(40100003)(19580395003)(105586002)(54606007)(20776003)(54356999)(74316001)(106356001)(64706001)(66066001)(120916001)(50986999)(76176999)(107046002)(97736003)(87936001)(21056001)(2656002)(86362001)(99396003)(575784001)(92726001)(92566001)(7059030);DIR:OUT;SFP:1101;SCL:1;SRVR:DB3PR04MB252;H:DB3PR04MB250.eurprd04.prod.outlook.com;FPR:;SPF:None;MLV:sfv;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+X-OriginatorOrg: andersinnovations.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260561>
 
-From: Yi EungJun <eungjun.yi@navercorp.com>
+>From 9096652a71666920ae8d59dd4317d536ba974d5b Mon Sep 17 00:00:00 2001
+From: Aarni Koskela <akx@iki.fi>
+Date: Tue, 2 Dec 2014 13:56:15 +0200
+Subject: [PATCH] git-add--interactive: allow list (un)selection by regular
+ expression
 
-Add an Accept-Language header which indicates the user's preferred
-languages defined by $LANGUAGE, $LC_ALL, $LC_MESSAGES and $LANG.
+Teach `list_and_choose` to allow `/regexp` and `-/regexp` syntax to
+select items based on regular expression match.
 
-Examples:
-  LANGUAGE= -> ""
-  LANGUAGE=ko:en -> "Accept-Language: ko, en;q=0.9, *;q=0.1"
-  LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *;q=0.1"
-  LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *;q=0.1"
+This feature works in all list menus in `git-add--interactive`, and is not
+limited to file menus only.
 
-This gives git servers a chance to display remote error messages in
-the user's preferred language.
+For instance, in file lists, `/\.c$` will select all files whose extension
+is `.c`.  In option menus, such as the main menu, `/pa` could be used to
+choose the `patch` option.
 
-Limit the number of languages to 1,000 because q-value must not be
-smaller than 0.001, and limit the length of Accept-Language header to
-4,000 bytes for some HTTP servers which cannot accept such long header.
-
-Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
+Signed-off-by: Aarni Koskela <akx@iki.fi>
 ---
- http.c                     | 154 +++++++++++++++++++++++++++++++++++++++++++++
- remote-curl.c              |   2 +
- t/t5550-http-fetch-dumb.sh |  31 +++++++++
- 3 files changed, 187 insertions(+)
 
-diff --git a/http.c b/http.c
-index 040f362..69624af 100644
---- a/http.c
-+++ b/http.c
-@@ -68,6 +68,8 @@ static struct curl_slist *no_pragma_header;
- 
- static struct active_request_slot *active_queue_head;
- 
-+static struct strbuf *cached_accept_language;
-+
- size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- {
- 	size_t size = eltsize * nmemb;
-@@ -515,6 +517,9 @@ void http_cleanup(void)
- 		cert_auth.password = NULL;
- 	}
- 	ssl_cert_password_required = 0;
-+
-+	if (cached_accept_language)
-+		strbuf_release(cached_accept_language);
+Thank you for the insightful comments, Junio, and sorry for the confusion
+regarding email-patch formatting.  Hoping I get it right this time.
+
+> Usually the responsibility to ensure correctness lies on the person who
+> proposes a change, not those who relies on the continued correct operation
+> of the existing code.
+
+You're of course absolutely right.  My point was that I can't think of an use
+case where one would need to otherwise have "/" or "-/" as the first characters
+of input in a list_and_choose situation, but someone else might.
+
+> [...] but is this about the selection that happens after showing you a
+> list of filenames to choose from?
+
+I clarified this in the commit message.  Selection by regexp works in all
+list_and_choose situations, including the main menu of `git add -i`, hence "option".
+
+Regarding the unchoose quantifier -- yes, silly me.
+
+And regarding error checking for the regular expression, you're right -- the
+program promptly blew up when entering an invalid regexp.  I incorporated your
+suggestion for error checking, with the addition of using the `error_msg` sub
+for colorized error reporting.
+
+Best regards,
+
+Aarni Koskela
+
+ git-add--interactive.perl | 49 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 1fadd69..28e4c2d 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -483,6 +483,8 @@ sub is_valid_prefix {
+ 	    !($prefix =~ /[\s,]/) && # separators
+ 	    !($prefix =~ /^-/) &&    # deselection
+ 	    !($prefix =~ /^\d+/) &&  # selection
++	    !($prefix =~ /^\//) &&   # regexp selection
++	    !($prefix =~ /^-\//) &&  # regexp unselection
+ 	    ($prefix ne '*') &&      # "all" wildcard
+ 	    ($prefix ne '?');        # prompt help
  }
- 
- struct active_request_slot *get_active_slot(void)
-@@ -986,6 +991,149 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
- 		strbuf_addstr(charset, "ISO-8859-1");
- }
- 
-+/*
-+ * Guess the user's preferred languages from the value in LANGUAGE environment
-+ * variable and LC_MESSAGES locale category.
-+ *
-+ * The result can be a colon-separated list like "ko:ja:en".
-+ */
-+static const char *get_preferred_languages(void)
-+{
-+	const char *retval;
+@@ -585,6 +587,50 @@ sub list_and_choose {
+ 			    prompt_help_cmd();
+ 			next TOPLOOP;
+ 		}
++		if ($line =~ /^(-)?\/(.+)$/) {
++			# The first capture group ("-") being missing means "choose" is
++			# requested. If the first group exists at all, "unchoose" is
++			# requested.
++			my $choose = !(defined $1);
 +
-+	retval = getenv("LANGUAGE");
-+	if (retval && *retval)
-+		return retval;
++			# Validate the regular expression and complain if compilation failed.
++			my $re = eval { qr/$2/ };
++			if (!$re) {
++				error_msg "Invalid regular expression:\n  $@\n";
++				next TOPLOOP;
++			}
 +
-+	retval = setlocale(LC_MESSAGES, NULL);
-+	if (retval && *retval &&
-+		strcmp(retval, "C") &&
-+		strcmp(retval, "POSIX"))
-+		return retval;
++			my $found = 0;
++			for ($i = 0; $i < @stuff; $i++) {
++				my $val = $stuff[$i];
 +
-+	return NULL;
-+}
++				# Figure out the display value for $val.
++				# Some lists passed to list_and_choose contain
++				# items other than strings; in order to match
++				# regexps against them, we need to extract the
++				# displayed string. The logic here is approximately
++				# equivalent to the display logic above.
 +
-+/*
-+ * Get an Accept-Language header which indicates user's preferred languages.
-+ *
-+ * Examples:
-+ *   LANGUAGE= -> ""
-+ *   LANGUAGE=ko:en -> "Accept-Language: ko, en; q=0.9, *; q=0.1"
-+ *   LANGUAGE=ko_KR.UTF-8:sr@latin -> "Accept-Language: ko-KR, sr; q=0.9, *; q=0.1"
-+ *   LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *; q=0.1"
-+ *   LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *; q=0.1"
-+ *   LANGUAGE= LANG=C -> ""
-+ */
-+static struct strbuf *get_accept_language(void)
-+{
-+	const char *lang_begin, *pos;
-+	int q, max_q;
-+	int num_langs;
-+	int decimal_places;
-+	int is_codeset_or_modifier = 0;
-+	char q_format[32];
-+	/*
-+	 * MAX_LANGS must not be larger than 1,000. If it is larger than that,
-+	 * q-value will be smaller than 0.001, the minimum q-value the HTTP
-+	 * specification allows [1].
-+	 *
-+	 * [1]: http://tools.ietf.org/html/rfc7231#section-5.3.1
-+	 */
-+	const int MAX_LANGS = 1000;
-+	const int MAX_SIZE_OF_HEADER = 4000;
-+	int last_size = 0;
++				my $ref = ref $val;
++				if ($ref eq 'ARRAY') {
++					$val = $val->[0];
++				}
++				elsif ($ref eq 'HASH') {
++					$val = $val->{VALUE};
++				}
 +
-+	if (cached_accept_language)
-+		return cached_accept_language;
++				# Match the string value against the regexp,
++				# then act accordingly.
 +
-+	cached_accept_language = xmalloc(sizeof(struct strbuf));
-+	strbuf_init(cached_accept_language, 0);
-+	lang_begin = get_preferred_languages();
-+
-+	/* Don't add Accept-Language header if no language is preferred. */
-+	if (!lang_begin)
-+		return cached_accept_language;
-+
-+	/* Count number of preferred lang_begin to decide precision of q-factor. */
-+	for (num_langs = 1, pos = lang_begin; *pos; pos++)
-+		if (*pos == ':')
-+			num_langs++;
-+
-+	/* Decide the precision for q-factor on number of preferred lang_begin. */
-+	num_langs += 1; /* for '*' */
-+
-+	if (MAX_LANGS < num_langs)
-+		num_langs = MAX_LANGS;
-+
-+	for (max_q = 1, decimal_places = 0;
-+		max_q < num_langs;
-+		decimal_places++, max_q *= 10);
-+
-+	sprintf(q_format, ";q=0.%%0%dd", decimal_places);
-+
-+	q = max_q;
-+
-+	strbuf_addstr(cached_accept_language, "Accept-Language: ");
-+
-+	/*
-+	 * Convert a list of colon-separated locale values [1][2] to a list of
-+	 * comma-separated language tags [3] which can be used as a value of
-+	 * Accept-Language header.
-+	 *
-+	 * [1]: http://pubs.opengroup.org/onlinepubs/007908799/xbd/envvar.html
-+	 * [2]: http://www.gnu.org/software/libc/manual/html_node/Using-gettextized-software.html
-+	 * [3]: http://tools.ietf.org/html/rfc7231#section-5.3.5
-+	 */
-+	for (pos = lang_begin; ; pos++) {
-+		if (*pos == ':' || !*pos) {
-+			/* Ignore if this character is the first one. */
-+			if (pos == lang_begin)
-+				continue;
-+
-+			is_codeset_or_modifier = 0;
-+
-+			/* Put a q-factor only if it is less than 1.0. */
-+			if (q < max_q)
-+				strbuf_addf(cached_accept_language, q_format, q);
-+
-+			if (q > 1)
-+				q--;
-+
-+			last_size = cached_accept_language->len;
-+
-+			/* NULL pos means this is the last language. */
-+			if (*pos)
-+				strbuf_addstr(cached_accept_language, ", ");
-+			else
-+				break;
-+
-+		} else if (is_codeset_or_modifier)
-+			continue;
-+		else if (*pos == '.' || *pos == '@') /* Remove .codeset and @modifier. */
-+			is_codeset_or_modifier = 1;
-+		else
-+			strbuf_addch(cached_accept_language, *pos == '_' ? '-' : *pos);
-+
-+		if (cached_accept_language->len > MAX_SIZE_OF_HEADER) {
-+			strbuf_remove(cached_accept_language, last_size,
-+					cached_accept_language->len - last_size);
-+			break;
++				if ($val =~ $re) {
++					$chosen[$i] = $choose;
++					$found = $found || $choose;
++					last if $choose && $opts->{SINGLETON};
++				}
++			}
++			last if $found && ($opts->{IMMEDIATE});
++			next TOPLOOP;
 +		}
-+	}
-+
-+	/* Don't add Accept-Language header if no language is preferred. */
-+	if (q >= max_q) {
-+		return cached_accept_language;
-+	}
-+
-+	/* Add '*' with minimum q-factor greater than 0.0. */
-+	strbuf_addstr(cached_accept_language, ", *");
-+	strbuf_addf(cached_accept_language, q_format, 1);
-+
-+	return cached_accept_language;
-+}
-+
- /* http_request() targets */
- #define HTTP_REQUEST_STRBUF	0
- #define HTTP_REQUEST_FILE	1
-@@ -998,6 +1146,7 @@ static int http_request(const char *url,
- 	struct slot_results results;
- 	struct curl_slist *headers = NULL;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf *accept_language;
- 	int ret;
- 
- 	slot = get_active_slot();
-@@ -1023,6 +1172,11 @@ static int http_request(const char *url,
- 					 fwrite_buffer);
- 	}
- 
-+	accept_language = get_accept_language();
-+
-+	if (accept_language && accept_language->len > 0)
-+		headers = curl_slist_append(headers, accept_language->buf);
-+
- 	strbuf_addstr(&buf, "Pragma:");
- 	if (options && options->no_cache)
- 		strbuf_addstr(&buf, " no-cache");
-diff --git a/remote-curl.c b/remote-curl.c
-index dd63bc2..04989e5 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -962,6 +962,8 @@ int main(int argc, const char **argv)
- 	struct strbuf buf = STRBUF_INIT;
- 	int nongit;
- 
-+	git_setup_gettext();
-+
- 	git_extract_argv0_path(argv[0]);
- 	setup_git_directory_gently(&nongit);
- 	if (argc < 2) {
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index ac71418..197c361 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -196,5 +196,36 @@ test_expect_success 'reencoding is robust to whitespace oddities' '
- 	grep "this is the error message" stderr
- '
- 
-+check_language () {
-+	echo "Accept-Language: $1\r" >expect &&
-+	test_must_fail env \
-+		GIT_CURL_VERBOSE=1 \
-+		LANGUAGE=$2 \
-+		LC_ALL=$3 \
-+		LC_MESSAGES=$4 \
-+		LANG=$5 \
-+		git clone "$HTTPD_URL/accept/language" 2>stderr &&
-+	grep -i ^Accept-Language: stderr >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'git client sends Accept-Language based on LANGUAGE, LC_ALL, LC_MESSAGES and LANG' '
-+	check_language "ko-KR, *;q=0.1" ko_KR.UTF-8 de_DE.UTF-8 ja_JP.UTF-8 en_US.UTF-8 &&
-+	check_language "de-DE, *;q=0.1" ""          de_DE.UTF-8 ja_JP.UTF-8 en_US.UTF-8 &&
-+	check_language "ja-JP, *;q=0.1" ""          ""          ja_JP.UTF-8 en_US.UTF-8 &&
-+	check_language "en-US, *;q=0.1" ""          ""          ""          en_US.UTF-8
-+'
-+
-+test_expect_success 'git client sends Accept-Language with many preferred languages' '
-+	check_language "ko-KR, en-US;q=0.99, fr-CA;q=0.98, de;q=0.97, sr;q=0.96, \
-+ja;q=0.95, zh;q=0.94, sv;q=0.93, pt;q=0.92, nb;q=0.91, *;q=0.01" \
-+		ko_KR.EUC-KR:en_US.UTF-8:fr_CA:de.UTF-8@euro:sr@latin:ja:zh:sv:pt:nb
-+'
-+
-+test_expect_success 'git client does not send Accept-Language' '
-+	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE= git clone "$HTTPD_URL/accept/language" 2>stderr &&
-+	! grep "^Accept-Language:" stderr
-+'
-+
- stop_httpd
- test_done
+ 		for my $choice (split(/[\s,]+/, $line)) {
+ 			my $choose = 1;
+ 			my ($bottom, $top);
+@@ -635,6 +681,7 @@ sub singleton_prompt_help_cmd {
+ Prompt help:
+ 1          - select a numbered item
+ foo        - select item based on unique prefix
++/regexp    - select item based on regular expression
+            - (empty) select nothing
+ EOF
+ }
+@@ -648,6 +695,8 @@ Prompt help:
+ foo        - select item based on unique prefix
+ -...       - unselect specified items
+ *          - choose all items
++/regexp    - select items based on regular expression
++-/regexp   - unselect items based on regular expression
+            - (empty) finish selecting
+ EOF
+ }
 -- 
-2.2.0
+1.9.2.msysgit.0
+
+
+-----Original Message-----
+From: Junio C Hamano [mailto:gitster@pobox.com] 
+Sent: 1. joulukuuta 2014 18:28
+To: Aarni Koskela
+Cc: git@vger.kernel.org; akx@iki.fi
+Subject: Re: [PATCH] git add -i: allow list (un)selection by regexp
+
+Aarni Koskela <aarni.koskela@andersinnovations.com> writes:
+
+> Hello!
+>
+> This patch makes it possible to select or unselect files in `git add 
+> -i` by regular expression instead of unique prefix only.
+>
+> The command syntax is `/foo` for selection and `-/foo` for unselection.
+> I don't think the syntax will conflict with any existing use cases, 
+> but feel free to prove me wrong.
+
+Usually the responsibility to ensure correctness lies on the person who proposes a change, not those who relies on the continued correct operation of the existing code.
+
+> I'm not a Perl programmer, but I've tried to follow the style of the 
+> existing code as much as possible. :)
+>
+> Note I'm currently not on the mailing list, so please cc.
+>
+> Best regards,
+>
+> Aarni Koskela
+
+All of the above do not belong to the commit log message.  Please have these commentaries after the three-dash line you have under your Signed-off-by line.
+
+>
+> From 53c12d9c9928dc93a57595e92d785ecc0b245390 Mon Sep 17 00:00:00 2001
+> From: Aarni Koskela <akx@iki.fi>
+> Date: Mon, 1 Dec 2014 11:06:10 +0200
+> Subject: [PATCH] git-add--interactive: allow list (un)selection by 
+> regular  expression
+
+Remove these four lines when sending out a patch in the e-mail.
+
+> Teach `list_and_choose` to allow `/regexp` and `-/regexp` syntax to 
+> select items based on regular expression match.
+>
+> For instance, `/jpg$` will select all options whose display name ends 
+> with `jpg`.
+
+It has been a long time since I wrote this code, but is this about the selection that happens after showing you a list of filenames to choose from?  "all options" together with "jpg" made me go "Huh?
+Does any of our command have jpeg related options?  We are not in the image processing business".
+
+Perhaps s/all options/all files/ or something.
+
+> Signed-off-by: Aarni Koskela <akx@iki.fi>
+> ---
+>  git-add--interactive.perl | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+>
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl 
+> index 1fadd69..34cc603 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -483,6 +483,8 @@ sub is_valid_prefix {
+>  	    !($prefix =~ /[\s,]/) && # separators
+>  	    !($prefix =~ /^-/) &&    # deselection
+>  	    !($prefix =~ /^\d+/) &&  # selection
+> +	    !($prefix =~ /^\//) &&   # regexp selection
+> +	    !($prefix =~ /^-\//) &&  # regexp unselection
+>  	    ($prefix ne '*') &&      # "all" wildcard
+>  	    ($prefix ne '?');        # prompt help
+>  }
+> @@ -585,6 +587,28 @@ sub list_and_choose {
+>  			    prompt_help_cmd();
+>  			next TOPLOOP;
+>  		}
+> +		if ($line =~ /^(-)*\/(.+)$/) {
+
+You want zero or one '-', not zero or arbitrary large number of '-', as a sign to unchoose.  (-)? instead of (-)*, perhaps?
+
+> +			my $choose = !($1 && $1 eq '-');
+
+The first $1 is an attempt to catch non-negative case where it is "undef"; it might be more explicit this way?
+
+			my $choose = !(defined $1);
+
+> +			my $re = $2;
+
+Mental note.  $re is an end-user supplied random string that may or may not be a valid regular expression.
+
+> +			my $found = 0;
+> +			for ($i = 0; $i < @stuff; $i++) {
+> +				my $val = $stuff[$i];
+> +				my $ref = ref $val;
+> +				if ($ref eq 'ARRAY') {
+> +					$val = $val->[0];
+> +				}
+> +				elsif ($ref eq 'HASH') {
+> +					$val = $val->{VALUE};
+> +				}
+> +				if ($val =~ /$re/) {
+
+... which makes me wonder what happens when $re is a bogus regular expression here.  Does the program die?  Does the user get an error message about bad regexp and the condition to this if expression is false?  Something else?
+
+Perhaps validating and catching regexp errors early like this might be sufficient:
+
+        		my $re = eval { qr/$2/ };
+                        if (!$re) {
+				print STDERR "$@\n";
+                                next TOPLOOP;
+			}
+
+
+Thanks.
