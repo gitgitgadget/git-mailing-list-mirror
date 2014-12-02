@@ -1,127 +1,139 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] receive-pack: support push-to-checkout hook
-Date: Tue, 2 Dec 2014 09:47:46 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1412020929420.13845@s15462909.onlinehome-server.info>
-References: <cover.1415368490.git.johannes.schindelin@gmx.de> <84dba8872922da96e99953eea0ccff5f5af9dd4a.1415368490.git.johannes.schindelin@gmx.de> <xmqqh9yag6mt.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411101400050.13845@s15462909.onlinehome-server.info>
- <xmqq1tpbawqe.fsf@gitster.dls.corp.google.com> <xmqq389qam25.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411121208250.13845@s15462909.onlinehome-server.info> <xmqqzjbw47vr.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411131123330.13845@s15462909.onlinehome-server.info>
- <alpine.DEB.1.00.1411131136200.13845@s15462909.onlinehome-server.info> <xmqqh9y32e36.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1411131850510.13845@s15462909.onlinehome-server.info> <xmqq4mu2285w.fsf@gitster.dls.corp.google.com>
- <xmqqzjbuzu6t.fsf@gitster.dls.corp.google.com> <xmqq1tp643yb.fsf@gitster.dls.corp.google.com> <xmqqa936ohs3.fsf@gitster.dls.corp.google.com> <xmqq61duohq7.fsf_-_@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] introduce git root
+Date: Tue, 2 Dec 2014 11:05:36 +0100
+Message-ID: <CAP8UFD2P+GZ7Da+YcmjtYiYsESt+BdWc006NN6ps_X_n-We4iA@mail.gmail.com>
+References: <1417291211-32268-1-git-send-email-arjun024@gmail.com>
+	<2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
+	<CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
+	<vpqoaro99xd.fsf@anie.imag.fr>
+	<xmqqd284rryz.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
+	<20141202070415.GC1948@peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-2057546813-1417509585=:13845"
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 09:47:57 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Arjun Sreedharan <arjun024@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 02 11:05:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xvj7k-0007rX-DR
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 09:47:56 +0100
+	id 1XvkL2-0003U4-1G
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 11:05:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbaLBIrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 03:47:52 -0500
-Received: from mout.gmx.net ([212.227.17.22]:49428 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750963AbaLBIrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 03:47:51 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0M2XkX-1YC13O0T1J-00sPl4;
- Tue, 02 Dec 2014 09:47:47 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqq61duohq7.fsf_-_@gitster.dls.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-Content-ID: <alpine.DEB.1.00.1412020940590.13845@s15462909.onlinehome-server.info>
-X-Provags-ID: V03:K0:kLZ3BdOap1j4YYmvPHg+SovVJ8ou345PenfAHJnGXnvwMGbLaaJ
- TAl/7kVaMgYwhVJaLNsLyWIJIGPg6NMFBEyWVm1a3pA10JriYfDGW0QQNisfOmRMY3JTJ7X
- 56gaesEDxOHkCGk+pCFez6IREcgPeOEehInpxE8Y5tOxb6J4HlqwStZuJcpYjxICJnQDF/K
- GN3+sN+sXZxk17FXw7OAQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751321AbaLBKFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 05:05:39 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:40527 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbaLBKFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 05:05:36 -0500
+Received: by mail-ig0-f179.google.com with SMTP id r2so10508188igi.0
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 02:05:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=HqMs78fmQ4WgRBgSOZQ4y+IJYE2UvTCtaqTzAy1dst0=;
+        b=09kNlBxY1RnAP6X+S85kTopzL/XIMTjbNltx0BlzQa+t26Sz0c8J7VJyOoY9CqBTDn
+         c48YuEJ3UoqxPEKVIe9PikRkWPOGtMD7sSyQC9tCAzrbQ6hIukbMc2MD9OXOCRSEkMPl
+         nV2V1KrAYsggfwKh73mWIlFO+XskyYEFfYxcoEiY6NXQ0GzefQh/oJO9y67/PIB+P/b6
+         dAA6aABhh/wrDTL5GR7yRBkiaif+ZX12NdpwNJ4SrnNlt4y6PDJjP24TBBBIy15kA+/e
+         4cE4b62PFh3NexEdX149bVG3XDCMS1F6m7doHbe7gC2vpdEv32OJFjPltazd27Wuuryd
+         059Q==
+X-Received: by 10.42.155.197 with SMTP id v5mr1867393icw.52.1417514736116;
+ Tue, 02 Dec 2014 02:05:36 -0800 (PST)
+Received: by 10.50.30.40 with HTTP; Tue, 2 Dec 2014 02:05:36 -0800 (PST)
+In-Reply-To: <20141202070415.GC1948@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260551>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Dec 2, 2014 at 8:04 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Dec 01, 2014 at 05:17:22AM +0100, Christian Couder wrote:
+>
+>> On Mon, Dec 1, 2014 at 4:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> >
+>> > If I were redoing this today, I would probably nominate the "git"
+>> > potty as such a "kitchen synk" command.  We have "--man-path" that
+>> > shows the location of the manual pages, "--exec-path[=path]" that
+>> > either shows or allows us to override the path to the subcommands,
+>> > and "--show-prefix", "--show-toplevel", and friends may feel quite
+>> > at home there.
+>>
+>> I wonder if we could reuse "git config" which is already a "kitchen
+>> synk" command to get/set a lot of parameters.
+>> Maybe we could dedicate a "git" or "virtual" or "proc" or "sys" (like
+>> /proc or /sys  in Linux) namespace for these special config parameters
+>> that would not necessarily reflect something in the config file.
+>>
+>> "git config git.man-path" would be the same as "git --man-path".
+>> "git config git.root" would be the same as "git rev-parse --show-toplevel".
+>> "git config git.exec-path mypath" would allow us to override the path
+>> to the subcommands, probably by saving something in the config file.
+>
+> What would:
+>
+>   git config git.root foo
 
---1784107012-2057546813-1417509585=:13845
-Content-Type: TEXT/PLAIN; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.1.00.1412020940591.13845@s15462909.onlinehome-server.info>
+That would output an error message saying that we cannot change the
+git.root value.
 
-Hi Junio,
+>   git config git.root
 
-On Mon, 1 Dec 2014, Junio C Hamano wrote:
+That would output the same as "git rev-parse --show-toplevel".
 
-> When receive.denyCurrentBranch is set to updateInstead, this hook
-> can be used to override the built-in "push-to-deploy" logic, which
-> insists that the working tree and the index must be unchanged
-> relative to HEAD.  The hook receives the commit with which the
-> tip of the current is going to be updated, and is responsible to
-> make any necessary changes to the working tree and to the index to
-> bring them to the desired state when the tip of the current branch
-> is updated to the new commit.
->=20
-> For example, the hook can simply run "git read-tree -u -m HEAD $1"
-> to the workflow to emulate "'git fetch' going in the reverse
-> direction with 'git push'" better than the push-to-deploy logic, as
-> the two-tree form of "read-tree -u -m" is essentially the same as
-> "git checkout" that switches branches while keeping the local
-> changes in the working tree that do not interfere with the
-> difference between the branches.
+> output? No matter what the answer is, I do not relish the thought of
+> trying to explain it in the documentation. :)
 
-I like it.
+Yeah, maybe it is better if we don't reuse "git config".
 
-The only sad part is that the already huge test suite is enlarged by yet
-another extensive set of test cases (and those tests might not really
-need to be that extensive because they essentially only need to make sure
-that the hook is run successfully *instead* of trying to update the
-working directory, i.e. a simple 'touch yep' hook would have been enough).
-It starts to be painful to run the complete test suite, not only on
-Windows (where this has been a multi-hour endeavor for me for ages
-already). BuildHive (CloudBees' very kind offer of Jenkins CI for Open
-Source, integrated conveniently with GitHub) already takes over an hour to
-run the Git test suite =E2=80=93 and BuildHive runs on Linux, not Windows!
+> There is also "git var", which is a catch-all for printing some deduced
+> environmental defaults. I'd be just as happy to see it go away, though.
 
-That means that everytime I push into a GitHub Pull Request, I have to
-wait for a full hour to know whether everything is groovy.
+Yeah, maybe we could use "git var" for more variables.
 
-Worse: when Git for Windows contributors (yes! they exist!) push into
-their Pull Requests, I have to wait for a full hour before I can merge,
-unless I want to merge something that the test suite did not validate!
+> Having:
+>
+>   git --exec-path
+>   git --toplevel
+>   git --author-ident
+>
+> all work would make sense to me (I often get confused between "git
+> --foo" and "git rev-parse --foo" when trying to get the exec-path and
+> git-dir). And I don't think it's too late to move in this direction.
+> We'd have to keep the old interfaces around, of course, but it would
+> immediately improve discoverability and consistency.
 
-So maybe it is time to start thinking about conciser tests that verify the
-bare minimum, especially for rarely exercised functionality? I mean,
-testing is always a balance between too much and too little. And at this
-point, I am afraid that several well-intended, but overly extensive tests
-increase the overall runtime of "make test" to a point where developers
-*avoid* running it, costing more time in the long run than necessary.
+I don't like reusing the git command for that puropose, because it
+clutters it and makes it difficult to improve.
 
-In this particular case, I think that we really, really *just* need to
-verify that the presence of the hook switches off the default behavior of
-updateInstead. *Nothing* else is needed to verify that this particular
-functionality hasn't regressed. I.e. something like:
+For example let's suppose that we decide to have a "git info" command.
+It could work like this:
 
-+test_expect_success 'updateInstead with push-to-checkout hook' '
-+=09rm -fr testrepo &&
-+=09git clone . testrepo &&
-+=09(
-+=09=09cd testrepo &&
-+=09=09echo unclean > path1 &&
-+=09=09git config receive.denyCurrentBranch updateInstead &&
-+=09=09echo 'touch yep' | write_script .git/hooks/push-to-checkout
-+=09) &&
-+=09git push testrepo HEAD^:refs/heads/master &&
-+=09test unclean =3D $(cat testrepo/path1) &&
-+=09test -f testrepo/yep
-+'
+$ git info sequence.editor
+vim
 
-would be more appropriate (although it probably has one or three bugs,
-given that I wrote this in the mailer).
+$ git info core.editor
+emacs
 
-Ciao,
-Johannes
---1784107012-2057546813-1417509585=:13845--
+$ git info --verbose sequence.editor
+sequence.editor = vim
+GIT_EDITOR = emacs
+core.editor = nano
+
+$ git info --verbose core.editor
+GIT_EDITOR = emacs
+core.editor = nano
+
+So the --verbose option could explain why the sequence.editor is vim
+by displaying the all the relevant options with their values from the
+most important to the least important.
+
+Best,
+Christian.
