@@ -1,66 +1,69 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] tree.c: update read_tree_recursive callback to pass
- strbuf as base
-Date: Tue, 2 Dec 2014 19:11:15 +0700
-Message-ID: <CACsJy8B7G9xQerZ+6GTPQuG2v1DuJLXfsKFobuz_vyFahnXuYQ@mail.gmail.com>
-References: <1417338302-8208-1-git-send-email-pclouds@gmail.com>
- <1417338302-8208-2-git-send-email-pclouds@gmail.com> <xmqqk32bp3nk.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 13:11:57 2014
+From: Yi EungJun <semtlenori@gmail.com>
+Subject: [PATCH v5 0/1] http: Add Accept-Language header if possible
+Date: Tue,  2 Dec 2014 21:12:35 +0900
+Message-ID: <1417522356-24212-1-git-send-email-eungjun.yi@navercorp.com>
+References: <1405792730-13539-1-git-send-email-eungjun.yi@navercorp.com>
+Cc: Yi EungJun <eungjun.yi@navercorp.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 02 13:12:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvmJA-0003YA-KU
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 13:11:57 +0100
+	id 1XvmK7-00044l-7s
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 13:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933060AbaLBMLu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Dec 2014 07:11:50 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:61801 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933050AbaLBMLq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 07:11:46 -0500
-Received: by mail-ie0-f178.google.com with SMTP id tp5so11479287ieb.9
-        for <git@vger.kernel.org>; Tue, 02 Dec 2014 04:11:45 -0800 (PST)
+	id S932943AbaLBMMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 07:12:51 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:51836 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932837AbaLBMMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 07:12:50 -0500
+Received: by mail-pa0-f52.google.com with SMTP id eu11so13327685pac.11
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 04:12:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SAz6Y+R/nFxZADGPfk+GfXLtRJm2l98H/vm80cm5nlo=;
-        b=mJkl0ogXbKf5u4q6ohAwWoEJec8vJhm0E0cem95nSDPMZ1c1gU1rD1rOHI8FN7ApiQ
-         EsTjvd4MicHj0yyf8s7VbmAj6NzKG0fpyLHEXjJ4englZ83uyZXBCwDNCIL8g+dhDLW2
-         bJgwi8pWEP7jTqHfO8dwrtINxKgeKqpIPSNMCwpNAX9YE/PQV/yEMRwKevFv34kG3LiS
-         QcnEqTXbvyUwTvEZaBzmX842TJrbRTBdwuh9+2BH6BSWLkxmnnIDF4ciTmbOZFQjMtPf
-         l8/gPr3M5M0+UpvufBkx65VnuxaRzAySxX+SBC0atDirz5AYh3uWo0C7SuRtYrQ7EvEL
-         OwRw==
-X-Received: by 10.50.47.102 with SMTP id c6mr2715444ign.27.1417522305725; Tue,
- 02 Dec 2014 04:11:45 -0800 (PST)
-Received: by 10.107.176.3 with HTTP; Tue, 2 Dec 2014 04:11:15 -0800 (PST)
-In-Reply-To: <xmqqk32bp3nk.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1IfvDYGsMqnM6uQgowRK+mLugs3wgNe152ZEsP01tNM=;
+        b=WMxV1N7Oa0Moh5yMvru5AsnAG0LMBDl7P0WcwNzlwQy1SuToC99E696A6vvi+3PMJ7
+         wkjVzdywHh9sSt3JURAPdyu589zSBWPZiSPNxyBLwfRVfF+rWJ5D8cwDH8q4kAWFVEQh
+         puCYbm+NZYRpZq5JWFyBLzpyW3NfeXf3MoKlpFnWIXqfmSviiurXkyUhmRlSE/aJ+UH/
+         2nv2mWO2oJo2gQjbBtA84Tw9HsiKVd5YEfIjTjGrcs83gQYTquQgbP/6WzI27ldBvHxL
+         aavXpGenJYJ9dyfmYayFSlAQWrP+AVSsZ7IsPpMSImd4mpGFFNYdEwikm8gQXFFdU2Y0
+         +PiA==
+X-Received: by 10.70.43.176 with SMTP id x16mr109943156pdl.31.1417522370383;
+        Tue, 02 Dec 2014 04:12:50 -0800 (PST)
+Received: from gmail.com ([111.91.137.66])
+        by mx.google.com with ESMTPSA id f12sm17905394pat.43.2014.12.02.04.12.47
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 02 Dec 2014 04:12:49 -0800 (PST)
+X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
+X-Mailer: git-send-email 2.2.0
+In-Reply-To: <1405792730-13539-1-git-send-email-eungjun.yi@navercorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260559>
 
-On Tue, Dec 2, 2014 at 2:32 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> This allows the callback to use 'base' as a temporary buffer to
->> quickly assemble full path "without" extra allocation. The callback
->> has to restore it afterwards of course.
->
-> Hmph, what's the quote around 'without' doing there?
+Changes since v4
 
-because it's only true if you haven't used up all preallocated space
-in strbuf. If someone passes an empty strbuf, then underneath strbuf
-may do a few realloc until the buffer is large enough.
---=20
-Duy
+* Fix styles as Junio C Hamano suggested.
+* Limit number of languages and length of Accept-Language header.
+
+Yi EungJun (1):
+  http: Add Accept-Language header if possible
+
+ http.c                     | 154 +++++++++++++++++++++++++++++++++++++++++++++
+ remote-curl.c              |   2 +
+ t/t5550-http-fetch-dumb.sh |  31 +++++++++
+ 3 files changed, 187 insertions(+)
+
+-- 
+2.2.0
