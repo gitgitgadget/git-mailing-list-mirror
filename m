@@ -1,194 +1,136 @@
-From: Christoph Mallon <mallon@cs.uni-saarland.de>
-Subject: Re: Bug in reflog of length 0x2BFF
-Date: Tue, 02 Dec 2014 07:13:46 +0100
-Message-ID: <547D589A.30004@cs.uni-saarland.de>
-References: <547C8610.8080301@cs.uni-saarland.de> <20141201233515.GV6527@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git status / git diff -C not detecting file copy
+Date: Tue, 2 Dec 2014 01:55:50 -0500
+Message-ID: <20141202065550.GB1948@peff.net>
+References: <CAJxwDJzzNV77cTP4nbzgCvFjjqp3C4X8d3j6uwhYvK4+g4r1YQ@mail.gmail.com>
+ <CAGyf7-E_y8zRUKh5RWvAhPXzSgpnVab6e=e1v92rSVVxf+LNJg@mail.gmail.com>
+ <CAJxwDJzxUEd3czHpwDtKaERKDhvyCGOzGbKO4X9z44ugTJ2q4w@mail.gmail.com>
+ <CAGyf7-F9twCEUY-LN=xEf4=gfNW8oLEHJmTjHRQ2MncHZ2emZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030206030006090505050702"
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 07:14:06 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Pol Online <info@pol-online.net>, Git Users <git@vger.kernel.org>
+To: Bryan Turner <bturner@atlassian.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 07:55:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xvgir-00055a-Uy
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 07:14:06 +0100
+	id 1XvhNL-0003Dx-1Z
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 07:55:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932981AbaLBGNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 01:13:52 -0500
-Received: from triton.rz.uni-saarland.de ([134.96.7.25]:10880 "EHLO
-	triton.rz.uni-saarland.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932967AbaLBGNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 01:13:51 -0500
-Received: from Apfeltasche-2.local (srbk-4db7fc59.pool.mediaWays.net [77.183.252.89])
-	(authenticated bits=0)
-	by triton.rz.uni-saarland.de (8.14.1/8.14.0) with ESMTP id sB26Dkqc015109
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 2 Dec 2014 07:13:47 +0100
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.98.5 at HIZ-Mailrelay triton.rz.uni-saarland.de
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:10.0) Gecko/20120129 Thunderbird/10.0
-In-Reply-To: <20141201233515.GV6527@google.com>
-X-Enigmail-Version: 1.4
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (triton.rz.uni-saarland.de [134.96.7.25]); Tue, 02 Dec 2014 07:13:47 +0100 (CET)
+	id S1754151AbaLBGzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 01:55:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46988 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752342AbaLBGzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 01:55:49 -0500
+Received: (qmail 25663 invoked by uid 102); 2 Dec 2014 06:55:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Dec 2014 00:55:49 -0600
+Received: (qmail 13384 invoked by uid 107); 2 Dec 2014 06:55:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Dec 2014 01:55:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Dec 2014 01:55:50 -0500
+Content-Disposition: inline
+In-Reply-To: <CAGyf7-F9twCEUY-LN=xEf4=gfNW8oLEHJmTjHRQ2MncHZ2emZQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260542>
 
-This is a multi-part message in MIME format.
---------------030206030006090505050702
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+On Sun, Nov 30, 2014 at 12:54:53PM +1100, Bryan Turner wrote:
 
-Hi Jonathan,
+> I'll let someone a little more intimately familiar with the internals
+> of git status comment on why the documentation for that mentions
+> copies.
 
-Am 02.12.14 00:35, schrieb Jonathan Nieder:
-> Christoph Mallon wrote:
->> % git rev-parse 'master@{52}'
->> warning: Log for ref refs/heads/master has gap after Thu, 1 Jan 1970 00:00:01 +0000.
->> 0000000000000000000000000000000000000036
-> 
-> Can you say more?  What output did you expect and how does this differ
-> from it?
+I don't think there is a good reason. git-status has used renames since
+mid-2005. The documentation mentioning copies was added much later,
+along with the short and porcelain formats. That code handles whatever
+the diff engine throws at it.  I don't think anybody considered at that
+time the fact that you cannot actually provoke status to look for
+copies.
 
-sorry, I thought it is obvious that the warning should not be there.
-As far as I understand the code, this warning is shown, when the old
-commit id of one entry does not equal the new commit id of its predecessor.
-But this reflog file does not have such a gap.
-Also the correct result ist 0...035, not 0...036.
-I.e. one entry is erroneously skipped.
+Interestingly, the rename behavior dates all the way back to:
 
-> I tried, with git 2.2.0,
-> 
-> 	git init gitbug &&
-> 	cd gitbug &&
-> 	git commit --allow-empty -m a &&
-> 	wget http://tron.yamagi.org/zeug/reflog.bad &&
-> 	mv reflog.bad .git/logs/refs/heads/master &&
-> 	sha1sum .git/logs/refs/heads/master &&
-> 	git rev-parse 'master@{52}'
+  commit 753fd78458b6d7d0e65ce0ebe7b62e1bc55f3992
+  Author: Linus Torvalds <torvalds@ppc970.osdl.org>
+  Date:   Fri Jun 17 15:34:19 2005 -0700
 
-These steps look right.
+  Use "-M" instead of "-C" for "git diff" and "git status"
+  
+  The "C" in "-C" may stand for "Cool", but it's also pretty slow, since
+  right now it leaves all unmodified files to be tested even if there are
+  no new files at all.  That just ends up being unacceptably slow for big
+  projects, especially if it's not all in the cache.
 
-> The output:
-> 
->  9ffe44715d0e542a60916255f144c74e6760ffd0  .git/logs/refs/heads/master
+I suspect that the copy code may be much faster these days (it sounds
+like we did not even have the find-copies-harder distinction then, and
+these days we certainly take the quick return if there are no copy
+destination candidates).
 
-The checksum is fine.
+To get a rough sense of how much effort is entailed in the various
+options, here are "git log --raw" timings for git.git (all timings are
+warm cache, best-of-five, wall clock time):
 
->  0000000000000000000000000000000000000035
+  log --raw:       0m2.311s
+  log --raw -M:    0m2.362s
+  log --raw -C:    0m2.576s
+  log --raw -C -C: 1m4.462s
 
-You do not see the bug. |:
+You can see that rename detection adds a little, and copy detections
+adds a little more.  That makes sense; it's rare for new files to appear
+at the same that old files are going away (renames), so most of the time
+it does nothing. Copies introduce a bit more work; we have to compare
+against any changed files, and there are typically several in each
+commit. find-copies-harder is...well, very expensive.
 
-> 
-> Could you make a test script that illustrates and reproduces the
-> problem?  I.e., a patch to a file like t/t1410-reflog.sh [...]
+These timings are of diffs between commits and their parents, of course.
+But if we assume that "git status" will show diffs roughly similar to
+what gets committed, then this should be comparable. There are about 30K
+non-merge commits we traversed there, so adding 200ms is an average of
+not very much per commit. Of course the cost is disproportionately borne
+by diffs which have an actual file come into being. There are ~2000
+commits that introduce a file, so it's probably accurate to say that it
+either adds nothing in most cases, or ~1/10th of a millisecond in
+others.
 
-http://tron.yamagi.org/zeug/0001-t1410-Test-erroneous-skipping-of-reflog-entries.patch
-(also attached)
+Note this is also doing inexact detection, which involves actually
+looking at the contents of candidate blobs (whereas exact detection can
+be done by comparing sha1s, which is very fast). If you set
+diff.renamelimit to "1", then we do only exact detections. Here are
+timings there:
 
-This test works for me at v2.0.4 and fails at v2.1.0 and up (v2.2.0, the
-current master).
-Bisect says the symptom appears at 4207ed285f31ad3e04f08254237c0c1a1609642b.
+  log --raw:       0m02.311s    (for reference)
+  log --raw -M:    0m02.337s
+  log --raw -C:    0m02.347s
+  log --raw -C -C: 0m24.419s
 
+That speeds things up a fair bit, even for "-C" (we don't have to access
+the blobs anymore, so I suspect the time is going to just accessing all
+of the trees; normally diff does not descend into subtrees that have the
+same sha1). Of course, you probably wouldn't want to turn off inexact
+renames completely. I suspect what you'd want is a --find-copies-moderately
+where we look for cheap copies using "-C", and then follow up with "-C
+-C" only using exact renames.
 
-	Christoph
+So from these timings, I'd conclude that:
 
---------------030206030006090505050702
-Content-Type: text/plain; x-mac-type="0"; x-mac-creator="0";
- name="0001-t1410-Test-erroneous-skipping-of-reflog-entries.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename*0="0001-t1410-Test-erroneous-skipping-of-reflog-entries.patch"
+  1. It's probably fine to turn on copies for "git status".
 
->From 82115da194adc42143b8603063e0a419fbbf4928 Mon Sep 17 00:00:00 2001
-From: Christoph Mallon <christoph.mallon@gmx.de>
-Date: Tue, 2 Dec 2014 07:03:11 +0100
-Subject: [PATCH] t1410: Test erroneous skipping of reflog entries.
+  2. It's probably even OK to use "-C -C" for some projects. Even though
+     22s looks scary there, that's only 11ms for git.git (remember,
+     spread across 2000 commits). For linux.git, it's much, much worse.
+     I killed my "-C -C" run after 10 minutes, and it had only gone
+     through 1/20th of the commits. Extrapolating, you're looking at
+     500ms or so added to a "git status" run.
 
----
- t/t1410-reflog.sh | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+     So you'd almost certainly want this to be configurable.
 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 8cf4461..cb77c27 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -287,4 +287,67 @@ test_expect_success 'stale dirs do not cause d/f conflicts (reflogs off)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'erroneous skipping of reflog entries' '
-+	git checkout -b reflogskip &&
-+	cat > .git/logs/refs/heads/reflogskip <<EOF &&
-+0000000000000000000000000000000000000037 0000000000000000000000000000000000000036 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxx> 0000000001 +0000	X
-+0000000000000000000000000000000000000036 0000000000000000000000000000000000000035 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxx> 0000000001 +0000	X
-+0000000000000000000000000000000000000035 0000000000000000000000000000000000000034 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000034 0000000000000000000000000000000000000033 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000033 0000000000000000000000000000000000000032 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000032 0000000000000000000000000000000000000031 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000031 0000000000000000000000000000000000000030 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000030 000000000000000000000000000000000000002f xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000002f 000000000000000000000000000000000000002e xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000002e 000000000000000000000000000000000000002d xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000002d 000000000000000000000000000000000000002c xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000002c 000000000000000000000000000000000000002b xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000002b 000000000000000000000000000000000000002a xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000002a 0000000000000000000000000000000000000029 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000029 0000000000000000000000000000000000000028 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000028 0000000000000000000000000000000000000027 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000027 0000000000000000000000000000000000000026 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000026 0000000000000000000000000000000000000025 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000025 0000000000000000000000000000000000000024 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000024 0000000000000000000000000000000000000023 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000023 0000000000000000000000000000000000000022 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000022 0000000000000000000000000000000000000021 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000021 0000000000000000000000000000000000000020 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000020 000000000000000000000000000000000000001f xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000001f 000000000000000000000000000000000000001e xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000001e 000000000000000000000000000000000000001d xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000001d 000000000000000000000000000000000000001c xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000001c 000000000000000000000000000000000000001b xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000001b 000000000000000000000000000000000000001a xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000001a 0000000000000000000000000000000000000019 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000019 0000000000000000000000000000000000000018 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000018 0000000000000000000000000000000000000017 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000017 0000000000000000000000000000000000000016 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000016 0000000000000000000000000000000000000015 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000015 0000000000000000000000000000000000000014 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000014 0000000000000000000000000000000000000013 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000013 0000000000000000000000000000000000000012 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000012 0000000000000000000000000000000000000011 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000011 0000000000000000000000000000000000000010 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000010 000000000000000000000000000000000000000f xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000000f 000000000000000000000000000000000000000e xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000000e 000000000000000000000000000000000000000d xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000000d 000000000000000000000000000000000000000c xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000000c 000000000000000000000000000000000000000b xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000000b 000000000000000000000000000000000000000a xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+000000000000000000000000000000000000000a 0000000000000000000000000000000000000009 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000009 0000000000000000000000000000000000000008 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000008 0000000000000000000000000000000000000007 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000007 0000000000000000000000000000000000000006 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000006 0000000000000000000000000000000000000005 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000005 0000000000000000000000000000000000000004 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000004 0000000000000000000000000000000000000003 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000003 0000000000000000000000000000000000000002 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+0000000000000000000000000000000000000002 0000000000000000000000000000000000000001 xxxxxxxxxxxxxxxx <xxx@xxxxxxxxxxxxxxxxxxxxx> 0000000001 +0000	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-+EOF
-+	git rev-parse "@{52}" > actual 2>&1 &&
-+	echo "0000000000000000000000000000000000000035" > expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.1.2
+Does either of you want to try your hand at a patch? Just enabling
+copies should be a one-liner. Making it configurable is more involved,
+but should also be pretty straightforward.
 
-
---------------030206030006090505050702--
+-Peff
