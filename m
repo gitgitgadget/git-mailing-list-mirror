@@ -1,191 +1,242 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 09/19] Add git-list-files, a user friendly version of
- ls-files and more
-Date: Mon, 1 Dec 2014 21:50:54 -0500
-Message-ID: <CAPig+cQCFkGUqLjvGPLON8D3577ADyBJ2hmQ9girbO5Q1Tn6Eg@mail.gmail.com>
-References: <1417337767-4505-1-git-send-email-pclouds@gmail.com>
-	<1417337767-4505-10-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Let deny.currentBranch=updateInstead ignore submodules
+Date: Mon, 01 Dec 2014 19:24:44 -0800
+Message-ID: <xmqqa936ohs3.fsf@gitster.dls.corp.google.com>
+References: <cover.1415368490.git.johannes.schindelin@gmx.de>
+	<84dba8872922da96e99953eea0ccff5f5af9dd4a.1415368490.git.johannes.schindelin@gmx.de>
+	<xmqqh9yag6mt.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411101400050.13845@s15462909.onlinehome-server.info>
+	<xmqq1tpbawqe.fsf@gitster.dls.corp.google.com>
+	<xmqq389qam25.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411121208250.13845@s15462909.onlinehome-server.info>
+	<xmqqzjbw47vr.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411131123330.13845@s15462909.onlinehome-server.info>
+	<alpine.DEB.1.00.1411131136200.13845@s15462909.onlinehome-server.info>
+	<xmqqh9y32e36.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1411131850510.13845@s15462909.onlinehome-server.info>
+	<xmqq4mu2285w.fsf@gitster.dls.corp.google.com>
+	<xmqqzjbuzu6t.fsf@gitster.dls.corp.google.com>
+	<xmqq1tp643yb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 03:51:03 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 02 04:24:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvdYM-0006Na-81
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 03:51:02 +0100
+	id 1Xve58-000245-LT
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 04:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932304AbaLBCu5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Dec 2014 21:50:57 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:54042 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932222AbaLBCuz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2014 21:50:55 -0500
-Received: by mail-yh0-f42.google.com with SMTP id v1so5613096yhn.29
-        for <git@vger.kernel.org>; Mon, 01 Dec 2014 18:50:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=Aprr+m8wPgoUiMifV3f/J5nfi6OJXz4r4Kz900y4aDU=;
-        b=Wb34HlrGiBo2twj0HBALp/oVFa8ktopAkUnbdbCgtz+WawTYbQwPSuq+jqFiU24fnu
-         2AnEbalS+LlLwsWyOSY1ozeSwU2nKs6coBNJvICVtIGpJQoGnxC/6WewD/968FkvXXU7
-         MsODJPQb1D4yarVqo99NWdNMejrCSf1kCB1PCAwmM0vY2rDR5DApcM6xoIvvBXkzQWmr
-         gp90ilnjZtc8IuZRCya1K/G/gQfzqkAc+glQcxqGYgGhDnK4SB5FSi4RBNhsFgaOLBiA
-         lyKwy+5zP70uMmJucM5BFdDHsF0oU9YtaVAJNe41TpVBmTuDX7b9utap1NTwUHTOFOhN
-         0NTw==
-X-Received: by 10.236.8.100 with SMTP id 64mr2676798yhq.112.1417488654675;
- Mon, 01 Dec 2014 18:50:54 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Mon, 1 Dec 2014 18:50:54 -0800 (PST)
-In-Reply-To: <1417337767-4505-10-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: Sjv1U5mC_gsRKlWqI-Jk-267PpQ
+	id S932760AbaLBDYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2014 22:24:48 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56084 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753893AbaLBDYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2014 22:24:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AD4FF23B27;
+	Mon,  1 Dec 2014 22:24:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oF918ACNirUOK9hIYOxhbPcPH14=; b=tj+v9q
+	IxGaqz1eriReVKszdvwi6AZArSSOg2cxG2U7e6EKMzEGzc6pejtDX4jtV7iTA0FC
+	NeC7VDmymHoHB1SEGQJKmuVUT0hSl0aoqOwv/YrVcx/Z7DYCb1v9dfBo/oh5jSc9
+	OutSCuQVsgsKaKyFA+WmKop+63vRScbOh09c8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o67ARDFHu+F5ckphXW4/wdcEg7Zb3lqK
+	81UiH9YGF84qFh1NH9xg2PBynXnS6VDtvUR2rrxgpDPjr0Em574O4gkyMJYnAwnk
+	cMfouk/xXp/hl0ra3Nfkeo8LMbNpduMB5I7HZgqvp2/2JRrJwQ0M27tyRZ5QNR0A
+	abm8Znxsito=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F9A823B26;
+	Mon,  1 Dec 2014 22:24:46 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0419223B25;
+	Mon,  1 Dec 2014 22:24:45 -0500 (EST)
+In-Reply-To: <xmqq1tp643yb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 13 Nov 2014 23:49:16 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C3A2FA9E-79D2-11E4-BD4C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260526>
 
-On Sunday, November 30, 2014, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy=
- <pclouds@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> And thinking about the names again, I have a feeling that
+>> updateInstead and mergeInstead are both probably misnomer.
 >
-> This is more user friendly version of ls-files:
->
-> * it's automatically colored and columnized
-> * it refreshes the index like all porcelain commands
-> * it defaults to non-recursive behavior like ls
-> * :(glob) is on by default so '*.c' means a.c but not a/b.c, use
->   '**/*.c' for that.
-> * auto pager
->
-> The name 'ls' is not taken. It is left for the user to make an alias
-> with better default options.
+> Let me take this part back.  After all, I do not think I would
+> design the mechanism to implement an alternative logic that decides
+> when it is safe to allow the update of the ref and to reflect the
+> changes to the working tree, and that actually does the checkout to
+> the working tree by using a new value like mergeInstead.  So we
+> would only need a single name, and updateInstead is not too bad.
+> ...
+> The mechanism I would employ when doing an alternative logic,
+> possibly looser one but does not necessarily so, would be to have a
+> hook script "push-to-checkout".  When denyCurrentBranch is set to
+> updateInstead, if there is no such hook, the "working tree has to be
+> absolutely clean and we would do a 'read-tree -m -u $old $new'
+> (which is the same as 'reset --hard $new' under the precondition)"
+> you implemented will be used as the "logic that decides when it is
+> safe, and that does the checkout to the working tree".  When the
+> "push-to-checkout" hook exists, however, we just invoke that hook
+> with $new as argument, and it can decide when it is safe in whatever
+> way it chooses to, and it can checkout the $new to the working tree
+> in whatever way it wants.
 
-I understand that your original version was named git-ls and that you
-renamed it to git-list-files in order to leave 'ls' available so users
-can create an 'ls' alias specifying their own default options. Would
-it make sense, however, to restore the name to git-ls and allow users
-to set default options via a config variable instead? Doing so would
-make the short-and-sweet git-ls command work for all users
-out-of-the-box, which might be well appreciated by Unix users.
+So here comes a two-patch series on top of your series (with the
+test update I sent earlier).  As I never do "push to deploy" that
+requires no changes to the working tree or to the index, while I
+have seem myself in a situation where I have to emulate a "git pull"
+with a "git push" in the opposite direction (and work it around if
+the target of the 'git pull' I wanted to do were the current branch,
+by first pushing into a throw-away branch, because of denyCurrent),
+I could imagine myself using this variant.  Having said that, this
+is primarily so that I do not want to forget and discard the brain
+cycles we spent discussing this to the waste, more than that I
+cannot wait to use this feature myself ;-)
 
-More below.
+The first one here is a pure refactoring.  The second one is the
+real fun.
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> diff --git a/Documentation/git-list-files.txt b/Documentation/git-lis=
-t-files.txt
-> new file mode 100644
-> index 0000000..3039e1e
-> --- /dev/null
-> +++ b/Documentation/git-list-files.txt
-> @@ -0,0 +1,80 @@
-> +git-list-files(1)
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +NAME
-> +----
-> +git-list-files - List files
-> +
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git list-files [options] [<pathspec>...]
-> +
-> +DESCRIPTION
-> +-----------
-> +List files (by default in current working directory) that are in the
-> +index. Depending on the chosen options, maybe only modified files in
-> +working tree are shown, or untracked files...
-> +
-> +OPTIONS
-> +-------
-> +-c::
-> +--cached::
-> +       Show cached files (default)
+-- >8 --
+Subject: [PATCH 1/2] receive-pack: refactor updateInstead codepath
 
-I realize that this mirrors what is in git-ls-files.txt, but:
+Keep the "there is nothing to update in a bare repository", "when
+the check and update process runs, here are the GIT_DIR and
+GIT_WORK_TREE" logic, which will be common regardless of how the
+decision to update and the actual update are done, in the original
+update_worktree() function, and split out the "working tree and
+the index must match the original HEAD exactly" and "use two-way
+read-tree to update the working tree" into a new push_to_deploy()
+helper function.  This will allow customizing the logic more cleanly
+and easily.
 
-s/$/./
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/receive-pack.c | 53 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 28 insertions(+), 25 deletions(-)
 
-> +-d::
-> +--deleted::
-> +       Show cached files that are deleted on working directory
-
-s/$/./
-
-> +-m::
-> +--modified::
-> +       Show cached files that have modification on working directory
-
-s/$/./
-
-> +-o::
-> +--others::
-> +       Show untracked files (and only unignored ones unless -i is
-
-s/-i/`-i`/
-
-> +       specified)
-
-s/$/./
-
-> +-i::
-> +--ignored::
-> +       Show only ignored files. When showing files in the index,
-> +       print only those matched by an exclude pattern. When showing
-> +       "other" files, show only those matched by an exclude pattern.
-> +
-> +-u::
-> +--unmerged::
-> +       Show unmerged files
-
-s/$/./
-
-> +--color[=3D<when>]::
-> +--no-color::
-> +       Color file names. The value must be `always`, `never`, or
-> +       `auto`. `--no-color` is equivalent to
-> +       `--color=3Dnever`. `--color` is equivalent to
-> +       `--color=3Dauto`. See configuration variable `color.list-file=
-s`
-> +       for the default settings.
-> +
-> +--column[=3D<options>]::
-> +--no-column::
-> +       Display files in columns. See configuration variable column.u=
-i
-
-s/column.ui/`column.ui`/
-
-> +       for option syntax. `--column` and `--no-column` without optio=
-ns
-> +       are equivalent to 'always' and 'never' respectively.
-> +
-> +--max-depth=3D<depth>::
-> +       For each <pathspec> given on command line, descend at most <d=
-epth>
-> +       levels of directories. A negative value means no limit.
-> +       This option is ignored if <pathspec> contains active wildcard=
-s.
-> +       In other words if "a*" matches a directory named "a*",
-> +       "*" is matched literally so --max-depth is still effective.
-> +       The default is `--max-depth=3D0`.
-> +
-> +<pathspec>::
-> +       Files to show. :(glob) magic is enabled and recursion disable=
-d
-> +       by default.
-> +
-> +SEE ALSO
-> +--------
-> +linkgit:git-ls-files[1]
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index c047418..11800cd 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -733,7 +733,9 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ 	return 0;
+ }
+ 
+-static const char *update_worktree(unsigned char *sha1)
++static const char *push_to_deploy(unsigned char *sha1,
++				  struct argv_array *env,
++				  const char *work_tree)
+ {
+ 	const char *update_refresh[] = {
+ 		"update-index", "-q", "--ignore-submodules", "--refresh", NULL
+@@ -748,69 +750,70 @@ static const char *update_worktree(unsigned char *sha1)
+ 	const char *read_tree[] = {
+ 		"read-tree", "-u", "-m", NULL, NULL
+ 	};
+-	const char *work_tree = git_work_tree_cfg ? git_work_tree_cfg : "..";
+-	struct argv_array env = ARGV_ARRAY_INIT;
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 
+-	if (is_bare_repository())
+-		return "denyCurrentBranch = updateInstead needs a worktree";
+-
+-	argv_array_pushf(&env, "GIT_DIR=%s", absolute_path(get_git_dir()));
+-
+ 	child.argv = update_refresh;
+-	child.env = env.argv;
++	child.env = env->argv;
+ 	child.dir = work_tree;
+ 	child.no_stdin = 1;
+ 	child.stdout_to_stderr = 1;
+ 	child.git_cmd = 1;
+-	if (run_command(&child)) {
+-		argv_array_clear(&env);
++	if (run_command(&child))
+ 		return "Up-to-date check failed";
+-	}
+ 
+ 	/* run_command() does not clean up completely; reinitialize */
+ 	child_process_init(&child);
+ 	child.argv = diff_files;
+-	child.env = env.argv;
++	child.env = env->argv;
+ 	child.dir = work_tree;
+ 	child.no_stdin = 1;
+ 	child.stdout_to_stderr = 1;
+ 	child.git_cmd = 1;
+-	if (run_command(&child)) {
+-		argv_array_clear(&env);
++	if (run_command(&child))
+ 		return "Working directory has unstaged changes";
+-	}
+ 
+ 	child_process_init(&child);
+ 	child.argv = diff_index;
+-	child.env = env.argv;
++	child.env = env->argv;
+ 	child.no_stdin = 1;
+ 	child.no_stdout = 1;
+ 	child.stdout_to_stderr = 0;
+ 	child.git_cmd = 1;
+-	if (run_command(&child)) {
+-		argv_array_clear(&env);
++	if (run_command(&child))
+ 		return "Working directory has staged changes";
+-	}
+ 
+ 	read_tree[3] = sha1_to_hex(sha1);
+ 	child_process_init(&child);
+ 	child.argv = read_tree;
+-	child.env = env.argv;
++	child.env = env->argv;
+ 	child.dir = work_tree;
+ 	child.no_stdin = 1;
+ 	child.no_stdout = 1;
+ 	child.stdout_to_stderr = 0;
+ 	child.git_cmd = 1;
+-	if (run_command(&child)) {
+-		argv_array_clear(&env);
++	if (run_command(&child))
+ 		return "Could not update working tree to new HEAD";
+-	}
+ 
+-	argv_array_clear(&env);
+ 	return NULL;
+ }
+ 
++static const char *update_worktree(unsigned char *sha1)
++{
++	const char *retval;
++	const char *work_tree = git_work_tree_cfg ? git_work_tree_cfg : "..";
++	struct argv_array env = ARGV_ARRAY_INIT;
++
++	if (is_bare_repository())
++		return "denyCurrentBranch = updateInstead needs a worktree";
++
++	argv_array_pushf(&env, "GIT_DIR=%s", absolute_path(get_git_dir()));
++
++	retval = push_to_deploy(sha1, &env, work_tree);
++
++	argv_array_clear(&env);
++	return retval;
++}
++
+ static const char *update(struct command *cmd, struct shallow_info *si)
+ {
+ 	const char *name = cmd->ref_name;
+-- 
+2.2.0-141-gd3f4719
