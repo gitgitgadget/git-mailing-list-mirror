@@ -1,86 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git status / git diff -C not detecting file copy
-Date: Tue, 2 Dec 2014 16:50:13 -0500
-Message-ID: <20141202215013.GB25338@peff.net>
-References: <CAJxwDJzzNV77cTP4nbzgCvFjjqp3C4X8d3j6uwhYvK4+g4r1YQ@mail.gmail.com>
- <CAGyf7-E_y8zRUKh5RWvAhPXzSgpnVab6e=e1v92rSVVxf+LNJg@mail.gmail.com>
- <CAJxwDJzxUEd3czHpwDtKaERKDhvyCGOzGbKO4X9z44ugTJ2q4w@mail.gmail.com>
- <CAGyf7-F9twCEUY-LN=xEf4=gfNW8oLEHJmTjHRQ2MncHZ2emZQ@mail.gmail.com>
- <20141202065550.GB1948@peff.net>
- <CAGyf7-EHBqZn5LCTYuA+07GSNOF0vVdszL6oTUKwY1ETRDKEwA@mail.gmail.com>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH/RFC v2] Squashed changes for multiple worktrees vs.
+ submodules
+Date: Wed, 3 Dec 2014 00:16:11 +0200
+Message-ID: <20141202221611.GB9128@wheezy.local>
+References: <1417390076-2953-1-git-send-email-max@max630.net>
+ <547E24E4.7050100@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pol Online <info@pol-online.net>,
-	Git Users <git@vger.kernel.org>
-To: Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 22:50:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Dec 02 23:16:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvvL4-0003dL-NR
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 22:50:31 +0100
+	id 1Xvvk7-00078a-97
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Dec 2014 23:16:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933168AbaLBVuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 16:50:17 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47418 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933022AbaLBVuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 16:50:16 -0500
-Received: (qmail 32164 invoked by uid 102); 2 Dec 2014 21:50:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Dec 2014 15:50:16 -0600
-Received: (qmail 19113 invoked by uid 107); 2 Dec 2014 21:50:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Dec 2014 16:50:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Dec 2014 16:50:13 -0500
+	id S933022AbaLBWQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 17:16:19 -0500
+Received: from p3plsmtpa12-07.prod.phx3.secureserver.net ([68.178.252.236]:41149
+	"EHLO p3plsmtpa12-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932832AbaLBWQS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 17:16:18 -0500
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa12-07.prod.phx3.secureserver.net with 
+	id NmG81p00W5B68XE01mGBly; Tue, 02 Dec 2014 15:16:18 -0700
 Content-Disposition: inline
-In-Reply-To: <CAGyf7-EHBqZn5LCTYuA+07GSNOF0vVdszL6oTUKwY1ETRDKEwA@mail.gmail.com>
+In-Reply-To: <547E24E4.7050100@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260599>
 
-On Wed, Dec 03, 2014 at 08:40:47AM +1100, Bryan Turner wrote:
-
-> On Tue, Dec 2, 2014 at 5:55 PM, Jeff King <peff@peff.net> wrote:
-> >
-> > So from these timings, I'd conclude that:
-> >
-> >   1. It's probably fine to turn on copies for "git status".
-> >
-> >   2. It's probably even OK to use "-C -C" for some projects. Even though
-> >      22s looks scary there, that's only 11ms for git.git (remember,
-> >      spread across 2000 commits). For linux.git, it's much, much worse.
-> >      I killed my "-C -C" run after 10 minutes, and it had only gone
-> >      through 1/20th of the commits. Extrapolating, you're looking at
-> >      500ms or so added to a "git status" run.
-> >
-> >      So you'd almost certainly want this to be configurable.
-> >
-> > Does either of you want to try your hand at a patch? Just enabling
-> > copies should be a one-liner. Making it configurable is more involved,
-> > but should also be pretty straightforward.
+On Tue, Dec 02, 2014 at 09:45:24PM +0100, Jens Lehmann wrote:
+>> But, while hacking the submodule init I became more
+>> convinced that the modules directory should be common and
+>> submodules in checkout should be a checkouts of the
+>> submodule. Because this is looks like concept of
+>> submodules, that they are unique for the lifetime of
+>> repository, even if they do not exist in all revisions.
+>> And if anybody want to use fully independent checkout
+>> they can be always checked out manually. Actually, after
+>> a submodule is initialized and have a proper gitlink, it
+>> can be updated and inquired regardless of where it points
+>> to.
 > 
-> I'm interested in taking a stab at a patch, but I'd like to confirm
-> which way to go. Based on Junio's reply I'm not certain the simple
-> patch could get accepted (assuming I do all the submission parts
-> properly and the implementation itself passes review). Does that mean
-> the only real option is the configurable patch?
+> If I understand you correctly you want to put the
+> submodule's common git dir under the superproject's common
+> git dir. I agree that that makes most sense as the
+> default, but having the possibility to use a common git
+> dir for submodule's of different superprojects would be
+> nice to have for some setups, e.g. CI-servers. But that
+> can be added later.
 
-I think this is the part where you get to use your judgement, and decide
-what you think the maintainer will take. :)
+So far there is no separation of .git/config for different
+worktrees. As submodules rely on the config their separation
+cannot be done fully without changing that. So this should
+be really left for some later improvements.
 
-Personally, I would probably go for the configurable version, as it is
-not that much harder, and is a nicer end-point.
+As a user I am currently perfectly satisfied with manually
+checking out or even cloning submodules inplace, I don't do
+it often.
 
-Junio gave an example elsewhere in which the config option value would
-look like "-C -C". I'd consider trying to match diff.renames instead,
-which takes false/true/copies for its three levels. It may make sense to
-teach both places "copies-harder" or something similar, for
-completeness.
+> Thanks. I just didn't quite understand why you had to do so many
+> changes to git-submodule.sh. Wouldn't it be sufficient to just
+> update module_clone()?
 
--Peff
+Thanks, I should try it.
+
+Probably I had the opposite idea in mind - keep module_clone
+as untouched as possible. Maybe I should see how it's going
+to look if I move all worktrees logic there.
+
+-- 
+Max
