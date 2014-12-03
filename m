@@ -1,77 +1,148 @@
-From: Petr Bena <benapetr@gmail.com>
-Subject: Re: git stash broken on MS Windows (automatically modify the files again)
-Date: Wed, 3 Dec 2014 18:03:44 +0100
-Message-ID: <CA+4EQ5e6464+MP7TqWMT8ceO6ZgZEE6xJPxJBfpAhoj4B-03Uw@mail.gmail.com>
-References: <CA+4EQ5d70JWiawt5zb9s6Vc3cDMApPmhdB2w+WLyfmWCcTQF4g@mail.gmail.com>
-	<CA+4EQ5cfC2N+e6g7wnxDZnnPj3BKTyuMj=TxX90fB7o+_EiOBQ@mail.gmail.com>
-	<CA+4EQ5fbDPFuzuz_OAX1Y=zCdL76j3ah0u0BVUW2pPqjaf4kBQ@mail.gmail.com>
-	<CAHb+SPAw+aeR4RsB6COhq4RMxuXJ64scY-Ez5tZPk3ziEAGm=Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC][PATCH] send-email: add --[no-]xmailer option
+Date: Wed, 03 Dec 2014 09:08:32 -0800
+Message-ID: <xmqqfvcwk6en.fsf@gitster.dls.corp.google.com>
+References: <20140324213814.GA1267@achilles.my.domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Aneurin Price <aneurin.price@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 18:03:50 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Luis Henriques <henrix@camandro.org>
+X-From: git-owner@vger.kernel.org Wed Dec 03 18:08:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwDLB-0007gc-R9
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 18:03:50 +0100
+	id 1XwDPu-00021I-9h
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 18:08:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbaLCRDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 12:03:46 -0500
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:41784 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991AbaLCRDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 12:03:45 -0500
-Received: by mail-ie0-f176.google.com with SMTP id tr6so14072437ieb.21
-        for <git@vger.kernel.org>; Wed, 03 Dec 2014 09:03:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oCLVMomPOlAd674zOKWAaSma9xqVd59zwr4nR8adjaQ=;
-        b=FftRsrMVUkLvVh3ysEC/dfDNP3avvmhoUcabv6nJTy9EMu9Th/oTuP33VrVbndjaig
-         WAPFCYEGV8jE7eliCb3tFswcm5t6SBsbhEKofJX2viiPS8Maz3b8L5ix9lvysCJcoxMv
-         w+C97WMrEkUDTW2NSXQr7zu8X/VeDOT6jncSYDf81xhwscDbpcJuLKLwboR/qYOl5Lw1
-         K3BS/N1k57j3549Stn3ZzIy64qoKSyn+G+skR0Z3Esbc0tBMfsl/heCmHIE2jaPwByar
-         O1h7lnQ+SfjMPbpLRW7xgHxr1/qlXMcRIPi+qLQ2w1O3Yit4RU86agQZ0xhz8hrlK+91
-         Glrw==
-X-Received: by 10.107.128.87 with SMTP id b84mr5631303iod.42.1417626224538;
- Wed, 03 Dec 2014 09:03:44 -0800 (PST)
-Received: by 10.107.151.141 with HTTP; Wed, 3 Dec 2014 09:03:44 -0800 (PST)
-In-Reply-To: <CAHb+SPAw+aeR4RsB6COhq4RMxuXJ64scY-Ez5tZPk3ziEAGm=Q@mail.gmail.com>
+	id S1751134AbaLCRIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 12:08:37 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64071 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750969AbaLCRIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 12:08:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5833421784;
+	Wed,  3 Dec 2014 12:08:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VQbjlxcyrLHYhVPxvfV/TEkR92M=; b=D6InlL
+	eqDAcDZAuL9MxksoK3Cp/KkAZQqbsgd+hd5br3iCLy7nLeZ85Qvm0xmEWFGlOmnR
+	a0gt8cqsiQpye5aNPZWkN6CWlYMJSOmOXXKqwGyUV85Y3pP0zo75QLj5FhlMAmTf
+	EYGV9VnFmIktSlIKd9B7aRBp+NFCu1IxGtNBg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dtZwKWHPvZBi8A1J7KzIN1FLUKoze68n
+	MISLaeYUuLGJuZ6F3/ou9Vq942OPxrR8WQcteC5qkJO9UFhnFCb/U15U5/fHryKs
+	rA3XRyTyvOF40uatByV4xYyQtmMvG0r/is8YtJ9n2YcwTSvUn/HarUnLyZ12hrrO
+	OA4TN0aUByQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E63E21783;
+	Wed,  3 Dec 2014 12:08:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BE24D21782;
+	Wed,  3 Dec 2014 12:08:33 -0500 (EST)
+In-Reply-To: <20140324213814.GA1267@achilles.my.domain> (Luis Henriques's
+	message of "Mon, 24 Mar 2014 21:38:27 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 034ABED8-7B0F-11E4-893F-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260663>
 
-Yay
+Luis Henriques <henrix@camandro.org> writes:
 
-Why doesn't windows git perform some kind of check here, and doesn't
-tell you a message like: this repository contains multiple files with
-same name, which I can't checkout on this OS Or something like that?
+> +--xmailer::
+> +	Prevent adding the "X-Mailer:" header.  Default value is
+> +	'sendemail.xmailer'.
 
-On Wed, Dec 3, 2014 at 5:50 PM, Aneurin Price <aneurin.price@gmail.com> wrote:
-> On 3 December 2014 at 14:48, Petr Bena <benapetr@gmail.com> wrote:
->> Only solution so far was to clone on linux, remove the folder which
->> contains these files and push them, then I had to delete the whole
->> repository on windows and clone it again.
->>
->> If I checkout any revision which contains these files repository get
->> broken in a way that only solution is deleting it from disk and
->> cloning again. Is this a bug?
->>
->
-> <snip>
->
->>> fatal: Will not add file alias 'BSS/export_home_oracle/scripts_IDAEU001/Audit/au
->>> dit_off.sql' ('BSS/export_home_oracle/scripts_IDAEU001/audit/audit_off.sql' alre
->>> ady exists in index)
->>>
->
-> On your Linux machine (and in the repository), do you actually have
-> both 'BSS/export_home_oracle/scripts_IDAEU001/Audit' and
-> 'BSS/export_home_oracle/scripts_IDAEU001/audit' directories?
+Two problems here.
+
+ - "git send-email --xmailer" would _ADD_, not prevent adding, the
+   header, regardless of the value of sendemail.xmailer.
+
+ - It is unspecified what happens when you do not have
+   sendemail.xmailer and do not give the --xmailer option.
+
+Perhaps
+
+--xmailer::
+--no-xmailer::
+
+	By default, `git send-email` adds an "X-Mailer:" header to
+        the message to identify the version of itself.  The
+        `--no-xmailer` option can be used to turn this off (setting
+        the `sendemail.xmailer` configuration to false has the same
+        effect).  The `--xmailer` option from the command line is
+        useful to countermand `sendemail.xmailer` that is set to
+        `false`.
+
+or something?
+
+
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index fdb0029..8789124 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -54,6 +54,7 @@ git send-email [options] <file | directory | rev-list options >
+>      --[no-]bcc              <str>  * Email Bcc:
+>      --subject               <str>  * Email "Subject:"
+>      --in-reply-to           <str>  * Email "In-Reply-To:"
+> +    --[no-]xmailer                 * Don't add "X-Mailer:" header.  Default on.
+
+The same confusion exists here.  "Don't ... default on" hints that
+by default we won't see "X-mailer:" which is not true.
+
+A way to avoid confusion is to describe what the option is about for
+the positive variant, just like it is done for "--[no-]annotate"
+option below.
+
+> @@ -174,6 +175,9 @@ my $force = 0;
+>  my $multiedit;
+>  my $editor;
+>  
+> +# Usage of X-Mailer email header
+> +my $xmailer;
+> +
+>  sub do_edit {
+>  	if (!defined($editor)) {
+>  		$editor = Git::command_oneline('var', 'GIT_EDITOR');
+> @@ -214,7 +218,8 @@ my %config_bool_settings = (
+>      "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
+>      "validate" => [\$validate, 1],
+>      "multiedit" => [\$multiedit, undef],
+> -    "annotate" => [\$annotate, undef]
+> +    "annotate" => [\$annotate, undef],
+> +    "xmailer" => [\$xmailer, 1]
+>  );
+>  
+>  my %config_settings = (
+> @@ -311,6 +316,7 @@ my $rc = GetOptions("h" => \$help,
+>  		    "8bit-encoding=s" => \$auto_8bit_encoding,
+>  		    "compose-encoding=s" => \$compose_encoding,
+>  		    "force" => \$force,
+> +		    "xmailer!" => \$xmailer,
+>  	 );
+>  
+>  usage() if $help;
+> @@ -1144,8 +1150,10 @@ To: $to${ccline}
+>  Subject: $subject
+>  Date: $date
+>  Message-Id: $message_id
+> -X-Mailer: git-send-email $gitversion
+>  ";
+> +	if ($xmailer) {
+> +		$header .= "X-Mailer: git-send-email $gitversion\n";
+> +	}
+>  	if ($reply_to) {
+>  
+>  		$header .= "In-Reply-To: $reply_to\n";
+
+tests?
+
+Thanks.
