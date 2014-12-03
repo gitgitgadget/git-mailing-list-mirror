@@ -1,169 +1,167 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 14/14] lockfile: make 'unable_to_lock_message' private
-Date: Wed, 3 Dec 2014 12:42:27 -0800
-Message-ID: <20141203204227.GA26810@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 03/14] copy_fd: pass error message back through a strbuf
+Date: Wed, 3 Dec 2014 16:00:31 -0500
+Message-ID: <20141203210031.GA6631@peff.net>
 References: <1416262453-30349-1-git-send-email-sbeller@google.com>
  <20141117233525.GC4336@google.com>
  <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
  <20141118004841.GE4336@google.com>
  <CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
  <20141203050217.GJ6527@google.com>
- <20141203052734.GX6527@google.com>
+ <20141203051344.GM6527@google.com>
+ <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 21:42:38 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 22:00:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwGkt-0007JM-0I
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 21:42:35 +0100
+	id 1XwH2M-0000or-Do
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 22:00:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494AbaLCUmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 15:42:31 -0500
-Received: from mail-ig0-f201.google.com ([209.85.213.201]:63452 "EHLO
-	mail-ig0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750855AbaLCUma (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 15:42:30 -0500
-Received: by mail-ig0-f201.google.com with SMTP id h15so1811034igd.4
-        for <git@vger.kernel.org>; Wed, 03 Dec 2014 12:42:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=wxdz3VbexpJBttpVMOuemhFZrNticLP2q2gi64rBkAU=;
-        b=BC1SdSooZZTZvx+R59cy9u8TjnLzEs+RN5+h3HwiuLAxOm691UIudhQnmQ2vQ3w9Nw
-         6tjcUbtpMvFucJwWf4GVaUnLFBEdjkSPFUu5CMFMGmymZC0UshNCr3ddId0TcDzr/Sso
-         NUp6XtSlSnU6LPWKCuFedbQP1tUvX8+VUjSrYflgvaaT3Lf7xAwEw1As9sKCXhKeHGKJ
-         JES0oaqiJ/vFuSGKPT9xlEguuJ9O+9At/a8ZXGsLnLilL+1amZshqtvdjyJ4XSgZ3YJa
-         5iWFWJ+0nSb9zOwEZXwysvySIs8EmUFSg8oO5wjGmvO+VvmbEhGOCKyZXqR9EyF4Oz4p
-         Qwqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=wxdz3VbexpJBttpVMOuemhFZrNticLP2q2gi64rBkAU=;
-        b=FXpzfAw+7RW4FxFsxmqLA1roGk/LL9arbgklLVe5EwOlWUMVX7Mw2GwYaEplk+tX+8
-         PV/vb0qXeX4C1syq3x1EcGQHYt+t/Spyx3Z0mD155H84zJjAMwlQkekHyRXcxkXEO3YF
-         bRs8ADFH+h+jwa4kYhF4LrAAldKPwvSR3brSQEbQ+VDD35DLBBGR8iV+f6kOUjqZt5iP
-         Z9Ytrs3X7Y0qMsQJSztRI+Z1ukk6c1Eq20e68tce9eOHj++gE6wH45yb6lacw21+h6me
-         e62eFfA5M8RPXq5ivwm/q53gGcASA5a/AieRm7o7V00pWEiXh7o06yGJxsq9JUZ0w9+O
-         Dp5Q==
-X-Gm-Message-State: ALoCoQmUH7q0X5saHfd74/odbMOs4haVfU7YdQldyyCHFGr4cHXWBh+JVgOT0gFTRwOTyI38v+px
-X-Received: by 10.43.126.9 with SMTP id gu9mr10117030icc.11.1417639349230;
-        Wed, 03 Dec 2014 12:42:29 -0800 (PST)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id r6si1029046yhg.1.2014.12.03.12.42.28
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Dec 2014 12:42:29 -0800 (PST)
-Received: from sbeller.mtv.corp.google.com ([172.27.69.125])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id dgwH8kG4.1; Wed, 03 Dec 2014 12:42:29 -0800
-Received: by sbeller.mtv.corp.google.com (Postfix, from userid 279346)
-	id 212E21411A0; Wed,  3 Dec 2014 12:42:28 -0800 (PST)
+	id S1751309AbaLCVAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 16:00:34 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47950 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750707AbaLCVAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 16:00:34 -0500
+Received: (qmail 25096 invoked by uid 102); 3 Dec 2014 21:00:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Dec 2014 15:00:33 -0600
+Received: (qmail 32034 invoked by uid 107); 3 Dec 2014 21:00:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Dec 2014 16:00:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Dec 2014 16:00:31 -0500
 Content-Disposition: inline
-In-Reply-To: <20141203052734.GX6527@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260691>
 
-On Tue, Dec 02, 2014 at 09:27:34PM -0800, Jonathan Nieder wrote:
-> The old external callers now use the message passed back by
-> hold_lock_file_for_update / hold_lock_file_for_append instead of
-> trying to interpret errno.
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> That's the end of the series.  Thanks for reading.
-> 
-> Thoughts?
+On Wed, Dec 03, 2014 at 11:01:08AM -0800, Junio C Hamano wrote:
 
-I reviewed the whole series and seems fine with me.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> > -extern int copy_fd(int ifd, int ofd);
+> > +extern int copy_fd(int ifd, int ofd, struct strbuf *err);
+> 
+> It is not limited to this single function, but what contract do we
+> envision this "error messages are given back to the caller via
+> strbuf" convention should give between the callers and the callee?
+> 
+> For example, is it a bug in the callee to touch "err" when there is
+> no error to report?  Another example is if we should allow the
+> callers to pass NULL there when they do not care about the nature of
+> the error (e.g. "git cmd -q").
+> 
+> There may be other rules we want to enforce consistently across
+> functions that adopt this convention.
 
-> 
->  lockfile.c | 42 +++++++++++++++++++++---------------------
->  lockfile.h |  2 --
->  2 files changed, 21 insertions(+), 23 deletions(-)
-> 
-> diff --git a/lockfile.c b/lockfile.c
-> index 8d8d5ed..7121370 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -98,6 +98,27 @@ static void resolve_symlink(struct strbuf *path)
->  	strbuf_reset(&link);
->  }
->  
-> +static void unable_to_lock_message(const char *path, int flags, int err,
-> +			    struct strbuf *buf)
-> +{
-> +	if (err != EEXIST) {
-> +		strbuf_addf(buf, "Unable to create '%s.lock': %s",
-> +			    absolute_path(path), strerror(err));
-> +	} else if (flags & LOCK_OUTSIDE_REPOSITORY) {
-> +		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
-> +		    "If no other git process is currently running, this probably means\n"
-> +		    "another git process crashed earlier. Make sure no other git process\n"
-> +		    "is running and remove the file manually to continue.",
-> +			    absolute_path(path), strerror(err));
-> +	} else {
-> +		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
-> +		    "If no other git process is currently running, this probably means a\n"
-> +		    "git process crashed in this repository earlier. Make sure no other git\n"
-> +		    "process is running and remove the file manually to continue.",
-> +			    absolute_path(path), strerror(err));
-> +	}
-> +}
-> +
->  static int lock_file(struct lock_file *lk, const char *path,
->  		     int flags, struct strbuf *err)
->  {
-> @@ -149,27 +170,6 @@ static int lock_file(struct lock_file *lk, const char *path,
->  	return lk->fd;
->  }
->  
-> -void unable_to_lock_message(const char *path, int flags, int err,
-> -			    struct strbuf *buf)
-> -{
-> -	if (err != EEXIST) {
-> -		strbuf_addf(buf, "Unable to create '%s.lock': %s",
-> -			    absolute_path(path), strerror(err));
-> -	} else if (flags & LOCK_OUTSIDE_REPOSITORY) {
-> -		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
-> -		    "If no other git process is currently running, this probably means\n"
-> -		    "another git process crashed earlier. Make sure no other git process\n"
-> -		    "is running and remove the file manually to continue.",
-> -			    absolute_path(path), strerror(err));
-> -	} else {
-> -		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
-> -		    "If no other git process is currently running, this probably means a\n"
-> -		    "git process crashed in this repository earlier. Make sure no other git\n"
-> -		    "process is running and remove the file manually to continue.",
-> -			    absolute_path(path), strerror(err));
-> -	}
-> -}
-> -
->  int hold_lock_file_for_update(struct lock_file *lk, const char *path,
->  			      int flags, struct strbuf *err)
->  {
-> diff --git a/lockfile.h b/lockfile.h
-> index b4d29a3..02e26fe 100644
-> --- a/lockfile.h
-> +++ b/lockfile.h
-> @@ -71,8 +71,6 @@ struct lock_file {
->  #define LOCK_NO_DEREF 1
->  #define LOCK_OUTSIDE_REPOSITORY 2
->  
-> -extern void unable_to_lock_message(const char *path, int, int err,
-> -				   struct strbuf *buf);
->  extern int hold_lock_file_for_update(struct lock_file *, const char *path,
->  				     int, struct strbuf *err);
->  extern int hold_lock_file_for_append(struct lock_file *, const char *path,
+It seems like we are really re-designing the error-handling chain here.
+Maybe it is worth taking a step back and thinking about our overall
+strategy.
+
+Why do we dislike errno? Because it is global state, and it is easy for
+it to get stomped by unrelated operations.  Another reason is that it
+carries no parameters. You see "ENOENT", but you do not have any context
+(e.g., which file).
+
+What's good about errno? It is machine-readable (i.e., callers can check
+for ENOENT, as opposed to text in a strbuf). It does not require any
+allocation. Besides making it slightly more robust, it removes any
+responsibility for resource cleanup from the caller.  It's globalness is
+also convenient; you do not need to add an extra parameter to each
+function to handle errors.
+
+So what are some alternatives?
+
+Passing back "-errno" instead of "-1" helps with the stomping issue (and
+without adding extra parameters). It also retains machine-readability
+(which I'll call just readability from now on).  But it doesn't help
+with context, or better messaging.
+
+Your solution adds a strbuf. That helps with context and stomping, but
+loses readability and adds allocation.
+
+If we changed the strbuf to a fixed-size buffer, that would help the
+allocation issue. Some messages might be truncated, but it seems
+unlikely in practice. It still loses readability, though.
+
+What about a struct that has an errno-like value _and_ a fixed-size
+buffer? I'm thinking something like:
+
+  struct error {
+	int code;
+	char msg[1024];
+  };
+
+  /* caller who wants to print the message; no need to free message */
+  struct error err;
+  if (copy_fd(from, to, &err))
+	return error("%s", err.msg);
+
+  /* caller who does not; they can pass NULL */
+  if (copy_fd(from, to, NULL))
+	return -1;
+
+  /* or they can use it to grab the errno value */
+  struct error err;
+  if (copy_fd(from, to, &err)) {
+	if (err.code == EPIPE)
+		exit(141);
+	return -1;
+  }
+
+  /* function which generates error */
+  void read_foo(const char *fn, struct error *err)
+  {
+	if (open(fn, O_RDONLY))
+		return mkerror(err, errno, "unable to open %s", fn);
+	... do other stuff ...
+	return 0;
+  }
+
+  /* helper function for generating errors */
+  int mkerror(struct error *err, int code, const char *fmt, ...)
+  {
+	va_list ap;
+	int len;
+
+	if (!err)
+		return;
+
+	err->code = code;
+	va_start(ap, fmt);
+	len = vsnprintf(err->msg, sizeof(err->msg), fmt, ap);
+	va_end(ap);
+
+	if (code)
+		snprintf(err->msg + len, sizeof(err->msg) - len,
+			 ": %s", strerror(code));
+
+	return -1;
+  }
+
+You can also take the machine-readable thing a step further, like:
+
+  struct error {
+	int code;
+	char param1[1024];
+	char param2[1024];
+	/* 2 parameters should be big enough for anyone, right? */
+  }
+
+and then generate the message on the fly when printing. This gives the
+callers more information. But it also means defining a constant for
+"code" for every error message, which is annoying. Libraries often do
+this, but I do not think we need to go that far here.
+
+-Peff
