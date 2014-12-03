@@ -1,88 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC][PATCH] send-email: add --[no-]xmailer option
-Date: Wed, 03 Dec 2014 08:56:45 -0800
-Message-ID: <xmqqk328k6ya.fsf@gitster.dls.corp.google.com>
-References: <20140324213814.GA1267@achilles.my.domain>
-	<20141202193243.GA2999@charon.olymp>
-	<20141203023419.GA10519@dcvr.yhbt.net>
+From: Petr Bena <benapetr@gmail.com>
+Subject: Re: git stash broken on MS Windows (automatically modify the files again)
+Date: Wed, 3 Dec 2014 18:03:44 +0100
+Message-ID: <CA+4EQ5e6464+MP7TqWMT8ceO6ZgZEE6xJPxJBfpAhoj4B-03Uw@mail.gmail.com>
+References: <CA+4EQ5d70JWiawt5zb9s6Vc3cDMApPmhdB2w+WLyfmWCcTQF4g@mail.gmail.com>
+	<CA+4EQ5cfC2N+e6g7wnxDZnnPj3BKTyuMj=TxX90fB7o+_EiOBQ@mail.gmail.com>
+	<CA+4EQ5fbDPFuzuz_OAX1Y=zCdL76j3ah0u0BVUW2pPqjaf4kBQ@mail.gmail.com>
+	<CAHb+SPAw+aeR4RsB6COhq4RMxuXJ64scY-Ez5tZPk3ziEAGm=Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Luis Henriques <henrix@camandro.org>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Dec 03 17:56:54 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Aneurin Price <aneurin.price@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 18:03:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwDET-00040j-Jd
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 17:56:53 +0100
+	id 1XwDLB-0007gc-R9
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 18:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342AbaLCQ4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 11:56:49 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56550 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751153AbaLCQ4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 11:56:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F101921480;
-	Wed,  3 Dec 2014 11:56:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bIM9ahiIGARpcMennoT6nRpUJt0=; b=wZwEoW
-	H6enBL94hx7guxDP7ypP2CGZMwaWuVpveP6tDk6Bz/1RZnsGduQO8LGmIAVZ2Oq7
-	wVzppZv0K1Gel9R0R8UWAsrzrW5LAaofmmznOOsh12bz0Hq+f5tqtK+AVv8RrPSt
-	iQumF7GC2pIkue3oDwDGxnqKXCM7M18vKZPNg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dnl+sTU8pQ1R1icekUWIkMY7ZcZ4RYrS
-	eQ0HTVxw8ipvsD6FmatpX9k2l1Z20BqhsaroVOoIQ3FXdtNkjG18VnSFYrzfY+gW
-	4E9jsYx41CTMgubQ5QFwvzDnzYttDUYV+nsye+NhtxYVr4kEOCplJPZaFkbH3ucK
-	XO2DEQl/ZhA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5BBC2147F;
-	Wed,  3 Dec 2014 11:56:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 67CBF2147A;
-	Wed,  3 Dec 2014 11:56:47 -0500 (EST)
-In-Reply-To: <20141203023419.GA10519@dcvr.yhbt.net> (Eric Wong's message of
-	"Wed, 3 Dec 2014 02:34:19 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5E46B082-7B0D-11E4-A100-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751153AbaLCRDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 12:03:46 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:41784 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991AbaLCRDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 12:03:45 -0500
+Received: by mail-ie0-f176.google.com with SMTP id tr6so14072437ieb.21
+        for <git@vger.kernel.org>; Wed, 03 Dec 2014 09:03:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=oCLVMomPOlAd674zOKWAaSma9xqVd59zwr4nR8adjaQ=;
+        b=FftRsrMVUkLvVh3ysEC/dfDNP3avvmhoUcabv6nJTy9EMu9Th/oTuP33VrVbndjaig
+         WAPFCYEGV8jE7eliCb3tFswcm5t6SBsbhEKofJX2viiPS8Maz3b8L5ix9lvysCJcoxMv
+         w+C97WMrEkUDTW2NSXQr7zu8X/VeDOT6jncSYDf81xhwscDbpcJuLKLwboR/qYOl5Lw1
+         K3BS/N1k57j3549Stn3ZzIy64qoKSyn+G+skR0Z3Esbc0tBMfsl/heCmHIE2jaPwByar
+         O1h7lnQ+SfjMPbpLRW7xgHxr1/qlXMcRIPi+qLQ2w1O3Yit4RU86agQZ0xhz8hrlK+91
+         Glrw==
+X-Received: by 10.107.128.87 with SMTP id b84mr5631303iod.42.1417626224538;
+ Wed, 03 Dec 2014 09:03:44 -0800 (PST)
+Received: by 10.107.151.141 with HTTP; Wed, 3 Dec 2014 09:03:44 -0800 (PST)
+In-Reply-To: <CAHb+SPAw+aeR4RsB6COhq4RMxuXJ64scY-Ez5tZPk3ziEAGm=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260662>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Yay
 
-> Luis Henriques <henrix@camandro.org> wrote:
->> On Mon, Mar 24, 2014 at 09:38:27PM +0000, Luis Henriques wrote:
->> > Add --[no-]xmailer that allows a user to disable adding the 'X-Mailer:'
->> > header to the email being sent.
->> >
->> 
->> Ping
->> 
->> It's been a while since I sent this patch.  Is there any interest in
->> having this switch in git-send-email?
->
-> I wasn't paying attention when the original was sent, but this
-> looks good to me.
->
-> Acked-by: Eric Wong <normalperson@yhbt.net>
->
->> I honestly don't like disclosing too much information about my system,
->> in this case which MUA I'm using and its version.
->
-> Right on.  I would even favor this being the default.
->
-> Auto-generated Message-Id headers also shows the use of git-send-email;
-> perhaps there can be a way to configure that, too.  However,
-> git-send-email respects manually-added Message-Id headers in the
-> original patch, so it's less of a problem, I suppose.
+Why doesn't windows git perform some kind of check here, and doesn't
+tell you a message like: this repository contains multiple files with
+same name, which I can't checkout on this OS Or something like that?
 
-I actually do not think this is a good idea from debuggability.
+On Wed, Dec 3, 2014 at 5:50 PM, Aneurin Price <aneurin.price@gmail.com> wrote:
+> On 3 December 2014 at 14:48, Petr Bena <benapetr@gmail.com> wrote:
+>> Only solution so far was to clone on linux, remove the folder which
+>> contains these files and push them, then I had to delete the whole
+>> repository on windows and clone it again.
+>>
+>> If I checkout any revision which contains these files repository get
+>> broken in a way that only solution is deleting it from disk and
+>> cloning again. Is this a bug?
+>>
+>
+> <snip>
+>
+>>> fatal: Will not add file alias 'BSS/export_home_oracle/scripts_IDAEU001/Audit/au
+>>> dit_off.sql' ('BSS/export_home_oracle/scripts_IDAEU001/audit/audit_off.sql' alre
+>>> ady exists in index)
+>>>
+>
+> On your Linux machine (and in the repository), do you actually have
+> both 'BSS/export_home_oracle/scripts_IDAEU001/Audit' and
+> 'BSS/export_home_oracle/scripts_IDAEU001/audit' directories?
