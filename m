@@ -1,132 +1,267 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Deprecation warnings under XCode
-Date: Tue, 2 Dec 2014 22:09:35 -0500
-Message-ID: <CAPig+cRj5bLrkperGiDHG78KghiGgkMAT=Qihia2FR8psEQxvQ@mail.gmail.com>
-References: <CAO2U3Qg4DVxSk2u1eJwGqYoxVZTbWRV69J9HTo1rnjFCxSyi2g@mail.gmail.com>
-	<547BFD42.3040104@web.de>
-	<xmqqoarnp7p2.fsf@gitster.dls.corp.google.com>
-	<CAPig+cRvGaFJQZZ8CDeMMB6u1NKtqUrfe1aWC0OUG3xF9Nu34g@mail.gmail.com>
-	<CAO2U3QiwJ=EZBModED6jR2YuF5NMVvrUkzj1iOGMLAqwKNbw3A@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/4] refs.c: add a transaction function to append a
+ reflog entry
+Date: Tue, 2 Dec 2014 19:15:19 -0800
+Message-ID: <20141203031519.GF6527@google.com>
+References: <1417506402-24257-1-git-send-email-sbeller@google.com>
+ <1417506402-24257-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git List <git@vger.kernel.org>,
-	David Aguilar <davvid@gmail.com>
-To: Michael Blume <blume.mike@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 04:09:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, ronniesahlberg@gmail.com,
+	mhagger@alum.mit.edu
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 04:15:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xw0Jx-0001TV-AD
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 04:09:41 +0100
+	id 1Xw0PX-0003xi-DF
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 04:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbaLCDJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 22:09:37 -0500
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:60262 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751285AbaLCDJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 22:09:36 -0500
-Received: by mail-yh0-f49.google.com with SMTP id f10so6630303yha.8
-        for <git@vger.kernel.org>; Tue, 02 Dec 2014 19:09:36 -0800 (PST)
+	id S1751026AbaLCDPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 22:15:24 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:42058 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884AbaLCDPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 22:15:23 -0500
+Received: by mail-ig0-f175.google.com with SMTP id h15so16197666igd.2
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 19:15:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=d5FZBdTkFmP9ND+5ci1dCTCBLluRDGudGp1k/aD4WpQ=;
-        b=ZlbvLlkXV31tg3A1G7h/oieXKpC6m3rptt9ZXUsEjHWLaKA6cOrhCi+KXvcr87zL9v
-         seJ5myXwiP+IMV4lVMXaqFSh1AB1S+y0IkN58bxZUSJjGMUUfIulLFGoPCdZa79qq5GH
-         xpmIVWmzbTcjOO/RmWK905E/IrCdzrkSQzIBNtaDWR0tQqXSaTjqSMVm3VA9BRge2cX2
-         zl+u/XDViLzV2msO6ZmnL1ERYWotzA1phzHDOM8xpObp+wOFF66tJsNjkvPuN8f0Bh0t
-         iMK78rMGa2gPPSzwOVzDowKVv3rqngOYuE9FoxcNJCwOW+5L7OnSC8jWYsu7ZxcBC+wF
-         bMRw==
-X-Received: by 10.236.53.69 with SMTP id f45mr3100910yhc.65.1417576175925;
- Tue, 02 Dec 2014 19:09:35 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Tue, 2 Dec 2014 19:09:35 -0800 (PST)
-In-Reply-To: <CAO2U3QiwJ=EZBModED6jR2YuF5NMVvrUkzj1iOGMLAqwKNbw3A@mail.gmail.com>
-X-Google-Sender-Auth: bFbZMX4AX3ml_824HB5DYdK9SpU
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SGLaJ/KBiSAujKnDNvR5Q/hAK93Ba5/K6Pc5HoQxjgc=;
+        b=CXmewQeLJEYxjQcx61eF28ILjxBfvL6alOlnZ7IJody4hEN5urV7o7gTiB+4ZkGaN3
+         YbJOUHcR9OxrLQfQFB7CqXbQe6GmcmXhlyZW5EP8ece0pvB9lcC5nz7YXlykIQqBK6iW
+         NynI6FtofVxPo7mWzXe0XcaLnGNvdWyZQDoSBHSRIlr6yhqXSZvxfDpQsFJv+ZhHvQqA
+         gl3AvD3/sfL+UsJwJErOZvq8H4Kf0ZAAOPJocyFD8OEdnfi8lQAIs1XCFCiMzR3eZnL6
+         Ok7c1qi/K1nDyMXvinOhUmOxOoPovfGv4tBfjJo/hQHnkFYFOVubk7t0HLe2IUCTOiAA
+         Nlxw==
+X-Received: by 10.107.168.18 with SMTP id r18mr2671599ioe.76.1417576522221;
+        Tue, 02 Dec 2014 19:15:22 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:fd7b:507b:3c7b:554e])
+        by mx.google.com with ESMTPSA id lr5sm13112169igb.16.2014.12.02.19.15.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 02 Dec 2014 19:15:21 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1417506402-24257-4-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260619>
 
-On Tue, Dec 2, 2014 at 8:12 PM, Michael Blume <blume.mike@gmail.com> wrote:
-> On Tue, Dec 2, 2014 at 4:37 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Mon, Dec 1, 2014 at 1:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> I am not a Mac person, but is this about APPLE_COMMON_CRYPTO support
->>> added in 4dcd7732 (Makefile: add support for Apple CommonCrypto
->>> facility, 2013-05-19) and be4c828b (imap-send: eliminate HMAC
->>> deprecation warnings on Mac OS X, 2013-05-19)? [...]
->>> In the Makefile we seem to have this:
->>>
->>>     # Define NO_APPLE_COMMON_CRYPTO if you are building on Darwin/Mac OS X
->>>     # and do not want to use Apple's CommonCrypto library.  This allows you
->>>     # to provide your own OpenSSL library, for example from MacPorts.
->>>
->>> which makes it sound like using APPLE_COMMON_CRYPTO is the default
->>> for Mac.  Perhaps those who do want to use CommonCrypto to avoid
->>> warnings should not define that macro?
->>
->> It's been a long time [1] since I looked at it, but I believe that
->> David's CommonCrypto patch series only replaced OpenSSL calls for
->> which Apple had provided CommonCrypto replacements. If my memory is
->> correct, there were still plenty of OpenSSL deprecations warnings
->> remaining after his patches (the warnings which started this thread)
->> even without defining NO_APPLE_COMMON_CRYPTO. Thus, David's patches
->> reduced the number of warnings but did not fully eliminate them.
->>
->> Checking again, it still seems to be the case that Apple neglects to
->> provide CommonCrypto replacements for these OpenSSL functions which
->> Apple itself deprecated.
->>
->> [1]: http://thread.gmane.org/gmane.comp.version-control.git/224833
+Stefan Beller wrote:
+
+> When performing a reflog transaction update, only write to the reflog iff
+> msg is non-NULL. This can then be combined with REFLOG_TRUNCATE to perform
+> an update that only truncates but does not write. This change only affects
+> whether or not a reflog entry should be generated and written. If msg == NULL
+> then no such entry will be written.
 >
-> If there's actually no way to address this, is there a simple way to
-> silence deprecation warnings only in this file? I only ask because
-> overall the git build seems to be extremely quiet, and it seems
-> valuable to preserve that, so that warnings we want to act on stick
-> out.
+> Orthogonal to this we have a boolean flag REFLOG_TRUNCATE which is used to
+> tell the transaction system to "truncate the reflog and thus discard all
+> previous users".
+>
+> At the current time the only place where we use msg == NULL is also the
+> place, where we use REFLOG_TRUNCATE. Even though these two settings are
+> currently only ever used together it still makes sense to have them through
+> two separate knobs.
+>
+> This allows future consumers of this API that may want to do things
+> differently. For example someone can do:
+>   msg="Reflog truncated by Bob because ..." + REFLOG_TRUNCATE
+> and have it truncate the log and have it start fresh with an initial message
+> that explains the log was truncated. This API allows that.
+>
+> During one transaction we allow to make multiple reflog updates to the
+> same ref. This means we only need to lock the reflog once, during the first
+> update that touches the reflog, and that all further updates can just write the
+> reflog entry since the reflog is already locked.
 
-An individual developer can add '-Wno-deprecated-declarations' to
-CFLAGS to suppress these warnings, however, that's pretty much a
-sledge hammer which would impact deprecations from all included
-headers, not just Apple's. For this reason, we probably wouldn't want
-to make this the default.
+I'm having trouble parsing all of the above.  Can you explain the
+motivation of the patch in a sentence or so?  Afterward that, if the
+API is not self-explanatory, there could be a short explanation of it
+(e.g., a list of functions and how they get used).
 
-The potentially lesser evil would be this small patch (minus Gmail
-whitespace damage) which disables the deprecation warnings only for
-Apple's headers:
+[...]
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3557,6 +3557,12 @@ struct transaction {
+>  	struct ref_update **ref_updates;
+>  	size_t alloc;
+>  	size_t nr;
+> +
+> +	/*
+> +	 * Sorted list of reflogs to be committed,
+> +	 * the util points to the lock_file
+> +	 */
+> +	struct string_list reflog_updates;
 
------ >8 -----
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 400e921..709e84f 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -211,6 +211,8 @@ extern char *gitbasename(char *);
- #endif
+Grammar nit: where there is a comma here, there should be the end of a
+sentence.
 
- #ifndef NO_OPENSSL
-+#define __AVAILABILITY_MACROS_USES_AVAILABILITY 0
-+#define MAC_OS_X_VERSION_MIN_REQUIRED MAC_OS_X_VERSION_10_6
- #include <openssl/ssl.h>
- #include <openssl/err.h>
- #endif
------ >8 -----
+[...]
+> @@ -3564,7 +3570,10 @@ struct transaction *transaction_begin(struct strbuf *err)
+>  {
+>  	assert(err);
+>  
+> -	return xcalloc(1, sizeof(struct transaction));
+> +	struct transaction *ret = xcalloc(1, sizeof(struct transaction));
+> +	string_list_init(&ret->reflog_updates, 1);
 
-It's still mildly heavy-handed, in that it could silence legitimate
-Apple deprecations, but it does give us a clean build with little
-fuss. An alternative would be to relegate these #defines to the Darwin
-section of the Makefile if placing them in git-compat-util.h seems too
-invasive.
+Can do
 
-Considering that Mac OS X is now at 10.10 and these deprecations
-commenced with Mac OS X 10.7 in July 2011 (3.5 years ago), and Apple
-still has not provided drop-in CommonCrypto equivalents, it seems
-unlikely that they will do so any time soon. Consequently, suppressing
-these otherwise unavoidable warnings may be the best we can do.
+	ret->reflog_updates.strdup_strings = 1;
 
-I'm willing to formalize and submit this as a proper patch if it's not
-considered too disgusting by the powers-that-be.
+instead, since calloc already zeroed the memory.
+
+[...]
+> +/* Returns a fd, -1 on error. */
+> +static int get_reflog_updates_fd(struct transaction *transaction,
+> +				 const char *refname,
+> +				 struct strbuf *err)
+> +{
+> +	char *path;
+> +	struct lock_file *lock;
+> +	struct string_list_item *item = string_list_insert(
+> +						&transaction->reflog_updates,
+> +						refname);
+> +	if (!item->util) {
+
+It can be clearer to handle the simple case first:
+
+	if (item->util) {
+		lock = item->util;
+		return lock->fd;
+	}
+
+	item->util = xcalloc(...);
+
+> +		item->util = xcalloc(1, sizeof(struct lock_file));
+> +		lock = item->util;
+> +		path = git_path("logs/locks/%s", refname);
+> +		if (safe_create_leading_directories(path)) {
+> +			strbuf_addf(err,
+> +				    "creating temporary directories %s failed.",
+> +				    path);
+
+Looking at other callers, looks like something like
+
+	if (scld(path)) {
+		strbuf_addf(err, "could not create leading directories of '%s': %s",
+			    path, strerror(errno));
+
+is common.  That way, the message includes details from errno, it's
+clear that one of the leading directories to $path, not $path itself,
+was what could not be created, and there is no trailing '.' at the end
+of the message.
+
+> +		if (hold_lock_file_for_update(lock, path, 0) < 0) {
+> +			strbuf_addf(err,
+> +				    "creating temporary file %s failed.",
+> +				    path);
+
+hold_lock_file_for_update() is weird and has its own special error
+message writing function:
+
+			unable_to_lock_message(path, errno, err);
+
+That lets it give advice to the user about why writing the .lock
+file failed and how to fix it.
+
+I have a series that simplifies by making it write directly to a
+strbuf passed as an argument, but that's orthogonal to this patch.
+
+[...]
+> +int transaction_update_reflog(struct transaction *transaction,
+> +			      const char *refname,
+> +			      const unsigned char *new_sha1,
+> +			      const unsigned char *old_sha1,
+> +			      const char *email,
+> +			      unsigned long timestamp, int tz,
+> +			      const char *msg, int flags,
+> +			      struct strbuf *err)
+
+This is an intimidating list of arguments.  Would it make sense to
+pack them into a struct, or to make the list less intimidating
+some other way (e.g. combining email + timestamp + tz into an
+ident string)?
+
+[...]
+> +	fd = get_reflog_updates_fd(transaction, refname, err);
+> +	if (!fd)
+> +		goto failure;
+
+if (fd < 0)
+
+[...]
+> +	if (flags & REFLOG_TRUNCATE) {
+> +		if (lseek(fd, 0, SEEK_SET) < 0 ||
+> +			ftruncate(fd, 0)) {
+> +			strbuf_addf(err, "Could not truncate reflog: %s. %s",
+> +				    refname, strerror(errno));
+
+Odd error message format (using '.' to separate the refname from
+strerror(errno) is unusual).  Errors normally are supposed to start
+with a lowercase letter, like
+
+	cannot truncate reflog '%s': %s
+
+> +			goto failure;
+> +		}
+> +	}
+
+How does this cause the reflog to be populated in the !(flags &
+REFLOG_TRUNCATE) case?
+
+Maybe I am misunderstanding the API.  If I use
+transaction_update_reflog() and have not updated the reflog
+previously, isn't this supposed to just append a new entry to the
+reflog?
+
+[...]
+> +failure:
+> +	strbuf_release(&buf);
+> +	/*
+> +	 * As we are using the lock file API, any stale files left behind will
+> +	 * be taken care of, no need to do anything here.
+> +	 */
+
+That's only true if the caller is going to exit instead of proceeding
+to other work.
+
+With current callers, I assume that's true.  So should this comment
+say something like "No need to roll back stale lock files because
+the caller will exit soon"?  Or should this roll back the lockfile
+anyway, in case the caller wants to try again?
+
+> +
+> +	transaction->state = TRANSACTION_CLOSED;
+> +	return 1;
+
+The normal convention is -1 on error.
+
+[...]
+> @@ -3796,6 +3912,13 @@ int transaction_commit(struct transaction *transaction,
+>  	}
+>  	for (i = 0; i < delnum; i++)
+>  		unlink_or_warn(git_path("logs/%s", delnames[i]));
+> +
+> +	/* Commit all reflog updates*/
+> +	for_each_string_list_item(item, &transaction->reflog_updates) {
+> +		struct lock_file *lock = item->util;
+> +		commit_lock_file_to(lock, git_path("logs/%s", item->string));
+
+Neat.
+
+This seems like a good starting point.  Other code paths still write
+to reflogs directly --- is there a plan to get them to use this code,
+too, in a followup patch (e.g., by making write_ref_sha1() or
+log_ref_write() use its own small transaction for the reflog update)?
+
+Thanks and hope that helps,
+Jonathan
