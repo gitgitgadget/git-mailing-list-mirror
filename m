@@ -1,87 +1,75 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: configure failed to detect no asciidoc
-Date: Wed, 3 Dec 2014 00:06:20 +0000
-Message-ID: <20141203000620.GF90134@vauxhall.crustytoothpaste.net>
-References: <547E4C28.7050407@lanl.gov>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] git add -i: allow list (un)selection by regexp
+Date: Tue, 2 Dec 2014 19:08:46 -0500
+Message-ID: <CAPig+cSAUkG7APutRcb3AG1hLCBQACThfDBi-p75CSk_UsSK7Q@mail.gmail.com>
+References: <DB3PR04MB25020F247555E521936E676EB7D0@DB3PR04MB250.eurprd04.prod.outlook.com>
+	<xmqqiohvqqqv.fsf@gitster.dls.corp.google.com>
+	<DB3PR04MB2509E51F1DE708549483845EB7A0@DB3PR04MB250.eurprd04.prod.outlook.com>
+	<xmqq8uiqm081.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="twz1s1Hj1O0rHoT0"
-Cc: git@vger.kernel.org
-To: Mike Berry <mrberry@lanl.gov>
-X-From: git-owner@vger.kernel.org Wed Dec 03 01:06:31 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Aarni Koskela <aarni.koskela@andersinnovations.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"akx@iki.fi" <akx@iki.fi>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 01:08:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvxSe-0004Yu-RD
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 01:06:29 +0100
+	id 1XvxUy-0005Z6-77
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 01:08:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933428AbaLCAGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 19:06:25 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:54935 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932722AbaLCAGY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 19:06:24 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 35E002808F;
-	Wed,  3 Dec 2014 00:06:24 +0000 (UTC)
-Mail-Followup-To: Mike Berry <mrberry@lanl.gov>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <547E4C28.7050407@lanl.gov>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.17-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S933509AbaLCAIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 19:08:48 -0500
+Received: from mail-yh0-f52.google.com ([209.85.213.52]:47009 "EHLO
+	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933489AbaLCAIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2014 19:08:47 -0500
+Received: by mail-yh0-f52.google.com with SMTP id z6so6513078yhz.39
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 16:08:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=FcnS4rJPG0RSToXnu4ZYJjRcm/xMNR9gSMZsHWmpMdg=;
+        b=MVUHMBm61gxUgx/HjToiyw1RbJdo7PNQ3PkEEyVFC138eKZyeV/KyQ2C27CrLgPGYK
+         saIxxAdDk1+tdDk6rNtNuCaH0n4Aei/O8m0zinZNn/SSsBMxU10Zo0ul0T/0Pzk6WJ2H
+         fwVtz07fy2pK8PhfGaWoLOZlIF/Q5qgh6ozGuKm+9UHDkpZGwlOkwFnUickd0JIbeFWS
+         85se+/BrgYuI6VyQWW/mkp37G2XoVZnGFiSAvvLTYZuyXWkSggiFDPL3mB4L/fu9ikrd
+         WI+paCj3F8Oa7c3TAGIOlWXqRsLbdD+YUVqGjLIK8xHJyuacrywX20M3DlGzilMYuIoq
+         J8Zg==
+X-Received: by 10.170.134.72 with SMTP id a69mr2950269ykc.103.1417565326716;
+ Tue, 02 Dec 2014 16:08:46 -0800 (PST)
+Received: by 10.170.68.68 with HTTP; Tue, 2 Dec 2014 16:08:46 -0800 (PST)
+In-Reply-To: <xmqq8uiqm081.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: wW_4_2QHr0v5qMMZqDAvXe_DFzg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260606>
 
+On Tue, Dec 2, 2014 at 12:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Aarni Koskela <aarni.koskela@andersinnovations.com> writes:
+>
+>> From 9096652a71666920ae8d59dd4317d536ba974d5b Mon Sep 17 00:00:00 2001
+>> From: Aarni Koskela <akx@iki.fi>
+>> Date: Tue, 2 Dec 2014 13:56:15 +0200
+>> Subject: [PATCH] git-add--interactive: allow list (un)selection by regular
+>>  expression
+>
+> Remove the three lines from the top, move the content on Subject: to
+> the subject of the e-mail.
+>
+> Other than that, everything I see in this message is very well
+> done.
+>
+> Thanks, will queue.
 
---twz1s1Hj1O0rHoT0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This change deserve a documentation update
+(Documentation/git-add.txt), does it not?
 
-On Tue, Dec 02, 2014 at 04:32:56PM -0700, Mike Berry wrote:
-> The documentation is still causing me trouble as my firewall doesn't like
-> the html in Documentation/docbook.xsl, but that's probably a firewall iss=
-ue.
-> Is there documentation method, not requiring active web access?
-
-If you have XML catalogs configured properly on your system, xsltproc
-will use them by default to avoid remote lookups.  On Debian, the
-stylesheets and relevant catalog entries will be installed if you have
-the docbook-xsl package installed.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---twz1s1Hj1O0rHoT0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIbBAEBCgAGBQJUflP8AAoJEL9TXYEfUvaLXVMP9iA3yoe61qsdwjKwMl6WOZmF
-zN7kF6kh0zp27frgumX03HsUIW/iJa5/X9DIZZejmMs9mzKnnTZKXo2GOMKAJiWV
-Rub7yYu0dIWne11FDr6r6n27HiDZ22nbT7ulbMCgtdrwdd3uk/V/kt35z1d94RoS
-myAY0eWoskc6B7nIqjI0O1H+XgOo2cCN5vUWMEAD0AKgG7/QusrBms5zoG96Rj5q
-YKKR4rr3Bo0mEYqsnLu9zXqSKLshlnp0OhJC+M5x2edqChanM3MHZ6fUfvHJGQd4
-3Qa5Uscpz6EUcdyqCAA4TBEVQG3bKZCeDvTJP738u1znDSiL00inTvracqe1yBFI
-W9z17xQrgUpiOw9zGCf0XtXh/hnVzsU/WYTu5GKBHwHTBeD0o+R2WdyI8DwhEHlz
-HfRJ+cVnSJ6uZRh+AZdYG5TUA6qQum1leG8u9UFD/0yQgPT4Cr+czyWy/nkw1BQ5
-7WNLX5Lx4HGUnbQhLZfo/8vVRkvqt2nWA3vGR+TEjZ27WWH9xYJXIjSsx+MYr9u1
-W9V0DzVQubAyEo6GjNe1lU9gpxUmwD3fZ+Yemt38hTepSaJyTIeTshbazADnOtFn
-hrAPHZEelEmvcVI9b0h7zh1dzFPbKmLOcYZMVkl/E2rL2DC2rdvF8ks4L+DUPdYQ
-ivisDWnJ0GvDmIZlDRs=
-=Ai8a
------END PGP SIGNATURE-----
-
---twz1s1Hj1O0rHoT0--
+Tests too, perhaps (assuming other git-add--interactive selections
+selection modes are already tested)?
