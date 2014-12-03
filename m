@@ -1,8 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 09/14] config: use message from lockfile API when locking
- config file fails
-Date: Tue, 2 Dec 2014 21:21:24 -0800
-Message-ID: <20141203052124.GS6527@google.com>
+Subject: [PATCH 10/14] rerere: error out on autoupdate failure
+Date: Tue, 2 Dec 2014 21:22:27 -0800
+Message-ID: <20141203052227.GT6527@google.com>
 References: <1416262453-30349-1-git-send-email-sbeller@google.com>
  <20141117233525.GC4336@google.com>
  <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
@@ -15,41 +14,41 @@ Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jeff King <peff@peff.net>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 06:21:33 2014
+X-From: git-owner@vger.kernel.org Wed Dec 03 06:22:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xw2NY-00087b-8V
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 06:21:32 +0100
+	id 1Xw2OY-00005b-Ve
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 06:22:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbaLCFV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 00:21:28 -0500
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:58397 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751160AbaLCFV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 00:21:28 -0500
-Received: by mail-ig0-f181.google.com with SMTP id l13so13020799iga.8
-        for <git@vger.kernel.org>; Tue, 02 Dec 2014 21:21:27 -0800 (PST)
+	id S1751396AbaLCFWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 00:22:31 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:55888 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750886AbaLCFWa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 00:22:30 -0500
+Received: by mail-ie0-f172.google.com with SMTP id tr6so13084449ieb.31
+        for <git@vger.kernel.org>; Tue, 02 Dec 2014 21:22:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6SkrQkN47kSY94Y0T3n4I6PZ5FXJ11IXOlh/q+CtHwA=;
-        b=pMut6RZ6tdhY/iRa1300pG09c4nQXfa6GqBns09EwMby96vT+0tmaYfpL5/9rHlxuh
-         hMscoWsqkThWbeCqmE6LpHalt/QGffIo+n5982DVFXZfcL9bt2oF27DGB6Id0GcIX7s8
-         G0fc2tdikPdmv/q2J1iE+aK5NaYdQ4wqRah+pVsgp8A9WhZUvn4v8W/2AN5DlcwLQx5w
-         jOO97+AVC2tx8UxS69SvMRQ+sEw2PnjbJGxJ+039OnoX1Iq5xoAmVOnxqBb9GmmDWiRi
-         eFw2ihgpdqtHIAf7WuVXKseN13WRTQG/kTpdZHJ3BjwAYF7Ur1I+L91Kyjm0ODkEjUob
-         HOqg==
-X-Received: by 10.107.157.212 with SMTP id g203mr2947425ioe.5.1417584087569;
-        Tue, 02 Dec 2014 21:21:27 -0800 (PST)
+        bh=ZsU/8vu/cxfpM2AHmWZqUDarhvfJqEe1e9+/nJAEJdo=;
+        b=CYK3/lx81Pd3/8sXcscNC2SW9Y7v/gGr2XGf1ndoQ/rCohcWqsWbmMCnrrQhp6NcOC
+         /sfw4zshbyanfgGxnKA1h2AciUrF8S3SauQ8JjlmzZmOpP3U9fVeifi5ErKbjnNVqEzh
+         SvNiILx6APnGFnWp1mLzWkZDB4aToCLsj62h194SWrNUfwP8z02CULm6HflhVIFPz7mj
+         9XvqMmFxOPX41od/yrY6sMLbAmzxwQnaUVVZgHZ9CbReHdynqa9GFSdLuXFRZzpzelpQ
+         S7/yt6kzea9Kiob25uf52icSAyhNYdt0QtQ4z+hK/iRvKqoFZbutdg1GQXsRFMRYgDTX
+         XNbQ==
+X-Received: by 10.50.3.8 with SMTP id 8mr55976711igy.45.1417584149873;
+        Tue, 02 Dec 2014 21:22:29 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:fd7b:507b:3c7b:554e])
-        by mx.google.com with ESMTPSA id o2sm13016123igv.12.2014.12.02.21.21.26
+        by mx.google.com with ESMTPSA id ro6sm13021237igb.3.2014.12.02.21.22.28
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 02 Dec 2014 21:21:26 -0800 (PST)
+        Tue, 02 Dec 2014 21:22:29 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20141203050217.GJ6527@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -57,60 +56,59 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260634>
 
-The message from the lockfile API includes advice about how to remove
-a stale lock file after a previous git process crashed.
+We have been silently tolerating errors by returning early with an
+error that the caller ignores since rerere.autoupdate was introduced
+in v1.6.0-rc0~120^2 (2008-06-22).  So on error (for example if the
+index is already locked), rerere can return success silently without
+updating the index or with only some items in the index updated.
 
-Pass the LOCK_OUTSIDE_REPOSITORY flag to avoid confusing error
-messages that imply the lockfile is under .git.  These functions (and
-'git config --file') are useful for arbitrary files in git config
-format, including both files outside .git such as /etc/gitconfig and
-$XDG_CONFIG_HOME/git/config and files under .git such as
-$GIT_DIR/config.
+Better to treat such failures as a fatal error so the operator can
+figure out what is wrong and fix it.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- config.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+Also sent separately at
+http://thread.gmane.org/gmane.comp.version-control.git/260623
 
-diff --git a/config.c b/config.c
-index 15a2983..dacde5f 100644
---- a/config.c
-+++ b/config.c
-@@ -1940,9 +1940,15 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 	 * contents of .git/config will be written into it.
- 	 */
- 	lock = xcalloc(1, sizeof(struct lock_file));
--	fd = hold_lock_file_for_update(lock, config_filename, 0);
-+	fd = hold_lock_file_for_update(lock, config_filename,
-+				       LOCK_OUTSIDE_REPOSITORY);
- 	if (fd < 0) {
--		error("could not lock config file %s: %s", config_filename, strerror(errno));
-+		struct strbuf err = STRBUF_INIT;
-+
-+		unable_to_lock_message(config_filename,
-+				       LOCK_OUTSIDE_REPOSITORY, errno, &err);
-+		error("%s", err.buf);
-+		strbuf_release(&err);
- 		free(store.key);
- 		ret = CONFIG_NO_LOCK;
- 		goto out_free;
-@@ -2211,9 +2217,15 @@ int git_config_rename_section_in_file(const char *config_filename,
- 		config_filename = filename_buf = git_pathdup("config");
+ rerere.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
+
+diff --git a/rerere.c b/rerere.c
+index 1b0555f..195f663 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -477,27 +477,23 @@ out:
  
- 	lock = xcalloc(1, sizeof(struct lock_file));
--	out_fd = hold_lock_file_for_update(lock, config_filename, 0);
-+	out_fd = hold_lock_file_for_update(lock, config_filename,
-+					   LOCK_OUTSIDE_REPOSITORY);
- 	if (out_fd < 0) {
--		ret = error("could not lock config file %s", config_filename);
-+		struct strbuf err = STRBUF_INIT;
-+
-+		unable_to_lock_message(config_filename,
-+				       LOCK_OUTSIDE_REPOSITORY, errno, &err);
-+		ret = error("%s", err.buf);
-+		strbuf_release(&err);
- 		goto out;
+ static struct lock_file index_lock;
+ 
+-static int update_paths(struct string_list *update)
++static void update_paths(struct string_list *update)
+ {
+ 	int i;
+-	int fd = hold_locked_index(&index_lock, 0);
+-	int status = 0;
+ 
+-	if (fd < 0)
+-		return -1;
++	hold_locked_index(&index_lock, 1);
+ 
+ 	for (i = 0; i < update->nr; i++) {
+ 		struct string_list_item *item = &update->items[i];
+ 		if (add_file_to_cache(item->string, ADD_CACHE_IGNORE_ERRORS))
+-			status = -1;
++			die("staging updated %s failed", item->string);
  	}
  
+-	if (!status && active_cache_changed) {
++	if (active_cache_changed) {
+ 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+ 			die("Unable to write new index file");
+-	} else if (fd >= 0)
++	} else
+ 		rollback_lock_file(&index_lock);
+-	return status;
+ }
+ 
+ static int do_plain_rerere(struct string_list *rr, int fd)
