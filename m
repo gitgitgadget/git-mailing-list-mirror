@@ -1,168 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/1] http: Add Accept-Language header if possible
-Date: Wed, 03 Dec 2014 10:22:20 -0800
-Message-ID: <xmqqfvcwiof7.fsf@gitster.dls.corp.google.com>
-References: <1405792730-13539-1-git-send-email-eungjun.yi@navercorp.com>
-	<1417522356-24212-1-git-send-email-eungjun.yi@navercorp.com>
-	<1417522356-24212-2-git-send-email-eungjun.yi@navercorp.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] rerere: error out on autoupdate failure
+Date: Wed, 3 Dec 2014 10:52:16 -0800
+Message-ID: <20141203185216.GA31609@google.com>
+References: <20141203042049.GI6527@google.com>
+ <xmqqy4qoiqmu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Yi EungJun <eungjun.yi@navercorp.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: Yi EungJun <semtlenori@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 19:22:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 19:52:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwEZL-0006uZ-Iz
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 19:22:31 +0100
+	id 1XwF2O-0005i0-84
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 19:52:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751402AbaLCSW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 13:22:27 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54284 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750891AbaLCSW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 13:22:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3746922CE0;
-	Wed,  3 Dec 2014 13:22:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hDdAtQbYmP1K4b5vQ1kGoPHxC+g=; b=GoThiD
-	U1OTnrll1c5fnF5U7IoAsRCO1NEbLEVtVMuZuXnGVF9EuIa4eBgtnlvkvMXHJg/X
-	ohLrFDkB3dUN4icawquIfNaB12qn7mwrM/8wJ2Y5EN8b20JVvXQOLd/vkf0PIHdy
-	qx4XF/GLtKSo7fdfv2dU7EBfVo/yhNFAT/+rM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LtLDtojh8SLCaC9Ir8Q0wx7cc0SK522T
-	qwc7eDZ+3NWw49Zuhi9rGDUoxsv+uoXvYe4bPGToNZ1uHIWxFuU+a6YNiITHQriW
-	JBvfwZJ4yVGwUcemqiTthtHTn5U/W14ar4eVlmQHhD6wv+NHP13a4AhkQ3kojMKv
-	IaNU3/+8pXk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E04022CDF;
-	Wed,  3 Dec 2014 13:22:26 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9FB4422CD9;
-	Wed,  3 Dec 2014 13:22:21 -0500 (EST)
-In-Reply-To: <1417522356-24212-2-git-send-email-eungjun.yi@navercorp.com> (Yi
-	EungJun's message of "Tue, 2 Dec 2014 21:12:36 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 528CA75E-7B19-11E4-8A27-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751088AbaLCSw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 13:52:27 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:61929 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbaLCSw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 13:52:27 -0500
+Received: by mail-ie0-f178.google.com with SMTP id tp5so14350445ieb.37
+        for <git@vger.kernel.org>; Wed, 03 Dec 2014 10:52:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=N9TSjMI7nS5NyqNK9G8vM46KcLM3Y/LK6VIhjrZcyJ4=;
+        b=f5prWuP0uZT+N/IW2HyCzlYFZnKH4lvfcgAzIfHAAyzWEFvP6bPjKIcAlREzLJpMqg
+         FhuYUxU+VK44yOdRi2XCmFox3O9razomwGJatdNl07Ru9BS6GSFEHZly7y5Wr+07EHlQ
+         8nX2AhmJlmgPRBJKm5S+XP0JL26yY9VfNLK0Qmzt1hSFzxv1jTbu9/QTy0b7f8lf+T41
+         0zXTCZ24ZyJaBOWFg6pc7CMayutcko1r+TE9nr0AGCGVDOLAOAf0EgYVWBB9lcE8HNmJ
+         PLJJugrowfNI9CVCvKNAec3FWnkGTnkKTu9Hg1BbI+r4o92revMEsLxxHAnfSIkznSiS
+         APRQ==
+X-Received: by 10.107.11.88 with SMTP id v85mr6074616ioi.46.1417632746586;
+        Wed, 03 Dec 2014 10:52:26 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:fd7b:507b:3c7b:554e])
+        by mx.google.com with ESMTPSA id s10sm13989092igr.2.2014.12.03.10.52.23
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 03 Dec 2014 10:52:24 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqy4qoiqmu.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260677>
 
-Yi EungJun <semtlenori@gmail.com> writes:
+We have been tolerating errors by returning early with an error that
+the caller ignores since rerere.autoupdate was introduced in
+v1.6.0-rc0~120^2 (2008-06-22).  So on error (for example if the index
+is already locked), rerere can return success without updating the
+index or with only some items in the index updated.
 
-> From: Yi EungJun <eungjun.yi@navercorp.com>
->
-> Add an Accept-Language header which indicates the user's preferred
-> languages defined by $LANGUAGE, $LC_ALL, $LC_MESSAGES and $LANG.
->
-> Examples:
->   LANGUAGE= -> ""
->   LANGUAGE=ko:en -> "Accept-Language: ko, en;q=0.9, *;q=0.1"
->   LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *;q=0.1"
->   LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *;q=0.1"
->
-> This gives git servers a chance to display remote error messages in
-> the user's preferred language.
->
-> Limit the number of languages to 1,000 because q-value must not be
-> smaller than 0.001, and limit the length of Accept-Language header to
-> 4,000 bytes for some HTTP servers which cannot accept such long header.
->
-> Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
-> ---
->  http.c                     | 154 +++++++++++++++++++++++++++++++++++++++++++++
->  remote-curl.c              |   2 +
->  t/t5550-http-fetch-dumb.sh |  31 +++++++++
->  3 files changed, 187 insertions(+)
->
-> diff --git a/http.c b/http.c
-> index 040f362..69624af 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -68,6 +68,8 @@ static struct curl_slist *no_pragma_header;
->  
->  static struct active_request_slot *active_queue_head;
->  
-> +static struct strbuf *cached_accept_language;
-> +
->  size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
->  {
->  	size_t size = eltsize * nmemb;
-> @@ -515,6 +517,9 @@ void http_cleanup(void)
->  		cert_auth.password = NULL;
->  	}
->  	ssl_cert_password_required = 0;
-> +
-> +	if (cached_accept_language)
-> +		strbuf_release(cached_accept_language);
+Better to treat such failures as a fatal error so the operator can
+figure out what is wrong and fix it.
 
-Is this correct?
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-You still keep cached_accept_language pointer itself, so the next
-call to get_accept_language() would say "Ah, cached_accept_language
-is there, so its contents (which is empty because we released it
-here) must be valid and to be reused".  Perhaps you want to free it,
-too, i.e.
+>>  	for (i = 0; i < update->nr; i++) {
+>>  		struct string_list_item *item = &update->items[i];
+>>  		if (add_file_to_cache(item->string, ADD_CACHE_IGNORE_ERRORS))
+>> -			status = -1;
+>> +			die("staging updated %s failed", item->string);
+>
+> Instead of crafting a new message, why not just stop passing IGNORE_ERRORS
+> and have add_file_to_cache() report the failure?  That is:
+> 
+> 	if (add_file_to_cache(item->string, 0))
+>         	return -1;
 
-	if (cached_accept_language) {
-		strbuf_release(cached_accept_language);
-                free(cached_accept_language);
-                cached_accept_language = NULL;
+Good catch.  It turns out that add_file_to_index does not even pay
+attention to the IGNORE_ERRORS flag.  On error it unconditionally
+prints a message using 'return error()'.
+
+builtin/add.c uses the IGNORE_ERRORS to flag to decide whether to
+avoid die()-ing on error (and it still lets add_file_to_index print the
+error to stderr in that case, so --ignore-errors is a bit of a misnomer).
+
+	if (add_file_to_cache(dir->entries[i]->name, flags)) {
+		if (!ignore_add_errors)
+			die(_("adding files failed"));
+		exit_status = 1;
 	}
 
-or something?
+The message always says which file it failed to index, so I agree that
+it makes sense to simply exit(128) here.
 
-> +static struct strbuf *get_accept_language(void)
-> +{
-> + ...
-> +	if (cached_accept_language)
-> +		return cached_accept_language;
-> +
-> +	cached_accept_language = xmalloc(sizeof(struct strbuf));
-> + ...
-> +	for (max_q = 1, decimal_places = 0;
-> +		max_q < num_langs;
-> +		decimal_places++, max_q *= 10);
+ rerere.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-Have that "empty statement" on its own separate line, i.e.
-
-	for (a, counter = 0;
-             b;
-             c, counter++)
-             ; /* just counting */
-
-Alternatively, you can make it more obvious that the purpose of loop
-is to count, i.e.
-
-	for (a, counter = 0;
-             b;
-             c)
-             counter++;
-
-> +test_expect_success 'git client does not send Accept-Language' '
-> +	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE= git clone "$HTTPD_URL/accept/language" 2>stderr &&
-> +	! grep "^Accept-Language:" stderr
-> +'
-
-Hmph, this test smells a bit brittle.  What is the reason you expect
-"git clone" to fail?  Is it because there is no repository at the
-named URL at "$HTTPD_URL/accept/language"?  Is that the only plausible
-reason for a failure?
-
-It might be better to use the URL to a repository that is expected
-to be served by the server started in this test and expect success.
-If it bothers you that "clone" creates a new copy that is otherwise
-unused by this test, you can use something like "ls-remote" instead,
-I would think.
+diff --git a/rerere.c b/rerere.c
+index 1b0555f..dbb2545 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -477,27 +477,26 @@ out:
+ 
+ static struct lock_file index_lock;
+ 
+-static int update_paths(struct string_list *update)
++static void update_paths(struct string_list *update)
+ {
+ 	int i;
+-	int fd = hold_locked_index(&index_lock, 0);
+-	int status = 0;
+ 
+-	if (fd < 0)
+-		return -1;
++	hold_locked_index(&index_lock, 1);
+ 
+ 	for (i = 0; i < update->nr; i++) {
+-		struct string_list_item *item = &update->items[i];
+-		if (add_file_to_cache(item->string, ADD_CACHE_IGNORE_ERRORS))
+-			status = -1;
++		if (add_file_to_cache(update->items[i].string, 0))
++			/*
++			 * add_file_to_cache() printed an error
++			 * with the pathname, so we don't have to.
++			 */
++			exit(128);
+ 	}
+ 
+-	if (!status && active_cache_changed) {
++	if (active_cache_changed) {
+ 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+ 			die("Unable to write new index file");
+-	} else if (fd >= 0)
++	} else
+ 		rollback_lock_file(&index_lock);
+-	return status;
+ }
+ 
+ static int do_plain_rerere(struct string_list *rr, int fd)
