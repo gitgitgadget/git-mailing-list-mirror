@@ -1,78 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/lib-gpg: adjust permissions for gnupg 2.1
-Date: Tue, 02 Dec 2014 15:57:50 -0800
-Message-ID: <xmqqiohtli4h.fsf@gitster.dls.corp.google.com>
-References: <547DB6C3.5010704@drmicha.warpmail.net>
-	<9c28f16c677bbc774e5b8dfc79b6ffe2c55d1720.1417527514.git.git@drmicha.warpmail.net>
-	<20141202210753.GD23461@peff.net>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Disabling credential helper?
+Date: Wed, 3 Dec 2014 00:03:10 +0000
+Message-ID: <20141203000310.GE90134@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 03 00:58:02 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="J4XPiPrVK1ev6Sgr"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 01:03:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XvxKS-00016I-MI
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 00:58:01 +0100
+	id 1XvxPb-0003Ee-AP
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 01:03:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933562AbaLBX54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2014 18:57:56 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63041 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933319AbaLBX5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2014 18:57:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 943ED23CCE;
-	Tue,  2 Dec 2014 18:57:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OxTdOt1umw0KF6gWf1jwSF9t9uA=; b=P5SZY+
-	IHsOiGq+qDU8huVhcsUoXbh129V6+ieesBBXn59bUU6U+6ukywk7T9DmawvhEEyI
-	7vRIHCwpOrtjx8FZZB+5AdNFpL7fKASdaXN7DZdR0eiWUL/z6WD8IsvN0pFyWsna
-	IONLU7o4dJMycoO1clm6U2DpdQXXSjkDlpJHA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hWFgYlvcoF8wlR6IOLpfQjLytHsgtYdG
-	w4jILhhGuqFtPs+WUwGkZskewThCMkHSo2YonwaM+LXsQvhDEN+0tbkF2fJffQ0W
-	i2Y3FxqWQyJ5JP4o1IPzqq996M+6vYnVsrv2gZm1wv/nhmqzc5H4QYOr/FtK9A8/
-	OY928yoLSQs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AB2B23CCD;
-	Tue,  2 Dec 2014 18:57:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S933487AbaLCADP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2014 19:03:15 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:54934 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933271AbaLCADO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2014 19:03:14 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B41E23CCC;
-	Tue,  2 Dec 2014 18:57:51 -0500 (EST)
-In-Reply-To: <20141202210753.GD23461@peff.net> (Jeff King's message of "Tue, 2
-	Dec 2014 16:07:53 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 06BF1A4A-7A7F-11E4-980E-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0DFFB2808F
+	for <git@vger.kernel.org>; Wed,  3 Dec 2014 00:03:14 +0000 (UTC)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.17-1-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260603>
 
-Jeff King <peff@peff.net> writes:
 
-> Taking a step back, though, I am not sure I understand the reasoning
-> behind the original e7f224f. The rationale in the commit message is that
-> we want to make sure that the files are writable. But why would they not
-> be? They are created by "cp -R",...
+--J4XPiPrVK1ev6Sgr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Wait.  After doing this,
+At $DAYJOB, we have a Git server[0] that supports the smart HTTP
+protocol.  That server can return a 401 if the repository is private or
+doesn't exist.
 
-    $ mkdir -p src/a && >src/b 2>src/a/c && chmod a-w src/b src/a/c
-    $ cp -R src dst
-    $ ls -lR dst
+We have several scripts, some of which run interactively, some not, that
+we simply want to fail if git fetch gets a non-2xx code.  Unfortunately,
+git is very insistent about trying to use the default credential helper
+to prompt for a username and password in this case, even opening
+/dev/tty.
 
-dst/b and dst/a/c are 0440 (with umask 0027, which makes src/b and
-src/a/c also 0440, which is copied with "cp -R").
+We've used GIT_ASKPASS=3D/bin/echo, which seems to solve the problem,
+although it's ugly and I'm concerned it might break in the future.  Is
+there a better way to do this?  I didn't see one in the documentation or
+code when I looked.
 
-I was primarily worried about t/lib-gpg/* being read-only from a
-src-tarball extract when we had a discussion that led to e7f224f7
-(t/lib-gpg: make gpghome files writable, 2014-10-24).
+[0] An Atlassian Stash instance.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--J4XPiPrVK1ev6Sgr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIbBAEBCgAGBQJUflM+AAoJEL9TXYEfUvaLy88P+NVP1173J7oDo1CiwJVREko1
+r9Ugt8qi+9OjWgetZtUVaYqgSIeRYjje9VHrZ75HvpvIPM542cnQLXhLN6XFlA2o
+lk1p7UMKuf19L43qxnEMyv9QkQqd3BGMAY93MmXk010obtjlPfLQ9sUFiVBJKyeo
+6rGUCzT9geHHig+YyLGE5lc2t36QMGxV3/BhdNbFMwrHU5CXIorWaseWQ+Qfb/QD
+qhzB7FCpKiN5sfVXqkOSQGmJ8vu3BLdKIZXD4tTj+YiSmVRawHaWBysi8lxucoXl
+/otWHc2gfQlgKPWMhEhBbjq3MlouQdvinjU2ErSxvt7O+GrOLaO7aXUTL8KSnHpl
+3m+dDqoBU/jYHRTD9bPbjqGrl/OHWIteFBoWp0C7z3pJ4oVHwL7a738e7nk/qRc5
+j8xDiMa3+kkov2snIFTEaRBafI4vuwtw3krV4h/bD+krgStamua6+XuOuTOUtTCJ
+ndiBF2lcqibP1YC/kqCDcfIr22Fg8Gyqnpg6Im+5apWSzJoojqx49E8OJ8v/zNjo
+NaqcnSpNbuBLZyKKBwIFo0e0eiUZUcgN5zdbnF7tWrpvA9gkeLqkLVlPoZSRV690
+lFjM8NoVnItCHm1YMuEzWNLu+NZYl2DH0yYwAhtMKxbnkaNH1qpNaFeQ4b8LMjTw
+Ejq4bjclKerWsyS5XaE=
+=pTCj
+-----END PGP SIGNATURE-----
+
+--J4XPiPrVK1ev6Sgr--
