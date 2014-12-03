@@ -1,176 +1,118 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: Our cumbersome mailing list workflow
-Date: Wed, 03 Dec 2014 18:28:08 +0100
-Message-ID: <547F4828.3000801@web.de>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com>	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>	<546F4B5B.2060508@alum.mit.edu>	<xmqq61e81ljq.fsf@gitster.dls.corp.google.com>	<5473CD28.5020405@alum.mit.edu>	<54776367.1010104@web.de>	<20141127225334.GA29203@dcvr.yhbt.net>	<547895F1.1010307@alum.mit.edu>	<xmqqh9xgrssc.fsf@gitster.dls.corp.google.com> <CAGZ79kagELCSkZ0CA1A7gc7CifjToYmb4kiBYQCse3Q7Hwca5Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] rerere: error out on autoupdate failure
+Date: Wed, 03 Dec 2014 09:34:33 -0800
+Message-ID: <xmqqy4qoiqmu.fsf@gitster.dls.corp.google.com>
+References: <20141203042049.GI6527@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 18:28:27 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 18:34:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwDj0-00040i-Hd
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 18:28:27 +0100
+	id 1XwDp4-0007BD-FW
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 18:34:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbaLCR2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 12:28:22 -0500
-Received: from mout.web.de ([212.227.17.11]:59428 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751061AbaLCR2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 12:28:21 -0500
-Received: from macce.local ([78.72.72.190]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MX0Q4-1XQJGE07gi-00VuuC; Wed, 03 Dec 2014 18:28:14
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <CAGZ79kagELCSkZ0CA1A7gc7CifjToYmb4kiBYQCse3Q7Hwca5Q@mail.gmail.com>
-X-Provags-ID: V03:K0:4e8qdqdFOu/dkxQsGTKLNtxLEn2LXUykshIODpWfhDWsqUZVHao
- us/kDyXBml7iNwdJcPm+CsmVih3M6zR+Le4J/LyDgsYYncv5c7Dv6X2Nrg2qdaLaEkVvTQz
- N1lRR7UT8XSAnLYBynrbsIFrvNLR8iwV+pei51YpKw9RdbgheS27VB4SkfXgr/SBuofoD/b
- eovLWFl7tulHuDfQzJxrQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751360AbaLCRei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 12:34:38 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50845 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751173AbaLCReg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 12:34:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0852721EBE;
+	Wed,  3 Dec 2014 12:34:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=piB2ZHSz89WaIgD8s9QQz+OUKyg=; b=SDwYD8
+	3Rrb3OxSsozkeEYvo2Kn1abOvXmFbrPy0OP5fAKtcpJBZ086V5r26RgUsgCSpt8l
+	pM1r5IfM2G6MwrXLEq1gcQaJ5Nlqwb7kYNLu2A+LS0gD9StHwp5cdjAm0Udruje3
+	5RXbvNyPczzU+BfzBYcy/1AfxIbMjxXx6f6Ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OkjVa2mxQ9GO5aFn5TBtGpnsE7+CXRqC
+	6omgVG0xx4H+4JHxJu1a3IFLYRumJOrzOGZIGwtcGTumCG2tIUwKMszHFhTkJxY7
+	Ad4vY3+4Rt3DTfRg7DrNlowLPnUfedjnUbz9qvT0kUeUQQbpfMibvZEPb/KUPcpy
+	6zfCA7S/LYc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F06BA21EBD;
+	Wed,  3 Dec 2014 12:34:35 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 821D721EBC;
+	Wed,  3 Dec 2014 12:34:35 -0500 (EST)
+In-Reply-To: <20141203042049.GI6527@google.com> (Jonathan Nieder's message of
+	"Tue, 2 Dec 2014 20:20:49 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A62B0D9E-7B12-11E4-BE98-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260668>
 
-On 2014-12-03 03.20, Stefan Beller wrote:
-> On Sun, Nov 30, 2014 at 6:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> It seems like a few desirable features are being talked about here, and
->>> summarizing the discussion as "centralized" vs "decentralized" is too
->>> simplistic. What is really important?
->>>
->>> 1. Convenient and efficient, including for newcomers
->>> 2. Usable while offline
->>> 3. Usable in pure-text mode
->>> 4. Decentralized
->>>
->>> Something else?
-> So when I started overtaking the ref log series by Ronnie,
-> Ronnies main concern was missing reviewers time. So my idea was to
-> make it as accessible as possible, so the reviewing party can use their
-> time best. However here are a few points, I want to mention:
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> We have been silently tolerating errors by returning early with an
+> error that the caller ignores since rerere.autoupdate was introduced
+> in v1.6.0-rc0~120^2 (2008-06-22).  So on error (for example if the
+> index is already locked), rerere can return success silently without
+> updating the index or with only some items in the index updated.
 >
->  * Having send emails as well as uploaded it to Gerrit, I either needed
->    a ChangeId (Gerrit strictly requires them to track inter-patch
-> diffs), and the
->    mailing list here strictly avoids them, so I was told.
->    Ok, that's my problem as I wasn't following the actual procedure of the
->    Git development model (mailing list only).
->  * That's why I stopped uploads to Gerrit, so I do not need to care about the
->    ChangeIds any more. I am not sure if that improved the quality of my patches
->    though.
->  * I seem to not have found the right workflow with the mailing list yet, as I
->    personally find copying around the inter-patch changelog very inconvenient.
->    Most of the regulars here just need fewer iterations, so I can understand,
->    that you find it less annoying. Hopefully I'll also get used to the
-> nit-picky things
->    and will require less review iterations in the future.
->    How are non-regulars/newcomers, who supposingly need more iterations on
->    a patch,  supposed to handle the inter patch change log conveniently?
->    I tried to keep the inter patch changelog be part of the commit message and
->    then just before sending the email, I'd move it the non-permanent section of
->    the email.
->  * Editing patches as text files is hard/annoying.
-Not sure if I understand. Editing text files isn't that hard, we do it all the time.
->  I have setup git send-email,
->    and that works awesome, as I'd only need one command to send off a series.
->    Having a step in between makes it more error-prone. So I do git format-patch
->    and then inject the inter patch change log, check to remove ChangeId and then
->    use git send-email.
-How do you "inject the inter patch change log" ? Is that manually, or is it a script ?
->  And at that final manual step I realized I am
-> far from being
->    perfect, so sometimes patches arrive on the mailing list, which are
-> sub quality
->    in the sense, that there are leftovers, i.e. a ChangeId
->  * A possible feature, which just comes to my mind:
->    Would it make sense for format-patch to not just show the diff
-> stats, but also
->    include, on which branch it applies? In git.git this is usually the
-> origin/master
->    branch, but dealing with patch series, building on top of each other that may
->    be a good feature to have.
+> Better to treat such failures as a fatal error so the operator can
+> figure out what is wrong and fix it.
 >
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> I ran into this while auditing hold_locked_index callers.  Tests
+> still pass after this change.  Sensible?
 
-Thanks for the description (and everybody for the discussion)
-In the hope that it may help, I can try to describe my work flow:
-- Run a script to send the patch (this is a real example)
-#################
+I think what the change wants to do is sensible, but "tests still
+pass" probably does not tell us very much.  You'd need a competing
+writers (e.g. in real life a human user may open two terminals and
+try to do things in the same repository from both terminals without
+realizing that she is stomping on herself), which is expected to
+break in unexpected ways ;-), which is not something the existing
+tests would try to catch anyway.
 
-SRCCOMMIT=119efe90bffee688a3c37d4358667
-DSTCOMMIT=$(git log --oneline -n1 | awk '{print $1}')
-VERSION="-v 1"
+>  rerere.c | 14 +++++---------
+>  1 file changed, 5 insertions(+), 9 deletions(-)
+>
+> diff --git a/rerere.c b/rerere.c
+> index 1b0555f..195f663 100644
+> --- a/rerere.c
+> +++ b/rerere.c
+> @@ -477,27 +477,23 @@ out:
+>  
+>  static struct lock_file index_lock;
+>  
+> -static int update_paths(struct string_list *update)
+> +static void update_paths(struct string_list *update)
+>  {
+>  	int i;
+> -	int fd = hold_locked_index(&index_lock, 0);
+> -	int status = 0;
+>  
+> -	if (fd < 0)
+> -		return -1;
+> +	hold_locked_index(&index_lock, 1);
+>  
+>  	for (i = 0; i < update->nr; i++) {
+>  		struct string_list_item *item = &update->items[i];
+>  		if (add_file_to_cache(item->string, ADD_CACHE_IGNORE_ERRORS))
+> -			status = -1;
+> +			die("staging updated %s failed", item->string);
 
-PATCHFILE=$( echo $0 | sed -e 's/\.sh$/.patch/')
-GIT_TEST_LONG=t
-export GIT_TEST_LONG
-git am --abort || :
-(  test -s $PATCHFILE || 
-	git format-patch $VERSION -s --to=git@vger.kernel.org  --cc=tboegi@web.de  --cc=mhagger@alum.mit.edu --stdout $SRCCOMMIT..$DSTCOMMIT >$PATCHFILE ) &&
-git checkout $SRCCOMMIT &&
-git am <$PATCHFILE &&
-cd t && cd .. && make &&
-(cd t && ./t0001*.sh) &&
-git imap-send <$PATCHFILE
+Instead of crafting a new message, why not just stop passing IGNORE_ERRORS
+and have add_file_to_cache() report the failure?  That is:
 
-#####################
-The script formats a patch file (if that does not exist),
-applies the patch on the source commit,
-runs make and then the test cases to verify that the patch works.
-(For bigger patches more tests or the whole test suite should be run,
-for this very isolated work it OK to run a singe test)
+	if (add_file_to_cache(item->string, 0))
+        	return -1;
 
-Once everything is OK, the patch is stored both on disc and in the Drafts folder of the "email program".
-(In your case you can use grep to remove the ChangedId or to check that it had been removed)
-
-Now it is time to "tweak" the patch file with an editor:
-Add what has been changed  since V1....
-Save the patch file, run the script again to verify that the patch still applies and works and
-put it into the Drafts folder of the mail program.
-
-(That's why I abort the "git imap-send" in the first round
-and press ^C when the password is asked)
-
-Start the favorite email program
-(Kmail works, or Thunderbird or 
- every other program that can send email in "plain text")
-
-Have a final look at the patch in the email prgram
-(remove the V1 from the header, change PATCH into PATCH/RFC).
-
-Let the spell checker look at it, re-read once more.
-If everything is OK, press the "send" button.
-
-If I send out a V2 version, make a copy of the script, and call it doit2.sh,
-change what needs to be changed.
-We can enhance the script to push to a global repo, create a new branch just to
-be sure we re-find our work...
-
-I store all these scripts under a folder in my home directory,
-each script has it's own directory, this for example is under
-141119_check_file_mode_for_SAMBA/.
-And if I am afraid that I don't know where it ended,
-I can make a comment file here and notice that Junio picked it up here:
-junio/tb/config-core-filemode-check-on-broken-fs
-(And the remote junio is "git://github.com/gitster/git.git")
-
-The good thing is that both the script and the patch file can be put
-under version control.
-
-
-I realized that re-checking the email which is rally send out to the list
-is worth the time and effort.
-Sometimes I keep it in the Drafts folder over night, and have
-a new look with fresh eyes the next day.
+That way, the user will get more useful diagnosis because there are
+different reasons why an "add" may fail and we give different error
+messages to them.
