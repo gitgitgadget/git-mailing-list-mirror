@@ -1,251 +1,111 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/4] refs.c: add a transaction function to append a
- reflog entry
-Date: Wed, 3 Dec 2014 14:28:52 -0800
-Message-ID: <20141203222852.GB26810@google.com>
-References: <1417506402-24257-1-git-send-email-sbeller@google.com>
- <1417506402-24257-4-git-send-email-sbeller@google.com>
- <20141203031519.GF6527@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/14] strbuf: introduce strbuf_prefixf()
+Date: Wed, 03 Dec 2014 14:40:35 -0800
+Message-ID: <xmqq388wwe58.fsf@gitster.dls.corp.google.com>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com>
+	<20141117233525.GC4336@google.com>
+	<CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
+	<20141118004841.GE4336@google.com>
+	<CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
+	<20141203050217.GJ6527@google.com> <20141203051016.GK6527@google.com>
+	<xmqqbnnkwgpg.fsf@gitster.dls.corp.google.com>
+	<20141203215918.GF6527@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org, ronniesahlberg@gmail.com,
-	mhagger@alum.mit.edu
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 23:29:00 2014
+X-From: git-owner@vger.kernel.org Wed Dec 03 23:40:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwIPr-0003mQ-1F
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 23:28:59 +0100
+	id 1XwIbD-0001qU-RE
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 23:40:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751173AbaLCW2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 17:28:55 -0500
-Received: from mail-ig0-f201.google.com ([209.85.213.201]:36686 "EHLO
-	mail-ig0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730AbaLCW2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 17:28:54 -0500
-Received: by mail-ig0-f201.google.com with SMTP id h15so1842051igd.4
-        for <git@vger.kernel.org>; Wed, 03 Dec 2014 14:28:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=PyUb4ifyJcL15fzmsC/kODy8oAR7WbG2TLt4C33a3Fk=;
-        b=NdzZW0QknWK1zPz42ZUr011gTRVADZ22WW7cy933v2Wyc4z+G7HwomVJmbynz1k6TN
-         Plj5k9M5G3/vBtbGNk6PXObhNDPQokR7hpBEnLor2VLqMiiKVcnsOpspja/OtUsztmhC
-         Gzc13lgimxZk/bJOYBcSGxBKqySiA/k3Fjzgqh1i48u5gnvsLvUlVWmXYfvRZVK3Bmwd
-         p9ZEhuPOSBNvToqln/fcFO1veGSo0ov8rlKdfSRv+8EZ4r/wSXJfifVWEsfQo+374QFm
-         fpzZMotRl+j5MJjWqgqiXGyYTz8YTau6BrqrNbcKf5mSfmYxNczGgD1qGbbdstINFKNr
-         qOLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=PyUb4ifyJcL15fzmsC/kODy8oAR7WbG2TLt4C33a3Fk=;
-        b=kfMw9JO4AJxAJmLULfQSMiKMk083mhZLv+zkGJXDVTFlITsymE6LLsIcnEuuSotfyo
-         fOH7rQbT6xgeoTZt1MxOtV27aTrW82oQn8U1nNLRf16lf4ImN4XrPDgcsNbPjzWpPY+s
-         KF2PG0M4tqU+7qqURpdU6ufkMg0gmsI2TipQnnJNpkzZfCUNEOay5SJv/riTTSttZ1vd
-         bGrkKnzG+PGYR3AAxOyVnGHSu/riBkYjtwAWqLOxpwjvSmYeTXhvfjDN9rOs+tiBfiEU
-         NvCu9Og7YnTvxbU0MiV9AG5lm8RMfN/UfyYWMUhD6VqnqJaId+PaFTC6cfq69dunXd7S
-         4Kew==
-X-Gm-Message-State: ALoCoQnyRAOZrLenfFf4FcYiXtJJ46SG441Dodgil8gfytvjSEJRvmSPAv+X2u3GutvN48PepkeK
-X-Received: by 10.182.165.37 with SMTP id yv5mr6872097obb.25.1417645733609;
-        Wed, 03 Dec 2014 14:28:53 -0800 (PST)
-Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
-        by gmr-mx.google.com with ESMTPS id t28si1040899yhb.4.2014.12.03.14.28.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Dec 2014 14:28:53 -0800 (PST)
-Received: from sbeller.mtv.corp.google.com ([172.27.69.125])
-	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id ks0QUiCc.1; Wed, 03 Dec 2014 14:28:53 -0800
-Received: by sbeller.mtv.corp.google.com (Postfix, from userid 279346)
-	id 8C99C141027; Wed,  3 Dec 2014 14:28:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20141203031519.GF6527@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752095AbaLCWkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 17:40:40 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56142 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751270AbaLCWkj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 17:40:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 28CAB2474F;
+	Wed,  3 Dec 2014 17:40:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lfdtmuEGBCFfkGJX9ckakA2B6IY=; b=piI8B4
+	3wpDvmPqWWPpp2oTanLTL05eVhtOsHmRy9xaW1fV6aaPhD+uUtpcgrUlVnI31sIc
+	1k7v4D5nMhzV22oNIkEPmcoBBAc0z+jFDPYiPQ55bn4GEO57g+tbzOIJ7w/DkVOr
+	y1EW5cbW45gJOuVipAa+aghYIRtH3zHjYvh3Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rsmGBMBFfK/qXuvhAhTpu3JDsuqWvAfO
+	fQ9IKieFDuMJUBDFckdM8Oi/47izLXykQNy18cTotq4nIOJcTZgu5lve5jBgMqPO
+	zW1pNsRs/9Ez3OL/SU6U4BKBdVZaXTB4Y5ymAG7NVgpaxs9s8iP3eWZjnbZLmzDv
+	Rf1jYdvXzMo=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 138F72474E;
+	Wed,  3 Dec 2014 17:40:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 88BCD2474B;
+	Wed,  3 Dec 2014 17:40:36 -0500 (EST)
+In-Reply-To: <20141203215918.GF6527@google.com> (Jonathan Nieder's message of
+	"Wed, 3 Dec 2014 13:59:18 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6631D2A6-7B3D-11E4-AC0F-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260705>
 
-On Tue, Dec 02, 2014 at 07:15:19PM -0800, Jonathan Nieder wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I'll think about rewriting the commit message, so it is easier to digest.
-I'll follow your suggestions except for the following annotations
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>>> +void strbuf_prefixf(struct strbuf *sb, const char *fmt, ...)
+>>> +{
+>>> +	va_list ap;
+>>> +	size_t pos, len;
+>>> +
+>>> +	pos = sb->len;
+>>> +
+>>> +	va_start(ap, fmt);
+>>> +	strbuf_vaddf(sb, fmt, ap);
+>>> +	va_end(ap);
+>>> +
+>>> +	len = sb->len - pos;
+>>> +	strbuf_insert(sb, 0, sb->buf + pos, len);
+>>> +	strbuf_remove(sb, pos + len, len);
+>>> +}
+>>
+>> This indeed is strange to read; it would be more straightforward to
+>> use a second strbuf for temporary storage you need to do this,
+>> instead of using the tail-end of the original strbuf and shuffling
+>> bytes around.
+>
+> I could do that.  It's less efficient but if the prevailing sentiment
+> is that it's worth it then I don't mind.
+>
+> Would adding a comment to the implementation of strbuf_prefixf help?
 
-> 
-> > +int transaction_update_reflog(struct transaction *transaction,
-> > +			      const char *refname,
-> > +			      const unsigned char *new_sha1,
-> > +			      const unsigned char *old_sha1,
-> > +			      const char *email,
-> > +			      unsigned long timestamp, int tz,
-> > +			      const char *msg, int flags,
-> > +			      struct strbuf *err)
-> 
-> This is an intimidating list of arguments.  Would it make sense to
-> pack them into a struct, or to make the list less intimidating
-> some other way (e.g. combining email + timestamp + tz into an
-> ident string)?
+Perhaps.
 
-It's true, that is's a huge list. One of the reasons Ronnie gave, 
-was having symmetry in reflog.c:expire_reflog_ent, which has a very
-similar signature, the  email + timestamp + tz are passed in as separate
-arguments.
+The reason why it felt strange to me was primarily because this was
+a short-hand way of writing something like this in the caller:
 
-expire_reflog_ent is being called from within reflog.c:expire_reflog
-
-	if (for_each_reflog_ent(ref, expire_reflog_ent, &cb)) {
-		status |= error("%s", err.buf);
-		goto cleanup;
+	if (transaction_commit(&t, err)) {
+		struct strbuf scratch = STRBUF_INIT;
+		strbuf_addf(&scratch, "cannot fetch '%s': ", remotename);
+		strbuf_splice(err, 0, 0, sctach.buf, scratch.len);
+                strbuf_reset(&scratch);
 	}
 
-now if, we dive into the for_each_reflog_ent function, it's essentially 
-just calling show_one_reflog_ent on each reflog entry.
-In there we are trying to separate a reflogs entry into the fields
-(new sha1, old sha1, committer, email, time, timezone, message) by the
-lovely expression
-
-	/* old SP new SP name <email> SP time TAB msg LF */
-	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
-	    get_sha1_hex(sb->buf, osha1) || sb->buf[40] != ' ' ||
-	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
-	    !(email_end = strchr(sb->buf + 82, '>')) ||
-	    email_end[1] != ' ' ||
-	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
-	    !message || message[0] != ' ' ||
-	    (message[1] != '+' && message[1] != '-') ||
-	    !isdigit(message[2]) || !isdigit(message[3]) ||
-	    !isdigit(message[4]) || !isdigit(message[5]))
-		return 0; /* corrupt? */
-
-so I wonder if it actually makes sense to first separate it out into fields,
-and then joining to an ident string again. Is there some kind of struct already,
-which groups together identifying information, such as name, email, timestamp + zone,
-which could be reused here for passing on the data?
-
-Anyway, this is a first step on transactioning the reflog code, so it is minimally
-invasive, not changing a lot of business logic. If you look into the next patch,
-(reflog.c: use a reflog transaction when writing during expire)
-you'll see that it's essentially just a replacement of printfs to calling
-the function.
-
--	if (cb->newlog) {
--		fprintf(cb->newlog, "%s %s %s %lu %c%04d\t%s",
--			sha1_to_hex(osha1), sha1_to_hex(nsha1),
--			email, timestamp, sign, zone,
--			message);
-+	if (cb->t) {
-+		if (transaction_update_reflog(cb->t, cb->refname, nsha1, osha1,
-+					      email, timestamp, tz, message, 0,
-+					      cb->err))
-
-and the errorhandling was removed.
-If we want to change the function signature of transaction_update_reflog, 
-I'd do it in a follow up?
-
-
-
-> 
-
-> 
-> [...]
-> > +	if (flags & REFLOG_TRUNCATE) {
-> > +		if (lseek(fd, 0, SEEK_SET) < 0 ||
-> > +			ftruncate(fd, 0)) {
-> > +			strbuf_addf(err, "Could not truncate reflog: %s. %s",
-> > +				    refname, strerror(errno));
-> 
-> Odd error message format (using '.' to separate the refname from
-> strerror(errno) is unusual).  Errors normally are supposed to start
-> with a lowercase letter, like
-> 
-> 	cannot truncate reflog '%s': %s
-> 
-> > +			goto failure;
-> > +		}
-> > +	}
-> 
-> How does this cause the reflog to be populated in the !(flags &
-> REFLOG_TRUNCATE) case?
-> 
-> Maybe I am misunderstanding the API.  If I use
-> transaction_update_reflog() and have not updated the reflog
-> previously, isn't this supposed to just append a new entry to the
-> reflog?
-> 
-
-He, that's indeed a good catch. I was investigating the API again myself and
-the REFLOG_TRUNCATE flag is only set on the very first call to transaction_update_reflog
-and the subsequent calls are rebuilding the reflog by adding the unpruned lines 
-again line by line.
-
-I am wondering if we should actually put that into the same function now.
-As the new reflog is build on the calls by transaction_update_reflog, it's actually
-depending on the order strictly as opposed to the refs.
-Maybe we want to have two separate functions
-	transaction_update_begin_reflog(...)
-	transaction_update_reflog_add_line(...)
-
-instead? Then a reflog update could look like this:
-	t=transaction_begin(...)
-	
-	transaction_update_begin_reflog(t, refname)
-	for_each_reflog_entry_for_refname(entry, refname):
-		if (want_to_keep(entry):
-			transaction_update_reflog_add_line(entry, refname)
-
-	transaction_commit(...)
-
-The logic of want_to_keep is currently in reflog.c:expire_reflog_ent(...),
-not sure if there are other places.
-
-
-> [...]
-> > +failure:
-> > +	strbuf_release(&buf);
-> > +	/*
-> > +	 * As we are using the lock file API, any stale files left behind will
-> > +	 * be taken care of, no need to do anything here.
-> > +	 */
-> 
-> That's only true if the caller is going to exit instead of proceeding
-> to other work.
-> 
-> With current callers, I assume that's true.  So should this comment
-> say something like "No need to roll back stale lock files because
-> the caller will exit soon"?  Or should this roll back the lockfile
-> anyway, in case the caller wants to try again?
-
-I am not sure if we ever want transactions be tried again without the user 
-explicitely rerunning the command?
-
-As we're operating on a lockfile, which was just created by us, and now in 
-the failure command, we're likely to die? Maybe I remove the comment altogether, 
-as the wondering reader will look into the API for lock files, when looking 
-for problems here.
-
-> > +	/* Commit all reflog updates*/
-> > +	for_each_string_list_item(item, &transaction->reflog_updates) {
-> > +		struct lock_file *lock = item->util;
-> > +		commit_lock_file_to(lock, git_path("logs/%s", item->string));
-> 
-> Neat.
-> 
-> This seems like a good starting point.  Other code paths still write
-> to reflogs directly --- is there a plan to get them to use this code,
-> too, in a followup patch (e.g., by making write_ref_sha1() or
-> log_ref_write() use its own small transaction for the reflog update)?
-> 
-
-That's the plan, but not part of this patch series yet.
-
-> Thanks and hope that helps,
-> Jonathan
-
-Thanks for the comments,
-Stefan
+Coming from that point of view, it looked strange not to be using a
+separate scratch area; that's all.
