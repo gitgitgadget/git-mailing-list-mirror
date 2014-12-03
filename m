@@ -1,80 +1,67 @@
-From: Debarshi Ray <rishi.is@lostca.se>
-Subject: git config option for passing flags to diff
-Date: Wed, 3 Dec 2014 14:27:51 +0000
-Message-ID: <20141203142741.GA65669@arati.lostca.se>
+From: Petr Bena <benapetr@gmail.com>
+Subject: git stash broken on MS Windows (automatically modify the files again)
+Date: Wed, 3 Dec 2014 15:33:26 +0100
+Message-ID: <CA+4EQ5d70JWiawt5zb9s6Vc3cDMApPmhdB2w+WLyfmWCcTQF4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="LQksG6bCIzRHxTLp"
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 03 15:33:20 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 15:33:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwAzX-0003In-CL
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 15:33:19 +0100
+	id 1XwAzl-0003PY-Cb
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 15:33:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753172AbaLCOdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 09:33:14 -0500
-Received: from arati.lostca.se ([144.76.32.53]:11698 "EHLO arati.lostca.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752504AbaLCOdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 09:33:13 -0500
-X-Greylist: delayed 461 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Dec 2014 09:33:13 EST
-Received: from arati.lostca.se (localhost [127.0.0.1])
-	by arati.lostca.se (Postfix) with ESMTP id 77070C08;
-	Wed,  3 Dec 2014 14:27:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=lostca.se; h=date:from:to
-	:subject:message-id:mime-version:content-type; s=howrah; bh=n4eF
-	G2CnZA0Wzbts8vJ5CMlqbIQ=; b=eQ6m/K8xIHyQSwbNiDjjVxnwanzJ7lFFJfPZ
-	KzZ2rsSDoGbNKRUTKguaG5ob9TxC0oCgKoJjB2xnNWIc78ebL8F56oj5JZT2B4RO
-	r7C5Z4uAJxCabQaxyNG4eG8jcx9U3+9FnqOs2KEwk0CnhJ5vq5ou2UlHwBgVGiFX
-	sg+FcDc=
-Received: from localhost (unknown [IPv6:2a01:4f8:191:2334::25])
-	by arati.lostca.se (Postfix) with ESMTPSA id 44564C07;
-	Wed,  3 Dec 2014 14:27:51 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752889AbaLCOd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 09:33:27 -0500
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:43993 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752163AbaLCOd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 09:33:26 -0500
+Received: by mail-ob0-f181.google.com with SMTP id gq1so1111626obb.40
+        for <git@vger.kernel.org>; Wed, 03 Dec 2014 06:33:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=JRsyM5wp4echIGrwiZ+Hx2W11pKPMRZjVpYx4KLGTK0=;
+        b=VUa2H2XLIg2IxMvIDdRi4NHhMJ0znKI8MR8slkhaykozFxzSdrTwwG4ghwlVps/M1k
+         UAvFbiPAFaQAzesDHLGyRtA3XALvxumTtkG/+ZVKbo98NAigvLU0IOThq/sRiI+9S6fJ
+         9sobF7nJhsZln9T8EGohM9bNP0SmRNaqLnfWL1uWsPYeQ6F4DPUGkF5TNzia1dTlkpHG
+         97QXceM7G5w+UIAdR9/Okwgz1PBMMBMvvF8wzKe1BCKYMu1bidC6DOgWcaXeH3/NwmSV
+         Tivx+V6w9hn8QFS5ERANPX9phILdvKYSdq1jQfR5E/BX9gW33fdMr92Zs0VBrwzpeEZr
+         jb7w==
+X-Received: by 10.182.122.139 with SMTP id ls11mr3410598obb.6.1417617206239;
+ Wed, 03 Dec 2014 06:33:26 -0800 (PST)
+Received: by 10.202.3.3 with HTTP; Wed, 3 Dec 2014 06:33:26 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260650>
 
+I have a mysterious problem with one of my git repositories that work
+fine when I check it out on linux, but not when I do that on windows.
 
---LQksG6bCIzRHxTLp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On windows, pile of files immediately change themselves - eg when I do
+git diff I see a lot of changes. What is even more interesting, is
+that when I do git stash, nothing happens (it tell me it stashed back,
+but changes are still there, so i can keep stashing and stashing but
+it doesn't help), I still have lot of dirty changes to tracked files
+and I can't get rid of them in any way. It's pretty much like if files
+were containing something what can't be stored on NTFS and windows
+version of git would replace the content with something else.
 
-I have been looking for a git config option to turn on
---function-context, and after searching on the Internet and reading
-the man pages, #git confirmed that it doesn't exist.
+Because it's private repository I unfortunately can't provide it's
+content, but these files are mostly SQL text files, the screenshot (so
+that colors are preserved), is here: http://snag.gy/93A8S.jpg
 
-I am wondering if it would be sensible to introduce such a variable?
-Or a variable to specify any additional flags to diff?
+Is there any way to "fix" windows git so that it works? Did anyone
+experience this? It may be something related to windows line endings,
+but I am not really sure.
 
-Thanks,
-Debarshi
---LQksG6bCIzRHxTLp
-Content-Type: application/pgp-signature
+During installation of GIT I checked "keep line endings as they are in
+repository"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (FreeBSD)
-
-iQIcBAEBAgAGBQJUfx3cAAoJEEMnBfrN1AMlur8P/j4OCpSihewYXsK9JF3CnBNX
-6fd/TGix5fIoAaI5R8nAIzVQRBtPyaj5msSOBQez26gWRPPIKf0Xghvv/ehTje2c
-Xzq6v6vKEFzQxAC4cMeUzMXBQsI4QXsxF/P2htTLx6kAK+CTsa4apSboiW9M4im9
-ntOpb8nw1f8iGy2FePr163viEjvwFTeiceoxZ4k5waiimm/sSq2GUGFehTxf15R1
-BxESzHVUNgnX3uCWpQivhzLbpOXPX+arzFLO6NhkzeCynF64Klso4gr0eDxb/E7y
-71vlmZFUGFRFuhvi7+cXB2nCfP4bc0ikWYLco7uwGRgxxzNk6BtzmdQONV4CVYk0
-mHLEc/mEZnGk3cRUTzp509KkVKCMTjTSz/J3C4WGoyZ8/F1ZfeztZaIUk5+rH94g
-PVryqhSswLTmGdNGVQaZKiuJ8AJxmh9wjS75ySnO08sNjKEJRuaEQfDTUyWWWvIc
-/dpWnDfI3XMzywRyOeYn53Rbg8h7n9vX28xcII7g8taVH3Y3Lqpt3gb88zdfpGOQ
-RBWXEN0kfwBknWoKbE6xZoBdnNHt785IK/QCQMaQmf78PjbU1KA4xV8fSHZIWBZJ
-Z77MjsfK5r11tD2Ib7yXUFR7O2bzLm3gRd5HA5VNYe2i73VubuaBeKw1Rj0N87VZ
-YVAwD/KYc6r6QMb3htXN
-=hd3l
------END PGP SIGNATURE-----
-
---LQksG6bCIzRHxTLp--
+Thanks
