@@ -1,129 +1,101 @@
-From: Luis Henriques <henrix@camandro.org>
-Subject: [PATCH v2] send-email: add --[no-]xmailer option
-Date: Wed, 3 Dec 2014 18:07:09 +0000
-Message-ID: <20141203180709.GA11160@charon.olymp>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Deprecation warnings under XCode
+Date: Wed, 3 Dec 2014 13:16:21 -0500
+Message-ID: <CAPig+cQHjAtBBGMJGFj6YH1dmW+akY0eg_i+jbOz-khirwa2bA@mail.gmail.com>
+References: <CAO2U3Qg4DVxSk2u1eJwGqYoxVZTbWRV69J9HTo1rnjFCxSyi2g@mail.gmail.com>
+	<547BFD42.3040104@web.de>
+	<xmqqoarnp7p2.fsf@gitster.dls.corp.google.com>
+	<CAPig+cRvGaFJQZZ8CDeMMB6u1NKtqUrfe1aWC0OUG3xF9Nu34g@mail.gmail.com>
+	<CAO2U3QiwJ=EZBModED6jR2YuF5NMVvrUkzj1iOGMLAqwKNbw3A@mail.gmail.com>
+	<CAPig+cRj5bLrkperGiDHG78KghiGgkMAT=Qihia2FR8psEQxvQ@mail.gmail.com>
+	<20141203100415.GA4893@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 03 19:07:22 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Git List <git@vger.kernel.org>,
+	Bernhard Reiter <ockham@raz.or.at>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 19:16:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwEKd-0007Gc-4J
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 19:07:19 +0100
+	id 1XwETS-0003v0-O7
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Dec 2014 19:16:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503AbaLCSHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 13:07:13 -0500
-Received: from balrog.mythic-beasts.com ([93.93.130.6]:39916 "EHLO
-	balrog.mythic-beasts.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045AbaLCSHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2014 13:07:12 -0500
-Received: from [2.81.129.121] (port=49294 helo=localhost)
-	by balrog.mythic-beasts.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <henrix@camandro.org>)
-	id 1XwEKT-0005ES-N8; Wed, 03 Dec 2014 18:07:10 +0000
-Content-Disposition: inline
-X-BlackCat-Spam-Score: -28
-X-Mythic-Debug: Threshold =  On = 
-X-Spam-Status: No, score=-2.9
+	id S1751313AbaLCSQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 13:16:23 -0500
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:44470 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751173AbaLCSQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 13:16:22 -0500
+Received: by mail-yk0-f180.google.com with SMTP id 9so7202153ykp.11
+        for <git@vger.kernel.org>; Wed, 03 Dec 2014 10:16:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=kHXfEScQWSyhz5W+UarkA4eK2xbafLSRGEXS+SF3VHg=;
+        b=P0HV2BPNTYqIW+KQPSN2Bjc3ef0vBdtIPpNPS9lhQKvSxRY16dj6pYQZbhj24twmA0
+         u903qotW33gQ5wWKrUBYFixn81KoX98qJuVtDE4S3xzZ+N/kPDM48XcLHg1VZ1v242ev
+         kKA7PTUo5KAipPYGeeqYOde360huThVzgixHHbr0wVKR/WCU1ZVWKubGNkunNW2mwlTg
+         +mRNXhSBiT/3UIU/HHfy9r7Can44WmBiZRuWYOS9FDLTZTMVML0RPJuxWWfiYORoJJss
+         FoJCN9KENsLLn79ONm2WuHBTNZovAebWG4YPk8w14FcvdZdkQRF822YR1o50IoqCCBQW
+         sr1A==
+X-Received: by 10.170.41.131 with SMTP id 125mr8716699ykj.85.1417630581455;
+ Wed, 03 Dec 2014 10:16:21 -0800 (PST)
+Received: by 10.170.68.68 with HTTP; Wed, 3 Dec 2014 10:16:21 -0800 (PST)
+In-Reply-To: <20141203100415.GA4893@gmail.com>
+X-Google-Sender-Auth: ECGA3RQCD0BW0ulGNiVztcodA4U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260675>
 
-Add --[no-]xmailer that allows a user to disable adding the 'X-Mailer:'
-header to the email being sent.
+On Wed, Dec 3, 2014 at 5:04 AM, David Aguilar <davvid@gmail.com> wrote:
+> On Tue, Dec 02, 2014 at 10:09:35PM -0500, Eric Sunshine wrote:
+>> The potentially lesser evil would be this small patch (minus Gmail
+>> whitespace damage) which disables the deprecation warnings only for
+>> Apple's headers:
+>>
+>> ----- >8 -----
+>> diff --git a/git-compat-util.h b/git-compat-util.h
+>> index 400e921..709e84f 100644
+>> --- a/git-compat-util.h
+>> +++ b/git-compat-util.h
+>> @@ -211,6 +211,8 @@ extern char *gitbasename(char *);
+>>  #endif
+>>
+>>  #ifndef NO_OPENSSL
+>> +#define __AVAILABILITY_MACROS_USES_AVAILABILITY 0
+>> +#define MAC_OS_X_VERSION_MIN_REQUIRED MAC_OS_X_VERSION_10_6
+>>  #include <openssl/ssl.h>
+>>  #include <openssl/err.h>
+>>  #endif
+>> ----- >8 -----
+>>
+>> Considering that Mac OS X is now at 10.10 and these deprecations
+>> commenced with Mac OS X 10.7 in July 2011 (3.5 years ago), and Apple
+>> still has not provided drop-in CommonCrypto equivalents, it seems
+>> unlikely that they will do so any time soon. Consequently, suppressing
+>> these otherwise unavoidable warnings may be the best we can do.
+>>
+>> I'm willing to formalize and submit this as a proper patch if it's not
+>> considered too disgusting by the powers-that-be.
+>
+> Tweaking those internal #defines can only come back to bite us
+> in the future when the functions are finally ripped out.
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
-Signed-off-by: Luis Henriques <henrix@camandro.org>
----
- Documentation/config.txt         |  1 +
- Documentation/git-send-email.txt |  5 +++++
- git-send-email.perl              | 11 +++++++++--
- 3 files changed, 15 insertions(+), 2 deletions(-)
+If Apple ever does remove those deprecated functions, the build will
+break badly regardless of whether or not the Apple-specific
+deprecation warnings are suppressed. This patch does not make the
+situation any worse, so I don't understand the argument.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 922072596fdd..3f9898931d3b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2304,6 +2304,7 @@ sendemail.smtpserveroption::
- sendemail.smtpuser::
- sendemail.thread::
- sendemail.validate::
-+sendemail.xmailer::
- 	See linkgit:git-send-email[1] for description.
- 
- sendemail.signedoffcc::
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index a60776eb579e..a0bd806cfed8 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -131,6 +131,11 @@ Note that no attempts whatsoever are made to validate the encoding.
- 	Specify encoding of compose message. Default is the value of the
- 	'sendemail.composeencoding'; if that is unspecified, UTF-8 is assumed.
- 
-+--xmailer::
-+--no-xmailer::
-+	Add (or prevent adding) the "X-Mailer:" header.  By default,
-+	the header is added, but it can be turned off by setting the
-+	`sendemail.xmailer` configuration variable to `false`.
- 
- Sending
- ~~~~~~~
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9949db01e119..a6e66b9ae386 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -54,6 +54,7 @@ git send-email [options] <file | directory | rev-list options >
-     --[no-]bcc              <str>  * Email Bcc:
-     --subject               <str>  * Email "Subject:"
-     --in-reply-to           <str>  * Email "In-Reply-To:"
-+    --[no-]xmailer                 * Add "X-Mailer:" header (default).
-     --[no-]annotate                * Review each patch that will be sent in an editor.
-     --compose                      * Open an editor for introduction.
-     --compose-encoding      <str>  * Encoding to assume for introduction.
-@@ -176,6 +177,8 @@ my $force = 0;
- my $multiedit;
- my $editor;
- 
-+my $use_xmailer;
-+
- sub do_edit {
- 	if (!defined($editor)) {
- 		$editor = Git::command_oneline('var', 'GIT_EDITOR');
-@@ -219,7 +222,8 @@ my %config_bool_settings = (
-     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
-     "validate" => [\$validate, 1],
-     "multiedit" => [\$multiedit, undef],
--    "annotate" => [\$annotate, undef]
-+    "annotate" => [\$annotate, undef],
-+    "xmailer" => [\$use_xmailer, 1]
- );
- 
- my %config_settings = (
-@@ -318,6 +322,7 @@ my $rc = GetOptions("h" => \$help,
- 		    "8bit-encoding=s" => \$auto_8bit_encoding,
- 		    "compose-encoding=s" => \$compose_encoding,
- 		    "force" => \$force,
-+		    "xmailer!" => \$use_xmailer,
- 	 );
- 
- usage() if $help;
-@@ -1163,8 +1168,10 @@ To: $to${ccline}
- Subject: $subject
- Date: $date
- Message-Id: $message_id
--X-Mailer: git-send-email $gitversion
- ";
-+	if ($use_xmailer) {
-+		$header .= "X-Mailer: git-send-email $gitversion\n";
-+	}
- 	if ($reply_to) {
- 
- 		$header .= "In-Reply-To: $reply_to\n";
+If a full set of drop-in equivalents was available, on the other hand,
+then your argument would make perfect sense, but it does not seem
+apply to the current situation since there is no evidence that Apple
+will be providing those replacements any time soon (or ever).
