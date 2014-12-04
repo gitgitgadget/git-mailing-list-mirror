@@ -1,62 +1,76 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: Re: [PATCH v2] compat: convert modes to use portable file type values
-Date: Thu, 4 Dec 2014 14:27:24 -0500
-Message-ID: <CAEvUa7nxzX=54QJto_R3hfvAO4FKhs8Pancz0TTiC7ev22--Kw@mail.gmail.com>
-References: <87wq68w3se.fsf@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC][PATCH] send-email: add --[no-]xmailer option
+Date: Thu, 04 Dec 2014 11:33:24 -0800
+Message-ID: <xmqqd27ztdkr.fsf@gitster.dls.corp.google.com>
+References: <20140324213814.GA1267@achilles.my.domain>
+	<20141202193243.GA2999@charon.olymp>
+	<20141203023419.GA10519@dcvr.yhbt.net>
+	<xmqqk328k6ya.fsf@gitster.dls.corp.google.com>
+	<20141204192245.GA3386@charon.olymp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 20:27:30 2014
+Content-Type: text/plain
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Luis Henriques <henrix@camandro.org>
+X-From: git-owner@vger.kernel.org Thu Dec 04 20:33:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwc3l-0006VM-Fh
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 20:27:29 +0100
+	id 1Xwc9b-0001cY-7B
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 20:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932885AbaLDT10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 14:27:26 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:50900 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932820AbaLDT1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 14:27:25 -0500
-Received: by mail-pa0-f41.google.com with SMTP id rd3so18528127pab.14
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 11:27:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=dHfMD8g5PqIcO/ca00VF2GmhEp2wp6884fhXIRifWdw=;
-        b=quqaH/Fhr74fqVpeUO+pQ2fNLAANSK4Onnq+g/g+CZIg9oE86GczYkKlzoTVwSzbx+
-         Hw80lSKBMkYmkeIeb91DPHBIHfw3Ops+2hzH1h0mlFUyxgkPSx8RmvmhX5HuPRP2dGqT
-         SbSc6OPOENDcIG2PfKuenZjHqyP6BPWGNeFP5/hVW0kAUNlwPR7SU3yQdUJuBJAlQlol
-         2Vr9/ef9SowY7YtVOsM4e/1kX1w6CLGSTgbdhitYBhLXLprVPdkRFSasMxSiWvT6Av/M
-         6057ZfvIRe18Hq79VsyRHYfWaBQjsoqj+rwJ9BgGEkzlwpdfcZB81v49UCSHr+4lc6Go
-         VIIg==
-X-Received: by 10.68.69.109 with SMTP id d13mr28762871pbu.57.1417721244825;
- Thu, 04 Dec 2014 11:27:24 -0800 (PST)
-Received: by 10.70.55.36 with HTTP; Thu, 4 Dec 2014 11:27:24 -0800 (PST)
-In-Reply-To: <87wq68w3se.fsf@gmail.com>
+	id S932898AbaLDTd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 14:33:27 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55594 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932315AbaLDTd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 14:33:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DD65823277;
+	Thu,  4 Dec 2014 14:33:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xP1hBcqAxRdoodzE5WIOc8OAJpE=; b=kZiLwJ
+	FmhN3aHrbplH26Gh88Uj86O8U+BLpVfy+x+LrJuPnHkUSju8aTW38bF0bG/KsRwZ
+	AY0nGrb3y+bJSnHgAZGnzJnlx+Xvyf8nyxhCNG8+rrU3tAxxIGLg9Cfugc9YST7t
+	cI1dbo+SpSFlnLZ2SkDH08jRJO8JnQGFa/KDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XnFtCLbYQMyWL2rSgQ2lVnaFwbvDglbD
+	9l1vP/V9Shc4XhIy8rpjcMrmOr3Dd9J0kjYppfisyY5Ov0QZT3ho6zbiqasWHspY
+	YeI1OffJ9OQcFgcWQONxNtlh6Tow6D3ufTwrhfUTAsphr59G4r3RZ/mmZAfRmMe7
+	53dcxfk0q+E=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D49DA23275;
+	Thu,  4 Dec 2014 14:33:25 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F8F423274;
+	Thu,  4 Dec 2014 14:33:25 -0500 (EST)
+In-Reply-To: <20141204192245.GA3386@charon.olymp> (Luis Henriques's message of
+	"Thu, 4 Dec 2014 19:22:45 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6A44CFCE-7BEC-11E4-97AD-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260787>
 
-On Wed, Dec 3, 2014 at 9:24 PM, David Michael <fedora.dm0@gmail.com> wrote:
-> --- /dev/null
-> +++ b/compat/stat.c
-> @@ -0,0 +1,49 @@
-> +#define _POSIX_C_SOURCE 200112L
-> +#include <stddef.h>    /* NULL         */
-> +#include <sys/stat.h>  /* *stat, S_IS* */
-> +#include <sys/types.h> /* mode_t       */
+Luis Henriques <henrix@camandro.org> writes:
 
-Oops, the <stddef.h> line can be removed now that this is no longer
-testing for NULL.  Let me know if this warrants a v3 if there is no
-other feedback.
+> On Wed, Dec 03, 2014 at 08:56:45AM -0800, Junio C Hamano wrote:
+>
+>> I actually do not think this is a good idea from debuggability.
+>
+> Do you think this could be merged with yet another switch?  I can't
+> think of a name for the switch, something like... "--hide-msgid"?
 
-Thanks.
+In case it wasn't clear, by "this" I meant the removal of
+"X-Mailer:", iow, "Adding --no-xmailer option is a bad idea from
+debuggability's point of view".
 
-David
+Not adding message-id is not an option; MSAs are supposed to always
+add one if they want to be RFC compliant, aren't they?
