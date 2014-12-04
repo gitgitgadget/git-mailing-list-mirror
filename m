@@ -1,69 +1,61 @@
-From: Guilherme <guibufolo@gmail.com>
-Subject: Re: git add <single file> and git add <list of files> behave
- differentely for ignored files
-Date: Thu, 4 Dec 2014 12:49:14 +0100
-Message-ID: <CAMDzUtz2BiM88y6UF2h5-NHYg=tVzysyYD+feXxKNEe-LPYfSg@mail.gmail.com>
-References: <CAMDzUtzQJoEi17OfX8FPOV6SDJ_ytJSH-YTKx2DtUON35-EVSg@mail.gmail.com>
- <20141204141100.742f32d74dbf8d65abc8c6ae@domain007.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Dec 04 12:50:10 2014
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFC/PATCH 0/2] Make git branch -f forceful
+Date: Thu,  4 Dec 2014 14:26:43 +0100
+Message-ID: <cover.1417699299.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 04 14:26:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwUv8-0006zy-60
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 12:50:06 +0100
+	id 1XwWQo-0005je-9I
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 14:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbaLDLt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 06:49:57 -0500
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:59632 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753542AbaLDLtz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 06:49:55 -0500
-Received: by mail-wi0-f176.google.com with SMTP id ex7so34443473wid.3
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 03:49:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=pgxm/ZAt1NU0EgyfnBs+TwbabrunLp2MnL+45s0ZiWw=;
-        b=LORwjCHgFFN9N6MWrVpKOMdvDPBiNn9FUxHFg3pMFeex4v1dZQsD2F0s90PXd+PCq6
-         2j8MT5jU1pVcuYchrCKO86wGLhFl2p5KQWwUCwljtsq/CkfNjmCwd2QOoqBRuVLTEJrD
-         FaFrJZf4+3mBT3OYcOXVgsR5oc+QH0TN9rarNF/LYRC5+0oqmYtys+7sxZxUqbbboRjq
-         Ji4ad0ieugdGcRcMJdIKzr4z5fkwqBJT6fVKF+PNSkq5HN91KiclIZPx/EFuViZZ64fg
-         Y33UIaweuBmT4VOgO2t8y6khsnYcqBU/4dMblKqml44G8QvqC+2Hz55H0mb3tVa+Fjv2
-         gHAA==
-X-Received: by 10.194.91.205 with SMTP id cg13mr10543217wjb.21.1417693794622;
- Thu, 04 Dec 2014 03:49:54 -0800 (PST)
-Received: by 10.27.54.80 with HTTP; Thu, 4 Dec 2014 03:49:14 -0800 (PST)
-In-Reply-To: <20141204141100.742f32d74dbf8d65abc8c6ae@domain007.com>
+	id S1753916AbaLDN0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 08:26:49 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:37197 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750907AbaLDN0s (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 08:26:48 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id C14B020ABA
+	for <git@vger.kernel.org>; Thu,  4 Dec 2014 08:26:47 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 04 Dec 2014 08:26:47 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:from:to:subject:date
+	:message-id; s=smtpout; bh=hCTDJEBkWYjWiFRZKytJvDtaP90=; b=lNlAb
+	wL33CnkQJDFduFJ3HqtXT862g1kSCiJPEfnjWTB9Kg8g36IhK+xRt1v848H9RfuT
+	gZyv9AtiEC0TZKKmiBIjqwiPvCPgen+dLK65lasB1E2eVDomLh1dxe1erbLlg4Mx
+	XjpN9KQPkGyri+JwAy6X+VkaMTHdlGzkQo63wU=
+X-Sasl-enc: CNvT0OX1QVd3wSyCsv/OaBrSKwZHuL9sXiV715GMp4ob 1417699607
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5DE85680013;
+	Thu,  4 Dec 2014 08:26:47 -0500 (EST)
+X-Mailer: git-send-email 2.2.0.rc3.286.g888a711
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260756>
 
-I forgot to mention:
+For many git commands, '-f/--force' is a way to force actions which
+would otherwise error out. Way more than once, I've been trying this
+with 'git branch -d' and 'git branch -m'...
 
-Environment: Cygwin
+I've had these two patches sitting in my tree for 3 years now it seems.
+Here's a rebase.
 
-Git version 2.1.1
+Before applying these for food I should probably rename force_create to force.
 
-On Thu, Dec 4, 2014 at 12:11 PM, Konstantin Khomoutov
-<flatworm@users.sourceforge.net> wrote:
-> On Thu, 4 Dec 2014 10:06:23 +0100
-> Guilherme <guibufolo@gmail.com> wrote:
->
->> I reported this issue on the git-user mailing list and they
->> redirected me here.
->>
->> The problem I have observed is that with a ignored path `git add
->> <single file>` behaves differently then `git add <list of files>`.
-> [...]
->
-> To those who's interested the original thread on git-users is
-> https://groups.google.com/d/topic/git-users/322tole9am8/discussion
+Michael J Gruber (2):
+  t3200-branch: test -M
+  branch: allow -f with -m and -d
+
+ builtin/branch.c  |  9 +++++++--
+ t/t3200-branch.sh | 14 ++++++++++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+
+-- 
+2.2.0.rc3.286.g888a711
