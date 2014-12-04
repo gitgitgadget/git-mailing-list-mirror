@@ -1,76 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] prompt: respect GIT_TERMINAL_PROMPT to disable terminal prompts
-Date: Thu, 04 Dec 2014 13:33:53 -0800
-Message-ID: <xmqqbnnjrtfi.fsf@gitster.dls.corp.google.com>
-References: <20141204034206.GA1493@peff.net> <20141204035228.GB21492@peff.net>
-	<xmqqy4qntgs6.fsf@gitster.dls.corp.google.com>
-	<20141204210149.GB19953@peff.net>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack base object"
+Date: Thu, 4 Dec 2014 16:34:03 -0500
+Organization: PD Inc
+Message-ID: <F5D60A90C93A45359EF00CC200C81561@black>
+References: <64C98FC352BD45EC9632202946A081E1@black> <20141204005443.GB200195@vauxhall.crustytoothpaste.net>
+Reply-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	  <git@vger.kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 04 22:34:01 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 04 22:34:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwe2B-0004nT-Nk
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 22:34:00 +0100
+	id 1Xwe2R-0004xW-40
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 22:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933274AbaLDVd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 16:33:56 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56314 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932094AbaLDVdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 16:33:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DAF6824E5F;
-	Thu,  4 Dec 2014 16:33:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jgcrS4TUo6GFejY2ZFfZ5LyGRSk=; b=H24bCV
-	njpolPfsYpu41kLHE3sffiAhLS/7D0oatodda5iYOb62DSigsoOuUHdAIEa03gbi
-	unyoQjdlJF0GpD635KJrBAZZOpAb5CVSaoYcIdahOxv3aTy8eDQssQweD7b3/oY0
-	K+ifjynoO0/WcYBBETUfYd1EYk+LQY3+m+RWo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=olCGkxIWZYGigfOgZvWVcNBs6PHrcOoV
-	i+YyOARczA2j5V25eKCBChuKvlCMOy7/757K+jvIcZoqDpezDyxXgEijoCoEmHjj
-	REBpmTsBVus630CqHgaMmiUvoTtCMkAbvhKhbgfZmhkTxVgQHxW+LYLrKWZRQhjq
-	qygRFd+YPO0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D1E2224E5E;
-	Thu,  4 Dec 2014 16:33:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56C9524E5D;
-	Thu,  4 Dec 2014 16:33:54 -0500 (EST)
-In-Reply-To: <20141204210149.GB19953@peff.net> (Jeff King's message of "Thu, 4
-	Dec 2014 16:01:49 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3F1B8926-7BFD-11E4-BA5B-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933207AbaLDVeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 16:34:11 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:60632 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932094AbaLDVeJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 16:34:09 -0500
+Received: from black (five-58.pdinc.us [192.168.5.58])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sB4LY3CC009130;
+	Thu, 4 Dec 2014 16:34:04 -0500
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <20141204005443.GB200195@vauxhall.crustytoothpaste.net>
+Thread-Index: AdAPXRtpqnFJ0p5ySsSWNqpxnc3bEwArKJ3g
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260806>
 
-Jeff King <peff@peff.net> writes:
+> -----Original Message-----
+> From: brian m. carlson
+> Sent: Wednesday, December 03, 2014 19:55
+> 
+> On Wed, Dec 03, 2014 at 06:31:18PM -0500, Jason Pyeron wrote:
+> > I remember hitting this a while ago, but just gave up.
+> > 
+> > It seems to be a problem for others too.
+> > 
+> > Any ideas on how to debug this so it can be patched?
+> > 
+> > -----Original Message-----
+> > From: Dave Lindbergh
+> > Sent: Wednesday, December 03, 2014 18:07
+> > To: cygwin
+> > 
+> > Aha - you're right.
+> > 
+> > It works fine on a local NTFS volume.
+> > 
+> > I get the error when I do it on Z:, which is mapped to a 
+> network drive
+> > (on another Windows box).
+> > 
+> > Is there a workaround? Why does this happen?
+> 
+> I don't think anyone is sure.  My wild guess is that there's something
+> about the way that Cygwin wraps Windows calls that makes it 
+> fail in this
+> case.  It might be interesting to run the Windows and Cygwin versions
+> under an strace equivalent and see where things differ.
 
-> On Thu, Dec 04, 2014 at 10:24:09AM -0800, Junio C Hamano wrote:
->
->> I wish this covered a lot more than just this part from an
->> end-user's point of view, but this is definitely one of the most
->> important code paths the mechanism should cover.
->
-> Which parts do you mean? Stuff like "git add -i"?
+[this was posted to the cygwin list]
 
-No, more like "tag -s" that eventually leads to somebody prompting
-for the passphrase to unlock your GPG key---and from an end user's
-point of view, that somebody is Git.
+http://nerdfever.com/files/strace.txt
 
-Of course, from _our_ point of view, that somebody is not us.  We do
-not have direct control, certainly from this codepath.
+> 
+> It's an interesting problem, but I don't have any Windows 
+> systems, so I
+> can't look into it.
+
+If it becomes a little less magic, I will chomp on the problem, but I cannot make a predictable test case.
+
+-Jason
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00. 
