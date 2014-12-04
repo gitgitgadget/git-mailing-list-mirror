@@ -1,65 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 05/23] expire_reflog(): rename "ref" parameter to
- "refname"
-Date: Thu, 4 Dec 2014 15:44:22 -0800
-Message-ID: <20141204234422.GG16345@google.com>
-References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
- <1417734515-11812-6-git-send-email-mhagger@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] doc: document error handling functions and
+ conventions (Re: [PATCH 03/14] copy_fd: pass error message back through a
+ strbuf)
+Date: Thu, 4 Dec 2014 18:44:33 -0500
+Message-ID: <20141204234432.GA29953@peff.net>
+References: <20141117233525.GC4336@google.com>
+ <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
+ <20141118004841.GE4336@google.com>
+ <CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
+ <20141203050217.GJ6527@google.com>
+ <20141203051344.GM6527@google.com>
+ <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
+ <20141204030133.GA16345@google.com>
+ <xmqqy4qnq9m2.fsf@gitster.dls.corp.google.com>
+ <20141204234147.GF16345@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 05 00:44:30 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 00:44:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwg4T-0005eY-QC
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:44:30 +0100
+	id 1Xwg4f-0005lK-1a
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:44:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933335AbaLDXo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 18:44:26 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:40377 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933119AbaLDXoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 18:44:25 -0500
-Received: by mail-ie0-f171.google.com with SMTP id rl12so16925161iec.30
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 15:44:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=vkhl0WXJDfErTzX1LJwRDNq9BQqR/2r74AYjwXWg4Fk=;
-        b=doTKoWk4SJ6wb1C+83rvCdkSCv8wo7I024sYmBZmyjsQDm07mp5Je1mmf/GhdycyNl
-         1EU6yzoXEue4G23yP/4sqFKcRg2BjGvMLNspPEsgadxN64XHRPCjcAMZKgH8NDQ9Alng
-         IvHPSv9KkemEiXavG4UIaGPEiHn++nayXDoXffrzj+WC3hwgzqIO7jNJukIEteUlFSmy
-         qrmNyKWbTpZS/GZhLN1CAWr5++HYgyHEX01aW3rkBzgEVf2wDYpDGGmpOALJWzeqJ039
-         O0LaVZ1jnEcQLdcyxL3boMVGPzigUqdoqyWMe3A+V3h3DXyKY9g3bolme8v6kTVu6rLS
-         O+EQ==
-X-Received: by 10.50.41.5 with SMTP id b5mr3236272igl.9.1417736664946;
-        Thu, 04 Dec 2014 15:44:24 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:5da0:cb9e:66b:e537])
-        by mx.google.com with ESMTPSA id rp3sm6511571igb.1.2014.12.04.15.44.23
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Dec 2014 15:44:24 -0800 (PST)
+	id S933364AbaLDXoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 18:44:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48653 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933119AbaLDXog (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 18:44:36 -0500
+Received: (qmail 27044 invoked by uid 102); 4 Dec 2014 23:44:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 17:44:36 -0600
+Received: (qmail 10689 invoked by uid 107); 4 Dec 2014 23:44:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 18:44:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 18:44:33 -0500
 Content-Disposition: inline
-In-Reply-To: <1417734515-11812-6-git-send-email-mhagger@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20141204234147.GF16345@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260841>
 
-Michael Haggerty wrote:
+On Thu, Dec 04, 2014 at 03:41:47PM -0800, Jonathan Nieder wrote:
 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  builtin/reflog.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+> Junio C Hamano wrote:
+> > Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> >> Here's a draft for documentation on that.
+> >
+> > Thanks; looks reasonable; even if the discussion between you and
+> > Peff took us to a slightly different direction than what you
+> > described here, the earlier description of long established practice
+> > is a welcome addition.
+> 
+> I think I see what I misunderstood.  Do you mean "even if we settle on
+> a different API, this documentation of what you started with should be
+> easy to adapt and will make life easier"?
+> 
+> In other words, did you mean to say that things are still up in the
+> air (which I agree with) or that the project has already settled on a
+> different direction (which I do not)?
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+FWIW, that is how I read it (up in the air), and where I thought our
+discussion was.
+
+-Peff
