@@ -1,86 +1,95 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Enhancement Request: "locale" git option
-Date: Thu, 4 Dec 2014 15:55:27 -0500
-Message-ID: <20141204205527.GA19953@peff.net>
-References: <54801C39020000A1000182FA@gwsmtp1.uni-regensburg.de>
- <54801B50.4080500@web.de>
- <20141204095557.GE27455@peff.net>
- <CACBZZX4Rin6jj2viTUmdpEqLb9TWnMf+p_vRF8BbLrTWFDcp3A@mail.gmail.com>
- <548087F8.1030103@drmicha.warpmail.net>
- <CACBZZX6iOtO-Wv_T1Sgtmjqdi8kEziBCHwp1X319x0o1QMOnGA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] prompt: respect GIT_TERMINAL_PROMPT to disable
+ terminal prompts
+Date: Thu, 4 Dec 2014 16:01:49 -0500
+Message-ID: <20141204210149.GB19953@peff.net>
+References: <20141204034206.GA1493@peff.net>
+ <20141204035228.GB21492@peff.net>
+ <xmqqy4qntgs6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 21:55:35 2014
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 22:01:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwdR0-0006u9-K7
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 21:55:34 +0100
+	id 1XwdX9-0002BT-Ri
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 22:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932094AbaLDUzb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2014 15:55:31 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48518 "HELO cloud.peff.net"
+	id S1754665AbaLDVBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 16:01:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48525 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753165AbaLDUza (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 15:55:30 -0500
-Received: (qmail 19918 invoked by uid 102); 4 Dec 2014 20:55:30 -0000
+	id S1753165AbaLDVBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 16:01:51 -0500
+Received: (qmail 20217 invoked by uid 102); 4 Dec 2014 21:01:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 14:55:30 -0600
-Received: (qmail 9338 invoked by uid 107); 4 Dec 2014 20:55:32 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 15:01:51 -0600
+Received: (qmail 9384 invoked by uid 107); 4 Dec 2014 21:01:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 15:55:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 15:55:27 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 16:01:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 16:01:49 -0500
 Content-Disposition: inline
-In-Reply-To: <CACBZZX6iOtO-Wv_T1Sgtmjqdi8kEziBCHwp1X319x0o1QMOnGA@mail.gmail.com>
+In-Reply-To: <xmqqy4qntgs6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260800>
 
-On Thu, Dec 04, 2014 at 06:21:40PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+On Thu, Dec 04, 2014 at 10:24:09AM -0800, Junio C Hamano wrote:
 
-> > That is one of the many reasons why I proposed to have a dictionary=
- of
-> > the main technical terms for each language before we even localise =
-git
-> > in that language. In an ideal word, we would provide a simple solut=
-ion
-> > for looking these terms up both ways. I don't think we're going to =
-have
-> > localised man pages any time soon, are we?
->=20
-> I think that's a great idea, and one that's only blocked on someone
-> (hint hint) sending patches for it.
->=20
-> It would be neat-o to have something to make translating the docs
-> easier, i.e. PO files for sections of the man pages. There's tools to
-> help with that which we could use.
->=20
-> But there's no reason for us not to have translated glossaries in the=
- meantime.
+> Jeff King <peff@peff.net> writes:
+> 
+> > diff --git a/prompt.c b/prompt.c
+> > index e5b4938..8181eeb 100644
+> > --- a/prompt.c
+> > +++ b/prompt.c
+> > @@ -57,11 +57,19 @@ char *git_prompt(const char *prompt, int flags)
+> >  			r = do_askpass(askpass, prompt);
+> >  	}
+> >  
+> > -	if (!r)
+> > -		r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
+> >  	if (!r) {
+> > -		/* prompts already contain ": " at the end */
+> > -		die("could not read %s%s", prompt, strerror(errno));
+> > +		const char *err;
+> > +
+> > +		if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
+> > +			r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
+> > +			err = strerror(errno);
+> > +		} else {
+> > +			err = "terminal prompts disabled";
+> > +		}
+> > +		if (!r) {
+> > +			/* prompts already contain ": " at the end */
+> > +			die("could not read %s%s", prompt, err);
+> > +		}
+> >  	}
+> >  	return r;
+> >  }
+> 
+> I wish this covered a lot more than just this part from an
+> end-user's point of view, but this is definitely one of the most
+> important code paths the mechanism should cover.
 
-By the way, there has been fairly significant volunteer effort put into
-translating Pro Git (e.g., <http://git-scm.com/book/de/v1>). I have no
-idea if the terms they use are similar to the terms we use in the
-localized messages. It might make sense to:
+Which parts do you mean? Stuff like "git add -i"?  I agree it might be
+nice to turn that off, but it is a little bit of a different beast, in
+that it reads from stdin. The git_prompt code is unique in accessing
+/dev/tty directly, which makes it hard to shut off.
 
-  1. Coordinate with those translators to make sure that the glossary
-     terms are consistent.
+I don't know of any other code in git that  (and it is used in
+many spots due to calls into the credential_fill code).
 
-  2. Figure out how to harness those translators for manpage work. Why
-     did Pro Git get so much volunteer translation done, and the
-     manpages didn't? Did they advertise to the right people? Have an
-     interface that made it easier for non-technical people to get
-     involved?
+I suspect there's similar code in git-svn that comes from the svn
+library, and it might be nice to cover that, too.
+
+Anyway, I'm happy to give other prompts the same treatment, but I think
+we can wait and add them as they are noticed.
 
 -Peff
