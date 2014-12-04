@@ -1,271 +1,162 @@
-From: David Michael <fedora.dm0@gmail.com>
-Subject: [PATCH v2] compat: convert modes to use portable file type values
-Date: Wed, 03 Dec 2014 21:24:17 -0500
-Message-ID: <87wq68w3se.fsf@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC] doc: document error handling functions and conventions
+ (Re: [PATCH 03/14] copy_fd: pass error message back through a strbuf)
+Date: Wed, 3 Dec 2014 19:01:33 -0800
+Message-ID: <20141204030133.GA16345@google.com>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com>
+ <20141117233525.GC4336@google.com>
+ <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
+ <20141118004841.GE4336@google.com>
+ <CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
+ <20141203050217.GJ6527@google.com>
+ <20141203051344.GM6527@google.com>
+ <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 04 03:23:59 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 04:01:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwM5F-0007HI-B1
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 03:23:57 +0100
+	id 1XwMfp-0000HD-LK
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 04:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbaLDCXx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Dec 2014 21:23:53 -0500
-Received: from mail-qa0-f48.google.com ([209.85.216.48]:56160 "EHLO
-	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750840AbaLDCXw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Dec 2014 21:23:52 -0500
-Received: by mail-qa0-f48.google.com with SMTP id v10so11428872qac.35
-        for <git@vger.kernel.org>; Wed, 03 Dec 2014 18:23:52 -0800 (PST)
+	id S1751429AbaLDDBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 22:01:41 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:34597 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751106AbaLDDBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 22:01:40 -0500
+Received: by mail-ie0-f169.google.com with SMTP id y20so15281395ier.28
+        for <git@vger.kernel.org>; Wed, 03 Dec 2014 19:01:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=sle7UNfR6SaKQtVtUCusU8eTa0AdOXkoA0BcnS1pXAI=;
-        b=fSMn1bCmpCVbn4PRt/7Im9ga58ywPAje1AhSlZul+HoCGdyXjiLIuwB7ySRt3t5J8t
-         f7o1pQCuNWDB+6KnK9kxJXxN63DKfmZaR2NiS09c1ofqo+USmRThQSGm48SRNR+9UEks
-         pFX0Nnq22C8FUC0iBHaznTD4677X5KzZiv7avXPblGCKmD3ct4tEyKUo5xqjPYEE/EVL
-         TiQfTwjrgLPeqgO6HcvbnGRcYrGXI86HxZXRdEiDcJoQ037EvTfsoZY8Aw0+u/gX+l3P
-         NPkwgbA0jzJ+ePbPtrhjBAYBGPYoFI2pCsZT8CkXElGDuhcERHVPZoOwoLkQpJ/wmT5X
-         9K8w==
-X-Received: by 10.224.96.194 with SMTP id i2mr12844015qan.87.1417659831968;
-        Wed, 03 Dec 2014 18:23:51 -0800 (PST)
-Received: from callisto (c-68-81-204-146.hsd1.pa.comcast.net. [68.81.204.146])
-        by mx.google.com with ESMTPSA id k9sm13921160qaj.7.2014.12.03.18.23.50
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Dec 2014 18:23:50 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=HJgC5jiQrdgJy3gwbWdXgKyrjxKp3iuFu75AcclIWxk=;
+        b=VMsl7Mrq1bdKOmUXrywnVLihBImeDDKGfVRmN4mJssYvDLTboQcurJhkD2Ygr44wRR
+         FexINiAf/2iTeXMssFD4muX5CmBx0lwXOEzG7V89NAjuLYxDeqtXCj/bd1ct/taIwxue
+         AWlaZW1QsedP6TzJta+bh/zGsC2/SP/Y8CEgZUyEgGM+aDCV25huamjkS8K6V9w1mV01
+         sEiCvsO9trsKngwJyPDuMf6t57TF/kuKc3/8d9QbxG5HrSUknbeL6RbQfTKetqz421LQ
+         JjwXyRmJikD7ESUG6Kh0JpBB4SPawcbkaWUdWErmGXn29AZ7ClK13dxRD/heqOL0IOn5
+         5FpQ==
+X-Received: by 10.50.142.104 with SMTP id rv8mr11583120igb.23.1417662099969;
+        Wed, 03 Dec 2014 19:01:39 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:c1ad:3fe5:3da3:c161])
+        by mx.google.com with ESMTPSA id k140sm13739879ioe.39.2014.12.03.19.01.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 03 Dec 2014 19:01:39 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260722>
 
-This adds simple wrapper functions around calls to stat(), fstat(),
-and lstat() that translate the operating system's native file type
-bits to those used by most operating systems.  It also rewrites the
-S_IF* macros to the common values, so all file type processing is
-performed using the translated modes.  This makes projects portable
-across operating systems that use different file type definitions.
-
-Only the file type bits may be affected by these compatibility
-functions; the file permission bits are assumed to be 07777 and are
-passed through unchanged.
-
-Signed-off-by: David Michael <fedora.dm0@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Changes in v2:
+>> -extern int copy_fd(int ifd, int ofd);
+>> +extern int copy_fd(int ifd, int ofd, struct strbuf *err);
+>
+> It is not limited to this single function, but what contract do we
+> envision this "error messages are given back to the caller via
+> strbuf" convention should give between the callers and the callee?
 
-Remove "else"s and use a perm_bits variable as suggested by Torsten
-B=C3=B6gershausen.
+Here's a draft for documentation on that.
 
-Only translate the mode on stat() success as suggested by Duy Nguyen.
+ Documentation/technical/api-error-handling.txt | 75 ++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
+ create mode 100644 Documentation/technical/api-error-handling.txt
 
-Add S_IFSOCK translation to support a git.c test.  (I left the device
-types defined just to support all the POSIX file types.)
-
-Replace _POSIX_SOURCE=3D1 with _POSIX_C_SOURCE=3D200112L to properly ge=
-t
-IEEE 1003.1a definitions for lstat(), as suggested for glibc.
-
- Makefile          |  8 ++++++++
- cache.h           |  7 -------
- compat/stat.c     | 49 +++++++++++++++++++++++++++++++++++++++++++++++=
-++
- configure.ac      | 23 +++++++++++++++++++++++
- git-compat-util.h | 34 ++++++++++++++++++++++++++++++++++
- 5 files changed, 114 insertions(+), 7 deletions(-)
- create mode 100644 compat/stat.c
-
-diff --git a/Makefile b/Makefile
-index 827006b..cba3be1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -191,6 +191,10 @@ all::
- # Define NO_TRUSTABLE_FILEMODE if your filesystem may claim to support
- # the executable mode bit, but doesn't really do so.
- #
-+# Define NEEDS_MODE_TRANSLATION if your OS strays from the typical fil=
-e type
-+# bits in mode values (e.g. z/OS defines I_SFMT to 0xFF000000 as oppos=
-ed to the
-+# usual 0xF000).
-+#
- # Define NO_IPV6 if you lack IPv6 support and getaddrinfo().
- #
- # Define NO_UNIX_SOCKETS if your system does not offer unix sockets.
-@@ -1230,6 +1234,10 @@ endif
- ifdef NO_TRUSTABLE_FILEMODE
- 	BASIC_CFLAGS +=3D -DNO_TRUSTABLE_FILEMODE
- endif
-+ifdef NEEDS_MODE_TRANSLATION
-+	COMPAT_CFLAGS +=3D -DNEEDS_MODE_TRANSLATION
-+	COMPAT_OBJS +=3D compat/stat.o
-+endif
- ifdef NO_IPV6
- 	BASIC_CFLAGS +=3D -DNO_IPV6
- endif
-diff --git a/cache.h b/cache.h
-index 99ed096..f8174fe 100644
---- a/cache.h
-+++ b/cache.h
-@@ -65,13 +65,6 @@ unsigned long git_deflate_bound(git_zstream *, unsig=
-ned long);
-  *
-  * The value 0160000 is not normally a valid mode, and
-  * also just happens to be S_IFDIR + S_IFLNK
-- *
-- * NOTE! We *really* shouldn't depend on the S_IFxxx macros
-- * always having the same values everywhere. We should use
-- * our internal git values for these things, and then we can
-- * translate that to the OS-specific value. It just so
-- * happens that everybody shares the same bit representation
-- * in the UNIX world (and apparently wider too..)
-  */
- #define S_IFGITLINK	0160000
- #define S_ISGITLINK(m)	(((m) & S_IFMT) =3D=3D S_IFGITLINK)
-diff --git a/compat/stat.c b/compat/stat.c
+diff --git a/Documentation/technical/api-error-handling.txt b/Documentation/technical/api-error-handling.txt
 new file mode 100644
-index 0000000..c2d4711
+index 0000000..fc68db1
 --- /dev/null
-+++ b/compat/stat.c
-@@ -0,0 +1,49 @@
-+#define _POSIX_C_SOURCE 200112L
-+#include <stddef.h>    /* NULL         */
-+#include <sys/stat.h>  /* *stat, S_IS* */
-+#include <sys/types.h> /* mode_t       */
++++ b/Documentation/technical/api-error-handling.txt
+@@ -0,0 +1,75 @@
++Error reporting in git
++======================
 +
-+static inline mode_t mode_native_to_git(mode_t native_mode)
-+{
-+	mode_t perm_bits =3D native_mode & 07777;
-+	if (S_ISREG(native_mode))
-+		return 0100000 | perm_bits;
-+	if (S_ISDIR(native_mode))
-+		return 0040000 | perm_bits;
-+	if (S_ISLNK(native_mode))
-+		return 0120000 | perm_bits;
-+	if (S_ISBLK(native_mode))
-+		return 0060000 | perm_bits;
-+	if (S_ISCHR(native_mode))
-+		return 0020000 | perm_bits;
-+	if (S_ISFIFO(native_mode))
-+		return 0010000 | perm_bits;
-+	if (S_ISSOCK(native_mode))
-+		return 0140000 | perm_bits;
-+	/* Non-standard type bits were given. */
-+	return perm_bits;
-+}
++`die`, `usage`, `error`, and `warning` report errors of various
++kinds.
 +
-+int git_stat(const char *path, struct stat *buf)
-+{
-+	int rc =3D stat(path, buf);
-+	if (rc =3D=3D 0)
-+		buf->st_mode =3D mode_native_to_git(buf->st_mode);
-+	return rc;
-+}
++- `die` is for fatal application errors.  It prints a message to
++  the user and exits with status 128.
 +
-+int git_fstat(int fd, struct stat *buf)
-+{
-+	int rc =3D fstat(fd, buf);
-+	if (rc =3D=3D 0)
-+		buf->st_mode =3D mode_native_to_git(buf->st_mode);
-+	return rc;
-+}
++- `usage` is for errors in command line usage.  After printing its
++  message, it exits with status 129.  (See also `usage_with_options`
++  in the link:api-parse-options.html[parse-options API].)
 +
-+int git_lstat(const char *path, struct stat *buf)
-+{
-+	int rc =3D lstat(path, buf);
-+	if (rc =3D=3D 0)
-+		buf->st_mode =3D mode_native_to_git(buf->st_mode);
-+	return rc;
-+}
-diff --git a/configure.ac b/configure.ac
-index 6af9647..5c1312f 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -873,6 +873,29 @@ else
- 	SNPRINTF_RETURNS_BOGUS=3D
- fi
- GIT_CONF_SUBST([SNPRINTF_RETURNS_BOGUS])
-+#
-+# Define NEEDS_MODE_TRANSLATION if your OS strays from the typical fil=
-e type
-+# bits in mode values.
-+AC_CACHE_CHECK([whether the platform uses typical file type bits],
-+ [ac_cv_sane_mode_bits], [
-+AC_EGREP_CPP(yippeeyeswehaveit,
-+	AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-+[#if S_IFMT =3D=3D 0170000 && \
-+	S_IFREG =3D=3D 0100000 && S_IFDIR =3D=3D 0040000 && S_IFLNK =3D=3D 01=
-20000 && \
-+	S_IFBLK =3D=3D 0060000 && S_IFCHR =3D=3D 0020000 && \
-+	S_IFIFO =3D=3D 0010000 && S_IFSOCK =3D=3D 0140000
-+yippeeyeswehaveit
-+#endif
-+]),
-+	[ac_cv_sane_mode_bits=3Dyes],
-+	[ac_cv_sane_mode_bits=3Dno])
-+])
-+if test $ac_cv_sane_mode_bits =3D yes; then
-+	NEEDS_MODE_TRANSLATION=3D
-+else
-+	NEEDS_MODE_TRANSLATION=3DUnfortunatelyYes
-+fi
-+GIT_CONF_SUBST([NEEDS_MODE_TRANSLATION])
-=20
-=20
- ## Checks for library functions.
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 400e921..265afc8 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -474,6 +474,40 @@ extern int git_munmap(void *start, size_t length);
- #define on_disk_bytes(st) ((st).st_blocks * 512)
- #endif
-=20
-+#ifdef NEEDS_MODE_TRANSLATION
-+#undef S_IFMT
-+#undef S_IFREG
-+#undef S_IFDIR
-+#undef S_IFLNK
-+#undef S_IFBLK
-+#undef S_IFCHR
-+#undef S_IFIFO
-+#undef S_IFSOCK
-+#define S_IFMT   0170000
-+#define S_IFREG  0100000
-+#define S_IFDIR  0040000
-+#define S_IFLNK  0120000
-+#define S_IFBLK  0060000
-+#define S_IFCHR  0020000
-+#define S_IFIFO  0010000
-+#define S_IFSOCK 0140000
-+#ifdef stat
-+#undef stat
-+#endif
-+#define stat(path, buf) git_stat(path, buf)
-+extern int git_stat(const char *, struct stat *);
-+#ifdef fstat
-+#undef fstat
-+#endif
-+#define fstat(fd, buf) git_fstat(fd, buf)
-+extern int git_fstat(int, struct stat *);
-+#ifdef lstat
-+#undef lstat
-+#endif
-+#define lstat(path, buf) git_lstat(path, buf)
-+extern int git_lstat(const char *, struct stat *);
-+#endif
++- `error` is for non-fatal library errors.  It prints a message
++  to the user and returns -1 for convenience in signaling the error
++  to the caller.
 +
- #define DEFAULT_PACKED_GIT_LIMIT \
- 	((1024L * 1024L) * (sizeof(void*) >=3D 8 ? 8192 : 256))
-=20
---=20
-1.9.3
++- `warning` is for reporting situations that probably should not
++  occur but which the user (and Git) can continue to work around
++  without running into too many problems.  Like `error`, it
++  returns -1 after reporting the situation to the caller.
++
++Customizable error handlers
++---------------------------
++
++The default behavior of `die` and `error` is to write a message to
++stderr and then exit or return as appropriate.  This behavior can be
++overridden using `set_die_routine` and `set_error_routine`.  For
++example, "git daemon" uses set_die_routine to write the reason `die`
++was called to syslog before exiting.
++
++Library errors
++--------------
++
++Functions return a negative integer on error.  Details beyond that
++vary from function to function:
++
++- Some functions return -1 for all errors.  Others return a more
++  specific value depending on how the caller might want to react
++  to the error.
++
++- Some functions report the error to stderr with `error`,
++  while others leave that for the caller to do.
++
++- errno is not meaningful on return from most functions (except
++  for thin wrappers for system calls).
++
++Check the function's API documentation to be sure.
++
++Caller-handled errors
++---------------------
++
++An increasing number of functions take a parameter 'struct strbuf *err'.
++On error, such functions append a message about what went wrong to the
++'err' strbuf.  The message is meant to be complete enough to be passed
++to `die` or `error` as-is.  For example:
++
++	if (ref_transaction_commit(transaction, &err))
++		die("%s", err.buf);
++
++The 'err' parameter will be untouched if no error occured, so multiple
++function calls can be chained:
++
++	t = ref_transaction_begin(&err);
++	if (!t ||
++	    ref_transaction_update(t, "HEAD", ..., &err) ||
++	    ret_transaction_commit(t, &err))
++		die("%s", err.buf);
++
++The 'err' parameter must be a pointer to a valid strbuf.  To silence
++a message, pass a strbuf that is explicitly ignored:
++
++	if (thing_that_can_fail_in_an_ignorable_way(..., &err))
++		/* This failure is okay. */
++		strbuf_reset(&err);
