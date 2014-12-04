@@ -1,103 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv3 00/13] the refs-transactions-reflog series
-Date: Thu, 4 Dec 2014 10:14:04 -0800
-Message-ID: <20141204181404.GD9992@google.com>
-References: <1417681763-32334-1-git-send-email-sbeller@google.com>
- <54809577.4080302@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] prompt: respect GIT_TERMINAL_PROMPT to disable terminal prompts
+Date: Thu, 04 Dec 2014 10:24:09 -0800
+Message-ID: <xmqqy4qntgs6.fsf@gitster.dls.corp.google.com>
+References: <20141204034206.GA1493@peff.net> <20141204035228.GB21492@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>, ronniesahlberg@gmail.com,
-	gitster@pobox.com, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Dec 04 19:14:14 2014
+Content-Type: text/plain
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 04 19:24:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwaur-00066U-DW
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 19:14:13 +0100
+	id 1Xwb4a-0003Y4-5B
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 19:24:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932709AbaLDSOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 13:14:09 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:53262 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932455AbaLDSOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 13:14:07 -0500
-Received: by mail-ie0-f172.google.com with SMTP id tr6so16451041ieb.3
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 10:14:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZnGbYFZohsaasOCVuxlSVb32mx1FA5DHBRcwBbQhaNc=;
-        b=uxqd+W2S8UaK80BTplSOvKG/kgeX+zbYbCmV2vDAt/yEZLoUCCqMoYl5+txt/JJ3CL
-         GYxBnCqh1n/XYyBdR8ISTyqprMfmIQS7JnDQqHLq0I6pBbbPwnz9MuMpeDA0+ZypQZLb
-         w6lj8ZJX2neBl8t6yY2dH6ZQq1nT4NaynFgZnwaiEQJYY5TmXyNHG1c/32rjtnEXCrhd
-         a+JmUhaGyGInvGw+oS4/TqCbGMxPpwkZPYXpdXO/7Lwp5ewYqFFXqA3oRJ04cZ6hPqCp
-         mjwbulg7o1OBq2wMFIjSx+1oMP0ynIr3VcFGcs/vfX7rSNLz+fnYORW0FOEd65/wAqfJ
-         ICpA==
-X-Received: by 10.43.137.131 with SMTP id io3mr12396234icc.69.1417716847315;
-        Thu, 04 Dec 2014 10:14:07 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:c1ad:3fe5:3da3:c161])
-        by mx.google.com with ESMTPSA id fk8sm20666173igb.9.2014.12.04.10.14.06
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Dec 2014 10:14:06 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <54809577.4080302@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932382AbaLDSYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 13:24:12 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754672AbaLDSYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 13:24:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5830621F05;
+	Thu,  4 Dec 2014 13:24:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Hfehf/4bkMjzJGXJSZLEZxpIqpU=; b=d6/KNC
+	7bD1w9nO+sfsWo9erc3jPPsbdy9bx0dfxmrqBJDsxok5h8zOzPL3d18LB34tvswn
+	YheGLLeJA+ZCiciQgMLwwjTAslS9eoLP71+Jcn9O27+3G2/K/vx/0Ox/sgPgx7CZ
+	QJML2nSod6KBygY26qdQVnsYvZGXK/WUlKM2k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TA+/V0ZacZbOy2227Dxjy0nGij6FCJqi
+	Lnlp7XABhnsKPs8jeH0MAaJBIfvxBxS06wWXM5kVUs5lbWRKsk0qVFx7u7luf7ba
+	QlE61qgImqxMuF0H8WbkaI7aGhW3MjzfCgxXwCweHMz/p5Rfn974xgO/5gzaHqor
+	4xJRpUgVLPo=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42D7B21F04;
+	Thu,  4 Dec 2014 13:24:11 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B385821F03;
+	Thu,  4 Dec 2014 13:24:10 -0500 (EST)
+In-Reply-To: <20141204035228.GB21492@peff.net> (Jeff King's message of "Wed, 3
+	Dec 2014 22:52:29 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BDFB499A-7BE2-11E4-8AAE-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260776>
 
-Michael Haggerty wrote:
+Jeff King <peff@peff.net> writes:
 
-> I am still unhappy with the approach of this series, for the reasons
-> that I explained earlier [1]. In short, I think that the abstraction
-> level is wrong. In my opinion, consumers of the refs API should barely
-> even have to *know* about reflogs, let alone implement reflog expiration
-> themselves.
+> diff --git a/prompt.c b/prompt.c
+> index e5b4938..8181eeb 100644
+> --- a/prompt.c
+> +++ b/prompt.c
+> @@ -57,11 +57,19 @@ char *git_prompt(const char *prompt, int flags)
+>  			r = do_askpass(askpass, prompt);
+>  	}
+>  
+> -	if (!r)
+> -		r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
+>  	if (!r) {
+> -		/* prompts already contain ": " at the end */
+> -		die("could not read %s%s", prompt, strerror(errno));
+> +		const char *err;
+> +
+> +		if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
+> +			r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
+> +			err = strerror(errno);
+> +		} else {
+> +			err = "terminal prompts disabled";
+> +		}
+> +		if (!r) {
+> +			/* prompts already contain ": " at the end */
+> +			die("could not read %s%s", prompt, err);
+> +		}
+>  	}
+>  	return r;
+>  }
 
-Okay, now returning to the substance of this comment.  This is
-revisiting themes from [3], so my opinions are probably not a
-surprise.
+I wish this covered a lot more than just this part from an
+end-user's point of view, but this is definitely one of the most
+important code paths the mechanism should cover.
 
-I think that the API changes that you and Stefan are proposing are
-consistent and could both go in.
-
-You suggested refactoring expire_reflogs() to use a callback that
-decides what to expire.  Then it doesn't have to care that the
-expiration happens by creating a new reflog and copying over the
-reflog entries that are not being expired.  The result is a clean
-reflog expiration API.
-
-The ref-transaction-reflog series allows those low-level steps to be
-part of a ref transaction.  Any ref backend (the current files-based
-backend or a future other one) would get a chance to reimplement those
-low-level steps, which are part of what happens during ref updates and
-reflog deletion.  The goal is for all reflog updates to use the
-transaction API, so that new ref/reflog backends only need to
-implement the transaction functions.
-
-So *both* are making good changes, with different goals.
-
-The implementation of the reflog expiration API can use the ref
-transaction API.
-
-> Of course, reflog expiration *should* be done atomically. But that is
-> the business of the refs module; callers shouldn't have to do all the
-> complicated work of building the transaction themselves.
-
-I don't understand this comment.  After the ref-transaction-reflog
-series, a transaction_update_ref() call still takes care of the
-corresponding reflog update without the caller having to worry about
-it.
-
-Thanks for looking it over,
-Jonathan
-
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/259712/focus=259770
-[3] http://thread.gmane.org/gmane.comp.version-control.git/259939/focus=259967
+Thanks, will queue.
