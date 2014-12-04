@@ -1,93 +1,166 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 06/23] expire_reflog(): exit early if the reference has no reflog
-Date: Fri,  5 Dec 2014 00:08:18 +0100
-Message-ID: <1417734515-11812-7-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 08/23] Extract function should_expire_reflog_ent()
+Date: Fri,  5 Dec 2014 00:08:20 +0100
+Message-ID: <1417734515-11812-9-git-send-email-mhagger@alum.mit.edu>
 References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 00:09:50 2014
+X-From: git-owner@vger.kernel.org Fri Dec 05 00:09:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwfWu-0003KS-Gd
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:09:48 +0100
+	id 1XwfWy-0003Mo-Pr
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804AbaLDXIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 18:08:54 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:42800 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933299AbaLDXIv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:08:51 -0500
-X-AuditID: 12074413-f79f26d0000030e7-90-5480e9825b33
+	id S933372AbaLDXJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 18:09:47 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:60069 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753262AbaLDXIx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:08:53 -0500
+X-AuditID: 1207440e-f79d26d000001b6e-8f-5480e985e3ee
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 6B.A0.12519.289E0845; Thu,  4 Dec 2014 18:08:50 -0500 (EST)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id EB.67.07022.589E0845; Thu,  4 Dec 2014 18:08:53 -0500 (EST)
 Received: from michael.fritz.box (p5DDB0B3C.dip0.t-ipconnect.de [93.219.11.60])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8de3027614
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8de5027614
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 4 Dec 2014 18:08:49 -0500
+	Thu, 4 Dec 2014 18:08:52 -0500
 X-Mailer: git-send-email 2.1.3
 In-Reply-To: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqNv0siHEYMMWXYuuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqNv6siHEYN5DcYuuK91MFg29V5gt
 	3t5cwmhxe8V8Zovevk+sFps3t7M4sHn8ff+ByWPnrLvsHgs2lXpcvKTs8XmTXABrFLdNUmJJ
-	WXBmep6+XQJ3xrWHjxkLtnNV7Ni4lbWBcRdHFyMnh4SAicSNBecZIWwxiQv31rN1MXJxCAlc
-	ZpTY0b+LFcI5xiTR2/2eGaSKTUBXYlFPMxOILSKgJjFz1WywDmaBE4wSvyZ3A43i4BAWCJSY
-	0JcBUsMioCqx7PVhsA28Ai4SG2fMZQIpkRCQk9i6zhskzCngKjF1ZitYiRBQybNNC9knMPIu
-	YGRYxSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrrpebWaKXmlK6iRESWsI7GHedlDvEKMDBqMTD
-	W7C7PkSINbGsuDL3EKMkB5OSKO/Zpw0hQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4jY8A5XhT
-	EiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErylL4AaBYtS01Mr0jJzShDS
-	TBycIMO5pESKU/NSUosSS0sy4kGREV8MjA2QFA/Q3jKQdt7igsRcoChE6ylGRSlx3nqQhABI
-	IqM0D24sLGG8YhQH+lIYYjsPMNnAdb8CGswENPhsQy3I4JJEhJRUA6P1GZ3Pa20Onq5WvxpY
-	1WsuyuhjvsWRv2ma24dXv0S75iRmLY49w+T83/zT0TNftO9G7zu4csbWx7MuXqxbIVP03e71
-	FI2Ms+u1X8WyrJPvcJZg+5h2985klswpk7qdGXNdCrTf3b2vt/EQg88Uxjl7b996 
+	WXBmep6+XQJ3xv0JHewFB6Qqfv++z9TA+E2ki5GTQ0LAROLqssPsELaYxIV769m6GLk4hAQu
+	M0rM33AWLCEkcIxJonV+FIjNJqArsainmQnEFhFQk5i5ajZYA7PACUaJX5O7GUESwgJOElP/
+	d4A1swioSmw7s5AZxOYVcJFoOfqTtYuRA2ibnMTWdd4gYU4BV4mpM1sZIXa5SDzbtJB9AiPv
+	AkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6xnq5mSV6qSmlmxghocW3g7F9vcwhRgEORiUe
+	3oLd9SFCrIllxZW5hxglOZiURHnPPm0IEeJLyk+pzEgszogvKs1JLT7EKMHBrCTCa3wEKMeb
+	klhZlVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuAtfQHUKFiUmp5akZaZU4KQ
+	ZuLgBBnOJSVSnJqXklqUWFqSEQ+KjPhiYGyApHiA9paBtPMWFyTmAkUhWk8xKkqJ81qDJARA
+	EhmleXBjYQnjFaM40JfCENt5gMkGrvsV0GAmoMFnG2pBBpckIqSkGhhdH+c4P1DqffyZtyNl
+	gnNUnmby455lLNO3q+d0F6Rc1pi5KOHRp6J/F9d02d7KYZzLNfNgNd/i7YEMLyYrT54nY84Q
+	Pu+orPWq+mtCN67m/FWUuGP749+F2Kq0vdxBDmIiISm7/9asOBog+Ej2/nnrkq3H 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260829>
 
-There is very little cleanup needed if the reference has no reflog. If
-we move the initialization of log_file down a bit, there's even less.
-So instead of jumping to the cleanup code at the end of the function,
-just do the cleanup and return inline.
+Extracted from expire_reflog_ent() a function that is solely
+responsible for deciding whether a reflog entry should be expired. By
+separating this "business logic" from the mechanics of actually
+expiring entries, we are working towards the goal of encapsulating
+reflog expiry within the refs API, with policy decided by a callback
+function passed to it by its caller.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/reflog.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ builtin/reflog.c | 70 +++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 42 insertions(+), 28 deletions(-)
 
 diff --git a/builtin/reflog.c b/builtin/reflog.c
-index df302f4..a282e60 100644
+index d344d45..7bc6e0f 100644
 --- a/builtin/reflog.c
 +++ b/builtin/reflog.c
-@@ -368,9 +368,11 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
- 	lock = lock_any_ref_for_update(refname, sha1, 0, NULL);
- 	if (!lock)
- 		return error("cannot lock ref '%s'", refname);
-+	if (!reflog_exists(refname)) {
-+		unlock_ref(lock);
-+		return 0;
-+	}
- 	log_file = git_pathdup("logs/%s", refname);
--	if (!reflog_exists(refname))
--		goto finish;
- 	if (!cmd->dry_run) {
- 		newlog_path = git_pathdup("logs/%s.lock", refname);
- 		cb.newlog = fopen(newlog_path, "w");
-@@ -419,7 +421,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
- 			clear_commit_marks(tip_commit, REACHABLE);
- 		}
+@@ -288,51 +288,65 @@ static int unreachable(struct expire_reflog_cb *cb, struct commit *commit, unsig
+ 	return !(commit->object.flags & REACHABLE);
+ }
+ 
+-static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+-		const char *email, unsigned long timestamp, int tz,
+-		const char *message, void *cb_data)
++/*
++ * Return true iff the specified reflog entry should be expired.
++ */
++static int should_expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
++				    const char *email, unsigned long timestamp, int tz,
++				    const char *message, void *cb_data)
+ {
+ 	struct expire_reflog_cb *cb = cb_data;
+ 	struct commit *old, *new;
+ 
+ 	if (timestamp < cb->cmd->expire_total)
+-		goto prune;
+-
+-	if (cb->cmd->rewrite)
+-		osha1 = cb->last_kept_sha1;
++		return 1;
+ 
+ 	old = new = NULL;
+ 	if (cb->cmd->stalefix &&
+ 	    (!keep_entry(&old, osha1) || !keep_entry(&new, nsha1)))
+-		goto prune;
++		return 1;
+ 
+ 	if (timestamp < cb->cmd->expire_unreachable) {
+ 		if (cb->unreachable_expire_kind == UE_ALWAYS)
+-			goto prune;
++			return 1;
+ 		if (unreachable(cb, old, osha1) || unreachable(cb, new, nsha1))
+-			goto prune;
++			return 1;
  	}
-- finish:
+ 
+ 	if (cb->cmd->recno && --(cb->cmd->recno) == 0)
+-		goto prune;
+-
+-	if (cb->newlog) {
+-		char sign = (tz < 0) ? '-' : '+';
+-		int zone = (tz < 0) ? (-tz) : tz;
+-		fprintf(cb->newlog, "%s %s %s %lu %c%04d\t%s",
+-			sha1_to_hex(osha1), sha1_to_hex(nsha1),
+-			email, timestamp, sign, zone,
+-			message);
+-		hashcpy(cb->last_kept_sha1, nsha1);
+-	}
+-	if (cb->cmd->verbose)
+-		printf("keep %s", message);
++		return 1;
 +
- 	if (cb.newlog) {
- 		if (fclose(cb.newlog)) {
- 			status |= error("%s: %s", strerror(errno),
+ 	return 0;
+- prune:
+-	if (!cb->newlog)
+-		printf("would prune %s", message);
+-	else if (cb->cmd->verbose)
+-		printf("prune %s", message);
++}
++
++static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
++		const char *email, unsigned long timestamp, int tz,
++		const char *message, void *cb_data)
++{
++	struct expire_reflog_cb *cb = cb_data;
++
++	if (cb->cmd->rewrite)
++		osha1 = cb->last_kept_sha1;
++
++	if (should_expire_reflog_ent(osha1, nsha1, email, timestamp, tz,
++				     message, cb_data)) {
++		if (!cb->newlog)
++			printf("would prune %s", message);
++		else if (cb->cmd->verbose)
++			printf("prune %s", message);
++	} else {
++		if (cb->newlog) {
++			char sign = (tz < 0) ? '-' : '+';
++			int zone = (tz < 0) ? (-tz) : tz;
++			fprintf(cb->newlog, "%s %s %s %lu %c%04d\t%s",
++				sha1_to_hex(osha1), sha1_to_hex(nsha1),
++				email, timestamp, sign, zone,
++				message);
++			hashcpy(cb->last_kept_sha1, nsha1);
++		}
++		if (cb->cmd->verbose)
++			printf("keep %s", message);
++	}
+ 	return 0;
+ }
+ 
 -- 
 2.1.3
