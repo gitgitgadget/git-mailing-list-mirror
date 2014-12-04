@@ -1,84 +1,79 @@
-From: Guilherme <guibufolo@gmail.com>
-Subject: git add <single file> and git add <list of files> behave differentely
- for ignored files
-Date: Thu, 4 Dec 2014 10:06:23 +0100
-Message-ID: <CAMDzUtzQJoEi17OfX8FPOV6SDJ_ytJSH-YTKx2DtUON35-EVSg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gc: support temporarily preserving garbage
+Date: Thu, 4 Dec 2014 04:10:23 -0500
+Message-ID: <20141204091023.GB27455@peff.net>
+References: <1415927805-53644-1-git-send-email-brodie@sf.io>
+ <xmqqlhnd1j66.fsf@gitster.dls.corp.google.com>
+ <20141117213442.GD15880@peff.net>
+ <CADQoFhyxFNzazsEaE6Bk2W_KDhogBho8vgJXkDDPsYvC46ZX5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 10:07:21 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bryan Turner <bturner@atlassian.com>,
+	Stefan Saasen <ssaasen@atlassian.com>
+To: Brodie Rao <brodie@sf.io>
+X-From: git-owner@vger.kernel.org Thu Dec 04 10:10:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwSNb-000791-92
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 10:07:19 +0100
+	id 1XwSQm-0000Im-Aq
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 10:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbaLDJHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 04:07:13 -0500
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:55671 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526AbaLDJHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 04:07:08 -0500
-Received: by mail-wg0-f48.google.com with SMTP id y19so22061827wgg.35
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 01:07:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=c8YNQYc/cLjC9FI0N6KLSFclZYTXsa/qsMT2DJSp1YY=;
-        b=fEuZIVEIitnKaB2vZCh3Qm7Y935LAXANgnJKpr2YMNbXB3vX/r/HX82uYlmKui4Xc6
-         q1jFia8mgmTQJ+mGMElW3wEPLnXNqVD3Do6F9/vXzPdeg+zXBKbn6rlk72GY7ZzWc4Sg
-         tigIENHjdkUS3yByQe6Z3HkJVOSVlSB8TkeZwLxzE65O7YNEWRlJqTX7d7a4KMJcid/W
-         MtuHglAPvqr6UbfFMSJZhNCKa8AiFDvotYIY124yrKcpBMcT29I/H9mAUMF6w/uedppU
-         XGWVTKbuGVyZit/roxrwFkNf+LRgxQpNWJpfzwDdshPL6AFdpEtum0vOF2rff7FZ4IjP
-         8u/A==
-X-Received: by 10.181.13.242 with SMTP id fb18mr23503334wid.1.1417684025065;
- Thu, 04 Dec 2014 01:07:05 -0800 (PST)
-Received: by 10.27.54.80 with HTTP; Thu, 4 Dec 2014 01:06:23 -0800 (PST)
+	id S1753381AbaLDJK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 04:10:28 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48244 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753042AbaLDJKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 04:10:25 -0500
+Received: (qmail 22858 invoked by uid 102); 4 Dec 2014 09:10:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 03:10:25 -0600
+Received: (qmail 4801 invoked by uid 107); 4 Dec 2014 09:10:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 04:10:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 04:10:23 -0500
+Content-Disposition: inline
+In-Reply-To: <CADQoFhyxFNzazsEaE6Bk2W_KDhogBho8vgJXkDDPsYvC46ZX5Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260749>
 
-Hello,
+On Wed, Dec 03, 2014 at 01:21:03PM -0800, Brodie Rao wrote:
 
-I reported this issue on the git-user mailing list and they redirected me here.
+> > I think it is also not sufficient. This patch seems to cover only
+> > objects. But we assume that we can atomically rename() new versions of
+> > files into place whenever we like without disrupting existing readers.
+> > This is the case for ref updates (and packed-refs), as well as the index
+> > file.  The destination end of the rename is an unlink() in disguise, and
+> > would be susceptible to the same problems.
+> 
+> I'm not aware of renaming over files happening anywhere in gc-related
+> code. Do you think that's something that would need to be addressed in
+> the rest of the code base before going forward with this garbage
+> directory approach? If so, do you have any suggestions on how to
+> tackle that problem?
 
-The problem I have observed is that with a ignored path `git add
-<single file>` behaves differently then `git add <list of files>`.
+As an example, if you run "git pack-refs --all --prune" (which is run by
+"git gc"), it will create a new pack-refs file and rename it into place.
+Another git program (say, "git for-each-ref") might be reading the file
+at the same time. If you run pack-refs and for-each-ref simultaneously
+in tight loops on your problematic NFS setup, what happens?
 
-I my git/info/excludes file i have
+I have no idea if it breaks or not. I don't have such a misbehaving
+system, and I don't know how rename() is implemented on it. But if it
+_is_ a problem of the same variety, then I don't see much point in
+making an invasive fix to address half of the problem areas, but not the
+other half (i.e., if we are still left with a broken git in this setup,
+was the invasive fix worth the cost?).
 
-/COM/config
-!COM/config/Project.gny
+If it is a problem (and again, I am just guessing), I'd imagine you
+would need a similar setup to what you proposed for unlink(): before
+renaming "packed-refs.lock" into "packed-refs", hard-link it into your
+"trash" area. And you'd probably want to intercept rename() there, to
+catch all places where we use this technique.
 
-The file COM/config/Project.gny has already been added to the
-repository via `git add -f`.
-
-When doing
-
-    git add -- COM/config/Projec.gny
-
-git will not complain but when doing
-
-    git add -- COM/config/Project.gny otherfiles.c
-
-it will report:
-
-    The following paths are ignored by one of your .gitignore files:
-    COM/config
-    Use -f if you really want to add them.
-    fatal: no files added
-
-This odd behaviour is also present in `git check-ignore`.
-
-Before adding the file `git check-ignore` correctly reports the file
-as ignored. After having added it via `git add -f` it won't report it
-as ignored anymore.
-
-Even if not a bug this behaviour is inconsistent and might want to be
-addressed as it makes scripting a little bit harder.
-
-Thank you.
+-Peff
