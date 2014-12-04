@@ -1,154 +1,115 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Our cumbersome mailing list workflow
-Date: Wed, 3 Dec 2014 23:57:47 -0000
-Organization: OPDS
-Message-ID: <221286D608764D5EA342E08097333279@PhilipOakley>
-References: <1416423000-4323-1-git-send-email-sbeller@google.com>	<1416578950-23210-1-git-send-email-mhagger@alum.mit.edu>	<546F4B5B.2060508@alum.mit.edu> <xmqq61e81ljq.fsf@gitster.dls.corp.google.com> <5473CD28.5020405@alum.mit.edu>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Disabling credential helper?
+Date: Thu, 4 Dec 2014 00:42:31 +0000
+Message-ID: <20141204004231.GA200195@vauxhall.crustytoothpaste.net>
+References: <20141203000310.GE90134@vauxhall.crustytoothpaste.net>
+ <20141203005953.GB6527@google.com>
+ <20141203012148.GB29427@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="Windows-1252";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Stefan Beller" <sbeller@google.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>,
-	"Ronnie Sahlberg" <sahlberg@google.com>, <git@vger.kernel.org>
-To: "Michael Haggerty" <mhagger@alum.mit.edu>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 00:57:52 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uAKRQypu60I7Lcqm"
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 04 01:42:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwJnq-0001I1-Vp
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 00:57:51 +0100
+	id 1XwKVJ-0007jY-Cy
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 01:42:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442AbaLCX5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 18:57:47 -0500
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:20049 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751639AbaLCX5q (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Dec 2014 18:57:46 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuUYACmif1ROl3OcPGdsb2JhbABaDoJ4gSqGNWzBKAGEFQQCgRYXAQEBAQEBBQEBAQE4IBuDfQUBAQEBAwgBAS4eAQEWCwsCAwUCAQMOBwECCSUUAQQaBgcDFAYBEggCAQIDAYgxxwCPXAEBAQEBBQEBAQEekAQRAVCDK4EeBZAPXosOjwuHIj8/MIEMgTkBAQE
-X-IPAS-Result: AuUYACmif1ROl3OcPGdsb2JhbABaDoJ4gSqGNWzBKAGEFQQCgRYXAQEBAQEBBQEBAQE4IBuDfQUBAQEBAwgBAS4eAQEWCwsCAwUCAQMOBwECCSUUAQQaBgcDFAYBEggCAQIDAYgxxwCPXAEBAQEBBQEBAQEekAQRAVCDK4EeBZAPXosOjwuHIj8/MIEMgTkBAQE
-X-IronPort-AV: E=Sophos;i="5.07,511,1413241200"; 
-   d="scan'208";a="478967228"
-Received: from host-78-151-115-156.as13285.net (HELO PhilipOakley) ([78.151.115.156])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 03 Dec 2014 23:57:42 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751639AbaLDAmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 19:42:42 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:54957 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751030AbaLDAml (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Dec 2014 19:42:41 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 73B702808F;
+	Thu,  4 Dec 2014 00:42:35 +0000 (UTC)
+Mail-Followup-To: Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20141203012148.GB29427@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.17-1-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260717>
 
-From: "Michael Haggerty" <mhagger@alum.mit.edu>
-Sent: Tuesday, November 25, 2014 12:28 AM
-> On 11/21/2014 07:00 PM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> I don't think that those iterations changed anything substantial 
->>> that
->>> overlaps with my version, but TBH it's such a pain in the ass 
->>> working
->>> with patches in email that I don't think I'll go to the effort of
->>> checking for sure unless somebody shows interest in actually using 
->>> my
->>> version.
->>>
->>> Sorry for being grumpy today :-(
-[..]
-> Let me list the aspects of our mailing list workflow that I find
-> cumbersome as a contributor and reviewer:
->
-> * Submitting patches to the mailing list is an ordeal of configuring
-> format-patch and send-email and getting everything just right, using
-> instructions that depend on the local environment. We saw that hardly
-> any GSoC applicants were able to get it right on their first attempt.
-> Submitting a patch series should be as simple as "git push".
->
-> * Once patches are submitted, there is no assurance that you (Junio)
-> will apply them to your tree at the same point that the submitter
-> developed and tested them.
->
-> * The branch name that you choose for a patch series is not easily
-> derivable from the patches as they appeared in the mailing list. 
-> Trying
-> to figure out whether/where the patches exist in your tree is a 
-> largely
-> manual task. The reverse mapping, from in-tree commit to the email 
-> where
-> it was proposed, is even more difficult to infer.
->
-> * Your tree has no indication of which version of a patch series (v1,
-> v2, etc) is currently applied.
->
-> The previous three points combine to make it awkward to get patches 
-> into
-> my local repository to review or test. There are two alternatives, 
-> both
-> cumbersome and imprecise:
->
->  * I do "git fetch gitster", then try to figure out whether the branch
-> I'm interested in is present, what its name is, and whether the 
-> version
-> in your tree is the latest version, then "git checkout xy/foobar".
->
 
-I had a thought about the issue of version labeling and of keeping the 
-old patch series hanging about during development that I felt was worth 
-recording.
+--uAKRQypu60I7Lcqm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-My thought was that while the cover letter and series version number are 
-currently stripped out from the start of the series, they could be added 
-back as a supplemental commit at the end of the series (an --allow-empty 
-commit). This could contain all of the patch subject lines and their 
-post '---' notes as appropriate.
+On Tue, Dec 02, 2014 at 08:21:48PM -0500, Jeff King wrote:
+> We could teach the credential-helper code to do that (e.g., a helper
+> returns "stop=3Dtrue" and we respect that). But I think you can do it
+> reasonably well today by making the input process fail. Sadly setting
+> GIT_ASKPASS to "false" just makes git complain and then try harder[1].
 
-Thus the series branch would appear to have an extra commit (compared to 
-the current process) after the original tip's possible merge into say 
-pu.
+Yes, I did notice that.  I tried /bin/false at first, and was a bit
+surprised it wasn't effective.
 
-When subsequent series are sent to the list, the new supplemental commit 
-would be a 'merge', with its second parent being the old series, thus 
-the old series is not lost until the branch is deleted, and the existing 
-merge pattern is retained.
+> But you can dissociate git from the terminal, like:
+>=20
+>   $ setsid -w git ls-remote https://github.com/private/repo
+>   fatal: could not read Username for 'https://github.com': No such device=
+ or address
 
-Clearly if this would need some additional coding as it's not suitable 
-as a manual process, but it could be just as automatic as the current 
-process while providing that little bit of additional visibility.
+I think this is a bit heavy-handed for my needs.  At work, we develop on
+headless VMs, so we use SSH for pushing since we can forward the agent.
+At home, I use Kerberos, so the prompt generally indicates I need to run
+kinit.
 
-Below, I've tried to set out how the commit graph might look (oldest to 
-the left). Hopefully my MUA won't ruin it.
-The first patch series branches at A, and is merged at D, with the 
-supplemental commit labeled with v1z.
+In neither case do I actually want to enter a password, so the
+environment variable will work fine, I think, since it sounds like it's
+at least semi-supported and it works well in scripts and in
+configuration files.
 
-When the new series arrives, and pu is rewound, we have the new series 
-applied from G (which in reality may not be linked directly from A), and 
-merged back at K. However the new v2z supplemental commit is now the 
-po/patches
-branch head, and is also a merge back to v1z.
+Also, having to patch the Perl git wrappers to use setsid would be more
+inconvenience than it's worth.
 
-patch series 1 (cover letter z)
-- A - B - C - D - E - F   <- pu
-   \        /
-    v1a-v1b--v1z     <-po/patches
+> That might have other fallouts if you use process groups for anything. I
+> have no problem with either an option to disable the terminal prompting,
+> or teaching the credential-helper interface to allow helpers to stop
+> lookup, either of which would be cleaner.
 
-patch series 2
-- A - G - H - I - J - K     <- pu (note re-wound)
-  |        \         /            (merge D lost)
-   \       v2a-v2b-v2c--v2z    <-po/patches
-    \                  /
-    v1a-v1b--v1z - - -.
+I'll probably submit a patch to disable the terminal prompting this
+weekend.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-The key idea here is to use the existing branching model, but then to 
-add the cover letter and other details at the end, rather than the 
-beginning as might have been expected from the email transmit sequence.
+--uAKRQypu60I7Lcqm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Philip
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUf633AAoJEL9TXYEfUvaL/JYP/36MNuXJmHTcX88N283UfqY4
+1SKKgds2TVs1JY+Gnir2tj6XJ9Sr7gbA2Ss5Yc43/v314Ucm6GpgJqTuatnW47gV
+YjbnUjLFFl6AXjWZwjKXJXRJyd1r9tgM7vlSoIC2uiy5z1y/NXuSlEWaiDsCJUki
+70d5INLQhqnx7Q/BNYLjDRPK8YXfXRmrtLVDWQXeY5fXjAMpXDP0PDrZRCEdcU8M
+qVH++VAkPJYU7d5+78K1gikQgku8DXwZUXT5CY1Vs8zk20NsWbirkLAWJuFTdIrz
+KIPOq6RL9gtpkcBZjwd7PrRnu8gk+Io4vUGUAwB9nvBKzP2q5O235JARGbI2XeTn
+6HvSylmAfA89qdEHUMtZb/qFqe0avIGpvnvHgfmhbN6qts9q4GK8apgY9CbWuDd4
+sIyCuSUD4exyMWeqDTfBHnD8c/ujwwjSxGeCR6S+68O2PLfzO7pvd2dv9RSpJw11
+ibVZ+B51wcj0ZkhbBNY5g8GXtYfqM17ETQ25qvnPx8mK3lmGGpkK/GXfnlRHkSWE
+WD5HR0MHKHuujipe54vuMCLUJS3qhWKtXk34D+r22HV9FY+2+jdq3zpGoDNCIGVC
+UpfFmBI0cb5Gg72tFg69JDDv7wi0lxiz0gQJJacR3DEjXQ/vwLe0XQ9KFxaTMg24
+xtbXsyLjRZbmJfuJzQg2
+=Neoq
+-----END PGP SIGNATURE-----
+
+--uAKRQypu60I7Lcqm--
