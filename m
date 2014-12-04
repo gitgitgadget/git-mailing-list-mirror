@@ -1,87 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug in reflog of length 0x2BFF
-Date: Thu, 04 Dec 2014 14:14:50 -0800
-Message-ID: <xmqq388vrrj9.fsf@gitster.dls.corp.google.com>
-References: <547C8610.8080301@cs.uni-saarland.de>
-	<20141201233515.GV6527@google.com>
-	<xmqqvblrrwxu.fsf@gitster.dls.corp.google.com>
-	<5480C60E.3070903@cs.uni-saarland.de>
-	<20141204215805.GD19953@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christoph Mallon <mallon@cs.uni-saarland.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 04 23:14:58 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 01/23] refs.c: make ref_transaction_create a wrapper for ref_transaction_update
+Date: Fri,  5 Dec 2014 00:08:13 +0100
+Message-ID: <1417734515-11812-2-git-send-email-mhagger@alum.mit.edu>
+References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 00:08:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwefp-0004MR-43
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 23:14:57 +0100
+	id 1XwfVx-0002lY-44
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:08:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754776AbaLDWOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 17:14:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62968 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753014AbaLDWOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 17:14:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1178923895;
-	Thu,  4 Dec 2014 17:14:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9H3P7/0BIRr3qPl/vPZczlxiSl0=; b=oeOdB8
-	foXug+gdGcV1AcXSuKtTW0Tzoq6Uro4N0o871YqqUViUYXew4Yi/37afNxFNqO14
-	rGN3O8SEl5+/uJYXve7ZaUlpktF3+obAFmxXzOTxbYa8pzX/RrI5Lw7zKqA/Ff+2
-	f8MbBFGZTEA5et/WKL8dnTNHMoyej9kNWdz94=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=boChLzuEd+8GrKMAZ+0VKg3TS0rh6Yn0
-	kLZQGRrxu6bbVemqp74IIxmh457de8WDTjCRh4EMqz8IE/wny7pffOZsMx7Bnooa
-	zXev5Fm9rNCuRLaBDQA0SrynaIiSDriohh80K9flxHAZ8Axv9S5UEo/xYgd8Eb2h
-	L5CMhzLP1QI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0484523894;
-	Thu,  4 Dec 2014 17:14:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7002923892;
-	Thu,  4 Dec 2014 17:14:51 -0500 (EST)
-In-Reply-To: <20141204215805.GD19953@peff.net> (Jeff King's message of "Thu, 4
-	Dec 2014 16:58:05 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F7A77BE4-7C02-11E4-8751-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933269AbaLDXIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 18:08:45 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:64234 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933201AbaLDXIo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:08:44 -0500
+X-AuditID: 12074414-f797f6d000004084-97-5480e97b91f1
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 40.E5.16516.B79E0845; Thu,  4 Dec 2014 18:08:43 -0500 (EST)
+Received: from michael.fritz.box (p5DDB0B3C.dip0.t-ipconnect.de [93.219.11.60])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8ddw027614
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 4 Dec 2014 18:08:42 -0500
+X-Mailer: git-send-email 2.1.3
+In-Reply-To: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqFv9siHE4PIOdYuuK91MFg29V5gt
+	3t5cwmhxe8V8Zovevk+sFv8m1Fhs3tzO4sDu8ff9ByaPnbPusnss2FTqcfGSssfnTXIBrFHc
+	NkmJJWXBmel5+nYJ3Bn3tz5nL1jKW/Hy4iy2BsbfXF2MnBwSAiYSh1bvYYawxSQu3FvP1sXI
+	xSEkcJlRYsbss1DOMSaJl0t+M4FUsQnoSizqaQazRQTUJGaumg1WxCzwg1HidcMaoFEcHMIC
+	8RI/VmuD1LAIqEo8eLSCFSTMK+Ai8WFmCIgpISAnsXWdN0gFp4CrxNSZrYwgthBQxbNNC9kn
+	MPIuYGRYxSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRroZebWaKXmlK6iRESYCI7GI+clDvEKMDB
+	qMTDW7C7PkSINbGsuDL3EKMkB5OSKO/Zpw0hQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4jY8A
+	5XhTEiurUovyYVLSHCxK4rzfFqv7CQmkJ5akZqemFqQWwWRlODiUJHi5XgA1ChalpqdWpGXm
+	lCCkmTg4QYZzSYkUp+alpBYllpZkxIPiIr4YGBkgKR6gvWUg7bzFBYm5QFGI1lOMilLivPUg
+	CQGQREZpHtxYWNp4xSgO9KUwbylIFQ8w5cB1vwIazAQ0+GxDLcjgkkSElFQDo6j3nIMLJote
+	PbL/vMnPGcHWey0XcFjNMFjx9Kj6tv9xzW/msL+M/rpRc8usy98enZ6v3t1482wy53yuMx1T
+	VhUfVrxzJum2l93kef3Bwu8ygtXfCpptVli+72/1LleR3Ts931rsOv35s5x9dnrN 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260810>
 
-Jeff King <peff@peff.net> writes:
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-> I think the bug is in the reverse-reflog reader in
-> for_each_reflog_ent_reverse. It reads BUFSIZ chunks of the file in
-> reverse order, and then parses them individually. If the trailing
-> newline for a line falls directly on the block boundary, we may not have
-> it in our current block, and pass the line to show_one_reflog_ent
-> without a trailing newline.
+The ref_transaction_update function can already be used to create refs by
+passing null_sha1 as the old_sha1 parameter. Simplify by replacing
+transaction_create with a thin wrapper.
 
-Ahh, thanks for helping spot it.  A code that uses BUFSIZ explains
-why a single reproduction recipe is platform dependent.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c | 27 ++-------------------------
+ 1 file changed, 2 insertions(+), 25 deletions(-)
 
-> So this is a long-standing bug in for_each_reflog_ent_reverse. It just
-> showed up recently because we started using that function for
-> read_ref_at_ent.
-> ...
-> The above is a workaround. I think the right solution is probably to
-> teach for_each_reflog_ent_reverse to makes sure the trailing newline is
-> included (either by tweaking the reverse code, or conditionally adding
-> it to the parsed buffer).
-
-Sounds correct.  Unfortunately I no longer remember how I decided to
-deal with a line that spans the block boundary in that piece of code
-X-<.
+diff --git a/refs.c b/refs.c
+index 5ff457e..005eb18 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3623,31 +3623,8 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ 			   int flags, const char *msg,
+ 			   struct strbuf *err)
+ {
+-	struct ref_update *update;
+-
+-	assert(err);
+-
+-	if (transaction->state != REF_TRANSACTION_OPEN)
+-		die("BUG: create called for transaction that is not open");
+-
+-	if (!new_sha1 || is_null_sha1(new_sha1))
+-		die("BUG: create ref with null new_sha1");
+-
+-	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+-		strbuf_addf(err, "refusing to create ref with bad name %s",
+-			    refname);
+-		return -1;
+-	}
+-
+-	update = add_update(transaction, refname);
+-
+-	hashcpy(update->new_sha1, new_sha1);
+-	hashclr(update->old_sha1);
+-	update->flags = flags;
+-	update->have_old = 1;
+-	if (msg)
+-		update->msg = xstrdup(msg);
+-	return 0;
++	return ref_transaction_update(transaction, refname, new_sha1,
++				      null_sha1, flags, 1, msg, err);
+ }
+ 
+ int ref_transaction_delete(struct ref_transaction *transaction,
+-- 
+2.1.3
