@@ -1,110 +1,145 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] introduce git root
-Date: Thu, 4 Dec 2014 16:12:32 -0500
-Message-ID: <20141204211232.GC19953@peff.net>
-References: <1417291211-32268-1-git-send-email-arjun024@gmail.com>
- <2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
- <CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
- <vpqoaro99xd.fsf@anie.imag.fr>
- <xmqqd284rryz.fsf@gitster.dls.corp.google.com>
- <CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
- <20141202070415.GC1948@peff.net>
- <xmqqd282m09j.fsf@gitster.dls.corp.google.com>
- <20141204092251.GC27455@peff.net>
- <xmqqlhmntf02.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCHv3 00/13] the refs-transactions-reflog series
+Date: Thu, 04 Dec 2014 22:13:38 +0100
+Message-ID: <5480CE82.9000408@alum.mit.edu>
+References: <1417681763-32334-1-git-send-email-sbeller@google.com> <54809577.4080302@alum.mit.edu> <20141204181404.GD9992@google.com> <20141204183231.GA2649@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Arjun Sreedharan <arjun024@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 22:12:41 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: ronniesahlberg@gmail.com, gitster@pobox.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 22:13:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwdhW-0008ME-Qu
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 22:12:39 +0100
+	id 1Xwdil-0000eo-Tc
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 22:13:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754809AbaLDVMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 16:12:35 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48537 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754715AbaLDVMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 16:12:34 -0500
-Received: (qmail 20638 invoked by uid 102); 4 Dec 2014 21:12:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 15:12:34 -0600
-Received: (qmail 9444 invoked by uid 107); 4 Dec 2014 21:12:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 16:12:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 16:12:32 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqlhmntf02.fsf@gitster.dls.corp.google.com>
+	id S1754863AbaLDVNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 16:13:49 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:42242 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754630AbaLDVNr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 16:13:47 -0500
+X-AuditID: 12074413-f79f26d0000030e7-e2-5480ce850f62
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 29.BC.12519.58EC0845; Thu,  4 Dec 2014 16:13:41 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB0B3C.dip0.t-ipconnect.de [93.219.11.60])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4LDcci022193
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 4 Dec 2014 16:13:40 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <20141204183231.GA2649@google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHKsWRmVeSWpSXmKPExsUixO6iqNt6riHEYMIbYYuuK91MFg29V5gt
+	3t5cwmjR2/eJ1WLz5nYWB1aPnbPusnss2FTqcfGSssfnTXIBLFHcNkmJJWXBmel5+nYJ3Bmt
+	65ayFkyXrji6dSdbA+MT0S5GDg4JAROJ6f+Yuxg5gUwxiQv31rN1MXJxCAlcZpSY+eM8M4Rz
+	lkli647LLCBVvALaEqv2PmADsVkEVCUmnZjGCmKzCehKLOppZgKxRQWCJE7uuc4OUS8ocXLm
+	E7BeEQEfiUW958FqmAVcJBa2LGMEOUJYwEGi4xQ/xK4VjBK/Z0wHq+cU0JfY/2o9C0S9nsSO
+	679YIWx5ieats5knMArMQrJiFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdfL
+	zSzRS00p3cQICWvhHYy7TsodYhTgYFTi4S3YXR8ixJpYVlyZe4hRkoNJSZT3wKmGECG+pPyU
+	yozE4oz4otKc1OJDjBIczEoivMZHgHK8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWp
+	RTBZGQ4OJQne7WeBGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBkRpfDIxVkBQP
+	0N5SkHbe4oLEXKAoROspRkUpcd5VIAkBkERGaR7cWFiyesUoDvSlMO/DM0BVPMBEB9f9Cmgw
+	E9Dgsw21IINLEhFSUg2MctHljhzrV6ryBa3wmTjDx6ty7asbm/ZL7Dq+Ztb3qnuFP9fu3r0o
+	ozWt+nJUaH0C+66bLKazdlq7SP3+UrjWh2/bt9BVkpdO3xAqe79hQ83ydVXrl5Z0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260803>
 
-On Thu, Dec 04, 2014 at 11:02:37AM -0800, Junio C Hamano wrote:
-
-> > Christian raised the issue of cluttering the "git --option" namespace,
-> > and I do agree that's a potential issue. 
+On 12/04/2014 07:32 PM, Stefan Beller wrote:
+> On Thu, Dec 04, 2014 at 10:14:04AM -0800, Jonathan Nieder wrote:
+>> Michael Haggerty wrote:
+>>
+>>> I am still unhappy with the approach of this series, for the reasons
+>>> that I explained earlier [1]. In short, I think that the abstraction
+>>> level is wrong. In my opinion, consumers of the refs API should barely
+>>> even have to *know* about reflogs, let alone implement reflog expiration
+>>> themselves.
+>>
+> Ok, what is a consumer for you? In my understanding the builtin/reflog.c is
+> a consumer of the refs API, so there we want to see clean code just telling the
+> refs backend to do its thing.
 > 
-> I am not sure if that is an issue at all.  You will need the same
-> number of options to cover all the necessary "computables" somewhere
-> anyway.
+> I think Jonathan made a good point by saying our patch series have 
+> different goals.
 > 
-> "git --show-this-or-that-computable" is not more or not less
-> cluttering compared to "git var --show-this-or-that-computable".
+> So I really like the code, which leads to 
+> 
+>     reflog_expiry_prepare(refname, sha1, cb.policy_cb);
+>     for_each_reflog_ent(refname, expire_reflog_ent, &cb);
+>     reflog_expiry_cleanup(cb.policy_cb);
+> 
+> but look at the surrounding code:
+>     
+> 	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
+> 		if (hold_lock_file_for_update(&reflog_lock, log_file, 0) < 0)
+> 			...
+> 	}
+> 
+> 
+> 	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
+> 		if (close_lock_file(&reflog_lock)) {
+> 			...
+> 		}
+> 	}
+> 
+> That part should also go into the refs.c backend, so in the expire_reflog
+> function you can just write:
+> 
+> 	transaction_begin(...)  // This does all the hold_lock_file_for_update magic 
+> 				// lines 457-464 in mhagger/reflog-expire-api
+> 
+>  	reflog_expiry_prepare(refname, sha1, cb.policy_cb);
+> 	for_each_reflog_ent(refname, expire_reflog_ent, &cb);
+> 	reflog_expiry_cleanup(cb.policy_cb);
+> 
+> 	transaction_commit(...) // This does all the close_lock_file/rename/write_in_full
+> 				// lines 470-488 in mhagger/reflog-expire-api
 
-My issue is only that "git --foo" has other options besides computables.
-So you need to name each option in a way that makes it clear it is
-reporting a computable and not doing something else.
+I'm pleasantly surprised that you guys have already looked at my work in
+progress. I wish I had had more time earlier today to explain what is
+still to be done:
 
-Take "git --pager" for instance. That would be a natural choice to
-replace "git var GIT_PAGER". But shouldn't "--pager" be the opposite of
-the existing "--no-pager"?
+The whole point of all of the refactoring is to move expire_reflog()
+(and supporting functions like expire_reflog_ent()) to refs.c. The
+"surrounding code" that you mention above would be moved there and would
+*not* need to be done by callers.
 
-So instead we probably need some namespace to indicate that it is a
-"showing" option. Like "--show-pager". And then for consistency, we
-would probably want to move "--exec-path" to "--show-exec-path",
-creating a new "--show-" namespace. Or we could call that namespace
-"git var". :)
+expire_reflog() will gain three callback function pointers as
+parameters. The caller (in this case reflog.c) will pass pointers to
+reflog_expiry_prepare(), reflog_expiry_cleanup(), and
+should_expire_reflog_ent() into expire_reflog().
 
-> I understand we are not talking about removing "git --exec-path",
-> but the desire is to have one single command the user can go to ask
-> about all the computables.  If "var" is to become that single
-> command, then we need to keep the interface to it uniform and
-> consistent, and telling the users to use "git var GIT_PAGER" and
-> "git var --exec-path" in the same script will not fly well.  Also
-> these GIT_$COMPUTABLE_NAME appear as if they can be influenced by
-> setting environment variables of the same name, which invites
-> further confusion.  This is especially bad because some of then do
-> get affected by environment (i.e. GIT_EDITOR="vi" has effect, but
-> GIT_AUTHOR_IDENT="Gitster <gitster@pobox.com>" does not).
+There is no need to wrap the code in a transaction, because the
+"surrounding code" that you mentioned implements all the "transaction"
+that is needed! There is no need to complicated the *ref_transaction*
+interface to allow arbitrary reflog updates when all we need is this one
+very special case, plus of course the reflog appends that (I claim)
+should happen implicitly whenever a reference is updated [1].
 
-I do not think "git var --exec-path" is a good idea, nor GIT_EXEC_PATH
-for the environment-variable confusion you mentioned. I was thinking of
-just creating a new namespace, like:
+>> So *both* are making good changes, with different goals.
+> 
+> If you want to I can rebase the reflog series on top of yours to show
+> they can work together quite nicely.
 
-  git var exec-path
-  git var author-ident
+Feel free to do what you want, but I really don't think we will ever
+need transactions to handle generic reflog updates.
 
-and deprecating the 4 existing GIT_* variables.
+Meanwhile I'll try to get my series finished, including API docs as
+Jonathan requested. I hope the code will be more convincing than my
+prose :-)
 
-> If we admit that "git var" was a failed experiment that gained only
-> four fake variables for the past 10 years, it will not be too much
-> trouble and transition pain to turn the existing ones into option
-> form, like --author-ident etc., like your original proposal did, I
-> would think.
+Michael
 
-I am also OK with that, if the details turn out to be not too ugly once
-somebody starts digging in. I was just anticipating some ugliness in
-advance. :) But I am not planning to work on it in the immediate future,
-so whoever does can make that call.
+[1] Of course, only for references that have reflogs enabled.
 
--Peff
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
