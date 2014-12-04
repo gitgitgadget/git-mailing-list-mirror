@@ -1,108 +1,175 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 23/23] refs.c: don't expose the internal struct ref_lock in the header file
-Date: Fri,  5 Dec 2014 00:08:35 +0100
-Message-ID: <1417734515-11812-24-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 14/23] struct expire_reflog_cb: a new callback data type
+Date: Fri,  5 Dec 2014 00:08:26 +0100
+Message-ID: <1417734515-11812-15-git-send-email-mhagger@alum.mit.edu>
 References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 00:09:30 2014
+X-From: git-owner@vger.kernel.org Fri Dec 05 00:09:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwfWc-00038c-4n
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:09:30 +0100
+	id 1XwfWh-0003Cj-GE
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:09:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933363AbaLDXJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 18:09:24 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:65158 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933354AbaLDXJO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:09:14 -0500
-X-AuditID: 1207440d-f79976d000005643-9a-5480e9999bf1
+	id S933336AbaLDXJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 18:09:04 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:42800 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754847AbaLDXJB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:09:01 -0500
+X-AuditID: 12074413-f79f26d0000030e7-ab-5480e98de98a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 24.16.22083.999E0845; Thu,  4 Dec 2014 18:09:13 -0500 (EST)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 6E.A0.12519.D89E0845; Thu,  4 Dec 2014 18:09:01 -0500 (EST)
 Received: from michael.fritz.box (p5DDB0B3C.dip0.t-ipconnect.de [93.219.11.60])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8deK027614
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8deB027614
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 4 Dec 2014 18:09:12 -0500
+	Thu, 4 Dec 2014 18:09:00 -0500
 X-Mailer: git-send-email 2.1.3
 In-Reply-To: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIIsWRmVeSWpSXmKPExsUixO6iqDvzZUOIwazJchZdV7qZLBp6rzBb
-	vL25hNHi9or5zBa9fZ9YLTZvbmdxYPP4+/4Dk8fOWXfZPRZsKvW4eEnZ4/MmuQDWKG6bpMSS
-	suDM9Dx9uwTujL29/5gLNnFWzG5fztrAuIu9i5GTQ0LAROLGi0ZGCFtM4sK99WxdjFwcQgKX
-	GSXmLWpihXCOMUn8OHqTFaSKTUBXYlFPMxOILSKgJjFz1WywDmaBE4wSvyZ3g40SFoiWeHB4
-	F1gRi4CqRMvSNrBmXgFXiZZrG4BsDqB1chJb13mDhDmBwlNntoK1Cgm4SDzbtJB9AiPvAkaG
-	VYxyiTmlubq5iZk5xanJusXJiXl5qUW6Rnq5mSV6qSmlmxghwcW7g/H/OplDjAIcjEo8vAW7
-	60OEWBPLiitzDzFKcjApifKefdoQIsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE1/gIUI43JbGy
-	KrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMHL9QKoUbAoNT21Ii0zpwQhzcTB
-	CTKcS0qkODUvJbUosbQkIx4UG/HFwOgASfEA7S0DaectLkjMBYpCtJ5iVJQS57UGSQiAJDJK
-	8+DGwlLGK0ZxoC+FeUtBqniA6Qau+xXQYCagwWcbakEGlyQipKQaGMu01RLmVSww7j7rxtgh
-	surqrwNLI41l2Z5UfT3uG9WZWDxl8uzOnzsyHzzgjjCYqbTp8iLuM6ketrNm7/n/qWZG6xO2
-	jz36L7dpHGlg8nUqnq3xkrPr9A/nsOi36ivu1F7f5iNs8f/YzgVPPbv4r8oXr3r+ 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqNv7siHE4M8cbouuK91MFg29V5gt
+	3t5cwmhxe8V8Zovevk+sFps3t7M4sHn8ff+ByWPnrLvsHgs2lXpcvKTs8XmTXABrFLdNUmJJ
+	WXBmep6+XQJ3xqlT5QXX5CsW/3JvYNwv2cXIySEhYCLx+msrK4QtJnHh3nq2LkYuDiGBy4wS
+	8w+vgnKOMUlsXvodrIpNQFdiUU8zE4gtIqAmMXPVbLAiZoETjBK/JnczgiSEBTwk2qZsYe9i
+	5OBgEVCV2LwlGiTMK+Aqceb3ZDaQsISAnMTWdd4gYU6g8NSZrWCdQgIuEs82LWSfwMi7gJFh
+	FaNcYk5prm5uYmZOcWqybnFyYl5eapGuuV5uZoleakrpJkZIWAnvYNx1Uu4QowAHoxIPb8Hu
+	+hAh1sSy4srcQ4ySHExKorxnnzaECPEl5adUZiQWZ8QXleakFh9ilOBgVhLhNT4ClONNSays
+	Si3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfCWvgBqFCxKTU+tSMvMKUFIM3Fw
+	ggznkhIpTs1LSS1KLC3JiAdFRXwxMC5AUjxAe8tA2nmLCxJzgaIQracYFaXEeetBEgIgiYzS
+	PLixsGTxilEc6EthiO08wEQD1/0KaDAT0OCzDbUgg0sSEVJSDYyeOnaWAZYlv8V6fz1X/iYe
+	m7LkXdiDu1nvTjCvzveZGfDtyf6wyq+/WPa5q/htWJFwm8dhtfkNwWsH5HgvSlQeXflKehbP
+	490bj798pbM8eNqD12p+yud8a45b5k3xeiRSw3Ytx/7L5iec5729d5z+naDZw5Tn 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260824>
 
-From: Stefan Beller <sbeller@google.com>
+Add a new data type, "struct expire_reflog_cb", for holding the data
+that expire_reflog() passes to expire_reflog_ent() via
+for_each_reflog_ent(). For now it only holds a pointer to "struct
+expire_reflog_policy_cb". In future commits we will move some data
+from the latter to the former.
 
-Now the struct ref_lock is used completely internally, so let's
-remove it from the header file.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 9 +++++++++
- refs.h | 9 ---------
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ builtin/reflog.c | 43 ++++++++++++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index f3564cf..40c5591 100644
---- a/refs.c
-+++ b/refs.c
-@@ -6,6 +6,15 @@
- #include "dir.h"
- #include "string-list.h"
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 3538e4b..5dfa53a 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -45,10 +45,15 @@ struct expire_reflog_policy_cb {
+ 	struct commit_list *tips;
+ };
  
-+struct ref_lock {
-+	char *ref_name;
-+	char *orig_ref_name;
-+	struct lock_file *lk;
-+	unsigned char old_sha1[20];
-+	int lock_fd;
-+	int force_write;
++struct expire_reflog_cb {
++	void *policy_cb;
 +};
 +
- /*
-  * How to handle various characters in refnames:
-  * 0: An acceptable character for refs
-diff --git a/refs.h b/refs.h
-index 174863d..2957641 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1,15 +1,6 @@
- #ifndef REFS_H
- #define REFS_H
+ struct collected_reflog {
+ 	unsigned char sha1[20];
+ 	char reflog[FLEX_ARRAY];
+ };
++
+ struct collect_reflog_cb {
+ 	struct collected_reflog **e;
+ 	int alloc;
+@@ -323,28 +328,29 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 		const char *email, unsigned long timestamp, int tz,
+ 		const char *message, void *cb_data)
+ {
+-	struct expire_reflog_policy_cb *cb = cb_data;
++	struct expire_reflog_cb *cb = cb_data;
++	struct expire_reflog_policy_cb *policy_cb = cb->policy_cb;
  
--struct ref_lock {
--	char *ref_name;
--	char *orig_ref_name;
--	struct lock_file *lk;
--	unsigned char old_sha1[20];
--	int lock_fd;
--	int force_write;
--};
--
- /*
-  * A ref_transaction represents a collection of ref updates
-  * that should succeed or fail together.
+-	if (cb->cmd->rewrite)
+-		osha1 = cb->last_kept_sha1;
++	if (policy_cb->cmd->rewrite)
++		osha1 = policy_cb->last_kept_sha1;
+ 
+ 	if (should_expire_reflog_ent(osha1, nsha1, email, timestamp, tz,
+-				     message, cb_data)) {
+-		if (!cb->newlog)
++				     message, policy_cb)) {
++		if (!policy_cb->newlog)
+ 			printf("would prune %s", message);
+-		else if (cb->cmd->verbose)
++		else if (policy_cb->cmd->verbose)
+ 			printf("prune %s", message);
+ 	} else {
+-		if (cb->newlog) {
++		if (policy_cb->newlog) {
+ 			char sign = (tz < 0) ? '-' : '+';
+ 			int zone = (tz < 0) ? (-tz) : tz;
+-			fprintf(cb->newlog, "%s %s %s %lu %c%04d\t%s",
++			fprintf(policy_cb->newlog, "%s %s %s %lu %c%04d\t%s",
+ 				sha1_to_hex(osha1), sha1_to_hex(nsha1),
+ 				email, timestamp, sign, zone,
+ 				message);
+-			hashcpy(cb->last_kept_sha1, nsha1);
++			hashcpy(policy_cb->last_kept_sha1, nsha1);
+ 		}
+-		if (cb->cmd->verbose)
++		if (policy_cb->cmd->verbose)
+ 			printf("keep %s", message);
+ 	}
+ 	return 0;
+@@ -423,12 +429,15 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
+ 			 unsigned int flags, void *cb_data)
+ {
+ 	struct cmd_reflog_expire_cb *cmd = cb_data;
+-	struct expire_reflog_policy_cb cb;
++	struct expire_reflog_cb cb;
++	struct expire_reflog_policy_cb policy_cb;
+ 	struct ref_lock *lock;
+ 	char *log_file;
+ 	int status = 0;
+ 
+ 	memset(&cb, 0, sizeof(cb));
++	memset(&policy_cb, 0, sizeof(policy_cb));
++	cb.policy_cb = &policy_cb;
+ 
+ 	/*
+ 	 * we take the lock for the ref itself to prevent it from
+@@ -446,16 +455,16 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
+ 	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
+ 		if (hold_lock_file_for_update(&reflog_lock, log_file, 0) < 0)
+ 			goto failure;
+-		cb.newlog = fdopen_lock_file(&reflog_lock, "w");
+-		if (!cb.newlog)
++		policy_cb.newlog = fdopen_lock_file(&reflog_lock, "w");
++		if (!policy_cb.newlog)
+ 			goto failure;
+ 	}
+ 
+-	cb.cmd = cmd;
++	policy_cb.cmd = cmd;
+ 
+-	reflog_expiry_prepare(refname, sha1, &cb);
++	reflog_expiry_prepare(refname, sha1, &policy_cb);
+ 	for_each_reflog_ent(refname, expire_reflog_ent, &cb);
+-	reflog_expiry_cleanup(&cb);
++	reflog_expiry_cleanup(&policy_cb);
+ 
+ 	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
+ 		if (close_lock_file(&reflog_lock)) {
+@@ -463,7 +472,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
+ 					strerror(errno));
+ 		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
+ 			(write_in_full(lock->lock_fd,
+-				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
++				sha1_to_hex(policy_cb.last_kept_sha1), 40) != 40 ||
+ 			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
+ 			 close_ref(lock) < 0)) {
+ 			status |= error("Couldn't write %s",
 -- 
 2.1.3
