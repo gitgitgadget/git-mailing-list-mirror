@@ -1,105 +1,173 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack
- base object"
-Date: Thu, 4 Dec 2014 00:54:44 +0000
-Message-ID: <20141204005443.GB200195@vauxhall.crustytoothpaste.net>
-References: <64C98FC352BD45EC9632202946A081E1@black>
+From: Jeff King <peff@peff.net>
+Subject: Re: Disabling credential helper?
+Date: Wed, 3 Dec 2014 20:33:06 -0500
+Message-ID: <20141204013306.GA9406@peff.net>
+References: <20141203000310.GE90134@vauxhall.crustytoothpaste.net>
+ <20141203005953.GB6527@google.com>
+ <20141203012148.GB29427@peff.net>
+ <20141203012950.GC6527@google.com>
+ <20141203013607.GA30037@peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DBIVS5p969aUjpLe"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 04 01:54:53 2014
+Content-Type: text/plain; charset=utf-8
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 02:33:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwKh2-0005M5-I7
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 01:54:52 +0100
+	id 1XwLIB-0007rQ-J2
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 02:33:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752805AbaLDAys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2014 19:54:48 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:54967 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751905AbaLDAys (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Dec 2014 19:54:48 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4AE8D2808F
-	for <git@vger.kernel.org>; Thu,  4 Dec 2014 00:54:47 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org
+	id S1752618AbaLDBdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2014 20:33:11 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48096 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752607AbaLDBdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2014 20:33:10 -0500
+Received: (qmail 3938 invoked by uid 102); 4 Dec 2014 01:33:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Dec 2014 19:33:09 -0600
+Received: (qmail 2358 invoked by uid 107); 4 Dec 2014 01:33:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Dec 2014 20:33:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Dec 2014 20:33:06 -0500
 Content-Disposition: inline
-In-Reply-To: <64C98FC352BD45EC9632202946A081E1@black>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.17-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+In-Reply-To: <20141203013607.GA30037@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260719>
+
+On Tue, Dec 02, 2014 at 08:36:07PM -0500, Jeff King wrote:
+
+> But to answer your question: you can't currently. I would be happy to
+> have a config syntax that means "reset this multi-value config option
+> list to nothing", but it does not yet exist. It would be useful for more
+> than just credential-helper config.
+
+This is something I've wanted for a while, so I took another peek at it.
+It turns out to be rather complicated.
+
+This is the initial patch I came up with (don't bother reading it too
+closely):
+
+diff --git a/credential.c b/credential.c
+index 1886ea5..9e84575 100644
+--- a/credential.c
++++ b/credential.c
+@@ -43,9 +43,6 @@ static int credential_config_callback(const char *var, const char *value,
+ 	if (!skip_prefix(var, "credential.", &key))
+ 		return 0;
+ 
+-	if (!value)
+-		return config_error_nonbool(var);
+-
+ 	dot = strrchr(key, '.');
+ 	if (dot) {
+ 		struct credential want = CREDENTIAL_INIT;
+@@ -63,8 +60,13 @@ static int credential_config_callback(const char *var, const char *value,
+ 		key = dot + 1;
+ 	}
+ 
+-	if (!strcmp(key, "helper"))
+-		string_list_append(&c->helpers, value);
++	if (!strcmp(key, "helper")) {
++		if (value)
++			string_list_append(&c->helpers, value);
++		else
++			string_list_clear(&c->helpers, 0);
++	} else if (!value)
++		return config_error_nonbool(var);
+ 	else if (!strcmp(key, "username")) {
+ 		if (!c->username)
+ 			c->username = xstrdup(value);
 
 
---DBIVS5p969aUjpLe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It allows you to do:
 
-On Wed, Dec 03, 2014 at 06:31:18PM -0500, Jason Pyeron wrote:
-> I remember hitting this a while ago, but just gave up.
->=20
-> It seems to be a problem for others too.
->=20
-> Any ideas on how to debug this so it can be patched?
->=20
-> -----Original Message-----
-> From: Dave Lindbergh
-> Sent: Wednesday, December 03, 2014 18:07
-> To: cygwin
->=20
-> Aha - you're right.
->=20
-> It works fine on a local NTFS volume.
->=20
-> I get the error when I do it on Z:, which is mapped to a network drive
-> (on another Windows box).
->=20
-> Is there a workaround? Why does this happen?
+  git -c credential.helper [-c credential.helper=foo] fetch ...
 
-I don't think anyone is sure.  My wild guess is that there's something
-about the way that Cygwin wraps Windows calls that makes it fail in this
-case.  It might be interesting to run the Windows and Cygwin versions
-under an strace equivalent and see where things differ.
+The first one "resets" the list to empty, and then you can further
+append to the list after that. There are a bunch of shortcomings,
+though:
 
-It's an interesting problem, but I don't have any Windows systems, so I
-can't look into it.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+  1. I chose the value-less boolean as a token to reset the list (since
+     it is otherwise an unmeaningful error). The example above shows its
+     use with "-c", but you could also do:
 
---DBIVS5p969aUjpLe
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+       [credential]
+       helper
+       helper = foo
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+     in a config file itself.  This is probably rather unintuitive.
 
-iQIcBAEBCgAGBQJUf7DTAAoJEL9TXYEfUvaLZR8P/A9DlIb0ALc7CzCYBN9ZMt4m
-U09qzCJwWmUBB5bCTwDDZwLIbzBh1Er6kBS8d01Hxa29Om5J9K0ga7Scpa4P8iCA
-01eqMeemTnq6/p3X5yycz2q0zljNZdDYOR3QD5+U0YsARgvHjLAIB2/wCHE4kAwc
-VGt44wD+Ix87Vw+CKFQETK0oU8gArWt1YyOLyv9XKG2e6rDJZtgl4P+r+FiTb012
-jzN3fOT99Ux1V5SmhQ3k4yv6AcV1OLdi1x4ujx+Xe6yKVV2VvYPgK5KDQP17hZXV
-bHnAsy1Pzb1rADF/xyGXt1tE4IrRcnFYQ6i/ZG7uJ0F1DYTinjwKs36TRKXIPzP/
-OXMSTramGk0XDc+KArjkV2X4iNXRvawJLDlwpHIy4nzvXzJERtYHstFT9DRov+Gw
-ztrRXixymj70GNhU5ZiF7ZwdD6nfrXe4j0hP9dsjLvd9CObQBACdHqdQh3RKK+9W
-vdgRrvRet5TKLwOc3qvlR8scWf91UmegkXC/er2pfvqvXwldfjcddqdbyLC5PqW9
-c8nCxyCN3k3qG+yqI29W+g8nec427DpGYbQYFg7hfZCrGDnsfcu0D1XKkS70pjzR
-WwmMBJIC5iVj2U75LPUNNuBu1w+ERg8fvhkeDQfiV3g6Ke3Tl/jyCykS8N256GV9
-th+rmqyFU4bUnuMX3Ses
-=9lyf
------END PGP SIGNATURE-----
+     But whatever syntax is chosen would need to have some mechanism for
+     specifying it in the config file itself, as well as in the
+     command-line (and therefore in the semi-public
+     GIT_CONFIG_PARAMETERS environment variable which is passed around).
+     So this is at least backwards-compatible, "just works" with
+     existing config code, and won't stomp on any existing working
+     values.
 
---DBIVS5p969aUjpLe--
+     If we can accept stomping on an unlikely-used token, something
+     like:
+
+       git -c credential.helper=RESET fetch ...
+
+     is more sensible (and we can argue about the exact token used).
+     If we can accept new syntax and new config code, something like:
+
+       git -c '!credential.helper' fetch ...
+
+     is probably workable.
+
+  2. Notice how we didn't touch the config code at all here. That's
+     because it doesn't know anything about whether a config item is a
+     multi-valued list, or that the string list exists. It is up to each
+     individual consumer of the config callbacks to implement this
+     list-clearing mechanism (and obviously we should make them all
+     agree on the token used). So we'd probably want to make similar
+     changes everywhere that multi-values are used (which, to be fair,
+     really isn't that many, I don't think).
+
+  3. Running `git config credential.helper` doesn't know about this
+     mechanism either. You can either get the "last one wins" behavior,
+     or you can use --get-all to get all instances. We'd probably have
+     to teach it a new `--get-list` that recognized the magic reset
+     token.
+
+None of those problems is insurmountable. It just takes a little more
+code than what I wrote above. But for credential helpers specifically,
+it's a bit more challenging. Because we're _not_ constructing just a
+list of just credential.helper here. We're constructing a list of all
+matching credential.*.helper config keys. So in something like:
+
+  [credential "http://example.com"]
+  helper = foo
+  [credential]
+  helper = bar
+
+if you run "git fetch http://example.com", you'll get both helpers, in
+sequence.
+
+What should adding:
+
+  [credential]
+  helper = RESET
+
+do on top of that?  Intuitively, I'd say that it would only touch the
+credential.helper variables. But that's not what the user probably
+wants. They probably want to reset _any_ helpers that have matched. And
+that's actually what the code I posted above would do. So that's good, I
+guess. But I wonder if this approach is introducing more confusion than
+it is worth.
+
+Having a separate --no-respect-credential-helpers is conceptually much
+simpler. But it also does not allow you to reset the list and add in a
+new helper.
+
+-Peff
