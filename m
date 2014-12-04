@@ -1,98 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] remote: add --fetch and --both options to set-url
-Date: Thu, 4 Dec 2014 04:37:50 -0500
-Message-ID: <20141204093750.GD27455@peff.net>
-References: <1416916106-19892-1-git-send-email-peter@lekensteyn.nl>
+Subject: Re: Enhancement Request: "locale" git option
+Date: Thu, 4 Dec 2014 04:55:58 -0500
+Message-ID: <20141204095557.GE27455@peff.net>
+References: <54801C39020000A1000182FA@gwsmtp1.uni-regensburg.de>
+ <54801B50.4080500@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Peter Wu <peter@lekensteyn.nl>
-X-From: git-owner@vger.kernel.org Thu Dec 04 10:38:00 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+	git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Dec 04 10:56:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwSrH-0005Z2-4F
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 10:37:59 +0100
+	id 1XwT8x-0006NE-3Q
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 10:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752922AbaLDJhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 04:37:53 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48260 "HELO cloud.peff.net"
+	id S1753743AbaLDJ4E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2014 04:56:04 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48272 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751147AbaLDJhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 04:37:52 -0500
-Received: (qmail 23985 invoked by uid 102); 4 Dec 2014 09:37:52 -0000
+	id S1753730AbaLDJ4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 04:56:00 -0500
+Received: (qmail 24771 invoked by uid 102); 4 Dec 2014 09:56:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 03:37:52 -0600
-Received: (qmail 4921 invoked by uid 107); 4 Dec 2014 09:37:54 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 03:56:00 -0600
+Received: (qmail 5018 invoked by uid 107); 4 Dec 2014 09:56:02 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 04:37:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 04:37:50 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 04:56:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 04:55:58 -0500
 Content-Disposition: inline
-In-Reply-To: <1416916106-19892-1-git-send-email-peter@lekensteyn.nl>
+In-Reply-To: <54801B50.4080500@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260752>
 
-On Tue, Nov 25, 2014 at 12:48:26PM +0100, Peter Wu wrote:
+On Thu, Dec 04, 2014 at 09:29:04AM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-> git remote set-url knew about the '--push' option to update just the
-> pushurl, but it does not have a similar option for "update fetch URL and
-> leave whatever was in place for the push URL".
-> 
-> This patch adds support for a '--fetch' option which implements that use
-> case in a backwards compatible way: if no --both, --push or --fetch
-> options are given, then the push URL is modified too if it was not set
-> before. This is the case since the push URL is implicitly based on the
-> fetch URL.
-> 
-> A '--both' option is added to make the command independent of previous
-> pushurl settings. For the --add and --delete set operations, it will
-> always set the push and/ or the fetch URLs. For the primary mode of
-> operation (without --add or --delete), it will drop pushurl as the
-> implicit push URL is the (fetch) URL.
-> 
-> The documentation has also been updated and a missing '--push' option
-> is added to the 'git remote -h' command.
-> 
-> Tests are also added to verify the documented behavior.
-> 
-> Signed-off-by: Peter Wu <peter@lekensteyn.nl>
-> ---
+> How about
+> alias git=3D'LANGUAGE=3Dde_DE.UTF-8 git'
+> in your ~/.profile ?
+> (Of course you need to change de to the language you want )
 
-Sorry for the slowness in reviewing. The design of this version makes
-sense to me (not surprising, I guess, since it was in direct response to
-my comments).
+Besides being awkward in scripts (which will not respect the alias and
+use a different language!), that variable will also be inherited by
+programs git spawns. So the editor, for example, may end up in the wron=
+g
+language.
 
-I didn't see anything glaringly wrong in the implementation, though I
-did find it a little hard to follow, because of this:
+I think respecting core.locale would make sense (probably the change
+would go into git_setup_gettext(), but you may have to fight with the
+setup code over looking at config so early in the process).
 
-> +#define MODIFY_TYPE_FETCH       (1 << 0)
-> +#define MODIFY_TYPE_PUSH        (1 << 1)
-> +#define MODIFY_TYPE_BOTH        (MODIFY_TYPE_FETCH | MODIFY_TYPE_PUSH)
-> +#define MODIFY_TYPE_HISTORIC    (MODIFY_TYPE_FETCH | (1 << 2))
-
-When reading through the code, the distinction between
-
-  modify_type & MODIFY_TYPE_FETCH
-
-and
-
-  modify_type == MODIFY_TYPE_FETCH
-
-is significant, because the former matches HISTORIC, while the latter
-does not. I imagine that a distinct bit value for HISTORIC would make
-things a bit more verbose (you would have to add an extra OR in many
-places), but I wonder if it would make the code easier to follow (one of
-the things I wanted to check was that HISTORIC does the same thing that
-it always did, and it is very hard to follow the HISTORIC behavior
-reading the code linearly).
-
-I dunno. I don't insist; just noting a difficulty I had while reading
-it.  Maybe you went down that route already during development and found
-it more painful.
+However, I think the original question is not one of localizing git, bu=
+t
+rather of having it _not_ localized (avoiding the German translations).
+There is a hack you can do that for that, which is to set
+GIT_TEXTDOMAINDIR to something nonsensical (like "/"), which will mean
+git cannot find the .po files, and just uses the builtin messages.
 
 -Peff
