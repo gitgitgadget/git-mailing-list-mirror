@@ -1,122 +1,108 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 22/23] lock_any_ref_for_update(): inline function
-Date: Fri,  5 Dec 2014 00:08:34 +0100
-Message-ID: <1417734515-11812-23-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 23/23] refs.c: don't expose the internal struct ref_lock in the header file
+Date: Fri,  5 Dec 2014 00:08:35 +0100
+Message-ID: <1417734515-11812-24-git-send-email-mhagger@alum.mit.edu>
 References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 00:09:24 2014
+X-From: git-owner@vger.kernel.org Fri Dec 05 00:09:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwfWT-00033l-Li
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:09:22 +0100
+	id 1XwfWc-00038c-4n
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933360AbaLDXJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 18:09:14 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:45007 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933355AbaLDXJM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:09:12 -0500
-X-AuditID: 1207440f-f792a6d000001284-02-5480e998c0c2
+	id S933363AbaLDXJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 18:09:24 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:65158 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933354AbaLDXJO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:09:14 -0500
+X-AuditID: 1207440d-f79976d000005643-9a-5480e9999bf1
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 31.99.04740.899E0845; Thu,  4 Dec 2014 18:09:12 -0500 (EST)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 24.16.22083.999E0845; Thu,  4 Dec 2014 18:09:13 -0500 (EST)
 Received: from michael.fritz.box (p5DDB0B3C.dip0.t-ipconnect.de [93.219.11.60])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8deJ027614
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8deK027614
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 4 Dec 2014 18:09:10 -0500
+	Thu, 4 Dec 2014 18:09:12 -0500
 X-Mailer: git-send-email 2.1.3
 In-Reply-To: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqDvjZUOIwbVeDouuK91MFg29V5gt
-	3t5cwmhxe8V8Zovevk+sFv8m1Fhs3tzO4sDu8ff9ByaPnbPusnss2FTqcfGSssfnTXIBrFHc
-	NkmJJWXBmel5+nYJ3BnPG46xF/wUrNi/cg97A+M2vi5GTg4JAROJv/e/M0HYYhIX7q1n62Lk
-	4hASuMwocXH+CyYI5xiTxN++lewgVWwCuhKLeprBOkQE1CRmrpoN1sEs8INR4nXDGmaQhLCA
-	o8TqKR/ZQGwWAVWJbRfPgdm8Aq4SrZdvsnYxcgCtk5PYus4bJMwJFJ46s5URxBYScJF4tmkh
-	+wRG3gWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE30cjNL9FJTSjcxQoKMfwdj13qZQ4wC
-	HIxKPLwFu+tDhFgTy4orcw8xSnIwKYnynn3aECLEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhNf4
-	CFCONyWxsiq1KB8mJc3BoiTOq75E3U9IID2xJDU7NbUgtQgmK8PBoSTBW/oCqFGwKDU9tSIt
-	M6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFBvxxcDoAEnxAO0tA2nnLS5IzAWKQrSeYlSUEue1
-	BkkIgCQySvPgxsJSxytGcaAvhXktQap4gGkHrvsV0GAmoMFnG2pBBpckIqSkGhgXODpkisxj
-	Xusr7tbku+poKdORuR0/b3uHXJ6QE/Zr6sz27Tqel3KvfUgLnte8fGP0m30rlJwT+gUWBz4P
-	8vSPWRew1Zj3l057qkBGZu/x/1OOmx2f8NUo+MUt9Z5idz8rv48aLDyLWXwN4z69 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIIsWRmVeSWpSXmKPExsUixO6iqDvzZUOIwazJchZdV7qZLBp6rzBb
+	vL25hNHi9or5zBa9fZ9YLTZvbmdxYPP4+/4Dk8fOWXfZPRZsKvW4eEnZ4/MmuQDWKG6bpMSS
+	suDM9Dx9uwTujL29/5gLNnFWzG5fztrAuIu9i5GTQ0LAROLGi0ZGCFtM4sK99WxdjFwcQgKX
+	GSXmLWpihXCOMUn8OHqTFaSKTUBXYlFPMxOILSKgJjFz1WywDmaBE4wSvyZ3g40SFoiWeHB4
+	F1gRi4CqRMvSNrBmXgFXiZZrG4BsDqB1chJb13mDhDmBwlNntoK1Cgm4SDzbtJB9AiPvAkaG
+	VYxyiTmlubq5iZk5xanJusXJiXl5qUW6Rnq5mSV6qSmlmxghwcW7g/H/OplDjAIcjEo8vAW7
+	60OEWBPLiitzDzFKcjApifKefdoQIsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE1/gIUI43JbGy
+	KrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMHL9QKoUbAoNT21Ii0zpwQhzcTB
+	CTKcS0qkODUvJbUosbQkIx4UG/HFwOgASfEA7S0DaectLkjMBYpCtJ5iVJQS57UGSQiAJDJK
+	8+DGwlLGK0ZxoC+FeUtBqniA6Qau+xXQYCagwWcbakEGlyQipKQaGMu01RLmVSww7j7rxtgh
+	surqrwNLI41l2Z5UfT3uG9WZWDxl8uzOnzsyHzzgjjCYqbTp8iLuM6ketrNm7/n/qWZG6xO2
+	jz36L7dpHGlg8nUqnq3xkrPr9A/nsOi36ivu1F7f5iNs8f/YzgVPPbv4r8oXr3r+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260823>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+From: Stefan Beller <sbeller@google.com>
 
-Inline the function at its one remaining caller (which is within
-refs.c) and remove it.
+Now the struct ref_lock is used completely internally, so let's
+remove it from the header file.
 
+Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 9 +--------
- refs.h | 9 +--------
- 2 files changed, 2 insertions(+), 16 deletions(-)
+ refs.c | 9 +++++++++
+ refs.h | 9 ---------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index c6ee775..f3564cf 100644
+index f3564cf..40c5591 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2346,13 +2346,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	return NULL;
- }
+@@ -6,6 +6,15 @@
+ #include "dir.h"
+ #include "string-list.h"
  
--struct ref_lock *lock_any_ref_for_update(const char *refname,
--					 const unsigned char *old_sha1,
--					 int flags, int *type_p)
--{
--	return lock_ref_sha1_basic(refname, old_sha1, NULL, flags, type_p);
--}
--
++struct ref_lock {
++	char *ref_name;
++	char *orig_ref_name;
++	struct lock_file *lk;
++	unsigned char old_sha1[20];
++	int lock_fd;
++	int force_write;
++};
++
  /*
-  * Write an entry to the packed-refs file for the specified refname.
-  * If peeled is non-NULL, write it as the entry's peeled value.
-@@ -4007,7 +4000,7 @@ extern int reflog_expire(const char *refname, const unsigned char *sha1,
- 	 * we take the lock for the ref itself to prevent it from
- 	 * getting updated.
- 	 */
--	lock = lock_any_ref_for_update(refname, sha1, 0, NULL);
-+	lock = lock_ref_sha1_basic(refname, sha1, NULL, 0, NULL);
- 	if (!lock)
- 		return error("cannot lock ref '%s'", refname);
- 	if (!reflog_exists(refname)) {
+  * How to handle various characters in refnames:
+  * 0: An acceptable character for refs
 diff --git a/refs.h b/refs.h
-index 82611b5..174863d 100644
+index 174863d..2957641 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -181,8 +181,7 @@ extern int is_branch(const char *refname);
- extern int peel_ref(const char *refname, unsigned char *sha1);
+@@ -1,15 +1,6 @@
+ #ifndef REFS_H
+ #define REFS_H
  
+-struct ref_lock {
+-	char *ref_name;
+-	char *orig_ref_name;
+-	struct lock_file *lk;
+-	unsigned char old_sha1[20];
+-	int lock_fd;
+-	int force_write;
+-};
+-
  /*
-- * Flags controlling lock_any_ref_for_update(), ref_transaction_update(),
-- * ref_transaction_create(), etc.
-+ * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
-  * REF_NODEREF: act on the ref directly, instead of dereferencing
-  *              symbolic references.
-  * REF_DELETING: tolerate broken refs
-@@ -191,12 +190,6 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
-  */
- #define REF_NODEREF	0x01
- #define REF_DELETING	0x02
--/*
-- * This function sets errno to something meaningful on failure.
-- */
--extern struct ref_lock *lock_any_ref_for_update(const char *refname,
--						const unsigned char *old_sha1,
--						int flags, int *type_p);
- 
- /*
-  * Setup reflog before using. Set errno to something meaningful on failure.
+  * A ref_transaction represents a collection of ref updates
+  * that should succeed or fail together.
 -- 
 2.1.3
