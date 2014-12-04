@@ -1,113 +1,74 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git add <single file> and git add <list of files> behave differentely
- for ignored files
-Date: Thu, 04 Dec 2014 16:02:21 +0100
-Message-ID: <5480777D.6000205@drmicha.warpmail.net>
-References: <CAMDzUtzQJoEi17OfX8FPOV6SDJ_ytJSH-YTKx2DtUON35-EVSg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Guilherme <guibufolo@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 16:02:29 2014
+Subject: [PATCH] check-ignore: clarify treatment of tracked files
+Date: Thu,  4 Dec 2014 16:23:05 +0100
+Message-ID: <fbc5799c32357e8bff0c690ba7bc4cd46374684d.1417706481.git.git@drmicha.warpmail.net>
+References: <5480777D.6000205@drmicha.warpmail.net>
+Cc: Guilherme <guibufolo@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 04 16:32:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwXvH-0006PY-Gl
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 16:02:27 +0100
+	id 1XwYON-0008NY-QF
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 16:32:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754030AbaLDPCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 10:02:23 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:34951 "EHLO
+	id S1754380AbaLDPc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 10:32:27 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:59897 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753832AbaLDPCX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 10:02:23 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6B7CF20947
-	for <git@vger.kernel.org>; Thu,  4 Dec 2014 10:02:22 -0500 (EST)
+	by vger.kernel.org with ESMTP id S1753880AbaLDPc1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 10:32:27 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 04F872070F
+	for <git@vger.kernel.org>; Thu,  4 Dec 2014 10:23:06 -0500 (EST)
 Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Thu, 04 Dec 2014 10:02:22 -0500
+  by compute1.internal (MEProxy); Thu, 04 Dec 2014 10:23:07 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=afRlIZDdQQU6KK/LtZAzFe
-	zEwek=; b=C8JiCoSckPH5ogBfAH1l5iSwWxc5cVqTCM6F86UKyPuia+FE5H9EiQ
-	FkRjZdP486nl6ICdy6RNPHxRu5nJKtO44pxNR/puYfzYge52qKp0cHVqVrlDtERg
-	B1gOwhcVfLYcv2F2tEtQ9TF9IR5+rgQPwbP4qofc+fGyYyKwyfbsE=
-X-Sasl-enc: PkygyslhreIgjuwMhu69i+CFg6jE+eWQ/NBLmSalRYjq 1417705342
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id E8E31C0027F;
-	Thu,  4 Dec 2014 10:02:21 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <CAMDzUtzQJoEi17OfX8FPOV6SDJ_ytJSH-YTKx2DtUON35-EVSg@mail.gmail.com>
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references; s=smtpout; bh=v3YsbRvlwDu3W9
+	AGrPV7JnCJy1o=; b=mR1HZNheTOjSHHCO3DlZ4qxGfZS9F1C6lTH/mRQZdeTq4i
+	UW7MAB84bFQD/J3IXYAGAICPF2cJsZLUCXXee6ZFoLmWjbsQXFFn2OCr9wN6EqFI
+	wE32jpS2cSYKB4b3n3nkjwx6WZo2xW1VDjdnO1jI7kWzjHxNf1+gekiKRuzfE=
+X-Sasl-enc: yq7t/OuVRGmvxTCjXQsHjNcteSRJyk22+xl/zNWit1Rx 1417706586
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 99307C0027E;
+	Thu,  4 Dec 2014 10:23:06 -0500 (EST)
+X-Mailer: git-send-email 2.2.0.rc3.286.g888a711
+In-Reply-To: <5480777D.6000205@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260760>
 
-Guilherme schrieb am 04.12.2014 um 10:06:
-> Hello,
-> 
-> I reported this issue on the git-user mailing list and they redirected me here.
-> 
-> The problem I have observed is that with a ignored path `git add
-> <single file>` behaves differently then `git add <list of files>`.
-> 
-> I my git/info/excludes file i have
-> 
-> /COM/config
-> !COM/config/Project.gny
-> 
-> The file COM/config/Project.gny has already been added to the
-> repository via `git add -f`.
-> 
-> When doing
-> 
->     git add -- COM/config/Projec.gny
-> 
-> git will not complain but when doing
-> 
->     git add -- COM/config/Project.gny otherfiles.c
-> 
-> it will report:
-> 
->     The following paths are ignored by one of your .gitignore files:
->     COM/config
->     Use -f if you really want to add them.
->     fatal: no files added
+By default, check-ignore does not list tracked files at all since
+they are not subject to ignore patterns.
 
-This is because git add assumes you specified on of the files in error,
-and thus refuses to add the other one, too.
+Make this clearer in the man page.
 
-I found that behaviour surprising. There's already a patch which, in the
-2nd case, would make "git add" only warn you about the ignored file but
-add the other one anyways. It will probably make its way into the next
-release.
+Reported-by: Guilherme <guibufolo@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+That really is a bit confusing. Does this help?
 
-For the case of a single file (or rather: ignored files only) I'm
-wondering whether we should issue a warning, too.
+ Documentation/git-check-ignore.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> This odd behaviour is also present in `git check-ignore`.
-> 
-> Before adding the file `git check-ignore` correctly reports the file
-> as ignored. After having added it via `git add -f` it won't report it
-> as ignored anymore.
-
-This is different: Once a file is "added", it is not ignored any more -
-you explicitely told git to track that file (rather than ignoring it).
-So, the output of git check-ignore is correct.
-
-> Even if not a bug this behaviour is inconsistent and might want to be
-> addressed as it makes scripting a little bit harder.
-> 
-> Thank you.
-> 
-
-I guess you want "git check-ignore --no-index". That man page may be a
-bit misleading - the description sounds as if only the patterns would
-matter.
-
-Michael
+diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+index ee2e091..788a011 100644
+--- a/Documentation/git-check-ignore.txt
++++ b/Documentation/git-check-ignore.txt
+@@ -21,6 +21,9 @@ the exclude mechanism) that decides if the pathname is excluded or
+ included.  Later patterns within a file take precedence over earlier
+ ones.
+ 
++By default, tracked files are not shown at all since they are not
++subject to exclude rules; but see `--no-index'.
++
+ OPTIONS
+ -------
+ -q, --quiet::
+-- 
+2.2.0.rc3.286.g888a711
