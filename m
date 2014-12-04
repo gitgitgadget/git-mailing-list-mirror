@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 10/23] expire_reflog(): add a "flags" argument
-Date: Fri,  5 Dec 2014 00:08:22 +0100
-Message-ID: <1417734515-11812-11-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 12/23] expire_reflog(): move updateref to flags argument
+Date: Fri,  5 Dec 2014 00:08:24 +0100
+Message-ID: <1417734515-11812-13-git-send-email-mhagger@alum.mit.edu>
 References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -14,111 +14,109 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwfWE-0002vY-VE
+	id 1XwfWF-0002vY-JY
 	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:09:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933321AbaLDXI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 18:08:58 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:42800 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754847AbaLDXI4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:08:56 -0500
-X-AuditID: 12074413-f79f26d0000030e7-99-5480e987838a
+	id S1754900AbaLDXJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 18:09:01 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:44999 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754847AbaLDXI7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 18:08:59 -0500
+X-AuditID: 1207440f-f792a6d000001284-de-5480e98a52ec
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id DC.A0.12519.789E0845; Thu,  4 Dec 2014 18:08:56 -0500 (EST)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id AD.89.04740.A89E0845; Thu,  4 Dec 2014 18:08:58 -0500 (EST)
 Received: from michael.fritz.box (p5DDB0B3C.dip0.t-ipconnect.de [93.219.11.60])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8de7027614
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB4N8de9027614
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 4 Dec 2014 18:08:54 -0500
+	Thu, 4 Dec 2014 18:08:57 -0500
 X-Mailer: git-send-email 2.1.3
 In-Reply-To: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrPIsWRmVeSWpSXmKPExsUixO6iqNvxsiHEYLOYRdeVbiaLht4rzBZv
-	by5htLi9Yj6zRW/fJ1aLzZvbWRzYPP6+/8DksXPWXXaPBZtKPS5eUvb4vEkugDWK2yYpsaQs
-	ODM9T98ugTvjf/99loKlwhWrJu9hb2Dcx9/FyMkhIWAi8b5pGTuELSZx4d56NhBbSOAyo8T8
-	2/JdjFxA9jEmiUOrPjGCJNgEdCUW9TQzgdgiAmoSM1fNZgMpYhY4wSjxa3I3WJGwgJ3Ep+vb
-	wGwWAVWJDd/nMIPYvAKuEpOfb2XpYuQA2iYnsXWdN0iYEyg8dWYrI8RiF4lnmxayT2DkXcDI
-	sIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11wvN7NELzWldBMjJLCEdzDuOil3iFGAg1GJh7dg
-	d32IEGtiWXFl7iFGSQ4mJVHes08bQoT4kvJTKjMSizPii0pzUosPMUpwMCuJ8BofAcrxpiRW
-	VqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4S18ANQoWpaanVqRl5pQgpJk4
-	OEGGc0mJFKfmpaQWJZaWZMSDIiO+GBgbICkeoL1lIO28xQWJuUBRiNZTjIpS4rz1IAkBkERG
-	aR7cWFi6eMUoDvSlMMR2HmCqget+BTSYCWjw2YZakMEliQgpqQbGGDep06JC51YlqF7hXLjq
-	U5XGrcUa557esujed+i+oumjv1d0E4/n28gf3eHHvlT/yObnu2rDPZu+PJC+vnyi1as9gbq3
-	r3V1/St0VvgtsfDzsa+xy1emKvxgvflF3M21y2eb4dGqMM6TinqS3Qtv+c9+NjeO 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqNv1siHE4MlhJYuuK91MFg29V5gt
+	3t5cwmhxe8V8Zovevk+sFps3t7M4sHn8ff+ByWPnrLvsHgs2lXpcvKTs8XmTXABrFLdNUmJJ
+	WXBmep6+XQJ3xuWL05kLnglX7P1+g7mB8TN/FyMnh4SAicTfRQfYIGwxiQv31gPZXBxCApcZ
+	JZo3PmGGcI4xScxt7WYBqWIT0JVY1NPMBGKLCKhJzFw1G6yDWeAEo8Svyd2MIAlhAQ+JOzee
+	go1lEVCVaN+3EKiBg4NXwFVi6nVpEFNCQE5i6zpvkApOkOjMVrBOIQEXiWebFrJPYORdwMiw
+	ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXRC83s0QvNaV0EyMktPh3MHatlznEKMDBqMTDW7C7
+	PkSINbGsuDL3EKMkB5OSKO/Zpw0hQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4jY8A5XhTEiur
+	UovyYVLSHCxK4rzqS9T9hATSE0tSs1NTC1KLYLIyHBxKErylL4AaBYtS01Mr0jJzShDSTByc
+	IMO5pESKU/NSUosSS0sy4kGREV8MjA2QFA/Q3jKQdt7igsRcoChE6ylGRSlxXmuQhABIIqM0
+	D24sLGG8YhQH+lKY1xKkigeYbOC6XwENZgIafLahFmRwSSJCSqqBcfrhZf7yX/R5Nym9rF9y
+	M9J+yZI9+99vzjhhGWyXI/9rpdGLhR/L614u7FkVWftpyqKQCZcPJ9+Xil62WW7XrfutfD3L
+	Td4E3ZSa75aXfNLrsAdTkLXSwrr+/MCJK7ddbjRIPK/gt2OjX9SbuLtVgRaXa1Se 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260816>
 
-We want to separate the options relevant to the expiry machinery from
-the options affecting the expiration policy. So add a "flags" argument
-to expire_reflog() to hold the former.
-
-The argument doesn't yet do anything.
+The policy objects don't care about "--updateref". So move it to
+expire_reflog()'s flags parameter.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/reflog.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ builtin/reflog.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/reflog.c b/builtin/reflog.c
-index ebfa635..319f0d2 100644
+index a490193..597c547 100644
 --- a/builtin/reflog.c
 +++ b/builtin/reflog.c
-@@ -415,7 +415,8 @@ static void reflog_expiry_cleanup(struct expire_reflog_cb *cb)
- 
+@@ -24,7 +24,6 @@ struct cmd_reflog_expire_cb {
+ 	struct rev_info revs;
+ 	int stalefix;
+ 	int rewrite;
+-	int updateref;
+ 	int verbose;
+ 	unsigned long expire_total;
+ 	unsigned long expire_unreachable;
+@@ -415,7 +414,8 @@ static void reflog_expiry_cleanup(struct expire_reflog_cb *cb)
  static struct lock_file reflog_lock;
  
--static int expire_reflog(const char *refname, const unsigned char *sha1, void *cb_data)
-+static int expire_reflog(const char *refname, const unsigned char *sha1,
-+			 unsigned int flags, void *cb_data)
- {
- 	struct cmd_reflog_expire_cb *cmd = cb_data;
- 	struct expire_reflog_cb cb;
-@@ -627,6 +628,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	unsigned long now = time(NULL);
- 	int i, status, do_all;
- 	int explicit_expiry = 0;
-+	unsigned int flags = 0;
+ enum expire_reflog_flags {
+-	EXPIRE_REFLOGS_DRY_RUN = 1 << 0
++	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
++	EXPIRE_REFLOGS_UPDATE_REF = 1 << 1
+ };
  
- 	default_reflog_expire_unreachable = now - 30 * 24 * 3600;
- 	default_reflog_expire = now - 90 * 24 * 3600;
-@@ -696,7 +698,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		for (i = 0; i < collected.nr; i++) {
- 			struct collected_reflog *e = collected.e[i];
- 			set_reflog_expiry_param(&cb, explicit_expiry, e->reflog);
--			status |= expire_reflog(e->reflog, e->sha1, &cb);
-+			status |= expire_reflog(e->reflog, e->sha1, flags, &cb);
- 			free(e);
+ static int expire_reflog(const char *refname, const unsigned char *sha1,
+@@ -460,7 +460,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
+ 		if (close_lock_file(&reflog_lock)) {
+ 			status |= error("Couldn't write %s: %s", log_file,
+ 					strerror(errno));
+-		} else if (cmd->updateref &&
++		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
+ 			(write_in_full(lock->lock_fd,
+ 				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
+ 			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
+@@ -471,7 +471,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
+ 		} else if (commit_lock_file(&reflog_lock)) {
+ 			status |= error("cannot rename %s.lock to %s",
+ 					log_file, log_file);
+-		} else if (cmd->updateref && commit_ref(lock)) {
++		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) && commit_ref(lock)) {
+ 			status |= error("Couldn't set %s", lock->ref_name);
  		}
- 		free(collected.e);
-@@ -710,7 +712,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 		set_reflog_expiry_param(&cb, explicit_expiry, ref);
--		status |= expire_reflog(ref, sha1, &cb);
-+		status |= expire_reflog(ref, sha1, flags, &cb);
  	}
- 	return status;
- }
-@@ -729,6 +731,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- {
- 	struct cmd_reflog_expire_cb cb;
- 	int i, status = 0;
-+	unsigned int flags = 0;
- 
- 	memset(&cb, 0, sizeof(cb));
- 
-@@ -781,7 +784,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 			cb.expire_total = 0;
- 		}
- 
--		status |= expire_reflog(ref, sha1, &cb);
-+		status |= expire_reflog(ref, sha1, flags, &cb);
- 		free(ref);
- 	}
- 	return status;
+@@ -663,7 +663,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		else if (!strcmp(arg, "--rewrite"))
+ 			cb.rewrite = 1;
+ 		else if (!strcmp(arg, "--updateref"))
+-			cb.updateref = 1;
++			flags |= EXPIRE_REFLOGS_UPDATE_REF;
+ 		else if (!strcmp(arg, "--all"))
+ 			do_all = 1;
+ 		else if (!strcmp(arg, "--verbose"))
+@@ -745,7 +745,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 		else if (!strcmp(arg, "--rewrite"))
+ 			cb.rewrite = 1;
+ 		else if (!strcmp(arg, "--updateref"))
+-			cb.updateref = 1;
++			flags |= EXPIRE_REFLOGS_UPDATE_REF;
+ 		else if (!strcmp(arg, "--verbose"))
+ 			cb.verbose = 1;
+ 		else if (!strcmp(arg, "--")) {
 -- 
 2.1.3
