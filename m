@@ -1,158 +1,87 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 03/13] refs.c: add a function to append a reflog entry to a fd
-Date: Thu,  4 Dec 2014 00:29:13 -0800
-Message-ID: <1417681763-32334-4-git-send-email-sbeller@google.com>
-References: <1417681763-32334-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
-	Stefan Beller <sbeller@google.com>
-To: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
-	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Dec 04 09:30:51 2014
+Subject: Re: [PATCH 03/14] copy_fd: pass error message back through a strbuf
+Date: Thu, 4 Dec 2014 00:36:46 -0800
+Message-ID: <CAGZ79kby-RdwzgXWvVgD42uiEis7SCnuAdSjO2EL03uN4s=LgA@mail.gmail.com>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com>
+	<20141117233525.GC4336@google.com>
+	<CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
+	<20141118004841.GE4336@google.com>
+	<CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
+	<20141203050217.GJ6527@google.com>
+	<20141203051344.GM6527@google.com>
+	<xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
+	<20141203210031.GA6631@peff.net>
+	<20141203213858.GC6527@google.com>
+	<20141204075920.GA27142@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 04 09:37:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwRoH-0006Eo-US
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 09:30:50 +0100
+	id 1XwRuB-0000lR-Vh
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 09:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753014AbaLDIap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 03:30:45 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:44494 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752117AbaLDI3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 03:29:36 -0500
-Received: by mail-ie0-f177.google.com with SMTP id rd18so14690029iec.8
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 00:29:36 -0800 (PST)
+	id S1751878AbaLDIgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 03:36:47 -0500
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:45558 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349AbaLDIgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 03:36:47 -0500
+Received: by mail-ig0-f174.google.com with SMTP id hn15so18335196igb.7
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 00:36:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QbKH4g6pnYD+Qa7rFgIB6XFqa0ISf96TOfGeIWCnoDI=;
-        b=i2QUDsfPygMjYbA7ioXMf69jaNLgZ/O2nG952OeLrdcmmlALWGL5OQc0cw06wptb7H
-         3IS4T0PWkJ03BVExdpBZy6EIbQLGKI+aGwP2tzfDMM61s1O4TjY3a3lbLsFjWC7wfXe3
-         Hppn4sBIIAzXyDjAkfGnIWX67df1q1LwpmsL2GnVWKR7rVZeAudIqv3Mm4BUU+6yBFkp
-         CmeRktRrWVweY6cEisur/JJ7dXZvnHMAHWv7Ryp+lhgaAG6X4Dr7fWZ8yOUgtbmbETip
-         eO0w/L9ghP5yp91UVVhosSxtx9CF16RyRakxjgeVPwdEeu1Xutdx6m7gaqAFuZCGB7ds
-         hvLg==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dht90lbGO/tQHil/sPnAPrC5KnE6JqvrJV6bkTLARmo=;
+        b=M/L9FxHMRDd3wym0l5pupaKuGSGf9wLFmNfQfsYJUAOI1V0Tcg30nuq7BS0uCTNgxc
+         Ql5Kp1S4n307xkgYs9MpoTBGn8hvGP7b2LCr/xymai9oYoWC+/gbLoFYs487fZlej4EO
+         QllkshwFsiDs+riMMLlDdJJ8mQ6qDvfS64kcxjuw44qtq3HwjEJuhYPqW323y+OFCvba
+         Ojysih+di4E/zl/oW2yNOb+wpAu8k6NHlfdalJD7GnUOoIc8mYmj6ipqDnYR2tmMUw/f
+         /VlDi7u9pqD9KazdyzZHgeepIEjrIq4GC6gS4f3sX0sybJ1fX/MRF4nCYJOAcnqCi9P4
+         +7Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=QbKH4g6pnYD+Qa7rFgIB6XFqa0ISf96TOfGeIWCnoDI=;
-        b=jnVczb7QWcpV2QQLNENE8IMNYOrZD37KdJnsgmKUDyPFofl+p0noQtNf97dq0SlfQd
-         11g3wGRhgP+gSouXyMzEno2vm4RVcOiaMqzzCxCkxOYdNYK8+q2Jjk/yeXbCAp/d7xtL
-         qR4yCO7Wd41rh/QYdjHofl7TPXNFewCxjAVfVd5calqLv1M613ucR9nSEnoGH6h5Mt1l
-         6odIZG/CBpOjHL4N0TGDdV8Z4M6HP72G/3ybat1NInZIg9qk+PoDkZztOMiwdVXyIrPK
-         BTQOME7SSQauxzNWLKhJd1VYlBWl7v8XQgmH/F4JBWGJItIn4J3bsMVcpHrN41Ah4jdi
-         Bx4w==
-X-Gm-Message-State: ALoCoQki4eJF1tCfGO9FLcIdqECXUMlhMzBtr07+F3ZOzXdqhimlLj51BGhCcgzsDeg5emjZ8GcH
-X-Received: by 10.107.168.216 with SMTP id e85mr8263696ioj.89.1417681776183;
-        Thu, 04 Dec 2014 00:29:36 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:5d2c:9a2d:3064:bc4])
-        by mx.google.com with ESMTPSA id c139sm6170311ioc.28.2014.12.04.00.29.35
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 04 Dec 2014 00:29:35 -0800 (PST)
-X-Mailer: git-send-email 2.2.0
-In-Reply-To: <1417681763-32334-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=dht90lbGO/tQHil/sPnAPrC5KnE6JqvrJV6bkTLARmo=;
+        b=fJWfYp603dwh9aNWH45i0Ka+GPH18OxbTMrQgaxl+GDmHOa5N/QtAT5HCMQ528u7Z0
+         c3yKJ+zKGovomXrYlD+uApuIiawpBYgKdgrWnure6Nk9nKcAk2WMaDCFUypstj3dAfQq
+         oNPxTYYYMdGQtQ93YQi90oF16ENTi1lPNXBTOVsjTPRWLfMbxG/1trscp7G3sB2UAQS3
+         NEzP2NY4OlLPnzbwv55orm4iF/TVPSyxtNAVezVnzmUYryi5FH1YyWs3M198a/Cf4XFC
+         sYtOS3GPasK0pjZHURmqbnlNT8H6SIGrt0BSngCK5FwAFfTY0nEdf2W85/hFifA7DHLG
+         Dh9g==
+X-Gm-Message-State: ALoCoQl2qd8/DVJ8G1hkWVy6+mxshwmxL8vm4FQiTRuFJi0DgQP0bxYPhW8MCZLY3v30jWf0ZmW4
+X-Received: by 10.107.153.147 with SMTP id b141mr8626962ioe.49.1417682206237;
+ Thu, 04 Dec 2014 00:36:46 -0800 (PST)
+Received: by 10.107.1.199 with HTTP; Thu, 4 Dec 2014 00:36:46 -0800 (PST)
+In-Reply-To: <20141204075920.GA27142@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260746>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+> Your solution adds a strbuf. That helps with context and stomping, but
+> loses readability and adds allocation.
 
-Break out the code to create the string and writing it to the file
-descriptor from log_ref_write and add it into a dedicated function
-log_ref_write_fd. For now this is only used from log_ref_write,
-but later on we will call this function from reflog transactions too,
-which means that we will end up with only a single place,
-where we write a reflog entry to a file instead of the current two
-places (log_ref_write and builtin/reflog.c).
+> If we changed the strbuf to a fixed-size buffer, that would help the
+> allocation issue. Some messages might be truncated, but it seems
+> unlikely in practice. It still loses readability, though.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
----
+> What about a struct that has an errno-like value _and_ a fixed-size
+> buffer? I'm thinking something like:
 
-Notes:
-    being part of origin/sb/log-ref-write-fd
-    
-    no changes since sending last time.
-
- refs.c | 48 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 18 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 05cb299..150c980 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2990,15 +2990,37 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
- 	return 0;
- }
- 
-+static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
-+			    const unsigned char *new_sha1,
-+			    const char *committer, const char *msg)
-+{
-+	int msglen, written;
-+	unsigned maxlen, len;
-+	char *logrec;
-+
-+	msglen = msg ? strlen(msg) : 0;
-+	maxlen = strlen(committer) + msglen + 100;
-+	logrec = xmalloc(maxlen);
-+	len = sprintf(logrec, "%s %s %s\n",
-+		      sha1_to_hex(old_sha1),
-+		      sha1_to_hex(new_sha1),
-+		      committer);
-+	if (msglen)
-+		len += copy_msg(logrec + len - 1, msg) - 1;
-+
-+	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
-+	free(logrec);
-+	if (written != len)
-+		return -1;
-+
-+	return 0;
-+}
-+
- static int log_ref_write(const char *refname, const unsigned char *old_sha1,
- 			 const unsigned char *new_sha1, const char *msg)
- {
--	int logfd, result, written, oflags = O_APPEND | O_WRONLY;
--	unsigned maxlen, len;
--	int msglen;
-+	int logfd, result, oflags = O_APPEND | O_WRONLY;
- 	char log_file[PATH_MAX];
--	char *logrec;
--	const char *committer;
- 
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates = !is_bare_repository();
-@@ -3010,19 +3032,9 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
- 	logfd = open(log_file, oflags);
- 	if (logfd < 0)
- 		return 0;
--	msglen = msg ? strlen(msg) : 0;
--	committer = git_committer_info(0);
--	maxlen = strlen(committer) + msglen + 100;
--	logrec = xmalloc(maxlen);
--	len = sprintf(logrec, "%s %s %s\n",
--		      sha1_to_hex(old_sha1),
--		      sha1_to_hex(new_sha1),
--		      committer);
--	if (msglen)
--		len += copy_msg(logrec + len - 1, msg) - 1;
--	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
--	free(logrec);
--	if (written != len) {
-+	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
-+				  git_committer_info(0), msg);
-+	if (result) {
- 		int save_errno = errno;
- 		close(logfd);
- 		error("Unable to append to %s", log_file);
--- 
-2.2.0
+What do you mean by the allocation being an issue?
+We're only populating the error buffer in the error case, so you're
+not talking about performance/speed I'd assume?
+As error handling breaks in the least expected ways, I'd rather go
+with well tested string buffer codes there?
