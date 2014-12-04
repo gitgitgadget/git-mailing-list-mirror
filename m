@@ -1,88 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] compat: convert modes to use portable file type values
-Date: Thu, 04 Dec 2014 11:39:19 -0800
-Message-ID: <xmqq8uintdaw.fsf@gitster.dls.corp.google.com>
-References: <87wq68w3se.fsf@gmail.com>
-	<CAEvUa7nxzX=54QJto_R3hfvAO4FKhs8Pancz0TTiC7ev22--Kw@mail.gmail.com>
+From: Luis Henriques <henrix@camandro.org>
+Subject: Re: [RFC][PATCH] send-email: add --[no-]xmailer option
+Date: Thu, 4 Dec 2014 19:44:55 +0000
+Message-ID: <20141204194455.GB3386@charon.olymp>
+References: <20140324213814.GA1267@achilles.my.domain>
+ <20141202193243.GA2999@charon.olymp>
+ <20141203023419.GA10519@dcvr.yhbt.net>
+ <xmqqk328k6ya.fsf@gitster.dls.corp.google.com>
+ <20141204192245.GA3386@charon.olymp>
+ <xmqqd27ztdkr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: David Michael <fedora.dm0@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 20:39:30 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	"Kyle J. McKay" <mackyle@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 20:45:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwcFL-00054h-7y
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 20:39:27 +0100
+	id 1XwcKs-0008Ka-4R
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 20:45:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932315AbaLDTjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 14:39:23 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751822AbaLDTjW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 14:39:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1727D233A9;
-	Thu,  4 Dec 2014 14:39:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RhSvxnsLBPUYgKYIjLVn6+wg6qU=; b=riuvYv
-	Po0k1t1IGyrYxeQqoExay9zscCw0T4n848lvLpsjOqzPPvxIwLY4Sx02I50QFecd
-	Wm3uSkukj9PvAYDa4UdjZ/1S7yFGrlcJoqlzNlpTIjIMdT34coKiUlByVRXYMYOK
-	Op7X2ua6XewI6CYiX/kX725FdFEYKMPIxNGQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h//gjDRGY30sMVw5saxOH5t1GyP3jinB
-	aGYKKOx0UdE71EGaII3fsAFzGw9tjZQjJPBPtGA2YkM6EnaBn+E1YjjIZaN08U4J
-	Jx0gSEpeWUyck8XNjIb6jEr0CAqrut2TgJMPHGcQNqP7wl2hFinxPHn5PBREcmgB
-	ZZxoKFhq1RM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C1DD233A8;
-	Thu,  4 Dec 2014 14:39:21 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76655233A7;
-	Thu,  4 Dec 2014 14:39:20 -0500 (EST)
-In-Reply-To: <CAEvUa7nxzX=54QJto_R3hfvAO4FKhs8Pancz0TTiC7ev22--Kw@mail.gmail.com>
-	(David Michael's message of "Thu, 4 Dec 2014 14:27:24 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3DF65554-7BED-11E4-A289-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933049AbaLDTpD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2014 14:45:03 -0500
+Received: from haggis.mythic-beasts.com ([93.93.131.56]:52689 "EHLO
+	haggis.mythic-beasts.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933006AbaLDTpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 14:45:01 -0500
+Received: from [2.81.129.121] (port=54825 helo=localhost)
+	by haggis.mythic-beasts.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <henrix@camandro.org>)
+	id 1XwcKf-0000fk-Ov; Thu, 04 Dec 2014 19:44:58 +0000
+Content-Disposition: inline
+In-Reply-To: <xmqqd27ztdkr.fsf@gitster.dls.corp.google.com>
+X-BlackCat-Spam-Score: -28
+X-Mythic-Debug: Threshold =  On = 
+X-Spam-Status: No, score=-2.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260790>
 
-David Michael <fedora.dm0@gmail.com> writes:
-
-> On Wed, Dec 3, 2014 at 9:24 PM, David Michael <fedora.dm0@gmail.com> wrote:
->> --- /dev/null
->> +++ b/compat/stat.c
->> @@ -0,0 +1,49 @@
->> +#define _POSIX_C_SOURCE 200112L
->> +#include <stddef.h>    /* NULL         */
->> +#include <sys/stat.h>  /* *stat, S_IS* */
->> +#include <sys/types.h> /* mode_t       */
+On Thu, Dec 04, 2014 at 11:33:24AM -0800, Junio C Hamano wrote:
+> Luis Henriques <henrix@camandro.org> writes:
+>=20
+> > On Wed, Dec 03, 2014 at 08:56:45AM -0800, Junio C Hamano wrote:
+> >
+> >> I actually do not think this is a good idea from debuggability.
+> >
+> > Do you think this could be merged with yet another switch?  I can't
+> > think of a name for the switch, something like... "--hide-msgid"?
+>=20
+> In case it wasn't clear, by "this" I meant the removal of
+> "X-Mailer:", iow, "Adding --no-xmailer option is a bad idea from
+> debuggability's point of view".
 >
-> Oops, the <stddef.h> line can be removed now that this is no longer
-> testing for NULL.  Let me know if this warrants a v3 if there is no
-> other feedback.
 
-Let me queue with this squashed in for now.
+Oh, ok.  I thought you were talking about the message-id.
 
- compat/stat.c | 1 -
- 1 file changed, 1 deletion(-)
+> Not adding message-id is not an option; MSAs are supposed to always
+> add one if they want to be RFC compliant, aren't they?
 
-diff --git a/compat/stat.c b/compat/stat.c
-index c2d4711..a2d3931 100644
---- a/compat/stat.c
-+++ b/compat/stat.c
-@@ -1,5 +1,4 @@
- #define _POSIX_C_SOURCE 200112L
--#include <stddef.h>    /* NULL         */
- #include <sys/stat.h>  /* *stat, S_IS* */
- #include <sys/types.h> /* mode_t       */
- 
+Yes, of course -- having a message ID is a requirement.  But I was
+hoping you could accept a solution similar to the one suggested by
+Kyle (adding him to Cc): he was suggesting hashing the message ID,
+which would be a good compromise, I believe.
+
+Cheers,
+--=20
+Lu=EDs
