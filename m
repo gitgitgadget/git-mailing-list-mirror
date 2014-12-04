@@ -1,110 +1,78 @@
-From: Mike Gerwitz <mikegerwitz@gnu.org>
-Subject: Re: git log --pretty="format:%H$t%aN$t%s$t%G?" --show-signature
-Date: Thu, 04 Dec 2014 13:05:38 -0500
-Message-ID: <871tofuw7h.fsf@gnu.org>
-References: <54809802.6030609@whonix.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Whonix-devel <whonix-devel@whonix.org>
-To: Patrick Schleizer <patrick-mailinglists@whonix.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 19:05:56 2014
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] completion: add git-tag options
+Date: Thu,  4 Dec 2014 19:07:35 +0100
+Message-ID: <1417716455-5609-1-git-send-email-ralf.thielow@gmail.com>
+Cc: Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 04 19:07:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwamp-0001DB-Bi
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 19:05:55 +0100
+	id 1Xwaod-0002K6-VD
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 19:07:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932717AbaLDSFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 13:05:48 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:46082 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932861AbaLDSFq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 13:05:46 -0500
-Received: from cpe-69-204-47-184.buffalo.res.rr.com ([69.204.47.184]:34774 helo=mikegerwitz-pc.gerwitz.local.gnu.org)
-	by fencepost.gnu.org with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.71)
-	(envelope-from <mikegerwitz@gnu.org>)
-	id 1Xwamf-0002g0-FT; Thu, 04 Dec 2014 13:05:45 -0500
-In-Reply-To: <54809802.6030609@whonix.org> (Patrick Schleizer's message of
-	"Thu, 04 Dec 2014 17:21:06 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
+	id S932905AbaLDSHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 13:07:43 -0500
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:61967 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932802AbaLDSHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 13:07:42 -0500
+Received: by mail-wi0-f177.google.com with SMTP id l15so28826869wiw.10
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 10:07:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=keN3jOkLvh6Wnn8N1uSpTYR7fghCeR7I++T/pZSXz9E=;
+        b=Ny83H35I5dUIm6n0XMjOZ4ckCBImyr09xCpc1E5VzBjsfkq2SYPi+z77y1d18iz+Zq
+         wFsumeH6Joa7X31Za6v+ZHK0tjRnF+qhPSg57Yaq6BSjJTIIVWfD3F7JWt9YmpN+Xfyp
+         d5rV1Sci3iFQ+WLpaxs8zItqM95v3EueU41oxjUFwyfBz0WAj36fz26EFKZ5W6bIP0Aq
+         Gf+hWjF126FCNcNS4Cr51IlwSbxbtj2z3DvJsGAXaCcILbDQsvi1N2L5KXPRgQmdMn6I
+         42dmQL/nOMNqay3OsX6tybJwpzRDIzR5CEJtZqzoAwYY4e20xQqrDcC0AO/7rRNWhMex
+         4iNQ==
+X-Received: by 10.194.85.137 with SMTP id h9mr18423049wjz.70.1417716458307;
+        Thu, 04 Dec 2014 10:07:38 -0800 (PST)
+Received: from localhost (dslb-088-073-192-130.088.073.pools.vodafone-ip.de. [88.73.192.130])
+        by mx.google.com with ESMTPSA id ud1sm41470927wjc.7.2014.12.04.10.07.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 04 Dec 2014 10:07:37 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.269.ge4ffef3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260774>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Add completion for git-tag options including
+all options that are currently shown in "git tag -h".
 
-Hey Patrick,
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ contrib/completion/git-completion.bash | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-On Thu, Dec 04, 2014 at 17:21:06 +0000, Patrick Schleizer wrote:
-> git log --pretty="format:%H$t%aN$t%s$t%G?" --show-signature
-> [...]
-> But when I run that command, spaces are missing. (Using a user that does
-> not know my gpg public key for testing purposes.) See output:
->
-> -----
->
-> user2@host:/home/user/testrepo$ git log
-> --pretty="format:%H$t%aN$t%s$t%G?" --show-signature
-
-That is because the variable `$t' is defined in my script on the
-preceding line, as a tab character.  You can insert it directly using
-C-V <TAB>, or $'\t' in bash.
-
-> Mike, could you please put your various git commit verification helper
-> scripts into a publicly visible?
-
-You can use this:
-
-  https://gitorious.org/easejs/easejs/source/ee85b058df783ffaa9f8d5ae58f9eb6d7586b0ca:tools/signchk
-
-But note that the default value of the `chkafter' var is
-ease.js-specific.
-
-> By the way, any chance that these useful helper scripts could make their
-> way into the official distribution of git as a stopgap until native git
-> commit verification support gets improved?
-
-It has since improved; I'm looking for the time to update the article,
-or write a follow-up.
-
-Git has since added other pretty formatting options as well:
-
-  https://github.com/git/git/blob/master/Documentation/pretty-formats.txt#L140
-
-Git v2.1.0 also added a `verify-commit' command:
-
-  https://github.com/git/git/blob/master/Documentation/git-verify-commit.txt
-
-I haven't used it yet.
-
-Hope that helps.
-
-- -- 
-Mike Gerwitz
-Free Software Hacker | GNU Maintainer
-http://mikegerwitz.com
-FSF Member #5804 | GPG Key ID: 0x8EE30EAB
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBAgAGBQJUgKJyAAoJEPIruBWO4w6rdS8QAMEtQhklDe4zXju0uc6ksqYl
-aXdXhE7HcyUDl6yWXEheXH4oCRLSthS+8MPQfuY8gae1eRvyHx3rViGpMEyB8s5B
-xhAQpOLVmro0QIwIZ/HGX4IKoGVq/QyqvLNR8iqnV8GXPu+ckGIG/UvrkFFSaLW8
-eFUvQLbNITViVgQljCzzfptL9dQvdra0D1EXxRk8+h8Sw4vKRN54h0tqKVw5PcsT
-4sFUBVwgmzILNKydFkMu1C+pDwnemhS04PtcrpmUTniOzLPhWJiZwzgDV5j9tOPq
-7noLrnw0kpm6PbX90i2+uSVGmh6zgoR69h7SAZGJEiHQj4BiZetLMwxJL25o73/c
-1/9tWT/7kAcpvzAjPjRMS3BqV7AVwNqTKKblCszfunS87aWLs1t/bgUg4e6x3lTJ
-JxyxkKnSnn3dzntMfB9UuuJ6bdtn1pJci4Ptvl2yzKHaZv7ImV78UIuxdthtMgMn
-eBawq3wm7HBMETkDDyRSpuPOEycBSnWZL2dL4Xc9IxPKDTJUvHTRUXxy4v2Juiv9
-Pogao25j6EpTlOqx29Y9Y95ITw/UdQU7NjPAGFNxIZZTgjzHrcIlaEKuoHp+t6oh
-s8OPhD+FMNWBFdAda+zP785sUbyF93/2xBK/HFyTUinOLn1/BJBC0FqHfeYd1hQe
-cJ0rYnOtckycQv+re9hz
-=+Rub
------END PGP SIGNATURE-----
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2fece98..cb32dc1 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2548,6 +2548,16 @@ _git_tag ()
+ 		__gitcomp_nl "$(__git_refs)"
+ 		;;
+ 	esac
++
++	case "$cur" in
++	--*)
++		__gitcomp "
++			--list --delete --verify --annotate --message --file
++			--sign --cleanup --local-user --force --column --sort
++			--contains --points-at
++			"
++		;;
++	esac
+ }
+ 
+ _git_whatchanged ()
+-- 
+2.2.0.269.ge4ffef3
