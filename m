@@ -1,79 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gc: support temporarily preserving garbage
-Date: Thu, 4 Dec 2014 04:10:23 -0500
-Message-ID: <20141204091023.GB27455@peff.net>
-References: <1415927805-53644-1-git-send-email-brodie@sf.io>
- <xmqqlhnd1j66.fsf@gitster.dls.corp.google.com>
- <20141117213442.GD15880@peff.net>
- <CADQoFhyxFNzazsEaE6Bk2W_KDhogBho8vgJXkDDPsYvC46ZX5Q@mail.gmail.com>
+Subject: Re: [PATCH] introduce git root
+Date: Thu, 4 Dec 2014 04:22:52 -0500
+Message-ID: <20141204092251.GC27455@peff.net>
+References: <1417291211-32268-1-git-send-email-arjun024@gmail.com>
+ <2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
+ <CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
+ <vpqoaro99xd.fsf@anie.imag.fr>
+ <xmqqd284rryz.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
+ <20141202070415.GC1948@peff.net>
+ <xmqqd282m09j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Bryan Turner <bturner@atlassian.com>,
-	Stefan Saasen <ssaasen@atlassian.com>
-To: Brodie Rao <brodie@sf.io>
-X-From: git-owner@vger.kernel.org Thu Dec 04 10:10:39 2014
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Arjun Sreedharan <arjun024@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 10:23:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwSQm-0000Im-Aq
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 10:10:36 +0100
+	id 1XwScn-0006Pq-Qc
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 10:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381AbaLDJK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 04:10:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48244 "HELO cloud.peff.net"
+	id S1753343AbaLDJW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 04:22:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48254 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753042AbaLDJKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 04:10:25 -0500
-Received: (qmail 22858 invoked by uid 102); 4 Dec 2014 09:10:25 -0000
+	id S1753335AbaLDJWy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 04:22:54 -0500
+Received: (qmail 23404 invoked by uid 102); 4 Dec 2014 09:22:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 03:10:25 -0600
-Received: (qmail 4801 invoked by uid 107); 4 Dec 2014 09:10:27 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 03:22:54 -0600
+Received: (qmail 4850 invoked by uid 107); 4 Dec 2014 09:22:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 04:10:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 04:10:23 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 04:22:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 04:22:52 -0500
 Content-Disposition: inline
-In-Reply-To: <CADQoFhyxFNzazsEaE6Bk2W_KDhogBho8vgJXkDDPsYvC46ZX5Q@mail.gmail.com>
+In-Reply-To: <xmqqd282m09j.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260750>
 
-On Wed, Dec 03, 2014 at 01:21:03PM -0800, Brodie Rao wrote:
+On Tue, Dec 02, 2014 at 09:26:00AM -0800, Junio C Hamano wrote:
 
-> > I think it is also not sufficient. This patch seems to cover only
-> > objects. But we assume that we can atomically rename() new versions of
-> > files into place whenever we like without disrupting existing readers.
-> > This is the case for ref updates (and packed-refs), as well as the index
-> > file.  The destination end of the rename is an unlink() in disguise, and
-> > would be susceptible to the same problems.
+> Jeff King <peff@peff.net> writes:
 > 
-> I'm not aware of renaming over files happening anywhere in gc-related
-> code. Do you think that's something that would need to be addressed in
-> the rest of the code base before going forward with this garbage
-> directory approach? If so, do you have any suggestions on how to
-> tackle that problem?
+> > There is also "git var", which is a catch-all for printing some deduced
+> > environmental defaults. I'd be just as happy to see it go away, though.
+> > Having:
+> >
+> >   git --exec-path
+> >   git --toplevel
+> >   git --author-ident
+> >
+> > all work would make sense to me (I often get confused between "git
+> > --foo" and "git rev-parse --foo" when trying to get the exec-path and
+> > git-dir). And I don't think it's too late to move in this direction.
+> > We'd have to keep the old interfaces around, of course, but it would
+> > immediately improve discoverability and consistency.
+> 
+> Yeah, I too think the above makes sense.  I forgot about "var", but
+> it should go at the same time we move kitchen-sink options out of
+> "rev-parse".  One less command to worry about at the UI level means
+> you do not have to say "if you want to learn about X, ask 'var', if
+> you want to learn about Y, ask 'rev-parse', use 'git' itself for Z".
 
-As an example, if you run "git pack-refs --all --prune" (which is run by
-"git gc"), it will create a new pack-refs file and rename it into place.
-Another git program (say, "git for-each-ref") might be reading the file
-at the same time. If you run pack-refs and for-each-ref simultaneously
-in tight loops on your problematic NFS setup, what happens?
+Christian raised the issue of cluttering the "git --option" namespace,
+and I do agree that's a potential issue. My proposal was to drop "git
+var", but I'd also be OK with making "git var" the new kitchen sink.  It
+doesn't accept many options now, so it's fairly wide open for changing
+without losing backwards compatibility. AFAICT, the "-l" option is
+utterly useless, but other than that, it just takes a variable name. We
+could introduce dashed options, or just define a sane variable namespace.
 
-I have no idea if it breaks or not. I don't have such a misbehaving
-system, and I don't know how rename() is implemented on it. But if it
-_is_ a problem of the same variety, then I don't see much point in
-making an invasive fix to address half of the problem areas, but not the
-other half (i.e., if we are still left with a broken git in this setup,
-was the invasive fix worth the cost?).
-
-If it is a problem (and again, I am just guessing), I'd imagine you
-would need a similar setup to what you proposed for unlink(): before
-renaming "packed-refs.lock" into "packed-refs", hard-link it into your
-"trash" area. And you'd probably want to intercept rename() there, to
-catch all places where we use this technique.
+Some of the discussion has involved mixing config options into this
+kitchen sink, but that does not make any sense to me (and is why I find
+"git var -l" so odd). Config options are fundamentally different, in
+that they are set and retrieved, not computed (from other config
+variables, or from hard-coded values). And we already have a nice tool
+for working with them (well...nice-ish, let's say).
 
 -Peff
