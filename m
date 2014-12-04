@@ -1,83 +1,93 @@
-From: =?ISO-8859-1?Q?S=E9rgio?= Basto <sergio@serjux.com>
-Subject: GIT: ignoring changes in tracked files and bug report
-Date: Thu, 04 Dec 2014 22:42:11 +0000
-Message-ID: <1417732931.20814.16.camel@segulix>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] doc: document error handling functions and
+ conventions (Re: [PATCH 03/14] copy_fd: pass error message back through a
+ strbuf)
+Date: Thu, 4 Dec 2014 15:37:38 -0800
+Message-ID: <20141204233738.GE16345@google.com>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com>
+ <20141117233525.GC4336@google.com>
+ <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
+ <20141118004841.GE4336@google.com>
+ <CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
+ <20141203050217.GJ6527@google.com>
+ <20141203051344.GM6527@google.com>
+ <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
+ <20141204030133.GA16345@google.com>
+ <xmqqy4qnq9m2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 05 00:32:26 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 00:37:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwfsn-0007Ju-Cv
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:32:25 +0100
+	id 1Xwfxx-00020D-PM
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 00:37:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754819AbaLDXcV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2014 18:32:21 -0500
-Received: from host1.easyho.st ([62.210.60.225]:58883 "EHLO host1.easyho.st"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754776AbaLDXcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 18:32:20 -0500
-X-Greylist: delayed 3004 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Dec 2014 18:32:20 EST
-Received: from [194.65.5.235] (port=23188 helo=[10.134.132.194])
-	by host1.easyho.st with esmtpsa (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128)
-	(Exim 4.84)
-	(envelope-from <sergio@serjux.com>)
-	id 1Xwf6C-0021E4-RP
-	for git@vger.kernel.org; Thu, 04 Dec 2014 22:42:14 +0000
-X-Mailer: Evolution 3.10.4 (3.10.4-4.fc20) 
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - host1.easyho.st
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - serjux.com
-X-Get-Message-Sender-Via: host1.easyho.st: authenticated_id: sergio@serjux.com
-X-From-Rewrite: unmodified, already matched
+	id S933315AbaLDXhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 18:37:42 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:40041 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754730AbaLDXhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 18:37:41 -0500
+Received: by mail-ie0-f182.google.com with SMTP id x19so16800276ier.27
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 15:37:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=nSUjqeS7VRUaPNp4jw/q/4Xbu7wnRgAvBrP5unAq9A4=;
+        b=DUxAJYCeayNK9skGuMVkGYTnSpofvNXsf9MRmi5s4NhFJVjIUXtDpI7IGQFjywC0Jb
+         CFhny5rbFGOpwyEpx/8wV2bZoN6IdDZduTygBPUgmLwH+LeuQ8osG5tIPyvjHgG/q99F
+         JplxR+0N3Q/P+yWT1zEEIlVANLrppb75oeWFfAOoaCDBPwlEuQ1Yy8hK+dlBZrKchTb/
+         hvqKRStJV88SIFz03coSuwInFHDeixti7rnbxCred1vHqS198kR66gTmgQUaPaAN0ilB
+         zMoGvBB6TCnqe7vKnz2M774tsFMyD5d+4spl8WXSenqtPs8KgkpbAJGTz5PiXsLBKXPh
+         Ejbw==
+X-Received: by 10.50.28.49 with SMTP id y17mr10622311igg.3.1417736260734;
+        Thu, 04 Dec 2014 15:37:40 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:5da0:cb9e:66b:e537])
+        by mx.google.com with ESMTPSA id bd5sm19787322igb.14.2014.12.04.15.37.39
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 04 Dec 2014 15:37:40 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqy4qnq9m2.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260838>
 
-Hi, I'm trying find a solution where I can change file in a devel
-environment , and not commit it into git .=20
+Hi,
 
-git update-index --assume-unchanged <file>=20
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-is one solution , not the best solution but one solution.=20
+>> Here's a draft for documentation on that.
+>
+> Thanks; looks reasonable; even if the discussion between you and
+> Peff took us to a slightly different direction than what you
+> described here, the earlier description of long established practice
+> is a welcome addition.
 
-I add 2 files that I want ignore on commits=20
+Thanks.
 
-git update-index --assume-unchanged configurations/local.defs
-git update-index --assume-unchanged processor/default.defs
+Can you say more?  I didn't think the discussion had reached a
+conclusion yet.
 
-git diff -a=20
-is clean=20
-git diff .
-is clean
+Unless there's a strong reason to do otherwise, I prefer to stick with
+the strbufs in this series for now.  I prefer strbuf for this purpose
+over char[1024].  And switching later doesn't seem hard.
 
-git commit -a=20
-nothing added to commit
-but=20
-git commit .=20
-# Changes to be committed:
-#       modified:   configurations/local.defs
-#       modified:   processor/default.defs
+But if others prefer char[1024], I can update the existing code that
+uses strbuf from the transaction API to use that and reroll this
+series with that convention.  A part of me dislikes that but I'll go
+along.
 
-this is a bug ?=20
-
-Anyway what is best way to deal with some files where we want change
-locally and not commit in git .=20
-The solution of have one environment variable that says if we are in
-devel or in production , and system read the variable and choose the
-files to read can't be applied in my case, and is a no solution , is
-save a variable outside of source code which I can't.=20
-
-
-Thanks,
---=20
-S=E9rgio M. B.
+Jonathan
