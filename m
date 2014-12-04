@@ -1,86 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/14] lockfile: introduce flag for locks outside .git
-Date: Wed, 03 Dec 2014 21:51:22 -0800
-Message-ID: <xmqqbnnkufmt.fsf@gitster.dls.corp.google.com>
-References: <1416262453-30349-1-git-send-email-sbeller@google.com>
-	<20141117233525.GC4336@google.com>
-	<CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com>
-	<20141118004841.GE4336@google.com>
-	<CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
-	<20141203050217.GJ6527@google.com> <20141203051911.GP6527@google.com>
-	<xmqqvblsuy2e.fsf@gitster.dls.corp.google.com>
-	<xmqqr3wguxhv.fsf@gitster.dls.corp.google.com>
-	<20141203232951.GJ6527@google.com>
+Subject: Re: Disabling credential helper?
+Date: Wed, 03 Dec 2014 22:07:54 -0800
+Message-ID: <xmqq7fy8uev9.fsf@gitster.dls.corp.google.com>
+References: <20141203000310.GE90134@vauxhall.crustytoothpaste.net>
+	<20141203005953.GB6527@google.com> <20141203012148.GB29427@peff.net>
+	<20141203012950.GC6527@google.com> <20141203013607.GA30037@peff.net>
+	<20141204013306.GA9406@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 06:52:08 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 04 07:08:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwPKg-0006Jy-L6
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 06:52:07 +0100
+	id 1XwPaB-0005li-Ci
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 07:08:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187AbaLDFv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 00:51:59 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54574 "EHLO
+	id S1750934AbaLDGH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 01:07:59 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61821 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752822AbaLDFv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 00:51:57 -0500
+	with ESMTP id S1750724AbaLDGH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 01:07:58 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AB321E39F;
-	Thu,  4 Dec 2014 00:51:57 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F7C21E637;
+	Thu,  4 Dec 2014 01:07:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xxLhf+YUTIMaaeSV/iM+s8jljE8=; b=PvdmAe
-	/80OKdZ5H657b7CC4K01xLEtY6GNKYZu2uIO1sPP1ywAb4uuFc/q0dEEL1+6vLrR
-	yHH+Ijuyk34Ih81OCfeThkogd59zhS0mwcan1fuk2bKA32mVbCzECU/vN8hb+jwa
-	9fHIZt0yp9KAMwVNVoy4Vk1HJr5fcnk9FI4Bw=
+	:content-type; s=sasl; bh=O+So5F3p6+5modCVuEIWnLAXcAU=; b=k/O3eH
+	LLvpHGuBwtnuACnbCCRsh6bznYlzPBKow5PbB7pCX/45GKUYHi476Xj4oio9Mn/s
+	3VqwcPgQOBUbtuBWep4E8nvl0LRBz1Rcq+P2xHQtq+7kKUexjL70tcLfGGm1u8o5
+	Lnf5PCNLTtQBRF21NVtpckQhoYhmCgOJh0ltk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L8SuRDYGUEPGJlEdT0Fj7ze4QNYe+sUC
-	iiS1MEIVPpjMSKXmeflz9j3HyzAiRBZTokTU7/YiLjszGaAnSXVC8zUQsFK6r7ln
-	GzHoBEve0LdG92ExkPm3OJm7A9uN4DROJG+i+GcJ7UT497/yGaHhwp4BSnJ51ryw
-	W+scRwpa/5o=
+	:content-type; q=dns; s=sasl; b=icBDa2Iww/afTgBEG2W+j/P+lwmEEPJU
+	jXg2M85CJASSWjjvb+Bm8NtaMTDJ/+ob51RMRLGaWVZDvFUGtr0Dr84FY5PszVsM
+	joNcWJhgoSWz3jU6zfe0zUhEZYZeZMab7p6hAcqU01j4ExyyNx1/Qe05AQR3B6qo
+	lxjDO98568A=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 015021E39E;
-	Thu,  4 Dec 2014 00:51:57 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 751861E636;
+	Thu,  4 Dec 2014 01:07:56 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9FB381E38E;
-	Thu,  4 Dec 2014 00:51:23 -0500 (EST)
-In-Reply-To: <20141203232951.GJ6527@google.com> (Jonathan Nieder's message of
-	"Wed, 3 Dec 2014 15:29:51 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD7B11E635;
+	Thu,  4 Dec 2014 01:07:55 -0500 (EST)
+In-Reply-To: <20141204013306.GA9406@peff.net> (Jeff King's message of "Wed, 3
+	Dec 2014 20:33:06 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9443BFBA-7B79-11E4-B388-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E3B10196-7B7B-11E4-920E-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260728>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Junio C Hamano wrote:
+>   1. I chose the value-less boolean as a token to reset the list (since
+>      it is otherwise an unmeaningful error). The example above shows its
+>      use with "-c", but you could also do:
 >
->> I tried to merge the 14-patch series with obvious fix-ups after
->> dropping the rerere abortion change you sent separately and in
->> duplicate and also dropping sb/copy-fd, but I've ran out of patience
->> with this step, at least for today's integration cycle.  Should we
->> also drop jk/lock-ref-sha1-basec-return-errors topic as well?
+>        [credential]
+>        helper
+>        helper = foo
 >
-> I don't mind adding it to the series....
+>      in a config file itself.  This is probably rather unintuitive.
 
-We may want to see it done the other way around, though.  That is,
-to allow the pack-refs race fix, which was reviewed and has been
-cooking, graduate without having to depend on this API rewrite, so
-that we may be able to merge it down even to v2.2.x maintenance
-track.
+For this one, and I suspect all the "multi-valued" ones, I think it
+actually is the most sensible syntax (another possiblity is to give
+an empty string, assuming that all multi-valued variables we care
+about take non-empty string or numeric values), as I do not see a
+useful/valid use case for wanting to define boolean multi-valued
+variable.
 
-Thanks.
+>      If we can accept stomping on an unlikely-used token, something
+>      like:
+>
+>        git -c credential.helper=RESET fetch ...
+>
+>      is more sensible (and we can argue about the exact token used).
+
+This unfortunately is unlikely to fly well if we are shooting for a
+generic mechanism that is applicable for multi-valued ones in
+general (your comment 2. below is very much relevant and true).
+
+>      If we can accept new syntax and new config code, something like:
+>
+>        git -c '!credential.helper' fetch ...
+>
+>      is probably workable.
+
+I think I suggested exactly this syntax (and "[credential] !helper"
+in the config file) when this was brought up the last time, but it
+was shot down because that would make the resulting configuration
+file unparsable (not just ignored) by existing versions of Git.
+
+But perhaps it is a good thing to break existing parser when "clear
+the variable settings seen so far" is used.  It would not do us very
+good to allow existing implementations to ignore it and continue as
+if all other entries (and special token like RESET) matter will
+silently give users incorrect result.
