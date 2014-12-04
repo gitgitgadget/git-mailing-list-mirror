@@ -1,110 +1,140 @@
-From: Patrick Schleizer <patrick-mailinglists@whonix.org>
-Subject: git log --pretty="format:%H$t%aN$t%s$t%G?" --show-signature
-Date: Thu, 04 Dec 2014 17:21:06 +0000
-Message-ID: <54809802.6030609@whonix.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Enhancement Request: "locale" git option
+Date: Thu, 4 Dec 2014 18:21:40 +0100
+Message-ID: <CACBZZX6iOtO-Wv_T1Sgtmjqdi8kEziBCHwp1X319x0o1QMOnGA@mail.gmail.com>
+References: <54801C39020000A1000182FA@gwsmtp1.uni-regensburg.de>
+ <54801B50.4080500@web.de> <20141204095557.GE27455@peff.net>
+ <CACBZZX4Rin6jj2viTUmdpEqLb9TWnMf+p_vRF8BbLrTWFDcp3A@mail.gmail.com> <548087F8.1030103@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org, Mike Gerwitz <mikegerwitz@gnu.org>,
-	Whonix-devel <whonix-devel@whonix.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 18:21:33 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Dec 04 18:22:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwa5s-0000Lb-6P
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 18:21:32 +0100
+	id 1Xwa6T-0000iD-3z
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 18:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932760AbaLDRVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 12:21:21 -0500
-Received: from whonix.org ([92.243.7.197]:55818 "EHLO whonix.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932453AbaLDRVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 12:21:20 -0500
-Received: from 127.0.0.1 (nchinda2.mit.edu [18.239.0.140])
-	by whonix.org (Postfix) with ESMTPSA id CB1F038;
-	Thu,  4 Dec 2014 18:21:14 +0100 (CET)
+	id S932395AbaLDRWE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2014 12:22:04 -0500
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:62159 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932182AbaLDRWA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 12:22:00 -0500
+Received: by mail-ob0-f175.google.com with SMTP id wp4so3150943obc.6
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 09:22:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=YfHO9XgRiBgs8idxQJbaBn8MVoOS0F80yI3fAv24Og0=;
+        b=GpIHJIooPVRgYzbGFDEgxnjJoyv+NtREHeeviOBSjxjFcUsMKfxvS8MNysTUkuuvgk
+         4fXJd3LJrLBt08woQYE/NPa8Iier7BSYxUFODx2oeiiXFWpLmccqbZsBeujyKZ6JOdak
+         2wxeE7+wtcuCgioDKeI3K+Y+3Jo2btXnygBncsfLNVQMtgt7ZvUaN1c7SqymKu1R2Myt
+         7hzJPVJloPGIkbNPinoFQTF/3uqSkoK5D0TY2p67DIsYKOKHUUjkC3X9W+QRVmcY6YmF
+         NbyRb8S4seegvApkH7fSuCP7UWOewGCDhBpsSc81Qmm1bL0sMQPHHxUBWnSW8mcVVwlU
+         VZ/Q==
+X-Received: by 10.182.79.104 with SMTP id i8mr7817384obx.58.1417713720263;
+ Thu, 04 Dec 2014 09:22:00 -0800 (PST)
+Received: by 10.76.141.44 with HTTP; Thu, 4 Dec 2014 09:21:40 -0800 (PST)
+In-Reply-To: <548087F8.1030103@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260769>
 
-Dear git mailing list,
-Dear Mike Gerwitz,
+On Thu, Dec 4, 2014 at 5:12 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason schrieb am 04.12.2014 um 16:49=
+:
+>> On Thu, Dec 4, 2014 at 10:55 AM, Jeff King <peff@peff.net> wrote:
+>>> On Thu, Dec 04, 2014 at 09:29:04AM +0100, Torsten B=C3=B6gershausen=
+ wrote:
+>>>
+>>>> How about
+>>>> alias git=3D'LANGUAGE=3Dde_DE.UTF-8 git'
+>>>> in your ~/.profile ?
+>>>> (Of course you need to change de to the language you want )
+>>>
+>>> Besides being awkward in scripts (which will not respect the alias =
+and
+>>> use a different language!), that variable will also be inherited by
+>>> programs git spawns. So the editor, for example, may end up in the =
+wrong
+>>> language.
+>>>
+>>> I think respecting core.locale would make sense (probably the chang=
+e
+>>> would go into git_setup_gettext(), but you may have to fight with t=
+he
+>>> setup code over looking at config so early in the process).
+>>
+>> I think we should just stick to the standard *nix way of doing this:
+>> Tell people to set their locale in their environment.
+>>
+>> If someone's having this issue it's also happening for all the
+>> binutils, and any other command-line and GUI program they use, unles=
+s
+>> they override using the standard way of doing so, by setting the
+>> relevant LC_* environment variables.
+>>
+>> If you want Git in English then create an alias to override its loca=
+le
+>> to be C, if you want the editor it spawns to be in some other langua=
+ge
+>> alias that to something that explicitly sets LC_* for that editor.
+>>
+>> Maybe I'm being overzealous about this (especially with the "I
+>> implemented this" blinders on), but let's not have Git set the
+>> precedent for other *nix programs that they all should come up with
+>> some custom way to override locales, that's something to be done at
+>> the OS locale library level, which we use.
+>>
+>>> However, I think the original question is not one of localizing git=
+, but
+>>> rather of having it _not_ localized (avoiding the German translatio=
+ns).
+>>> There is a hack you can do that for that, which is to set
+>>> GIT_TEXTDOMAINDIR to something nonsensical (like "/"), which will m=
+ean
+>>> git cannot find the .po files, and just uses the builtin messages.
+>>
+>> You can, but the fact that that works is an internal implementation
+>> detail we shouldn't document or support.
+>>
+>
+> The main issue at hand is really that we have localised git but not i=
+ts
+> man pages. Even if you understand English, the man pages don't help y=
+ou
+> at all if you can't connect the technical terms used there to their
+> localised counterparts in git's messages. (NO_GETTEXT=3Dy is my solut=
+ion.)
+>
+> That is one of the many reasons why I proposed to have a dictionary o=
+f
+> the main technical terms for each language before we even localise gi=
+t
+> in that language. In an ideal word, we would provide a simple solutio=
+n
+> for looking these terms up both ways. I don't think we're going to ha=
+ve
+> localised man pages any time soon, are we?
 
-according to http://mikegerwitz.com/papers/git-horror-story#script-trust
-the output of:
+I think that's a great idea, and one that's only blocked on someone
+(hint hint) sending patches for it.
 
-git log --pretty="format:%H$t%aN$t%s$t%G?" --show-signature
+It would be neat-o to have something to make translating the docs
+easier, i.e. PO files for sections of the man pages. There's tools to
+help with that which we could use.
 
-should look like this:
-
------
-
-f72924356896ab95a542c495b796555d016cbddd       Mike Gerwitz    Yet
-another foo
-gpg: Signature made Sun 22 Apr 2012 01:37:26 PM EDT using RSA key ID
-8EE30EAB
-gpg: Good signature from "Mike Gerwitz (Free Software Developer)
-<mike@mikegerwitz.com>"
-gpg: WARNING: This key is not certified with a trusted signature!
-gpg:          There is no indication that the signature belongs to the
-owner.
-Primary key fingerprint: 2217 5B02 E626 BC98 D7C0  C2E5 F22B B815 8EE3 0EAB
-afb1e7373ae5e7dae3caab2c64cbb18db3d96fba       Mike Gerwitz    Modified
-bar    G
-
------
-
-But when I run that command, spaces are missing. (Using a user that does
-not know my gpg public key for testing purposes.) See output:
-
------
-
-user2@host:/home/user/testrepo$ git log
---pretty="format:%H$t%aN$t%s$t%G?" --show-signature
-gpg: Signature made Thu 04 Dec 2014 04:37:58 PM UTC using RSA key ID
-77BB3C48
-gpg: Good signature from "Patrick Schleizer <adrelanos@riseup.net>"
-gpg: WARNING: This key is not certified with a trusted signature!
-gpg:          There is no indication that the signature belongs to the
-owner.
-Primary key fingerprint: 916B 8D99 C38E AF5E 8ADC  7A2A 8D66 066A 2EEA CCDA
-     Subkey fingerprint: 6E97 9B28 A6F3 7C43 BE30  AFA1 CB8D 50BB 77BB 3C48
-529bbc076f05c13023580ea7be7ba63aba3e9672Patrick Schleizersigned commit 2U
-gpg: Signature made Thu 04 Dec 2014 04:29:32 PM UTC using RSA key ID
-77BB3C48
-gpg: Good signature from "Patrick Schleizer <adrelanos@riseup.net>"
-gpg: WARNING: This key is not certified with a trusted signature!
-gpg:          There is no indication that the signature belongs to the
-owner.
-Primary key fingerprint: 916B 8D99 C38E AF5E 8ADC  7A2A 8D66 066A 2EEA CCDA
-     Subkey fingerprint: 6E97 9B28 A6F3 7C43 BE30  AFA1 CB8D 50BB 77BB 3C48
-ea1615ac1a9fe9f957f91f54a33a60d57828a32fPatrick Schleizersigned commitU
-75e79a211963907afd3a6d2f28c3571d37140231Patrick Schleizerreal long
-commit msg Please enter the commit message for your changes. Lines
-starting with '#' will be ignored, and an empt
-30096d1633ef22463c1a770288755ae5325f1242Patrick Schleizer2N
-e7be12378d2805bebe531bd01cbec9dec1f79032Patrick Schleizerinitial commitN
-(END)
-
------
-
-Any idea? Am I doing something wrong?
-
-I am asking, because therefore Mike Gerwitz's Quote "Signature Check
-Script With Web Of Trust" verification script (
-http://mikegerwitz.com/papers/git-horror-story#script-trust ) does not
-work for me.
-
-Mike, could you please put your various git commit verification helper
-scripts into a publicly visible?
-
-By the way, any chance that these useful helper scripts could make their
-way into the official distribution of git as a stopgap until native git
-commit verification support gets improved?
-
-Cheers,
-Patrick
+But there's no reason for us not to have translated glossaries in the m=
+eantime.
