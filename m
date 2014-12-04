@@ -1,97 +1,107 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack base object"
-Date: Thu, 4 Dec 2014 16:34:03 -0500
-Organization: PD Inc
-Message-ID: <F5D60A90C93A45359EF00CC200C81561@black>
-References: <64C98FC352BD45EC9632202946A081E1@black> <20141204005443.GB200195@vauxhall.crustytoothpaste.net>
-Reply-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	  <git@vger.kernel.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug in reflog of length 0x2BFF
+Date: Thu, 4 Dec 2014 16:58:05 -0500
+Message-ID: <20141204215805.GD19953@peff.net>
+References: <547C8610.8080301@cs.uni-saarland.de>
+ <20141201233515.GV6527@google.com>
+ <xmqqvblrrwxu.fsf@gitster.dls.corp.google.com>
+ <5480C60E.3070903@cs.uni-saarland.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 22:34:17 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>
+To: Christoph Mallon <mallon@cs.uni-saarland.de>
+X-From: git-owner@vger.kernel.org Thu Dec 04 22:58:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwe2R-0004xW-40
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 22:34:15 +0100
+	id 1XwePd-0002it-Uo
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 22:58:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933207AbaLDVeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 16:34:11 -0500
-Received: from mail.pdinc.us ([67.90.184.27]:60632 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932094AbaLDVeJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2014 16:34:09 -0500
-Received: from black (five-58.pdinc.us [192.168.5.58])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sB4LY3CC009130;
-	Thu, 4 Dec 2014 16:34:04 -0500
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <20141204005443.GB200195@vauxhall.crustytoothpaste.net>
-Thread-Index: AdAPXRtpqnFJ0p5ySsSWNqpxnc3bEwArKJ3g
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+	id S933082AbaLDV6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 16:58:09 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48561 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932905AbaLDV6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 16:58:08 -0500
+Received: (qmail 22561 invoked by uid 102); 4 Dec 2014 21:58:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 15:58:08 -0600
+Received: (qmail 9816 invoked by uid 107); 4 Dec 2014 21:58:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 16:58:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 16:58:05 -0500
+Content-Disposition: inline
+In-Reply-To: <5480C60E.3070903@cs.uni-saarland.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260807>
 
-> -----Original Message-----
-> From: brian m. carlson
-> Sent: Wednesday, December 03, 2014 19:55
+On Thu, Dec 04, 2014 at 09:37:34PM +0100, Christoph Mallon wrote:
+
+> Am 04.12.14 21:18, schrieb Junio C Hamano:
+> > Jonathan Nieder <jrnieder@gmail.com> writes:
+> >> Could you make a test script that illustrates and reproduces the
+> >> problem?  I.e., a patch to a file like t/t1410-reflog.sh, such that
+> >> if I run
+> >>
+> >> 	cd git
+> >> 	make
+> >> 	cd t
+> >> 	./t1410-reflog.sh
+> >>
+> >> then I can reproduce the bug?
+> > 
+> > Amen to that.  I am getting the same thing.
 > 
-> On Wed, Dec 03, 2014 at 06:31:18PM -0500, Jason Pyeron wrote:
-> > I remember hitting this a while ago, but just gave up.
-> > 
-> > It seems to be a problem for others too.
-> > 
-> > Any ideas on how to debug this so it can be patched?
-> > 
-> > -----Original Message-----
-> > From: Dave Lindbergh
-> > Sent: Wednesday, December 03, 2014 18:07
-> > To: cygwin
-> > 
-> > Aha - you're right.
-> > 
-> > It works fine on a local NTFS volume.
-> > 
-> > I get the error when I do it on Z:, which is mapped to a 
-> network drive
-> > (on another Windows box).
-> > 
-> > Is there a workaround? Why does this happen?
-> 
-> I don't think anyone is sure.  My wild guess is that there's something
-> about the way that Cygwin wraps Windows calls that makes it 
-> fail in this
-> case.  It might be interesting to run the Windows and Cygwin versions
-> under an strace equivalent and see where things differ.
+> I ran reproduce it reliably on multiple machines (OS X, FreeBSD, ia32,
+> amd64), a friend of mine can, too.
 
-[this was posted to the cygwin list]
+Thanks, I was able to reproduce this easily on an OS X machine.
 
-http://nerdfever.com/files/strace.txt
+Does this patch fix your problem?
 
-> 
-> It's an interesting problem, but I don't have any Windows 
-> systems, so I
-> can't look into it.
+diff --git a/refs.c b/refs.c
+index f1afec5..42e3a30 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3052,7 +3052,7 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
+ 	int tz;
+ 
+ 	/* old SP new SP name <email> SP time TAB msg LF */
+-	if (sb->len < 83 || sb->buf[sb->len - 1] != '\n' ||
++	if (sb->len < 83 ||
+ 	    get_sha1_hex(sb->buf, osha1) || sb->buf[40] != ' ' ||
+ 	    get_sha1_hex(sb->buf + 41, nsha1) || sb->buf[81] != ' ' ||
+ 	    !(email_end = strchr(sb->buf + 82, '>')) ||
 
-If it becomes a little less magic, I will chomp on the problem, but I cannot make a predictable test case.
 
--Jason
+I think the bug is in the reverse-reflog reader in
+for_each_reflog_ent_reverse. It reads BUFSIZ chunks of the file in
+reverse order, and then parses them individually. If the trailing
+newline for a line falls directly on the block boundary, we may not have
+it in our current block, and pass the line to show_one_reflog_ent
+without a trailing newline. That function is picky about making sure it
+got a full line.
 
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00. 
+So this is a long-standing bug in for_each_reflog_ent_reverse. It just
+showed up recently because we started using that function for
+read_ref_at_ent.
+
+I haven't confirmed yet, but I suspect the problem shows up on OS X and
+FreeBSD but not Linux because of the definition of BUFSIZ (so it is
+really probably glibc versus BSD libc). The same bug exists on Linux,
+but you would need different input to stimulate the newline at the right
+spot.
+
+The above is a workaround. I think the right solution is probably to
+teach for_each_reflog_ent_reverse to makes sure the trailing newline is
+included (either by tweaking the reverse code, or conditionally adding
+it to the parsed buffer).
+
+-Peff
