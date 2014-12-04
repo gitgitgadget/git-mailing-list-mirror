@@ -1,71 +1,90 @@
-From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-Subject: Antw: Re: Enhancement Request: "locale" git option
-Date: Thu, 04 Dec 2014 16:51:10 +0100
-Message-ID: <548090FE020000A100018323@gwsmtp1.uni-regensburg.de>
-References: <54801C39020000A1000182FA@gwsmtp1.uni-regensburg.de>
- <54801B50.4080500@web.de>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 12/13] refs.c: use a bit for ref_update have_old
+Date: Thu, 04 Dec 2014 17:10:05 +0100
+Message-ID: <5480875D.6050803@web.de>
+References: <1417681763-32334-1-git-send-email-sbeller@google.com> <1417681763-32334-13-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>, <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Dec 04 16:51:20 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>, ronniesahlberg@gmail.com,
+	mhagger@alum.mit.edu, jrnieder@gmail.com, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Dec 04 17:10:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwYgX-00033T-FO
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 16:51:17 +0100
+	id 1XwYz2-0006PS-Dz
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Dec 2014 17:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753766AbaLDPvO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2014 10:51:14 -0500
-Received: from rrzmta2.uni-regensburg.de ([194.94.155.52]:60769 "EHLO
-	rrzmta2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785AbaLDPvN (ORCPT
-	<rfc822;groupwise-git@vger.kernel.org:1:1>);
-	Thu, 4 Dec 2014 10:51:13 -0500
-Received: from rrzmta2.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 74BEF5284F
-	for <git@vger.kernel.org>; Thu,  4 Dec 2014 16:51:11 +0100 (CET)
-Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-	by rrzmta2.uni-regensburg.de (Postfix) with ESMTP id 577B3520B6
-	for <git@vger.kernel.org>; Thu,  4 Dec 2014 16:51:11 +0100 (CET)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
-	with Novell_GroupWise; Thu, 04 Dec 2014 16:51:11 +0100
-X-Mailer: Novell GroupWise Internet Agent 14.0.1 
-In-Reply-To: <54801B50.4080500@web.de>
-Content-Disposition: inline
+	id S932094AbaLDQKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 11:10:19 -0500
+Received: from mout.web.de ([212.227.17.11]:52601 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753665AbaLDQKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 11:10:17 -0500
+Received: from [192.168.209.17] ([78.72.72.190]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0M1G68-1Xh6Wx0mro-00tDVH; Thu, 04 Dec 2014 17:10:11
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <1417681763-32334-13-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:yEMxBXLlIqEZLLlbkA2dUh0Awaoosbr/msIeSJCZTm/e6t/hLoE
+ uWOwjrazmMg92mdjllmaqpW1kR1P1dkQhKEqKOwo6ol8uYPkk5l+E9JMem6xlLSB7fqzEvU
+ 23bgc9fbUqyrCnHrPsV0x4IUcOvHhvBj4hXqV08olcUEyTqvhJQWEHmFCqXSZMrbZvoD6bU
+ dNGQ8eI35FvgnFjdTZtHQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260763>
 
->>> Torsten B=C3=B6gershausen <tboegi@web.de> schrieb am 04.12.2014 um =
-09:29 in
-Nachricht <54801B50.4080500@web.de>:
-> On 12/04/2014 08:32 AM, Ulrich Windl wrote:
->> Hi!
->>
->> I'm native German, but German git messages confuse me (yopu'll have =
-to=20
-> correlate them with the man pages). At the moment git uses the locale=
-=20
-> settings from the environment, so you can only change git's locale se=
-ttings
+On 12/04/2014 09:29 AM, Stefan Beller wrote:
+Somewhat short commit message, especially the motivation is missing.
 
-> by changing the environment (like "LANG=3D git ...").
->> OTOH Git has a flexible hierachical option setting mechanism. Why no=
-t allow
+What do we gain with this patch ?
+In the struct the compiler needs to layout 2*20 bytes for the sha's.
+It follows an int, typically 4 bytes.
+It follows another int, now with one bit.
+Then we have the pointer "struct ref_lock *lock",
+which needs to be aligned on 4 byte boundary for a 32 bit processor,
+or an 8 byte boundary for a 64 bit machine.
 
-> a Git language (locale) setting system-wde, user-wide, or
-repository-specific.
->>
->> Regards,
->> Ulrich
-> How about
-> alias git=3D'LANGUAGE=3Dde_DE.UTF-8 git'
-> in your ~/.profile ?
-> (Of course you need to change de to the language you want )
+Our "1 bit int" is padded with 31 bits.
+We do not gain anything in memory consumption. (unless we declare int flags
+to be 31 bits, and the compiler may join "have_old" and "flags" together
+into one int in memory.
 
-That way no program ever needs configuration files ;-)
+But there is a price to pay:
+The generated code to fiddle out the bits from an int becomes more complicated.
+You need to fetch the memory from one int, mask and shift.
+Some processors can do this, out of my mind some ARM can, some can not.
+
+We need to run the compiler to look at the generated code of course.
+ 
+
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> 
+> Notes:
+>     Also a patch, which hasn't been posted on the mailing list before.
+> 
+>  refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/refs.c b/refs.c
+> index b54b5b3..2942227 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3532,7 +3532,7 @@ struct ref_update {
+>  	unsigned char new_sha1[20];
+>  	unsigned char old_sha1[20];
+>  	int flags; /* REF_NODEREF? */
+> -	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
+> +	int have_old:1; /* 1 if old_sha1 is valid, 0 otherwise */
+>  	struct ref_lock *lock;
+>  	int type;
+>  	char *msg;
+> 
