@@ -1,73 +1,97 @@
-From: "Ruud Huynen" <ruud.huynen@hispeed.ch>
-Subject: GIT: cherry-picking includes changes from a different commit
-Date: Fri, 5 Dec 2014 21:04:28 +0100
-Message-ID: <02f801d010c6$ad32a1d0$0797e570$@hispeed.ch>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: bug report on update-index --assume-unchanged
+Date: Fri, 5 Dec 2014 20:48:17 -0000
+Organization: OPDS
+Message-ID: <12536C063959480083CC2D4CBA0BA38E@PhilipOakley>
+References: <1417732931.20814.16.camel@segulix><1417759955.10992.2.camel@segulix> <548156E5.2080006@kdbg.org><CACsJy8AVKaq4NJu=23W+wcRgVTQ7hVAOxsVwtZnZsNw6393cTA@mail.gmail.com><1417798622.23238.6.camel@segulix> <xmqq1toeq79b.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 05 21:21:09 2014
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Duy Nguyen" <pclouds@gmail.com>, "Johannes Sixt" <j6t@kdbg.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	=?utf-8?Q?S=C3=A9rgio_Basto?= <sergio@serjux.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 21:47:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwzNB-0001Fq-9Q
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 21:21:05 +0100
+	id 1Xwzmz-0006QZ-8V
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 21:47:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183AbaLEUVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 15:21:00 -0500
-Received: from [62.179.121.34] ([62.179.121.34]:45675 "EHLO
-	fep14.mx.upcmail.net" rhost-flags-FAIL-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750748AbaLEUU7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 15:20:59 -0500
-X-Greylist: delayed 976 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Dec 2014 15:20:59 EST
-Received: from edge02.upcmail.net ([192.168.13.237])
-          by viefep31-int.chello.at
-          (InterMail vM.8.01.05.05 201-2260-151-110-20120111) with ESMTP
-          id <20141205200440.BCUG20501.viefep31-int.chello.at@edge02.upcmail.net>
-          for <git@vger.kernel.org>; Fri, 5 Dec 2014 21:04:40 +0100
-Received: from PC13 ([77.58.148.244])
-	by edge02.upcmail.net with edge
-	id Pw4T1p01A5Gd0pH01w4U3A; Fri, 05 Dec 2014 21:04:28 +0100
-X-SourceIP: 77.58.148.244
-X-Authenticated-Sender: ruud.huynen@hispeed.ch
-X-Mailer: Microsoft Outlook 15.0
-thread-index: AdAQxqoqTqFO74acST2R6lzBeSoq6w==
-Content-Language: en-gb
+	id S1751502AbaLEUrl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 15:47:41 -0500
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:18905 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751323AbaLEUrl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 15:47:41 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Am8PAOQYglROl3BEPGdsb2JhbABZgwaBKoMFgy5swSwBhBEEAoEcFwEBAQEBAQUBAQEBOCAbg30FAQEBAQMIAQEZDwEFHgEBFAoDCwIDBQIBAxUDAgIFIQICFAEEGgYHAxQGARIIAgECAwGILr9GhmeQJoEoi1WDUoJ2MoEVBY9GXIcYg0cOi0KCa4dRPzCCQwEBAQ
+X-IPAS-Result: Am8PAOQYglROl3BEPGdsb2JhbABZgwaBKoMFgy5swSwBhBEEAoEcFwEBAQEBAQUBAQEBOCAbg30FAQEBAQMIAQEZDwEFHgEBFAoDCwIDBQIBAxUDAgIFIQICFAEEGgYHAxQGARIIAgECAwGILr9GhmeQJoEoi1WDUoJ2MoEVBY9GXIcYg0cOi0KCa4dRPzCCQwEBAQ
+X-IronPort-AV: E=Sophos;i="5.07,524,1413241200"; 
+   d="scan'208";a="654205455"
+Received: from host-78-151-112-68.as13285.net (HELO PhilipOakley) ([78.151.112.68])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 05 Dec 2014 20:47:38 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260890>
 
-I noticed when cherry-picking a commit it includes changes from this commit
-and also changes from a different commit as the one I was picking.
+=46rom: "Junio C Hamano" <gitster@pobox.com>
+> S=C3=A9rgio Basto <sergio@serjux.com> writes:
+>
+>
+>> On Sex, 2014-12-05 at 17:52 +0700, Duy Nguyen wrote:
+>>> On Fri, Dec 5, 2014 at 1:55 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>>> > Actually, it's a user error. When you set --assume-unchanged, the=
+n
+>>> > you give
+>>> > a promise to git that you do not change the files, and git does
+>>> > not have to
+>>> > check itself whether there is a change.
+>>> >
+>>> > But since you did not keep your promise, you get what you deserve=
+=2E
+>>> > ;-)
+>>
+>>
+>> No, I marked with assume-unchanged *after* change the file , and not
+>> before. Else don't see what is the point of assume-unchanged if you
+>> really don't change the file.
+>
+> That "unchanged" is relative to what is in the index.
+>
+> Your promise is "these paths I will not modify" and in return you
+> gain performance in "git status" as the promise allows Git not to
+> check with lstat() if the files in the workng tree was modified and
+> instead assume that you didn't change them.  That is the point of
+> assume-unchanged bit.
+>
+> If however you did something that made Git notice that you changed
+> these paths marked with assume-unchanged bit anyway, then Git will,
+> well, notice that they are not "unchanged" as you promised.
 
-I was in contact with "jast" on IRC, who noticed the issue, but didn't had
-time to look further.
+The problem here is that there is no guidance on what those actions are
+that may make git 'notice'. The man page git-update-index isn't as clea=
+r
+as it could be. Using --really-refresh being one option that would make
+git notice, but I wouldn't know when that is used.
 
-For a description of my problem, please read
-http://stackoverflow.com/questions/27220638/git-cherry-pick-info-about-picke
-d-commits
+Part of the implied question is why "git commit ." would notice when
+when "git commit -a" didn't appear to. So it's unclear as to what the=20
+user should have expected.
 
+(Note, I don't use assume-unchanged myself so this is more about=20
+supporting the user/manual clarification. It is mentioned moderately=20
+often on stackoverflow etc.)
 
-git clone git://github.com/MythTV/mythtv.git
-git checkout fixes/0.27
-
-git cherry-pick 30df98ce5d11b69d0b5c5114a9007cdfc79a7e9b
-# from master
-# commit also picked: 17f17e1fc51b3b4017e08f5ea35c8a7b5a64eeec
-# resulting in a conflict
-
-For the commits and before/conflict files, see
-https://gist.github.com/FritzHerbers/4f9b0990b6bca15a70eb
-
-As nobody could believe me, that changes from another commit are included,
-is something wrong, or is it new behavior? Why did it happen?
-With which command, can I have a listing of "intermediate" commits picked?
-How can I automate such situations?
-
-Fritz
-git version 1.9.1
+--
+Philip
