@@ -1,82 +1,72 @@
-From: Alex Stangl <alex@stangl.us>
-Subject: error: core.autocrlf=input conflicts with core.eol=crlf
-Date: Thu, 4 Dec 2014 23:42:05 -0600
-Message-ID: <20141205054205.GA71681@scout.stangl.us>
+From: =?ISO-8859-1?Q?S=E9rgio?= Basto <sergio@serjux.com>
+Subject: bug report on update-index --assume-unchanged
+Date: Fri, 05 Dec 2014 06:12:35 +0000
+Message-ID: <1417759955.10992.2.camel@segulix>
+References: <1417732931.20814.16.camel@segulix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 05 06:49:25 2014
+X-From: git-owner@vger.kernel.org Fri Dec 05 07:13:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwllc-00026S-Rh
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 06:49:25 +0100
+	id 1Xwm8k-0006C6-RP
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 07:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750877AbaLEFtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 00:49:19 -0500
-Received: from stangl.us ([66.93.193.95]:29620 "EHLO stangl.us"
+	id S1751021AbaLEGNM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 01:13:12 -0500
+Received: from host1.easyho.st ([62.210.60.225]:45439 "EHLO host1.easyho.st"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750740AbaLEFtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2014 00:49:19 -0500
-X-Greylist: delayed 431 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Dec 2014 00:49:18 EST
-Received: from scout.stangl.us (localhost [127.0.0.1])
-	by scout.stangl.us (Postfix) with ESMTP id 7D45822816
-	for <git@vger.kernel.org>; Thu,  4 Dec 2014 23:42:06 -0600 (CST)
-X-Virus-Scanned: amavisd-new at stangl.us
-Received: from stangl.us ([127.0.0.1])
-	by scout.stangl.us (scout.stangl.us [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tdieId7bP7CU for <git@vger.kernel.org>;
-	Thu,  4 Dec 2014 23:42:05 -0600 (CST)
-Received: by scout.stangl.us (Postfix, from userid 1001)
-	id C5CB622812; Thu,  4 Dec 2014 23:42:05 -0600 (CST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1750909AbaLEGNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 01:13:11 -0500
+Received: from bl8-175-54.dsl.telepac.pt ([85.241.175.54]:54577 helo=[192.168.1.67])
+	by host1.easyho.st with esmtpsa (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128)
+	(Exim 4.84)
+	(envelope-from <sergio@serjux.com>)
+	id 1Xwm84-003yn2-1e
+	for git@vger.kernel.org; Fri, 05 Dec 2014 06:12:37 +0000
+In-Reply-To: <1417732931.20814.16.camel@segulix>
+X-Mailer: Evolution 3.10.4 (3.10.4-4.fc20) 
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - host1.easyho.st
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - serjux.com
+X-Get-Message-Sender-Via: host1.easyho.st: authenticated_id: sergio@serjux.com
+X-From-Rewrite: unmodified, already matched
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260857>
 
 Hi,
 
-There seems to be problems with the checks in the git code for conflicts
-between config values of core.autocrlf and core.eol. Because the various
-config files are read in separate passes, and the conflict check happens
-on the fly, it creates a situation where the order of the config file
-entries matters. This seems like a bug or at least a POLA violation --
-ordering of lines within a section of a config file is not usually
-significant.
+I add 2 files that I want ignore on commits=20
+git update-index --assume-unchanged configurations/local.defs
+git update-index --assume-unchanged processor/default.defs
 
-Example: User has core.autocrlf=input in his ~/.gitconfig. In his
-project-level .git/config he wants to set core.autocrlf=false and
-core.eol=crlf. If the core.autocrlf=false comes first, then all is
-well and no conflict is reported. If the core.eol=crlf line comes
-first, then at the time this line is getting parsed, core.autocrlf
-is still set at "input" from ~/.gitconfig, and execution aborts:
+git diff -a=20
+is clean=20
+git diff .
+is clean
+git commit -a=20
 
-error: core.autocrlf=input conflicts with core.eol=crlf
+nothing added to commit
 
-It seems like the conflict check should be made at the end of the
-config file parsing, not on the fly. I was tempted to create a patch,
-however I am unfamilar with the codebase, and didn't understand all
-the places where the config file parsing is called, so I'm not sure
-of the ramifications of any proposed change. A benefit of the current
-approach is that it reports the line number where it aborted in the
-config file. Trying to retain this and at the same time defer the
-check until the end could get complicated.
+but=20
 
-Besides interaction between multiple levels of config files, the
-same sort of ordering issue can arise in conjunction with command-line
-config overrides.
+git commit .=20
+# Changes to be committed:
+#       modified:   configurations/local.defs
+#       modified:   processor/default.defs
 
-Example: User has core.autocrlf=input in his project-level .git/config.
-This command works fine:
-$ git -c core.autocrlf=false -c core.eol=crlf status
-This command blows up with conflict error:
-$ git -c core.eol=crlf -c core.autocrlf=false status
+this is a bug .
 
-I tested with git versions 1.9.3 and 2.1.0.
-
-Alex
+thanks
+--=20
+S=E9rgio M. B.
