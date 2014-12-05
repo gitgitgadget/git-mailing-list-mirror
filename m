@@ -1,80 +1,88 @@
-From: =?ISO-8859-1?Q?S=E9rgio?= Basto <sergio@serjux.com>
-Subject: Re: bug report on update-index --assume-unchanged
-Date: Fri, 05 Dec 2014 16:57:02 +0000
-Message-ID: <1417798622.23238.6.camel@segulix>
-References: <1417732931.20814.16.camel@segulix>
-	 <1417759955.10992.2.camel@segulix> <548156E5.2080006@kdbg.org>
-	 <CACsJy8AVKaq4NJu=23W+wcRgVTQ7hVAOxsVwtZnZsNw6393cTA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] prompt: respect GIT_TERMINAL_PROMPT to disable terminal prompts
+Date: Fri, 05 Dec 2014 09:37:22 -0800
+Message-ID: <xmqqk326q9pp.fsf@gitster.dls.corp.google.com>
+References: <20141204034206.GA1493@peff.net> <20141204035228.GB21492@peff.net>
+	<xmqqy4qntgs6.fsf@gitster.dls.corp.google.com>
+	<20141204210149.GB19953@peff.net>
+	<xmqqbnnjrtfi.fsf@gitster.dls.corp.google.com>
+	<20141205091049.GB32112@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 17:57:21 2014
+Content-Type: text/plain
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 05 18:37:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwwBs-0004qQ-Vj
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 17:57:13 +0100
+	id 1Xwwou-0000Nf-Ky
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 18:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750893AbaLEQ5I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 11:57:08 -0500
-Received: from host1.easyho.st ([62.210.60.225]:47696 "EHLO host1.easyho.st"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750779AbaLEQ5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2014 11:57:08 -0500
-Received: from [194.65.5.235] (port=39220 helo=[10.134.132.194])
-	by host1.easyho.st with esmtpsa (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128)
-	(Exim 4.84)
-	(envelope-from <sergio@serjux.com>)
-	id 1XwwBj-0015ek-BP; Fri, 05 Dec 2014 16:57:04 +0000
-In-Reply-To: <CACsJy8AVKaq4NJu=23W+wcRgVTQ7hVAOxsVwtZnZsNw6393cTA@mail.gmail.com>
-X-Mailer: Evolution 3.10.4 (3.10.4-4.fc20) 
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - host1.easyho.st
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - serjux.com
-X-Get-Message-Sender-Via: host1.easyho.st: authenticated_id: sergio@serjux.com
-X-From-Rewrite: unmodified, already matched
+	id S1751856AbaLERh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 12:37:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61217 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751848AbaLERh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 12:37:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96F752086E;
+	Fri,  5 Dec 2014 12:37:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=98PEaLl9oYhO4bNMsWEak2nQngo=; b=dEjEir
+	WglXF3esYcPa649TxZ7NeSPoZu9ekkuiipiHe1twG1kuFtQPIIePcsGds/ot2pkj
+	ditCNOUlXymKAGZ0XYtNSnvlQ+OGe1OOP7Syz8/eAGY/GLbOLRqXIXyQu6cvIUyb
+	5n0GTio0pOUfc2JtceodaeynwhNfmAFmup9aQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M45JccPmNFxHzdAjawWhAg1vLgRmvy7Y
+	rk5QzKHH3B0Wc9n77r0KoJ7A7mLJcWp57KRWjHMnwZTZXdbz3X6GpmUY9JDveJHN
+	R7gqxSOyyyBKbBEfYFUo+DNpmZDAwyKjCTD1Bd1gNxRvwfcmKNXkV4AFo0slGQxv
+	B0Q1oAKDGeM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C6102086D;
+	Fri,  5 Dec 2014 12:37:25 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E89E62086A;
+	Fri,  5 Dec 2014 12:37:23 -0500 (EST)
+In-Reply-To: <20141205091049.GB32112@peff.net> (Jeff King's message of "Fri, 5
+	Dec 2014 04:10:49 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5F61C71A-7CA5-11E4-9693-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260876>
 
-Hi,
-On Sex, 2014-12-05 at 17:52 +0700, Duy Nguyen wrote:=20
-> On Fri, Dec 5, 2014 at 1:55 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> > Actually, it's a user error. When you set --assume-unchanged, then =
-you give
-> > a promise to git that you do not change the files, and git does not=
- have to
-> > check itself whether there is a change.
-> >
-> > But since you did not keep your promise, you get what you deserve. =
-;-)
+Jeff King <peff@peff.net> writes:
 
+> On Thu, Dec 04, 2014 at 01:33:53PM -0800, Junio C Hamano wrote:
+>
+>> Of course, from _our_ point of view, that somebody is not us.  We do
+>> not have direct control, certainly from this codepath.
 
-No, I marked with assume-unchanged *after* change the file , and not
-before. Else don't see what is the point of assume-unchanged if you
-really don't change the file.=20
+Belated typofix - s/from /not &/.
 
+>
+> Right, but in theory we can provoke gpg to do what we want when we spawn
+> it. However, having had zero luck in convincing it to stop asking me for
+> a passphrase recently in another thread, I do not know what magic
+> command line option is required. :(
+>
+> I think it would be OK to merge the git handling of GIT_TERMINAL_PROMPT
+> (i.e., the patch I sent), and somebody who runs into the issue with gpg
+> and can figure out how to tame it can scratch their own itch later. I
+> hate leaving things half-implemented or inconsistent, but I also don't
+> know how to make gpg do what we want. And doing a partial solution
+> seems better to me than holding the credential.c half hostage.
 
-> You are correct about the original idea behind --assume-unchanged. Bu=
-t
-> over the time I think we bend over a bit and sort of support these us=
-e
-> cases. For example, aecda37 (do not overwrite files marked "assume
-> unchanged" - 2010-05-01). The change is one-liner, so I don't mind
-> doing it.
+Oh, no question about that.  You are making things better by
+advancing one step at a time.
 
-I think is the right thing=20
-
-Thanks,
---=20
-S=E9rgio M. B.
+Queued and will be moving to 'next' shortly.
