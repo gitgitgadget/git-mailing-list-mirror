@@ -1,72 +1,105 @@
-From: =?ISO-8859-1?Q?S=E9rgio?= Basto <sergio@serjux.com>
-Subject: bug report on update-index --assume-unchanged
-Date: Fri, 05 Dec 2014 06:12:35 +0000
-Message-ID: <1417759955.10992.2.camel@segulix>
-References: <1417732931.20814.16.camel@segulix>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH/RFC v2] Squashed changes for multiple worktrees vs. submodules
+Date: Fri, 5 Dec 2014 08:32:00 +0200
+Message-ID: <CAF7_NFQzPDF+7NS2VwopK8Oei=9NzWEAGM5fko-St5KvvmLa9A@mail.gmail.com>
+References: <1417390076-2953-1-git-send-email-max@max630.net>
+	<547E24E4.7050100@web.de>
+	<20141202221611.GB9128@wheezy.local>
+	<5480BEB9.8070109@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 05 07:13:23 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Dec 05 07:41:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwm8k-0006C6-RP
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 07:13:20 +0100
+	id 1Xwma4-0004CI-C9
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 07:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751021AbaLEGNM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 01:13:12 -0500
-Received: from host1.easyho.st ([62.210.60.225]:45439 "EHLO host1.easyho.st"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750909AbaLEGNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2014 01:13:11 -0500
-Received: from bl8-175-54.dsl.telepac.pt ([85.241.175.54]:54577 helo=[192.168.1.67])
-	by host1.easyho.st with esmtpsa (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128)
-	(Exim 4.84)
-	(envelope-from <sergio@serjux.com>)
-	id 1Xwm84-003yn2-1e
-	for git@vger.kernel.org; Fri, 05 Dec 2014 06:12:37 +0000
-In-Reply-To: <1417732931.20814.16.camel@segulix>
-X-Mailer: Evolution 3.10.4 (3.10.4-4.fc20) 
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - host1.easyho.st
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - serjux.com
-X-Get-Message-Sender-Via: host1.easyho.st: authenticated_id: sergio@serjux.com
-X-From-Rewrite: unmodified, already matched
+	id S1751991AbaLEGcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 01:32:04 -0500
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:51696 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751984AbaLEGcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 01:32:01 -0500
+Received: by mail-wg0-f53.google.com with SMTP id l18so66476wgh.26
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 22:32:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=NJJo0735EW6W1iEYRgOGuFI5e8AAh7611mnUtrRnyJ8=;
+        b=bzIIaFE0Y9+AKyZw6Zng0XHT9Jgg+8fFXeFQ95b+8nQZEOIzSfWbJXtckDWabVkQFP
+         GDjzFceoi+QtXVSwMP4DkabjjnQO1dAA5LDpB8++oZ69W8oI1++4zDqemIBQq/zKQBVT
+         N/KXW478V33TZqwzcYhzMagNfkRgUtexr2vqgAw5dOuWFSGEpdO2TK22fXjMUIqJNy/p
+         6VLyZISom/9zIjAPvtSWw9oxmBJbZU52NngpBkT8o7YkQrebO4ulgytE1wxEEIQHafcn
+         Z/Bn4oz0wDdAQ6VUQNhsHnV1oDwUTjGUYVUUkFOVqJJdkfsvyPrOC0+LP33COUIymQzK
+         cY8A==
+X-Received: by 10.194.189.240 with SMTP id gl16mr20888812wjc.119.1417761120459;
+ Thu, 04 Dec 2014 22:32:00 -0800 (PST)
+Received: by 10.180.75.179 with HTTP; Thu, 4 Dec 2014 22:32:00 -0800 (PST)
+In-Reply-To: <5480BEB9.8070109@web.de>
+X-Google-Sender-Auth: OmCsWNfYrcAOnmvbCg9kxpKcq7s
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260858>
 
-Hi,
+On Thu, Dec 4, 2014 at 10:06 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> But I'd need to have separate settings for
+> our CI server, e.g. to checkout the sources without the
+> largish documentation submodule in one test job (=worktree)
+> while checking out the whole documentation for another job
+> building the setup in another worktree.
 
-I add 2 files that I want ignore on commits=20
-git update-index --assume-unchanged configurations/local.defs
-git update-index --assume-unchanged processor/default.defs
+Currently I'm estimating approach when submodules which have .git
+file or directory inside are updated, and those which do not have it are not.
+I have added a config variable submodule.updateIgnoringConfigUrl (because
+usually the submodule.<name>.url is what turns on the update). It looks working,
+maybe I even add setting the variable when chackout --to is used.
 
-git diff -a=20
-is clean=20
-git diff .
-is clean
-git commit -a=20
+> And if I understand the "checkout: reject if the branch is
+> already checked out elsewhere" thread correctly, I won't be
+> able to build "master" in two jobs at the same time?
 
-nothing added to commit
+You are alerady second person complaining about it, but I don't really see
+how this can be a problem. Make a branch 'master2', it's another 40 bytes.
 
-but=20
+> So two reasons against using multiple worktrees on our CI
+> server to save quite some disk space :-(
 
-git commit .=20
-# Changes to be committed:
-#       modified:   configurations/local.defs
-#       modified:   processor/default.defs
+My use is not to save space (working tree files often takes more than
+the repository
+itself), but for development, I have like 3-5 checkouts usually, which
+used to be local
+clones, but not having to keep synching them is really life changing.
 
-this is a bug .
+> Thanks. But I changed my mind about the details (now that I
+> know about .git/config and multiple worktrees). I think you'd
+> have to connect a .git directory in the submodule to the
+> common git dir directly, as you cannot use the core.worktree
+> setting (which could be different between commits due to
+> renames) when putting it into <worktree>/.git/modules. And
+> then you couldn't remove or rename a submodule anymore,
+> because that fails when it contains a .git directory.
 
-thanks
---=20
-S=E9rgio M. B.
+I need to think more about it.
+
+> Seems like we should put a "Warning: may do unexpected things
+> when used with submodules" (with some examples about what might
+> happen) in the multiple worktrees documentation. And I don't
+> believe anymore that teaching submodules to use the common git
+> dir makes that much sense after I know about the restrictions
+> it imposes.
+
+btw, I thought even about making it an error to add/remove/(de)initialize
+submodule not in the main working tree. But I'm afraid it would not be
+considered appropriate for merging.
+
+-- 
+Max
