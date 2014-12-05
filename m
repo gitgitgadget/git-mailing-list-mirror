@@ -1,201 +1,107 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack base object"
-Date: Fri, 5 Dec 2014 10:30:20 -0500
-Organization: PD Inc
-Message-ID: <F5116E3BF1974D039102426C8F6E3BED@black>
-References: <F5D60A90C93A45359EF00CC200C81561@black>
-Reply-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	  <git@vger.kernel.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: Enhancement Request: "locale" git option
+Date: Fri, 05 Dec 2014 16:45:15 +0100
+Message-ID: <5481D30B.2020104@web.de>
+References: <54801C39020000A1000182FA@gwsmtp1.uni-regensburg.de> <54801B50.4080500@web.de> <20141204095557.GE27455@peff.net> <CACBZZX4Rin6jj2viTUmdpEqLb9TWnMf+p_vRF8BbLrTWFDcp3A@mail.gmail.com> <548087F8.1030103@drmicha.warpmail.net> <CACBZZX6iOtO-Wv_T1Sgtmjqdi8kEziBCHwp1X319x0o1QMOnGA@mail.gmail.com> <20141204205527.GA19953@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 05 16:30:32 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?B?VG9yc3RlbiBCw7Y=?= =?UTF-8?B?Z2Vyc2hhdXNlbg==?= 
+	<tboegi@web.de>, Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?B?b24=?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 16:45:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwupx-0001aJ-KO
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 16:30:30 +0100
+	id 1Xwv4d-0000u8-2e
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 16:45:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbaLEPa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 10:30:26 -0500
-Received: from mail.pdinc.us ([67.90.184.27]:60786 "EHLO mail.pdinc.us"
+	id S1751018AbaLEPpb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 10:45:31 -0500
+Received: from mout.web.de ([212.227.17.12]:56621 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750862AbaLEPaZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 10:30:25 -0500
-Received: from black (five-58.pdinc.us [192.168.5.58])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sB5FUL6Q024536;
-	Fri, 5 Dec 2014 10:30:21 -0500
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <F5D60A90C93A45359EF00CC200C81561@black>
-Thread-Index: AdAPXRtpqnFJ0p5ySsSWNqpxnc3bEwArKJ3gACRqPBA=
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+	id S1751263AbaLEPp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 10:45:28 -0500
+Received: from [192.168.209.17] ([78.72.72.190]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LkyEb-1XOPf61XKn-00air1; Fri, 05 Dec 2014 16:45:17
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <20141204205527.GA19953@peff.net>
+X-Provags-ID: V03:K0:PhyYH0wS9DSUllE7HpdQ5RAyyGqGjbN4719XRw6oVCa6KEvydWu
+ jyQ2BXUzMVZPLYy781wbBCvouhKKcsSvjdkhv68fLZdstKEv0JOYcwsrMg6L4RaRcOHTX9Z
+ VDds1hq8TRTqyO5ZoVfLONQuYYG7FkDGLAztVZRASNFsbAHc8MjR2NkAuBPCymAVyhz8GFC
+ f+/ilsoQdnR2GgfiDfUNw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260872>
 
-> -----Original Message-----
-> From: Jason Pyeron
-> Sent: Thursday, December 04, 2014 16:34
-> To: git@vger.kernel.org
-> Cc: 'brian m. carlson'
-> Subject: RE: FW: [cygwin] Cygwin's git says "error: 
-> failed to read delta-pack base object"
-> 
-> > -----Original Message-----
-> > From: brian m. carlson
-> > Sent: Wednesday, December 03, 2014 19:55
-> > 
-> > On Wed, Dec 03, 2014 at 06:31:18PM -0500, Jason Pyeron wrote:
-> > > I remember hitting this a while ago, but just gave up.
-> > > 
-> > > It seems to be a problem for others too.
-> > > 
-> > > Any ideas on how to debug this so it can be patched?
-> > > 
-> > > -----Original Message-----
-> > > From: Dave Lindbergh
-> > > Sent: Wednesday, December 03, 2014 18:07
-> > > To: cygwin
-> > > 
-> > > Aha - you're right.
-> > > 
-> > > It works fine on a local NTFS volume.
-> > > 
-> > > I get the error when I do it on Z:, which is mapped to a 
-> > network drive
-> > > (on another Windows box).
-> > > 
-> > > Is there a workaround? Why does this happen?
-> > 
-> > I don't think anyone is sure.  My wild guess is that 
-> there's something
-> > about the way that Cygwin wraps Windows calls that makes it 
-> > fail in this
-> > case.  It might be interesting to run the Windows and 
-> Cygwin versions
-> > under an strace equivalent and see where things differ.
-> 
-> [this was posted to the cygwin list]
-> 
-> http://nerdfever.com/files/strace.txt
-> 
-> > 
-> > It's an interesting problem, but I don't have any Windows 
-> > systems, so I
-> > can't look into it.
-> 
-> If it becomes a little less magic, I will chomp on the 
-> problem, but I cannot make a predictable test case.
+On 12/04/2014 09:55 PM, Jeff King wrote:
+> On Thu, Dec 04, 2014 at 06:21:40PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+>=20
+>>> That is one of the many reasons why I proposed to have a dictionary=
+ of
+>>> the main technical terms for each language before we even localise =
+git
+>>> in that language. In an ideal word, we would provide a simple solut=
+ion
+>>> for looking these terms up both ways. I don't think we're going to =
+have
+>>> localised man pages any time soon, are we?
+>>
+>> I think that's a great idea, and one that's only blocked on someone
+>> (hint hint) sending patches for it.
+>>
+>> It would be neat-o to have something to make translating the docs
+>> easier, i.e. PO files for sections of the man pages. There's tools t=
+o
+>> help with that which we could use.
+>>
+>> But there's no reason for us not to have translated glossaries in th=
+e meantime.
+>=20
+> By the way, there has been fairly significant volunteer effort put in=
+to
+> translating Pro Git (e.g., <http://git-scm.com/book/de/v1>). I have n=
+o
+> idea if the terms they use are similar to the terms we use in the
+> localized messages. It might make sense to:
+>=20
+>   1. Coordinate with those translators to make sure that the glossary
+>      terms are consistent.
+>=20
+>   2. Figure out how to harness those translators for manpage work. Wh=
+y
+>      did Pro Git get so much volunteer translation done, and the
+>      manpages didn't? Did they advertise to the right people? Have an
+>      interface that made it easier for non-technical people to get
+>      involved?
+>=20
+> -Peff
 
-Corrina at Cygwin devined the strace (see below) and I am working on a test cases and hacks.
+(Thanks for the pointer, excellent book)
 
-Pseudo code and observations
-./sha1_file.c:write_loose_object(sha1)
-{
- filename=sha1_file_name(sha1)
- (fd,tmp_file)=create_tmpfile(filename)
- write_buffer(fd)
- close_sha1_file(fd)
- return move_temp_to_file(tmp_file, filename)
-}
+I do not know who was first, and who came later, but=20
+<http://git-scm.com/book/de/v1/Git-Grundlagen-%C3%84nderungen-am-Reposi=
+tory-nachverfolgen>
 
-move_temp_to_file(tmpfile, filename)
-{
- // I am thinking about forcing renames to see if the problem exists then as well
- // if that "works" then a per repo config option allowing for forced renames
- if (OBJECT_CREATION_USES_RENAMES) goto try_rename
- else if link(tmpfile,filename)
-
- if (failed except exist failures)
- {
-  try_rename:
-  rename(tmpfile, filename)
-  if (ok) goto out
- }
- unlink_or_warn(tmpfile)
- if (failed except exist failures) return error
- out:
-}
-
-write_sha1_file(sha1)
-{
- return write_loose_object(sha1)
-}
+uses "versioniert" as "tracked"
 
 
-> -----Original Message-----
-> From: Corinna Vinschen
-> Sent: Friday, December 05, 2014 6:35
-> To: cygwin@cygwin.com
-<snip/>
-> What I found in the strace is this:
-> 
-> - Create file Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ
-> 
-> - open file, write something, close file.
-> 
-> - link (Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ,
-> 	
-> Z:\pic32mx-bmf\.git\objects\30\0bdeb2fd209d24afb865584da10b78aa8fefc4)
->   succeeds.
-> 
-> - unlink (Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ) succeeds
-> 
-> - Trying to open
->   
-> Z:\pic32mx-bmf\.git\objects\30\0bdeb2fd209d24afb865584da10b78aa8fefc4
->   but the file doesn't exist and NtCreateFile fails with status
->   0xC0000034, STATUS_OBJECT_NAME_NOT_FOUND --> ENOENT.
-> 
-> - Subsequent unlink (Z:\pic32mx-bmf\.git\objects\30) fails with a
->   STATUS_DIRECTORY_NOT_EMPTY --> ENOTEMPTY.
-> 
-> - git seems to be prepared for such a case, the parent process calls
->   opendir/readdir on the directory.  Enumerating the files in
->   Z:\pic32mx-bmf\.git\objects\30 shows the entries ".", ".." and
->   "0bdeb2fd209d24afb865584da10b78aa8fefc4".
-> 
-> - Then git calls lstat on the file, which results in NtOpenFile
->   returning status STATUS_OBJECT_NAME_NOT_FOUND again.
-> 
-> - From a POSIX POV this means "somebody else" deleted the file,
->   so the dir is empty now.  Git tries to delete the directory again,
->   which again results in STATUS_DIRECTORY_NOT_EMPTY --> ENOTEMPTY
->   and, internally, a sharing violation which disallows to move the
->   directory out of the way.
-> 
-> This looks suspiciously like a bug in the remote filesystem.  Link
-> succeeded, so there are two links to the same file in the directory.
-> Unlinking link 1 succeeds, so there's still one link to the 
-> file in the
-> directory, but link 2 is inaccessible as if the file has been deleted
-> completely.  Thus, a full POSIX git on this drive is broken.
-> 
-> Can you please run
-> 
->   /usr/lib/csih/getVolInfo /cygdrive/z
-> 
-> and paste the output here?  Maybe I can workaround this in the next
-> Cygwin version.
-> 
-> 
-> Corinna
-> 
+LANG=3Dde_DE.UTF-8 git status
+gives:
+nichts zum Commit vorgemerkt, aber es gibt unbeobachtete Dateien (benut=
+zen Sie "git add" zum Beobachten)
 
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00. 
+
+Does it make sense to replace "beobachten" with "versionieren" ?
