@@ -1,100 +1,161 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 07/23] expire_reflog(): use a lock_file for rewriting the
- reflog file
-Date: Thu, 4 Dec 2014 18:19:31 -0800
-Message-ID: <20141205021931.GA29570@google.com>
-References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
- <1417734515-11812-8-git-send-email-mhagger@alum.mit.edu>
- <20141205002331.GJ16345@google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] introduce git root
+Date: Fri, 5 Dec 2014 03:27:17 +0100
+Message-ID: <CAP8UFD2P9P9zL=irZ-7uPD6+bEhxaiABowh0O3RT01Ov3VqT6w@mail.gmail.com>
+References: <1417291211-32268-1-git-send-email-arjun024@gmail.com>
+	<2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
+	<CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
+	<vpqoaro99xd.fsf@anie.imag.fr>
+	<xmqqd284rryz.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
+	<20141202070415.GC1948@peff.net>
+	<xmqqd282m09j.fsf@gitster.dls.corp.google.com>
+	<20141204092251.GC27455@peff.net>
+	<xmqqlhmntf02.fsf@gitster.dls.corp.google.com>
+	<20141204211232.GC19953@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 03:19:37 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Arjun Sreedharan <arjun024@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 05 03:27:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwiUb-0002v9-7p
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 03:19:37 +0100
+	id 1Xwic8-0006qc-Ca
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 03:27:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933536AbaLECTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 21:19:33 -0500
-Received: from mail-pd0-f201.google.com ([209.85.192.201]:32917 "EHLO
-	mail-pd0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933398AbaLECTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 21:19:32 -0500
-Received: by mail-pd0-f201.google.com with SMTP id ft15so2631531pdb.2
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 18:19:32 -0800 (PST)
+	id S933565AbaLEC1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 21:27:20 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:55376 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933474AbaLEC1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 21:27:18 -0500
+Received: by mail-ig0-f173.google.com with SMTP id r2so95265igi.6
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 18:27:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=s9v/eJIOKgM2QR+l5AnXMLoywoCo2pymwqIa5Tx2Ad8=;
-        b=NgxWX6WiN2yYYzQi3WIJbuYvvrXLg/45Mh++D+GefVDxBGEfGqo/HxejmvRnH/pblJ
-         STa+dAEmJ+2BtbuBHQjSw1jI1i0N6t+HghvGpTscq8ElFkaPtuAMOFDREVKQQjZ7nLGf
-         GaH33IRIobNhRKjYqPMEkq2somct4/kGHK7t46N0kPtnJT6B3fn8xMHvC//5uzwJJ8YE
-         04Q1bGTvhSyt2hMjZPPN4vYvBDPzduFAdk4+XUCCkv0ClP6pyu/lOupqYNl1gW7b0osH
-         KVM6IM+NPLY2kqpj67IlucEQP+qYumoAAk164GKP+Usq+tqJIJyFdAKIMOSSRyLeC9Oz
-         OpPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=s9v/eJIOKgM2QR+l5AnXMLoywoCo2pymwqIa5Tx2Ad8=;
-        b=gV6j+3dLHJPkh7hdKWQ6LmPNtXzYPXhp0glYnAHz/bOP4Fo1vJv49IW9btrianpJ0s
-         zu8F8hK+GawMLGHmRO8j5Tbdq4GY1/PL07rsLohgcXZ76v5rgaA5z233ByRy0jyouK60
-         p+fse87znHFT1HmhooghHk8SHtxYizsFb+SjVLjiy0gEfizjl3CsU0Ohm/flzXxySzXq
-         HxO40av5BceGpEdK130dPZlgb1x5c1cEIk38VoChSSfbhM4ycef+fy+HMDYHconZJ4fQ
-         tbbYOi2+dutkDVKumXdqAKFRIvxaNxetazTrDQO/eMA6oLptxQcNgG0QNjKICbbsqVaS
-         tfbA==
-X-Gm-Message-State: ALoCoQnsiE0Oa3oZKo65xtD6wKuJtNsbezO+wzUpP3FEKk2ayqyzVZlXYsi6CDfXSNkWhk/DMkwA
-X-Received: by 10.68.203.170 with SMTP id kr10mr16122186pbc.0.1417745972490;
-        Thu, 04 Dec 2014 18:19:32 -0800 (PST)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id s23si1219774yhf.0.2014.12.04.18.19.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Dec 2014 18:19:32 -0800 (PST)
-Received: from sbeller.mtv.corp.google.com ([172.27.69.125])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id GELZq1gJ.1; Thu, 04 Dec 2014 18:19:32 -0800
-Received: by sbeller.mtv.corp.google.com (Postfix, from userid 279346)
-	id 788FE140B6E; Thu,  4 Dec 2014 18:19:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20141205002331.GJ16345@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=cwZFYb7uUfL89Hi9C3XuhpMU8o/wpDRJzkkgTU1fpEE=;
+        b=sOoYuCJl+pS/EEoKJ7IWUbBkWnlyZL1VaRk3PU8QK+v+rmetA5oHkafCnUxXkS6tnQ
+         2KP+A+YOusgOCKBFQIxIcECzkrkQ4eLkBciC8GqTHqGTwzZhcQ5NCPNbfO39RkMzalW9
+         C//d6tJiDWi8ZU6xt3roAqbYaT3PwHOR7YlC15eB1+obatJylcBWDEVhGQj04P2yznbC
+         wBgrrDJNTAP4w2Ru78Y5iqLmJFmhnIO9DhhNA8FzVqDx0yaL697rPBNphBYFwvKnO75A
+         9ZBx2csJ82ay+zRtN5YFdKR6a/J4HWWx6NBEdmj/wHrgsT8iced89CZkM7Ep+TIWImO4
+         HiMw==
+X-Received: by 10.107.134.212 with SMTP id q81mr12440335ioi.62.1417746437715;
+ Thu, 04 Dec 2014 18:27:17 -0800 (PST)
+Received: by 10.50.30.40 with HTTP; Thu, 4 Dec 2014 18:27:17 -0800 (PST)
+In-Reply-To: <20141204211232.GC19953@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260854>
 
-On Thu, Dec 04, 2014 at 04:23:31PM -0800, Jonathan Nieder wrote:
-> Michael Haggerty wrote:
-> 
-> > We don't actually need the locking functionality, because we already
-> > hold the lock on the reference itself, which is how the reflog file is
-> > locked. But the lock_file code still does some of the bookkeeping for
-> > us and is more careful than the old code here was.
-> 
-> As you say, the ref lock takes care of mutual exclusion, so we do not
-> have to be too careful about compatibility with other tools that might
-> not know to lock the reflog.  And this is not tying our hands for a
-> future when I might want to lock logs/refs/heads/topic/1 while
-> logs/refs/heads/topic still exists as part of the implementation of
-> "git mv topic/1 topic".
-> 
-> Stefan and I had forgotten about that guarantee when looking at that
-> kind of operation --- thanks for the reminder.
+Jeff King <peff@peff.net> wrote:
 
-I did not forget about it, I did not know about that in the first hand.
-We don't seem to have documentation on it?
+> Some of the discussion has involved mixing config options into this
+> kitchen sink, but that does not make any sense to me (and is why I
+> find "git var -l" so odd). Config options are fundamentally different, in
+> that they are set and retrieved, not computed (from other config
+> variables, or from hard-coded values). And we already have a nice
+> tool for working with them (well...nice-ish, let's say).
 
-So sorry for heading in a direction, which would have been avoidable.
+Yeah, but "git config" cannot say which config option applies in some
+context and why.
+For example, to chose the editor all the following could apply:
 
-Thanks,
-Stefan
+GIT_SEQUENCE_EDITOR env variable
+sequence.editor config variable
+GIT_EDITOR env variable
+core.editor config variable
+VISUAL env variable
+EDITOR env variable
+editor configured at compile time
+
+and the user or our own scripts right now cannot easily know which
+editor should be used when editing the sequence list.
+
+The best they can do is:
+
+- first check if GIT_SEQUENCE_EDITOR is set, and if yes, use it
+- then check if sequence.editor config variable is set, and if yes, use it
+- then use "git var GIT_EDITOR" that will check the other options
+
+I don't think it is very nice.
+
+Jeff King <peff@peff.net> also wrote:
+
+> My issue is only that "git --foo" has other options besides computables.
+> So you need to name each option in a way that makes it clear it is
+> reporting a computable and not doing something else.
+>
+> Take "git --pager" for instance. That would be a natural choice to
+> replace "git var GIT_PAGER". But shouldn't "--pager" be the opposite of
+> the existing "--no-pager"?
+>
+> So instead we probably need some namespace to indicate that it is a
+> "showing" option. Like "--show-pager". And then for consistency, we
+> would probably want to move "--exec-path" to "--show-exec-path",
+> creating a new "--show-" namespace. Or we could call that namespace
+> "git var". :)
+
+I agree with that, but I think it could be better if there was also a
+notion of context,
+
+> I do not think "git var --exec-path" is a good idea, nor GIT_EXEC_PATH
+> for the environment-variable confusion you mentioned. I was thinking of
+> just creating a new namespace, like:
+>
+>   git var exec-path
+>   git var author-ident
+
+I agree that this is nice, but I wonder what we would do for the
+sequence editor and the default editor.
+Maybe:
+
+git var sequence-editor
+git var editor
+
+That would already be nicer than what we have now, but maybe we should
+consider the following instead:
+
+git var sequence.editor
+git var core.editor
+
+(and maybe also some aliases to core.editor, like:
+
+git var default.editor
+git var editor)
+
+I think "sequence.editor" and "core.editor" are better because:
+
+- they use the same syntax as the config variables, so they are easier
+to remember and to discover, and
+- they provide a notion of context.
+
+The notion of context is interesting because suppose that we later
+introduce the "commit.editor" config variable. If we decide now that
+"foo.editor" means just "core.editor" if we don't know about any
+"editor" variable related to the "foo" context, then the scripts that
+might later be written using "git var commit.editor" will not have to
+worry about the fact that previous versions of Git didn't know about
+"commit.editor".
+
+People could even start using "git var commit.editor" now, because it
+would work even if "commit.editor" is unused by git commit.
+
+Of course when the user asks for "git var foo.editor" and we don't
+know about any "editor" variable related to the "foo" context, we
+first should check if "foo.editor" exists in the config file and we
+should use that if it exists, before we default to "git var
+core.editor".
+
+Best,
+Christian.
