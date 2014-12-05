@@ -1,9 +1,9 @@
 From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: SPAM: RE: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack base object"
-Date: Fri, 5 Dec 2014 10:26:30 -0500
+Subject: RE: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack base object"
+Date: Fri, 5 Dec 2014 10:30:20 -0500
 Organization: PD Inc
-Message-ID: <CB189BF2E728417298483F177AAD0309@black>
-References: <64C98FC352BD45EC9632202946A081E1@black> <20141204005443.GB200195@vauxhall.crustytoothpaste.net> <F5D60A90C93A45359EF00CC200C81561@black>
+Message-ID: <F5116E3BF1974D039102426C8F6E3BED@black>
+References: <F5D60A90C93A45359EF00CC200C81561@black>
 Reply-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	  <git@vger.kernel.org>
 Mime-Version: 1.0
@@ -12,25 +12,25 @@ Content-Type: text/plain;
 Content-Transfer-Encoding: 8BIT
 Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 05 16:26:43 2014
+X-From: git-owner@vger.kernel.org Fri Dec 05 16:30:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwumJ-00081s-89
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 16:26:43 +0100
+	id 1Xwupx-0001aJ-KO
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 16:30:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbaLEP0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 10:26:39 -0500
-Received: from mail.pdinc.us ([67.90.184.27]:60783 "EHLO mail.pdinc.us"
+	id S1751135AbaLEPa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 10:30:26 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:60786 "EHLO mail.pdinc.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751244AbaLEP0i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 10:26:38 -0500
+	id S1750862AbaLEPaZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 10:30:25 -0500
 Received: from black (five-58.pdinc.us [192.168.5.58])
 	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sB5FQVCj024528;
-	Fri, 5 Dec 2014 10:26:32 -0500
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sB5FUL6Q024536;
+	Fri, 5 Dec 2014 10:30:21 -0500
 X-Mailer: Microsoft Office Outlook 11
 In-Reply-To: <F5D60A90C93A45359EF00CC200C81561@black>
 Thread-Index: AdAPXRtpqnFJ0p5ySsSWNqpxnc3bEwArKJ3gACRqPBA=
@@ -39,16 +39,14 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260870>
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260871>
 
 > -----Original Message-----
-> From: git-owner@vger.kernel.org 
-> [mailto:git-owner@vger.kernel.org] On Behalf Of Jason Pyeron
+> From: Jason Pyeron
 > Sent: Thursday, December 04, 2014 16:34
 > To: git@vger.kernel.org
 > Cc: 'brian m. carlson'
-> Subject: SPAM: RE: FW: [cygwin] Cygwin's git says "error: 
+> Subject: RE: FW: [cygwin] Cygwin's git says "error: 
 > failed to read delta-pack base object"
 > 
 > > -----Original Message-----
