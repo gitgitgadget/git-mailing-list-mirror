@@ -1,85 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Announcing a new (prototype) git-remote-hg tool
-Date: Fri, 5 Dec 2014 15:13:30 -0800
-Message-ID: <20141205231330.GL16345@google.com>
-References: <20141205205335.GA28935@glandium.org>
- <20141205221319.GK16345@google.com>
- <20141205225930.GA29256@peff.net>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: git bundle vs git rev-list
+Date: Fri, 5 Dec 2014 23:13:50 +0000
+Message-ID: <20141205231350.GB223328@vauxhall.crustytoothpaste.net>
+References: <CAL3By--xYnXFUdDP3MDxAxvfeBT3ArFrdAV=apzdWg6_kiD2Yg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 06 00:13:47 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zx4FCpZtqtKETZ7O"
+Cc: git@vger.kernel.org
+To: Jesse Hopkins <jesse.hops@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 00:14:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xx24I-0006CT-Kn
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 00:13:47 +0100
+	id 1Xx24Z-0006MB-CV
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 00:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754185AbaLEXNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 18:13:36 -0500
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:49549 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752903AbaLEXNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2014 18:13:33 -0500
-Received: by mail-ig0-f169.google.com with SMTP id hl2so1575118igb.4
-        for <git@vger.kernel.org>; Fri, 05 Dec 2014 15:13:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=MTtzRmU7A27tVEG50I4RMCoDLdybl1ldlfNtqw5smNM=;
-        b=zMvSmSz3AYkZGflkPi5/OZw9M74Nrk/8+A42iON986C1Z++hRz3BWxVzQ7BzNDun64
-         gDIX1ty0hkg0nZTwde4UC+SSp4iRuTHUWlADi3Au7FTzGdWNrOtG87xVsayzzKALdcg1
-         dkwbYb/OmahTE/jD7TzuRY3fJhjomia/byQDExlpefWO83Ag7rn8oWLBtxueThK/5Ukq
-         SrsbDKgE3TTmq6AlUhquwy3jfR92suKgd5EtolWnbR1aTklt2SEaJR3IXbTkcsGX3B+j
-         vGILBhRyRJoAsc3cmpoyOCx9/g65DNXlTmrqWBl6IgnQRDbknTzh4qjzl1vJ8+oXCbLC
-         4DrA==
-X-Received: by 10.107.138.5 with SMTP id m5mr978477iod.85.1417821212807;
-        Fri, 05 Dec 2014 15:13:32 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:d425:9c48:1673:7021])
-        by mx.google.com with ESMTPSA id l5sm1513721igu.10.2014.12.05.15.13.31
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Dec 2014 15:13:32 -0800 (PST)
+	id S1753794AbaLEXN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 18:13:59 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:55047 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753618AbaLEXN6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 18:13:58 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 923D52808F;
+	Fri,  5 Dec 2014 23:13:57 +0000 (UTC)
+Mail-Followup-To: Jesse Hopkins <jesse.hops@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20141205225930.GA29256@peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAL3By--xYnXFUdDP3MDxAxvfeBT3ArFrdAV=apzdWg6_kiD2Yg@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.17-1-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260912>
 
-Jeff King wrote:
 
-> One of the nice things about spinning remote-hg out of the core repo is
-> that it means we do not have to endorse a particular implementation, and
-> they can compete with each other on their merits.
+--zx4FCpZtqtKETZ7O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-True.
+On Fri, Dec 05, 2014 at 03:36:18PM -0700, Jesse Hopkins wrote:
+> 1. Any thoughts on why a tag would be included by 'git bundle', when
+> 'git rev-list' with the same arguments returns empty?
 
-[...]
-> It's a shame that both squat on the name "remote-hg", because it makes
-> it difficult to tell the two apart. But of course that is the only way
-> to make "git clone hg::..." work. Maybe we need a layer of indirection?
-> :)
+I think the answer to this is found in the git rev-list manpage:
 
-If the helpers are roughly interchangeable (that is, if you can switch
-between fetching using each one into the same on-disk git repository),
-then picking one to symlink as git-remote-hg in your $PATH should be
-enough.
+  List commits that are reachable by following the parent links from the
+  given commit(s), but exclude commits that are reachable from the
+  one(s) given with a ^ in front of them.
 
-If they don't have that level of interoperability, then there's an
-argument to be made that the URLs shouldn't be the same.
-Unfortunately url.*.insteadof rules are resolved at fetch time instead
-of being resolved once and the result recorded in .git/config.  So
-yes, it seems like a way to have abbreviations for URLs (e.g., hg::
-meaning hg+mh:: or hg+fc::) that get resolved at clone time would be
-useful.  It's a layer of indirection we don't provide. :/
+The operative word here is "commits".  A bundle might include one or
+more tag objects, or unannotated tags, even though no new commits were
+available within the time frame.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Thanks,
-Jonathan
+--zx4FCpZtqtKETZ7O
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUgjwuAAoJEL9TXYEfUvaLDcQQAK9B+EoeC6QFpG0tKzHoUYDZ
+87kKKO0v5wBdw8JRUFd9TLcE5CWuabic+HTceejJActU53ioUUXQ8ZGPuSQd9n4E
+ZKYk1P6x8tewi3/5Kf1t1dsDcmDLiyOOY6RbYBK4LAWJs/QOhMvfmmCk+Dk9iYP8
+Y4kw3pCPB4KRiUuKHm3UzXKUUcO4Hzy+NQ7X6bkGhCIrnI9eVuiaH7cKUQvggTY0
+kpgKjemjR7wmgrD725npAgYfBgWipLm2Y4lZ8rdghLD1d0RzCFrDVNeOIzBqCRsu
+NljrFZKQgXo0XXI2YorXVDwyvduaDGYRHWLPKo3irc6ctllaGFBRoewCr+riBPPl
+9xXyDmfh65pFLk3rY/QSgg8mS5KeExpdctDMbwjmFMEbWZxFmMRrid3wCZprkSZJ
+h+RE2ZIIFELwz8nYAEavHsF2ulqqs3wL97Wvnldc8pkEOiIsJeR082ozhngsGaYd
+0/QvQPwMqssEuJ7L15RzdyWPD6rqEBuxSa3+QNhd+t/jYl6Da1BgTiyiXqidjTd9
+jpv+ll/HlBbMa8AAqdTT1uIS45+eSbQzOfz+nVxl17l+Kjq2hNVa4sTLMmUbvv8M
+qOIxsWuRTh0KM1i/tSPLj/1WwmMZpiNGxqUmzxcD3mcR/OfUKb/+pREm2y4NdogP
+PFmwuz3t3R7TMlgwXs3S
+=vH4y
+-----END PGP SIGNATURE-----
+
+--zx4FCpZtqtKETZ7O--
