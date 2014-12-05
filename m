@@ -1,161 +1,170 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] introduce git root
-Date: Fri, 5 Dec 2014 03:27:17 +0100
-Message-ID: <CAP8UFD2P9P9zL=irZ-7uPD6+bEhxaiABowh0O3RT01Ov3VqT6w@mail.gmail.com>
-References: <1417291211-32268-1-git-send-email-arjun024@gmail.com>
-	<2AC7B765F56B4AA8A0DB76E8C670A889@PhilipOakley>
-	<CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
-	<vpqoaro99xd.fsf@anie.imag.fr>
-	<xmqqd284rryz.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
-	<20141202070415.GC1948@peff.net>
-	<xmqqd282m09j.fsf@gitster.dls.corp.google.com>
-	<20141204092251.GC27455@peff.net>
-	<xmqqlhmntf02.fsf@gitster.dls.corp.google.com>
-	<20141204211232.GC19953@peff.net>
+From: ronnie sahlberg <ronniesahlberg@gmail.com>
+Subject: Re: [PATCH 07/23] expire_reflog(): use a lock_file for rewriting the
+ reflog file
+Date: Thu, 4 Dec 2014 18:59:01 -0800
+Message-ID: <CAN05THTH2XDaUmchehF0gY0-GSgD_O9rJH7F5Gc3dHLCPz3GsA@mail.gmail.com>
+References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
+	<1417734515-11812-8-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Arjun Sreedharan <arjun024@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 05 03:27:24 2014
+Cc: Stefan Beller <sbeller@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Dec 05 03:59:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwic8-0006qc-Ca
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 03:27:24 +0100
+	id 1Xwj6u-0005zC-R0
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 03:59:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933565AbaLEC1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 21:27:20 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:55376 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933474AbaLEC1S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 21:27:18 -0500
-Received: by mail-ig0-f173.google.com with SMTP id r2so95265igi.6
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 18:27:17 -0800 (PST)
+	id S933462AbaLEC7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 21:59:05 -0500
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:51030 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932378AbaLEC7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 21:59:04 -0500
+Received: by mail-lb0-f181.google.com with SMTP id l4so5770910lbv.12
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 18:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=cwZFYb7uUfL89Hi9C3XuhpMU8o/wpDRJzkkgTU1fpEE=;
-        b=sOoYuCJl+pS/EEoKJ7IWUbBkWnlyZL1VaRk3PU8QK+v+rmetA5oHkafCnUxXkS6tnQ
-         2KP+A+YOusgOCKBFQIxIcECzkrkQ4eLkBciC8GqTHqGTwzZhcQ5NCPNbfO39RkMzalW9
-         C//d6tJiDWi8ZU6xt3roAqbYaT3PwHOR7YlC15eB1+obatJylcBWDEVhGQj04P2yznbC
-         wBgrrDJNTAP4w2Ru78Y5iqLmJFmhnIO9DhhNA8FzVqDx0yaL697rPBNphBYFwvKnO75A
-         9ZBx2csJ82ay+zRtN5YFdKR6a/J4HWWx6NBEdmj/wHrgsT8iced89CZkM7Ep+TIWImO4
-         HiMw==
-X-Received: by 10.107.134.212 with SMTP id q81mr12440335ioi.62.1417746437715;
- Thu, 04 Dec 2014 18:27:17 -0800 (PST)
-Received: by 10.50.30.40 with HTTP; Thu, 4 Dec 2014 18:27:17 -0800 (PST)
-In-Reply-To: <20141204211232.GC19953@peff.net>
+        bh=APpvsrtZNZEpr01djnGZUGJuk9Wuka1esiBZfV948j8=;
+        b=omxvkdBU34CJpCab2tteAHa+FnzTs/PDmNfB9lWaySneMK9J6Dfnb8noDm/l67+Eqi
+         tQrKPRoTWhSlPIlKGeJK9Mi6t+rUvUbh4yfCyvS24yHfuOSXbAETSJOQGJUo4XOFUvLA
+         KIcvyL6MUOFnnHELz2EubC5D9J7LTXnzvF+bd+L9iqiRig2iF6Pin2/PuAp1pGbGyY/Z
+         GkV7FS8N5FXcoPmcyTBmx15ne7r04ogaQsCswVzHG/vgLieOQDS7cZ0u0VDNdSD2VtT3
+         V9yrR1ToLsMmYEGgZcanNoQOcghJ5GK37Pc4fwMZd996yP+1XMxiUixMuqetBy2I2WZF
+         wMBQ==
+X-Received: by 10.152.21.66 with SMTP id t2mr600333lae.27.1417748341825; Thu,
+ 04 Dec 2014 18:59:01 -0800 (PST)
+Received: by 10.25.15.207 with HTTP; Thu, 4 Dec 2014 18:59:01 -0800 (PST)
+In-Reply-To: <1417734515-11812-8-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260855>
 
-Jeff King <peff@peff.net> wrote:
+On Thu, Dec 4, 2014 at 3:08 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> We don't actually need the locking functionality, because we already
+> hold the lock on the reference itself,
 
-> Some of the discussion has involved mixing config options into this
-> kitchen sink, but that does not make any sense to me (and is why I
-> find "git var -l" so odd). Config options are fundamentally different, in
-> that they are set and retrieved, not computed (from other config
-> variables, or from hard-coded values). And we already have a nice
-> tool for working with them (well...nice-ish, let's say).
+No. You do need the lock.
+The ref is locked only during transaction_commit()
 
-Yeah, but "git config" cannot say which config option applies in some
-context and why.
-For example, to chose the editor all the following could apply:
+If you don't want to lock the reflog file and instead rely on the lock
+on the ref itself you will need to
+rework your patches so that the lock on the ref is taken already
+during, for example, transaction_update_ref() instead.
 
-GIT_SEQUENCE_EDITOR env variable
-sequence.editor config variable
-GIT_EDITOR env variable
-core.editor config variable
-VISUAL env variable
-EDITOR env variable
-editor configured at compile time
+But without doing those changes and moving the ref locking from
+_commit() to _update_ref() you will risk reflog corruption/surprises
+if two operations collide and both rewrite the reflog without any lock held.
 
-and the user or our own scripts right now cannot easily know which
-editor should be used when editing the sequence list.
 
-The best they can do is:
-
-- first check if GIT_SEQUENCE_EDITOR is set, and if yes, use it
-- then check if sequence.editor config variable is set, and if yes, use it
-- then use "git var GIT_EDITOR" that will check the other options
-
-I don't think it is very nice.
-
-Jeff King <peff@peff.net> also wrote:
-
-> My issue is only that "git --foo" has other options besides computables.
-> So you need to name each option in a way that makes it clear it is
-> reporting a computable and not doing something else.
+> which is how the reflog file is
+> locked. But the lock_file code still does some of the bookkeeping for
+> us and is more careful than the old code here was.
 >
-> Take "git --pager" for instance. That would be a natural choice to
-> replace "git var GIT_PAGER". But shouldn't "--pager" be the opposite of
-> the existing "--no-pager"?
+> For example:
 >
-> So instead we probably need some namespace to indicate that it is a
-> "showing" option. Like "--show-pager". And then for consistency, we
-> would probably want to move "--exec-path" to "--show-exec-path",
-> creating a new "--show-" namespace. Or we could call that namespace
-> "git var". :)
-
-I agree with that, but I think it could be better if there was also a
-notion of context,
-
-> I do not think "git var --exec-path" is a good idea, nor GIT_EXEC_PATH
-> for the environment-variable confusion you mentioned. I was thinking of
-> just creating a new namespace, like:
+> * Correctly handle the case that the reflog lock file already exists
+>   for some reason or cannot be opened.
 >
->   git var exec-path
->   git var author-ident
-
-I agree that this is nice, but I wonder what we would do for the
-sequence editor and the default editor.
-Maybe:
-
-git var sequence-editor
-git var editor
-
-That would already be nicer than what we have now, but maybe we should
-consider the following instead:
-
-git var sequence.editor
-git var core.editor
-
-(and maybe also some aliases to core.editor, like:
-
-git var default.editor
-git var editor)
-
-I think "sequence.editor" and "core.editor" are better because:
-
-- they use the same syntax as the config variables, so they are easier
-to remember and to discover, and
-- they provide a notion of context.
-
-The notion of context is interesting because suppose that we later
-introduce the "commit.editor" config variable. If we decide now that
-"foo.editor" means just "core.editor" if we don't know about any
-"editor" variable related to the "foo" context, then the scripts that
-might later be written using "git var commit.editor" will not have to
-worry about the fact that previous versions of Git didn't know about
-"commit.editor".
-
-People could even start using "git var commit.editor" now, because it
-would work even if "commit.editor" is unused by git commit.
-
-Of course when the user asks for "git var foo.editor" and we don't
-know about any "editor" variable related to the "foo" context, we
-first should check if "foo.editor" exists in the config file and we
-should use that if it exists, before we default to "git var
-core.editor".
-
-Best,
-Christian.
+> * Correctly clean up the lockfile if the program dies.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  builtin/reflog.c | 37 ++++++++++++++++++++++---------------
+>  1 file changed, 22 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index a282e60..d344d45 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -349,12 +349,14 @@ static int push_tip_to_list(const char *refname, const unsigned char *sha1, int
+>         return 0;
+>  }
+>
+> +static struct lock_file reflog_lock;
+> +
+>  static int expire_reflog(const char *refname, const unsigned char *sha1, void *cb_data)
+>  {
+>         struct cmd_reflog_expire_cb *cmd = cb_data;
+>         struct expire_reflog_cb cb;
+>         struct ref_lock *lock;
+> -       char *log_file, *newlog_path = NULL;
+> +       char *log_file;
+>         struct commit *tip_commit;
+>         struct commit_list *tips;
+>         int status = 0;
+> @@ -372,10 +374,14 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
+>                 unlock_ref(lock);
+>                 return 0;
+>         }
+> +
+>         log_file = git_pathdup("logs/%s", refname);
+>         if (!cmd->dry_run) {
+> -               newlog_path = git_pathdup("logs/%s.lock", refname);
+> -               cb.newlog = fopen(newlog_path, "w");
+> +               if (hold_lock_file_for_update(&reflog_lock, log_file, 0) < 0)
+> +                       goto failure;
+> +               cb.newlog = fdopen_lock_file(&reflog_lock, "w");
+> +               if (!cb.newlog)
+> +                       goto failure;
+>         }
+>
+>         cb.cmd = cmd;
+> @@ -423,10 +429,9 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
+>         }
+>
+>         if (cb.newlog) {
+> -               if (fclose(cb.newlog)) {
+> -                       status |= error("%s: %s", strerror(errno),
+> -                                       newlog_path);
+> -                       unlink(newlog_path);
+> +               if (close_lock_file(&reflog_lock)) {
+> +                       status |= error("Couldn't write %s: %s", log_file,
+> +                                       strerror(errno));
+>                 } else if (cmd->updateref &&
+>                         (write_in_full(lock->lock_fd,
+>                                 sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
+> @@ -434,21 +439,23 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
+>                          close_ref(lock) < 0)) {
+>                         status |= error("Couldn't write %s",
+>                                         lock->lk->filename.buf);
+> -                       unlink(newlog_path);
+> -               } else if (rename(newlog_path, log_file)) {
+> -                       status |= error("cannot rename %s to %s",
+> -                                       newlog_path, log_file);
+> -                       unlink(newlog_path);
+> +                       rollback_lock_file(&reflog_lock);
+> +               } else if (commit_lock_file(&reflog_lock)) {
+> +                       status |= error("cannot rename %s.lock to %s",
+> +                                       log_file, log_file);
+>                 } else if (cmd->updateref && commit_ref(lock)) {
+>                         status |= error("Couldn't set %s", lock->ref_name);
+> -               } else {
+> -                       adjust_shared_perm(log_file);
+>                 }
+>         }
+> -       free(newlog_path);
+>         free(log_file);
+>         unlock_ref(lock);
+>         return status;
+> +
+> + failure:
+> +       rollback_lock_file(&reflog_lock);
+> +       free(log_file);
+> +       unlock_ref(lock);
+> +       return -1;
+>  }
+>
+>  static int collect_reflog(const char *ref, const unsigned char *sha1, int unused, void *cb_data)
+> --
+> 2.1.3
+>
