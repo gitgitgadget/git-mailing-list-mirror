@@ -1,106 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] for_each_reflog_ent_reverse: turn leftover check into
- assertion
-Date: Thu, 4 Dec 2014 20:32:44 -0500
-Message-ID: <20141205013244.GA16642@peff.net>
-References: <547C8610.8080301@cs.uni-saarland.de>
- <20141201233515.GV6527@google.com>
- <xmqqvblrrwxu.fsf@gitster.dls.corp.google.com>
- <5480C60E.3070903@cs.uni-saarland.de>
- <20141204215805.GD19953@peff.net>
- <xmqq388vrrj9.fsf@gitster.dls.corp.google.com>
- <20141205012854.GA16590@peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC v2] Squashed changes for multiple worktrees vs. submodules
+Date: Fri, 5 Dec 2014 08:33:55 +0700
+Message-ID: <CACsJy8BWv8U6+sujEj8HgMGmgFJR_YgCroYHcG1jsoGtbVCD7Q@mail.gmail.com>
+References: <1417390076-2953-1-git-send-email-max@max630.net>
+ <547E24E4.7050100@web.de> <20141202221611.GB9128@wheezy.local> <5480BEB9.8070109@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christoph Mallon <mallon@cs.uni-saarland.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 02:32:52 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Max Kirillov <max@max630.net>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Dec 05 02:34:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XwhlL-0003wA-DP
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 02:32:51 +0100
+	id 1Xwhmw-0004mk-M3
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 02:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754735AbaLEBcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 20:32:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48703 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751824AbaLEBcq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 20:32:46 -0500
-Received: (qmail 32135 invoked by uid 102); 5 Dec 2014 01:32:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 19:32:46 -0600
-Received: (qmail 11249 invoked by uid 107); 5 Dec 2014 01:32:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Dec 2014 20:32:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Dec 2014 20:32:44 -0500
-Content-Disposition: inline
-In-Reply-To: <20141205012854.GA16590@peff.net>
+	id S1754859AbaLEBe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2014 20:34:27 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:51598 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751824AbaLEBe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2014 20:34:26 -0500
+Received: by mail-ig0-f172.google.com with SMTP id hl2so32392igb.11
+        for <git@vger.kernel.org>; Thu, 04 Dec 2014 17:34:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=DfII6eeMSVPUhD2IJpyBzMKY2Sb2mfBuW7rhL4B/xjw=;
+        b=Ul3dq46LgZ3pmhxelhQP8x5S8Cc8eLGOcx5y7VYDC+emGp10OTjQOOfBZOMji8Hray
+         i44PcvTzWpIBwhE414AYQwbmzwwt+w/R/apfBygDDcXakrgay49AELVc6IxsWO9jBm1V
+         9gFZeDQYG4rdCcwL3WAK/iycTfi+wnoJoBMI8KEcL1VycK0rDGMFQQway5XSEig4mZSr
+         cZeGfO7gEBL65JA+/hIsHoV+CiDZQ+WLAtOlHzCs5jGl9Fz3HxrboFlImy+wTRtIleaK
+         K1HXC8uUY0aRcVA60hXNvbVLBIndSxbuyCydEuQBa4yqQmvAQm1zmfFY2hzBNFobH0JS
+         Gsjw==
+X-Received: by 10.50.3.106 with SMTP id b10mr231722igb.41.1417743265959; Thu,
+ 04 Dec 2014 17:34:25 -0800 (PST)
+Received: by 10.107.176.3 with HTTP; Thu, 4 Dec 2014 17:33:55 -0800 (PST)
+In-Reply-To: <5480BEB9.8070109@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260851>
 
-On Thu, Dec 04, 2014 at 08:28:54PM -0500, Jeff King wrote:
+On Fri, Dec 5, 2014 at 3:06 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Wow, so the .git/config is shared between all worktrees? I
+> suspect you have very good reasons for that,
 
-> The minimal fix here would be to add this special case to
-> the conditional that checks whether we found a newline.
-> But we can make the flow a little clearer by rearranging a
-> bit: we first handle lines that we are going to show, and
-> then at the end of each loop, stuff away any leftovers if
-> necessary. That lets us fold this special-case in with the
-> more common "we ended in the middle of a line" case.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I really needed this rearranging to figure out what the fix
-> _should_ be. Now that I did that, I was able to write the above
-> paragraph explaining what the minimal fix would be. And I can do that if
-> we prefer. But I think the fact that I had to go through the untangling
-> step first is an indication that maybe the end result is better. Of
-> course that's all subjective. :)
+most of config vars are at repo-level, not worktree-level, except
+maybe submodule.* and something else. Technically we could use
+"include.path" to point to a non-shared file, where we store
+worktree-specific config.
 
-I _think_ the patch below is also applicable to the code before my
-boundary-fixing patch. But the rearranging also made me more confident
-in it.
+> but I believe
+> that'll make multiple work trees surprise the user from time
+> to time when used with submodules. Because initializing a
+> submodule in one worktree initializes it in all other
+> worktrees too (I suspect other users regard "git submodule
+> init" being a worktree local command too). And setting
+> "submodule.<name>.update" to "none" will also affect all
+> other worktrees. But I'd need to have separate settings for
+> our CI server, e.g. to checkout the sources without the
+> largish documentation submodule in one test job (=worktree)
+> while checking out the whole documentation for another job
+> building the setup in another worktree.
+>
+> And if I understand the "checkout: reject if the branch is
+> already checked out elsewhere" thread correctly, I won't be
+> able to build "master" in two jobs at the same time?
 
--- >8 --
-Subject: for_each_reflog_ent_reverse: turn leftover check into assertion
+If you do "git checkout --to ... master^{}", it should run fine. I'm
+still considering doing something better with the read-only refs, but
+haven't found time to really think it through yet.
 
-Our loop should always process all lines, even if we hit the
-beginning of the file. We have a conditional after the loop
-ends to double-check that there is nothing left and to
-process it. But this should never happen, and is a sign of a
-logic bug in the loop. Let's turn it into a BUG assertion.
+> Thanks. But I changed my mind about the details (now that I
+> know about .git/config and multiple worktrees). I think you'd
+> have to connect a .git directory in the submodule to the
+> common git dir directly, as you cannot use the core.worktree
+> setting (which could be different between commits due to
+> renames) when putting it into <worktree>/.git/modules. And
+> then you couldn't remove or rename a submodule anymore,
+> because that fails when it contains a .git directory.
+>
+> Seems like we should put a "Warning: may do unexpected things
+> when used with submodules" (with some examples about what might
+> happen) in the multiple worktrees documentation. And I don't
+> believe anymore that teaching submodules to use the common git
+> dir makes that much sense after I know about the restrictions
+> it imposes.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Of course I cannot say something like "this can never happen; the old
-code was wrong to handle this case" without a nagging feeling that I am
-missing something, so extra careful eyes are appreciated (and are why I
-would rather have an assert here than removing the code and silently
-dropping lines if I am wrong).
-
- refs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/refs.c b/refs.c
-index ccb8834..1f77fa6 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3451,7 +3451,7 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
- 
- 	}
- 	if (!ret && sb.len)
--		ret = show_one_reflog_ent(&sb, fn, cb_data);
-+		die("BUG: reverse reflog parser had leftover data");
- 
- 	fclose(logfp);
- 	strbuf_release(&sb);
+I'm ok with such a warning fwiw.
 -- 
-2.2.0.390.gf60752d
+Duy
