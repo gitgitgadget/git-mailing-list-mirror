@@ -1,97 +1,94 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: bug report on update-index --assume-unchanged
-Date: Fri, 5 Dec 2014 20:48:17 -0000
-Organization: OPDS
-Message-ID: <12536C063959480083CC2D4CBA0BA38E@PhilipOakley>
-References: <1417732931.20814.16.camel@segulix><1417759955.10992.2.camel@segulix> <548156E5.2080006@kdbg.org><CACsJy8AVKaq4NJu=23W+wcRgVTQ7hVAOxsVwtZnZsNw6393cTA@mail.gmail.com><1417798622.23238.6.camel@segulix> <xmqq1toeq79b.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 07/23] expire_reflog(): use a lock_file for rewriting the reflog file
+Date: Fri, 05 Dec 2014 12:55:55 -0800
+Message-ID: <xmqqk325q0is.fsf@gitster.dls.corp.google.com>
+References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
+	<1417734515-11812-8-git-send-email-mhagger@alum.mit.edu>
+	<20141205002331.GJ16345@google.com>
+	<20141205191829.GB16682@google.com>
+	<xmqqoarhq4dc.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kbf_Ze6JR33Y6-N3JZTUQqTyqc-feQZ-__h7JkeUTzUvg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Duy Nguyen" <pclouds@gmail.com>, "Johannes Sixt" <j6t@kdbg.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	=?utf-8?Q?S=C3=A9rgio_Basto?= <sergio@serjux.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 21:47:48 2014
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 21:56:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwzmz-0006QZ-8V
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 21:47:45 +0100
+	id 1Xwzv3-000253-KW
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 21:56:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbaLEUrl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 15:47:41 -0500
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:18905 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751323AbaLEUrl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 15:47:41 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Am8PAOQYglROl3BEPGdsb2JhbABZgwaBKoMFgy5swSwBhBEEAoEcFwEBAQEBAQUBAQEBOCAbg30FAQEBAQMIAQEZDwEFHgEBFAoDCwIDBQIBAxUDAgIFIQICFAEEGgYHAxQGARIIAgECAwGILr9GhmeQJoEoi1WDUoJ2MoEVBY9GXIcYg0cOi0KCa4dRPzCCQwEBAQ
-X-IPAS-Result: Am8PAOQYglROl3BEPGdsb2JhbABZgwaBKoMFgy5swSwBhBEEAoEcFwEBAQEBAQUBAQEBOCAbg30FAQEBAQMIAQEZDwEFHgEBFAoDCwIDBQIBAxUDAgIFIQICFAEEGgYHAxQGARIIAgECAwGILr9GhmeQJoEoi1WDUoJ2MoEVBY9GXIcYg0cOi0KCa4dRPzCCQwEBAQ
-X-IronPort-AV: E=Sophos;i="5.07,524,1413241200"; 
-   d="scan'208";a="654205455"
-Received: from host-78-151-112-68.as13285.net (HELO PhilipOakley) ([78.151.112.68])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 05 Dec 2014 20:47:38 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751466AbaLEU4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 15:56:00 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55387 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750779AbaLEUz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 15:55:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E294B24CA8;
+	Fri,  5 Dec 2014 15:55:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=o7Nj4WkILSV0fotu0w/KYg42ZIE=; b=RDShs7
+	UWf6I+MwPpyzQQk/e0YzDoaAPKn3KhmCnrHRWOI5aCWkWkNWaqW+iA4ETk+3ouoI
+	a9ROZpat+sULABJ50AB1T+nK68Fp8huC38vBLrFCr7PptjUAeM/mpfPsAyPJ+5KK
+	1+5OUzfGEbpbp5wna+0WuLpcKIonXg5l5n+RY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DJSuMGv+Kd0PS6xN0JsiW3TDjRm+DcIN
+	r6Mb3hDqbmkICcvJXjC5k87g2o7eg2im6jmNId+vOr3a7hBab+mN22ZmPEICqoRM
+	baNzTfl8cvNs5qjTsGtuxz4dhNmhFCCcnJxvSLn1jkz8KBYDJP3gttO9QuDz/OMY
+	Fifmh2JPfR0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D875D24CA7;
+	Fri,  5 Dec 2014 15:55:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4DA0424CA6;
+	Fri,  5 Dec 2014 15:55:57 -0500 (EST)
+In-Reply-To: <CAGZ79kbf_Ze6JR33Y6-N3JZTUQqTyqc-feQZ-__h7JkeUTzUvg@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 5 Dec 2014 11:41:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1C4D21A6-7CC1-11E4-A718-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260891>
 
-=46rom: "Junio C Hamano" <gitster@pobox.com>
-> S=C3=A9rgio Basto <sergio@serjux.com> writes:
->
->
->> On Sex, 2014-12-05 at 17:52 +0700, Duy Nguyen wrote:
->>> On Fri, Dec 5, 2014 at 1:55 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->>> > Actually, it's a user error. When you set --assume-unchanged, the=
-n
->>> > you give
->>> > a promise to git that you do not change the files, and git does
->>> > not have to
->>> > check itself whether there is a change.
->>> >
->>> > But since you did not keep your promise, you get what you deserve=
-=2E
->>> > ;-)
+Stefan Beller <sbeller@google.com> writes:
+
+>>> After the series completes, this lock is only used in reflog_expire.
+>>> So I'd rather move it inside the function? Then we could run the reflog_expire
+>>> function in parallel for different locks in theory?
 >>
+>> I am not sure about the "parallel" part, but I would imagine that it
+>> is an essential prerequisite to move this outside the "client" code
+>> if we want to later replace the backing storage of refs and reflogs
+>> outside the filesystem, so from that point of view,  I think the
+>> suggestion makes sense.
 >>
->> No, I marked with assume-unchanged *after* change the file , and not
->> before. Else don't see what is the point of assume-unchanged if you
->> really don't change the file.
+>> Thanks.
+>>
 >
-> That "unchanged" is relative to what is in the index.
->
-> Your promise is "these paths I will not modify" and in return you
-> gain performance in "git status" as the promise allows Git not to
-> check with lstat() if the files in the workng tree was modified and
-> instead assume that you didn't change them.  That is the point of
-> assume-unchanged bit.
->
-> If however you did something that made Git notice that you changed
-> these paths marked with assume-unchanged bit anyway, then Git will,
-> well, notice that they are not "unchanged" as you promised.
+> Sorry for the confusion. With parallel I mean,...
 
-The problem here is that there is no guidance on what those actions are
-that may make git 'notice'. The man page git-update-index isn't as clea=
-r
-as it could be. Using --really-refresh being one option that would make
-git notice, but I wouldn't know when that is used.
+There is no confusion.  I understand exactly what you meant.
 
-Part of the implied question is why "git commit ." would notice when
-when "git commit -a" didn't appear to. So it's unclear as to what the=20
-user should have expected.
+What I said was not sure was if "parallel" is a practical enough
+possiblity to include into the set of value propositions the
+suggested change to move the lock out of the "client" may give us.
 
-(Note, I don't use assume-unchanged myself so this is more about=20
-supporting the user/manual clarification. It is mentioned moderately=20
-often on stackoverflow etc.)
+In other words, "With this change, doing a parallel will become a
+lot easier"---"Really?  It probably is not one of the harder part of
+the problem if you really want to go parallel" was the discourse I
+had in my mind.
 
---
-Philip
+;-)
