@@ -1,170 +1,82 @@
-From: ronnie sahlberg <ronniesahlberg@gmail.com>
-Subject: Re: [PATCH 07/23] expire_reflog(): use a lock_file for rewriting the
- reflog file
-Date: Thu, 4 Dec 2014 18:59:01 -0800
-Message-ID: <CAN05THTH2XDaUmchehF0gY0-GSgD_O9rJH7F5Gc3dHLCPz3GsA@mail.gmail.com>
-References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
-	<1417734515-11812-8-git-send-email-mhagger@alum.mit.edu>
+From: Alex Stangl <alex@stangl.us>
+Subject: error: core.autocrlf=input conflicts with core.eol=crlf
+Date: Thu, 4 Dec 2014 23:42:05 -0600
+Message-ID: <20141205054205.GA71681@scout.stangl.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 05 03:59:15 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 05 06:49:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwj6u-0005zC-R0
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 03:59:13 +0100
+	id 1Xwllc-00026S-Rh
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 06:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933462AbaLEC7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2014 21:59:05 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:51030 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932378AbaLEC7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2014 21:59:04 -0500
-Received: by mail-lb0-f181.google.com with SMTP id l4so5770910lbv.12
-        for <git@vger.kernel.org>; Thu, 04 Dec 2014 18:59:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=APpvsrtZNZEpr01djnGZUGJuk9Wuka1esiBZfV948j8=;
-        b=omxvkdBU34CJpCab2tteAHa+FnzTs/PDmNfB9lWaySneMK9J6Dfnb8noDm/l67+Eqi
-         tQrKPRoTWhSlPIlKGeJK9Mi6t+rUvUbh4yfCyvS24yHfuOSXbAETSJOQGJUo4XOFUvLA
-         KIcvyL6MUOFnnHELz2EubC5D9J7LTXnzvF+bd+L9iqiRig2iF6Pin2/PuAp1pGbGyY/Z
-         GkV7FS8N5FXcoPmcyTBmx15ne7r04ogaQsCswVzHG/vgLieOQDS7cZ0u0VDNdSD2VtT3
-         V9yrR1ToLsMmYEGgZcanNoQOcghJ5GK37Pc4fwMZd996yP+1XMxiUixMuqetBy2I2WZF
-         wMBQ==
-X-Received: by 10.152.21.66 with SMTP id t2mr600333lae.27.1417748341825; Thu,
- 04 Dec 2014 18:59:01 -0800 (PST)
-Received: by 10.25.15.207 with HTTP; Thu, 4 Dec 2014 18:59:01 -0800 (PST)
-In-Reply-To: <1417734515-11812-8-git-send-email-mhagger@alum.mit.edu>
+	id S1750877AbaLEFtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 00:49:19 -0500
+Received: from stangl.us ([66.93.193.95]:29620 "EHLO stangl.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750740AbaLEFtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 00:49:19 -0500
+X-Greylist: delayed 431 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Dec 2014 00:49:18 EST
+Received: from scout.stangl.us (localhost [127.0.0.1])
+	by scout.stangl.us (Postfix) with ESMTP id 7D45822816
+	for <git@vger.kernel.org>; Thu,  4 Dec 2014 23:42:06 -0600 (CST)
+X-Virus-Scanned: amavisd-new at stangl.us
+Received: from stangl.us ([127.0.0.1])
+	by scout.stangl.us (scout.stangl.us [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tdieId7bP7CU for <git@vger.kernel.org>;
+	Thu,  4 Dec 2014 23:42:05 -0600 (CST)
+Received: by scout.stangl.us (Postfix, from userid 1001)
+	id C5CB622812; Thu,  4 Dec 2014 23:42:05 -0600 (CST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260856>
 
-On Thu, Dec 4, 2014 at 3:08 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> We don't actually need the locking functionality, because we already
-> hold the lock on the reference itself,
+Hi,
 
-No. You do need the lock.
-The ref is locked only during transaction_commit()
+There seems to be problems with the checks in the git code for conflicts
+between config values of core.autocrlf and core.eol. Because the various
+config files are read in separate passes, and the conflict check happens
+on the fly, it creates a situation where the order of the config file
+entries matters. This seems like a bug or at least a POLA violation --
+ordering of lines within a section of a config file is not usually
+significant.
 
-If you don't want to lock the reflog file and instead rely on the lock
-on the ref itself you will need to
-rework your patches so that the lock on the ref is taken already
-during, for example, transaction_update_ref() instead.
+Example: User has core.autocrlf=input in his ~/.gitconfig. In his
+project-level .git/config he wants to set core.autocrlf=false and
+core.eol=crlf. If the core.autocrlf=false comes first, then all is
+well and no conflict is reported. If the core.eol=crlf line comes
+first, then at the time this line is getting parsed, core.autocrlf
+is still set at "input" from ~/.gitconfig, and execution aborts:
 
-But without doing those changes and moving the ref locking from
-_commit() to _update_ref() you will risk reflog corruption/surprises
-if two operations collide and both rewrite the reflog without any lock held.
+error: core.autocrlf=input conflicts with core.eol=crlf
 
+It seems like the conflict check should be made at the end of the
+config file parsing, not on the fly. I was tempted to create a patch,
+however I am unfamilar with the codebase, and didn't understand all
+the places where the config file parsing is called, so I'm not sure
+of the ramifications of any proposed change. A benefit of the current
+approach is that it reports the line number where it aborted in the
+config file. Trying to retain this and at the same time defer the
+check until the end could get complicated.
 
-> which is how the reflog file is
-> locked. But the lock_file code still does some of the bookkeeping for
-> us and is more careful than the old code here was.
->
-> For example:
->
-> * Correctly handle the case that the reflog lock file already exists
->   for some reason or cannot be opened.
->
-> * Correctly clean up the lockfile if the program dies.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  builtin/reflog.c | 37 ++++++++++++++++++++++---------------
->  1 file changed, 22 insertions(+), 15 deletions(-)
->
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index a282e60..d344d45 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -349,12 +349,14 @@ static int push_tip_to_list(const char *refname, const unsigned char *sha1, int
->         return 0;
->  }
->
-> +static struct lock_file reflog_lock;
-> +
->  static int expire_reflog(const char *refname, const unsigned char *sha1, void *cb_data)
->  {
->         struct cmd_reflog_expire_cb *cmd = cb_data;
->         struct expire_reflog_cb cb;
->         struct ref_lock *lock;
-> -       char *log_file, *newlog_path = NULL;
-> +       char *log_file;
->         struct commit *tip_commit;
->         struct commit_list *tips;
->         int status = 0;
-> @@ -372,10 +374,14 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
->                 unlock_ref(lock);
->                 return 0;
->         }
-> +
->         log_file = git_pathdup("logs/%s", refname);
->         if (!cmd->dry_run) {
-> -               newlog_path = git_pathdup("logs/%s.lock", refname);
-> -               cb.newlog = fopen(newlog_path, "w");
-> +               if (hold_lock_file_for_update(&reflog_lock, log_file, 0) < 0)
-> +                       goto failure;
-> +               cb.newlog = fdopen_lock_file(&reflog_lock, "w");
-> +               if (!cb.newlog)
-> +                       goto failure;
->         }
->
->         cb.cmd = cmd;
-> @@ -423,10 +429,9 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
->         }
->
->         if (cb.newlog) {
-> -               if (fclose(cb.newlog)) {
-> -                       status |= error("%s: %s", strerror(errno),
-> -                                       newlog_path);
-> -                       unlink(newlog_path);
-> +               if (close_lock_file(&reflog_lock)) {
-> +                       status |= error("Couldn't write %s: %s", log_file,
-> +                                       strerror(errno));
->                 } else if (cmd->updateref &&
->                         (write_in_full(lock->lock_fd,
->                                 sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
-> @@ -434,21 +439,23 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
->                          close_ref(lock) < 0)) {
->                         status |= error("Couldn't write %s",
->                                         lock->lk->filename.buf);
-> -                       unlink(newlog_path);
-> -               } else if (rename(newlog_path, log_file)) {
-> -                       status |= error("cannot rename %s to %s",
-> -                                       newlog_path, log_file);
-> -                       unlink(newlog_path);
-> +                       rollback_lock_file(&reflog_lock);
-> +               } else if (commit_lock_file(&reflog_lock)) {
-> +                       status |= error("cannot rename %s.lock to %s",
-> +                                       log_file, log_file);
->                 } else if (cmd->updateref && commit_ref(lock)) {
->                         status |= error("Couldn't set %s", lock->ref_name);
-> -               } else {
-> -                       adjust_shared_perm(log_file);
->                 }
->         }
-> -       free(newlog_path);
->         free(log_file);
->         unlock_ref(lock);
->         return status;
-> +
-> + failure:
-> +       rollback_lock_file(&reflog_lock);
-> +       free(log_file);
-> +       unlock_ref(lock);
-> +       return -1;
->  }
->
->  static int collect_reflog(const char *ref, const unsigned char *sha1, int unused, void *cb_data)
-> --
-> 2.1.3
->
+Besides interaction between multiple levels of config files, the
+same sort of ordering issue can arise in conjunction with command-line
+config overrides.
+
+Example: User has core.autocrlf=input in his project-level .git/config.
+This command works fine:
+$ git -c core.autocrlf=false -c core.eol=crlf status
+This command blows up with conflict error:
+$ git -c core.eol=crlf -c core.autocrlf=false status
+
+I tested with git versions 1.9.3 and 2.1.0.
+
+Alex
