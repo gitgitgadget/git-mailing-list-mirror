@@ -1,226 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t0027: check the eol conversion warnings
-Date: Fri, 05 Dec 2014 15:15:21 -0800
-Message-ID: <xmqqfvctofhy.fsf@gitster.dls.corp.google.com>
-References: <547B7AF8.80700@web.de>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Announcing a new (prototype) git-remote-hg tool
+Date: Sat, 6 Dec 2014 08:31:06 +0900
+Message-ID: <20141205233106.GA832@glandium.org>
+References: <20141205205335.GA28935@glandium.org>
+ <20141205221319.GK16345@google.com>
+ <20141205225930.GA29256@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Dec 06 00:15:35 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 06 00:31:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xx262-0007Bh-FB
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 00:15:34 +0100
+	id 1Xx2LJ-0006lI-G6
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 00:31:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752965AbaLEXP2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 18:15:28 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50812 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752914AbaLEXPZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 18:15:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F19DC24E6E;
-	Fri,  5 Dec 2014 18:15:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=9FQR6lou8XBB
-	fJ6HlfiRJl2MfCI=; b=pzhfPcCVFqR/ovB2eQQA2PsR34QMP9fUxbVhF7MuRBFo
-	fSQB0bMhH9s/TTvNSZEuJnRajxgUI8JPomNZlTMO9de3unDZbNRntbffTthPjCkB
-	ljNr+4fB4uEdDX8Jnhd3UwkbybANY01MXdhVIkB0RRcI2QXqUh1KlWnOZ7ovrbs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ScYSCh
-	Dy7gms6Ekv4ItTEQAkN3UeCX1+J+7PyDiTzWQao5L+x6WKTT1Pq40FHge4yL9faJ
-	UvKG6S7IQ2JpRoLPNlvfg+SjFhf24/tpyG0ViiDG+ihy8xX5HnRPKUw2v2LKLKhx
-	rZKalo1rdOuYqz7q1cxPAa6/3J05nPL0Es9OU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E895124E6D;
-	Fri,  5 Dec 2014 18:15:23 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6763D24E69;
-	Fri,  5 Dec 2014 18:15:22 -0500 (EST)
-In-Reply-To: <547B7AF8.80700@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
- =?utf-8?Q?=22's?= message of
-	"Sun, 30 Nov 2014 21:15:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 964A4CB4-7CD4-11E4-A932-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753237AbaLEXbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 18:31:15 -0500
+Received: from [12.216.224.110] ([12.216.224.110]:51358 "EHLO glandium.org"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752738AbaLEXbN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 18:31:13 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1Xx2L5-0000Kl-0D; Sat, 06 Dec 2014 08:31:07 +0900
+Content-Disposition: inline
+In-Reply-To: <20141205225930.GA29256@peff.net>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260914>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Fri, Dec 05, 2014 at 05:59:30PM -0500, Jeff King wrote:
+> On Fri, Dec 05, 2014 at 02:13:19PM -0800, Jonathan Nieder wrote:
+> 
+> > Mike Hommey wrote:
+> > 
+> > > I'm currently evaluating what the final tool would look like. I'm *very*
+> > > tempted to implement it in C, based on core git code, because there are
+> > > many things that this helper does that would be so much easier to do
+> > > with direct access to git's guts. And that wouldn't require more
+> > > dependencies than git currently has: it would "just" need curl and ssh,
+> > > and git already uses both.
+> > >
+> > > If I were to go in that direction, would you consider integrating it
+> > > in git core?
+> > 
+> > Yes --- I would like this a lot.
+> 
+> I'm concerned that this tool will have drawbacks that Felipe's remote-hg
+> does not. And I can well imagine that it may, as that tool builds on
+> Mercurial's API, which will probably handle some corner cases
+> differently.
 
-> Depending on the file content, eol parameters and .gitattributes
-> "git add" may give a warning when the eol of a file will change
-> when the file is checked out again.
->
-> There are 2 different warnings, either "CRLF will be replaced..." or
-> "LF will be replaced...".
->
-> Let t0027 check for these warnings:
-> call create_file_in_repo() with additional parameters,
-> which will be used to call check_warning().
->
-> When a file has eol=3Dlf or eol=3Dcrlf in .gitattributes, it is handl=
-ed
-> as text and should be normalized.
-> Add missing test cases in t0027.
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
+FWIW, my tool only uses the mercurial code for the wire protocol. This
+can (and if I go the C route, will) be implemented without using
+mercurial code, it's really not a hard problem.
 
-Thanks; nobody seems to have shown interest in this and it fell
-through the cracks it seems.  I didn't make a connection to the
-previous discussion when I saw this v2, and backburnered it.
+> This isn't to disparage Mike's attempt; it will probably
+> have some upsides, too. But given that the approaches are so different,
+> it does not seem obvious to me that one will always be better than the
+> other.
+> 
+> One of the nice things about spinning remote-hg out of the core repo is
+> that it means we do not have to endorse a particular implementation, and
+> they can compete with each other on their merits.  I would very much
+> hate to see Felipe's remote-hg project wither and die just because
+> another implementation becomes the de facto standard by being included
+> in git.git. It's a proven tool, and this new thing is not yet.
 
-The patch is clear that the change to check the expected "X will be
-replaced by Y" is added to existing combinations, and also for the
-lf & crlf cases the existing tests were not checking earlier.
+Note that I'm only talking about an hypothetical long term goal. If
+there's not even a slim chance that this may end up in git core, or in
+the git.git repo, I'm not sure it's worth writing the tool in C at all,
+considering the burden for users. IOW, I'm only trying to assess if I
+should follow my temptation or not. But I can probably reassess after I
+actually get my prototype to do more than it does now. But maybe there
+are ways to make it work for users outside of git.git even if it's in C.
+I don't know.
 
-Will queue.
+> It's a shame that both squat on the name "remote-hg", because it makes
+> it difficult to tell the two apart. But of course that is the only way
+> to make "git clone hg::..." work. Maybe we need a layer of indirection?
+> :)
 
-> Changes since V1:
-> - Simplified the diff
-> - Fixed a bug (LF_mix_CR.err was mixed with CRLF_mix_LF)
-> - Changed the commit message
->  t/t0027-auto-crlf.sh | 82 ++++++++++++++++++++++++++++++++++++++++++=
-----------
->  1 file changed, 66 insertions(+), 16 deletions(-)
->
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index 2a4a6c1..452320d 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -55,16 +55,41 @@ create_gitattributes () {
->  	esac
->  }
-> =20
-> +check_warning () {
-> +	case "$1" in
-> +	LF_CRLF) grep "LF will be replaced by CRLF" $2;;
-> +	CRLF_LF) grep "CRLF will be replaced by LF" $2;;
-> +	'')
-> +		>expect
-> +		grep "will be replaced by" $2 >actual
-> +		test_cmp expect actual
-> +		;;
-> +	*) false ;;
-> +	esac
-> +}
-> +
->  create_file_in_repo () {
->  	crlf=3D$1
->  	attr=3D$2
-> +	lfname=3D$3
-> +	crlfname=3D$4
-> +	lfmixcrlf=3D$5
-> +	lfmixcr=3D$6
-> +	crlfnul=3D$7
->  	create_gitattributes "$attr" &&
-> +	pfx=3Dcrlf_${crlf}_attr_${attr}
->  	for f in LF CRLF LF_mix_CR CRLF_mix_LF CRLF_nul
->  	do
-> -		pfx=3Dcrlf_${crlf}_attr_${attr}_$f.txt &&
-> -		cp $f $pfx && git -c core.autocrlf=3D$crlf add $pfx
-> +		fname=3D${pfx}_$f.txt &&
-> +		cp $f $fname &&
-> +		git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err"
->  	done &&
-> -	git commit -m "core.autocrlf $crlf"
-> +	git commit -m "core.autocrlf $crlf" &&
-> +	check_warning "$lfname" ${pfx}_LF.err &&
-> +	check_warning "$crlfname" ${pfx}_CRLF.err &&
-> +	check_warning "$lfmixcrlf" ${pfx}_CRLF_mix_LF.err &&
-> +	check_warning "$lfmixcr" ${pfx}_LF_mix_CR.err &&
-> +	check_warning "$crlfnul" ${pfx}_CRLF_nul.err
->  }
-> =20
->  check_files_in_repo () {
-> @@ -140,22 +165,47 @@ test_expect_success 'setup master' '
->  '
-> =20
-> =20
-> -test_expect_success 'create files' '
-> -	create_file_in_repo false "" &&
-> -	create_file_in_repo true  "" &&
-> -	create_file_in_repo input "" &&
-> =20
-> -	create_file_in_repo false "auto" &&
-> -	create_file_in_repo true  "auto" &&
-> -	create_file_in_repo input "auto" &&
-> +warn_LF_CRLF=3D"LF will be replaced by CRLF"
-> +warn_CRLF_LF=3D"CRLF will be replaced by LF"
-> +
-> +test_expect_success 'add files empty attr' '
-> +	create_file_in_repo false ""     ""        ""        ""        ""  =
-      "" &&
-> +	create_file_in_repo true  ""     "LF_CRLF" ""        "LF_CRLF" ""  =
-      "" &&
-> +	create_file_in_repo input ""     ""        "CRLF_LF" "CRLF_LF" ""  =
-      ""
-> +'
-> +
-> +test_expect_success 'add files attr=3Dauto' '
-> +	create_file_in_repo false "auto" ""        "CRLF_LF" "CRLF_LF" ""  =
-      "" &&
-> +	create_file_in_repo true  "auto" "LF_CRLF" ""        "LF_CRLF" ""  =
-      "" &&
-> +	create_file_in_repo input "auto" ""        "CRLF_LF" "CRLF_LF" ""  =
-      ""
-> +'
-> +
-> +test_expect_success 'add files attr=3Dtext' '
-> +	create_file_in_repo false "text" ""        "CRLF_LF" "CRLF_LF" ""  =
-      "CRLF_LF" &&
-> +	create_file_in_repo true  "text" "LF_CRLF" ""        "LF_CRLF" "LF_=
-CRLF" ""        &&
-> +	create_file_in_repo input "text" ""        "CRLF_LF" "CRLF_LF" ""  =
-      "CRLF_LF"
-> +'
-> +
-> +test_expect_success 'add files attr=3D-text' '
-> +	create_file_in_repo false "-text" ""       ""        ""        ""  =
-      "" &&
-> +	create_file_in_repo true  "-text" ""       ""        ""        ""  =
-      "" &&
-> +	create_file_in_repo input "-text" ""       ""        ""        ""  =
-      ""
-> +'
-> +
-> +test_expect_success 'add files attr=3Dlf' '
-> +	create_file_in_repo false "lf"    ""       "CRLF_LF" "CRLF_LF"  "" =
-      "CRLF_LF" &&
-> +	create_file_in_repo true  "lf"    ""       "CRLF_LF" "CRLF_LF"  "" =
-      "CRLF_LF" &&
-> +	create_file_in_repo input "lf"    ""       "CRLF_LF" "CRLF_LF"  "" =
-      "CRLF_LF"
-> +'
-> =20
-> -	create_file_in_repo false "text" &&
-> -	create_file_in_repo true  "text" &&
-> -	create_file_in_repo input "text" &&
-> +test_expect_success 'add files attr=3Dcrlf' '
-> +	create_file_in_repo false "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_=
-CRLF" "" &&
-> +	create_file_in_repo true  "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_=
-CRLF" "" &&
-> +	create_file_in_repo input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_=
-CRLF" ""
-> +'
-> =20
-> -	create_file_in_repo false "-text" &&
-> -	create_file_in_repo true  "-text" &&
-> -	create_file_in_repo input "-text" &&
-> +test_expect_success 'create files cleanup' '
->  	rm -f *.txt &&
->  	git reset --hard
->  '
+Yeah, that's an unfortunate consequence of how remote helpers work.
+There are already two different git-remote-hgs (there's felipe's, and
+there's another one using hg-git under the hood) that I know of. I'm
+adding a third one. For what it's worth, none of the existing one is
+satisfying on repos the size of Mozilla's, and apparently noone at
+Mozilla uses them because of that. Add to that the disk space
+inefficiency of actually keeping a copy of the mercurial repo locally.
+The existing tools can likely be improved to scale better, but that
+wouldn't change the disk space problem.
+
+Mike
