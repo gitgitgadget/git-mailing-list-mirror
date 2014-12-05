@@ -1,107 +1,94 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH 2/2] branch: allow -f with -m and -d
-Date: Fri, 05 Dec 2014 11:57:43 +0100
-Message-ID: <54818FA7.7040102@drmicha.warpmail.net>
-References: <cover.1417699299.git.git@drmicha.warpmail.net>	<7b1ae15228841d3eaed739e89295ec10a2be45fa.1417699299.git.git@drmicha.warpmail.net> <xmqqh9xbtehw.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 04/23] expire_reflog(): remove unused parameter
+Date: Fri, 05 Dec 2014 13:43:54 +0100
+Message-ID: <5481A88A.7050509@alum.mit.edu>
+References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu> <1417734515-11812-5-git-send-email-mhagger@alum.mit.edu> <20141204232853.GD16345@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 11:57:52 2014
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 13:44:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwqa5-0003Ci-ON
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 11:57:50 +0100
+	id 1XwsF3-0003BJ-Ax
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 13:44:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbaLEK5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 05:57:46 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:39700 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751065AbaLEK5p (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 05:57:45 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 8DF0B20914
-	for <git@vger.kernel.org>; Fri,  5 Dec 2014 05:57:44 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 05 Dec 2014 05:57:44 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=Sm0lvocKmm7UyhcFvLf0iY
-	h6xQI=; b=uA2tp0ud4UCPkbEx+lPKoD2e39sSXuVRogc3sPvWQ0ZWO+4fVnei9D
-	YMPpSiN5juIPrxXGE1nghuhMePL7XPJYV2ZLb4huV9o8rFai3BWtQyvhK5Wk5o1k
-	EXy8OGDfhSIdMLUc9UPYtmBnqO1Vi7GmnzfTAMwt0u77dqDUIj2mE=
-X-Sasl-enc: ROX+gJiDYWJ7RXA06zEYt3f8q7hSPTelYF4m5P2jj7fY 1417777064
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 0D3CBC00280;
-	Fri,  5 Dec 2014 05:57:43 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <xmqqh9xbtehw.fsf@gitster.dls.corp.google.com>
+	id S1751305AbaLEMoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 07:44:08 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:59896 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751258AbaLEMoH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2014 07:44:07 -0500
+X-AuditID: 1207440c-f79376d00000680a-44-5481a88ca5f5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 0B.2C.26634.C88A1845; Fri,  5 Dec 2014 07:43:56 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB07F3.dip0.t-ipconnect.de [93.219.7.243])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sB5ChsbX029064
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 5 Dec 2014 07:43:55 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <20141204232853.GD16345@google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsUixO6iqNuzojHE4MNeY4uuK91MFg29V5gt
+	3t5cwmjR2/eJ1WLz5nYWB1aPnbPusnss2FTqcfGSssfnTXIBLFHcNkmJJWXBmel5+nYJ3Bl7
+	X79jL9jFWbHm5Sm2BsYL7F2MnBwSAiYSRy+vgrLFJC7cW8/WxcjFISRwmVFibs9/dgjnLJPE
+	tvOHwKp4BbQlLs38yAhiswioSvyb/gYsziagK7Gop5kJxBYVCJI4uec6VL2gxMmZT1hAbBEB
+	DYnnn76BbWAWmMIocfDbPzaQhLCAs8TxlgaobQsZJQ4dvQq0gYODU8BAovOiLEgNs4CexI7r
+	v1ghbHmJ7W/nME9gFJiFZMcsJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrqJeb
+	WaKXmlK6iRES2jw7GL+tkznEKMDBqMTDu0KiMUSINbGsuDL3EKMkB5OSKC/PIqAQX1J+SmVG
+	YnFGfFFpTmrxIUYJDmYlEd7k2UA53pTEyqrUonyYlDQHi5I4r+oSdT8hgfTEktTs1NSC1CKY
+	rAwHh5IEb+xyoEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4ULTGFwPjFSTFA7Q3
+	AaSdt7ggMRcoCtF6ilFRSpy3CiQhAJLIKM2DGwtLWK8YxYG+FOb9BlLFA0x2cN2vgAYzAQ2+
+	Www2uCQRISXVwKhZuDNy2pl/hpUX9xfMy4xZkuHIOV/O/XbSsnud2R96Nkee3nzOu9ym/vjO
+	nxtevDX7UTTLyn+3gPftU7P2+WxU5AnJmPY+e6LZqR9TXy/UfBT9vebV8Z2P6uX4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260868>
 
-Junio C Hamano schrieb am 04.12.2014 um 20:13:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> -f/--force is the standard way to force an action, and is used by branch
->> for the recreation of existing branches, but not for deleting unmerged
->> branches nor for renaming to an existing branch.
->>
->> Make "-m -f" equivalent to "-M" and "-d -f" equivalent to" -D", i.e.
->> allow -f/--force to be used with -m/-d also.
-> 
-> I like that goal.  And I agree with your s/force_create/force/g
-> remark on the cover, too.
-> 
-> 
-> 
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->>  builtin/branch.c  | 9 +++++++--
->>  t/t3200-branch.sh | 5 +++++
->>  2 files changed, 12 insertions(+), 2 deletions(-)
->>
->> diff --git a/builtin/branch.c b/builtin/branch.c
->> index 3b79c50..8ea04d7 100644
->> --- a/builtin/branch.c
->> +++ b/builtin/branch.c
->> @@ -848,7 +848,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->>  		OPT_BOOL('l', "create-reflog", &reflog, N_("create the branch's reflog")),
->>  		OPT_BOOL(0, "edit-description", &edit_description,
->>  			 N_("edit the description for the branch")),
->> -		OPT__FORCE(&force_create, N_("force creation (when already exists)")),
->> +		OPT__FORCE(&force_create, N_("force creation, move/rename, deletion")),
->>  		{
->>  			OPTION_CALLBACK, 0, "no-merged", &merge_filter_ref,
->>  			N_("commit"), N_("print only not merged branches"),
->> @@ -891,7 +891,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->>  	if (with_commit || merge_filter != NO_FILTER)
->>  		list = 1;
->>  
->> -	if (!!delete + !!rename + !!force_create + !!new_upstream +
->> +	if (!!delete + !!rename + !!new_upstream +
-> 
-> This puzzled me but earlier -f implied creation and no other mode
-> (hence it was an error to give it together with delete and other
-> modes), but now -f is merely a "do forcibly whatever mode of
-> operation other option determines" that does not conflict.
-> 
-> What should "-f -u" and "-f -l" do, then, though?
-> 
->>  	    list + unset_upstream > 1)
->>  		usage_with_options(builtin_branch_usage, options);
->>  
+On 12/05/2014 12:28 AM, Jonathan Nieder wrote:> Michael Haggerty wrote:
+>> It was called "unused", so at least it was self-consistent.
+>
+> The missing context is that this was a callback function that had to
+> match the each_ref_fn signature [...]
+>
+> With or without a note in the commit message explaining that,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-I would say there is nothing to force, so we ignore -f there.
-Alternatively, we could warn about that. While I do consider forcing
-something that doesn't need force a mistake in other contexts, I would
-not apply that thinking to the -f option.
+[...]
+
+>> --- a/builtin/reflog.c
+>> +++ b/builtin/reflog.c
+>> @@ -349,7 +349,7 @@ static int push_tip_to_list(const char *refname,
+const unsigned char *sha1, int
+>>  	return 0;
+>>  }
+>>
+>> -static int expire_reflog(const char *ref, const unsigned char *sha1,
+int unused, void *cb_data)
+>> +static int expire_reflog(const char *ref, const unsigned char *sha1,
+void *cb_data)
+>>  {
+>>  	struct cmd_reflog_expire_cb *cmd = cb_data;
+>
+> On second thought: why not update the last parameter to be a 'struct
+> cmd_reflog_expire_cb *' instead of 'void *' while at it, like this?
+> [...]
+
+Thanks for the explanation, the review, and the suggestion. I will
+expand the commit to be "don't implement each_ref_fn anymore" and
+incorporate all of your suggestions.
 
 Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
