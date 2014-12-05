@@ -1,231 +1,106 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 09/23] expire_reflog(): extract two policy-related
- functions
-Date: Fri, 5 Dec 2014 11:02:59 -0800
-Message-ID: <20141205190259.GA16682@google.com>
-References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
- <1417734515-11812-10-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] for_each_reflog_ent_reverse: turn leftover check into assertion
+Date: Fri, 05 Dec 2014 11:15:24 -0800
+Message-ID: <xmqqsigtq56b.fsf@gitster.dls.corp.google.com>
+References: <547C8610.8080301@cs.uni-saarland.de>
+	<20141201233515.GV6527@google.com>
+	<xmqqvblrrwxu.fsf@gitster.dls.corp.google.com>
+	<5480C60E.3070903@cs.uni-saarland.de>
+	<20141204215805.GD19953@peff.net>
+	<xmqq388vrrj9.fsf@gitster.dls.corp.google.com>
+	<20141205012854.GA16590@peff.net> <20141205013244.GA16642@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 05 20:03:08 2014
+Content-Type: text/plain
+Cc: Christoph Mallon <mallon@cs.uni-saarland.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 05 20:15:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xwy9j-0002Vu-K0
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 20:03:08 +0100
+	id 1XwyLm-0000cC-St
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Dec 2014 20:15:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbaLETDC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 14:03:02 -0500
-Received: from mail-pa0-f73.google.com ([209.85.220.73]:62638 "EHLO
-	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750975AbaLETDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2014 14:03:01 -0500
-Received: by mail-pa0-f73.google.com with SMTP id lj1so163850pab.0
-        for <git@vger.kernel.org>; Fri, 05 Dec 2014 11:03:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=iQhW6U44ewIs5JmA1tJ12c5GcRlN2hTS6MSrJwNiuLg=;
-        b=RWOzIZlm9NqYxVSYKvimOeJU9+9D3QbJhC3gzVb6qPIBWDs2KlgYnFGHrys2o3EP9s
-         /p6aPIUQ63mEfXWRCFw9K1kK43uPw23ePhsX1sErnmkgKnQ8L7vzHf7yzxFuuhFuXIjd
-         3U2uzHnF2TIZuOrrN8rN7cOiEqzLSKriOtPE4Tsc8GhEgMh+EdFx30RuS/pDctt+Vowo
-         qMLEASycJPC4qGStCNzJCRZJwLnzmrOHzIK7A9f8jlz+gqIq41Js8Z3hP07sAcMQqDJU
-         8M4ePXod5Z+hD5xAp38gMpl728pqu41ISLp4k1cqcTCPnIyZxuhzA5d/GgXPea1hQQ1z
-         0TYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=iQhW6U44ewIs5JmA1tJ12c5GcRlN2hTS6MSrJwNiuLg=;
-        b=UuW/FuVD5RuNfl7RXfZK2kKh7XOGW7MPNBF8ZLGCWa7Lw6kNMYP/aGZJhStLrAwoVq
-         2ffU4NWG4dIXKtWC+t6BNpalH/TI/2tjs6abZGvY61YxVlS55UgZfQgehYZngLUNensS
-         HgETzkc1yT7frHdpbzUtPjxzZ9QyEpPEFtNPfm5yKe9yx85ZGo6wQo6drQALY/KWcI17
-         N8oj57+4gsNelAsLIsrhDMICRkk7ucTCN5x1wgY/ac8lU1Jo8gQkGiPQKSh5XSx8AA2f
-         BQii3C6+HeO07VfeshFmV6L9Ro09SzkmMiMywhxftakg7CqH7Dd+J093gcXYP/cdryvH
-         pimg==
-X-Gm-Message-State: ALoCoQl8V2D3NfY/DF6QuCVcFLh6hIq/m6Q7pG96xDElD34fJz6WlHL3l5OZmfmtwGPTBs9Q5dHp
-X-Received: by 10.66.100.166 with SMTP id ez6mr15292576pab.39.1417806180463;
-        Fri, 05 Dec 2014 11:03:00 -0800 (PST)
-Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id 5si1304234yhd.6.2014.12.05.11.02.59
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Dec 2014 11:03:00 -0800 (PST)
-Received: from sbeller.mtv.corp.google.com ([172.27.69.125])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id Qy1Xvkwi.1; Fri, 05 Dec 2014 11:03:00 -0800
-Received: by sbeller.mtv.corp.google.com (Postfix, from userid 279346)
-	id 61417140B70; Fri,  5 Dec 2014 11:02:59 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1417734515-11812-10-git-send-email-mhagger@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751867AbaLETPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 14:15:30 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52788 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751468AbaLETP1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 14:15:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D770C234AD;
+	Fri,  5 Dec 2014 14:15:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6r0zWcFICu+u7Ev+J+4lteck8rI=; b=XU8TZH
+	N2BN7m6RRHNh7E1xYcvEZyB9Ldf++9Kp0R0ryU5yxGAwACifaddfr/vNNn9QLGRX
+	4AodmIQETnZaGZgNH2R9zZ0qh0Qs+gSZ6/GfzTVaobWp6wKM8hQLc/sVC49kS8fG
+	jcyPg98Y/OL/dNaySYUFmUqiXT5tnemIEpf3k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IE0B2gtq/hRBanvrDZoMDf0pjXGnte5m
+	BORUV8ktE25mbtrnoSJR2vlhokypbTO5H44QlxKa2EpGnNtD1EU0EXGHRsZ7UTVF
+	lIqPw/lQc64DDlAnuHrgfrKHqwlSnp0ATy3sgZfR7ClUXAbJ4wH1pO4OgI7W55uc
+	dZarR9VCTMA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD97A234AC;
+	Fri,  5 Dec 2014 14:15:26 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A1C3234A8;
+	Fri,  5 Dec 2014 14:15:25 -0500 (EST)
+In-Reply-To: <20141205013244.GA16642@peff.net> (Jeff King's message of "Thu, 4
+	Dec 2014 20:32:44 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 10FC2DB4-7CB3-11E4-A464-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260883>
 
-On Fri, Dec 05, 2014 at 12:08:21AM +0100, Michael Haggerty wrote:
-> Extract two functions, reflog_expiry_prepare() and
-> reflog_expiry_cleanup(), from expire_reflog(). This is a further step
-> towards separating the code for deciding on expiration policy from the
-> code that manages the physical expiration.
-> 
-> This change requires a couple of local variables from expire_reflog()
-> to be turned into fields of "struct expire_reflog_cb". More
-> reorganization of the callback data will follow in later commits.
-> 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-Reviewed-by: Stefan Beller <sbeller@google.com>
+Jeff King <peff@peff.net> writes:
 
+> I _think_ the patch below is also applicable to the code before my
+> boundary-fixing patch. But the rearranging also made me more confident
+> in it.
+
+Yeah, thanks for a fix.
+
+> -- >8 --
+> Subject: for_each_reflog_ent_reverse: turn leftover check into assertion
+>
+> Our loop should always process all lines, even if we hit the
+> beginning of the file. We have a conditional after the loop
+> ends to double-check that there is nothing left and to
+> process it. But this should never happen, and is a sign of a
+> logic bug in the loop. Let's turn it into a BUG assertion.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
-> In fact, the work done in reflog_expire_cleanup() doesn't really need
-> to be done via a callback, because it doesn't need to be done while
-> the reference lock is held. But the symmetry between prepare and
-> cleanup is kindof nice. Perhaps some future policy decision will want
-> to do some final work under the reference lock?
-> 
-> But it would be easy to get rid of this third callback function and
-> have the callers do the work themselves after calling expire_reflog().
-> I don't have a string feeling either way.
-> 
->  builtin/reflog.c | 94 +++++++++++++++++++++++++++++++-------------------------
->  1 file changed, 52 insertions(+), 42 deletions(-)
-> 
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index 7bc6e0f..ebfa635 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -43,6 +43,8 @@ struct expire_reflog_cb {
->  	unsigned long mark_limit;
->  	struct cmd_reflog_expire_cb *cmd;
->  	unsigned char last_kept_sha1[20];
-> +	struct commit *tip_commit;
-> +	struct commit_list *tips;
->  };
+> Of course I cannot say something like "this can never happen; the old
+> code was wrong to handle this case" without a nagging feeling that I am
+> missing something, so extra careful eyes are appreciated (and are why I
+> would rather have an assert here than removing the code and silently
+> dropping lines if I am wrong).
+>
+>  refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/refs.c b/refs.c
+> index ccb8834..1f77fa6 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3451,7 +3451,7 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
 >  
->  struct collected_reflog {
-> @@ -363,6 +365,54 @@ static int push_tip_to_list(const char *refname, const unsigned char *sha1, int
->  	return 0;
->  }
+>  	}
+>  	if (!ret && sb.len)
+> -		ret = show_one_reflog_ent(&sb, fn, cb_data);
+> +		die("BUG: reverse reflog parser had leftover data");
 >  
-> +static void reflog_expiry_prepare(const char *refname,
-> +				  const unsigned char *sha1,
-> +				  struct expire_reflog_cb *cb)
-> +{
-> +	if (!cb->cmd->expire_unreachable || !strcmp(refname, "HEAD")) {
-> +		cb->tip_commit = NULL;
-> +		cb->unreachable_expire_kind = UE_HEAD;
-> +	} else {
-> +		cb->tip_commit = lookup_commit_reference_gently(sha1, 1);
-> +		if (!cb->tip_commit)
-> +			cb->unreachable_expire_kind = UE_ALWAYS;
-> +		else
-> +			cb->unreachable_expire_kind = UE_NORMAL;
-> +	}
-> +
-> +	if (cb->cmd->expire_unreachable <= cb->cmd->expire_total)
-> +		cb->unreachable_expire_kind = UE_ALWAYS;
-> +
-> +	cb->mark_list = NULL;
-> +	cb->tips = NULL;
-> +	if (cb->unreachable_expire_kind != UE_ALWAYS) {
-> +		if (cb->unreachable_expire_kind == UE_HEAD) {
-> +			struct commit_list *elem;
-> +			for_each_ref(push_tip_to_list, &cb->tips);
-> +			for (elem = cb->tips; elem; elem = elem->next)
-> +				commit_list_insert(elem->item, &cb->mark_list);
-> +		} else {
-> +			commit_list_insert(cb->tip_commit, &cb->mark_list);
-> +		}
-> +		cb->mark_limit = cb->cmd->expire_total;
-> +		mark_reachable(cb);
-> +	}
-> +}
-> +
-> +static void reflog_expiry_cleanup(struct expire_reflog_cb *cb)
-> +{
-> +	if (cb->unreachable_expire_kind != UE_ALWAYS) {
-> +		if (cb->unreachable_expire_kind == UE_HEAD) {
-> +			struct commit_list *elem;
-> +			for (elem = cb->tips; elem; elem = elem->next)
-> +				clear_commit_marks(elem->item, REACHABLE);
-> +			free_commit_list(cb->tips);
-> +		} else {
-> +			clear_commit_marks(cb->tip_commit, REACHABLE);
-> +		}
-> +	}
-> +}
-> +
->  static struct lock_file reflog_lock;
->  
->  static int expire_reflog(const char *refname, const unsigned char *sha1, void *cb_data)
-> @@ -371,8 +421,6 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
->  	struct expire_reflog_cb cb;
->  	struct ref_lock *lock;
->  	char *log_file;
-> -	struct commit *tip_commit;
-> -	struct commit_list *tips;
->  	int status = 0;
->  
->  	memset(&cb, 0, sizeof(cb));
-> @@ -400,47 +448,9 @@ static int expire_reflog(const char *refname, const unsigned char *sha1, void *c
->  
->  	cb.cmd = cmd;
->  
-> -	if (!cmd->expire_unreachable || !strcmp(refname, "HEAD")) {
-> -		tip_commit = NULL;
-> -		cb.unreachable_expire_kind = UE_HEAD;
-> -	} else {
-> -		tip_commit = lookup_commit_reference_gently(sha1, 1);
-> -		if (!tip_commit)
-> -			cb.unreachable_expire_kind = UE_ALWAYS;
-> -		else
-> -			cb.unreachable_expire_kind = UE_NORMAL;
-> -	}
-> -
-> -	if (cmd->expire_unreachable <= cmd->expire_total)
-> -		cb.unreachable_expire_kind = UE_ALWAYS;
-> -
-> -	cb.mark_list = NULL;
-> -	tips = NULL;
-> -	if (cb.unreachable_expire_kind != UE_ALWAYS) {
-> -		if (cb.unreachable_expire_kind == UE_HEAD) {
-> -			struct commit_list *elem;
-> -			for_each_ref(push_tip_to_list, &tips);
-> -			for (elem = tips; elem; elem = elem->next)
-> -				commit_list_insert(elem->item, &cb.mark_list);
-> -		} else {
-> -			commit_list_insert(tip_commit, &cb.mark_list);
-> -		}
-> -		cb.mark_limit = cmd->expire_total;
-> -		mark_reachable(&cb);
-> -	}
-> -
-> +	reflog_expiry_prepare(refname, sha1, &cb);
->  	for_each_reflog_ent(refname, expire_reflog_ent, &cb);
-> -
-> -	if (cb.unreachable_expire_kind != UE_ALWAYS) {
-> -		if (cb.unreachable_expire_kind == UE_HEAD) {
-> -			struct commit_list *elem;
-> -			for (elem = tips; elem; elem = elem->next)
-> -				clear_commit_marks(elem->item, REACHABLE);
-> -			free_commit_list(tips);
-> -		} else {
-> -			clear_commit_marks(tip_commit, REACHABLE);
-> -		}
-> -	}
-> +	reflog_expiry_cleanup(&cb);
->  
->  	if (cb.newlog) {
->  		if (close_lock_file(&reflog_lock)) {
-> -- 
-> 2.1.3
-> 
+>  	fclose(logfp);
+>  	strbuf_release(&sb);
