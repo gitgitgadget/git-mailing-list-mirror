@@ -1,69 +1,95 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate "track" as "versionieren"
-Date: Sat, 6 Dec 2014 20:44:15 +0100
-Message-ID: <CAN0XMOL7YduHe1xstEZs2cq5-gXhdDr4VSr-eWfeZYarjhF_1Q@mail.gmail.com>
-References: <1417894129-5535-1-git-send-email-ralf.thielow@gmail.com>
-	<3B030774-3176-44C0-861E-1DB1B668AE76@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: Accept-language test fails on Mac OS
+Date: Sat, 06 Dec 2014 22:04:06 +0100
+Message-ID: <54836F46.9080009@web.de>
+References: <CAO2U3QgoSmYkDYbvFnChxPMrTCEboUbk1NWjv+9Us60EfozN_w@mail.gmail.com>	<xmqqppbxogli.fsf@gitster.dls.corp.google.com>	<CAO2U3QikrHRC0PncO2vxFMv88HMnJHYa1AiPak+Lp0OU1u6dZA@mail.gmail.com>	<5482D180.9010002@web.de> <CAFT+Tg_4EJ15CmujDtcubfw+0rr2J=pbjccqSSs9tmj-rz6+eQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
-To: phillip <phillip.szelat@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 20:44:21 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: semtlenori@gmail.com,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Michael Blume <blume.mike@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 22:05:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxLHB-0007OJ-Ei
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 20:44:21 +0100
+	id 1XxMXn-0002Eq-6P
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 22:05:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198AbaLFToR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2014 14:44:17 -0500
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:37129 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414AbaLFToR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2014 14:44:17 -0500
-Received: by mail-wg0-f52.google.com with SMTP id x12so838201wgg.11
-        for <git@vger.kernel.org>; Sat, 06 Dec 2014 11:44:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DyAJkAYtsRa/Kch/QWbOY90NNU2I+zfBHMMzihEFOFE=;
-        b=QUbi5+DnYw70BlHJu1vxxaOlt1SSMlhNCrTUpCprzsiLyH11BYR8tLn9e+InCANeGe
-         eUHF/T+0eTyjs/2V8pdQ2qDEu3FUSGFcO9GwTWAmy1+0KJjS5XqrbaEoq8jPEIKdQ4Rq
-         Zdsr2VBSzyCeSqRSvEbRVC1IB/tkY4f9IEV6Q9e4Vb0b8vO3m63L4vHb9Gi9kM37xJSh
-         MmX6x+KbKx7mbhTsVO5fXv5bpq3NBJOxEnqRYf5ZZO0JWslGu938PZnPWjKRD+VjPMFk
-         c51qoILg0DBofZ2qKFWtn5q9nfNofdXaQLX5bX370owD29028cV+NVm3omc+pIT0Mz2Z
-         Xf7w==
-X-Received: by 10.194.187.235 with SMTP id fv11mr33821021wjc.16.1417895055878;
- Sat, 06 Dec 2014 11:44:15 -0800 (PST)
-Received: by 10.194.235.167 with HTTP; Sat, 6 Dec 2014 11:44:15 -0800 (PST)
-In-Reply-To: <3B030774-3176-44C0-861E-1DB1B668AE76@gmail.com>
+	id S1752273AbaLFVEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2014 16:04:15 -0500
+Received: from mout.web.de ([212.227.17.12]:63914 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752223AbaLFVEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2014 16:04:15 -0500
+Received: from macce.local ([78.72.72.190]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MORqb-1Y2bBk1MaD-005o8c; Sat, 06 Dec 2014 22:04:10
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
+In-Reply-To: <CAFT+Tg_4EJ15CmujDtcubfw+0rr2J=pbjccqSSs9tmj-rz6+eQ@mail.gmail.com>
+X-Provags-ID: V03:K0:KgMnxXJAX/2CYqLW9CLbx1n80HhZZdr/qAzRH55aUgIech82g/J
+ La21i6PLij9FU4bz4U88AUVgGxYVLIozpYlP6pAGL+qMVwCw5ADBYa1pigoeNt/sHd7kG+E
+ /+L6lR6tEyd8+T/SRq5NzccSYy6bGa226bNwKHVY5I5E2cdTVO5Of0Kb1CIyHrXikmw6njc
+ IEKjUVAsiNvP8GtxHy62g==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260964>
 
-Hi Phillip
+On 2014-12-06 20.44, Yi, EungJun wrote:
+> Could you tell me your locale information from executing 'locale'
+> command and the verbose message you can get by accessing any git
+> repository via HTTP protocol? (e.g. GIT_CURL_VERBOSE=1 git clone
+> http://github.com/foo/bar )
+locale -a
+C
+C.UTF-8
+en_US.utf8
+icelandic
+is_IS
+is_IS.iso88591
+is_IS.utf8
+POSIX
 
-Am 6. Dezember 2014 um 20:34 schrieb phillip <phillip.szelat@gmail.com>:
->
->
-> Hi,
->
-> for my feeling Beobachten is better then Versionieren. Its more natural and easier to understand, but okey ;)
->
+-----------------------------
+After patching like this:
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index fc6e7fc..1e42b42 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -205,8 +205,8 @@ check_language () {
+        LANG=$5 \
+        git ls-remote "$HTTPD_URL/dumb/repo.git" 2>&1 |
+        tr -d '\015' |
+-       sort -u >stderr &&
+-       grep -i ^Accept-Language: stderr >actual &&
++       sort -u >stderr
++       grep -i ^Accept-Language: stderr >actual
+        test_cmp expect actual
+ }
+-----------
+I get this:
 
-I think it's OK as Git is all about versioning content. In other cases
-"beobachten"
-might be the better choice.
 
-Ralf
+expecting success: 
+        check_language "ko-KR, *;q=0.1" ko_KR.UTF-8 de_DE.UTF-8 ja_JP.UTF-8 en_US.UTF-8 &&
+        check_language "de-DE, *;q=0.1" ""          de_DE.UTF-8 ja_JP.UTF-8 en_US.UTF-8 &&
+        check_language "ja-JP, *;q=0.1" ""          ""          ja_JP.UTF-8 en_US.UTF-8 &&
+        check_language "en-US, *;q=0.1" ""          ""          ""          en_US.UTF-8
+
+--- expect      2014-12-06 21:00:59.000000000 +0000
++++ actual      2014-12-06 21:00:59.000000000 +0000
+@@ -1 +0,0 @@
+-Accept-Language: de-DE, *;q=0.1
+not ok 25 - git client sends Accept-Language based on LANGUAGE, LC_ALL, LC_MESSAGES and LANG
+#       
+#               check_language "ko-KR, *;q=0.1" ko_KR.UTF-8 de_DE.UTF-8 ja_JP.UTF-8 en_US.UTF-8 &&
+#               check_language "de-DE, *;q=0.1" ""          de_DE.UTF-8 ja_JP.UTF-8 en_US.UTF-8 &&
+#               check_language "ja-JP, *;q=0.1" ""          ""          ja_JP.UTF-8 en_US.UTF-8 &&
+#               check_language "en-US, *;q=0.1" ""          ""          ""          en_US.UTF-8
+#       
