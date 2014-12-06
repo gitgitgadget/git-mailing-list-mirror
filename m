@@ -1,87 +1,140 @@
-From: =?ISO-8859-1?Q?S=E9rgio?= Basto <sergio@serjux.com>
-Subject: Re: bug report on update-index --assume-unchanged
-Date: Sat, 06 Dec 2014 00:45:57 +0000
-Message-ID: <1417826757.30899.16.camel@segulix>
-References: <1417732931.20814.16.camel@segulix>
-	<1417759955.10992.2.camel@segulix> <548156E5.2080006@kdbg.org>
-	<CACsJy8AVKaq4NJu=23W+wcRgVTQ7hVAOxsVwtZnZsNw6393cTA@mail.gmail.com>
-	<1417798622.23238.6.camel@segulix>
-	 <xmqq1toeq79b.fsf@gitster.dls.corp.google.com>
-	 <12536C063959480083CC2D4CBA0BA38E@PhilipOakley>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] fetch-pack: don't resend known-common refs in find_common
+Date: Fri, 5 Dec 2014 16:48:10 -0800
+Message-ID: <CAJo=hJvt1fkgkMdQX=dkcdBcmv_PT4pnz5BC9d0DSLCi=Q7ZbQ@mail.gmail.com>
+References: <1413884908.4175.49.camel@seahawk> <20141021144838.GA11589@seahawk>
+ <xmqqd29l1f3p.fsf@gitster.dls.corp.google.com> <1413963706.11656.5.camel@seahawk>
+ <xmqqfveghvw3.fsf@gitster.dls.corp.google.com> <20141026153931.GA28288@spirit>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Sat Dec 06 01:46:32 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Sat Dec 06 01:48:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xx3W3-0000py-S1
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 01:46:32 +0100
+	id 1Xx3Y8-0001rB-Gh
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 01:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbaLFAqB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2014 19:46:01 -0500
-Received: from host1.easyho.st ([62.210.60.225]:40120 "EHLO host1.easyho.st"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751030AbaLFAqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2014 19:46:01 -0500
-Received: from [188.250.193.97] (port=57719 helo=[192.168.1.67])
-	by host1.easyho.st with esmtpsa (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128)
-	(Exim 4.84)
-	(envelope-from <sergio@serjux.com>)
-	id 1Xx3VV-000qnb-Hq; Sat, 06 Dec 2014 00:45:59 +0000
-In-Reply-To: <12536C063959480083CC2D4CBA0BA38E@PhilipOakley>
-X-Mailer: Evolution 3.10.4 (3.10.4-4.fc20) 
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - host1.easyho.st
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - serjux.com
-X-Get-Message-Sender-Via: host1.easyho.st: authenticated_id: sergio@serjux.com
-X-From-Rewrite: unmodified, already matched
+	id S1751183AbaLFAsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 19:48:33 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:61425 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751030AbaLFAsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 19:48:32 -0500
+Received: by mail-ig0-f178.google.com with SMTP id hl2so193421igb.11
+        for <git@vger.kernel.org>; Fri, 05 Dec 2014 16:48:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=jgRwVR65Gl4IJLhZcg9Z2l45NkOS1CbX75AyCVWmpF8=;
+        b=D8yZuxJInknSeX7qi8+n7eRwjSMjdqymEF3XOINv4jamRhr+r+th13z4v6x9Qd2md6
+         FHxCaH69mJyt6Qaxe7EymUaJ6KEneM/OR6kny6P3eRgYaM8zBwED64HLdqlBYCcPOS+f
+         ttFB8dgCXX1B2Y8q2SBnDarFXFRchilHm7L+E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=jgRwVR65Gl4IJLhZcg9Z2l45NkOS1CbX75AyCVWmpF8=;
+        b=U6mnBZWrRoc87SLd/huoP7BAJsh2Tl7VvhoZR9ODVNTPFMTz+hzAO32E1FQ+M9jiPk
+         +QaDEFLG8XkeCPMDK7wQyJLNMYRumRqcq/KDDGuoEp5T+wiIC0b8rOtH9Pxk0SFcae0g
+         Dg++oeW2yXlrF6DvyTyGk/Aizpi+Fie+ykKLKGwUij/aGyG6HAsB+aOeUVwuSTSIObKn
+         qcvOPB1U9UvdfQv4uId9LQ1TzOPqe+edJmA+ZGpZPyWB+k4D2aYLM9YI92RJdKpB5EfD
+         wqMlmg8f/tZeJElktVmJ3jEJ7nq3yR4JVc5+GfdvVvcGYEnSYf3bArjW1kZDGMO9v+cm
+         i2NQ==
+X-Gm-Message-State: ALoCoQmzK5ItQgY/xtDqdK84L/fGtnUNbeUIN11cowo/Oe/ao02IMJ50GJEj6NpzTgpdpDn7ZU6O
+X-Received: by 10.107.25.129 with SMTP id 123mr1301877ioz.90.1417826911120;
+ Fri, 05 Dec 2014 16:48:31 -0800 (PST)
+Received: by 10.64.226.161 with HTTP; Fri, 5 Dec 2014 16:48:10 -0800 (PST)
+In-Reply-To: <20141026153931.GA28288@spirit>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260920>
 
-On Sex, 2014-12-05 at 20:48 +0000, Philip Oakley wrote:
-> The problem here is that there is no guidance on what those actions
-> are
-> that may make git 'notice'. The man page git-update-index isn't as
-> clear
-> as it could be. Using --really-refresh being one option that would
-> make
-> git notice, but I wouldn't know when that is used.
->=20
-> Part of the implied question is why "git commit ." would notice when
-> when "git commit -a" didn't appear to. So it's unclear as to what the=
-=20
-> user should have expected.
->=20
-I agree with this sentence, this is a bug because:
+On Sun, Oct 26, 2014 at 8:39 AM, Dennis Kaarsemaker
+<dennis@kaarsemaker.net> wrote:
+> On Wed, Oct 22, 2014 at 10:11:40AM -0700, Junio C Hamano wrote:
+>> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+>>
+>> > On di, 2014-10-21 at 10:56 -0700, Junio C Hamano wrote:
+>> >> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+>> >>
+>> >> > By not clearing the request buffer in stateless-rpc mode, fetch-pack
+>> >> > would keep sending already known-common commits, leading to ever bigger
+>> >> > http requests, eventually getting too large for git-http-backend to
+>> >> > handle properly without filling up the pipe buffer in inflate_request.
+>> >> > ---
+>> >> > I'm still not quite sure whether this is the right thing to do, but make
+>> >> > test still passes :) The new testcase demonstrates the problem, when
+>> >> > running t5551 with EXPENSIVE, this test will hang without the patch to
+>> >> > fetch-pack.c and succeed otherwise.
+>> >>
+>> >> IIUC, because "stateless" is just that, i.e. the server-end does not
+>> >> keep track of what is already known, not telling what is known to be
+>> >> common in each request would fundamentally break the protocol.  Am I
+>> >> mistaken?
+>> >
+>> > That sounds plausible, but why then does the fetch complete with this
+>> > line removed, and why does 'make test' still pass?
+>>
+>> The fetch-pack program tries to help the upload-pack program(s)
+>> running on the other end find what nodes in the graph both
+>> repositories have in common by sending what the repository on its
+>> end has.  Some commits may not be known by the other side (e.g. your
+>> new commits that haven't been pushed there that are made on a branch
+>> forked from the common history), and some others may be known
+>> (i.e. you drilled down the history from the tips of your refs and
+>> reached a commit that you fetched from the common history
+>> previously).  The latter are ACKed by the upload-pack process and
+>> are remembered to be re-sent to the _next_ incarnation of the
+>> upload-pack process when stateless RPC is in use.
+>>
+>> With your patch, you stop telling the upload-pack process what these
+>> two programs already found to be common in their exchange.  After
+>> the first exchange, fetch-pack and upload-pack may have noticed that
+>> both ends have version 2.0, but because you do not convey that fact
+>> to the other side, the new incarnation of upload-pack may end up
+>> deciding that the version 1.9 is the newest common commit between
+>> the two, and sending commits between 1.9 and 2.0.
+>>
+>> If you imagine an extreme case, it would be easy to see why "the
+>> fetch completes" and "make test passes" are not sufficient to say
+>> anything about this change.  Even if you break the protocol in in a
+>> way different from your patch, by not sending any "have", such a
+>> butchered "fetch-pack" will become "fetch everything from scratch",
+>> aka "clone".  The end result will still have correct history and
+>> "fetch completes" would be true.
+>>
+>> But I'd prefer deferring a more detailed analysis/explanation to
+>> Shawn, as stateless RPC is his creation.
 
-git commit -a ( and -a means all ) is incoherent with "git commit ."
-This is stupid because when I want commit part of the tree, commit
-includes one file that is not included when I say to commit all .=20
-So maybe you should fix, git commit -a to be coherent .=20
+Junio's statement above about the world is correct.
 
-> (Note, I don't use assume-unchanged myself so this is more about=20
-> supporting the user/manual clarification. It is mentioned moderately=20
-> often on stackoverflow etc.)
+> Thanks for the explanation, that makes it quite clear that this approach
+> is wrong. The patch below (apologies for the formatting, I'm not quite
+> sure how to use format-patch in this situation) does it differently: by
+> buffering upload-pack's output until it has read all the input, the new
+> test still succeeds and again 'make test' passes.
 
-yeap =20
+This probably introduces latency into the traditional bidirectional
+multi_ack protocol.
 
-Sorry I don't have time to read all messages in thread ,=20
-but I'm going to test git with the patch suggest in this thread , at
-least, I solve "my" problem for some time ...=20
+> @@ -384,15 +385,19 @@ static int get_common_commits(void)
+>                         if (multi_ack == 2 && got_common
+>                             && !got_other && ok_to_give_up()) {
+>                                 sent_ready = 1;
+> -                               packet_write(1, "ACK %s ready\n", last_hex);
+> +                               packet_buf_write(&resp_buf, "ACK %s ready\n", last_hex);
+>                         }
+>                         if (have_obj.nr == 0 || multi_ack)
+> -                               packet_write(1, "NAK\n");
+> +                               packet_buf_write(&resp_buf, "NAK\n");
 
-Thanks, =20
---=20
-S=E9rgio M. B.
+By buffering and delaying these when !stateless_rpc we defer telling
+the peer in a multi_ack exchange. That delays the peer from cutting
+off its communication by about 1RTT.
