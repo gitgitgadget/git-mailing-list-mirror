@@ -1,85 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Announcing a new (prototype) git-remote-hg tool
-Date: Sat, 6 Dec 2014 00:06:29 -0500
-Message-ID: <20141206050628.GB31301@peff.net>
-References: <20141205205335.GA28935@glandium.org>
- <20141205221319.GK16345@google.com>
- <20141205225930.GA29256@peff.net>
- <20141205231330.GL16345@google.com>
+Subject: Re: git bundle vs git rev-list
+Date: Sat, 6 Dec 2014 00:16:51 -0500
+Message-ID: <20141206051651.GC31301@peff.net>
+References: <CAL3By--xYnXFUdDP3MDxAxvfeBT3ArFrdAV=apzdWg6_kiD2Yg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 06:06:45 2014
+Cc: git@vger.kernel.org
+To: Jesse Hopkins <jesse.hops@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 06:16:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xx7Zt-0005xZ-8A
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 06:06:45 +0100
+	id 1Xx7jl-0001sF-Gy
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 06:16:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751216AbaLFFGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2014 00:06:31 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49284 "HELO cloud.peff.net"
+	id S1751482AbaLFFQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2014 00:16:54 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49294 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750746AbaLFFGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2014 00:06:30 -0500
-Received: (qmail 5104 invoked by uid 102); 6 Dec 2014 05:06:30 -0000
+	id S1751061AbaLFFQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2014 00:16:53 -0500
+Received: (qmail 5565 invoked by uid 102); 6 Dec 2014 05:16:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Dec 2014 23:06:30 -0600
-Received: (qmail 9376 invoked by uid 107); 6 Dec 2014 05:06:33 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Dec 2014 23:16:53 -0600
+Received: (qmail 9474 invoked by uid 107); 6 Dec 2014 05:16:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 06 Dec 2014 00:06:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Dec 2014 00:06:29 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 06 Dec 2014 00:16:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Dec 2014 00:16:51 -0500
 Content-Disposition: inline
-In-Reply-To: <20141205231330.GL16345@google.com>
+In-Reply-To: <CAL3By--xYnXFUdDP3MDxAxvfeBT3ArFrdAV=apzdWg6_kiD2Yg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260936>
 
-On Fri, Dec 05, 2014 at 03:13:30PM -0800, Jonathan Nieder wrote:
+On Fri, Dec 05, 2014 at 03:36:18PM -0700, Jesse Hopkins wrote:
 
-> > It's a shame that both squat on the name "remote-hg", because it makes
-> > it difficult to tell the two apart. But of course that is the only way
-> > to make "git clone hg::..." work. Maybe we need a layer of indirection?
-> > :)
-> 
-> If the helpers are roughly interchangeable (that is, if you can switch
-> between fetching using each one into the same on-disk git repository),
-> then picking one to symlink as git-remote-hg in your $PATH should be
-> enough.
+> #Create the bundle
+> git bundle create out.bundle --all "--since=<last_bundle_date>"
 
-That may be enough. For the most part you do not need to agree with
-other members of the project on which implementation to use. My
-experience with import tools has been that either:
+Others pointed out that a bug in the handling of --since may be the
+culprit here. However, I'd encourage you to use actual sha1s, as they
+are going to be more robust (especially in the face of any clock skew in
+the commit timestamps).
 
-  1. you are using them personally (because you do not like the
-     upstream's choice of VCS and would prefer to transparently work in
-     your favorite tool), or
+You should be able to follow a procedure like:
 
-  2. there is a group of developers who want to use git, but
-     somebody provides an unofficial git mirror. They do not have to
-     agree on the tool, because they just use git directly from the
-     mirror.
+  1. On day 1, create a bundle from scratch:
 
-So it is mostly a personal choice. But the two confusions I'd still
-anticipate are:
+       git bundle create out.bundle --all
 
-  a. It's difficult to even _talk_ about the tools, because the names
-     are the same (so searching for tips on the tool, reporting bugs,
-     etc, are harder than necessary).
+  2. Before you send it out, record its tips in the local repository
+     for later reference:
 
-  b. You may want different tools for different projects. If one tool is
-     much more efficient, you may need it for a large repo (e.g.,
-     mozilla). But another tool may provide other features, and you
-     would prefer it for smaller repos.
+       git fetch out.bundle +refs/*:refs/remotes/bundle/*
 
-This is largely speculation, though, and I do not actively use the tools
-myself. So I'd be happy to push off dealing with it until it itches
-enough for somebody to scratch.
+  3. On day 2, create a bundle from the previously recorded tips:
+
+       git bundle create out.bundle --all --not --remotes=bundle
+
+  4. Update your tips in the same way:
+
+       git fetch out.bundle +refs/*:refs/remotes/bundle/*
+
+and so on for day 3 and onward.
+
+Note that this is not the only way to store those tips (I just did it
+using git refs because it's simple to manipulate). You could also just
+store it in a file:
+
+      # checkpoint
+      git ls-remote out.bundle | cut -f1 | sort -u >tips
+
+      # make incremental bundle
+      git bundle create out.bundle --all --not $(cat tips)
+
+This also makes it easy to recover if the other side ever gets out of
+sync (say you create and checkpoint a bundle on the sending side, but it
+never makes it to the remote; how do you know where to start from?). You
+can always get the latest set of tips from the remote by running:
+
+      git ls-remote . | cut -f1 | sort -u >tips
+
+on it and then sneaker-netting the tips file back to the sender.
 
 -Peff
