@@ -1,99 +1,99 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/8] Making reflog modifications part of the transactions API
-Date: Fri,  5 Dec 2014 18:46:27 -0800
-Message-ID: <1417833995-25687-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 1/8] refs.c: let fprintf handle the formatting
+Date: Fri,  5 Dec 2014 18:46:28 -0800
+Message-ID: <1417833995-25687-2-git-send-email-sbeller@google.com>
+References: <1417833995-25687-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
 	ronniesahlberg@gmail.com, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Dec 06 03:46:50 2014
+X-From: git-owner@vger.kernel.org Sat Dec 06 03:46:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xx5OU-0004kd-1o
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 03:46:50 +0100
+	id 1Xx5OU-0004kd-Kh
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 03:46:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751016AbaLFCqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2014 21:46:39 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:54120 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779AbaLFCqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2014 21:46:38 -0500
-Received: by mail-ig0-f172.google.com with SMTP id hl2so283137igb.5
-        for <git@vger.kernel.org>; Fri, 05 Dec 2014 18:46:38 -0800 (PST)
+	id S1751967AbaLFCqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2014 21:46:42 -0500
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:59055 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779AbaLFCqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2014 21:46:40 -0500
+Received: by mail-ig0-f181.google.com with SMTP id l13so297844iga.14
+        for <git@vger.kernel.org>; Fri, 05 Dec 2014 18:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=1vvS0Ejzspu/DP0/NBArkKIWKp4TCo++2lZCeBkKKJc=;
-        b=RLIuqo90xwzV2EOz1PLgW7UJl1vfAfHW6ERx1w6mlgLQFGTD1G/b9LClqimvSBiq/a
-         sTmAzb7exCffoBZhYsgcgXQ2ugAcRGiZT7YRrQ9sAit2vrN7EJb263o49a8hOww27g65
-         6ef6N5BdBUBVSTgFZLgtPMthQbDsE9Nz/zyGGRf8FCGg0Ox8kPQ9ysEjxHCxZjKLHbaU
-         h70Og4TudLxpVPMGktj1LxpQMIiJYa06gQkMyji12Afm8Hpg4CdPoD5PRvztJPOcyGjc
-         y5GEIqpIOyB14euf135I/05SEBKbS27jBE+UksKYdhkVB5Bi6XV6irnzAvKp6YP/0HCM
-         3GEQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4KwsDfuXecZsNEaVP0ZkmTd2AGTMPw0ocGfQExlx7bc=;
+        b=QFlv7hfZwGuw3MaibRuvPLscMbHgnUYu57ofTq5rkh6NGFzS36HQL9i4eu8PFm8kJv
+         MsJ4YtG4JS3fiZZ6x8fqYo9+fwdxiHRwZCcDJkdSIptX42B3fNDy1vGnMB4WK9D7P2D5
+         21gyB/sEeTLOJ2pRay8YAUufqeBYu/jEsVe+Vv6FEgdJxe0bAVO1zoH7M7g8CXnHAMFj
+         mEnoBCgPJ6lt/ZNNFMdBufwjah+UN3yRQlNVC/M/pelJN4cTZM10GuHl/4Epi7hUWzg6
+         aFERZ6PevCXv5Js4cdikNplk/M3rzFJpfh6wKZyQFLA5OOTPU/XNsF44bezvmZgABghB
+         EsOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=1vvS0Ejzspu/DP0/NBArkKIWKp4TCo++2lZCeBkKKJc=;
-        b=ZtOji1k+7wZPQFq/oi4OZwM4ihtHBB88bHwQ1mmyZlTpVqkIRzbOrd7ggiKyYANVwM
-         2IF275iTevIRQkJ3xeW2tqXzlMwF7/8J0D3hsYARKVTQ9blQ2w+wW/5cHVO8BWfh/kmC
-         6yH663PYNCRGMqQJqLF5NZDxWTDOjUeb3rIgkXVAn/+ZW1oKwzhX8+/X5oxXrELQvtMt
-         KvJ7GcK/42M591pyjyrg+nhavYIlgW3iAlUcr1KijUbMhgaQcBliDXX008k6zJyEnI2Q
-         Bopb2H6NH3MOGoE1YFAnEAVIJyZrkUjF9D2cZBiQn9I+QUlTICbVpPDIm3w24LRnk0hM
-         vvow==
-X-Gm-Message-State: ALoCoQnXj8iqigDhNTRhQVH1zE+SiOIzjI79HwL4/mmQzaxOiTiJL2BBsfWQueoQyxwtaMeQ593X
-X-Received: by 10.42.95.208 with SMTP id g16mr18355185icn.81.1417833998166;
-        Fri, 05 Dec 2014 18:46:38 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=4KwsDfuXecZsNEaVP0ZkmTd2AGTMPw0ocGfQExlx7bc=;
+        b=Eo6f6qBhFMw1YB2zoEfp8rvMhyvr8lSq9Ycv+086KjBs8JAAbjJS6lTCQbpsP4YQyD
+         QGIYBklRq4+BPN6xya92AkuEF4nmI27ouAvfKF+iuU2HAhGYkXT5zFZ06MeHUGJBIB8g
+         Tt3WM88umpiGQB9j8HsX8lKINrWdyl0K3ghHlsr3mTxbhV9k7t9HoCVa0bRmpzG0Jyyx
+         zIEJp+g6cjPfilz0bp9xc56xmc6P41E5XOOrlC7LCusL75wz6FD/zkbi2UBGGmj0rHc5
+         YSzswPa+V54HmzeGDNRh5Hv1YV6rjHNx4UiB9UfJ69SNruQkorEXJCw7fjC/qUZ/qSeR
+         Fmsw==
+X-Gm-Message-State: ALoCoQnxiputIpS78UAtW0PMpEKp0h2wNaLjdaETYn8mDsy/r/v/KyvF+Nwujozy2mBzi25YWzj2
+X-Received: by 10.43.89.68 with SMTP id bd4mr17876421icc.63.1417833999438;
+        Fri, 05 Dec 2014 18:46:39 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:4022:de56:febc:d879])
-        by mx.google.com with ESMTPSA id l7sm160575igv.12.2014.12.05.18.46.37
+        by mx.google.com with ESMTPSA id x10sm153736igl.19.2014.12.05.18.46.38
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 05 Dec 2014 18:46:37 -0800 (PST)
+        Fri, 05 Dec 2014 18:46:38 -0800 (PST)
 X-Mailer: git-send-email 2.2.0
+In-Reply-To: <1417833995-25687-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260926>
 
-This goes on top of Michaels series. The idea of this series is make the
-reflogs being part of the transaction API, so it will be part of the contract
-of transaction_commit to either commit all the changes or none at all.
+Instead of calculating, whether to put a plus or minus sign, offload
+the responsibilty to the fprintf function.
 
-Currently when using the transaction API to change refs, also reflogs are changed.
-But the changes to the reflogs just happen as a side effect and not as part of
-the atomic part of changes we want to commit altogether.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Ronnie Sahlberg (3):
-  refs.c: use a reflog transaction when writing during expire
-  refs.c: rename log_ref_setup to create_reflog
-  refs.c: allow deleting refs with a broken sha1
+Notes:
+    This patch was already sent as a single patch to the list,
+    but not yet acknowledge in any way, so I am including it here.
+    
+    This series goes on top of Michaels series
+    https://github.com/mhagger/git/tree/reflog-expire-api-v1
 
-Stefan Beller (5):
-  refs.c: let fprintf handle the formatting
-  refs.c: rename the transaction functions
-  refs.c: rename transaction.updates to transaction.ref_updates
-  refs.c: add transaction function to append to the reflog
-  refs.c: add transaction function to delete the reflog
+ refs.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
- branch.c               |  13 +-
- builtin/branch.c       |   5 +-
- builtin/checkout.c     |   8 +-
- builtin/commit.c       |  10 +-
- builtin/fetch.c        |  12 +-
- builtin/receive-pack.c |  13 +-
- builtin/replace.c      |  10 +-
- builtin/tag.c          |  10 +-
- builtin/update-ref.c   |  26 ++--
- cache.h                |   7 +
- fast-import.c          |  22 +--
- refs.c                 | 359 ++++++++++++++++++++++++++++++++++---------------
- refs.h                 |  43 +++---
- sequencer.c            |  12 +-
- t/t3200-branch.sh      |   8 ++
- walker.c               |  10 +-
- 16 files changed, 359 insertions(+), 209 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 40c5591..1147216 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3972,12 +3972,9 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 			printf("prune %s", message);
+ 	} else {
+ 		if (cb->newlog) {
+-			char sign = (tz < 0) ? '-' : '+';
+-			int zone = (tz < 0) ? (-tz) : tz;
+-			fprintf(cb->newlog, "%s %s %s %lu %c%04d\t%s",
++			fprintf(cb->newlog, "%s %s %s %lu %+05d\t%s",
+ 				sha1_to_hex(osha1), sha1_to_hex(nsha1),
+-				email, timestamp, sign, zone,
+-				message);
++				email, timestamp, tz, message);
+ 			hashcpy(cb->last_kept_sha1, nsha1);
+ 		}
+ 		if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
 -- 
 2.2.0
