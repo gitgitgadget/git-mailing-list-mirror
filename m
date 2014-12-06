@@ -1,70 +1,75 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] document string_list_clear
-Date: Sat, 6 Dec 2014 00:30:24 -0500
-Message-ID: <20141206053024.GE31301@peff.net>
-References: <1417830678-16115-1-git-send-email-sbeller@google.com>
- <20141206020458.GR16345@google.com>
+Subject: Re: no-xmailer tests fail under Mac OS
+Date: Sat, 6 Dec 2014 00:34:34 -0500
+Message-ID: <20141206053434.GF31301@peff.net>
+References: <CAO2U3Qg3KsjvWJFza4MfiQDa2LbCpOy1Nxf9Vt3NSgXc7Bee9g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 06:30:35 2014
+Cc: Git List <git@vger.kernel.org>,
+	Luis Henriques <henrix@camandro.org>
+To: Michael Blume <blume.mike@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 06:34:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xx7ww-0007Nv-Rz
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 06:30:35 +0100
+	id 1Xx80u-0000ZG-79
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 06:34:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbaLFFa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2014 00:30:27 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49304 "HELO cloud.peff.net"
+	id S1751562AbaLFFeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2014 00:34:36 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49309 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751145AbaLFFa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2014 00:30:26 -0500
-Received: (qmail 6216 invoked by uid 102); 6 Dec 2014 05:30:26 -0000
+	id S1750746AbaLFFeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2014 00:34:36 -0500
+Received: (qmail 6416 invoked by uid 102); 6 Dec 2014 05:34:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Dec 2014 23:30:26 -0600
-Received: (qmail 9608 invoked by uid 107); 6 Dec 2014 05:30:28 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Dec 2014 23:34:36 -0600
+Received: (qmail 9627 invoked by uid 107); 6 Dec 2014 05:34:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 06 Dec 2014 00:30:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Dec 2014 00:30:24 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 06 Dec 2014 00:34:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Dec 2014 00:34:34 -0500
 Content-Disposition: inline
-In-Reply-To: <20141206020458.GR16345@google.com>
+In-Reply-To: <CAO2U3Qg3KsjvWJFza4MfiQDa2LbCpOy1Nxf9Vt3NSgXc7Bee9g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260939>
 
-On Fri, Dec 05, 2014 at 06:04:58PM -0800, Jonathan Nieder wrote:
+On Fri, Dec 05, 2014 at 06:05:24PM -0800, Michael Blume wrote:
 
-> Stefan Beller wrote:
+> Failures start from
 > 
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > ---
-> >
-> >  Just stumbled accross this one and wasn't sure if it also frees up
-> >  the memory involved.
-> >
-> >  string-list.h | 5 +++++
-> >  1 file changed, 5 insertions(+)
+> commit d2384abff7a6181fd7b9a51af7e780aa21e5cb8d (refs/bisect/bad)
+> Author: Luis Henriques <henrix@camandro.org>
+> Date:   Thu Dec 4 19:11:30 2014 +0000
 > 
-> Sounds reasonable.  Documentation/technical/api-string-list.txt
-> documents these functions more fully.  The right balance between
-> documenting things in two places vs. adding "see also" pointers vs.
-> just putting the highlights in one of the two places isn't obvious to
-> me.
+>     test/send-email: --[no-]xmailer tests
+> 
+>     Add tests for the --[no-]xmailer option.
+> 
+>     Signed-off-by: Luis Henriques <henrix@camandro.org>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> 
+> but continue with Junio's SQUASH??? commit at b728d078
 
-Also, I forgot to mention: if we consistently put the API docs into the
-header files and extracted it automatically into standalone documents,
-we would not need to have two places.
+The commit contains:
 
-This is something I've been meaning to look at for a long time, but it
-never quite makes the priority list. And my past experiences with tools
-like doxygen has been that they are complicated and have a lot of
-dependencies. It's been a long time since I've tried, though.
+  +       test "z$(grep ^X-Mailer: out | wc -l)" = "z$expected"
+
+We have had trouble in the past with "wc -l" output not being strictly
+portable. I do not recall offhand which systems, but it is a good bet
+that this is the culprit. Doing:
+
+  grep ^X-Mailer: out >mailer &&
+  test_line_count = $expected mailer
+
+should fix it. It might be even nicer to actually compare the x-mailer
+line we find to an expected output, but that may introduce complications
+if the value changes with the version or something (you'd have to
+sanitize the output, and then I do not know that the test is really
+buying much over just seeing whether it exists).
 
 -Peff
