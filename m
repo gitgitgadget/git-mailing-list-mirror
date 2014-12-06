@@ -1,143 +1,277 @@
-From: =?UTF-8?q?=D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=20=D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE?= 
-	<dpb@corrigendum.ru>
-Subject: [PATCH v2 1/2] send-email: align RFC 2047 decoding more closely with the spec
-Date: Sat,  6 Dec 2014 22:36:22 +0300
-Message-ID: <1417894583-2352-1-git-send-email-dpb@corrigendum.ru>
+From: phillip <phillip.szelat@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate "track" as "versionieren"
+Date: Sat, 06 Dec 2014 20:34:41 +0100
+Message-ID: <3B030774-3176-44C0-861E-1DB1B668AE76@gmail.com>
+References: <1417894129-5535-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Jay Soffian <jaysoffian@gmail.com>,
-	Jeff King <peff@peff.net>, Thomas Rast <tr@thomasrast.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 06 20:36:46 2014
+Cc: tboegi@web.de, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
+To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 06 20:36:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxL9p-0003qM-1s
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 20:36:45 +0100
+	id 1XxL9n-0003qM-PE
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 20:36:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752088AbaLFTgg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2014 14:36:36 -0500
-Received: from forward4l.mail.yandex.net ([84.201.143.137]:42485 "EHLO
-	forward4l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751639AbaLFTge (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2014 14:36:34 -0500
-Received: from smtp17.mail.yandex.net (smtp17.mail.yandex.net [95.108.252.17])
-	by forward4l.mail.yandex.net (Yandex) with ESMTP id 15C881440DB7;
-	Sat,  6 Dec 2014 22:36:30 +0300 (MSK)
-Received: from smtp17.mail.yandex.net (localhost [127.0.0.1])
-	by smtp17.mail.yandex.net (Yandex) with ESMTP id A547D1900164;
-	Sat,  6 Dec 2014 22:36:29 +0300 (MSK)
-Received: from 109-184-135-154.dynamic.mts-nn.ru (109-184-135-154.dynamic.mts-nn.ru [109.184.135.154])
-	by smtp17.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id AG4MC1hKDi-aSKGQS6b;
-	Sat,  6 Dec 2014 22:36:29 +0300
-	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: 34e53474-a405-4156-8a47-0f246e5f6721
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
-	t=1417894589; bh=wxH0PA8IIo+W8xzvP92CI37/Pc1pS/sDrgIX1p/fBEY=;
-	h=From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	b=NuWeeXVrg4ZA1Vo4xK0+5JjYYUL761IvpNqmMqrxtBxbs7Mu5hd7p/aftPpqpMdKU
-	 22Y5lDlzlE3yktiXWVZHfm+lVIbw2wBPmvbQd4wBD1xVaOAG/LzgWh6bSc+RMMEhJ4
-	 yJQE5YuHazz+EXsR7SovrdUY+5a7eyxKusQ3EVDs=
-Authentication-Results: smtp17.mail.yandex.net; dkim=pass header.i=@corrigendum.ru
-X-Mailer: git-send-email 2.2.0.34.g02e215e.dirty
+	id S1752047AbaLFTeq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2014 14:34:46 -0500
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:51458 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639AbaLFTep (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2014 14:34:45 -0500
+Received: by mail-wg0-f50.google.com with SMTP id k14so3352521wgh.37
+        for <git@vger.kernel.org>; Sat, 06 Dec 2014 11:34:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=bG/eMcZBSDSIm7DjkuaSIUTORwDjC+bBjHpEje+lfbE=;
+        b=Xfrcgx6qfGTwqX5grR5GVkpxJwaJS7itaRXwcH3ht+PuxYkK4+uPPZRdeThNPhE4yO
+         REuYUefcc4h72yk2h+WKSXzL/Jks1sSTEbfHWygvDBacEN6+SyvNMlMIuhYpY/gWwX9/
+         72o6M6k6fPoQWC7DCQV5ZvCCBpZ0vWEUgBI75WAeHrvNv8Kt1Uu+KXUbGYSDpuzt0DmB
+         FMWy6ZK4+GaXR0pugIGmiR0H1Io2+zSXD/UmO7X/bcvMwTBKq3/RbWafvA+nedQQ03Yh
+         jTInVUJfdRaovKUW2cCGzUkDz4geo7msYaokDBL24AfMrnkqjA/XjVJnMOhukkr3bKL4
+         7z+A==
+X-Received: by 10.180.76.211 with SMTP id m19mr13226081wiw.73.1417894483910;
+        Sat, 06 Dec 2014 11:34:43 -0800 (PST)
+Received: from android-b7bb6bce7d91de53.fritz.box (i59F454EB.versanet.de. [89.244.84.235])
+        by mx.google.com with ESMTPSA id vm8sm49738012wjc.6.2014.12.06.11.34.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 06 Dec 2014 11:34:43 -0800 (PST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <1417894129-5535-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260961>
 
-More specifically:
 
-* Add "\" to the list of characters not allowed in a token (see RFC 204=
-7
-  errata).
 
-* Share regexes between unquote_rfc2047 and is_rfc2047_quoted. Besides
-  removing duplication, this also makes unquote_rfc2047 more stringent.
+Hi,
 
-* Allow both "q" and "Q" to identify the encoding.
+for my feeling Beobachten is better then Versionieren. Its more natural=
+ and easier to understand, but okey ;)
 
-* Allow lowercase hexadecimal digits in the "Q" encoding.
+Phillip
 
-And, more on the cosmetic side:
-
-* Change the "encoded-text" regex to exclude rather than include charac=
-ters,
-  for clarity and consistency with "token".
-
-Signed-off-by: =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD =D0=94=D0=BE=D0=BD=D1=87=D0=
-=B5=D0=BD=D0=BA=D0=BE <dpb@corrigendum.ru>
----
- git-send-email.perl | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9949db0..d461ffb 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -145,6 +145,11 @@ my $have_mail_address =3D eval { require Mail::Add=
-ress; 1 };
- my $smtp;
- my $auth;
-=20
-+# Regexes for RFC 2047 productions.
-+my $re_token =3D qr/[^][()<>@,;:\\"\/?.=3D \000-\037\177-\377]+/;
-+my $re_encoded_text =3D qr/[^? \000-\037\177-\377]+/;
-+my $re_encoded_word =3D qr/=3D\?($re_token)\?($re_token)\?($re_encoded=
-_text)\?=3D/;
-+
- # Variables we fill in automatically, or via prompting:
- my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh=
-,
- 	$initial_reply_to,$initial_subject,@files,
-@@ -913,15 +918,20 @@ $time =3D time - scalar $#files;
-=20
- sub unquote_rfc2047 {
- 	local ($_) =3D @_;
--	my $encoding;
--	s{=3D\?([^?]+)\?q\?(.*?)\?=3D}{
--		$encoding =3D $1;
--		my $e =3D $2;
--		$e =3D~ s/_/ /g;
--		$e =3D~ s/=3D([0-9A-F]{2})/chr(hex($1))/eg;
--		$e;
-+	my $charset;
-+	s{$re_encoded_word}{
-+		$charset =3D $1;
-+		my $encoding =3D $2;
-+		my $text =3D $3;
-+		if ($encoding eq 'q' || $encoding eq 'Q') {
-+			$text =3D~ s/_/ /g;
-+			$text =3D~ s/=3D([0-9A-F]{2})/chr(hex($1))/egi;
-+			$text;
-+		} else {
-+			$&; # other encodings not supported yet
-+		}
- 	}eg;
--	return wantarray ? ($_, $encoding) : $_;
-+	return wantarray ? ($_, $charset) : $_;
- }
-=20
- sub quote_rfc2047 {
-@@ -934,10 +944,8 @@ sub quote_rfc2047 {
-=20
- sub is_rfc2047_quoted {
- 	my $s =3D shift;
--	my $token =3D qr/[^][()<>@,;:"\/?.=3D \000-\037\177-\377]+/;
--	my $encoded_text =3D qr/[!->@-~]+/;
- 	length($s) <=3D 75 &&
--	$s =3D~ m/^(?:"[[:ascii:]]*"|=3D\?$token\?$token\?$encoded_text\?=3D)=
-$/o;
-+	$s =3D~ m/^(?:"[[:ascii:]]*"|$re_encoded_word)$/o;
- }
-=20
- sub subject_needs_rfc2047_quoting {
---=20
-2.1.1
+On 6 December 2014 20:28:49 CET, Ralf Thielow <ralf.thielow@gmail.com> =
+wrote:
+>Suggested-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+>Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+>---
+> po/de.po | 40 ++++++++++++++++++++--------------------
+> 1 file changed, 20 insertions(+), 20 deletions(-)
+>
+>diff --git a/po/de.po b/po/de.po
+>index 5a93ea8..bf11225 100644
+>--- a/po/de.po
+>+++ b/po/de.po
+>@@ -690,7 +690,7 @@ msgstr ": vielleicht ein
+>Verzeichnis/Datei-Konflikt?"
+> #: merge-recursive.c:727
+> #, c-format
+> msgid "refusing to lose untracked file at '%s'"
+>-msgstr "verweigere, da unbeobachtete Dateien in '%s' verloren gehen
+>w=C3=BCrden"
+>+msgstr "verweigere, da unversionierte Dateien in '%s' verloren gehen
+>w=C3=BCrden"
+>=20
+> #: merge-recursive.c:767
+> #, c-format
+>@@ -1631,7 +1631,7 @@ msgstr ""
+> #: wt-status.c:225
+>msgid "  (commit or discard the untracked or modified content in
+>submodules)"
+> msgstr ""
+>-"  (committen oder verwerfen Sie den unbeobachteten oder ge=C3=A4nder=
+ten
+>Inhalt in "
+>+"  (committen oder verwerfen Sie den unversionierten oder ge=C3=A4nde=
+rten
+>Inhalt in "
+> "den Submodulen)"
+>=20
+> #: wt-status.c:237
+>@@ -1716,7 +1716,7 @@ msgstr "ge=C3=A4nderter Inhalt, "
+>=20
+> #: wt-status.c:374
+> msgid "untracked content, "
+>-msgstr "unbeobachteter Inhalt, "
+>+msgstr "unversionierter Inhalt, "
+>=20
+> #: wt-status.c:391
+> #, c-format
+>@@ -1932,7 +1932,7 @@ msgstr "Initialer Commit"
+>=20
+> #: wt-status.c:1356
+> msgid "Untracked files"
+>-msgstr "Unbeobachtete Dateien"
+>+msgstr "Unversionierte Dateien"
+>=20
+> #: wt-status.c:1358
+> msgid "Ignored files"
+>@@ -1945,18 +1945,18 @@ msgid ""
+> "may speed it up, but you have to be careful not to forget to add\n"
+> "new files yourself (see 'git help status')."
+> msgstr ""
+>-"Es dauerte %.2f Sekunden die unbeobachteten Dateien zu bestimmen.\n"
+>+"Es dauerte %.2f Sekunden die unversionierten Dateien zu bestimmen.\n=
+"
+>"'status -uno' k=C3=B6nnte das beschleunigen, aber Sie m=C3=BCssen dar=
+auf
+>achten,\n"
+> "neue Dateien selbstst=C3=A4ndig hinzuzuf=C3=BCgen (siehe 'git help s=
+tatus')."
+>=20
+> #: wt-status.c:1368
+> #, c-format
+> msgid "Untracked files not listed%s"
+>-msgstr "Unbeobachtete Dateien nicht aufgelistet%s"
+>+msgstr "Unversionierte Dateien nicht aufgelistet%s"
+>=20
+> #: wt-status.c:1370
+> msgid " (use -u option to show untracked files)"
+>-msgstr " (benutzen Sie die Option -u, um unbeobachtete Dateien
+>anzuzeigen)"
+>+msgstr " (benutzen Sie die Option -u, um unversionierte Dateien
+>anzuzeigen)"
+>=20
+> #: wt-status.c:1376
+> msgid "No changes"
+>@@ -1980,20 +1980,20 @@ msgid ""
+>"nothing added to commit but untracked files present (use \"git add\"
+>to "
+> "track)\n"
+> msgstr ""
+>-"nichts zum Commit vorgemerkt, aber es gibt unbeobachtete Dateien
+>(benutzen "
+>-"Sie \"git add\" zum Beobachten)\n"
+>+"nichts zum Commit vorgemerkt, aber es gibt unversionierte Dateien
+>(benutzen "
+>+"Sie \"git add\" zum Versionieren)\n"
+>=20
+> #: wt-status.c:1390
+> #, c-format
+> msgid "nothing added to commit but untracked files present\n"
+>-msgstr "nichts zum Commit vorgemerkt, aber es gibt unbeobachtete
+>Dateien\n"
+>+msgstr "nichts zum Commit vorgemerkt, aber es gibt unversionierte
+>Dateien\n"
+>=20
+> #: wt-status.c:1393
+> #, c-format
+>msgid "nothing to commit (create/copy files and use \"git add\" to
+>track)\n"
+> msgstr ""
+>"nichts zu committen (Erstellen/Kopieren Sie Dateien und benutzen Sie
+>\"git "
+>-"add\" zum Beobachten)\n"
+>+"add\" zum Versionieren)\n"
+>=20
+> #: wt-status.c:1396 wt-status.c:1401
+> #, c-format
+>@@ -2004,7 +2004,7 @@ msgstr "nichts zu committen\n"
+> #, c-format
+> msgid "nothing to commit (use -u to show untracked files)\n"
+> msgstr ""
+>-"nichts zu committen (benutzen Sie die Option -u, um unbeobachtete
+>Dateien "
+>+"nichts zu committen (benutzen Sie die Option -u, um unversionierte
+>Dateien "
+> "anzuzeigen)\n"
+>=20
+> #: wt-status.c:1403
+>@@ -2119,7 +2119,7 @@ msgstr "das Hinzuf=C3=BCgen andernfalls ignorier=
+ter
+>Dateien erlauben"
+>=20
+> #: builtin/add.c:255
+> msgid "update tracked files"
+>-msgstr "beobachtete Dateien aktualisieren"
+>+msgstr "versionierte Dateien aktualisieren"
+>=20
+> #: builtin/add.c:256
+> msgid "record only the fact that the path will be added later"
+>@@ -2128,7 +2128,7 @@ msgstr "nur speichern, dass der Pfad sp=C3=A4ter
+>hinzugef=C3=BCgt werden soll"
+> #: builtin/add.c:257
+> msgid "add changes from all tracked and untracked files"
+> msgstr ""
+>-"=C3=84nderungen von allen beobachteten und unbeobachteten Dateien
+>hinzuf=C3=BCgen"
+>+"=C3=84nderungen von allen versionierten und unversionierten Dateien
+>hinzuf=C3=BCgen"
+>=20
+> #: builtin/add.c:260
+> msgid "ignore paths removed in the working tree (same as --no-all)"
+>@@ -4536,7 +4536,7 @@ msgstr "Kein existierender Autor mit '%s'
+>gefunden."
+> #: builtin/commit.c:1110 builtin/commit.c:1350
+> #, c-format
+> msgid "Invalid untracked files mode '%s'"
+>-msgstr "Ung=C3=BCltiger Modus '%s' f=C3=BCr unbeobachtete Dateien"
+>+msgstr "Ung=C3=BCltiger Modus '%s' f=C3=BCr unversionierte Dateien"
+>=20
+> #: builtin/commit.c:1147
+> msgid "--long and -z are incompatible"
+>@@ -4636,7 +4636,7 @@ msgstr "Modus"
+> #: builtin/commit.c:1377 builtin/commit.c:1656
+>msgid "show untracked files, optional modes: all, normal, no. (Default=
+:
+>all)"
+> msgstr ""
+>-"nicht beobachtete Dateien anzeigen, optionale Modi: all, normal, no.
+>"
+>+"unversionierte Dateien anzeigen, optionale Modi: all, normal, no. "
+> "(Standard: all)"
+>=20
+> #: builtin/commit.c:1380
+>@@ -4657,7 +4657,7 @@ msgstr ""
+>=20
+> #: builtin/commit.c:1384
+> msgid "list untracked files in columns"
+>-msgstr "unbeobachtete Dateien in Spalten auflisten"
+>+msgstr "unversionierte Dateien in Spalten auflisten"
+>=20
+> #: builtin/commit.c:1471
+> msgid "couldn't look up newly created commit"
+>@@ -5768,7 +5768,7 @@ msgstr "auch in Inhalten finden, die nicht von
+>Git verwaltet werden"
+>=20
+> #: builtin/grep.c:642
+> msgid "search in both tracked and untracked files"
+>-msgstr "in beobachteten und unbeobachteten Dateien suchen"
+>+msgstr "in versionierten und unversionierten Dateien suchen"
+>=20
+> #: builtin/grep.c:644
+> msgid "search also in ignored files"
+>@@ -5959,7 +5959,7 @@ msgstr ""
+> #: builtin/grep.c:900
+> msgid "--[no-]exclude-standard cannot be used for tracked contents."
+> msgstr ""
+>-"Die Option --[no-]exclude-standard kann nicht mit beobachteten
+>Inhalten "
+>+"Die Option --[no-]exclude-standard kann nicht mit versionierten
+>Inhalten "
+> "verwendet werden."
+>=20
+> #: builtin/grep.c:908
+>@@ -6101,7 +6101,7 @@ msgstr "Ein Git-Glossar"
+>=20
+> #: builtin/help.c:426
+> msgid "Specifies intentionally untracked files to ignore"
+>-msgstr "Spezifikation von bewusst ignorierten, unbeobachteten Dateien=
+"
+>+msgstr "Spezifikation von bewusst ignorierten, unversionierten
+>Dateien"
+>=20
+> #: builtin/help.c:427
+> msgid "Defining submodule properties"
