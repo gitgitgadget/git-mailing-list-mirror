@@ -1,82 +1,99 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: bug report on update-index --assume-unchanged
-Date: Sat, 6 Dec 2014 13:28:25 -0000
-Organization: OPDS
-Message-ID: <E7C0C71D452B476D8E0E60AD75423156@PhilipOakley>
-References: <1417732931.20814.16.camel@segulix><1417759955.10992.2.camel@segulix> <548156E5.2080006@kdbg.org><CACsJy8AVKaq4NJu=23W+wcRgVTQ7hVAOxsVwtZnZsNw6393cTA@mail.gmail.com><1417798622.23238.6.camel@segulix> <xmqq1toeq79b.fsf@gitster.dls.corp.google.com> <12536C063959480083CC2D4CBA0BA38E@PhilipOakley> <1417826757.30899.16.camel@segulix>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Duy Nguyen" <pclouds@gmail.com>, "Johannes Sixt" <j6t@kdbg.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?S=E9rgio_Basto?= <sergio@serjux.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 14:28:21 2014
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v2] doc: make clear --assume-unchanged's user contract
+Date: Sat,  6 Dec 2014 15:04:30 +0000
+Message-ID: <1417878270-4364-2-git-send-email-philipoakley@iee.org>
+References: <1417878270-4364-1-git-send-email-philipoakley@iee.org>
+Cc: ?utf-8?Q?S=C3=A9rgio?= Basto <sergio@serjux.com>,
+	Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+To: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 16:03:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxFPI-0000XE-VL
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 14:28:21 +0100
+	id 1XxGto-0002Nd-3S
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Dec 2014 16:03:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbaLFN2L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2014 08:28:11 -0500
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:47909 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751761AbaLFN2K (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Dec 2014 08:28:10 -0500
+	id S1751972AbaLFPDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2014 10:03:52 -0500
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:40296 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751932AbaLFPDv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Dec 2014 10:03:51 -0500
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuYOAPkDg1ROl3SjPGdsb2JhbABZgwaBKoYzbME2AYQRBAKBExcBAQEBAQEFAQEBATggG4N9BgEBBAgBASgBBR4BASELAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYguxTGPf4x9g1KDKIEVBYQiiyRchxiDRw6FZIVegmuHUT8wgQMkgRwBAQE
-X-IPAS-Result: AuYOAPkDg1ROl3SjPGdsb2JhbABZgwaBKoYzbME2AYQRBAKBExcBAQEBAQEFAQEBATggG4N9BgEBBAgBASgBBR4BASELAgMFAgEDFQwlFAEEGgYHAxQGEwgCAQIDAYguxTGPf4x9g1KDKIEVBYQiiyRchxiDRw6FZIVegmuHUT8wgQMkgRwBAQE
+X-IronPort-Anti-Spam-Result: Ai4MAHQag1ROl3SjPGdsb2JhbABZgwaBKoYzxjQEAgKBERcBAQEBAQEFAQEBATg7hAMBBVYjEAhJOQoUBgESiD/UfQEBAQcCIJBPB4Q2BYVYlSmLUIo8PzCCQwEBAQ
+X-IPAS-Result: Ai4MAHQag1ROl3SjPGdsb2JhbABZgwaBKoYzxjQEAgKBERcBAQEBAQEFAQEBATg7hAMBBVYjEAhJOQoUBgESiD/UfQEBAQcCIJBPB4Q2BYVYlSmLUIo8PzCCQwEBAQ
 X-IronPort-AV: E=Sophos;i="5.07,529,1413241200"; 
-   d="scan'208";a="18799805"
-Received: from host-78-151-116-163.as13285.net (HELO PhilipOakley) ([78.151.116.163])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 06 Dec 2014 13:28:07 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+   d="scan'208";a="654259112"
+Received: from host-78-151-116-163.as13285.net (HELO localhost) ([78.151.116.163])
+  by out1.ip06ir2.opaltelecom.net with ESMTP; 06 Dec 2014 15:03:49 +0000
+X-Mailer: git-send-email 1.9.4.msysgit.0
+In-Reply-To: <1417878270-4364-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260953>
 
-=46rom: "S=E9rgio Basto" <sergio@serjux.com>
-[..]
->> Part of the implied question is why "git commit ." would notice when
->> when "git commit -a" didn't appear to. So it's unclear as to what th=
-e
->> user should have expected.
->>
-> I agree with this sentence, this is a bug because:
->
-> git commit -a ( and -a means all ) is incoherent with "git commit ."
-> This is stupid because when I want commit part of the tree, commit
-> includes one file that is not included when I say to commit all .
-> So maybe you should fix, git commit -a to be coherent .
+Many users misunderstand the --assume-unchanged contract, believing
+it means Git won't look at the flagged file.
 
-Ultimately this (-a vs '.' with --assume-unchanged) is not a 'bug',=20
-because it does as planned. However the documenation is 'wrong' or at=20
-least misguides many readers.
+Be explicit that the --assume-unchanged contract is by the user that
+they will NOT change the file so that Git does not need to look (and
+expend, for example, lstat(2) cycles)
 
-Thank you for bring it to the list's attention.
-[..]
->
-> Sorry I don't have time to read all messages in thread ,
-> but I'm going to test git with the patch suggest in this thread , at
-> least, I solve "my" problem for some time ...
->
-My patch, and Junio's 'squash' are to correct the documentation, and=20
-especially remove the line about it having an "ignore" capability, whic=
-h=20
-is a promise not kept (your -a vs '.' !).
+Mentioning "Git stops checking" does not help the reader, as it is
+only one possible consequence of what that assumption allows Git to
+do, but
 
-I'll be updating the documenation patch today for review, though that=20
-doesn't solve the wider problem of:
-    - 'how to temporarily ignore changes to a tracked file'.
---
-Philip=20
+   (1) there are things other than "stop checking" that Git can do
+       based on that assumption; and
+   (2) Git is not obliged to stop checking; it merely is allowed to.
+
+Also, this is a single flag bit, correct the plural to singular, and
+the verb, accordingly.
+
+Drop the stale and incorrect information about "poor-man's ignore",
+which is not what this flag bit is about at all.
+
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ Documentation/git-update-index.txt | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index e0a8702..da1ccbc 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -78,20 +78,18 @@ OPTIONS
+         Set the execute permissions on the updated files.
+ 
+ --[no-]assume-unchanged::
+-	When these flags are specified, the object names recorded
+-	for the paths are not updated.  Instead, these options
+-	set and unset the "assume unchanged" bit for the
+-	paths.  When the "assume unchanged" bit is on, Git stops
+-	checking the working tree files for possible
+-	modifications, so you need to manually unset the bit to
+-	tell Git when you change the working tree file. This is
++	When this flag is specified, the object names recorded
++	for the paths are not updated.  Instead, this option
++	sets/unsets the "assume unchanged" bit for the
++	paths.  When the "assume unchanged" bit is on, the user
++	promises not to change the file and allows Git to assume
++	that the working tree file matches what is recorded in
++	the index.  If you want to change the working tree file,
++	you need to unset the bit to tell Git.  This is
+ 	sometimes helpful when working with a big project on a
+ 	filesystem that has very slow lstat(2) system call
+ 	(e.g. cifs).
+ +
+-This option can be also used as a coarse file-level mechanism
+-to ignore uncommitted changes in tracked files (akin to what
+-`.gitignore` does for untracked files).
+ Git will fail (gracefully) in case it needs to modify this file
+ in the index e.g. when merging in a commit;
+ thus, in case the assumed-untracked file is changed upstream,
+-- 
+1.9.4.msysgit.0
