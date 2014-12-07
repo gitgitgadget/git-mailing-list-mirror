@@ -1,139 +1,259 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] introduce git root
-Date: Sun, 7 Dec 2014 06:23:54 +0100
-Message-ID: <CAP8UFD3mXJEHOfSoW6-B8uAR0gv2ZKWUhAs1SpNr17wVsRpM6g@mail.gmail.com>
-References: <CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
-	<vpqoaro99xd.fsf@anie.imag.fr>
-	<xmqqd284rryz.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
-	<20141202070415.GC1948@peff.net>
-	<xmqqd282m09j.fsf@gitster.dls.corp.google.com>
-	<20141204092251.GC27455@peff.net>
-	<xmqqlhmntf02.fsf@gitster.dls.corp.google.com>
-	<20141204211232.GC19953@peff.net>
-	<CAP8UFD2P9P9zL=irZ-7uPD6+bEhxaiABowh0O3RT01Ov3VqT6w@mail.gmail.com>
-	<20141205092752.GC32112@peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Support for git-svn propset
+Date: Sun, 7 Dec 2014 05:42:11 +0000
+Message-ID: <20141207054211.GA25793@dcvr.yhbt.net>
+References: <20141206222942.GB91825@elvis.mu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Arjun Sreedharan <arjun024@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 07 06:24:22 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Michael G. Schwern" <schwern@pobox.com>,
+	David Fraser <davidf@sjsoft.com>
+To: Alfred Perlstein <alfred@freebsd.org>
+X-From: git-owner@vger.kernel.org Sun Dec 07 06:42:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxUKT-0005kL-Fb
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 06:24:21 +0100
+	id 1XxUbw-0004pV-P7
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 06:42:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752242AbaLGFXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2014 00:23:55 -0500
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:52617 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752156AbaLGFXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2014 00:23:55 -0500
-Received: by mail-ie0-f170.google.com with SMTP id rd18so2976889iec.1
-        for <git@vger.kernel.org>; Sat, 06 Dec 2014 21:23:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=j2urVYNZD93dbxzuRcXXLhH9keD0h1relkbQpRonZOM=;
-        b=CH2LkRnAnN08Kowq2jVFGEl0qfdsvbB2lZSXvX6nJdFtBfgBGX0U/y4s6QTeoDuk25
-         JGCSFG5Iu8qtV1UbXR5t2O94CzQ6KOZakatuSWzHZNCxPFTDqZ5Gzt9n1O4bdEEZVpPs
-         aX7E2mbMxPKa9t0FapvpQ8soku0opXSrYWbbVhl0WNe6qOAinaglp6+A0yUGL1YWCZm7
-         HBIyxG6QMzCYTqKbnGVDNMW4coHDE1vguDFeiPAq7Tm+APSaMTo2HdrI0/4jwbjwWBWx
-         0FhjKKB4IhcyAQW57cPLeEOiu00NPu7tASX9XE3IGhbe0OI7UvIg2GbbhRTWQHYGHtdz
-         w5Dg==
-X-Received: by 10.50.45.100 with SMTP id l4mr363696igm.40.1417929834395; Sat,
- 06 Dec 2014 21:23:54 -0800 (PST)
-Received: by 10.50.30.40 with HTTP; Sat, 6 Dec 2014 21:23:54 -0800 (PST)
-In-Reply-To: <20141205092752.GC32112@peff.net>
+	id S1751909AbaLGFmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2014 00:42:15 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:40145 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751487AbaLGFmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2014 00:42:14 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC2FE633805;
+	Sun,  7 Dec 2014 05:42:11 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20141206222942.GB91825@elvis.mu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260970>
 
-On Fri, Dec 5, 2014 at 10:27 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Dec 05, 2014 at 03:27:17AM +0100, Christian Couder wrote:
->
->> > I do not think "git var --exec-path" is a good idea, nor GIT_EXEC_PATH
->> > for the environment-variable confusion you mentioned. I was thinking of
->> > just creating a new namespace, like:
->> >
->> >   git var exec-path
->> >   git var author-ident
->>
->> I agree that this is nice, but I wonder what we would do for the
->> sequence editor and the default editor.
->> Maybe:
->>
->> git var sequence-editor
->> git var editor
->
-> Again, I think we're mostly agreeing. Context and hierarchy and falling
-> back are good things. Whatever we call the variables, "editor" and
-> "sequence-editor" and "foo-editor" should have a predictable and
-> consistent form. I like the idea of "foo-editor" automatically falling
-> back to "editor" even if we don't know what "foo" is.
+Alfred Perlstein <alfred@freebsd.org> wrote:
+> This change allows git-svn to support setting subversion properties.
+> 
+> Very useful for manually setting properties when committing to a
+> subversion repo that *requires* properties to be set without requiring
+> moving your changeset to separate subversion checkout in order to
+> set props.
+> 
+> This change is initially from David Fraser <davidf () sjsoft ! com>
 
-Yeah but that means that we have to use something other than "-" to
-separate the context from the name, because we already have names like
-exec-path, html-path and man-path.
+No point to obfuscate email addresses in commit messages (especially
+it's also in the Signed-off-by :).
 
-> But the one place I do not agree is:
->
->> I think "sequence.editor" and "core.editor" are better because:
->>
->> - they use the same syntax as the config variables, so they are easier
->> to remember and to discover, and
->
-> I really don't like using "core.editor" here, because it has the same
-> name as a config variable, but it is _not_ the config variable. It
-> happens to use the config variable as one of the inputs to its
-> computation, but in many cases:
->
->   git config core.editor
->
-> and
->
->   git var core.editor
->
-> will produce different values.
+> Appearing here:
+>   http://marc.info/?l=git&m=125259772625008&w=2
+> 
+> They are now forward ported to most recent git along with fixes to
+> deal with files in subdirectories.
+> 
+> Style and functional changes from Eric Wong have been taken
+> in thier entirety from:
 
-Yeah, but I don't think it is a problem. They are different commands,
-so it can be expected that they do different things.
+s/thier/their/
 
-For example, if you use "git log origin/master" you get a different
-ouput than if you use "git show origin/master", though you still use
-the same "origin/master" notation.
+>   http://marc.info/?l=git&m=141742735608544&w=2
 
-When you use "git show" you consider only the commit pointed to by
-origin/master and when you use "git log" you consider the same commit
-but also all its ancestors.
+Fwiw, I prefer equivalent mid.gmane.org links since the message-ID
+remains useful if the web server ever goes away. e.g.:
 
-In the same way, when you use "git config core.editor" you consider
-only the value of the core.editor logical variable in the config
-files, while when you would use "git var core.editor" you would
-consider the value of the core.editor logical variable in both the
-config files and the environment variables.
+  http://mid.gmane.org/20141201094911.GA13931@dcvr.yhbt.net
 
-> They are entirely different namespaces.
-> Using the same syntax and name seems unnecessarily confusing to me. Even
-> still using dotted hierarchies, but giving them different names (e.g.,
-> "editor", "editor.sequence", "editor.foo") would make it more obvious
-> that they are not the same thing.
+> Reviewed-by: Eric Wong <normalperson@yhbt.net>
+> Signed-off-by: Alfred Perlstein <alfred@freebsd.org>
+> Signed-off-by: David Fraser <davidf@sjsoft.com>
 
-Using yet another namespace or syntax when we could reuse an existing
-one is what would seem unnecessarily confusing to me.
-The value of the "editor" logical variable in the "sequence" context
-is related to the "sequence.editor" logical value in the config file,
-because the later can directly influence the former. So there is a
-reason to use the same notation.
+I'd like to squash in the following changes (in order of importance):
 
-Best,
-Christian.
+- use && to chain commands throughout tests
+- use svn_cmd wrapper throughout tests
+- show $! in die messages
+- favor $(...) over `...` in tests
+- make new_props an array simplify building the final list
+- wrap long comments (help output still needs fixing)
+- remove unnecessary FIXME comment
+
+No need to resend if you're OK with these things.  Thanks again.
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 5cdbf39..ec5cee4 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1392,9 +1392,9 @@ sub cmd_propset {
+ 	my $file = basename($path);
+ 	my $dn = dirname($path);
+ 	my $cur_props = Git::SVN::Editor::check_attr( "svn-properties", $path );
+-	my $new_props = "";
++	my @new_props;
+ 	if ($cur_props eq "unset" || $cur_props eq "" || $cur_props eq "set") {
+-		$new_props = "$propname=$propval";
++		push @new_props, "$propname=$propval";
+ 	} else {
+ 		# TODO: handle combining properties better
+ 		my @props = split(/;/, $cur_props);
+@@ -1403,24 +1403,24 @@ sub cmd_propset {
+ 			# Parse 'name=value' syntax and set the property.
+ 			if ($prop =~ /([^=]+)=(.*)/) {
+ 				my ($n,$v) = ($1,$2);
+-				if ($n eq $propname)
+-				{
++				if ($n eq $propname) {
+ 					$v = $propval;
+ 					$replaced_prop = 1;
+ 				}
+-				if ($new_props eq "") { $new_props="$n=$v"; }
+-				else { $new_props="$new_props;$n=$v"; }
++				push @new_props, "$n=$v";
+ 			}
+ 		}
+ 		if (!$replaced_prop) {
+-			$new_props = "$new_props;$propname=$propval";
++			push @new_props, "$propname=$propval";
+ 		}
+ 	}
+ 	my $attrfile = "$dn/.gitattributes";
+ 	open my $attrfh, '>>', $attrfile or die "Can't open $attrfile: $!\n";
+ 	# TODO: don't simply append here if $file already has svn-properties
+-	print $attrfh "$file svn-properties=$new_props\n" or die "write to $attrfile";
+-	close $attrfh or die "close $attrfile";
++	my $new_props = join(';', @new_props);
++	print $attrfh "$file svn-properties=$new_props\n" or
++		die "write to $attrfile: $!\n";
++	close $attrfh or die "close $attrfile: $!\n";
+ }
+ 
+ # cmd_proplist (PATH)
+diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
+index dd15318..8bed2d9 100644
+--- a/perl/Git/SVN/Editor.pm
++++ b/perl/Git/SVN/Editor.pm
+@@ -288,8 +288,7 @@ sub apply_autoprops {
+ 	}
+ }
+ 
+-sub check_attr
+-{
++sub check_attr {
+ 	my ($attr,$path) = @_;
+ 	my $fh = command_output_pipe("check-attr", $attr, "--", $path);
+ 	return undef if (!$fh);
+@@ -306,10 +305,12 @@ sub apply_manualprops {
+ 	if ($pending_properties eq "") { return; }
+ 	# Parse the list of properties to set.
+ 	my @props = split(/;/, $pending_properties);
+-	# TODO: get existing properties to compare to - this fails for add so currently not done
++	# TODO: get existing properties to compare to
++	# - this fails for add so currently not done
+ 	# my $existing_props = ::get_svnprops($file);
+ 	my $existing_props = {};
+-	# TODO: caching svn properties or storing them in .gitattributes would make that faster
++	# TODO: caching svn properties or storing them in .gitattributes
++	# would make that faster
+ 	foreach my $prop (@props) {
+ 		# Parse 'name=value' syntax and set the property.
+ 		if ($prop =~ /([^=]+)=(.*)/) {
+@@ -317,8 +318,6 @@ sub apply_manualprops {
+ 			for ($n, $v) {
+ 				s/^\s+//; s/\s+$//;
+ 			}
+-			# FIXME: clearly I don't know perl and couldn't work
+-			# out how to evaluate this better
+ 			my $existing = $existing_props->{$n};
+ 			if (!defined($existing) || $existing ne $v) {
+ 			    $self->change_file_prop($fbat, $n, $v);
+diff --git a/t/t9148-git-svn-propset.sh b/t/t9148-git-svn-propset.sh
+index b36a8a2..6973e8d 100755
+--- a/t/t9148-git-svn-propset.sh
++++ b/t/t9148-git-svn-propset.sh
+@@ -9,16 +9,14 @@ test_description='git svn propset tests'
+ 
+ foo_subdir2="subdir/subdir2/foo_subdir2"
+ 
+-mkdir import
+-(cd import
+-	mkdir subdir
+-	mkdir subdir/subdir2
+-	touch foo		# for 'add props top level'
+-	touch subdir/foo_subdir # for 'add props relative'
+-	touch "$foo_subdir2"	# for 'add props subdir'
++(mkdir import && cd import &&
++	mkdir subdir &&
++	mkdir subdir/subdir2 &&
++	touch foo && : "for 'add props top level'" &&
++	touch subdir/foo_subdir && : "for 'add props relative'" &&
++	touch "$foo_subdir2" && : "for 'add props subdir'" &&
+ 	svn_cmd import -m 'import for git svn' . "$svnrepo" >/dev/null
+-)
+-rm -rf import
++) && rm -rf import
+ 
+ test_expect_success 'initialize git svn' 'git svn init "$svnrepo"'
+ test_expect_success 'fetch revisions from svn' 'git svn fetch'
+@@ -30,9 +28,10 @@ test_expect_success 'add props top level' '
+ 	git svn propset svn:keywords "FreeBSD=%H" foo &&
+ 	echo hello >> foo &&
+ 	git commit -m "testing propset" foo &&
+-	git svn dcommit
++	git svn dcommit &&
+ 	svn_cmd co "$svnrepo" svn_project &&
+-	(cd svn_project && test "`svn propget svn:keywords foo`" = "FreeBSD=%H") &&
++	(cd svn_project &&
++	 test "$(svn_cmd propget svn:keywords foo)" = "FreeBSD=%H") &&
+ 	rm -rf svn_project
+ 	'
+ 
+@@ -41,11 +40,12 @@ test_expect_success 'add multiple props' '
+ 	git svn propset fbsd:nokeywords yes foo &&
+ 	echo hello >> foo &&
+ 	git commit -m "testing propset" foo &&
+-	git svn dcommit
++	git svn dcommit &&
+ 	svn_cmd co "$svnrepo" svn_project &&
+-	(cd svn_project && test "`svn propget svn:keywords foo`" = "FreeBSD=%H") &&
+-	(cd svn_project && test "`svn propget fbsd:nokeywords foo`" = "yes") &&
+-	(cd svn_project && test "`svn proplist -q foo | wc -l`" -eq 2) &&
++	(cd svn_project &&
++		test "$(svn_cmd propget svn:keywords foo)" = "FreeBSD=%H" &&
++		test "$(svn_cmd propget fbsd:nokeywords foo)" = "yes" &&
++		test "$(svn_cmd proplist -q foo | wc -l)" -eq 2) &&
+ 	rm -rf svn_project
+ 	'
+ 
+@@ -53,19 +53,24 @@ test_expect_success 'add props subdir' '
+ 	git svn propset svn:keywords "FreeBSD=%H" "$foo_subdir2" &&
+ 	echo hello >> "$foo_subdir2" &&
+ 	git commit -m "testing propset" "$foo_subdir2" &&
+-	git svn dcommit
++	git svn dcommit &&
+ 	svn_cmd co "$svnrepo" svn_project &&
+-	(cd svn_project && test "`svn propget svn:keywords "$foo_subdir2"`" = "FreeBSD=%H") &&
++	(cd svn_project &&
++	 test "$(svn_cmd propget svn:keywords "$foo_subdir2")" = "FreeBSD=%H"
++	) &&
+ 	rm -rf svn_project
+ 	'
+ 
+ test_expect_success 'add props relative' '
+-	(cd subdir/subdir2 && git svn propset svn:keywords "FreeBSD=%H" ../foo_subdir ) &&
++	(cd subdir/subdir2 &&
++	 git svn propset svn:keywords "FreeBSD=%H" ../foo_subdir ) &&
+ 	echo hello >> subdir/foo_subdir &&
+ 	git commit -m "testing propset" subdir/foo_subdir &&
+-	git svn dcommit
++	git svn dcommit &&
+ 	svn_cmd co "$svnrepo" svn_project &&
+-	(cd svn_project && test "`svn propget svn:keywords subdir/foo_subdir`" = "FreeBSD=%H") &&
++	(cd svn_project &&
++	 test "$(svn_cmd propget svn:keywords subdir/foo_subdir)" = "FreeBSD=%H"
++	) &&
+ 	rm -rf svn_project
+ 	'
+ test_done
