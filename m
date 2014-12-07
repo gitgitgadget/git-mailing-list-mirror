@@ -1,181 +1,139 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack base object"
-Date: Sat, 6 Dec 2014 20:33:12 -0500
-Organization: PD Inc
-Message-ID: <275080CE3B5A44D7A46B3DF0E55C33D4@black>
-References: <F5D60A90C93A45359EF00CC200C81561@black> <F5116E3BF1974D039102426C8F6E3BED@black>
-Reply-To: <git@vger.kernel.org>, <lindbergh@92f1.com>,
-	  "brian m. carlson" <sandals@crustytoothpaste.net>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] introduce git root
+Date: Sun, 7 Dec 2014 06:23:54 +0100
+Message-ID: <CAP8UFD3mXJEHOfSoW6-B8uAR0gv2ZKWUhAs1SpNr17wVsRpM6g@mail.gmail.com>
+References: <CAJFMrCEciWXhBb36MVeFPi7Y7D=9zQ2xGPpiyUz9y4_hOh_taw@mail.gmail.com>
+	<vpqoaro99xd.fsf@anie.imag.fr>
+	<xmqqd284rryz.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
+	<20141202070415.GC1948@peff.net>
+	<xmqqd282m09j.fsf@gitster.dls.corp.google.com>
+	<20141204092251.GC27455@peff.net>
+	<xmqqlhmntf02.fsf@gitster.dls.corp.google.com>
+	<20141204211232.GC19953@peff.net>
+	<CAP8UFD2P9P9zL=irZ-7uPD6+bEhxaiABowh0O3RT01Ov3VqT6w@mail.gmail.com>
+	<20141205092752.GC32112@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-	"'Dave Lindbergh'" <lindbergh@92f1.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 07 02:33:31 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Arjun Sreedharan <arjun024@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 07 06:24:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxQj4-0003gL-TD
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 02:33:31 +0100
+	id 1XxUKT-0005kL-Fb
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 06:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752619AbaLGBdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2014 20:33:23 -0500
-Received: from mail.pdinc.us ([67.90.184.27]:32773 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752277AbaLGBdW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Dec 2014 20:33:22 -0500
-Received: from black (five-58.pdinc.us [192.168.5.58])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sB71XD2X029497;
-	Sat, 6 Dec 2014 20:33:14 -0500
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <F5116E3BF1974D039102426C8F6E3BED@black>
-Thread-Index: AdAPXRtpqnFJ0p5ySsSWNqpxnc3bEwArKJ3gACRqPBAAR47CYA==
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+	id S1752242AbaLGFXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2014 00:23:55 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:52617 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752156AbaLGFXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2014 00:23:55 -0500
+Received: by mail-ie0-f170.google.com with SMTP id rd18so2976889iec.1
+        for <git@vger.kernel.org>; Sat, 06 Dec 2014 21:23:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=j2urVYNZD93dbxzuRcXXLhH9keD0h1relkbQpRonZOM=;
+        b=CH2LkRnAnN08Kowq2jVFGEl0qfdsvbB2lZSXvX6nJdFtBfgBGX0U/y4s6QTeoDuk25
+         JGCSFG5Iu8qtV1UbXR5t2O94CzQ6KOZakatuSWzHZNCxPFTDqZ5Gzt9n1O4bdEEZVpPs
+         aX7E2mbMxPKa9t0FapvpQ8soku0opXSrYWbbVhl0WNe6qOAinaglp6+A0yUGL1YWCZm7
+         HBIyxG6QMzCYTqKbnGVDNMW4coHDE1vguDFeiPAq7Tm+APSaMTo2HdrI0/4jwbjwWBWx
+         0FhjKKB4IhcyAQW57cPLeEOiu00NPu7tASX9XE3IGhbe0OI7UvIg2GbbhRTWQHYGHtdz
+         w5Dg==
+X-Received: by 10.50.45.100 with SMTP id l4mr363696igm.40.1417929834395; Sat,
+ 06 Dec 2014 21:23:54 -0800 (PST)
+Received: by 10.50.30.40 with HTTP; Sat, 6 Dec 2014 21:23:54 -0800 (PST)
+In-Reply-To: <20141205092752.GC32112@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260969>
 
-TLDR = Cygwin remote filesystem sometimes has strange failures -> workaround is to use rename, not link/unlink; 
-see https://github.com/pdinc-oss/git/commit/5a36824ed01d4335148ca3846e75cc99c11650e2
-> -----Original Message-----
-> From: Jason Pyeron
-> Sent: Friday, December 05, 2014 10:30
-> 
-> > -----Original Message-----
-> > From: Jason Pyeron
-> > Sent: Thursday, December 04, 2014 16:34
-> > 
-> > > -----Original Message-----
-> > > From: brian m. carlson
-> > > Sent: Wednesday, December 03, 2014 19:55
-> > > 
-> > > On Wed, Dec 03, 2014 at 06:31:18PM -0500, Jason Pyeron wrote:
-> > > > I remember hitting this a while ago, but just gave up.
-> > > > 
-> > > > It seems to be a problem for others too.
-> > > > 
-> > > > Any ideas on how to debug this so it can be patched?
-> > > > 
-> > > > -----Original Message-----
-> > > > From: Dave Lindbergh
-> > > > Sent: Wednesday, December 03, 2014 18:07
-> > > > To: cygwin
-> > > > 
-> > > > Aha - you're right.
-> > > > 
-> > > > It works fine on a local NTFS volume.
-> > > > 
-> > > > I get the error when I do it on Z:, which is mapped to a 
-> > > network drive
-> > > > (on another Windows box).
-> > > > 
-> > > > Is there a workaround? Why does this happen?
+On Fri, Dec 5, 2014 at 10:27 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Dec 05, 2014 at 03:27:17AM +0100, Christian Couder wrote:
+>
+>> > I do not think "git var --exec-path" is a good idea, nor GIT_EXEC_PATH
+>> > for the environment-variable confusion you mentioned. I was thinking of
+>> > just creating a new namespace, like:
+>> >
+>> >   git var exec-path
+>> >   git var author-ident
+>>
+>> I agree that this is nice, but I wonder what we would do for the
+>> sequence editor and the default editor.
+>> Maybe:
+>>
+>> git var sequence-editor
+>> git var editor
+>
+> Again, I think we're mostly agreeing. Context and hierarchy and falling
+> back are good things. Whatever we call the variables, "editor" and
+> "sequence-editor" and "foo-editor" should have a predictable and
+> consistent form. I like the idea of "foo-editor" automatically falling
+> back to "editor" even if we don't know what "foo" is.
 
-I have a really hacky workaround, commit 5a36824ed01d4335148ca3846e75cc99c11650e2 comments out the logic and forces a rename instead of link and unlink.
+Yeah but that means that we have to use something other than "-" to
+separate the context from the name, because we already have names like
+exec-path, html-path and man-path.
 
-https://github.com/pdinc-oss/git/tree/cygwin-issue-remoteCIFS-rename
+> But the one place I do not agree is:
+>
+>> I think "sequence.editor" and "core.editor" are better because:
+>>
+>> - they use the same syntax as the config variables, so they are easier
+>> to remember and to discover, and
+>
+> I really don't like using "core.editor" here, because it has the same
+> name as a config variable, but it is _not_ the config variable. It
+> happens to use the config variable as one of the inputs to its
+> computation, but in many cases:
+>
+>   git config core.editor
+>
+> and
+>
+>   git var core.editor
+>
+> will produce different values.
 
-<snip/>
+Yeah, but I don't think it is a problem. They are different commands,
+so it can be expected that they do different things.
 
-> Pseudo code and observations
-> ./sha1_file.c:write_loose_object(sha1)
-> {
->  filename=sha1_file_name(sha1)
->  (fd,tmp_file)=create_tmpfile(filename)
->  write_buffer(fd)
->  close_sha1_file(fd)
->  return move_temp_to_file(tmp_file, filename)
-> }
-> 
-> move_temp_to_file(tmpfile, filename)
-> {
->  // I am thinking about forcing renames to see if the problem 
-> exists then as well
->  // if that "works" then a per repo config option allowing 
-> for forced renames
->  if (OBJECT_CREATION_USES_RENAMES) goto try_rename
->  else if link(tmpfile,filename)
-> 
+For example, if you use "git log origin/master" you get a different
+ouput than if you use "git show origin/master", though you still use
+the same "origin/master" notation.
 
-Dave has tested a build I made for him on 64 bit Cygwin and it works. I no longer have access to the environment I was having this problem in last February. I will try to investigate this further, but I am not hopeful, maybe Corinna will have luck on the issue. But I was in a secure corporate environment and I thought the host based security system (AV), coupled with the remote file system was causing the problem, namely files created are not available instantly.
+When you use "git show" you consider only the commit pointed to by
+origin/master and when you use "git log" you consider the same commit
+but also all its ancestors.
 
-I do think that we should have a config option for this, as most users who could encounter such a problem are not likely to be able (or allowed) to rebuild the git executable themselves.
+In the same way, when you use "git config core.editor" you consider
+only the value of the core.editor logical variable in the config
+files, while when you would use "git var core.editor" you would
+consider the value of the core.editor logical variable in both the
+config files and the environment variables.
 
-<snip/>
+> They are entirely different namespaces.
+> Using the same syntax and name seems unnecessarily confusing to me. Even
+> still using dotted hierarchies, but giving them different names (e.g.,
+> "editor", "editor.sequence", "editor.foo") would make it more obvious
+> that they are not the same thing.
 
-> > -----Original Message-----
-> > From: Corinna Vinschen
-> > Sent: Friday, December 05, 2014 6:35
-> > To: cygwin@cygwin.com
-> <snip/>
-> > What I found in the strace is this:
-> > 
-> > - Create file Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ
-> > 
-> > - open file, write something, close file.
-> > 
-> > - link (Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ,
-> > 	
-> > 
-> Z:\pic32mx-bmf\.git\objects\30\0bdeb2fd209d24afb865584da10b78aa8fefc4)
-> >   succeeds.
-> > 
-> > - unlink (Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ) succeeds
-> > 
-> > - Trying to open
-> >   
-> > 
-> Z:\pic32mx-bmf\.git\objects\30\0bdeb2fd209d24afb865584da10b78aa8fefc4
-> >   but the file doesn't exist and NtCreateFile fails with status
-> >   0xC0000034, STATUS_OBJECT_NAME_NOT_FOUND --> ENOENT.
-> > 
-> > - Subsequent unlink (Z:\pic32mx-bmf\.git\objects\30) fails with a
-> >   STATUS_DIRECTORY_NOT_EMPTY --> ENOTEMPTY.
-> > 
-> > - git seems to be prepared for such a case, the parent process calls
-> >   opendir/readdir on the directory.  Enumerating the files in
-> >   Z:\pic32mx-bmf\.git\objects\30 shows the entries ".", ".." and
-> >   "0bdeb2fd209d24afb865584da10b78aa8fefc4".
-> > 
-> > - Then git calls lstat on the file, which results in NtOpenFile
-> >   returning status STATUS_OBJECT_NAME_NOT_FOUND again.
-> > 
-> > - From a POSIX POV this means "somebody else" deleted the file,
-> >   so the dir is empty now.  Git tries to delete the directory again,
-> >   which again results in STATUS_DIRECTORY_NOT_EMPTY --> ENOTEMPTY
-> >   and, internally, a sharing violation which disallows to move the
-> >   directory out of the way.
-> > 
-> > This looks suspiciously like a bug in the remote filesystem.  Link
-> > succeeded, so there are two links to the same file in the directory.
-> > Unlinking link 1 succeeds, so there's still one link to the 
-> > file in the
-> > directory, but link 2 is inaccessible as if the file has 
-> been deleted
-> > completely.  Thus, a full POSIX git on this drive is broken.
-> > 
-> > Can you please run
-> > 
-> >   /usr/lib/csih/getVolInfo /cygdrive/z
-> > 
-> > and paste the output here?  Maybe I can workaround this in the next
-> > Cygwin version.
+Using yet another namespace or syntax when we could reuse an existing
+one is what would seem unnecessarily confusing to me.
+The value of the "editor" logical variable in the "sequence" context
+is related to the "sequence.editor" logical value in the config file,
+because the later can directly influence the former. So there is a
+reason to use the same notation.
 
-Dave's response: https://www.cygwin.com/ml/cygwin/2014-12/msg00066.html
-
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00. 
+Best,
+Christian.
