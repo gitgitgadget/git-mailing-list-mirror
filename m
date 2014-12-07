@@ -1,116 +1,131 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH/RFC v2] Squashed changes for multiple worktrees vs.
- submodules
-Date: Sun, 7 Dec 2014 08:42:30 +0200
-Message-ID: <20141207064230.GA9782@wheezy.local>
-References: <1417390076-2953-1-git-send-email-max@max630.net>
- <547E24E4.7050100@web.de>
- <20141202221611.GB9128@wheezy.local>
- <5480BEB9.8070109@web.de>
- <CAF7_NFQzPDF+7NS2VwopK8Oei=9NzWEAGM5fko-St5KvvmLa9A@mail.gmail.com>
- <5482FF40.3040204@web.de>
+From: "Yi, EungJun" <semtlenori@gmail.com>
+Subject: Re: Accept-language test fails on Mac OS
+Date: Sun, 7 Dec 2014 15:54:39 +0900
+Message-ID: <CAFT+Tg_OQLj7oWfOJ8ATKHo36Jv3+JcSYWEc-trKsAtjv7wskg@mail.gmail.com>
+References: <CAO2U3QgoSmYkDYbvFnChxPMrTCEboUbk1NWjv+9Us60EfozN_w@mail.gmail.com>
+	<xmqqppbxogli.fsf@gitster.dls.corp.google.com>
+	<CAO2U3QikrHRC0PncO2vxFMv88HMnJHYa1AiPak+Lp0OU1u6dZA@mail.gmail.com>
+	<5482D180.9010002@web.de>
+	<CAFT+Tg_4EJ15CmujDtcubfw+0rr2J=pbjccqSSs9tmj-rz6+eQ@mail.gmail.com>
+	<54836F46.9080009@web.de>
+Reply-To: semtlenori@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Dec 07 07:48:33 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Dec 07 07:54:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxVdw-0001gA-QU
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 07:48:33 +0100
+	id 1XxVk1-0004W2-P2
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 07:54:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbaLGGnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2014 01:43:04 -0500
-Received: from p3plsmtpa09-04.prod.phx3.secureserver.net ([173.201.193.233]:51331
-	"EHLO p3plsmtpa09-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750721AbaLGGnC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2014 01:43:02 -0500
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa09-04.prod.phx3.secureserver.net with 
-	id QWiS1p0055B68XE01WizzX; Sat, 06 Dec 2014 23:43:01 -0700
-Content-Disposition: inline
-In-Reply-To: <5482FF40.3040204@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752627AbaLGGyn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2014 01:54:43 -0500
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:35023 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752447AbaLGGyl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2014 01:54:41 -0500
+Received: by mail-qg0-f51.google.com with SMTP id e89so1139592qgf.24
+        for <git@vger.kernel.org>; Sat, 06 Dec 2014 22:54:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=8GeE+GmnMKu0MDjjSqdP3utKU0A4Q0t5aVQSu4IvN2U=;
+        b=ZenX0nSTsMeGLo0cXD9EovMzuzKbpEx+tjs/VGaj4jRRE/cnktYEaTz6ZkXteqGqHA
+         LU/X+T+/C320ayNGKO0KbBPJs0wZKNsppf2magBbJyS+8LqZauqY/4Km2Sf8m0V3A3WP
+         gdFr8MMCXVZLdUES1wet6dr3pftTnDI8Vl8qhHmPbxa9JBaCqL5/K9YdGlemIza+xyTQ
+         UGewVq+8KhmFY/5PAZnnbO9M6/tuvW+wVu/qHPg2PRRgMEsUDW+yeRrbhdv+MvYXgd0P
+         5p5a3Q1MQYECWQ50lbwE1l7Ah2gpxD1PoehTjljD8aZWi6X03DqpUozEehhx9i7KMA63
+         RO0Q==
+X-Received: by 10.224.51.131 with SMTP id d3mr41619739qag.94.1417935279711;
+ Sat, 06 Dec 2014 22:54:39 -0800 (PST)
+Received: by 10.140.86.163 with HTTP; Sat, 6 Dec 2014 22:54:39 -0800 (PST)
+In-Reply-To: <54836F46.9080009@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260973>
 
-On Sat, Dec 06, 2014 at 02:06:08PM +0100, Jens Lehmann wrote:
-> Am 05.12.2014 um 07:32 schrieb Max Kirillov:
->> Currently I'm estimating approach when submodules which have .git
->> file or directory inside are updated, and those which do not have it are not.
->> I have added a config variable submodule.updateIgnoringConfigUrl (because
->> usually the submodule.<name>.url is what turns on the update). It looks working,
->> maybe I even add setting the variable when chackout --to is used.
+Thank you for providing useful information to fix the failures.
 
-> But it's not only submodule.<name>.url, the list goes on with
-> update, fetch & ignore and then there are the global options
-> like diff.submodule, diff.ignoreSubmodules and some more.
+On Sun, Dec 7, 2014 at 6:04 AM, Torsten B=C3=B6gershausen <tboegi@web.d=
+e> wrote:
+> On 2014-12-06 20.44, Yi, EungJun wrote:
+>> Could you tell me your locale information from executing 'locale'
+>> command and the verbose message you can get by accessing any git
+>> repository via HTTP protocol? (e.g. GIT_CURL_VERBOSE=3D1 git clone
+>> http://github.com/foo/bar )
+> locale -a
+> C
+> C.UTF-8
+> en_US.utf8
+> icelandic
+> is_IS
+> is_IS.iso88591
+> is_IS.utf8
+> POSIX
 
-I believe that parameters are important for some use, but I
-know several tesns of git users who have no idea bout them,
-and I myself only learned about them while working on this.
+I'm sorry for bothering you, but could you tell me the result of
+"locale" command without "-a" option? What I want to know is locale
+environment variables and its values, so I want to reproduce the test
+failures on my laptop.
 
-To have some a submodule not initialized in some sorktree is
-what I really need. I was sure before it is managed by
-having the submodule checked out. Probably I just did not
-run `submodule update` in the worktree where did not use
-submodules, but I cannot rely on it.  I see now from
-211b7f19c7 that adding parameter for all updates will break
-the initalization. Maybe it would be better to have a
-runtime argument: `git submodule update --ignore-config-url`
+>
+> -----------------------------
+> After patching like this:
+> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+> index fc6e7fc..1e42b42 100755
+> --- a/t/t5550-http-fetch-dumb.sh
+> +++ b/t/t5550-http-fetch-dumb.sh
+> @@ -205,8 +205,8 @@ check_language () {
+>         LANG=3D$5 \
+>         git ls-remote "$HTTPD_URL/dumb/repo.git" 2>&1 |
+>         tr -d '\015' |
+> -       sort -u >stderr &&
+> -       grep -i ^Accept-Language: stderr >actual &&
+> +       sort -u >stderr
+> +       grep -i ^Accept-Language: stderr >actual
+>         test_cmp expect actual
+>  }
+> -----------
+> I get this:
+>
+>
+> expecting success:
+>         check_language "ko-KR, *;q=3D0.1" ko_KR.UTF-8 de_DE.UTF-8 ja_=
+JP.UTF-8 en_US.UTF-8 &&
+>         check_language "de-DE, *;q=3D0.1" ""          de_DE.UTF-8 ja_=
+JP.UTF-8 en_US.UTF-8 &&
+>         check_language "ja-JP, *;q=3D0.1" ""          ""          ja_=
+JP.UTF-8 en_US.UTF-8 &&
+>         check_language "en-US, *;q=3D0.1" ""          ""          "" =
+         en_US.UTF-8
+>
+> --- expect      2014-12-06 21:00:59.000000000 +0000
+> +++ actual      2014-12-06 21:00:59.000000000 +0000
+> @@ -1 +0,0 @@
+> -Accept-Language: de-DE, *;q=3D0.1
+> not ok 25 - git client sends Accept-Language based on LANGUAGE, LC_AL=
+L, LC_MESSAGES and LANG
+> #
+> #               check_language "ko-KR, *;q=3D0.1" ko_KR.UTF-8 de_DE.U=
+TF-8 ja_JP.UTF-8 en_US.UTF-8 &&
+> #               check_language "de-DE, *;q=3D0.1" ""          de_DE.U=
+TF-8 ja_JP.UTF-8 en_US.UTF-8 &&
+> #               check_language "ja-JP, *;q=3D0.1" ""          ""     =
+     ja_JP.UTF-8 en_US.UTF-8 &&
+> #               check_language "en-US, *;q=3D0.1" ""          ""     =
+     ""          en_US.UTF-8
+> #
+>
+>
 
-> Thanks to you and Duy for discussing this with me! I'd sum it
-> up like this:
-> 
-> *) Multiple worktrees are meant to couple separate worktrees
->    with a single repository to avoid having to push and fetch
->    each time to sync refs and also to not having to sync
->    settings manually (with the benefit of some disk space
->    savings). That's a cool feature and explains why a branch
->    should be protected against being modified in different
->    worktrees.
-
-I should notify that I am not the author of the feature,
-maybe Duy have some other vision.
-
->    The first level submodule settings are shared between the
->    multiple worktrees; submodule objects, settings and refs
->    aren't (because the .git/modules directory isn't shared).
-> 
->    Looks like that would work with just what we have now, no?
-
-Yes, very much like what I proposed in $gmane/258173, but I
-need to have something about preventing checkout. And I
-should review what I've done since that, maybe there are
-more things to fix.
-
-> *) I'd love to see a solution for sharing the object database
->    between otherwise unrelated clones of the same project (so
->    that fetching in one clone updates the objects in the common
->    dir and gc cannot throw anything away used by one of the
->    clones). But I'd expect a bare repository as the common one
->    where we put the worktrees refs into their own namespaces.
-
-There is a GIT_NAMESPACE already, maybe it should be just
-extended to work with all commands?
-
-btw, have you tried alternates? It does reduce the number of
-objects you need to keep very strongly. You can put in the
-alternate store only released branches which are guaranteed
-to be not force-updated, to avoid issues with missing
-objects, and it still helps. For example, the full git
-repository takes about 70mb, and if I put master to
-alternate store, the rest takes 7mb, and even if I clone all
-original repository, debian repository and msysgit
-repository, thay all take 15mb. It's without worktree, which
-takes 27mb :)
-
--- 
-Max
+The test seems to fail if LANGUAGE=3D"". I will dig it. Thanks.
