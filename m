@@ -1,85 +1,111 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: git push hung?
-Date: Sun, 07 Dec 2014 18:57:33 +0100
-Message-ID: <5484950D.7080107@web.de>
-References: <F818AFA80A5F46BBA007F6EB102A75C5@black>
+From: =?utf-8?B?0KDQvtC80LDQvSDQlNC+0L3Rh9C10L3QutC+?= 
+	<dpb@corrigendum.ru>
+Subject: Re: [PATCH v2 2/2] send-email: handle adjacent RFC 2047-encoded words
+ properly
+Date: Sun, 07 Dec 2014 21:17:00 +0300
+Message-ID: <op.xqifqmyznngjn5@freezie>
+References: <1417894583-2352-1-git-send-email-dpb@corrigendum.ru>
+ <1417894583-2352-2-git-send-email-dpb@corrigendum.ru>
+ <20141207091859.GA21311@peff.net> <op.xqh5hrafnngjn5@freezie>
+ <316EF32F3157400882911A84EA0CFC61@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 07 18:57:53 2014
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+	=?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjar?= =?utf-8?Q?mason?= 
+	<avarab@gmail.com>, "Jay Soffian" <jaysoffian@gmail.com>,
+	"Thomas Rast" <tr@thomasrast.ch>
+To: "Jeff King" <peff@peff.net>, "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Dec 07 19:17:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xxg5e-00052H-P1
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 18:57:51 +0100
+	id 1XxgOO-0006v0-V7
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 19:17:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227AbaLGR5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2014 12:57:47 -0500
-Received: from mout.web.de ([212.227.17.12]:59634 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752051AbaLGR5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2014 12:57:46 -0500
-Received: from macce.local ([78.72.72.190]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MJTdf-1Y0iDl1IiZ-0038nU; Sun, 07 Dec 2014 18:57:35
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <F818AFA80A5F46BBA007F6EB102A75C5@black>
-X-Provags-ID: V03:K0:Mu6YOWIoUEAp+3RlH+EzI5xK1ILPKui7e90Qqor3aZe2FWfkjeQ
- Ia2aDqZYKIe4ZRoJl1M5WXLCg933rgJnWbUCurJuwdBIg7uAIisqLs2NejBduEFjGMA/L/E
- f4ADFqqfwbfloZf5a/wvQlVf+Yggy6GuE4aitTefm5VgrML3SU7E+xVWwVkP7a4CdZK67qZ
- lU9kBzmY7eU6QO7qswYyA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753155AbaLGSRJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2014 13:17:09 -0500
+Received: from forward10l.mail.yandex.net ([84.201.143.143]:53706 "EHLO
+	forward10l.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752754AbaLGSRG convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 7 Dec 2014 13:17:06 -0500
+Received: from smtp18.mail.yandex.net (smtp18.mail.yandex.net [95.108.252.18])
+	by forward10l.mail.yandex.net (Yandex) with ESMTP id 26470BA0FCD;
+	Sun,  7 Dec 2014 21:17:02 +0300 (MSK)
+Received: from smtp18.mail.yandex.net (localhost [127.0.0.1])
+	by smtp18.mail.yandex.net (Yandex) with ESMTP id 23F6918A00E9;
+	Sun,  7 Dec 2014 21:17:01 +0300 (MSK)
+Received: from 109-184-135-154.dynamic.mts-nn.ru (109-184-135-154.dynamic.mts-nn.ru [109.184.135.154])
+	by smtp18.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id fB4ILj4s5Y-H0HKTwos;
+	Sun,  7 Dec 2014 21:17:00 +0300
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(Client certificate not present)
+X-Yandex-Uniq: bebb4f41-249a-46b4-8729-f2091ed4e9bc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
+	t=1417976220; bh=OFqiN1hH0Cv4XQEwe+FGP9GiYYbTWI9pvvXU9o3HgYA=;
+	h=Content-Type:To:Cc:Subject:References:Date:MIME-Version:
+	 Content-Transfer-Encoding:From:Message-ID:In-Reply-To:User-Agent;
+	b=LUqSEPcKm6WgYqNKrroVflfy1F5R85nSIpcp6BkxXGJ1fuLEwHskyYFFen7+G35vS
+	 KePGGHoBjibh92WspQ5tviF6YRxbVhCFUxG7Y74X9HG36gnMGTsSLuNKXqb/eGmyNf
+	 jffT5E591LdDObUWVkIOWhjVIywu3AQKAd7GdJjg=
+Authentication-Results: smtp18.mail.yandex.net; dkim=pass header.i=@corrigendum.ru
+In-Reply-To: <316EF32F3157400882911A84EA0CFC61@PhilipOakley>
+User-Agent: Opera Mail/12.17 (Win64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260995>
 
-On 2014-12-07 15.24, Jason Pyeron wrote:
-> I am trying to push to our local intranet git (smart https behind apache), and it has been at this point for 10+ hours.
-> 
-> jpyeron@black /projects/git/git
-> $ GIT_TRACE=1 git push
-> 09:08:45.662902 git.c:349               trace: built-in: git 'push'
-> 09:08:45.662902 run-command.c:341       trace: run_command: 'git-remote-https' 'origin' 'https://intranet.pdinc.us/git/git/'
-> 09:08:46.225700 run-command.c:341       trace: run_command: 'git credential-cache --timeout=99999999999 get'
-> 09:08:46.256967 run-command.c:192       trace: exec: '/bin/sh' '-c' 'git credential-cache --timeout=99999999999 get' 'git credential-cache --timeout=99999999999 get'
-> 09:08:46.366400 git.c:554               trace: exec: 'git-credential-cache' '--timeout=99999999999' 'get'
-> 09:08:46.366400 run-command.c:341       trace: run_command: 'git-credential-cache' '--timeout=99999999999' 'get'
-> 09:08:47.022999 run-command.c:341       trace: run_command: 'git credential-cache --timeout=99999999999 store'
-> 09:08:47.038632 run-command.c:192       trace: exec: '/bin/sh' '-c' 'git credential-cache --timeout=99999999999 store' 'git credential-cache --timeout=99999999999 store'
-> 09:08:47.116799 git.c:554               trace: exec: 'git-credential-cache' '--timeout=99999999999' 'store'
-> 09:08:47.116799 run-command.c:341       trace: run_command: 'git-credential-cache' '--timeout=99999999999' 'store'
-> 09:08:47.366931 run-command.c:341       trace: run_command: 'send-pack' '--stateless-rpc' '--helper-status' '--thin' '--progress' 'https://intranet.pdinc.us/git/git/' 'refs/heads/master:refs/heads/master'
-> 09:08:47.382565 exec_cmd.c:134          trace: exec: 'git' 'send-pack' '--stateless-rpc' '--helper-status' '--thin' '--progress' 'https://intranet.pdinc.us/git/git/' 'refs/heads/master:refs/heads/master'
-> 09:08:47.429465 git.c:349               trace: built-in: git 'send-pack' '--stateless-rpc' '--helper-status' '--thin' '--progress' 'https://intranet.pdinc.us/git/git/' 'refs/heads/master:refs/heads/master'
-> 09:08:47.538898 run-command.c:341       trace: run_command: 'pack-objects' '--all-progress-implied' '--revs' '--stdout' '--thin' '--delta-base-offset' '--progress'
-> 09:08:47.695231 exec_cmd.c:134          trace: exec: 'git' 'pack-objects' '--all-progress-implied' '--revs' '--stdout' '--thin' '--delta-base-offset' '--progress'
-> 09:08:47.742131 git.c:349               trace: built-in: git 'pack-objects' '--all-progress-implied' '--revs' '--stdout' '--thin' '--delta-base-offset' '--progress'
-> Counting objects: 18734, done.
-> Delta compression using up to 2 threads.
-> Compressing objects: 100% (5707/5707), done.
-> Writing objects: 100% (18734/18734), 9.37 MiB | 0 bytes/s, done.
-> Total 18734 (delta 14519), reused 17108 (delta 12968)
-> 
-> Servier died, this is in the log:
-> 
-> fatal: protocol error: expected old/new/ref, got 'shallow 3339e9f686bd4c17e3575c71327c4ccf1e8e077b'
-> 
-> What steps can I take to debug this hang in the client?
-> 
-> Git fetch hangs the same way with a server exit of fatal: did not find object for shallow 3339e9f686bd4c17e3575c71327c4ccf1e8e077b
-> 
-> Note: I fixed the underlying problem with a git fetch --unshallow upstream
+Philip Oakley <philipoakley@iee.org> =D0=BF=D0=B8=D1=81=D0=B0=D0=BB =D0=
+=B2 =D1=81=D0=B2=D0=BE=D1=91=D0=BC =D0=BF=D0=B8=D1=81=D1=8C=D0=BC=D0=B5=
+ Sun, 07 Dec 2014 =20
+20:48:05 +0300:
+
+> From: "=D0=A0=D0=BE=D0=BC=D0=B0=D0=BD =D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=
+=BD=D0=BA=D0=BE" <dpb@corrigendum.ru>
+>> Jeff King <peff@peff.net> =D0=BF=D0=B8=D1=81=D0=B0=D0=BB =D0=B2 =D1=81=
+=D0=B2=D0=BE=D1=91=D0=BC =D0=BF=D0=B8=D1=81=D1=8C=D0=BC=D0=B5 Sun, 07 D=
+ec 2014 =20
+>> 12:18:59  +0300:
+>>
+>>> On Sat, Dec 06, 2014 at 10:36:23PM +0300, =D0=A0=D0=BE=D0=BC=D0=B0=D0=
+=BD =D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE wrote:
+>>> One final note on this bit of code: if there are multiple encoded =20
+>>> words,
+>>> we grab the $charset from the final encoded word, and never report =
+the
+>>> earlier charsets. Technically they do not all have to be the same
+>>> (rfc2047 even has an example where they are not). I think we can =20
+>>> dismiss
+>>> this, though, as:
+>>>
+>>>   1. It was like this before your patches (we might have seen multi=
+ple
+>>>      non-adjacent encoded words; you're just handling adjacent ones=
+),
+>>>      and nobody has complained.
+>>>
+>>>   2. Using two separate encodings in the same header is sufficientl=
+y
+>>>      ridiculous that I can live with us not handling it properly.
+>>
+>> Yeah, that bugs me as well. But I think handling multiple encodings =
+=20
+>> would  require substantial reworking of the code, so I chickened out=
+ =20
+>> (with the  same excuses :-)).
 >
-Was the log above after the git fetch --unshallow upstream ?
-What is the output if you run the following commands on the server:
-git show 3339e9f686bd4c17e
-git fsck
-git --version
-which git
+> Would that be worth a terse comment in the documentation change part =
+of =20
+> the patch?
+> "Multiple  (RFC2047) encodings are not supported.",
+> or would that be bike shed noise.
 
-(And what on the client)
+I didn't change any documentation... and in either case, they weren't =20
+supported in the first place, so I don't think it's anything I need to =
+=20
+mention.
