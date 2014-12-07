@@ -1,177 +1,141 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: Accept-language test fails on Mac OS
-Date: Sun, 07 Dec 2014 11:03:14 +0100
-Message-ID: <548425E2.5080503@web.de>
-References: <CAO2U3QgoSmYkDYbvFnChxPMrTCEboUbk1NWjv+9Us60EfozN_w@mail.gmail.com> <xmqqppbxogli.fsf@gitster.dls.corp.google.com> <CAO2U3QikrHRC0PncO2vxFMv88HMnJHYa1AiPak+Lp0OU1u6dZA@mail.gmail.com> <5482D180.9010002@web.de> <CAFT+Tg_4EJ15CmujDtcubfw+0rr2J=pbjccqSSs9tmj-rz6+eQ@mail.gmail.com> <54836F46.9080009@web.de> <20141207071827.GA31014@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] doc: document error handling functions and
+ conventions (Re: [PATCH 03/14] copy_fd: pass error message back through a
+ strbuf)
+Date: Sun, 7 Dec 2014 05:07:55 -0500
+Message-ID: <20141207100755.GB22230@peff.net>
+References: <20141203050217.GJ6527@google.com>
+ <20141203051344.GM6527@google.com>
+ <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
+ <20141204030133.GA16345@google.com>
+ <xmqqy4qnq9m2.fsf@gitster.dls.corp.google.com>
+ <20141204234147.GF16345@google.com>
+ <20141204234432.GA29953@peff.net>
+ <CAPc5daW3+8xjG3z3WgOMfqzWJUiPdcN1-FVgVc0fAjH7tgCa4A@mail.gmail.com>
+ <20141205000128.GA30048@peff.net>
+ <xmqqfvcuq8nu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: semtlenori@gmail.com, Michael Blume <blume.mike@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Dec 07 11:03:25 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 07 11:08:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxYgX-0001vA-2M
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 11:03:25 +0100
+	id 1XxYkz-0004Bv-OZ
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 11:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbaLGKDV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2014 05:03:21 -0500
-Received: from mout.web.de ([212.227.15.3]:54589 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753023AbaLGKDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2014 05:03:19 -0500
-Received: from birne.local ([78.72.72.190]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0Mef0K-1YLqpv2WzY-00OHuX; Sun, 07 Dec 2014 11:03:15
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <20141207071827.GA31014@peff.net>
-X-Provags-ID: V03:K0:s9oehANVbgSs4f32g0z5K/QZ/oC6MfCA2xz4st4AFHuYWIIknwg
- yTTJHtY8Z5945KFSdbbrr38KB+PcCLQDMZZRfnbumrXIVJXzQXZXVxW62a0/zQxwG89Yx/O
- 4WekAx/CdkxnUri1D0+6YnyUhwFbtUJ7keibkdzMrxbizIXlQhDQr2/eY/bVDBryDnnMLZS
- KdcjKpVSERLguYIEXSDvw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752949AbaLGKH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2014 05:07:58 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49598 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752903AbaLGKH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2014 05:07:56 -0500
+Received: (qmail 13022 invoked by uid 102); 7 Dec 2014 10:07:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 07 Dec 2014 04:07:57 -0600
+Received: (qmail 16023 invoked by uid 107); 7 Dec 2014 10:07:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 07 Dec 2014 05:07:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Dec 2014 05:07:55 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqfvcuq8nu.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260983>
 
-On 07.12.14 08:18, Jeff King wrote:
-> On Sat, Dec 06, 2014 at 10:04:06PM +0100, Torsten B=C3=B6gershausen w=
-rote:
->=20
->> I get this:
->>
->>
->> expecting success:=20
->>         check_language "ko-KR, *;q=3D0.1" ko_KR.UTF-8 de_DE.UTF-8 ja=
-_JP.UTF-8 en_US.UTF-8 &&
->>         check_language "de-DE, *;q=3D0.1" ""          de_DE.UTF-8 ja=
-_JP.UTF-8 en_US.UTF-8 &&
->>         check_language "ja-JP, *;q=3D0.1" ""          ""          ja=
-_JP.UTF-8 en_US.UTF-8 &&
->>         check_language "en-US, *;q=3D0.1" ""          ""          ""=
-          en_US.UTF-8
->>
->> --- expect      2014-12-06 21:00:59.000000000 +0000
->> +++ actual      2014-12-06 21:00:59.000000000 +0000
->> @@ -1 +0,0 @@
->> -Accept-Language: de-DE, *;q=3D0.1
->> not ok 25 - git client sends Accept-Language based on LANGUAGE, LC_A=
-LL, LC_MESSAGES and LANG
->=20
-> I can reproduce the same problem here (Debian unstable). I actually r=
-an
-> into three issues (aside from needing to use Junio's SQUASH commit, t=
-o
-> avoid the "\r" bash-ism):
->=20
->   1. I couldn't build without including locale.h, for the
->      definition of setlocale() and the LC_MESSAGES constant (both use=
-d
->      in get_preferred_languages).
->=20
->      I'm not sure what portability issues there are with including it
->      unconditionally. Should this possibly be tied into gettext.c, wh=
-ich
->      already uses setlocale?
->=20
->   2. The call to setlocale(LC_MESSAGES, NULL) in get_preferred_langua=
-ges
->      always returns "C" for me. This seems related to building with
->      NO_GETTEXT (which I typically do), as we never init setlocale
->      if NO_GETTEXT is set. This program demonstrates it:
->=20
-> 	#include <stdio.h>
-> 	#include <string.h>
-> 	#include <locale.h>
-> =09
-> 	int main(int argc, char **argv)
-> 	{
-> 		if (argv[1] && !strcmp(argv[1], "init"))
-> 			setlocale(LC_MESSAGES, "");
-> 		printf("%s", setlocale(LC_MESSAGES, NULL));
-> 		return 0;
-> 	}
->=20
->      If I run it as "LANG=3Den_US.UTF-8 ./a.out", it prints "C". If I=
- run
->      it as "LANG=3Den_US.UTF-8 ./a.out init", it prints "en_US.UTF-8"=
-=2E I
->      think we either need to start unconditionally calling setlocale(=
-)
->      as we do in git_setup_gettext, or we need to tie your feature to
->      using gettext.
->=20
->      This is what causes the failure of the de-DE test for me; buildi=
-ng
->      without NO_GETTEXT makes it work. Note that this doesn't affect =
-the
->      first test for ko-KR, because that test sets LANGUAGE, which we
->      read ourselves (so we never make a setlocale() call).
->=20
->   3. Even building with NO_GETTEXT, setlocale() does not want to
->      report ja_JP.UTF-8 for me, making the third test fail.
->=20
->      I think the issue is that I do not build the ja_JP locale on my
->      system. Running "dpkg-reconfigure locales" and asking it to buil=
-d
->      ja_JP.UTF-8 makes the test pass. This is somewhat of a Debian-is=
-m.
->      From "man locale-gen":
->=20
->        By default, the locale package which provides the base support
->        for localisation of libc-based programs does not contain usabl=
-e
->        localisation files for every supported language. This limitati=
-on
->        has became necessary because of the substantial size of such
->        files and the large number of languages supported by libc. As =
-a
->        result, Debian uses a special mechanism where we prepare the
->        actual localisation files on the target host and distribute on=
-ly
->        the templates for them.
->=20
->      I suspect it is inherited by Debian derivatives like Ubuntu. But=
- I
->      also don't know that we can count on other platforms having all =
-of
->      the locales either (e.g., they may ship them as separate package=
-s,
->      not all of which are installed).
->=20
->      So I'm not sure of an easy way around this. You want 4 separate
->      locales to thoroughly test, but you cannot rely on any particula=
-r
->      locale being present on the user's system.
->=20
->      Note that this is just a problem with the tests, probably not wi=
-th
->      the feature itself. Presumably people setting LANG=3Dja_JP actua=
-lly
->      have that locale on their system (though technically this featur=
-e
->      is about asking the _server_ to use that language, it seems like
->      you would do so because you were using that language locally, to=
-o).
->=20
-> -Peff
-> --
-(I remember debugging t0204 some time ago)
+On Fri, Dec 05, 2014 at 10:00:05AM -0800, Junio C Hamano wrote:
 
-We may get inspiration from this, either how to adjust the locale to be=
- used,
-or if the test should be skipped.
+> Jeff King <peff@peff.net> writes:
+> 
+> > The only downside I can think of is that we may truncate the message in
+> > exceptional circumstances. But is it really any less helpful to say:
+> >
+> >   error: unable to open file: some-incredibly-long-filename-aaaaaa...
+> >
+> > than printing out an extra 100 lines of "a"? And I mean the "..."
+> > literally. I think mkerror() should indicate the truncation with a
+> > "...", just so that it is clear to the user. It should almost never
+> > happen, but when it does, it can be helpful to show the user that yes,
+> > we know we are truncating the message, and it is not that git truncated
+> > your filename during the operation.
+> >
+> > Is this truncation really a concern, and/or is there some other downside
+> > I'm not thinking of?
+> 
+> I am more worried about variable length part pushing the information
+> that is given later out to the right, e.g. "error: missing file '%s'
+> prevents us from doing X".  Chomping to [1024] is not a good
+> strategy for that kind of message; abbreviating %s to /path/name/...
+> (again, with literally "...") would be.
 
- grep -l is_IS *
-lib-gettext.sh
-t0200-gettext-basic.sh
-t0203-gettext-setlocale-sanity.sh
-t0204-gettext-reencode-sanity.sh
+True. Unfortunately I do not think there is an easy way to truncate the
+expanded strings used by placeholders. The two approaches I could think
+of are:
+
+  1. Loop over the va_list and tweak any pointers we find. Except that
+     loop means we actually need to loop over the _format string_, since
+     that is the only thing which tells us which placeholders are strings.
+     But I am not even sure there is a portable way to munge a va_list,
+     as opposed to just reading it.
+
+  2. Transparently rewrite '%s' in the format string to '%.128s' or
+     similar. This also requires iterating over the format string, but
+     it's fairly straightforward. Code is below, but it's not _quite_
+     right. We would want to conditionally add "..." based on whether or
+     not the particular item was truncated. But we cannot know when
+     munging the format string if that will happen or not (we know
+     _something_ will be truncated, but not which string).
+
+I don't think you can do it right without reimplementing vsnprintf
+yourself. Which is obviously a terrible idea.
+
+I still think truncation is going to be a non-issue in practice, and I'd
+rather deal with that potential fallout than have to deal with memory
+management in every error handler that uses this technique. But I don't
+have much more to say on the matter, so if you disagree, I guess that's
+that.
+
+Unless we can do something clever with a set of global error strbufs or
+something (i.e., that expand as needed, but the caller does not have to
+free themselves, as they will get recycled eventually). That has its own
+corner cases, though.
+
+Anyway, the truncating-fmt code is below, for fun.
+
+-Peff
+
+static int abbrev_fmt(char *buf, int len, int abbrev, const char *fmt, va_list ap)
+{
+	va_list cp;
+	int got;
+
+	va_copy(cp, ap);
+	got = vsnprintf(buf, len, fmt, ap);
+	if (got >= len) {
+		struct strbuf munged = STRBUF_INIT;
+
+		while (*fmt) {
+			char ch = *fmt++;
+			strbuf_addch(&munged, ch);
+			if (ch == '%') {
+				if (*fmt == 's') {
+					strbuf_addf(&munged, ".%ds...", abbrev);
+					fmt++;
+				} else /* skips past %%-quoting */
+					strbuf_addch(&munged, *fmt);
+			}
+		}
+
+		got = vsnprintf(buf, len, munged.buf, cp);
+		strbuf_release(&munged);
+	}
+	return got;
+}
