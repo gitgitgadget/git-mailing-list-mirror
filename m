@@ -1,81 +1,57 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH] git-svn: Support for git-svn propset
-Date: Sun, 07 Dec 2014 09:00:12 +0100
-Message-ID: <5484090C.8070101@web.de>
-References: <20141206222942.GB91825@elvis.mu.org> <5483E968.6060708@web.de>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH/RFC v2] Squashed changes for multiple worktrees vs.
+ submodules
+Date: Sun, 7 Dec 2014 11:15:03 +0200
+Message-ID: <20141207091503.GC9128@wheezy.local>
+References: <1417390076-2953-1-git-send-email-max@max630.net>
+ <547E24E4.7050100@web.de>
+ <20141202221611.GB9128@wheezy.local>
+ <5480BEB9.8070109@web.de>
+ <CAF7_NFQzPDF+7NS2VwopK8Oei=9NzWEAGM5fko-St5KvvmLa9A@mail.gmail.com>
+ <5482FF40.3040204@web.de>
+ <20141207064230.GA9782@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Michael G. Schwern" <schwern@pobox.com>,
-	David Fraser <davidf@sjsoft.com>
-To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Alfred Perlstein <alfred@freebsd.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 07 09:04:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Dec 07 10:15:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxWpo-000396-4W
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 09:04:52 +0100
+	id 1XxXvu-0003Q5-Ms
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 10:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699AbaLGIAm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2014 03:00:42 -0500
-Received: from mout.web.de ([212.227.15.14]:64375 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752411AbaLGIAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2014 03:00:41 -0500
-Received: from macce.local ([78.72.72.190]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0M0R25-1XhVNQ2HZV-00ucrA; Sun, 07 Dec 2014 09:00:13
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <5483E968.6060708@web.de>
-X-Provags-ID: V03:K0:pDU7GaahxYDU6dGzGRW53aeXOBD0wQgWXLeZL5ZAseG+Jh64Mru
- VYGPysSiCWwQG2gG1FeoAzQMV5W+G13AKpkeV0rcLRI950CHp388AAXYBtx2vHpkJ9i14ye
- B2jtJSTo6unUVukvB0C53VTL+qmndO3amtAzYwxRroQprY1cQGe1G3womggsDQUuPYb2X2G
- Sg3eKx6pjBsY/jykpBcqw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752845AbaLGJPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2014 04:15:08 -0500
+Received: from p3plsmtpa09-06.prod.phx3.secureserver.net ([173.201.193.235]:52213
+	"EHLO p3plsmtpa09-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751757AbaLGJPF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2014 04:15:05 -0500
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa09-06.prod.phx3.secureserver.net with 
+	id QZEz1p0085B68XE01ZF29z; Sun, 07 Dec 2014 02:15:03 -0700
+Content-Disposition: inline
+In-Reply-To: <20141207064230.GA9782@wheezy.local>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260976>
 
-On 2014-12-07 06.45, Torsten B=F6gershausen wrote:
-[]
->> +
->> +test_expect_success 'add multiple props' '
->> +	git svn propset svn:keywords "FreeBSD=3D%H" foo &&
->> +	git svn propset fbsd:nokeywords yes foo &&
->> +	echo hello >> foo &&
->> +	git commit -m "testing propset" foo &&
->> +	git svn dcommit
->> +	svn_cmd co "$svnrepo" svn_project &&
->> +	(cd svn_project && test "`svn propget svn:keywords foo`" =3D "Free=
-BSD=3D%H") &&
->> +	(cd svn_project && test "`svn propget fbsd:nokeywords foo`" =3D "y=
-es") &&
->> +	(cd svn_project && test "`svn proplist -q foo | wc -l`" -eq 2) &&
->> +	rm -rf svn_project
->> +	'
->> +
-> Ah, another small thing:
-> the "wc -l" will not work under Mac OS X.
-> Please see test_line_count() in t/test-lib-functions.sh
->=20
-My excuse:
-I think I am wrong here and I need to correct myself after having looke=
-d at other TC's.
-The "wc -l" should work under Mac OS X.
+On Sun, Dec 07, 2014 at 08:42:30AM +0200, Max Kirillov wrote:
+>> *) I'd love to see a solution for sharing the object database
+>>    between otherwise unrelated clones of the same project (so
+>>    that fetching in one clone updates the objects in the common
+>>    dir and gc cannot throw anything away used by one of the
+>>    clones). But I'd expect a bare repository as the common one
+>>    where we put the worktrees refs into their own namespaces.
 
-Another small nit:
+> There is a GIT_NAMESPACE already, maybe it should be just
+> extended to work with all commands?
 
-This=20
-"`svn propget svn:keywords foo`" =3D "FreeBSD=3D%H")
-can be written as
-"$(svn propget svn:keywords foo)" =3D "FreeBSD=3D%H")
-
-(if you want to use the "Git style" for command substitution)
+No, this will not work for submodules, has same issues with
+the same config.
