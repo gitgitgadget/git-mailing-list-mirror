@@ -1,74 +1,181 @@
-From: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-Subject: Re: How to repair a shallow clone (?)
-Date: Sun, 07 Dec 2014 07:37:58 +0700
-Message-ID: <5483A166.4010109@gmail.com>
-References: <5482F55F.1060008@web.de>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: FW: [cygwin] Cygwin's git says "error: failed to read delta-pack base object"
+Date: Sat, 6 Dec 2014 20:33:12 -0500
+Organization: PD Inc
+Message-ID: <275080CE3B5A44D7A46B3DF0E55C33D4@black>
+References: <F5D60A90C93A45359EF00CC200C81561@black> <F5116E3BF1974D039102426C8F6E3BED@black>
+Reply-To: <git@vger.kernel.org>, <lindbergh@92f1.com>,
+	  "brian m. carlson" <sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Dec 07 01:42:43 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+	"'Dave Lindbergh'" <lindbergh@92f1.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 07 02:33:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxPvu-0006k1-H9
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 01:42:42 +0100
+	id 1XxQj4-0003gL-TD
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 02:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011AbaLGAiE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2014 19:38:04 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:43713 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373AbaLGAiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2014 19:38:03 -0500
-Received: by mail-pa0-f53.google.com with SMTP id kq14so2965689pab.12
-        for <git@vger.kernel.org>; Sat, 06 Dec 2014 16:38:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=mHs6Pn3nPdxSp5KYmpaV6vd07rRnn0YkqfWLqeS2IhU=;
-        b=sb7cOKF29tea8bneInGcpZz5b0cPi1zx2MuEidad6EA0I5oxQHB37LCBRt7na58/xB
-         6Av+19t7Ds3K9aKYkjbNsFL2mzFxLTE/Engx+d0J597LL7xRXX2WEKpakfyrnIUmv6Pt
-         2a9dbPP6dW+njCMXt8FmJU53RsQKpTRbucw5tGvwt5KtuEGLVJYwG+M8MFkLhvjwIeZr
-         YXXYWvpBpbns6g1Yv/Hlu9/Nd6EVX5+vhDRK3K31E2Udn75zxrU/Jncgj/SXd/YlsQ55
-         +By0d2s874G53FH3zz/TBzRFCtcmVqv7fK3jzwcC80X/RnOElqlZpDC4UGEdXggFqrBJ
-         buTw==
-X-Received: by 10.68.190.229 with SMTP id gt5mr47664151pbc.119.1417912682524;
-        Sat, 06 Dec 2014 16:38:02 -0800 (PST)
-Received: from vnwildman.myftp.org ([113.168.10.223])
-        by mx.google.com with ESMTPSA id fe5sm21967183pdb.77.2014.12.06.16.38.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Dec 2014 16:38:02 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <5482F55F.1060008@web.de>
+	id S1752619AbaLGBdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2014 20:33:23 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:32773 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752277AbaLGBdW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Dec 2014 20:33:22 -0500
+Received: from black (five-58.pdinc.us [192.168.5.58])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sB71XD2X029497;
+	Sat, 6 Dec 2014 20:33:14 -0500
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <F5116E3BF1974D039102426C8F6E3BED@black>
+Thread-Index: AdAPXRtpqnFJ0p5ySsSWNqpxnc3bEwArKJ3gACRqPBAAR47CYA==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260968>
 
-On 06/12/2014 19:23, Torsten B=C3=B6gershausen wrote:
-> I think I started to clone the repo in a shallow way
-> (SparkleShare asked if I want to clone the complete history,
-> and I probably answered "no" )
->
-> Is there a way to repair this situation ?
-> (Except doing a complete re-clone ?)
->
-I think git don't accept push from shallow repo. I've ever encounter
-this problem. I UNshallow it, then every thing will work:
+TLDR = Cygwin remote filesystem sometimes has strange failures -> workaround is to use rename, not link/unlink; 
+see https://github.com/pdinc-oss/git/commit/5a36824ed01d4335148ca3846e75cc99c11650e2
+> -----Original Message-----
+> From: Jason Pyeron
+> Sent: Friday, December 05, 2014 10:30
+> 
+> > -----Original Message-----
+> > From: Jason Pyeron
+> > Sent: Thursday, December 04, 2014 16:34
+> > 
+> > > -----Original Message-----
+> > > From: brian m. carlson
+> > > Sent: Wednesday, December 03, 2014 19:55
+> > > 
+> > > On Wed, Dec 03, 2014 at 06:31:18PM -0500, Jason Pyeron wrote:
+> > > > I remember hitting this a while ago, but just gave up.
+> > > > 
+> > > > It seems to be a problem for others too.
+> > > > 
+> > > > Any ideas on how to debug this so it can be patched?
+> > > > 
+> > > > -----Original Message-----
+> > > > From: Dave Lindbergh
+> > > > Sent: Wednesday, December 03, 2014 18:07
+> > > > To: cygwin
+> > > > 
+> > > > Aha - you're right.
+> > > > 
+> > > > It works fine on a local NTFS volume.
+> > > > 
+> > > > I get the error when I do it on Z:, which is mapped to a 
+> > > network drive
+> > > > (on another Windows box).
+> > > > 
+> > > > Is there a workaround? Why does this happen?
 
-$ git fetch --unshallow origin
+I have a really hacky workaround, commit 5a36824ed01d4335148ca3846e75cc99c11650e2 comments out the logic and forces a rename instead of link and unlink.
 
-This command will convert a shallow repository to a complete one.
-See git-fetch(1) and git-clone(1).
+https://github.com/pdinc-oss/git/tree/cygwin-issue-remoteCIFS-rename
 
-I hope it helpful!
-Thanks,
+<snip/>
 
---=20
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n.
+> Pseudo code and observations
+> ./sha1_file.c:write_loose_object(sha1)
+> {
+>  filename=sha1_file_name(sha1)
+>  (fd,tmp_file)=create_tmpfile(filename)
+>  write_buffer(fd)
+>  close_sha1_file(fd)
+>  return move_temp_to_file(tmp_file, filename)
+> }
+> 
+> move_temp_to_file(tmpfile, filename)
+> {
+>  // I am thinking about forcing renames to see if the problem 
+> exists then as well
+>  // if that "works" then a per repo config option allowing 
+> for forced renames
+>  if (OBJECT_CREATION_USES_RENAMES) goto try_rename
+>  else if link(tmpfile,filename)
+> 
+
+Dave has tested a build I made for him on 64 bit Cygwin and it works. I no longer have access to the environment I was having this problem in last February. I will try to investigate this further, but I am not hopeful, maybe Corinna will have luck on the issue. But I was in a secure corporate environment and I thought the host based security system (AV), coupled with the remote file system was causing the problem, namely files created are not available instantly.
+
+I do think that we should have a config option for this, as most users who could encounter such a problem are not likely to be able (or allowed) to rebuild the git executable themselves.
+
+<snip/>
+
+> > -----Original Message-----
+> > From: Corinna Vinschen
+> > Sent: Friday, December 05, 2014 6:35
+> > To: cygwin@cygwin.com
+> <snip/>
+> > What I found in the strace is this:
+> > 
+> > - Create file Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ
+> > 
+> > - open file, write something, close file.
+> > 
+> > - link (Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ,
+> > 	
+> > 
+> Z:\pic32mx-bmf\.git\objects\30\0bdeb2fd209d24afb865584da10b78aa8fefc4)
+> >   succeeds.
+> > 
+> > - unlink (Z:\pic32mx-bmf\.git\objects\30\tmp_obj_YljwNZ) succeeds
+> > 
+> > - Trying to open
+> >   
+> > 
+> Z:\pic32mx-bmf\.git\objects\30\0bdeb2fd209d24afb865584da10b78aa8fefc4
+> >   but the file doesn't exist and NtCreateFile fails with status
+> >   0xC0000034, STATUS_OBJECT_NAME_NOT_FOUND --> ENOENT.
+> > 
+> > - Subsequent unlink (Z:\pic32mx-bmf\.git\objects\30) fails with a
+> >   STATUS_DIRECTORY_NOT_EMPTY --> ENOTEMPTY.
+> > 
+> > - git seems to be prepared for such a case, the parent process calls
+> >   opendir/readdir on the directory.  Enumerating the files in
+> >   Z:\pic32mx-bmf\.git\objects\30 shows the entries ".", ".." and
+> >   "0bdeb2fd209d24afb865584da10b78aa8fefc4".
+> > 
+> > - Then git calls lstat on the file, which results in NtOpenFile
+> >   returning status STATUS_OBJECT_NAME_NOT_FOUND again.
+> > 
+> > - From a POSIX POV this means "somebody else" deleted the file,
+> >   so the dir is empty now.  Git tries to delete the directory again,
+> >   which again results in STATUS_DIRECTORY_NOT_EMPTY --> ENOTEMPTY
+> >   and, internally, a sharing violation which disallows to move the
+> >   directory out of the way.
+> > 
+> > This looks suspiciously like a bug in the remote filesystem.  Link
+> > succeeded, so there are two links to the same file in the directory.
+> > Unlinking link 1 succeeds, so there's still one link to the 
+> > file in the
+> > directory, but link 2 is inaccessible as if the file has 
+> been deleted
+> > completely.  Thus, a full POSIX git on this drive is broken.
+> > 
+> > Can you please run
+> > 
+> >   /usr/lib/csih/getVolInfo /cygdrive/z
+> > 
+> > and paste the output here?  Maybe I can workaround this in the next
+> > Cygwin version.
+
+Dave's response: https://www.cygwin.com/ml/cygwin/2014-12/msg00066.html
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00. 
