@@ -1,68 +1,67 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git-svn: propset support v2
-Date: Sun, 7 Dec 2014 04:25:26 -0500
-Message-ID: <CAPig+cQaP8KUFjFUqvxPZV1KiJePe_KisU4HSfZ1qVATOMriGw@mail.gmail.com>
-References: <20141206222918.GA91825@elvis.mu.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: Accept-language test fails on Mac OS
+Date: Sun, 07 Dec 2014 10:56:37 +0100
+Message-ID: <54842455.8000603@web.de>
+References: <CAO2U3QgoSmYkDYbvFnChxPMrTCEboUbk1NWjv+9Us60EfozN_w@mail.gmail.com>	<xmqqppbxogli.fsf@gitster.dls.corp.google.com>	<CAO2U3QikrHRC0PncO2vxFMv88HMnJHYa1AiPak+Lp0OU1u6dZA@mail.gmail.com>	<5482D180.9010002@web.de>	<CAFT+Tg_4EJ15CmujDtcubfw+0rr2J=pbjccqSSs9tmj-rz6+eQ@mail.gmail.com>	<54836F46.9080009@web.de> <CAFT+Tg_OQLj7oWfOJ8ATKHo36Jv3+JcSYWEc-trKsAtjv7wskg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Michael Blume <blume.mike@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	"Michael G. Schwern" <schwern@pobox.com>,
-	David Fraser <davidf@sjsoft.com>
-To: Alfred Perlstein <alfred@freebsd.org>
-X-From: git-owner@vger.kernel.org Sun Dec 07 10:25:37 2014
+	Git List <git@vger.kernel.org>
+To: semtlenori@gmail.com,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Dec 07 10:56:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxY5t-00007D-GQ
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 10:25:33 +0100
+	id 1XxYaC-0006wK-VB
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 10:56:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752802AbaLGJZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2014 04:25:29 -0500
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:43821 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752659AbaLGJZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2014 04:25:27 -0500
-Received: by mail-yh0-f49.google.com with SMTP id f10so1545617yha.36
-        for <git@vger.kernel.org>; Sun, 07 Dec 2014 01:25:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ebOnOLqtJCfSfT68RrurrOxJ+HA813zlCID1wXfY8Ho=;
-        b=LDRbRbzbjNeDLcCoXArQSXkXSpZIe0W2umqZsmn2G2JOCdDVoGZ8swuL1lqhsSeX4c
-         q/4O5vflfIscICARQIfO2vWKsmdbkA2K7ajle5GhNoMeABrorSOPHlhgK9XRPfiXsCsN
-         +OV5s22GiknXh0OA8Tt516eREVC++EAQeTzvbHY/K6s1p/5bM8lFc4A1npu4S3egDzi0
-         EhCGpFMBFyxkwxTRlp76X1QFrRFmeqHEv3VHHQrLQranQYMZtdzTfACUE8uVcZN69MMl
-         h2yPBM9BsnwmxL14J4fsx8kRz7LNBEQZFPIPqVEaTiDUU4Cf2GaJuM4IKR7V9YnyKIkU
-         rfTw==
-X-Received: by 10.170.133.5 with SMTP id z5mr29776517ykb.2.1417944326851; Sun,
- 07 Dec 2014 01:25:26 -0800 (PST)
-Received: by 10.170.68.68 with HTTP; Sun, 7 Dec 2014 01:25:26 -0800 (PST)
-In-Reply-To: <20141206222918.GA91825@elvis.mu.org>
-X-Google-Sender-Auth: Ttn94f4Yjp4aCRvckM5WLwdXyC0
+	id S1753049AbaLGJ4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2014 04:56:48 -0500
+Received: from mout.web.de ([212.227.15.4]:57369 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752911AbaLGJ4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2014 04:56:48 -0500
+Received: from birne.local ([78.72.72.190]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0Lfzwp-1XeiQr2IEV-00pZN0; Sun, 07 Dec 2014 10:56:42
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <CAFT+Tg_OQLj7oWfOJ8ATKHo36Jv3+JcSYWEc-trKsAtjv7wskg@mail.gmail.com>
+X-Provags-ID: V03:K0:FhqVFCkNqjOkib0aHc06sQ4ZNMgVzeN97Xi9kLUqF1ealm0z13o
+ aZFxL+zGphynf83HEcQVV2ogmCmJEGUiueYxpKhLx8zajiGJLeHofiGugP0UQvj+hiHi+Z6
+ Ro5D3TXyjpjgkcJUVW6Bx3WYZ9ReCSRfz7CZgBlMxYQ2/1m/mbAURctyksE6FraTSlLBhiT
+ LZ0uYU/yOj9PEfjexig9Q==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260980>
 
-On Sat, Dec 6, 2014 at 5:29 PM, Alfred Perlstein <alfred@freebsd.org> wrote:
-> I have incorporated Eric Wong's feedback into the git-svn propset support patch.
->
-> There is a nit that I want to point out.  The code does not support adding props
-> unless there are also content changes to the files as well.  You can see this in
-> the testcase.
-
-This is an important nugget of information which would be worthwhile
-to mention in the commit message of the patch rather than here as mere
-commentary.
-
-> That is still sufficient for many people's workflows (FreeBSD at
-> least).  So I am wondering if this is OK.
->
-> I would gladly take any pointers to making it work with unchanged
-> files either for a later diff or to wrap this up.
+On 07.12.14 07:54, Yi, EungJun wrote:
+> I'm sorry for bothering you, but could you tell me the result of
+> "locale" command without "-a" option? What I want to know is locale
+> environment variables and its values, so I want to reproduce the test
+> failures on my laptop.
+> 
+(Just for completeness:)
+ locale
+LANG=en_US.UTF-8
+LANGUAGE=en_US:en
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_PAPER="en_US.UTF-8"
+LC_NAME="en_US.UTF-8"
+LC_ADDRESS="en_US.UTF-8"
+LC_TELEPHONE="en_US.UTF-8"
+LC_MEASUREMENT="en_US.UTF-8"
+LC_IDENTIFICATION="en_US.UTF-8"
+LC_ALL=
