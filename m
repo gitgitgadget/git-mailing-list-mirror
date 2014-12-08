@@ -1,98 +1,104 @@
-From: Onno Kortmann <onno@gmx.net>
-Subject: Re: [PATCH] Show number of commits being rebased interactively
-Date: Sun, 07 Dec 2014 21:56:29 +0100
-Message-ID: <5484BEFD.7060906@gmx.net>
-References: <5460E893.7080003@gmx.net> <xmqq388tpyls.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] fsck: properly bound "invalid tag name" error message
+Date: Mon, 8 Dec 2014 00:48:13 -0500
+Message-ID: <20141208054812.GA30154@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 07 21:56:42 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 08 06:48:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xxish-0002aB-CX
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Dec 2014 21:56:39 +0100
+	id 1XxrBE-0006j1-Rj
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 06:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753411AbaLGU4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2014 15:56:35 -0500
-Received: from mout.gmx.net ([212.227.15.15]:59615 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752658AbaLGU4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2014 15:56:34 -0500
-Received: from [192.168.6.43] ([95.119.207.42]) by mail.gmx.com (mrgmx002)
- with ESMTPSA (Nemesis) id 0LlESk-1XNpYu13Qs-00azFO; Sun, 07 Dec 2014 21:56:30
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <xmqq388tpyls.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:RqhdXrVfY58fLzrRzJSek7L1awVG78722uAchAXrWydmFCbhXBb
- a75/cvf200/CbUbkph3Q+O97X3LJ8cB7RAqFIBxsxHYANeFat1YfQyzwvdpc9h1hZXv54xG
- TAgYdTOqsnn+O51vm8S+YHAJegg3C5eM1gDniVQ1RQ7aJJQbu9LH11GMyRGcdMFvW5O1zfy
- 9ZbK6Wizqt0kcfqQzAUEQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752039AbaLHFsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 00:48:15 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49809 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751007AbaLHFsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2014 00:48:14 -0500
+Received: (qmail 25842 invoked by uid 102); 8 Dec 2014 05:48:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 07 Dec 2014 23:48:14 -0600
+Received: (qmail 20419 invoked by uid 107); 8 Dec 2014 05:48:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Dec 2014 00:48:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Dec 2014 00:48:13 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/260998>
 
-Hi,
+When we detect an invalid tag-name header in a tag object,
+like, "tag foo bar\n", we feed the pointer starting at "foo
+bar" to a printf "%s" formatter. This shows the name, as we
+want, but then it keeps printing the rest of the tag buffer,
+rather than stopping at the end of the line.
 
-> These lines above "---" will become the only log message text, which
-> is probably not what you intended.  Use "-- >8 --" marker instead
-> (that is a perforation line with a pair of scissors on it)?
-Thanks, hopefully fixed below.
+Our tests did not notice because they look only for the
+matching line, but the bug is that we print much more than
+we wanted to. So we also adjust the test to be more exact.
 
->> +commitcount=$(git stripspace --strip-comments <"$todo"  | wc -l)
->
-> Does this count the number of commits?  I suspect it at least needs
-> to filter "x|exec" out.
-Very true - after reading this, I learned about the '-x' option
-to git-rebase -i :-)
-I changed the patch so it now properly looks for '^pick ' patterns. I
-hope this should do the trick under all circumstances? In the case
-of having 'exec' lines interspersed, the $commitcount becomes a lot
-less useful (no comparison to editor line numbers), though.
+Note that when fscking tags with "index-pack --strict", this
+is even worse. index-pack does not add a trailing
+NUL-terminator after the object, so we may actually read
+past the buffer and print uninitialized memory. Running
+t5302 with valgrind does notice the bug for that reason.
 
-Cheers,
-
-Onno
-8< 8< 8< 8< 8< 8< 8< 8< 8<
-Subject: [PATCH] Show number of commits being rebased interactively
-
-During 'rebase -i', one wrong edit in a long rebase session might
-inadvertently drop commits. This change shows the total number of
-commits in the comments below the commit list. After the rebase
-edit, the number can be quickly compared to the line number of
-the last commit - by scrolling to the last entry in the rebase
-TODO list. This gives peace of mind that no commits have been
-lost in the edit.
-
-Signed-off-by: Onno Kortmann <onno@gmx.net>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- git-rebase--interactive.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+I'm generally nervous about adding too-specific stderr wording or
+formatting to our tests, as I do not want them to be brittle. But I do
+not actually think this is substantially different than what other fsck
+tests do (i.e., they are already grepping for _half_ the wording
+already, so if it changes, they are likely to break, too).
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index b64dd28..b26e5e6 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -1031,9 +1031,13 @@ test -s "$todo" || echo noop >> "$todo"
- test -n "$autosquash" && rearrange_squash "$todo"
- test -n "$cmd" && add_exec_commands "$todo"
+If we care, the test can check test_line_count or similar to make sure
+there isn't extra data. But I think the way I have written it below is a
+lot easier for a reader coming later to understand what is going on.
 
-+commitcount=$(git stripspace --strip-comments <"$todo"  | \
-+	      sane_grep "^pick " | \
-+	      wc -l)
+ fsck.c          | 3 ++-
+ t/t1450-fsck.sh | 8 ++++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index 2fffa43..88c92e8 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -423,7 +423,8 @@ static int fsck_tag_buffer(struct tag *tag, const char *data,
+ 	}
+ 	strbuf_addf(&sb, "refs/tags/%.*s", (int)(eol - buffer), buffer);
+ 	if (check_refname_format(sb.buf, 0))
+-		error_func(&tag->object, FSCK_WARN, "invalid 'tag' name: %s", buffer);
++		error_func(&tag->object, FSCK_WARN, "invalid 'tag' name: %.*s",
++			   (int)(eol - buffer), buffer);
+ 	buffer = eol + 1;
+ 
+ 	if (!skip_prefix(buffer, "tagger ", &buffer))
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 019fddd..57ccce5 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -229,8 +229,12 @@ test_expect_success 'tag with incorrect tag name & missing tagger' '
+ 	echo $tag >.git/refs/tags/wrong &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	git fsck --tags 2>out &&
+-	grep "invalid .tag. name" out &&
+-	grep "expected .tagger. line" out
 +
- cat >>"$todo" <<EOF
-
--$comment_char Rebase $shortrevisions onto $shortonto
-+$comment_char Rebase $shortrevisions onto $shortonto ($commitcount commit(s))
- EOF
- append_todo_help
- git stripspace --comment-lines >>"$todo" <<\EOF
++	cat >expect <<-EOF &&
++	warning in tag $tag: invalid '\''tag'\'' name: wrong name format
++	warning in tag $tag: invalid format - expected '\''tagger'\'' line
++	EOF
++	test_cmp expect out
+ '
+ 
+ test_expect_success 'tag with bad tagger' '
 -- 
-2.2.0.rc0.18.g1c09766
+2.2.0.390.gf60752d
