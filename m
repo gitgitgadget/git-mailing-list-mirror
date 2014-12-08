@@ -1,148 +1,147 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 10/23] expire_reflog(): add a "flags" argument
-Date: Mon, 8 Dec 2014 14:35:11 -0800
-Message-ID: <20141208223511.GB25562@google.com>
+Subject: Re: [PATCH 11/23] expire_reflog(): move dry_run to flags argument
+Date: Mon, 8 Dec 2014 14:38:45 -0800
+Message-ID: <20141208223845.GC25562@google.com>
 References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
- <1417734515-11812-11-git-send-email-mhagger@alum.mit.edu>
+ <1417734515-11812-12-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Dec 08 23:35:20 2014
+X-From: git-owner@vger.kernel.org Mon Dec 08 23:38:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xy6tk-0003ns-DU
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 23:35:20 +0100
+	id 1Xy6x9-0005KZ-Sa
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 23:38:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbaLHWfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2014 17:35:14 -0500
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:62375 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbaLHWfN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2014 17:35:13 -0500
-Received: by mail-vc0-f202.google.com with SMTP id hy10so317481vcb.1
-        for <git@vger.kernel.org>; Mon, 08 Dec 2014 14:35:12 -0800 (PST)
+	id S1754569AbaLHWis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 17:38:48 -0500
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:51724 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752996AbaLHWir (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2014 17:38:47 -0500
+Received: by mail-qc0-f202.google.com with SMTP id i17so315711qcy.3
+        for <git@vger.kernel.org>; Mon, 08 Dec 2014 14:38:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=2JvO4GWgcyN5aiR1vzUH34Hk+k0KHIxYzq+kg2GxYV4=;
-        b=HI3Bnp+8sc220ugrBVuz+7qAo2B0eLOj3inZLCsDYshVHnvpNhhDyrDvkb+8l6A0ib
-         MxmFgZV6nbOP+md7sBoxnVOP5n2hXiWJUcuQlus3MAY3zraSEpKo06RrJiWH9L/l0at0
-         6WBW8IwHCLnOXR/4hHXQGHkgfsQskKF9bNA44fKtqR1GDhW/FwtppduHt1eQGgQZ1G67
-         Him/kFaoB0LGDyQGxBnbeqbHSX9doRO9wG4IKcA7LdSkzc3/2Gn/kR+ppjOyt0SfKMyg
-         o/p7HeX9csPztjyhjvpko9gcEBezcpkrfeX5K10+U9ZOT3V2nSGO6p/c+wh8hkhJ6Smy
-         PaIQ==
+        bh=c3b6aqmiQSwJzeiOmHAAXEc/s0BWqfgld2u09CuVblk=;
+        b=UOMwBcXdOrIX47rCTLCNdkylzHyHNckUMkh7loAoNeiOE0VuUeekkbW/dqWxeGKsC+
+         54BIqA8JSiKvYkX9uqVquvnUpxxd4qYwZ2gHVBuKgSev0kPbH2YG+jGYkwRhFCqJlJ4i
+         OQ0Rx8kSB1iJn4cZwTU0DVu2xwzfB+COi6OLzneV2bCow4FGr5wX1hBF8y8Ao67Saert
+         7/9PTOvZB3M87Ahz4PERf80fbC8gBbBrKMhQqRIvrwoBpviHEDX+nU2o0oDPj1PgLDm8
+         Y+JRIaIwiWcwc6lunlXkFXfw/U0vsFgonzmARN7PLl0CMTW6mJRtGFPtiNHNpNoKSVru
+         p/SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=2JvO4GWgcyN5aiR1vzUH34Hk+k0KHIxYzq+kg2GxYV4=;
-        b=NEk8qk/xTtH3/FBdcEE/a+eAQyaejmHM5yhX5IwxqdB8m0BUmFuOJI/aJhjUai2YgR
-         wLNm4FaK3RBC8nPF4Xjs1SJuDlfnmSigGjc+RP9+IVOYiv8S2Na9MtIqU55e9Tq2hjft
-         0UCwTEffAC87okalHS6+Ay1Su5Nk0AStsXEMzW4DN2f8KlEK781YeqbjEvTUdXr9qnrE
-         Vy3vnOWAtIRGz2Lfd80SQphxPvgASZRt8S6cVXsPxY0W0G9f+VRf7UwgJ1D0iDjN251C
-         Fjf1tUb2oqDGNO4AkF/Fsu8vtbcjtU+3nokZA+xxUJxWiYEc+4XDZLyFKWJL++ORy1vV
-         0sKQ==
-X-Gm-Message-State: ALoCoQlbYwYJ5CkHwixnYwgTyL0eWlvzm6dNaItq6EVv4l0CuKPfexXTcmDrIWNV5Dk+HsQcvvCc
-X-Received: by 10.52.35.238 with SMTP id l14mr30931147vdj.8.1418078112117;
-        Mon, 08 Dec 2014 14:35:12 -0800 (PST)
+        bh=c3b6aqmiQSwJzeiOmHAAXEc/s0BWqfgld2u09CuVblk=;
+        b=emYWE5W4y9TNPi246adpKJB4x0bhQ/7pU8QpMuCk4N37BjKojlkWSe7Zo/YizevIWg
+         1l2dThENsB2xHBpsPJ7NwS2DhAqGQvl0CSdMqBmpI8oC2kSn7S3NX0RtaF9FXFYhlrGd
+         9wQcHFK43mNP/R9n56+rN2Eshnyin53NZ+CYhEKSzQJIpA4un/O7fN5n93UPunJlbUUN
+         w9XkPjT02CM34o9f4yfmYCJ41FvOfUsG5qH2r1WdsAdRjKbtd8z9ruqA0aWgcdin008H
+         AKVcBGJy1BBl7gqey1le/b9jytnEa7NdlUW90DVvJncb7CtkbcSRTGHA/jJFqmhRk89W
+         b03Q==
+X-Gm-Message-State: ALoCoQmetum+G70USAgNjLTP3Blq50fa74j6ahto8OaUgc1WP+IoYq8jvvJV2mo/VQKIjTcg0Hzl
+X-Received: by 10.236.31.33 with SMTP id l21mr31315538yha.20.1418078326645;
+        Mon, 08 Dec 2014 14:38:46 -0800 (PST)
 Received: from corpmail-nozzle1-2.hot.corp.google.com ([100.108.1.103])
-        by gmr-mx.google.com with ESMTPS id 5si1692228yhd.6.2014.12.08.14.35.11
+        by gmr-mx.google.com with ESMTPS id t24si1694121yht.2.2014.12.08.14.38.46
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Dec 2014 14:35:12 -0800 (PST)
+        Mon, 08 Dec 2014 14:38:46 -0800 (PST)
 Received: from sbeller.mtv.corp.google.com ([172.27.69.125])
-	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id 4YnJ4ZEz.1; Mon, 08 Dec 2014 14:35:12 -0800
+	by corpmail-nozzle1-2.hot.corp.google.com with ESMTP id cJV0mESO.1; Mon, 08 Dec 2014 14:38:46 -0800
 Received: by sbeller.mtv.corp.google.com (Postfix, from userid 279346)
-	id 39EA0140BBD; Mon,  8 Dec 2014 14:35:11 -0800 (PST)
+	id AD75D140BBD; Mon,  8 Dec 2014 14:38:45 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1417734515-11812-11-git-send-email-mhagger@alum.mit.edu>
+In-Reply-To: <1417734515-11812-12-git-send-email-mhagger@alum.mit.edu>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261088>
 
-On Fri, Dec 05, 2014 at 12:08:22AM +0100, Michael Haggerty wrote:
-> We want to separate the options relevant to the expiry machinery from
-> the options affecting the expiration policy. So add a "flags" argument
-> to expire_reflog() to hold the former.
-> 
-> The argument doesn't yet do anything.
+On Fri, Dec 05, 2014 at 12:08:23AM +0100, Michael Haggerty wrote:
+> The policy objects don't care about "--dry-run". So move it to
+> expire_reflog()'s flags parameter.
 > 
 > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 
 Reviewed-by: <sbeller@google.com>
 
 > ---
->  builtin/reflog.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
+>  builtin/reflog.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
 > 
 > diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index ebfa635..319f0d2 100644
+> index 319f0d2..a490193 100644
 > --- a/builtin/reflog.c
 > +++ b/builtin/reflog.c
-> @@ -415,7 +415,8 @@ static void reflog_expiry_cleanup(struct expire_reflog_cb *cb)
+> @@ -22,7 +22,6 @@ static unsigned long default_reflog_expire_unreachable;
+>  
+>  struct cmd_reflog_expire_cb {
+>  	struct rev_info revs;
+> -	int dry_run;
+>  	int stalefix;
+>  	int rewrite;
+>  	int updateref;
+> @@ -415,6 +414,10 @@ static void reflog_expiry_cleanup(struct expire_reflog_cb *cb)
 >  
 >  static struct lock_file reflog_lock;
 >  
-> -static int expire_reflog(const char *refname, const unsigned char *sha1, void *cb_data)
-> +static int expire_reflog(const char *refname, const unsigned char *sha1,
-> +			 unsigned int flags, void *cb_data)
+> +enum expire_reflog_flags {
+> +	EXPIRE_REFLOGS_DRY_RUN = 1 << 0
+> +};
+> +
+>  static int expire_reflog(const char *refname, const unsigned char *sha1,
+>  			 unsigned int flags, void *cb_data)
 >  {
->  	struct cmd_reflog_expire_cb *cmd = cb_data;
->  	struct expire_reflog_cb cb;
-> @@ -627,6 +628,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
->  	unsigned long now = time(NULL);
->  	int i, status, do_all;
->  	int explicit_expiry = 0;
-> +	unsigned int flags = 0;
->  
->  	default_reflog_expire_unreachable = now - 30 * 24 * 3600;
->  	default_reflog_expire = now - 90 * 24 * 3600;
-> @@ -696,7 +698,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
->  		for (i = 0; i < collected.nr; i++) {
->  			struct collected_reflog *e = collected.e[i];
->  			set_reflog_expiry_param(&cb, explicit_expiry, e->reflog);
-> -			status |= expire_reflog(e->reflog, e->sha1, &cb);
-> +			status |= expire_reflog(e->reflog, e->sha1, flags, &cb);
->  			free(e);
->  		}
->  		free(collected.e);
-> @@ -710,7 +712,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
->  			continue;
->  		}
->  		set_reflog_expiry_param(&cb, explicit_expiry, ref);
-> -		status |= expire_reflog(ref, sha1, &cb);
-> +		status |= expire_reflog(ref, sha1, flags, &cb);
+> @@ -439,7 +442,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
 >  	}
->  	return status;
->  }
-> @@ -729,6 +731,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
->  {
->  	struct cmd_reflog_expire_cb cb;
->  	int i, status = 0;
-> +	unsigned int flags = 0;
 >  
->  	memset(&cb, 0, sizeof(cb));
+>  	log_file = git_pathdup("logs/%s", refname);
+> -	if (!cmd->dry_run) {
+> +	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
+>  		if (hold_lock_file_for_update(&reflog_lock, log_file, 0) < 0)
+>  			goto failure;
+>  		cb.newlog = fdopen_lock_file(&reflog_lock, "w");
+> @@ -453,7 +456,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
+>  	for_each_reflog_ent(refname, expire_reflog_ent, &cb);
+>  	reflog_expiry_cleanup(&cb);
 >  
-> @@ -781,7 +784,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
->  			cb.expire_total = 0;
->  		}
->  
-> -		status |= expire_reflog(ref, sha1, &cb);
-> +		status |= expire_reflog(ref, sha1, flags, &cb);
->  		free(ref);
->  	}
->  	return status;
+> -	if (cb.newlog) {
+> +	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
+>  		if (close_lock_file(&reflog_lock)) {
+>  			status |= error("Couldn't write %s: %s", log_file,
+>  					strerror(errno));
+> @@ -644,7 +647,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+>  	for (i = 1; i < argc; i++) {
+>  		const char *arg = argv[i];
+>  		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+> -			cb.dry_run = 1;
+> +			flags |= EXPIRE_REFLOGS_DRY_RUN;
+>  		else if (starts_with(arg, "--expire=")) {
+>  			if (parse_expiry_date(arg + 9, &cb.expire_total))
+>  				die(_("'%s' is not a valid timestamp"), arg);
+> @@ -738,7 +741,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+>  	for (i = 1; i < argc; i++) {
+>  		const char *arg = argv[i];
+>  		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+> -			cb.dry_run = 1;
+> +			flags |= EXPIRE_REFLOGS_DRY_RUN;
+>  		else if (!strcmp(arg, "--rewrite"))
+>  			cb.rewrite = 1;
+>  		else if (!strcmp(arg, "--updateref"))
 > -- 
 > 2.1.3
 > 
