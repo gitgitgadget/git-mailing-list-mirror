@@ -1,77 +1,95 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] index-format.txt: add a missing closing quote
-Date: Mon,  8 Dec 2014 20:42:15 +0700
-Message-ID: <1418046135-16377-1-git-send-email-pclouds@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fsck: properly bound "invalid tag name" error message
+Date: Mon, 8 Dec 2014 14:46:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412081431540.13845@s15462909.onlinehome-server.info>
+References: <20141208054812.GA30154@peff.net> <20141208055706.GA30207@peff.net> <20141208112835.GA15919@lanh> <alpine.DEB.1.00.1412081232500.13845@s15462909.onlinehome-server.info> <20141208114740.GA16658@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 08 14:32:02 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 08 14:46:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxyPv-0007Yo-1Z
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 14:31:59 +0100
+	id 1Xxye9-0007bx-RB
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 14:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755217AbaLHNbz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Dec 2014 08:31:55 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:39675 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753050AbaLHNbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2014 08:31:55 -0500
-Received: by mail-pa0-f54.google.com with SMTP id fb1so5206639pad.41
-        for <git@vger.kernel.org>; Mon, 08 Dec 2014 05:31:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=fO2Tcxn06aZ6c8ASBiqbNWpRcoFSDxhbEecDVWHbnLs=;
-        b=Z5JPSYIbdXnPtfrJzmJl249QK9Z7L6O0rU4HOvfKn8bHAa1rWgr71DbjcMaC6T5FGd
-         HRTxDajuaDlpzTAFN+/2Jen72lInSgOrl/2Gm67dz2Cn+d3sUreWnUaKcFUKKoupeVBl
-         zauVABnKmMkHmkFRek5qziK9g081TP7jtr/u6OUQ6sMQk8nSjqnxhd1T63a8R8lzi8Wa
-         iTwg+pRdnr455otFEfWqv59hMPmLqqKW6ovlO01tEL03sN2LfO07EGd18k9R9gw9dqSe
-         m+hTo+7RW5t1SLr5t2hXDft5tCQ+hHEoRUk+QDq1bQQAivbdgw919vdyH5mKIATV4O/U
-         YLkg==
-X-Received: by 10.70.109.174 with SMTP id ht14mr21234784pdb.74.1418045514608;
-        Mon, 08 Dec 2014 05:31:54 -0800 (PST)
-Received: from lanh ([115.73.205.130])
-        by mx.google.com with ESMTPSA id j5sm36614237pdp.9.2014.12.08.05.31.51
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Dec 2014 05:31:54 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 08 Dec 2014 20:42:30 +0700
-X-Mailer: git-send-email 2.2.0.60.gb7b3c64
+	id S1751482AbaLHNqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 08:46:36 -0500
+Received: from mout.gmx.net ([212.227.17.21]:52480 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751164AbaLHNqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2014 08:46:35 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LbPza-1Xa94p2M5i-00kvhy;
+ Mon, 08 Dec 2014 14:46:29 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20141208114740.GA16658@peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:z2cnMFU6eB5eiAX5Rs5VVc/4ifmtPLzbUaE+LMuYd0on/LyihpM
+ AB02NBJkX7LKL9EjB2liwF9DU8SVE/7Yav/mjbKLBWGQDjXm2Ni67iLn3jgvTOxN0UDOWMK
+ d5udqYMF9qq+oF48CY15SHBgoR9dhOpQ004rs83133FK02/aczH3GOC59FUOAkphYh0/HbE
+ yPXO656kEElkoYOn0Wx8A==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261016>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/technical/index-format.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Peff,
 
-diff --git a/Documentation/technical/index-format.txt b/Documentation/t=
-echnical/index-format.txt
-index 1250b5c..35112e4 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -207,7 +207,7 @@ Git index format
-   in a separate file. This extension records the changes to be made on
-   top of that to produce the final index.
-=20
--  The signature for this extension is { 'l', 'i, 'n', 'k' }.
-+  The signature for this extension is { 'l', 'i', 'n', 'k' }.
-=20
-   The extension consists of:
-=20
---=20
-2.2.0.60.gb7b3c64
+On Mon, 8 Dec 2014, Jeff King wrote:
+
+> On Mon, Dec 08, 2014 at 12:35:27PM +0100, Johannes Schindelin wrote:
+> 
+> > On Mon, 8 Dec 2014, Duy Nguyen wrote:
+> > 
+> > > On Mon, Dec 08, 2014 at 12:57:06AM -0500, Jeff King wrote:
+> > > > I do admit that I am tempted to teach index-pack to always NUL-terminate
+> > > > objects in memory that we feed to fsck, just to be on the safe side. It
+> > > > doesn't cost much, and could prevent a silly mistake (either in the
+> > > > future, or one that I missed in my analysis).
+> > > 
+> > > I think I'm missing a "but.." here.
+> > 
+> > The "but..."s I have are:
+> > 
+> > 1) we potentially waste space, and
+> 
+> I think this can be ignored. It's 1 byte per object, and only while we
+> keep the object in RAM. Also, we already do it for buffers read from
+> read_sha1_file, so when you run "git log" every commit buffer we keep in
+> RAM is already doing this (and has been since basically day one).
+
+Fine with me.
+
+> > 2) I would like to make really certain, preferably with static analysis,
+> >    that fsck_object() only receives buffers that are NUL terminated, and
+> >    that no call path is missed.
+> 
+> I know this is not as good as a real static analysis, but I was
+> concerned about this exact thing about a year ago (I think in relation
+> to commit parsing for pretty-printing) and traced all of the paths
+> through which you can get an object; they all end up in the same few
+> code paths that all xmallocz: unpack_sha1_file for loose objects,
+> unpack_compressed_entry for pack bases, and patch_delta for deltas.
+
+Thank you for sharing the analysis. This is exactly what I was looking
+for.
+
+> Index-pack and unpack-objects are the odd men out here because they are
+> processing objects that are not actually in the repository yet. I think
+> the spots Duy pointed out probably cover index-pack. It looks like
+> builtin/unpack-objects.c:get_data needs the same treatment.
+
+I just started working on that. To see the progress, please have a look
+here:
+
+	https://github.com/dscho/git/pull/5
+
+Ciao,
+Dscho
