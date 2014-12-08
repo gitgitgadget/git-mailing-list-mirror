@@ -1,89 +1,134 @@
-From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-Subject: Antw: Re: Enhancement Request: "locale" git option
-Date: Mon, 08 Dec 2014 08:50:20 +0100
-Message-ID: <5485664C020000A100018371@gwsmtp1.uni-regensburg.de>
-References: <54801C39020000A1000182FA@gwsmtp1.uni-regensburg.de>
- <54801B50.4080500@web.de> <20141204095557.GE27455@peff.net>
- <CACBZZX4Rin6jj2viTUmdpEqLb9TWnMf+p_vRF8BbLrTWFDcp3A@mail.gmail.com>
- <548087F8.1030103@drmicha.warpmail.net>
- <CACBZZX6iOtO-Wv_T1Sgtmjqdi8kEziBCHwp1X319x0o1QMOnGA@mail.gmail.com>
- <20141204205527.GA19953@peff.net> <5481D30B.2020104@web.de>
- <CAN0XMO+hn0cYrd=gVpUad_mQCvkNwdFzFLn0Vo7045-M_0Gsvw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH] transport-helper: initialize debug flag before starting
+ threads
+Date: Mon, 8 Dec 2014 03:22:06 -0500
+Message-ID: <20141208082206.GA28302@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@drmicha.warpmail.net>,
-	"=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?=" <avarab@gmail.com>,
-	<peff@peff.net>, <git@vger.kernel.org>
-To: <ralf.thielow@gmail.com>, <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Dec 08 08:50:34 2014
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 08 09:22:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xxt5U-0003yA-RK
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 08:50:33 +0100
+	id 1Xxta9-00029D-Lk
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 09:22:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754376AbaLHHu3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Dec 2014 02:50:29 -0500
-Received: from rrzmta2.uni-regensburg.de ([194.94.155.52]:40965 "EHLO
-	rrzmta2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754071AbaLHHu2 (ORCPT
-	<rfc822;groupwise-git@vger.kernel.org:4:1>);
-	Mon, 8 Dec 2014 02:50:28 -0500
-Received: from rrzmta2.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id A628C529EA
-	for <git@vger.kernel.org>; Mon,  8 Dec 2014 08:50:26 +0100 (CET)
-Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-	by rrzmta2.uni-regensburg.de (Postfix) with ESMTP id EAD7653083
-	for <git@vger.kernel.org>; Mon,  8 Dec 2014 08:50:20 +0100 (CET)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
-	with Novell_GroupWise; Mon, 08 Dec 2014 08:50:20 +0100
-X-Mailer: Novell GroupWise Internet Agent 14.0.1 
-In-Reply-To: <CAN0XMO+hn0cYrd=gVpUad_mQCvkNwdFzFLn0Vo7045-M_0Gsvw@mail.gmail.com>
+	id S1754215AbaLHIWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 03:22:08 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49835 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753901AbaLHIWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2014 03:22:07 -0500
+Received: (qmail 3380 invoked by uid 102); 8 Dec 2014 08:22:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Dec 2014 02:22:07 -0600
+Received: (qmail 21371 invoked by uid 107); 8 Dec 2014 08:22:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Dec 2014 03:22:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Dec 2014 03:22:06 -0500
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261003>
 
->>> Ralf Thielow <ralf.thielow@gmail.com> schrieb am 06.12.2014 um 20:2=
-8 in
-Nachricht
-<CAN0XMO+hn0cYrd=3DgVpUad_mQCvkNwdFzFLn0Vo7045-M_0Gsvw@mail.gmail.com>:
-> 2014-12-05 16:45 GMT+01:00 Torsten B=C3=B6gershausen <tboegi@web.de>:
->>
->> I do not know who was first, and who came later, but
->>=20
->
-<http://git-scm.com/book/de/v1/Git-Grundlagen-%C3%84nderungen-am-Reposi=
-tory-na
+The transport_debug() function uses a static variable to
+lazily cache the boolean value of $TRANSPORT_DEBUG. If a
+program uses transport-helper's bidirectional_transfer_loop
+(as remote-ext and remote-fd do), then two threads may both
+try to write the variable at the same time.
 
-> chverfolgen>
->>
->> uses "versioniert" as "tracked"
->>
->>
->> LANG=3Dde_DE.UTF-8 git status
->> gives:
->> nichts zum Commit vorgemerkt, aber es gibt unbeobachtete Dateien (be=
-nutzen
+We can fix this by initializing the variable right before
+starting the threads.
 
-> Sie "git add" zum Beobachten)
->>
->>
->> Does it make sense to replace "beobachten" with "versionieren" ?
->>
->=20
-> I think it makes sense. "versionieren" describes the concept of track=
-ing
-> better than "beobachten", IMO. I'll send a patch for that.
+Noticed by "-fsanitize=thread". This probably isn't a
+problem in practice, as both threads will write the same
+value, and we are unlikely to see a torn write on an "int"
+(i.e., on sane platforms a write to an int is atomic).
 
-Isolated from usage, "versionieren" and "tracking" have no common trans=
-lation;
-what about "verfolgen" (~follow) for "tracking"?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I'm playing around with -fsanitize=thread and found this. The fix isn't
+_too_ bad, but it's not the only case.
 
->=20
-> Thanks
+For example, "grep" may spawn many threads, each of which calls
+want_color(), which does the same static cache-the-env trick. Should
+grep call want_color() preemptively before staring threads? That's also
+not too bad, but we're starting to cross a lot of module boundaries here
+(i.e., it's a bit gross that grep needs to know how want_color() is
+implemented).
+
+As noted above, I think these cases are pretty benign. But it looks like
+-fsanitize=thread would be a good way to find cases that are not (e.g.,
+places in index-pack where we need to take the global lock but don't),
+and it would be nice to keep things clean. The options for doing so (and
+hence the RFC) are:
+
+  1. Fixes like this (or grep calling want_color preemptively0. I'm not
+     sure yet how many would be necessary, but probably a handful.
+
+  2. Annotate sites like this (a single int read/write where all threads
+     should get the same value) with "it's OK to race here" markers.
+
+  3. Introduce locking into each site. This has performance
+     implications, which makes me hesitate if this isn't a problem in
+     practice. There's probably a simple lockless solution, though.
+
+I think I'd favor (2) if we don't mind polluting our code with such
+annotations. I haven't investigated exactly what they would look like,
+though (there is a "dynamic annotation" that is pretty gross, as it
+requires linking with extra code; but I think there may also be a
+valgrind-suppression-like scheme that can live outside the code
+completely).
+
+ transport-helper.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/transport-helper.c b/transport-helper.c
+index 0224687..fc3756c 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1058,17 +1058,23 @@ int transport_helper_init(struct transport *transport, const char *name)
+ /* This should be enough to hold debugging message. */
+ #define PBUFFERSIZE 8192
+ 
++static int transport_debug_enabled(void)
++{
++	static int debug_enabled = -1;
++
++	if (debug_enabled < 0)
++		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
++	return debug_enabled;
++}
++
+ /* Print bidirectional transfer loop debug message. */
+ __attribute__((format (printf, 1, 2)))
+ static void transfer_debug(const char *fmt, ...)
+ {
+ 	va_list args;
+ 	char msgbuf[PBUFFERSIZE];
+-	static int debug_enabled = -1;
+ 
+-	if (debug_enabled < 0)
+-		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
+-	if (!debug_enabled)
++	if (!transport_debug_enabled)
+ 		return;
+ 
+ 	va_start(args, fmt);
+@@ -1237,6 +1243,10 @@ static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
+ 	pthread_t ptg_thread;
+ 	int err;
+ 	int ret = 0;
++
++	/* initialize static global debug flag as a side effect */
++	transport_debug_enabled();
++
+ 	err = pthread_create(&gtp_thread, NULL, udt_copy_task_routine,
+ 		&s->gtp);
+ 	if (err)
+-- 
+2.2.0.390.gf60752d
