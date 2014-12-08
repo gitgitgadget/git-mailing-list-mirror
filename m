@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH] checkout: add --ignore-other-wortrees
-Date: Mon,  8 Dec 2014 21:04:44 +0700
-Message-ID: <1418047507-22892-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 01/23] dir.c: optionally compute sha-1 of a .gitignore file
+Date: Mon,  8 Dec 2014 21:04:45 +0700
+Message-ID: <1418047507-22892-3-git-send-email-pclouds@gmail.com>
 References: <1418047507-22892-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,159 +10,198 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 08 14:54:59 2014
+X-From: git-owner@vger.kernel.org Mon Dec 08 14:55:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xxym7-00047h-VW
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 14:54:56 +0100
+	id 1XxymE-0004Al-6f
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 14:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755445AbaLHNyv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Dec 2014 08:54:51 -0500
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:65201 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbaLHNyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2014 08:54:50 -0500
-Received: by mail-pd0-f169.google.com with SMTP id z10so5222812pdj.28
-        for <git@vger.kernel.org>; Mon, 08 Dec 2014 05:54:48 -0800 (PST)
+	id S1755467AbaLHNy4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Dec 2014 08:54:56 -0500
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:60998 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755446AbaLHNyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2014 08:54:53 -0500
+Received: by mail-pd0-f180.google.com with SMTP id w10so2103175pde.39
+        for <git@vger.kernel.org>; Mon, 08 Dec 2014 05:54:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=TG7JesFh5k9PuBj3avxeXk4N1dbHKOlzJFE39u4fl10=;
-        b=sqj39XMbO8lAYRUuy3C5Poh5+gW6oeZ5ttn2M7dyffE52jY75VYVJ/EDhD/z7ewM09
-         UXV7ubfzw8D9oNF7RVbZrQrUB8aJf8p4GS0zc9ZC1vWU2bZQinGmKAsY/cGKO/Ucun6v
-         STdiDvcVc8oeDgTUcI04mu2MKvwOoRBrIV0Kn/4n1/jEV4WDhlHLK+7Q7Ds1JJlQ4kUf
-         i80RHBG3IBeU/nrV3+5pFbVsWrtT6oDPPa2VWfRGZQ7y7BiUu4lEfRiW6ligC+QRosXf
-         ymJ6eC1iSAGpHdte0pGP1rj5NaTxx4SxZNliTh6+/nYV9fjTRzxEEd8U6qFpuF9ca5gs
-         g9dQ==
-X-Received: by 10.68.102.195 with SMTP id fq3mr60445268pbb.7.1418046888413;
-        Mon, 08 Dec 2014 05:54:48 -0800 (PST)
+        bh=hOep2CSEC6v0DjcfoxNCslWTjZw5o/T+NPCgdDSodsY=;
+        b=zIFNrE6DJBJ6gKIpnSMzI2quVk5Kr/6oNTL6U2yr3+3V3jACKtkzKm7ii5h250hYjl
+         rjxjULS6aGWjlPjHXNrAhDnX2WA7P+R4CZr9a3TWzcHO/O6YGmKJrcnJ0slG/MLoujAA
+         NZTkQWnL7l3blKo3cGlKYYCuRApXtHiMMy5wG53NoGkVlxY6WcKD2MGyWDySzEy6P1+i
+         IXl3Hhpb1v8nJk5PF0r67r1aRX/c5rK5rm+WWYPXmxowwWb4VWsDZvLtR1EzVvHKF6Up
+         GJDJMIwLmeuF9IkxnSSw6HXZfxyTBFlliap0580zqgBQ7Fp/8DVH4BsjIPWSEZrWIGzq
+         lBpw==
+X-Received: by 10.68.246.229 with SMTP id xz5mr61116986pbc.131.1418046893246;
+        Mon, 08 Dec 2014 05:54:53 -0800 (PST)
 Received: from lanh ([115.73.205.130])
-        by mx.google.com with ESMTPSA id oz10sm36581136pdb.95.2014.12.08.05.54.45
+        by mx.google.com with ESMTPSA id df1sm36434481pbb.2.2014.12.08.05.54.50
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Dec 2014 05:54:47 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 08 Dec 2014 21:05:23 +0700
+        Mon, 08 Dec 2014 05:54:52 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 08 Dec 2014 21:05:29 +0700
 X-Mailer: git-send-email 2.2.0.60.gb7b3c64
 In-Reply-To: <1418047507-22892-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261019>
 
+This is not used anywhere yet. But the goal is to compare quickly if a
+=2Egitignore file has changed when we have the SHA-1 of both old (cache=
+d
+somewhere) and new (from index or a tree) versions.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-checkout.txt |  6 ++++++
- builtin/checkout.c             | 19 +++++++++++--------
- t/t2025-checkout-to.sh         |  7 +++++++
- 3 files changed, 24 insertions(+), 8 deletions(-)
+ dir.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++-------
+ dir.h |  6 ++++++
+ 2 files changed, 52 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
-t.txt
-index 0c13825..71d9e4e 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -232,6 +232,12 @@ section of linkgit:git-add[1] to learn how to oper=
-ate the `--patch` mode.
- 	specific files such as HEAD, index... See "MULTIPLE WORKING
- 	TREES" section for more information.
+diff --git a/dir.c b/dir.c
+index fcb6872..4cc936b 100644
+--- a/dir.c
++++ b/dir.c
+@@ -466,7 +466,8 @@ void add_exclude(const char *string, const char *ba=
+se,
+ 	x->el =3D el;
+ }
 =20
-+--ignore-other-worktrees::
-+	`git checkout` refuses when the wanted ref is already checked out
-+	by another worktree. This option makes `git checkout` check the
-+	ref out anyway. In other words, the ref is held by more than one
-+	worktree.
-+
- <branch>::
- 	Branch to checkout; if it refers to a branch (i.e., a name that,
- 	when prepended with "refs/heads/", is a valid ref), then that
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 953b763..8b2bf20 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -37,6 +37,7 @@ struct checkout_opts {
- 	int writeout_stage;
- 	int overwrite_ignore;
- 	int ignore_skipworktree;
-+	int ignore_other_worktrees;
-=20
- 	const char *new_branch;
- 	const char *new_branch_force;
-@@ -1079,11 +1080,12 @@ static void check_linked_checkouts(struct branc=
-h_info *new)
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
- 				struct branch_info *new,
--				struct tree **source_tree,
--				unsigned char rev[20],
--				const char **new_branch,
--				int force_detach)
-+				struct checkout_opts *opts,
-+				unsigned char rev[20])
+-static void *read_skip_worktree_file_from_index(const char *path, size=
+_t *size)
++static void *read_skip_worktree_file_from_index(const char *path, size=
+_t *size,
++						struct sha1_stat *sha1_stat)
  {
-+	struct tree **source_tree =3D &opts->source_tree;
-+	const char **new_branch =3D &opts->new_branch;
-+	int force_detach =3D opts->force_detach;
- 	int argcount =3D 0;
- 	unsigned char branch_rev[20];
- 	const char *arg;
-@@ -1209,7 +1211,8 @@ static int parse_branchname_arg(int argc, const c=
-har **argv,
- 		int flag;
- 		char *head_ref =3D resolve_refdup("HEAD", 0, sha1, &flag);
- 		if (head_ref &&
--		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)))
-+		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)) &&
-+		    !opts->ignore_other_worktrees)
- 			check_linked_checkouts(new);
- 		free(head_ref);
+ 	int pos, len;
+ 	unsigned long sz;
+@@ -485,6 +486,10 @@ static void *read_skip_worktree_file_from_index(co=
+nst char *path, size_t *size)
+ 		return NULL;
  	}
-@@ -1340,6 +1343,8 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
- 				N_("second guess 'git checkout no-such-branch'")),
- 		OPT_FILENAME(0, "to", &opts.new_worktree,
- 			   N_("check a branch out in a separate working directory")),
-+		OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
-+			 N_("do not check if another worktree is holding the given ref")),
- 		OPT_END(),
- 	};
+ 	*size =3D xsize_t(sz);
++	if (sha1_stat) {
++		memset(&sha1_stat->stat, 0, sizeof(sha1_stat->stat));
++		hashcpy(sha1_stat->sha1, active_cache[pos]->sha1);
++	}
+ 	return data;
+ }
 =20
-@@ -1420,9 +1425,7 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
- 			opts.track =3D=3D BRANCH_TRACK_UNSPECIFIED &&
- 			!opts.new_branch;
- 		int n =3D parse_branchname_arg(argc, argv, dwim_ok,
--					     &new, &opts.source_tree,
--					     rev, &opts.new_branch,
--					     opts.force_detach);
-+					     &new, &opts, rev);
- 		argv +=3D n;
- 		argc -=3D n;
+@@ -529,11 +534,18 @@ static void trim_trailing_spaces(char *buf)
+ 		*last_space =3D '\0';
+ }
+=20
+-int add_excludes_from_file_to_list(const char *fname,
+-				   const char *base,
+-				   int baselen,
+-				   struct exclude_list *el,
+-				   int check_index)
++/*
++ * Given a file with name "fname", read it (either from disk, or from
++ * the index if "check_index" is non-zero), parse it and store the
++ * exclude rules in "el".
++ *
++ * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
++ * stat data from disk (only valid if add_excludes returns zero). If
++ * ss_valid is non-zero, "ss" must contain good value as input.
++ */
++static int add_excludes(const char *fname, const char *base, int basel=
+en,
++			struct exclude_list *el, int check_index,
++			struct sha1_stat *sha1_stat)
+ {
+ 	struct stat st;
+ 	int fd, i, lineno =3D 1;
+@@ -547,7 +559,7 @@ int add_excludes_from_file_to_list(const char *fnam=
+e,
+ 		if (0 <=3D fd)
+ 			close(fd);
+ 		if (!check_index ||
+-		    (buf =3D read_skip_worktree_file_from_index(fname, &size)) =3D=3D=
+ NULL)
++		    (buf =3D read_skip_worktree_file_from_index(fname, &size, sha1_s=
+tat)) =3D=3D NULL)
+ 			return -1;
+ 		if (size =3D=3D 0) {
+ 			free(buf);
+@@ -560,6 +572,11 @@ int add_excludes_from_file_to_list(const char *fna=
+me,
+ 	} else {
+ 		size =3D xsize_t(st.st_size);
+ 		if (size =3D=3D 0) {
++			if (sha1_stat) {
++				fill_stat_data(&sha1_stat->stat, &st);
++				hashcpy(sha1_stat->sha1, EMPTY_BLOB_SHA1_BIN);
++				sha1_stat->valid =3D 1;
++			}
+ 			close(fd);
+ 			return 0;
+ 		}
+@@ -571,6 +588,21 @@ int add_excludes_from_file_to_list(const char *fna=
+me,
+ 		}
+ 		buf[size++] =3D '\n';
+ 		close(fd);
++		if (sha1_stat) {
++			int pos;
++			if (sha1_stat->valid &&
++			    !match_stat_data(&sha1_stat->stat, &st))
++				; /* no content change, ss->sha1 still good */
++			else if (check_index &&
++				 (pos =3D cache_name_pos(fname, strlen(fname))) >=3D 0 &&
++				 !ce_stage(active_cache[pos]) &&
++				 ce_uptodate(active_cache[pos]))
++				hashcpy(sha1_stat->sha1, active_cache[pos]->sha1);
++			else
++				hash_sha1_file(buf, size, "blob", sha1_stat->sha1);
++			fill_stat_data(&sha1_stat->stat, &st);
++			sha1_stat->valid =3D 1;
++		}
  	}
-diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
-index 915b506..f8e4df4 100755
---- a/t/t2025-checkout-to.sh
-+++ b/t/t2025-checkout-to.sh
-@@ -79,6 +79,13 @@ test_expect_success 'die the same branch is already =
-checked out' '
- 	)
- '
 =20
-+test_expect_success 'not die the same branch is already checked out' '
-+	(
-+		cd here &&
-+		git checkout --ignore-other-worktrees --to anothernewmaster newmaste=
-r
-+	)
-+'
+ 	el->filebuf =3D buf;
+@@ -589,6 +621,13 @@ int add_excludes_from_file_to_list(const char *fna=
+me,
+ 	return 0;
+ }
+=20
++int add_excludes_from_file_to_list(const char *fname, const char *base=
+,
++				   int baselen, struct exclude_list *el,
++				   int check_index)
++{
++	return add_excludes(fname, base, baselen, el, check_index, NULL);
++}
 +
- test_expect_success 'not die on re-checking out current branch' '
- 	(
- 		cd there &&
+ struct exclude_list *add_exclude_list(struct dir_struct *dir,
+ 				      int group_type, const char *src)
+ {
+diff --git a/dir.h b/dir.h
+index 6c45e9d..cdca71b 100644
+--- a/dir.h
++++ b/dir.h
+@@ -73,6 +73,12 @@ struct exclude_list_group {
+ 	struct exclude_list *el;
+ };
+=20
++struct sha1_stat {
++	struct stat_data stat;
++	unsigned char sha1[20];
++	int valid;
++};
++
+ struct dir_struct {
+ 	int nr, alloc;
+ 	int ignored_nr, ignored_alloc;
 --=20
 2.2.0.60.gb7b3c64
