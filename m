@@ -1,94 +1,140 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 22/23] lock_any_ref_for_update(): inline function
-Date: Mon, 8 Dec 2014 15:34:22 -0800
-Message-ID: <20141208233422.GM25562@google.com>
-References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
- <1417734515-11812-23-git-send-email-mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+From: Alfred Perlstein <bright@mu.org>
+Subject: Re: [PATCH] git-svn: Support for git-svn propset
+Date: Mon, 8 Dec 2014 15:43:00 -0800
+Message-ID: <04BE232D-0198-4DEA-90ED-8C8E36456CC5@mu.org>
+References: <20141207104723.GB54199@elvis.mu.org> <20141208213636.GA3743@dcvr.yhbt.net>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Alfred Perlstein <alfred@freebsd.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Dec 09 00:34:29 2014
+	"Michael G. Schwern" <schwern@pobox.com>,
+	David Fraser <davidf@sjsoft.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Dec 09 00:49:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xy7oy-00068Q-Ld
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 00:34:29 +0100
+	id 1Xy83t-0004Ny-CP
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 00:49:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028AbaLHXeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2014 18:34:25 -0500
-Received: from mail-ie0-f201.google.com ([209.85.223.201]:55161 "EHLO
-	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752261AbaLHXeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2014 18:34:24 -0500
-Received: by mail-ie0-f201.google.com with SMTP id rp18so664379iec.2
-        for <git@vger.kernel.org>; Mon, 08 Dec 2014 15:34:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+7hv97ubMv74/huwl2FI1wsaBx5fAAE8jBQZOkD/FTk=;
-        b=SXhnBChlvlFQJ4Fk0MzTCtAHLdRi4H0vKCggcBits55swxOfBoBRGK9yPIEK82Kj08
-         6/2kY3IJZTh813vPda/W3KL6B+46zdi0Q8owsGVSaeN/8cTAOKtIAxbg/JIOMnRag2jg
-         M4M5uxg1f43prKkVz6E1KfxLt7WzvP+A1avbkygLVGU8aCF2ZXc2HiedrK8hiQb2w/4/
-         b8VcZBF3d35mss4mSqo5QQwN640DMgIUBS0Pml9IVPSqKC9MLHIiAQBoFy380JKfphu6
-         p5qkHGppG3LoqsebIyBLruckjEnqJ6yp24KdPX1RT/JfHxI9o1SpVyE9IapfBp6wnBpS
-         5Ykg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=+7hv97ubMv74/huwl2FI1wsaBx5fAAE8jBQZOkD/FTk=;
-        b=jb5WHDHH34jkmaJnSjO38lDkM6t5vQYtItY5TicrJUEBAN75Y7rO2thQGG0VWWI2XD
-         1uqwgDQrmH+Wib22zKNO0lydIO3vhQFR+/qLYZ6ylQq5b2Gd9DZFJkUIAbL5z1BfPVEV
-         Xt9SF9yL0vmv2dxArJ4XM6z+wrBHI53N77KfVktDJ7ZEzIVnF8u+I0Q8jlNrhzSPQ5o3
-         EbRiYcZQnSDeAwbcqeMgVfbedZ5mNObXCN5s3gLteJeaasSCWXiKCVkIGHPfB0O2TFGI
-         a2FhJYFdD797RU2DxZalZ46So4ox0OXsawo855k0Dqq92bJ+KCuqIaenAzKlojXGGPH9
-         S5LA==
-X-Gm-Message-State: ALoCoQlvrhOslHda9TABJcX9AOaJH2UBAZ1/a97MdLoN4WJ4nVzEO+iHGpdTBu/q8bKoK6IhvcnH
-X-Received: by 10.43.9.72 with SMTP id ov8mr33111525icb.20.1418081663674;
-        Mon, 08 Dec 2014 15:34:23 -0800 (PST)
-Received: from corpmail-nozzle1-1.hot.corp.google.com ([100.108.1.104])
-        by gmr-mx.google.com with ESMTPS id r6si1700947yhg.1.2014.12.08.15.34.23
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Dec 2014 15:34:23 -0800 (PST)
-Received: from sbeller.mtv.corp.google.com ([172.27.69.125])
-	by corpmail-nozzle1-1.hot.corp.google.com with ESMTP id 07nBelvc.1; Mon, 08 Dec 2014 15:34:23 -0800
-Received: by sbeller.mtv.corp.google.com (Postfix, from userid 279346)
-	id A355F140BBD; Mon,  8 Dec 2014 15:34:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1417734515-11812-23-git-send-email-mhagger@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755327AbaLHXtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 18:49:49 -0500
+Received: from elvis.mu.org ([192.203.228.196]:13690 "EHLO elvis.mu.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755304AbaLHXts convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2014 18:49:48 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Dec 2014 18:49:48 EST
+Received: from [100.89.165.221] (220.sub-70-197-14.myvzw.com [70.197.14.220])
+	by elvis.mu.org (Postfix) with ESMTPSA id B126C341F873;
+	Mon,  8 Dec 2014 15:43:02 -0800 (PST)
+X-Mailer: iPhone Mail (12B436)
+In-Reply-To: <20141208213636.GA3743@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261099>
 
-On Fri, Dec 05, 2014 at 12:08:34AM +0100, Michael Haggerty wrote:
-> From: Ronnie Sahlberg <sahlberg@google.com>
+
+
+> On Dec 8, 2014, at 1:36 PM, Eric Wong <normalperson@yhbt.net> wrote:
 > 
-> Inline the function at its one remaining caller (which is within
-> refs.c) and remove it.
+> Alfred Perlstein <alfred@freebsd.org> wrote:
+>> Appearing here:
+>>  http://marc.info/?l=git&m=125259772625008&w=2
+> 
+> Probably better to use a mid URL here, too
+> 
+> http://mid.gmane.org/1927112650.1281253084529659.JavaMail.root@klofta.sjsoft.com
+> 
+> such a long URL, though...
+> 
+>> --- a/perl/Git/SVN/Editor.pm
+>> +++ b/perl/Git/SVN/Editor.pm
+>> @@ -288,6 +288,44 @@ sub apply_autoprops {
+>>    }
+>> }
+>> 
+>> +sub check_attr {
+>> +    my ($attr,$path) = @_;
+>> +    my $fh = command_output_pipe("check-attr", $attr, "--", $path);
+>> +    return undef if (!$fh);
+>> +
+>> +    my $val = <$fh>;
+>> +    close $fh;
+>> +    if ($val) { $val =~ s/^[^:]*:\s*[^:]*:\s*(.*)\s*$/$1/; }
+>> +    return $val;
+>> +}
+> 
+> I just noticed command_output_pipe didn't use a corresponding
+> command_close_pipe to check for errors, but command_oneline is even
+> better.  I'll squash the following:
+> 
+> --- a/perl/Git/SVN/Editor.pm
+> +++ b/perl/Git/SVN/Editor.pm
+> @@ -290,11 +290,7 @@ sub apply_autoprops {
+> 
+> sub check_attr {
+>    my ($attr,$path) = @_;
+> -    my $fh = command_output_pipe("check-attr", $attr, "--", $path);
+> -    return undef if (!$fh);
+> -
+> -    my $val = <$fh>;
+> -    close $fh;
+> +    my $val = command_oneline("check-attr", $attr, "--", $path);
+>    if ($val) { $val =~ s/^[^:]*:\s*[^:]*:\s*(.*)\s*$/$1/; }
+>    return $val;
+> }
+> 
+> In your test, "local" isn't portable, unfortunately, but tests seem to
+> work fine without local so I've removed them:
+> 
+> --- a/t/t9148-git-svn-propset.sh
+> +++ b/t/t9148-git-svn-propset.sh
+> @@ -29,10 +29,9 @@ test_expect_success 'fetch revisions from svn' '
+>    git svn fetch
+>    '
+> 
+> -set_props()
+> -{
+> -    local subdir="$1"
+> -    local file="$2"
+> +set_props () {
+> +    subdir="$1"
+> +    file="$2"
+>    shift;shift;
+>    (cd "$subdir" &&
+>        while [ $# -gt 0 ] ; do
+> @@ -43,10 +42,9 @@ set_props()
+>        git commit -m "testing propset" "$file")
+> }
+> 
+> -confirm_props()
+> -{
+> -    local subdir="$1"
+> -    local file="$2"
+> +confirm_props () {
+> +    subdir="$1"
+> +    file="$2"
+>    shift;shift;
+>    (set -e ; cd "svn_project/$subdir" &&
+>        while [ $# -gt 0 ] ; do
+> 
+> Unless there's other improvements we missed, I'll push out your v3 with
+> my changes squashed in for Junio to pull in a day or two.  Thank you
+> again for working on this!
 > 
 
+Eric,
 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+All looks good to me. 
 
-It's originally from Ronnie, but his sign off is missing?
+Thank you all very much for the feedback and help.  It's made this a very rewarding endeavor. 
 
-If that sign off is found again, 
-Reviewed-by: Stefan Beller <sbeller@google.com>
-
-> ---
->  refs.c | 9 +--------
->  refs.h | 9 +--------
->  2 files changed, 2 insertions(+), 16 deletions(-)
-> 
+-Alfred. 
