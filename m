@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 15/23] untracked cache: print stats with $GIT_TRACE_UNTRACKED_STATS
-Date: Mon,  8 Dec 2014 21:04:59 +0700
-Message-ID: <1418047507-22892-17-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 16/23] untracked cache: mark index dirty if untracked cache is updated
+Date: Mon,  8 Dec 2014 21:05:00 +0700
+Message-ID: <1418047507-22892-18-git-send-email-pclouds@gmail.com>
 References: <1418047507-22892-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,83 +10,106 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 08 14:56:13 2014
+X-From: git-owner@vger.kernel.org Mon Dec 08 14:56:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XxynJ-0004wt-TL
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 14:56:10 +0100
+	id 1XxynP-000526-Bl
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 14:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755516AbaLHN4F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Dec 2014 08:56:05 -0500
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:38511 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754376AbaLHN4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2014 08:56:04 -0500
-Received: by mail-pd0-f170.google.com with SMTP id v10so5190431pde.15
-        for <git@vger.kernel.org>; Mon, 08 Dec 2014 05:56:02 -0800 (PST)
+	id S1755522AbaLHN4K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Dec 2014 08:56:10 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:52549 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754376AbaLHN4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2014 08:56:08 -0500
+Received: by mail-pa0-f48.google.com with SMTP id rd3so5273654pab.21
+        for <git@vger.kernel.org>; Mon, 08 Dec 2014 05:56:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=T3/z93URxQ9rpuvkSL8MZMpTfNmFJ+QjKVBEP6X0qPA=;
-        b=Wftp1TdAWNSjyPuzc8Xs7Y87YeRg0XKEbdI2njn2DXtQXseB4u96HM+/d22usmfgBT
-         2JygTFhytJY6FrDCoRNl46Wy060TXRiAH90c3WhreVQYIaYvGS/nfuUeVSd+4ITjpghJ
-         ZH85Q9oEi8IGxp60QopbhY7XJ1O32FPUaCdQzzMxx14hebzL3y4EdSKobkeQRAe7+Brj
-         qBt6tKUr0Vg1AY2/ZiH1B9Plwn+GMKmj9MbyYTu3fSy5Y/DBoVpTKeYUbu+iXLrwnmZ1
-         4sNwWFDc5vaM9SfD6lJ4RKJtq3xIEcWVzcy2mvNUBfMUKcojTi1hUAeSPse8CEg+N9Wa
-         f6KA==
-X-Received: by 10.69.14.33 with SMTP id fd1mr61545080pbd.90.1418046962894;
-        Mon, 08 Dec 2014 05:56:02 -0800 (PST)
+        bh=E8iTiyKEbWaA0lBWaukVL+F0Ju2tIvjFdM0WgsNBB2U=;
+        b=FN3DhxVQRCQx0aHnR17hW4kyI7guqFQM8nMJBHBWDGBkvq0M0rotAgb3ujSvgul64/
+         +4uONexKjyzkwVQgufwe9zuKyRuFNXjYhmCQIO+akwd2nocGNcbTlT0v1CIxjqd6bzh+
+         UlXHTuVaRKR/o5uuVn0/6xkJmPJ01qxda85DOkcsktqaPJ4jkghZFz0RUFqr1arkPWfb
+         iaTYy9AKdfP0GM8u6lg/NRU2XWvxEgSmGheykCiJCO1Ts8mYAkufi6s/2QwwUEj1+8tv
+         kb9x/wZeP/vurCNFpUjFG40AhHDlRwnzyCxpXGsqSnEXZviHVn8Nw1FubNzS8J3nsyk5
+         ESGA==
+X-Received: by 10.66.220.34 with SMTP id pt2mr53064950pac.142.1418046967822;
+        Mon, 08 Dec 2014 05:56:07 -0800 (PST)
 Received: from lanh ([115.73.205.130])
-        by mx.google.com with ESMTPSA id ny10sm12355693pdb.21.2014.12.08.05.56.00
+        by mx.google.com with ESMTPSA id m3sm36004823pda.75.2014.12.08.05.56.05
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Dec 2014 05:56:02 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 08 Dec 2014 21:06:38 +0700
+        Mon, 08 Dec 2014 05:56:07 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 08 Dec 2014 21:06:43 +0700
 X-Mailer: git-send-email 2.2.0.60.gb7b3c64
 In-Reply-To: <1418047507-22892-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261033>
-
-This could be used to verify correct behavior in tests
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261034>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- dir.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ cache.h      | 1 +
+ dir.c        | 9 +++++++++
+ read-cache.c | 2 +-
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
+diff --git a/cache.h b/cache.h
+index f8b3dc5..fca979b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -295,6 +295,7 @@ static inline unsigned int canon_mode(unsigned int =
+mode)
+ #define RESOLVE_UNDO_CHANGED	(1 << 4)
+ #define CACHE_TREE_CHANGED	(1 << 5)
+ #define SPLIT_INDEX_ORDERED	(1 << 6)
++#define UNTRACKED_CHANGED	(1 << 7)
+=20
+ struct split_index;
+ struct untracked_cache;
 diff --git a/dir.c b/dir.c
-index 7fa372e..14dbd7a 100644
+index 14dbd7a..9b0e1a1 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1922,6 +1922,18 @@ int read_directory(struct dir_struct *dir, const=
+@@ -1933,6 +1933,15 @@ int read_directory(struct dir_struct *dir, const=
  char *path, int len, const stru
- 	free_simplify(simplify);
- 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
- 	qsort(dir->ignored, dir->ignored_nr, sizeof(struct dir_entry *), cmp_=
-name);
-+	if (dir->untracked) {
-+		static struct trace_key trace_untracked_stats =3D TRACE_KEY_INIT(UNT=
-RACKED_STATS);
-+		trace_printf_key(&trace_untracked_stats,
-+				 "node creation: %u\n"
-+				 "gitignore invalidation: %u\n"
-+				 "directory invalidation: %u\n"
-+				 "opendir: %u\n",
-+				 dir->untracked->dir_created,
-+				 dir->untracked->gitignore_invalidated,
-+				 dir->untracked->dir_invalidated,
-+				 dir->untracked->dir_opened);
-+	}
+ 				 dir->untracked->gitignore_invalidated,
+ 				 dir->untracked->dir_invalidated,
+ 				 dir->untracked->dir_opened);
++		if (dir->untracked =3D=3D the_index.untracked &&
++		    (dir->untracked->dir_opened ||
++		     dir->untracked->gitignore_invalidated ||
++		     dir->untracked->dir_invalidated))
++			the_index.cache_changed |=3D UNTRACKED_CHANGED;
++		if (dir->untracked !=3D the_index.untracked) {
++			free(dir->untracked);
++			dir->untracked =3D NULL;
++		}
+ 	}
  	return dir->nr;
  }
+diff --git a/read-cache.c b/read-cache.c
+index 0ecba05..71d8e20 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -42,7 +42,7 @@ static struct cache_entry *refresh_cache_entry(struct=
+ cache_entry *ce,
+ /* changes that can be kept in $GIT_DIR/index (basically all extension=
+s) */
+ #define EXTMASK (RESOLVE_UNDO_CHANGED | CACHE_TREE_CHANGED | \
+ 		 CE_ENTRY_ADDED | CE_ENTRY_REMOVED | CE_ENTRY_CHANGED | \
+-		 SPLIT_INDEX_ORDERED)
++		 SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED)
 =20
+ struct index_state the_index;
+ static const char *alternate_index_output;
 --=20
 2.2.0.60.gb7b3c64
