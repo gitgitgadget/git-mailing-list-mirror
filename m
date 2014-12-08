@@ -1,67 +1,65 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 0/5] git-glossary
-Date: Mon, 8 Dec 2014 17:16:02 +0100
-Message-ID: <CAP8UFD0yRKRPj3x6jZoL72jkzs0T2vZ0HZVi46zX0gzXqGv_Sw@mail.gmail.com>
-References: <cover.1418052470.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Dec 08 17:16:11 2014
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 0/2] Make git branch -f forceful
+Date: Mon,  8 Dec 2014 17:28:43 +0100
+Message-ID: <cover.1418055912.git.git@drmicha.warpmail.net>
+References: <xmqqbnniq8k8.fsf@gitster.dls.corp.google.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 08 17:28:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xy0yn-0006ie-Qc
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 17:16:10 +0100
+	id 1Xy1BB-00056B-Oe
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 17:28:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947AbaLHQQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2014 11:16:05 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:59752 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755908AbaLHQQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2014 11:16:04 -0500
-Received: by mail-ie0-f177.google.com with SMTP id rd18so4758907iec.36
-        for <git@vger.kernel.org>; Mon, 08 Dec 2014 08:16:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=cmAq+t6dwbk34I3Q27qVFlPtubgzcp+5S9f2srYKIeQ=;
-        b=jV16+gSbJ9hUnAk5n8b3NklwXLCBPEzDzRs3UUz2EkCUprT8JGlNigqZuqKvKm4IQc
-         L53CiYxmbcL+Ffrevd+4Dx/9kUb/iM7p5nXJWoZCHHQwoJo5HKpw1WRmnEaBKU51RRsa
-         Mgzwqhco7mrTHhCT0iQuNHuzIZ8EbRFadiHnqHJ+PE46TaQUzo8hZtuB16nhyWg08cFC
-         fmzcdXczPw+Gb2zC5fgIiMHLC+z0tbPOQEdaSQ9DN0rA38TSugXNt0yPjz1hyMHNMoEu
-         mqWUMta2yHTvFyiLJUbtYZDeoFFYS9KUL2sFcfz0cP9nby1PjaJNbAtFNoLCc4j3gRuQ
-         AXeQ==
-X-Received: by 10.107.135.211 with SMTP id r80mr11651746ioi.67.1418055362444;
- Mon, 08 Dec 2014 08:16:02 -0800 (PST)
-Received: by 10.50.30.40 with HTTP; Mon, 8 Dec 2014 08:16:02 -0800 (PST)
-In-Reply-To: <cover.1418052470.git.git@drmicha.warpmail.net>
+	id S1751405AbaLHQ2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 11:28:48 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:43502 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750908AbaLHQ2r (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2014 11:28:47 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id E201020289
+	for <git@vger.kernel.org>; Mon,  8 Dec 2014 11:28:46 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 08 Dec 2014 11:28:46 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references; s=smtpout; bh=eXHk4KizW6smXa
+	1UBB9UVvA/gOk=; b=q6f+Ge0t40A92eGj7ZRHQki4fKDGnOhf9UHN957X4bvu28
+	F7+6YB/8yP4hVS2QoCr8wy9vDFGCZM4uFG0u45Q2HoMAjDi6+AdNCgIHzhmephZT
+	5ypih99cuHAWdlYTTroVUR/7rhkI0gqasYS+z61EMAAzPqab6kS9G5MUw1VTc=
+X-Sasl-enc: jNl6Up8Yo6Es3Fh5+chYDBT2al/4okl3gEZzJeIB4QgF 1418056126
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 8049368012B;
+	Mon,  8 Dec 2014 11:28:46 -0500 (EST)
+X-Mailer: git-send-email 2.2.0.345.g7041aac
+In-Reply-To: <xmqqbnniq8k8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261073>
 
-On Mon, Dec 8, 2014 at 4:38 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> More and more people use Git in localised setups, which usually means
-> mixed localisation setups - not only, but also because of our English
-> man pages.
->
-> Here's an attempt at leveraging our current infrastructure for helping
-> those poor mixed localisation folks. The idea is to keep the most
-> important iterms in the glossary and translate at least these.
+For many git commands, '-f/--force' is a way to force actions which
+would otherwise error out. Way more than once, I've been trying this
+with 'git branch -d' and 'git branch -m'...
 
-If the problem is related to all the man pages, shouldn't the solution
-apply to all the man pages?
+I've had these two patches sitting in my tree for 3 years now it seems.
+Here's a rebase.
 
-> 1/5: generate glossary term list automatically from gitglossary.txt
-> 2/5: introduce git-glossary command which helps with lookups
+In v2 I rename force_create to force and spell out the "-f" behaviour
+for other options in the commit message.
 
-Couldn't you improve git-help ?
+Michael J Gruber (2):
+  t3200-branch: test -M
+  branch: allow -f with -m and -d
 
-Thanks,
-Christian.
+ builtin/branch.c  | 13 +++++++++----
+ t/t3200-branch.sh | 14 ++++++++++++++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
+
+-- 
+2.2.0.345.g7041aac
