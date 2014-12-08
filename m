@@ -1,133 +1,93 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 2/2] branch: allow -f with -m and -d
-Date: Mon,  8 Dec 2014 17:28:45 +0100
-Message-ID: <80b7cc5312666af6136d641a24e42aed78636724.1418055912.git.git@drmicha.warpmail.net>
-References: <xmqqbnniq8k8.fsf@gitster.dls.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>
+From: Martin Scherer <m.scherer@fu-berlin.de>
+Subject: Blobs not referenced by file (anymore) are not removed by GC
+Date: Mon, 08 Dec 2014 17:22:23 +0100
+Message-ID: <5485D03F.3060008@fu-berlin.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 08 17:28:59 2014
+X-From: git-owner@vger.kernel.org Mon Dec 08 17:29:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xy1BC-00056B-Uo
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 17:28:59 +0100
+	id 1Xy1Bz-0005YF-2Q
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 17:29:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752477AbaLHQ2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2014 11:28:53 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:50530 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750908AbaLHQ2u (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2014 11:28:50 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id A89B6201C5
-	for <git@vger.kernel.org>; Mon,  8 Dec 2014 11:28:49 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Mon, 08 Dec 2014 11:28:49 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
-	:message-id:in-reply-to:references:in-reply-to:references; s=
-	smtpout; bh=wwJQYtKq10ItDO2rKPEb7MziIno=; b=ZPNojUMGFQi1SyW1v6sg
-	w+k0gFyDXlk0A8KBP6cOI8PRS6rqeGynKDSQvC2Fwra+ccBtZLS1RsIe76VXDvGT
-	Q7tbnfhbnKgkDyZuTbp5Ut34RfizSiQ4nHX1fXMuMAnHX3BAt/A/nJZ723nnv9Zp
-	HzneccIUQ35F3Ts+O4Af06Y=
-X-Sasl-enc: YsotgOtHEEQBvI5QNX9svD+48TPnNLDI7VIVzIJiUlRH 1418056129
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 472E26801E0;
-	Mon,  8 Dec 2014 11:28:49 -0500 (EST)
-X-Mailer: git-send-email 2.2.0.345.g7041aac
-In-Reply-To: <xmqqbnniq8k8.fsf@gitster.dls.corp.google.com>
-In-Reply-To: <cover.1418055912.git.git@drmicha.warpmail.net>
-References: <cover.1418055912.git.git@drmicha.warpmail.net>
+	id S1755523AbaLHQ3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 11:29:43 -0500
+Received: from outpost1.zedat.fu-berlin.de ([130.133.4.66]:57418 "EHLO
+	outpost1.zedat.fu-berlin.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755494AbaLHQ3m (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2014 11:29:42 -0500
+X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Dec 2014 11:29:42 EST
+Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
+          by outpost.zedat.fu-berlin.de (Exim 4.82)
+          for git@vger.kernel.org with esmtp
+          (envelope-from <m.scherer@fu-berlin.de>)
+          id <1Xy14r-001KnO-9D>; Mon, 08 Dec 2014 17:22:25 +0100
+Received: from zafc6.pia.fu-berlin.de ([87.77.175.198] helo=[10.175.198.1])
+          by inpost2.zedat.fu-berlin.de (Exim 4.82)
+          for git@vger.kernel.org with esmtpsa
+          (envelope-from <m.scherer@fu-berlin.de>)
+          id <1Xy14r-003aFa-7i>; Mon, 08 Dec 2014 17:22:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+OpenPGP: url=pgp.mit.edu
+X-Originating-IP: 87.77.175.198
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261076>
 
--f/--force is the standard way to force an action, and is used by branch
-for the recreation of existing branches, but not for deleting unmerged
-branches nor for renaming to an existing branch.
+Hi,
 
-Make "-m -f" equivalent to "-M" and "-d -f" equivalent to" -D", i.e.
-allow -f/--force to be used with -m/-d also.
+after using BFG on a repo given certain directory globs, all of those
+files(names) are gone from history, but can not be collected by garbage
+collection anymore. So the blobs of the underlying files are not deleted
+and only the file names are not associated with the blob anymore. I
+wonder, if I discovered a bug (at least in bfg). But I expect git to
+discover that this blobs are not used in any way (so they have to
+associated to something right?)
 
-For the list modes, "-f" is simply ignored.
+# invoke bfg --delete-folders something multiple times with different
+pattern.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+# try to cleanup
+
+git gc --aggressive --prune=now # big blobs still in history
+git fsck # no results
+git fsck --full  --unreachable --dangling # no results
+
+to verify if the blobs are still there, see the output of
+
+git gc && git verify-pack -v .git/objects/pack/pack-*.idx | egrep "^\w+
+blob\W+[0-9]+ [0-9]+ [0-9]+$" | sort -k 3 -n -r > bigobjects
+.txt
+
+head bigobjects.txt # outputs 9451427d7335395779b91864418630d2f0af780a
+blob   7895212 1869047 7657491
+
+
+Also if bfg is being told to remove the biggest blob (bfg -B 1) with
+no-blob-protection, it does not succeed in removing it.
+
+--- output of bfg -B 1
+
+Found 1 blob ids for large blobs - biggest=7895212 smallest=7895212
+....
+
+BFG aborting: No refs to update - no dirty commits found??
 ---
- builtin/branch.c  | 13 +++++++++----
- t/t3200-branch.sh |  5 +++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 3b79c50..dc6f0b2 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -800,7 +800,7 @@ static int edit_branch_description(const char *branch_name)
- 
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
--	int delete = 0, rename = 0, force_create = 0, list = 0;
-+	int delete = 0, rename = 0, force = 0, list = 0;
- 	int verbose = 0, abbrev = -1, detached = 0;
- 	int reflog = 0, edit_description = 0;
- 	int quiet = 0, unset_upstream = 0;
-@@ -848,7 +848,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('l', "create-reflog", &reflog, N_("create the branch's reflog")),
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
--		OPT__FORCE(&force_create, N_("force creation (when already exists)")),
-+		OPT__FORCE(&force, N_("force creation, move/rename, deletion")),
- 		{
- 			OPTION_CALLBACK, 0, "no-merged", &merge_filter_ref,
- 			N_("commit"), N_("print only not merged branches"),
-@@ -891,7 +891,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (with_commit || merge_filter != NO_FILTER)
- 		list = 1;
- 
--	if (!!delete + !!rename + !!force_create + !!new_upstream +
-+	if (!!delete + !!rename + !!new_upstream +
- 	    list + unset_upstream > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
-@@ -904,6 +904,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		colopts = 0;
- 	}
- 
-+	if (force) {
-+		delete *= 2;
-+		rename *= 2;
-+	}
-+
- 	if (delete) {
- 		if (!argc)
- 			die(_("branch name required"));
-@@ -1020,7 +1025,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 		branch_existed = ref_exists(branch->refname);
- 		create_branch(head, argv[0], (argc == 2) ? argv[1] : head,
--			      force_create, reflog, 0, quiet, track);
-+			      force, reflog, 0, quiet, track);
- 
- 		/*
- 		 * We only show the instructions if the user gave us
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 0b3b8f5..ddea498 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -106,6 +106,11 @@ test_expect_success 'git branch -M o/q o/p should work when o/p exists' '
- 	git branch -M o/q o/p
- '
- 
-+test_expect_success 'git branch -m -f o/q o/p should work when o/p exists' '
-+	git branch o/q &&
-+	git branch -m -f o/q o/p
-+'
-+
- test_expect_success 'git branch -m q r/q should fail when r exists' '
- 	git branch q &&
- 	git branch r &&
--- 
-2.2.0.345.g7041aac
+The repo can be found here.
+
+https://github.com/marscher/stallone_stale_objects
+
+I will restart all over to cleanup the history, but I guess this might
+be interesting for git developers.
+
+
+Best,
+Martin
