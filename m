@@ -1,119 +1,83 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFC/PATCH 1/5] glossary.h: generate a glossary list from the Makefile
-Date: Mon,  8 Dec 2014 16:38:55 +0100
-Message-ID: <dbf54a1a9697cab11692a40a3f7eba1e86508e44.1418052470.git.git@drmicha.warpmail.net>
-References: <cover.1418052470.git.git@drmicha.warpmail.net>
+Subject: [RFC/PATCH 0/5] git-glossary
+Date: Mon,  8 Dec 2014 16:38:54 +0100
+Message-ID: <cover.1418052470.git.git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 08 16:39:11 2014
+X-From: git-owner@vger.kernel.org Mon Dec 08 16:39:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xy0Oz-0000K8-Cj
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 16:39:09 +0100
+	id 1Xy0PC-0000ST-Pf
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 16:39:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960AbaLHPjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2014 10:39:04 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:49279 "EHLO
+	id S1752477AbaLHPjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 10:39:03 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:38474 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752066AbaLHPjC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2014 10:39:02 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7D64420BDB
-	for <git@vger.kernel.org>; Mon,  8 Dec 2014 10:39:02 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Mon, 08 Dec 2014 10:39:02 -0500
+	by vger.kernel.org with ESMTP id S1751880AbaLHPjB (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2014 10:39:01 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3784820C84
+	for <git@vger.kernel.org>; Mon,  8 Dec 2014 10:39:01 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Mon, 08 Dec 2014 10:39:01 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=x-sasl-enc:from:to:subject:date
-	:message-id:in-reply-to:references; s=smtpout; bh=qUBks7J/KJq/Uz
-	Bs5ctoNYteylc=; b=NgkSNDGC+1vFHAKnMInmprtrEf6zOMKBvPuspzjJhc7pAv
-	iEg8tEJbQlxAminCq5K+jIKETgpVLenPpQGRmRR0nNj7DsPZUAOZBqhpUAMyoB+E
-	5ioo3ewkQk5QLQ0u5hPTMhGGKm+x3mCs9G42LuyOv9MlVwIwenRKJw3bIwJug=
-X-Sasl-enc: X6WQtEL4VlXyvxJ5bf1WpXPqBVNBVA23oonrTj2+/1a1 1418053142
+	:message-id; s=smtpout; bh=SAgg21cZo9TAMfzIBglKDDzhKOw=; b=PtU4w
+	ywEP2BATfOHquM52Yv0PAZEpHD+Pihw2XIrfihFpDeNYTJ8QNRueOto4OVxxQI/n
+	7PQWzSCTqHXFayOBsSGbaTh7bXYvrfU+yvZRJJsm5kltq8FUS80cGfrFnZHMBsCn
+	SwEr693yYVnTYCgcWd4ojEwhiC1AR+tTmTcYtI=
+X-Sasl-enc: hydX0awHzpDPiC+UQ3Ph8WyzGRTzJgDnisfDcjxBAU2r 1418053140
 Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 2138F680190;
-	Mon,  8 Dec 2014 10:39:02 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id CC822C00281;
+	Mon,  8 Dec 2014 10:39:00 -0500 (EST)
 X-Mailer: git-send-email 2.2.0.345.g7041aac
-In-Reply-To: <cover.1418052470.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261046>
 
-Generate a header file which lists all terms defined in the glossary
-in a way suitable for localisation. This will be used by the new
-glossary command.
+More and more people use Git in localised setups, which usually means
+mixed localisation setups - not only, but also because of our English
+man pages.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-I also snuck in a change to the clean target, so that we don't have to update
-it (its definition) as long as we keep GENERATED_H up to date.
+Here's an attempt at leveraging our current infrastructure for helping
+those poor mixed localisation folks. The idea is to keep the most
+important iterms in the glossary and translate at least these.
 
- .gitignore           | 1 +
- Makefile             | 7 +++++--
- generate-glossary.sh | 8 ++++++++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+1/5: generate glossary term list automatically from gitglossary.txt
+2/5: introduce git-glossary command which helps with lookups
+3/5: introduce git-glossary.txt, the man page for the command
+4/5: git.pot update
+5/5: sample de.po update
+
+Without 4/5 and 5/5, a few terms from the glossary can be translated
+already by coincidence with localised messages from some git commands.
+
+Michael J Gruber (5):
+  glossary.h: generate a glossary list from the Makefile
+  glossary: introduce glossary lookup command
+  glossary: man page
+  l10n: git-glossary
+  l10n: de: git-glossary
+
+ .gitignore                     |    2 +
+ Documentation/git-glossary.txt |   48 ++
+ Makefile                       |    8 +-
+ builtin.h                      |    1 +
+ builtin/glossary.c             |  104 +++
+ command-list.txt               |    1 +
+ generate-glossary.sh           |    8 +
+ git.c                          |    1 +
+ po/de.po                       | 1382 ++++++++++++++++++++++++----------------
+ po/git.pot                     | 1362 +++++++++++++++++++++++----------------
+ 10 files changed, 1839 insertions(+), 1078 deletions(-)
+ create mode 100644 Documentation/git-glossary.txt
+ create mode 100644 builtin/glossary.c
  create mode 100755 generate-glossary.sh
 
-diff --git a/.gitignore b/.gitignore
-index a052419..fb4ebaa 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -208,6 +208,7 @@
- /test-urlmatch-normalization
- /test-wildmatch
- /common-cmds.h
-+/glossary.h
- *.tar.gz
- *.dsc
- *.deb
-diff --git a/Makefile b/Makefile
-index 14d5ac1..ae74fdf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -627,7 +627,7 @@ LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
- VCSSVN_LIB = vcs-svn/lib.a
- 
--GENERATED_H += common-cmds.h
-+GENERATED_H += common-cmds.h glossary.h
- 
- LIB_H = $(shell $(FIND) . \
- 	-name .git -prune -o \
-@@ -1649,6 +1649,9 @@ common-cmds.h: ./generate-cmdlist.sh command-list.txt
- common-cmds.h: $(wildcard Documentation/git-*.txt)
- 	$(QUIET_GEN)./generate-cmdlist.sh > $@+ && mv $@+ $@
- 
-+glossary.h: ./generate-glossary.sh Documentation/glossary-content.txt
-+	$(QUIET_GEN)./generate-glossary.sh > $@+ && mv $@+ $@
-+
- SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
- 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
- 	$(gitwebdir_SQ):$(PERL_PATH_SQ)
-@@ -2356,7 +2359,7 @@ clean: profile-clean coverage-clean
- 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
- 	$(RM) -r bin-wrappers $(dep_dirs)
- 	$(RM) -r po/build/
--	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
-+	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
- 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
- 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
-diff --git a/generate-glossary.sh b/generate-glossary.sh
-new file mode 100755
-index 0000000..41f1eb3
---- /dev/null
-+++ b/generate-glossary.sh
-@@ -0,0 +1,8 @@
-+#!/bin/sh
-+
-+echo "/* Automatically generated by $0 */
-+
-+static const char *glossary[] = {"
-+
-+sed -n -e 's/^.*\]\]\(.*\)::$/\tN_("\1"),/p' Documentation/glossary-content.txt
-+echo "};"
 -- 
 2.2.0.345.g7041aac
