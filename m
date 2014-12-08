@@ -1,73 +1,67 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 15/18] Document the new receive.fsck.* options.
-Date: Mon, 8 Dec 2014 17:15:29 +0100 (CET)
-Message-ID: <78b9db79bd0b2c17e74b18d689d473861d44e405.1418055173.git.johannes.schindelin@gmx.de>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH 0/5] git-glossary
+Date: Mon, 8 Dec 2014 17:16:02 +0100
+Message-ID: <CAP8UFD0yRKRPj3x6jZoL72jkzs0T2vZ0HZVi46zX0gzXqGv_Sw@mail.gmail.com>
+References: <cover.1418052470.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Dec 08 17:15:56 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Dec 08 17:16:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xy0yY-0006Yo-Jy
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 17:15:54 +0100
+	id 1Xy0yn-0006ie-Qc
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Dec 2014 17:16:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755946AbaLHQPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2014 11:15:50 -0500
-Received: from mout.gmx.net ([212.227.17.20]:52305 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755908AbaLHQPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2014 11:15:49 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0Lz0aC-1XtSZl3tPU-0149I7;
- Mon, 08 Dec 2014 17:15:29 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <cover.1418055173.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:eCYXm++UWbY9iK0WFD8liuvRuJOleJIgSKpxTDSRvec5en47Qbl
- GwFA0f96dTyHhevdPOyL5PHz8Vn3HNZFAiA7Fdks7EIiuwJInMqJ4to7LPRoz5qt+VkimUv
- W0pWYAVt/L7Wpmk4W0iM1dtGMf6dYfYb5duuhdu3n8aKjINC2rE5uSqXI1ZOF2WJb7wL/WA
- 7WCgxiqufiiKsPElr72Vw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1755947AbaLHQQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2014 11:16:05 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:59752 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755908AbaLHQQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2014 11:16:04 -0500
+Received: by mail-ie0-f177.google.com with SMTP id rd18so4758907iec.36
+        for <git@vger.kernel.org>; Mon, 08 Dec 2014 08:16:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=cmAq+t6dwbk34I3Q27qVFlPtubgzcp+5S9f2srYKIeQ=;
+        b=jV16+gSbJ9hUnAk5n8b3NklwXLCBPEzDzRs3UUz2EkCUprT8JGlNigqZuqKvKm4IQc
+         L53CiYxmbcL+Ffrevd+4Dx/9kUb/iM7p5nXJWoZCHHQwoJo5HKpw1WRmnEaBKU51RRsa
+         Mgzwqhco7mrTHhCT0iQuNHuzIZ8EbRFadiHnqHJ+PE46TaQUzo8hZtuB16nhyWg08cFC
+         fmzcdXczPw+Gb2zC5fgIiMHLC+z0tbPOQEdaSQ9DN0rA38TSugXNt0yPjz1hyMHNMoEu
+         mqWUMta2yHTvFyiLJUbtYZDeoFFYS9KUL2sFcfz0cP9nby1PjaJNbAtFNoLCc4j3gRuQ
+         AXeQ==
+X-Received: by 10.107.135.211 with SMTP id r80mr11651746ioi.67.1418055362444;
+ Mon, 08 Dec 2014 08:16:02 -0800 (PST)
+Received: by 10.50.30.40 with HTTP; Mon, 8 Dec 2014 08:16:02 -0800 (PST)
+In-Reply-To: <cover.1418052470.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261072>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/config.txt | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+On Mon, Dec 8, 2014 at 4:38 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> More and more people use Git in localised setups, which usually means
+> mixed localisation setups - not only, but also because of our English
+> man pages.
+>
+> Here's an attempt at leveraging our current infrastructure for helping
+> those poor mixed localisation folks. The idea is to keep the most
+> important iterms in the glossary and translate at least these.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7deae0b..b3276ee 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2109,6 +2109,20 @@ receive.fsckObjects::
- 	Defaults to false. If not set, the value of `transfer.fsckObjects`
- 	is used instead.
- 
-+receive.fsck.*::
-+	When `receive.fsckObjects is set to true, errors can be switched
-+	to warnings and vice versa by setting e.g. `receive.fsck.bad-name`
-+	to `warn` or `error` (or `ignore` to hide those errors
-+	completely). For convenience, fsck prefixes the error/warning
-+	with the name of the option, e.g. "missing-email: invalid
-+	author/committer line - missing email" means that setting
-+	`receive.fsck.missing-email` to `ignore` will hide that issue.
-+	For convenience, camelCased options are accepted, too (e.g.
-+	`receive.fsck.missingEmail`).
-++
-+This feature is intended to support working with legacy repositories
-+which would not pass pushing when `receive.fsckObjects = true`.
-+
- receive.unpackLimit::
- 	If the number of objects received in a push is below this
- 	limit then the objects will be unpacked into loose object
--- 
-2.0.0.rc3.9669.g840d1f9
+If the problem is related to all the man pages, shouldn't the solution
+apply to all the man pages?
+
+> 1/5: generate glossary term list automatically from gitglossary.txt
+> 2/5: introduce git-glossary command which helps with lookups
+
+Couldn't you improve git-help ?
+
+Thanks,
+Christian.
