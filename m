@@ -1,92 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/7] parse_color: refactor color storage
-Date: Tue, 9 Dec 2014 15:21:35 -0500
-Message-ID: <20141209202135.GB12001@peff.net>
-References: <20141120151418.GA23607@peff.net>
- <20141120151704.GD23680@peff.net>
- <54875825.7060008@kdbg.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] document string_list_clear
+Date: Tue, 9 Dec 2014 12:21:52 -0800
+Message-ID: <20141209202152.GZ16345@google.com>
+References: <1417830678-16115-1-git-send-email-sbeller@google.com>
+ <20141206020458.GR16345@google.com>
+ <20141206053024.GE31301@peff.net>
+ <xmqq388omwzr.fsf@gitster.dls.corp.google.com>
+ <20141209201551.GA12001@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Scott Baker <bakers@canbytel.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Dec 09 21:21:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 09 21:22:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRHy-0004QB-Vk
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:21:43 +0100
+	id 1XyRIK-0004aM-E5
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:22:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbaLIUVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 15:21:39 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50694 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751587AbaLIUVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 15:21:37 -0500
-Received: (qmail 19155 invoked by uid 102); 9 Dec 2014 20:21:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 14:21:37 -0600
-Received: (qmail 3653 invoked by uid 107); 9 Dec 2014 20:21:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 15:21:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2014 15:21:35 -0500
+	id S1752813AbaLIUV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 15:21:58 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:62098 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752761AbaLIUV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 15:21:56 -0500
+Received: by mail-ie0-f178.google.com with SMTP id tp5so1303291ieb.9
+        for <git@vger.kernel.org>; Tue, 09 Dec 2014 12:21:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=gZdWv2scM4RHcA5ecg38/1L9h8lMojomiD1nhH23H/Q=;
+        b=pRYWJs2ijEsaEkKxxf7+/A3yoNY81kVGyPDZC90cshSmhCPbue1kiMqYN+VrZdHQ0O
+         maSA/VsuA/kHRayBcESTIL0Qrff5j7hjct9OiJSVTA0wzyjCDjToprUhNfUbLyMwCeUw
+         uLowqG9MAIVEF8hf0/D6WtolXJ053YpIQJPnib0sUMAXDpW5fDC4Q+1jliRuiy2AIJJM
+         eAaSWexKUbp+JQwo5KCI/E9ufUMuX1qjg+XWkezYHaulIgyj79pp0Inlrc9ZDxiEbal4
+         clWuXWrlXxdEf2Oz2r09IgSXFmgOqrcSWELVB7Ss6eaINzEaLKIrVRTDm9Phn3ErhRtD
+         OSNg==
+X-Received: by 10.42.194.17 with SMTP id dw17mr3658436icb.4.1418156515318;
+        Tue, 09 Dec 2014 12:21:55 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:41c9:2fc6:1317:4ac])
+        by mx.google.com with ESMTPSA id nm13sm1390707igb.5.2014.12.09.12.21.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 09 Dec 2014 12:21:54 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <54875825.7060008@kdbg.org>
+In-Reply-To: <20141209201551.GA12001@peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261158>
 
-On Tue, Dec 09, 2014 at 09:14:29PM +0100, Johannes Sixt wrote:
+Jeff King wrote:
+> On Tue, Dec 09, 2014 at 11:41:44AM -0800, Junio C Hamano wrote:
 
-> Am 20.11.2014 um 16:17 schrieb Jeff King:
-> > +#define COLOR_FOREGROUND '3'
-> > +#define COLOR_BACKGROUND '4'
-> 
-> This (COLOR_BACKGROUND) causes an ugly redefinition warning on Windows,
-> because we inherit a definition from a Windows header. How would you
-> like it fixed? A different name or #undef in front of it?
+>> Yeah, that is a thought.
+>>
+>> Some existing documentation pages like allocation-growing may not be
+>> a good match for this strategy, though; cache.h has a lot more than
+>> just alloc-grow, and there needs to be a way to generate more than
+>> one API docs from a single header (and vice versa, taking text from
+>> more than one source for a single API, I suspect).
+>
+> I think that would be a matter of tool support for saying "now I am
+> outputting api-foo" in the inline documentation[1]. It does make writing
+> Makefiles a lot harder, though, if there isn't a one-to-one
+> correspondence between targets and their sources. Perhaps it is a sign
+> that we should split our include files more along functional boundaries.
 
-I think a different name would be fine. The constants are actually only
-used once each. Their main function is to avoid a confusing parameter
-'3' to the color_output function. But we could use the literal
-constants with a parameter, like:
+Yeah, I think a separate alloc-grow.h would be fine.
 
-diff --git a/color.c b/color.c
-index e2a0a99..809b359 100644
---- a/color.c
-+++ b/color.c
-@@ -144,9 +144,6 @@ int color_parse(const char *value, char *dst)
- 	return color_parse_mem(value, strlen(value), dst);
- }
- 
--#define COLOR_FOREGROUND '3'
--#define COLOR_BACKGROUND '4'
--
- /*
-  * Write the ANSI color codes for "c" to "out"; the string should
-  * already have the ANSI escape code in it. "out" should have enough
-@@ -245,12 +242,14 @@ int color_parse_mem(const char *value, int value_len, char *dst)
- 		if (!color_empty(&fg)) {
- 			if (sep++)
- 				*dst++ = ';';
--			dst = color_output(dst, &fg, COLOR_FOREGROUND);
-+			/* foreground colors are all in the 3x range */
-+			dst = color_output(dst, &fg, '3');
- 		}
- 		if (!color_empty(&bg)) {
- 			if (sep++)
- 				*dst++ = ';';
--			dst = color_output(dst, &bg, COLOR_BACKGROUND);
-+			/* background colors are all in the 4x range */
-+			dst = color_output(dst, &bg, '4');
- 		}
- 		*dst++ = 'm';
- 	}
-
-We could also pass in integer "30" and "40", and then format it with %d
-inside color_output. I don't know if that would be more obvious or not.
-
--Peff
+Thanks,
+Jonathan
