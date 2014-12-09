@@ -1,77 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] document string_list_clear
-Date: Tue, 09 Dec 2014 11:41:44 -0800
-Message-ID: <xmqq388omwzr.fsf@gitster.dls.corp.google.com>
-References: <1417830678-16115-1-git-send-email-sbeller@google.com>
-	<20141206020458.GR16345@google.com> <20141206053024.GE31301@peff.net>
+Subject: Re: no-xmailer tests fail under Mac OS
+Date: Tue, 09 Dec 2014 11:45:33 -0800
+Message-ID: <xmqqy4qgli8y.fsf@gitster.dls.corp.google.com>
+References: <CAO2U3Qg3KsjvWJFza4MfiQDa2LbCpOy1Nxf9Vt3NSgXc7Bee9g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 09 20:41:54 2014
+Cc: Git List <git@vger.kernel.org>,
+	Luis Henriques <henrix@camandro.org>
+To: Michael Blume <blume.mike@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 20:45:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyQfQ-0002XI-Tm
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 20:41:53 +0100
+	id 1XyQj8-0004G9-NB
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 20:45:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752282AbaLITlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 14:41:49 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63450 "EHLO
+	id S1752297AbaLITpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 14:45:39 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61550 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751141AbaLITls (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 14:41:48 -0500
+	with ESMTP id S1752249AbaLITph (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 14:45:37 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D4A8924671;
-	Tue,  9 Dec 2014 14:41:46 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0519524752;
+	Tue,  9 Dec 2014 14:45:36 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+zoH1unmRYrle99MYUjIJOrlQmk=; b=ISzWMY
-	qz26I6rHmZsqBPb9TQRHPyDiMxU4q1Vv923IIl7kTI4xzYDw+DIVqWKe0zfYqfgq
-	sg00YczBkFCf222YAzzyb6QxrGjbeCR5AwP/kWF4yhpzHr/yFwWXSVr3r34KdXq/
-	3F3pn0hV/0hsfClyE6nqLHCwuaju2RbvEgAdI=
+	:content-type; s=sasl; bh=3oMZ+YdL3JHht+h2klDpa1KBVu0=; b=KM2DLh
+	fc1SCi4pqWE0HhlyYocN8G1cTpJNUDpJc0KB8R+llQHsqOzCrHE3MK6IeNFikesM
+	6BsxQuMbUGc8UC4d4LAPrxqiGEhQrj7SvNjEqS+/sgSZuFNSuVqcKIvHq5rd+pp+
+	L82IYLFT0i2m/RakGbRn7rbZonbj0lOYX01Ws=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TIQQxO1CqO+DPt4yT4+SM3cC7a5YrHk0
-	2GvixwGsI6wWmJdI+xk/3mdIK34TqOHuol3NBibERUzNolRBJcj+5osZR9WwBqLK
-	b3rm/1m7HZdlR0yllmmXAHZjBOM0NhkT3zR1NF7XKQy7ol7VlgoQD3/J5vEK2Pyb
-	WX7kUS6uiyQ=
+	:content-type; q=dns; s=sasl; b=VvjfDtUxAPP0aV9jL2AyyklOdjqN1bWp
+	yqHvKeK81GJtfXgRS+KWg343WWIK2cFAldIDr5hStPARcJTZ1Y/OGdOLJ/klO3Rw
+	+atblelKZXZ1RVqHDWhT4NDeVBFugohrpvgrKFzMXNOIwCC9auewDqMXfZ1pHES5
+	FiI6bl3auJA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CB06F24670;
-	Tue,  9 Dec 2014 14:41:46 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ED3D524751;
+	Tue,  9 Dec 2014 14:45:35 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 471862466F;
-	Tue,  9 Dec 2014 14:41:46 -0500 (EST)
-In-Reply-To: <20141206053024.GE31301@peff.net> (Jeff King's message of "Sat, 6
-	Dec 2014 00:30:24 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7862E2474F;
+	Tue,  9 Dec 2014 14:45:34 -0500 (EST)
+In-Reply-To: <CAO2U3Qg3KsjvWJFza4MfiQDa2LbCpOy1Nxf9Vt3NSgXc7Bee9g@mail.gmail.com>
+	(Michael Blume's message of "Fri, 5 Dec 2014 18:05:24 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 68EECE0C-7FDB-11E4-9846-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F0F3D7A2-7FDB-11E4-83B3-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261146>
 
-Jeff King <peff@peff.net> writes:
+Michael Blume <blume.mike@gmail.com> writes:
 
-> Also, I forgot to mention: if we consistently put the API docs into the
-> header files and extracted it automatically into standalone documents,
-> we would not need to have two places.
+> Failures start from
 >
-> This is something I've been meaning to look at for a long time, but it
-> never quite makes the priority list. And my past experiences with tools
-> like doxygen has been that they are complicated and have a lot of
-> dependencies. It's been a long time since I've tried, though.
+> commit d2384abff7a6181fd7b9a51af7e780aa21e5cb8d (refs/bisect/bad)
+> Author: Luis Henriques <henrix@camandro.org>
+> Date:   Thu Dec 4 19:11:30 2014 +0000
+>
+>     test/send-email: --[no-]xmailer tests
+>
+>     Add tests for the --[no-]xmailer option.
+>
+>     Signed-off-by: Luis Henriques <henrix@camandro.org>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> but continue with Junio's SQUASH??? commit at b728d078
 
-Yeah, that is a thought.
+I missed this bit in the patch you pointed out:
 
-Some existing documentation pages like allocation-growing may not be
-a good match for this strategy, though; cache.h has a lot more than
-just alloc-grow, and there needs to be a way to generate more than
-one API docs from a single header (and vice versa, taking text from
-more than one source for a single API, I suspect).
++       test "z$(grep ^X-Mailer: out | wc -l)" = "z$expected"
+
+which depends on "wc -l" not to add any extra whitespace around its
+count.  We know that some implementations do, and we should be using
+
+	test $(grep xxx | wc -l) -eq $expected
+
+or something, or test_line_count.
+
+Thanks for noticing.
