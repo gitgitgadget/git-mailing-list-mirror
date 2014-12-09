@@ -1,237 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] document string_list_clear
-Date: Tue, 9 Dec 2014 12:17:13 -0800
-Message-ID: <20141209201713.GY16345@google.com>
-References: <1417830678-16115-1-git-send-email-sbeller@google.com>
- <20141206020458.GR16345@google.com>
- <xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
- <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: fast-import should not care about core.ignorecase
+Date: Tue, 09 Dec 2014 12:19:52 -0800
+Message-ID: <xmqqoarclgnr.fsf@gitster.dls.corp.google.com>
+References: <20141209001211.GA13386@glandium.org>
+	<54864B3D.6040503@workspacewhiz.com>
+	<20141209013138.GU16345@google.com>
+	<54866A94.2040305@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 21:17:23 2014
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 21:20:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRDm-0002Oj-42
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:17:22 +0100
+	id 1XyRGK-0003d3-HQ
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:20:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472AbaLIURS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 15:17:18 -0500
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:48506 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752344AbaLIURR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 15:17:17 -0500
-Received: by mail-ig0-f179.google.com with SMTP id r2so1632011igi.12
-        for <git@vger.kernel.org>; Tue, 09 Dec 2014 12:17:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=oBAeNA+PGypL/4SXiMxiZLvsjVAuXAeWfySx2gT3ntc=;
-        b=IsKKUAitK9xj/NBCec+oOEgUryrBGyQ2Ot8cKol0ig6Ab7PKgLXG9uzB1eJK+Icmk4
-         Mhl/j59xrkh3GC3LLy/Piz+7xX2aZF5pW1XXjILcjzT3PErQ+iye9hDZEuutNU7mIlM5
-         vEMPfY0ZhS7LvWjJbI04vz7vgFF0KGEDyYywKDXJqfqA/WaudRKr0Q9glrdnB966qgHf
-         ni3mgVYt9BMbIdlxLNNRBtecknynXbSDEMwZ6JfMWmzZxQdQ0esO/MuE0kL1AIOWC29o
-         vv0ukp8/RyKVY6YyyLCsHoYR9s9tQNACBMTZ7Gzruw15VhVHF2mpXksVD2l9Kx9uMAxc
-         Jr4g==
-X-Received: by 10.50.30.202 with SMTP id u10mr21913328igh.35.1418156236551;
-        Tue, 09 Dec 2014 12:17:16 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:41c9:2fc6:1317:4ac])
-        by mx.google.com with ESMTPSA id g131sm1047548ioe.37.2014.12.09.12.17.15
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Dec 2014 12:17:16 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752451AbaLIUT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 15:19:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50844 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751963AbaLIUTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 15:19:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EF3A230AD;
+	Tue,  9 Dec 2014 15:19:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Khqov6bdfpZAoC9cu8k8TtQBWbw=; b=yfatbN
+	EoHuTQ0B+HyaWM2FhCPdzDSVV1DrEzwaHkTqhA18sgAlCRe9wkcVRLE5ngMYoleu
+	jvaUbjcpJk3dAhQcsS+H7uTKDeTre6lzUz/4vjyskh0xfiN0M0O1bV/bEZTtZxKa
+	/1rDmkdTCqYZkwwRZQANJ0LcnghYsZUyEr5rs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F9MrNb5EJXlsFJ2a4Qug6B/xjSX3KGJT
+	hOC8gVYYBXTjoCMTM27bkxwndxTG2GcUTvD8NCX09iruPD8euG9752MIVhyePFjW
+	BSqHjzK2qXLMeKNVBij9E9TiP4p+EhPWD1Aqjp/vqDkrk51bXNcxOXikvOQVkMXo
+	RckmmLzKzmk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 94906230AA;
+	Tue,  9 Dec 2014 15:19:54 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EAF64230A5;
+	Tue,  9 Dec 2014 15:19:53 -0500 (EST)
+In-Reply-To: <54866A94.2040305@workspacewhiz.com> (Joshua Jensen's message of
+	"Mon, 08 Dec 2014 20:20:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BC7E5358-7FE0-11E4-B7EF-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261155>
 
-Stefan Beller wrote:
-> On Tue, Dec 9, 2014 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Joshua Jensen <jjensen@workspacewhiz.com> writes:
 
->> Perhaps the API doc that currently says "Free" is the only thing
->> that needs fixing?  And perhaps add "See $doc" at the beginning of
->> the header and remove duplicated comments we already have in the
->> file?
+> Jonathan Nieder wrote on 12/8/2014 6:31 PM:
+>> Joshua Jensen wrote:
+>>> I think it has been discussed before, but maybe Git needs a
+>>> core.casefold in addition to core.ignorecase.)
+>> Would it work for --casefold to be a commandline flag to fast-import,
+>> instead of a global option affecting multiple Git commands?
+> Given that core.ignorecase=true means to fold filename case in quite a
+> number of places within Git right now, I would expect the same
+> behavior within a repository where fast-import is being run against
+> core.ignorecase=true.
 >
-> The reason I wrote this patch originally was because I seem to forget we have
-> more than one place to document our APIs. If there are comments in the header
-> I seem to have thought it were the only place where we have documentation.
+> So, I don't know what core.ignorecase should mean, but I'm pretty sure
+> I know what core.foldcase should mean.
+>
+> Would --casefold work?  Sure, but it would be a special case against
+> the existing core.ignorecase behavior that I don't think makes much
+> sense.
 
-How about this patch?
+I would recommend doing this:
 
--- >8 --
-Subject: put strbuf API documentation in one place
+ - Add file-scope static variable fast_import_casefold to fast-import.c
 
-v1.8.1-rc0~61^2 (strbuf_split*(): document functions, 2012-11-04)
-added some nice API documentation for a few functions to strbuf.h, to
-complement the documentation at Documentation/technical/api-strbuf.
-That was helpful because it meant one less hop for someone reading the
-header to find API documentation.
+ - Patch fast-import.c where it calls strncmp_icase(a, b) to read
 
-In practice, unfortunately, it is too hard to remember that there
-is documentation in two places.  The longer documentation comments
-in the header made Documentation/technical/api-strbuf less
-discoverable.  So move the information to
-Documentation/technical/api-strbuf and drop the long comments.
+    fast_import_casefold ? strcasecmp(a, b) : strcmp(a, b);
 
-Hopefully in the long term we will find a good way to
-generate well organized Documentation/technical/api-* documents
-from comments in headers and this problem will be eliminated
-completely.
+ - Initialize fast_import_casefold to the same value as ignore_case.
 
-Short reminders in the header file are still okay.
+ - Add a new command line option "--[no-]casefold" to modify the
+   value of fast_import_casefold.
 
-Reported-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/technical/api-strbuf.txt | 20 +++++++++++++++--
- strbuf.h                               | 40 ++--------------------------------
- 2 files changed, 20 insertions(+), 40 deletions(-)
+Once all of the above is in place, optionally do this:
 
-diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-index cca6543..a43facc 100644
---- a/Documentation/technical/api-strbuf.txt
-+++ b/Documentation/technical/api-strbuf.txt
-@@ -252,6 +252,11 @@ which can be used by the programmer of the callback as she sees fit.
- 	destination. This is useful for literal data to be fed to either
- 	strbuf_expand or to the *printf family of functions.
- 
-+`strbuf_addstr_xml_quoted`::
-+
-+	Append a string to a strbuf with the characters '<', '>', '&', and
-+	'"' converted into XML entities.
-+
- `strbuf_humanise_bytes`::
- 
- 	Append the given byte size as a human-readable string (i.e. 12.23 KiB,
-@@ -266,6 +271,13 @@ which can be used by the programmer of the callback as she sees fit.
- 	Add a formatted string prepended by a comment character and a
- 	blank to the buffer.
- 
-+`xstrfmt`::
-+`xstrvfmt`::
-+
-+	Create a newly allocated string using printf format.  You can do
-+	this easily with a strbuf, but this provides a shortcut to save a
-+	few lines.
-+
- `strbuf_fread`::
- 
- 	Read a given size of data from a FILE* pointer to the buffer.
-@@ -336,11 +348,15 @@ same behaviour as well.
- 	terminator characters.  Some of these functions take a `max`
- 	parameter, which, if positive, limits the output to that
- 	number of substrings.
-++
-+For lighter-weight alternatives, see `string_list_split` and
-+`string_list_split_in_place` from the
-+link:api-string-list.html[string list API].
- 
- `strbuf_list_free`::
- 
--	Free a list of strbufs (for example, the return values of the
--	`strbuf_split()` functions).
-+	Free a NULL-terminated list of strbufs (for example, the return
-+	values of the `strbuf_split()` functions).
- 
- `launch_editor`::
- 
-diff --git a/strbuf.h b/strbuf.h
-index 652b6c4..f3c9bb6 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -58,56 +58,27 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
- 		return 0;
- }
- 
--/*
-- * Split str (of length slen) at the specified terminator character.
-- * Return a null-terminated array of pointers to strbuf objects
-- * holding the substrings.  The substrings include the terminator,
-- * except for the last substring, which might be unterminated if the
-- * original string did not end with a terminator.  If max is positive,
-- * then split the string into at most max substrings (with the last
-- * substring containing everything following the (max-1)th terminator
-- * character).
-- *
-- * For lighter-weight alternatives, see string_list_split() and
-- * string_list_split_in_place().
-- */
--extern struct strbuf **strbuf_split_buf(const char *, size_t,
-+extern struct strbuf **strbuf_split_buf(const char *str, size_t slen,
- 					int terminator, int max);
- 
--/*
-- * Split a NUL-terminated string at the specified terminator
-- * character.  See strbuf_split_buf() for more information.
-- */
- static inline struct strbuf **strbuf_split_str(const char *str,
- 					       int terminator, int max)
- {
- 	return strbuf_split_buf(str, strlen(str), terminator, max);
- }
- 
--/*
-- * Split a strbuf at the specified terminator character.  See
-- * strbuf_split_buf() for more information.
-- */
- static inline struct strbuf **strbuf_split_max(const struct strbuf *sb,
- 						int terminator, int max)
- {
- 	return strbuf_split_buf(sb->buf, sb->len, terminator, max);
- }
- 
--/*
-- * Split a strbuf at the specified terminator character.  See
-- * strbuf_split_buf() for more information.
-- */
- static inline struct strbuf **strbuf_split(const struct strbuf *sb,
- 					   int terminator)
- {
- 	return strbuf_split_max(sb, terminator, 0);
- }
- 
--/*
-- * Free a NULL-terminated list of strbufs (for example, the return
-- * values of the strbuf_split*() functions).
-- */
- extern void strbuf_list_free(struct strbuf **);
- 
- /*----- add data in your buffer -----*/
-@@ -158,10 +129,7 @@ extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
- 
- extern void strbuf_add_lines(struct strbuf *sb, const char *prefix, const char *buf, size_t size);
- 
--/*
-- * Append s to sb, with the characters '<', '>', '&' and '"' converted
-- * into XML entities.
-- */
-+/* append s with <, >, &, and " converted to XML entities */
- extern void strbuf_addstr_xml_quoted(struct strbuf *sb, const char *s);
- 
- static inline void strbuf_complete_line(struct strbuf *sb)
-@@ -200,10 +168,6 @@ extern int fprintf_ln(FILE *fp, const char *fmt, ...);
- 
- char *xstrdup_tolower(const char *);
- 
--/*
-- * Create a newly allocated string using printf format. You can do this easily
-- * with a strbuf, but this provides a shortcut to save a few lines.
-- */
- __attribute__((format (printf, 1, 0)))
- char *xstrvfmt(const char *fmt, va_list ap);
- __attribute__((format (printf, 1, 2)))
--- 
-2.2.0.rc0.207.ga3a616c
+ - Add fastImport.casefold configuration variable.  The
+   initialization logic for fast_import_casefold would then become:
+
+    1. If the configuration is set, use that value; otherwise
+    2. Use the same value as ignore_case.
+
+ - Start warning when fast_import_casefold is set to true only
+   because ignore_case is set (i.e. no "--[no-casefold]" is given
+   from the command line or from the config), saying that this is
+   true for now only as a backward compatibility measure and in a
+   later version of Git we will flip the default _not_ to fold on
+   any system.
+
+ - Wait a bit and then flip the default.
