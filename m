@@ -1,99 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFD/PATCH] Documentation: mention category
-Date: Tue, 09 Dec 2014 12:26:58 -0800
-Message-ID: <xmqqiohklgbx.fsf@gitster.dls.corp.google.com>
-References: <538d1a10bda3793ea10ec6f7de43de371d17e709.1418123780.git.git@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] document string_list_clear
+Date: Tue, 9 Dec 2014 15:27:38 -0500
+Message-ID: <20141209202738.GC12001@peff.net>
+References: <1417830678-16115-1-git-send-email-sbeller@google.com>
+ <20141206020458.GR16345@google.com>
+ <xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
+ <20141209201713.GY16345@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Dec 09 21:27:12 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 21:27:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRNG-0006yG-7u
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:27:10 +0100
+	id 1XyRNp-0007Eo-4C
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:27:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbaLIU1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 15:27:04 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50745 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750857AbaLIU1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 15:27:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EF667232BA;
-	Tue,  9 Dec 2014 15:27:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w5BKKIVgfaiFhOFjF8stlTosmsE=; b=bv2Zh1
-	EYvOXspZ8lYTr9mSqkSCqeaCcH+AKxpCGKw7SAA6SQU7Rt37/jr9AoSyCwTgE8ma
-	8XNWi2CLQAwGWFEiNB3etzALoaU92tBZXflRMhxrpNZM08P2UmlCHrw690oEwKrX
-	AK0216NRmLigah6BUFMiUhtWav0O8ps2W+EYI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VOaAeXPTG5O9W1jBY84K4d/g7xgk9pY0
-	Fho2/RH7IUq3d6W80lFPApSvfgaYYSsruw8+Gz4gIsfoTxOVpnZQC2gEFgJV6Dg5
-	bqAZ3b4npaSdMfe7NErZkeRseV5rP4LuWkBlo+c2QgsduBhzUQtpriJSTr8AYqRv
-	MsyeJg7nHCY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D50B1232B9;
-	Tue,  9 Dec 2014 15:27:00 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2778A232B7;
-	Tue,  9 Dec 2014 15:27:00 -0500 (EST)
-In-Reply-To: <538d1a10bda3793ea10ec6f7de43de371d17e709.1418123780.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Tue, 9 Dec 2014 12:21:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BA868E20-7FE1-11E4-AAA3-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751209AbaLIU1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 15:27:41 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50708 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751075AbaLIU1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 15:27:40 -0500
+Received: (qmail 19714 invoked by uid 102); 9 Dec 2014 20:27:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 14:27:40 -0600
+Received: (qmail 3754 invoked by uid 107); 9 Dec 2014 20:27:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 15:27:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2014 15:27:38 -0500
+Content-Disposition: inline
+In-Reply-To: <20141209201713.GY16345@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261161>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, Dec 09, 2014 at 12:17:13PM -0800, Jonathan Nieder wrote:
 
-> Rather than changing git-foo.txt, we could do the substitution magic
-> from Documentation/Makefile, of course, to keep man pages and command-list
-> in sync. Although this would keep me from submitting the final series
-> with 1 patch per file :)
+> Stefan Beller wrote:
+> > On Tue, Dec 9, 2014 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> >> Perhaps the API doc that currently says "Free" is the only thing
+> >> that needs fixing?  And perhaps add "See $doc" at the beginning of
+> >> the header and remove duplicated comments we already have in the
+> >> file?
+> >
+> > The reason I wrote this patch originally was because I seem to forget we have
+> > more than one place to document our APIs. If there are comments in the header
+> > I seem to have thought it were the only place where we have documentation.
+> 
+> How about this patch?
+> 
+> -- >8 --
+> Subject: put strbuf API documentation in one place
+> 
+> v1.8.1-rc0~61^2 (strbuf_split*(): document functions, 2012-11-04)
+> added some nice API documentation for a few functions to strbuf.h, to
+> complement the documentation at Documentation/technical/api-strbuf.
+> That was helpful because it meant one less hop for someone reading the
+> header to find API documentation.
+> 
+> In practice, unfortunately, it is too hard to remember that there
+> is documentation in two places.  The longer documentation comments
+> in the header made Documentation/technical/api-strbuf less
+> discoverable.  So move the information to
+> Documentation/technical/api-strbuf and drop the long comments.
+> 
+> Hopefully in the long term we will find a good way to
+> generate well organized Documentation/technical/api-* documents
+> from comments in headers and this problem will be eliminated
+> completely.
+> 
+> Short reminders in the header file are still okay.
 
-I do not get that smiley.  Are you saying that these noisy patches
-add to your karma points?
+I somewhat feel this goes in the opposite direction of where we want to
+be (all data in one place, but that place is the header). Your patch
+might make api-strbuf more discoverable, but it also vastly increases
+the chances of function getting out of sync with their documentation, or
+new functions being added without getting documented (very often the
+presence of other documentation in the comments is enough to guilt me
+into writing it for new ones).
 
-> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-> index 9631526..b6a8bc6 100644
-> --- a/Documentation/git-add.txt
-> +++ b/Documentation/git-add.txt
-> @@ -13,6 +13,10 @@ SYNOPSIS
->  	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing]
->  	  [--] [<pathspec>...]
->  
-> +CATEGORY
-> +--------
-> +Main user interface command (porcelain)
-> +
->  DESCRIPTION
->  -----------
+Elsewhere I mentioned a tool to extract comments and format them. But do
+people actually care about the formatting step? Does anybody asciidoc
+the technical/api-* files? We did not even support building them until
+sometime in 2012. Personally, I only ever view them as text.
 
-While I do not have objection to adding this information, I have
-a few problems with the execution:
+In which case can we simply start migrating api-strbuf.txt into
+in-header comments, without worrying about a parsing tool?
 
- - These four lines at the very beginning is a precious real
-   estate.  The new reader would not benefit from the distinction
-   before reading the first paragraph of description to learn what
-   it does and what it is for anyway.  Move it much later, perhaps
-   at the end.
-
- - A phrase "Main user interface command" to a new user does not
-   help very much if it does not tell enough what that phrase really
-   means (e.g. you should not be using it for scripting).  Extend
-   the description more, after moving it to the end.
-
- - As you said, this should be done in a way to keep the two sources
-   of information in sync.  Either add these from command-list, or
-   generate command-list from these.
+-Peff
