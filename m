@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH/RFC 4/4] attr: avoid heavy work when we know the specified attr is not defined
-Date: Tue,  9 Dec 2014 20:53:25 +0700
-Message-ID: <1418133205-18213-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH/RFC 3/4] attr: do not attempt to expand when we know it's not a macro
+Date: Tue,  9 Dec 2014 20:53:24 +0700
+Message-ID: <1418133205-18213-4-git-send-email-pclouds@gmail.com>
 References: <1418133205-18213-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -16,157 +16,103 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyLF8-00021s-3o
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 14:54:22 +0100
+	id 1XyLEw-0001sZ-6c
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 14:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272AbaLINyM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2014 08:54:12 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:44693 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757203AbaLINxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 08:53:51 -0500
-Received: by mail-pa0-f52.google.com with SMTP id eu11so589579pac.25
-        for <git@vger.kernel.org>; Tue, 09 Dec 2014 05:53:51 -0800 (PST)
+	id S1757177AbaLINxr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2014 08:53:47 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:59824 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757173AbaLINxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 08:53:46 -0500
+Received: by mail-pa0-f45.google.com with SMTP id lj1so596708pab.18
+        for <git@vger.kernel.org>; Tue, 09 Dec 2014 05:53:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=FGY9EsTo7KZdkA/0oV7oA453cM71FWWwBeC7M9dShVs=;
-        b=Z5ouf71ONYCNpI6eC4ujAOW/Q49LGLbAcMNhNbXovVlFV7n1/thD0cQyxUMWfMMGue
-         SfC5Mwxg1fT2LEMyoVBopj5/2qmTigrE5/jrhW+9FXcy9V4rkAAMPxEhfyrK49RqPhSr
-         pCiZgDz5AmQ8q3PPzcQNE3WNmcl5au237Nhw6H6l7RtHT6wqIHhnQPaoNXxPNtPp4Ybw
-         7c42AhKGC9e5LbraRC9P2b3wgVSkj6uIePlzRFeIn503KOL0Ymrt2cMplnjMBJe4Bf5S
-         B9gDMtn5OfZXg2iUdLvN/BnRQv0dofRIZ9O+XJVswEJd4kaCaCtmF58LuVU6WAOphRGl
-         nRgw==
-X-Received: by 10.70.34.65 with SMTP id x1mr3145133pdi.165.1418133230656;
-        Tue, 09 Dec 2014 05:53:50 -0800 (PST)
+        bh=nEJvRfmqMb43Y+KZoR39yrjqXYu1L4Pm20I/ndHlK78=;
+        b=fUytcosM7MmXGMuaYI16iLjeTNRCqGSQTbRE5Q0zHtNil2hEnzZ28D6UPwahJI5dDN
+         hY4cBGbsa3YV5Y086z1O97IHSLJHeUz9AxnIi9byRNxxCS+HKMrAwW8134arXQ/bgoFA
+         szo5hSml5BLG384Nos4AncRwvvqPioeocbEOMDO4xLKq7yyLrH3frneL9Yk4dET0AfMu
+         gWRPwNd4pYBO0OvfasKuCfLRTzkS7P/a/n1LXaQJyn+PznDPdU9yhaWnH1u5W8dmz1Rs
+         v0UXNHqxhHSux/ILUiIin48nzfpxxvFgw5lvxz45d1BGurVAgtCSF4YYtcUSo3ts18ec
+         IFRQ==
+X-Received: by 10.66.102.41 with SMTP id fl9mr5588137pab.7.1418133225689;
+        Tue, 09 Dec 2014 05:53:45 -0800 (PST)
 Received: from lanh ([115.73.216.238])
-        by mx.google.com with ESMTPSA id w8sm1576129pbt.71.2014.12.09.05.53.48
+        by mx.google.com with ESMTPSA id ug6sm1645364pab.7.2014.12.09.05.53.43
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Dec 2014 05:53:50 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 09 Dec 2014 20:53:47 +0700
+        Tue, 09 Dec 2014 05:53:45 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 09 Dec 2014 20:53:42 +0700
 X-Mailer: git-send-email 2.2.0.84.ge9c7a8a
 In-Reply-To: <1418133205-18213-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261125>
 
-If we have never seen attr 'X' in any .gitattributes file we have
-examined so far, we can be sure that 'X' is not defined. So no need to
-go over all the attr stack to look for attr 'X'. This is the purpose
-behind this new field maybe_real.
+Keep track of all recognized macros in the new "maybe_macro" field.
+This this field is true, it _may_ be a macro (depending on what's in
+the current attr stack). But if the field is false, it's definitely
+not a macro, no need to go through the whole attr stack in
+macroexpand_one() to search for one.
 
-This optimization breaks down if macros are involved because we can't
-know for sure what macro would expand to 'X' at attr parsing time. But
-if we go the permisstic way and assume all macros are expanded, we hit
-the builtin "binary" macro. At least the "diff" attr defined in this
-macro will disable this optimization for git-grep. So we wait until
-any attr lines _may_ reference to a macro before we turn this off.
-
-In git.git, this reduces the number of fill_one() call for "git grep
-abcdefghi" from ~5300 to 3000. The optimization stops when it reads
-t/.gitattributes, which uses 'binary' macro.
-
-"git grep" is actually a good example to justify this patch. The
-command checks "diff" attribute on every file. People usually don't
-define this attribute. But they pay the attr lookup penalty anyway
-without this patch, proportional to the number of attr lines they have
-in repo.
+Without this, "git grep abcdefghi" on git.git hits the inner loop in
+macroexpand_one() about 2500 times. With this, it's about 60 times.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- attr.c | 44 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ attr.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index 4ec6186..ba41761 100644
+index def09c7..4ec6186 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -33,9 +33,11 @@ struct git_attr {
+@@ -32,6 +32,7 @@ struct git_attr {
+ 	struct git_attr *next;
  	unsigned h;
  	int attr_nr;
- 	int maybe_macro;
-+	int maybe_real;
++	int maybe_macro;
  	char name[FLEX_ARRAY];
  };
  static int git_attr_nr;
-+static int cannot_trust_maybe_real;
-=20
- static struct git_attr_check *check_all_attr;
- static struct git_attr *(git_attr_hash[HASHSIZE]);
-@@ -97,6 +99,7 @@ static struct git_attr *git_attr_internal(const char =
+@@ -95,6 +96,7 @@ static struct git_attr *git_attr_internal(const char =
 *name, int len)
+ 	a->h =3D hval;
  	a->next =3D git_attr_hash[pos];
  	a->attr_nr =3D git_attr_nr++;
- 	a->maybe_macro =3D 0;
-+	a->maybe_real =3D 0;
++	a->maybe_macro =3D 0;
  	git_attr_hash[pos] =3D a;
 =20
  	REALLOC_ARRAY(check_all_attr, git_attr_nr);
-@@ -269,6 +272,10 @@ static struct match_attr *parse_attr_line(const ch=
+@@ -244,9 +246,10 @@ static struct match_attr *parse_attr_line(const ch=
 ar *line, const char *src,
- 	/* Second pass to fill the attr_states */
- 	for (cp =3D states, i =3D 0; *cp; i++) {
- 		cp =3D parse_attr(src, lineno, cp, &(res->state[i]));
-+		if (!is_macro)
-+			res->state[i].attr->maybe_real =3D 1;
-+		if (res->state[i].attr->maybe_macro)
-+			cannot_trust_maybe_real =3D 1;
- 	}
-=20
- 	return res;
-@@ -752,11 +759,46 @@ static void collect_all_attrs(const char *path)
- 		rem =3D fill(path, pathlen, basename_offset, stk, rem);
- }
-=20
-+static void collect_selected_attrs(const char *path, int num,
-+				   struct git_attr_check *check)
-+{
-+	struct attr_stack *stk;
-+	int i, pathlen, rem, dirlen;
-+	int basename_offset;
-+
-+	pathlen =3D split_path(path, &dirlen, &basename_offset);
-+	prepare_attr_stack(path, dirlen);
-+	if (cannot_trust_maybe_real) {
-+		for (i =3D 0; i < git_attr_nr; i++)
-+			check_all_attr[i].value =3D ATTR__UNKNOWN;
+ 		      sizeof(*res) +
+ 		      sizeof(struct attr_state) * num_attr +
+ 		      (is_macro ? 0 : namelen + 1));
+-	if (is_macro)
++	if (is_macro) {
+ 		res->u.attr =3D git_attr_internal(name, namelen);
+-	else {
++		res->u.attr->maybe_macro =3D 1;
 +	} else {
-+		rem =3D num;
-+		for (i =3D 0; i < num; i++) {
-+			struct git_attr_check *c;
-+			c =3D check_all_attr + check[i].attr->attr_nr;
-+			if (check[i].attr->maybe_real)
-+				c->value =3D ATTR__UNKNOWN;
-+			else {
-+				c->value =3D ATTR__UNSET;
-+				rem--;
-+			}
-+		}
-+		if (!rem)
-+			return;
-+	}
-+	rem =3D git_attr_nr;
-+	for (stk =3D attr_stack; 0 < rem && stk; stk =3D stk->prev)
-+		rem =3D fill(path, pathlen, basename_offset, stk, rem);
-+}
-+
- int git_check_attr(const char *path, int num, struct git_attr_check *c=
-heck)
- {
+ 		char *p =3D (char *)&(res->state[num_attr]);
+ 		memcpy(p, name, namelen);
+ 		res->u.pat.pattern =3D p;
+@@ -687,7 +690,8 @@ static int macroexpand_one(int attr_nr, int rem)
+ 	struct match_attr *a =3D NULL;
  	int i;
 =20
--	collect_all_attrs(path);
-+	if (cannot_trust_maybe_real)
-+		collect_all_attrs(path);
-+	else
-+		collect_selected_attrs(path, num, check);
+-	if (check_all_attr[attr_nr].value !=3D ATTR__TRUE)
++	if (check_all_attr[attr_nr].value !=3D ATTR__TRUE ||
++	    !check_all_attr[attr_nr].attr->maybe_macro)
+ 		return rem;
 =20
- 	for (i =3D 0; i < num; i++) {
- 		const char *value =3D check_all_attr[check[i].attr->attr_nr].value;
+ 	for (stk =3D attr_stack; !a && stk; stk =3D stk->prev)
 --=20
 2.2.0.84.ge9c7a8a
