@@ -1,81 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am.txt: --ignore-date flag is not passed to git-apply
-Date: Tue, 09 Dec 2014 12:27:48 -0800
-Message-ID: <xmqqegs8lgaj.fsf@gitster.dls.corp.google.com>
-References: <1418146098-30099-1-git-send-email-rdwampler@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] document string_list_clear
+Date: Tue, 9 Dec 2014 12:32:15 -0800
+Message-ID: <CAGZ79kZa5sPxbzURtGScCrfbTaCX_cHiRj7uew6Xk+1Df7oTEQ@mail.gmail.com>
+References: <1417830678-16115-1-git-send-email-sbeller@google.com>
+	<20141206020458.GR16345@google.com>
+	<xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
+	<20141209201713.GY16345@google.com>
+	<20141209202738.GC12001@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, giuseppe.bilotta@gmail.com
-To: Ronald Wampler <rdwampler@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 21:27:57 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 09 21:32:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRNz-0007Jw-RO
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:27:56 +0100
+	id 1XyRSG-0000pe-KH
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:32:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751219AbaLIU1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 15:27:52 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56305 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751075AbaLIU1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 15:27:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E949B23310;
-	Tue,  9 Dec 2014 15:27:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bImzTf1FBVMiA8JOnP2R/CrGYjU=; b=pAof1H
-	99f4qbaZ0yuvjaR7+Cmwbzf7gzctun6nPY4T/NSx1fpvfpAVv6zOEayB4ErGlW6c
-	+qxSFPKXnr1PbHtLKN+Rgb/ZM/1j5Xg2TRDUAkW4PLDaKVZaMN2dIXxiU8bQdGcu
-	/3a9YJtqxEYnIuqHSYwlwWdMVXC4jEYPhxuSs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a9II4n9w+X8U6hyEa2sGGRGpOtouECII
-	54Z5ITjh7qmmv6ZP7Nig6DNn7uD7LvVPJuohcw06ajJeXl6fSXHoYisGUwXQYdVP
-	i6I0CAptx2TGdFBdboc4tacnRaUoMTfU6ZTa7Q2GU8V9gML535WgRpfsXK0KpUwN
-	DW4JKxWS09Q=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E08C62330C;
-	Tue,  9 Dec 2014 15:27:50 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58F762330B;
-	Tue,  9 Dec 2014 15:27:50 -0500 (EST)
-In-Reply-To: <1418146098-30099-1-git-send-email-rdwampler@gmail.com> (Ronald
-	Wampler's message of "Tue, 9 Dec 2014 12:28:18 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D8730990-7FE1-11E4-8360-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751075AbaLIUcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 15:32:16 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:61118 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750723AbaLIUcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 15:32:16 -0500
+Received: by mail-ie0-f176.google.com with SMTP id tr6so1316230ieb.21
+        for <git@vger.kernel.org>; Tue, 09 Dec 2014 12:32:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=bJM0gIX1Icaky0r8/3fzUlq+1zhUTvxLBX3tZvMzAM8=;
+        b=VeoRJo6ZR3Tquls3J6dUXthEomgzwC/u8Hky/JlIHrioMxBZlYdOv6FFPAIR5f4yrs
+         yr/gjwEUsfgUMO1vNWu96zOv6J4Vp4kayBrLpozSUAyGOpT7wI7oflpiP44lgWGCPF10
+         UJt1bntVz5adGrdFl6vkBcseI7rEdvAsKEdkM8sPryLrSRSMK3hRNeFJ/zG5uU/Jr2hE
+         aTHVaBYZeIH+f4bkjyZLOOYi/6kffbIg3t2JdxmaSft9NSfeIU9l7Wz8d6WiGrfD0E60
+         /CfLX10J8NEio9UQxkys3fUlB1NH/yvoSyH6i/PbllxrUYbkfulT8upEWlE4D3ocZfAj
+         JmOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=bJM0gIX1Icaky0r8/3fzUlq+1zhUTvxLBX3tZvMzAM8=;
+        b=UY3H2Za01QW8pjEx/4g4SZGZ9yqTrsLCw029BVMiE7etEA11YJn90LTLX+TXIKXJIt
+         HES3a5XHox8PZ1iMJVCuJrCOSL5yMXisAtwCUmCwinCpCJIgg59efYECko/fTg/3a3u2
+         aXAP7AycZub7jNKtTf1KbpefRepM6hqf48ybaNpRymGGPhfonq3DYv1m6PeV7mE02rGi
+         WTMaHjDoW2jURP4uNOQbVRmL3ROs6Vp8XajfqR84oXt/2G/RAlg5+dbO1jVL6HpufcBo
+         qOgA9oqKwbGeaCU5/6jt8jLG8yLwKk2DKYTkbfLJS77+HnbImf55YJwN+17pPYtThXme
+         AoNQ==
+X-Gm-Message-State: ALoCoQlz7ulNe3JTrK6xDiTm7UEyU2Op7uDQuYhURFMXSM2qQCOgDVojqmbddoLj8mw7zVt9uhix
+X-Received: by 10.107.25.2 with SMTP id 2mr379705ioz.70.1418157135267; Tue, 09
+ Dec 2014 12:32:15 -0800 (PST)
+Received: by 10.107.1.199 with HTTP; Tue, 9 Dec 2014 12:32:15 -0800 (PST)
+In-Reply-To: <20141209202738.GC12001@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261163>
 
-Ronald Wampler <rdwampler@gmail.com> writes:
-
-> ---
->  Documentation/git-am.txt | 1 -
->  1 file changed, 1 deletion(-)
-
-Of course ;-)  "git apply" does not care about dates as it does not
-make the commit.
-
-Thanks.
+On Tue, Dec 9, 2014 at 12:27 PM, Jeff King <peff@peff.net> wrote:
 
 >
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index 9adce37..d4ef16c 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -83,7 +83,6 @@ default.   You can use `--no-utf8` to override this.
->  	it is supposed to apply to and we have those blobs
->  	available locally.
->  
-> ---ignore-date::
->  --ignore-space-change::
->  --ignore-whitespace::
->  --whitespace=<option>::
+> In which case can we simply start migrating api-strbuf.txt into
+> in-header comments, without worrying about a parsing tool?
+>
+> -Peff
+
+That would be my preference as well. Putting the API documentation
+into the header files. Optionally if you're fancy you may enjoy the generated
+API documentation. But I personally would rather look into the header for
+the most up to date information.
+
+As said above the Documentation/technical would only serve a purpose to
+explain very high level concepts. So racy-git.txt or
+pack-heuristics.txt will fit
+in there very good.
