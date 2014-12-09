@@ -1,78 +1,95 @@
-From: Roberto Tyley <roberto.tyley@gmail.com>
-Subject: Re: Blobs not referenced by file (anymore) are not removed by GC
-Date: Tue, 9 Dec 2014 22:15:31 +0000
-Message-ID: <CAFY1edY=Ren9krK1-yFoxt92AAushUyqnbt=69hdXMeiBFAK=w@mail.gmail.com>
-References: <5485D03F.3060008@fu-berlin.de>
-	<20141209141457.GA18544@peff.net>
-	<CAFY1edaEG040jnfTJA4G9a0bAkFJHc3N5sHjtwOOdXmndsu9YQ@mail.gmail.com>
-	<20141209161133.GA17756@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] document string_list_clear
+Date: Tue, 9 Dec 2014 14:23:37 -0800
+Message-ID: <20141209222337.GA16345@google.com>
+References: <1417830678-16115-1-git-send-email-sbeller@google.com>
+ <20141206020458.GR16345@google.com>
+ <xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
+ <20141209201713.GY16345@google.com>
+ <20141209202738.GC12001@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Martin Scherer <m.scherer@fu-berlin.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 09 23:15:38 2014
+X-From: git-owner@vger.kernel.org Tue Dec 09 23:23:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyT4C-0007wz-F3
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 23:15:36 +0100
+	id 1XyTC4-0003JL-UQ
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 23:23:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753310AbaLIWPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 17:15:32 -0500
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:50432 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752640AbaLIWPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 17:15:32 -0500
-Received: by mail-ie0-f181.google.com with SMTP id tp5so1503886ieb.12
-        for <git@vger.kernel.org>; Tue, 09 Dec 2014 14:15:31 -0800 (PST)
+	id S1753291AbaLIWXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 17:23:41 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:33901 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752792AbaLIWXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 17:23:40 -0500
+Received: by mail-ie0-f177.google.com with SMTP id rd18so1510902iec.22
+        for <git@vger.kernel.org>; Tue, 09 Dec 2014 14:23:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=784DtwJz4j9IHvRX2ikro3qRi1qf9S8srDu6ABw18fo=;
-        b=a7I9jkbDhSNk8F9tpNwuGOXlR9IVc7YF1KbheinaFZZ9uSDhgke/+C9WnjFXzFeTn0
-         SeBiRacPa4KHj3LethZO3BaE5aZBcoDf+H9vK7cYc4ay1IzsHQzBiPupHhsnTKUHYXrr
-         CAEvln1ETTOCOGF2o/RQkUlAQ7aGEQp1nFTTUAU71ZoMdclaEkdtLSJyz3YWZpyrsvfS
-         jG3HEahVwGm+IS5rRVFOC1AdA12GfhFG0jI5n+kxnU/x/f1+WvQvjtpaKio5lOU5xGzk
-         mbI6U667rCmtuXRmCMo37KvmnbytjWB0xWSUu8vi2svFDSC6xD6RC5QR1LfyTYzJVcCr
-         CefQ==
-X-Received: by 10.107.138.131 with SMTP id c3mr947666ioj.0.1418163331262; Tue,
- 09 Dec 2014 14:15:31 -0800 (PST)
-Received: by 10.64.240.171 with HTTP; Tue, 9 Dec 2014 14:15:31 -0800 (PST)
-In-Reply-To: <20141209161133.GA17756@peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=KtFr3G21lggZeJikHCDikY3EbPCY9UiPcwsB0hBtrcY=;
+        b=ZZ01YviWj6Au/hXKN3zxz+N3g6DBKJ84c3YrqBHjDVEOle0cryTqDRR/l0Kn+xjNfZ
+         jL59qnIhbZduLUIWqdLmWdhkt/niIeikdFhsPvLTT793WCTWu/pOvaa9HTACIlirNbgl
+         CK3//7hMN5PA6w3JcPXWAO+VfAmK0MSWV3ygky9UcKUdOj17QNHkKdg3roGYEw6OCKbI
+         Byn2GKhsVnizerCsgBYDhLIjwY3Lc+x2lUo/096b63eB/3UaER5MNYtsdEUvMHHJNtmB
+         E4eWTVYIDIEpM8+Hg8n+FUp5pMmfciwO6Lo7hb7QtXlyyTaw/41PYbIlIy/qnBn7D025
+         Xhtw==
+X-Received: by 10.43.66.9 with SMTP id xo9mr4049054icb.67.1418163820018;
+        Tue, 09 Dec 2014 14:23:40 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:a4ec:4fac:afb2:e506])
+        by mx.google.com with ESMTPSA id 6sm1547680igk.11.2014.12.09.14.23.39
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 09 Dec 2014 14:23:39 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20141209202738.GC12001@peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261170>
 
-On Tuesday, 9 December 2014, Jeff King <peff@peff.net> wrote:
-> I actually think filter-branch's "refs/original" is a bit outdated at
-> this point. The information is there in the reflogs already, and
-> dealing with refs/original often causes confusion in my experience. It
-> could probably use a "git filter-branch --restore" or something to
-> switch each $ref to $ref@{1} (after making sure that the reflog entry
-> was from filter-branch, of course).
+Jeff King wrote:
 
-Yeah, I'd agree that refs/original can cause confusion.
+> Elsewhere I mentioned a tool to extract comments and format them. But do
+> people actually care about the formatting step?
 
+If formatting means "convert to a straightforward text document that I
+can read through", then I do.
 
-> Not that I expect you to want to work on filter-branch. :) But maybe
-> food for thought for a BFG feature.
+>                                                 Does anybody asciidoc
+> the technical/api-* files? We did not even support building them until
+> sometime in 2012. Personally, I only ever view them as text.
 
-I haven't heard much demand for a recover/restore feature on the BFG
-(I think by the time people get to the BFG, they're pretty sure they
-want to go ahead with the procedure!) but I'll bear it in mind. Mind
-you, to make the post-rewrite clean-up easier, I'd be happy to
-contribute a patch that gives 'gc' a flag to do the equivalent of:
+I also view them as text.  I tend to find it easier to read the
+technical/api-* files than headers.  That might be for the same reason
+that some other people prefer header files --- a
+Documentation/technical/ file tends to be written in one chunk
+together and ends up saying exactly what I need to know about the
+calling sequence in a coherent way, while header files tend to evolve
+over time to match the implementation without maintaining that
+organization and usability.
 
-git reflog expire --expire=now --all && git gc --prune=now --aggressive
+I suspect a simple tool to extract the comments and produce something
+like the technical/api-* files would help, since then when someone
+writes a patch, they could try the tool and see if the result is still
+easy to read.
 
-Maybe:
+Anyway, the patch I wrote was an attempt at a minimal fix (and an
+attempt at getting out of a conversation that seemed to be moving
+toward bikeshedding).  If someone wants to move the documentation from
+api-strbuf.txt to strbuf.h, I won't object, since I hope that a simple
+tool like described above isn't too far away.
 
-git gc --purge
-
-??
+Thanks,
+Jonathan
