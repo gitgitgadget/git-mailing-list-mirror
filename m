@@ -1,95 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] document string_list_clear
-Date: Tue, 9 Dec 2014 14:23:37 -0800
-Message-ID: <20141209222337.GA16345@google.com>
-References: <1417830678-16115-1-git-send-email-sbeller@google.com>
- <20141206020458.GR16345@google.com>
- <xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
- <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
- <20141209201713.GY16345@google.com>
- <20141209202738.GC12001@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] pkt-line: allow writing of LARGE_PACKET_MAX buffers
+Date: Tue, 09 Dec 2014 14:41:51 -0800
+Message-ID: <xmqqa92wla34.fsf@gitster.dls.corp.google.com>
+References: <20141209174958.GA26167@peff.net>
+	<20141209180916.GA26873@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 09 23:23:47 2014
+X-From: git-owner@vger.kernel.org Tue Dec 09 23:41:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyTC4-0003JL-UQ
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 23:23:45 +0100
+	id 1XyTTi-0003vr-Bi
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 23:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291AbaLIWXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 17:23:41 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:33901 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752792AbaLIWXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 17:23:40 -0500
-Received: by mail-ie0-f177.google.com with SMTP id rd18so1510902iec.22
-        for <git@vger.kernel.org>; Tue, 09 Dec 2014 14:23:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=KtFr3G21lggZeJikHCDikY3EbPCY9UiPcwsB0hBtrcY=;
-        b=ZZ01YviWj6Au/hXKN3zxz+N3g6DBKJ84c3YrqBHjDVEOle0cryTqDRR/l0Kn+xjNfZ
-         jL59qnIhbZduLUIWqdLmWdhkt/niIeikdFhsPvLTT793WCTWu/pOvaa9HTACIlirNbgl
-         CK3//7hMN5PA6w3JcPXWAO+VfAmK0MSWV3ygky9UcKUdOj17QNHkKdg3roGYEw6OCKbI
-         Byn2GKhsVnizerCsgBYDhLIjwY3Lc+x2lUo/096b63eB/3UaER5MNYtsdEUvMHHJNtmB
-         E4eWTVYIDIEpM8+Hg8n+FUp5pMmfciwO6Lo7hb7QtXlyyTaw/41PYbIlIy/qnBn7D025
-         Xhtw==
-X-Received: by 10.43.66.9 with SMTP id xo9mr4049054icb.67.1418163820018;
-        Tue, 09 Dec 2014 14:23:40 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:a4ec:4fac:afb2:e506])
-        by mx.google.com with ESMTPSA id 6sm1547680igk.11.2014.12.09.14.23.39
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Dec 2014 14:23:39 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20141209202738.GC12001@peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753455AbaLIWly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 17:41:54 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58714 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751595AbaLIWlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 17:41:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18E7F25707;
+	Tue,  9 Dec 2014 17:41:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=88vN+NGP1W5M4JwnX97ouDe00j0=; b=YqLJwW
+	OFhvBNfZ/ezsaIr9Wv+F+1zC/1EQDFqCuHr6hrp9CzaVPNyuBZ+Vw70pqgTo5bCP
+	GRuDvhKdvBlOsDEzNOKw7YdmqSRxwR1Otygou/8WqpO0MpMfS0tmyW2uvekESU3C
+	H9CILstAvCOHrFqXvIJ0A6fRZxVJ9c5KD7z3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oKeApBOuyTkoCnoLwmeHH1zG1pBVSXvX
+	kWqLKgEPey0AzPaYouSOXJZjNEpQlm707jHjesHfiM7lxJZpBTUq2iHu7LgsBiSy
+	mHJ3q4jcSGYCVKF+AkO9kRQ2mmUozZV65cXpJRoYdL8zG9f5VEcdMVSzWv0a/ZjW
+	kYhOwBMVQEY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 106ED25706;
+	Tue,  9 Dec 2014 17:41:53 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C74E25705;
+	Tue,  9 Dec 2014 17:41:52 -0500 (EST)
+In-Reply-To: <20141209180916.GA26873@peff.net> (Jeff King's message of "Tue, 9
+	Dec 2014 13:09:16 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 91F0C378-7FF4-11E4-B344-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261171>
 
-Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> Elsewhere I mentioned a tool to extract comments and format them. But do
-> people actually care about the formatting step?
+> On Tue, Dec 09, 2014 at 12:49:58PM -0500, Jeff King wrote:
+>
+>> Another option would be to use a static strbuf. Then we're only wasting
+>> heap, and even then only as much as we need (we'd still manually cap it
+>> at LARGE_PACKET_MAX since that's what the protocol dictates). This would
+>> also make packet_buf_write more efficient (right now it formats into a
+>> static buffer, and then copies the result into a strbuf; probably not
+>> measurably important, but silly nonetheless).
+>
+> Below is what that would look like. It's obviously a much more invasive
+> change, but I think the result is nice.
 
-If formatting means "convert to a straightforward text document that I
-can read through", then I do.
+Yes, indeed.  Is there any reason why we shouldn't go with this
+variant, other than "it touches a bit more lines" that I am not
+seeing?
 
->                                                 Does anybody asciidoc
-> the technical/api-* files? We did not even support building them until
-> sometime in 2012. Personally, I only ever view them as text.
+> Let's switch to using a strbuf, with a hard-limit of
+> LARGE_PACKET_MAX (which is specified by the protocol).  This
+> matches the size of the readers, as of 74543a0 (pkt-line:
+> provide a LARGE_PACKET_MAX static buffer, 2013-02-20).
+> Versions of git older than that will complain about our
+> large packets, but it's really no worse than the current
+> behavior. Right now the sender barfs with "impossibly long
+> line" trying to send the packet, and afterwards the reader
+> will barf with "protocol error: bad line length %d", which
+> is arguably better anyway.
 
-I also view them as text.  I tend to find it easier to read the
-technical/api-* files than headers.  That might be for the same reason
-that some other people prefer header files --- a
-Documentation/technical/ file tends to be written in one chunk
-together and ends up saying exactly what I need to know about the
-calling sequence in a coherent way, while header files tend to evolve
-over time to match the implementation without maintaining that
-organization and usability.
-
-I suspect a simple tool to extract the comments and produce something
-like the technical/api-* files would help, since then when someone
-writes a patch, they could try the tool and see if the result is still
-easy to read.
-
-Anyway, the patch I wrote was an attempt at a minimal fix (and an
-attempt at getting out of a conversation that seemed to be moving
-toward bikeshedding).  If someone wants to move the documentation from
-api-strbuf.txt to strbuf.h, I won't object, since I hope that a simple
-tool like described above isn't too far away.
-
-Thanks,
-Jonathan
+Anything older than 1.8.3 is affected by this, but only when the
+sending side has to send a large packet.  It is between failing
+because the sender cannot send a large packet and failing because
+the receiver does not expect such a large packet to come, and either
+way the whole operation will fail anyway, so there is no net loss.
