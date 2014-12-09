@@ -1,107 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/7] parse_color: refactor color storage
-Date: Tue, 9 Dec 2014 16:01:26 -0500
-Message-ID: <20141209210126.GA14305@peff.net>
-References: <20141120151418.GA23607@peff.net>
- <20141120151704.GD23680@peff.net>
- <54875825.7060008@kdbg.org>
- <20141209202135.GB12001@peff.net>
- <548760FA.50209@kdbg.org>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: Blobs not referenced by file (anymore) are not removed by GC
+Date: Tue, 9 Dec 2014 22:15:31 +0000
+Message-ID: <CAFY1edY=Ren9krK1-yFoxt92AAushUyqnbt=69hdXMeiBFAK=w@mail.gmail.com>
+References: <5485D03F.3060008@fu-berlin.de>
+	<20141209141457.GA18544@peff.net>
+	<CAFY1edaEG040jnfTJA4G9a0bAkFJHc3N5sHjtwOOdXmndsu9YQ@mail.gmail.com>
+	<20141209161133.GA17756@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Scott Baker <bakers@canbytel.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Dec 09 22:01:34 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Martin Scherer <m.scherer@fu-berlin.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 09 23:15:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRuX-0006HX-EE
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 22:01:33 +0100
+	id 1XyT4C-0007wz-F3
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 23:15:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130AbaLIVB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 16:01:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50753 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751570AbaLIVB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 16:01:29 -0500
-Received: (qmail 22680 invoked by uid 102); 9 Dec 2014 21:01:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 15:01:28 -0600
-Received: (qmail 4289 invoked by uid 107); 9 Dec 2014 21:01:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 16:01:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2014 16:01:26 -0500
-Content-Disposition: inline
-In-Reply-To: <548760FA.50209@kdbg.org>
+	id S1753310AbaLIWPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 17:15:32 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:50432 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640AbaLIWPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 17:15:32 -0500
+Received: by mail-ie0-f181.google.com with SMTP id tp5so1503886ieb.12
+        for <git@vger.kernel.org>; Tue, 09 Dec 2014 14:15:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=784DtwJz4j9IHvRX2ikro3qRi1qf9S8srDu6ABw18fo=;
+        b=a7I9jkbDhSNk8F9tpNwuGOXlR9IVc7YF1KbheinaFZZ9uSDhgke/+C9WnjFXzFeTn0
+         SeBiRacPa4KHj3LethZO3BaE5aZBcoDf+H9vK7cYc4ay1IzsHQzBiPupHhsnTKUHYXrr
+         CAEvln1ETTOCOGF2o/RQkUlAQ7aGEQp1nFTTUAU71ZoMdclaEkdtLSJyz3YWZpyrsvfS
+         jG3HEahVwGm+IS5rRVFOC1AdA12GfhFG0jI5n+kxnU/x/f1+WvQvjtpaKio5lOU5xGzk
+         mbI6U667rCmtuXRmCMo37KvmnbytjWB0xWSUu8vi2svFDSC6xD6RC5QR1LfyTYzJVcCr
+         CefQ==
+X-Received: by 10.107.138.131 with SMTP id c3mr947666ioj.0.1418163331262; Tue,
+ 09 Dec 2014 14:15:31 -0800 (PST)
+Received: by 10.64.240.171 with HTTP; Tue, 9 Dec 2014 14:15:31 -0800 (PST)
+In-Reply-To: <20141209161133.GA17756@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261169>
 
-On Tue, Dec 09, 2014 at 09:52:10PM +0100, Johannes Sixt wrote:
+On Tuesday, 9 December 2014, Jeff King <peff@peff.net> wrote:
+> I actually think filter-branch's "refs/original" is a bit outdated at
+> this point. The information is there in the reflogs already, and
+> dealing with refs/original often causes confusion in my experience. It
+> could probably use a "git filter-branch --restore" or something to
+> switch each $ref to $ref@{1} (after making sure that the reflog entry
+> was from filter-branch, of course).
 
-> This patch would actually be my personal preference. The comment near
-> the literal makes it all clear.
+Yeah, I'd agree that refs/original can cause confusion.
 
-Thanks. Here it is ready to be applied.
 
-Junio, this goes on top of the jk/colors topic.
+> Not that I expect you to want to work on filter-branch. :) But maybe
+> food for thought for a BFG feature.
 
--- >8 --
-Subject: [PATCH] parse_color: drop COLOR_BACKGROUND macro
+I haven't heard much demand for a recover/restore feature on the BFG
+(I think by the time people get to the BFG, they're pretty sure they
+want to go ahead with the procedure!) but I'll bear it in mind. Mind
+you, to make the post-rewrite clean-up easier, I'd be happy to
+contribute a patch that gives 'gc' a flag to do the equivalent of:
 
-Commit 695d95d (parse_color: refactor color storage,
-2014-11-20) introduced two macros, COLOR_FOREGROUND and
-COLOR_BACKGROUND. The latter conflicts with a system macro
-defined on Windows, breaking compilation there.
+git reflog expire --expire=now --all && git gc --prune=now --aggressive
 
-The simplest solution is to just get rid of these macros
-entirely. They are constants that are only used in one place
-(since the whole point of 695d95d was to avoid repeating
-ourselves). Their main function is to make the magic
-character constants more readable, but we can do the same
-thing with a comment.
+Maybe:
 
-Reported-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Jeff King <peff@peff.net>
----
- color.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+git gc --purge
 
-diff --git a/color.c b/color.c
-index e2a0a99..809b359 100644
---- a/color.c
-+++ b/color.c
-@@ -144,9 +144,6 @@ int color_parse(const char *value, char *dst)
- 	return color_parse_mem(value, strlen(value), dst);
- }
- 
--#define COLOR_FOREGROUND '3'
--#define COLOR_BACKGROUND '4'
--
- /*
-  * Write the ANSI color codes for "c" to "out"; the string should
-  * already have the ANSI escape code in it. "out" should have enough
-@@ -245,12 +242,14 @@ int color_parse_mem(const char *value, int value_len, char *dst)
- 		if (!color_empty(&fg)) {
- 			if (sep++)
- 				*dst++ = ';';
--			dst = color_output(dst, &fg, COLOR_FOREGROUND);
-+			/* foreground colors are all in the 3x range */
-+			dst = color_output(dst, &fg, '3');
- 		}
- 		if (!color_empty(&bg)) {
- 			if (sep++)
- 				*dst++ = ';';
--			dst = color_output(dst, &bg, COLOR_BACKGROUND);
-+			/* background colors are all in the 4x range */
-+			dst = color_output(dst, &bg, '4');
- 		}
- 		*dst++ = 'm';
- 	}
--- 
-2.2.0.454.g7eca6b7
+??
