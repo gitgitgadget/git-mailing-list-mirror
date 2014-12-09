@@ -1,54 +1,92 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [wish] Revert changes in git gui
-Date: Tue, 09 Dec 2014 21:21:22 +0100
-Message-ID: <548759C2.5030909@kdbg.org>
-References: <54875263.1010407@grueninger.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/7] parse_color: refactor color storage
+Date: Tue, 9 Dec 2014 15:21:35 -0500
+Message-ID: <20141209202135.GB12001@peff.net>
+References: <20141120151418.GA23607@peff.net>
+ <20141120151704.GD23680@peff.net>
+ <54875825.7060008@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-To: =?ISO-8859-15?Q?Christoph_Gr=FCninger?= <foss@grueninger.de>
-X-From: git-owner@vger.kernel.org Tue Dec 09 21:21:33 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Scott Baker <bakers@canbytel.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Dec 09 21:21:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRHo-0004JT-Dn
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:21:32 +0100
+	id 1XyRHy-0004QB-Vk
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:21:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752529AbaLIUV0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2014 15:21:26 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:48847 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751013AbaLIUVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 15:21:24 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3jxt8305Lyz5tlV;
-	Tue,  9 Dec 2014 21:21:22 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6E42019F828;
-	Tue,  9 Dec 2014 21:21:22 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.2.0
-In-Reply-To: <54875263.1010407@grueninger.de>
+	id S1752553AbaLIUVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 15:21:39 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50694 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751587AbaLIUVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 15:21:37 -0500
+Received: (qmail 19155 invoked by uid 102); 9 Dec 2014 20:21:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 14:21:37 -0600
+Received: (qmail 3653 invoked by uid 107); 9 Dec 2014 20:21:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 15:21:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2014 15:21:35 -0500
+Content-Disposition: inline
+In-Reply-To: <54875825.7060008@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261157>
 
-Am 09.12.2014 um 20:49 schrieb Christoph Gr=FCninger:
-> While browsing the changes, it is very easy to add (or remove) lines =
-or
-> hunks for commit via the context menu. I would like to revert the
-> changes of a line or a hunk in a similar way. I have often white-spac=
-e
-> or formatting changes I don't want to commit but want them reverted
-> immediately.
+On Tue, Dec 09, 2014 at 09:14:29PM +0100, Johannes Sixt wrote:
 
-I'm using this patch series since it was posted:
+> Am 20.11.2014 um 16:17 schrieb Jeff King:
+> > +#define COLOR_FOREGROUND '3'
+> > +#define COLOR_BACKGROUND '4'
+> 
+> This (COLOR_BACKGROUND) causes an ugly redefinition warning on Windows,
+> because we inherit a definition from a Windows header. How would you
+> like it fixed? A different name or #undef in front of it?
 
-http://thread.gmane.org/gmane.comp.version-control.git/188170/focus=3D1=
-88171
+I think a different name would be fine. The constants are actually only
+used once each. Their main function is to avoid a confusing parameter
+'3' to the color_output function. But we could use the literal
+constants with a parameter, like:
 
--- Hannes
+diff --git a/color.c b/color.c
+index e2a0a99..809b359 100644
+--- a/color.c
++++ b/color.c
+@@ -144,9 +144,6 @@ int color_parse(const char *value, char *dst)
+ 	return color_parse_mem(value, strlen(value), dst);
+ }
+ 
+-#define COLOR_FOREGROUND '3'
+-#define COLOR_BACKGROUND '4'
+-
+ /*
+  * Write the ANSI color codes for "c" to "out"; the string should
+  * already have the ANSI escape code in it. "out" should have enough
+@@ -245,12 +242,14 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+ 		if (!color_empty(&fg)) {
+ 			if (sep++)
+ 				*dst++ = ';';
+-			dst = color_output(dst, &fg, COLOR_FOREGROUND);
++			/* foreground colors are all in the 3x range */
++			dst = color_output(dst, &fg, '3');
+ 		}
+ 		if (!color_empty(&bg)) {
+ 			if (sep++)
+ 				*dst++ = ';';
+-			dst = color_output(dst, &bg, COLOR_BACKGROUND);
++			/* background colors are all in the 4x range */
++			dst = color_output(dst, &bg, '4');
+ 		}
+ 		*dst++ = 'm';
+ 	}
+
+We could also pass in integer "30" and "40", and then format it with %d
+inside color_output. I don't know if that would be more obvious or not.
+
+-Peff
