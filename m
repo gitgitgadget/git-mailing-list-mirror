@@ -1,101 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] document string_list_clear
-Date: Tue, 9 Dec 2014 15:27:38 -0500
-Message-ID: <20141209202738.GC12001@peff.net>
-References: <1417830678-16115-1-git-send-email-sbeller@google.com>
- <20141206020458.GR16345@google.com>
- <xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
- <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
- <20141209201713.GY16345@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am.txt: --ignore-date flag is not passed to git-apply
+Date: Tue, 09 Dec 2014 12:27:48 -0800
+Message-ID: <xmqqegs8lgaj.fsf@gitster.dls.corp.google.com>
+References: <1418146098-30099-1-git-send-email-rdwampler@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 21:27:47 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, giuseppe.bilotta@gmail.com
+To: Ronald Wampler <rdwampler@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 21:27:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRNp-0007Eo-4C
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:27:45 +0100
+	id 1XyRNz-0007Jw-RO
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:27:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751209AbaLIU1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 15:27:41 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50708 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751075AbaLIU1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 15:27:40 -0500
-Received: (qmail 19714 invoked by uid 102); 9 Dec 2014 20:27:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 14:27:40 -0600
-Received: (qmail 3754 invoked by uid 107); 9 Dec 2014 20:27:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 15:27:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2014 15:27:38 -0500
-Content-Disposition: inline
-In-Reply-To: <20141209201713.GY16345@google.com>
+	id S1751219AbaLIU1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 15:27:52 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56305 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751075AbaLIU1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 15:27:51 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E949B23310;
+	Tue,  9 Dec 2014 15:27:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bImzTf1FBVMiA8JOnP2R/CrGYjU=; b=pAof1H
+	99f4qbaZ0yuvjaR7+Cmwbzf7gzctun6nPY4T/NSx1fpvfpAVv6zOEayB4ErGlW6c
+	+qxSFPKXnr1PbHtLKN+Rgb/ZM/1j5Xg2TRDUAkW4PLDaKVZaMN2dIXxiU8bQdGcu
+	/3a9YJtqxEYnIuqHSYwlwWdMVXC4jEYPhxuSs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a9II4n9w+X8U6hyEa2sGGRGpOtouECII
+	54Z5ITjh7qmmv6ZP7Nig6DNn7uD7LvVPJuohcw06ajJeXl6fSXHoYisGUwXQYdVP
+	i6I0CAptx2TGdFBdboc4tacnRaUoMTfU6ZTa7Q2GU8V9gML535WgRpfsXK0KpUwN
+	DW4JKxWS09Q=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E08C62330C;
+	Tue,  9 Dec 2014 15:27:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58F762330B;
+	Tue,  9 Dec 2014 15:27:50 -0500 (EST)
+In-Reply-To: <1418146098-30099-1-git-send-email-rdwampler@gmail.com> (Ronald
+	Wampler's message of "Tue, 9 Dec 2014 12:28:18 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D8730990-7FE1-11E4-8360-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261162>
 
-On Tue, Dec 09, 2014 at 12:17:13PM -0800, Jonathan Nieder wrote:
+Ronald Wampler <rdwampler@gmail.com> writes:
 
-> Stefan Beller wrote:
-> > On Tue, Dec 9, 2014 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> >> Perhaps the API doc that currently says "Free" is the only thing
-> >> that needs fixing?  And perhaps add "See $doc" at the beginning of
-> >> the header and remove duplicated comments we already have in the
-> >> file?
-> >
-> > The reason I wrote this patch originally was because I seem to forget we have
-> > more than one place to document our APIs. If there are comments in the header
-> > I seem to have thought it were the only place where we have documentation.
-> 
-> How about this patch?
-> 
-> -- >8 --
-> Subject: put strbuf API documentation in one place
-> 
-> v1.8.1-rc0~61^2 (strbuf_split*(): document functions, 2012-11-04)
-> added some nice API documentation for a few functions to strbuf.h, to
-> complement the documentation at Documentation/technical/api-strbuf.
-> That was helpful because it meant one less hop for someone reading the
-> header to find API documentation.
-> 
-> In practice, unfortunately, it is too hard to remember that there
-> is documentation in two places.  The longer documentation comments
-> in the header made Documentation/technical/api-strbuf less
-> discoverable.  So move the information to
-> Documentation/technical/api-strbuf and drop the long comments.
-> 
-> Hopefully in the long term we will find a good way to
-> generate well organized Documentation/technical/api-* documents
-> from comments in headers and this problem will be eliminated
-> completely.
-> 
-> Short reminders in the header file are still okay.
+> ---
+>  Documentation/git-am.txt | 1 -
+>  1 file changed, 1 deletion(-)
 
-I somewhat feel this goes in the opposite direction of where we want to
-be (all data in one place, but that place is the header). Your patch
-might make api-strbuf more discoverable, but it also vastly increases
-the chances of function getting out of sync with their documentation, or
-new functions being added without getting documented (very often the
-presence of other documentation in the comments is enough to guilt me
-into writing it for new ones).
+Of course ;-)  "git apply" does not care about dates as it does not
+make the commit.
 
-Elsewhere I mentioned a tool to extract comments and format them. But do
-people actually care about the formatting step? Does anybody asciidoc
-the technical/api-* files? We did not even support building them until
-sometime in 2012. Personally, I only ever view them as text.
+Thanks.
 
-In which case can we simply start migrating api-strbuf.txt into
-in-header comments, without worrying about a parsing tool?
-
--Peff
+>
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index 9adce37..d4ef16c 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -83,7 +83,6 @@ default.   You can use `--no-utf8` to override this.
+>  	it is supposed to apply to and we have those blobs
+>  	available locally.
+>  
+> ---ignore-date::
+>  --ignore-space-change::
+>  --ignore-whitespace::
+>  --whitespace=<option>::
