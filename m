@@ -1,79 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] document string_list_clear
-Date: Tue, 9 Dec 2014 12:21:52 -0800
-Message-ID: <20141209202152.GZ16345@google.com>
-References: <1417830678-16115-1-git-send-email-sbeller@google.com>
- <20141206020458.GR16345@google.com>
- <20141206053024.GE31301@peff.net>
- <xmqq388omwzr.fsf@gitster.dls.corp.google.com>
- <20141209201551.GA12001@peff.net>
+From: Daniel Hahler <genml+git-2014@thequod.de>
+Subject: diff: use built-in patterns by default via git attributes
+Date: Tue, 09 Dec 2014 21:18:30 +0100
+Message-ID: <54875916.7020107@thequod.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 09 21:22:05 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="LvE9IcINm8Hpw4cG3CgDvFrGpJFSpMSfJ"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 09 21:25:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyRIK-0004aM-E5
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:22:04 +0100
+	id 1XyRLY-0006AC-Mz
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 21:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752813AbaLIUV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 15:21:58 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:62098 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752761AbaLIUV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 15:21:56 -0500
-Received: by mail-ie0-f178.google.com with SMTP id tp5so1303291ieb.9
-        for <git@vger.kernel.org>; Tue, 09 Dec 2014 12:21:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=gZdWv2scM4RHcA5ecg38/1L9h8lMojomiD1nhH23H/Q=;
-        b=pRYWJs2ijEsaEkKxxf7+/A3yoNY81kVGyPDZC90cshSmhCPbue1kiMqYN+VrZdHQ0O
-         maSA/VsuA/kHRayBcESTIL0Qrff5j7hjct9OiJSVTA0wzyjCDjToprUhNfUbLyMwCeUw
-         uLowqG9MAIVEF8hf0/D6WtolXJ053YpIQJPnib0sUMAXDpW5fDC4Q+1jliRuiy2AIJJM
-         eAaSWexKUbp+JQwo5KCI/E9ufUMuX1qjg+XWkezYHaulIgyj79pp0Inlrc9ZDxiEbal4
-         clWuXWrlXxdEf2Oz2r09IgSXFmgOqrcSWELVB7Ss6eaINzEaLKIrVRTDm9Phn3ErhRtD
-         OSNg==
-X-Received: by 10.42.194.17 with SMTP id dw17mr3658436icb.4.1418156515318;
-        Tue, 09 Dec 2014 12:21:55 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:41c9:2fc6:1317:4ac])
-        by mx.google.com with ESMTPSA id nm13sm1390707igb.5.2014.12.09.12.21.54
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Dec 2014 12:21:54 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20141209201551.GA12001@peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753125AbaLIUZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 15:25:17 -0500
+Received: from hahler.de ([188.40.33.212]:35406 "EHLO elfe.thequod.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751013AbaLIUZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 15:25:15 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Dec 2014 15:25:15 EST
+Received: from localhost (amavis [10.122.1.24])
+	by elfe.thequod.de (Postfix) with ESMTP id 76C6E6212D
+	for <git@vger.kernel.org>; Tue,  9 Dec 2014 21:18:33 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
+	content-type:content-type:subject:subject:mime-version
+	:user-agent:from:from:date:date:message-id:received:received; s=
+	postfix2; t=1418156313; bh=XrU1K9DoGzG6iitKqv29Gpc3DD1DL2Tr+pbiL
+	KzcEnQ=; b=K/9JJhq6L9YrjlOL7xfhajZPriUh5VHxWmsiIA1OZlemFpOZjW7ph
+	5lNRAVihFRZlVQBCvXxFCLJ6jfLzb279EY5hsk/WrcW2ri9/H47McHmzA408FUYO
+	lb49SWXmtGa8eQXRCof1LSAvaFU2dU1B7QXhRSWhrRgXH+aj79Ljsk=
+Received: from elfe.thequod.de ([10.122.1.25])
+	by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
+	with ESMTP id zjzkdSpRkXjv for <git@vger.kernel.org>;
+	Tue,  9 Dec 2014 21:18:33 +0100 (CET)
+Received: from lenny.thequod.de (ip5b403898.dynamic.kabel-deutschland.de [91.64.56.152])
+	(Authenticated sender: daniel@hahler.de)
+	by elfe.thequod.de (Postfix) with ESMTPSA
+	for <git@vger.kernel.org>; Tue,  9 Dec 2014 21:18:33 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261159>
 
-Jeff King wrote:
-> On Tue, Dec 09, 2014 at 11:41:44AM -0800, Junio C Hamano wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--LvE9IcINm8Hpw4cG3CgDvFrGpJFSpMSfJ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
->> Yeah, that is a thought.
->>
->> Some existing documentation pages like allocation-growing may not be
->> a good match for this strategy, though; cache.h has a lot more than
->> just alloc-grow, and there needs to be a way to generate more than
->> one API docs from a single header (and vice versa, taking text from
->> more than one source for a single API, I suspect).
->
-> I think that would be a matter of tool support for saying "now I am
-> outputting api-foo" in the inline documentation[1]. It does make writing
-> Makefiles a lot harder, though, if there isn't a one-to-one
-> correspondence between targets and their sources. Perhaps it is a sign
-> that we should split our include files more along functional boundaries.
+Hi,
 
-Yeah, I think a separate alloc-grow.h would be fine.
+I'm wondering why the built-in patterns (defined in userdiff.c) are not
+being applied by default, e.g. what you would normally do in
+core.attributesfile via:
 
-Thanks,
-Jonathan
+    *.py diff=3Dpython
+
+Wouldn't it make sense to provide certain defaults for attributes, where
+Git provides enhanced patterns?
+
+
+Regards,
+Daniel.
+
+--=20
+http://daniel.hahler.de/
+
+
+
+--LvE9IcINm8Hpw4cG3CgDvFrGpJFSpMSfJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUh1kWfAK/hT/mPgARAuZYAKCWCnrZXNMPdompJHS6RSUXWkhQGQCgjfNK
+TmwdxV7+skOy4ORiK6aENA0=
+=GtX4
+-----END PGP SIGNATURE-----
+
+--LvE9IcINm8Hpw4cG3CgDvFrGpJFSpMSfJ--
