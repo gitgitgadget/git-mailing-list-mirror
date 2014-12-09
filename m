@@ -1,58 +1,68 @@
 From: Max Kirillov <max@max630.net>
-Subject: [PATCH v3 3/3] Add GIT_COMMON_DIR to local_repo_env
-Date: Tue,  9 Dec 2014 06:44:43 +0200
-Message-ID: <1418100283-8995-4-git-send-email-max@max630.net>
+Subject: Re: [PATCH v3 0/3] Multiple worktrees vs. submodules fixes
+Date: Tue, 9 Dec 2014 07:04:35 +0200
+Message-ID: <20141209050435.GA9140@wheezy.local>
 References: <1418100283-8995-1-git-send-email-max@max630.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Max Kirillov <max@max630.net>
-To: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 09 05:45:18 2014
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Dec 09 06:10:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyCfl-00014Z-1K
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 05:45:17 +0100
+	id 1XyD4I-0002Dx-Tm
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 06:10:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756593AbaLIEpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2014 23:45:08 -0500
-Received: from p3plsmtpa08-04.prod.phx3.secureserver.net ([173.201.193.105]:38567
-	"EHLO p3plsmtpa08-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756510AbaLIEpH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2014 23:45:07 -0500
+	id S1750722AbaLIFEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 00:04:41 -0500
+Received: from p3plsmtpa12-03.prod.phx3.secureserver.net ([68.178.252.232]:59873
+	"EHLO p3plsmtpa12-03.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750713AbaLIFEl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2014 00:04:41 -0500
 Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa08-04.prod.phx3.secureserver.net with 
-	id RGkh1p00V5B68XE01Gl4x3; Mon, 08 Dec 2014 21:45:07 -0700
-X-Mailer: git-send-email 2.2.0.50.gb2b6831
+	by p3plsmtpa12-03.prod.phx3.secureserver.net with 
+	id RH4W1p0065B68XE01H4dzT; Mon, 08 Dec 2014 22:04:40 -0700
+Content-Disposition: inline
 In-Reply-To: <1418100283-8995-1-git-send-email-max@max630.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261111>
 
-This is obviously right thing to do, because submodule repository does
-not use common directory of super repository.
+On Tue, Dec 09, 2014 at 06:44:40AM +0200, Max Kirillov wrote:
+> After discussions I came to basically same as v1.
+> 
+> * Resubmitting the 2 patches which have not been taken to worktrees reroll -
+>   they fix visible issue. Mostly unchanged except small cleanup in test.
+> * Added GIT_COMMON_DIR to local_repo_env. While it is obviously a right
+>   thing, I wasn't able to observe any change in behavior.
+> 
+> Max Kirillov (3):
+>   submodule refactor: use git_path_submodule() in add_submodule_odb()
+>   path: implement common_dir handling in git_path_submodule()
+>   Add GIT_COMMON_DIR to local_repo_env
+> 
+>  cache.h                          |  1 +
+>  environment.c                    |  1 +
+>  path.c                           | 24 ++++++++++++++++++++----
+>  setup.c                          | 17 ++++++++++++-----
+>  submodule.c                      | 28 ++++++++++------------------
+>  t/t7410-submodule-checkout-to.sh | 10 ++++++++++
+>  6 files changed, 54 insertions(+), 27 deletions(-)
+> 
+> -- 
+> 2.2.0.50.gb2b6831
+>
 
-Suggested-by: Jens Lehmann <Jens.Lehmann@web.de>
-Signed-off-by: Max Kirillov <max@max630.net>
----
- environment.c | 1 +
- 1 file changed, 1 insertion(+)
+Should be applied on top of
+http://thread.gmane.org/gmane.comp.version-control.git/260387
+with _all_ patches included, currently it's df56607dff
 
-diff --git a/environment.c b/environment.c
-index 8351007..85ce3c4 100644
---- a/environment.c
-+++ b/environment.c
-@@ -94,6 +94,7 @@ const char * const local_repo_env[] = {
- 	CONFIG_DATA_ENVIRONMENT,
- 	DB_ENVIRONMENT,
- 	GIT_DIR_ENVIRONMENT,
-+	GIT_COMMON_DIR_ENVIRONMENT,
- 	GIT_WORK_TREE_ENVIRONMENT,
- 	GIT_IMPLICIT_WORK_TREE_ENVIRONMENT,
- 	GRAFT_ENVIRONMENT,
 -- 
-2.2.0.50.gb2b6831
+Max
