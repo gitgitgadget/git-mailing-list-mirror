@@ -1,71 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] doc: add some crossrefs between manual pages
-Date: Tue, 9 Dec 2014 09:14:38 -0800
-Message-ID: <20141209171438.GA22606@google.com>
-References: <1415737027-44589-1-git-send-email-max@quendi.de>
- <xmqqppct5p1q.fsf@gitster.dls.corp.google.com>
- <96693472-344E-4ED3-B027-49A8303AF8C0@quendi.de>
- <xmqqbnoc3zli.fsf@gitster.dls.corp.google.com>
- <xmqq7fz03z7i.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Max Horn <max@quendi.de>, git@vger.kernel.org, spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 18:14:50 2014
+From: Ronald Wampler <rdwampler@gmail.com>
+Subject: [PATCH] git-am.txt: --ignore-date flag is not passed to git-apply
+Date: Tue,  9 Dec 2014 12:28:18 -0500
+Message-ID: <1418146098-30099-1-git-send-email-rdwampler@gmail.com>
+Cc: giuseppe.bilotta@gmail.com, gitster@pobox.com,
+	Ronald Wampler <rdwampler@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 09 18:30:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyON7-0003hO-Qs
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 18:14:50 +0100
+	id 1XyOcZ-00049e-EA
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 18:30:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbaLIROp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 12:14:45 -0500
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:34243 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751091AbaLIROp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 12:14:45 -0500
-Received: by mail-ig0-f174.google.com with SMTP id hn15so4900461igb.13
-        for <git@vger.kernel.org>; Tue, 09 Dec 2014 09:14:44 -0800 (PST)
+	id S1751122AbaLIRan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 12:30:43 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:38901 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931AbaLIRan (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 12:30:43 -0500
+Received: by mail-ig0-f179.google.com with SMTP id r2so1337808igi.12
+        for <git@vger.kernel.org>; Tue, 09 Dec 2014 09:30:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=aRXIhcBrLqgJU8e2/MBjpj753o5O9Zxe1LXamxR0bQA=;
-        b=RNqe738iDUuEd+/XxAlSu3TjnodHMSnc4RcM+A2b+Ly6V+CITB8+zG/z8sITS2l1r3
-         08yScDArIjjoMLohV4K9v5uXdAm70lbtlQgCna9VW8Yt5gq0YZDVeGy9B3yd6iPKQDDA
-         rWmpDhwJO3zvsR/uyNfrFo3GsTNI1SLtdIuf3LuoMh+oXrPJ6zVERXkNodbbjkpjt7fy
-         iB02dl5La5NttdfoMYfOmwUNMakDK9oBOg/SdMPvlZOHkhn+kE/rESt8ph8xCxXqJY8b
-         yv/IB9QIp9Gy99/tRNPzg2UsH+180EVSdxL4ML+Y5hEpkQuXXRZw3YbucaxUOymSPR0r
-         qUvw==
-X-Received: by 10.42.212.10 with SMTP id gq10mr2799882icb.79.1418145284220;
-        Tue, 09 Dec 2014 09:14:44 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:41c9:2fc6:1317:4ac])
-        by mx.google.com with ESMTPSA id w9sm5739478igk.20.2014.12.09.09.14.43
+        h=from:to:cc:subject:date:message-id;
+        bh=O21maQ7y1wQ2+YcCtNuw6Pn4d2KTk9vP9MgKqdR7DJ0=;
+        b=Li3I1wZ1kGQ5oW7OEGJ8EJ8SCNMK+6srOgDkNE0oCAZgCCrI/KFvAc3QNaDy6Ps4/E
+         kWlFiH0A1x36rgHY3wa51lZ1ARJ6ED0og+Q6LK8laXayDtiPQ1w7eA2Onna5KZ2kY+qd
+         raAkWaA9+DO1KTbmoi2Vc4Ut0FD/049XJ25GWdhzxvinxONgCuVvAEPIOGi058KF7moQ
+         2Vzwgr6HxZs9TyTFzIx90RHzBOdfLQgS/nhIb1w3lCY/zP6DxbQwDwtVG5azIVn+HqMA
+         IvhgAyWD/liZoAAi0wvuOT+ITq184PdZ6S9KrvHhWHCBLH7SO59cES3gPamW7/beuOHF
+         yyUw==
+X-Received: by 10.50.50.165 with SMTP id d5mr21354690igo.16.1418146242447;
+        Tue, 09 Dec 2014 09:30:42 -0800 (PST)
+Received: from localhost.localdomain (rrcs-24-123-216-252.central.biz.rr.com. [24.123.216.252])
+        by mx.google.com with ESMTPSA id z20sm1152784igp.22.2014.12.09.09.30.41
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 09 Dec 2014 09:14:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqq7fz03z7i.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 09 Dec 2014 09:30:41 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.33.gc18b867
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261132>
 
-Junio C Hamano wrote:
+---
+ Documentation/git-am.txt | 1 -
+ 1 file changed, 1 deletion(-)
 
-> So I am OK to special case fast-import and single it out as a
-> notable implementation technology, which is what your patch does.
-
-More importantly, helpers implementing the "import" or "export"
-capability are indicating that they grok the fast-import format.  What
-they use behind the scenes to produce or parse it is not so important
---- the relevant thing is that a fast-import stream (with format
-documented in git-fast-import(1)) is part of the remote helper
-protocol in this case.
-
-Thanks,
-Jonathan
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 9adce37..d4ef16c 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -83,7 +83,6 @@ default.   You can use `--no-utf8` to override this.
+ 	it is supposed to apply to and we have those blobs
+ 	available locally.
+ 
+---ignore-date::
+ --ignore-space-change::
+ --ignore-whitespace::
+ --whitespace=<option>::
+-- 
+2.2.0.33.gc18b867
