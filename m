@@ -1,67 +1,112 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Avoid gcc compiler warning
-Date: Tue, 9 Dec 2014 03:47:28 -0500
-Message-ID: <20141209084728.GA13123@peff.net>
-References: <cover.1418056722.git.johannes.schindelin@gmx.de>
- <b9e1cb1f858e71b964be4f752fcebc22cd944ebc.1418056722.git.johannes.schindelin@gmx.de>
+Date: Tue, 9 Dec 2014 10:48:36 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412091039130.13845@s15462909.onlinehome-server.info>
+References: <cover.1418056722.git.johannes.schindelin@gmx.de> <b9e1cb1f858e71b964be4f752fcebc22cd944ebc.1418056722.git.johannes.schindelin@gmx.de> <20141209084728.GA13123@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 09 09:47:36 2014
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 09 10:48:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyGSF-0001ff-EC
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 09:47:35 +0100
+	id 1XyHPa-00053e-NG
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Dec 2014 10:48:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753247AbaLIIrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2014 03:47:31 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50427 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752001AbaLIIrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2014 03:47:31 -0500
-Received: (qmail 12896 invoked by uid 102); 9 Dec 2014 08:47:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 02:47:31 -0600
-Received: (qmail 30761 invoked by uid 107); 9 Dec 2014 08:47:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Dec 2014 03:47:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2014 03:47:28 -0500
-Content-Disposition: inline
-In-Reply-To: <b9e1cb1f858e71b964be4f752fcebc22cd944ebc.1418056722.git.johannes.schindelin@gmx.de>
+	id S1754755AbaLIJst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2014 04:48:49 -0500
+Received: from mout.gmx.net ([212.227.15.19]:57154 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752845AbaLIJsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2014 04:48:47 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0MX16a-1YRxKK35Qi-00Vwid;
+ Tue, 09 Dec 2014 10:48:36 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20141209084728.GA13123@peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:34nWfbhZQRmot+MHEdbfaKWXvhrF1CgTK7UtDWF2JeMvu2bTXoW
+ 8HiXcHkOKrRwE30GpNHE30m3gDNDENquSTRW6jX27yZ37EepPOc5Vxktv2f0I/xAKXIghn1
+ VRCzWkVEyBuZ/Pt/KOdmM4ka1oXvoc3446SOTpgVvGeZNK+vrvwiJB6MAgTDUuURo+moYTF
+ 36VJFMG/I8KyjNBne5AbQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261116>
 
-On Mon, Dec 08, 2014 at 05:38:59PM +0100, Johannes Schindelin wrote:
+Hi Peff,
 
-> At least on this developer's MacOSX (Snow Leopard, gcc-4.2.1), GCC prints
-> a warning that 'hash' may be used uninitialized when compiling
-> test-hashmap that 'hash' may be used uninitialized (but GCC 4.6.3 on this
-> developer's Ubuntu server does not report this problem).
+On Tue, 9 Dec 2014, Jeff King wrote:
+
+> On Mon, Dec 08, 2014 at 05:38:59PM +0100, Johannes Schindelin wrote:
 > 
-> Since hash() is called from perf_hashmap() which accepts an unchecked
-> integer value from the command line, the warning appears to be legitimate,
-> even if the test-hashmap command is only called from the test suite.
+> > At least on this developer's MacOSX (Snow Leopard, gcc-4.2.1), GCC prints
+> > a warning that 'hash' may be used uninitialized when compiling
+> > test-hashmap that 'hash' may be used uninitialized (but GCC 4.6.3 on this
+> > developer's Ubuntu server does not report this problem).
+> > 
+> > Since hash() is called from perf_hashmap() which accepts an unchecked
+> > integer value from the command line, the warning appears to be legitimate,
+> > even if the test-hashmap command is only called from the test suite.
+> 
+> I think the older gcc is wrong;
 
-I think the older gcc is wrong; we are switching on "method & 3", which
-must be in the range 0-3 (and we cover all cases).
+Thanks for pointing to the older thread. It just happened to make it
+inconvenient to develop the rather huge fsck api topic branch I submitted
+yesterday because my vi kept jumping to test-hashmap.c because of that
+compiler warning (and as you know, not everybody has the luxury of being
+able to upgrade their gcc *cough* *Xcode* *cough* *Snow Leopard*).
 
-I do not mind silencing the warning anyway, but see this discussion:
+> we are switching on "method & 3", which must be in the range 0-3 (and we
+> cover all cases).
 
-  http://thread.gmane.org/gmane.comp.version-control.git/258186
+That is of course correct, but still does not address the compiler
+warning.
 
-The thread seems very broken in gmane, but it continues here:
+Junio, you said that you would prefer the useless initialization, so here
+goes:
 
-  http://article.gmane.org/gmane.comp.version-control.git/258232
+-- snipsnap --
+Subject: [PATCH] Avoid gcc compiler warning
 
-  http://thread.gmane.org/gmane.comp.version-control.git/258245
+At least on this developer's MacOSX (Snow Leopard, gcc-4.2.1), GCC prints
+a warning that 'hash' may be used uninitialized when compiling
+test-hashmap that 'hash' may be used uninitialized (but GCC 4.6.3 on this
+developer's Ubuntu server does not report this problem).
 
-  http://article.gmane.org/gmane.comp.version-control.git/258264
+The old compiler is wrong, of course, as the switch(method & 3) statement
+already handles all the possible cases, but that does not help in a
+scenario where it is hard or impossible to upgrade to a newer compiler
+(e.g. being stuck on an older MacOSX and having to rely on Xcode).
 
--Peff
+So let's just initialize the variable and be done with it, it is hardly a
+crucial part of the code because it is only used by the test suite and
+invisible to the end users.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ test-hashmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test-hashmap.c b/test-hashmap.c
+index 07aa7ec..cc2891d 100644
+--- a/test-hashmap.c
++++ b/test-hashmap.c
+@@ -47,7 +47,7 @@ static struct test_entry *alloc_test_entry(int hash,
+char *key, int klen,
+ 
+ static unsigned int hash(unsigned int method, unsigned int i, const char
+*key)
+ {
+-	unsigned int hash;
++	unsigned int hash = 0;
+ 	switch (method & 3)
+ 	{
+ 	case HASH_METHOD_FNV:
+-- 
+2.0.0.rc3.9669.g840d1f9
