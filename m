@@ -1,133 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] commit: always populate GIT_AUTHOR_* variables
-Date: Wed, 10 Dec 2014 10:43:42 -0500
-Message-ID: <20141210154342.GB20771@peff.net>
-References: <20141210153952.GA14910@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: filter-branch performance
+Date: Wed, 10 Dec 2014 08:05:21 -0800
+Message-ID: <xmqqfvcnjxry.fsf@gitster.dls.corp.google.com>
+References: <548744F1.9000902@gmx.de> <20141209185933.GC31158@peff.net>
+	<CAFY1edYYC9TZmLE6b3=QAoTB1zQHi_Y97rHL-5wk5Pbpa_oj_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Simon <simonzack@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 16:43:49 2014
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Henning Moll <newsScott@gmx.de>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Roberto Tyley <roberto.tyley@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 17:05:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyjQb-0001eD-56
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 16:43:49 +0100
+	id 1Xyjlc-0006Bc-UF
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 17:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757888AbaLJPnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 10:43:45 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51101 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757686AbaLJPno (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 10:43:44 -0500
-Received: (qmail 10755 invoked by uid 102); 10 Dec 2014 15:43:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 09:43:44 -0600
-Received: (qmail 10363 invoked by uid 107); 10 Dec 2014 15:43:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 10:43:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 10:43:42 -0500
-Content-Disposition: inline
-In-Reply-To: <20141210153952.GA14910@peff.net>
+	id S932281AbaLJQF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 11:05:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64980 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932180AbaLJQF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 11:05:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BF8723C33;
+	Wed, 10 Dec 2014 11:05:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZbcJmzRr/UNQQH8ZnUhIWZJP5Pk=; b=niSbOw
+	e07N2vfLnsXbeuN+RBEGv3vYFJEz/64wcwY/XlnjXro3mx9vIqYko1TpvWB1Zz84
+	Z8wCiDBbkB4YgGT3qRc+70Kou5NJjTHUlfyGy3qNXgJ14Dgo+6p6OVpVE/Ka4vMO
+	6EuZD8FJB3y3FEsjfqBSRlAvvss/QMKDHbMc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gYKwtSr84fKHfN5rc+M08mvRU5xpem6f
+	Fu/+VIOoOO7juaooyyZXdd9C+COUlii9gfrGUZdrwRZ++SxBwEXnS8qtXciZXUK1
+	ulTHPMmasPKrfYuomE4p1obYl+8ITwTehUf8A9FZu3Pq3eqpP2R2Hxhhm39xCAKg
+	8C6HMpcvf8U=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1165D23C32;
+	Wed, 10 Dec 2014 11:05:26 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E4B4B23C2A;
+	Wed, 10 Dec 2014 11:05:22 -0500 (EST)
+In-Reply-To: <CAFY1edYYC9TZmLE6b3=QAoTB1zQHi_Y97rHL-5wk5Pbpa_oj_w@mail.gmail.com>
+	(Roberto Tyley's message of "Wed, 10 Dec 2014 14:18:24 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 58AA6046-8086-11E4-92D3-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261220>
 
-To figure out the author ident for a commit, we call
-determine_author_info(). This function collects information
-from the environment, other commits (in the case of
-"--amend" or "-c/-C"), and the "--author" option. It then
-uses fmt_ident to generate the final ident string that goes
-into the commit object. fmt_ident is therefore responsible
-for any quality or validation checks on what is allowed to
-go into a commit.
+Roberto Tyley <roberto.tyley@gmail.com> writes:
 
-Before returning, though, we call split_ident_line on the
-result, and feed the individual components to hooks via the
-GIT_AUTHOR_* variables. Furthermore, we do extra validation
-by feeding the split to sane_ident_split(), which is pickier
-than fmt_ident (in particular, it will complain about an empty
-email field).  If this parsing or validation fails, we skip
-updating the environment variables.
+> The BFG is generally faster than filter-branch for 3 reasons:
+>
+> 1. No forking - everything stays in the JVM process
+> 2. Embarrassingly parallel algorithm makes good use of multi-core machines
+> 3. Memoization means no Git object (file or folder) is cleaned more than once
+>
+> In the case of your problem, only the first factor will be noticeably
+> helpful. Unfortunately commits do need to be cleaned sequentially, as
+> their hashes depend on the hashes of their parents, and filter-branch
+> doesn't clean /commits/ more than once, the way it does with files or
+> folders - so the last 2 reasons in the list won't be significant.
 
-This is bad, because it means that hooks may silently see a
-different ident than what we are putting into the commit. We
-should drop the extra sane_ident_split checks entirely, and
-take whatever fmt_ident has fed us (and what will go into
-the commit object).
-
-If parsing fails, we should actually abort here rather than
-continuing (and feeding the hooks bogus data). However,
-split_ident_line should never fail here. The ident was just
-generated by fmt_ident, so we know that it's sane. We can
-use assert_split_ident to double-check this.
-
-Note that we also teach that assertion to check that we
-found a date (it always should, but until now, no caller
-cared whether we found a date or not). Checking the return
-value of sane_ident_split is enough to ensure we have the
-name/email pointers set, and checking date_begin is enough
-to know that all of the date/tz variables are set.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/commit.c | 26 +++++---------------------
- 1 file changed, 5 insertions(+), 21 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2be5506..f1a9e07 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -504,7 +504,7 @@ static int is_a_merge(const struct commit *current_head)
- 
- static void assert_split_ident(struct ident_split *id, const struct strbuf *buf)
- {
--	if (split_ident_line(id, buf->buf, buf->len))
-+	if (split_ident_line(id, buf->buf, buf->len) || !id->date_begin)
- 		die("BUG: unable to parse our own ident: %s", buf->buf);
- }
- 
-@@ -518,20 +518,6 @@ static void export_one(const char *var, const char *s, const char *e, int hack)
- 	strbuf_release(&buf);
- }
- 
--static int sane_ident_split(struct ident_split *person)
--{
--	if (!person->name_begin || !person->name_end ||
--	    person->name_begin == person->name_end)
--		return 0; /* no human readable name */
--	if (!person->mail_begin || !person->mail_end ||
--	    person->mail_begin == person->mail_end)
--		return 0; /* no usable mail */
--	if (!person->date_begin || !person->date_end ||
--	    !person->tz_begin || !person->tz_end)
--		return 0;
--	return 1;
--}
--
- static int parse_force_date(const char *in, char *out, int len)
- {
- 	if (len < 1)
-@@ -606,12 +592,10 @@ static void determine_author_info(struct strbuf *author_ident)
- 	}
- 
- 	strbuf_addstr(author_ident, fmt_ident(name, email, date, IDENT_STRICT));
--	if (!split_ident_line(&author, author_ident->buf, author_ident->len) &&
--	    sane_ident_split(&author)) {
--		export_one("GIT_AUTHOR_NAME", author.name_begin, author.name_end, 0);
--		export_one("GIT_AUTHOR_EMAIL", author.mail_begin, author.mail_end, 0);
--		export_one("GIT_AUTHOR_DATE", author.date_begin, author.tz_end, '@');
--	}
-+	assert_split_ident(&author, author_ident);
-+	export_one("GIT_AUTHOR_NAME", author.name_begin, author.name_end, 0);
-+	export_one("GIT_AUTHOR_EMAIL", author.mail_begin, author.mail_end, 0);
-+	export_one("GIT_AUTHOR_DATE", author.date_begin, author.tz_end, '@');
- }
- 
- static int author_date_is_interesting(void)
--- 
-2.2.0.454.g7eca6b7
+Just this part.  If your history is bushy, you should be able to
+rewrite histories of merged branches in parallel up to the point
+they are merged---rewriting of the merge commit of course has to
+wait until all the branches have been rewritten, though.
