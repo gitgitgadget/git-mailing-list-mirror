@@ -1,128 +1,133 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] commit: loosen ident checks when generating template
-Date: Wed, 10 Dec 2014 10:42:10 -0500
-Message-ID: <20141210154209.GA20771@peff.net>
+Subject: [PATCH 2/2] commit: always populate GIT_AUTHOR_* variables
+Date: Wed, 10 Dec 2014 10:43:42 -0500
+Message-ID: <20141210154342.GB20771@peff.net>
 References: <20141210153952.GA14910@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Simon <simonzack@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 16:42:19 2014
+X-From: git-owner@vger.kernel.org Wed Dec 10 16:43:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyjP6-0000s0-IO
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 16:42:16 +0100
+	id 1XyjQb-0001eD-56
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 16:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757786AbaLJPmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 10:42:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51098 "HELO cloud.peff.net"
+	id S1757888AbaLJPnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 10:43:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51101 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757060AbaLJPmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 10:42:12 -0500
-Received: (qmail 10697 invoked by uid 102); 10 Dec 2014 15:42:12 -0000
+	id S1757686AbaLJPno (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 10:43:44 -0500
+Received: (qmail 10755 invoked by uid 102); 10 Dec 2014 15:43:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 09:42:12 -0600
-Received: (qmail 10345 invoked by uid 107); 10 Dec 2014 15:42:17 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 09:43:44 -0600
+Received: (qmail 10363 invoked by uid 107); 10 Dec 2014 15:43:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 10:42:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 10:42:10 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 10:43:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 10:43:42 -0500
 Content-Disposition: inline
 In-Reply-To: <20141210153952.GA14910@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261219>
 
-When we generate the commit-message template, we try to
-report an author or committer ident that will be of interest
-to the user: an author that does not match the committer, or
-a committer that was auto-configured.
+To figure out the author ident for a commit, we call
+determine_author_info(). This function collects information
+from the environment, other commits (in the case of
+"--amend" or "-c/-C"), and the "--author" option. It then
+uses fmt_ident to generate the final ident string that goes
+into the commit object. fmt_ident is therefore responsible
+for any quality or validation checks on what is allowed to
+go into a commit.
 
-When doing so, if we encounter what we consider to be a
-bogus ident, we immediately die. This is a bad idea, because
-our use of the idents here is purely informational.  Any
-ident rules should be enforced elsewhere, because commits
-that do not invoke the editor will not even hit this code
-path (e.g., "git commit -mfoo" would work, but "git commit"
-would not). So at best, we are redundant with other checks,
-and at worse, we actively prevent commits that should
-otherwise be allowed.
+Before returning, though, we call split_ident_line on the
+result, and feed the individual components to hooks via the
+GIT_AUTHOR_* variables. Furthermore, we do extra validation
+by feeding the split to sane_ident_split(), which is pickier
+than fmt_ident (in particular, it will complain about an empty
+email field).  If this parsing or validation fails, we skip
+updating the environment variables.
 
-We should therefore do the minimal parsing we can to get a
-value and not do any validation (i.e., drop the call to
-sane_ident_split()).
+This is bad, because it means that hooks may silently see a
+different ident than what we are putting into the commit. We
+should drop the extra sane_ident_split checks entirely, and
+take whatever fmt_ident has fed us (and what will go into
+the commit object).
 
-In theory we could notice when even our minimal parsing
-fails to work, and do the sane thing for each check (e.g.,
-if we have an author but can't parse the committer, assume
-they are different and print the author). But we can
-actually simplify this even further.
+If parsing fails, we should actually abort here rather than
+continuing (and feeding the hooks bogus data). However,
+split_ident_line should never fail here. The ident was just
+generated by fmt_ident, so we know that it's sane. We can
+use assert_split_ident to double-check this.
 
-We know that the author and committer strings we are parsing
-have been generated by us earlier in the program, and
-therefore they must be parseable. We could just call
-split_ident_line without even checking its return value,
-knowing that it will put _something_ in the name/mail
-fields. Of course, to protect ourselves against future
-changes to the code, it makes sense to turn this into an
-assert, so we are not surprised if our assumption fails.
+Note that we also teach that assertion to check that we
+found a date (it always should, but until now, no caller
+cared whether we found a date or not). Checking the return
+value of sane_ident_split is enough to ensure we have the
+name/email pointers set, and checking date_begin is enough
+to know that all of the date/tz variables are set.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/commit.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ builtin/commit.c | 26 +++++---------------------
+ 1 file changed, 5 insertions(+), 21 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index d1c90db..2be5506 100644
+index 2be5506..f1a9e07 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -502,6 +502,12 @@ static int is_a_merge(const struct commit *current_head)
- 	return !!(current_head->parents && current_head->parents->next);
- }
+@@ -504,7 +504,7 @@ static int is_a_merge(const struct commit *current_head)
  
-+static void assert_split_ident(struct ident_split *id, const struct strbuf *buf)
-+{
-+	if (split_ident_line(id, buf->buf, buf->len))
-+		die("BUG: unable to parse our own ident: %s", buf->buf);
-+}
-+
- static void export_one(const char *var, const char *s, const char *e, int hack)
+ static void assert_split_ident(struct ident_split *id, const struct strbuf *buf)
  {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -608,13 +614,6 @@ static void determine_author_info(struct strbuf *author_ident)
- 	}
+-	if (split_ident_line(id, buf->buf, buf->len))
++	if (split_ident_line(id, buf->buf, buf->len) || !id->date_begin)
+ 		die("BUG: unable to parse our own ident: %s", buf->buf);
  }
  
--static void split_ident_or_die(struct ident_split *id, const struct strbuf *buf)
+@@ -518,20 +518,6 @@ static void export_one(const char *var, const char *s, const char *e, int hack)
+ 	strbuf_release(&buf);
+ }
+ 
+-static int sane_ident_split(struct ident_split *person)
 -{
--	if (split_ident_line(id, buf->buf, buf->len) ||
--	    !sane_ident_split(id))
--		die(_("Malformed ident string: '%s'"), buf->buf);
+-	if (!person->name_begin || !person->name_end ||
+-	    person->name_begin == person->name_end)
+-		return 0; /* no human readable name */
+-	if (!person->mail_begin || !person->mail_end ||
+-	    person->mail_begin == person->mail_end)
+-		return 0; /* no usable mail */
+-	if (!person->date_begin || !person->date_end ||
+-	    !person->tz_begin || !person->tz_end)
+-		return 0;
+-	return 1;
 -}
 -
- static int author_date_is_interesting(void)
+ static int parse_force_date(const char *in, char *out, int len)
  {
- 	return author_message || force_date;
-@@ -822,8 +821,14 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
- 					"%s", only_include_assumed);
+ 	if (len < 1)
+@@ -606,12 +592,10 @@ static void determine_author_info(struct strbuf *author_ident)
+ 	}
  
--		split_ident_or_die(&ai, author_ident);
--		split_ident_or_die(&ci, &committer_ident);
-+		/*
-+		 * These should never fail because we they come from our own
-+		 * fmt_ident. They may fail the sane_ident test, but we know
-+		 * that the name and mail pointers will at least be valid,
-+		 * which is enough for our tests and printing here.
-+		 */
-+		assert_split_ident(&ai, author_ident);
-+		assert_split_ident(&ci, &committer_ident);
+ 	strbuf_addstr(author_ident, fmt_ident(name, email, date, IDENT_STRICT));
+-	if (!split_ident_line(&author, author_ident->buf, author_ident->len) &&
+-	    sane_ident_split(&author)) {
+-		export_one("GIT_AUTHOR_NAME", author.name_begin, author.name_end, 0);
+-		export_one("GIT_AUTHOR_EMAIL", author.mail_begin, author.mail_end, 0);
+-		export_one("GIT_AUTHOR_DATE", author.date_begin, author.tz_end, '@');
+-	}
++	assert_split_ident(&author, author_ident);
++	export_one("GIT_AUTHOR_NAME", author.name_begin, author.name_end, 0);
++	export_one("GIT_AUTHOR_EMAIL", author.mail_begin, author.mail_end, 0);
++	export_one("GIT_AUTHOR_DATE", author.date_begin, author.tz_end, '@');
+ }
  
- 		if (ident_cmp(&ai, &ci))
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
+ static int author_date_is_interesting(void)
 -- 
 2.2.0.454.g7eca6b7
