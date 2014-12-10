@@ -1,78 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Blobs not referenced by file (anymore) are not removed by GC
-Date: Wed, 10 Dec 2014 08:07:09 -0800
-Message-ID: <xmqqbnnbjxoy.fsf@gitster.dls.corp.google.com>
-References: <5485D03F.3060008@fu-berlin.de> <20141209141457.GA18544@peff.net>
-	<CAFY1edaEG040jnfTJA4G9a0bAkFJHc3N5sHjtwOOdXmndsu9YQ@mail.gmail.com>
-	<20141209161133.GA17756@peff.net>
-	<CAFY1edY=Ren9krK1-yFoxt92AAushUyqnbt=69hdXMeiBFAK=w@mail.gmail.com>
-	<20141210071119.GA18104@peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 03/14] copy_fd: pass error message back through a strbuf
+Date: Wed, 10 Dec 2014 18:02:47 +0100
+Message-ID: <54887CB7.4000603@alum.mit.edu>
+References: <1416262453-30349-1-git-send-email-sbeller@google.com> <20141117233525.GC4336@google.com> <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com> <20141118004841.GE4336@google.com> <CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com> <20141203050217.GJ6527@google.com> <20141203051344.GM6527@google.com> <xmqqzjb4h823.fsf@gitster.dls.corp.google.com> <20141203210031.GA6631@peff.net> <20141203213858.GC6527@google.com> <20141204075920.GA27142@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Roberto Tyley <roberto.tyley@gmail.com>,
-	Martin Scherer <m.scherer@fu-berlin.de>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 10 17:07:21 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 18:03:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyjnM-0007FJ-5x
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 17:07:20 +0100
+	id 1XykfE-00068P-43
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 18:03:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932247AbaLJQHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 11:07:14 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53367 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932180AbaLJQHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 11:07:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8674B23CDC;
-	Wed, 10 Dec 2014 11:07:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=greE2AxLXVu0Xj+07LB/G6KRAGw=; b=OREEoJ
-	m/1pHAATO0tlWHok7NdC6gZdmuFO0+EiQEQPqrs2fxA6gv6fE7V9nmSTGNiebbbb
-	5vfeJ556TiHDZyvQR2tsE2W/UFsZynKuPJpRME3Nm5vWkXsQTDd0kpG3f8IPACXO
-	QEMCXVEhjv7V/BD+yqXCtKukHStBGlWo4KGfo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TPdMPfHDMO1s81yY6N7S/rZB2DzqpwiJ
-	9mmjifJ9p4C9plfZfu6HZVbp1QILmVbDZvcB+sGdV920LGkF1Fha+tkaAYyJidpy
-	MPfSCn5WccLLrU9TAludLQFQszTo54dSqc67YI25xSdONEd5YKr/zd9kRtiFkSDK
-	5EJSBZwb7fY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C1EC23CDB;
-	Wed, 10 Dec 2014 11:07:11 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EECB723CD9;
-	Wed, 10 Dec 2014 11:07:10 -0500 (EST)
-In-Reply-To: <20141210071119.GA18104@peff.net> (Jeff King's message of "Wed,
-	10 Dec 2014 02:11:19 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 991083D6-8086-11E4-AA24-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932418AbaLJRCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 12:02:54 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:63231 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932375AbaLJRCy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2014 12:02:54 -0500
+X-AuditID: 12074411-f79fa6d000006b8a-76-54887cba5933
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 01.41.27530.ABC78845; Wed, 10 Dec 2014 12:02:50 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB0BBF.dip0.t-ipconnect.de [93.219.11.191])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBAH2lx8016155
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 10 Dec 2014 12:02:49 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <20141204075920.GA27142@peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqLurpiPE4N9/U4uuK91MFg29V5gt
+	3t5cwmjxo6WH2WLz5nYWB1aPnbPusnss2FTq8ax3D6PHxUvKHp83yQWwRnHbJCWWlAVnpufp
+	2yVwZzydvYm9oJmv4snWX6wNjE+4uhg5OSQETCSufV3OBGGLSVy4t56ti5GLQ0jgMqPE7/mH
+	WSGc80wS/99sZwSp4hXQlji67zpYB4uAqsTql+tZQGw2AV2JRT3NYHFRgSCJk3uus0PUC0qc
+	nPkEqIaDQ0TAWeL2enmQMLNAhsSkdbOYQWxhAR+JX7s2sUDsessssXPZPrBeTgE9iYnnJrFD
+	NKhL/Jl3iRnClpdo3jqbeQKjwCwkK2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzU
+	Il1TvdzMEr3UlNJNjJAQF9zBOOOk3CFGAQ5GJR7eFVfbQ4RYE8uKK3MPMUpyMCmJ8k4r6QgR
+	4kvKT6nMSCzOiC8qzUktPsQowcGsJMKbWwaU401JrKxKLcqHSUlzsCiJ8/ItUfcTEkhPLEnN
+	Tk0tSC2CycpwcChJ8PpXAzUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2I1vhgY
+	rSApHqC9KSDtvMUFiblAUYjWU4yKUuK82SAJAZBERmke3FhY4nrFKA70pTBvFUgVDzDpwXW/
+	AhrMBDT4RWIryOCSRISUVAOj58z7hRfmLy6fZbRFoL3yUN2xJ2lc1tLch9985U6r7dp1kHvx
+	U8bIvtWWD3ZMXLF0bqKMa8U89pOPHHvbGY9Zfe+pleB/GybSmPjSNyZ0icj2mkkz 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261222>
 
-Jeff King <peff@peff.net> writes:
+On 12/04/2014 08:59 AM, Jeff King wrote:
+> On Wed, Dec 03, 2014 at 01:38:58PM -0800, Jonathan Nieder wrote:
+>> The allocation of a variable-sized buffer is a small overhead that I
+>> don't mind incurring on error.  In the non-error case, the caller
+>> doesn't actually have to free the buffer, and if they choose to, the
+>> overhead incurred is that of free(NULL)'.
+> 
+> I don't care at all about overhead. I care about extra work on the part
+> of the caller to avoid a leak. It turns:
+> 
+>   if (some_func(fd, &err))
+> 	return error("%s", err.msg);
+> 
+> into:
+> 
+>   if (some_func(fd, &err)) {
+> 	error("%s", err.buf);
+> 	strbuf_release(&err);
+> 	return -1;
+>   }
 
->> ... I'd be happy to
->> contribute a patch that gives 'gc' a flag to do the equivalent of:
->> 
->> git reflog expire --expire=now --all && git gc --prune=now --aggressive
->> 
->> Maybe:
->> 
->> git gc --purge
->
-> Yeah, that is common enough that it might be worthwhile (you probably
-> want --expire-unreachable in the reflog invocation, though).
+What if we go in the direction not of less infrastructure, but a little
+bit more? Like
 
-Also you would not want an unconditional --aggressive.
+	struct result {
+		int code;
+		struct strbuf msg;
+	};
+
+	int report_errors(struct result *result)
+	{
+		int code = result->code;
+		if (code) {
+			error(result->msg.buf);
+		}
+		result->code = 0;
+		strbuf_release(result->msg);
+		return code; /* or alternatively (code ? -1 : 0) */
+	}
+
+	int report_warnings(struct result *result)
+	{
+		...
+	}
+
+	int report_with_prefix(struct result *result, const char *fmt, ...)
+	{
+		...
+	}
+
+Then a caller could look pretty much like before:
+
+	struct result result = RESULT_INIT;
+
+	if (some_func(fd, &result))
+		return report_errors(&result);
+
+Other callers might not even bother to check the return value of the
+function, relying instead on result.code via process_error():
+
+	char *ptr = some_func(fd, &result);
+	if (report_errors(&result))
+		return -1;
+
+If the result code is considered superfluous, we could use naked strbufs
+and use msg.len as the indicator that there was an error.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
