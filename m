@@ -1,76 +1,66 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 23/23] untracked cache: guard and disable on system changes
-Date: Wed, 10 Dec 2014 19:22:14 +0700
-Message-ID: <CACsJy8BPzcAPJZG4=+mt=LmhhheJjXkfD2+znMjBbjbB9mODDQ@mail.gmail.com>
-References: <1418047507-22892-1-git-send-email-pclouds@gmail.com>
- <1418047507-22892-25-git-send-email-pclouds@gmail.com> <20141209100430.GC76457@vauxhall.crustytoothpaste.net>
- <CACsJy8A5-smRXN0k5TK8uPg4-j-Z83KWLNSO_w-eFivTNB_www@mail.gmail.com> <5487D543.7060801@web.de>
+From: Simon <simonzack@gmail.com>
+Subject: Git commit amend empty emails
+Date: Thu, 11 Dec 2014 00:17:35 +1100
+Message-ID: <548847EF.7080805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Dec 10 13:22:52 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 10 14:17:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XygI7-0008Ni-Kx
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 13:22:51 +0100
+	id 1Xyh9C-00034I-0d
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 14:17:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577AbaLJMWr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Dec 2014 07:22:47 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:55831 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751189AbaLJMWq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2014 07:22:46 -0500
-Received: by mail-ie0-f179.google.com with SMTP id rp18so2520716iec.38
-        for <git@vger.kernel.org>; Wed, 10 Dec 2014 04:22:46 -0800 (PST)
+	id S1756471AbaLJNRh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Dec 2014 08:17:37 -0500
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:61600 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756461AbaLJNRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 08:17:36 -0500
+Received: by mail-pd0-f170.google.com with SMTP id v10so2787877pde.1
+        for <git@vger.kernel.org>; Wed, 10 Dec 2014 05:17:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=4h/ky75GgupAtGTKuLorQENYwJOkfN+C6tjh+kA3er8=;
-        b=shfTXUv0wy5gB9oyso9OAJohiEbHEnj0suy1qIOa/ODYiHonC+CYzzCzDJxe5JyFyh
-         zp1QEI0ffKT5jRHvYxw9AMieAtPHMnQPwe4yv32VIFLxsBuAGNbrgQdX9csePdUkn8Un
-         LXTXovC3Ir5tTrVZpkFtxGIJhDPHhwdOYzgMo9sknCRLrMxijxyNpwNZf2ssRg6Nrupy
-         3PNbwpg0wgjbJWeaA8c9zwaIkK4EAsWmLYoPgAy4j0uywvPX6tLW4jtO2S8cO6nWXBFw
-         jEc4AMskNbJtZ1VxoxY0E3nVxuXOvHDwoU7YobdZYHDl374XfCtnCvGA37wOPmJStXtk
-         VU7g==
-X-Received: by 10.43.120.69 with SMTP id fx5mr6412783icc.45.1418214165917;
- Wed, 10 Dec 2014 04:22:45 -0800 (PST)
-Received: by 10.107.176.3 with HTTP; Wed, 10 Dec 2014 04:22:14 -0800 (PST)
-In-Reply-To: <5487D543.7060801@web.de>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=3GrSjhlRPD6HYOzSFzT03Ld9z23a2DJ9V9StbNjw8EA=;
+        b=TZK29UvCN3/lWdLf7A5B2ytM76K+Ylr5YzdmZHK3paFsoPqdixB5aUeCk3W1sHWES/
+         cRGgAM8GYmWnpMEUCD3H0YcWqFDGE+dEfMjrFcjOL3TkhubMEW8/HOx+Q9DzIeC7RM/0
+         zVUd8uEJyNmSH4OeiFQ+aWFEhxTWoRNbFU6aLMo4nDeBS4GtUtFoFHlO+xw8+9P5XBbn
+         GVip0fVlJWTJr1jN0IEI0W3nZtDDa+ZT8WkGdvhyTOiiKcpPpf288O2LJis+RHQyiOcT
+         mLNsNoZIOiE+Yy0EbHa5S81iuTMpCXGJM0kjPrBy7s/NO/73mVbGd1NAeczTBJWGLit2
+         X9WA==
+X-Received: by 10.68.170.130 with SMTP id am2mr7013933pbc.156.1418217455784;
+        Wed, 10 Dec 2014 05:17:35 -0800 (PST)
+Received: from [192.168.2.141] (c220-239-56-122.eburwd6.vic.optusnet.com.au. [220.239.56.122])
+        by mx.google.com with ESMTPSA id fa9sm4317756pab.36.2014.12.10.05.17.34
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 10 Dec 2014 05:17:35 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261211>
 
-On Wed, Dec 10, 2014 at 12:08 PM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
-> That opens another question:
-> How flexible/extensible/self-describing is the format of the UNTR ext=
-ension
-> ?
-> If we drop the OS name & root dir check because it disallows network =
-use,
-> but later add a better method to verify that the underlying chain
-> local OS - network - remote OS-remote FS is OK,
-> do we need to change the file format of UNTR ?
-> If yes, can old clients read the new format and vice versa?
-> Do we need a version information of some kind, or does the
-> old client skip unknown entries like we do with extensions in the ind=
-ex ?
+Git is having empty email problems I think, I'm on git v2.1.3.
 
-The way index extensions are done so far, there's no actual versioning
-inside an extension.Once an extension is out, its format is set in
-stone. If you change your mind, you make a new extension (with a
-different signature), so signatures are sort of "version". Code is
-shared mostly so it should not be a problem. Old clients don't
-recognize new extensions, so they drop them. New clients either stick
-to old extensions or convert them to new ones. This is all local
-matters, so I don't think we need to worry too much.
---=20
-Duy
+Steps to reproduce:
+
+     $ git init
+     Initialized empty Git repository in /tmp/test_git/.git/
+     $ echo 'test' > abc
+     $ git add --all 1 =E2=86=B5
+     $ git commit --message 'test'
+     [master (root-commit) 3cc2793] test
+      1 file changed, 1 insertion(+)
+      create mode 100644 abc
+     $ echo 'test2' > abc
+     $ git commit --amend
+     fatal: Malformed ident string: 'admin <> 1418217345 +0000'
