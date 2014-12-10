@@ -1,74 +1,86 @@
-From: Roberto Tyley <roberto.tyley@gmail.com>
-Subject: Re: filter-branch performance
-Date: Wed, 10 Dec 2014 23:44:58 +0000
-Message-ID: <CAFY1eda-utVReuQnotSUDPV4-=hiMupbNdLZrYnEiaDryXQboQ@mail.gmail.com>
-References: <548744F1.9000902@gmx.de>
-	<20141209185933.GC31158@peff.net>
-	<CAFY1edYYC9TZmLE6b3=QAoTB1zQHi_Y97rHL-5wk5Pbpa_oj_w@mail.gmail.com>
-	<xmqqfvcnjxry.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Henning Moll <newsScott@gmx.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/2] Fix a bug with update-ref "verify" and no oldvalue
+Date: Thu, 11 Dec 2014 00:47:50 +0100
+Message-ID: <1418255272-5875-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Brad King <brad.king@kitware.com>,
+	Stefan Beller <sbeller@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 00:45:06 2014
+X-From: git-owner@vger.kernel.org Thu Dec 11 00:48:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyqwM-0006x4-5u
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 00:45:06 +0100
+	id 1XyqzP-0008KL-3O
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 00:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758314AbaLJXpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 18:45:00 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:57457 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758097AbaLJXo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 18:44:59 -0500
-Received: by mail-ig0-f170.google.com with SMTP id r2so8620357igi.1
-        for <git@vger.kernel.org>; Wed, 10 Dec 2014 15:44:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wljZYp0/u/rg9DN3w7pEouI2ylWYYXkgwvkrVIfgC8E=;
-        b=OF7R7flu8tmRs4jwW/kC7B10cdd+lLWANLldWtXwrEHA38rYoCo6QCubzH4O8Rwkii
-         V0voz+2VHzzz2nhYNBGBbdmZV3cavSXc5/xhoety1fIcLm6/R9Po8WgB2WTdW0iFHhcm
-         cpKLpdvqk1TZyVtJ4YzLLZyMoUwHjOUNYSYynKfyhd6abj6EXmOskYF2YvflbRSN8yuj
-         xhIsDdsGUpVYcWLkPc0ZnMzZtFo0jjvaf3mN2HBD8hqXHn7PRw9O/fo0YE0vMDT3GzSd
-         XQ8aC/FSqzjaf7grdy890ahs5XBg2Or+JzH6DV9xTkiQCsJTioSuhYSQRDr2F29Age5h
-         DETQ==
-X-Received: by 10.107.138.131 with SMTP id c3mr7107222ioj.0.1418255098572;
- Wed, 10 Dec 2014 15:44:58 -0800 (PST)
-Received: by 10.64.240.171 with HTTP; Wed, 10 Dec 2014 15:44:58 -0800 (PST)
-In-Reply-To: <xmqqfvcnjxry.fsf@gitster.dls.corp.google.com>
+	id S1758365AbaLJXsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 18:48:05 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:63121 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758097AbaLJXsE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2014 18:48:04 -0500
+X-AuditID: 12074412-f79e46d0000036b4-67-5488dbafd446
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 12.23.14004.FABD8845; Wed, 10 Dec 2014 18:47:59 -0500 (EST)
+Received: from michael.fritz.box (p5DDB0BBF.dip0.t-ipconnect.de [93.219.11.191])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBANlut8003387
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 10 Dec 2014 18:47:57 -0500
+X-Mailer: git-send-email 2.1.3
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqLv+dkeIwdWfChY710lYdF3pZrJo
+	6L3CbPH25hJGi9sr5jNb9PZ9YrXYvLmdxYHd4+/7D0weO2fdZfdYsKnU4+Oz5eweFy8pe3ze
+	JBfAFsVtk5RYUhacmZ6nb5fAnfHiTwtzwTrOioMnFrM1MF5l72Lk5JAQMJFYtOYHC4QtJnHh
+	3nq2LkYuDiGBy4wS7UueM0I4J5gkJvZsYgapYhPQlVjU08wEYosIqElMbDvEAlLELPCFUWL9
+	vj9gCWEBd4kXE28DJTg4WARUJTr6XEHCvALOEm9OtzOBhCUE5CS2rvOewMi9gJFhFaNcYk5p
+	rm5uYmZOcWqybnFyYl5eapGumV5uZoleakrpJkZI8AjtYFx/Uu4QowAHoxIP74qr7SFCrIll
+	xZW5hxglOZiURHl7r3eECPEl5adUZiQWZ8QXleakFh9ilOBgVhLhTboBlONNSaysSi3Kh0lJ
+	c7AoifP+XKzuJySQnliSmp2aWpBaBJOV4eBQkuD1uwXUKFiUmp5akZaZU4KQZuLgBBnOJSVS
+	nJqXklqUWFqSEQ8K9PhiYKiDpHiA9naCtPMWFyTmAkUhWk8xKkqJ81qAJARAEhmleXBjYSnh
+	FaM40JfCvC9AqniA6QSu+xXQYCagwcu3gA0uSURISTUwuqxq4bzB7V503bPh8LyX1SdEwp+U
+	qVbOiVZVFVh1tjPrcemhytnZYXKlS85K9M7WP21WcWXCVpVrXSIbORPcP9sGLJK6Lz+T4d5L
+	3g95IV6xR/h+MzzNtK94ydPEFXY/VcCn5bMGk9oVg2Clw+9n8uZNnN6RenfiSv6a 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261260>
 
-On 10 December 2014 at 16:05, Junio C Hamano <gitster@pobox.com> wrote:
-> Roberto Tyley <roberto.tyley@gmail.com> writes:
->
->> The BFG is generally faster than filter-branch for 3 reasons:
->>
->> 1. No forking - everything stays in the JVM process
->> 2. Embarrassingly parallel algorithm makes good use of multi-core machines
->> 3. Memoization means no Git object (file or folder) is cleaned more than once
->>
->> In the case of your problem, only the first factor will be noticeably
->> helpful. Unfortunately commits do need to be cleaned sequentially, as
->> their hashes depend on the hashes of their parents, and filter-branch
->> doesn't clean /commits/ more than once, the way it does with files or
->> folders - so the last 2 reasons in the list won't be significant.
->
-> Just this part.  If your history is bushy, you should be able to
-> rewrite histories of merged branches in parallel up to the point
-> they are merged---rewriting of the merge commit of course has to
-> wait until all the branches have been rewritten, though.
+Ever since the --stdin option was added to "git update-ref" in
 
-That's true, and the bfg does take advantage of that parallelism, so
-as well as point 1, point 2 will provide some benefit if history is
-bushy enough :)
+    c750ba9519 update-ref: support multiple simultaneous updates (2013-09-09)
+
+the "verify" command has been broken. If no <oldvalue> is specified,
+the documentation says that the "verify" command will verify that the
+reference doesn't currently exist. But in fact, it unconditionally
+*deletes* the reference (!)
+
+Hopefully this is not a common usage idiom, but this is nonetheless a
+serious bug.
+
+Add some tests for this and related functionality, then fix the bug.
+
+These patches are also available from my GitHub repository [1] as
+branch "update-ref-verify-fix-v1".
+
+This fix applies to "maint", for which I think it is appropriate. It
+also merges through to "master" with no conflicts, though it conflicts
+trivially with "pu".
+
+[1] https://github.com/mhagger/git
+
+Michael Haggerty (2):
+  t1400: add some more tests of "update-ref --stdin"'s verify command
+  update-ref: fix "verify" command with missing <oldvalue>
+
+ builtin/update-ref.c  | 14 +++-----
+ t/t1400-update-ref.sh | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 97 insertions(+), 9 deletions(-)
+
+-- 
+2.1.3
