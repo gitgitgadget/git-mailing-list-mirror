@@ -1,77 +1,65 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Poor push performance with large number of refs
-Date: Tue, 9 Dec 2014 21:41:28 -0800
-Message-ID: <CAJo=hJvKBvQvN=EV4y=ACz5pou9A0tD+txAn_8VR9L3KKtQSiA@mail.gmail.com>
-References: <20141210003735.GA124293@vauxhall.crustytoothpaste.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Blobs not referenced by file (anymore) are not removed by GC
+Date: Wed, 10 Dec 2014 02:11:19 -0500
+Message-ID: <20141210071119.GA18104@peff.net>
+References: <5485D03F.3060008@fu-berlin.de>
+ <20141209141457.GA18544@peff.net>
+ <CAFY1edaEG040jnfTJA4G9a0bAkFJHc3N5sHjtwOOdXmndsu9YQ@mail.gmail.com>
+ <20141209161133.GA17756@peff.net>
+ <CAFY1edY=Ren9krK1-yFoxt92AAushUyqnbt=69hdXMeiBFAK=w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 10 06:41:55 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Martin Scherer <m.scherer@fu-berlin.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Roberto Tyley <roberto.tyley@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 08:11:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xya26-0006tP-K6
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 06:41:54 +0100
+	id 1XybQk-0002qM-Dz
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 08:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843AbaLJFlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 00:41:50 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:44686 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814AbaLJFlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 00:41:49 -0500
-Received: by mail-ie0-f171.google.com with SMTP id rl12so2037349iec.16
-        for <git@vger.kernel.org>; Tue, 09 Dec 2014 21:41:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=Jxa1ttlc111O07cV9o/jSFx+oxfBv07wBxZdHODzEj0=;
-        b=f4pI28G5rRqog6sDNm4bh+0ckayrUzyge676q8zn8zLPu7xiaCK6rPXuyXjMByzBzb
-         slTYZvRBYYr8cyjY7SJuZxS9MD4s/YTsmEvHQg7tT8DcVqXAres5TPbqoqp2BDY2FoT/
-         kivN38DtQPWKP6YzTj85IN3w9DVHq0DGwrTZs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=Jxa1ttlc111O07cV9o/jSFx+oxfBv07wBxZdHODzEj0=;
-        b=hqeBG41lPn5qQRx5qA+IdbP2F/z0Y44n+P7GSM6II9DR6/m5qSPllQZkiJuH9kX6N4
-         KndBvMTbtYjHvrT8DX+usRExqoZsR6DoUl5reQ4eq6Zgaqb1gpLZMZXKAq3BOc8gQup6
-         17kFUkEFcoxwBGKgMlfhlxf+o1dfPXH3g4YqOa5STdQyGDlzKkmBuEsOLfhiXVb0FBrJ
-         Czm/ktnue9qwxVIbFOO58I30OxRIgwVm+WNTiqjT1JlyMBPwS9hae3Kuz9DphbrE4Zth
-         pQE88qGx0woa2Xq9OrJ3tn3xZEpMiOZuHoeDPvSISOD2k5p1OH+9rfvUa55dSwUjoJdK
-         nxKg==
-X-Gm-Message-State: ALoCoQlyL6o3nB1aTQd/PDQZnJUcexQj8yOWX72nP6WXrHRD5m+c4y+j0YRd/uUaKeck1utAL2PD
-X-Received: by 10.50.103.3 with SMTP id fs3mr23782660igb.6.1418190109144; Tue,
- 09 Dec 2014 21:41:49 -0800 (PST)
-Received: by 10.64.226.161 with HTTP; Tue, 9 Dec 2014 21:41:28 -0800 (PST)
-In-Reply-To: <20141210003735.GA124293@vauxhall.crustytoothpaste.net>
+	id S1756977AbaLJHLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 02:11:22 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50900 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753054AbaLJHLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 02:11:22 -0500
+Received: (qmail 20648 invoked by uid 102); 10 Dec 2014 07:11:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 01:11:22 -0600
+Received: (qmail 7079 invoked by uid 107); 10 Dec 2014 07:11:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 02:11:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 02:11:19 -0500
+Content-Disposition: inline
+In-Reply-To: <CAFY1edY=Ren9krK1-yFoxt92AAushUyqnbt=69hdXMeiBFAK=w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261190>
 
-On Tue, Dec 9, 2014 at 4:37 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> I have a repository that's just under 2 GiB in size and contains over
-> 20000 refs, with a copy of it on a server.  Both sides are using Git
-> 2.1.2.  If I push a branch that contains a single commit, it takes about
-> 15 seconds to push.  However, if everything is up-to-date, it completes
-> within 2 seconds.  Notably, HTTPS performs the same as SSH.
->
-> Most of the time is spent between the "Pushing to remote machine" and
-> "Counting objects", running git pack-objects:
->
->   git pack-objects --all-progress-implied --revs --stdout --thin --delta-base-offset --progress
->
-> Unfortunately, -vvv doesn't provide any helpful output.  I have some
-> suspicions what's going on here, but no hard data.  Where should I
-> be looking to determine the bottleneck?
+On Tue, Dec 09, 2014 at 10:15:31PM +0000, Roberto Tyley wrote:
 
-My guess is the revision queue is struggling to insert 20,000 commits
-that the remote side "has", are uninteresting, and should not be
-transmitted. This queue insertion usually requires parsing the commit
-object out of the local object store to get the commit timestamp, then
-bubble sort inserting that commit into the queue.
+> > Not that I expect you to want to work on filter-branch. :) But maybe
+> > food for thought for a BFG feature.
+> 
+> I haven't heard much demand for a recover/restore feature on the BFG
+> (I think by the time people get to the BFG, they're pretty sure they
+> want to go ahead with the procedure!) but I'll bear it in mind. Mind
+> you, to make the post-rewrite clean-up easier, I'd be happy to
+> contribute a patch that gives 'gc' a flag to do the equivalent of:
+> 
+> git reflog expire --expire=now --all && git gc --prune=now --aggressive
+> 
+> Maybe:
+> 
+> git gc --purge
+
+Yeah, that is common enough that it might be worthwhile (you probably
+want --expire-unreachable in the reflog invocation, though).
+
+-Peff
