@@ -1,129 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 4/4] attr: avoid heavy work when we know the specified attr is not defined
-Date: Tue, 09 Dec 2014 16:18:57 -0800
-Message-ID: <xmqqsigojr0u.fsf@gitster.dls.corp.google.com>
-References: <1418133205-18213-1-git-send-email-pclouds@gmail.com>
-	<1418133205-18213-5-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 10/23] untracked cache: save to an index extension
+Date: Wed, 10 Dec 2014 07:21:07 +0700
+Message-ID: <CACsJy8BGfRPAMK9rFBiHs7w8L_3JwbRsZViDwPPVw6AVjUXg8g@mail.gmail.com>
+References: <1418047507-22892-1-git-send-email-pclouds@gmail.com> <1418047507-22892-12-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 01:19:07 2014
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 10 01:21:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyUzh-0005PC-S6
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 01:19:06 +0100
+	id 1XyV2E-0006QH-PR
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 01:21:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133AbaLJATA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2014 19:19:00 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62508 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751587AbaLJATA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2014 19:19:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E3A425FFD;
-	Tue,  9 Dec 2014 19:18:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0NLqLAdlItUh
-	85GFg9SKRF8PXaw=; b=NE+eWe7X9X6AXOqgg3LQRaNDvOtIjDTLqhdXmkKM+GbX
-	Qh6tW2idJaposJuiyUgKrDvlZdRtgLrif1GZEHbuccxrD2ObH1FFGkBGygdthyhR
-	Jk2XdTh7lid4ygMlKo8uPa7yDvCtQnKYwT3UmkOuorEd368VG0NEFmqqxsVkVIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=f2QkWe
-	89xVhD4p1i5Qtx4Thk3xCEvVM8FOiF+we218MLfT5zig1ekKCAA+5SFde4p/5P9k
-	7zHfy0xHP8Tsyi2336YbkKBeqXWgYY3P2ORxxTSgZW+VEEwrWGMY56+3KPHgRiHu
-	m88y6UBRhzc1/oy0AGYmrunxaXl9z4MXJbjC8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0501225FFC;
-	Tue,  9 Dec 2014 19:18:59 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81B8F25FFB;
-	Tue,  9 Dec 2014 19:18:58 -0500 (EST)
-In-Reply-To: <1418133205-18213-5-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 9 Dec
- 2014 20:53:25 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 22851B5C-8002-11E4-B117-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752302AbaLJAVj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2014 19:21:39 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:46207 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751013AbaLJAVi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2014 19:21:38 -0500
+Received: by mail-ig0-f178.google.com with SMTP id hl2so1982382igb.17
+        for <git@vger.kernel.org>; Tue, 09 Dec 2014 16:21:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=8/gAcI7qlanqrTkaYlQQIMJyjpKeMSzblNs+qjp4/RQ=;
+        b=Clv1h7uoP6E0L/5hzeMkh9lhg51+2hx3CoXTwJPPgA9Z3qL3P88sD/htEIgCuCsuLq
+         +4OHCHM0Sg7c25sfHXdKCKPckinbk5ZAjAcpAfTDyVrpP8J9YffWauCXUYbmJ+pK/wI7
+         5iOyGqBROojOl3lheRjIyoH9K8718PuqCmvrcEmrGPu7CjRFp9nmrZwhjZByEN6VQigO
+         NOpTl2mPAooH6HjCObN5Mu/MT28oNtk3xgplAjeklH+wSrvKkYeKDU/gNvnFIclYfl3l
+         aNB3Bu7hnKQGhuFl3+IvzMX1efdZ1lPybY+YNgE0m8ONXMqJ0VMZVtMmIAW+k6wo509X
+         QBKA==
+X-Received: by 10.43.119.131 with SMTP id fu3mr4418224icc.56.1418170897840;
+ Tue, 09 Dec 2014 16:21:37 -0800 (PST)
+Received: by 10.107.176.3 with HTTP; Tue, 9 Dec 2014 16:21:07 -0800 (PST)
+In-Reply-To: <1418047507-22892-12-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261182>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> +static void collect_selected_attrs(const char *path, int num,
-> +				   struct git_attr_check *check)
+On Mon, Dec 8, 2014 at 9:04 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> +void write_untracked_extension(struct strbuf *out, struct untracked_=
+cache *untracked)
 > +{
-> +	struct attr_stack *stk;
-> +	int i, pathlen, rem, dirlen;
-> +	int basename_offset;
-> +
-> +	pathlen =3D split_path(path, &dirlen, &basename_offset);
-> +	prepare_attr_stack(path, dirlen);
-> +	if (cannot_trust_maybe_real) {
-> +		for (i =3D 0; i < git_attr_nr; i++)
-> +			check_all_attr[i].value =3D ATTR__UNKNOWN;
+> +       struct ondisk_untracked_cache *ouc;
+> +       struct write_data wd;
+> +       unsigned char varbuf[16];
+> +       int len =3D 0, varint_len;
+> +       if (untracked->exclude_per_dir)
+> +               len =3D strlen(untracked->exclude_per_dir);
+> +       ouc =3D xmalloc(sizeof(*ouc) + len);
+> +       stat_data_to_disk(&ouc->info_exclude_stat, &untracked->ss_inf=
+o_exclude.stat);
+> +       stat_data_to_disk(&ouc->excludes_file_stat, &untracked->ss_ex=
+cludes_file.stat);
+> +       hashcpy(ouc->info_exclude_sha1, untracked->ss_info_exclude.sh=
+a1);
+> +       hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.=
+sha1);
+> +       ouc->dir_flags =3D htonl(untracked->dir_flags);
+> +       memcpy(ouc->exclude_per_dir, untracked->exclude_per_dir, len =
++ 1);
+> +       strbuf_add(out, ouc, sizeof(*ouc) + len);
 
-Judging from the fact that
-
- (1) the only caller calls this function in this fashion based on the
-     setting of "cannot-trust" bit,
-
- (2) this and the other function the only caller calls share the
-     same code in their beginning part, and
-
- (3) the body of the if() statement here duplicates the code from
-     collect_all_attrs(),
-
-I smell that a much better split is possible.
-
-Why isn't this all inside a single function collect_all_attrs()?
-That single function may no longer be collect_ALL_attrs, so renaming
-it to collect_attrs() is fine, but then that function may have this
-if () to initialize all of them to ATTR__UNKNOWN or do the else part
-we see below, and when organized that way we do not need to have
-duplicated code (or split_path() helper function), no?
-
-> +	} else {
-> +		rem =3D num;
-> +		for (i =3D 0; i < num; i++) {
-> +			struct git_attr_check *c;
-> +			c =3D check_all_attr + check[i].attr->attr_nr;
-> +			if (check[i].attr->maybe_real)
-> +				c->value =3D ATTR__UNKNOWN;
-> +			else {
-> +				c->value =3D ATTR__UNSET;
-> +				rem--;
-> +			}
-> +		}
-> +		if (!rem)
-> +			return;
-> +	}
-> +	rem =3D git_attr_nr;
-> +	for (stk =3D attr_stack; 0 < rem && stk; stk =3D stk->prev)
-> +		rem =3D fill(path, pathlen, basename_offset, stk, rem);
-> +}
-> +
->  int git_check_attr(const char *path, int num, struct git_attr_check =
-*check)
->  {
->  	int i;
-> =20
-> -	collect_all_attrs(path);
-> +	if (cannot_trust_maybe_real)
-> +		collect_all_attrs(path);
-> +	else
-> +		collect_selected_attrs(path, num, check);
-> =20
->  	for (i =3D 0; i < num; i++) {
->  		const char *value =3D check_all_attr[check[i].attr->attr_nr].value=
-;
+just fyi, this sizeof(*ouc) here is wrong because we write down an
+unknown number of padding by the compiler after the last field "char
+exclude_per_dir[1]". I will use offsetof(struct..., exclude_per_dir)
+next time. Spotted by valgrind.
+--=20
+Duy
