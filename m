@@ -1,70 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/18] Introduce an internal API to interact with the fsck machinery
-Date: Wed, 10 Dec 2014 10:34:07 -0800
-Message-ID: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+Subject: Re: Git commit amend empty emails
+Date: Wed, 10 Dec 2014 10:46:16 -0800
+Message-ID: <xmqqmw6vgx6v.fsf@gitster.dls.corp.google.com>
+References: <548847EF.7080805@gmail.com> <20141210153952.GA14910@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 10 19:35:47 2014
+Cc: Simon <simonzack@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 10 19:46:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xym6z-0006Kl-L0
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 19:35:46 +0100
+	id 1XymHI-0003fC-Dp
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 19:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932646AbaLJSfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 13:35:41 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54694 "EHLO
+	id S932650AbaLJSqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 13:46:20 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55833 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932564AbaLJSfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 13:35:41 -0500
+	with ESMTP id S932593AbaLJSqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 13:46:19 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 185F522FEC;
-	Wed, 10 Dec 2014 13:35:40 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AA3023284;
+	Wed, 10 Dec 2014 13:46:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xjRJsPwqm174VLobTN7JK3cxBzM=; b=pUz97A
-	F8f3ZYhHKwRtIxCVq2nT2pVPa9CsWcF7ZmP8NWcRnir4H/F4XDGrQKq2Puc/WSxW
-	QaAiMSaRfHZ5CLTYBzRJlRdEXjQJXch08YEQ9S4awEiXEA7QVCuMHx9z0dXIcyFT
-	KqpfMKkJjsDFa/yneI4ZlvWqzsTDBx4q4nQqs=
+	:content-type; s=sasl; bh=I04fcDtqPY76aHw4tm/GxZwf//I=; b=mEp2Kz
+	uUpETqA0Nk5yOD4x9wSpcXAsLJsuBSHK3JQWMyfjHsN1utVUPRsjw9qfKadneya3
+	U/3Ryv3Lf1uBPb/f0BvhdfHmnI8oXfSORgeZJthDEksZ2OOmCSL1T/18lhVtJvnf
+	iX2iclj1FMvyLqMyIkNnDBBLQAGSVOP8FhBGQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KazFYXaoD5JrR1p/wVaeGeK/nkAY2RVK
-	vfeB6U4aZ0VrtTr3KGQBwFQoDO369OG3MxCmddw6SZSq+L5sH1Vy+sXGUVo1bS+w
-	11SeDSzKPBrCE2yi0VQPTklwQ2t0hU5+44vvUqMjuUVgbL7RiT87pXFObtAUwUwJ
-	FVHH7M/BoxU=
+	:content-type; q=dns; s=sasl; b=Q5OdggQItzr9zHaPGwMZiyeh1Ps+slL4
+	VqT0crIneq3O9BIkccApRIwrnL7WWibulUZVAHXUKYkCt6Keye2mIt4G3+OYb0fL
+	QyW+krzYKrcnKrXJqi0/Ne+/RMPE+2rF/hmVRPmzqMxZKG+ZZ3tCwM+e/d6Cuyih
+	FqSJ/GhcMxI=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0DDE722FE9;
-	Wed, 10 Dec 2014 13:35:40 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8148223283;
+	Wed, 10 Dec 2014 13:46:18 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E09222FAA;
-	Wed, 10 Dec 2014 13:34:09 -0500 (EST)
-In-Reply-To: <cover.1418055173.git.johannes.schindelin@gmx.de> (Johannes
-	Schindelin's message of "Mon, 8 Dec 2014 17:13:55 +0100 (CET)")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EFAC223282;
+	Wed, 10 Dec 2014 13:46:17 -0500 (EST)
+In-Reply-To: <20141210153952.GA14910@peff.net> (Jeff King's message of "Wed,
+	10 Dec 2014 10:39:53 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 211FC9A8-809B-11E4-AED2-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D3859702-809C-11E4-8228-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261237>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> At the moment, the git-fsck's integrity checks are targeted toward the
-> end user, i.e. the error messages are really just messages, intended for
-> human consumption.
+> However, there's something else going on. I am surprised that we allow
+> empty emails at all and the code here is quite strange. The first check
+> on the ident format is when we feed the data to fmt_ident to generate
+> the string that goes into the commit object.  We disallow empty _names_
+> there, but not empty _emails_.  I'm not sure if this is an oversight, or
+> an intentional historic compatibility thing.
+
+Looking at e27ddb6 you cited, I think we knew about historical
+mistakes that allowed an empty names, but not an empty e-mail
+address.  We probably have tried to kill both in one stone.
+
+> Once upon a time, it relied only on split_ident_lane to report problems.
+> But Junio's e27ddb6 (split_ident_line(): make best effort when parsing
+> author/committer line, 2012-08-31) made split_ident_line more lenient,
+> and introduced sane_ident_split to cover the difference. Except that it
+> did more than that: besides checking whether the name is empty (which
+> the original split_ident_line used to do), it also complains if the
+> email is empty (which is new in that commit).
+
+> So we now notice the empty email in this code path, but the only thing
+> we do is avoid writing out the environment variables and continue. Which
+> means that the actual string generated by fmt_ident (complete with empty
+> email) is what goes into the commit. So why are we setting the
+> environment variables at all?
+
+I think that part was more underthinking than oversight.
+
+We didn't want to abort the commit but we didn't want to contaminate
+the environment variables with known-to-be-bad values to spread the
+problem further.  But there is no guarantee that not exporting the
+environment variables would give us more comformant name and e-mail
+address, so that thinking is flawed.
+
+> Here are two patches to improve this. These are on top of the
+> jk/commit-date-approxidate topic, as that is where the regression was
+> introduced.
 >
-> Under certain circumstances, some of those errors should be allowed to
-> be turned into mere warnings, though, because the cost of fixing the
-> issues might well be larger than the cost of carrying those flawed
-> objects.
-
-Overall I very much like what this series aims to do.
-Thanks for working on this.
+> The first one fixes the regression and can stand by itself. The second
+> fixes the GIT_AUTHOR problem, but AFAIK that has been there for years.
+> So it is not as urgent, but is still maint-worthy, in my opinion.
+>
+>   [1/2]: commit: loosen ident checks when generating template
+>   [2/2]: commit: always populate GIT_AUTHOR_* variables
+>
+> If we did want to truly disallow empty emails, we could do a follow-on
+> 3/2 that teaches fmt_ident to reject them (that is the right place
+> because it is where the validation checks for the author go, and also
+> because we would probably want the same validation for the committer).
+>
+> But I do not think we should do that lightly. It has been this way for
+> years, and clearly at least one person is depending on it. If we're
+> going to change it, we might want a warning/deprecation period.
+>
+> -Peff
