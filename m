@@ -1,113 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/18] Offer a function to demote fsck errors to warnings
-Date: Wed, 10 Dec 2014 10:00:44 -0800
-Message-ID: <xmqqoarbidv7.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 09/18] fsck: handle multiple authors in commits specially
+Date: Wed, 10 Dec 2014 10:04:22 -0800
+Message-ID: <xmqqk31zidp5.fsf@gitster.dls.corp.google.com>
 References: <cover.1418055173.git.johannes.schindelin@gmx.de>
-	<2a0c4cd4c5d3aaceff8a6ffa49d2f3597d26086d.1418055173.git.johannes.schindelin@gmx.de>
+	<43faa41d4cc98d6c40a393ec590af73ec5c94246.1418055173.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 10 19:00:54 2014
+X-From: git-owner@vger.kernel.org Wed Dec 10 19:04:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XylZF-0004l1-Hm
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 19:00:53 +0100
+	id 1Xylck-0006f7-6f
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 19:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbaLJSAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 13:00:49 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53387 "EHLO
+	id S932538AbaLJSE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 13:04:26 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58247 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932167AbaLJSAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 13:00:49 -0500
+	with ESMTP id S932501AbaLJSEZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 13:04:25 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B6D222727;
-	Wed, 10 Dec 2014 13:00:47 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC792227D5;
+	Wed, 10 Dec 2014 13:04:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O8b+lrbkFvMSzYmh6a9KX/Z7yx8=; b=GjDISK
-	X7ykF0gRZ//CVxTeBFwc0tIjiWiSI6DdZlyMpJItqOoqWtGz3Bs8ysEA+jypq+9O
-	4eW86lrGxN4L0Zo9NZJZOBPBNYWv1XAObYlU/SrI6sNqveZEl5Hqc0P6MfYjdYSW
-	16TT4SzfGeOt1U3gGiP/loTUsPSGdTxRuS89E=
+	:content-type; s=sasl; bh=Mk0GGwxJ1uNivPkavotb/a8Yqyk=; b=r+x8m4
+	c6FY1dDs+J5Dkvy/9G5TvgWJntz4TwiWKCR1HCBvLNjWnusTRZWiUNcGnDO0V0K6
+	uFqf/HvAQNVG/vS4FbT8WaK7eK3GLPQbKUPddMaJf0rOVx5UNOSyvoRKenixSkzW
+	5bmItG26SUmyWUukAIogeL8LbM6522FIyjVkE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wqt3tKZhvunmlBZLawylt/1rhDJKvyrg
-	XlXCyk1eAuZSl7alf1Rd25Esz2A2RkSTW1/Q9hbU7MuAqRGpWt9Zbqa+AGDGyKwK
-	S6QXCbSEOcoVCwTY+ob1XXntXLVGTh71O/CeWhHve2IYdXr/cRt8b1ki+12Mnr5H
-	ug4EIXTI+r4=
+	:content-type; q=dns; s=sasl; b=pFhIAYoh4Z+GNl8cOfebisRTQTOSbngW
+	d2VbOOVyl3/da8yecRcW1xyjhTngPFxt6yx7Bauk8NTpRuH3zif0FVKRAL+GMl+p
+	xYi8DraHjnm/PIytKEg3hb5z51kadDGmx+yE0hSG1IUj5/kROI0RC0jv3Zz15C1e
+	lAS53c+aQyo=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3294F22724;
-	Wed, 10 Dec 2014 13:00:47 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A45BA227D4;
+	Wed, 10 Dec 2014 13:04:24 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF37222723;
-	Wed, 10 Dec 2014 13:00:45 -0500 (EST)
-In-Reply-To: <2a0c4cd4c5d3aaceff8a6ffa49d2f3597d26086d.1418055173.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Mon, 8 Dec 2014 17:14:30 +0100
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 31147227D3;
+	Wed, 10 Dec 2014 13:04:24 -0500 (EST)
+In-Reply-To: <43faa41d4cc98d6c40a393ec590af73ec5c94246.1418055173.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 8 Dec 2014 17:15:00 +0100
 	(CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 76F6CAFC-8096-11E4-B0FD-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F930CEDC-8096-11E4-A5DA-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261229>
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> There are legacy repositories out there whose older commits and tags
-> have issues that prevent pushing them when 'receive.fsckObjects' is set.
-> One real-life example is a commit object that has been hand-crafted to
-> list two authors.
->
-> Often, it is not possible to fix those issues without disrupting the
-> work with said repositories, yet it is still desirable to perform checks
-> by setting `receive.fsckObjects = true`. This commit is the first step
-> to allow demoting specific fsck issues to mere warnings.
->
-> The function added by this commit parses a list of settings in the form:
->
-> 	missing-email=warn,bad-name=warn,...
->
-> Unfortunately, the FSCK_WARN/FSCK_ERROR flag is only really heeded by
-> git fsck so far, but other call paths (e.g. git index-pack --strict)
-> error out *always* no matter what type was specified. Therefore, we
-> need to take extra care to default to all FSCK_ERROR in those cases.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  fsck.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  fsck.h |  7 +++++--
->  2 files changed, 63 insertions(+), 2 deletions(-)
->
-> diff --git a/fsck.c b/fsck.c
-> index 05b146c..9e6d70f 100644
-> --- a/fsck.c
-> +++ b/fsck.c
-> @@ -97,9 +97,63 @@ static int parse_msg_id(const char *text, int len)
->  
->  int fsck_msg_type(enum fsck_msg_id msg_id, struct fsck_options *options)
->  {
-> +	if (options->strict_mode && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
-> +		return options->strict_mode[msg_id];
-> +	if (options->strict)
-> +		return FSCK_ERROR;
->  	return msg_id < FIRST_WARNING ? FSCK_ERROR : FSCK_WARN;
->  }
+> This problem has been detected in the wild, and is the primary reason
+> to introduce an option to demote certain fsck errors to warnings. Let's
+> offer to ignore this particular problem specifically.
+> ...
+> +	while (skip_prefix(buffer, "author ", &buffer)) {
+> +		err = report(options, &commit->object, FSCK_MSG_MULTIPLE_AUTHORS, "invalid format - multiple 'author' lines");
+> +		if (err)
+> +			return err;
 
-Hmm, if you are later going to allow demoting (hopefully also promoting)
-error to warn, etc., would the comparison between msg_id and FIRST_WARNING
-make much sense?
+If we have an option to demote this to a warning, wouldn't we want
+to do the same fsck_ident() on that secondary author line?
 
-In other words, at some point wouldn't we be better off with
-something like this
-
-	struct {
-        	enum id;
-                const char *id_string;
-                enum error_level { FSCK_PASS, FSCK_WARN, FSCK_ERROR };
-	} possible_fsck_errors[];
+> +		/* require_end_of_header() ensured that there is a newline */
+> +		buffer = strchr(buffer, '\n') + 1;
+> +	}
+>  	if (!skip_prefix(buffer, "committer ", &buffer))
+>  		return report(options, &commit->object, FSCK_MSG_MISSING_COMMITTER, "invalid format - expected 'committer' line");
+>  	err = fsck_ident(&buffer, &commit->object, options);
