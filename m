@@ -1,90 +1,128 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/3] convert read_packed_refs to use strbuf
-Date: Wed, 10 Dec 2014 05:39:07 -0500
-Message-ID: <20141210103907.GA22186@peff.net>
-References: <20141209174958.GA26167@peff.net>
- <20141209180916.GA26873@peff.net>
- <xmqqa92wla34.fsf@gitster.dls.corp.google.com>
- <20141210073447.GA20298@peff.net>
- <CAPig+cQQThA7wiz8iwkKX=ipg1n5w+gyeS8NqtbjGui986Hn+g@mail.gmail.com>
- <CAPig+cR4p9C46wU2-nNVy7rpXzbW0fGmqzik85UP_1j3YUEmjA@mail.gmail.com>
- <CAPig+cT9rRXdZ5OS8HPBuNOh2P-+PVYZkGR-74rBfXsc2nj_Zw@mail.gmail.com>
- <20141210095319.GA9099@peff.net>
+Subject: [PATCH 1/3] read_packed_refs: use a strbuf for reading lines
+Date: Wed, 10 Dec 2014 05:40:07 -0500
+Message-ID: <20141210104007.GA24514@peff.net>
+References: <20141210103907.GA22186@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	Michael Blume <blume.mike@gmail.com>,
 	Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 11:40:11 2014
+X-From: git-owner@vger.kernel.org Wed Dec 10 11:40:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xyegj-0007Du-PI
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 11:40:10 +0100
+	id 1Xyegt-0007Jk-2o
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 11:40:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755405AbaLJKju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 05:39:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50987 "HELO cloud.peff.net"
+	id S1753372AbaLJKkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 05:40:12 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50993 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752466AbaLJKjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 05:39:10 -0500
-Received: (qmail 29506 invoked by uid 102); 10 Dec 2014 10:39:10 -0000
+	id S1753222AbaLJKkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 05:40:09 -0500
+Received: (qmail 29556 invoked by uid 102); 10 Dec 2014 10:40:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 04:39:10 -0600
-Received: (qmail 8222 invoked by uid 107); 10 Dec 2014 10:39:14 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 04:40:10 -0600
+Received: (qmail 8242 invoked by uid 107); 10 Dec 2014 10:40:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 05:39:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 05:39:07 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 05:40:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 05:40:07 -0500
 Content-Disposition: inline
-In-Reply-To: <20141210095319.GA9099@peff.net>
+In-Reply-To: <20141210103907.GA22186@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261206>
 
-On Wed, Dec 10, 2014 at 04:53:19AM -0500, Jeff King wrote:
+We currently used a fixed PATH_MAX-sized buffer for reading
+packed-refs lines. This is a reasonable guess, in the sense
+that git generally cannot work with refs larger than
+PATH_MAX. However, there are a few cases where it is not
+great:
 
-> > Clarification: for-each-ref ignores the ref when the full line read
-> > from packed-refs hits length 1024 (not when the refname itself hits
-> > length 1024).
-> 
-> Yes, the problem is in read_packed_refs:
-> 
->     char refline[PATH_MAX];
->     ...
->     while (fgets(refline, sizeof(refline), f)) {
->         ...
->     }
-> 
-> This could be trivially converted to strbuf_getwholeline, but I am not
-> sure what else would break, or whether such a system would actually be
-> _usable_ with such long refs (e.g., would it break the first time you
+  1. Some systems may have a low value of PATH_MAX, but can
+     actually handle larger paths in practice. Fixing this
+     code path probably isn't enough to make them work
+     completely with long refs, but it is a step in the
+     right direction.
 
-I accidentally cut off the next line, but it was something like
-"...first time you actually tried writing to the ref)".
+  2. We use fgets, which will happily give us half a line on
+     the first read, and then the rest of the line on the
+     second. This is probably OK in practice, because our
+     refline parser is careful enough to look for the
+     trailing newline on the first line. The second line may
+     look like a peeled line to us, but since "^" is illegal
+     in refnames, it is not likely to come up.
 
-> Using fgets like this does shear lines, though. The next fgets call will
-> see the second half of the line. I think we are saved from doing
-> anything stupid by parse_ref_line, but it is mostly luck. So perhaps for
-> that reason the trivial conversion to strbuf is worth it, even if it
-> doesn't help any practical cases.
+     Still, it does not hurt to be more careful.
 
-Here's a patch to do that. It still doesn't let you create long refs on
-OS X, as we get caught up in the PATH_MAX found in git_path() and
-friends. Still, I think it's a step in the right direction, and it fixes
-the shearing issue.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ refs.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-Patches 2 and 3 are just follow-on cleanups.
-
-  [1/3]: read_packed_refs: use a strbuf for reading lines
-  [2/3]: read_packed_refs: pass strbuf to parse_ref_line
-  [3/3]: read_packed_refs: use skip_prefix instead of static array
-
-I checked, and this miraculously does not conflict with any of the refs
-work in pu. :)
-
--Peff
+diff --git a/refs.c b/refs.c
+index 5ff457e..6f31935 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1126,16 +1126,16 @@ static const char *parse_ref_line(char *line, unsigned char *sha1)
+ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ {
+ 	struct ref_entry *last = NULL;
+-	char refline[PATH_MAX];
++	struct strbuf line = STRBUF_INIT;
+ 	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled = PEELED_NONE;
+ 
+-	while (fgets(refline, sizeof(refline), f)) {
++	while (strbuf_getwholeline(&line, f, '\n') != EOF) {
+ 		unsigned char sha1[20];
+ 		const char *refname;
+ 		static const char header[] = "# pack-refs with:";
+ 
+-		if (!strncmp(refline, header, sizeof(header)-1)) {
+-			const char *traits = refline + sizeof(header) - 1;
++		if (!strncmp(line.buf, header, sizeof(header)-1)) {
++			const char *traits = line.buf + sizeof(header) - 1;
+ 			if (strstr(traits, " fully-peeled "))
+ 				peeled = PEELED_FULLY;
+ 			else if (strstr(traits, " peeled "))
+@@ -1144,7 +1144,7 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 			continue;
+ 		}
+ 
+-		refname = parse_ref_line(refline, sha1);
++		refname = parse_ref_line(line.buf, sha1);
+ 		if (refname) {
+ 			int flag = REF_ISPACKED;
+ 
+@@ -1160,10 +1160,10 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 			continue;
+ 		}
+ 		if (last &&
+-		    refline[0] == '^' &&
+-		    strlen(refline) == PEELED_LINE_LENGTH &&
+-		    refline[PEELED_LINE_LENGTH - 1] == '\n' &&
+-		    !get_sha1_hex(refline + 1, sha1)) {
++		    line.buf[0] == '^' &&
++		    line.len == PEELED_LINE_LENGTH &&
++		    line.buf[PEELED_LINE_LENGTH - 1] == '\n' &&
++		    !get_sha1_hex(line.buf + 1, sha1)) {
+ 			hashcpy(last->u.value.peeled, sha1);
+ 			/*
+ 			 * Regardless of what the file header said,
+@@ -1173,6 +1173,8 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 			last->flag |= REF_KNOWS_PEELED;
+ 		}
+ 	}
++
++	strbuf_release(&line);
+ }
+ 
+ /*
+-- 
+2.2.0.454.g7eca6b7
