@@ -1,183 +1,141 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 1/2] t1400: add some more tests of "update-ref --stdin"'s verify command
-Date: Thu, 11 Dec 2014 00:47:51 +0100
-Message-ID: <1418255272-5875-2-git-send-email-mhagger@alum.mit.edu>
-References: <1418255272-5875-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Brad King <brad.king@kitware.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 00:48:13 2014
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] push: add remote.pushThin to control thin pack generation
+Date: Wed, 10 Dec 2014 23:49:49 +0000
+Message-ID: <1418255389-133205-1-git-send-email-sandals@crustytoothpaste.net>
+References: <20141210233443.GA130424@vauxhall.crustytoothpaste.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 11 00:50:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyqzI-0008I9-Vr
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 00:48:09 +0100
+	id 1Xyr15-0000tn-T1
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 00:50:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758356AbaLJXsD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 18:48:03 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:65096 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758335AbaLJXsC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2014 18:48:02 -0500
-X-AuditID: 12074411-f79fa6d000006b8a-5e-5488dbb06151
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 41.90.27530.0BBD8845; Wed, 10 Dec 2014 18:48:01 -0500 (EST)
-Received: from michael.fritz.box (p5DDB0BBF.dip0.t-ipconnect.de [93.219.11.191])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBANlut9003387
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 10 Dec 2014 18:47:59 -0500
-X-Mailer: git-send-email 2.1.3
-In-Reply-To: <1418255272-5875-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrFIsWRmVeSWpSXmKPExsUixO6iqLvxdkeIwarDTBY710lYdF3pZrJo
-	6L3CbPH25hJGi9sr5jNb9PZ9YrXYvLmdxYHd4+/7D0weO2fdZfdYsKnU4+Oz5eweFy8pe3ze
-	JBfAFsVtk5RYUhacmZ6nb5fAnXFnRT9jwVvFiqOX+1kbGI9JdzFyckgImEhcaupnh7DFJC7c
-	W8/WxcjFISRwmVHiyJ4PzBDOCSaJf++Os4BUsQnoSizqaWYCsUUE1CQmth1iASliFvjCKLF+
-	3x+whLBAhMTe06vBbBYBVYmzt9eCreAVcJb4+3kp0FQOoHVyElvXeYOEOQVcJDbfWw5WLgRU
-	cmvxTfYJjLwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuma6uVmluilppRuYoSEm+AOxhkn
-	5Q4xCnAwKvHwrrjaHiLEmlhWXJl7iFGSg0lJlLf3ekeIEF9SfkplRmJxRnxRaU5q8SFGCQ5m
-	JRHepBtAOd6UxMqq1KJ8mJQ0B4uSOC/fEnU/IYH0xJLU7NTUgtQimKwMB4eSBK/fLaBGwaLU
-	9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFBsxBcDowMkxQO09z9IO29xQWIuUBSi9RSj
-	opQ4736QhABIIqM0D24sLIm8YhQH+lKYtxykigeYgOC6XwENZgIavHwL2OCSRISUVAPjPP1t
-	D1umL2RldJ9TE9txfeFu/tliTy6evLIp63H4kizF6neip8I8eReoaT2yW2U9kWnmYY7C5krP
-	u36vUkIzpJqmrz/Q+4EzLzDweVjSTQt++3sa2adu/d3ziN/rz0W17x7t9xpkWZyY 
+	id S933171AbaLJXt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 18:49:56 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:55234 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932621AbaLJXtz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2014 18:49:55 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 759DA2808F
+	for <git@vger.kernel.org>; Wed, 10 Dec 2014 23:49:54 +0000 (UTC)
+X-Mailer: git-send-email 2.2.0.rc0.207.ga3a616c
+In-Reply-To: <20141210233443.GA130424@vauxhall.crustytoothpaste.net>
+X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261263>
 
-Two of the tests fail because
+From: "brian m. carlson" <brian.carlson@cpanel.net>
 
-    verify refs/heads/foo
+Thin packs are enabled when pushing by default, but with a large number
+of refs and a fast network, git may spend more time trying to find a
+good delta than it would spend simply sending data over the network.
+Add a per-remote option, pushThin, that controls the default for pushes
+on that remote.
 
-with no argument (not even zeros) actually *deletes* refs/heads/foo.
-This problem will be fixed in the next commit.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: brian m. carlson <brian.carlson@cpanel.net>
 ---
-The two failing tests have to restore the $m reference when they're
-done because otherwise the bug deletes it, causing subsequent tests
-to fail.
+ SOURCES/git/Documentation/config.txt | 6 ++++++
+ SOURCES/git/builtin/push.c           | 6 ++++--
+ SOURCES/git/remote.c                 | 3 +++
+ SOURCES/git/remote.h                 | 1 +
+ SOURCES/git/transport.c              | 2 ++
+ 5 files changed, 16 insertions(+), 2 deletions(-)
 
- t/t1400-update-ref.sh | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
-
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 7b4707b..6a3cdd1 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -619,6 +619,52 @@ test_expect_success 'stdin update/create/verify combination works' '
- 	test_must_fail git rev-parse --verify -q $c
- '
+diff --git a/SOURCES/git/Documentation/config.txt b/SOURCES/git/Documentation/config.txt
+index 9220725..7fededd 100644
+--- a/SOURCES/git/Documentation/config.txt
++++ b/SOURCES/git/Documentation/config.txt
+@@ -2178,6 +2178,12 @@ remote.<name>.push::
+ 	The default set of "refspec" for linkgit:git-push[1]. See
+ 	linkgit:git-push[1].
  
-+test_expect_success 'stdin verify succeeds for correct value' '
-+	git rev-parse $m >expect &&
-+	echo "verify $m $m" >stdin &&
-+	git update-ref --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
++remote.<name>.pushThin::
++	If true (the default), pass the \--thin option to
++	linkgit:git-pack-objects[1] during push.  This results in a smaller
++	pack being sent and can improve push time over slow networks.  Over
++	fast networks, setting this value to false may improve performance.
 +
-+test_expect_success 'stdin verify succeeds for missing reference' '
-+	echo "verify refs/heads/missing $Z" >stdin &&
-+	git update-ref --stdin <stdin &&
-+	test_must_fail git rev-parse --verify -q refs/heads/missing
-+'
-+
-+test_expect_success 'stdin verify treats no value as missing' '
-+	echo "verify refs/heads/missing" >stdin &&
-+	git update-ref --stdin <stdin &&
-+	test_must_fail git rev-parse --verify -q refs/heads/missing
-+'
-+
-+test_expect_success 'stdin verify fails for wrong value' '
-+	git rev-parse $m >expect &&
-+	echo "verify $m $m~1" >stdin &&
-+	test_must_fail git update-ref --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin verify fails for mistaken null value' '
-+	git rev-parse $m >expect &&
-+	echo "verify $m $Z" >stdin &&
-+	test_must_fail git update-ref --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_failure 'stdin verify fails for mistaken empty value' '
-+	M=$(git rev-parse $m) &&
-+	test_when_finished "git update-ref $m $M" &&
-+	git rev-parse $m >expect &&
-+	echo "verify $m" >stdin &&
-+	test_must_fail git update-ref --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'stdin update refs works with identity updates' '
- 	cat >stdin <<-EOF &&
- 	update $a $m $m
-@@ -938,6 +984,52 @@ test_expect_success 'stdin -z update/create/verify combination works' '
- 	test_must_fail git rev-parse --verify -q $c
- '
+ remote.<name>.mirror::
+ 	If true, pushing to this remote will automatically behave
+ 	as if the `--mirror` option was given on the command line.
+diff --git a/SOURCES/git/builtin/push.c b/SOURCES/git/builtin/push.c
+index a076b19..ae39677 100644
+--- a/SOURCES/git/builtin/push.c
++++ b/SOURCES/git/builtin/push.c
+@@ -15,7 +15,7 @@ static const char * const push_usage[] = {
+ 	NULL,
+ };
  
-+test_expect_success 'stdin -z verify succeeds for correct value' '
-+	git rev-parse $m >expect &&
-+	printf $F "verify $m" "$m" >stdin &&
-+	git update-ref -z --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
+-static int thin = 1;
++static int thin = -1;
+ static int deleterefs;
+ static const char *receivepack;
+ static int verbosity;
+@@ -347,7 +347,9 @@ static int push_with_options(struct transport *transport, int flags)
+ 	if (receivepack)
+ 		transport_set_option(transport,
+ 				     TRANS_OPT_RECEIVEPACK, receivepack);
+-	transport_set_option(transport, TRANS_OPT_THIN, thin ? "yes" : NULL);
 +
-+test_expect_success 'stdin -z verify succeeds for missing reference' '
-+	printf $F "verify refs/heads/missing" "$Z" >stdin &&
-+	git update-ref -z --stdin <stdin &&
-+	test_must_fail git rev-parse --verify -q refs/heads/missing
-+'
++	if (thin != -1)
++		transport_set_option(transport, TRANS_OPT_THIN, thin ? "yes" : NULL);
+ 
+ 	if (!is_empty_cas(&cas)) {
+ 		if (!transport->smart_options)
+diff --git a/SOURCES/git/remote.c b/SOURCES/git/remote.c
+index f624217..54777cb 100644
+--- a/SOURCES/git/remote.c
++++ b/SOURCES/git/remote.c
+@@ -175,6 +175,7 @@ static struct remote *make_remote(const char *name, int len)
+ 
+ 	ret = xcalloc(1, sizeof(struct remote));
+ 	ret->prune = -1;  /* unspecified */
++	ret->push_thin = 1; /* default on */
+ 	ALLOC_GROW(remotes, remotes_nr + 1, remotes_alloc);
+ 	remotes[remotes_nr++] = ret;
+ 	ret->name = xstrndup(name, len);
+@@ -445,6 +446,8 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 		if (git_config_string(&v, key, value))
+ 			return -1;
+ 		add_push_refspec(remote, v);
++	} else if (!strcmp(subkey, ".pushthin")) {
++		remote->push_thin = git_config_bool(key, value);
+ 	} else if (!strcmp(subkey, ".fetch")) {
+ 		const char *v;
+ 		if (git_config_string(&v, key, value))
+diff --git a/SOURCES/git/remote.h b/SOURCES/git/remote.h
+index 8b62efd..badf266 100644
+--- a/SOURCES/git/remote.h
++++ b/SOURCES/git/remote.h
+@@ -46,6 +46,7 @@ struct remote {
+ 	int skip_default_update;
+ 	int mirror;
+ 	int prune;
++	int push_thin;
+ 
+ 	const char *receivepack;
+ 	const char *uploadpack;
+diff --git a/SOURCES/git/transport.c b/SOURCES/git/transport.c
+index 70d38e4..2f495fa 100644
+--- a/SOURCES/git/transport.c
++++ b/SOURCES/git/transport.c
+@@ -987,6 +987,8 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 			ret->smart_options->receivepack = remote->receivepack;
+ 	}
+ 
++	transport_set_option(ret, TRANS_OPT_THIN, remote->push_thin ? "yes" : NULL);
 +
-+test_expect_success 'stdin -z verify treats no value as missing' '
-+	printf $F "verify refs/heads/missing" "" >stdin &&
-+	git update-ref -z --stdin <stdin &&
-+	test_must_fail git rev-parse --verify -q refs/heads/missing
-+'
-+
-+test_expect_success 'stdin -z verify fails for wrong value' '
-+	git rev-parse $m >expect &&
-+	printf $F "verify $m" "$m~1" >stdin &&
-+	test_must_fail git update-ref -z --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin -z verify fails for mistaken null value' '
-+	git rev-parse $m >expect &&
-+	printf $F "verify $m" "$Z" >stdin &&
-+	test_must_fail git update-ref -z --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_failure 'stdin -z verify fails for mistaken empty value' '
-+	M=$(git rev-parse $m) &&
-+	test_when_finished "git update-ref $m $M" &&
-+	git rev-parse $m >expect &&
-+	printf $F "verify $m" "" >stdin &&
-+	test_must_fail git update-ref -z --stdin <stdin &&
-+	git rev-parse $m >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'stdin -z update refs works with identity updates' '
- 	printf $F "update $a" "$m" "$m" "update $b" "$m" "$m" "update $c" "$Z" "" >stdin &&
- 	git update-ref -z --stdin <stdin &&
+ 	return ret;
+ }
+ 
 -- 
-2.1.3
+2.2.0
