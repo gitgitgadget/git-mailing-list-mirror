@@ -1,127 +1,169 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 03/14] copy_fd: pass error message back through a strbuf
-Date: Wed, 10 Dec 2014 18:02:47 +0100
-Message-ID: <54887CB7.4000603@alum.mit.edu>
-References: <1416262453-30349-1-git-send-email-sbeller@google.com> <20141117233525.GC4336@google.com> <CAGZ79kYU1f1COjtv+4MzgbPLi42m1JQsXsuuCr3WXsuR8XrO7w@mail.gmail.com> <20141118004841.GE4336@google.com> <CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com> <20141203050217.GJ6527@google.com> <20141203051344.GM6527@google.com> <xmqqzjb4h823.fsf@gitster.dls.corp.google.com> <20141203210031.GA6631@peff.net> <20141203213858.GC6527@google.com> <20141204075920.GA27142@peff.net>
+From: Chris Down <chris@chrisdown.name>
+Subject: http.proxy seems to not be propagated on `submodule update`
+Date: Wed, 10 Dec 2014 17:05:46 +0000
+Message-ID: <20141210170546.GA50294@chrisdown.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 18:03:03 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="x+6KMIRAuhnl3hBn"
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 10 18:05:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XykfE-00068P-43
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 18:03:00 +0100
+	id 1Xyki3-0007lq-Ct
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 18:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932418AbaLJRCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 12:02:54 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:63231 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932375AbaLJRCy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2014 12:02:54 -0500
-X-AuditID: 12074411-f79fa6d000006b8a-76-54887cba5933
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 01.41.27530.ABC78845; Wed, 10 Dec 2014 12:02:50 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB0BBF.dip0.t-ipconnect.de [93.219.11.191])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBAH2lx8016155
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 10 Dec 2014 12:02:49 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
-In-Reply-To: <20141204075920.GA27142@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqLurpiPE4N9/U4uuK91MFg29V5gt
-	3t5cwmjxo6WH2WLz5nYWB1aPnbPusnss2FTq8ax3D6PHxUvKHp83yQWwRnHbJCWWlAVnpufp
-	2yVwZzydvYm9oJmv4snWX6wNjE+4uhg5OSQETCSufV3OBGGLSVy4t56ti5GLQ0jgMqPE7/mH
-	WSGc80wS/99sZwSp4hXQlji67zpYB4uAqsTql+tZQGw2AV2JRT3NYHFRgSCJk3uus0PUC0qc
-	nPkEqIaDQ0TAWeL2enmQMLNAhsSkdbOYQWxhAR+JX7s2sUDsessssXPZPrBeTgE9iYnnJrFD
-	NKhL/Jl3iRnClpdo3jqbeQKjwCwkK2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzU
-	Il1TvdzMEr3UlNJNjJAQF9zBOOOk3CFGAQ5GJR7eFVfbQ4RYE8uKK3MPMUpyMCmJ8k4r6QgR
-	4kvKT6nMSCzOiC8qzUktPsQowcGsJMKbWwaU401JrKxKLcqHSUlzsCiJ8/ItUfcTEkhPLEnN
-	Tk0tSC2CycpwcChJ8PpXAzUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2I1vhgY
-	rSApHqC9KSDtvMUFiblAUYjWU4yKUuK82SAJAZBERmke3FhY4nrFKA70pTBvFUgVDzDpwXW/
-	AhrMBDT4RWIryOCSRISUVAOj58z7hRfmLy6fZbRFoL3yUN2xJ2lc1tLch9985U6r7dp1kHvx
-	U8bIvtWWD3ZMXLF0bqKMa8U89pOPHHvbGY9Zfe+pleB/GybSmPjSNyZ0icj2mkkz 
+	id S932293AbaLJRFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 12:05:51 -0500
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:49281 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932146AbaLJRFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 12:05:50 -0500
+Received: by mail-wi0-f178.google.com with SMTP id em10so5859205wid.11
+        for <git@vger.kernel.org>; Wed, 10 Dec 2014 09:05:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chrisdown.name; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=mDjATmnAycCXMY7rxkJFWV1zLiLXCyCvqSq9HDd7tBw=;
+        b=CNc4W9wzBPlBgw9Q57ocdouQvbMXnNWUcDit9lQvZ0NbQtzEUrCOWjCtn6ztGn+BrZ
+         sXd+I+GrMnK8NszWWfMw3bbDftuA1B4fn/8waeIyS2xuOs4n1sAMYm1rTja3UojNlubs
+         x5xNiFbrRmdA2SIDtNLyP6rh1lAGkRKEkJRPk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=mDjATmnAycCXMY7rxkJFWV1zLiLXCyCvqSq9HDd7tBw=;
+        b=VUmKztkm9aDLqlCqE1tjMSrXEBuaMCyWu/qxHGg7EWa5AEA5MaWUxoc2JXnLuEnIon
+         8s5GUOJDn4G71L1uEX/dmJ9t8QcYwTIsobg3pHm+ZLiUaucCZoaNLWbbTgEmw+gUOhUa
+         qCbucItwShZWe8fWPT4+BBSgk8qTiNckN4acVWCu1bqNJpt5WTKma5h4I6PLshtcbKND
+         o+YoVn0s+2hjUTSF5DTB7kdJPYTkezv9hLQcFGiwRlR3yqu7Ui9ewHuTcBC1omJin5N5
+         sprNSgHKiOPfWShlX1bomj30mDsRdGbgL4utW9n5inC97dkXdVpZjIE4srq0tuvGBSAP
+         WqHg==
+X-Gm-Message-State: ALoCoQnB7uXpLSTwRDF4lZsR9j2PkbdzjP5OtUadwKMvHommma5jzF9z04AP/8H6HoSQ32V+WVZL
+X-Received: by 10.180.108.235 with SMTP id hn11mr7989304wib.14.1418231149014;
+        Wed, 10 Dec 2014 09:05:49 -0800 (PST)
+Received: from chrisdown.name ([195.89.19.114])
+        by mx.google.com with ESMTPSA id ex8sm6584076wjd.41.2014.12.10.09.05.47
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 10 Dec 2014 09:05:48 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261223>
 
-On 12/04/2014 08:59 AM, Jeff King wrote:
-> On Wed, Dec 03, 2014 at 01:38:58PM -0800, Jonathan Nieder wrote:
->> The allocation of a variable-sized buffer is a small overhead that I
->> don't mind incurring on error.  In the non-error case, the caller
->> doesn't actually have to free the buffer, and if they choose to, the
->> overhead incurred is that of free(NULL)'.
-> 
-> I don't care at all about overhead. I care about extra work on the part
-> of the caller to avoid a leak. It turns:
-> 
->   if (some_func(fd, &err))
-> 	return error("%s", err.msg);
-> 
-> into:
-> 
->   if (some_func(fd, &err)) {
-> 	error("%s", err.buf);
-> 	strbuf_release(&err);
-> 	return -1;
->   }
 
-What if we go in the direction not of less infrastructure, but a little
-bit more? Like
+--x+6KMIRAuhnl3hBn
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	struct result {
-		int code;
-		struct strbuf msg;
-	};
+Hello,
 
-	int report_errors(struct result *result)
-	{
-		int code = result->code;
-		if (code) {
-			error(result->msg.buf);
-		}
-		result->code = 0;
-		strbuf_release(result->msg);
-		return code; /* or alternatively (code ? -1 : 0) */
-	}
+I'm trying to recursively update submodules in a repo on a server that=20
+requires a proxy to access the internet.
 
-	int report_warnings(struct result *result)
-	{
-		...
-	}
+I typically pass http.proxy with -c to tell git about the proxy, but=20
+with `submodule update`, it seems the argument isn't propagated and thus=20
+results in the process sitting doing nothing when it tries to connect.
 
-	int report_with_prefix(struct result *result, const char *fmt, ...)
-	{
-		...
-	}
+Is this expected behaviour?
 
-Then a caller could look pretty much like before:
+    cdown@dev023:dotfiles:linux$ GIT_TRACE=3D2 git -c http.proxy=3Dfwdproxy=
+=2Eany:8080 submodule update --init --recursive
+    trace: exec: 'git-submodule' 'update' '--init' '--recursive'
+    trace: run_command: 'git-submodule' 'update' '--init' '--recursive'
+    trace: built-in: git 'rev-parse' '--git-dir'
+    trace: built-in: git 'rev-parse' '--show-cdup'
+    trace: built-in: git 'rev-parse' '-q' '--git-dir'
+    trace: built-in: git 'rev-parse' '--sq-quote' '--init'
+    trace: built-in: git 'rev-parse' '--sq-quote' '--recursive'
+    trace: built-in: git 'ls-files' '--error-unmatch' '--stage' '--'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/auto-save.url'
+    trace: built-in: git 'config' '-f' '.gitmodules' 'submodule..vim/bundle=
+/auto-save.update'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/ctrlp.url'
+    trace: built-in: git 'config' '-f' '.gitmodules' 'submodule..vim/bundle=
+/ctrlp.update'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/easymotion.url'
+    trace: built-in: git 'config' '-f' '.gitmodules' 'submodule..vim/bundle=
+/easymotion.update'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/fugitive.url'
+    trace: built-in: git 'config' '-f' '.gitmodules' 'submodule..vim/bundle=
+/fugitive.update'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/markdown.url'
+    trace: built-in: git 'config' '-f' '.gitmodules' 'submodule..vim/bundle=
+/markdown.update'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/pathogen.url'
+    trace: built-in: git 'config' '-f' '.gitmodules' 'submodule..vim/bundle=
+/pathogen.update'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/supertab.url'
+    trace: built-in: git 'config' '-f' '.gitmodules' 'submodule..vim/bundle=
+/supertab.update'
+    trace: built-in: git 'ls-files' '--error-unmatch' '--stage' '--'
+    trace: built-in: git 'config' '-f' '.gitmodules' '--get-regexp' '^submo=
+dule\..*\.path$'
+    trace: built-in: git 'config' 'submodule..vim/bundle/auto-save.url'
+    trace: built-in: git 'config' 'submodule..vim/bundle/auto-save.update'
+    trace: built-in: git 'rev-parse' '--git-dir'
+    trace: built-in: git 'rev-parse' '--show-toplevel'
+    trace: built-in: git 'rev-parse' '--show-toplevel'
+    trace: built-in: git 'rev-parse' '--local-env-vars'
+    trace: built-in: git 'config' 'core.worktree' '../../../../../.vim/bund=
+le/auto-save'
+    trace: built-in: git 'rev-parse' '--local-env-vars'
+    trace: built-in: git 'fetch'
+    trace: run_command: 'git-remote-https' 'origin' 'https://github.com/907=
+th/vim-auto-save.git'
+    ^C
+    cdown@dev023:dotfiles:linux$ git --version
+    git version 1.8.1
 
-	struct result result = RESULT_INIT;
+Thanks,
 
-	if (some_func(fd, &result))
-		return report_errors(&result);
+Chris
 
-Other callers might not even bother to check the return value of the
-function, relying instead on result.code via process_error():
+--x+6KMIRAuhnl3hBn
+Content-Type: application/pgp-signature
 
-	char *ptr = some_func(fd, &result);
-	if (report_errors(&result))
-		return -1;
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.22 (Darwin)
 
-If the result code is considered superfluous, we could use naked strbufs
-and use msg.len as the indicator that there was an error.
+iQJ8BAEBCgBmBQJUiH1qXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQwODQ5MjlBQ0ZCQzIzQjBCMUEyNkE4NDFE
+RjhEMjFCNjE2MTE4MDcwAAoJEN+NIbYWEYBwqJ4QAILHei6ILzP7vqzULcguaW8E
+sSEdwvq2SeQbnJ6w5ek8I7/m4oqOGJObsbl34l3lHbloAHvvCpwR8rQq+X+2UaCd
+wUzQQN/DK8XA1SeZGUm4IiHRBjFyeeAbJlQhdymULMPRi8D0Gs3XSGJ1R8yJy1y2
+bp5zfSowYg6u97n/DwelFGYvG8xpMiVPHSzpIoIpXyuyOnwG+qSiq6ejRO4/VD8G
+Zts81yLuhZ5ifz0D6CMbjZJHEOLeS1WAG8lM1Nt0Squ112vr3qV8g2cxAuMmh/Vl
+UQ8Gr85W0h7Xksji9nKWxER+i42S0rcDwBvqzsBmgpuhpGNZmKx512Rr8CzZxlIC
+1GVyITo8bhB0WPk1NqnKacuRbtKM+e6ewqsB292TW3qNsd+/ikAb3gzBBk/tfGZD
+gfurJolHEDYrgswk8Uh6Bstx/TI8HJF2wblj0SWsDQtLNay4YI/xcTp5c+HUWAb5
+p9VJzbnFamO95oCxEOhI+ZHem8GMqrifKGjPNHWrXM626XoBpVPrC/799n+d7gPY
+k04b8WF9Ch7+LKUrbxMvoIOn2bPfxLngEfihYqGvJ+A8PzqKVagdjBhRtLLXYNjf
+fJwvprJjgT4k4vTs3xGgTL/EFwMN/cNBfHH53ZlfTQtDEp8PoOAxTwfxKv/5UqwF
+B5bWpn7EXqjwPwFMtecg
+=5O6u
+-----END PGP SIGNATURE-----
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+--x+6KMIRAuhnl3hBn--
