@@ -1,111 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 03/14] copy_fd: pass error message back through a strbuf
-Date: Wed, 10 Dec 2014 14:14:34 -0500
-Message-ID: <20141210191434.GA23273@peff.net>
-References: <20141118004841.GE4336@google.com>
- <CAGZ79kbF6JjxgHX2KZFhSh9QyGOXeS=cVK0z=CM4n9-ErRDJ8A@mail.gmail.com>
- <20141203050217.GJ6527@google.com>
- <20141203051344.GM6527@google.com>
- <xmqqzjb4h823.fsf@gitster.dls.corp.google.com>
- <20141203210031.GA6631@peff.net>
- <20141203213858.GC6527@google.com>
- <20141204075920.GA27142@peff.net>
- <54887CB7.4000603@alum.mit.edu>
- <xmqqfvcngwjh.fsf@gitster.dls.corp.google.com>
+From: Stephen Fisher <sfisher@SDF.ORG>
+Subject: Re: Git's configure script --mandir doesn't work
+Date: Wed, 10 Dec 2014 12:41:50 -0700
+Message-ID: <20141210194150.GA28190@SDF.ORG>
+References: <20141204232532.GB14036@SDF.ORG>
+ <20141205093619.GE32112@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 20:14:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 10 20:42:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xymih-0001eZ-1n
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 20:14:43 +0100
+	id 1Xyn9O-0007Uu-DF
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 20:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933054AbaLJTOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 14:14:38 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51196 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933022AbaLJTOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 14:14:37 -0500
-Received: (qmail 19548 invoked by uid 102); 10 Dec 2014 19:14:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 13:14:37 -0600
-Received: (qmail 11958 invoked by uid 107); 10 Dec 2014 19:14:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 14:14:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 14:14:34 -0500
+	id S932866AbaLJTmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 14:42:12 -0500
+Received: from mx.sdf.org ([192.94.73.24]:55577 "EHLO sdf.lonestar.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932319AbaLJTmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 14:42:10 -0500
+Received: from sdf.org (IDENT:sfisher@otaku.freeshell.org [192.94.73.9])
+	by sdf.lonestar.org (8.14.8/8.14.5) with ESMTP id sBAJfoGP017147
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-GCM-SHA384 (256 bits) verified NO);
+	Wed, 10 Dec 2014 19:41:50 GMT
+Received: (from sfisher@localhost)
+	by sdf.org (8.14.8/8.12.8/Submit) id sBAJfo6A016878;
+	Wed, 10 Dec 2014 12:41:50 -0700 (MST)
 Content-Disposition: inline
-In-Reply-To: <xmqqfvcngwjh.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20141205093619.GE32112@peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261240>
 
-On Wed, Dec 10, 2014 at 11:00:18AM -0800, Junio C Hamano wrote:
-
-> Two potential issues are:
+On Fri, Dec 05, 2014 at 04:36:20AM -0500, Jeff King wrote:
+> On Thu, Dec 04, 2014 at 04:25:32PM -0700, Stephen Fisher wrote:
 > 
->  - Callers that ignore errors need to actively ignore errors with
->    strbuf_release(&result.msg);
-
-That was my first thought, too. If you want to do anything besides
-report_error, you have to deal with the strbuf. But I'd guess that they
-often fall into one of two cases:
-
-  1. You are just propagating the error to your caller. In which case
-      it is not _your_ result struct in the first place, and you do not
-      need to care about deallocating it either way. I.e.:
-
-        int some_func(..., struct result *err)
-	{
-		if (some_other_func(..., err))
-			return -1;
-		...
-	}
-
-  2. You want to ignore the error. I think anybody taking a result
-     struct (or a strbuf, or whatever) should accept NULL as "do not
-     bother giving me your message". And the convenience wrappers
-     should handle that (I think the mkerror example I sent earlier
-     did), so callees can just do:
-
-       return mkerror(err, "whatever: %s", ...);
-
-The remainder could strbuf_release manually, but there would hopefully
-not be many of them.
-
-I think I could live with something like that.
-
->  - Callers have to remember that once the report_errors() function
->    is called on a "struct result", the struct loses its information.
+> > I'm installing Git 2.2.0 from source distribution on NetBSD 6.1.5 
+> > (amd64) and when I specify --mandir=/usr/local/man, it still 
+> > installs man pages in the default /usr/local/share/man directory.  
+> > Is there a fix available for this?
 > 
-> Neither is insurmountable, but the latter might turn out to be
-> cumbersome to work around in some codepaths.
+> It works fine for me here (Debian):
 
-I suspect the message is not that interesting after calling
-report_errors(). The "code" flag could remain, as it does not require
-deallocation.
+> Can you elaborate on the commands you're running? After running the 
+> configure script, can you confirm that "mandir" is set appropriately 
+> in config.mak.autogen?
 
-> Another alternative may be to have the reporting storage on the side
-> of the callee, and have callers that are interested in errors to
-> supply a place to store a pointer to it, i.e.
-> 
-> 	int some_func(..., struct result **errors) {
->         	static struct result mine;
+Thanks for your reply and sorry for my delay in responding.
 
-This makes some_func not reentrant. Which is a hazard both for threaded
-code, but also for functions which want to do:
+I'm executing ./configure --mandir=/usr/local/man --disable-pthreads 
+then gmake and gmake install.  I'm using gmake (GNU make) because I get 
+Makefile errors with the regular BSD make, but that's another issue.  
+I'm disabling pthreads because there is a linking error for undefined 
+references to a few functions (I probably need to pass -lpthread in 
+LDFLAGS, but haven't tried that yet).
 
-  if (some_func(foo, &err_one)) {
-          /* didn't work? Try an alternative. */
-	  if (!some_func(bar, &err_two))
-	          ....
+mandir is properly set in config.mak.autogen.
 
-and expect err_one to contain anything useful.
+When I set prefix to /tmp/foo and mandir to /tmp/bar like your example, 
+it installs things into /tmp/foo, but /tmp/bar isn't even created.
+
+I noticed text files in Documentation/ that look like the content of man 
+pages, and when I run gmake in that directory, I get an error about 
+asciidoc missing to make an HTML file.  Is asciidoc required for the man 
+pages as well?  I don't see any files that appear to be man page format 
+other than in perl/blib/man3 and those are installed (but not under the 
+mandir prefix, rather the default /usr/local/share/man prefix).
