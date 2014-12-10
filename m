@@ -1,79 +1,136 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/18] fsck: handle multiple authors in commits specially
-Date: Wed, 10 Dec 2014 10:04:22 -0800
-Message-ID: <xmqqk31zidp5.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 12/18] Disallow demoting grave fsck errors to warnings
+Date: Wed, 10 Dec 2014 10:06:51 -0800
+Message-ID: <xmqqd27ridl0.fsf@gitster.dls.corp.google.com>
 References: <cover.1418055173.git.johannes.schindelin@gmx.de>
-	<43faa41d4cc98d6c40a393ec590af73ec5c94246.1418055173.git.johannes.schindelin@gmx.de>
+	<fcf343ed359ca47d6154f0d1e1850738eb7768ac.1418055173.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 10 19:04:31 2014
+X-From: git-owner@vger.kernel.org Wed Dec 10 19:07:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xylck-0006f7-6f
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 19:04:30 +0100
+	id 1XylfB-00081I-KE
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 19:07:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932538AbaLJSE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 13:04:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58247 "EHLO
+	id S932522AbaLJSGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 13:06:55 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50031 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932501AbaLJSEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 13:04:25 -0500
+	with ESMTP id S932490AbaLJSGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 13:06:54 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC792227D5;
-	Wed, 10 Dec 2014 13:04:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E716A22872;
+	Wed, 10 Dec 2014 13:06:52 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mk0GGwxJ1uNivPkavotb/a8Yqyk=; b=r+x8m4
-	c6FY1dDs+J5Dkvy/9G5TvgWJntz4TwiWKCR1HCBvLNjWnusTRZWiUNcGnDO0V0K6
-	uFqf/HvAQNVG/vS4FbT8WaK7eK3GLPQbKUPddMaJf0rOVx5UNOSyvoRKenixSkzW
-	5bmItG26SUmyWUukAIogeL8LbM6522FIyjVkE=
+	:content-type; s=sasl; bh=IMb0mSBcwjFOqDd61VufgmgpEP0=; b=U7mdSO
+	LOF4UTBBP4Zr6zsS/C4vAarNAtMfyfcv6RWMsB7SBoQLdN4C//d+C2N4A4ahQT37
+	HXrDi/VfqSjUJjg+DBGn2mz6q7eEKhlUhTbBC/jstoF1NTLfxPmMJrqIopTAfybR
+	Qlr6YrJ+uLQw1g6S4aDApZqrRmMNY1CBbouRg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pFhIAYoh4Z+GNl8cOfebisRTQTOSbngW
-	d2VbOOVyl3/da8yecRcW1xyjhTngPFxt6yx7Bauk8NTpRuH3zif0FVKRAL+GMl+p
-	xYi8DraHjnm/PIytKEg3hb5z51kadDGmx+yE0hSG1IUj5/kROI0RC0jv3Zz15C1e
-	lAS53c+aQyo=
+	:content-type; q=dns; s=sasl; b=qgSixZz3oaUioeUSt/gT4wc0q2+VrDEJ
+	vTEf5kbq1ZTPkPxulqUuZfMAxjthM2YpLm7kx+jUlQyQGnknH0DkuFLC53sugE0E
+	Ebi21YXHL/ARM4dTHKPneMl+UJ/ejlWFAbXwStLBWolBA5rCpcDpp8OGaLL204id
+	7sFBmShVo7E=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A45BA227D4;
-	Wed, 10 Dec 2014 13:04:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DBBCC22871;
+	Wed, 10 Dec 2014 13:06:52 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 31147227D3;
-	Wed, 10 Dec 2014 13:04:24 -0500 (EST)
-In-Reply-To: <43faa41d4cc98d6c40a393ec590af73ec5c94246.1418055173.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Mon, 8 Dec 2014 17:15:00 +0100
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A9852286F;
+	Wed, 10 Dec 2014 13:06:52 -0500 (EST)
+In-Reply-To: <fcf343ed359ca47d6154f0d1e1850738eb7768ac.1418055173.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 8 Dec 2014 17:15:16 +0100
 	(CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F930CEDC-8096-11E4-A5DA-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5178803A-8097-11E4-A936-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261230>
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> This problem has been detected in the wild, and is the primary reason
-> to introduce an option to demote certain fsck errors to warnings. Let's
-> offer to ignore this particular problem specifically.
-> ...
-> +	while (skip_prefix(buffer, "author ", &buffer)) {
-> +		err = report(options, &commit->object, FSCK_MSG_MULTIPLE_AUTHORS, "invalid format - multiple 'author' lines");
-> +		if (err)
-> +			return err;
+> Some kinds of errors are intrinsically unrecoverable (e.g. errors while
+> uncompressing objects). It does not make sense to allow demoting them to
+> mere warnings.
 
-If we have an option to demote this to a warning, wouldn't we want
-to do the same fsck_ident() on that secondary author line?
+Makes sense, but the patch makes it look as if this is an "oops, we
+should have done the list in patch 02/18 in this order from the
+beginning".  Can we reorder the patches?
 
-> +		/* require_end_of_header() ensured that there is a newline */
-> +		buffer = strchr(buffer, '\n') + 1;
-> +	}
->  	if (!skip_prefix(buffer, "committer ", &buffer))
->  		return report(options, &commit->object, FSCK_MSG_MISSING_COMMITTER, "invalid format - expected 'committer' line");
->  	err = fsck_ident(&buffer, &commit->object, options);
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  fsck.c                          | 8 ++++++--
+>  t/t5504-fetch-receive-strict.sh | 9 +++++++++
+>  2 files changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/fsck.c b/fsck.c
+> index c1e7a85..f8339af 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -9,6 +9,9 @@
+>  #include "refs.h"
+>  
+>  #define FOREACH_MSG_ID(FUNC) \
+> +	/* fatal errors */ \
+> +	FUNC(NUL_IN_HEADER) \
+> +	FUNC(UNTERMINATED_HEADER) \
+>  	/* errors */ \
+>  	FUNC(BAD_DATE) \
+>  	FUNC(BAD_EMAIL) \
+> @@ -39,10 +42,8 @@
+>  	FUNC(MISSING_TYPE_ENTRY) \
+>  	FUNC(MULTIPLE_AUTHORS) \
+>  	FUNC(NOT_SORTED) \
+> -	FUNC(NUL_IN_HEADER) \
+>  	FUNC(TAG_OBJECT_NOT_TAG) \
+>  	FUNC(UNKNOWN_TYPE) \
+> -	FUNC(UNTERMINATED_HEADER) \
+>  	FUNC(ZERO_PADDED_DATE) \
+>  	/* warnings */ \
+>  	FUNC(BAD_FILEMODE) \
+> @@ -56,6 +57,7 @@
+>  	FUNC(NULL_SHA1) \
+>  	FUNC(ZERO_PADDED_FILEMODE)
+>  
+> +#define FIRST_NON_FATAL_ERROR FSCK_MSG_BAD_DATE
+>  #define FIRST_WARNING FSCK_MSG_BAD_FILEMODE
+>  
+>  #define MSG_ID(x) FSCK_MSG_##x,
+> @@ -150,6 +152,8 @@ void fsck_strict_mode(struct fsck_options *options, const char *mode)
+>  		}
+>  
+>  		msg_id = parse_msg_id(mode, equal);
+> +		if (type != FSCK_ERROR && msg_id < FIRST_NON_FATAL_ERROR)
+> +			die("Cannot demote %.*s", len, mode);
+>  		options->strict_mode[msg_id] = type;
+>  		mode += len;
+>  	}
+> diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+> index db79e56..8a47db2 100755
+> --- a/t/t5504-fetch-receive-strict.sh
+> +++ b/t/t5504-fetch-receive-strict.sh
+> @@ -135,4 +135,13 @@ test_expect_success 'push with receive.fsck.missing-mail = warn' '
+>  	grep "missing-email" act
+>  '
+>  
+> +test_expect_success 'receive.fsck.unterminated-header = warn triggers error' '
+> +	rm -rf dst &&
+> +	git init dst &&
+> +	git --git-dir=dst/.git config receive.fsckobjects true &&
+> +	git --git-dir=dst/.git config receive.fsck.unterminated-header warn &&
+> +	test_must_fail git push --porcelain dst HEAD >act 2>&1 &&
+> +	grep "Cannot demote unterminated-header=warn" act
+> +'
+> +
+>  test_done
