@@ -1,159 +1,139 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] introduce git root
-Date: Wed, 10 Dec 2014 15:10:57 -0500
-Message-ID: <20141210201057.GC23273@peff.net>
-References: <xmqqd284rryz.fsf@gitster.dls.corp.google.com>
- <CAP8UFD2jES1i+6zOt1gXqTWFy1UHu2GBwAisQktd_Ymbj9Db2g@mail.gmail.com>
- <20141202070415.GC1948@peff.net>
- <xmqqd282m09j.fsf@gitster.dls.corp.google.com>
- <20141204092251.GC27455@peff.net>
- <xmqqlhmntf02.fsf@gitster.dls.corp.google.com>
- <20141204211232.GC19953@peff.net>
- <CAP8UFD2P9P9zL=irZ-7uPD6+bEhxaiABowh0O3RT01Ov3VqT6w@mail.gmail.com>
- <20141205092752.GC32112@peff.net>
- <xmqqoarcn0wm.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4] pkt-line: allow writing of LARGE_PACKET_MAX buffers
+Date: Wed, 10 Dec 2014 15:14:17 -0500
+Message-ID: <CAPig+cSx2dw7DsZgiebHqZUG7DbnQtpgxKbi2883Z42VajeAJA@mail.gmail.com>
+References: <20141209174958.GA26167@peff.net>
+	<20141209180916.GA26873@peff.net>
+	<xmqqa92wla34.fsf@gitster.dls.corp.google.com>
+	<20141210073447.GA20298@peff.net>
+	<CAPig+cQQThA7wiz8iwkKX=ipg1n5w+gyeS8NqtbjGui986Hn+g@mail.gmail.com>
+	<20141210094702.GA8917@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Arjun Sreedharan <arjun024@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>, Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 21:11:14 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 10 21:14:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XynbN-00063R-Tq
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 21:11:14 +0100
+	id 1XyneS-0007km-Hb
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 21:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757945AbaLJULE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 15:11:04 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51241 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755965AbaLJULA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 15:11:00 -0500
-Received: (qmail 25085 invoked by uid 102); 10 Dec 2014 20:11:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 14:11:00 -0600
-Received: (qmail 12489 invoked by uid 107); 10 Dec 2014 20:11:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 15:11:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 15:10:57 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqoarcn0wm.fsf@gitster.dls.corp.google.com>
+	id S932354AbaLJUOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 15:14:20 -0500
+Received: from mail-yh0-f41.google.com ([209.85.213.41]:64511 "EHLO
+	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756870AbaLJUOT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 15:14:19 -0500
+Received: by mail-yh0-f41.google.com with SMTP id a41so1653548yho.14
+        for <git@vger.kernel.org>; Wed, 10 Dec 2014 12:14:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=XLi4/BtSjMVy7IgddEoeIWuB0wtp8QBomccJGiSJlBw=;
+        b=Sa0KuzPBteIxImqhyJjM4yb3bj8QIpOIb9J6T/jqacqyj23m7oc09l4UKufbe2QA+i
+         vU8FEBmCoBD4BTQRcz8elGHyxroPVyASgfMQdzDj8i0n/+A1yKPMqCf07V7v0fCeA8NA
+         vEt4iZFInWhT5/h1RI71Gnfvj5sRMxlRAkGflzuWz5Ramy1bhh19TTfz/LgQltPZwpYy
+         OXsnTZWmnaqgwb4JGYBXvQyq3Qk/71f5P0Nyh5UuxYpOl03xe+HXJ4Gr/CA8VJr9owpJ
+         FWfZ6tca1Sx2fokPXI51D6WKAq4lZ/tKqEfhXzEec6RCVqWF2eS2imtNDaRV2VoON1iy
+         4VrQ==
+X-Received: by 10.236.206.74 with SMTP id k50mr4925572yho.180.1418242458202;
+ Wed, 10 Dec 2014 12:14:18 -0800 (PST)
+Received: by 10.170.79.215 with HTTP; Wed, 10 Dec 2014 12:14:17 -0800 (PST)
+In-Reply-To: <20141210094702.GA8917@peff.net>
+X-Google-Sender-Auth: W4rKUp1XEs_ucvR9N98rffThyWo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261245>
 
-On Tue, Dec 09, 2014 at 10:17:13AM -0800, Junio C Hamano wrote:
+On Wed, Dec 10, 2014 at 4:47 AM, Jeff King <peff@peff.net> wrote:
+> Subject: pkt-line: allow writing of LARGE_PACKET_MAX buffers
+>
+> When we send out pkt-lines with refnames, we use a static
+> 1000-byte buffer. This means that the maximum size of a ref
+> over the git protocol is around 950 bytes (the exact size
+> depends on the protocol line being written, but figure on a sha1
+> plus some boilerplate).
+>
+> This is enough for any sane workflow, but occasionally odd
+> things happen (e.g., a bug may create a ref "foo/foo/foo/..."
+> accidentally).  With the current code, you cannot even use
+> "push" to delete such a ref from a remote.
+>
+> Let's switch to using a strbuf, with a hard-limit of
+> LARGE_PACKET_MAX (which is specified by the protocol).  This
+> matches the size of the readers, as of 74543a0 (pkt-line:
+> provide a LARGE_PACKET_MAX static buffer, 2013-02-20).
+> Versions of git older than that will complain about our
+> large packets, but it's really no worse than the current
+> behavior. Right now the sender barfs with "impossibly long
+> line" trying to send the packet, and afterwards the reader
+> will barf with "protocol error: bad line length %d", which
+> is arguably better anyway.
+>
+> Note that we're not really _solving_ the problem here, but
+> just bumping the limits. In theory, the length of a ref is
+> unbounded, and pkt-line can only represent sizes up to
+> 65531 bytes. So we are just bumping the limit, not removing
+> it.  But hopefully 64K should be enough for anyone.
+>
+> As a bonus, by using a strbuf for the formatting we can
+> eliminate an unnecessary copy in format_buf_write.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/t/t5527-fetch-odd-refs.sh b/t/t5527-fetch-odd-refs.sh
+> index edea9f9..85bcb2e 100755
+> --- a/t/t5527-fetch-odd-refs.sh
+> +++ b/t/t5527-fetch-odd-refs.sh
+> @@ -26,4 +26,37 @@ test_expect_success 'suffix ref is ignored during fetch' '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success 'try to create repo with absurdly long refname' '
+> +       ref240=$_z40/$_z40/$_z40/$_z40/$_z40/$_z40
 
-> It is a tangent, the current definition of "git_editor" helper reads
-> like this:
-> 
->         git_editor() {
->                 if test -z "${GIT_EDITOR:+set}"
->                 then
->                         GIT_EDITOR="$(git var GIT_EDITOR)" || return $?
->                 fi
-> 
->                 eval "$GIT_EDITOR" '"$@"'
->         }
-> 
-> If "git var editor" were to compute a reasonable value from the
-> various user settings, and because GIT_EDITOR is among the sources
-> of user settings, I wonder if the surrounding "if test -z then...fi"
-> should be there.
+Maybe you want to keep the &&-chain intact here?
 
-I think it should not be. The point of "git var" is to say "compute for
-me what the internal C code would compute". I think it happens to be a
-noop in this case, because the C code will give GIT_EDITOR preference
-over anything else. But it seems like a layering violation; the shell
-scripts should not have to know or care about the existence $GIT_EDITOR.
-
-> The pager side seems to do (halfway) "the right thing":
-> 
->         git_pager() {
->                 if test -t 1
->                 then
->                         GIT_PAGER=$(git var GIT_PAGER)
->                 else
->                         GIT_PAGER=cat
->                 fi
->                 : ${LESS=-FRX}
->                 : ${LV=-c}
->                 export LESS LV
-> 
->                 eval "$GIT_PAGER" '"$@"'
->         }
-> 
-> The initial "test -t 1" is "we do not page to non-terminal", but we
-> ask "git var" to take care of PAGER/GIT_PAGER fallback/precedence.
-> 
-> It is tempting to argue that "we do not page to non-terminal" should
-> also be part of "various user settings" for "git var" to take into
-> account and fold this "if test -t 1...then...else...fi" also into
-> "git var", but because a typical command line "git var" will be used
-> on would look like this:
-> 
-> 	GIT_PAGER=$(git var pager)
->         eval "$GIT_PAGER" ...
-> 
-> with the standard output stream of "git var" not connected to
-> terminal, that would not fly very well, and I am not sure what
-> should be done about it.
-
-Right, I think in an ideal world the "is it a terminal" context is
-handled by "git var", but the reality of shell scripts makes it hard. We
-face the same problem with "git config --get-colorbool". There we cheat
-a little and use the exit code to signal the result. That works for a
-bool, but not for a string. :)
-
-I think you'd have to do something a little gross like:
-
-  pager=$(git var GIT_PAGER >&3) 3>&1
-
-Except that doesn't work; the shell does not take redirections for a
-straight variable assignment. Something like:
-
-  # git var uses fd 3 by convention for stdout-tty tests
-  exec 3>&1
-
-at the top of git-sh-setup, and then:
-
-  pager=$(git var GIT_PAGER >&3)
-
-in the scripts themselves. That works, but is a bit ugly.
-
-> This is another tangent that comes back to the original "how to name
-> them?" question, but I wonder if a convention like this would work.
-> 
->  * When asking for a feature (e.g. "what editor to use"), if there
->    is a git-specific environment variable that can be set to
->    override all other settings (e.g. "$GIT_EDITOR" trumps "$EDITOR"
->    environment or "core.editor" configuration), "git var" can be
->    queried with the name of that "strong" environment variable.
-
-I'd prefer to create a new namespace. When you set $GIT_EDITOR as a
-"trump" variable, then that is leaking information about the computation
-from "git var" out to the caller. What happens if the computation
-changes so that $GIT_EDITOR is no longer the last word?
-
->  * All other features without such a strong environment variables
->    should not be spelled as if there is such an environment variable
->    the user can set in order to avoid confusion.
-
-So now you have two classes of variables. Some that look like
-environment variables, and some that do not. What does it buy you for
-the ones that do look like environment variables? I feel like either way
-you will still use them as:
-
-  editor=$(git var editor)
-  eval "$editor" "$@"
-
-Does it matter whether you call it $editor or $GIT_EDITOR?
-
--Peff
+> +       ref1440=$ref240/$ref240/$ref240/$ref240/$ref240/$ref240 &&
+> +       git init long &&
+> +       (
+> +               cd long &&
+> +               test_commit long &&
+> +               test_commit master
+> +       ) &&
+> +       if git -C long update-ref refs/heads/$ref1440 long; then
+> +               test_set_prereq LONG_REF
+> +       else
+> +               echo >&2 "long refs not supported"
+> +       fi
+> +'
+> +
+> +test_expect_success LONG_REF 'fetch handles extremely long refname' '
+> +       git fetch long refs/heads/*:refs/remotes/long/* &&
+> +       cat >expect <<-\EOF &&
+> +       long
+> +       master
+> +       EOF
+> +       git for-each-ref --format="%(subject)" refs/remotes/long >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success LONG_REF 'push handles extremely long refname' '
+> +       git push long :refs/heads/$ref1440 &&
+> +       git -C long for-each-ref --format="%(subject)" refs/heads >actual &&
+> +       echo master >expect &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
+> --
+> 2.2.0.454.g7eca6b7
+>
