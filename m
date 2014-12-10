@@ -1,125 +1,129 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 3/4] attr: do not attempt to expand when we know it's not a macro
-Date: Tue, 09 Dec 2014 15:56:04 -0800
-Message-ID: <xmqqwq60js2z.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH/RFC 4/4] attr: avoid heavy work when we know the specified attr is not defined
+Date: Tue, 09 Dec 2014 16:18:57 -0800
+Message-ID: <xmqqsigojr0u.fsf@gitster.dls.corp.google.com>
 References: <1418133205-18213-1-git-send-email-pclouds@gmail.com>
-	<1418133205-18213-4-git-send-email-pclouds@gmail.com>
+	<1418133205-18213-5-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 00:56:14 2014
+X-From: git-owner@vger.kernel.org Wed Dec 10 01:19:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyUdZ-0004c0-BG
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 00:56:13 +0100
+	id 1XyUzh-0005PC-S6
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 01:19:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751587AbaLIX4I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2014 18:56:08 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59145 "EHLO
+	id S1752133AbaLJATA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2014 19:19:00 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62508 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751321AbaLIX4H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2014 18:56:07 -0500
+	with ESMTP id S1751587AbaLJATA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2014 19:19:00 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B5E825A6E;
-	Tue,  9 Dec 2014 18:56:06 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E3A425FFD;
+	Tue,  9 Dec 2014 19:18:59 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=dnt756hEoLN7
-	Rt99DCldOWzEC0k=; b=KLqmss1VaZYti72mdGtiBUb+/sE5bjSFHfNMemRfZ9eK
-	erxNaVD2bcmBeH/du46il3sWA2GoZ9Ps+gJUKHZHMpyCqO/wvC0huihU6dIwTXRI
-	FRh0t9UK55bsmkUSV/hiul0rNSJi7QGqmiJrDfNf6bMuu8CPrxlu2eKqPP3FBrE=
+	:content-type:content-transfer-encoding; s=sasl; bh=0NLqLAdlItUh
+	85GFg9SKRF8PXaw=; b=NE+eWe7X9X6AXOqgg3LQRaNDvOtIjDTLqhdXmkKM+GbX
+	Qh6tW2idJaposJuiyUgKrDvlZdRtgLrif1GZEHbuccxrD2ObH1FFGkBGygdthyhR
+	Jk2XdTh7lid4ygMlKo8uPa7yDvCtQnKYwT3UmkOuorEd368VG0NEFmqqxsVkVIQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YWpSDZ
-	W2gx4kmoRkQl6U7qp0z+jlf/V+OSMVhsFl0QQ+k2h2zgossKBE5r1Gfd2WDwsqgQ
-	Mqt9EepUYN3U/2Gg6h2CEBjWZblQnnL8+N16ZVdbS2q+/wlzx5PggzsJBeToop+F
-	0g8qSRgZQdc/9AHlYC5ibLPKe02UjhQae1fnM=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=f2QkWe
+	89xVhD4p1i5Qtx4Thk3xCEvVM8FOiF+we218MLfT5zig1ekKCAA+5SFde4p/5P9k
+	7zHfy0xHP8Tsyi2336YbkKBeqXWgYY3P2ORxxTSgZW+VEEwrWGMY56+3KPHgRiHu
+	m88y6UBRhzc1/oy0AGYmrunxaXl9z4MXJbjC8=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F2BF425A6D;
-	Tue,  9 Dec 2014 18:56:05 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0501225FFC;
+	Tue,  9 Dec 2014 19:18:59 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 738B225A6C;
-	Tue,  9 Dec 2014 18:56:05 -0500 (EST)
-In-Reply-To: <1418133205-18213-4-git-send-email-pclouds@gmail.com>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81B8F25FFB;
+	Tue,  9 Dec 2014 19:18:58 -0500 (EST)
+In-Reply-To: <1418133205-18213-5-git-send-email-pclouds@gmail.com>
  (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 9 Dec
- 2014 20:53:24 +0700")
+ 2014 20:53:25 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F01E36CE-7FFE-11E4-88BE-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 22851B5C-8002-11E4-B117-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261181>
 
 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Keep track of all recognized macros in the new "maybe_macro" field.
-> This this field is true, it _may_ be a macro (depending on what's in
-> the current attr stack). But if the field is false, it's definitely
-> not a macro, no need to go through the whole attr stack in
-> macroexpand_one() to search for one.
->
-> Without this, "git grep abcdefghi" on git.git hits the inner loop in
-> macroexpand_one() about 2500 times. With this, it's about 60 times.
+> +static void collect_selected_attrs(const char *path, int num,
+> +				   struct git_attr_check *check)
+> +{
+> +	struct attr_stack *stk;
+> +	int i, pathlen, rem, dirlen;
+> +	int basename_offset;
+> +
+> +	pathlen =3D split_path(path, &dirlen, &basename_offset);
+> +	prepare_attr_stack(path, dirlen);
+> +	if (cannot_trust_maybe_real) {
+> +		for (i =3D 0; i < git_attr_nr; i++)
+> +			check_all_attr[i].value =3D ATTR__UNKNOWN;
 
-Nice ;-)
+Judging from the fact that
 
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  attr.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/attr.c b/attr.c
-> index def09c7..4ec6186 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -32,6 +32,7 @@ struct git_attr {
->  	struct git_attr *next;
->  	unsigned h;
->  	int attr_nr;
-> +	int maybe_macro;
->  	char name[FLEX_ARRAY];
->  };
->  static int git_attr_nr;
-> @@ -95,6 +96,7 @@ static struct git_attr *git_attr_internal(const cha=
-r *name, int len)
->  	a->h =3D hval;
->  	a->next =3D git_attr_hash[pos];
->  	a->attr_nr =3D git_attr_nr++;
-> +	a->maybe_macro =3D 0;
->  	git_attr_hash[pos] =3D a;
-> =20
->  	REALLOC_ARRAY(check_all_attr, git_attr_nr);
-> @@ -244,9 +246,10 @@ static struct match_attr *parse_attr_line(const =
-char *line, const char *src,
->  		      sizeof(*res) +
->  		      sizeof(struct attr_state) * num_attr +
->  		      (is_macro ? 0 : namelen + 1));
-> -	if (is_macro)
-> +	if (is_macro) {
->  		res->u.attr =3D git_attr_internal(name, namelen);
-> -	else {
-> +		res->u.attr->maybe_macro =3D 1;
+ (1) the only caller calls this function in this fashion based on the
+     setting of "cannot-trust" bit,
+
+ (2) this and the other function the only caller calls share the
+     same code in their beginning part, and
+
+ (3) the body of the if() statement here duplicates the code from
+     collect_all_attrs(),
+
+I smell that a much better split is possible.
+
+Why isn't this all inside a single function collect_all_attrs()?
+That single function may no longer be collect_ALL_attrs, so renaming
+it to collect_attrs() is fine, but then that function may have this
+if () to initialize all of them to ATTR__UNKNOWN or do the else part
+we see below, and when organized that way we do not need to have
+duplicated code (or split_path() helper function), no?
+
 > +	} else {
->  		char *p =3D (char *)&(res->state[num_attr]);
->  		memcpy(p, name, namelen);
->  		res->u.pat.pattern =3D p;
-> @@ -687,7 +690,8 @@ static int macroexpand_one(int attr_nr, int rem)
->  	struct match_attr *a =3D NULL;
+> +		rem =3D num;
+> +		for (i =3D 0; i < num; i++) {
+> +			struct git_attr_check *c;
+> +			c =3D check_all_attr + check[i].attr->attr_nr;
+> +			if (check[i].attr->maybe_real)
+> +				c->value =3D ATTR__UNKNOWN;
+> +			else {
+> +				c->value =3D ATTR__UNSET;
+> +				rem--;
+> +			}
+> +		}
+> +		if (!rem)
+> +			return;
+> +	}
+> +	rem =3D git_attr_nr;
+> +	for (stk =3D attr_stack; 0 < rem && stk; stk =3D stk->prev)
+> +		rem =3D fill(path, pathlen, basename_offset, stk, rem);
+> +}
+> +
+>  int git_check_attr(const char *path, int num, struct git_attr_check =
+*check)
+>  {
 >  	int i;
 > =20
-> -	if (check_all_attr[attr_nr].value !=3D ATTR__TRUE)
-> +	if (check_all_attr[attr_nr].value !=3D ATTR__TRUE ||
-> +	    !check_all_attr[attr_nr].attr->maybe_macro)
->  		return rem;
+> -	collect_all_attrs(path);
+> +	if (cannot_trust_maybe_real)
+> +		collect_all_attrs(path);
+> +	else
+> +		collect_selected_attrs(path, num, check);
 > =20
->  	for (stk =3D attr_stack; !a && stk; stk =3D stk->prev)
+>  	for (i =3D 0; i < num; i++) {
+>  		const char *value =3D check_all_attr[check[i].attr->attr_nr].value=
+;
