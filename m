@@ -1,135 +1,128 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git commit amend empty emails
-Date: Wed, 10 Dec 2014 10:39:53 -0500
-Message-ID: <20141210153952.GA14910@peff.net>
-References: <548847EF.7080805@gmail.com>
+Subject: [PATCH 1/2] commit: loosen ident checks when generating template
+Date: Wed, 10 Dec 2014 10:42:10 -0500
+Message-ID: <20141210154209.GA20771@peff.net>
+References: <20141210153952.GA14910@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Simon <simonzack@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 16:40:02 2014
+X-From: git-owner@vger.kernel.org Wed Dec 10 16:42:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyjMu-00087l-20
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 16:40:00 +0100
+	id 1XyjP6-0000s0-IO
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 16:42:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757703AbaLJPj4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Dec 2014 10:39:56 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51092 "HELO cloud.peff.net"
+	id S1757786AbaLJPmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 10:42:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51098 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756341AbaLJPjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 10:39:55 -0500
-Received: (qmail 10569 invoked by uid 102); 10 Dec 2014 15:39:55 -0000
+	id S1757060AbaLJPmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 10:42:12 -0500
+Received: (qmail 10697 invoked by uid 102); 10 Dec 2014 15:42:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 09:39:55 -0600
-Received: (qmail 10313 invoked by uid 107); 10 Dec 2014 15:39:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 09:42:12 -0600
+Received: (qmail 10345 invoked by uid 107); 10 Dec 2014 15:42:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 10:39:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 10:39:53 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Dec 2014 10:42:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2014 10:42:10 -0500
 Content-Disposition: inline
-In-Reply-To: <548847EF.7080805@gmail.com>
+In-Reply-To: <20141210153952.GA14910@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261218>
 
-On Thu, Dec 11, 2014 at 12:17:35AM +1100, Simon wrote:
+When we generate the commit-message template, we try to
+report an author or committer ident that will be of interest
+to the user: an author that does not match the committer, or
+a committer that was auto-configured.
 
-> Git is having empty email problems I think, I'm on git v2.1.3.
->=20
-> Steps to reproduce:
->=20
->     $ git init
->     Initialized empty Git repository in /tmp/test_git/.git/
->     $ echo 'test' > abc
->     $ git add --all 1 =E2=86=B5
->     $ git commit --message 'test'
->     [master (root-commit) 3cc2793] test
->      1 file changed, 1 insertion(+)
->      create mode 100644 abc
->     $ echo 'test2' > abc
->     $ git commit --amend
->     fatal: Malformed ident string: 'admin <> 1418217345 +0000'
+When doing so, if we encounter what we consider to be a
+bogus ident, we immediately die. This is a bad idea, because
+our use of the idents here is purely informational.  Any
+ident rules should be enforced elsewhere, because commits
+that do not invoke the editor will not even hit this code
+path (e.g., "git commit -mfoo" would work, but "git commit"
+would not). So at best, we are redundant with other checks,
+and at worse, we actively prevent commits that should
+otherwise be allowed.
 
-Yes, this looks like a regression in v2.1.0, due to my 4701026 (commit:
-use split_ident_line to compare author/committer, 2014-05-01).  That
-commit added a call to sane_ident_split() when preparing the commit
-message template, which is what is causing the error you see (and why
-your first commit succeeds, but the latter fails).
+We should therefore do the minimal parsing we can to get a
+value and not do any validation (i.e., drop the call to
+sane_ident_split()).
 
-The absolute simplest fix would be to remove the sane_ident_split call.
-Though I have a different patch prepared, which argues that we should
-not be doing any validation in this code path at all (see below).
+In theory we could notice when even our minimal parsing
+fails to work, and do the sane thing for each check (e.g.,
+if we have an author but can't parse the committer, assume
+they are different and print the author). But we can
+actually simplify this even further.
 
-However, there's something else going on. I am surprised that we allow
-empty emails at all and the code here is quite strange. The first check
-on the ident format is when we feed the data to fmt_ident to generate
-the string that goes into the commit object.  We disallow empty _names_
-there, but not empty _emails_.  I'm not sure if this is an oversight, o=
-r
-an intentional historic compatibility thing.
+We know that the author and committer strings we are parsing
+have been generated by us earlier in the program, and
+therefore they must be parseable. We could just call
+split_ident_line without even checking its return value,
+knowing that it will put _something_ in the name/mail
+fields. Of course, to protect ourselves against future
+changes to the code, it makes sense to turn this into an
+assert, so we are not surprised if our assumption fails.
 
-And then it gets weirder. We take the output of fmt_ident, and then fee=
-d
-that back into split_ident_line, so that we can set the GIT_AUTHOR_*
-variables in the environment. And that does its _own_ set of checks, vi=
-a
-sane_ident_split.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/commit.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-Once upon a time, it relied only on split_ident_lane to report problems=
-=2E
-But Junio's e27ddb6 (split_ident_line(): make best effort when parsing
-author/committer line, 2012-08-31) made split_ident_line more lenient,
-and introduced sane_ident_split to cover the difference. Except that it
-did more than that: besides checking whether the name is empty (which
-the original split_ident_line used to do), it also complains if the
-email is empty (which is new in that commit).
-
-So we now notice the empty email in this code path, but the only thing
-we do is avoid writing out the environment variables and continue. Whic=
-h
-means that the actual string generated by fmt_ident (complete with empt=
-y
-email) is what goes into the commit. So why are we setting the
-environment variables at all?
-
-It looks like they are for the benefit of hooks, as evidenced by 7dfe8a=
-d
-(commit: pass author/committer info to hooks, 2012-03-11). So that mean=
-s
-that we are sometimes passing totally bogus data to hooks (i.e., an
-ident is good enough to make it into a commit message, but
-sane_ident_split prevents us from putting the data into the
-environment).
-
-So I think e27ddb6 was a little over-anxious in adding the email
-validation, but nobody noticed because those checks don't actually
-affect whether or not we commit. Hooks might see bogus data, but it is
-in such a rare set of cases that nobody has noticed.
-
-Here are two patches to improve this. These are on top of the
-jk/commit-date-approxidate topic, as that is where the regression was
-introduced.
-
-The first one fixes the regression and can stand by itself. The second
-fixes the GIT_AUTHOR problem, but AFAIK that has been there for years.
-So it is not as urgent, but is still maint-worthy, in my opinion.
-
-  [1/2]: commit: loosen ident checks when generating template
-  [2/2]: commit: always populate GIT_AUTHOR_* variables
-
-If we did want to truly disallow empty emails, we could do a follow-on
-3/2 that teaches fmt_ident to reject them (that is the right place
-because it is where the validation checks for the author go, and also
-because we would probably want the same validation for the committer).
-
-But I do not think we should do that lightly. It has been this way for
-years, and clearly at least one person is depending on it. If we're
-going to change it, we might want a warning/deprecation period.
-
--Peff
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d1c90db..2be5506 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -502,6 +502,12 @@ static int is_a_merge(const struct commit *current_head)
+ 	return !!(current_head->parents && current_head->parents->next);
+ }
+ 
++static void assert_split_ident(struct ident_split *id, const struct strbuf *buf)
++{
++	if (split_ident_line(id, buf->buf, buf->len))
++		die("BUG: unable to parse our own ident: %s", buf->buf);
++}
++
+ static void export_one(const char *var, const char *s, const char *e, int hack)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -608,13 +614,6 @@ static void determine_author_info(struct strbuf *author_ident)
+ 	}
+ }
+ 
+-static void split_ident_or_die(struct ident_split *id, const struct strbuf *buf)
+-{
+-	if (split_ident_line(id, buf->buf, buf->len) ||
+-	    !sane_ident_split(id))
+-		die(_("Malformed ident string: '%s'"), buf->buf);
+-}
+-
+ static int author_date_is_interesting(void)
+ {
+ 	return author_message || force_date;
+@@ -822,8 +821,14 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			status_printf_ln(s, GIT_COLOR_NORMAL,
+ 					"%s", only_include_assumed);
+ 
+-		split_ident_or_die(&ai, author_ident);
+-		split_ident_or_die(&ci, &committer_ident);
++		/*
++		 * These should never fail because we they come from our own
++		 * fmt_ident. They may fail the sane_ident test, but we know
++		 * that the name and mail pointers will at least be valid,
++		 * which is enough for our tests and printing here.
++		 */
++		assert_split_ident(&ai, author_ident);
++		assert_split_ident(&ci, &committer_ident);
+ 
+ 		if (ident_cmp(&ai, &ci))
+ 			status_printf_ln(s, GIT_COLOR_NORMAL,
+-- 
+2.2.0.454.g7eca6b7
