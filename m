@@ -1,91 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] document string_list_clear
-Date: Wed, 10 Dec 2014 14:28:03 -0800
-Message-ID: <xmqqlhmff8cs.fsf@gitster.dls.corp.google.com>
-References: <1417830678-16115-1-git-send-email-sbeller@google.com>
-	<20141206020458.GR16345@google.com>
-	<xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
-	<20141209201713.GY16345@google.com> <20141209202738.GC12001@peff.net>
-	<20141209222337.GA16345@google.com> <20141210084351.GA29776@peff.net>
-	<5488A87C.4030505@alum.mit.edu> <20141210215154.GF16345@google.com>
+Date: Wed, 10 Dec 2014 14:37:21 -0800
+Message-ID: <20141210223721.GG16345@google.com>
+References: <20141206020458.GR16345@google.com>
+ <xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
+ <20141209201713.GY16345@google.com>
+ <20141209202738.GC12001@peff.net>
+ <20141209222337.GA16345@google.com>
+ <20141210084351.GA29776@peff.net>
+ <5488A87C.4030505@alum.mit.edu>
+ <20141210215154.GF16345@google.com>
+ <xmqqlhmff8cs.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
 	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 23:28:17 2014
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 23:37:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xypjw-0003bv-Vk
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 23:28:13 +0100
+	id 1Xypsv-0000ts-T8
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Dec 2014 23:37:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758207AbaLJW2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2014 17:28:08 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61001 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750744AbaLJW2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2014 17:28:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 76F5B24A3C;
-	Wed, 10 Dec 2014 17:28:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=St6TH86Hy0mAEDMEIaoC91MSurw=; b=TLb6ur
-	p655x6LXCfH2GI7W6Rq9J7Mly5jXvb6scw/1pgqzxr3byrF8fU/mrUrOsBCl1arL
-	yoPGQLDpuWbOio8yPxZjldWUC5BJ9dnw7+vhQr/roKeWkDPVnc5B50UaA3jhvUiG
-	iTCNpdB43JOy8eeZlm6stxX7LjGQ0XgCW3t28=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jwYQKqDHxZlh+8tLpJI2GMpblHFL0aT5
-	M+VUm4w5nmtksqSztkV6N4fHKn8XoRb8vHUDWJfhcLHWPYnkIUXhI75LTWTZLANo
-	b4X6u+pUlcwo1KlmiavZAnY3Fe7Q5k2MZTWhO1mDAsNJnZvF7/FEyL4FWZwBPI3y
-	fdZGtzZVZRo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A17724A3B;
-	Wed, 10 Dec 2014 17:28:06 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDFB624A37;
-	Wed, 10 Dec 2014 17:28:05 -0500 (EST)
-In-Reply-To: <20141210215154.GF16345@google.com> (Jonathan Nieder's message of
-	"Wed, 10 Dec 2014 13:51:54 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CFAA5734-80BB-11E4-A7B5-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933135AbaLJWhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2014 17:37:25 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:42019 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932724AbaLJWhY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2014 17:37:24 -0500
+Received: by mail-ie0-f180.google.com with SMTP id rp18so3561692iec.25
+        for <git@vger.kernel.org>; Wed, 10 Dec 2014 14:37:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=9xJuF5fSq+XPnWJmxLnRZF/iJ/koRBogaLotlwA8tD8=;
+        b=rxjGcSBdGPXvjtBQOlyd1zuOteY4o/WPJkJLfGRiGQ/vPGjr4w8VPGj9xI85B40gg+
+         mwCmA0D+eHyFO3zzMnAHuP5P4NFutBEPNP9tYO+zlPtIikPDhY3xw0D9exx0/G+EjZP4
+         tbXWxr4c1p7ds0PqXybfmCwbIXSIG5ZAEL/qKhAdFhxx5EWULIy2gvcenKVlX4KhZhGh
+         Pgst6EkYcog7/3p+vlg5DUpWLYjiwn3rs9QOHCPHZAzdMwpIkbgqm5m11golnBrSuuOe
+         WE0FaqbBjlzxUHhXAI7peHFmSOZCq9MCMkOgZrqUybL3EkdDmPMEErZdNlU/ZVHosEyS
+         l7Ig==
+X-Received: by 10.42.68.203 with SMTP id y11mr8883058ici.62.1418251044143;
+        Wed, 10 Dec 2014 14:37:24 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:ad0e:8148:e84b:d170])
+        by mx.google.com with ESMTPSA id t15sm2991235ioi.21.2014.12.10.14.37.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 10 Dec 2014 14:37:23 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqlhmff8cs.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261252>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> Michael Haggerty wrote:
 
-> Michael Haggerty wrote:
+>>>                              I would find it a pity for that work to be
+>>> squashed into Documentation/technical/api-*.txt, where in my opinion it
+>>> is less discoverable and more likely to fall into disrepair.
+>>
+>> I think we're in violent agreement and keep repeating ourselves.
 >
->>                              I would find it a pity for that work to be
->> squashed into Documentation/technical/api-*.txt, where in my opinion it
->> is less discoverable and more likely to fall into disrepair.
+> Hmph, I am confused.
 >
-> I think we're in violent agreement and keep repeating ourselves.
+> I somehow had an impression that the "move to doc and remove from
+> header" patch was to illustrate how unpleasant the result will be as
+> a whole (i.e. results in a nice documentation as a starting point,
+> but we can see that it will be hard to motivate and help people to
+> keep it up to date during further development).  Which would suggest
+> that you are in favor of moving the other way around, to keep the
+> header rich with documentation only at the higher level.  Am I
+> reading you correctly?
 
-Hmph, I am confused.
+Sorry, I think I was unclear.
 
-I somehow had an impression that the "move to doc and remove from
-header" patch was to illustrate how unpleasant the result will be as
-a whole (i.e. results in a nice documentation as a starting point,
-but we can see that it will be hard to motivate and help people to
-keep it up to date during further development).  Which would suggest
-that you are in favor of moving the other way around, to keep the
-header rich with documentation only at the higher level.  Am I
-reading you correctly?
+Some possibilities, in order of my preference (earlier items are better):
 
-> All I said is that api-strbuf.txt is currently the most readable
-> documentation of the strbuf API I can find.  The patch to move the
-> text to strbuf.h looked rough and incomplete.  Therefore I don't think
-> it's ready to be applied as is.  If you'd like more details about why
-> I say that, feel free to ask.
+ 1. Move documentation to header and provide a program to generate a nice
+    standalone document.
+
+ 2. Move documentation to header, being careful enough that the header
+    sort of works as a standalone document.
+
+ 3. Move documentation to Documentation/technical/ and keep the header
+    bare-bones.
+
+ 4. Status quo (comprehensive documentation for some functions in both
+    places, for others in only one place, no reliable way for someone
+    to find the information they need in one place).
+
+Since (3) is better than (4), I wrote simple patches to do that for
+strbuf.h and string-list.h.  I meant them in earnest --- I hope they
+get applied.
+
+I think peff was working on (2), which is an admirable goal.  The
+patch seemed to be incomplete.
+
+Thanks,
+Jonathan
