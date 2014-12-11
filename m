@@ -1,62 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Interested in helping open source friends on HP-UX?
-Date: Wed, 10 Dec 2014 23:46:25 -0800
-Message-ID: <xmqq4mt2fx2m.fsf@gitster.dls.corp.google.com>
-Reply-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+From: Christian Hesse <mail@eworm.de>
+Subject: [PATCH 1/1] skip RFC1991 tests with gnupg 2.1.x
+Date: Thu, 11 Dec 2014 10:30:34 +0100
+Message-ID: <1418290234-21516-1-git-send-email-mail@eworm.de>
+Cc: Christian Hesse <mail@eworm.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 11 08:46:33 2014
+X-From: git-owner@vger.kernel.org Thu Dec 11 10:37:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyySG-0004eL-Qm
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 08:46:33 +0100
+	id 1Xz0BT-0000Nx-F9
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 10:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933961AbaLKHq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2014 02:46:29 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51952 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933943AbaLKHq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2014 02:46:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B0FD1D596;
-	Thu, 11 Dec 2014 02:46:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:reply-to:date:message-id:mime-version:content-type; s=
-	sasl; bh=6xUrCebrHycxw2t/4EY7LkYL5PM=; b=j09lGBCwC0iHYW5b7qGZx6p
-	U+AjS6FA7b4c1bPNbq+xhqeQ/rdsP8jwThXU08b52YVwO6eYLluYB1II/0dMhLob
-	O2bmchn4nOLFUSLxjOaDxemiTkkzS60+enslzohwDOBvs8xHgKfuepvSd/554RPn
-	Jxhp80C9b5RYNt16sbjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:reply-to:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=uyDG63vFr6gpYXMI0jOPfntjRqwP9ciEe6avX/Zzsh7QCTuMx
-	AIvXWSEcmJQ2e9qWBZZS11FLeSPaww76By7mNh/pvEQD7XUp8U3ZF5gKIYkICP+o
-	MgYk6jxPFyaSHKI/uc9ND2pV+e732yJBMwDmGv4Qv/Qi/PybdZbA37axmI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51B071D594;
-	Thu, 11 Dec 2014 02:46:27 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S932839AbaLKJhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 04:37:14 -0500
+Received: from mx.mylinuxtime.de ([148.251.109.235]:60907 "EHLO
+	mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932272AbaLKJhL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 04:37:11 -0500
+X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Dec 2014 04:37:11 EST
+Received: from leda.eworm.de (unknown [10.10.1.2])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4A651D593;
-	Thu, 11 Dec 2014 02:46:26 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CFC2EE40-8109-11E4-8801-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	by mx.mylinuxtime.de (Postfix) with ESMTPSA id D1A5124255;
+	Thu, 11 Dec 2014 10:30:46 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.9.2 mx.mylinuxtime.de D1A5124255
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
+	t=1418290246; bh=eedEWdv2hJUijUuPSCQ8OBYSnsXvHcBff3iN6UwphzQ=;
+	h=From:To:Cc:Subject:Date;
+	b=VpB3u1fRXceZUYdaMVlGIGLGBtz2G2MPV1JPrFZdfIEJquB4MsHh5GLRXWGwKCH1y
+	 Q8dpv3ujHjWDtGCAHPsDQwEu9hjYa1q+z0C3lTpTLRU2t+GCAYKY+RzOcm+to4nFVG
+	 WGe5DJoScqMlbPtkjrL0I69lrnSfFz7+cTO1oaMQ=
+Received: by leda.eworm.de (Postfix, from userid 1000)
+	id A372D10345B; Thu, 11 Dec 2014 10:30:41 +0100 (CET)
+X-Mailer: git-send-email 2.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261273>
 
-Hello, all.
+---
+ t/lib-gpg.sh   |  6 ++++++
+ t/t7004-tag.sh | 14 +++++++-------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
-H. Merijn Brand runs a few HP-UX boxes to help perl5 and other open
-source communities, wants help porting more recent Git on these
-boxes, running HP-UX 10.20, 11.00, and 11.23, and looking for a
-volunteer.  Please contact him directly if you are interested.
-
-Thanks.
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index cd2baef..05b07c6 100755
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -22,6 +22,12 @@ else
+ 		GNUPGHOME="$(pwd)/gpghome"
+ 		export GNUPGHOME
+ 		test_set_prereq GPG
++		case "$gpg_version" in
++		'gpg (GnuPG) 2.1.'*)
++			say "Your version of gpg (2.1.x) is missing some legacy features"
++			test_set_prereq GNUPG21
++			;;
++		esac
+ 		;;
+ 	esac
+ fi
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 796e9f7..1c40967 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1081,7 +1081,7 @@ test_expect_success GPG \
+ get_tag_header rfc1991-signed-tag $commit commit $time >expect
+ echo "RFC1991 signed tag" >>expect
+ echo '-----BEGIN PGP MESSAGE-----' >>expect
+-test_expect_success GPG \
++test_expect_success GPG,!GNUPG21 \
+ 	'creating a signed tag with rfc1991' '
+ 	echo "rfc1991" >gpghome/gpg.conf &&
+ 	git tag -s -m "RFC1991 signed tag" rfc1991-signed-tag $commit &&
+@@ -1095,7 +1095,7 @@ cp "$1" actual
+ EOF
+ chmod +x fakeeditor
+ 
+-test_expect_success GPG \
++test_expect_success GPG,!GNUPG21 \
+ 	'reediting a signed tag body omits signature' '
+ 	echo "rfc1991" >gpghome/gpg.conf &&
+ 	echo "RFC1991 signed tag" >expect &&
+@@ -1103,13 +1103,13 @@ test_expect_success GPG \
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success GPG \
++test_expect_success GPG,!GNUPG21 \
+ 	'verifying rfc1991 signature' '
+ 	echo "rfc1991" >gpghome/gpg.conf &&
+ 	git tag -v rfc1991-signed-tag
+ '
+ 
+-test_expect_success GPG \
++test_expect_success GPG,!GNUPG21 \
+ 	'list tag with rfc1991 signature' '
+ 	echo "rfc1991" >gpghome/gpg.conf &&
+ 	echo "rfc1991-signed-tag RFC1991 signed tag" >expect &&
+@@ -1123,12 +1123,12 @@ test_expect_success GPG \
+ 
+ rm -f gpghome/gpg.conf
+ 
+-test_expect_success GPG \
++test_expect_success GPG,!GNUPG21 \
+ 	'verifying rfc1991 signature without --rfc1991' '
+ 	git tag -v rfc1991-signed-tag
+ '
+ 
+-test_expect_success GPG \
++test_expect_success GPG,!GNUPG21 \
+ 	'list tag with rfc1991 signature without --rfc1991' '
+ 	echo "rfc1991-signed-tag RFC1991 signed tag" >expect &&
+ 	git tag -l -n1 rfc1991-signed-tag >actual &&
+@@ -1139,7 +1139,7 @@ test_expect_success GPG \
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success GPG \
++test_expect_success GPG,!GNUPG21 \
+ 	'reediting a signed tag body omits signature' '
+ 	echo "RFC1991 signed tag" >expect &&
+ 	GIT_EDITOR=./fakeeditor git tag -f -s rfc1991-signed-tag $commit &&
+-- 
+2.1.3
