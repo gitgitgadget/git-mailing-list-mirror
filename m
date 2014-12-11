@@ -1,108 +1,74 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH 2/5] glossary: introduce glossary lookup command
-Date: Thu, 11 Dec 2014 16:23:58 +0100
-Message-ID: <5489B70E.2040604@drmicha.warpmail.net>
-References: <cover.1418052470.git.git@drmicha.warpmail.net>	<585191103e7bdd21ed422324504b6503bec2b914.1418052470.git.git@drmicha.warpmail.net> <xmqqa92vf7ao.fsf@gitster.dls.corp.google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/1] skip RFC1991 tests with gnupg 2.1.x
+Date: Thu, 11 Dec 2014 16:32:27 +0100
+Message-ID: <5489B90B.6070706@web.de>
+References: <1418290234-21516-1-git-send-email-mail@eworm.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 16:24:12 2014
+To: Christian Hesse <mail@eworm.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 11 16:32:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xz5b4-00023d-SA
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 16:24:07 +0100
+	id 1Xz5jK-000088-5n
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 16:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965040AbaLKPYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2014 10:24:01 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:45673 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964877AbaLKPYA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2014 10:24:00 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 8C7DA20BD5
-	for <git@vger.kernel.org>; Thu, 11 Dec 2014 10:23:59 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Thu, 11 Dec 2014 10:23:59 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=oGhvi7eH5Q9rSBWG9qm27B
-	n7eeA=; b=bW5vzCCxmDxlStkYR2vLfmCFJAIA6iObno5NB7u91zA6bSNEIQ/ZLP
-	AisxsQHEGSusYUUBH9cPv7IJQhGTKEfSN73UiU9cDR4U1dZLUylzKCZ+T45xo4RE
-	tXJXD4L6Qxcc27A7wGv/t1yth3zDZh7XRUtTxDDcXMtLp3LOOTsnQ=
-X-Sasl-enc: 0j+/ogww+wjoNYHYVkKt4IxAuMjZAuKvy9XYxRsdC0jR 1418311439
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 1630AC00282;
-	Thu, 11 Dec 2014 10:23:58 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <xmqqa92vf7ao.fsf@gitster.dls.corp.google.com>
+	id S964828AbaLKPce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 10:32:34 -0500
+Received: from mout.web.de ([212.227.17.12]:64490 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933278AbaLKPcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 10:32:33 -0500
+Received: from birne.local ([78.72.72.190]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0M5OUd-1Xkyky2wGd-00zXkx; Thu, 11 Dec 2014 16:32:31
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <1418290234-21516-1-git-send-email-mail@eworm.de>
+X-Provags-ID: V03:K0:G4YecnIQIFdvfThKSKhssF0/JCoALBe68A9Re0qhFPvq7AtNeK6
+ KgjIEUNhmQ+kGfzys09XNWfk/uj+L04K90BMKLekByY+vxbxbaFmCgXmzdbxCvt7OqfIpqH
+ H1unHpWsvtZLmhlFPzxHFUwAe4Qr8R67NlNRZ05ROpiS/klqMRbvMaTaVVRTHifBKv/cFmv
+ Q1U9LgosvfkiqGyi6u1jw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261282>
 
-Junio C Hamano schrieb am 10.12.2014 um 23:50:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+On 11.12.14 10:30, Christian Hesse wrote:
+> ---
+>  t/lib-gpg.sh   |  6 ++++++
+>  t/t7004-tag.sh | 14 +++++++-------
+>  2 files changed, 13 insertions(+), 7 deletions(-)
 > 
->> When using a localised git, there are many reasons why a correspondence
->> between English and localised git terms is needed:
->> - connect localised messages with English ones (porcelain vs. plumbing)
->> - connect localised messages with English man pages or online docs
->> - help out someone in a different locale
->>
->> Introduce a `git glossary' command that leverages the existing infrastructure
->> in three possible ways:
->> - `git glossary' lists all glossary terms along with their translation
->> - `git glossary foo' matches `foo' in the glossary (both English and
->>   localisation; partial matches shown)
->> - `git glossary -a foo' matches `foo' in the git message catalogue
->>   (English, exact match only).
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->> Some bike-shedding expected regarding the interface...
->> Once I've learned how to test l10n stuff, this will be amended.
-> 
-> This is interesting.
-> 
-> I wondered if we want to also have the associated documentation in
-> response to a query, but I am not sure how well that would go
-> without having a translated glossary at least.  I.e. pulling the
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index cd2baef..05b07c6 100755
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -22,6 +22,12 @@ else
+>  		GNUPGHOME="$(pwd)/gpghome"
+>  		export GNUPGHOME
+>  		test_set_prereq GPG
+> +		case "$gpg_version" in
+> +		'gpg (GnuPG) 2.1.'*)
+> +			say "Your version of gpg (2.1.x) is missing some legacy features"
+> +			test_set_prereq GNUPG21
+> +			;;
+> +		esac
+>  		;;
+>  	esac
+>  fi
+We do not really need the GNUPG21 (and we don't need to touch the TC at all)
+		case "$gpg_version" in
+		'gpg (GnuPG) 2.1.'*)
+			say "Your version of gpg (2.1.x) is missing some legacy features"
+			;;
+		*)
+			test_set_prereq GPG
+			;;
 
-Yes, I think we would need something different then. The glossary
-entries are asciidoc which we can't format easily from the glossary
-command. I really think of the glossary command as being orthogonal to
-the definitory glossary. I guess I should name it "translate" instead.
-
-It's just that I don't know how to do the translation from the locale
-back to English for stuff in the message catalogue (i.e. how to search
-the translations), unless I list the msgids the way I do for the
-glossary terms. It could be any list of terms. The glossary seemed to be
-a good place for that list of most important terms which users may want
-to translate both ways.
-
-> original from glossary-content.txt would produce something like
-> this:
-> 
-> 	$ LANG=de git glossary -l blob object
->         Blob-Objekten
-> 	Untyped <<def_object,object>>, e.g. the contents of a file.
-> 
-> which is not ideal.
-> 
-> I noticed that you allow querying more than one term from the
-> command line, so the above example would not work quite well, as we
-> would end up querying "blob" and then "object", not a single term
-> "blob object" which does have N_() translation in <glossary.h>.
-
-Exactly, one would need to query for "blob object". Or we concatenate
-arguments automatically, but I think being able to query multiple terms
-(also) is more useful.
-
-Michael
+		esac
+  		;;
