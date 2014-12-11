@@ -1,65 +1,95 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH 2/2] update-ref: fix "verify" command with missing <oldvalue>
-Date: Thu, 11 Dec 2014 11:19:46 -0500
-Message-ID: <5489C422.9000104@kitware.com>
-References: <1418255272-5875-1-git-send-email-mhagger@alum.mit.edu> <1418255272-5875-3-git-send-email-mhagger@alum.mit.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/1] skip RFC1991 tests with gnupg 2.1.x
+Date: Thu, 11 Dec 2014 17:54:56 +0100
+Message-ID: <5489CC60.7080704@drmicha.warpmail.net>
+References: <1418290234-21516-1-git-send-email-mail@eworm.de> <5489B90B.6070706@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Dec 11 17:19:59 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Christian Hesse <mail@eworm.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 11 17:55:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xz6T6-0001ru-9l
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 17:19:56 +0100
+	id 1Xz715-0005k1-OL
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 17:55:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933195AbaLKQTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2014 11:19:51 -0500
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:53468 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932897AbaLKQTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2014 11:19:50 -0500
-Received: by mail-qg0-f41.google.com with SMTP id j5so4030323qga.0
-        for <git@vger.kernel.org>; Thu, 11 Dec 2014 08:19:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=VdkGh83nQF3TyNrjSnEkPRgyK5VuGSpSl7fLlOA52z8=;
-        b=h+bJugh+IWCAkHMNhTh9vtW7kUGYMxcTEAto4srixC1N4Mbg8rBKJme/HwVANVGqeX
-         HivRgAa7xqWluwIUOQzk4BOzRfkg7jyq6vOc/xYVfCVB96WAM7gv2qMaz0Z/5ABNaSDo
-         0zqOiqM+sJdsXqOdA6FYhoIBK6WHabC/Y752GBMSFyzULsDzPKVFvRWwzu/zSVkTYWqV
-         PipjH0gPwn42M5mUUOoHsHcwNQRGrbS0X58P6dGv9zFosYNwcwoA718glZAjdXY+AE7W
-         8L9FuB+hoFo2a098gICmMTBztgF1sQJ88s8MI01gpQFxEDYcTLCmSXCdU+7RV9xJqKez
-         WMow==
-X-Gm-Message-State: ALoCoQl1sG5iG4l64wC4AAto9iUMhNucrPNmciRAm14pbBUuK8ns/aHjmEgD4BoywimKgSoUbxRg
-X-Received: by 10.229.130.65 with SMTP id r1mr21522181qcs.16.1418314789791;
-        Thu, 11 Dec 2014 08:19:49 -0800 (PST)
-Received: from [192.168.100.143] (cpe-72-224-128-246.nycap.res.rr.com. [72.224.128.246])
-        by mx.google.com with ESMTPSA id a1sm1445317qam.3.2014.12.11.08.19.48
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 11 Dec 2014 08:19:49 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.7) Gecko/20100111 Thunderbird/3.0.1
-In-Reply-To: <1418255272-5875-3-git-send-email-mhagger@alum.mit.edu>
-X-Enigmail-Version: 1.0.1
+	id S1756013AbaLKQy7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Dec 2014 11:54:59 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:45650 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754591AbaLKQy6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2014 11:54:58 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 57CF1210AF
+	for <git@vger.kernel.org>; Thu, 11 Dec 2014 11:54:58 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 11 Dec 2014 11:54:58 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=KYckDJBPBOk1nyUpMhlGQQ
+	jh4ko=; b=uDCTLZi5AhxNK7mBsd/x8NoAt9Jkjw2D8dpYMvi2MCj3ROwsoGZPam
+	qn7vUtig2o2K4stQCo5GG6Bxk/fwPIoyQIIPrSCoYkycfsp1Sq50NrP3kmGqlfiK
+	TduVokOn0ad9L2jMBeCq49zTsGsJ2eeiWmfVOl8g3iGpR2qUt6OYI=
+X-Sasl-enc: FOoT5hzBXzHzI4evAluBn+41CbuHK5e4oCS/ugMS+aru 1418316898
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id AAC32C0027D;
+	Thu, 11 Dec 2014 11:54:57 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <5489B90B.6070706@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261285>
 
-On 12/10/2014 6:47 PM, Michael Haggerty wrote:
-> set have_old unconditionally and set old_sha1 to null_sha1.
+Torsten B=F6gershausen schrieb am 11.12.2014 um 16:32:
+> On 11.12.14 10:30, Christian Hesse wrote:
+>> ---
+>>  t/lib-gpg.sh   |  6 ++++++
+>>  t/t7004-tag.sh | 14 +++++++-------
+>>  2 files changed, 13 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+>> index cd2baef..05b07c6 100755
+>> --- a/t/lib-gpg.sh
+>> +++ b/t/lib-gpg.sh
+>> @@ -22,6 +22,12 @@ else
+>>  		GNUPGHOME=3D"$(pwd)/gpghome"
+>>  		export GNUPGHOME
+>>  		test_set_prereq GPG
+>> +		case "$gpg_version" in
+>> +		'gpg (GnuPG) 2.1.'*)
+>> +			say "Your version of gpg (2.1.x) is missing some legacy features=
+"
+>> +			test_set_prereq GNUPG21
+>> +			;;
+>> +		esac
+>>  		;;
+>>  	esac
+>>  fi
+> We do not really need the GNUPG21 (and we don't need to touch the TC =
+at all)
+> 		case "$gpg_version" in
+> 		'gpg (GnuPG) 2.1.'*)
+> 			say "Your version of gpg (2.1.x) is missing some legacy features"
+> 			;;
+> 		*)
+> 			test_set_prereq GPG
+> 			;;
+>=20
+> 		esac
+>   		;;
+>=20
 
-Reviewed-by: Brad King <brad.king@kitware.com>
+That would disable all GPG tests, which is pretty harsh.
 
--Brad
+If gpg 2.1 is the future of gpg (which I don't know), which should
+rather prepare for that and make our tests independent of the version.
+Is gpg 2.1 stable enough to cater for its special needs?
+
+Michael
