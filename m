@@ -1,72 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] skip RFC1991 tests with gnupg 2.1.x
-Date: Thu, 11 Dec 2014 15:10:01 -0800
-Message-ID: <xmqqegs5dbqu.fsf@gitster.dls.corp.google.com>
-References: <1418290234-21516-1-git-send-email-mail@eworm.de>
-	<5489B90B.6070706@web.de> <5489CC60.7080704@drmicha.warpmail.net>
-	<20141211234405.3513d5d7@leda.localdomain>
+From: Florian Hassanen <florian.hassanen@gmail.com>
+Subject: Re: [PATCH] git-check-ignore.txt: Clarify exit codes
+Date: Fri, 12 Dec 2014 00:16:32 +0100
+Message-ID: <CAMAJHBYVMy-tc_aCjyeN7=VMG=k7gjWh9evL6bcJLzYfQcf6yg@mail.gmail.com>
+References: <1418323355-23935-1-git-send-email-florian.hassanen@gmail.com> <xmqqiohhdc5j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Torsten =?utf-8?Q?B?= =?utf-8?Q?=C3=B6gershausen?= 
-	<tboegi@web.de>, git@vger.kernel.org
-To: Christian Hesse <mail@eworm.de>
-X-From: git-owner@vger.kernel.org Fri Dec 12 00:16:35 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 00:17:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzCy9-0002Vf-HL
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 00:16:26 +0100
+	id 1XzCz8-00007U-Ne
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 00:17:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934394AbaLKXKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2014 18:10:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50400 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934114AbaLKXKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2014 18:10:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 82F1325D00;
-	Thu, 11 Dec 2014 18:10:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CXzAovjjxzy1vgZEeOlH5YPmjko=; b=Lg+1DK
-	0GropI18gePHBz9aVEsxr3ebnW4EjFhjyXf7G6OqdTVk8ae7wqg8xOsDl/Yce/Q0
-	XF7+3J3vmQ26lNjxpusfb9cT7BNh2WxR27vyW29hfyHTI2m128Nvla9g6ZIxRbB4
-	gc559DEmc8nc91f5/ApJYaWwtAzyT6c/QlpeA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BrQnFbxlNm37xsJY+lIzYePmyGM114QE
-	Xovx3d3Hig8sopK2G9QXcJ73bWfJCedLOLJalk4oIasdvIuTLIR6QxqoWHT+jYHP
-	mdoSsfZl/KWHrpFzc3DsOgXAzqgbU6Drn++EmIfetPhYvkhP+8pDX2ghRvuL8rrx
-	8rFzAOp0soQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 790FE25CFF;
-	Thu, 11 Dec 2014 18:10:03 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F26B525CFD;
-	Thu, 11 Dec 2014 18:10:02 -0500 (EST)
-In-Reply-To: <20141211234405.3513d5d7@leda.localdomain> (Christian Hesse's
-	message of "Thu, 11 Dec 2014 23:44:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D65FD1A6-818A-11E4-8233-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S934536AbaLKXQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 18:16:55 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:36072 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934114AbaLKXQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 18:16:54 -0500
+Received: by mail-lb0-f170.google.com with SMTP id 10so5072528lbg.15
+        for <git@vger.kernel.org>; Thu, 11 Dec 2014 15:16:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6iGy/pHktmBj8rNqkzfozgg0UZTkIiA17H8sU88q6xI=;
+        b=AM49SS+4KHDWN+ruKc29+z7Tbrn+uNKC80KnjUwaCAnQEwkQpTVDrfu2nXE/mcVz52
+         ws8lWRRVJOQb6ZDj9jkTy7dh6vuN6Cg2kiWgiQugPpvzOkjDlJeXLJN1KYBwYn0oxZoq
+         Zu3Wk2XErorYaPusio+mLN0FVa7WRdRtVzhLIBU6S6B5bY1+dbUDFF1ZipJ6e9lA4rkI
+         pINPa0POLFCjTjaUbbHhJdQHlFBhe+hM5Gvm8dlvd3AKE/R8+OT5m97/FlXFP5z4hB3L
+         w/MrzGx+rxieH29SEXetX2c57qqsHxFrm10XFRHiGlaO7254cYNnzdEHDcMbRC/vsGuI
+         VTiQ==
+X-Received: by 10.112.158.40 with SMTP id wr8mr12401980lbb.51.1418339813048;
+ Thu, 11 Dec 2014 15:16:53 -0800 (PST)
+Received: by 10.152.26.101 with HTTP; Thu, 11 Dec 2014 15:16:32 -0800 (PST)
+In-Reply-To: <xmqqiohhdc5j.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261304>
 
-Christian Hesse <mail@eworm.de> writes:
+>> check-ignore disregards whether a path is matched by a
+>> positive or negative pattern. Thus for a file that is _not_
+>> ignored, but is captured by negative pattern in .gitignore,
+>> the exit code is 0. The docs suggested otherwise.
+>
+> I am not sure that is the actual behaviour of the command.  Given
+> this .gitignore file:
+>
+>     $ cat .gitignore; echo END
+>     !vendor.o
+>     *.o
+>     END
+>
+> which is designed to allow binary-only blob "vendor.o" supplied by
+> the vendor to be tracked, but to ignore all the other usual build
+> artifacts, you see this:
+>
+>     $ for o in a.o vendor.o; do git check-ignore $o >/dev/null; echo $?; done
+>     0
+>     1
+>
+> Puzzled...
 
-> However... Even if GnuPG 2.2.x (or whatever future release) will become next
-> stable: It will not reintroduce support for rfc1991.
+Maybe your global ignore file gets in the way?
 
-How certain are we about the deprecation?
+on both of my machines (cygwin + git 2.1.1, linux + git @master) I have:
 
-It also would make us feel safer if we did not have to depend on the
-version or keyfile format (which would not have anything to do with
-the decision to support or not to support rfc1991 format) to check
-if the feature is supported, but that is a separate issue.
+  $ cat > .gitignore << EOF
+  !vendor.o
+  *.o
+  EOF
+
+  for o in a.o vendor.o; do git check-ignore $o >/dev/null; echo $?; done
+  0
+  0
+
+which corresponds to how I understand the command so far :)
+
+is one of a.o and vendor.o already in your index?
+there is a --no-index as well (which enables yet another different behavior)
