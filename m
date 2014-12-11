@@ -1,89 +1,131 @@
-From: Luis Henriques <henrix@camandro.org>
-Subject: Re: no-xmailer tests fail under Mac OS
-Date: Thu, 11 Dec 2014 22:35:50 +0000
-Message-ID: <87h9x124s9.fsf@camandro.org>
-References: <CAO2U3Qg3KsjvWJFza4MfiQDa2LbCpOy1Nxf9Vt3NSgXc7Bee9g@mail.gmail.com>
-	<20141206053434.GF31301@peff.net>
-	<CAO2U3QjkJRPrFvapK=LDU_GG5Ne6_zVD+S61JP+iV_Xi-gk5JQ@mail.gmail.com>
-	<20141206063245.GA5966@peff.net>
-	<CAO2U3QgDMpKwqsjzPNECpJw4z+WbboX5ug7Shu5v5ZCuPsKuGQ@mail.gmail.com>
-	<20141206071234.GA6850@peff.net>
-	<xmqq1to5et1j.fsf@gitster.dls.corp.google.com>
-	<20141211221339.GA9478@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/1] create gpg homedir on the fly and skip RFC1991 tests for gnupg 2.1
+Date: Thu, 11 Dec 2014 14:41:31 -0800
+Message-ID: <xmqqr3w5dd2c.fsf@gitster.dls.corp.google.com>
+References: <1418303772-7909-1-git-send-email-mail@eworm.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Blume <blume.mike@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 11 23:36:06 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Christian Hesse <mail@eworm.de>
+X-From: git-owner@vger.kernel.org Thu Dec 11 23:41:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzCL7-0003mJ-EA
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 23:36:05 +0100
+	id 1XzCQW-0005tk-3z
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 23:41:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758924AbaLKWf7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Dec 2014 17:35:59 -0500
-Received: from haggis.mythic-beasts.com ([93.93.131.56]:55164 "EHLO
-	haggis.mythic-beasts.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757793AbaLKWf6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2014 17:35:58 -0500
-Received: from [217.129.142.138] (port=62109 helo=localhost)
-	by haggis.mythic-beasts.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <henrix@camandro.org>)
-	id 1XzCKw-0004WO-Go; Thu, 11 Dec 2014 22:35:55 +0000
-In-Reply-To: <20141211221339.GA9478@peff.net> (Jeff King's message of "Thu, 11
-	Dec 2014 17:13:39 -0500")
-X-BlackCat-Spam-Score: -28
-X-Mythic-Debug: Threshold =  On = 
-X-Spam-Status: No, score=-2.9
+	id S933631AbaLKWlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 17:41:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52269 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933541AbaLKWle (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 17:41:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2147B254A4;
+	Thu, 11 Dec 2014 17:41:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AwAQMoh0YEEExBNx238mAzJMxg8=; b=FoVAEo
+	Ikq04cZIFM9JwKPhLjQfDQ/4RF+pMO/VOMRtWiCyWSoTvUzAhTuI3PI8dtaZw1V6
+	6xFaYaRF3S60LUxcI223BZ0+a2vp77VyACGTsqVwxUHZSQpYnUomASo5J0WlxlhZ
+	R5hN3+yjXTtBzr4N0RIfwgQkR+4YVsJaIH+pw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KFQtVFNXKwcyUIpZilmW+PJwFTElLDvA
+	/vX6hlp687nkqquD8vZ8Y18Q58P4AozuixBfVXj5thb1hhl84FdKfMPxuAZXxdC2
+	wCXECO+DYsqU9bBn/DZDbg9Q/rmdm9EWFDrzV6+8VSoKYvB3vDMJisdGpk/F6Vpn
+	Mpcz851ymVI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18430254A3;
+	Thu, 11 Dec 2014 17:41:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 891D6254A2;
+	Thu, 11 Dec 2014 17:41:32 -0500 (EST)
+In-Reply-To: <1418303772-7909-1-git-send-email-mail@eworm.de> (Christian
+	Hesse's message of "Thu, 11 Dec 2014 14:16:12 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DAE0E232-8186-11E4-BA35-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261299>
 
-Jeff King <peff@peff.net> writes:
+Christian Hesse <mail@eworm.de> writes:
 
-> On Thu, Dec 11, 2014 at 02:11:04PM -0800, Junio C Hamano wrote:
+> GnuPG 2.1 homedir looks different, so just creat it on the fly by
+> importing needed private and public keys and ownertrust.
+> This solves an issue with gnupg 2.1 running interactive pinentry when
+> old secret key is present.
 >
->> Jeff King <peff@peff.net> writes:
->>=20
->> > On Fri, Dec 05, 2014 at 11:07:37PM -0800, Michael Blume wrote:
->> >
->> >> > Ah, right, we might be looking for 0 sometimes. The right way t=
-o do it
->> >> > without destroying the &&-chaining is:
->> >> >
->> >> >   { grep ^X-Mailer: out || true } &&
->> >> >   test_line_count =3D $expected mailer
->> >>=20
->> >> Hmm, it doesn't look like that helper is &&-chained though? So it
->> >> seems like we could just do without the &&
->> >
->> > You're right, but that is IMHO a bug. We would not notice if send-=
-email
->> > or format-patch barfed, and we are expecting to find no X-Mailer (=
-we
->> > wouldn't, but for the wrong reason).
->>=20
->> Let me patch this up further by amending the SQUASH??? at the tip.
->>=20
->>  t/t9001-send-email.sh | 11 +++++------
->>  1 file changed, 5 insertions(+), 6 deletions(-)
->> [...]
->
-> Yeah, looks good to me.
->
-> -Peff
+> Additionally GnuPG 2.1 does not longer support RFC1991, so skip these
+> tests.
+> ---
 
-Same here.  Thanks a lot for fixing this.
+Needs a sign-off.
 
-Cheers,
---
-Lu=C3=ADs
+Are older GPG implementations still happy with this new way to
+initialize their gpghome?  
+
+>  t/lib-gpg.sh          |  13 ++++++++++---
+>  t/lib-gpg/ownertrust  |   4 ++++
+>  t/lib-gpg/random_seed | Bin 600 -> 0 bytes
+>  t/lib-gpg/trustdb.gpg | Bin 1360 -> 0 bytes
+>  t/t7004-tag.sh        |  14 +++++++-------
+>  5 files changed, 21 insertions(+), 10 deletions(-)
+>  create mode 100644 t/lib-gpg/ownertrust
+>  delete mode 100644 t/lib-gpg/random_seed
+>  delete mode 100644 t/lib-gpg/trustdb.gpg
+
+Do these trust files need to be shipped?  In other words, would it
+be insufficient to just import private-public keyrings?  I know we
+have been shipping trustdb.gpg, and I do not think it is a problem
+to ship export-ownertrust output, but as long as we are cleaning
+things up to make us compatible with both older and newer GPG,
+I thought I'd ask ;-)
+
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index cd2baef..17c45ad 100755
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -16,12 +16,19 @@ else
+>  		# Type DSA and Elgamal, size 2048 bits, no expiration date.
+>  		# Name and email: C O Mitter <committer@example.com>
+>  		# No password given, to enable non-interactive operation.
+> -		cp -R "$TEST_DIRECTORY"/lib-gpg ./gpghome
+> -		chmod 0700 gpghome
+> -		chmod 0600 gpghome/*
+> +		mkdir ./gpghome
+> +		chmod 0700 ./gpghome
+>  		GNUPGHOME="$(pwd)/gpghome"
+>  		export GNUPGHOME
+> +		gpg --homedir "${GNUPGHOME}" --import \
+> +			"$TEST_DIRECTORY"/lib-gpg/pubring.gpg \
+> +			"$TEST_DIRECTORY"/lib-gpg/secring.gpg
+> +		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
+> +			"$TEST_DIRECTORY"/lib-gpg/ownertrust
+>  		test_set_prereq GPG
+> +		if [ -e "${GNUPGHOME}"/pubring.kbx ]; then
+> +			test_set_prereq GNUPG21
+> +		fi
+
+Instead of !GNUPG21 prerequisite, how about using a RFC1991
+prerequisite, which is satisfied by older GPG but not by the ones
+that lack support?  That is,
+
+	...
+        test_set_prereq GPG
+	if ! test "${GNUPGHOME}"/pubring.kbx
+        then
+		test_set_prereq GPG_RFC1991
+	fi
+
+or something.  That way, we do not have to be in a funny situation
+where we say a version of GPG satisfies GNUPG21 prereq but it in
+fact is GPG version 4.3 in the future.
+
+Thanks.
