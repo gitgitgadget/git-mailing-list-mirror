@@ -1,129 +1,63 @@
-From: Christian Hesse <mail@eworm.de>
-Subject: [PATCH 1/1] skip RFC1991 tests with gnupg 2.1.x
-Date: Thu, 11 Dec 2014 10:30:34 +0100
-Message-ID: <1418290234-21516-1-git-send-email-mail@eworm.de>
-Cc: Christian Hesse <mail@eworm.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 11 10:37:20 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] list-objects: mark fewer commits as edges for non-shallow clones
+Date: Thu, 11 Dec 2014 17:51:54 +0700
+Message-ID: <CACsJy8DM17je-FJ7vq3SFZJWPL5KbZ=kE=iTFQ0X0bZUpKuNmg@mail.gmail.com>
+References: <20141211030948.GA137226@vauxhall.crustytoothpaste.net> <1418269615-139571-1-git-send-email-sandals@crustytoothpaste.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Thu Dec 11 11:52:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Xz0BT-0000Nx-F9
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 10:37:19 +0100
+	id 1Xz1MD-0003J2-VW
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 11:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932839AbaLKJhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2014 04:37:14 -0500
-Received: from mx.mylinuxtime.de ([148.251.109.235]:60907 "EHLO
-	mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932272AbaLKJhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2014 04:37:11 -0500
-X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Dec 2014 04:37:11 EST
-Received: from leda.eworm.de (unknown [10.10.1.2])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx.mylinuxtime.de (Postfix) with ESMTPSA id D1A5124255;
-	Thu, 11 Dec 2014 10:30:46 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.9.2 mx.mylinuxtime.de D1A5124255
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
-	t=1418290246; bh=eedEWdv2hJUijUuPSCQ8OBYSnsXvHcBff3iN6UwphzQ=;
-	h=From:To:Cc:Subject:Date;
-	b=VpB3u1fRXceZUYdaMVlGIGLGBtz2G2MPV1JPrFZdfIEJquB4MsHh5GLRXWGwKCH1y
-	 Q8dpv3ujHjWDtGCAHPsDQwEu9hjYa1q+z0C3lTpTLRU2t+GCAYKY+RzOcm+to4nFVG
-	 WGe5DJoScqMlbPtkjrL0I69lrnSfFz7+cTO1oaMQ=
-Received: by leda.eworm.de (Postfix, from userid 1000)
-	id A372D10345B; Thu, 11 Dec 2014 10:30:41 +0100 (CET)
-X-Mailer: git-send-email 2.1.3
+	id S932555AbaLKKw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 05:52:26 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:49404 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756252AbaLKKwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 05:52:25 -0500
+Received: by mail-ie0-f174.google.com with SMTP id rl12so4394039iec.5
+        for <git@vger.kernel.org>; Thu, 11 Dec 2014 02:52:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BqqpuKm7WU7drTmQfzKndTLAdCioVbec8995ABsGUOo=;
+        b=iNRTVVyHOI4gHLQYFtAKKCxMzBzi54AeOr8SvWODyHYBt+pe6pmjaZKk0TO/+3HCRI
+         0op98Dqzd9tGDnL8qwr9ti6Y/jXUFXGIx/BxkM4r6gR4ZQzY/CXiA1wBqCsnMlmh4Tvh
+         ef3eeOSNUO72Cn4VbiEYDGwYIE+73/lXhfFiaD80InIgQDYQP0fP5jeZw/grSeDT5A3o
+         hklh890MLs3ftfZDCYwZOBChpWuhHysasWm2G7KD4oLFdO3oAxxQ3YNzXS1pG2zVtYPN
+         5O4I+QLEFP6dktVZNIDaM1eUOfVXZ6OQOkq9TjMEdecGxtSg1I/YsLDVEvKsp0UNSrli
+         TIXw==
+X-Received: by 10.107.161.138 with SMTP id k132mr3898168ioe.60.1418295144453;
+ Thu, 11 Dec 2014 02:52:24 -0800 (PST)
+Received: by 10.107.176.3 with HTTP; Thu, 11 Dec 2014 02:51:54 -0800 (PST)
+In-Reply-To: <1418269615-139571-1-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261275>
 
----
- t/lib-gpg.sh   |  6 ++++++
- t/t7004-tag.sh | 14 +++++++-------
- 2 files changed, 13 insertions(+), 7 deletions(-)
+On Thu, Dec 11, 2014 at 10:46 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> In commit fbd4a70 (list-objects: mark more commits as edges in
+> mark_edges_uninteresting - 2013-08-16), we made --thin much more
+> aggressive by reading lots more trees.  This produces much smaller packs
+> for shallow clones; however, it causes a significant performance
+> regression for non-shallow clones with lots of refs (23.322 seconds vs.
+> 4.785 seconds with 22400 refs).  Limit this extra edge-marking to
+> shallow clones to avoid poor performance.
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index cd2baef..05b07c6 100755
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -22,6 +22,12 @@ else
- 		GNUPGHOME="$(pwd)/gpghome"
- 		export GNUPGHOME
- 		test_set_prereq GPG
-+		case "$gpg_version" in
-+		'gpg (GnuPG) 2.1.'*)
-+			say "Your version of gpg (2.1.x) is missing some legacy features"
-+			test_set_prereq GNUPG21
-+			;;
-+		esac
- 		;;
- 	esac
- fi
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 796e9f7..1c40967 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1081,7 +1081,7 @@ test_expect_success GPG \
- get_tag_header rfc1991-signed-tag $commit commit $time >expect
- echo "RFC1991 signed tag" >>expect
- echo '-----BEGIN PGP MESSAGE-----' >>expect
--test_expect_success GPG \
-+test_expect_success GPG,!GNUPG21 \
- 	'creating a signed tag with rfc1991' '
- 	echo "rfc1991" >gpghome/gpg.conf &&
- 	git tag -s -m "RFC1991 signed tag" rfc1991-signed-tag $commit &&
-@@ -1095,7 +1095,7 @@ cp "$1" actual
- EOF
- chmod +x fakeeditor
- 
--test_expect_success GPG \
-+test_expect_success GPG,!GNUPG21 \
- 	'reediting a signed tag body omits signature' '
- 	echo "rfc1991" >gpghome/gpg.conf &&
- 	echo "RFC1991 signed tag" >expect &&
-@@ -1103,13 +1103,13 @@ test_expect_success GPG \
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG \
-+test_expect_success GPG,!GNUPG21 \
- 	'verifying rfc1991 signature' '
- 	echo "rfc1991" >gpghome/gpg.conf &&
- 	git tag -v rfc1991-signed-tag
- '
- 
--test_expect_success GPG \
-+test_expect_success GPG,!GNUPG21 \
- 	'list tag with rfc1991 signature' '
- 	echo "rfc1991" >gpghome/gpg.conf &&
- 	echo "rfc1991-signed-tag RFC1991 signed tag" >expect &&
-@@ -1123,12 +1123,12 @@ test_expect_success GPG \
- 
- rm -f gpghome/gpg.conf
- 
--test_expect_success GPG \
-+test_expect_success GPG,!GNUPG21 \
- 	'verifying rfc1991 signature without --rfc1991' '
- 	git tag -v rfc1991-signed-tag
- '
- 
--test_expect_success GPG \
-+test_expect_success GPG,!GNUPG21 \
- 	'list tag with rfc1991 signature without --rfc1991' '
- 	echo "rfc1991-signed-tag RFC1991 signed tag" >expect &&
- 	git tag -l -n1 rfc1991-signed-tag >actual &&
-@@ -1139,7 +1139,7 @@ test_expect_success GPG \
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG \
-+test_expect_success GPG,!GNUPG21 \
- 	'reediting a signed tag body omits signature' '
- 	echo "RFC1991 signed tag" >expect &&
- 	GIT_EDITOR=./fakeeditor git tag -f -s rfc1991-signed-tag $commit &&
+I'm glad it's now working better for you. Out of curiosity, have you
+enabled pack bitmap on this repo? I would expect it to reduce time
+some (or a lot) more, or we would find something to optimize further.
 -- 
-2.1.3
+Duy
