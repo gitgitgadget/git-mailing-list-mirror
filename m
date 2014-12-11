@@ -1,114 +1,128 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] commit: ignore assume-unchanged files in "commmit <file>" mode
-Date: Thu, 11 Dec 2014 23:23:33 -0000
-Organization: OPDS
-Message-ID: <35EB570A2A994662AA2E89910ECE9668@PhilipOakley>
-References: <1417732931.20814.16.camel@segulix> <1417776974-6537-1-git-send-email-pclouds@gmail.com> <1418093090.19104.1.camel@segulix>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Florian Hassanen <florian.hassanen@gmail.com>
+Subject: Re: [PATCH] git-check-ignore.txt: Clarify exit codes
+Date: Fri, 12 Dec 2014 00:40:53 +0100
+Message-ID: <CAMAJHBZpLY_Rwdpuw6hruJwST_tgY1S02ZPt=ueKPXOXHREHxQ@mail.gmail.com>
+References: <1418323355-23935-1-git-send-email-florian.hassanen@gmail.com>
+ <xmqqiohhdc5j.fsf@gitster.dls.corp.google.com> <CAMAJHBYVMy-tc_aCjyeN7=VMG=k7gjWh9evL6bcJLzYfQcf6yg@mail.gmail.com>
+ <xmqqa92tdb80.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>
-To: =?UTF-8?Q?S=C3=A9rgio_Basto?= <sergio@serjux.com>,
-	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 00:23:38 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 00:41:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzD57-0000cy-SV
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 00:23:38 +0100
+	id 1XzDMG-0000Na-P6
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 00:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965383AbaLKXXe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Dec 2014 18:23:34 -0500
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:13783 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934114AbaLKXXd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2014 18:23:33 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AowkAPslilROl3QYPGdsb2JhbABZgwZSWIMFgypsvluFaAQCgRUXAQEBAQEBBQEBAQE4IBuEBwUBAQEBAwgBARkECwEFHgEBIQsCAwUCAQMVAQICAgUhAgIUAQQIEgYHAxQGARIIAgECAwGIBwMVCcFWhlOKDA2FUAEKAQEBHoEhiGmDQBOBMWSCby6BEwWNf0yCcoNugk+KHzqFToQOPjCBA4FAAQEB
-X-IPAS-Result: AowkAPslilROl3QYPGdsb2JhbABZgwZSWIMFgypsvluFaAQCgRUXAQEBAQEBBQEBAQE4IBuEBwUBAQEBAwgBARkECwEFHgEBIQsCAwUCAQMVAQICAgUhAgIUAQQIEgYHAxQGARIIAgECAwGIBwMVCcFWhlOKDA2FUAEKAQEBHoEhiGmDQBOBMWSCby6BEwWNf0yCcoNugk+KHzqFToQOPjCBA4FAAQEB
-X-IronPort-AV: E=Sophos;i="5.07,560,1413241200"; 
-   d="scan'208";a="19189912"
-Received: from host-78-151-116-24.as13285.net (HELO PhilipOakley) ([78.151.116.24])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 11 Dec 2014 23:23:28 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1759191AbaLKXlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 18:41:17 -0500
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:63419 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759155AbaLKXlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 18:41:16 -0500
+Received: by mail-lb0-f172.google.com with SMTP id u10so5052515lbd.31
+        for <git@vger.kernel.org>; Thu, 11 Dec 2014 15:41:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=LR27JkfR2GwSjdA0IoIus5gduV+YPin6dS3YMJ6lnBw=;
+        b=hQS6ytbYAljlwxxEdrfUUwyttgdpDSGF9d+tcP4QmhiG2f/nKeV42/IoEiNjmA+JS1
+         1vtruX9Tov6XRVQmnJABJrZMs98M8BYkErUhZTVQufx+euXa09T9qI4r+5+ql3uNrLpU
+         EANoy0Ud4TK/RDHTv3jdVzqv79KxyUYBZGTWiqK8FwIuKeTENcsTi/gumhqVl7eckYf/
+         I/5OlcqaJM7vB3lGJvsA7xpF/o/fGE8ddYqH8Aru4YPMFWSQ3O+OS1zGSJK50gNLn5B5
+         DnhlPDL948sU8kC22HvEiT4jlv1vSb7EvUxzLjp8/p4mPZnTT4Ov2HhSWfzL3XnT3lwm
+         9ihw==
+X-Received: by 10.112.130.65 with SMTP id oc1mr12591852lbb.7.1418341274808;
+ Thu, 11 Dec 2014 15:41:14 -0800 (PST)
+Received: by 10.152.26.101 with HTTP; Thu, 11 Dec 2014 15:40:53 -0800 (PST)
+In-Reply-To: <xmqqa92tdb80.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261307>
 
-=46rom: "S=C3=A9rgio Basto" <sergio@serjux.com> Sent: Tuesday, December=
- 09,=20
-2014 2:44 AM
-> On Sex, 2014-12-05 at 17:56 +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy wrote:
->> In the same spirit of 7fce6e3 (commit: correctly respect=20
->> skip-worktree
->> bit - 2009-12-14), if a file is marked unchanged, skip it.
->>
->> Noticed-by: S=C3=A9rgio Basto <sergio@serjux.com>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  builtin/commit.c                         |  2 +-
->>  t/t2106-update-index-assume-unchanged.sh | 10 ++++++++++
->>  2 files changed, 11 insertions(+), 1 deletion(-)
->>
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index e108c53..ee3de12 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -252,7 +252,7 @@ static int list_paths(struct string_list *list,=20
->> const char *with_tree,
->>  if (!ce_path_match(ce, pattern, m))
->>  continue;
->>  item =3D string_list_insert(list, ce->name);
->> - if (ce_skip_worktree(ce))
->> + if (ce->ce_flags & (CE_VALID | CE_SKIP_WORKTREE))
->>  item->util =3D item; /* better a valid pointer than a fake one */
->>  }
->>
->> diff --git a/t/t2106-update-index-assume-unchanged.sh=20
->> b/t/t2106-update-index-assume-unchanged.sh
->> index 99d858c..dc332f5 100755
->> --- a/t/t2106-update-index-assume-unchanged.sh
->> +++ b/t/t2106-update-index-assume-unchanged.sh
->> @@ -21,4 +21,14 @@ test_expect_success 'do not switch branches with=20
->> dirty file' \
->>  git update-index --assume-unchanged file &&
->>  test_must_fail git checkout master'
->>
->> +test_expect_success 'commit <paths> ignore assume-unchanged files' =
-'
->> + : >anotherfile &&
->> + git add anotherfile &&
->> + echo dirty >anotherfile &&
->> + git commit -m one -- file anotherfile &&
->> + git diff --name-only HEAD^ HEAD >actual &&
->> + echo anotherfile >expected &&
->> + test_cmp expected actual
->> +'
->> +
->>  test_done
->
->
-> works great many thanks,
->
-Junio: Given that this patch avoids the user surprise that the `commit=20
-=2E` and `commit -a` produced unexpectedly different effects, should it=
-=20
-also be included in the --assume unchanged patches? Or is the test=20
-inappropriate?
+> It smells like you spotted a bug in the behaviour, not a bug in the
+> documentation, at least to me.
 
-I'm guessing that there will still be other potential 'gotcha' code=20
-paths that would still produce surprise though.
+At first I thought so as well :-)
+I even prepared a patch, just to find out, that existing tests specifically
+test for this "unintuitive" behavior.
 
-Philip=20
+Then I read the docs in more detail and found this:
+
+  If the pattern contained a ! prefix or / suffix, it will be
+preserved in the output.
+
+So it seems there is indeed the intent to output patterns, even if
+they are negated/negative.
+
+Another problem I see with providing "correct" behavior is this:
+
+If I do a test for a non existant file, it cannot be decided whether I
+mean a file or a directory.
+
+e.g.
+
+having a gitignore with a single line
+
+  dir/
+
+which only ignores die _directory_ dir, but not the _file_ dir
+
+the exit code for
+
+  $ git check-ignore dir
+
+could either be 0 or 1, depending on whether a _file_ named "dir" or a
+_directory_
+named "dir" was meant.
+
+I assume that the command is meant to get the applying entry of the gitignore
+and then its up to the consumer to provide additional logic to determine whether
+the path is actually ignored or not.
+
+I am not sure what the correct behavior should be. And whether some
+code already depends
+on this command.
+
+My personal preference, would be a behavior like
+
+$ # regardless whether dir exists or not
+$ git check-ignore dir # a file is meant
+$ git check-ignore dir/ # a directory is mean
+
+and the exit code should only depend on whether the file is actually
+ignored or not
+- and not if there is an arbitrary matching pattern in gitignore
+
+PS: btw, the previously discussed gitignore file should have read
+(note the order)
+cat > .gitignore << EOF
+*.o
+!vendor.o
+EOF
+
+because always the last matching entry applies
+(so exceptions must come last) - but the exit codes are still the same
+
+On Fri, Dec 12, 2014 at 12:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Florian Hassanen <florian.hassanen@gmail.com> writes:
+>
+>> Maybe your global ignore file gets in the way?
+>
+> No, as I do not have one.
+>
+>> is one of a.o and vendor.o already in your index?
+>
+> Bingo.  I did "git add ." to see if the .gitignore file is doing the
+> right thing before running that demonstration.
+>
+> It smells like you spotted a bug in the behaviour, not a bug in the
+> documentation, at least to me.
+>
