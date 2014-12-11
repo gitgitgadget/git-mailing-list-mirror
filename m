@@ -1,118 +1,88 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v3 23/23] untracked cache: guard and disable on system
- changes
-Date: Thu, 11 Dec 2014 21:41:25 +0100
-Message-ID: <548A0175.6000008@web.de>
-References: <1418047507-22892-1-git-send-email-pclouds@gmail.com> <1418047507-22892-25-git-send-email-pclouds@gmail.com> <20141209100430.GC76457@vauxhall.crustytoothpaste.net> <CACsJy8A5-smRXN0k5TK8uPg4-j-Z83KWLNSO_w-eFivTNB_www@mail.gmail.com> <5487D543.7060801@web.de> <CACsJy8BPzcAPJZG4=+mt=LmhhheJjXkfD2+znMjBbjbB9mODDQ@mail.gmail.com>
+From: Kelson <kelson@shysecurity.com>
+Subject: Re: [PATCH] added git-config support for diff.relative setting
+Date: Thu, 11 Dec 2014 16:41:07 -0500
+Message-ID: <548A0F73.80109@shysecurity.com>
+References: <548947A0.7000608@shysecurity.com> <CACsJy8CBRzbVrKnKPACuqxLw2N3PiK2O2nE4-C_3jfEp6-2p=g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 21:41:43 2014
+X-From: git-owner@vger.kernel.org Thu Dec 11 22:41:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzAYP-0003Q8-Qx
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 21:41:42 +0100
+	id 1XzBUQ-0005CI-Bi
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 22:41:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758989AbaLKUlh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Dec 2014 15:41:37 -0500
-Received: from mout.web.de ([212.227.17.11]:59111 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758987AbaLKUlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2014 15:41:36 -0500
-Received: from macce.local ([78.72.72.190]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MUFGo-1YP7eR1cmo-00Qx29; Thu, 11 Dec 2014 21:41:33
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <CACsJy8BPzcAPJZG4=+mt=LmhhheJjXkfD2+znMjBbjbB9mODDQ@mail.gmail.com>
-X-Provags-ID: V03:K0:bq/RsAJmvuZsmdxyj/l/JU5b2UMxMLry7DD0TVTTJoXkwOzjU9R
- dxtlWv5YR1k9a1b2Zrr/oDWXHTGoL0yYjkGwSTDoIXqRPfyeIw3zpa9AxAPTc/Uwd2nGUNu
- qTB9CZLsW7sHZCQeYeeB04p7RjYsXU6Tksd1vINyoiMBq132vgfs3trCs+5z47ktSrrA5mT
- 9EphHnS1c0+3JnibUdCUQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S965336AbaLKVlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 16:41:13 -0500
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:49153 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934302AbaLKVlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 16:41:11 -0500
+Received: by mail-qg0-f50.google.com with SMTP id i50so4473157qgf.37
+        for <git@vger.kernel.org>; Thu, 11 Dec 2014 13:41:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=INXRRnVCN0nVWEWTyls6IaK1hgpNvA+vkUa4SBfdQGM=;
+        b=BOH3PwwIKhJoMmIVAZsq2XLkh8osyFLrXUWNIEk1J3h4dMTqnh1RNB9fGvua8jg7K2
+         Euh8rhMOyP4WEliqsgCSp8OFKR3FF0UfN8vm9xgIdh1d9DmXkCrvfSLrslS8gJWPwkIj
+         YbYwaf5I0gjsPDpu897umFM2v9nGfANacxDkTJZd1RW2FPEpUh8IWPT1pRuv6cNZQN2f
+         faGSc2BHYAoZGzrudECT5y6eLXHiTtcyIpld/ZRpaT6RvPk5NZemuMaRb2dzEePvq96+
+         dkUMWhV5en/swS+hUPOzAN8MkbWJPbUiiJhoYIUJamN2hZ+X3uYxcubo3aa7cjihV9w5
+         adfw==
+X-Gm-Message-State: ALoCoQnrQuvegRZH2A4xscQh6VZbg3bD0agk5vkQzIqAPu5Aj0VDuScKdAd1xO7B7dDz/JoK4OvO
+X-Received: by 10.140.84.111 with SMTP id k102mr22905486qgd.76.1418334070671;
+        Thu, 11 Dec 2014 13:41:10 -0800 (PST)
+Received: from [10.0.0.22] (pool-100-36-60-151.washdc.fios.verizon.net. [100.36.60.151])
+        by mx.google.com with ESMTPSA id j91sm2206780qgd.8.2014.12.11.13.41.09
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Dec 2014 13:41:10 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <CACsJy8CBRzbVrKnKPACuqxLw2N3PiK2O2nE4-C_3jfEp6-2p=g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261292>
 
-On 10.12.14 13:22, Duy Nguyen wrote:
-> On Wed, Dec 10, 2014 at 12:08 PM, Torsten B=C3=B6gershausen <tboegi@w=
-eb.de> wrote:
->> That opens another question:
->> How flexible/extensible/self-describing is the format of the UNTR ex=
-tension
->> ?
->> If we drop the OS name & root dir check because it disallows network=
- use,
->> but later add a better method to verify that the underlying chain
->> local OS - network - remote OS-remote FS is OK,
->> do we need to change the file format of UNTR ?
->> If yes, can old clients read the new format and vice versa?
->> Do we need a version information of some kind, or does the
->> old client skip unknown entries like we do with extensions in the in=
-dex ?
-> The way index extensions are done so far, there's no actual versionin=
-g
-> inside an extension.Once an extension is out, its format is set in
-> stone. If you change your mind, you make a new extension (with a
-> different signature), so signatures are sort of "version". Code is
-> shared mostly so it should not be a problem. Old clients don't
-> recognize new extensions, so they drop them. New clients either stick
-> to old extensions or convert them to new ones. This is all local
-> matters, so I don't think we need to worry too much.
-Thanks for the info.
-Even if I share the the concerns that the cache may work on one system,
-but not on the other, there should be better ways to protect from that.
+That is quite manageable. I was concerned that --relative changes the UI 
+(relative paths) and behavior (excluding files outside the current 
+directory), which might not be clear if placed in just the UI component. 
+You make a great point that git_diff_basic_config drives other commands 
+though, like git-bisect, which --relative would not effect.
 
-Using the uname does not really help, if you move one repo from NTFS to=
- VFAT,
-we will not detect it (assuming we use Windows).
-(And how much do we need to support the move of a repo ?)
+-----Original Message-----
+From: Duy Nguyen <pclouds@gmail.com>
+Sent: 12/11/2014 08:37 AM
+To: Kelson <kelson@shysecurity.com>
+CC: Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] added git-config support for diff.relative setting
 
-There is a concern that this may not work, when different clients are a=
-ccessing
-the repo, using the UNTR extension.
+On Thu, Dec 11, 2014 at 2:28 PM, Kelson <kelson@shysecurity.com> wrote:
+> @@ -270,6 +270,14 @@ int git_diff_basic_config(const char *var, const char
+> *value, void *cb)
+>                  return 0;
+>          }
+>
+> +       if (!strcmp(var, "diff.relative")) {
+> +               if (git_config_bool(var, value))
+> +                       DIFF_OPT_SET(&default_diff_options, RELATIVE_NAME);
+> +               else
+> +                       DIFF_OPT_CLR(&default_diff_options, RELATIVE_NAME);
+> +               return 0;
+> +       }
+> +
+>          if (starts_with(var, "submodule."))
+>                  return parse_submodule_config_option(var, value);
+>
 
-Some kind of sanity check would be good to have, what can be done ?
-The most important things are the timestamps.
-I can think of 2 sanity checks:
-- If the modified time stamp of a directory is older then the create ti=
-me of any file,
-  the UNTR cache can not be used.
-- If the timestamp of a file changes, but the sha1 sum is the same, wha=
-t does this mean?
-  The file (or the whole repo) has been copied, or the time stamping do=
-es not work.
-
-A simple verification of the FS could be to stat() .git/, create a temp=
- file, delete it and
-stat() again. If mtime does not change, the FS is unusable for UNTR.
-
-Then we could extend the uname idea:
-Create a string in UNTR which is a collection of lines like this:
-
-Working-For: Linux;/mnt/nfs/projects/project1
-Not-OK-For: WIndows:/a:/project1
-(Of course the strings can be made nicer, and '\n' is URL-encoded.)
-
-Each system that is not listed needs to probe the repo, add another lin=
-e
-and re-write the index.
-
-We can even add a "best-for" line, and invalidate the UNTR every 12 hou=
-rs or so.
-
-Should we think about having an ASCII area for additional information, =
-which is part
-of the stone, but the content is flexible ?
-
-The patch-series really speeds up "git status" on a network, thanks for=
- working on it.
-The next days^H^H^H^H weeks I will do some more tests, using different =
-combinations
-of OS and network protocols.
+This affects more than just git-diff. git_diff_ui_config() may be a
+better place.
