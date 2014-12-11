@@ -1,72 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-check-ignore.txt: Clarify exit codes
-Date: Thu, 11 Dec 2014 15:21:19 -0800
-Message-ID: <xmqqa92tdb80.fsf@gitster.dls.corp.google.com>
-References: <1418323355-23935-1-git-send-email-florian.hassanen@gmail.com>
-	<xmqqiohhdc5j.fsf@gitster.dls.corp.google.com>
-	<CAMAJHBYVMy-tc_aCjyeN7=VMG=k7gjWh9evL6bcJLzYfQcf6yg@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] commit: ignore assume-unchanged files in "commmit <file>" mode
+Date: Thu, 11 Dec 2014 23:23:33 -0000
+Organization: OPDS
+Message-ID: <35EB570A2A994662AA2E89910ECE9668@PhilipOakley>
+References: <1417732931.20814.16.camel@segulix> <1417776974-6537-1-git-send-email-pclouds@gmail.com> <1418093090.19104.1.camel@segulix>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Florian Hassanen <florian.hassanen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 00:21:30 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>
+To: =?UTF-8?Q?S=C3=A9rgio_Basto?= <sergio@serjux.com>,
+	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 00:23:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzD31-0005zP-0C
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 00:21:27 +0100
+	id 1XzD57-0000cy-SV
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 00:23:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934410AbaLKXVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2014 18:21:22 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64419 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934114AbaLKXVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2014 18:21:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ED35925FFC;
-	Thu, 11 Dec 2014 18:21:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M6X5hVDGkHWImHqa3+bQc74Nb6Y=; b=DT/l07
-	OQcUu7SXUtv+uoGZsvFM3Yac0yCP6E4Y1LjNieq/5C3UPn5hrWQuMGTljsQkBpEm
-	01YASwzb8g0Q80z2SGZCl69RWiqtTwQVRqLQQBijDRI8ZpGyupp/hyOjZgulW6cL
-	YF72ljTTIjBydodFQZmmI2O+RmTasKNrEivvw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=imP09n1qK4zUjiJIC2dlTzGjcUeqTyVT
-	lA4+2vMWC6leKLie3rFqZGvzu8KRT2Ok9ft7Rv01rEYwqdviGDfW1RQzANFESjpu
-	vY1nUnb8ZoxB3nEknXYt2HF3KDIT7VoDn2l6UFiZoUs/o9G1wIw9k3qgtdubRzUk
-	VxpZj4/CUeI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E376625FFB;
-	Thu, 11 Dec 2014 18:21:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F10A25FFA;
-	Thu, 11 Dec 2014 18:21:20 -0500 (EST)
-In-Reply-To: <CAMAJHBYVMy-tc_aCjyeN7=VMG=k7gjWh9evL6bcJLzYfQcf6yg@mail.gmail.com>
-	(Florian Hassanen's message of "Fri, 12 Dec 2014 00:16:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6A185FDE-818C-11E4-8991-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S965383AbaLKXXe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Dec 2014 18:23:34 -0500
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:13783 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934114AbaLKXXd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2014 18:23:33 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AowkAPslilROl3QYPGdsb2JhbABZgwZSWIMFgypsvluFaAQCgRUXAQEBAQEBBQEBAQE4IBuEBwUBAQEBAwgBARkECwEFHgEBIQsCAwUCAQMVAQICAgUhAgIUAQQIEgYHAxQGARIIAgECAwGIBwMVCcFWhlOKDA2FUAEKAQEBHoEhiGmDQBOBMWSCby6BEwWNf0yCcoNugk+KHzqFToQOPjCBA4FAAQEB
+X-IPAS-Result: AowkAPslilROl3QYPGdsb2JhbABZgwZSWIMFgypsvluFaAQCgRUXAQEBAQEBBQEBAQE4IBuEBwUBAQEBAwgBARkECwEFHgEBIQsCAwUCAQMVAQICAgUhAgIUAQQIEgYHAxQGARIIAgECAwGIBwMVCcFWhlOKDA2FUAEKAQEBHoEhiGmDQBOBMWSCby6BEwWNf0yCcoNugk+KHzqFToQOPjCBA4FAAQEB
+X-IronPort-AV: E=Sophos;i="5.07,560,1413241200"; 
+   d="scan'208";a="19189912"
+Received: from host-78-151-116-24.as13285.net (HELO PhilipOakley) ([78.151.116.24])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 11 Dec 2014 23:23:28 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261306>
 
-Florian Hassanen <florian.hassanen@gmail.com> writes:
+=46rom: "S=C3=A9rgio Basto" <sergio@serjux.com> Sent: Tuesday, December=
+ 09,=20
+2014 2:44 AM
+> On Sex, 2014-12-05 at 17:56 +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy wrote:
+>> In the same spirit of 7fce6e3 (commit: correctly respect=20
+>> skip-worktree
+>> bit - 2009-12-14), if a file is marked unchanged, skip it.
+>>
+>> Noticed-by: S=C3=A9rgio Basto <sergio@serjux.com>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>>  builtin/commit.c                         |  2 +-
+>>  t/t2106-update-index-assume-unchanged.sh | 10 ++++++++++
+>>  2 files changed, 11 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index e108c53..ee3de12 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -252,7 +252,7 @@ static int list_paths(struct string_list *list,=20
+>> const char *with_tree,
+>>  if (!ce_path_match(ce, pattern, m))
+>>  continue;
+>>  item =3D string_list_insert(list, ce->name);
+>> - if (ce_skip_worktree(ce))
+>> + if (ce->ce_flags & (CE_VALID | CE_SKIP_WORKTREE))
+>>  item->util =3D item; /* better a valid pointer than a fake one */
+>>  }
+>>
+>> diff --git a/t/t2106-update-index-assume-unchanged.sh=20
+>> b/t/t2106-update-index-assume-unchanged.sh
+>> index 99d858c..dc332f5 100755
+>> --- a/t/t2106-update-index-assume-unchanged.sh
+>> +++ b/t/t2106-update-index-assume-unchanged.sh
+>> @@ -21,4 +21,14 @@ test_expect_success 'do not switch branches with=20
+>> dirty file' \
+>>  git update-index --assume-unchanged file &&
+>>  test_must_fail git checkout master'
+>>
+>> +test_expect_success 'commit <paths> ignore assume-unchanged files' =
+'
+>> + : >anotherfile &&
+>> + git add anotherfile &&
+>> + echo dirty >anotherfile &&
+>> + git commit -m one -- file anotherfile &&
+>> + git diff --name-only HEAD^ HEAD >actual &&
+>> + echo anotherfile >expected &&
+>> + test_cmp expected actual
+>> +'
+>> +
+>>  test_done
+>
+>
+> works great many thanks,
+>
+Junio: Given that this patch avoids the user surprise that the `commit=20
+=2E` and `commit -a` produced unexpectedly different effects, should it=
+=20
+also be included in the --assume unchanged patches? Or is the test=20
+inappropriate?
 
-> Maybe your global ignore file gets in the way?
+I'm guessing that there will still be other potential 'gotcha' code=20
+paths that would still produce surprise though.
 
-No, as I do not have one.
-
-> is one of a.o and vendor.o already in your index?
-
-Bingo.  I did "git add ." to see if the .gitignore file is doing the
-right thing before running that demonstration.
-
-It smells like you spotted a bug in the behaviour, not a bug in the
-documentation, at least to me.
+Philip=20
