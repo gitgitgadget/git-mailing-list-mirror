@@ -1,136 +1,62 @@
-From: Kelson <kelson@shysecurity.com>
-Subject: [PATCH] added git-config support for diff.relative setting
-Date: Thu, 11 Dec 2014 02:28:32 -0500
-Message-ID: <548947A0.7000608@shysecurity.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Interested in helping open source friends on HP-UX?
+Date: Wed, 10 Dec 2014 23:46:25 -0800
+Message-ID: <xmqq4mt2fx2m.fsf@gitster.dls.corp.google.com>
+Reply-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 11 08:28:42 2014
+X-From: git-owner@vger.kernel.org Thu Dec 11 08:46:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XyyAz-0003Zf-Fe
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 08:28:41 +0100
+	id 1XyySG-0004eL-Qm
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Dec 2014 08:46:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932634AbaLKH2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2014 02:28:36 -0500
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:49642 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932171AbaLKH2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2014 02:28:35 -0500
-Received: by mail-qg0-f44.google.com with SMTP id q107so1306596qgd.31
-        for <git@vger.kernel.org>; Wed, 10 Dec 2014 23:28:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=+ayZtLIKnPhty/qnWxBvm2RgfoqKE1Ib+znzJj/ca0I=;
-        b=cHcKP6mwbV8lz2oo1C12iUP26RQvcH3rudAE1oQcxHVyhOsWpTUSVGXn1Xyv0Apz5J
-         l5L9j+FAJ6uGFaD0RTMCrgS+pVtUEH5Xlrc/8Z0XirCYxpT82h3YG9L9VKVA1XLmnG/S
-         qQAKgh5PxfKVepmQjTnhhfcnO9uC689yswl0Goct4FLma4nfOkFBgYfyaQ95yu5TkoFi
-         7XJYPw6CAs4zMpF5JjVX1dcHaSvPYoeNGR4OKpYeN5gEd6u9prv2/V8JQJ7B7y+37Zvt
-         lfV8iqznJB41S+TM7FhQxYC/ck7bQMEWHqziBlsgfSQP95nhdiRqOZl103B+j8onwrq+
-         jKnA==
-X-Gm-Message-State: ALoCoQmG5jaw1xTjhhOd3ArrdzKqjJQdWgxgeaeU5RzBDztqDC8/j227MZ7AXiM2jb6BlW+C2+XV
-X-Received: by 10.140.87.71 with SMTP id q65mr15758859qgd.67.1418282914764;
-        Wed, 10 Dec 2014 23:28:34 -0800 (PST)
-Received: from [10.0.0.22] (pool-100-36-60-151.washdc.fios.verizon.net. [100.36.60.151])
-        by mx.google.com with ESMTPSA id j101sm325899qge.24.2014.12.10.23.28.34
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Dec 2014 23:28:34 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+	id S933961AbaLKHq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2014 02:46:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51952 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933943AbaLKHq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2014 02:46:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B0FD1D596;
+	Thu, 11 Dec 2014 02:46:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:reply-to:date:message-id:mime-version:content-type; s=
+	sasl; bh=6xUrCebrHycxw2t/4EY7LkYL5PM=; b=j09lGBCwC0iHYW5b7qGZx6p
+	U+AjS6FA7b4c1bPNbq+xhqeQ/rdsP8jwThXU08b52YVwO6eYLluYB1II/0dMhLob
+	O2bmchn4nOLFUSLxjOaDxemiTkkzS60+enslzohwDOBvs8xHgKfuepvSd/554RPn
+	Jxhp80C9b5RYNt16sbjY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:reply-to:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=uyDG63vFr6gpYXMI0jOPfntjRqwP9ciEe6avX/Zzsh7QCTuMx
+	AIvXWSEcmJQ2e9qWBZZS11FLeSPaww76By7mNh/pvEQD7XUp8U3ZF5gKIYkICP+o
+	MgYk6jxPFyaSHKI/uc9ND2pV+e732yJBMwDmGv4Qv/Qi/PybdZbA37axmI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51B071D594;
+	Thu, 11 Dec 2014 02:46:27 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4A651D593;
+	Thu, 11 Dec 2014 02:46:26 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CFC2EE40-8109-11E4-8801-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261272>
 
-By default, git-diff shows changes and pathnames relative to the 
-repository root.
-Setting the diff.relative config option to "true" shows pathnames 
-relative to
-the current directory and excludes changes outside this directory.
----
-  Documentation/diff-config.txt |  6 ++++++
-  diff.c                        |  8 ++++++++
-  t/t4045-diff-relative.sh      | 21 +++++++++++++++++++++
-  3 files changed, 35 insertions(+)
+Hello, all.
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index b001779..10f183f 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -182,3 +182,9 @@ diff.algorithm::
-  	low-occurrence common elements".
-  --
-  +
-+
-+diff.relative::
-+	By default, linkgit:git-diff[1] shows changes and pathnames
-+	relative to the repository root. Setting this variable to
-+	`true` shows pathnames relative to the current directory and
-+	excludes changes outside this directory.
-diff --git a/diff.c b/diff.c
-index d1bd534..22daa2f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -270,6 +270,14 @@ int git_diff_basic_config(const char *var, const 
-char *value, void *cb)
-  		return 0;
-  	}
+H. Merijn Brand runs a few HP-UX boxes to help perl5 and other open
+source communities, wants help porting more recent Git on these
+boxes, running HP-UX 10.20, 11.00, and 11.23, and looking for a
+volunteer.  Please contact him directly if you are interested.
 
-+	if (!strcmp(var, "diff.relative")) {
-+		if (git_config_bool(var, value))
-+			DIFF_OPT_SET(&default_diff_options, RELATIVE_NAME);
-+		else
-+			DIFF_OPT_CLR(&default_diff_options, RELATIVE_NAME);
-+		return 0;
-+	}
-+
-  	if (starts_with(var, "submodule."))
-  		return parse_submodule_config_option(var, value);
-
-diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
-index 3950f50..8c8fe0b 100755
---- a/t/t4045-diff-relative.sh
-+++ b/t/t4045-diff-relative.sh
-@@ -29,6 +29,23 @@ test_expect_success "-p $*" "
-  "
-  }
-
-+check_config() {
-+expect=$1; shift
-+cat >expected <<EOF
-+diff --git a/$expect b/$expect
-+new file mode 100644
-+index 0000000..25c05ef
-+--- /dev/null
-++++ b/$expect
-+@@ -0,0 +1 @@
-++other content
-+EOF
-+test_expect_success "git-config diff.relative=true in $1" "
-+	(cd $1; git -c diff.relative=true diff -p HEAD^ >../actual) &&
-+	test_cmp expected actual
-+"
-+}
-+
-  check_numstat() {
-  expect=$1; shift
-  cat >expected <<EOF
-@@ -69,5 +86,9 @@ for type in diff numstat stat raw; do
-  	check_$type file2 --relative=subdir
-  	check_$type dir/file2 --relative=sub
-  done
-+for type in config; do
-+	check_$type file2 subdir/
-+	check_$type file2 subdir
-+done
-
-  test_done
--- 
-1.9.1
+Thanks.
