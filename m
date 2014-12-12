@@ -1,155 +1,124 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 13/24] Rename expire_reflog_cb to expire_reflog_policy_cb
-Date: Fri, 12 Dec 2014 09:56:52 +0100
-Message-ID: <1418374623-5566-14-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 10/24] expire_reflog(): add a "flags" argument
+Date: Fri, 12 Dec 2014 09:56:49 +0100
+Message-ID: <1418374623-5566-11-git-send-email-mhagger@alum.mit.edu>
 References: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 09:58:05 2014
+X-From: git-owner@vger.kernel.org Fri Dec 12 09:58:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzM31-0004td-Hf
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:58:03 +0100
+	id 1XzM39-00052F-6l
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:58:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965286AbaLLI5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 03:57:37 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:58938 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934685AbaLLI5f (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 03:57:35 -0500
-X-AuditID: 1207440c-f79376d00000680a-c1-548aadf9131d
+	id S965171AbaLLI5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 03:57:30 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:47533 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964947AbaLLI50 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 03:57:26 -0500
+X-AuditID: 12074412-f79e46d0000036b4-32-548aadf53188
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 48.8E.26634.9FDAA845; Fri, 12 Dec 2014 03:57:29 -0500 (EST)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 74.5F.14004.5FDAA845; Fri, 12 Dec 2014 03:57:25 -0500 (EST)
 Received: from michael.fritz.box (p5DDB074C.dip0.t-ipconnect.de [93.219.7.76])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBC8v9nN023104
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBC8v9nK023104
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 12 Dec 2014 03:57:28 -0500
+	Fri, 12 Dec 2014 03:57:24 -0500
 X-Mailer: git-send-email 2.1.3
 In-Reply-To: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqPtzbVeIwelfWhZdV7qZLBp6rzBb
-	vL25hNHi9or5zBa9fZ9YLTZvbmdxYPP4+/4Dk8fOWXfZPRZsKvW4eEnZ4/MmuQDWKG6bpMSS
-	suDM9Dx9uwTujKvHHzAWPJKteLZkJVMD41yJLkZODgkBE4kfqxYwQ9hiEhfurWfrYuTiEBK4
-	zCjxfNNOVgjnGJPE3d4zTCBVbAK6Eot6msFsEQE1iYlth1hAbGaBE4wSsxtCQGxhAR+Jpaf/
-	sYHYLAKqEn9e7wazeQVcJFb83A1UzwG0TU5i6zpvkDAnUPhiyxOwMUICzhJbV3SyTmDkXcDI
-	sIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11AvN7NELzWldBMjJLR4djB+WydziFGAg1GJh/dF
-	aleIEGtiWXFl7iFGSQ4mJVHe75OBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4/0YB5XhTEiur
-	UovyYVLSHCxK4ryqS9T9hATSE0tSs1NTC1KLYLIyHBxKErxxa4AaBYtS01Mr0jJzShDSTByc
-	IMO5pESKU/NSUosSS0sy4kGREV8MjA2QFA/Q3mCQdt7igsRcoChE6ylGRSlx3laQhABIIqM0
-	D24sLGG8YhQH+lKYtw6kigeYbOC6XwENZgIavHxLB8jgkkSElFQDY1PsYj2+n2vefWtXULkx
-	S1Mnknl771zNAlVOJpvmpmBNLecP0+qWxKfffCKv8mPCHe2evY92JM603Gu7o3ju1Ibna0Uu
-	7vC/LM/Yqsts6qdp8WlG5JPt8xgVMhrPZ69d4RskzJp1cNOFm+of2Va4llit22nh 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqPt1bVeIweEuM4uuK91MFg29V5gt
+	3t5cwmhxe8V8Zovevk+sFps3t7M4sHn8ff+ByWPnrLvsHgs2lXpcvKTs8XmTXABrFLdNUmJJ
+	WXBmep6+XQJ3xvrnlxgLOoUrtk54x9TAuIy/i5GTQ0LAROLJyVmMELaYxIV769m6GLk4hAQu
+	M0pM3X+CHcI5xiSx/2QPC0gVm4CuxKKeZiYQW0RATWJi2yGwOLPACUaJ2Q0hILawgKPEp7/7
+	2EBsFgFVifcbdzCD2LwCLhJz+qcDbeMA2iYnsXWdN0iYEyh8seUJ2BghAWeJrSs6WScw8i5g
+	ZFjFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuml5tZopeaUrqJERJaQjsY15+UO8QowMGoxMP7
+	IrUrRIg1say4MvcQoyQHk5Io7/fJQCG+pPyUyozE4oz4otKc1OJDjBIczEoivH+jgHK8KYmV
+	ValF+TApaQ4WJXHen4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8cWuAGgWLUtNTK9Iyc0oQ0kwc
+	nCDDuaREilPzUlKLEktLMuJBkRFfDIwNkBQP0N5gkHbe4oLEXKAoROspRkUpcd5WkIQASCKj
+	NA9uLCxhvGIUB/pSmPcMSBUPMNnAdb8CGswENHj5lg6QwSWJCCmpBsb17+cterBP2u3IicKE
+	f2c+rf2wnW9/h1/uRC9nF85S3qD7R3e2/GNjvWXMGPbPfon87neqpgtn67/5cf2JTHV3iBrb
+	Fx5+ydNum+doWrm4Xcr/mReQt6vEVNg80OztrqnhXQZf3ujeuV1mXtF5e/LainPu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261335>
 
-This is the first step towards separating the data needed by the
-policy code from the data needed by the reflog expiration machinery.
+We want to separate the options relevant to the expiry machinery from
+the options affecting the expiration policy. So add a "flags" argument
+to expire_reflog() to hold the former.
 
-(In a moment we will add a *new* "struct expire_reflog_cb" for the use
-of expire_reflog() itself, then move fields selectively from
-expire_reflog_policy_cb to expire_reflog_cb.)
+The argument doesn't yet do anything.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Reviewed-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/reflog.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ builtin/reflog.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/reflog.c b/builtin/reflog.c
-index e238fe0..94c34fc 100644
+index 8db52d7..dfff5f2 100644
 --- a/builtin/reflog.c
 +++ b/builtin/reflog.c
-@@ -35,7 +35,7 @@ struct cmd_reflog_expire_cb {
- 	int recno;
- };
- 
--struct expire_reflog_cb {
-+struct expire_reflog_policy_cb {
- 	FILE *newlog;
- 	enum {
- 		UE_NORMAL,
-@@ -225,7 +225,7 @@ static int keep_entry(struct commit **it, unsigned char *sha1)
-  * the expire_limit and queue them back, so that the caller can call
-  * us again to restart the traversal with longer expire_limit.
-  */
--static void mark_reachable(struct expire_reflog_cb *cb)
-+static void mark_reachable(struct expire_reflog_policy_cb *cb)
- {
- 	struct commit *commit;
- 	struct commit_list *pending;
-@@ -264,7 +264,7 @@ static void mark_reachable(struct expire_reflog_cb *cb)
- 	cb->mark_list = leftover;
+@@ -414,7 +414,7 @@ static void reflog_expiry_cleanup(struct expire_reflog_cb *cb)
  }
  
--static int unreachable(struct expire_reflog_cb *cb, struct commit *commit, unsigned char *sha1)
-+static int unreachable(struct expire_reflog_policy_cb *cb, struct commit *commit, unsigned char *sha1)
- {
- 	/*
- 	 * We may or may not have the commit yet - if not, look it
-@@ -300,7 +300,7 @@ static int should_expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 				    const char *email, unsigned long timestamp, int tz,
- 				    const char *message, void *cb_data)
- {
--	struct expire_reflog_cb *cb = cb_data;
-+	struct expire_reflog_policy_cb *cb = cb_data;
- 	struct commit *old, *new;
- 
- 	if (timestamp < cb->cmd->expire_total)
-@@ -328,7 +328,7 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
- {
--	struct expire_reflog_cb *cb = cb_data;
-+	struct expire_reflog_policy_cb *cb = cb_data;
- 
- 	if (cb->cmd->rewrite)
- 		osha1 = cb->last_kept_sha1;
-@@ -355,7 +355,8 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	return 0;
- }
- 
--static int push_tip_to_list(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
-+static int push_tip_to_list(const char *refname, const unsigned char *sha1,
-+			    int flags, void *cb_data)
- {
- 	struct commit_list **list = cb_data;
- 	struct commit *tip_commit;
-@@ -370,7 +371,7 @@ static int push_tip_to_list(const char *refname, const unsigned char *sha1, int
- 
- static void reflog_expiry_prepare(const char *refname,
- 				  const unsigned char *sha1,
--				  struct expire_reflog_cb *cb)
-+				  struct expire_reflog_policy_cb *cb)
- {
- 	if (!cb->cmd->expire_unreachable || !strcmp(refname, "HEAD")) {
- 		cb->tip_commit = NULL;
-@@ -402,7 +403,7 @@ static void reflog_expiry_prepare(const char *refname,
- 	}
- }
- 
--static void reflog_expiry_cleanup(struct expire_reflog_cb *cb)
-+static void reflog_expiry_cleanup(struct expire_reflog_policy_cb *cb)
- {
- 	if (cb->unreachable_expire_kind != UE_ALWAYS) {
- 		if (cb->unreachable_expire_kind == UE_HEAD) {
-@@ -420,7 +421,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
- 			 unsigned int flags, struct cmd_reflog_expire_cb *cmd)
+ static int expire_reflog(const char *refname, const unsigned char *sha1,
+-			 struct cmd_reflog_expire_cb *cmd)
++			 unsigned int flags, struct cmd_reflog_expire_cb *cmd)
  {
  	static struct lock_file reflog_lock;
--	struct expire_reflog_cb cb;
-+	struct expire_reflog_policy_cb cb;
- 	struct ref_lock *lock;
- 	char *log_file;
- 	int status = 0;
+ 	struct expire_reflog_cb cb;
+@@ -642,6 +642,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 	unsigned long now = time(NULL);
+ 	int i, status, do_all;
+ 	int explicit_expiry = 0;
++	unsigned int flags = 0;
+ 
+ 	default_reflog_expire_unreachable = now - 30 * 24 * 3600;
+ 	default_reflog_expire = now - 90 * 24 * 3600;
+@@ -711,7 +712,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		for (i = 0; i < collected.nr; i++) {
+ 			struct collected_reflog *e = collected.e[i];
+ 			set_reflog_expiry_param(&cb, explicit_expiry, e->reflog);
+-			status |= expire_reflog(e->reflog, e->sha1, &cb);
++			status |= expire_reflog(e->reflog, e->sha1, flags, &cb);
+ 			free(e);
+ 		}
+ 		free(collected.e);
+@@ -725,7 +726,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 		set_reflog_expiry_param(&cb, explicit_expiry, ref);
+-		status |= expire_reflog(ref, sha1, &cb);
++		status |= expire_reflog(ref, sha1, flags, &cb);
+ 	}
+ 	return status;
+ }
+@@ -744,6 +745,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ {
+ 	struct cmd_reflog_expire_cb cb;
+ 	int i, status = 0;
++	unsigned int flags = 0;
+ 
+ 	memset(&cb, 0, sizeof(cb));
+ 
+@@ -796,7 +798,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 			cb.expire_total = 0;
+ 		}
+ 
+-		status |= expire_reflog(ref, sha1, &cb);
++		status |= expire_reflog(ref, sha1, flags, &cb);
+ 		free(ref);
+ 	}
+ 	return status;
 -- 
 2.1.3
