@@ -1,144 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/24] Add reflog_expire() to the references API
-Date: Fri, 12 Dec 2014 12:58:30 -0800
-Message-ID: <xmqqegs4bn61.fsf@gitster.dls.corp.google.com>
-References: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
+From: ronnie sahlberg <ronniesahlberg@gmail.com>
+Subject: Re: [PATCH 0/8] Making reflog modifications part of the transactions API
+Date: Fri, 12 Dec 2014 16:16:07 -0500
+Message-ID: <CAN05THRiMiQCqO1VZX7zQeWLBZMPG_sx1aVvdGirAoEh2Hd9Dw@mail.gmail.com>
+References: <1417833995-25687-1-git-send-email-sbeller@google.com>
+	<548B150C.2090606@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
+	Junio C Hamano <gitster@pobox.com>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 12 21:58:45 2014
+X-From: git-owner@vger.kernel.org Fri Dec 12 22:16:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzXIR-00076r-AF
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 21:58:43 +0100
+	id 1XzXZn-0002Hm-Mk
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 22:16:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966511AbaLLU6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 15:58:36 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57754 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757042AbaLLU6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2014 15:58:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 90098238E7;
-	Fri, 12 Dec 2014 15:58:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nNcwLklksBZSMXv5KGo7pry0w6w=; b=uaWkvL
-	aY9ufv8WpaAQRNa8CTeITI4NAFcynpIMyS9Fs2wKsZNWviBFSStZeiIW+h5F/FyU
-	2wH//LoXlqsenWbQ8TYK3l3cB4tuWazv/62bjsw/ZjNkz27BnohxurhUzsqyHyR4
-	Axlm3+Wq6ax8W19RBofzXD6vtl6JjY3Y95AkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dZIIZKF4Dr3ZElm4/b9PHEsjJXfMR5Iv
-	axMXFVZJAKmBPW4cg440VCC8cZcZC4A7YmQOjgXhYtazTY+kkEarcEzkGj0s1XbL
-	6vVHVgSuAPXfIp2ljORlsijq3UDiNnlnSQJp1tJ6jciYC/y7EgRsNJEfa4khhfkV
-	7vwSo2c0sjk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 86B6A238E6;
-	Fri, 12 Dec 2014 15:58:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06006238E5;
-	Fri, 12 Dec 2014 15:58:32 -0500 (EST)
-In-Reply-To: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Fri, 12 Dec 2014 09:56:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A1739B0A-8241-11E4-B4FE-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752630AbaLLVQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 16:16:31 -0500
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:44110 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753120AbaLLVQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2014 16:16:09 -0500
+Received: by mail-lb0-f175.google.com with SMTP id u10so6454695lbd.6
+        for <git@vger.kernel.org>; Fri, 12 Dec 2014 13:16:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=rhjjKVd3bAxbPD/wpPCSpR7An3KQBrCgAqt8wgWmSKY=;
+        b=kHkT7RegY9g0uoC3obzAqV+B0MvzI/+hIWBWW6Cd3ABel91FTPc17W3t74IRZ1Dwuv
+         57YpIsl8zVtT+2XBRXrIJZJyVGziS6mnBzQ0MupRGSx7+nNyO0Vgv49+yQ1u4mSL7mx3
+         AfK5+HV6QpuCWP8qBUYon5rDHbO2OFELe7onQCXmrWEngcP4P+5V6eWAu11M+7AHGrji
+         +COdJgy+dqa8/LMrEnu2Q2u0NbvkdUfQoM9wlCBeghAo+BZGBtaxfgx3rWW5fELctJoT
+         2Mjuv80+rgk0DmLUOxG5nlygdEqe9r7U147zMdShk5143DfIFl6I1vyvIJYuelEXSt0/
+         J6Ew==
+X-Received: by 10.152.116.101 with SMTP id jv5mr7518310lab.13.1418418968066;
+ Fri, 12 Dec 2014 13:16:08 -0800 (PST)
+Received: by 10.25.15.67 with HTTP; Fri, 12 Dec 2014 13:16:07 -0800 (PST)
+In-Reply-To: <548B150C.2090606@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261373>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Fri, Dec 12, 2014 at 11:17 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 12/06/2014 03:46 AM, Stefan Beller wrote:
+>> This goes on top of Michaels series. The idea of this series is make the
+>> reflogs being part of the transaction API, so it will be part of the contract
+>> of transaction_commit to either commit all the changes or none at all.
+>>
+>> Currently when using the transaction API to change refs, also reflogs are changed.
+>> But the changes to the reflogs just happen as a side effect and not as part of
+>> the atomic part of changes we want to commit altogether.
+>
+> Would you please explain why this patch series is still needed if my
+> "reflog_expire()" series is accepted?
+>
+> reflog_expire() already has its own little transaction. Reflog
+> expiration never needs to be combined with other reference changes, so
+> there is no need for reflog expiration to be done via a ref_transaction.
+>
+> ref_transaction_commit() already updates the reflog if necessary when a
+> reference is updated. That update is part of the containing
+> ref_transaction, because it is locked by the lock on the reference
+> itself at the beginning of the transaction and unlocked at the end of
+> the transaction [1]. It can't fail in normal circumstances because the
+> preconditions for the transaction have already been checked.
+>
+> As far as I can tell, the only thing left to do is provide a substitute
+> for log_ref_setup() a.k.a. create_reflog() that can be triggered within
+> a transaction. In my opinion the easiest way to do that is to give
+> ref_transaction_update()'s flag parameter an additional option,
+> REF_CREATE_REFLOG, which forces the reference's reflog to be created if
+> it does not already exist.
+>
+> What am I missing?
+>
 
-> This is v2 of the series. Thanks to Jonathan, Stefan, Junio, and
-> Ronnie for their feedback on v1 [1]. I think I have addressed all of
-> the issues that were raised.
->
-> Changes since v1:
->
-> * Several improvements to commit messages and comments; added some
->   Reviewed-by comments from the mailing list.
->
-> * Change the signature of expire_reflog() early in the series to cast
->   off its heritage as an each_ref_fn.
->
-> * Move the static lock_file object into expire_reflog(), and explain
->   the locking policy better.
->
-> * Report errors if hold_lock_file_for_update() or fdopen_lock_file()
->   fails.
->
-> * Fix the capitalization in some error messages.
->
-> * When "enum expire_reflog_flags" is first introduced, put its
->   definition earlier in the file so that a later patch in the series
->   doesn't have to move it.
->
-> * Rename reflog_expiry_select_fn to reflog_expiry_should_prune_fn.
->
-> * Append Stefan's patch 24/24 "refs.c: let fprintf handle the
->   formatting"
+My original idea was to clean up a bit of the reflog handling API and
+have one single transaction API for all  ref and reflog operations.
 
-All looked reasonable (three patches in the series somehow stood out
-in a funny way in shortlog output, though).
+Think future use cases where you have a database backend for both refs
+and reflogs. It would be very nice to have a single atomic transaction
+that would either commit or fail atomically any update to refs and/or
+reflogs.
+Otherwise you would have all consumers of the API have to invent their
+own transaction and rewind support : 'oh the ref transaction failed
+and I have already done the reflog commit,   have to manually uncommit
+...".
+And this quickly becomes quite burdensome for consumers.
 
-Will queue.  I think a few topics from Stefan I have in 'pu' can
-safely be dropped as the early part of this series has the same.
+I think a transaction API should remove this burden from consumers and
+make it as easy as possible to use the API.
 
-Thanks.
+Conditional of if it is desireable to have transactions for reflogs at all.
 
 
->
-> This branch is also available on GitHub:
->
->     https://github.com/mhagger/git.git, branch reflog-expire-api-v2
->
+
+About the cleanup part. The current API, and I think also the current
+direction of both my old patches (which I think did not go far enough
+in the transactifications) or this current patchseries is that they
+all
+have a very confusing and inconsistent API for reflog updates.
+With this I mean,   sometimes reflog updates happen within a
+transaction as a side effect of a ref_transaction_update().
+Other times reflog updates happens ooutside of transactions by calling
+a special reflog API.
+
+I.e.  reflogs sometimes update as part of a transaction and sometimes not.
+A follow up question then on this API is what should happen if you
+have a transaction open, but not committed, and while the transaction
+is open you call the non-transactional reflog API for a reflog for the
+same ref that is already beeing/or going to be/ updated as the
+ref-update-side-effect ?
+
+
+I think an api where "sometimes you operate on foo from within a
+transaction and sometimes you do not, and if you do the latter when a
+transaction is open, it is unclear what should happen" is not great.
+IMHO, refs and reflog updates are related and I think:
+
+* a transaction should be the ONLY way to mutate either a ref or a
+reflog or both.
+* if you update both a ref and a reflog then that should happen as
+part of one single transaction.
+* (later) it would probably make the API better if the code was
+refactored so write_ref_sha1() will NOT call log_ref_write() anymore
+and instead make the reflog update that happens explicit perhaps by
+calling something like a ref_transaction_update_reflog() as part of
+the ref_transaction_update() call.
+
+
+
+
+
+
 > Michael
 >
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/260812
+> [1] The reflog updates are not atomic in the face of disk errors and
+> power outages and stuff, but neither are reference updates. In other
+> words, I think reflog updates in ref_transaction_commit() are done as
+> safely as reference updates, which is surely good enough for this
+> reference backend. Other reference backends can do a better job with
+> both while staying within the existing API.
 >
-> Michael Haggerty (18):
->   expire_reflog(): it's not an each_ref_fn anymore
->   expire_reflog(): rename "ref" parameter to "refname"
->   expire_reflog(): return early if the reference has no reflog
->   expire_reflog(): use a lock_file for rewriting the reflog file
->   Extract function should_expire_reflog_ent()
->   expire_reflog(): extract two policy-related functions
->   expire_reflog(): add a "flags" argument
->   expire_reflog(): move dry_run to flags argument
->   expire_reflog(): move updateref to flags argument
->   Rename expire_reflog_cb to expire_reflog_policy_cb
->   struct expire_reflog_cb: a new callback data type
->   expire_reflog(): pass flags through to expire_reflog_ent()
->   expire_reflog(): move verbose to flags argument
->   expire_reflog(): move rewrite to flags argument
->   Move newlog and last_kept_sha1 to "struct expire_reflog_cb"
->   expire_reflog(): treat the policy callback data as opaque
->   reflog_expire(): new function in the reference API
->   lock_any_ref_for_update(): inline function
+> --
+> Michael Haggerty
+> mhagger@alum.mit.edu
 >
-> Ronnie Sahlberg (4):
->   refs.c: make ref_transaction_create a wrapper for
->     ref_transaction_update
->   refs.c: make ref_transaction_delete a wrapper for
->     ref_transaction_update
->   refs.c: add a function to append a reflog entry to a fd
->   refs.c: remove unlock_ref/close_ref/commit_ref from the refs api
->
-> Stefan Beller (2):
->   refs.c: don't expose the internal struct ref_lock in the header file
->   refs.c: let fprintf handle the formatting
->
->  builtin/reflog.c | 259 ++++++++++++++++++++++--------------------------------
->  refs.c           | 263 ++++++++++++++++++++++++++++++++++++++-----------------
->  refs.h           |  75 ++++++++++------
->  3 files changed, 332 insertions(+), 265 deletions(-)
