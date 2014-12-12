@@ -1,99 +1,129 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 0/8] Making reflog modifications part of the transactions
- API
-Date: Fri, 12 Dec 2014 17:17:16 +0100
-Message-ID: <548B150C.2090606@alum.mit.edu>
-References: <1417833995-25687-1-git-send-email-sbeller@google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 04/24] expire_reflog(): it's not an each_ref_fn anymore
+Date: Fri, 12 Dec 2014 10:09:55 -0800
+Message-ID: <CAGZ79kZOa77DKLnvinhgAVwCeRRXWMD5Krk8QK6N170+oqA-xA@mail.gmail.com>
+References: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
+	<1418374623-5566-5-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	jrnieder@gmail.com, ronniesahlberg@gmail.com, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Dec 12 17:17:28 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Dec 12 19:11:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzSuF-0005WM-Mi
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 17:17:28 +0100
+	id 1XzUgH-0005aL-0r
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 19:11:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934960AbaLLQRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 11:17:22 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:61166 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934917AbaLLQRW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 11:17:22 -0500
-X-AuditID: 1207440c-f79376d00000680a-ee-548b150f7363
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id B1.3F.26634.F051B845; Fri, 12 Dec 2014 11:17:19 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB074C.dip0.t-ipconnect.de [93.219.7.76])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBCGHHA3008851
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 12 Dec 2014 11:17:18 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
-In-Reply-To: <1417833995-25687-1-git-send-email-sbeller@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqMsv2h1isGm5hUXXlW4mi4beK8wW
-	b28uYbTo7fvEarF5czuLA6vHzll32T0WbCr1uHhJ2ePzJrkAlihum6TEkrLgzPQ8fbsE7oyO
-	jq9sBVsEKlYe6GVuYFzB28XIySEhYCKx6doaZghbTOLCvfVsXYxcHEIClxklfkxuYYVwzjJJ
-	/Hm1DqyKV0Bb4vz+BewgNouAqsTy+y1sIDabgK7Eop5mJhBbVCBI4uSe6+wQ9YISJ2c+YQEZ
-	JCLQyigxa99zsAZhgWCJrucfwIqEBJwkeqZvYAGxOQWcJRY3rQOzmQX0JHZc/8UKYctLNG+d
-	zTyBkX8WkrmzkJTNQlK2gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGuoV5uZoleakrpJkZI
-	CPPsYPy2TuYQowAHoxIP74vUrhAh1sSy4srcQ4ySHExKorx3+LtDhPiS8lMqMxKLM+KLSnNS
-	iw8xSnAwK4nw/o0CKudNSaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfAy
-	iAANFSxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAdFZXwxMC5BUjxAe+VA2nmLCxJz
-	gaIQracYFaXEedlBEgIgiYzSPLixsMT0ilEc6Eth3gnCQFU8wKQG1/0KaDAT0ODlWzpABpck
-	IqSkGhj13TeYhB257DUra7978pScHYrf7zzsu2H3rvur+jT+nUf+Xik7otwxR9FFee4W34ta
-	h4J2rfp91PRikWp4S/o76aPHltYvrYm1f7nwfGroh7ui1l23l1nuX/xG9liNQev+ 
+	id S935022AbaLLSJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 13:09:57 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:41291 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179AbaLLSJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2014 13:09:56 -0500
+Received: by mail-ie0-f176.google.com with SMTP id tr6so7353726ieb.21
+        for <git@vger.kernel.org>; Fri, 12 Dec 2014 10:09:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=cZA3eMsiPZAjWK2tRN51gFD5M1JApfyU2MeFZPrKgFI=;
+        b=I70OQWPPj03wHM7fUFVQtb1tTEgal7brL0MdICOFKTPaHF1rOI3Dbd2HtraZpe4LRx
+         rgekzRHmbD9MfHaYH3t7W2Dvve4mz7UsqnttkqM2SfnLLwAo2iArV673Dxz0xPVzi6tL
+         Qdz4eimcpT7cTFjYCRVvTlI8QEyCdurFZlWQ8Wh9A02H1qZlsTUIWc8tAZJMZDQ5iE4K
+         SHB+U+Gn6WWqx8Z0FipBLTaL3YsfGVbvIvfbXS3t4eQQgLOZHoySHZgP2NGWn4PhmBw6
+         OvCA+yDYdrtjIdpYEb5NCQkfzwSiKDLokILPGlBxLEy0q9iDlni/0bW+6zgFrqg/bNGm
+         Yipw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=cZA3eMsiPZAjWK2tRN51gFD5M1JApfyU2MeFZPrKgFI=;
+        b=Bg/52Ww1WCCEEW/dekehjW/n020pzWsZOmFHM2TDZpxICXk2BPO+E77uQuQjh2qDF1
+         gkLTr77PC1tuDRxyeUuVT7nKnrX4SjwIz/jIbgtKg4h/Thnx8BWm8xMkHNUuTk4kxK9R
+         EGpntGDRgg1toJ1ChuZMKqxipeWttDlJ2SpLjfwai1zWktF3AydtcJIXpGlF0etmvsyX
+         UO80Jf8ucrHEgFSy4M7KXVubC/odtNbiMFahj79iDMR5xWrwI8fRerZiEGdPzQ6WE1l+
+         nz3kBJvdsNIDj/Lk/3A/RyzkXKs2fnTbRxmgi0PTjkXedpvhGXCjZwxUH8xg+ls8/JKl
+         0GkA==
+X-Gm-Message-State: ALoCoQnBSKha//bPAsxooA7z1S3eo39zqLXh0xuwXS2Tlqyq4HnDsIypxBNYN4NJkDVV1sBc4sEq
+X-Received: by 10.107.25.74 with SMTP id 71mr9705394ioz.70.1418407795966; Fri,
+ 12 Dec 2014 10:09:55 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Fri, 12 Dec 2014 10:09:55 -0800 (PST)
+In-Reply-To: <1418374623-5566-5-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261351>
 
-On 12/06/2014 03:46 AM, Stefan Beller wrote:
-> This goes on top of Michaels series. The idea of this series is make the
-> reflogs being part of the transaction API, so it will be part of the contract
-> of transaction_commit to either commit all the changes or none at all.
-> 
-> Currently when using the transaction API to change refs, also reflogs are changed.
-> But the changes to the reflogs just happen as a side effect and not as part of
-> the atomic part of changes we want to commit altogether.
+On Fri, Dec 12, 2014 at 12:56 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Prior to v1.5.4~14, expire_reflog() had to be an each_ref_fn because
+> it was passed to for_each_reflog(). Since then, there has been no
+> reason for it to implement the each_ref_fn interface. So...
+>
+> * Remove the "unused" parameter (which took the place of "flags", but
+>   was really unused).
+>
+> * Declare the last parameter to be (struct cmd_reflog_expire_cb *)
+>   rather than (void *).
+>
+> Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 
-Would you please explain why this patch series is still needed if my
-"reflog_expire()" series is accepted?
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
-reflog_expire() already has its own little transaction. Reflog
-expiration never needs to be combined with other reference changes, so
-there is no need for reflog expiration to be done via a ref_transaction.
-
-ref_transaction_commit() already updates the reflog if necessary when a
-reference is updated. That update is part of the containing
-ref_transaction, because it is locked by the lock on the reference
-itself at the beginning of the transaction and unlocked at the end of
-the transaction [1]. It can't fail in normal circumstances because the
-preconditions for the transaction have already been checked.
-
-As far as I can tell, the only thing left to do is provide a substitute
-for log_ref_setup() a.k.a. create_reflog() that can be triggered within
-a transaction. In my opinion the easiest way to do that is to give
-ref_transaction_update()'s flag parameter an additional option,
-REF_CREATE_REFLOG, which forces the reference's reflog to be created if
-it does not already exist.
-
-What am I missing?
-
-Michael
-
-[1] The reflog updates are not atomic in the face of disk errors and
-power outages and stuff, but neither are reference updates. In other
-words, I think reflog updates in ref_transaction_commit() are done as
-safely as reference updates, which is surely good enough for this
-reference backend. Other reference backends can do a better job with
-both while staying within the existing API.
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+> ---
+>  builtin/reflog.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index 2d85d26..160541a 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -349,9 +349,9 @@ static int push_tip_to_list(const char *refname, const unsigned char *sha1, int
+>         return 0;
+>  }
+>
+> -static int expire_reflog(const char *ref, const unsigned char *sha1, int unused, void *cb_data)
+> +static int expire_reflog(const char *ref, const unsigned char *sha1,
+> +                        struct cmd_reflog_expire_cb *cmd)
+>  {
+> -       struct cmd_reflog_expire_cb *cmd = cb_data;
+>         struct expire_reflog_cb cb;
+>         struct ref_lock *lock;
+>         char *log_file, *newlog_path = NULL;
+> @@ -663,7 +663,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+>                 for (i = 0; i < collected.nr; i++) {
+>                         struct collected_reflog *e = collected.e[i];
+>                         set_reflog_expiry_param(&cb, explicit_expiry, e->reflog);
+> -                       status |= expire_reflog(e->reflog, e->sha1, 0, &cb);
+> +                       status |= expire_reflog(e->reflog, e->sha1, &cb);
+>                         free(e);
+>                 }
+>                 free(collected.e);
+> @@ -677,7 +677,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+>                         continue;
+>                 }
+>                 set_reflog_expiry_param(&cb, explicit_expiry, ref);
+> -               status |= expire_reflog(ref, sha1, 0, &cb);
+> +               status |= expire_reflog(ref, sha1, &cb);
+>         }
+>         return status;
+>  }
+> @@ -748,7 +748,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+>                         cb.expire_total = 0;
+>                 }
+>
+> -               status |= expire_reflog(ref, sha1, 0, &cb);
+> +               status |= expire_reflog(ref, sha1, &cb);
+>                 free(ref);
+>         }
+>         return status;
+> --
+> 2.1.3
+>
