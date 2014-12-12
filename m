@@ -1,109 +1,145 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 06/24] expire_reflog(): return early if the reference
- has no reflog
-Date: Fri, 12 Dec 2014 10:15:14 -0800
-Message-ID: <CAGZ79kYHWZW0Q15nx7xWdzw8-2iL-rT034T-vQ4u9nz3Gi7JNQ@mail.gmail.com>
-References: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
-	<1418374623-5566-7-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] create gpg homedir on the fly
+Date: Fri, 12 Dec 2014 10:26:55 -0800
+Message-ID: <xmqq61dgd8r4.fsf@gitster.dls.corp.google.com>
+References: <20141212094753.160a0fb5@leda.localdomain>
+	<1418374214-8241-1-git-send-email-mail@eworm.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 12 19:15:25 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Christian Hesse <mail@eworm.de>
+X-From: git-owner@vger.kernel.org Fri Dec 12 19:27:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzUkM-0003h0-KO
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 19:15:22 +0100
+	id 1XzUwI-0006mf-Rx
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 19:27:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935233AbaLLSPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 13:15:18 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:45630 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752179AbaLLSPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2014 13:15:17 -0500
-Received: by mail-ig0-f178.google.com with SMTP id hl2so1944467igb.5
-        for <git@vger.kernel.org>; Fri, 12 Dec 2014 10:15:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TJ7+7YcAlo3mHDSNtHM9lJS2krgQg8TXPAxUG6U6pVo=;
-        b=GTgY1oEEn+A2vD3LrjPhuVtdf87ae6HBX89+YzbaJa8RVxyJLi8JEX7imdESkP3/tk
-         ew+bU8EcGyy7fmHceOLaYq/d1n97tUUN8DWJJ50tLIQf+nkGK6QAFoluewuMwIlCUp5E
-         bhYj8akQ57rhNypGShhpQm3ZU4ncLqjcf28/Eh7JA+dRHw6/6A0mmKC5In0wBxNOp2lg
-         VPaAHrdP+LVY4C/Vhel0fzGUgWD6RgYWmmQG44J/hRphF1Z4C8/6v1jyO/GJuxAPev/w
-         JIPn/ucmDLXHlz4VsuGgnw+I1lPXHEUbe4SBb26hczwe9suYQcSbrpfpXN6XSEU2r5KN
-         Mf7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=TJ7+7YcAlo3mHDSNtHM9lJS2krgQg8TXPAxUG6U6pVo=;
-        b=U1DwLO9rA07FHE6XgdYUYy5sZoxm+u2sfODwfU3+bXA791wfY1MFMPo0qXJIk5YBIV
-         QCRGv0WQu0av9tYvA1XcVMJPNZrDDKMhuFGTXBRsp7TPWtpgylB9ufZ9EL4XFL0l98Xj
-         zUmRBikX8XNUySD91E66c9hB7/VCY2XYZD+ah5cPrzz6ggAnZLpVzYqcB36crA2/t5rF
-         YdvbW1RjwwC4ap0UJ7vnC9Jg4AKeXabBW0duX3nBXIIHriVGY+yqxU7rkkniHcCCjl5L
-         AyhA8t4SGZIHyTXyMAct07dEIR5BkU4BViTdwhHeQNjo8fjuNtgQudRqeK/sUW54UpB5
-         DWdg==
-X-Gm-Message-State: ALoCoQnu/Rt5trYnmnxxi6oRAQFU44GkNDlNfoS2N+NhAVtjjwIVBc5UzJq7NDYFNyYPtHeRq3SC
-X-Received: by 10.50.137.65 with SMTP id qg1mr5916082igb.37.1418408115013;
- Fri, 12 Dec 2014 10:15:15 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Fri, 12 Dec 2014 10:15:14 -0800 (PST)
-In-Reply-To: <1418374623-5566-7-git-send-email-mhagger@alum.mit.edu>
+	id S965100AbaLLS1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 13:27:39 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51481 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932991AbaLLS06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2014 13:26:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E05B025168;
+	Fri, 12 Dec 2014 13:26:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NhA+p8j57JNe/bBgN5niaBnkTaU=; b=tgR4hi
+	pV4mQj687zpb3huFI/oCoAbT7/rlKJjsYNrBlYls89x5WjTqGDaZdtTWfMwWutSP
+	tjnJlOUL96A6tJ0yX+sUg5dDOOT3ww9pMQBxAsIDicpDCnzey7HTaet9sIVBLrK6
+	N5PCEAI7Qf255n7mjxnD2cv90oebbKSqtfRsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lcqYyV+xv3L4xlnF8TlvptSKA0sfQPfV
+	uzTvJP0OqDDAyK9dGLGDjX4RxRJd94c/7Kcc2LAUFEEzn8AD5WD98vCYaauO9Pvr
+	JMaTjl0+2QQ/YTdXuuoXA6FcuXAkY2ne47KLB/fx4Az60gxMJnBHQxBF9ql3uZlL
+	viYo7ij1p9g=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D56C125165;
+	Fri, 12 Dec 2014 13:26:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 521DA25164;
+	Fri, 12 Dec 2014 13:26:57 -0500 (EST)
+In-Reply-To: <1418374214-8241-1-git-send-email-mail@eworm.de> (Christian
+	Hesse's message of "Fri, 12 Dec 2014 09:50:12 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 748DEFE2-822C-11E4-AC2F-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261353>
 
-On Fri, Dec 12, 2014 at 12:56 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> There is very little cleanup needed if the reference has no reflog. If
-> we move the initialization of log_file down a bit, there's even less.
-> So instead of jumping to the cleanup code at the end of the function,
-> just do the cleanup and return inline.
+Christian Hesse <mail@eworm.de> writes:
+
+> GnuPG 2.1 homedir looks different, so just creat it on the fly by
+> importing needed private and public keys and ownertrust.
+> This solves an issue with gnupg 2.1 running interactive pinentry when
+> old secret key is present.
 >
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Reviewed-by: Stefan Beller <sbeller@google.com>
-
+> Signed-off-by: Christian Hesse <mail@eworm.de>
 > ---
->  builtin/reflog.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+
+Thanks; will queue with s/just creat/&e/;
+
+>  t/lib-gpg.sh          |  10 +++++++---
+>  t/lib-gpg/ownertrust  |   4 ++++
+>  t/lib-gpg/random_seed | Bin 600 -> 0 bytes
+>  t/lib-gpg/trustdb.gpg | Bin 1360 -> 0 bytes
+>  4 files changed, 11 insertions(+), 3 deletions(-)
+>  create mode 100644 t/lib-gpg/ownertrust
+>  delete mode 100644 t/lib-gpg/random_seed
+>  delete mode 100644 t/lib-gpg/trustdb.gpg
 >
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index ff51dbf..37b33c9 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -368,9 +368,11 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
->         lock = lock_any_ref_for_update(refname, sha1, 0, NULL);
->         if (!lock)
->                 return error("cannot lock ref '%s'", refname);
-> +       if (!reflog_exists(refname)) {
-> +               unlock_ref(lock);
-> +               return 0;
-> +       }
->         log_file = git_pathdup("logs/%s", refname);
-> -       if (!reflog_exists(refname))
-> -               goto finish;
->         if (!cmd->dry_run) {
->                 newlog_path = git_pathdup("logs/%s.lock", refname);
->                 cb.newlog = fopen(newlog_path, "w");
-> @@ -419,7 +421,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
->                         clear_commit_marks(tip_commit, REACHABLE);
->                 }
->         }
-> - finish:
-> +
->         if (cb.newlog) {
->                 if (fclose(cb.newlog)) {
->                         status |= error("%s: %s", strerror(errno),
-> --
-> 2.1.3
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index cd2baef..4e57942 100755
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -16,11 +16,15 @@ else
+>  		# Type DSA and Elgamal, size 2048 bits, no expiration date.
+>  		# Name and email: C O Mitter <committer@example.com>
+>  		# No password given, to enable non-interactive operation.
+> -		cp -R "$TEST_DIRECTORY"/lib-gpg ./gpghome
+> -		chmod 0700 gpghome
+> -		chmod 0600 gpghome/*
+> +		mkdir ./gpghome
+> +		chmod 0700 ./gpghome
+>  		GNUPGHOME="$(pwd)/gpghome"
+>  		export GNUPGHOME
+> +		gpg --homedir "${GNUPGHOME}" --import \
+> +			"$TEST_DIRECTORY"/lib-gpg/pubring.gpg \
+> +			"$TEST_DIRECTORY"/lib-gpg/secring.gpg
+> +		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
+> +			"$TEST_DIRECTORY"/lib-gpg/ownertrust
+>  		test_set_prereq GPG
+>  		;;
+>  	esac
+> diff --git a/t/lib-gpg/ownertrust b/t/lib-gpg/ownertrust
+> new file mode 100644
+> index 0000000..b3e3c4f
+> --- /dev/null
+> +++ b/t/lib-gpg/ownertrust
+> @@ -0,0 +1,4 @@
+> +# List of assigned trustvalues, created Thu 11 Dec 2014 01:26:28 PM CET
+> +# (Use "gpg --import-ownertrust" to restore them)
+> +73D758744BE721698EC54E8713B6F51ECDDE430D:6:
+> +D4BE22311AD3131E5EDA29A461092E85B7227189:3:
+> diff --git a/t/lib-gpg/random_seed b/t/lib-gpg/random_seed
+> deleted file mode 100644
+> index 95d249f15fce980f0e8c1a8a18b085b3885708aa..0000000000000000000000000000000000000000
+> GIT binary patch
+> literal 0
+> HcmV?d00001
 >
+> literal 600
+> zcmV-e0;m1ccZd+x>>TST*Lrq1x^ggx^+ymwieO!6X=U~ZH@{avIgxdn#ai{)Ou@Qw
+> za}Z!boffEq^fn)n?c=IEnDpt59Lnc)aR*;8Z;k>gh_NW;ka;7Mt@v#sG(!Y9SSXWv
+> zQxd3WlyBr#4ltW6uKOoa6(r3df1VX$cG4`Om6hD-ckaX+Hb_yI?{f`hJQY&k!1cM-
+> zoGeY~(Z7aYn$W06djh?W|CMs>W=k@jgf=P2D1UA1T%vz0oE|<O<lIacG0xioPtS&U
+> zNd#}P%YpJr-H65~J^RdqA!YV9BEvh7Gw^CdXg+Hp?kj=KGW|+|&g$4?`trWWGuy$9
+> zv-|;8Y4(NRHWPyJ{epd{4%FHQKk5j}?0FFDAJ;0kIItZ4y<JS?DIG4~0!#x~;X`!P
+> zO%+va?@`?yQnhjrP@&#yjY$YO_0yk|1ddhc8V&ru7d%ytet)mF<ZIUbPB3bvhHQ41
+> zNmnYeFxUMu=m$K5&s=5_F&JSR#oU3Y#X{(q7HTp-VYJ)%JjihbZ@R#GeqmU{>0C4Q
+> zc}hUG+ighB{7XSaNw_h;=YtqacQ<B(Cg$e)^NTDD-oMD+T`O#-^|-ib>j!<pxHg+(
+> zlC$%zE836|E*F*((=>O{Nn@K$taZO}!>$t>GMgsw?!=n_#(%X9Ha|$b=H@VstWYe;
+> zPUQ<L$$#9HTcOLoyEd6*A4TOEe3}c}GiW*^P1Lt{nHYUEAB`Qx7*wizaEyM$?AjVN
+> mb-6m)4=6PVqdR>h+D!{<c#q1!T9b(}OW7hrrT@nJcBO(OGA4ll
+>
+> diff --git a/t/lib-gpg/trustdb.gpg b/t/lib-gpg/trustdb.gpg
+> deleted file mode 100644
+> index 4879ae9a84650a93a4d15bd6560c5d1b89eb4c2f..0000000000000000000000000000000000000000
+> GIT binary patch
+> literal 0
+> HcmV?d00001
+>
+> literal 1360
+> zcmZQfFGy!*W@Ke#VqggLnYN69fq@Z-(E%eDx(E*bs5<NcGvvcX4&tvN?+<A7410el
+> zpr*s&;$I$y;_DG5-p>^?`;Pjx3vc@>clMq$FB`<O@(4fkGH5;5W#Id_>(K1CUIi|N
+> zsvi2g;@3gdA(S!jFkIQEWGHo6ST63C=8{BCz1HnYg`Lb06^aOjybMdTjEeXLLrOJU
+> RgG}yTes6vJW7bzp^8ko~DZ2mw
