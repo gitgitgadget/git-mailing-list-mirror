@@ -1,95 +1,115 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] use strbuf_complete_line() for adding a newline if needed
-Date: Fri, 12 Dec 2014 20:16:38 +0100
-Message-ID: <548B3F16.80208@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] document string_list_clear
+Date: Fri, 12 Dec 2014 11:17:55 -0800
+Message-ID: <xmqqoar8brto.fsf@gitster.dls.corp.google.com>
+References: <1417830678-16115-1-git-send-email-sbeller@google.com>
+	<20141206020458.GR16345@google.com>
+	<xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
+	<20141209201713.GY16345@google.com> <20141209202738.GC12001@peff.net>
+	<20141209222337.GA16345@google.com> <20141210084351.GA29776@peff.net>
+	<20141210091815.GA18372@google.com> <20141212091625.GA9049@peff.net>
+	<20141212183114.GA29365@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 12 20:17:39 2014
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 20:18:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzVid-0004p8-3l
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 20:17:39 +0100
+	id 1XzVj8-0005ey-FF
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 20:18:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934770AbaLLTRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 14:17:34 -0500
-Received: from mout.web.de ([212.227.15.4]:52630 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933644AbaLLTRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2014 14:17:33 -0500
-Received: from [192.168.178.27] ([79.253.155.45]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0M0QlZ-1XgjHO3IVR-00ucuA; Fri, 12 Dec 2014 20:17:27
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-X-Provags-ID: V03:K0:0vas6ZTj3+hqbxcbog0EZyWOMtp7MwqApEvDAsebv11hu0wA57e
- HT2xleupbX3C7MN/ACJe84roty9hya+vJ1+8jxM+Tmqcvv2EIpqZyJf3XhEVXJVB/rHmiQh
- 3ANpefBXXaCooQ495xdz9z6sl+90UnTT+rNaBPMzpPKfobM+aoKrvx4a8N0hYAQr0mdXwQH
- NJtcy6Qy/rQyX1OJbfgcw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1755540AbaLLTSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 14:18:05 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61161 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752165AbaLLTSC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2014 14:18:02 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 34F84240A0;
+	Fri, 12 Dec 2014 14:17:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8FUIGDzpN+nq2eUZQ/we6rLVPbI=; b=XEpV8L
+	AGBD1cgv53TuYSWRCz37dU2Fgaqha/cdbdaHG99TF6hZti/Bt89YL+owdO/2LQPH
+	qHAwZEdnSWD/XVq1FHoSgQzYVG8oQvGEDjfA6rN1qsmlBFtgd/xo0aEDslv2E5RH
+	R64OxHm5qoTD7x7SqlouaQVv8cz3umBNZxdsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FGlD4/dKfJI2wTAoLaXcLmlqYLKn3F56
+	LH82+HE1lOlB1mzaL4Ob4QNqkNHSUv4EsR2lhCg4xSn42XqhctJnnJEvYK6DtI3f
+	COWiX1oDA/hMrz+xJlnPkgAxWuN8eKRA0YfDxeBBrc5xakHt7jDL+dRtF8p1OxIw
+	DY1fjfoliuo=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 293EF2409F;
+	Fri, 12 Dec 2014 14:17:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B3382409C;
+	Fri, 12 Dec 2014 14:17:56 -0500 (EST)
+In-Reply-To: <20141212183114.GA29365@google.com> (Jonathan Nieder's message of
+	"Fri, 12 Dec 2014 10:31:14 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9412D510-8233-11E4-A038-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261360>
 
-Call strbuf_complete_line() instead of open-coding it.  Also remove
-surrounding comments indicating the intent to complete a line since
-this information is already included in the function name.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/fmt-merge-msg.c | 3 +--
- notes-utils.c           | 3 +--
- trace.c                 | 4 +---
- 3 files changed, 3 insertions(+), 7 deletions(-)
+> Jeff King wrote:
+>
+>> I'm not sure any such thought as "intended to be out of date" went into
+>> it.
+>
+> Junio started the documentation in v1.5.4-rc1~49 (2007-11-24).  I'm
+> not sure if there was a discussion preceding that commit.  My
+> understanding was always that putting the documentation out-of-line
+> was an intentional decision and that it was understood that the
+> documentation would have cycles of falling out of date and needing to
+> be updated, but I may be misunderstanding the history.
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 37177c6..af7919e 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -216,8 +216,7 @@ static void add_branch_desc(struct strbuf *out, const char *name)
- 			strbuf_addf(out, "  : %.*s", (int)(ep - bp), bp);
- 			bp = ep;
- 		}
--		if (out->buf[out->len - 1] != '\n')
--			strbuf_addch(out, '\n');
-+		strbuf_complete_line(out);
- 	}
- 	strbuf_release(&desc);
- }
-diff --git a/notes-utils.c b/notes-utils.c
-index b64dc1b..ccbf073 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -44,8 +44,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
- 
- 	/* Prepare commit message and reflog message */
- 	strbuf_addstr(&buf, msg);
--	if (buf.buf[buf.len - 1] != '\n')
--		strbuf_addch(&buf, '\n'); /* Make sure msg ends with newline */
-+	strbuf_complete_line(&buf);
- 
- 	create_notes_commit(t, NULL, buf.buf, buf.len, commit_sha1);
- 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
-diff --git a/trace.c b/trace.c
-index 4778608..f6f9f3a 100644
---- a/trace.c
-+++ b/trace.c
-@@ -122,9 +122,7 @@ static int prepare_trace_line(const char *file, int line,
- 
- static void print_trace_line(struct trace_key *key, struct strbuf *buf)
- {
--	/* append newline if missing */
--	if (buf->len && buf->buf[buf->len - 1] != '\n')
--		strbuf_addch(buf, '\n');
-+	strbuf_complete_line(buf);
- 
- 	write_or_whine_pipe(get_trace_fd(key), buf->buf, buf->len, err_msg);
- 	strbuf_release(buf);
--- 
-2.2.0
+There of course was not "intended to be out of date".  It was just
+that the prevailing style of comments in the header back then was
+sporadic per-function explanation that would have served only as a
+reminder for those who have read the corresponding *.c file, without
+any overall structure of the API described.
+
+We could have gone to "in header description" route back then and
+the commit you referred to could have added
+
+	/*
+         * NEEDSWORK: describe the overall structure of the API
+         * here, so that people can use it without reading the
+         * implementation of the API itself.
+         */
+
+to each header file instead.  I chose not to primarily because those
+who wanted to have documentation pages that are pointed from api-index
+were audience different from those who updated *.[ch] files, and also
+I had slight preference to have a set of *.txt files that do not force
+me to squelch /* * * */ while reading them.
+
+> Separate from the question of history, I honestly prefer this way of
+> doing API documentation relative to 90% of the API documentation in
+> headers I've seen in other projects.  I suspect you don't.  That's
+> okay --- it's possible for rational people to disagree about things.
+
+Yes.
+
+> The overall concept is good.
+
+OK, then let's agree to go in the "comprehensive doc in the *.h and
+then those who want *.txt can help the machinery to extract"
+direction.
+
+Thanks.
