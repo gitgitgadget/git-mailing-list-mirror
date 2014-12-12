@@ -1,179 +1,94 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 07/24] expire_reflog(): use a lock_file for rewriting the reflog file
-Date: Fri, 12 Dec 2014 09:56:46 +0100
-Message-ID: <1418374623-5566-8-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 06/24] expire_reflog(): return early if the reference has no reflog
+Date: Fri, 12 Dec 2014 09:56:45 +0100
+Message-ID: <1418374623-5566-7-git-send-email-mhagger@alum.mit.edu>
 References: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 09:58:24 2014
+X-From: git-owner@vger.kernel.org Fri Dec 12 09:58:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzM3L-0005Ff-N7
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:58:24 +0100
+	id 1XzM3R-0005QU-Si
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:58:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934699AbaLLI6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 03:58:19 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:59490 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934049AbaLLI5W (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 03:57:22 -0500
-X-AuditID: 1207440e-f79d26d000001b6e-4f-548aadf1539d
+	id S934701AbaLLI6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 03:58:20 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49444 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934676AbaLLI5V (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 03:57:21 -0500
+X-AuditID: 12074411-f79fa6d000006b8a-48-548aadf05513
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 4C.45.07022.1FDAA845; Fri, 12 Dec 2014 03:57:22 -0500 (EST)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 95.DC.27530.0FDAA845; Fri, 12 Dec 2014 03:57:20 -0500 (EST)
 Received: from michael.fritz.box (p5DDB074C.dip0.t-ipconnect.de [93.219.7.76])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBC8v9nH023104
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBC8v9nG023104
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 12 Dec 2014 03:57:20 -0500
+	Fri, 12 Dec 2014 03:57:19 -0500
 X-Mailer: git-send-email 2.1.3
 In-Reply-To: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqPtpbVeIQdsXJouuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqPthbVeIQe9RPYuuK91MFg29V5gt
 	3t5cwmhxe8V8Zovevk+sFps3t7M4sHn8ff+ByWPnrLvsHgs2lXpcvKTs8XmTXABrFLdNUmJJ
-	WXBmep6+XQJ3xp0bbSwFlxUrlkxYxNjAeEuqi5GTQ0LAROLL8pvsELaYxIV769m6GLk4hAQu
-	M0psnnmYHcI5xiTR1XWFCaSKTUBXYlFPM5gtIqAmMbHtEAuIzSxwglFidkNIFyMHh7BAhMSp
-	ziyQMIuAqsT5l5/YQMK8As4SHd1uIKaEgJzE1nXeIBWcAi4SF1uegA0RAqrYuqKTdQIj7wJG
-	hlWMcok5pbm6uYmZOcWpybrFyYl5ealFusZ6uZkleqkppZsYIWHFt4Oxfb3MIUYBDkYlHt4J
-	yV0hQqyJZcWVuYcYJTmYlER5v08GCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh/RsFlONNSays
-	Si3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfAeXQPUKFiUmp5akZaZU4KQZuLg
-	BBnOJSVSnJqXklqUWFqSEQ+KivhiYFyApHiA9rKtBdlbXJCYCxSFaD3FqCglznsaZK4ASCKj
-	NA9uLCxZvGIUB/pSmPcMSBUPMNHAdb8CGswENHj5lg6QwSWJCCmpBsbedNY7tVP0TCI3ayrd
-	3yfav8SUxd+t9mywzqqWqAhHDYOUy16bGZtOVYtc/lZtolq76euceUL+v0V9tGaLKWmU/dP1
-	mquq7CfjHbWT9Sz7rclPTjxI+HNmfn6ry5R/VVNX3JnyXlatw+rR0SiuY7cTzujL 
+	WXBmep6+XQJ3RsuK9WwFt7gqOh91MDcw3uHoYuTkkBAwkej8MpUVwhaTuHBvPVsXIxeHkMBl
+	RommSRdZIZxjTBLr2s+BVbEJ6Eos6mlmArFFBNQkJrYdYgGxmQVOMErMbggBsYUFwiQObfvB
+	DmKzCKhKXFm0mxnE5hVwlpja9Z2xi5EDaJucxNZ13iBhTgEXiYstT8DGCAGVbF3RyTqBkXcB
+	I8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1TvdzMEr3UlNJNjJDQEtzBOOOk3CFGAQ5GJR7e
+	F6ldIUKsiWXFlbmHGCU5mJREeb9PBgrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4f0bBZTjTUms
+	rEotyodJSXOwKInz8i1R9xMSSE8sSc1OTS1ILYLJynBwKEnwxq0BahQsSk1PrUjLzClBSDNx
+	cIIM55ISKU7NS0ktSiwtyYgHRUZ8MTA2QFI8QHuDQdp5iwsSc4GiEK2nGBWlxHlbQRICIImM
+	0jy4sbCE8YpRHOhLYd4zIFU8wGQD1/0KaDAT0ODlWzpABpckIqSkGhgNJuaejzXbdPMOh92x
+	bsGSqvxPF57k3PbsDdlnZ7Y+5dyZdwEbYpV+ZJ3rPP/mOQcDc/2nX88Pewvd7Xw/X814v/Hh
+	2+sD9ZTVd0lLu51oX3F9+QXXOIZIm7jiVq5n3K5HW24avKmLOrrvm3+1yW+HfXuY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261341>
 
-We don't actually need the locking functionality, because we already
-hold the lock on the reference itself, which is how the reflog file is
-locked. But the lock_file code can do some of the bookkeeping for us,
-and it is more careful than the old code here was. For example:
-
-* It correctly handles the case that the reflog lock file already
-  exists for some reason or cannot be opened.
-
-* It correctly cleans up the lockfile if the program dies.
+There is very little cleanup needed if the reference has no reflog. If
+we move the initialization of log_file down a bit, there's even less.
+So instead of jumping to the cleanup code at the end of the function,
+just do the cleanup and return inline.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/reflog.c | 60 ++++++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 41 insertions(+), 19 deletions(-)
+ builtin/reflog.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 37b33c9..ba5b3d3 100644
+index ff51dbf..37b33c9 100644
 --- a/builtin/reflog.c
 +++ b/builtin/reflog.c
-@@ -352,9 +352,10 @@ static int push_tip_to_list(const char *refname, const unsigned char *sha1, int
- static int expire_reflog(const char *refname, const unsigned char *sha1,
- 			 struct cmd_reflog_expire_cb *cmd)
- {
-+	static struct lock_file reflog_lock;
- 	struct expire_reflog_cb cb;
- 	struct ref_lock *lock;
--	char *log_file, *newlog_path = NULL;
-+	char *log_file;
- 	struct commit *tip_commit;
- 	struct commit_list *tips;
- 	int status = 0;
-@@ -362,8 +363,9 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
- 	memset(&cb, 0, sizeof(cb));
- 
- 	/*
--	 * we take the lock for the ref itself to prevent it from
--	 * getting updated.
-+	 * The reflog file is locked by holding the lock on the
-+	 * reference itself, plus we might need to update the
-+	 * reference if --updateref was specified:
- 	 */
+@@ -368,9 +368,11 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
  	lock = lock_any_ref_for_update(refname, sha1, 0, NULL);
  	if (!lock)
-@@ -372,10 +374,29 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
- 		unlock_ref(lock);
- 		return 0;
- 	}
-+
+ 		return error("cannot lock ref '%s'", refname);
++	if (!reflog_exists(refname)) {
++		unlock_ref(lock);
++		return 0;
++	}
  	log_file = git_pathdup("logs/%s", refname);
+-	if (!reflog_exists(refname))
+-		goto finish;
  	if (!cmd->dry_run) {
--		newlog_path = git_pathdup("logs/%s.lock", refname);
--		cb.newlog = fopen(newlog_path, "w");
-+		/*
-+		 * Even though holding $GIT_DIR/logs/$reflog.lock has
-+		 * no locking implications, we use the lock_file
-+		 * machinery here anyway because it does a lot of the
-+		 * work we need, including cleaning up if the program
-+		 * exits unexpectedly.
-+		 */
-+		if (hold_lock_file_for_update(&reflog_lock, log_file, 0) < 0) {
-+			struct strbuf err = STRBUF_INIT;
-+			unable_to_lock_message(log_file, errno, &err);
-+			error("%s", err.buf);
-+			strbuf_release(&err);
-+			goto failure;
-+		}
-+		cb.newlog = fdopen_lock_file(&reflog_lock, "w");
-+		if (!cb.newlog) {
-+			error("cannot fdopen %s (%s)",
-+			      reflog_lock.filename.buf, strerror(errno));
-+			goto failure;
-+		}
- 	}
- 
- 	cb.cmd = cmd;
-@@ -423,32 +444,33 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
- 	}
- 
- 	if (cb.newlog) {
--		if (fclose(cb.newlog)) {
--			status |= error("%s: %s", strerror(errno),
--					newlog_path);
--			unlink(newlog_path);
-+		if (close_lock_file(&reflog_lock)) {
-+			status |= error("couldn't write %s: %s", log_file,
-+					strerror(errno));
- 		} else if (cmd->updateref &&
- 			(write_in_full(lock->lock_fd,
- 				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
- 			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
- 			 close_ref(lock) < 0)) {
--			status |= error("Couldn't write %s",
-+			status |= error("couldn't write %s",
- 					lock->lk->filename.buf);
--			unlink(newlog_path);
--		} else if (rename(newlog_path, log_file)) {
--			status |= error("cannot rename %s to %s",
--					newlog_path, log_file);
--			unlink(newlog_path);
-+			rollback_lock_file(&reflog_lock);
-+		} else if (commit_lock_file(&reflog_lock)) {
-+			status |= error("unable to commit reflog '%s' (%s)",
-+					log_file, strerror(errno));
- 		} else if (cmd->updateref && commit_ref(lock)) {
--			status |= error("Couldn't set %s", lock->ref_name);
--		} else {
--			adjust_shared_perm(log_file);
-+			status |= error("couldn't set %s", lock->ref_name);
+ 		newlog_path = git_pathdup("logs/%s.lock", refname);
+ 		cb.newlog = fopen(newlog_path, "w");
+@@ -419,7 +421,7 @@ static int expire_reflog(const char *refname, const unsigned char *sha1,
+ 			clear_commit_marks(tip_commit, REACHABLE);
  		}
  	}
--	free(newlog_path);
- 	free(log_file);
- 	unlock_ref(lock);
- 	return status;
+- finish:
 +
-+ failure:
-+	rollback_lock_file(&reflog_lock);
-+	free(log_file);
-+	unlock_ref(lock);
-+	return -1;
- }
- 
- static int collect_reflog(const char *ref, const unsigned char *sha1, int unused, void *cb_data)
+ 	if (cb.newlog) {
+ 		if (fclose(cb.newlog)) {
+ 			status |= error("%s: %s", strerror(errno),
 -- 
 2.1.3
