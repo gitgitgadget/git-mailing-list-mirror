@@ -1,130 +1,144 @@
-From: Christian Hesse <mail@eworm.de>
-Subject: [PATCH 1/3] create gpg homedir on the fly
-Date: Fri, 12 Dec 2014 09:55:21 +0100
-Message-ID: <1418374521-8643-1-git-send-email-mail@eworm.de>
-References: <CAPig+cTEY4fbNuVv0S-jOk7CKouh5aRKSR=KejJQD3a9bhcOKQ@mail.gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Christian Hesse <mail@eworm.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 09:56:31 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 03/24] refs.c: add a function to append a reflog entry to a fd
+Date: Fri, 12 Dec 2014 09:56:42 +0100
+Message-ID: <1418374623-5566-4-git-send-email-mhagger@alum.mit.edu>
+References: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Stefan Beller <sbeller@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 09:57:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzM1S-0001b1-GF
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:56:30 +0100
+	id 1XzM2N-00042v-3O
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:57:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934641AbaLLI4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 03:56:04 -0500
-Received: from mx.mylinuxtime.de ([148.251.109.235]:35350 "EHLO
-	mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756471AbaLLIzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2014 03:55:49 -0500
-Received: from leda.eworm.de (unknown [10.10.1.2])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx.mylinuxtime.de (Postfix) with ESMTPSA id 2CB33241AD;
-	Fri, 12 Dec 2014 09:55:48 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.9.2 mx.mylinuxtime.de 2CB33241AD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
-	t=1418374548; bh=nH1o/wGSbpbEoZ4xfdSTp3lS9kHRTFaT7cVWhNci5uM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ay7wkw5Bdu/Y8GpHNms116MXtVJfwHXIIt2aXqqQTRugmHMmaWikMAgaz1unmOjw2
-	 UOLzbX92d/imvZT3OiytmysQLk8h5NmNstk9QyJFKnUP6qtcQFam1v487nGowQ2V2B
-	 MtUsdTGJvEhho1OG8l70gGyYHX9ORpRp7p0oB+ns=
-Received: by leda.eworm.de (Postfix, from userid 1000)
-	id 02C6C100CAA; Fri, 12 Dec 2014 09:55:42 +0100 (CET)
-X-Mailer: git-send-email 2.2.0
-In-Reply-To: <CAPig+cTEY4fbNuVv0S-jOk7CKouh5aRKSR=KejJQD3a9bhcOKQ@mail.gmail.com>
+	id S934674AbaLLI5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 03:57:19 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61199 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934049AbaLLI5R (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 03:57:17 -0500
+X-AuditID: 12074413-f79f26d0000030e7-a0-548aadec0c51
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id E0.1C.12519.CEDAA845; Fri, 12 Dec 2014 03:57:16 -0500 (EST)
+Received: from michael.fritz.box (p5DDB074C.dip0.t-ipconnect.de [93.219.7.76])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBC8v9nD023104
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Fri, 12 Dec 2014 03:57:15 -0500
+X-Mailer: git-send-email 2.1.3
+In-Reply-To: <1418374623-5566-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqPtmbVeIwdU2HYuuK91MFg29V5gt
+	3t5cwmhxe8V8Zovevk+sFv8m1Fhs3tzO4sDu8ff9ByaPnbPusnss2FTqcfGSssfnTXIBrFHc
+	NkmJJWXBmel5+nYJ3BkvFqxnLmgRq3h6+ihjA+MWwS5GTg4JAROJ5b/Xs0DYYhIX7q1n62Lk
+	4hASuMwoseHzBSaQhJDAMSaJpVf8QGw2AV2JRT3NYHERATWJiW2HWEAamAV+MEpMnH2EuYuR
+	g0NYIFCioyMMpIZFQFXi+vbdzCA2r4CzxLoffUwgJRICchJb13mDhDkFXCQutjxhgVjlLLF1
+	RSfrBEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0UlNKNzFCAkx4B+Ouk3KH
+	GAU4GJV4eF+kdoUIsSaWFVfmHmKU5GBSEuX9PhkoxJeUn1KZkVicEV9UmpNafIhRgoNZSYT3
+	bxRQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwXt0DVCjYFFqempF
+	WmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCgu4ouBkQGS4gHaGwzSzltckJgLFIVoPcWoKCXO
+	exokIQCSyCjNgxsLSxuvGMWBvhTmZQap4gGmHLjuV0CDmYAGL9/SATK4JBEhJdXAGGg6ryuO
+	zzR6s9uspkNGPhO+frN7MjNf1XZqisHZLVapt62Zux84nA/dzfNm97T5U7jZw0QdHv2eaSW7
+	QuCKVf/OooNKkbfff3Fm3b+6p9W0yXVXodkO7w2OLl+kf2w0f9PMp3D23+31inxS 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261320>
 
-GnuPG 2.1 homedir looks different, so just create it on the fly by
-importing needed private and public keys and ownertrust.
-This solves an issue with gnupg 2.1 running interactive pinentry when
-old secret key is present.
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-Signed-off-by: Christian Hesse <mail@eworm.de>
+Break out the code to create the string and writing it to the file
+descriptor from log_ref_write and add it into a dedicated function
+log_ref_write_fd. It is a nice unit of work.
+
+For now this is only used from log_ref_write, but in the future it
+might have other callers.
+
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- t/lib-gpg.sh          |  10 +++++++---
- t/lib-gpg/ownertrust  |   4 ++++
- t/lib-gpg/random_seed | Bin 600 -> 0 bytes
- t/lib-gpg/trustdb.gpg | Bin 1360 -> 0 bytes
- 4 files changed, 11 insertions(+), 3 deletions(-)
- create mode 100644 t/lib-gpg/ownertrust
- delete mode 100644 t/lib-gpg/random_seed
- delete mode 100644 t/lib-gpg/trustdb.gpg
+ refs.c | 48 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 18 deletions(-)
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index cd2baef..4e57942 100755
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -16,11 +16,15 @@ else
- 		# Type DSA and Elgamal, size 2048 bits, no expiration date.
- 		# Name and email: C O Mitter <committer@example.com>
- 		# No password given, to enable non-interactive operation.
--		cp -R "$TEST_DIRECTORY"/lib-gpg ./gpghome
--		chmod 0700 gpghome
--		chmod 0600 gpghome/*
-+		mkdir ./gpghome
-+		chmod 0700 ./gpghome
- 		GNUPGHOME="$(pwd)/gpghome"
- 		export GNUPGHOME
-+		gpg --homedir "${GNUPGHOME}" --import \
-+			"$TEST_DIRECTORY"/lib-gpg/pubring.gpg \
-+			"$TEST_DIRECTORY"/lib-gpg/secring.gpg
-+		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
-+			"$TEST_DIRECTORY"/lib-gpg/ownertrust
- 		test_set_prereq GPG
- 		;;
- 	esac
-diff --git a/t/lib-gpg/ownertrust b/t/lib-gpg/ownertrust
-new file mode 100644
-index 0000000..b3e3c4f
---- /dev/null
-+++ b/t/lib-gpg/ownertrust
-@@ -0,0 +1,4 @@
-+# List of assigned trustvalues, created Thu 11 Dec 2014 01:26:28 PM CET
-+# (Use "gpg --import-ownertrust" to restore them)
-+73D758744BE721698EC54E8713B6F51ECDDE430D:6:
-+D4BE22311AD3131E5EDA29A461092E85B7227189:3:
-diff --git a/t/lib-gpg/random_seed b/t/lib-gpg/random_seed
-deleted file mode 100644
-index 95d249f15fce980f0e8c1a8a18b085b3885708aa..0000000000000000000000000000000000000000
-GIT binary patch
-literal 0
-HcmV?d00001
-
-literal 600
-zcmV-e0;m1ccZd+x>>TST*Lrq1x^ggx^+ymwieO!6X=U~ZH@{avIgxdn#ai{)Ou@Qw
-za}Z!boffEq^fn)n?c=IEnDpt59Lnc)aR*;8Z;k>gh_NW;ka;7Mt@v#sG(!Y9SSXWv
-zQxd3WlyBr#4ltW6uKOoa6(r3df1VX$cG4`Om6hD-ckaX+Hb_yI?{f`hJQY&k!1cM-
-zoGeY~(Z7aYn$W06djh?W|CMs>W=k@jgf=P2D1UA1T%vz0oE|<O<lIacG0xioPtS&U
-zNd#}P%YpJr-H65~J^RdqA!YV9BEvh7Gw^CdXg+Hp?kj=KGW|+|&g$4?`trWWGuy$9
-zv-|;8Y4(NRHWPyJ{epd{4%FHQKk5j}?0FFDAJ;0kIItZ4y<JS?DIG4~0!#x~;X`!P
-zO%+va?@`?yQnhjrP@&#yjY$YO_0yk|1ddhc8V&ru7d%ytet)mF<ZIUbPB3bvhHQ41
-zNmnYeFxUMu=m$K5&s=5_F&JSR#oU3Y#X{(q7HTp-VYJ)%JjihbZ@R#GeqmU{>0C4Q
-zc}hUG+ighB{7XSaNw_h;=YtqacQ<B(Cg$e)^NTDD-oMD+T`O#-^|-ib>j!<pxHg+(
-zlC$%zE836|E*F*((=>O{Nn@K$taZO}!>$t>GMgsw?!=n_#(%X9Ha|$b=H@VstWYe;
-zPUQ<L$$#9HTcOLoyEd6*A4TOEe3}c}GiW*^P1Lt{nHYUEAB`Qx7*wizaEyM$?AjVN
-mb-6m)4=6PVqdR>h+D!{<c#q1!T9b(}OW7hrrT@nJcBO(OGA4ll
-
-diff --git a/t/lib-gpg/trustdb.gpg b/t/lib-gpg/trustdb.gpg
-deleted file mode 100644
-index 4879ae9a84650a93a4d15bd6560c5d1b89eb4c2f..0000000000000000000000000000000000000000
-GIT binary patch
-literal 0
-HcmV?d00001
-
-literal 1360
-zcmZQfFGy!*W@Ke#VqggLnYN69fq@Z-(E%eDx(E*bs5<NcGvvcX4&tvN?+<A7410el
-zpr*s&;$I$y;_DG5-p>^?`;Pjx3vc@>clMq$FB`<O@(4fkGH5;5W#Id_>(K1CUIi|N
-zsvi2g;@3gdA(S!jFkIQEWGHo6ST63C=8{BCz1HnYg`Lb06^aOjybMdTjEeXLLrOJU
-RgG}yTes6vJW7bzp^8ko~DZ2mw
-
+diff --git a/refs.c b/refs.c
+index 05cb299..150c980 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2990,15 +2990,37 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 	return 0;
+ }
+ 
++static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
++			    const unsigned char *new_sha1,
++			    const char *committer, const char *msg)
++{
++	int msglen, written;
++	unsigned maxlen, len;
++	char *logrec;
++
++	msglen = msg ? strlen(msg) : 0;
++	maxlen = strlen(committer) + msglen + 100;
++	logrec = xmalloc(maxlen);
++	len = sprintf(logrec, "%s %s %s\n",
++		      sha1_to_hex(old_sha1),
++		      sha1_to_hex(new_sha1),
++		      committer);
++	if (msglen)
++		len += copy_msg(logrec + len - 1, msg) - 1;
++
++	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
++	free(logrec);
++	if (written != len)
++		return -1;
++
++	return 0;
++}
++
+ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 			 const unsigned char *new_sha1, const char *msg)
+ {
+-	int logfd, result, written, oflags = O_APPEND | O_WRONLY;
+-	unsigned maxlen, len;
+-	int msglen;
++	int logfd, result, oflags = O_APPEND | O_WRONLY;
+ 	char log_file[PATH_MAX];
+-	char *logrec;
+-	const char *committer;
+ 
+ 	if (log_all_ref_updates < 0)
+ 		log_all_ref_updates = !is_bare_repository();
+@@ -3010,19 +3032,9 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 	logfd = open(log_file, oflags);
+ 	if (logfd < 0)
+ 		return 0;
+-	msglen = msg ? strlen(msg) : 0;
+-	committer = git_committer_info(0);
+-	maxlen = strlen(committer) + msglen + 100;
+-	logrec = xmalloc(maxlen);
+-	len = sprintf(logrec, "%s %s %s\n",
+-		      sha1_to_hex(old_sha1),
+-		      sha1_to_hex(new_sha1),
+-		      committer);
+-	if (msglen)
+-		len += copy_msg(logrec + len - 1, msg) - 1;
+-	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
+-	free(logrec);
+-	if (written != len) {
++	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
++				  git_committer_info(0), msg);
++	if (result) {
+ 		int save_errno = errno;
+ 		close(logfd);
+ 		error("Unable to append to %s", log_file);
 -- 
-2.2.0
+2.1.3
