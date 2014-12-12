@@ -1,59 +1,130 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] create gpg homedir on the fly
-Date: Fri, 12 Dec 2014 03:52:19 -0500
-Message-ID: <CAPig+cTEY4fbNuVv0S-jOk7CKouh5aRKSR=KejJQD3a9bhcOKQ@mail.gmail.com>
-References: <20141212094753.160a0fb5@leda.localdomain>
-	<1418374214-8241-1-git-send-email-mail@eworm.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Christian Hesse <mail@eworm.de>
-X-From: git-owner@vger.kernel.org Fri Dec 12 09:52:27 2014
+From: Christian Hesse <mail@eworm.de>
+Subject: [PATCH 1/3] create gpg homedir on the fly
+Date: Fri, 12 Dec 2014 09:55:21 +0100
+Message-ID: <1418374521-8643-1-git-send-email-mail@eworm.de>
+References: <CAPig+cTEY4fbNuVv0S-jOk7CKouh5aRKSR=KejJQD3a9bhcOKQ@mail.gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christian Hesse <mail@eworm.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 09:56:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzLxa-0005ED-6z
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:52:26 +0100
+	id 1XzM1S-0001b1-GF
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 09:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934041AbaLLIwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 03:52:20 -0500
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:33936 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932127AbaLLIwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2014 03:52:19 -0500
-Received: by mail-yk0-f176.google.com with SMTP id q200so2932440ykb.21
-        for <git@vger.kernel.org>; Fri, 12 Dec 2014 00:52:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=jyTIZXupdB1SKe/FLhGahHRp+eqrN6CEAbPJOX94ZDk=;
-        b=OpBMIL91ZNyNCLtUL0mXFdYhX4Tn5hKiRsHeC21Df9ouMAmGvubrFtQC83o5dmMzcQ
-         icTke22izNkCz0TYnadXm4/nQYhdS9gT2GputkbXE5vr0zt5DGRkBOFm+TE/BN358Xh8
-         NjJW0yNtofQC9jlJjR2UWicFtsPHew0KRlePg083RI36aIlStJEzB3NkNzR+I796obD6
-         B6Yd4/xnHnv1ie2YbMNzQw2vxwAuRa8A2Qt0cekwsdwBSyhiBPGP4GSpewEPOwr6qav3
-         tmxJ5SfAMlPUSt8KN5CRSuelBF1sUiNpOWIAFAotZPWRoh39HoAYc9TF4UkG/qIyDjS7
-         VqmQ==
-X-Received: by 10.236.53.69 with SMTP id f45mr10448864yhc.65.1418374339231;
- Fri, 12 Dec 2014 00:52:19 -0800 (PST)
-Received: by 10.170.79.215 with HTTP; Fri, 12 Dec 2014 00:52:19 -0800 (PST)
-In-Reply-To: <1418374214-8241-1-git-send-email-mail@eworm.de>
-X-Google-Sender-Auth: KpO7E-Q6nJAmNOVOo1xF0jdlCd0
+	id S934641AbaLLI4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 03:56:04 -0500
+Received: from mx.mylinuxtime.de ([148.251.109.235]:35350 "EHLO
+	mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756471AbaLLIzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2014 03:55:49 -0500
+Received: from leda.eworm.de (unknown [10.10.1.2])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx.mylinuxtime.de (Postfix) with ESMTPSA id 2CB33241AD;
+	Fri, 12 Dec 2014 09:55:48 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.9.2 mx.mylinuxtime.de 2CB33241AD
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
+	t=1418374548; bh=nH1o/wGSbpbEoZ4xfdSTp3lS9kHRTFaT7cVWhNci5uM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Ay7wkw5Bdu/Y8GpHNms116MXtVJfwHXIIt2aXqqQTRugmHMmaWikMAgaz1unmOjw2
+	 UOLzbX92d/imvZT3OiytmysQLk8h5NmNstk9QyJFKnUP6qtcQFam1v487nGowQ2V2B
+	 MtUsdTGJvEhho1OG8l70gGyYHX9ORpRp7p0oB+ns=
+Received: by leda.eworm.de (Postfix, from userid 1000)
+	id 02C6C100CAA; Fri, 12 Dec 2014 09:55:42 +0100 (CET)
+X-Mailer: git-send-email 2.2.0
+In-Reply-To: <CAPig+cTEY4fbNuVv0S-jOk7CKouh5aRKSR=KejJQD3a9bhcOKQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261319>
 
-On Fri, Dec 12, 2014 at 3:50 AM, Christian Hesse <mail@eworm.de> wrote:
-> GnuPG 2.1 homedir looks different, so just creat it on the fly by
+GnuPG 2.1 homedir looks different, so just create it on the fly by
+importing needed private and public keys and ownertrust.
+This solves an issue with gnupg 2.1 running interactive pinentry when
+old secret key is present.
 
-s/creat/create/
+Signed-off-by: Christian Hesse <mail@eworm.de>
+---
+ t/lib-gpg.sh          |  10 +++++++---
+ t/lib-gpg/ownertrust  |   4 ++++
+ t/lib-gpg/random_seed | Bin 600 -> 0 bytes
+ t/lib-gpg/trustdb.gpg | Bin 1360 -> 0 bytes
+ 4 files changed, 11 insertions(+), 3 deletions(-)
+ create mode 100644 t/lib-gpg/ownertrust
+ delete mode 100644 t/lib-gpg/random_seed
+ delete mode 100644 t/lib-gpg/trustdb.gpg
 
-> importing needed private and public keys and ownertrust.
-> This solves an issue with gnupg 2.1 running interactive pinentry when
-> old secret key is present.
->
-> Signed-off-by: Christian Hesse <mail@eworm.de>
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index cd2baef..4e57942 100755
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -16,11 +16,15 @@ else
+ 		# Type DSA and Elgamal, size 2048 bits, no expiration date.
+ 		# Name and email: C O Mitter <committer@example.com>
+ 		# No password given, to enable non-interactive operation.
+-		cp -R "$TEST_DIRECTORY"/lib-gpg ./gpghome
+-		chmod 0700 gpghome
+-		chmod 0600 gpghome/*
++		mkdir ./gpghome
++		chmod 0700 ./gpghome
+ 		GNUPGHOME="$(pwd)/gpghome"
+ 		export GNUPGHOME
++		gpg --homedir "${GNUPGHOME}" --import \
++			"$TEST_DIRECTORY"/lib-gpg/pubring.gpg \
++			"$TEST_DIRECTORY"/lib-gpg/secring.gpg
++		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
++			"$TEST_DIRECTORY"/lib-gpg/ownertrust
+ 		test_set_prereq GPG
+ 		;;
+ 	esac
+diff --git a/t/lib-gpg/ownertrust b/t/lib-gpg/ownertrust
+new file mode 100644
+index 0000000..b3e3c4f
+--- /dev/null
++++ b/t/lib-gpg/ownertrust
+@@ -0,0 +1,4 @@
++# List of assigned trustvalues, created Thu 11 Dec 2014 01:26:28 PM CET
++# (Use "gpg --import-ownertrust" to restore them)
++73D758744BE721698EC54E8713B6F51ECDDE430D:6:
++D4BE22311AD3131E5EDA29A461092E85B7227189:3:
+diff --git a/t/lib-gpg/random_seed b/t/lib-gpg/random_seed
+deleted file mode 100644
+index 95d249f15fce980f0e8c1a8a18b085b3885708aa..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 600
+zcmV-e0;m1ccZd+x>>TST*Lrq1x^ggx^+ymwieO!6X=U~ZH@{avIgxdn#ai{)Ou@Qw
+za}Z!boffEq^fn)n?c=IEnDpt59Lnc)aR*;8Z;k>gh_NW;ka;7Mt@v#sG(!Y9SSXWv
+zQxd3WlyBr#4ltW6uKOoa6(r3df1VX$cG4`Om6hD-ckaX+Hb_yI?{f`hJQY&k!1cM-
+zoGeY~(Z7aYn$W06djh?W|CMs>W=k@jgf=P2D1UA1T%vz0oE|<O<lIacG0xioPtS&U
+zNd#}P%YpJr-H65~J^RdqA!YV9BEvh7Gw^CdXg+Hp?kj=KGW|+|&g$4?`trWWGuy$9
+zv-|;8Y4(NRHWPyJ{epd{4%FHQKk5j}?0FFDAJ;0kIItZ4y<JS?DIG4~0!#x~;X`!P
+zO%+va?@`?yQnhjrP@&#yjY$YO_0yk|1ddhc8V&ru7d%ytet)mF<ZIUbPB3bvhHQ41
+zNmnYeFxUMu=m$K5&s=5_F&JSR#oU3Y#X{(q7HTp-VYJ)%JjihbZ@R#GeqmU{>0C4Q
+zc}hUG+ighB{7XSaNw_h;=YtqacQ<B(Cg$e)^NTDD-oMD+T`O#-^|-ib>j!<pxHg+(
+zlC$%zE836|E*F*((=>O{Nn@K$taZO}!>$t>GMgsw?!=n_#(%X9Ha|$b=H@VstWYe;
+zPUQ<L$$#9HTcOLoyEd6*A4TOEe3}c}GiW*^P1Lt{nHYUEAB`Qx7*wizaEyM$?AjVN
+mb-6m)4=6PVqdR>h+D!{<c#q1!T9b(}OW7hrrT@nJcBO(OGA4ll
+
+diff --git a/t/lib-gpg/trustdb.gpg b/t/lib-gpg/trustdb.gpg
+deleted file mode 100644
+index 4879ae9a84650a93a4d15bd6560c5d1b89eb4c2f..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1360
+zcmZQfFGy!*W@Ke#VqggLnYN69fq@Z-(E%eDx(E*bs5<NcGvvcX4&tvN?+<A7410el
+zpr*s&;$I$y;_DG5-p>^?`;Pjx3vc@>clMq$FB`<O@(4fkGH5;5W#Id_>(K1CUIi|N
+zsvi2g;@3gdA(S!jFkIQEWGHo6ST63C=8{BCz1HnYg`Lb06^aOjybMdTjEeXLLrOJU
+RgG}yTes6vJW7bzp^8ko~DZ2mw
+
+-- 
+2.2.0
