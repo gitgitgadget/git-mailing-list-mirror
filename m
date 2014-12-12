@@ -1,99 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 20/23] reflog_expire(): new function in the reference API
-Date: Fri, 12 Dec 2014 10:57:15 -0800
-Message-ID: <xmqqwq5wbss4.fsf@gitster.dls.corp.google.com>
-References: <1417734515-11812-1-git-send-email-mhagger@alum.mit.edu>
-	<1417734515-11812-21-git-send-email-mhagger@alum.mit.edu>
-	<20141208233217.GL25562@google.com> <548AA5E9.9090201@alum.mit.edu>
-	<20141212085022.GA11891@peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] use strbuf_complete_line() for adding a newline if needed
+Date: Fri, 12 Dec 2014 20:16:38 +0100
+Message-ID: <548B3F16.80208@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Stefan Beller <sbeller@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 12 19:57:56 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 12 20:17:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzVPU-0005OU-IU
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 19:57:52 +0100
+	id 1XzVid-0004p8-3l
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 20:17:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965445AbaLLS5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 13:57:49 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57923 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932399AbaLLS5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2014 13:57:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FA9625B31;
-	Fri, 12 Dec 2014 13:57:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=whm/TmYmIYRuwv/envcmvWJqcz0=; b=bLmjqG
-	ODk0byrltN6WkW4qTmyexNFHXJwhBCdyYva5qHnRTlk0xg9oFiVjV/s5wWmL5yQb
-	s4dGtRFBxkQiEjT+Zx1hQtAo7XCo89HaJvXFMEPEvtDfLcQpayjye4na6Veguq0l
-	a/LmPeWdpgsx4lTT7kUan70zRSXkKUpx2D710=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mx256t6kQYRswxM5f6VGp4gw0tQDLB2v
-	nNQswT3ROak4X+NfiM5TdBFlT7HyS6o0io+T3ALWvEWyfqG881Z3OfygUO5SEjQH
-	sD99L2zqhRjjxge1yRgkW/2eHT4Fhc4qeOCp4uF/T04YJLNDHlvUFRlycNFF0zad
-	1S1Xkvydvl8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 749DB25B30;
-	Fri, 12 Dec 2014 13:57:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A842A25B11;
-	Fri, 12 Dec 2014 13:57:16 -0500 (EST)
-In-Reply-To: <20141212085022.GA11891@peff.net> (Jeff King's message of "Fri,
-	12 Dec 2014 03:50:22 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B1020C3E-8230-11E4-9F76-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S934770AbaLLTRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 14:17:34 -0500
+Received: from mout.web.de ([212.227.15.4]:52630 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933644AbaLLTRd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2014 14:17:33 -0500
+Received: from [192.168.178.27] ([79.253.155.45]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0M0QlZ-1XgjHO3IVR-00ucuA; Fri, 12 Dec 2014 20:17:27
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+X-Provags-ID: V03:K0:0vas6ZTj3+hqbxcbog0EZyWOMtp7MwqApEvDAsebv11hu0wA57e
+ HT2xleupbX3C7MN/ACJe84roty9hya+vJ1+8jxM+Tmqcvv2EIpqZyJf3XhEVXJVB/rHmiQh
+ 3ANpefBXXaCooQ495xdz9z6sl+90UnTT+rNaBPMzpPKfobM+aoKrvx4a8N0hYAQr0mdXwQH
+ NJtcy6Qy/rQyX1OJbfgcw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261359>
 
-Jeff King <peff@peff.net> writes:
+Call strbuf_complete_line() instead of open-coding it.  Also remove
+surrounding comments indicating the intent to complete a line since
+this information is already included in the function name.
 
->> > enum expire_reflog_flags {
->> >      EXPIRE_REFLOGS_DRY_RUN    = 1 << 0,
->> >      EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
->> >      EXPIRE_REFLOGS_VERBOSE    = 1 << 2,
->> >      EXPIRE_REFLOGS_REWRITE    = 1 << 3
->> > }
->> > 
->> > Do we have a preference in the coding style on this one?
->
-> I think vertically aligned lists look really nice. But they often wreak
-> havoc with diffs, because introducing one longer line means re-aligning
-> the whole thing. IMHO, it's not worth it (but if you're going to do it,
-> leave lots of extra room for expansion).
->
-> Just my two cents, of course. I don't recall this particular style point
-> coming up before.
->
->> Both styles are used in our codebase, and I don't think the style guide
->> says anything about it. My practice in such cases is:
->> 
->> * If I'm modifying existing code, preserve the existing style (to avoid
->> unnecessary churn)
->> * If most of our code uses one style, then use that style
->> * If our code uses both styles frequently, just use whatever style looks
->> better to me
->
-> I think that is a very good philosophy in general.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/fmt-merge-msg.c | 3 +--
+ notes-utils.c           | 3 +--
+ trace.c                 | 4 +---
+ 3 files changed, 3 insertions(+), 7 deletions(-)
 
-Thanks.
-
-About the indentation on the second and subsequent lines of a
-logical line that is split into multiple lines, we explicitly say
-"Both ar valid, and we use both."  Following the above three-bullet
-list would be a good practice for this one, too.
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 37177c6..af7919e 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -216,8 +216,7 @@ static void add_branch_desc(struct strbuf *out, const char *name)
+ 			strbuf_addf(out, "  : %.*s", (int)(ep - bp), bp);
+ 			bp = ep;
+ 		}
+-		if (out->buf[out->len - 1] != '\n')
+-			strbuf_addch(out, '\n');
++		strbuf_complete_line(out);
+ 	}
+ 	strbuf_release(&desc);
+ }
+diff --git a/notes-utils.c b/notes-utils.c
+index b64dc1b..ccbf073 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -44,8 +44,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
+ 
+ 	/* Prepare commit message and reflog message */
+ 	strbuf_addstr(&buf, msg);
+-	if (buf.buf[buf.len - 1] != '\n')
+-		strbuf_addch(&buf, '\n'); /* Make sure msg ends with newline */
++	strbuf_complete_line(&buf);
+ 
+ 	create_notes_commit(t, NULL, buf.buf, buf.len, commit_sha1);
+ 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
+diff --git a/trace.c b/trace.c
+index 4778608..f6f9f3a 100644
+--- a/trace.c
++++ b/trace.c
+@@ -122,9 +122,7 @@ static int prepare_trace_line(const char *file, int line,
+ 
+ static void print_trace_line(struct trace_key *key, struct strbuf *buf)
+ {
+-	/* append newline if missing */
+-	if (buf->len && buf->buf[buf->len - 1] != '\n')
+-		strbuf_addch(buf, '\n');
++	strbuf_complete_line(buf);
+ 
+ 	write_or_whine_pipe(get_trace_fd(key), buf->buf, buf->len, err_msg);
+ 	strbuf_release(buf);
+-- 
+2.2.0
