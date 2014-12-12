@@ -1,145 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] create gpg homedir on the fly
-Date: Fri, 12 Dec 2014 10:26:55 -0800
-Message-ID: <xmqq61dgd8r4.fsf@gitster.dls.corp.google.com>
-References: <20141212094753.160a0fb5@leda.localdomain>
-	<1418374214-8241-1-git-send-email-mail@eworm.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] document string_list_clear
+Date: Fri, 12 Dec 2014 10:31:14 -0800
+Message-ID: <20141212183114.GA29365@google.com>
+References: <1417830678-16115-1-git-send-email-sbeller@google.com>
+ <20141206020458.GR16345@google.com>
+ <xmqq7fy0mx70.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kbk4SXEXKzn-V8c4zCQU8m8ub+VkKhmub-bFoLZT1WWpA@mail.gmail.com>
+ <20141209201713.GY16345@google.com>
+ <20141209202738.GC12001@peff.net>
+ <20141209222337.GA16345@google.com>
+ <20141210084351.GA29776@peff.net>
+ <20141210091815.GA18372@google.com>
+ <20141212091625.GA9049@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Christian Hesse <mail@eworm.de>
-X-From: git-owner@vger.kernel.org Fri Dec 12 19:27:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 12 19:31:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzUwI-0006mf-Rx
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 19:27:43 +0100
+	id 1XzUzu-0004XP-Eg
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 19:31:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965100AbaLLS1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 13:27:39 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51481 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932991AbaLLS06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2014 13:26:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E05B025168;
-	Fri, 12 Dec 2014 13:26:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NhA+p8j57JNe/bBgN5niaBnkTaU=; b=tgR4hi
-	pV4mQj687zpb3huFI/oCoAbT7/rlKJjsYNrBlYls89x5WjTqGDaZdtTWfMwWutSP
-	tjnJlOUL96A6tJ0yX+sUg5dDOOT3ww9pMQBxAsIDicpDCnzey7HTaet9sIVBLrK6
-	N5PCEAI7Qf255n7mjxnD2cv90oebbKSqtfRsM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lcqYyV+xv3L4xlnF8TlvptSKA0sfQPfV
-	uzTvJP0OqDDAyK9dGLGDjX4RxRJd94c/7Kcc2LAUFEEzn8AD5WD98vCYaauO9Pvr
-	JMaTjl0+2QQ/YTdXuuoXA6FcuXAkY2ne47KLB/fx4Az60gxMJnBHQxBF9ql3uZlL
-	viYo7ij1p9g=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D56C125165;
-	Fri, 12 Dec 2014 13:26:57 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 521DA25164;
-	Fri, 12 Dec 2014 13:26:57 -0500 (EST)
-In-Reply-To: <1418374214-8241-1-git-send-email-mail@eworm.de> (Christian
-	Hesse's message of "Fri, 12 Dec 2014 09:50:12 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 748DEFE2-822C-11E4-AC2F-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752165AbaLLSbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 13:31:22 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:38164 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750759AbaLLSbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2014 13:31:21 -0500
+Received: by mail-ig0-f173.google.com with SMTP id r2so1903325igi.12
+        for <git@vger.kernel.org>; Fri, 12 Dec 2014 10:31:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=MDtgPpUVrkzS17CecaATeYEzPUlYAawwRRk0a0hzWfA=;
+        b=przwhNKBRb/+ZUTwc0Uy0fA1CG6j2CFj8blg0aQbx5k6sL2bpPSdW9+fMYqhfSa6b9
+         LtAylkqjHU7Jtr08vBgD4UZPeSCXWmXjYnLqA54orvTXQmqwd/lX/ufpg5qAZ7hqMjp3
+         nI3GRIfGsKP1evu+Cbhn/D9HWj0k/gJLSbwt07IDfkCSLfAkgBrOB6VjZOW2wVQ2eImt
+         SNYegeiJ4qRLiGq4F1Cesnr3qTUM/Zl2fkIjWVFI0HwRGgzNy1jezRhnMvHOZ0fF0t8O
+         lbflN7JZvk1zgFAVTzzzcL10NGz5uimftL5gP+mFZdqh1fu90+MaTkMRhBiKsrOrk+lP
+         ibJw==
+X-Received: by 10.42.201.212 with SMTP id fb20mr17465074icb.2.1418409081260;
+        Fri, 12 Dec 2014 10:31:21 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:88f6:7c4b:61b7:9a92])
+        by mx.google.com with ESMTPSA id m127sm968590ioe.32.2014.12.12.10.31.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 12 Dec 2014 10:31:20 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20141212091625.GA9049@peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261354>
 
-Christian Hesse <mail@eworm.de> writes:
+Jeff King wrote:
 
-> GnuPG 2.1 homedir looks different, so just creat it on the fly by
-> importing needed private and public keys and ownertrust.
-> This solves an issue with gnupg 2.1 running interactive pinentry when
-> old secret key is present.
->
-> Signed-off-by: Christian Hesse <mail@eworm.de>
-> ---
+> I'm not sure any such thought as "intended to be out of date" went into
+> it.
 
-Thanks; will queue with s/just creat/&e/;
+Junio started the documentation in v1.5.4-rc1~49 (2007-11-24).  I'm
+not sure if there was a discussion preceding that commit.  My
+understanding was always that putting the documentation out-of-line
+was an intentional decision and that it was understood that the
+documentation would have cycles of falling out of date and needing to
+be updated, but I may be misunderstanding the history.
 
->  t/lib-gpg.sh          |  10 +++++++---
->  t/lib-gpg/ownertrust  |   4 ++++
->  t/lib-gpg/random_seed | Bin 600 -> 0 bytes
->  t/lib-gpg/trustdb.gpg | Bin 1360 -> 0 bytes
->  4 files changed, 11 insertions(+), 3 deletions(-)
->  create mode 100644 t/lib-gpg/ownertrust
->  delete mode 100644 t/lib-gpg/random_seed
->  delete mode 100644 t/lib-gpg/trustdb.gpg
->
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index cd2baef..4e57942 100755
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -16,11 +16,15 @@ else
->  		# Type DSA and Elgamal, size 2048 bits, no expiration date.
->  		# Name and email: C O Mitter <committer@example.com>
->  		# No password given, to enable non-interactive operation.
-> -		cp -R "$TEST_DIRECTORY"/lib-gpg ./gpghome
-> -		chmod 0700 gpghome
-> -		chmod 0600 gpghome/*
-> +		mkdir ./gpghome
-> +		chmod 0700 ./gpghome
->  		GNUPGHOME="$(pwd)/gpghome"
->  		export GNUPGHOME
-> +		gpg --homedir "${GNUPGHOME}" --import \
-> +			"$TEST_DIRECTORY"/lib-gpg/pubring.gpg \
-> +			"$TEST_DIRECTORY"/lib-gpg/secring.gpg
-> +		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
-> +			"$TEST_DIRECTORY"/lib-gpg/ownertrust
->  		test_set_prereq GPG
->  		;;
->  	esac
-> diff --git a/t/lib-gpg/ownertrust b/t/lib-gpg/ownertrust
-> new file mode 100644
-> index 0000000..b3e3c4f
-> --- /dev/null
-> +++ b/t/lib-gpg/ownertrust
-> @@ -0,0 +1,4 @@
-> +# List of assigned trustvalues, created Thu 11 Dec 2014 01:26:28 PM CET
-> +# (Use "gpg --import-ownertrust" to restore them)
-> +73D758744BE721698EC54E8713B6F51ECDDE430D:6:
-> +D4BE22311AD3131E5EDA29A461092E85B7227189:3:
-> diff --git a/t/lib-gpg/random_seed b/t/lib-gpg/random_seed
-> deleted file mode 100644
-> index 95d249f15fce980f0e8c1a8a18b085b3885708aa..0000000000000000000000000000000000000000
-> GIT binary patch
-> literal 0
-> HcmV?d00001
->
-> literal 600
-> zcmV-e0;m1ccZd+x>>TST*Lrq1x^ggx^+ymwieO!6X=U~ZH@{avIgxdn#ai{)Ou@Qw
-> za}Z!boffEq^fn)n?c=IEnDpt59Lnc)aR*;8Z;k>gh_NW;ka;7Mt@v#sG(!Y9SSXWv
-> zQxd3WlyBr#4ltW6uKOoa6(r3df1VX$cG4`Om6hD-ckaX+Hb_yI?{f`hJQY&k!1cM-
-> zoGeY~(Z7aYn$W06djh?W|CMs>W=k@jgf=P2D1UA1T%vz0oE|<O<lIacG0xioPtS&U
-> zNd#}P%YpJr-H65~J^RdqA!YV9BEvh7Gw^CdXg+Hp?kj=KGW|+|&g$4?`trWWGuy$9
-> zv-|;8Y4(NRHWPyJ{epd{4%FHQKk5j}?0FFDAJ;0kIItZ4y<JS?DIG4~0!#x~;X`!P
-> zO%+va?@`?yQnhjrP@&#yjY$YO_0yk|1ddhc8V&ru7d%ytet)mF<ZIUbPB3bvhHQ41
-> zNmnYeFxUMu=m$K5&s=5_F&JSR#oU3Y#X{(q7HTp-VYJ)%JjihbZ@R#GeqmU{>0C4Q
-> zc}hUG+ighB{7XSaNw_h;=YtqacQ<B(Cg$e)^NTDD-oMD+T`O#-^|-ib>j!<pxHg+(
-> zlC$%zE836|E*F*((=>O{Nn@K$taZO}!>$t>GMgsw?!=n_#(%X9Ha|$b=H@VstWYe;
-> zPUQ<L$$#9HTcOLoyEd6*A4TOEe3}c}GiW*^P1Lt{nHYUEAB`Qx7*wizaEyM$?AjVN
-> mb-6m)4=6PVqdR>h+D!{<c#q1!T9b(}OW7hrrT@nJcBO(OGA4ll
->
-> diff --git a/t/lib-gpg/trustdb.gpg b/t/lib-gpg/trustdb.gpg
-> deleted file mode 100644
-> index 4879ae9a84650a93a4d15bd6560c5d1b89eb4c2f..0000000000000000000000000000000000000000
-> GIT binary patch
-> literal 0
-> HcmV?d00001
->
-> literal 1360
-> zcmZQfFGy!*W@Ke#VqggLnYN69fq@Z-(E%eDx(E*bs5<NcGvvcX4&tvN?+<A7410el
-> zpr*s&;$I$y;_DG5-p>^?`;Pjx3vc@>clMq$FB`<O@(4fkGH5;5W#Id_>(K1CUIi|N
-> zsvi2g;@3gdA(S!jFkIQEWGHo6ST63C=8{BCz1HnYg`Lb06^aOjybMdTjEeXLLrOJU
-> RgG}yTes6vJW7bzp^8ko~DZ2mw
+Separate from the question of history, I honestly prefer this way of
+doing API documentation relative to 90% of the API documentation in
+headers I've seen in other projects.  I suspect you don't.  That's
+okay --- it's possible for rational people to disagree about things.
+
+It's moot given that we don't seem to disagree about what should be
+done about it.  Why keep arguing?
+
+> I think the end result that I posted is still strictly better than what
+> we have currently, with the exception that I should have reformatted the
+> hanging indents. What is it that you don't like about it?
+
+Other issues of inconsistent markup.  For example, some comments are
+strangely indented, and some look like
+
+	/* First line
+	 * second line
+	 * third line */
+
+> I'm not super interested in going back and forth over minor markup
+> issues if there are overall issues with the concept that might block it
+> from happening (just because they are tedious and time-consuming, and I
+> do not want to spend a lot of time formatting something that will get
+> thrown away). So please list your complaints in order of increasing
+> specificity. :)
+
+The overall concept is good.
+
+I chose not to list markup issues for the same reason (it's more
+tedious to go back and forth than for someone to spend some time to
+get it mostly-right first on their own).  I am kind of confused about
+the current status, since I've said again and again that I'd be happy
+to see the documentation in the header but you still seem to be trying
+to convince me of that.  What am I missing?
+
+Jonathan
