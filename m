@@ -1,77 +1,99 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/1] skip RFC1991 tests with gnupg 2.1.x
-Date: Fri, 12 Dec 2014 17:00:41 +0100
-Message-ID: <548B1129.80202@drmicha.warpmail.net>
-References: <1418290234-21516-1-git-send-email-mail@eworm.de>	<5489B90B.6070706@web.de>	<5489CC60.7080704@drmicha.warpmail.net>	<20141211234405.3513d5d7@leda.localdomain>	<xmqqegs5dbqu.fsf@gitster.dls.corp.google.com>	<20141212093543.5175e7a5@leda.localdomain> <20141212105444.50adca35@leda.localdomain>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/8] Making reflog modifications part of the transactions
+ API
+Date: Fri, 12 Dec 2014 17:17:16 +0100
+Message-ID: <548B150C.2090606@alum.mit.edu>
+References: <1417833995-25687-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Christian Hesse <mail@eworm.de>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 17:00:51 2014
+Content-Transfer-Encoding: 8bit
+To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	jrnieder@gmail.com, ronniesahlberg@gmail.com, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Dec 12 17:17:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzSe9-0003yb-1g
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 17:00:49 +0100
+	id 1XzSuF-0005WM-Mi
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Dec 2014 17:17:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933677AbaLLQAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2014 11:00:45 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:47496 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757971AbaLLQAo (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 11:00:44 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 883F4209F7
-	for <git@vger.kernel.org>; Fri, 12 Dec 2014 11:00:43 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Fri, 12 Dec 2014 11:00:43 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=r6n/Bo6AVl6dvR5s9s63hW
-	lUjMk=; b=j+mZElHCqBpxBZi1aykjN/d6295Ma2MlLF0YhHFXiesKxY7rZaDpLW
-	/OiC035PqR3RWJK+S9UTukc0q++WhJLcwSfadDrwBzmdMqZN5tKTf67vecm4Iq6q
-	MFATDGpgdcPaZlsbIDO4Yj5AlakPz9zg1a92yKw8Avdl06VxWeGh0=
-X-Sasl-enc: MR8NMXfzCKjBPWhF1mumqtcGv2EvULjLGK+cK1OfgN3r 1418400043
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id B2C16C00285;
-	Fri, 12 Dec 2014 11:00:42 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <20141212105444.50adca35@leda.localdomain>
+	id S934960AbaLLQRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2014 11:17:22 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:61166 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934917AbaLLQRW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2014 11:17:22 -0500
+X-AuditID: 1207440c-f79376d00000680a-ee-548b150f7363
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id B1.3F.26634.F051B845; Fri, 12 Dec 2014 11:17:19 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB074C.dip0.t-ipconnect.de [93.219.7.76])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBCGHHA3008851
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 12 Dec 2014 11:17:18 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <1417833995-25687-1-git-send-email-sbeller@google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqMsv2h1isGm5hUXXlW4mi4beK8wW
+	b28uYbTo7fvEarF5czuLA6vHzll32T0WbCr1uHhJ2ePzJrkAlihum6TEkrLgzPQ8fbsE7oyO
+	jq9sBVsEKlYe6GVuYFzB28XIySEhYCKx6doaZghbTOLCvfVsXYxcHEIClxklfkxuYYVwzjJJ
+	/Hm1DqyKV0Bb4vz+BewgNouAqsTy+y1sIDabgK7Eop5mJhBbVCBI4uSe6+wQ9YISJ2c+YQEZ
+	JCLQyigxa99zsAZhgWCJrucfwIqEBJwkeqZvYAGxOQWcJRY3rQOzmQX0JHZc/8UKYctLNG+d
+	zTyBkX8WkrmzkJTNQlK2gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGuoV5uZoleakrpJkZI
+	CPPsYPy2TuYQowAHoxIP74vUrhAh1sSy4srcQ4ySHExKorx3+LtDhPiS8lMqMxKLM+KLSnNS
+	iw8xSnAwK4nw/o0CKudNSaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfAy
+	iAANFSxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAdFZXwxMC5BUjxAe+VA2nmLCxJz
+	gaIQracYFaXEedlBEgIgiYzSPLixsMT0ilEc6Eth3gnCQFU8wKQG1/0KaDAT0ODlWzpABpck
+	IqSkGhj13TeYhB257DUra7978pScHYrf7zzsu2H3rvur+jT+nUf+Xik7otwxR9FFee4W34ta
+	h4J2rfp91PRikWp4S/o76aPHltYvrYm1f7nwfGroh7ui1l23l1nuX/xG9liNQev+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261350>
 
-Christian Hesse schrieb am 12.12.2014 um 10:54:
-> Christian Hesse <mail@eworm.de> on Fri, 2014/12/12 09:35:
->> Junio C Hamano <gitster@pobox.com> on Thu, 2014/12/11 15:10:
->>> Christian Hesse <mail@eworm.de> writes:
->>>   
->>>> However... Even if GnuPG 2.2.x (or whatever future release) will become
->>>> next stable: It will not reintroduce support for rfc1991.  
->>>
->>> How certain are we about the deprecation?  
->>
->> The sixth beta of GnuPG [0] had this change:
->>
->>  * gpg: Removed the option --pgp2 and --rfc1991 and the ability to
->>    create PGP-2 compatible messages.
+On 12/06/2014 03:46 AM, Stefan Beller wrote:
+> This goes on top of Michaels series. The idea of this series is make the
+> reflogs being part of the transaction API, so it will be part of the contract
+> of transaction_commit to either commit all the changes or none at all.
 > 
-> This is the corresponding commit:
-> 
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commit;h=2b8d8369d59249b89526c18c5ac276e6445dc35e
-> 
+> Currently when using the transaction API to change refs, also reflogs are changed.
+> But the changes to the reflogs just happen as a side effect and not as part of
+> the atomic part of changes we want to commit altogether.
 
-So, in fact, gpg2.1 removes support for creating pgp2 (rfc1991)
-signatures only. That is: We could put an armor exported signature
-into our test suite, test verification against that signature,
-and restrict the test for creation of that signature by gpg version (or
-skip it completely).
+Would you please explain why this patch series is still needed if my
+"reflog_expire()" series is accepted?
+
+reflog_expire() already has its own little transaction. Reflog
+expiration never needs to be combined with other reference changes, so
+there is no need for reflog expiration to be done via a ref_transaction.
+
+ref_transaction_commit() already updates the reflog if necessary when a
+reference is updated. That update is part of the containing
+ref_transaction, because it is locked by the lock on the reference
+itself at the beginning of the transaction and unlocked at the end of
+the transaction [1]. It can't fail in normal circumstances because the
+preconditions for the transaction have already been checked.
+
+As far as I can tell, the only thing left to do is provide a substitute
+for log_ref_setup() a.k.a. create_reflog() that can be triggered within
+a transaction. In my opinion the easiest way to do that is to give
+ref_transaction_update()'s flag parameter an additional option,
+REF_CREATE_REFLOG, which forces the reference's reflog to be created if
+it does not already exist.
+
+What am I missing?
 
 Michael
+
+[1] The reflog updates are not atomic in the face of disk errors and
+power outages and stuff, but neither are reference updates. In other
+words, I think reflog updates in ref_transaction_commit() are done as
+safely as reference updates, which is surely good enough for this
+reference backend. Other reference backends can do a better job with
+both while staying within the existing API.
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
