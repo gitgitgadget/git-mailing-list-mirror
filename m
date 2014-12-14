@@ -1,88 +1,125 @@
-From: "krzf83@gmail.com " <krzf83@gmail.com>
-Subject: Re: hooks scripts and noexec partition
-Date: Sun, 14 Dec 2014 02:44:35 +0100
-Message-ID: <CAJ1PRS=KmiQJG91nxG5pQXPHX2XruoyL9c4yzzPeYayw+UAjPw@mail.gmail.com>
-References: <CAJ1PRS=96aSp3GE+wj=zHX=JGfZbjUeiUuiDDvfJNuRhrbK_Yg@mail.gmail.com>
-	<20140115091609.GC14335@sigill.intra.peff.net>
+From: =?UTF-8?q?=D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=20=D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE?= 
+	<dpb@corrigendum.ru>
+Subject: [PATCH v2 2/2] send-email: handle adjacent RFC 2047-encoded words properly
+Date: Sun, 14 Dec 2014 18:59:47 +0300
+Message-ID: <1418572787-2056-2-git-send-email-dpb@corrigendum.ru>
+References: <1418572787-2056-1-git-send-email-dpb@corrigendum.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 14 02:44:43 2014
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Dec 14 17:00:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XzyEl-0008SI-3J
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Dec 2014 02:44:43 +0100
+	id 1Y0Bae-0007YD-78
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Dec 2014 17:00:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569AbaLNBoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2014 20:44:38 -0500
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:35844 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751905AbaLNBoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2014 20:44:37 -0500
-Received: by mail-lb0-f175.google.com with SMTP id u10so7752964lbd.34
-        for <git@vger.kernel.org>; Sat, 13 Dec 2014 17:44:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=HfyRYV+bDT656n/tbGL+VuNHH0TMemJokbO+WxWYH48=;
-        b=vgQLkz6014vruumUnI8k2FQasYuH4Yb+MvUF123yGUA17R10V7Xvlv7i1IjD6xPwk/
-         5NM6yu3S1wvPfJUGIEECWld0IKOGka2x9fC6sUgaMEfTNQQqN8Oa3Z0BKDEV95Yauf8D
-         Ik5tkwZchq33USdT+N5RKT4V7Vmc0TPhWJe5yZXR9kQiXv6himh2z04t4xhbxnko0B06
-         Nths3WhhLLlG8RsU1WK9oT1fMk49paDkg7gVrqebd2S7c3Cuhgf3SkXTS1j5fSPUZiVp
-         frPj6EZBztdq2VUBM9JO6kBE0RTPNl2R7+5xpj0sw9GjndXmj8W6yFxXle3i9S4LdJgb
-         JTZg==
-X-Received: by 10.152.5.165 with SMTP id t5mr18474938lat.62.1418521475626;
- Sat, 13 Dec 2014 17:44:35 -0800 (PST)
-Received: by 10.152.206.4 with HTTP; Sat, 13 Dec 2014 17:44:35 -0800 (PST)
-In-Reply-To: <20140115091609.GC14335@sigill.intra.peff.net>
+	id S1752001AbaLNQAI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Dec 2014 11:00:08 -0500
+Received: from forward8l.mail.yandex.net ([84.201.143.141]:52567 "EHLO
+	forward8l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785AbaLNQAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2014 11:00:06 -0500
+Received: from smtp1o.mail.yandex.net (smtp1o.mail.yandex.net [37.140.190.26])
+	by forward8l.mail.yandex.net (Yandex) with ESMTP id 4CDA81A41031;
+	Sun, 14 Dec 2014 19:00:02 +0300 (MSK)
+Received: from smtp1o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp1o.mail.yandex.net (Yandex) with ESMTP id CF5E8DE312C;
+	Sun, 14 Dec 2014 19:00:01 +0300 (MSK)
+Received: from 95-37-173-200.dynamic.mts-nn.ru (95-37-173-200.dynamic.mts-nn.ru [95.37.173.200])
+	by smtp1o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id WMovLIO4FZ-01Naq6g5;
+	Sun, 14 Dec 2014 19:00:01 +0300
+	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+	(Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
+	t=1418572801; bh=w6kVH0c0bY+1K2SB9wb+DROfb+JnFGqSrQDNzRZHBHQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=Ji/AlAKufzT8pFROhAS7wuJUuwC6Fijl3R8stJR8HYKrhzNmf+wvEZKryzrlx1J3v
+	 XEWA+IIyQZoGD1dZflU4y+M9sM92WT7Jy6rvcmjVGRfyqB7TP2ZCY3QC8TfkvLlGjP
+	 FMnbRse6s70/S4f4sFDMR0676W3I8H34v67ebYtQ=
+Authentication-Results: smtp1o.mail.yandex.net; dkim=pass header.i=@corrigendum.ru
+X-Mailer: git-send-email 2.2.0.67.gf656295
+In-Reply-To: <1418572787-2056-1-git-send-email-dpb@corrigendum.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261398>
 
-Thanks for the patch, however it is not working (no change, hooks
-still dont work on noexec partition). Since I see that you are fluent
-in git code and C can you by any chance tell me how to modify
-run-command.c to make git run hooks as: /bin/sh <hook_path> ?
+The RFC says that they are to be concatenated after decoding (i.e. the
+intervening whitespace is ignored).
 
-2014-01-15 10:16 GMT+01:00 Jeff King <peff@peff.net>:
-> On Tue, Jan 14, 2014 at 04:41:03PM +0100, krzf83@gmail.com  wrote:
->
->> git can't execute hooks no partitions mounted with noexec - even if
->> those are just scripts with shebang line
->
-> Right. Git does not know that they are shell (or other) scripts; they
-> could be anything, and the advertised interface is that git will run
-> exec on them (and it is explicitly OK for them to exist but not be
-> executable, and git takes this as a sign that they are inactive).
->
->> and they actualy work by
->> hooks/./post-comit (because I use small patch on kernel that allows
->> running scripts that way on noexec partition)
->
-> If you are suggesting that git always execute them as "hooks/./$hook",
-> that might make sense if such behavior is widespread. But it sounds like
-> you are running a custom kernel patch to get around the noexec setting.
-> Here is the custom git patch to match it. :)
->
-> diff --git a/run-command.c b/run-command.c
-> index 3914d9c..ae84e87 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -753,7 +753,7 @@ int finish_async(struct async *async)
->
->  char *find_hook(const char *name)
->  {
-> -       char *path = git_path("hooks/%s", name);
-> +       char *path = git_path("hooks/./%s", name);
->         if (access(path, X_OK) < 0)
->                 path = NULL;
->
->
-> -Peff
+Signed-off-by: =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD =D0=94=D0=BE=D0=BD=D1=87=D0=
+=B5=D0=BD=D0=BA=D0=BE <dpb@corrigendum.ru>
+Acked-by: Jeff King <peff@peff.net>
+---
+ git-send-email.perl   | 26 ++++++++++++++++----------
+ t/t9001-send-email.sh |  7 +++++++
+ 2 files changed, 23 insertions(+), 10 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d461ffb..7d5cc8a 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -919,17 +919,23 @@ $time =3D time - scalar $#files;
+ sub unquote_rfc2047 {
+ 	local ($_) =3D @_;
+ 	my $charset;
+-	s{$re_encoded_word}{
+-		$charset =3D $1;
+-		my $encoding =3D $2;
+-		my $text =3D $3;
+-		if ($encoding eq 'q' || $encoding eq 'Q') {
+-			$text =3D~ s/_/ /g;
+-			$text =3D~ s/=3D([0-9A-F]{2})/chr(hex($1))/egi;
+-			$text;
+-		} else {
+-			$&; # other encodings not supported yet
++	my $sep =3D qr/[ \t]+/;
++	s{$re_encoded_word(?:$sep$re_encoded_word)*}{
++		my @words =3D split $sep, $&;
++		foreach (@words) {
++			m/$re_encoded_word/;
++			$charset =3D $1;
++			my $encoding =3D $2;
++			my $text =3D $3;
++			if ($encoding eq 'q' || $encoding eq 'Q') {
++				$_ =3D $text;
++				s/_/ /g;
++				s/=3D([0-9A-F]{2})/chr(hex($1))/egi;
++			} else {
++				# other encodings not supported yet
++			}
+ 		}
++		join '', @words;
+ 	}eg;
+ 	return wantarray ? ($_, $charset) : $_;
+ }
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 19a3ced..fa965ff 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -240,6 +240,13 @@ test_expect_success $PREREQ 'non-ascii self name i=
+s suppressed' "
+ 		'non_ascii_self_suppressed'
+ "
+=20
++# This name is long enough to force format-patch to split it into mult=
+iple
++# encoded-words, assuming it uses UTF-8 with the "Q" encoding.
++test_expect_success $PREREQ 'long non-ascii self name is suppressed' "
++	test_suppress_self_quoted '=C6=91=C3=BC=C3=B1n=C3=AD=C4=99=C5=99 =E2=82=
+=AC. N=C3=A2=E1=B9=81=C3=A9' 'odd_?=3Dmail@example.com' \
++		'long_non_ascii_self_suppressed'
++"
++
+ test_expect_success $PREREQ 'sanitized self name is suppressed' "
+ 	test_suppress_self_unquoted '\"A U. Thor\"' 'author@example.com' \
+ 		'self_name_sanitized_suppressed'
+--=20
+2.1.1
