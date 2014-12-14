@@ -1,140 +1,116 @@
-From: =?UTF-8?q?=D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=20=D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE?= 
-	<dpb@corrigendum.ru>
-Subject: [PATCH v2 1/2] send-email: align RFC 2047 decoding more closely with the spec
-Date: Sun, 14 Dec 2014 18:59:46 +0300
-Message-ID: <1418572787-2056-1-git-send-email-dpb@corrigendum.ru>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 3/4] strbuf.h: format asciidoc code blocks as 4-space
+ indent
+Date: Sun, 14 Dec 2014 18:42:26 +0100
+Message-ID: <548DCC02.60100@alum.mit.edu>
+References: <20141212212726.GA26284@peff.net> <20141212213055.GC27451@peff.net> <20141212223903.GE29365@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Dec 14 17:00:20 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 14 18:42:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0Bal-0007p6-4z
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Dec 2014 17:00:19 +0100
+	id 1Y0DBo-0002Sk-I7
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Dec 2014 18:42:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752148AbaLNQAL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Dec 2014 11:00:11 -0500
-Received: from forward6l.mail.yandex.net ([84.201.143.139]:54290 "EHLO
-	forward6l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751938AbaLNQAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2014 11:00:06 -0500
-Received: from smtp1o.mail.yandex.net (smtp1o.mail.yandex.net [37.140.190.26])
-	by forward6l.mail.yandex.net (Yandex) with ESMTP id 54B1414E0F87;
-	Sun, 14 Dec 2014 19:00:01 +0300 (MSK)
-Received: from smtp1o.mail.yandex.net (localhost [127.0.0.1])
-	by smtp1o.mail.yandex.net (Yandex) with ESMTP id CC2C3DE312C;
-	Sun, 14 Dec 2014 19:00:00 +0300 (MSK)
-Received: from 95-37-173-200.dynamic.mts-nn.ru (95-37-173-200.dynamic.mts-nn.ru [95.37.173.200])
-	by smtp1o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id WMovLIO4FZ-00NCHrre;
-	Sun, 14 Dec 2014 19:00:00 +0300
-	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-	(Client certificate not present)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
-	t=1418572800; bh=qE38UBbXJZ6WywdSaYZ6k3aUXI1M//W8Q3PSkgabe3I=;
-	h=From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	b=Vr2F3e/8XtwDwTPlOskl9gzRvFeG0cXwYWYhmIEUr5AVQeEfWqozqN6qmydqpyUuF
-	 wQli1ARTYs4paucU8FI4EjybwIwwXeLDPu+wtvgToOJsS67E3hs710PIvvvWGN4sb4
-	 U4Rf6NVYaKaPYNdG1NCD/kKJYul+5BShPJsTysyw=
-Authentication-Results: smtp1o.mail.yandex.net; dkim=pass header.i=@corrigendum.ru
-X-Mailer: git-send-email 2.2.0.67.gf656295
+	id S1751952AbaLNRmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2014 12:42:36 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:50639 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751297AbaLNRmf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Dec 2014 12:42:35 -0500
+X-AuditID: 12074413-f79f26d0000030e7-89-548dcc059d76
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 0A.3F.12519.50CCD845; Sun, 14 Dec 2014 12:42:29 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB23FD.dip0.t-ipconnect.de [93.219.35.253])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBEHgRfZ024863
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 14 Dec 2014 12:42:28 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.2.0
+In-Reply-To: <20141212223903.GE29365@google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqMt6pjfE4M5yfYuuK91MFg29V5gt
+	3t5cwmjxo6WH2WLz5nYWB1aPnbPusnss2FTq8ax3D6PHxUvKHp83yQWwRnHbJCWWlAVnpufp
+	2yVwZ5w9eIStYLZgxaOeyewNjNt5uxg5OSQETCQObl7HBmGLSVy4tx7MFhK4zCix/BhjFyMX
+	kH2eSeL/uk+sIAleAU2JHw9OsIPYLAKqEl8nzWYBsdkEdCUW9TQzgdiiAkESJ/dcZ4eoF5Q4
+	OfMJWI2IgLPE98Z3LCBDmQUaGCU+HNgMtk0YqOHokcOsEJuLJdp2zgVr4BQwkJg+ZTWYzSyg
+	J7Hj+i9WCFteonnrbOYJjAKzkOyYhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0
+	zfVyM0v0UlNKNzFCQlx4B+Ouk3KHGAU4GJV4eD9E9YYIsSaWFVfmHmKU5GBSEuWdtwkoxJeU
+	n1KZkVicEV9UmpNafIhRgoNZSYT3wWagHG9KYmVValE+TEqag0VJnFdtibqfkEB6Yklqdmpq
+	QWoRTFaGg0NJgvfQKaBGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFCsxhcDoxUk
+	xQO09zxIO29xQWIuUBSi9RSjopQ4bz9IQgAkkVGaBzcWlrheMYoDfSnM+xqkigeY9OC6XwEN
+	ZgIafJmxB2RwSSJCSqqBccMHid0XS3SmnZ9793TcG/Xk/7e/8l/i7Csoip+hkHPzHL8Ln2bi
+	62W/w1wCeaquK0tnZPM6OCu7impu3f/19WWvjKta0eHsNzYvLIjh1//ofp/nqcPx 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261400>
 
-More specifically:
+On 12/12/2014 11:39 PM, Jonathan Nieder wrote:
+> Jeff King wrote:
+> 
+>> This is much easier to read when the whole thing is stuffed
+>> inside a comment block. And there is precedent for this
+>> convention in markdown (and just in general ascii text).
+>>
+>> Signed-off-by: Jeff King <peff@peff.net>
+>> ---
+> 
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> 
+>> As a side note, I actually find markdown much more pleasant to read and
+>> write than asciidoc.
+> 
+> I do, too.  Quoting in asciidoc is a nightmare.
 
-* Add "\" to the list of characters not allowed in a token (see RFC 204=
-7
-  errata).
+Peff, thanks for working on this. I think it is a definite improvement.
 
-* Share regexes between unquote_rfc2047 and is_rfc2047_quoted. Besides
-  removing duplication, this also makes unquote_rfc2047 more stringent.
+I suggest that we accept the use of asciidoc/markdown's convention of
+using backwards quotes to mark code snippets (especially identifier
+names) within comments *anywhere* in our code base. For example, this
+appears in refs.c:
 
-* Allow both "q" and "Q" to identify the encoding.
+    /*
+     * Create a struct ref_entry object for the specified dirname.
+     * dirname is the name of the directory with a trailing slash
+     * (e.g., "refs/heads/") or "" for the top-level directory.
+     */
 
-* Allow lowercase hexadecimal digits in the "Q" encoding.
+I claim that it is more readable with a tiny bit of markup:
 
-And, more on the cosmetic side:
+    /*
+     * Create a `struct ref_entry` object for the specified `dirname`.
+     * `dirname` is the name of the directory with a trailing slash
+     * (e.g., "refs/heads/") or "" for the top-level directory.
+     */
 
-* Change the "encoded-text" regex to exclude rather than include charac=
-ters,
-  for clarity and consistency with "token".
+Marking up `struct ref_entry` helps make it clear that the two words
+belong together, and marking up `dirname` makes it clear that we are
+talking about a specific identifier (in this case, a function parameter).
 
-Signed-off-by: =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD =D0=94=D0=BE=D0=BD=D1=87=D0=
-=B5=D0=BD=D0=BA=D0=BE <dpb@corrigendum.ru>
-Acked-by: Jeff King <peff@peff.net>
----
- git-send-email.perl | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+Currently, comments use a mix of unadorned text, single-quoted text, and
+double-quoted text when talking about code. I think the
+asciidoc/markdown convention is clearer [1].
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9949db0..d461ffb 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -145,6 +145,11 @@ my $have_mail_address =3D eval { require Mail::Add=
-ress; 1 };
- my $smtp;
- my $auth;
-=20
-+# Regexes for RFC 2047 productions.
-+my $re_token =3D qr/[^][()<>@,;:\\"\/?.=3D \000-\037\177-\377]+/;
-+my $re_encoded_text =3D qr/[^? \000-\037\177-\377]+/;
-+my $re_encoded_word =3D qr/=3D\?($re_token)\?($re_token)\?($re_encoded=
-_text)\?=3D/;
-+
- # Variables we fill in automatically, or via prompting:
- my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh=
-,
- 	$initial_reply_to,$initial_subject,@files,
-@@ -913,15 +918,20 @@ $time =3D time - scalar $#files;
-=20
- sub unquote_rfc2047 {
- 	local ($_) =3D @_;
--	my $encoding;
--	s{=3D\?([^?]+)\?q\?(.*?)\?=3D}{
--		$encoding =3D $1;
--		my $e =3D $2;
--		$e =3D~ s/_/ /g;
--		$e =3D~ s/=3D([0-9A-F]{2})/chr(hex($1))/eg;
--		$e;
-+	my $charset;
-+	s{$re_encoded_word}{
-+		$charset =3D $1;
-+		my $encoding =3D $2;
-+		my $text =3D $3;
-+		if ($encoding eq 'q' || $encoding eq 'Q') {
-+			$text =3D~ s/_/ /g;
-+			$text =3D~ s/=3D([0-9A-F]{2})/chr(hex($1))/egi;
-+			$text;
-+		} else {
-+			$&; # other encodings not supported yet
-+		}
- 	}eg;
--	return wantarray ? ($_, $encoding) : $_;
-+	return wantarray ? ($_, $charset) : $_;
- }
-=20
- sub quote_rfc2047 {
-@@ -934,10 +944,8 @@ sub quote_rfc2047 {
-=20
- sub is_rfc2047_quoted {
- 	my $s =3D shift;
--	my $token =3D qr/[^][()<>@,;:"\/?.=3D \000-\037\177-\377]+/;
--	my $encoded_text =3D qr/[!->@-~]+/;
- 	length($s) <=3D 75 &&
--	$s =3D~ m/^(?:"[[:ascii:]]*"|=3D\?$token\?$token\?$encoded_text\?=3D)=
-$/o;
-+	$s =3D~ m/^(?:"[[:ascii:]]*"|$re_encoded_word)$/o;
- }
-=20
- sub subject_needs_rfc2047_quoting {
---=20
-2.1.1
+I think we shouldn't be pedantic about this. When a comment is readable
+with no markup, there's no need to add markup. And "incorrect" markup
+shouldn't by itself be reason to reject a patch. But in many examples, a
+little bit of markup makes the text less ambiguous and easier to read.
+
+Michael
+
+[1] Yes, I see the irony in trying to improve a mixture of three
+    conventions by adding a fourth one.
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
