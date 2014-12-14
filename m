@@ -1,134 +1,88 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] doc: core.ignoreStat clarify the --assume-unchanged effect
-Date: Sat, 13 Dec 2014 20:39:05 -0000
-Organization: OPDS
-Message-ID: <C25BE5AA16BF46468ABC6814549D3134@PhilipOakley>
-References: <1418341733-1656-1-git-send-email-philipoakley@iee.org> <1418341733-1656-2-git-send-email-philipoakley@iee.org> <alpine.DEB.1.00.1412121149040.13845@s15462909.onlinehome-server.info>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "krzf83@gmail.com " <krzf83@gmail.com>
+Subject: Re: hooks scripts and noexec partition
+Date: Sun, 14 Dec 2014 02:44:35 +0100
+Message-ID: <CAJ1PRS=KmiQJG91nxG5pQXPHX2XruoyL9c4yzzPeYayw+UAjPw@mail.gmail.com>
+References: <CAJ1PRS=96aSp3GE+wj=zHX=JGfZbjUeiUuiDDvfJNuRhrbK_Yg@mail.gmail.com>
+	<20140115091609.GC14335@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	=?iso-8859-1?Q?S=E9rgio_Basto?= <sergio@serjux.com>,
-	"Johannes Sixt" <j6t@kdbg.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Duy Nguyen" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 13 21:38:25 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 14 02:44:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XztSI-00015w-Ld
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Dec 2014 21:38:23 +0100
+	id 1XzyEl-0008SI-3J
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Dec 2014 02:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997AbaLMUiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2014 15:38:17 -0500
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:33264 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753645AbaLMUiQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Dec 2014 15:38:16 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Am8RAJGijFQCYJYyPGdsb2JhbABZgwaBKoYwbMRhBAKBEhcBAQEBAQEFAQEBATggG4QHBQEBAQECAQgBAR0RHgEBHAUFBgIDBQIBAxUDCSUUAQQaBgcDFAYBEggCAQIDAYgHAwkMx0GPEwEBAQcCAR+NSoIogx2BEwWEJoRvhG1MiS6KIYYLhA4+MIEDJIEcAQEB
-X-IPAS-Result: Am8RAJGijFQCYJYyPGdsb2JhbABZgwaBKoYwbMRhBAKBEhcBAQEBAQEFAQEBATggG4QHBQEBAQECAQgBAR0RHgEBHAUFBgIDBQIBAxUDCSUUAQQaBgcDFAYBEggCAQIDAYgHAwkMx0GPEwEBAQcCAR+NSoIogx2BEwWEJoRvhG1MiS6KIYYLhA4+MIEDJIEcAQEB
-X-IronPort-AV: E=Sophos;i="5.07,572,1413241200"; 
-   d="scan'208";a="537248522"
-Received: from host-2-96-150-50.as13285.net (HELO PhilipOakley) ([2.96.150.50])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 13 Dec 2014 20:38:11 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752569AbaLNBoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2014 20:44:38 -0500
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:35844 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751905AbaLNBoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2014 20:44:37 -0500
+Received: by mail-lb0-f175.google.com with SMTP id u10so7752964lbd.34
+        for <git@vger.kernel.org>; Sat, 13 Dec 2014 17:44:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=HfyRYV+bDT656n/tbGL+VuNHH0TMemJokbO+WxWYH48=;
+        b=vgQLkz6014vruumUnI8k2FQasYuH4Yb+MvUF123yGUA17R10V7Xvlv7i1IjD6xPwk/
+         5NM6yu3S1wvPfJUGIEECWld0IKOGka2x9fC6sUgaMEfTNQQqN8Oa3Z0BKDEV95Yauf8D
+         Ik5tkwZchq33USdT+N5RKT4V7Vmc0TPhWJe5yZXR9kQiXv6himh2z04t4xhbxnko0B06
+         Nths3WhhLLlG8RsU1WK9oT1fMk49paDkg7gVrqebd2S7c3Cuhgf3SkXTS1j5fSPUZiVp
+         frPj6EZBztdq2VUBM9JO6kBE0RTPNl2R7+5xpj0sw9GjndXmj8W6yFxXle3i9S4LdJgb
+         JTZg==
+X-Received: by 10.152.5.165 with SMTP id t5mr18474938lat.62.1418521475626;
+ Sat, 13 Dec 2014 17:44:35 -0800 (PST)
+Received: by 10.152.206.4 with HTTP; Sat, 13 Dec 2014 17:44:35 -0800 (PST)
+In-Reply-To: <20140115091609.GC14335@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261397>
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>  Friday, 
-December 12, 2014 10:56 AM
-> Hi Philip,
+Thanks for the patch, however it is not working (no change, hooks
+still dont work on noexec partition). Since I see that you are fluent
+in git code and C can you by any chance tell me how to modify
+run-command.c to make git run hooks as: /bin/sh <hook_path> ?
+
+2014-01-15 10:16 GMT+01:00 Jeff King <peff@peff.net>:
+> On Tue, Jan 14, 2014 at 04:41:03PM +0100, krzf83@gmail.com  wrote:
 >
-> On Thu, 11 Dec 2014, Philip Oakley wrote:
+>> git can't execute hooks no partitions mounted with noexec - even if
+>> those are just scripts with shebang line
 >
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index c26a7c8..81570b7 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -354,10 +354,11 @@ proxy use, while defaulting to a common proxy 
->> for external domains.
->>  core.ignoreStat::
->>  If true, commands which modify both the working tree and the index
->>  will mark the updated paths with the "assume unchanged" bit in the
->> - index. These marked files are then assumed to stay unchanged in the
->> - working tree, until you mark them otherwise manually - Git will not
->> - detect the file changes by lstat() calls. This is useful on systems
->> - where those are very slow, such as Microsoft Windows.
->> + index. These marked files are then expected to stay unchanged in 
->> the
->> + working tree. If you change them you should mark their update 
->> manually.
->> + Git will normally not detect the file changes by lstat() calls.
->> + This is useful on systems where those calls are very slow, such as
->> + cifs/Microsoft Windows.
->>  See linkgit:git-update-index[1].
->>  False by default.
+> Right. Git does not know that they are shell (or other) scripts; they
+> could be anything, and the advertised interface is that git will run
+> exec on them (and it is explicitly OK for them to exist but not be
+> executable, and git takes this as a sign that they are inactive).
 >
-> I think that the new wording is better, but still can be 
-> misunderstood.
-> How about this instead:
+>> and they actualy work by
+>> hooks/./post-comit (because I use small patch on kernel that allows
+>> running scripts that way on noexec partition)
 >
-> -- snip --
-> core.ignoreStat::
-> If true, Git will not try to detect when files were modified.
- "not _normally_ try"? - is there a guarantee that ignoreStat will 
-switch off ALL checks?
-Is there a list of those commands which will, implicitly, check?
-
-> When Git commands are used to modify files, Git will know that
-> they were modified, but when files are modified outside of Git,
-+ e.g. by the user, external SDK or other tools,
-> the user will need to stage the modified files explicitly; they
-> will not be reported as changed e.g. by linkgit:git-status[1].
-The git-status man page give no indication either way as to the effect 
-of this ignoreStat or the --assume-unchanged flags (or --skip-worktree). 
-User expectations can go either way.
-
-I was thinking I'd need to reference 'git update-index --really-refresh 
-<file>' (but filenames beginning with . are discarded, so no '--all' 
-equivalence !)
-
-> +
-> This is useful on systems where lstat() calls are very slow, such as
-> CIFS/Microsoft Windows.
-> See linkgit:git-update-index[1].
-> False by default.
-> -- snap --
+> If you are suggesting that git always execute them as "hooks/./$hook",
+> that might make sense if such behavior is widespread. But it sounds like
+> you are running a custom kernel patch to get around the noexec setting.
+> Here is the custom git patch to match it. :)
 >
-> In other words, I would try to skip the "assume unchanged" flag
-> altogether, it is prone to confuse readers unfamiliar with the inner
-> workings of the index.
-It's certainly confused many, to the point that the false information 
-has become the accepted truth.
-
-
-I'll take on board most of the suggestions.
-
-This documenation clarification problem (users asking "how to 
-temporarily mark files such that git will ignore their changes" getting 
-confused) has grown arms and legs. In Duy's code fix, I see a repeated 
-pattern that should have a macro; If only there was a good name for what 
-it means (ce->ce_flags & (CE_VALID | CE_SKIP_WORKTREE)), which extends 
-ce_skip_worktree(ce).
-
-Longer term I'm also looking for a method for the situation that would 
-indicate that the local repo)doesn't even have a copy of 'that sha1' 
-blob or tree (in the same way as a submodule sha1s) so that one can do a 
-narrow clone/fetch for privacy/security reasons.
-
---
-Philip
+> diff --git a/run-command.c b/run-command.c
+> index 3914d9c..ae84e87 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -753,7 +753,7 @@ int finish_async(struct async *async)
+>
+>  char *find_hook(const char *name)
+>  {
+> -       char *path = git_path("hooks/%s", name);
+> +       char *path = git_path("hooks/./%s", name);
+>         if (access(path, X_OK) < 0)
+>                 path = NULL;
+>
+>
+> -Peff
