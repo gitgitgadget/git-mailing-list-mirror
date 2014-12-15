@@ -1,110 +1,138 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] receive-pack.c: add protocol support to negotiate atomic-push
-Date: Mon, 15 Dec 2014 12:53:12 -0800
-Message-ID: <xmqqy4q8d493.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 2/5] send-pack.c: add an --atomic-push command line argument
+Date: Mon, 15 Dec 2014 13:01:19 -0800
+Message-ID: <xmqqsiggd3vk.fsf@gitster.dls.corp.google.com>
 References: <1418673368-20785-1-git-send-email-sbeller@google.com>
-	<1418673368-20785-2-git-send-email-sbeller@google.com>
+	<1418673368-20785-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
 	ronniesahlberg@gmail.com, Ronnie Sahlberg <sahlberg@google.com>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 21:53:32 2014
+X-From: git-owner@vger.kernel.org Mon Dec 15 22:01:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0ce1-0003Vn-Rp
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 21:53:30 +0100
+	id 1Y0cll-0007Q5-7T
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 22:01:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750817AbaLOUxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2014 15:53:25 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53511 "EHLO
+	id S1750764AbaLOVBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2014 16:01:24 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58510 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750722AbaLOUxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2014 15:53:24 -0500
+	with ESMTP id S1750716AbaLOVBX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2014 16:01:23 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AEF5C27D8E;
-	Mon, 15 Dec 2014 15:53:18 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DEFAB2706C;
+	Mon, 15 Dec 2014 16:01:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sOugQRKiR1Rog9XdrCicpxHa9Rw=; b=pxg+iI
-	66JjVv+xTS9cdGVzK3tQkU6UFeGYec0jzBP5BeMlag8jnzo8wSKjpwzTA/tB1594
-	aG6f9CLDEI9S287cAv/kWCV4sUe/GpxJ7hN/JFjfZU7iXThRctL314ck6IyLcAYC
-	S3akz8gWCHR/bB9fTDTenIsCVINWHUzlfDkd0=
+	:content-type; s=sasl; bh=+IOQLU3BFNlOKJfO89IA4nxo88k=; b=MTnW8b
+	5Xv6ThCyNDD46VebLAYCAaLi2CJzkfHpxO71mEsz8l/uC1q/oe/1aKHsaKK61NvS
+	v+ktyMQ5jl3o6ycUp/euIMnpyCaT+6womnjkXHF2dAnalpk58I9xW0VwV2Z2XeKg
+	40Gk2wtqUeGeMIJk02S+YKbKcs/5XaDsG+kKw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hTrlDZyqwB49X790ZQuVk7EGediNO2OC
-	30LMRdWqfbaTqGwNXG0vjepknlJz28zNhyrTxcLo3mw0lwLfNVgxD2baZbGGGK/M
-	/exU5o+O0ljxDj4SCs+gqvbT6WBWO+Pcv+R+snebZXr9wRUEgSRhRrQc6JbH1VS9
-	QfrD9pf6PeA=
+	:content-type; q=dns; s=sasl; b=SVHu0EtZxxqt1KQH2sIDwqW/77e4fxl4
+	gMaWjhtL4Px1xWz5h82UCwPqJjwjvQartVCN7uLvsLyWNTByDpTuFMHXLILWF9vY
+	9lvVwU4CkB9d3uMh/9zZgLhBfj/7nnY6zyTvpoZ3FEEClWSXAFAsgsCM9wWSNUOD
+	7FyebmnxMps=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A588027D8C;
-	Mon, 15 Dec 2014 15:53:18 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CF98D2706B;
+	Mon, 15 Dec 2014 16:01:21 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2BC1A27D8A;
-	Mon, 15 Dec 2014 15:53:14 -0500 (EST)
-In-Reply-To: <1418673368-20785-2-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 15 Dec 2014 11:56:04 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ED9DD2706A;
+	Mon, 15 Dec 2014 16:01:20 -0500 (EST)
+In-Reply-To: <1418673368-20785-3-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 15 Dec 2014 11:56:05 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 633BB91E-849C-11E4-A6A1-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 85628B0C-849D-11E4-8AE3-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261423>
 
 Stefan Beller <sbeller@google.com> writes:
 
-> From: Ronnie Sahlberg <sahlberg@google.com>
->
-> This adds support to the protocol between send-pack and receive-pack to
-> * allow receive-pack to inform the client that it has atomic push capability
-> * allow send-pack to request atomic push back.
->
-> There is currently no setting in send-pack to actually request that atomic
-> pushes are to be used yet. This only adds protocol capability not ability
-> for the user to activate it.
+> -static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args)
+> +static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args, int *atomic_push_failed)
 
-Hmph, am I reading the patch to send-pack.c correctly?
+Hmph.  Is "atomic push" so special that it deserves a separate
+parameter?  When we come up with yet another mode of failure, would
+we add another parameter to the callers to this function?
 
-It detects if the other side supports the capability and leaves it
-in atomic_push_supported variable for later use, and also requests
-the feature to be activated when atomic_push is set, but I see no
-logic to link these two together, e.g. error out when atomic_push
-is true and atomic_push_supported is false (or turn it off with a
-warning, or whatever).
+> @@ -203,6 +203,12 @@ static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_a
+>  	case REF_STATUS_REJECT_NEEDS_FORCE:
+>  	case REF_STATUS_REJECT_STALE:
+>  	case REF_STATUS_REJECT_NODELETE:
+> +		if (atomic_push_failed) {
+> +			fprintf(stderr, "Atomic push failed for ref %s. "
+> +				"Status:%d\n", ref->name, ref->status);
+> +			*atomic_push_failed = 1;
 
-> diff --git a/send-pack.c b/send-pack.c
-> index 949cb61..1ccc84c 100644
-> --- a/send-pack.c
-> +++ b/send-pack.c
-> @@ -294,6 +294,8 @@ int send_pack(struct send_pack_args *args,
->  	int use_sideband = 0;
->  	int quiet_supported = 0;
->  	int agent_supported = 0;
-> +	int atomic_push_supported = 0;
-> +	int atomic_push = 0;
->  	unsigned cmds_sent = 0;
->  	int ret;
->  	struct async demux;
-> @@ -314,6 +316,8 @@ int send_pack(struct send_pack_args *args,
->  		agent_supported = 1;
->  	if (server_supports("no-thin"))
->  		args->use_thin_pack = 0;
-> +	if (server_supports("atomic-push"))
-> +		atomic_push_supported = 1;
->  	if (args->push_cert) {
->  		int len;
+All other error message that come from the codepaths around here
+seem to avoid uppercase.  Also maybe you want to use error() here?
+
+> +	if (args->use_atomic_push && !atomic_push_supported) {
+> +		fprintf(stderr, "Server does not support atomic-push.");
+> +		return -1;
+> +	}
+
+This check logically belongs to the previous step, no?
+
+> +	atomic_push = atomic_push_supported && args->use_atomic_push;
+
 >  
-> @@ -335,6 +339,8 @@ int send_pack(struct send_pack_args *args,
->  		strbuf_addstr(&cap_buf, " side-band-64k");
->  	if (quiet_supported && (args->quiet || !args->progress))
->  		strbuf_addstr(&cap_buf, " quiet");
-> +	if (atomic_push)
-> +		strbuf_addstr(&cap_buf, " atomic-push");
->  	if (agent_supported)
->  		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+>  	if (status_report)
+>  		strbuf_addstr(&cap_buf, " report-status");
+> @@ -365,7 +376,8 @@ int send_pack(struct send_pack_args *args,
+>  	 * the pack data.
+>  	 */
+>  	for (ref = remote_refs; ref; ref = ref->next) {
+> -		if (!ref_update_to_be_sent(ref, args))
+> +		if (!ref_update_to_be_sent(ref, args,
+> +			args->use_atomic_push ? &atomic_push_failed : NULL))
+>  			continue;
+>  
+>  		if (!ref->deletion)
+> @@ -377,6 +389,23 @@ int send_pack(struct send_pack_args *args,
+>  			ref->status = REF_STATUS_EXPECTING_REPORT;
+>  	}
+>  
+> +	if (atomic_push_failed) {
+> +		for (ref = remote_refs; ref; ref = ref->next) {
+> +			if (!ref->peer_ref && !args->send_mirror)
+> +				continue;
+> +
+> +			switch (ref->status) {
+> +			case REF_STATUS_EXPECTING_REPORT:
+> +				ref->status = REF_STATUS_ATOMIC_PUSH_FAILED;
+> +				continue;
+> +			default:
+> +				; /* do nothing */
+> +			}
+> +		}
+> +		fprintf(stderr, "Atomic push failed.");
+> +		return -1;
+
+The same comment as the other fprintf() applies here.
+
+> @@ -728,6 +728,10 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+>  						 ref->deletion ? NULL : ref->peer_ref,
+>  						 "remote failed to report status", porcelain);
+>  		break;
+> +	case REF_STATUS_ATOMIC_PUSH_FAILED:
+> +		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+> +						 "atomic-push-failed", porcelain);
+
+Why dashed-words-here?
+
+> +		break;
+>  	case REF_STATUS_OK:
+>  		print_ok_ref_status(ref, porcelain);
+>  		break;
