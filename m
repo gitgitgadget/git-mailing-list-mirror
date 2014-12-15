@@ -1,90 +1,86 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/5] receive-pack.c: add protocol support to negotiate atomic-push
-Date: Mon, 15 Dec 2014 14:30:31 -0800
-Message-ID: <CAGZ79kYJjnTaUJMhLWt5q76odqQ_zBifEgVbNLJFdv8BViCCQw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Add a flag to push atomically
+Date: Mon, 15 Dec 2014 14:33:57 -0800
+Message-ID: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
 References: <1418673368-20785-1-git-send-email-sbeller@google.com>
-	<1418673368-20785-2-git-send-email-sbeller@google.com>
-	<xmqqy4q8d493.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	ronnie sahlberg <ronniesahlberg@gmail.com>,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 23:30:37 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
+	ronniesahlberg@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Dec 15 23:34:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0eA0-0005ue-Cc
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 23:30:36 +0100
+	id 1Y0eDN-0007Zk-BX
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 23:34:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbaLOWad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2014 17:30:33 -0500
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:32886 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974AbaLOWac (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2014 17:30:32 -0500
-Received: by mail-ie0-f182.google.com with SMTP id x19so11714542ier.27
-        for <git@vger.kernel.org>; Mon, 15 Dec 2014 14:30:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=T26WNDAaWOpeMkERX5izpeKYttd34+O6BXGqgd5WRY4=;
-        b=UTvWUd62LF74dVR2hO3uQpSEb2WLd5gBsHrBtHn3w2E0AMrSyfFzgPr5Hvm0XgF1I6
-         quSLWIfy1cSO/1oLsWhjwn+M7F48NOySDvHmM4Jx2haqyxVwTTrk9jyEbQvSKFkyIP0o
-         0u0BQ5UYY9S9/0xknR69FViEAa87nQ+c+jgiVepIFszj9Wl45n953vOlsx/dvP0KjrxC
-         5hfgH6xr0sWMriw6n2hAKhe7TGyGkjonUhwjm+4yya6vC6vFOmkuXdhHSghql8PExU8l
-         WKwMaO61QN0RRQvb3JrvmNPN36kqg6u94hIfe05Qm1kN6pGRyJbJIHFaFBGoBOwwbrmH
-         0KFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=T26WNDAaWOpeMkERX5izpeKYttd34+O6BXGqgd5WRY4=;
-        b=e9ea1o1yI+fOoUhepbcEP9ekSPoVB1YtSrKwWneYVdKfJbALsX/RACtYkklmYylM4v
-         wJf4jJGmtoZYT4MTvJGRQh3ha0skLC5KIH4LwSXXeNlaIlrtlFnGp4YvTajshVqGE4Yg
-         fjJjk+tMTSzJbtJUxsShno92Jc9POfTlk/IlY6FHASt7yLwUX8auT5VLkspr+tj/EfsY
-         wKpskJnGt44ffdGKupK89/IikUzOvZjMOU3Zuic/62dP4d/RUlQfgTbm/zXzQizODWoM
-         K/3HzaU1vfiyfTPCAnC0NITF1gWT67kIquBCLTy/yS3GFKWEvCF4fiH52MkiV3QrP+zu
-         Gw8g==
-X-Gm-Message-State: ALoCoQlDi1/uv97ZvMVN7b2wRwyZ71ngO1oNcbIhdKFI/QcdB4OOCWDl6fKQV5S+Ir3Ko9Rzl78V
-X-Received: by 10.43.82.72 with SMTP id ab8mr30285752icc.76.1418682631524;
- Mon, 15 Dec 2014 14:30:31 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Mon, 15 Dec 2014 14:30:31 -0800 (PST)
-In-Reply-To: <xmqqy4q8d493.fsf@gitster.dls.corp.google.com>
+	id S1750877AbaLOWeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2014 17:34:00 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51920 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750796AbaLOWeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2014 17:34:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D06527991;
+	Mon, 15 Dec 2014 17:33:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/aW/z/skcjEENOXUv4NdvW3xAcY=; b=PjGplm
+	HDX9m8CxgrAtFiL/gsfoMkhfqM/0WW2vmEH6+jkndn67pVP4UkBZOc123quW8sNZ
+	Rcej+tS40ogDbyJQL+JelhU+ZRHC+v2jZh/0ViL6BZhW91nBxZKumxHVchlFdEjp
+	jOAhw68O5vRo9PMZpJxyLOQt25rguRpkY0Rn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Mqm6ghK5ukqEmMYgrx6n418k2ypvAQWf
+	jtyoa3avijW8N4XaC9eSQoTkJK5EwVOoD00K2Xx2WBI4MM1kqLYUhwtkfPkGJlB3
+	owyQZTuu1yUZVutWy8Jod2Lfdh1rTeVVNCfdwL+4HeXPImvb+4kwOLHAag96Ndrt
+	98U4w+Obh3I=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 742B427990;
+	Mon, 15 Dec 2014 17:33:59 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 00EBA2798F;
+	Mon, 15 Dec 2014 17:33:58 -0500 (EST)
+In-Reply-To: <1418673368-20785-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 15 Dec 2014 11:56:03 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7630D3D4-84AA-11E4-A765-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261431>
 
-On Mon, Dec 15, 2014 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Hmph, am I reading the patch to send-pack.c correctly?
+Stefan Beller <sbeller@google.com> writes:
+
+> This patch series adds a flag to git push to update the remote refs atomically.
 >
-> It detects if the other side supports the capability and leaves it
-> in atomic_push_supported variable for later use, and also requests
-> the feature to be activated when atomic_push is set, but I see no
-> logic to link these two together, e.g. error out when atomic_push
-> is true and atomic_push_supported is false (or turn it off with a
-> warning, or whatever).
-
-
-This is what you mean by
-
+> It was part of a longer patch series[1].
+> This series applies on top of origin/mh/reflog-expire
+> It can also be found at [2].
 >
->> +     if (args->use_atomic_push && !atomic_push_supported) {
->> +             fprintf(stderr, "Server does not support atomic-push.");
->> +             return -1;
->> +     }
+> Change since picking the series up from Ronnie.
+>   * other anchor point (i.e. where the series applies)
+>   * more tests for this feature, specially testing failures
+>   * drop the patch to rename ref_transaction_* to transaction_*_ref
+>   * slight rewording of the additional documentation
 >
-> This check logically belongs to the previous step, no?
+> [1] http://www.spinics.net/lists/git/msg241214.html
+> [2] https://github.com/stefanbeller/git/tree/atomic-push-v1
+>
+> Ronnie Sahlberg (4):
+>   receive-pack.c: add protocol support to negotiate atomic-push
+>   send-pack.c: add an --atomic-push command line argument
+>   receive-pack.c: use a single transaction when atomic-push is
+>     negotiated
+>   push.c: add an --atomic-push argument
+>
+> Stefan Beller (1):
+>   t5543-atomic-push.sh: add basic tests for atomic pushes
 
-from the next patch? If so it will be part of the next reroll.
-
-Thanks,
-Stefan
+Thanks.  I think I like where it is going.
