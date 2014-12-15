@@ -1,71 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 11/23] untracked cache: load from UNTR index extension
-Date: Mon, 15 Dec 2014 11:35:37 -0800
-Message-ID: <xmqq7fxsemeu.fsf@gitster.dls.corp.google.com>
-References: <1418047507-22892-1-git-send-email-pclouds@gmail.com>
-	<1418047507-22892-13-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 20:35:50 2014
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 0/5] Add a flag to push atomically
+Date: Mon, 15 Dec 2014 11:56:03 -0800
+Message-ID: <1418673368-20785-1-git-send-email-sbeller@google.com>
+Cc: mhagger@alum.mit.edu, jrnieder@gmail.com, gitster@pobox.com,
+	ronniesahlberg@gmail.com, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 15 20:56:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0bQp-0000EJ-8M
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 20:35:47 +0100
+	id 1Y0bkl-0001wr-Dh
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 20:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751892AbaLOTfm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Dec 2014 14:35:42 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59941 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751039AbaLOTfl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Dec 2014 14:35:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D19E278B7;
-	Mon, 15 Dec 2014 14:35:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1NA7ek7DDEnf
-	y7hEkOjWNWLB0+U=; b=TvsDYtXVAc1bTRo5DCej8R/pRsKswH7VNU6J5iFppg3d
-	Ql3rWPVakT40NfEfkdkkHMkV1Z9ASp4n+mL3W19jIcHQRao+evcivAEWCBFwEnrz
-	xoLJrILV3v4mrCAJdiiw4juBUrOT3BWing+2na7L5LxUgJQT+EAWL/z16FJLCaA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gtgYuZ
-	CjFEtrjhU0m8CqJvDrRgdyT5Csjkdy9/KvTy2G7V5JUhj9sLI88zwVVW44FIe3Da
-	iSEqy7k+pGLM6jr1tLMb4pHThI8KkqXcz3ttajK0rbaEK0XIYOobLwHHVhLj7Muc
-	n9ixZPGNJC6xxLGdg2WSRTlvGjZg3FuDfNU9Q=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 33DC4278B6;
-	Mon, 15 Dec 2014 14:35:40 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A3072278B5;
-	Mon, 15 Dec 2014 14:35:39 -0500 (EST)
-In-Reply-To: <1418047507-22892-13-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 8 Dec
- 2014 21:04:55 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8CE310F6-8491-11E4-9875-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1750989AbaLOT4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2014 14:56:19 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:45038 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750814AbaLOT4S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2014 14:56:18 -0500
+Received: by mail-ie0-f177.google.com with SMTP id rd18so11427107iec.22
+        for <git@vger.kernel.org>; Mon, 15 Dec 2014 11:56:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=wd19G9VEYM7C13ytGmOPWGxr1cdoaK7GFVGNP3sZYHg=;
+        b=BXOoItOY3izIC66t04YQkEB/NhJRFHAgxryG0k40itVqjW8ePzO+bcR94NVplXcac9
+         hZPknrID0Xw3NoJm94C2lIIHEFnbNf0/HenWFC+NC/g7H8IJCaiDTOxrvgfhN0d2WjbV
+         cMjcuznpxL24uQETi1DRY7IbNKoSDkTobbE8ABxviqTuWnmL7Mhbk3XTHotl86vpGvKz
+         +xfN8GY1Z3mnf9952QKcSHEoNUIAaeyuCPSe9XGw6SYOvP3okJr7SNiymgdZ3Ya6mlVU
+         7DmQ1nr8ShFP4yZfJYOJGBIK9EKAMO5eTbArnuk1VgBzM0kftTNn8MX3pBKJkKMuGIe1
+         u1FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=wd19G9VEYM7C13ytGmOPWGxr1cdoaK7GFVGNP3sZYHg=;
+        b=ItXeeDpofzDaGVLyTX/kXDRY6oMepge10AUyvYKH6gUQ69qDsVY7Y9yN6LUUaba9Lk
+         +dkkvMHGsGx8pSEmpdEnxjL2SFswdI0n5nreKrBlVehG+POtfz07xGchkxZkwIFFhrsB
+         BxrUP6ykubCX6I8Xg1Bifj7iJQIpv55HsL+kI4vFtg3DOVNnzMhzPH+oHSQvzfjfUTHj
+         WuHYU60yeMEA+YAqhzvOuYjfRDOf68IjZ5xwG1CnC609t11bbcLZYSjhRbxVXBRBabsp
+         AbuJkex2cuU59cr6kCMeRlrhNNe0HtLxUDzpHuNU+2/N3WjNYIfL+bQ36B7Kvd8PJm59
+         MnbA==
+X-Gm-Message-State: ALoCoQnyBx+GfL1AmeBlziKA64KSy8Y8Hfs7scmJHuvFnd2WGsTBsEfFMW30ZxWBu4+fvmLAzIVQ
+X-Received: by 10.50.134.195 with SMTP id pm3mr7841937igb.0.1418673378000;
+        Mon, 15 Dec 2014 11:56:18 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:ccd:69a0:9bbf:bab9])
+        by mx.google.com with ESMTPSA id 137sm112866ioo.23.2014.12.15.11.56.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Dec 2014 11:56:17 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.33.gc2219e3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261413>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+This patch series adds a flag to git push to update the remote refs atomically.
 
-> +struct untracked_cache *read_untracked_extension(const void *data, u=
-nsigned long sz)
-> +{
-> +	const struct ondisk_untracked_cache *ouc;
-> +	struct untracked_cache *uc;
-> +	struct read_data rd;
-> +	const unsigned char *next =3D data, *end =3D data + sz;
+It was part of a longer patch series[1].
+This series applies on top of origin/mh/reflog-expire
+It can also be found at [2].
 
-data + sz is arithmetic on void * which is a no-no.
+Change since picking the series up from Ronnie.
+  * other anchor point (i.e. where the series applies)
+  * more tests for this feature, specially testing failures
+  * drop the patch to rename ref_transaction_* to transaction_*_ref
+  * slight rewording of the additional documentation
+
+[1] http://www.spinics.net/lists/git/msg241214.html
+[2] https://github.com/stefanbeller/git/tree/atomic-push-v1
+
+Ronnie Sahlberg (4):
+  receive-pack.c: add protocol support to negotiate atomic-push
+  send-pack.c: add an --atomic-push command line argument
+  receive-pack.c: use a single transaction when atomic-push is
+    negotiated
+  push.c: add an --atomic-push argument
+
+Stefan Beller (1):
+  t5543-atomic-push.sh: add basic tests for atomic pushes
+
+ Documentation/git-push.txt                        |   8 +-
+ Documentation/git-send-pack.txt                   |   7 +-
+ Documentation/technical/protocol-capabilities.txt |  12 +-
+ builtin/push.c                                    |   2 +
+ builtin/receive-pack.c                            |  79 +++++++--
+ builtin/send-pack.c                               |   6 +-
+ remote.h                                          |   3 +-
+ send-pack.c                                       |  45 +++++-
+ send-pack.h                                       |   1 +
+ t/t5543-atomic-push.sh                            | 185 ++++++++++++++++++++++
+ transport.c                                       |   5 +
+ transport.h                                       |   1 +
+ 12 files changed, 327 insertions(+), 27 deletions(-)
+ create mode 100755 t/t5543-atomic-push.sh
+
+-- 
+2.2.0.33.gc2219e3.dirty
