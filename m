@@ -1,76 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: remote helper example with push/fetch capabilities
-Date: Mon, 15 Dec 2014 13:44:59 -0800
-Message-ID: <20141215214459.GJ29365@google.com>
+Date: Mon, 15 Dec 2014 13:47:20 -0800
+Message-ID: <xmqqegs0d1qv.fsf@gitster.dls.corp.google.com>
 References: <CAPCWLt6kxoJJSWAcyH_kW071Md0vc4zeo41hCKBQHd-_pvUMXQ@mail.gmail.com>
- <20141215204740.GI29365@google.com>
- <CAPCWLt4=oYTPFXktCj8CgqNncaO2=sbwZcPOVa+a5wgt7HPCUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
 To: Klein W <wineklein@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 22:45:14 2014
+X-From: git-owner@vger.kernel.org Mon Dec 15 22:47:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0dS3-0003Lt-1K
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 22:45:11 +0100
+	id 1Y0dUF-0004Ln-HF
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 22:47:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbaLOVpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2014 16:45:04 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:58897 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105AbaLOVpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2014 16:45:03 -0500
-Received: by mail-ie0-f177.google.com with SMTP id rd18so11164977iec.8
-        for <git@vger.kernel.org>; Mon, 15 Dec 2014 13:45:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=atP2w33T4+zFGAMzSsd98EnDQeby9gPijZ1S32c/Vxo=;
-        b=uLe6D6lCVZtRAhDE70NNZe8BJ/Qvr5sL9AAgO0Nakte8c31qRLcyRJUH3eoklFBRaZ
-         +hZ+De/kbTceKC6j3j5QYK7SyTys30YECHgdvJeOcWhcbL3vqmSCNAl/Ryhtvo9QYR8J
-         b5IgAl9qZ5JWwP9yNTZKu1sDNvdTPsY0ajL1kYVgumpnGhPqzPw8eoRDmqSO9XdVwsss
-         XLzUruVcdJHOOW7xeB9sFLnBKVCvFvozYDu9D804VemXAYqiF+x6ruw+Oue6kdfQYw/D
-         igVmgShbXLdJPB803YA6vljLZWZANGdCF75TqSdAl4ovWbNchb9RCeN3l9SaP5fE8OcG
-         zd5A==
-X-Received: by 10.107.38.202 with SMTP id m193mr30905287iom.19.1418679902068;
-        Mon, 15 Dec 2014 13:45:02 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:216c:de00:a6aa:1f46])
-        by mx.google.com with ESMTPSA id f9sm5264189iod.24.2014.12.15.13.45.01
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Dec 2014 13:45:01 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAPCWLt4=oYTPFXktCj8CgqNncaO2=sbwZcPOVa+a5wgt7HPCUQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750945AbaLOVrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2014 16:47:24 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52203 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750772AbaLOVrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2014 16:47:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A47BD27D41;
+	Mon, 15 Dec 2014 16:47:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l+MBrWOX1XkKSQFTec6yRaOJu6A=; b=LXu0Pg
+	72hcslPZquU7Mtuv4CyusyEKeCfnpuO4GMqCOKeubdw6qbw/y2/BvNO4AWSLjr0N
+	xSmvDSVFHaANJgL97NBjJD9sJziYHgQAYvDnrf1EbaUGlNM8FEUaaxJPnYk1a6y4
+	aegTT3nVtmwA3n27tKMYA/hHkMU3m3GDs9yS8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hkgZQ8UV+bZY5o6C/uOR1SgEBuxiZTes
+	wPXb3QFue67FmumkWsh5bhNPDzit7Ja1aiDiLAkib6KxFwXby3F9RyZNGgp60jlR
+	0xjexDRfIRs/Zg4zl4kanMPeD5aA2CqrkX3EUahdU0/s1sA3zEsFueqN2yqk7U7B
+	H2BjHuqX5uc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 98F1E27D40;
+	Mon, 15 Dec 2014 16:47:22 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17C5827D3C;
+	Mon, 15 Dec 2014 16:47:22 -0500 (EST)
+In-Reply-To: <CAPCWLt6kxoJJSWAcyH_kW071Md0vc4zeo41hCKBQHd-_pvUMXQ@mail.gmail.com>
+	(Klein W.'s message of "Mon, 15 Dec 2014 15:17:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F31B20A4-84A3-11E4-8D4C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261427>
 
-Klein W wrote:
-> On Mon, Dec 15, 2014 at 3:47 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Klein W <wineklein@gmail.com> writes:
 
->> It mainly has to do with what it is convenient for your helper to
->> produce.  If the helper would find it more convenient to write native
->> git objects (for example because the remote server speaks a
->> git-specific protocol, as in the case of remote-curl.c) then the
->> "fetch" capability will be more convenient.  If the helper wants to
->> make a batch of new objects then a fast-import stream can be a
->> convenient way to do this and the "import" capability takes care of
->> running fast-import to take care of that.
+> Is there any example of a remote helper [0] with push and fetch capabilities?
 >
-> I'm trying to write a remote helper for hosting git remotes on Amazon
-> S3.  Do you have any intuition about which capabilities would work
-> best for this case?
+> The git-remote-testgit.sh example [1] only has import/export capabilities.
+>
+> Also, what are the advantages and disadvantages of a remote helper
+> with push/fetch capabilities vs a remote helper with import/export
+> capabilities?
 
-fetch/push.  I'd suggest looking at the "dumb" HTTP code (fetch_dumb,
-push_dav) in remote-curl.c to start.
+A helper with push/fetch capabilities is responsible for (and more
+importantly, "in control of") packdata creation, while helpers that
+use import/export interface rely on fast-import, which is quite dumb
+when it comes to storage efficiency of the resulting repository.
+The former might be more preferrable from the efficiency point of
+view.
 
-Thanks,
-Jonathan
+BUT.
+
+Unless your foreign SCM is Git itself, however, it is not practical
+to write your own pack data generator correctly and efficiently to
+support push/fetch capabilities anyway, so the choice is often made
+not because of "advantages vs disadvantages" but because of what you
+can write in practice.
