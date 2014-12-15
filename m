@@ -1,77 +1,84 @@
-From: Benjamin Quorning <bquorning@zendesk.com>
-Subject: But in `git checkout --patch`
-Date: Mon, 15 Dec 2014 15:41:45 +0100
-Message-ID: <CAN9HoQH5=z-d=J1HCA2UwGuFek21X6qCd_jFEkNpE6GiE50oNg@mail.gmail.com>
+From: Peter van der Does <peter@avirtualhome.com>
+Subject: [PATCH] Update documentation occurrences of filename .sh
+Date: Mon, 15 Dec 2014 09:34:28 -0500
+Message-ID: <548EF174.1010705@avirtualhome.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 15 15:41:55 2014
+X-From: git-owner@vger.kernel.org Mon Dec 15 15:54:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0WqQ-0005SP-PP
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 15:41:55 +0100
+	id 1Y0X2Y-0003ce-98
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 15:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753214AbaLOOlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2014 09:41:50 -0500
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:58960 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179AbaLOOlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2014 09:41:46 -0500
-Received: by mail-pd0-f181.google.com with SMTP id v10so11778588pde.12
-        for <git@vger.kernel.org>; Mon, 15 Dec 2014 06:41:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zendesk.com; s=zencorpemail;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=XzH7EpSP7+SA8tfoXP6/8mV7odcKLMsqyOUJt9c/H94=;
-        b=JeNPcSDvEB/0EUT0fz/oxq92UqwsZBevlOwYW/8Oefiupk3lX5DyzVFns1ErtRwny6
-         sYSAMmtXov9/VTn0sReHdQ7iOym2reKSyO3F+yw3wIPLPF1O+jrgha+PkTm4Qe3pLSC1
-         dqrtB9mhPvV82yG8NC5DV2CzHaHjhWpZmt/D4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=XzH7EpSP7+SA8tfoXP6/8mV7odcKLMsqyOUJt9c/H94=;
-        b=nNIvnVx3i1gE6mfs6thBpJO0t8TUH0okEhy28mDl5LpUwKceEBrAE2ZlFy4ogjFLxt
-         85hfyu+rNob+yW3LFiu1BCAZbzIcnWlp+mR7S+xfDjSHLejt99X+dHFcetx494HEDvQB
-         cf6NIxS/u3Z/QPdrnTg+vMu+IZ2cUddoZ/crTbyphiQ37K4yTyTRdHH1MH9BszRJf98P
-         6QGXDwj5nzU4mYCyc+pkCHhJ9VzVMYxJeubv+R9t/5X61LEDgylZOVxWPGChweUMPzXE
-         /YccoX5RShOhFX+Ud0UVnyR9Ym5iMLidBRKKGXqjuMn9g94sd6dGJQiJN0EBTBfD/za1
-         vwjA==
-X-Gm-Message-State: ALoCoQlpZ0Hd8EHL71to8I2sqj3K7RL+EKgiGZbDpQ+LYXHC4/V/CnXYOLWAj43U0VB3bbvD3vKe
-X-Received: by 10.66.120.129 with SMTP id lc1mr52352051pab.86.1418654505611;
- Mon, 15 Dec 2014 06:41:45 -0800 (PST)
-Received: by 10.66.150.196 with HTTP; Mon, 15 Dec 2014 06:41:45 -0800 (PST)
+	id S1753145AbaLOOyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2014 09:54:21 -0500
+Received: from zandvoort.avirtualhome.com ([96.126.105.64]:59914 "EHLO
+	mail.avirtualhome.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751905AbaLOOyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2014 09:54:18 -0500
+X-Greylist: delayed 1186 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Dec 2014 09:54:18 EST
+Received: from [192.168.1.106] (c-69-248-90-230.hsd1.nj.comcast.net [69.248.90.230])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.avirtualhome.com (Postfix) with ESMTPSA id 5134B17570
+	for <git@vger.kernel.org>; Mon, 15 Dec 2014 09:34:29 -0500 (EST)
+DKIM-Filter: OpenDKIM Filter v2.9.1 mail.avirtualhome.com 5134B17570
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=avirtualhome.com;
+	s=mail; t=1418654069;
+	bh=JQFylXFAR9IGqV/h3mKJD4ZammfmOjFrbjiTRjDsppQ=;
+	h=Date:From:To:Subject:From;
+	b=nU3AMf/o/cYh8rv2GV0jbibqo6NbExCls54DpVFQfHl1zTtpoEBq+NC+9/SJYWaj/
+	 I1U9+Gw9Mfd86r7GNwgGh4Zbp5sGZphcLp2FdeZKJRW/my6JYEzW/iBThwARG4w38G
+	 HD4iQ2/+8phU5FhLdveqmhExcIvE2hYdZ6+6HXHg=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:36.0) Gecko/20100101 Thunderbird/36.0a2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261407>
 
-I'm not entirely sure how you like your bug reports, so I'll just the
-best I can :-)
+Documentation in the completion scripts for Bash and Zsh state the wrong filenames.
 
-$ git --version
-git version 2.2.0
+Signed-off-by: Peter van der Does <peter@avirtualhome.com>
 
-$ uname -a
-Darwin buzz.local 13.4.0 Darwin Kernel Version 13.4.0: Sun Aug 17
-19:50:11 PDT 2014; root:xnu-2422.115.4~1/RELEASE_X86_64 x86_64
+---
+ contrib/completion/git-completion.bash | 4 ++--
+ contrib/completion/git-completion.zsh  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Reproduction steps:
-
-1. A repository with a changed file, but no staged changes.
-2. Execute `git checkout --patch`
-3. When asked, press `e` to edit a chunk (opens an external editor in my case)
-4. With the editor still open, click ctrl-C in the terminal.
-5. The diff that was being edited, and the command prompt ("discard
-this hunk from worktree" etc) is printed to the screen, over and over
-again.
-6. I have to grep and kill this process: /usr/bin/perl
-/usr/local/Cellar/git/2.2.0/libexec/git-core/git-add--interactive
---patch=checkout --
-
---
-Benjamin Quorning
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2fece98..41608ad 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -16,9 +16,9 @@
+ #
+ # To use these routines:
+ #
+-#    1) Copy this file to somewhere (e.g. ~/.git-completion.sh).
++#    1) Copy this file to somewhere (e.g. ~/.git-completion.bash).
+ #    2) Add the following line to your .bashrc/.zshrc:
+-#        source ~/.git-completion.sh
++#        source ~/.git-completion.bash
+ #    3) Consider changing your PS1 to also show the current branch,
+ #       see git-prompt.sh for details.
+ #
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 9f6f0fa..e255413 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -9,7 +9,7 @@
+ #
+ # If your script is somewhere else, you can configure it on your ~/.zshrc:
+ #
+-#  zstyle ':completion:*:*:git:*' script ~/.git-completion.sh
++#  zstyle ':completion:*:*:git:*' script ~/.git-completion.zsh
+ #
+ # The recommended way to install this script is to copy to '~/.zsh/_git', and
+ # then add the following to your ~/.zshrc file:
+-- 
+2.2.0
