@@ -1,80 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: remote helper example with push/fetch capabilities
-Date: Mon, 15 Dec 2014 12:47:40 -0800
-Message-ID: <20141215204740.GI29365@google.com>
-References: <CAPCWLt6kxoJJSWAcyH_kW071Md0vc4zeo41hCKBQHd-_pvUMXQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] receive-pack.c: add protocol support to negotiate atomic-push
+Date: Mon, 15 Dec 2014 12:53:12 -0800
+Message-ID: <xmqqy4q8d493.fsf@gitster.dls.corp.google.com>
+References: <1418673368-20785-1-git-send-email-sbeller@google.com>
+	<1418673368-20785-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Klein W <wineklein@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 21:47:47 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
+	ronniesahlberg@gmail.com, Ronnie Sahlberg <sahlberg@google.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Dec 15 21:53:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0cYV-0000hO-Gx
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 21:47:47 +0100
+	id 1Y0ce1-0003Vn-Rp
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Dec 2014 21:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750926AbaLOUro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2014 15:47:44 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36805 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915AbaLOUrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2014 15:47:43 -0500
-Received: by mail-ig0-f170.google.com with SMTP id r2so6626051igi.3
-        for <git@vger.kernel.org>; Mon, 15 Dec 2014 12:47:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xW0CGzeGKOGe3I8B9La3j2Kxvr7xo6K5Tyy9KXqxgAU=;
-        b=FEezfQV9A2SZRXtFGrGtYD/dmF01XITlMCnaGOOZJoKsb0oMGena5R92LUwf4DrQ9V
-         hoYYNTqkZgqD1I6qClpfHaJ1ZR+n5RkfjOn0SnPSyHCjqqiayKL1xTzMk8uItLnHNLt9
-         lqzQUDubyPoG84FJAgSIAAWEUsv3HLCEuE5hLCLzS86h6ND9i85S5ddBDcA+EZ7vLEMT
-         4u75bvyA+DlRfQIzFUQ4AhWMd94zHtRG/mYewy+qZhYnb+ROZSPGTki3JEnV5HYqBJI1
-         p6wKQD+7/d0pnXn6STVB2EgzMQ5qV9PtPS3A4l2Yw8We0aBlDFngCTnoQF3Q2gEkV68+
-         LSmg==
-X-Received: by 10.50.30.33 with SMTP id p1mr20121082igh.22.1418676462753;
-        Mon, 15 Dec 2014 12:47:42 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:f581:e7a2:ee7:8026])
-        by mx.google.com with ESMTPSA id p198sm5188805iop.36.2014.12.15.12.47.41
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Dec 2014 12:47:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAPCWLt6kxoJJSWAcyH_kW071Md0vc4zeo41hCKBQHd-_pvUMXQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750817AbaLOUxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2014 15:53:25 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53511 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750722AbaLOUxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2014 15:53:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AEF5C27D8E;
+	Mon, 15 Dec 2014 15:53:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sOugQRKiR1Rog9XdrCicpxHa9Rw=; b=pxg+iI
+	66JjVv+xTS9cdGVzK3tQkU6UFeGYec0jzBP5BeMlag8jnzo8wSKjpwzTA/tB1594
+	aG6f9CLDEI9S287cAv/kWCV4sUe/GpxJ7hN/JFjfZU7iXThRctL314ck6IyLcAYC
+	S3akz8gWCHR/bB9fTDTenIsCVINWHUzlfDkd0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hTrlDZyqwB49X790ZQuVk7EGediNO2OC
+	30LMRdWqfbaTqGwNXG0vjepknlJz28zNhyrTxcLo3mw0lwLfNVgxD2baZbGGGK/M
+	/exU5o+O0ljxDj4SCs+gqvbT6WBWO+Pcv+R+snebZXr9wRUEgSRhRrQc6JbH1VS9
+	QfrD9pf6PeA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A588027D8C;
+	Mon, 15 Dec 2014 15:53:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2BC1A27D8A;
+	Mon, 15 Dec 2014 15:53:14 -0500 (EST)
+In-Reply-To: <1418673368-20785-2-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 15 Dec 2014 11:56:04 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 633BB91E-849C-11E4-A6A1-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261422>
 
-Hi,
+Stefan Beller <sbeller@google.com> writes:
 
-Klein W wrote:
+> From: Ronnie Sahlberg <sahlberg@google.com>
+>
+> This adds support to the protocol between send-pack and receive-pack to
+> * allow receive-pack to inform the client that it has atomic push capability
+> * allow send-pack to request atomic push back.
+>
+> There is currently no setting in send-pack to actually request that atomic
+> pushes are to be used yet. This only adds protocol capability not ability
+> for the user to activate it.
 
-> Is there any example of a remote helper [0] with push and fetch capabilities?
+Hmph, am I reading the patch to send-pack.c correctly?
 
-Sure --- see remote-curl.c.
+It detects if the other side supports the capability and leaves it
+in atomic_push_supported variable for later use, and also requests
+the feature to be activated when atomic_push is set, but I see no
+logic to link these two together, e.g. error out when atomic_push
+is true and atomic_push_supported is false (or turn it off with a
+warning, or whatever).
 
-There's also the "connect" capability.  builtin/remote-ext.c and
-builtin/remote-fd.c are examples using that one.
-
-[...]
-> Also, what are the advantages and disadvantages of a remote helper
-> with push/fetch capabilities vs a remote helper with import/export
-> capabilities?
-
-It mainly has to do with what it is convenient for your helper to
-produce.  If the helper would find it more convenient to write native
-git objects (for example because the remote server speaks a
-git-specific protocol, as in the case of remote-curl.c) then the
-"fetch" capability will be more convenient.  If the helper wants to
-make a batch of new objects then a fast-import stream can be a
-convenient way to do this and the "import" capability takes care of
-running fast-import to take care of that.
-
-Thanks and hope that helps,
-Jonathan
+> diff --git a/send-pack.c b/send-pack.c
+> index 949cb61..1ccc84c 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -294,6 +294,8 @@ int send_pack(struct send_pack_args *args,
+>  	int use_sideband = 0;
+>  	int quiet_supported = 0;
+>  	int agent_supported = 0;
+> +	int atomic_push_supported = 0;
+> +	int atomic_push = 0;
+>  	unsigned cmds_sent = 0;
+>  	int ret;
+>  	struct async demux;
+> @@ -314,6 +316,8 @@ int send_pack(struct send_pack_args *args,
+>  		agent_supported = 1;
+>  	if (server_supports("no-thin"))
+>  		args->use_thin_pack = 0;
+> +	if (server_supports("atomic-push"))
+> +		atomic_push_supported = 1;
+>  	if (args->push_cert) {
+>  		int len;
+>  
+> @@ -335,6 +339,8 @@ int send_pack(struct send_pack_args *args,
+>  		strbuf_addstr(&cap_buf, " side-band-64k");
+>  	if (quiet_supported && (args->quiet || !args->progress))
+>  		strbuf_addstr(&cap_buf, " quiet");
+> +	if (atomic_push)
+> +		strbuf_addstr(&cap_buf, " atomic-push");
+>  	if (agent_supported)
+>  		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
