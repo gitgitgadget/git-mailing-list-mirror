@@ -1,146 +1,276 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 5/6] push.c: add an --atomic-push argument
-Date: Tue, 16 Dec 2014 10:49:06 -0800
-Message-ID: <1418755747-22506-5-git-send-email-sbeller@google.com>
+Subject: [PATCHv2 3/6] send-pack.c: add --atomic command line argument
+Date: Tue, 16 Dec 2014 10:49:04 -0800
+Message-ID: <1418755747-22506-3-git-send-email-sbeller@google.com>
 References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
  <1418755747-22506-1-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com, git@vger.kernel.org, mhagger@alum.mit.edu,
 	jrnieder@gmail.com, ronniesahlberg@gmail.com
-X-From: git-owner@vger.kernel.org Tue Dec 16 19:49:32 2014
+X-From: git-owner@vger.kernel.org Tue Dec 16 19:49:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0xBa-0005n1-Vd
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 19:49:31 +0100
+	id 1Y0xBa-0005n1-7I
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 19:49:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbaLPStV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2014 13:49:21 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:36748 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbaLPStT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2014 13:49:19 -0500
-Received: by mail-ie0-f178.google.com with SMTP id tp5so13516379ieb.9
-        for <git@vger.kernel.org>; Tue, 16 Dec 2014 10:49:19 -0800 (PST)
+	id S1751108AbaLPStT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Dec 2014 13:49:19 -0500
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:58369 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044AbaLPStR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2014 13:49:17 -0500
+Received: by mail-ig0-f182.google.com with SMTP id hn15so7575174igb.3
+        for <git@vger.kernel.org>; Tue, 16 Dec 2014 10:49:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zmIAhr6QxQfTyYeycGFjdoxiBRTbJvhrKVyEeEvjjIo=;
-        b=VlTazE/78Ba4LA1lIRJ8TNZ/B2wQwW5jRG7uza1kiJ2lRbTwdJyLa3A+Cd65fgc71b
-         cCJ6th7pRCs+5YT4Ut11/pDbaIxXejgvTOJSxZhm38NZgDDSgPJR1d6ICFKOhQoob5HB
-         3SwAA4JHczEeZzq6pwu4RmTCZNTIpJFeGC9kn8VeqQegg2G8WW7OiVbduM5j/8YKEmvl
-         niexMhw3c3bvZ2t25c8fm4Us9bcM84yOOyIeGHbF3XJXDG27kdyXKs3ml4b54bnSdWCs
-         ewFc2YNJKfGIskuzaV6PFWAQBF3fGeTx2LBb1YSjU3i1wVW51/TxelXPrUti1NnfCXUB
-         vGiw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=2itUYDNoTdOc0+qZLmCcE2GYfsvLJAYUXjDkttTWjEA=;
+        b=cyYZVqJMGZkjkEcfDKUEq8ba1kfimJB0nRJdgk5eS5SiCDV9ysrUNQfkGjkU/E94ZV
+         5g3anpY+sPXZlbT7uT18H++KAFmY1fVLfkBv/gF3wbPb0GGhOaKXF+o9YQfmSQro/XKN
+         E9jyS2+RNCzDjPCG8HlC6v70P/lOT/01oD4/iRPkRwjJ+24QR7hPKRCFlmnd1btFUbRn
+         ePcUdFdvTK6Goahy+/3iq4cL/1/WapuXwgBRit63brIGv4Fwy0T9VZ0rSGECP6lymBwf
+         PsymbUfzT1/lyhhJcbQ1k2meRVy6Hdq2K1PUB1YEf+SGte0J+i4sOUY8xv346KZuzoxc
+         oJ1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=zmIAhr6QxQfTyYeycGFjdoxiBRTbJvhrKVyEeEvjjIo=;
-        b=ErGMrer/bS3n1oqrNZTRtjm5m6QxGl37C3ZWOJOVaoo/+pbx8ghUEusjPlGyGUJtaj
-         u5Vaswwk5m7zA09V16xxDisx75zX6iO3tAlRf2FVpcZO4E7cXBiESKYjpL98yMLS9lyy
-         MzqjXYjimqZ1sl1haNbJwOZ0RSMbkZ7kLfbbhqQ978qReCgLi3zviZxv/cBRwsSP+54o
-         lviabZsRdlx7+SNGwxML1/H2MAAfMb9yLnxTIxVO/jOg1YuiJxPVEQPT4eWZCYG2cNam
-         TdG1f83fe+jLc3I39myAvxDHqBTNSqXCXlNwzqXZS0J8MVAm2qpCoYuEM0AcyZEvNEdk
-         ItZg==
-X-Gm-Message-State: ALoCoQm2chx89ae62224Ffg6YDlXToHPdfxzs7wFwBBxm7Cc0FQlU9KzA8F5hFCMKYmWaHZSFXwP
-X-Received: by 10.50.142.68 with SMTP id ru4mr1640846igb.25.1418755758869;
-        Tue, 16 Dec 2014 10:49:18 -0800 (PST)
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=2itUYDNoTdOc0+qZLmCcE2GYfsvLJAYUXjDkttTWjEA=;
+        b=AR9DKmkhaofrv9NvcoYkOAuSmvnPeWg30i8ntQnXa8KowIKxJW51FcfO5esQ7cDFug
+         lVqbEEVMqgy7RhKatIZtfwy88SdR05nVbrrDgeUIuySKqsI9OXGF6jqvuK2ZfWc3DSeG
+         lh0QtaOWpOtD6B9pfkdIHzfW5dEWSf7YE+2yLtwtb05m3/AyFJEvOhQTo1gSMuwDeMOq
+         uU3eDInoQmVuM9ndrONOS03UljizuioR1cvPR/Tw+C6Ue/NQiPmWhy0cNTGl7dTBoV4s
+         AlFxvcjTeOqySplgyOkwmUOsVMi5qcLbDYEq/UwW8b8gLLjDX+V27oiZ/yi+S9cKawGK
+         +vIA==
+X-Gm-Message-State: ALoCoQlCkQlqxuFpGnJUUEdoKbXCP0X5IpHXafQ2Esvg4CXUdVZGqXg/XYtzAeXgCPTunLW38py7
+X-Received: by 10.42.25.12 with SMTP id y12mr32727929icb.74.1418755756203;
+        Tue, 16 Dec 2014 10:49:16 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:4db1:657a:aafa:5d88])
-        by mx.google.com with ESMTPSA id r18sm628775ioi.28.2014.12.16.10.49.18
+        by mx.google.com with ESMTPSA id pn2sm3854672igb.21.2014.12.16.10.49.15
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 16 Dec 2014 10:49:18 -0800 (PST)
+        Tue, 16 Dec 2014 10:49:15 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.31.gad78000.dirty
 In-Reply-To: <1418755747-22506-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261445>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+=46rom: Ronnie Sahlberg <sahlberg@google.com>
 
-Add a command line argument to the git push command to request atomic
-pushes.
+This adds support to send-pack to negotiate and use atomic pushes
+iff the server supports it. Atomic pushes are activated by a new comman=
+d
+line flag --atomic.
+
+In order to do this we also need to change the semantics for send_pack(=
+)
+slightly. The existing send_pack() function actually doesn't send all t=
+he
+refs back to the server when multiple refs are involved, for example
+when using --all. Several of the failure modes for pushes can already b=
+e
+detected locally in the send_pack client based on the information from =
+the
+initial server side list of all the refs as generated by receive-pack.
+Any such refs that we thus know would fail to push are thus pruned from
+the list of refs we send to the server to update.
+
+=46or atomic pushes, we have to deal thus with both failures that are d=
+etected
+locally as well as failures that are reported back from the server. In =
+order
+to do so we treat all local failures as push failures too.
+
+We introduce a new status code REF_STATUS_ATOMIC_PUSH_FAILED so we can
+flag all refs that we would normally have tried to push to the server
+but we did not due to local failures. This is to improve the error mess=
+age
+back to the end user to flag that "these refs failed to update since th=
+e
+atomic push operation failed."
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
 Notes:
-    Changes v1 -> v2
-    	It's --atomic now! (dropping the -push)
+    Changes v1 -> v2:
+     * Now we only need a very small change in the existing code and ha=
+ve
+       a new static function, which cares about error reporting.
+    	  Junio wrote:
+    	  > Hmph. =C2=A0Is "atomic push" so special that it deserves a sep=
+arate
+    	  > parameter? =C2=A0When we come up with yet another mode of fail=
+ure, would
+    	  > we add another parameter to the callers to this function?
+     * error messages are worded differently (lower case!),
+     * use of error function instead of fprintf
+   =20
+     * undashed the printed error message ("atomic push failed");
 
- Documentation/git-push.txt | 7 ++++++-
- builtin/push.c             | 2 ++
- transport.c                | 1 +
- transport.h                | 1 +
- 4 files changed, 10 insertions(+), 1 deletion(-)
+ Documentation/git-send-pack.txt |  7 ++++++-
+ builtin/send-pack.c             |  6 +++++-
+ remote.h                        |  3 ++-
+ send-pack.c                     | 36 +++++++++++++++++++++++++++++++++=
++--
+ transport.c                     |  4 ++++
+ 5 files changed, 51 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 21b3f29..3feacc5 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -9,7 +9,7 @@ git-push - Update remote refs along with associated objects
+diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-p=
+ack.txt
+index 2a0de42..45c7725 100644
+--- a/Documentation/git-send-pack.txt
++++ b/Documentation/git-send-pack.txt
+@@ -9,7 +9,7 @@ git-send-pack - Push objects over Git protocol to anoth=
+er repository
  SYNOPSIS
  --------
  [verse]
--'git push' [--all | --mirror | --tags] [--follow-tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
-+'git push' [--all | --mirror | --tags] [--follow-tags] [--atomic-push] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
- 	   [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose]
- 	   [-u | --set-upstream] [--signed]
- 	   [--force-with-lease[=<refname>[:<expect>]]]
-@@ -136,6 +136,11 @@ already exists on the remote side.
- 	logged.  See linkgit:git-receive-pack[1] for the details
- 	on the receiving end.
- 
+-'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=3D<git-r=
+eceive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]
++'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=3D<git-r=
+eceive-pack>] [--verbose] [--thin] [--atomic] [<host>:]<directory> [<re=
+f>...]
+=20
+ DESCRIPTION
+ -----------
+@@ -62,6 +62,11 @@ be in a separate packet, and the list must end with =
+a flush packet.
+ 	Send a "thin" pack, which records objects in deltified form based
+ 	on objects not included in the pack to reduce network traffic.
+=20
 +--atomic::
-+	Use the an atomic transaction on the server side if available.
-+	Either all refs are updated, or on error, no refs are updated.
-+	If the server does not support atomic pushes the push will fail.
++	Use an atomic transaction for updating the refs. If any of the refs
++	fails to update then the entire push will fail without changing any
++	refs.
 +
- --receive-pack=<git-receive-pack>::
- --exec=<git-receive-pack>::
- 	Path to the 'git-receive-pack' program on the remote
-diff --git a/builtin/push.c b/builtin/push.c
-index a076b19..fe0b8cc 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -518,6 +518,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "follow-tags", &flags, N_("push missing but relevant tags"),
- 			TRANSPORT_PUSH_FOLLOW_TAGS),
- 		OPT_BIT(0, "signed", &flags, N_("GPG sign the push"), TRANSPORT_PUSH_CERT),
-+		OPT_BIT(0, "atomic", &flags, N_("use a single atomic transaction at the serverside, if available"),
-+			TRANSPORT_ATOMIC_PUSH),
- 		OPT_END()
- 	};
- 
+ <host>::
+ 	A remote host to house the repository.  When this
+ 	part is specified, 'git-receive-pack' is invoked via
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index b564a77..b961e5a 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -13,7 +13,7 @@
+ #include "sha1-array.h"
+=20
+ static const char send_pack_usage[] =3D
+-"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pac=
+k=3D<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref=
+>...]\n"
++"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pac=
+k=3D<git-receive-pack>] [--verbose] [--thin] [--atomic] [<host>:]<direc=
+tory> [<ref>...]\n"
+ "  --all and explicit <ref> specification are mutually exclusive.";
+=20
+ static struct send_pack_args args;
+@@ -170,6 +170,10 @@ int cmd_send_pack(int argc, const char **argv, con=
+st char *prefix)
+ 				args.use_thin_pack =3D 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--atomic")) {
++				args.atomic =3D 1;
++				continue;
++			}
+ 			if (!strcmp(arg, "--stateless-rpc")) {
+ 				args.stateless_rpc =3D 1;
+ 				continue;
+diff --git a/remote.h b/remote.h
+index 8b62efd..f346524 100644
+--- a/remote.h
++++ b/remote.h
+@@ -115,7 +115,8 @@ struct ref {
+ 		REF_STATUS_REJECT_SHALLOW,
+ 		REF_STATUS_UPTODATE,
+ 		REF_STATUS_REMOTE_REJECT,
+-		REF_STATUS_EXPECTING_REPORT
++		REF_STATUS_EXPECTING_REPORT,
++		REF_STATUS_ATOMIC_PUSH_FAILED
+ 	} status;
+ 	char *remote_status;
+ 	struct ref *peer_ref; /* when renaming */
+diff --git a/send-pack.c b/send-pack.c
+index 1c4ac75..71b1915 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -279,6 +279,30 @@ free_return:
+ 	return update_seen;
+ }
+=20
++
++static int atomic_push_failure(struct send_pack_args *args,
++			       struct ref *remote_refs,
++			       struct ref *failing_ref)
++{
++	struct ref *ref;
++	/* Mark other refs as failed */
++	for (ref =3D remote_refs; ref; ref =3D ref->next) {
++		if (!ref->peer_ref && !args->send_mirror)
++			continue;
++
++		switch (ref->status) {
++		case REF_STATUS_EXPECTING_REPORT:
++			ref->status =3D REF_STATUS_ATOMIC_PUSH_FAILED;
++			continue;
++		default:
++			; /* do nothing */
++		}
++	}
++	error("atomic push failed for ref %s. "
++	      "status: %d\n", failing_ref->name, failing_ref->status);
++	return -1;
++}
++
+ int send_pack(struct send_pack_args *args,
+ 	      int fd[], struct child_process *conn,
+ 	      struct ref *remote_refs,
+@@ -371,9 +395,17 @@ int send_pack(struct send_pack_args *args,
+ 	 * the pack data.
+ 	 */
+ 	for (ref =3D remote_refs; ref; ref =3D ref->next) {
+-		if (no_ref_update_to_be_sent(ref, args))
++		int reject_reason;
++		if ((reject_reason =3D no_ref_update_to_be_sent(ref, args))) {
++			/* When we know the server would reject a ref update if
++			 * we were to send it and we're trying to send the refs
++			 * atomically, abort the whole operation */
++			if (use_atomic && reject_reason =3D=3D 2)
++				return atomic_push_failure(args,
++							   remote_refs,
++							   ref);
+ 			continue;
+-
++		}
+ 		if (!ref->deletion)
+ 			need_pack_data =3D 1;
+=20
 diff --git a/transport.c b/transport.c
-index c67feee..5b29514 100644
+index 70d38e4..c67feee 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -830,6 +830,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
- 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
- 	args.push_cert = !!(flags & TRANSPORT_PUSH_CERT);
-+	args.atomic = !!(flags & TRANSPORT_ATOMIC_PUSH);
- 	args.url = transport->url;
- 
- 	ret = send_pack(&args, data->fd, data->conn, remote_refs,
-diff --git a/transport.h b/transport.h
-index 3e0091e..25fa1da 100644
---- a/transport.h
-+++ b/transport.h
-@@ -125,6 +125,7 @@ struct transport {
- #define TRANSPORT_PUSH_NO_HOOK 512
- #define TRANSPORT_PUSH_FOLLOW_TAGS 1024
- #define TRANSPORT_PUSH_CERT 2048
-+#define TRANSPORT_ATOMIC_PUSH 4096
- 
- #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
- #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
--- 
+@@ -728,6 +728,10 @@ static int print_one_push_status(struct ref *ref, =
+const char *dest, int count, i
+ 						 ref->deletion ? NULL : ref->peer_ref,
+ 						 "remote failed to report status", porcelain);
+ 		break;
++	case REF_STATUS_ATOMIC_PUSH_FAILED:
++		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++						 "atomic push failed", porcelain);
++		break;
+ 	case REF_STATUS_OK:
+ 		print_ok_ref_status(ref, porcelain);
+ 		break;
+--=20
 2.2.0.31.gad78000.dirty
