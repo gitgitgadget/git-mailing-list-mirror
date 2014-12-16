@@ -1,164 +1,199 @@
-From: Kenneth Lorber <keni@his.com>
-Subject: bug & patch: exit codes from internal commands are handled incorrectly
-Date: Tue, 16 Dec 2014 14:28:15 -0500
-Message-ID: <13474FB1-5310-42E5-82A9-4047FEFEFF4A@his.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kenneth Lorber <keni@his.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 16 20:34:10 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 4/6] receive-pack.c: use a single ref_transaction for atomic pushes
+Date: Tue, 16 Dec 2014 11:35:53 -0800
+Message-ID: <xmqqwq5r9yli.fsf@gitster.dls.corp.google.com>
+References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
+	<1418755747-22506-1-git-send-email-sbeller@google.com>
+	<1418755747-22506-4-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
+	ronniesahlberg@gmail.com, Ronnie Sahlberg <sahlberg@google.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 20:36:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0xsn-0007JV-Bq
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 20:34:09 +0100
+	id 1Y0xua-0008ON-0K
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 20:36:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751616AbaLPTeE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Dec 2014 14:34:04 -0500
-Received: from smtp-nf-106.his.com ([216.194.251.35]:42688 "EHLO
-	smtp-nf-106.his.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751594AbaLPTeB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Dec 2014 14:34:01 -0500
-X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Dec 2014 14:34:00 EST
-Received: from cuda201.his.com (cuda201.his.com [216.194.248.226])
-	by smtp-nf-106.his.com (Postfix) with ESMTPS id 8A3E1609CD
-	for <git@vger.kernel.org>; Tue, 16 Dec 2014 14:28:21 -0500 (EST)
-X-ASG-Debug-ID: 1418758100-061c414fc11fc20c0001-QuoKaX
-Received: from smtp-nf-202.his.com (smtp-nf-202.his.com [216.194.248.252]) by cuda201.his.com with ESMTP id itfLmCfSegMGZuY8 for <git@vger.kernel.org>; Tue, 16 Dec 2014 14:28:20 -0500 (EST)
-X-Barracuda-Envelope-From: keni@his.com
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.252
-Received: from mail-sterling.his.com (mail-sterling.his.com [216.194.248.141])
-	by smtp-nf-202.his.com (Postfix) with ESMTP id B593A600FB
-	for <git@vger.kernel.org>; Tue, 16 Dec 2014 14:28:20 -0500 (EST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail-sterling.his.com (Postfix) with ESMTP id A33334170001
-	for <git@vger.kernel.org>; Tue, 16 Dec 2014 14:28:19 -0500 (EST)
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
-X-Virus-Scanned: amavisd-new at mail-sterling.his.com
-Received: from mail-sterling.his.com ([127.0.0.1])
-	by localhost (mail-sterling.his.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mfhiF8Go4HE2; Tue, 16 Dec 2014 14:28:16 -0500 (EST)
-Received: from polyhymnia.home (pool-71-246-192-220.washdc.fios.verizon.net [71.246.192.220])
-	by mail-sterling.his.com (Postfix) with ESMTPSA id 9949E3FF0001;
-	Tue, 16 Dec 2014 14:28:16 -0500 (EST)
-X-Barracuda-Apparent-Source-IP: 71.246.192.220
-X-ASG-Orig-Subj: bug & patch: exit codes from internal commands are handled incorrectly
-X-Mailer: Apple Mail (2.1878.6)
-X-Barracuda-Connect: smtp-nf-202.his.com[216.194.248.252]
-X-Barracuda-Start-Time: 1418758100
-X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
-Received-SPF: pass (his.com: domain of keni@his.com designates 216.194.248.141 as permitted sender)
-X-Virus-Scanned: by bsmtpd at his.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.12982
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
+	id S1750983AbaLPTf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2014 14:35:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54588 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750862AbaLPTfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2014 14:35:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2378B28AD6;
+	Tue, 16 Dec 2014 14:35:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jffBwIwke2Hjr6OxuasAy9ZORN4=; b=HCHngs
+	Konm0AghBabTbYUHk6AG9IORgmxBg+I0W2OHHMpmrBXRwb9nbN+xOQHGQl+qlevI
+	gSdesjqiWmBh3GqAj/X6wya6YnwodXPHhcwoGVcQLM1oQg/nCjCPB0yLOfA2WfUV
+	7NEMq54ueJreMfoORoEiius/aEUpgdS+ot+CE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CZPnmgTH3v8kDNHX56mdKFeugW8ROEe2
+	Lz5Ve6mNNO73hNvnXX33Wsd4R3BZaP95/CAso5MY9xe1mc0cFUY1Qk1StP6Kb96u
+	AEHsLpwTzOKTnzUE4JgrruNgv9i7SG6dMPBw/40THVkhI39VRmWnCVPIcf7LUxk1
+	KE4nSPmHKWc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1969228AD5;
+	Tue, 16 Dec 2014 14:35:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5C95728AD2;
+	Tue, 16 Dec 2014 14:35:56 -0500 (EST)
+In-Reply-To: <1418755747-22506-4-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 16 Dec 2014 10:49:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C1533FFE-855A-11E4-9069-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261459>
 
-(Apologies if I=92ve missed anything here - I=92m still climbing the gi=
-t learning curve.)
+Stefan Beller <sbeller@google.com> writes:
 
-Bug: exit codes from (at least) internal commands are handled incorrect=
-ly.
-E.g. git-merge-file, docs say:
-        The exit value of this program is negative on error, and the nu=
-mber of
-        conflicts otherwise. If the merge was clean, the exit value is =
-0.
-But only 8 bits get carried through exit, so 256 conflicts gives exit(0=
-), which means the merge was clean.
+>     	* update(...) assumes to be always in a transaction
+>     	* Caring about when to begin/commit transactions is put
+>     	  into execute_commands
 
-Issue shows up on:
- git version 1.8.5.2 (Apple Git-48)
- build from source (git version 2.2.0.68.g64396d6.dirty after patch bel=
-ow applied)
+I am obviously biased, but I find that the new code structure and
+separation of responsibility between update() and execute()
+functions a lot clearer than the previous one.
 
-Reproduce by:
+Thanks.
 
-Put the following test program in an empty directory as buggen.pl
-
-TEST PROGRAM START
-open OUTB, ">basefile" or die;
-print OUTB "this is the base file\n";
-close OUTB;
-
-open OUT1, ">bfile1" or die;
-open OUT2, ">bfile2" or die;
-
-$c =3D shift;
-
-while($c > 0){
-        print OUT1 "a\nb\nc\nd\nchange $c file 1\n";
-        print OUT2 "a\nb\nc\nd\nchange $c file 2\n";
-        $c--;
-}
-TEST PROGRAM END
-
-Do these tests:
-
-perl buggen.pl 0
-git merge-file -p bfile1 basefile bfile2
-echo $status
-0
-
-perl buggen.pl 1
-git merge-file -p bfile1 basefile bfile2
-echo $status
-1
-
-perl buggen.pl 256
-git merge-file -p bfile1 basefile bfile2
-echo $status
-0       <=3D=3D=3DOOPS
-
-Proposed patches:
-diff --git a/git.c b/git.c
-index 82d7a1c..8228a3c 100644
---- a/git.c
-+++ b/git.c
-@@ -349,6 +349,8 @@ static int run_builtin(struct cmd_struct *p, int ar=
-gc, const
-        trace_argv_printf(argv, "trace: built-in: git");
-
-        status =3D p->fn(argc, argv, prefix);
-+       if (status > 255)
-+               status =3D 255;   /* prevent exit() from truncating to =
-0 */
-        if (status)
-                return status;
-diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge=
--file.txt
-index d2fc12e..76e6a11 100644
---- a/Documentation/git-merge-file.txt
-+++ b/Documentation/git-merge-file.txt
-@@ -41,7 +41,8 @@ lines from `<other-file>`, or lines from both respect=
-ively.  T
- conflict markers can be given with the `--marker-size` option.
-
- The exit value of this program is negative on error, and the number of
--conflicts otherwise. If the merge was clean, the exit value is 0.
-+conflicts otherwise (but 255 will be reported even if more than 255 co=
-nflicts
-+exist). If the merge was clean, the exit value is 0.
-
- 'git merge-file' is designed to be a minimal clone of RCS 'merge'; tha=
-t is, it
- implements all of RCS 'merge''s functionality which is needed by
-
-Open questions:
-1) Is 255 safe for all operating systems?
-2) Does this issue affect any other places?
-
-Thanks,
-Keni
-keni@his.com
+>  builtin/receive-pack.c | 64 ++++++++++++++++++++++++++++++++++++++------------
+>  1 file changed, 49 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index e76e5d5..0803fd2 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -67,6 +67,8 @@ static const char *NONCE_SLOP = "SLOP";
+>  static const char *nonce_status;
+>  static long nonce_stamp_slop;
+>  static unsigned long nonce_stamp_slop_limit;
+> +struct strbuf err = STRBUF_INIT;
+> +struct ref_transaction *transaction;
+>  
+>  static enum deny_action parse_deny_action(const char *var, const char *value)
+>  {
+> @@ -832,34 +834,32 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+>  				cmd->did_not_exist = 1;
+>  			}
+>  		}
+> -		if (delete_ref(namespaced_name, old_sha1, 0)) {
+> -			rp_error("failed to delete %s", name);
+> +		if (ref_transaction_delete(transaction,
+> +					   namespaced_name,
+> +					   old_sha1,
+> +					   0, old_sha1 != NULL,
+> +					   "push", &err)) {
+> +			rp_error("%s", err.buf);
+> +			strbuf_release(&err);
+>  			return "failed to delete";
+>  		}
+>  		return NULL; /* good */
+>  	}
+>  	else {
+> -		struct strbuf err = STRBUF_INIT;
+> -		struct ref_transaction *transaction;
+> -
+>  		if (shallow_update && si->shallow_ref[cmd->index] &&
+>  		    update_shallow_ref(cmd, si))
+>  			return "shallow error";
+>  
+> -		transaction = ref_transaction_begin(&err);
+> -		if (!transaction ||
+> -		    ref_transaction_update(transaction, namespaced_name,
+> -					   new_sha1, old_sha1, 0, 1, "push",
+> -					   &err) ||
+> -		    ref_transaction_commit(transaction, &err)) {
+> -			ref_transaction_free(transaction);
+> -
+> +		if (ref_transaction_update(transaction,
+> +					   namespaced_name,
+> +					   new_sha1, old_sha1,
+> +					   0, 1, "push",
+> +					   &err)) {
+>  			rp_error("%s", err.buf);
+>  			strbuf_release(&err);
+>  			return "failed to update ref";
+>  		}
+>  
+> -		ref_transaction_free(transaction);
+>  		strbuf_release(&err);
+>  		return NULL; /* good */
+>  	}
+> @@ -1059,6 +1059,16 @@ static void execute_commands(struct command *commands,
+>  		return;
+>  	}
+>  
+> +	if (use_atomic) {
+> +		transaction = ref_transaction_begin(&err);
+> +		if (!transaction) {
+> +			error("%s", err.buf);
+> +			strbuf_release(&err);
+> +			for (cmd = commands; cmd; cmd = cmd->next)
+> +				cmd->error_string = "transaction error";
+> +			return;
+> +		}
+> +	}
+>  	data.cmds = commands;
+>  	data.si = si;
+>  	if (check_everything_connected(iterate_receive_command_list, 0, &data))
+> @@ -1086,8 +1096,23 @@ static void execute_commands(struct command *commands,
+>  
+>  		if (cmd->skip_update)
+>  			continue;
+> -
+> +		if (!use_atomic) {
+> +			transaction = ref_transaction_begin(&err);
+> +			if (!transaction) {
+> +				rp_error("%s", err.buf);
+> +				strbuf_release(&err);
+> +				cmd->error_string = "failed to start transaction";
+> +			}
+> +		}
+>  		cmd->error_string = update(cmd, si);
+> +		if (!use_atomic)
+> +			if (ref_transaction_commit(transaction, &err)) {
+> +				ref_transaction_free(transaction);
+> +				rp_error("%s", err.buf);
+> +				strbuf_release(&err);
+> +				cmd->error_string = "failed to update ref";
+> +			}
+> +
+>  		if (shallow_update && !cmd->error_string &&
+>  		    si->shallow_ref[cmd->index]) {
+>  			error("BUG: connectivity check has not been run on ref %s",
+> @@ -1096,6 +1121,14 @@ static void execute_commands(struct command *commands,
+>  		}
+>  	}
+>  
+> +	if (use_atomic) {
+> +		if (ref_transaction_commit(transaction, &err)) {
+> +			rp_error("%s", err.buf);
+> +			for (cmd = commands; cmd; cmd = cmd->next)
+> +				cmd->error_string = err.buf;
+> +		}
+> +		ref_transaction_free(transaction);
+> +	}
+>  	if (shallow_update && !checked_connectivity)
+>  		error("BUG: run 'git fsck' for safety.\n"
+>  		      "If there are errors, try to remove "
+> @@ -1543,5 +1576,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+>  	sha1_array_clear(&shallow);
+>  	sha1_array_clear(&ref);
+>  	free((void *)push_cert_nonce);
+> +	strbuf_release(&err);
+>  	return 0;
+>  }
