@@ -1,86 +1,126 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Anastas Dancha <anapsix@random.io>
 Subject: Re: [PATCH] remote: allow adding remote w same name as alias
-Date: Tue, 16 Dec 2014 10:33:40 +0100
-Message-ID: <548FFC74.7080307@drmicha.warpmail.net>
-References: <20141216021900.50095.24877@random.io>
+Date: Tue, 16 Dec 2014 09:57:29 -0500
+Message-ID: <CAChhagAFTxmFVvCUiKp3a369awPJtZEuVsfFMcdiqeB9ZwYnKg@mail.gmail.com>
+References: <20141216021900.50095.24877@random.io> <alpine.DEB.1.00.1412160944180.13845@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Anastas Dancha <anapsix@random.io>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 16 10:33:49 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 16 15:57:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0oVo-0007Qh-Ot
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 10:33:49 +0100
+	id 1Y0tZS-0001L1-Uw
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 15:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbaLPJdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2014 04:33:43 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:49863 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750885AbaLPJdm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Dec 2014 04:33:42 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id D1E7B2048B
-	for <git@vger.kernel.org>; Tue, 16 Dec 2014 04:33:41 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 16 Dec 2014 04:33:41 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=d0ahslSJJ3jO3TMHmTyZbb
-	Eq9Og=; b=RIIGRT3JQhYMaqkwz5BNgX8XbOQMaoaI+UUC+lokzLQSt7vAG0A7Yh
-	1+cupp22D9VkvhaOP7EN+nwp7HELPTutoQbCr2ZF09dzDR/hQxZSYm8s3w6THE0z
-	xZNb1QNxictbSuY55uQ0tomXHUgm+YpY9zI+vsUjuBTnNNTEgE/6g=
-X-Sasl-enc: z2vDCFvxvnR7cWIPeDjoj1FupKBrnEvBdCywKcrfFg5Q 1418722421
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 09B9AC0027E;
-	Tue, 16 Dec 2014 04:33:40 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <20141216021900.50095.24877@random.io>
+	id S1751030AbaLPO5v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Dec 2014 09:57:51 -0500
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:40120 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750921AbaLPO5u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Dec 2014 09:57:50 -0500
+Received: by mail-ob0-f172.google.com with SMTP id va8so23278506obc.3
+        for <git@vger.kernel.org>; Tue, 16 Dec 2014 06:57:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=YjPsHIwJVHzq2AdEMAtxzjIfJZZriOjj4Vy0vD8iHy0=;
+        b=g/gatHgu8dM7/79cZpUPCoPJK234yYiF9IkzCDs2hBPhl+JDWhOv3J9lRmoGP/oQri
+         3n7ODHKdwhBuPGs4+tY07wkSYftbe3oG5ASk66bhZEduZLJePP95F3Sa+cozVLBwLRh0
+         R01XYGrR8BpBCf0obGauOA7Juxh1CKh2wap39KS/SDEaTcbIkgBv3MG4UiawXWtJIgNp
+         F+9NGnM6cYo1PuOrSA700y3uNXRxxzYQ3gIJbhmk1++1UHRhb14NO5MoYuQg48w1DlcV
+         HIpVAHNrKSQCI9jE+0WOTptRMc/JveNAQuoZUxmUmqgMwVw8R6cl/0PotyM/G42NcW2G
+         2Clg==
+X-Received: by 10.202.217.138 with SMTP id q132mr7908156oig.35.1418741869763;
+ Tue, 16 Dec 2014 06:57:49 -0800 (PST)
+Received: by 10.76.183.104 with HTTP; Tue, 16 Dec 2014 06:57:29 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1412160944180.13845@s15462909.onlinehome-server.info>
+X-Google-Sender-Auth: CXPn6Ybc1Hos4Pf4uw0ZRk4FaL4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261442>
 
-Anastas Dancha schrieb am 16.12.2014 um 03:30:
-> From f80bdf3272e7bdf790ee67fb94196a8aa139331f Mon Sep 17 00:00:00 2001
-> From: Anastas Dancha <anapsix@random.io>
-> Date: Mon, 15 Dec 2014 16:30:50 -0500
-> Subject: [PATCH] remote: allow adding remote w same name as alias
-> 
-> When ~/.gitconfig contains an alias (i.e. myremote)
-> and you are adding a new remote using the same name
-> for remote, Git will refuse to add the remote with
-> the same name as one of the aliases, even though the
-> remote with such name is not setup for current repo.
-> 
-> $ git remote add myremote git@host.com:team/repo.git
-> fatal: remote myremote already exists.
-> 
-> The fatal error comes from strcmp(name, remote->url[0])
-> condition, which compares a name of the new remote with
-> existing urls of all the remotes, including the ones
-> from ~/.gitconfig (or global variant).
-> I'm not sure why that is necessary, unless Git is meant
-> to prevent users from naming their remotes as their
-> remote aliases..
-> Imho, if someone want's to git remote add myremote
-> myremote, they should, since git-remote always takes
-> 2 arguments, first being the new remote's name and
-> second being new remote's url (or alias, if set).
+My bad Johannes,
 
-While that is true for "git remote", it is wrong for "git push" and the
-like, which takes "remote name or remote URL" as a parameter. Therefore,
-remote names and remote aliases need to be unique within the same namespace.
+Then I wrote "alias", I've meant the following:
+```
+[url "git@githost.com"]
+insteadOf =3D myalias
+pushInsteadOf =3D myalias
+```
+Unfortunately, your suggested fix will not allow my [poorly] described =
+use case.
+Hope this makes more sense now.
 
-> Thanks to @mymuss for sanity check and debugging.
-> 
-> Signed-off-by: Anastas Dancha <anapsix@random.io>
-> ---
->  builtin/remote.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+Thank you for looking into this.
+
+-Anastas
+
+On Tue, Dec 16, 2014 at 4:01 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Anastas,
+>
+> On Tue, 16 Dec 2014, Anastas Dancha wrote:
+>
+>> When ~/.gitconfig contains an alias (i.e. myremote)
+>> and you are adding a new remote using the same name
+>> for remote, Git will refuse to add the remote with
+>> the same name as one of the aliases, even though the
+>> remote with such name is not setup for current repo.
+>
+> Just to make sure we're on the same page... you are talking about
+>
+>         [remote "myremote"]
+>
+> not
+>
+>         [alias]
+>                 myremote =3D ...
+>
+> yes? If so, please avoid using the term "alias"...
+>
+> Further, I assume that your .gitconfig lists the "myremote" without a=
+ URL?
+>
+> Also:
+>
+>> -       if (remote && (remote->url_nr > 1 || strcmp(name, remote->ur=
+l[0]) ||
+>> -                       remote->fetch_refspec_nr))
+>> -               die(_("remote %s already exists."), name);
+>> +       if (remote && (remote->url_nr > 1 || remote->fetch_refspec_n=
+r))
+>> +               die(_("remote %s %s already exists."), name, url);
+>
+> The real problem here is that strcmp() is performed even if url_nr =3D=
+=3D 0,
+> *and* that it compares the name =E2=80=93 instead of the url =E2=80=93=
+ to the remote's URL.
+> That is incorrect, so the correct fix would be:
+>
+> -       if (remote && (remote->url_nr > 1 || strcmp(name, remote->url=
+[0]) ||
+> +       if (remote && (remote->url_nr > 1 ||
+> +                       (remote->url_nr =3D=3D 1 && strcmp(url, remot=
+e->url[0])) ||
+>                         remote->fetch_refspec_nr))
+>                 die(_("remote %s already exists."), name);
+>
+> In other words, we would still verify that there is no existing remot=
+e,
+> even if that remote was declared in ~/.gitconfig. However, if a remot=
+e
+> exists without any URL, or if it has a single URL that matches the
+> provided one, and there are no fetch refspecs, *then* there is nothin=
+g to
+> complain about and we continue.
+>
+> Ciao,
+> Johannes
