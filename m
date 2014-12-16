@@ -1,132 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCHv2 6/6] t5543-atomic-push.sh: add basic tests for atomic pushes
-Date: Tue, 16 Dec 2014 11:46:38 -0800
-Message-ID: <xmqqoar39y3l.fsf@gitster.dls.corp.google.com>
+Date: Tue, 16 Dec 2014 11:57:04 -0800
+Message-ID: <CAGZ79kZnGKNTpRZndgG_CjAC9gqafGXoq8rFOWuHZkaqY_LK7w@mail.gmail.com>
 References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
 	<1418755747-22506-1-git-send-email-sbeller@google.com>
 	<1418755747-22506-6-git-send-email-sbeller@google.com>
+	<xmqqoar39y3l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
-	ronniesahlberg@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 20:46:46 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	ronnie sahlberg <ronniesahlberg@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 20:57:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0y4z-0006hZ-Q3
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 20:46:46 +0100
+	id 1Y0yF6-0004aE-71
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 20:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308AbaLPTqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2014 14:46:42 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53862 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751159AbaLPTql (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2014 14:46:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E08828D8B;
-	Tue, 16 Dec 2014 14:46:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=90mOeQUV++AQYR/WkO3ECUMDA1o=; b=H3oLRr
-	NXKUBJiuuQVvbP+R96Nw1fFdAog6tHoykQopgHGCnsag16DMpgywS1HUYrdDMPEZ
-	v2NhpC0oYqomr86umb0MuOI747mTHs+/LYF0caZ/mcpVD2DCqIEe/xvRcBPa89oA
-	w4yk7YuKIgbC7JsvNIHuK3wblDJ8t5ntQ4Cbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G/k8/x73olsHrH1aXSTXZDshVKA0TZK6
-	SIJhHtTT6wzBgCJX15FKAsL56E8lFV6eLwoXmgKQhdlrENIn22LHzEKfX/GNh3mP
-	NqfAtzFO9M/+s9+WQH9ZWaSToiFSgzFj0z7O7JLJJ3ytagAVAurJCSUu5JcCR9j8
-	CDkZO/zn2Po=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91F6628D8A;
-	Tue, 16 Dec 2014 14:46:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D94828D89;
-	Tue, 16 Dec 2014 14:46:41 -0500 (EST)
-In-Reply-To: <1418755747-22506-6-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 16 Dec 2014 10:49:07 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 42204B26-855C-11E4-BC26-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751516AbaLPT5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2014 14:57:07 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:42769 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103AbaLPT5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2014 14:57:06 -0500
+Received: by mail-ie0-f176.google.com with SMTP id tr6so13101451ieb.7
+        for <git@vger.kernel.org>; Tue, 16 Dec 2014 11:57:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/Y0T/hy6JqcMUG8CoKh48ukxMG/styyFl5VfvZgeIlg=;
+        b=Ocetwb6t3E5F7jEMVhFWM6WJXZF7xC0cq8UARMDoIVfSh3x9bTcAkDoECvFVClZioN
+         DDfuP8lbVb+E5e8XV7Uq9WQfxaQqsdEcvqmmBcC7ENdBNzFpp2nkTW8Rs/vm1DdLIwwN
+         BznbJCV/hP5kXmgO5VsvR4BtPNXiGOiBry6j8HdVVGbno6gxS4qZ6uaYVRZ7cEMhIIKk
+         5mic1SLyOwATJUusjsPGilptyUSpFsWqcjv+4dT5NpKXT404Q4L9frRuCVQGpOEYEkRn
+         FGgWROmu1JVdIbBX18MJmjCUZhS+TDGkWr4u1vcP4ujMyvqlUNLYvBiKrnj4Ov2i5Pp4
+         608w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=/Y0T/hy6JqcMUG8CoKh48ukxMG/styyFl5VfvZgeIlg=;
+        b=gu8Ut5p+TaVSRTxd9ePNNM3Ajn0HgKit/WKvXMFYK9JZNJDk8+LaXL8exhPeWyPI4v
+         sBaH0otbaQSmNtizughu0t43uU8CBA1Fmm4rJnV57ZT3QHgUp/R8sN5DH8/lUm1tCA93
+         W7z2ZA8gEbdJ5FUJ/1Z8qGjE7zjQFUTLKbxR+YJArg6oEHIB6WAJ4toJ7dhP7Onj/igA
+         5UwEJIJ9vXxSvMzWUTg29uMgovvhuxW4OyIkrQOZo6KAnVFyu7QwR1p4+ZDJcZbupICd
+         75OmEWQ74e2G7gEPQLJOEXjoGoEe3V+ElBsR8aRhP53aSLZXj0wqbCqq28M3xmK8mojp
+         b0zA==
+X-Gm-Message-State: ALoCoQlvZjOg8dyTm/V1ArpmqMaFcAoJpSyInD5VOZy9wH/XxH38kpNjjoFE1RgoUAlvxySWukN2
+X-Received: by 10.43.154.196 with SMTP id lf4mr3390186icc.95.1418759824761;
+ Tue, 16 Dec 2014 11:57:04 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Tue, 16 Dec 2014 11:57:04 -0800 (PST)
+In-Reply-To: <xmqqoar39y3l.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261464>
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Dec 16, 2014 at 11:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> +test_description='pushing to a repository using the atomic push option'
-> +
-> +. ./test-lib.sh
-> +
-> +D=`pwd`
+>
+> Seeing that all callers of test_ref_upstream computes $2 as
+>
+>         git -C workbench rev-parse --verify <something>
+>
 
-$(pwd)?
+Only in the first tests, where this should be the case after push.
+In the failure tests, we go with HEAD@{N} which needs to be computed
+inside the workbench repo.
 
-> +mk_repo_pair () {
-> +	rm -rf workbench upstream &&
-> +	test_create_repo upstream &&
-> +	test_create_repo workbench &&
-> +	(
-> +		cd upstream && git config receive.denyCurrentBranch warn
-> +	) &&
+Alternatively we could check if the reflog of upstream has a certain
+number of entries
+which would indicate the push was not recorded (i.e. not performed?)
 
-I was wondering how you would do this part after suggesting use of
-test_create_repo, knowing very well that one of them was a bare one
-;-).
-
-We might want to extend test_create_repo to allow creating a bare
-repository, but this is also OK.
-
-> +	(
-> +		cd workbench && git remote add up ../upstream
-> +	)
-> +}
-
-> +# refname, expected value, e.g.
-> +# test_ref_upstream refs/heads/master HEADS{0}
-> +test_ref_upstream () {
-> +	test "$#" == "2" # if this fails, we have a bug in this script.
-
-This is not C; "test $# = 2" (notice a single equal sign).  And you
-do not need dq-pair around these.
-
-> +	test "$(git -C upstream rev-parse --verify $1)" == "$2"
-> +}
-
-Seeing that all callers of test_ref_upstream computes $2 as
-
-	git -C workbench rev-parse --verify <something>
-
-I have a feeling that
-
-> +	test_ref_upstream second second
-
-would be easier for them to write than
-
-> +	test_ref_upstream second $(git -C workbench rev-parse --verify second)
-
-That is
-
-# refname in upstream and expected value from workbench
-# E.g. "test_ref_upstream master HEAD" makes sure that HEAD in
-# workbench matches the master branch in upstream repository.
-test_ref_upstream () {
-	test $# = 2 &&
-        test "$(git -C upstream rev-parse --verify "$1")" == \
-		"$(git -C workbench rev-parse --verify "$2")"
-}
-
-or something.  We may however want to do the usual
-
-	test $# = 2 &&
-	git -C upstream rev-parse --verify "$1" >expect &&
-	git -C workbench rev-parse --verify "$2" >actual &&
-        test_cmp expect actual
-
-though.
+I think we should keep it similar to this one.
