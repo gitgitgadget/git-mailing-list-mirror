@@ -1,156 +1,171 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 2/6] send-pack: Invert the return value of ref_update_to_be_sent
-Date: Tue, 16 Dec 2014 11:14:55 -0800
-Message-ID: <xmqq7fxrbe4w.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv2 4/6] receive-pack.c: use a single ref_transaction for
+ atomic pushes
+Date: Tue, 16 Dec 2014 14:29:05 -0500
+Message-ID: <CAPig+cRkPZ8-MQyDs_S-3UXy2JUP6nLzjCE-pmpOa4Z4gyQKEg@mail.gmail.com>
 References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
 	<1418755747-22506-1-git-send-email-sbeller@google.com>
-	<1418755747-22506-2-git-send-email-sbeller@google.com>
+	<1418755747-22506-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
-	ronniesahlberg@gmail.com
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>, ronniesahlberg@gmail.com,
+	Ronnie Sahlberg <sahlberg@google.com>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 20:15:03 2014
+X-From: git-owner@vger.kernel.org Tue Dec 16 20:29:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0xaJ-0004Qj-2d
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 20:15:03 +0100
+	id 1Y0xo0-0004Hv-EK
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 20:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150AbaLPTO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2014 14:14:58 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64166 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751049AbaLPTO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2014 14:14:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A4C9D2862E;
-	Tue, 16 Dec 2014 14:14:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ovgHzMetrF/DIh9bq5mCYiyeX3k=; b=FYHAZw
-	4ZEFpZ+OgSwOkhUzWh1bQOtoLJLoeabElx9IBz4GS3c3qfz8YjO9hnWEFyePh2EP
-	XROfLVhexo8RhqNzz4XHzR2jenjYbpANRJzw5l+IHjHO2JfjZCqDC68Mc2Dmeem1
-	efScid1z7FVb4Y/HRjCLDldaU1rmkGc4SidNs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lDGUxEwu8WGw5ZPZabP9FXAwqp2QvZa9
-	nsD4aopKA5MaDlr2lhYz0aZ4nLwpJMQsxJey2jenabmFPluS5ZoKRhPxJB4MQmuh
-	x3EExUb2CNT2FXQmIOJkWcrPPWtOpFsKqm8gBopOi+ON6guRTGHvwNJD9jyVhfn9
-	EUEgXYEu664=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B0632862D;
-	Tue, 16 Dec 2014 14:14:59 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 244022862C;
-	Tue, 16 Dec 2014 14:14:59 -0500 (EST)
-In-Reply-To: <1418755747-22506-2-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 16 Dec 2014 10:49:03 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D3E4F764-8557-11E4-89CB-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751416AbaLPT3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2014 14:29:08 -0500
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:64055 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012AbaLPT3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2014 14:29:06 -0500
+Received: by mail-yh0-f42.google.com with SMTP id v1so6435279yhn.15
+        for <git@vger.kernel.org>; Tue, 16 Dec 2014 11:29:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=WLZ9Sq6jCKjnqnAA0cWv8UARgvnyZ6W3I3bwEG1v2bk=;
+        b=iA8j8Ow/zWUXDGKh5GycJilxBmYutuHBH9kyLrATNAhFvHYGdD9X4X4ibZZbpVRfY0
+         PlTip1do4EKWF9KdS7lIhSHp62xNJieSs9Upv7lkvfai3fRPSYBXb7noit8sW6MDkMQN
+         ZhPWoNaPr3BJTdTqwjvFWO4l+WuaaETMMgN4SDJdzSN0jPwuiI/MNzZLe45X5VEYT4xM
+         0Bx9nPUNnxu2zhBVQknylQJqw+wn6T6x0V/I/INUrP/gLl0esAgL0ngM+PMiN94iE5ZY
+         Zl21tgs2YxTSpUfIo+QEKqTDUMumIkVDq9B0NX7OuMub1BOtVU/E/CrCruHITnUPwcBb
+         67rQ==
+X-Received: by 10.236.0.197 with SMTP id 45mr28101293yhb.148.1418758145297;
+ Tue, 16 Dec 2014 11:29:05 -0800 (PST)
+Received: by 10.170.79.215 with HTTP; Tue, 16 Dec 2014 11:29:05 -0800 (PST)
+In-Reply-To: <1418755747-22506-4-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: GmCAmzHs3-OlG3jidNMHsskB5do
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261455>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Having the return value inverted we can have different values for
-> the error codes. This is useful in a later patch when we want to
-> know if we hit the REF_STATUS_REJECT_* case.
+On Tue, Dec 16, 2014 at 1:49 PM, Stefan Beller <sbeller@google.com> wrote:
+> From: Ronnie Sahlberg <sahlberg@google.com>
 >
+> Update receive-pack to use an atomic transaction iff the client negotiated
+> that it wanted atomic-push. This leaves the default behavior to be the old
+> non-atomic one ref at a time update. This is to cause as little disruption
+> as possible to existing clients. It is unknown if there are client scripts
+> that depend on the old non-atomic behavior so we make it opt-in for now.
+>
+> If it turns out over time that there are no client scripts that depend on the
+> old behavior we can change git to default to use atomic pushes and instead
+> offer an opt-out argument for people that do not want atomic pushes.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->
-> Notes:
->     New in the series. For consistency with all the other patches
->     it also reads v2.
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index e76e5d5..0803fd2 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -67,6 +67,8 @@ static const char *NONCE_SLOP = "SLOP";
+>  static const char *nonce_status;
+>  static long nonce_stamp_slop;
+>  static unsigned long nonce_stamp_slop_limit;
+> +struct strbuf err = STRBUF_INIT;
+> +struct ref_transaction *transaction;
 
-Sorry, but ECANNOTPARSE especially "it also read v2" part.
+Should these be static?
 
->  send-pack.c | 15 ++++++++-------
->  1 file changed, 8 insertions(+), 7 deletions(-)
->
-> diff --git a/send-pack.c b/send-pack.c
-> index 2a513f4..1c4ac75 100644
-> --- a/send-pack.c
-> +++ b/send-pack.c
-> @@ -190,10 +190,10 @@ static void advertise_shallow_grafts_buf(struct strbuf *sb)
->  	for_each_commit_graft(advertise_shallow_grafts_cb, sb);
->  }
->  
-> -static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args)
-> +static int no_ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args)
+>  static enum deny_action parse_deny_action(const char *var, const char *value)
 >  {
->  	if (!ref->peer_ref && !args->send_mirror)
-> -		return 0;
-> +		return 1;
->  
->  	/* Check for statuses set by set_ref_status_for_push() */
->  	switch (ref->status) {
-> @@ -203,10 +203,11 @@ static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_a
->  	case REF_STATUS_REJECT_NEEDS_FORCE:
->  	case REF_STATUS_REJECT_STALE:
->  	case REF_STATUS_REJECT_NODELETE:
-> +		return 2;
->  	case REF_STATUS_UPTODATE:
-> -		return 0;
-> +		return 3;
->  	default:
-> -		return 1;
-> +		return 0;
+> @@ -1059,6 +1059,16 @@ static void execute_commands(struct command *commands,
+>                 return;
+>         }
+>
+> +       if (use_atomic) {
+> +               transaction = ref_transaction_begin(&err);
+> +               if (!transaction) {
+> +                       error("%s", err.buf);
+> +                       strbuf_release(&err);
+> +                       for (cmd = commands; cmd; cmd = cmd->next)
+> +                               cmd->error_string = "transaction error";
+> +                       return;
+> +               }
+> +       }
 
-Hmmm.  It used to be "will we send this one?"  It is fine if the
-function wants to differenciate various kinds of error, but
+Not seen in this diff, but just below this point, the pre-receive hook
+is invoked. If it "declines", then execute_commands() returns without
+releasing the transaction which was begun here. Is that correct
+behavior?
 
- (1) unexplained 1, 2 and 3 looks cryptic and unmaintainable;
+For robustness, it might also be sane to release the 'err' strbuf at
+this early return (though the current code does not strictly leak it).
 
- (2) no_ prefix in the function name is usually a bad idea, because
-     it easily invites "if (!no_foo(...))" double negation; and
+>         data.cmds = commands;
+>         data.si = si;
+>         if (check_everything_connected(iterate_receive_command_list, 0, &data))
+> @@ -1086,8 +1096,23 @@ static void execute_commands(struct command *commands,
+>
+>                 if (cmd->skip_update)
+>                         continue;
+> -
+> +               if (!use_atomic) {
+> +                       transaction = ref_transaction_begin(&err);
+> +                       if (!transaction) {
+> +                               rp_error("%s", err.buf);
+> +                               strbuf_release(&err);
+> +                               cmd->error_string = "failed to start transaction";
 
- (3) unless there is a good reason to do otherwise, a function that
-     returns 0 on success should signal an error with a negative
-     return.
+Here, you assign cmd->error_string...
 
-"static int check_to_send_update()" or something, perhaps?
+> +                       }
+> +               }
+>                 cmd->error_string = update(cmd, si);
 
-	if (check_to_send_update() < 0)
-        	/* skip as this is an error */
-                continue;
+and then immediately overwrite it here. Is it correct to invoke
+update() when ref_transaction_begin() has failed? Seems fishy.
 
-does not look too bad.
+> +               if (!use_atomic)
+> +                       if (ref_transaction_commit(transaction, &err)) {
+> +                               ref_transaction_free(transaction);
 
+Shouldn't you be freeing the transaction outside of this conditional
+rather than only in case of failure?
+
+> +                               rp_error("%s", err.buf);
+> +                               strbuf_release(&err);
+> +                               cmd->error_string = "failed to update ref";
+> +                       }
+> +
+>                 if (shallow_update && !cmd->error_string &&
+>                     si->shallow_ref[cmd->index]) {
+>                         error("BUG: connectivity check has not been run on ref %s",
+> @@ -1096,6 +1121,14 @@ static void execute_commands(struct command *commands,
+>                 }
+>         }
+>
+> +       if (use_atomic) {
+> +               if (ref_transaction_commit(transaction, &err)) {
+> +                       rp_error("%s", err.buf);
+> +                       for (cmd = commands; cmd; cmd = cmd->next)
+> +                               cmd->error_string = err.buf;
+> +               }
+> +               ref_transaction_free(transaction);
+> +       }
+>         if (shallow_update && !checked_connectivity)
+>                 error("BUG: run 'git fsck' for safety.\n"
+>                       "If there are errors, try to remove "
+> @@ -1543,5 +1576,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+>         sha1_array_clear(&shallow);
+>         sha1_array_clear(&ref);
+>         free((void *)push_cert_nonce);
+> +       strbuf_release(&err);
+>         return 0;
 >  }
->  
-> @@ -250,7 +251,7 @@ static int generate_push_cert(struct strbuf *req_buf,
->  	strbuf_addstr(&cert, "\n");
->  
->  	for (ref = remote_refs; ref; ref = ref->next) {
-> -		if (!ref_update_to_be_sent(ref, args))
-> +		if (no_ref_update_to_be_sent(ref, args))
->  			continue;
->  		update_seen = 1;
->  		strbuf_addf(&cert, "%s %s %s\n",
-> @@ -370,7 +371,7 @@ int send_pack(struct send_pack_args *args,
->  	 * the pack data.
->  	 */
->  	for (ref = remote_refs; ref; ref = ref->next) {
-> -		if (!ref_update_to_be_sent(ref, args))
-> +		if (no_ref_update_to_be_sent(ref, args))
->  			continue;
->  
->  		if (!ref->deletion)
-> @@ -391,7 +392,7 @@ int send_pack(struct send_pack_args *args,
->  		if (args->dry_run || args->push_cert)
->  			continue;
->  
-> -		if (!ref_update_to_be_sent(ref, args))
-> +		if (no_ref_update_to_be_sent(ref, args))
->  			continue;
->  
->  		old_hex = sha1_to_hex(ref->old_sha1);
+> --
+> 2.2.0.31.gad78000.dirty
