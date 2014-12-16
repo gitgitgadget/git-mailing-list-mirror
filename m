@@ -1,82 +1,116 @@
-From: Stefan Beller <sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCHv2 6/6] t5543-atomic-push.sh: add basic tests for atomic pushes
-Date: Tue, 16 Dec 2014 11:57:04 -0800
-Message-ID: <CAGZ79kZnGKNTpRZndgG_CjAC9gqafGXoq8rFOWuHZkaqY_LK7w@mail.gmail.com>
+Date: Tue, 16 Dec 2014 12:30:15 -0800
+Message-ID: <xmqqk31r9w2w.fsf@gitster.dls.corp.google.com>
 References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
 	<1418755747-22506-1-git-send-email-sbeller@google.com>
 	<1418755747-22506-6-git-send-email-sbeller@google.com>
-	<xmqqoar39y3l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	ronnie sahlberg <ronniesahlberg@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 20:57:12 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, jrnieder@gmail.com,
+	ronniesahlberg@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 21:30:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0yF6-0004aE-71
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 20:57:12 +0100
+	id 1Y0ylF-0007Yk-1z
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 21:30:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbaLPT5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2014 14:57:07 -0500
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:42769 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103AbaLPT5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2014 14:57:06 -0500
-Received: by mail-ie0-f176.google.com with SMTP id tr6so13101451ieb.7
-        for <git@vger.kernel.org>; Tue, 16 Dec 2014 11:57:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/Y0T/hy6JqcMUG8CoKh48ukxMG/styyFl5VfvZgeIlg=;
-        b=Ocetwb6t3E5F7jEMVhFWM6WJXZF7xC0cq8UARMDoIVfSh3x9bTcAkDoECvFVClZioN
-         DDfuP8lbVb+E5e8XV7Uq9WQfxaQqsdEcvqmmBcC7ENdBNzFpp2nkTW8Rs/vm1DdLIwwN
-         BznbJCV/hP5kXmgO5VsvR4BtPNXiGOiBry6j8HdVVGbno6gxS4qZ6uaYVRZ7cEMhIIKk
-         5mic1SLyOwATJUusjsPGilptyUSpFsWqcjv+4dT5NpKXT404Q4L9frRuCVQGpOEYEkRn
-         FGgWROmu1JVdIbBX18MJmjCUZhS+TDGkWr4u1vcP4ujMyvqlUNLYvBiKrnj4Ov2i5Pp4
-         608w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=/Y0T/hy6JqcMUG8CoKh48ukxMG/styyFl5VfvZgeIlg=;
-        b=gu8Ut5p+TaVSRTxd9ePNNM3Ajn0HgKit/WKvXMFYK9JZNJDk8+LaXL8exhPeWyPI4v
-         sBaH0otbaQSmNtizughu0t43uU8CBA1Fmm4rJnV57ZT3QHgUp/R8sN5DH8/lUm1tCA93
-         W7z2ZA8gEbdJ5FUJ/1Z8qGjE7zjQFUTLKbxR+YJArg6oEHIB6WAJ4toJ7dhP7Onj/igA
-         5UwEJIJ9vXxSvMzWUTg29uMgovvhuxW4OyIkrQOZo6KAnVFyu7QwR1p4+ZDJcZbupICd
-         75OmEWQ74e2G7gEPQLJOEXjoGoEe3V+ElBsR8aRhP53aSLZXj0wqbCqq28M3xmK8mojp
-         b0zA==
-X-Gm-Message-State: ALoCoQlvZjOg8dyTm/V1ArpmqMaFcAoJpSyInD5VOZy9wH/XxH38kpNjjoFE1RgoUAlvxySWukN2
-X-Received: by 10.43.154.196 with SMTP id lf4mr3390186icc.95.1418759824761;
- Tue, 16 Dec 2014 11:57:04 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 16 Dec 2014 11:57:04 -0800 (PST)
-In-Reply-To: <xmqqoar39y3l.fsf@gitster.dls.corp.google.com>
+	id S1751211AbaLPUaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2014 15:30:20 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56465 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750983AbaLPUaT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2014 15:30:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC10C27991;
+	Tue, 16 Dec 2014 15:30:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qkoaoprV3sI/Fw7C6CBdoDWTo/s=; b=P3PDqD
+	OpD/kQYOse6Sp48bmat6OEJlyXvsNnRoQdPC5+/dKgOi7pFUoQr2zCAxQoRtFicF
+	F328RnVyZ61yIrp+HluXx6hkPBXKh4H350blP+gHPC9vCpKohyFaLesPILaDw0UM
+	8bsnHXYZDOqT/eZaVg7/jc8X5LdgCuaqQmuWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tQqV6d5H708zWX6fLoTzvzK6rsqxXebx
+	6EOKCm6h0jvxaazV5ExDrpHklDg7i6UUzoAk3hp6DqsOpisHLq6e1QVISH6Gjw84
+	vogb83+/dRUjgLCoYXT3dbo2fCEsmaiSkO56pKRVrIJN/32oi1gEPEjjcieUla6x
+	bwikT4YyKOM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E1D7527990;
+	Tue, 16 Dec 2014 15:30:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6BEC02798E;
+	Tue, 16 Dec 2014 15:30:18 -0500 (EST)
+In-Reply-To: <1418755747-22506-6-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 16 Dec 2014 10:49:07 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 599A5390-8562-11E4-B092-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261465>
 
-On Tue, Dec 16, 2014 at 11:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Stefan Beller <sbeller@google.com> writes:
 
->
-> Seeing that all callers of test_ref_upstream computes $2 as
->
->         git -C workbench rev-parse --verify <something>
->
+>     > What's the value of this test?  Isn't it a non-fast-forward check
+>     > you already tested in the previous one?
+>     
+>     I messed up there. Originally I wanted to test the 2 different
+>     stages of rejection. A non-fast-forward check is done locally and
+>     we don't even try pushing. But I also want to test if we locally
+>     thing all is good, but the server refuses a ref to update.
 
-Only in the first tests, where this should be the case after push.
-In the failure tests, we go with HEAD@{N} which needs to be computed
-inside the workbench repo.
+It is tricky to arrange a test to fail a fast-forward check on the
+receiver side, because the local test is done by reading from the
+other side, not relying on your remote tracking branches.  The usual
+flow is:
 
-Alternatively we could check if the reflog of upstream has a certain
-number of entries
-which would indicate the push was not recorded (i.e. not performed?)
+    pusher says to the receiver "I want to push"
 
-I think we should keep it similar to this one.
+    receiver says to the pusher "Here are the tips of my refs"
+
+    pusher thinks: "Ah, I was about to update their master branch
+		with this commit, but what they have is (1) not
+		known to me so by definition I cannot fast-forward,
+		or (2) known to me and I can definitely tell I am
+		not fast-forwarding it, so I'd locally fail this
+		push".
+
+You need to invent a way to successfully race with an ongoing push.
+After receiver gives the tips of its refs (all of which are
+ancestors of what is going to be pushed) but before the pusher
+finishes the "thinking" above, you would somehow update the refs at
+the receiver so that the push will not fast-forward.  
+
+Such a raced flow would look like:
+
+    pusher says to the receiver "I want to push"
+
+    receiver says to the pusher "Here are the tips of my refs"
+
+    pusher thinks: "OK, everything I'll send will fast-forward"
+    pusher thinks: "Let's start generating a packfile"
+
+    you intervene and update receiver's 'master' at this point.
+
+    pusher send a pack and tells the receiver "I want to update your
+		master from OLD to NEW".
+
+    receiver thinks: "Huh, that OLD is not where my 'master' is"
+
+    recevier says to the pusher "No fast-forward".
+
+But I do not think it is practical to run such a test.
+
+Rejecting on the receiver's end using pre-receive or update hook
+should be testable and should be tested.
+
+Thanks.
