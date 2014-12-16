@@ -1,112 +1,81 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] t5400: remove dead code
-Date: Mon, 15 Dec 2014 19:58:07 -0800
-Message-ID: <1418702287-13771-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Dec 16 04:58:21 2014
+From: Christian Hesse <mail@eworm.de>
+Subject: [PATCH 1/1] tests: make comment match the code
+Date: Tue, 16 Dec 2014 09:40:05 +0100
+Message-ID: <1418719205-13832-1-git-send-email-mail@eworm.de>
+Cc: Christian Hesse <mail@eworm.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 16 09:43:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0jHB-0007P6-8s
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 04:58:21 +0100
+	id 1Y0nj0-0005S3-G6
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 09:43:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbaLPD6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2014 22:58:16 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:59847 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750816AbaLPD6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2014 22:58:15 -0500
-Received: by mail-ig0-f170.google.com with SMTP id r2so7111968igi.3
-        for <git@vger.kernel.org>; Mon, 15 Dec 2014 19:58:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Kjm6eHTBagQ5B9Rm6s7zwJhkWdzZir/NGEgVSuqYBdE=;
-        b=Ffx2RQ3itteHJEopIoVo4t/p2ScDKIkcH6Y3VFXpYP90O6HVhXi+890o3g0gcx9PiV
-         ryver86lDaayvxiRTZiJreNiNPG09ojUGp338HMtjKHn8+ZNGIG9mbTu7QQS34+Qgh5z
-         Ywpf6zy2DnktGNNtiNW3hadC/R5e0B63IUSNLZz3Bc6yv4YAJmtyRHMnvJQUcIhFpnzS
-         27NLtnmnmjSgmQbC1ajPla1OrYDcrr4idshbVhna6stZxp+hreL1XNNm+/BdCxt/JTML
-         PdxVsXGp1JqN+XScL0C44tIAsLNo8MDKUhycYYq3N+R63qoHoJd3O2G3YWncFRQEbCAy
-         DFqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Kjm6eHTBagQ5B9Rm6s7zwJhkWdzZir/NGEgVSuqYBdE=;
-        b=Qnfr69fFS4OAVoKiLOs+8r5wSapPm0bR2bUHosHrx56Ww560P4aQC3USA5zyM/+1dU
-         4UbcIIg2IM1BU+8mkbSxzl0WnR25G3ntOlN/gcZtEcRCjlBVRdIrTCAP8j1Pl6J4212s
-         MQ4fV5U429DBQDe0HKVT5hc6ehvf/UAqaoDsIv7Sa9IbhLWcl560RGZ20HbVqza/LHHz
-         w0LkfkkjW94rgwf87GCvN6Mx2EAuJ0IxR5RiV+Im4oh0IQ1JWWLclYD286WT1SP1ftBf
-         A/JQOMEvX0YfkpD5RkoWjIxs+4GkME74jRwtNgMMOvB6wBvh5CRKKYkHu3E6vDfEmrQR
-         bEkQ==
-X-Gm-Message-State: ALoCoQm76ePX2zphVBd08Qt8DmKKq0finFxfr8cn5x8/eDeXEKYxZ9/N8cl5+yR5pnmSikVaXGLD
-X-Received: by 10.107.46.28 with SMTP id i28mr32362059ioo.73.1418702294760;
-        Mon, 15 Dec 2014 19:58:14 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:ccd:69a0:9bbf:bab9])
-        by mx.google.com with ESMTPSA id a69sm1260820ioe.18.2014.12.15.19.58.14
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 15 Dec 2014 19:58:14 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.31.gad78000.dirty
+	id S1751489AbaLPImJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2014 03:42:09 -0500
+Received: from mx.mylinuxtime.de ([148.251.109.235]:53254 "EHLO
+	mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750892AbaLPImD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2014 03:42:03 -0500
+Received: from leda.eworm.de (unknown [10.10.1.2])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx.mylinuxtime.de (Postfix) with ESMTPSA id DE1BF2434C;
+	Tue, 16 Dec 2014 09:42:00 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.9.2 mx.mylinuxtime.de DE1BF2434C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
+	t=1418719320; bh=ZjQ+gC0nMvYiUASe/l5xN7dpF2j4ZYNfVNAhIdSwcsw=;
+	h=From:To:Cc:Subject:Date;
+	b=C+KxSJfjTFrAD5rDSVxDZjnUoreajqaAhbQ/YMmCKQeWiXZwNTIbjAqPMX3n7ZcNI
+	 qB72PGgWz7R6+uv6K1yO81B+GzEv4fbqXPetLazgeD7Bj+g9gDof4LsjY0P7aLuu+O
+	 x9u9/Bbgs6twzWEgX2V7aZsU1BoPq2kfyEPjd6o8=
+Received: by leda.eworm.de (Postfix, from userid 1000)
+	id 9AACA1002BF; Tue, 16 Dec 2014 09:41:55 +0100 (CET)
+X-Mailer: git-send-email 2.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261439>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+GnuPG homedir is generated on the fly and keys are imported from
+armored key file. Make commet match available key info and new key
+generation procedure.
+
+Signed-off-by: Christian Hesse <mail@eworm.de>
 ---
+ t/lib-gpg.sh | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-Notes:
-    When debugging the atomic push series I wondered if we want to have
-    tests for the atomic push as well as for atomic send-pack.
-    So I looked at the t5400 test if I could easily add tests for send-pack.
-    I don't think I will add tests in here, but I found dead code.
-    Also I am rambling about the other series this patch is totally unrelated.
-    
-    Removing dead code is always a joy!
-    
-    Thanks,
-    Stefan
-
- t/t5400-send-pack.sh | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
-
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 0736bcb..04cea97 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -76,8 +76,7 @@ test_expect_success 'refuse pushing rewound head without --force' '
- 	test "$victim_head" = "$pushed_head"
- '
- 
--test_expect_success \
--        'push can be used to delete a ref' '
-+test_expect_success 'push can be used to delete a ref' '
- 	( cd victim && git branch extra master ) &&
- 	git send-pack ./victim :extra master &&
- 	( cd victim &&
-@@ -196,19 +195,6 @@ rewound_push_setup() {
- 	)
- }
- 
--rewound_push_succeeded() {
--	cmp ../parent/.git/refs/heads/master .git/refs/heads/master
--}
--
--rewound_push_failed() {
--	if rewound_push_succeeded
--	then
--		false
--	else
--		true
--	fi
--}
--
- test_expect_success 'pushing explicit refspecs respects forcing' '
- 	rewound_push_setup &&
- 	parent_orig=$(cd parent && git rev-parse --verify master) &&
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 33de402..d88da29 100755
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -12,10 +12,20 @@ else
+ 		say "Your version of gpg (1.0.6) is too buggy for testing"
+ 		;;
+ 	*)
+-		# key generation info: gpg --homedir t/lib-gpg --gen-key
+-		# Type DSA and Elgamal, size 2048 bits, no expiration date.
+-		# Name and email: C O Mitter <committer@example.com>
++		# Available key info:
++		# * Type DSA and Elgamal, size 2048 bits, no expiration date,
++		#   name and email: C O Mitter <committer@example.com>
++		# * Type RSA, size 2048 bits, no expiration date,
++		#   name and email: Eris Discordia <discord@example.net>
+ 		# No password given, to enable non-interactive operation.
++		# To generate new key:
++		#	gpg --homedir /tmp/gpghome --gen-key
++		# To write armored exported key to keyring:
++		#	gpg --homedir /tmp/gpghome --export-secret-keys \
++		#		--armor 0xDEADBEEF >> lib-gpg/keyring.gpg
++		# To export ownertrust:
++		#	gpg --homedir /tmp/gpghome --export-ownertrust \
++		#		> lib-gpg/ownertrust
+ 		mkdir ./gpghome &&
+ 		chmod 0700 ./gpghome &&
+ 		GNUPGHOME="$(pwd)/gpghome" &&
 -- 
-2.2.0.31.gad78000.dirty
+2.2.0
