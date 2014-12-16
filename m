@@ -1,95 +1,112 @@
-From: Anastas Dancha <anapsix@random.io>
-Subject: [PATCH] remote: allow adding remote w same name as alias
-Date: Tue, 16 Dec 2014 02:30:30 +0000
-Message-ID: <20141216021900.50095.24877@random.io>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 16 03:34:10 2014
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] t5400: remove dead code
+Date: Mon, 15 Dec 2014 19:58:07 -0800
+Message-ID: <1418702287-13771-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Dec 16 04:58:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0hxi-0003Uy-Db
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 03:34:10 +0100
+	id 1Y0jHB-0007P6-8s
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 04:58:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750892AbaLPCac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2014 21:30:32 -0500
-Received: from mail-s74.mailgun.info ([184.173.153.202]:46791 "EHLO
-	mail-s74.mailgun.info" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750859AbaLPCab (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2014 21:30:31 -0500
-X-Greylist: delayed 663 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Dec 2014 21:30:31 EST
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=random.io; q=dns/txt; s=mailo;
- t=1418697031; h=Sender: Date: Content-Transfer-Encoding: Message-Id:
- To: From: Subject: Cc: Content-Type: Mime-Version;
- bh=ISiOM6XFfGjLyy5g+sHuZ/Nl44HvjQ2cu7voVygYAT0=; b=eb7ZWJN73BZ7KvgVExn/ZGZYa2u3wv31bDLU+Jsw4nwtHq9rUiUa6/befn58PkQ+uBT/0mQ5
- Lt7DRd6fRORSshy0hKoULvnxBBUIk7ClHRiJCxVdFBmnItguTW3kVbsymjRCydhc6Qc/q9r6
- QvPdATdZ1GX/WAVDMHSyrbLt5v4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=random.io; s=mailo; q=dns;
- h=Mime-Version: Content-Type: Cc: Subject: From: To: Message-Id:
- Content-Transfer-Encoding: Date: Sender;
- b=uYm9oefJBY5haAPQB17YANf0vRbQpuayNt6A+kHiOFMSMZ1oQaw2UE0+P77FzE0dC0WCqN
- EHK4zGt+1EAJTMzxHHxhm5liLZbWE1X86hYgvS+sM3N09+5WuHByatGy7LnIA3dKOi+ArAT+
- rkg+F5a7TyH4EUdAlAHjg66u9T/RI=
-Received: by luna.mailgun.net with HTTP; Tue, 16 Dec 2014 02:19:00 +0000
-X-Mailgun-Sid: WyJlNGQ0NiIsICJnaXRAdmdlci5rZXJuZWwub3JnIiwgImRjZGNkMCJd
+	id S1750966AbaLPD6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2014 22:58:16 -0500
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:59847 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750816AbaLPD6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2014 22:58:15 -0500
+Received: by mail-ig0-f170.google.com with SMTP id r2so7111968igi.3
+        for <git@vger.kernel.org>; Mon, 15 Dec 2014 19:58:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Kjm6eHTBagQ5B9Rm6s7zwJhkWdzZir/NGEgVSuqYBdE=;
+        b=Ffx2RQ3itteHJEopIoVo4t/p2ScDKIkcH6Y3VFXpYP90O6HVhXi+890o3g0gcx9PiV
+         ryver86lDaayvxiRTZiJreNiNPG09ojUGp338HMtjKHn8+ZNGIG9mbTu7QQS34+Qgh5z
+         Ywpf6zy2DnktGNNtiNW3hadC/R5e0B63IUSNLZz3Bc6yv4YAJmtyRHMnvJQUcIhFpnzS
+         27NLtnmnmjSgmQbC1ajPla1OrYDcrr4idshbVhna6stZxp+hreL1XNNm+/BdCxt/JTML
+         PdxVsXGp1JqN+XScL0C44tIAsLNo8MDKUhycYYq3N+R63qoHoJd3O2G3YWncFRQEbCAy
+         DFqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Kjm6eHTBagQ5B9Rm6s7zwJhkWdzZir/NGEgVSuqYBdE=;
+        b=Qnfr69fFS4OAVoKiLOs+8r5wSapPm0bR2bUHosHrx56Ww560P4aQC3USA5zyM/+1dU
+         4UbcIIg2IM1BU+8mkbSxzl0WnR25G3ntOlN/gcZtEcRCjlBVRdIrTCAP8j1Pl6J4212s
+         MQ4fV5U429DBQDe0HKVT5hc6ehvf/UAqaoDsIv7Sa9IbhLWcl560RGZ20HbVqza/LHHz
+         w0LkfkkjW94rgwf87GCvN6Mx2EAuJ0IxR5RiV+Im4oh0IQ1JWWLclYD286WT1SP1ftBf
+         A/JQOMEvX0YfkpD5RkoWjIxs+4GkME74jRwtNgMMOvB6wBvh5CRKKYkHu3E6vDfEmrQR
+         bEkQ==
+X-Gm-Message-State: ALoCoQm76ePX2zphVBd08Qt8DmKKq0finFxfr8cn5x8/eDeXEKYxZ9/N8cl5+yR5pnmSikVaXGLD
+X-Received: by 10.107.46.28 with SMTP id i28mr32362059ioo.73.1418702294760;
+        Mon, 15 Dec 2014 19:58:14 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:ccd:69a0:9bbf:bab9])
+        by mx.google.com with ESMTPSA id a69sm1260820ioe.18.2014.12.15.19.58.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 15 Dec 2014 19:58:14 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.31.gad78000.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261438>
 
->From f80bdf3272e7bdf790ee67fb94196a8aa139331f Mon Sep 17 00:00:00 2001
-From: Anastas Dancha <anapsix@random.io>
-Date: Mon, 15 Dec 2014 16:30:50 -0500
-Subject: [PATCH] remote: allow adding remote w same name as alias
-
-When ~/.gitconfig contains an alias (i.e. myremote)
-and you are adding a new remote using the same name
-for remote, Git will refuse to add the remote with
-the same name as one of the aliases, even though the
-remote with such name is not setup for current repo.
-
-$ git remote add myremote git@host.com:team/repo.git
-fatal: remote myremote already exists.
-
-The fatal error comes from strcmp(name, remote->url[0])
-condition, which compares a name of the new remote with
-existing urls of all the remotes, including the ones
-from ~/.gitconfig (or global variant).
-I'm not sure why that is necessary, unless Git is meant
-to prevent users from naming their remotes as their
-remote aliases..
-Imho, if someone want's to git remote add myremote
-myremote, they should, since git-remote always takes
-2 arguments, first being the new remote's name and
-second being new remote's url (or alias, if set).
-Thanks to @mymuss for sanity check and debugging.
-
-Signed-off-by: Anastas Dancha <anapsix@random.io>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/remote.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 7f28f92..7471d0a 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -180,9 +180,8 @@ static int add(int argc, const char **argv)
- 	url = argv[1];
+Notes:
+    When debugging the atomic push series I wondered if we want to have
+    tests for the atomic push as well as for atomic send-pack.
+    So I looked at the t5400 test if I could easily add tests for send-pack.
+    I don't think I will add tests in here, but I found dead code.
+    Also I am rambling about the other series this patch is totally unrelated.
+    
+    Removing dead code is always a joy!
+    
+    Thanks,
+    Stefan
+
+ t/t5400-send-pack.sh | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
+
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 0736bcb..04cea97 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -76,8 +76,7 @@ test_expect_success 'refuse pushing rewound head without --force' '
+ 	test "$victim_head" = "$pushed_head"
+ '
  
- 	remote = remote_get(name);
--	if (remote && (remote->url_nr > 1 || strcmp(name, remote->url[0]) ||
--			remote->fetch_refspec_nr))
--		die(_("remote %s already exists."), name);
-+	if (remote && (remote->url_nr > 1 || remote->fetch_refspec_nr))
-+		die(_("remote %s %s already exists."), name, url);
+-test_expect_success \
+-        'push can be used to delete a ref' '
++test_expect_success 'push can be used to delete a ref' '
+ 	( cd victim && git branch extra master ) &&
+ 	git send-pack ./victim :extra master &&
+ 	( cd victim &&
+@@ -196,19 +195,6 @@ rewound_push_setup() {
+ 	)
+ }
  
- 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
- 	if (!valid_fetch_refspec(buf2.buf))
+-rewound_push_succeeded() {
+-	cmp ../parent/.git/refs/heads/master .git/refs/heads/master
+-}
+-
+-rewound_push_failed() {
+-	if rewound_push_succeeded
+-	then
+-		false
+-	else
+-		true
+-	fi
+-}
+-
+ test_expect_success 'pushing explicit refspecs respects forcing' '
+ 	rewound_push_setup &&
+ 	parent_orig=$(cd parent && git rev-parse --verify master) &&
 -- 
-2.2.0
+2.2.0.31.gad78000.dirty
