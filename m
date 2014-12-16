@@ -1,123 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] receive-pack: refuse all commands if one fails in atomic mode
-Date: Tue, 16 Dec 2014 12:32:12 -0800
-Message-ID: <xmqqfvcf9vzn.fsf@gitster.dls.corp.google.com>
-References: <1418755747-22506-6-git-send-email-sbeller@google.com>
-	<1418757280-32412-1-git-send-email-sbeller@google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2 6/6] t5543-atomic-push.sh: add basic tests for atomic pushes
+Date: Tue, 16 Dec 2014 12:36:15 -0800
+Message-ID: <CAGZ79ka5o1fx_-rQfbrSngJOeD4wTSQm=ZfeeU-LAkxREKA9ew@mail.gmail.com>
+References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
+	<1418755747-22506-1-git-send-email-sbeller@google.com>
+	<1418755747-22506-6-git-send-email-sbeller@google.com>
+	<xmqqk31r9w2w.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
-	git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 21:32:22 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	ronnie sahlberg <ronniesahlberg@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 21:36:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y0yn8-0000G4-0r
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 21:32:22 +0100
+	id 1Y0yr6-0002ou-Az
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Dec 2014 21:36:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbaLPUcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2014 15:32:18 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65373 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750791AbaLPUcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2014 15:32:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0031C27A01;
-	Tue, 16 Dec 2014 15:32:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BAoRPDcTBcRnbyoSzgWsvMRgYGQ=; b=OKUrDB
-	ukIp0gIK55nC4//bS1veplSQyD+KIwS/Cj4iqReaADMXsd1zDaR1M5eGSsvZHa6F
-	uRD/2LD7XvpKw5crbfVeem/XLeK/aYxRrg/1Q+k3MBpCSgJEfeC7I9hAWT3aCdGp
-	+2qt15kWXWCj7Cxom2WOyQaLQnKXAwzUSJV4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZZRtlDxAQCepFt7EZ9q49c1KHCj5yhzT
-	p3QDeDqZXfPFLSvAu3h/wYC38DKT8rCCpo+WbooRmu9SQO5dIsLQ6rueYB7IHnFO
-	h8gAB7bKzxcjl3WnZ/8kTe8kCzGl5clpa1IFFaiBp0iGWfDYQiE4+MBoqdxbPFVj
-	/3SI/1hgwSY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA9FF27A00;
-	Tue, 16 Dec 2014 15:32:17 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5472B279FF;
-	Tue, 16 Dec 2014 15:32:15 -0500 (EST)
-In-Reply-To: <1418757280-32412-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 16 Dec 2014 11:14:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9F4846C2-8562-11E4-ACAC-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751312AbaLPUgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2014 15:36:17 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:59464 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751247AbaLPUgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2014 15:36:16 -0500
+Received: by mail-ie0-f177.google.com with SMTP id rd18so13670744iec.36
+        for <git@vger.kernel.org>; Tue, 16 Dec 2014 12:36:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4DOMiJHgXTCJc/hqU13JpPVxdtI+r5IZK+5Gji7KHlQ=;
+        b=G4Wdir0KtdKSsNYRO3Kg3tNyDjwgIViZW4fTWRun5AhJxlBWvIywXugcMLm+1qzeOJ
+         +bSPR/gX5GVG41H45cB006Axs61ceIpnmEXykSSdyFMZBZZM79ppQJCbL0OjWjVkm2DI
+         UipYAYo9gzuO56tbDgE7Mvd60rKAyaNcJyCRrhSLPie3IboklhXZsRKy4JwPnkp4oYdX
+         XTGZHWyE4o3iDpmPe8Kxy6UfZbzEy1f75piQ0pdsM9mMrjcs55FwZKLaONIXd1W0fCGQ
+         qhZv8MoeEUTLC5QKL+nTk7omGhX6U7EMsQFFe86dals8M4IiV97Cles4lWUtXhMJExir
+         PlhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=4DOMiJHgXTCJc/hqU13JpPVxdtI+r5IZK+5Gji7KHlQ=;
+        b=C1eICGiOfUZdinDytm4Do1KMox1DtLzmbGkz9ft3De1gTM/bML0JgkIR4ZBTfISWxp
+         7R4gSwFEGPnkS9Xx2Pd6CpH5sGc2ULtA8zmPnoJKBMSWe6lROad+7G13PSsXLHbIYlq7
+         Nc9TMdR+lUotcveZSW+OAFwR98PCiEjbah6kesJapWc2AH0e9PTgAPaF5tAqKDvkzARq
+         K0M3WcANOwZQBkjkI1xiO87rqTe5wk6GBxo1nMTwg/SWU2lx8VPLIRL99I4sZ8Z8OU60
+         GsMq7nyH9N0XAGOI0KMj1cWSxERp4U9BQRRT5vvnkPbZYdqfiCG+ZVXO3VhxkUbzEiL1
+         U7fA==
+X-Gm-Message-State: ALoCoQmDMoI/M2APe+QfwhbnYsOWMKpQbP+80JoJQxa5v7/qjKvsbRjKmqJLy6f3C/lMdSgTcI4W
+X-Received: by 10.107.25.74 with SMTP id 71mr29458328ioz.70.1418762175197;
+ Tue, 16 Dec 2014 12:36:15 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Tue, 16 Dec 2014 12:36:15 -0800 (PST)
+In-Reply-To: <xmqqk31r9w2w.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261468>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> This patch will be incorporated into the right places in v3 of the series.
+On Tue, Dec 16, 2014 at 12:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+>>     > What's the value of this test?  Isn't it a non-fast-forward check
+>>     > you already tested in the previous one?
+>>
+>>     I messed up there. Originally I wanted to test the 2 different
+>>     stages of rejection. A non-fast-forward check is done locally and
+>>     we don't even try pushing. But I also want to test if we locally
+>>     thing all is good, but the server refuses a ref to update.
 >
-> Notes:
->     I don't want to resend the patch series today to accumulate comments,
->     but this makes the last test pass, which is the whole point of the series.
->     
->     I'll put it into the right places in a reroll.
+> It is tricky to arrange a test to fail a fast-forward check on the
+> receiver side, because the local test is done by reading from the
+> other side, not relying on your remote tracking branches.  The usual
+> flow is:
 >
->  builtin/receive-pack.c | 13 ++++++++++++-
->  t/t5543-atomic-push.sh |  2 +-
->  2 files changed, 13 insertions(+), 2 deletions(-)
+>     pusher says to the receiver "I want to push"
 >
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 0803fd2..3477f7c 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1122,7 +1122,18 @@ static void execute_commands(struct command *commands,
->  	}
->  
->  	if (use_atomic) {
-> -		if (ref_transaction_commit(transaction, &err)) {
-> +		/* update(...) may abort early (i.e. because the hook refused to
-> +		 * update that ref), which then doesn't even record a transaction
-> +		 * regarding that ref. Make sure all commands are without error
-> +		 * and then commit atomically. */
+>     receiver says to the pusher "Here are the tips of my refs"
+>
+>     pusher thinks: "Ah, I was about to update their master branch
+>                 with this commit, but what they have is (1) not
+>                 known to me so by definition I cannot fast-forward,
+>                 or (2) known to me and I can definitely tell I am
+>                 not fast-forwarding it, so I'd locally fail this
+>                 push".
+>
+> You need to invent a way to successfully race with an ongoing push.
+> After receiver gives the tips of its refs (all of which are
+> ancestors of what is going to be pushed) but before the pusher
+> finishes the "thinking" above, you would somehow update the refs at
+> the receiver so that the push will not fast-forward.
+>
+> Such a raced flow would look like:
+>
+>     pusher says to the receiver "I want to push"
+>
+>     receiver says to the pusher "Here are the tips of my refs"
+>
+>     pusher thinks: "OK, everything I'll send will fast-forward"
+>     pusher thinks: "Let's start generating a packfile"
+>
+>     you intervene and update receiver's 'master' at this point.
+>
+>     pusher send a pack and tells the receiver "I want to update your
+>                 master from OLD to NEW".
+>
+>     receiver thinks: "Huh, that OLD is not where my 'master' is"
+>
+>     recevier says to the pusher "No fast-forward".
+>
+> But I do not think it is practical to run such a test.
+>
+> Rejecting on the receiver's end using pre-receive or update hook
+> should be testable and should be tested.
+>
+> Thanks.
+>
 
-	/*
-         * The first line of our multi-line comment
-         * has only opening slash-asterisk and nothing else.
-         * The last line has asterisk-slash and nothing else.
-         */
+Yes, that was my understanding as well. I just messed up mentally.
 
-> +		for (cmd = commands; cmd; cmd = cmd->next)
-> +			if (cmd->error_string)
-> +				break;
-> +		if (cmd) {
-> +			for (cmd = commands; cmd; cmd = cmd->next)
-> +				if (!cmd->error_string)
-> +					cmd->error_string = "atomic push failure";
-> +		} else if (ref_transaction_commit(transaction, &err)) {
->  			rp_error("%s", err.buf);
->  			for (cmd = commands; cmd; cmd = cmd->next)
->  				cmd->error_string = err.buf;
-
-Makes sense.
-
-> diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-> index 6354fc0..f0e54d9 100755
-> --- a/t/t5543-atomic-push.sh
-> +++ b/t/t5543-atomic-push.sh
-> @@ -142,7 +142,7 @@ test_expect_success 'atomic push fails if one tag fails remotely' '
->  	test_ref_upstream second $(git -C workbench rev-parse --verify HEAD@{1})
->  '
->  
-> -test_expect_failure 'atomic push obeys update hook preventing a branch to be pushed' '
-> +test_expect_success 'atomic push obeys update hook preventing a branch to be pushed' '
->  	mk_repo_pair &&
->  	(
->  		cd workbench &&
+Now that the update hook test is in place, we do have tests from the local
+and the remote side rejecting, so it should be fine now.
