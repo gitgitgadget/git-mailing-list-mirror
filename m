@@ -1,83 +1,111 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Improving git branch
-Date: Wed, 17 Dec 2014 11:10:10 +0000
-Message-ID: <CAHQ6N+qBUcBcG8RC6Co+k_GmJDXCynmyfZmvTjz4bQyH1wG3DA@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Improving git branch
+Date: Wed, 17 Dec 2014 12:28:29 +0100
+Message-ID: <549168DD.1080906@drmicha.warpmail.net>
+References: <CAHQ6N+qBUcBcG8RC6Co+k_GmJDXCynmyfZmvTjz4bQyH1wG3DA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 17 12:11:02 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 17 12:29:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1CVD-0008Pf-44
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Dec 2014 12:10:47 +0100
+	id 1Y1Cmb-0006Tf-AV
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Dec 2014 12:28:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751137AbaLQLKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2014 06:10:32 -0500
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:58579 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbaLQLKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2014 06:10:31 -0500
-Received: by mail-ob0-f179.google.com with SMTP id va2so3133787obc.10
-        for <git@vger.kernel.org>; Wed, 17 Dec 2014 03:10:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=yxVelZQscr2Td3SEk/rDk5fV+nDJQRGVIWVOJ2YsUuQ=;
-        b=pXzJFYJn5e9BbIxWtFahNU4HHmqZ8Bed4M8uJPb6AKUS+Xg6QI7hyNUk+FYFKnsKwB
-         B1FNqNVObqRGrDjqqTNfNSCDSzeJwlHIQAWDe/YRlFTeMVW+rrJGRQsLuA329y5LuALz
-         D5HaiqUqAazZQQ3WJ3K/A8rxKtWgsmh/lX5Q5qlQphD5RgctnyC8mfEdBSQ1YFyyb40D
-         KZowvTYAo/iHKZlymLKt1lgaOPO5TvuJ0IM4K1lzqgz6uh+EIeFcj7cljki/8LVN11q9
-         a1AA+UzxNCROOouzKoc+Dq4J0b29uhfikInKYnyGi1rPG5Pcr2MAbNFYreoqq659Km7X
-         4wVQ==
-X-Received: by 10.202.80.21 with SMTP id e21mr24449645oib.65.1418814631064;
- Wed, 17 Dec 2014 03:10:31 -0800 (PST)
-Received: by 10.60.25.6 with HTTP; Wed, 17 Dec 2014 03:10:10 -0800 (PST)
+	id S1751219AbaLQL2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2014 06:28:32 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:57883 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751098AbaLQL2b (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Dec 2014 06:28:31 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id C8EA2205C5
+	for <git@vger.kernel.org>; Wed, 17 Dec 2014 06:28:30 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute6.internal (MEProxy); Wed, 17 Dec 2014 06:28:30 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=V7cryhBUBQZi3chgkS+XgA
+	xiBiE=; b=XEmWTIGqOk3KYZvwVChKnvzw8wqHAVu9ZZZkzPOFJLHWIXiin+zL9r
+	haXzfFFK1AAtWevY81LUFzMGupwQ4YELfbIpWlvzeL/NrB6dKhZ5/M7tLyqABihU
+	ozsI+RwmTnCRyZrV8Eu2QQ0yQJVHezd0ISn9MDf04EUjVoOH28OQI=
+X-Sasl-enc: xLNYI9qenfOxvWhyE+IGov86IdGIz7jNVmyZd8Y9ljH1 1418815710
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4F6A0C00282;
+	Wed, 17 Dec 2014 06:28:30 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <CAHQ6N+qBUcBcG8RC6Co+k_GmJDXCynmyfZmvTjz4bQyH1wG3DA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261480>
 
-Hi all,
+John Tapsell schrieb am 17.12.2014 um 12:10:
+> Hi all,
+> 
+>   I'm interested in putting in some time and effort into improving the
+> output of "git branch".
+> 
+>   What I'm thinking is an output like this:
+> 
+> $ git branch
+> 
+> 2014-12-17 * (detached from origin/master)     deaba04 Do stuff
+> 2014-12-15   john.ta/add_timing_info                6edbcfa  Add timing stuff
+> 2014-12-14   master                                          8537316
+> [origin/master: ahead 1, behind 16] Some stuff
+> 2014-12-12   john.ta/new_reduce_memory       99d84db Reintroduce: memory stuff
+> 2014-12-05   john.ta/bugfixes                            e15c95e Add stuff
+> 2014-12-03   john.ta/container                           e9fd4e5 This
+> branch is a test bed for containers
+> 
+> 
+> (These columns are supposed to be all aligned nicely..)
+> 
+> So, features:
+> 
+> 1. Show the date of the last commit
+> 2. Sort by date.  Most recently used branches at the top
+> 3. Show the branch name, including your current "branch", with a * to
+> indicate that it's checked out.
+> 4. Show the sha
+> 5. Show the branch DESCRIPTION - and if that's not available, show the
+> short-line of the most recent commit.
+> 
+> There is also a small amount of color here that I can't paste here, to
+> follow the coloring in the current git branch.
+> 
+> Before I start making patches etc, what do people think?  Would I have
+> a chance of getting this in?  Should I change some aspects etc?
+> 
+> Thanks,
+> 
+> John Tapsell
+> 
 
-  I'm interested in putting in some time and effort into improving the
-output of "git branch".
+I support the general goal, we have quite some way to go there.
 
-  What I'm thinking is an output like this:
+As to the method: "git branch" in list mode, "git tag" in list mode and
+"git for-each-ref" all do similar things and are in turn not dissimilar
+from "git log --no-walk" with appropriate formatting and rev options.
 
-$ git branch
+Rather than extending "git branch" any further[*], I suggest a bolder
+strategy:
 
-2014-12-17 * (detached from origin/master)     deaba04 Do stuff
-2014-12-15   john.ta/add_timing_info                6edbcfa  Add timing stuff
-2014-12-14   master                                          8537316
-[origin/master: ahead 1, behind 16] Some stuff
-2014-12-12   john.ta/new_reduce_memory       99d84db Reintroduce: memory stuff
-2014-12-05   john.ta/bugfixes                            e15c95e Add stuff
-2014-12-03   john.ta/container                           e9fd4e5 This
-branch is a test bed for containers
+- unify/merge for-each-ref and pretty formats (and code) as far as possible
+- leverage that for the list modes of branch and tag
+
+That would allow everyone to get their favourite listing, just like for
+logs. Otherwise it would be very difficult to agree on *the* proper
+format for an extended branch or tag list.
+
+Michael
 
 
-(These columns are supposed to be all aligned nicely..)
-
-So, features:
-
-1. Show the date of the last commit
-2. Sort by date.  Most recently used branches at the top
-3. Show the branch name, including your current "branch", with a * to
-indicate that it's checked out.
-4. Show the sha
-5. Show the branch DESCRIPTION - and if that's not available, show the
-short-line of the most recent commit.
-
-There is also a small amount of color here that I can't paste here, to
-follow the coloring in the current git branch.
-
-Before I start making patches etc, what do people think?  Would I have
-a chance of getting this in?  Should I change some aspects etc?
-
-Thanks,
-
-John Tapsell
+[*] I know I'm a sinner, too.
