@@ -1,145 +1,114 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3 2/6] send-pack: Rename ref_update_to_be_sent to check_to_send_update
-Date: Wed, 17 Dec 2014 10:32:53 -0800
-Message-ID: <1418841177-12152-3-git-send-email-sbeller@google.com>
-References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
- <1418841177-12152-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
-	gitster@pobox.com, sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Wed Dec 17 19:33:34 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Improving git branch
+Date: Wed, 17 Dec 2014 12:51:36 -0800
+Message-ID: <xmqqzjam80fb.fsf@gitster.dls.corp.google.com>
+References: <CAHQ6N+qBUcBcG8RC6Co+k_GmJDXCynmyfZmvTjz4bQyH1wG3DA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 21:51:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1JPe-0000VR-O6
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Dec 2014 19:33:31 +0100
+	id 1Y1LZR-0000Hk-7P
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Dec 2014 21:51:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378AbaLQSd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2014 13:33:26 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:42569 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999AbaLQSdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2014 13:33:05 -0500
-Received: by mail-ig0-f172.google.com with SMTP id hl2so9204982igb.17
-        for <git@vger.kernel.org>; Wed, 17 Dec 2014 10:33:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iHA3YlPFyuR5ouK1kKwA8yQ0aYxO76sis9jRVmz7EKc=;
-        b=TFuWrgUJoa6b1JdrFpUr8vTJgLkTEN4Eop25u47oGUN8u2pv+NQuhEH/zkIoFMuRX/
-         ucVu3Q08Q6vWPRTOo40dkhCzGE+Brk5uZYW5DbFjwswMvvqP2YsTqtRbgCITBmpvSDf/
-         7K6083GGMKBocGLlQI5yeXy8hWSacibHueCk2QghKPVCfvJmcG6d/gCWOs9mu2DWD0HG
-         +A7I/LgFOmDT9heXchQkDaIQrRzESQPCJ5HxWn6n/u8vl0t93jnnw0IMQoOUquZORgH7
-         9lqWUSy1UApkEuFKUaFc139UDUBHstAT87YCl9IU37EnHeaQnWA3XhCO869CkMqElLMc
-         sbkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=iHA3YlPFyuR5ouK1kKwA8yQ0aYxO76sis9jRVmz7EKc=;
-        b=DZ6vaKCbumxnIbrsmDuxswaHYVdNm2tjd2Fl9b9KPpNx3ld0vwlWqw0K5LmEeA+J2I
-         KkOVcAd3PSASziFQpdFXmo48935s27tSpQVLxCFiP+/dkxCFFQ7NKYEUpBWGRLzBahB1
-         Nbolqs4Cbei8zal4ij3ogxK2c9ofNVyP/7ZPqf0fa1yjar3Q1dxfG4k2waHK+uJb68ub
-         MOXWCSgdglCNn7n0ebN0KjzcOjiBXhpMRrUcIZXK55gxv1kvPnM1vELjuTMgs3eC4Zmk
-         +B6IN676z2cV7if7Tp7gjYoUB3C6gncjcZ6Fn3DvkrE66CVXTidr2eNoDaOxZEHaa4o8
-         bSJQ==
-X-Gm-Message-State: ALoCoQkIWNl2LW/8mtyyRrplYsCpuFzDKdxbDG45TuLenCPR2xmmjI0vMCio3hBdhciB2qiZGFCS
-X-Received: by 10.107.12.10 with SMTP id w10mr25874114ioi.71.1418841185176;
-        Wed, 17 Dec 2014 10:33:05 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:9f5:d31a:4ba2:b65d])
-        by mx.google.com with ESMTPSA id kv4sm8180924igb.13.2014.12.17.10.33.04
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 17 Dec 2014 10:33:04 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.31.gad78000.dirty
-In-Reply-To: <1418841177-12152-1-git-send-email-sbeller@google.com>
+	id S1751117AbaLQUvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2014 15:51:41 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50826 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751030AbaLQUvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2014 15:51:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ECF9628E7B;
+	Wed, 17 Dec 2014 15:51:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=spLCm8fX0BeG0q5oM95erxxx3vA=; b=N/QFrN
+	wgHMUPpRn58P97gMUsHmmtZlyyWzApno9QDV30BDoYR4zoNvhGnyVJW+ULLk3sYj
+	Zd5RrF7U9iVwc9EQ9Q2kzuuWNElPIsi4QUWp5Q4LMrBhK3grqq39huwbZktkUCUx
+	8rBoke3Q6wmKXX1a2GY1lA11wT5QHI38MkpHI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JqOpf0Wkr/w3NkPgeyfGiYgGJH02Luvw
+	TERWMhn8eE0y4AFSmPyzsPq7vo8yvj5anY44+KPBlXH5ghE8OJmSm+pCEfUmwAXg
+	2uYG5u9A8OXybYHQfHYngwpa7GUGkr7QW53B58kxHXA78M+PiKNq8BlOi5bY86kt
+	bfOZSlf5m5w=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E450928E7A;
+	Wed, 17 Dec 2014 15:51:40 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6926628E79;
+	Wed, 17 Dec 2014 15:51:40 -0500 (EST)
+In-Reply-To: <CAHQ6N+qBUcBcG8RC6Co+k_GmJDXCynmyfZmvTjz4bQyH1wG3DA@mail.gmail.com>
+	(John Tapsell's message of "Wed, 17 Dec 2014 11:10:10 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 80239FC2-862E-11E4-A071-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261495>
 
-This renames ref_update_to_be_sent to check_to_send_update and inverts
-the meaning of the return value. Having the return value inverted we
-can have different values for the error codes. This is useful in a
-later patch when we want to know if we hit the CHECK_REF_STATUS_REJECTED
-case.
+John Tapsell <johnflux@gmail.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+>   I'm interested in putting in some time and effort into improving the
+> output of "git branch".
+>
+>   What I'm thinking is an output like this:
+>
+> $ git branch
+>
+> 2014-12-17 * (detached from origin/master)     deaba04 Do stuff
+> 2014-12-15   john.ta/add_timing_info                6edbcfa  Add timing stuff
+> 2014-12-14   master                                          8537316
+> [origin/master: ahead 1, behind 16] Some stuff
+> 2014-12-12   john.ta/new_reduce_memory       99d84db Reintroduce: memory stuff
+> 2014-12-05   john.ta/bugfixes                            e15c95e Add stuff
+> 2014-12-03   john.ta/container                           e9fd4e5 This
+> branch is a test bed for containers
+>
+>
+> (These columns are supposed to be all aligned nicely..)
+>
+> So, features:
+>
+> 1. Show the date of the last commit
+> 2. Sort by date.  Most recently used branches at the top
+> 3. Show the branch name, including your current "branch", with a * to
+> indicate that it's checked out.
+> 4. Show the sha
+> 5. Show the branch DESCRIPTION - and if that's not available, show the
+> short-line of the most recent commit.
+>
+> There is also a small amount of color here that I can't paste here, to
+> follow the coloring in the current git branch.
+>
+> Before I start making patches etc, what do people think?  Would I have
+> a chance of getting this in?  Should I change some aspects etc?
 
-Notes:
-    This was introduced with the [PATCHv2] series.
-    Changes v2 -> v3:
-    
-    * Rename to check_to_send_update
-    * Negative error values.
-    * errors values are #define'd and not raw numbers.
+Three random points:
 
- send-pack.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ * A single output format can never be favourite of everybody, so
+   this needs to be more like
 
-diff --git a/send-pack.c b/send-pack.c
-index e2bdd89..77e4201 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -190,10 +190,13 @@ static void advertise_shallow_grafts_buf(struct strbuf *sb)
- 	for_each_commit_graft(advertise_shallow_grafts_cb, sb);
- }
- 
--static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args)
-+#define CHECK_REF_NO_PUSH 1
-+#define CHECK_REF_STATUS_REJECTED 2
-+#define CHECK_REF_UPTODATE 3
-+static int check_to_send_update(const struct ref *ref, const struct send_pack_args *args)
- {
- 	if (!ref->peer_ref && !args->send_mirror)
--		return 0;
-+		return -CHECK_REF_NO_PUSH;
- 
- 	/* Check for statuses set by set_ref_status_for_push() */
- 	switch (ref->status) {
-@@ -203,10 +206,11 @@ static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_a
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
- 	case REF_STATUS_REJECT_STALE:
- 	case REF_STATUS_REJECT_NODELETE:
-+		return -CHECK_REF_STATUS_REJECTED;
- 	case REF_STATUS_UPTODATE:
--		return 0;
-+		return -CHECK_REF_UPTODATE;
- 	default:
--		return 1;
-+		return 0;
- 	}
- }
- 
-@@ -250,7 +254,7 @@ static int generate_push_cert(struct strbuf *req_buf,
- 	strbuf_addstr(&cert, "\n");
- 
- 	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!ref_update_to_be_sent(ref, args))
-+		if (check_to_send_update(ref, args) < 0)
- 			continue;
- 		update_seen = 1;
- 		strbuf_addf(&cert, "%s %s %s\n",
-@@ -369,7 +373,7 @@ int send_pack(struct send_pack_args *args,
- 	 * the pack data.
- 	 */
- 	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!ref_update_to_be_sent(ref, args))
-+		if (check_to_send_update(ref, args) < 0)
- 			continue;
- 
- 		if (!ref->deletion)
-@@ -390,7 +394,7 @@ int send_pack(struct send_pack_args *args,
- 		if (args->dry_run || args->push_cert)
- 			continue;
- 
--		if (!ref_update_to_be_sent(ref, args))
-+		if (check_to_send_update(ref, args) < 0)
- 			continue;
- 
- 		old_hex = sha1_to_hex(ref->old_sha1);
--- 
-2.2.0.31.gad78000.dirty
+	$ git branch --format='%(committerdate) %(refname) %(subject)'
+
+   optionally with branch.format configuration variable to let the
+   user specify the default.
+
+ * I am not sure if the "current" marker should be anywhere but the
+   frontmost column in the recommended default.  The output from the
+   command obviously is not meant for machine processing
+   (e.g. sorting or grepping), so this point is minor, though.
+
+ * I do not think the object name should take valuable screen real
+   estate, again in the built-in default (I wouldn't mind people
+   hurting themselves with their configuration at all ;-).  After
+   looking at "git branch --pretty-long" output, people can give any
+   command john.ta/bugfixes instead of e15c95e, no?
