@@ -1,76 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Improving git branch
-Date: Wed, 17 Dec 2014 16:01:48 -0500
-Message-ID: <20141217210148.GA26551@peff.net>
-References: <CAHQ6N+qBUcBcG8RC6Co+k_GmJDXCynmyfZmvTjz4bQyH1wG3DA@mail.gmail.com>
- <549168DD.1080906@drmicha.warpmail.net>
- <xmqqvbla80bm.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Saving space/network on common repos
+Date: Wed, 17 Dec 2014 14:01:55 -0800
+Message-ID: <CAGZ79kbupVyX=SUSbuAbkX5nA2NJC1R5zCzoVz4-Rdkcc+Xt1Q@mail.gmail.com>
+References: <CAGXKyzEYhR69w1=4q-xtBagVBwOPqNA9C=AD0bAorB+5eRtVRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	John Tapsell <johnflux@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 17 22:01:56 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: csilvers@khanacademy.org
+X-From: git-owner@vger.kernel.org Wed Dec 17 23:02:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1LjH-0003Nb-Kc
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Dec 2014 22:01:55 +0100
+	id 1Y1MfR-0005g3-5t
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Dec 2014 23:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbaLQVBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2014 16:01:51 -0500
-Received: from cloud.peff.net ([50.56.180.127]:54036 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751078AbaLQVBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2014 16:01:50 -0500
-Received: (qmail 31793 invoked by uid 102); 17 Dec 2014 21:01:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Dec 2014 15:01:50 -0600
-Received: (qmail 2084 invoked by uid 107); 17 Dec 2014 21:01:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Dec 2014 16:01:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Dec 2014 16:01:48 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqvbla80bm.fsf@gitster.dls.corp.google.com>
+	id S1751406AbaLQWB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2014 17:01:56 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:64477 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751247AbaLQWB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2014 17:01:56 -0500
+Received: by mail-ie0-f181.google.com with SMTP id tp5so15870742ieb.40
+        for <git@vger.kernel.org>; Wed, 17 Dec 2014 14:01:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=fhKjSZiIVisDOJarcTZsfBeyZgeIt8qx28sghsA0zLQ=;
+        b=UxYNTx80hR3wObwM2ucatgRaET4fZtnUkeaqfO5E33CMBT6a6dK/5s/G2rvYuZc59R
+         59K7PXmw0vwxWmgIGdCdQVaP5p2i2weFg1IuE2fmfpMkWBT4kdYDQUxxu2w5KI69eJ2C
+         4syBm2N54OpAuAu6cd3621BEpDb4vmUAcqTYGIfXfHZ8hF5oG3rGHREoWCh/FpYFyLO2
+         r0yKy0iqszjVq7JG6kOofGukudJ8KJFBia1s1im8rQzg8rbPytuX4zQLRcw0TUmkZrag
+         uvKjBPP89pWg5ACRtys359dDYaOOV3mgWACLsTrh0mV0+LK1n30j6IJnnmczkIWP/BSj
+         2t9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=fhKjSZiIVisDOJarcTZsfBeyZgeIt8qx28sghsA0zLQ=;
+        b=hX3OcxCxwEd9MAgkeD2gI0CYw/dkk+uApo9+34q84P16zITa/MiIQKDM2FC+sI1G7Y
+         Op1z4KIyc9cWbr9HNJXlAl9is7baXuVdjRGwbtCDBGweJg3dVTDtKo/JStIYKMiiUc+q
+         rXvUpQy8cZSuao8x0jjOYTPGsWNIDxgo3E/+LVjZAVddsIF9bIIXFAapYIpC0dQrh8PR
+         HQEXbUCQFOJOkSItYpiRzScCwT4Wnck/UewyZhMtdJygo8Cbi6KDIeFyA+qsPN3E0SyS
+         sXqwwy2obZYpfqzmOtgz8OmwhN3q+k3z3epi9bQopivVlC7HDTGo6xGbEJMTkQnjg50o
+         8XsA==
+X-Gm-Message-State: ALoCoQnWzVkCqFVpU1biCEgFzbhkBNePtt51xoZ3M+w2ijqAXgS2NnEXOOKeLgVgFPHomCZoB2eD
+X-Received: by 10.50.117.41 with SMTP id kb9mr1353307igb.37.1418853715382;
+ Wed, 17 Dec 2014 14:01:55 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Wed, 17 Dec 2014 14:01:55 -0800 (PST)
+In-Reply-To: <CAGXKyzEYhR69w1=4q-xtBagVBwOPqNA9C=AD0bAorB+5eRtVRg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261498>
 
-On Wed, Dec 17, 2014 at 12:53:49PM -0800, Junio C Hamano wrote:
-
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
-> > Rather than extending "git branch" any further[*], I suggest a bolder
-> > strategy:
-> >
-> > - unify/merge for-each-ref and pretty formats (and code) as far as possible
-> > - leverage that for the list modes of branch and tag
-> >
-> > That would allow everyone to get their favourite listing, just like for
-> > logs. Otherwise it would be very difficult to agree on *the* proper
-> > format for an extended branch or tag list.
-> >
-> > Michael
-> >
-> >
-> > [*] I know I'm a sinner, too.
-> 
-> Actually this is not a "bolder" strategy, but the unification has
-> been discussed and agreed to be the longer-term direction for quite
-> a while, I think.  Didn't Peff have this in his "things to do when
-> absolutely bored" box?
-
-Yes. It is not even in my "absolutely bored" box, but rather the "I
-would like to work on this but somehow other crap keeps coming up" box.
-
-The last blocker I ran into was that we need to unify the "--contains"
-implementation for "git tag" and "git branch". If anybody wants to push
-this forward, I think that is the best place to start. I can dig up
-references if anybody is interested.
-
--Peff
+I am not sure if there was any improvement since then, but Junio
+wrote about alternates 2 years ago
+http://git-blame.blogspot.com/2012/08/bringing-bit-more-sanity-to-alternates.html
