@@ -1,111 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Introducing a test_create_repo_bare (was Re: [PATCHv2 6/6] t5543-atomic-push.sh: add basic tests for atomic pushes)
-Date: Wed, 17 Dec 2014 15:51:15 -0800
-Message-ID: <xmqq61d996oc.fsf@gitster.dls.corp.google.com>
-References: <CAGZ79kY=TP31VJxPZnjb04og-vHU+-c4d+AgAkis2Q7yeDeXbg@mail.gmail.com>
+From: Craig Silverstein <csilvers@khanacademy.org>
+Subject: Re: Saving space/network on common repos
+Date: Wed, 17 Dec 2014 15:57:32 -0800
+Message-ID: <CAGXKyzEqTik3p=A8NZJ6kUscFjw_Dh1mBPT-ciwq9L8kNKDDig@mail.gmail.com>
+References: <CAGXKyzEYhR69w1=4q-xtBagVBwOPqNA9C=AD0bAorB+5eRtVRg@mail.gmail.com>
+	<20141217223215.GO29365@google.com>
+Reply-To: csilvers@khanacademy.org
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 00:51:25 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 00:57:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1ONH-00036u-VE
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 00:51:24 +0100
+	id 1Y1OTK-0004fQ-04
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 00:57:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120AbaLQXvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2014 18:51:19 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50841 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751078AbaLQXvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2014 18:51:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3604028E06;
-	Wed, 17 Dec 2014 18:51:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hV8eGldkC2ubYRLOKKMukTy6Sd4=; b=Y+3XIu
-	zBdWNAoh7CnGpypoFxILfDcrOJtNYwSEcP9jYfNmtWm3/x+nDLQGAbv74MCfTpU6
-	1HXNn24evYwklV5xoPVwCsEFOowv/TR62FTNnaNPiGhiE33xKHvxyDbTEzkgfjs6
-	YPOeW31ZNakeM+o/rXgaUFufVYEjodopJy1iU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E6uMX8sr/6uybbtmlqVDNHZhUJqSOnNi
-	xuyRW2DRzi60zisASg6Xoc4Av10DEtOQcw8KajXXbZxsKS4MvV2jICsuKO7OOXYo
-	9yllW7ZNatSAO+llCb4SNCsbeJ94sVSPUYKkkhc+nOfeMT5F6ryNE2Rs60JoR8Uw
-	qYFOcJ35Zhw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A01228E05;
-	Wed, 17 Dec 2014 18:51:19 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2BBC28E04;
-	Wed, 17 Dec 2014 18:51:18 -0500 (EST)
-In-Reply-To: <CAGZ79kY=TP31VJxPZnjb04og-vHU+-c4d+AgAkis2Q7yeDeXbg@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 17 Dec 2014 15:20:22 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 987893CA-8647-11E4-8395-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751252AbaLQX5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2014 18:57:34 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:53338 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751117AbaLQX5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2014 18:57:33 -0500
+Received: by mail-ig0-f178.google.com with SMTP id hl2so333531igb.11
+        for <git@vger.kernel.org>; Wed, 17 Dec 2014 15:57:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=khanacademy.org; s=google;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=ujxEWPdGwkKkAhNWMDpqg3Vy6eHlImz5mUllrNE7Gl8=;
+        b=aTJKGkF23X/HoOBXYdU8I2RtQLmuSTYiKbQfvuhCMvcbnNTW2h0g3vUlR9pMwSow1r
+         /1NwVJl1dH7gHacULTSc1ekX1qXGFeaWIe0vKg5g+xMH9qw/X9yS914r6nLWkW5WG5w2
+         qvm7q/Ik59OkTQOIOYbh4p+Hqy+7DF0KKq9Yk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=ujxEWPdGwkKkAhNWMDpqg3Vy6eHlImz5mUllrNE7Gl8=;
+        b=eROomQPViiFEuItV1Mh2Tos6w+kcthasPBhiiULIYqwfq95yNmFidlH7CC/VbZ53n+
+         7XXhF7ghQUJLSMxz3XoZFKkFkTyOJyvf0ROArrB4sYuTS+E3NggBOklgWoW6VugoTVmP
+         kliplliqXucqagspbfmectYJbdC4iS5SlhNOIx7k6XHyf6J5AWhAVxQBFbc8TYszVguS
+         LH4bdBR7j/faAFrm/p4f5/Q40pz2JZEaz21Rayy4McI1lzMBtRwxZQRNYyElAnEZqvEp
+         +lzQJ9snH/t9mI29o1pNi9UNEuSiS1fcQq6FRBIVS3PEJ+aJmnje3HLaTVmZF2FvtARE
+         RGCg==
+X-Gm-Message-State: ALoCoQmfcdRDd0hHOX8JFVDBObaefA+/3WgnzZZAwveMNiuu0Bx6KvVGavDaEaESNh0/bjD+W+xN
+X-Received: by 10.107.132.78 with SMTP id g75mr42148827iod.21.1418860652537;
+ Wed, 17 Dec 2014 15:57:32 -0800 (PST)
+Received: by 10.107.7.159 with HTTP; Wed, 17 Dec 2014 15:57:32 -0800 (PST)
+In-Reply-To: <20141217223215.GO29365@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261508>
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Dec 17, 2014 at 2:32 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> You might find 'git new-workdir' from contrib/workdir to be helpful.
+> It lets you attach multiple working copies to a single set of objects
+> and refs.
 
-> On Tue, Dec 16, 2014 at 11:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
->>> +     (
->>> +             cd upstream && git config receive.denyCurrentBranch warn
->>> +     ) &&
->>
->> I was wondering how you would do this part after suggesting use of
->> test_create_repo, knowing very well that one of them was a bare one
->> ;-).
->>
->> We might want to extend test_create_repo to allow creating a bare
->> repository, but this is also OK.
->
-> So I searching through all the tests, where it would make sense to do that.
-> I searched for "denyCurrentBranch" and came up with this list where I think
-> it makes sense to replace (git init | test_create_repo | or alike) by a
-> test_create_repo_bare or add the --bare option to test_create_repo
->
-> places where test_create_repo_bare is easily introducable:
-> t5517-push-mirror.sh # setup an upstream repo
-> t5543-atomic-push.sh # setup an upstream repo
-> t5701-clone-local.sh # Test  'clone empty repository'
->
-> not as easy:
-> t5400-send-pack.sh # we commit to that repo while being inside
-> t5405-send-pack-rewind.sh # we commit to that repo while being inside
-> t5516-fetch-push.sh # we test the various denyCurrentBranch options
->
-> unsure:
-> t5522-pull-symlink.sh # just cloning the repo
->
-> So I think we don't need the test_create_repo_bare yet.
+Thanks!  That does indeed sound promising -- like a more principled
+version of my GIT_OBJECT_DIRECTORY suggestion.
 
-Thanks for digging.
+>> Question 4) Is there a practical way to set up submodules so they can
+>> use the same object-sharing framework that the main repo does?
+>
+> It's possible to do, but we haven't written a nice UI for it yet.
+> (In other words, you can do this by cloning with --no-recurse-submodules
+> and manually creating the submodule workdir in the appropriate place.
 
-We already knew we do not *NEED* it.  We have been surviving without
-one.
+Hmm, let me see if I understand you right -- you're suggesting that
+when cloning my reference repo, I do
+    git clone --no-recurse-submodules <my repo>
+    for (path, url) in `parse-.gitmodules`: git clone url path
+# this is psuedocode, obviously :-)
 
-You need to remember that adding and using a new helper is *NOT* the
-ultimate goal; categorizing those that do not want bare repositories
-as "not as easy" is misguided.  They truly do not want bare, so they
-are not our target audience in the first place.  For the same reason,
-"easily introduceable" is not a good criteria to look for.
+and then when I want to create a new workdir, I do something like:
+    cd reference_repo
+    git new-workdir /var/workspace1
+    for (path, url) in `parse-.gitmodules`: cd path && git new-workdir
+/var/workspace1/path
 
-The issue is if some existing tests will be helped, if we had such a
-helper.  That is, do we "git init --bare" by hand in some test?  Are
-these tests in such a hand-crafted repositories more susceptible to
-future breakages because they do not use the template from the built
-location or they do not disable hooks?  If we had such tests, then
-they would benefit by having a "bare" mode of test_create_repo.
+?  Basically, I'm going back to the old git way of having each
+submodule have its own .git directory, rather than having it have a
+.git file with a 'gitdir' entry.  Am I understanding this right?
+
+Also, it seems to me there's the possibility, with git-newdir, that if
+several of the workspaces try to fetch at the same time they could
+step on each others' toes.  Is that a problem?  I know there's a push
+lock but I don't believe there's a fetch lock, and I could imagine git
+getting unhappy if two fetches happened in the same repo at the same
+time.
+
+craig
