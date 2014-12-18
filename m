@@ -1,87 +1,111 @@
-From: "Dan Langille (dalangil)" <dalangil@cisco.com>
-Subject: git-http-backend auth via Kerberos
-Date: Thu, 18 Dec 2014 22:19:19 +0000
-Message-ID: <540A8740-B240-40FF-BB50-0D90DEA04031@cisco.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: git-http-backend auth via Kerberos
+Date: Thu, 18 Dec 2014 22:54:32 +0000
+Message-ID: <20141218225418.GA84625@vauxhall.crustytoothpaste.net>
+References: <540A8740-B240-40FF-BB50-0D90DEA04031@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 18 23:28:59 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mojUlQ0s9EVzWg2t"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Dan Langille (dalangil)" <dalangil@cisco.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 23:54:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1jZ2-000339-0G
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 23:28:56 +0100
+	id 1Y1jy0-0003Sq-3e
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 23:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbaLRW2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2014 17:28:52 -0500
-Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:40203 "EHLO
-	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751125AbaLRW2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2014 17:28:51 -0500
-X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Dec 2014 17:28:51 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1992; q=dns/txt; s=iport;
-  t=1418941731; x=1420151331;
-  h=from:to:subject:date:message-id:content-id:
-   content-transfer-encoding:mime-version;
-  bh=38wm1wz4N9arcyZjB0g+gg1TUEATBnNaeewv+yxBeLo=;
-  b=fBIJD1CAGfd9FKGcHgVZZdIH8dapuJvLf/Z+upd5MYoIrHd4AHDqWNVN
-   PeodC85sXO+itQcnKt8vtEBvh20dCwlqozXYlLxe4v6ZF+e1v7jlFaWsq
-   nmtmXivxE9kAYgf3FHUMC764chdaarOKgyruSwCuqAAhH6Hmi5EfpNICl
-   I=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ap4GAPRRk1StJV2Q/2dsb2JhbABbgwZSWASDAsMdhXIegQoWAQEBAQF9hBMjEVcBIgIUEgIEMBUSBBOILA2pJo9EljQBAQEBAQEEAQEBAQEBAQEBAQEXgSGODComFIJQLoETBY4Kgz6BfYM1kUIig2xvgUV+AQEB
-X-IronPort-AV: E=Sophos;i="5.07,603,1413244800"; 
-   d="scan'208";a="381174544"
-Received: from rcdn-core-8.cisco.com ([173.37.93.144])
-  by rcdn-iport-5.cisco.com with ESMTP; 18 Dec 2014 22:19:20 +0000
-Received: from xhc-aln-x06.cisco.com (xhc-aln-x06.cisco.com [173.36.12.80])
-	by rcdn-core-8.cisco.com (8.14.5/8.14.5) with ESMTP id sBIMJKrl030099
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Thu, 18 Dec 2014 22:19:20 GMT
-Received: from xmb-rcd-x03.cisco.com ([169.254.7.194]) by
- xhc-aln-x06.cisco.com ([173.36.12.80]) with mapi id 14.03.0195.001; Thu, 18
- Dec 2014 16:19:20 -0600
-Thread-Topic: git-http-backend auth via Kerberos
-Thread-Index: AQHQGxCrd+//UJfMPkWu780RpZEfpA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.82.243.139]
-Content-ID: <5ECB402401F52D41A84C561B34F08498@emea.cisco.com>
+	id S1751759AbaLRWyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2014 17:54:40 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:55617 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751618AbaLRWyj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2014 17:54:39 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 044832808F;
+	Thu, 18 Dec 2014 22:54:35 +0000 (UTC)
+Mail-Followup-To: "Dan Langille (dalangil)" <dalangil@cisco.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <540A8740-B240-40FF-BB50-0D90DEA04031@cisco.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.18.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261542>
 
-SSBhbSB0cnlpbmcgdG8gZ2V0IGh0dHA6Ly9naXQtc2NtLmNvbS9kb2NzL2dpdC1odHRwLWJhY2tl
-bmQgdG8gYXV0aCB2aWEgS2VyYmVyb3MuDQoNCkkgaGF2ZSBzdWNjZXNzIHdoZW4gYSBLZXJiZXJv
-cyB0aWNrZXQgaXMgcHJlc2VudC4NCg0KSSBhbSB0cnlpbmcgdG8gZ2V0IGdpdCB0byBhdXRoZW50
-aWNhdGUgd2l0aCBLZXJiZXJvcyB3aGVuIGEgdGlja2V0IGlzIG5vdCBwcmVzZW50Lg0KDQpIZXJl
-IGlzIHdoYXQgc3VjY2VlZHMgd2l0aCBhIHRpY2tldDoNCg0KPExvY2F0aW9uIC9naXQ+DQogIFNT
-TE9wdGlvbnMgK1N0ZGVudlZhcnMNCiAgT3B0aW9ucyArRXhlY0NHSSArRm9sbG93U3ltTGlua3Mg
-K1N5bUxpbmtzSWZPd25lck1hdGNoDQoNCiAgICAjIEJ5IGRlZmF1bHQsIGFsbG93IGFjY2VzcyB0
-byBhbnlvbmUuDQogICAgT3JkZXIgYWxsb3csZGVueQ0KICAgIEFsbG93IGZyb20gQWxsDQoNCiAg
-ICAjIEVuYWJsZSBLZXJiZXJvcyBhdXRoZW50aWNhdGlvbiB1c2luZyBtb2RfYXV0aF9rZXJiLg0K
-ICAgIEF1dGhUeXBlIEtlcmJlcm9zDQogICAgQXV0aE5hbWUg4oCcdXMuZXhhbXBsZS5jb20iDQog
-ICAgS3JiQXV0aFJlYWxtIHVzLmV4YW1wbGUuY29tDQogICAgS3JiNUtleVRhYiAvdXNyL2xvY2Fs
-L2V0Yy9hcGFjaGUyMi9yZXBvLXRlc3Qua2V5dGFiDQogICAgS3JiTWV0aG9kTmVnb3RpYXRlIG9u
-DQogICAgS3JiU2F2ZUNyZWRlbnRpYWxzIG9uDQogICAgS3JiVmVyaWZ5S0RDIG9uDQogICAgS3Ji
-U2VydmljZU5hbWUgQW55DQogICAgUmVxdWlyZSB2YWxpZC11c2VyDQo8L0xvY2F0aW9uPg0KDQpU
-aGlzIGlzIHdoYXQgaGFwcGVucyB3aXRob3V0IGEgdmFsaWQgdGlja2V0Og0KDQokIGdpdCBjbG9u
-ZSBodHRwczovL3VzLmV4YW1wbGUuY29tL2dpdC9jbGFtYXYtYnl0ZWNvZGUtY29tcGlsZXINCkNs
-b25pbmcgaW50byAnY2xhbWF2LWJ5dGVjb2RlLWNvbXBpbGVyJy4uLg0KVXNlcm5hbWUgZm9yICdo
-dHRwczovL3VzLmV4YW1wbGUuY29tJzogZGFuDQpQYXNzd29yZCBmb3IgJ2h0dHBzOi8vZGFuQHVz
-LmV4YW1wbGUuY29tJzogDQpmYXRhbDogQXV0aGVudGljYXRpb24gZmFpbGVkIGZvciAnaHR0cHM6
-Ly91cy5leGFtcGxlLmNvbS9naXQvY2xhbWF2LWJ5dGVjb2RlLWNvbXBpbGVyLycNCg0KT2Ygbm90
-ZSwgSSBzZWUgdGhpcyBpbiB0aGUgQXBhY2hlIGxvZ3M6DQoNClRodSBEZWMgMTggMTY6NDM6MzUg
-MjAxNF0gW2RlYnVnXSBzcmMvbW9kX2F1dGhfa2VyYi5jKDE3NDkpOiBbY2xpZW50IDEwLjcuNjku
-MTBdIGtlcmJfYXV0aGVudGljYXRlX3VzZXIgZW50ZXJlZCB3aXRoIHVzZXIgKE5VTEwpIGFuZCBh
-dXRoX3R5cGUgS2VyYmVyb3MNCg0KSWRlYXM/ICBTdWdnZXN0aW9ucz8gIEhpbnRzPyAgVGhhbmtz
-Lg0KDQrigJQgDQpEYW4gTGFuZ2lsbGUNCkluZnJhc3RydWN0dXJlICYgT3BlcmF0aW9ucw0KVGFs
-b3MgR3JvdXANClNvdXJjZWZpcmUsIEluYy4NCg0K
+
+--mojUlQ0s9EVzWg2t
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Dec 18, 2014 at 10:19:19PM +0000, Dan Langille (dalangil) wrote:
+> This is what happens without a valid ticket:
+>=20
+> $ git clone https://us.example.com/git/clamav-bytecode-compiler
+> Cloning into 'clamav-bytecode-compiler'...
+> Username for 'https://us.example.com': dan
+> Password for 'https://dan@us.example.com':=20
+> fatal: Authentication failed for 'https://us.example.com/git/clamav-bytec=
+ode-compiler/'
+
+So there are two ways to do this.  One is allowing users to clone
+without any credentials, which I take it you are trying to avoid.  If
+that *is* what you're going for, I can provide you with my Apache
+configuration, which does allow that.
+
+What I would recommend is going to
+https://us.example.com/git/clamav-bytecode-compiler/info/refs in a web
+browser without a ticket, and see if it prompts you for a username and
+password.  When you get that working, it will probably also work for you
+with git.
+
+You can also run git with GIT_CURL_VERBOSE=3D1 and see the protocol
+exchange printed out, so you can see what's happening.  You'll obviously
+want to see if the server offers Basic auth as well as Negotiate.
+
+You might also try specifying KrbMethodK5Passwd on explicitly.  I don't
+happen to use that option (I use Kerberos to avoid passwords altogether)
+so that might work for you.
+
+I don't know what version of git you're using, but some older versions
+will still prompt for a password whenever authentication fails.
+Therefore, just because you're getting a password prompt doesn't mean
+that providing a password will necessarily work.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--mojUlQ0s9EVzWg2t
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUk1soAAoJEL9TXYEfUvaLf48P/jJR/eDgux/UzqWhhPaoHFK3
+5ayPXgmLwJGxn6WWJLMlYCbG1o6NP0/S7eC79sQ9jSHcJS2T1i0yPepdQbQYC9J8
+KiCUx1mhORSbylTENKgnAH6dUE2q5H6px87+B7OQ8kHWASaBe30ti4aIwQes2ZMj
+UOqo8J1KddWvVlHybUdP/65Ft5x8KpPiXfFy8PxmNK3V3W8aCTSr8uDK2lrjd3kW
+LiX/N6+2PSkPkmlNb6Sg3zokOfJ/Tp4nRh3GQgK+iQTnZb5+PSuNqhdpEh124/2U
+ktoYctN7dcpFQhcCb8CUDQNMB4VE8f12GLSqXSyShybR1cKNAeeGoyW55HBbzkeQ
+50kNn3pPLagBna0M26gvlzds0Pjp6hOkAVG8v9CpuX6Avc/WaCnLKD86sldqqHZ/
+oZzRkyBoaTpo6XO04jxRm8fpUDPDE890F53jNK2FTBUHH1HZDfEPk/pJ9d3Zw4E/
+csCRwX76FDWYkYCulS/ifUUjRBtmNbR6BzMPG5YVDiIeEJR4dL8xL7rDOve+M09c
+rg61VbebQfQJuXhhsqBnoFYVZQSq2UdGOeFjgdBsu1m8wXthGJEPWHafS/lD6sUy
+JMCYQHljapo30Y2Zkzow71i9jA7G5csOCZHr13l+HuwkRFrYtFwGEKlfy5gNtLxn
+EohL5fJagTJCzwHT71lq
+=e8kf
+-----END PGP SIGNATURE-----
+
+--mojUlQ0s9EVzWg2t--
