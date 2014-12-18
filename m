@@ -1,66 +1,86 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH 1/1] pack-bitmap: comment typo fixed
-Date: Thu, 18 Dec 2014 20:10:42 +0600
-Message-ID: <1418911842-1655-1-git-send-email-kuleshovmail@gmail.com>
-Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 15:11:38 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 4/6] receive-pack.c: use a single ref_transaction for atomic pushes
+Date: Thu, 18 Dec 2014 09:02:31 -0800
+Message-ID: <xmqqppbg7uxk.fsf@gitster.dls.corp.google.com>
+References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
+	<1418841177-12152-1-git-send-email-sbeller@google.com>
+	<1418841177-12152-5-git-send-email-sbeller@google.com>
+	<xmqqa92l97u1.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kZCTb5Uj34Kj-qnQEWmD+4=3U8LyeHxQWmLg-ozJr7Azg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 18:02:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1bnf-0001wS-KX
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 15:11:32 +0100
+	id 1Y1eTH-0006Vw-VY
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 18:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbaLROLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2014 09:11:17 -0500
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:62089 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752188AbaLROLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2014 09:11:16 -0500
-Received: by mail-lb0-f180.google.com with SMTP id l4so998403lbv.25
-        for <git@vger.kernel.org>; Thu, 18 Dec 2014 06:11:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=82FHSYXH28C28t5pKZpTaI1nhOIL92oWF3SJ+lBrUd4=;
-        b=JAFcobYvv0ZjNv0hk2AYVhy8yZ/jbVbTTldMUCCLOb4sKDNEk3uEWg7XEOklBtPCLL
-         AnVMGtccm+edH+rUZJVtsOP+zhBEzQI6CCfTHRB5gp8CMlbVgFskciVwo/2sUXuFJQdC
-         homTqIkPjHPeBf7VIslxeSXRdzrF5I7wscgS1dSbWuC4jEfkbwcW+PI9lYRpTsCrgSze
-         uyCO499y6WI8BnTiqQWSouBD5I5XOlPb6i0/5HD5rOfM2teDr+wbQ3ASptPFmvUbKhsn
-         EL/5qUSF9IZnLAXYCsh8uwnEdZ4Czoof9dB+v6zK2Ro5BeO4H/5OV1uD3C4aEQ/xCIL4
-         e0uw==
-X-Received: by 10.112.185.99 with SMTP id fb3mr2429047lbc.21.1418911874583;
-        Thu, 18 Dec 2014 06:11:14 -0800 (PST)
-Received: from localhost.localdomain ([2.133.0.167])
-        by mx.google.com with ESMTPSA id z4sm1642661laz.8.2014.12.18.06.11.12
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 Dec 2014 06:11:13 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.66.gda9d48c.dirty
+	id S1751158AbaLRRCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2014 12:02:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65533 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751059AbaLRRCe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2014 12:02:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 14055263A5;
+	Thu, 18 Dec 2014 12:02:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lnlUkNqcMAMrgdOfATbUD6KDJZw=; b=EvXdZV
+	f4oR1QAzxeWe/7LoOJ4vtQGb69Uf4aAkQ8MfdDltmDqUPVwiAMLwaAaC/2BCmZnj
+	Iw43JEd/XG1rQ6gtSH/BULNTbrM8wmf8s/kAhNv5LCPxkIL53iCfLRXSbBIO6bkj
+	3Tw3pP7Dkmk7rsJl3P+LlDIM7uwlpAzSQHjBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UJ5bT14YDSMoBDHEzNrH5cqJGkZ83DO7
+	MeNOZgqtinUEk/KuWaE8Z4UHQU5P1nI+7gfR9X4M4UWPM4lqtPyX2Hgc6fzK+hXA
+	vqc8CtDEg3ZxqAA8UfHYSrOlRI5qChOFKYA9Cl38m1ayVckX/0jD3rgyq0V7ozkK
+	5j9Gt/oyjMk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 07D61263A0;
+	Thu, 18 Dec 2014 12:02:35 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 680E52639F;
+	Thu, 18 Dec 2014 12:02:34 -0500 (EST)
+In-Reply-To: <CAGZ79kZCTb5Uj34Kj-qnQEWmD+4=3U8LyeHxQWmLg-ozJr7Azg@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 17 Dec 2014 15:58:24 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A957F038-86D7-11E4-9E4E-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261528>
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- pack-bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Stefan Beller <sbeller@google.com> writes:
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 6a81841..3281df3 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -60,7 +60,7 @@ static struct bitmap_index {
- 	struct ewah_bitmap *blobs;
- 	struct ewah_bitmap *tags;
- 
--	/* Map from SHA1 -> `stored_bitmap` for all the bitmapped comits */
-+	/* Map from SHA1 -> `stored_bitmap` for all the bitmapped commits */
- 	khash_sha1 *bitmaps;
- 
- 	/* Number of bitmapped commits */
--- 
-2.2.0.66.gda9d48c.dirty
+> This would change the current behavior. In the case of !atomic we want
+> to consider all commands and not stop early.
+
+Quite right.
+
+> So maybe more
+> if (!cmd->error_string) {
+>         if (!use_atomic
+>             && ref_transaction_commit(...)) {
+>             ...
+>         }
+> } else {
+>         if (use_atomic)
+>              goto check_atomic_commit;
+> }
+
+Don't you need to rollback/abort/free in one-at-a-time mode and did
+not commit because error_string is already set, though?
