@@ -1,81 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Introducing a test_create_repo_bare (was Re: [PATCHv2 6/6] t5543-atomic-push.sh: add basic tests for atomic pushes)
-Date: Thu, 18 Dec 2014 09:06:28 -0800
-Message-ID: <xmqqlhm47uqz.fsf@gitster.dls.corp.google.com>
-References: <CAGZ79kY=TP31VJxPZnjb04og-vHU+-c4d+AgAkis2Q7yeDeXbg@mail.gmail.com>
-	<xmqq61d996oc.fsf@gitster.dls.corp.google.com>
-	<20141218002825.GQ29365@google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: bug & patch: exit codes from internal commands are handled incorrectly
+Date: Thu, 18 Dec 2014 18:43:15 +0100
+Message-ID: <54931233.6080900@web.de>
+References: <13474FB1-5310-42E5-82A9-4047FEFEFF4A@his.com> <885593BD-3024-4811-83A5-D3A0C4CE6AC1@his.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 18:06:40 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Kenneth Lorber <keni@his.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 18 18:43:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1eX5-0007yI-KM
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 18:06:36 +0100
+	id 1Y1f6l-0005DF-1B
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 18:43:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbaLRRGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2014 12:06:31 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56953 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751059AbaLRRGb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2014 12:06:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96C0C264F1;
-	Thu, 18 Dec 2014 12:06:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=46qxkskFRUWjORKLgXYB2LwQ/74=; b=loJp2x
-	gDquMzXTG1RObRSFdkH/ubv9hjQm3EU116wLRyAS/xAKP+/hiSl0sSdbMtn1UGGh
-	bGT6tv5q40nouBHum9OVSdo76Cx8gxzguXFWALy/yTcAZ73Yu+VrBHu08QO1qHRo
-	V/fR5+Ly0/g/sz4Z8L3H9zjVFCA8lylhMqweY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qnmZrZ1aegZuLNY6PvEQDDm1j2Cl1k3o
-	Reh7pnyDE5+49s9DXddVevUCDi6Dnuq3id1lNuq+e7qjBfAPzaXmJwM0rNDYBBg/
-	5as6jluWn7QiMQHvRMV9o4pDnsSZyz6DO7EgJeQAhsX4lEX7ErZ6Ml+sbBu6WA1Y
-	b4wggtiBHK8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E01C264EE;
-	Thu, 18 Dec 2014 12:06:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 08016264EB;
-	Thu, 18 Dec 2014 12:06:31 -0500 (EST)
-In-Reply-To: <20141218002825.GQ29365@google.com> (Jonathan Nieder's message of
-	"Wed, 17 Dec 2014 16:28:25 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 36EC153C-86D8-11E4-80DA-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751133AbaLRRnX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Dec 2014 12:43:23 -0500
+Received: from mout.web.de ([212.227.15.3]:59389 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751033AbaLRRnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2014 12:43:22 -0500
+Received: from birne.local ([78.72.72.190]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0LbftD-1Xcons1TTv-00lB6q; Thu, 18 Dec 2014 18:43:19
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <885593BD-3024-4811-83A5-D3A0C4CE6AC1@his.com>
+X-Provags-ID: V03:K0:K66XEYnTTsdt0bY/VlyphdO1ETWgpIGqJSlRJj+gv8SJOZBhM4S
+ S9UUHtcbO5qpydzouHTAwHiqqDL8RtbNW4u3WDSAwYKwCR6Ox721QUMy8y/HZbnh0Pff7VZ
+ /u9En/UvPfywS5tUFSrgnGAzaexSmIYVsxcUm35X3wbWQe/wzNJpucZofp2CuDYCk4GZNFJ
+ HW/yHAk5yc1TV1oVrkB+A==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261531>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On 18.12.14 03:15, Kenneth Lorber wrote:
+> The situation is actually slightly more complex than I stated previou=
+sly.  From the docs:
+>   The exit value of this program is negative on error,
+> But there=92s no such thing as a negative error code under Unix, so (=
+at best) that will be exit(255).
+>=20
+> No patch, because this is getting painfully close to needing someone =
+with a global view of the code to fix.
+>=20
+> Thanks,
+> Keni
+>=20
+My spontanous question:
+Would it be save to clamp at 127 ?
 
-> Junio C Hamano wrote:
->
->> The issue is if some existing tests will be helped, if we had such a
->> helper.
->
-> Since both bin-wrappers/git and test-lib.sh set GIT_TEMPLATE_DIR and
-> templates/blt doesn't contain any enabled hooks, I don't see how such
-> a helper would be useful.
+>> +       if (status > 127)
+>> +               status =3D 127;   /* prevent exit() from truncating =
+to 0 or becoming negative */
 
-Probably bin-wrappers/git has gained it after test_setup_repo
-protected itself manually, and I obviously forgot about it. I agree
-with your conclusion below, if test_create_repo has become a no-op
-these days.  Thanks.
 
-> If making things more consistent were worth the churn, then if
-> anything it would make sense to make test_create_repo private to the
-> setup code in test-lib.sh and to use plain 'git init <directory>' in
-> tests.
+(And the rest looked good enough to become a patch,=20
+or at least to start a wider discussion)
