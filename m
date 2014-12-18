@@ -1,84 +1,68 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Improving git branch
-Date: Thu, 18 Dec 2014 11:05:12 +0100
-Message-ID: <5492A6D8.8060509@drmicha.warpmail.net>
-References: <CAHQ6N+qBUcBcG8RC6Co+k_GmJDXCynmyfZmvTjz4bQyH1wG3DA@mail.gmail.com>	<549168DD.1080906@drmicha.warpmail.net> <xmqqvbla80bm.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH 1/1] Documentation: config: typo fixed
+Date: Thu, 18 Dec 2014 17:27:59 +0600
+Message-ID: <1418902079-27794-1-git-send-email-kuleshovmail@gmail.com>
+Cc: <git@vger.kernel.org>, 0xAX <kuleshovmail@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 11:05:25 2014
+X-From: git-owner@vger.kernel.org Thu Dec 18 12:28:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1XxU-0004rp-VK
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 11:05:25 +0100
+	id 1Y1ZGH-0003Hm-MK
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Dec 2014 12:28:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178AbaLRKFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2014 05:05:16 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:39890 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750986AbaLRKFO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2014 05:05:14 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id F3C9920A8A
-	for <git@vger.kernel.org>; Thu, 18 Dec 2014 05:05:13 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 18 Dec 2014 05:05:13 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=glUgaFgfFnJTOcYI03j2zO
-	eQxiI=; b=TnkEEgydNe26Q9erfFsGup+JtN3IlPkkHHh2n3bKlrDIebH+I4pvQW
-	0vJTVMcjvovICCauv17X29tSBAlP/I30Rf/6jKJBUjU1AkQ2UaIebB8zZ2KXoohK
-	U4uQYu1HGyF0wJUX6LgjYP3jxemnisGjXgCi+0mypC8NzQWZUAj5k=
-X-Sasl-enc: mjtg0p5Dl6in3EfBDbdAPqr1kFW+UO8thJaJ9jZjlzrj 1418897113
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 4006C680188;
-	Thu, 18 Dec 2014 05:05:13 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <xmqqvbla80bm.fsf@gitster.dls.corp.google.com>
+	id S1751610AbaLRL2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2014 06:28:43 -0500
+Received: from mail-la0-f51.google.com ([209.85.215.51]:36371 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751057AbaLRL2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2014 06:28:42 -0500
+Received: by mail-la0-f51.google.com with SMTP id ms9so799653lab.24
+        for <git@vger.kernel.org>; Thu, 18 Dec 2014 03:28:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=KtTcTr9zF+OwXjBFrCzGxOtYAphXMXDi59hyu57ikiU=;
+        b=q8kwOZrklcqnRxZX4WcCZx1Aq2yBx8Foc1kQ1QS4HXPO02kGrDqtIfABwfbC3Y+Hyv
+         a9VZhDdy3zqVpR+/K8P0u1sdOoDrDjvz6w+XvrEmFBlH275tJ3XAQAG39l5kHry/k/RH
+         JlhlGKnGIwTmszadKO/q6OB5f5Rg2BsclNh93L6B4WYt/fbZLj8EkncEnvucFG9pvLHh
+         KZn93y7gCX5MZaKHwyC6vA63y+WtUknkrWa6cGiISGFRfwAHvXRi2UZk0tZTMRBcNIIz
+         IRF/frvQMuB+60Jm6NN2T7/1SL4w0neXT8K05exK3zhSeOybU5PrGa1qRpsNbpGpFW8T
+         U0Ww==
+X-Received: by 10.152.36.165 with SMTP id r5mr1622780laj.93.1418902121140;
+        Thu, 18 Dec 2014 03:28:41 -0800 (PST)
+Received: from localhost.localdomain ([2.133.0.167])
+        by mx.google.com with ESMTPSA id zp3sm1692799lbb.45.2014.12.18.03.28.39
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 18 Dec 2014 03:28:40 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.64.g3889e7a.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261521>
 
-Junio C Hamano schrieb am 17.12.2014 um 21:53:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Rather than extending "git branch" any further[*], I suggest a bolder
->> strategy:
->>
->> - unify/merge for-each-ref and pretty formats (and code) as far as possible
->> - leverage that for the list modes of branch and tag
->>
->> That would allow everyone to get their favourite listing, just like for
->> logs. Otherwise it would be very difficult to agree on *the* proper
->> format for an extended branch or tag list.
->>
->> Michael
->>
->>
->> [*] I know I'm a sinner, too.
-> 
-> Actually this is not a "bolder" strategy, but the unification has
-> been discussed and agreed to be the longer-term direction for quite
-> a while, I think.  Didn't Peff have this in his "things to do when
-> absolutely bored" box?
-> 
+From: 0xAX <kuleshovmail@gmail.com>
 
-If "waiting for Peff to be bored" is not a bold strategy then I don't
-know what would be one ;)
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+---
+ Documentation/config.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Seriously, I didn't feel bold enough to claim that this is agreed upon
-but I am more than happy that it is!
-
-If I can squeeze out some more git time from my other obligations I'll
-try and help.
-
-Michael
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f615a5c..a995b68 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -203,7 +203,7 @@ advice.*::
+ 		show directions on how to proceed from the current state.
+ --
+ 
+-core.fileMode::
++core.filemode::
+ 	Tells Git if the executable bit of files in the working tree
+ 	is to be honored.
+ +
+-- 
+2.2.0.64.g3889e7a.dirty
