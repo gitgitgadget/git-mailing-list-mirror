@@ -1,60 +1,73 @@
-From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: Re: Fix wrong catalan translation
-Date: Fri, 19 Dec 2014 09:13:08 -0700
-Message-ID: <CAMMLpeTdTOxEeBAd3h5m5ostoGcQvRrCcQvxa-i34p95PmMp8g@mail.gmail.com>
-References: <CACsWDtysnvwxzQCChVfZAF5fQMoT-qYZhC0cfj3Px2Eris5_ug@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Joan Perals Tresserra <j.pertres@gmail.com>
-To: Albert Astals Cid <aacid@kde.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 17:13:42 2014
+From: dev+git@drbeat.li
+Subject: [PATCH v2 1/5] update_unicode.sh: simplify output capture
+Date: Fri, 19 Dec 2014 17:21:30 +0100
+Message-ID: <1419006094-24572-1-git-send-email-dev+git@drbeat.li>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 19 17:21:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y20BN-0000zg-OC
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 17:13:38 +0100
+	id 1Y20JE-00058R-6N
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 17:21:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752225AbaLSQNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2014 11:13:31 -0500
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:50609 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751792AbaLSQN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2014 11:13:29 -0500
-Received: by mail-ie0-f180.google.com with SMTP id rp18so981380iec.39
-        for <git@vger.kernel.org>; Fri, 19 Dec 2014 08:13:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DeRdZt+VYqQrb849YCZj8UWDtSutwOKog0jsSdVxnyo=;
-        b=SexlJWcNxKdtI6eEZkJx8m4xC5o6YCmFFRorjZIGxR0I843eMy079TRzQJttQYa0oV
-         gu3wxo9YE9vnQb2JLv/A6JEOgNivsKELcNo6E04Dcw+hcJNWTWDLU31d+/DyXqfUCtrc
-         FysBAIIBcUEHXyPcKgTnBNV55xZXIKTOM3LCKy7PhVFq98BsCUoERehZ+DszRPMOsdIW
-         PV9eiyB6EmJRU2x9PKG3iBvgSlGsN1JTwdp9TWEFiYG9Y2SINLRJPKejq8SMixiZcrFN
-         knKbNzMZIRDL+pL7yhGTrHlH/P5ggf2nbdsqxuOwOlaS80BTnrSLr9y5f3e3ZeR+aK+K
-         V4iQ==
-X-Received: by 10.51.16.37 with SMTP id ft5mr3816713igd.6.1419005609033; Fri,
- 19 Dec 2014 08:13:29 -0800 (PST)
-Received: by 10.107.128.194 with HTTP; Fri, 19 Dec 2014 08:13:08 -0800 (PST)
-In-Reply-To: <CACsWDtysnvwxzQCChVfZAF5fQMoT-qYZhC0cfj3Px2Eris5_ug@mail.gmail.com>
+	id S1752635AbaLSQVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2014 11:21:40 -0500
+Received: from smtp2.mail.fcom.ch ([212.60.46.171]:43393 "EHLO
+	smtp2.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751587AbaLSQVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2014 11:21:39 -0500
+Received: from drbeat.li (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
+	by smtp2.mail.fcom.ch (Postfix) with ESMTP id CAE9220E4C
+	for <git@vger.kernel.org>; Fri, 19 Dec 2014 17:21:35 +0100 (CET)
+Received: by drbeat.li (Postfix, from userid 1000)
+	id BBF3420949; Fri, 19 Dec 2014 17:21:34 +0100 (CET)
+X-Mailer: git-send-email 2.1.3
+X-Virus-Scanned: clamav-milter 0.98.4 at smtp2.mail.fcom.ch
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261570>
 
-2014-12-19 3:38 GMT-07:00 Albert Astals Cid <aacid@kde.org>:
-> Hi, i'm attaching a fix for the Catalan translation were it seems some
-> Spanish sneaked in.
+From: Beat Bolli <dev+git@drbeat.li>
 
-Hi Albert, thanks for your interest, and sorry for the error. I'm
-currently working with Joan Perals on a batch of corrections to the
-Catalan translation, including the one you mentioned:
-https://github.com/alexhenrie/git-po/pull/1
+Instead of capturing the output of each echo and uniset invocation, wrap
+the whole section in a group command and redirect its output all at
+once.
 
-Hopefully it will be done soon.
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ update_unicode.sh | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
--Alex
+diff --git a/update_unicode.sh b/update_unicode.sh
+index 000b937..c1c876c 100755
+--- a/update_unicode.sh
++++ b/update_unicode.sh
+@@ -26,12 +26,13 @@ fi &&
+ 			./configure --enable-warnings=-Werror CFLAGS='-O0 -ggdb'
+ 		fi &&
+ 		make
+-	) &&
+-	echo "static const struct interval zero_width[] = {" >$UNICODEWIDTH_H &&
+-	UNICODE_DIR=. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
+-	grep -v plane >>$UNICODEWIDTH_H &&
+-	echo "};" >>$UNICODEWIDTH_H &&
+-	echo "static const struct interval double_width[] = {" >>$UNICODEWIDTH_H &&
+-	UNICODE_DIR=. ./uniset/uniset --32 eaw:F,W >>$UNICODEWIDTH_H &&
+-	echo "};" >>$UNICODEWIDTH_H
++	) && {
++		echo "static const struct interval zero_width[] = {" &&
++		UNICODE_DIR=. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
++		grep -v plane &&
++		echo "};" &&
++		echo "static const struct interval double_width[] = {" &&
++		UNICODE_DIR=. ./uniset/uniset --32 eaw:F,W &&
++		echo "};"
++	} >$UNICODEWIDTH_H
+ )
+-- 
+2.1.3
