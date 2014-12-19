@@ -1,80 +1,74 @@
-From: Albert Astals Cid <aacid@kde.org>
-Subject: Fix wrong catalan translation
-Date: Fri, 19 Dec 2014 11:38:22 +0100
-Message-ID: <CACsWDtysnvwxzQCChVfZAF5fQMoT-qYZhC0cfj3Px2Eris5_ug@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001a11340cacdb19eb050a8f4e5e
-To: alexhenrie24@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 19 11:38:30 2014
+From: dev+git@drbeat.li
+Subject: [PATCH 1/5] update_unicode.sh: simplify output capture
+Date: Fri, 19 Dec 2014 15:39:27 +0100
+Message-ID: <1418999971-21548-1-git-send-email-dev+git@drbeat.li>
+Cc: tboegi@web.de, Beat Bolli <dev+git@drbeat.li>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 19 15:47:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1ux2-0005hi-VX
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 11:38:29 +0100
+	id 1Y1yqG-0001bY-LG
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 15:47:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752456AbaLSKiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2014 05:38:25 -0500
-Received: from mail-la0-f42.google.com ([209.85.215.42]:48379 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098AbaLSKiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2014 05:38:24 -0500
-Received: by mail-la0-f42.google.com with SMTP id gd6so601786lab.1
-        for <git@vger.kernel.org>; Fri, 19 Dec 2014 02:38:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=NInRw4H5CfLcmh89FZMwqTIrsaIAwVPk/yXNgh6P69E=;
-        b=sXbnKzKFYMvewXDn/3kxjR7piH04wBPp1UhnlK2mMaaLNguZcVio9CdGE/BEZOKDVu
-         YXJfFPkztGmkO9KVB9PVnkX0/M/VHOacHCpYa7oYcAh2Eq8Lr7j+kyK8u5p2Evh7YqN6
-         heXYdmxwrz1QUiRRpTTuRQyOuvF4vp0WSP16WyHmKQ8Q9gH1gG9hwKyo4f0Jumw7EEJ6
-         /3NHQn0RWL/PD7Ak3Puzmsz97/o5+mWLnNRYrljggyrxKTZfQMBxXBQvnUqULrcdbqbf
-         QVi9Y7m6Mk133hvFt4NTpzv8fhsKy4kbCxH46lnnMq4VrtMOm2bZTSYU/bzmzCoIQLAZ
-         XbqA==
-X-Received: by 10.152.234.9 with SMTP id ua9mr7039477lac.44.1418985503127;
- Fri, 19 Dec 2014 02:38:23 -0800 (PST)
-Received: by 10.112.10.193 with HTTP; Fri, 19 Dec 2014 02:38:22 -0800 (PST)
-X-Google-Sender-Auth: OZNTbO74AUjalEyxzsCrTLdNeRU
+	id S1752240AbaLSOri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2014 09:47:38 -0500
+Received: from smtp1.mail.fcom.ch ([212.60.46.170]:51443 "EHLO
+	smtp1.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752024AbaLSOrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2014 09:47:37 -0500
+Received: from drbeat.li (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
+	by smtp1.mail.fcom.ch (Postfix) with ESMTP id 9D41E21547;
+	Fri, 19 Dec 2014 15:40:13 +0100 (CET)
+Received: by drbeat.li (Postfix, from userid 1000)
+	id 22FBE20949; Fri, 19 Dec 2014 15:40:13 +0100 (CET)
+X-Mailer: git-send-email 2.1.3
+X-Virus-Scanned: clamav-milter 0.98.4 at smtp1.mail.fcom.ch
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261556>
 
---001a11340cacdb19eb050a8f4e5e
-Content-Type: text/plain; charset=UTF-8
+From: Beat Bolli <dev+git@drbeat.li>
 
-I'm not subscribed, please CC-me.
+Instead of capturing the output of each echo and uniset invocation, wrap
+the whole section in a group command and redirect its output all at
+once.
 
-Hi, i'm attaching a fix for the Catalan translation were it seems some
-Spanish sneaked in.
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ update_unicode.sh | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-Cheers,
-  Albert
-
-P.S: Sending again since your list didn't like me sending this from
-@yahoo mail server
-
---001a11340cacdb19eb050a8f4e5e
-Content-Type: text/x-diff; charset=US-ASCII; 
-	name="0001-Encima-is-not-a-word-in-Catalan.patch"
-Content-Disposition: attachment; 
-	filename="0001-Encima-is-not-a-word-in-Catalan.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_i3vfbvax0
-
-RnJvbSBlOGFlMmRiMGQwZjk3MzZiZDM1ZDkyYTY2ZmM0NmY1OWQ3NjJhZDk1IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGJlcnQgQXN0YWxzIENpZCA8YWFjaWRAa2RlLm9yZz4KRGF0
-ZTogRnJpLCAxOSBEZWMgMjAxNCAxMToxMzozNCArMDEwMApTdWJqZWN0OiBbUEFUQ0hdIEVuY2lt
-YSBpcyBub3QgYSB3b3JkIGluIENhdGFsYW4KCi0tLQogcG8vY2EucG8gfCAyICstCiAxIGZpbGUg
-Y2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9wby9j
-YS5wbyBiL3BvL2NhLnBvCmluZGV4IDFmZWEwNDcuLjEyOGY2M2EgMTAwNjQ0Ci0tLSBhL3BvL2Nh
-LnBvCisrKyBiL3BvL2NhLnBvCkBAIC0xMDczMCw3ICsxMDczMCw3IEBAIG1zZ3N0ciAiQ2Fudmlz
-IGRlICRtYiBhICRvbnRvOiIKIAogIzogZ2l0LXJlYmFzZS5zaDo2MTAKIG1zZ2lkICJGaXJzdCwg
-cmV3aW5kaW5nIGhlYWQgdG8gcmVwbGF5IHlvdXIgd29yayBvbiB0b3Agb2YgaXQuLi4iCi1tc2dz
-dHIgIlByaW1lciwgcmVib2JpbmFudCBlbCBjYXAgcGVyIGEgcmVwcm9kdWlyIGVsIHZvc3RyZSB0
-cmViYWxsIGVuY2ltYS4uLiIKK21zZ3N0ciAiUHJpbWVyLCByZWJvYmluYW50IGVsIGNhcCBwZXIg
-YSByZXByb2R1aXIgZWwgdm9zdHJlIHRyZWJhbGwgYSBzb2JyZS4uLiIKIAogIzogZ2l0LXJlYmFz
-ZS5zaDo2MjAKICMsIHNoLWZvcm1hdAotLSAKMi4xLjMKCg==
---001a11340cacdb19eb050a8f4e5e--
+diff --git a/update_unicode.sh b/update_unicode.sh
+index 000b937..c1c876c 100755
+--- a/update_unicode.sh
++++ b/update_unicode.sh
+@@ -26,12 +26,13 @@ fi &&
+ 			./configure --enable-warnings=-Werror CFLAGS='-O0 -ggdb'
+ 		fi &&
+ 		make
+-	) &&
+-	echo "static const struct interval zero_width[] = {" >$UNICODEWIDTH_H &&
+-	UNICODE_DIR=. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
+-	grep -v plane >>$UNICODEWIDTH_H &&
+-	echo "};" >>$UNICODEWIDTH_H &&
+-	echo "static const struct interval double_width[] = {" >>$UNICODEWIDTH_H &&
+-	UNICODE_DIR=. ./uniset/uniset --32 eaw:F,W >>$UNICODEWIDTH_H &&
+-	echo "};" >>$UNICODEWIDTH_H
++	) && {
++		echo "static const struct interval zero_width[] = {" &&
++		UNICODE_DIR=. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
++		grep -v plane &&
++		echo "};" &&
++		echo "static const struct interval double_width[] = {" &&
++		UNICODE_DIR=. ./uniset/uniset --32 eaw:F,W &&
++		echo "};"
++	} >$UNICODEWIDTH_H
+ )
+-- 
+2.1.3
