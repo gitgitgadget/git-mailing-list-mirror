@@ -1,73 +1,88 @@
-From: dev+git@drbeat.li
-Subject: [PATCH v2 1/5] update_unicode.sh: simplify output capture
-Date: Fri, 19 Dec 2014 17:24:20 +0100
-Message-ID: <1419006264-24741-1-git-send-email-dev+git@drbeat.li>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 19 17:24:50 2014
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: git log --graph --oneline issues (very small edge case)
+Date: Fri, 19 Dec 2014 11:27:46 -0500
+Organization: PD Inc
+Message-ID: <71B93170AE5D4ED08EF12CED427299C4@black>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 19 17:27:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y20M8-0006eO-0h
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 17:24:44 +0100
+	id 1Y20PB-0008Sk-8I
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 17:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667AbaLSQYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2014 11:24:30 -0500
-Received: from smtp4.mail.fcom.ch ([212.60.46.173]:54739 "EHLO
-	smtp4.mail.fcom.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752498AbaLSQY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2014 11:24:27 -0500
-Received: from drbeat.li (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
-	by smtp4.mail.fcom.ch (Postfix) with ESMTP id 9A17A20891
-	for <git@vger.kernel.org>; Fri, 19 Dec 2014 17:24:26 +0100 (CET)
-Received: by drbeat.li (Postfix, from userid 1000)
-	id D7E0F20949; Fri, 19 Dec 2014 17:24:24 +0100 (CET)
-X-Mailer: git-send-email 2.1.3
-X-Virus-Scanned: clamav-milter 0.98.5 at smtp4.mail.fcom.ch
-X-Virus-Status: Clean
+	id S1751935AbaLSQ1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2014 11:27:49 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:35412 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750953AbaLSQ1s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Dec 2014 11:27:48 -0500
+Received: from black (five-58.pdinc.us [192.168.5.58])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id sBJGRlRa018203
+	for <git@vger.kernel.org>; Fri, 19 Dec 2014 11:27:47 -0500
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdAbqLkQxEFAQInPQBCFHex4S+XtsA==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261580>
 
-From: Beat Bolli <dev+git@drbeat.li>
+When a repo has multiple initial commits, the oneline graph can get borked.
 
-Instead of capturing the output of each echo and uniset invocation, wrap
-the whole section in a group command and redirect its output all at
-once.
+It will put a commit * with no parent directly above the next commit * with no children. This gives the false impression that the two commits are a sequence on a branch. E.g:
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- update_unicode.sh | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+* xxxxxxx update of A (#0011)
+* xxxxxxx merge of B->A (#0010)
+|\
+| * xxxxxxx update of B (#0009)
+* | xxxxxxx update of A (#0008)
+* | xxxxxxx update of A (#0007)
+| * xxxxxxx update of B (#0006)
+| * xxxxxxx update of B (#0005)
+| * xxxxxxx inital commit B (#0004)
+| * xxxxxxx update of A' (#0003)
+| * xxxxxxx fork of A (#0002)
+|/
+* xxxxxxx intial commit A (#0001)
 
-diff --git a/update_unicode.sh b/update_unicode.sh
-index 000b937..c1c876c 100755
---- a/update_unicode.sh
-+++ b/update_unicode.sh
-@@ -26,12 +26,13 @@ fi &&
- 			./configure --enable-warnings=-Werror CFLAGS='-O0 -ggdb'
- 		fi &&
- 		make
--	) &&
--	echo "static const struct interval zero_width[] = {" >$UNICODEWIDTH_H &&
--	UNICODE_DIR=. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
--	grep -v plane >>$UNICODEWIDTH_H &&
--	echo "};" >>$UNICODEWIDTH_H &&
--	echo "static const struct interval double_width[] = {" >>$UNICODEWIDTH_H &&
--	UNICODE_DIR=. ./uniset/uniset --32 eaw:F,W >>$UNICODEWIDTH_H &&
--	echo "};" >>$UNICODEWIDTH_H
-+	) && {
-+		echo "static const struct interval zero_width[] = {" &&
-+		UNICODE_DIR=. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
-+		grep -v plane &&
-+		echo "};" &&
-+		echo "static const struct interval double_width[] = {" &&
-+		UNICODE_DIR=. ./uniset/uniset --32 eaw:F,W &&
-+		echo "};"
-+	} >$UNICODEWIDTH_H
- )
--- 
-2.1.3
+It should put a blank line after a commit without a parent, like so:
+
+* xxxxxxx update of A (#0011)
+* xxxxxxx merge of B->A (#0010)
+|\
+| * xxxxxxx update of B (#0009)
+* | xxxxxxx update of A (#0008)
+* | xxxxxxx update of A (#0007)
+| * xxxxxxx update of B (#0006)
+| * xxxxxxx update of B (#0005)
+| * xxxxxxx inital commit B (#0004)
+|
+| * xxxxxxx update of A' (#0003)
+| * xxxxxxx fork of A (#0002)
+|/
+* xxxxxxx intial commit A (#0001)
+
+Unless it is the last commit to be output.
+
+I hit this in the wild https://github.com/pdinc-oss/CipherShed.git, but now that the branches are merged the graph looks fine.
+
+-Jason
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
