@@ -1,96 +1,92 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] refs.c: remove extern keyword from function definition
-Date: Fri, 19 Dec 2014 17:24:56 +0000
-Message-ID: <54945F68.9000807@ramsay1.demon.co.uk>
+From: "Nicolas Pennequin (npennequ)" <npennequ@cisco.com>
+Subject: Gitk: "argument list too long"
+Date: Fri, 19 Dec 2014 17:32:22 +0000
+Message-ID: <D0BA1FB7.16EC4%npennequ@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 19 18:25:21 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 19 18:42:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y21Im-0006OB-Hu
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 18:25:20 +0100
+	id 1Y21Yy-00070s-UE
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 18:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbaLSRZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2014 12:25:04 -0500
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:55473 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751082AbaLSRZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2014 12:25:03 -0500
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 69BA3401318;
-	Fri, 19 Dec 2014 17:24:46 +0000 (GMT)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id D6202400DED;
-	Fri, 19 Dec 2014 17:24:45 +0000 (GMT)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
-	Fri, 19 Dec 2014 17:24:45 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-X-MDF-HostID: 19
+	id S1752472AbaLSRmA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Dec 2014 12:42:00 -0500
+Received: from rcdn-iport-3.cisco.com ([173.37.86.74]:21143 "EHLO
+	rcdn-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbaLSRl7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Dec 2014 12:41:59 -0500
+X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Dec 2014 12:41:59 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=678; q=dns/txt; s=iport;
+  t=1419010919; x=1420220519;
+  h=from:to:subject:date:message-id:content-id:
+   content-transfer-encoding:mime-version;
+  bh=zHXpaRGtcGtf/fAUEtYBnIAnh7rlUjYxqmfICzt1b7U=;
+  b=jZP/J3/NWDAKp5BM5zaMWcfGZ9IWoXTTf03rREDcijuVX67ut7uRAq6n
+   AYg5Bs1fEXe4D7+7g4YDODzE3T4jwEf2MODtuQygMRtoIYltj8R9BoEJ3
+   Cf4/YdoUcrY1Iv0NCkWJM60RanWWIs7Ga4uA7O4zakVYuGpDUcDVMF50A
+   c=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AjMFANxglFStJV2S/2dsb2JhbABagwaBLsN9iTQWAQEBAQF9hBOBCwGBACcEiD+rJaVjAQEIAgEflCIFiRyEcYhykUgig26CNH4BAQE
+X-IronPort-AV: E=Sophos;i="5.07,607,1413244800"; 
+   d="scan'208";a="381411675"
+Received: from rcdn-core-10.cisco.com ([173.37.93.146])
+  by rcdn-iport-3.cisco.com with ESMTP; 19 Dec 2014 17:32:23 +0000
+Received: from xhc-aln-x12.cisco.com (xhc-aln-x12.cisco.com [173.36.12.86])
+	by rcdn-core-10.cisco.com (8.14.5/8.14.5) with ESMTP id sBJHWNl0012208
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 19 Dec 2014 17:32:23 GMT
+Received: from xmb-aln-x08.cisco.com ([169.254.3.252]) by
+ xhc-aln-x12.cisco.com ([173.36.12.86]) with mapi id 14.03.0195.001; Fri, 19
+ Dec 2014 11:32:23 -0600
+Thread-Topic: Gitk: "argument list too long"
+Thread-Index: AQHQG7G/xrdX0NqWeEeiTlltNs+npg==
+Accept-Language: fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/14.4.6.141106
+x-originating-ip: [10.60.62.1]
+Content-ID: <0023AAB9F1AEBF4A9BD70CE83D8ED960@emea.cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261583>
+
+Hi,
+
+I=B9m having some trouble with gitk on Mac using a very large repositor=
+y
+(chromium/src).
+I=B9m using git version 2.2.1 from Homebrew.
+
+The error details are the following:
+
+couldn't execute "git": argument list too long
+couldn't execute "git": argument list too long
+    while executing
+"open [concat $cmd $ids] r"
+    (procedure "getallcommits" line 47)
+    invoked from within
+"getallcommits"
+    (procedure "readcache" line 80)
+    invoked from within
+"readcache file10"
+    ("eval" body line 1)
+    invoked from within
+"eval $script"
+    (procedure "dorunq" line 11)
+    invoked from within
+"dorunq"
+    ("after" script)
 
 
-Commit 5ed85684 ("reflog_expire(): new function in the reference
-API", 12-12-2014) added a new function definition which included
-the extern keyword.
-
-While this is not an illegal use of the keyword, it is somewhat
-unusual to include it in a function definition. (It would be
-unique in the git codebase). Also, it triggers a warning from
-sparse. In order to suppress the warning, simply remove the
-extern keyword from reflog_expire() definition.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Michael,
-
-If you need to re-roll your 'mh/reflog-expire' series, could you
-please squash this into the relevant patch.
-
-Thanks!
-
-ATB,
-Ramsay Jones
- 
- refs.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 3bd686c..fdef36d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -4020,12 +4020,12 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	return 0;
- }
- 
--extern int reflog_expire(const char *refname, const unsigned char *sha1,
--			 unsigned int flags,
--			 reflog_expiry_prepare_fn prepare_fn,
--			 reflog_expiry_should_prune_fn should_prune_fn,
--			 reflog_expiry_cleanup_fn cleanup_fn,
--			 void *policy_cb_data)
-+int reflog_expire(const char *refname, const unsigned char *sha1,
-+		 unsigned int flags,
-+		 reflog_expiry_prepare_fn prepare_fn,
-+		 reflog_expiry_should_prune_fn should_prune_fn,
-+		 reflog_expiry_cleanup_fn cleanup_fn,
-+		 void *policy_cb_data)
- {
- 	static struct lock_file reflog_lock;
- 	struct expire_reflog_cb cb;
--- 
-2.2.0
+Regards,
+Nicolas
