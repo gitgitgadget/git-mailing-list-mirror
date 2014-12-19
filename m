@@ -1,118 +1,104 @@
-From: Craig Silverstein <csilvers@khanacademy.org>
-Subject: Are simultaneous fetches safe?
-Date: Fri, 19 Dec 2014 11:17:53 -0800
-Message-ID: <CAGXKyzFfzxwhQJJWXqivU2U940Pq3my_gTKS6RJzfO_OVsOygg@mail.gmail.com>
-Reply-To: csilvers@khanacademy.org
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 19 20:18:00 2014
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv6 0/7] atomic pushes
+Date: Fri, 19 Dec 2014 11:38:54 -0800
+Message-ID: <1419017941-7090-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
+	gitster@pobox.com, sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Fri Dec 19 20:39:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y233n-0003rd-Lx
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 20:18:00 +0100
+	id 1Y23OQ-0005Zt-QJ
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 20:39:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751384AbaLSTRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2014 14:17:55 -0500
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:50815 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751156AbaLSTRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2014 14:17:54 -0500
-Received: by mail-ig0-f175.google.com with SMTP id h15so1169864igd.14
-        for <git@vger.kernel.org>; Fri, 19 Dec 2014 11:17:54 -0800 (PST)
+	id S1751952AbaLSTjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2014 14:39:13 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:43620 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751279AbaLSTjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2014 14:39:12 -0500
+Received: by mail-ie0-f177.google.com with SMTP id rd18so1321353iec.22
+        for <git@vger.kernel.org>; Fri, 19 Dec 2014 11:39:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=khanacademy.org; s=google;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        bh=nmtC7lgywfiO3tt8/sqIIDMcGQNDaw3qXMzgVsffVDk=;
-        b=O9gva5phfG0nOE7HmhIVdmQNDx0TMRNZd2N6BXzRHO8YpRZCLnk1yVcFvQ6z9HyOOQ
-         GZS812buA4L7V+u0Wrdj+5M3FvIl4QDKrh6Bupf13wu3IMuqZebcfLDqcMfx0wLr8MV/
-         XmkWmiQEtGsQNFKvMbD0FHBXyzTjCoIDMFzG8=
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=cDNUj91IuZyJiJSsKTwHbnM5J1aHE43OJk2Kig4YZE4=;
+        b=THb7Xdie2luzAtNWaFw2XAhDPuXPQg92Mr+btcABnQq6ZCvyy/o7sFJekguv0sOd18
+         gxXQZlDGYPKooz33Ye5vN8uzvxtTsnbYSOdgc4Lr61iymZ1m+Jt6uZu/xsXoRMNM7a0o
+         E8xIrCYyhgw+A3u/06NXiYwNOqgnCvnuCgvq5QrdCad5wAahfNpDEzRpNZ5NCehXKpGp
+         x7IT/L4afpXc7HYOq95eoN0uSqb4MNFSZ+ezNvfuERsYcvWCY9erhyaWqXmAVtE+3OKA
+         6MxWCZYZi3gNBM1TBj0D93sWpzAm2NaamwqwwfYHg6TI4/iYYrc43NBlfyyXxxI41ONr
+         cIqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:date:message-id:subject
-         :from:to:content-type;
-        bh=nmtC7lgywfiO3tt8/sqIIDMcGQNDaw3qXMzgVsffVDk=;
-        b=gryK7DN0zvrKbRQ89kePA3+XjVsEWx/sAPHsm3AWSV8wI0VWsQ9kEJBN83Z8Q3U9b7
-         iAzzMj/L9Exqem1FHrHwCR8d5Ljm/8DPfzQDnf+QoezOQHhGbJBTVhNtedvHBdvuCJej
-         idPsyf+Hjw37fgd+Hdk99n7QVFruLR2b5I2e0KJk0N4MO2nYPgXA/u0bhN2A6kLS8Irm
-         MJa/waeLH/+JFOqCiymLrkWFvFUZGXJI52/Wyp+o52UAUxI3USImmJa5dd5Z0ZLFSSYo
-         n2qlK/lxh+NG/6dnrwMttNTvXlONso8srgWcNKb5+4cliMJ+HIBjlGk+t0eIUsSb92VR
-         jG7g==
-X-Gm-Message-State: ALoCoQmhOBCRXOgLmPWELHNKOLI5tcNq1HVw7q9hvkh0cNwZWg+tklfl3dSyau0AXPnON574moeb
-X-Received: by 10.50.127.241 with SMTP id nj17mr4820680igb.22.1419016673894;
- Fri, 19 Dec 2014 11:17:53 -0800 (PST)
-Received: by 10.107.7.159 with HTTP; Fri, 19 Dec 2014 11:17:53 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=cDNUj91IuZyJiJSsKTwHbnM5J1aHE43OJk2Kig4YZE4=;
+        b=VG5aSUq0nbbqWWIcvDDajjlJq0QxtscfK7N5uo5LQsMyepujCQSFEAeWC6Fws5etUd
+         U5P0gzlo0QL9oHAuzCpHMDdxiMRjfdL9JBuit8AuHm945N+XIk93RemJHRnurA26bUfr
+         OMhpGCH92+H7kyK3AQjq2O9rwYD3ZLIq6FiYDhbvdqjr/HaIIDkdW8fZtHKK+girtwg3
+         MaENNL5zsvh2u6RFRK+55FM3omFMRIZXKp4kMG6ORtiWwoRdi2Tek+wVgafpA5dLzNpH
+         H1m9ZkGQbstLU8Vs2W4QYKktchMI8qJLav1IzRHWGx9J5g+Ygr8YM3lsAxhqxbE4eWs4
+         yJ6g==
+X-Gm-Message-State: ALoCoQl9AIxciKsdxJuGzdDGcPVqfMwtdqqhuKydr+zYa5S/Mqjaw2V5BiECS4jb/lWdOexCzy+8
+X-Received: by 10.50.127.146 with SMTP id ng18mr4781803igb.17.1419017951609;
+        Fri, 19 Dec 2014 11:39:11 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:5827:d4a2:8bd5:ac5d])
+        by mx.google.com with ESMTPSA id l14sm4936822ioi.31.2014.12.19.11.39.10
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 19 Dec 2014 11:39:11 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.62.g3f15098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261586>
 
-(Separated out from another thread since this issue seems more general.)
+This patch series adds a flag to git push to update the remote refs atomically.
 
-I am planning to use 'git new-workdir', which basically lets several
-workspaces share a single .git/refs directory. (Among other dirs in
-.git) It's possible that I'll end up running 'git fetch' in these
-workspaces simultaneously, meaning they'll be trying to update
-.git/ref at the same time.  Is this safe?  I know there's a push-lock,
-but there doesn't seem to be a fetch-lock.
+This series applies on top of origin/mh/reflog-expire
+It can also be found at github[1].
 
-When I tried it, I got some errors:
+This series incorporates all suggestions by Eric. Most changes appear in
+patch 4/7 as it is a complete rewrite compared to v5 of this patch series.
+5/7 is new to the series and cleans up the rewrite by moving the function
+execute_command around.
 
-Running 'git fetch' in window 1:
----
-khan% git fetch origin
-remote: Counting objects: 37, done.
-remote: Compressing objects: 100% (37/37), done.
-remote: Total 37 (delta 11), reused 0 (delta 0)
-Unpacking objects: 100% (37/37), done.
-From github.com:Khan/webapp
-   1f893f3..a9d6739  master     -> origin/master
-   2641d9f..b630758  athena     -> origin/athena
- + 2a83b90...b7ca8be chris      -> origin/chris  (forced update)
-   0e74194..a9d6739  sat        -> origin/sat
- * [new tag]         gae-1219-0726-b7ca8bef9b50 -> gae-1219-0726-b7ca8bef9b50
- * [new tag]         gae-1219-0908-a9d67391b44c -> gae-1219-0908-a9d67391b44c
----
-
-Running 'git fetch' in window2 at the same time, in the same directory:
----
-khan% git fetch origin
-error: Ref refs/remotes/origin/master is at
-a9d67391b44cc8df8336afbc0b0a53691eae1bd4 but expected
-1f893f3a4d78012964fc7fb93d1f61eacb1b4858
-From github.com:Khan/webapp
- ! 1f893f3..a9d6739  master     -> origin/master  (unable to update local ref)
-error: Ref refs/remotes/origin/athena is at
-b63075834f77e494c56aade8ef8d7154f174865c but expected
-2641d9ff052769aca8919c5528f02d65210a12cf
- ! 2641d9f..b630758  athena     -> origin/athena  (unable to update local ref)
-error: Ref refs/remotes/origin/chris is at
-b7ca8bef9b5011aa763104f1193b60dd91e0ba0c but expected
-2a83b9042cfd1d73970cf0333910f4db978fbc71
- ! 2a83b90...b7ca8be chris      -> origin/chris  (unable to update local ref)
-error: Ref refs/remotes/origin/sat is at
-a9d67391b44cc8df8336afbc0b0a53691eae1bd4 but expected
-0e74194f8a07a13dbae023f88d9cdf2ddcc3566f
- ! 0e74194..a9d6739  sat        -> origin/sat  (unable to update local ref)
- * [new tag]         gae-1219-0726-b7ca8bef9b50 -> gae-1219-0726-b7ca8bef9b50
- * [new tag]         gae-1219-0908-a9d67391b44c -> gae-1219-0908-a9d67391b44c
----
-
-Are these errors benign, or is there the risk of corruption of some
-kind?  Is there the possibility of corruption in other dirs as well,
-such as .git/objects?
-
-Is it possible that both fetch's could prompt a gc run, and if so, is
-there a risk that two gc's running simultaneously could cause
-problems?
-
-(Here's the full list of .git dirs shared across workspaces, according
-to https://github.com/git/git/blob/master/contrib/workdir/git-new-workdir):
-   config refs logs/refs objects info hooks packed-refs remotes rr-cache svn
+Any comments are welcome!
 
 Thanks,
-craig
+Stefan
+
+[1] https://github.com/stefanbeller/git/tree/atomic-push-v6
+
+Ronnie Sahlberg (3):
+  receive-pack.c: add protocol support to negotiate atomic-push
+  send-pack.c: add --atomic command line argument
+  push.c: add an --atomic argument
+
+Stefan Beller (4):
+  send-pack: Rename ref_update_to_be_sent to check_to_send_update
+  receive-pack.c: receive-pack.c: use a single ref_transaction for
+    atomic pushes
+  receive-pack: move execute_commands_non_atomic before execute_commands
+  t5543-atomic-push.sh: add basic tests for atomic pushes
+
+ Documentation/git-push.txt                        |   7 +-
+ Documentation/git-send-pack.txt                   |   7 +-
+ Documentation/technical/protocol-capabilities.txt |  13 +-
+ builtin/push.c                                    |   2 +
+ builtin/receive-pack.c                            | 165 +++++++++++++++-----
+ builtin/send-pack.c                               |   6 +-
+ remote.h                                          |   3 +-
+ send-pack.c                                       |  66 +++++++-
+ send-pack.h                                       |   3 +-
+ t/t5543-atomic-push.sh                            | 178 ++++++++++++++++++++++
+ transport.c                                       |   5 +
+ transport.h                                       |   1 +
+ 12 files changed, 405 insertions(+), 51 deletions(-)
+ create mode 100755 t/t5543-atomic-push.sh
+
+-- 
+2.2.1.62.g3f15098
