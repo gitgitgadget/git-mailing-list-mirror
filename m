@@ -1,10 +1,10 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv3 1/6] receive-pack.c: add protocol support to negotiate atomic
-Date: Thu, 18 Dec 2014 20:05:38 -0500
-Message-ID: <CAPig+cT1HGF+Vjc8Jag7UcsXUYegbdYjNAtJYgGgreR3tXrR0g@mail.gmail.com>
+Subject: Re: [PATCHv3 3/6] send-pack.c: add --atomic command line argument
+Date: Thu, 18 Dec 2014 20:22:38 -0500
+Message-ID: <CAPig+cSHp+4Q3yM8EeG-b3VqofuuhAjaKRMrjJ=5jGutY2eKhw@mail.gmail.com>
 References: <xmqqzjaobl0q.fsf@gitster.dls.corp.google.com>
 	<1418841177-12152-1-git-send-email-sbeller@google.com>
-	<1418841177-12152-2-git-send-email-sbeller@google.com>
+	<1418841177-12152-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
@@ -14,98 +14,134 @@ Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
 	Git List <git@vger.kernel.org>,
 	Ronnie Sahlberg <sahlberg@google.com>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 19 02:05:45 2014
+X-From: git-owner@vger.kernel.org Fri Dec 19 02:22:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y1m0l-0001ew-U7
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 02:05:44 +0100
+	id 1Y1mHE-0002LS-PY
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Dec 2014 02:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751609AbaLSBFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2014 20:05:39 -0500
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:42078 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196AbaLSBFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2014 20:05:38 -0500
-Received: by mail-ob0-f172.google.com with SMTP id va8so8810065obc.3
-        for <git@vger.kernel.org>; Thu, 18 Dec 2014 17:05:38 -0800 (PST)
+	id S1751844AbaLSBWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2014 20:22:40 -0500
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:48020 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751822AbaLSBWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2014 20:22:39 -0500
+Received: by mail-yk0-f180.google.com with SMTP id 9so9465ykp.25
+        for <git@vger.kernel.org>; Thu, 18 Dec 2014 17:22:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=iAfT2fNqHN8GUFCjGl8beBf68XZqMaCix8izgVdD7Is=;
-        b=qTz1GiRhoyCdc43qJeI3oA1RmnvMGYmrJrCNHLpr123CHhwOv5MYsjOHSQ/0MUg4IQ
-         F0LL8JvqHclNp2M0+pEC/fG8ZvqOzwTweCHnBDVyZiB1WbK9t2MkoGGPmNWZOFKlFBMj
-         /npxL+O89w8Y0dBhOL5LjDoCqldKHDWFqjQQsTjltWZU+O1UG/9XReaBnwUS1VR8C/bP
-         RiIgSFt3vIBpBxpgB8tMujltF5Lxg6Hdk1leCDMB0GA5ZJXx8d77jpcSAtgDm5a49kZ5
-         Lg7frymniLZcbzESXpJOZXLD+46bhZ/H1gKa9SCM1N0dHakLGsk7+cD1+sgNWwxNlFSp
-         ZqBQ==
-X-Received: by 10.236.89.172 with SMTP id c32mr4368741yhf.180.1418951138289;
- Thu, 18 Dec 2014 17:05:38 -0800 (PST)
-Received: by 10.170.79.215 with HTTP; Thu, 18 Dec 2014 17:05:38 -0800 (PST)
-In-Reply-To: <1418841177-12152-2-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: JmmvF-2QyFEkhAvXm_PxH_WCErg
+        bh=ZBfG1sNGurpHXz0rrK6vmFMPViJNju0peZe/4NfWADw=;
+        b=uynUlaq7sPa0ibGo1SnFCgrO+MYkwKKX3Ln/vnTxZLub1XKlziEPSKPSODZxM4xyz9
+         PGZ+OtNd7HbDbvpMmlhVdfJHYiSUBUasLSDQw3VID390M/UxEwe8kfqsIj5J/cv+GSFe
+         goGqgZANEJGdNAZvJJYKm+6XUmx42L4VQ6vLV+xMY2GFwUhtkoOIxY2gQZprMGqKuOTf
+         IOTv9ziLPN7oMLl0zMBB4LdTBB4riChDfxkPAxmtx6paSYtYJ6aFIKFoNN+nfhxLBykA
+         jkSA9wy5bEZ/S8QBiWyQ9P7Yg7Fq11wwr+nxQIkNFBJ7mGsSzGvEYTxnM9RpXFFh62e3
+         cuzw==
+X-Received: by 10.170.78.130 with SMTP id u124mr4844030yku.91.1418952158752;
+ Thu, 18 Dec 2014 17:22:38 -0800 (PST)
+Received: by 10.170.79.215 with HTTP; Thu, 18 Dec 2014 17:22:38 -0800 (PST)
+In-Reply-To: <1418841177-12152-4-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: JF61azqmOs3qb8d9ddAsSQPTP6k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261545>
 
 On Wed, Dec 17, 2014 at 1:32 PM, Stefan Beller <sbeller@google.com> wrote:
 > From: Ronnie Sahlberg <sahlberg@google.com>
 >
-> This adds support to the protocol between send-pack and receive-pack to
-> * allow receive-pack to inform the client that it has atomic push capability
-> * allow send-pack to request atomic push back.
->
-> There is currently no setting in send-pack to actually request that atomic
-> pushes are to be used yet. This only adds protocol capability not ability
-> for the user to activate it.
+> This adds support to send-pack to negotiate and use atomic pushes
+> iff the server supports it. Atomic pushes are activated by a new command
+> line flag --atomic.
 >
 > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-> diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-> index 6d5424c..68ec23d 100644
-> --- a/Documentation/technical/protocol-capabilities.txt
-> +++ b/Documentation/technical/protocol-capabilities.txt
-> @@ -244,6 +245,14 @@ respond with the 'quiet' capability to suppress server-side progress
->  reporting if the local progress reporting is also being suppressed
->  (e.g., via `push -q`, or if stderr does not go to a tty).
+> diff --git a/send-pack.c b/send-pack.c
+> index 77e4201..a696d5c 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -282,6 +282,30 @@ free_return:
+>         return update_seen;
+>  }
 >
-> +atomic
-> +------
 > +
-> +If the server sends the 'atomic' capability it is capable of accepting
-> +atomic pushes. If the pushing client requests this capability, the server
-> +will update the refs in one single atomic transaction. Either all refs are
-
-"one single atomic" sounds awfully redundant.
-
-> +updated or none.
+> +static int atomic_push_failure(struct send_pack_args *args,
+> +                              struct ref *remote_refs,
+> +                              struct ref *failing_ref)
+> +{
+> +       struct ref *ref;
+> +       /* Mark other refs as failed */
+> +       for (ref = remote_refs; ref; ref = ref->next) {
+> +               if (!ref->peer_ref && !args->send_mirror)
+> +                       continue;
 > +
->  allow-tip-sha1-in-want
->  ----------------------
->
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 32fc540..e76e5d5 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -328,6 +332,10 @@ int send_pack(struct send_pack_args *args,
->                         "Perhaps you should specify a branch such as 'master'.\n");
->                 return 0;
->         }
-> +       if (args->atomic && !atomic_supported) {
-> +               return error("server does not support atomic push.");
-
-Just above this code, the 'args->push_cert' check uses die() rather
-than error() when the remote side fails to support the requested
-feature.
-
+> +               switch (ref->status) {
+> +               case REF_STATUS_EXPECTING_REPORT:
+> +                       ref->status = REF_STATUS_ATOMIC_PUSH_FAILED;
+> +                       continue;
+> +               default:
+> +                       ; /* do nothing */
+> +               }
 > +       }
-> +       use_atomic = atomic_supported && args->atomic;
->
->         if (status_report)
->                 strbuf_addstr(&cap_buf, " report-status");
+> +       error("atomic push failed for ref %s. "
+> +             "status: %d\n", failing_ref->name, failing_ref->status);
+> +       return -1;
+
+error() returns -1, so:
+
+    return error(...);
+
+Also, why split the string literal like that? It's not warranted by
+the indentation level. Instead:
+
+    return error("atomic push failed for ref %s. status: %d\n",
+        failing_ref->name, failing_ref->status);
+
+> +}
+> +
+>  int send_pack(struct send_pack_args *args,
+>               int fd[], struct child_process *conn,
+>               struct ref *remote_refs,
+> @@ -373,9 +397,21 @@ int send_pack(struct send_pack_args *args,
+>          * the pack data.
+>          */
+>         for (ref = remote_refs; ref; ref = ref->next) {
+> -               if (check_to_send_update(ref, args) < 0)
+> +               switch (check_to_send_update(ref, args)) {
+> +               case 0: /* no error */
+> +                       break;
+> +               case -CHECK_REF_STATUS_REJECTED:
+
+I realize that Junio said that this could wait for cleanup patch by
+someone later, but I'd argue that defining these constants now with
+their proper negative values would be beneficial:
+
+First, it is a potential maintenance burden that each person working
+on the code later must remember to negate the constants each time they
+are used. Forgetting to do so will lead to incorrect behavior.
+
+Second, negating these constants at point-of-use implies incorrectly
+that there is some valid use-case for the non-negated forms. It's
+misleading and confusing.
+
+> +                       /*
+> +                        * When we know the server would reject a ref update if
+> +                        * we were to send it and we're trying to send the refs
+> +                        * atomically, abort the whole operation.
+> +                        */
+> +                       if (use_atomic)
+> +                               return atomic_push_failure(args, remote_refs, ref);
+> +                       /* Fallthrough for non atomic case. */
+> +               default:
+>                         continue;
+> -
+> +               }
+>                 if (!ref->deletion)
+>                         need_pack_data = 1;
