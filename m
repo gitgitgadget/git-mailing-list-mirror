@@ -1,72 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] configure.ac: check tv_nsec field in struct stat
-Date: Sun, 21 Dec 2014 16:47:02 -0500
-Message-ID: <CAPig+cQmFBJYu-fJmOWV5zVRqPphi=aA+fJ8sBAVnHyXPNbAJQ@mail.gmail.com>
-References: <1419188016-26134-1-git-send-email-reubenhwk@gmail.com>
-	<CAPig+cQWpq12axtJNsjoiKLKTpi6_xreS1fYDXYBtNv0Bj=T2Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-config support for diff.relative setting
+Date: Sun, 21 Dec 2014 14:46:16 -0800
+Message-ID: <xmqqppbcbozr.fsf@gitster.dls.corp.google.com>
+References: <54954054.7080201@shysecurity.com>
+	<CFEBFB254713492C988FED7E11475227@PhilipOakley>
+	<xmqq61d5d7yn.fsf@gitster.dls.corp.google.com>
+	<54972281.9050603@shysecurity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Reuben Hawkins <reubenhwk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 22:47:12 2014
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: kelson@shysecurity.com
+X-From: git-owner@vger.kernel.org Sun Dec 21 23:46:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y2oLG-0002oI-EO
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Dec 2014 22:47:10 +0100
+	id 1Y2pGa-0004oI-6Y
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Dec 2014 23:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753147AbaLUVrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2014 16:47:04 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:58488 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753097AbaLUVrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2014 16:47:03 -0500
-Received: by mail-yh0-f42.google.com with SMTP id v1so1815012yhn.1
-        for <git@vger.kernel.org>; Sun, 21 Dec 2014 13:47:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=zL/l7Nrj6RJncJIeY8m1phCJgRFkfWCrXbbT+jaS2Vk=;
-        b=mfeo6RSQ0Y265vWJpxp3x6tbdhGWHiOFWT+krFGUUyl9CqZmKH8Q4ym+IjgDpo75gT
-         yneV7z3ZPjMqntYxjjcOZzX1UEKe1mDLSrNA44PpuwMmUEHU5qsm7QDmjUpIbpnijjsq
-         biiarDJxpWr2zJHtf41iFOuTSiU+cVfcgCXlVpgAXNZtWIRHO7AOteyOxKuPPHv+lhVk
-         N3tUyM3E9qcev9PsY99U53pGDY8zgRVaGqlb9taeLMzQ0hj9piHQdGXHehdvY7f+TpsO
-         H3ERQJORU+OnSJZ2Ymp0IHgWng4h5NtCf1drax3/LNmcQxOA+CvOHNLEnX+/JjF7Jx1O
-         yPTQ==
-X-Received: by 10.236.14.36 with SMTP id c24mr15367096yhc.166.1419198422402;
- Sun, 21 Dec 2014 13:47:02 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Sun, 21 Dec 2014 13:47:02 -0800 (PST)
-In-Reply-To: <CAPig+cQWpq12axtJNsjoiKLKTpi6_xreS1fYDXYBtNv0Bj=T2Q@mail.gmail.com>
-X-Google-Sender-Auth: 90g750RUmpsLoUoUoQeRXHrO00E
+	id S1753129AbaLUWqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2014 17:46:20 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58796 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752581AbaLUWqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2014 17:46:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 80E1C26072;
+	Sun, 21 Dec 2014 17:46:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EMr7XcJ+RtPZ76WkPTEj90mlB9o=; b=dC6LeP
+	nshFdKlTwrkCBSXfSqVI+2xjrER847JyE116EwHgOgkunXsXROnMGnsBNydnnWGT
+	lFDhr2eeIT1+po3QXaPEJSc8MaxGcsDBXeN8E3/Z9exYZJ1z2icQ7nZT9AIhJ6gi
+	bBTqD0TUZAC14S65qGxjL094D1hXQ9K79REks=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GuWq/TpBFJoXDXdO+gxC0bo6Z0cM+LZE
+	BKybMNNjekhiJiAmCxqATOVyp5whWvSQUVP+sDCDxNHs2GFVUfcdCsUWjZugHxj3
+	ETSbzt3Wrk/dUvPRR4+JOTYd+bev/iC7dUW2ChpGELJJ6hSITqKYlRUuORsXQjQg
+	K0wxCUpf7hc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 74CD926071;
+	Sun, 21 Dec 2014 17:46:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9E582606F;
+	Sun, 21 Dec 2014 17:46:17 -0500 (EST)
+In-Reply-To: <54972281.9050603@shysecurity.com> (kelson@shysecurity.com's
+	message of "Sun, 21 Dec 2014 14:41:53 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2D1E60A4-8963-11E4-B982-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261633>
 
-On Sun, Dec 21, 2014 at 3:20 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Dec 21, 2014 at 1:53 PM, Reuben Hawkins <reubenhwk@gmail.com> wrote:
->> +AC_CHECK_MEMBER([struct stat.st_mtim.tv_nsec],
->> +[HAVE_ST_MTIM=Yes],
->> +[HAVE_ST_MTIM=No],
->
-> In Autoconf, it's customary to use lowercase values (such as "yes"
-> rather than "Yes") for these temporary variables. A "no" value is
-> usually represented by an empty assignment (HAVE_ST_MTIM=). However,
-> AC_CHECK_MEMBER() assigns the test result automatically to a shell
-> variable (in this case, named
-> ac_cv_member_struct_stat_st_mtim_tv_nsec), so there is no need to
-> invent your own (HAVE_ST_MTIM).
->
-> So, you can reduce this to:
->
->    AC_CHECK_MEMBER([struct stat.st_mtim.tv_nsec])
->
-> and later check the value with
->
->     test x$ac_cv_member_struct_stat_st_mtim_tv_nsec = yes
+kelson@shysecurity.com writes:
 
-Apple auto-correction strikes again: s/yes/xyes/
+>> "Philip Oakley" <philipoakley@iee.org> wrote:
+>> Shouldn't this `(identical to "git diff --relative")` also be
+>>included in the documentation change? It would truly clarify the
+>> intenbt for the reader.
+>
+> Updated as follows:
+> +diff.relative::
+> +	Show pathnames relative to the current directory and exclude
+> +	changes outside this directory; equivalent to the 'git diff'
+> +	option '--relative'.
+>
+>> "Junio C Hamano" <gitster@pobox.com> wrote:
+>> There should be a way to run non-relative diff in a repository that
+>> has the configuration set, perhaps by overriding with some command
+>> line option (e.g. "--no-relative").
+>
+> Good idea; I'll put together a second patch for a "--no-relative"
+> option to disable diff.relative.
+
+The order should be first to add --no-relative, which should allow
+you to say
+
+	$ alias gd "git diff --relative"
+        $ gd --no-relative
+
+which would expand to "git diff --relative --no-relative" to defeat
+the earlier one on the command line, and then add diff.relative in
+the second patch, I would think.  A natural consequence of the
+latter would be that these would steps work as expected:
+
+	$ git config diff.relative no
+        $ git diff
+        $ git diff --relative
+        $ git diff --no-relative
+        $ git config diff.relative yes
+        $ git diff
+        $ git diff --relative
+        $ git diff --no-relative
+
+which should be tested in a new set of tests added to t4045.
+
+For the first patch, I would expect a new set of tests added to
+t4045 to check at least the following:
+
+	$ git diff --no-relative
+	$ git diff --no-relative --relative
+	$ git diff --relative --no-relative
+
+Thanks.
