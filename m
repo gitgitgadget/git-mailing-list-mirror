@@ -1,59 +1,60 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: About refs refs/heads/+...
-Date: Sun, 21 Dec 2014 17:58:13 +0700
-Message-ID: <CACsJy8B8wVKAoqaKJxuyWbyDbFEofwctyfQoU=A0S_yUMc8bgA@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] completion: add --irreversible-delete for format-patch
+Date: Sun, 21 Dec 2014 11:50:07 +0000
+Message-ID: <20141221115007.GA23500@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 21 11:58:50 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 21 12:50:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y2eDp-0006mx-Nn
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Dec 2014 11:58:50 +0100
+	id 1Y2f1a-0008Gj-6O
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Dec 2014 12:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510AbaLUK6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2014 05:58:45 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:60765 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298AbaLUK6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2014 05:58:44 -0500
-Received: by mail-ie0-f174.google.com with SMTP id at20so2921313iec.5
-        for <git@vger.kernel.org>; Sun, 21 Dec 2014 02:58:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=rzhOBx14RjOhJMBqGFiC22yY3S+iRbDnXAg2AJ7eCoo=;
-        b=n78pNCzAj0WKzZNYB0och6OgOAsdI7CE+2UC2l75p/qxueE/2MZtvVMgjqEefbH+bI
-         QwZXN4ZOwahUTnXnUoUXEt8GXbcYbMx5riYkaf1unVlB9HZt7XuKvNCJmROxJ6dveVzl
-         nnKTtGMyJ+fpTGs7IL+bbIYVqQU+eCc0xxw+mc+xmZXWAh3dYyC6na59Q0bQU1Xr7BIT
-         jziJ/kxCUxAHMHOMnkVUe6jY5MMvZhDetWEdHTHlkSijcHyHDT0uxldpHVO0qNvaX/1V
-         4EQNg1tl4NJH00W3YrA9cMeulebsGAbk1P0S/cLDUkdKpj7dANDgO/SLLiLrV9qi3eDG
-         M38g==
-X-Received: by 10.50.79.202 with SMTP id l10mr11305017igx.24.1419159523962;
- Sun, 21 Dec 2014 02:58:43 -0800 (PST)
-Received: by 10.107.176.3 with HTTP; Sun, 21 Dec 2014 02:58:13 -0800 (PST)
+	id S1753445AbaLULuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2014 06:50:09 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:41323 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750952AbaLULuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2014 06:50:08 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32F4F1F8A1;
+	Sun, 21 Dec 2014 11:50:08 +0000 (UTC)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261613>
 
-I accidentally created a branch whose name starts with  "+".
-Everything went ok until I pushed it  because "+" is interpreted as
-forced refspec (e.g. "git push somewhere +wip"). Using full ref names
-would avoid ambiguity. The corner case of this is where the branch
-name is simply "+". Then refspec "+:" will be interpreted completely
-different from what the user wants. I wonder if we could do something
-better:
+Normally I would use "-D", but send-email (which normally passes options
+to format-patch) interprets the "-D" as a case-insensitive abbreviation
+for "--dry-run", preventing format-patch from seeing "-D".
 
- - forbid "/+" in ref names (too strong?)
- - some heuristics to detect "+:" and refuse it if ref "+" exists.
-heuristics to hint the user about full ref name after we fail to match
-refspec because we misinterpret "+"
- - improve refspec matching code to detect ambiguation and force using
-full ref name.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ Case-insensitivity strikes again! :<
+ What a wacky default for Getopt::Long...  And it's probably too late
+ for us to disable case-insensitivity in CLI parsing for send-email.
+
+ contrib/completion/git-completion.bash | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2fece98..41d8ff8 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1257,6 +1257,7 @@ __git_format_patch_options="
+ 	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+ 	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
+ 	--output-directory --reroll-count --to= --quiet --notes
++	--irreversible-delete
+ "
+ 
+ _git_format_patch ()
 -- 
-Duy
+EW
