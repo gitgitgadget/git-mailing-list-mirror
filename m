@@ -1,78 +1,84 @@
-From: Ben Walton <bdwalton@gmail.com>
-Subject: [PATCH] Use wc instead of awk to count subtrees in t0090-cache-tree
-Date: Mon, 22 Dec 2014 17:52:24 +0000
-Message-ID: <1419270744-1408-1-git-send-email-bdwalton@gmail.com>
-Cc: git@vger.kernel.org, Ben Walton <bdwalton@gmail.com>
-To: gitster@pobox.com, dturner@twopensource.com
-X-From: git-owner@vger.kernel.org Mon Dec 22 19:51:49 2014
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] completion: add --irreversible-delete for format-patch
+Date: Mon, 22 Dec 2014 19:00:59 +0000
+Message-ID: <20141222190059.GA19490@dcvr.yhbt.net>
+References: <20141221115007.GA23500@dcvr.yhbt.net>
+ <xmqq3887a5qd.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Paul Gortmaker <paul.gortmaker@windriver.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 20:01:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3857-0005gK-15
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 19:51:49 +0100
+	id 1Y38E5-0004Vb-SS
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 20:01:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754598AbaLVSvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 13:51:44 -0500
-Received: from jimi.chass.utoronto.ca ([128.100.160.32]:40976 "EHLO
-	jimi.chass.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754134AbaLVSvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 13:51:44 -0500
-X-Greylist: delayed 3574 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Dec 2014 13:51:44 EST
-Received: from hendrix.chass.utoronto.ca ([128.100.160.33]:34790 ident=93)
-	  by jimi.chass.utoronto.ca with esmtp  (Exim 4.76)
-	 (envelope-from <bdwalton@benandwen.net>)
-	 id 1Y379N-0001Dj-4k ; Mon, 22 Dec 2014 12:52:09 -0500
-Received: from 86-42-148-151-dynamic.b-ras1.bbh.dublin.eircom.net ([86.42.148.151]:57385 helo=neilyoung)
-	 (auth info: dovecot_plain:bwalton@chass.utoronto.ca) by hendrix.chass.utoronto.ca with esmtpsa (TLSv1:AES128-SHA:128)
-	 (Exim 4.76)
-	 (envelope-from <bdwalton@benandwen.net>)
-	 id 1Y379K-0006Kb-Ey ; Mon, 22 Dec 2014 12:52:06 -0500
-Received: from bdwalton by neilyoung with local (Exim 4.82)
-	(envelope-from <bdwalton@benandwen.net>)
-	id 1Y379e-0000NJ-0H; Mon, 22 Dec 2014 17:52:26 +0000
-X-Mailer: git-send-email 1.9.1
+	id S1755017AbaLVTBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 14:01:00 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:56412 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754964AbaLVTA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 14:00:59 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C5261F8A1;
+	Mon, 22 Dec 2014 19:00:59 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <xmqq3887a5qd.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261667>
 
-The awk statements previously used in this test weren't compatible
-with the native versions of awk on Solaris:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > Normally I would use "-D", but send-email (which normally passes options
+> > to format-patch) interprets the "-D" as a case-insensitive abbreviation
+> > for "--dry-run", preventing format-patch from seeing "-D".
+> 
+> Is this nonstandard option that is designed to produce an
+> inapplicable patch so widely used to warrant a completion?
+> 
+> I'd actually understand it if this were to complete "git show" and
+> friends, but not for format-patch.  I'd actually think we might be
+> better off forbidding its use for the format-patch command (but not
+> for other commands in the "git log" family), not just at the
+> completion level but at the command line argument parser level.
+> 
+> Hmph...
 
-echo "dir" | /bin/awk -v c=0 '$1 {++c} END {print c}'
-awk: syntax error near line 1
-awk: bailing out near line 1
+I was actually hoping Paul would resurrect his work on getting apply
+to understand --irreversible-delete:
 
-echo "dir" | /usr/xpg4/bin/awk -v c=0 '$1 {++c} END {print c}'
-0
+http://mid.gmane.org/1343939748-12256-1-git-send-email-paul.gortmaker@windriver.com
+($gmane/202789)
 
-And with GNU awk for comparison:
-echo "dir" | /opt/csw/gnu/awk -v c=0 '$1 {++c} END {print c}'
-1
+I find this option useful to reduce mail traffic for others to review
+changes which are already pushed to a public repo.
 
-Instead of modifying the awk code to work, use wc -w instead as that
-is both adequate and simpler.
-
-Signed-off-by: Ben Walton <bdwalton@gmail.com>
----
- t/t0090-cache-tree.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 067f4c6..f2b1c9c 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -22,7 +22,7 @@ generate_expected_cache_tree_rec () {
- 	# ls-files might have foo/bar, foo/bar/baz, and foo/bar/quux
- 	# We want to count only foo because it's the only direct child
- 	subtrees=$(git ls-files|grep /|cut -d / -f 1|uniq) &&
--	subtree_count=$(echo "$subtrees"|awk -v c=0 '$1 {++c} END {print c}') &&
-+	subtree_count=$(echo "$subtrees"|wc -w) &&
- 	entries=$(git ls-files|wc -l) &&
- 	printf "SHA $dir (%d entries, %d subtrees)\n" "$entries" "$subtree_count" &&
- 	for subtree in $subtrees
--- 
-1.9.1
+> > Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> > ---
+> >  Case-insensitivity strikes again! :<
+> >  What a wacky default for Getopt::Long...  And it's probably too late
+> >  for us to disable case-insensitivity in CLI parsing for send-email.
+> >
+> >  contrib/completion/git-completion.bash | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> > index 2fece98..41d8ff8 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1257,6 +1257,7 @@ __git_format_patch_options="
+> >  	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+> >  	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
+> >  	--output-directory --reroll-count --to= --quiet --notes
+> > +	--irreversible-delete
+> >  "
+> >  
+> >  _git_format_patch ()
