@@ -1,91 +1,71 @@
-From: Tony Finch <dot@dotat.at>
-Subject: [PATCH v2] git-prompt: preserve value of $? inside shell prompt
-Date: Mon, 22 Dec 2014 18:09:25 +0000
-Message-ID: <alpine.LSU.2.00.1412221808110.2546@hermes-1.csi.cam.ac.uk>
-References: <xmqqa92fbo0j.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/7] receive-pack: move execute_commands_non_atomic before execute_commands
+Date: Mon, 22 Dec 2014 10:19:40 -0800
+Message-ID: <xmqqfvc7a6o3.fsf@gitster.dls.corp.google.com>
+References: <1419017941-7090-1-git-send-email-sbeller@google.com>
+	<1419017941-7090-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 22 19:09:33 2014
+Content-Type: text/plain
+Cc: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
+	sunshine@sunshineco.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 19:19:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y37QD-0007yR-F1
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 19:09:33 +0100
+	id 1Y37aB-0006vm-Bf
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 19:19:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755501AbaLVSJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 13:09:29 -0500
-Received: from ppsw-52.csi.cam.ac.uk ([131.111.8.152]:39336 "EHLO
-	ppsw-52.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754957AbaLVSJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 13:09:28 -0500
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:52333)
-	by ppsw-52.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1Y37Q6-0006xs-D3 (Exim 4.82_3-c0e5623)
-	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 22 Dec 2014 18:09:26 +0000
-Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1Y37Q5-00066J-W1 (Exim 4.72)
-	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 22 Dec 2014 18:09:25 +0000
-X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
-In-Reply-To: <xmqqa92fbo0j.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1754354AbaLVSTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 13:19:47 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60662 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754223AbaLVSTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 13:19:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 86AF928C22;
+	Mon, 22 Dec 2014 13:19:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NzjYXr9Vi2c387LvmqWNC8R5KVk=; b=fRTaC4
+	pH7LsuBpeEy5PuzgXHSpjuOk8PNt7PkRZFP9LMjCO1aIBGRPUUYV+kqytEEQXw4t
+	yM/3O1Jba/dx7SEfLqcam+ilDvcvBsMyAOfNgG4hWAH4uf0dhp8mK0+NaA/o1Lv4
+	1kyMWHAmLoTTux1LorF1pz83y4xvRwsGdm3E8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jny7g7e3PDb2+xUg2K5gUzlQyY9NKy/3
+	6SJj5NOnBhSoBrL8uwTL4DM8jkzc1BusaBFtlARmkWGuptWOY7JnLK8+sFreNHVQ
+	md907ui8firpD/5L+pZasNt7rNlqQl2XvIc2CN+I8XeNh7V5ALY9oxoM8e20A5MU
+	oNYWIneQY4Q=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B15428C21;
+	Mon, 22 Dec 2014 13:19:43 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8D9828C20;
+	Mon, 22 Dec 2014 13:19:42 -0500 (EST)
+In-Reply-To: <1419017941-7090-6-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 19 Dec 2014 11:38:59 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 19C1F922-8A07-11E4-B154-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261662>
 
-If you have a prompt which displays the command exit status,
-__git_ps1 without this change corrupts it, although it has
-the correct value in the parent shell:
+Stefan Beller <sbeller@google.com> writes:
 
-	~/src/git (master) 0 $ set | grep ^PS1
-	PS1='\w$(__git_ps1) $? \$ '
-	~/src/git (master) 0 $ false
-	~/src/git (master) 0 $ echo $?
-	1
-	~/src/git (master) 0 $
+> Notes:
+>     This patch is new with v6 of the series
+>     
+>     As execute_commands_non_atomic is larger than execute_commands, the diff
+>     is not moving around execute_commands_non_atomic, but execute_commands.
 
-There is a slightly ugly workaround:
+;-)
 
-	~/src/git (master) 0 $ set | grep ^PS1
-	PS1='\w$(x=$?; __git_ps1; exit $x) $? \$ '
-	~/src/git (master) 0 $ false
-	~/src/git (master) 1 $
-
-This change makes the workaround unnecessary.
-
-Signed-off-by: Tony Finch <dot@dotat.at>
----
- contrib/completion/git-prompt.sh | 4 ++++
- 1 file changed, 4 insertions(+)
-
-I hope that explains it properly :-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index c5473dc..5fe69d0 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -288,6 +288,7 @@ __git_eread ()
- # In this mode you can request colored hints using GIT_PS1_SHOWCOLORHINTS=true
- __git_ps1 ()
- {
-+	local exit=$?
- 	local pcmode=no
- 	local detached=no
- 	local ps1pc_start='\u@\h:\w '
-@@ -511,4 +512,7 @@ __git_ps1 ()
- 	else
- 		printf -- "$printf_format" "$gitstring"
- 	fi
-+
-+	# preserve exit status
-+	return $exit
- }
--- 
-2.2.1.68.g56d9796
+Next time perhaps try "--patience" to decide between with and
+without which one reads better?
