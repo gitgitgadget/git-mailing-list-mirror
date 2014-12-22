@@ -1,72 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Use wc instead of awk to count subtrees in
- t0090-cache-tree
-Date: Mon, 22 Dec 2014 14:02:09 -0800
-Message-ID: <20141222220209.GT29365@google.com>
-References: <1419270744-1408-1-git-send-email-bdwalton@gmail.com>
- <xmqqk31j8ik9.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 14/18] fsck: allow upgrading fsck warnings to errors
+Date: Mon, 22 Dec 2014 14:15:39 -0800
+Message-ID: <xmqqbnmv8h6c.fsf@gitster.dls.corp.google.com>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+	<c70409e8e6a42bdc7cacd19cbd49d5d1adbedd1a.1418055173.git.johannes.schindelin@gmx.de>
+	<xmqq4mt3idho.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222259070.21312@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ben Walton <bdwalton@gmail.com>, dturner@twopensource.com,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 22 23:02:19 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 22 23:15:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3B3R-0005l0-8Z
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:02:17 +0100
+	id 1Y3BGV-0007Tm-DH
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:15:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755739AbaLVWCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 17:02:13 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:61779 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755729AbaLVWCN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 17:02:13 -0500
-Received: by mail-ie0-f175.google.com with SMTP id x19so4933467ier.6
-        for <git@vger.kernel.org>; Mon, 22 Dec 2014 14:02:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=seH7ZI3yB82B/BaOUZMx0YyKou3nr4d61poDGiwn1UE=;
-        b=Qvo7LtgnCFlkDBvcjROhCtSfyoG8Fi6gEKJazfJFfltINCoXxw4/F1MlHJGo8ZOMO/
-         k7RxSOi0TIdkrq5POM3E+td+LpFZUoU0GQxXAJNen2zNByS+m1t1EqllIGCVNp2QWK9S
-         uHKUFJEkIzwQmtg7B5GV88BbJVHot+d6L6+gmRHqUgh4/ihzdQpKH55ZKt3m60yaMQwG
-         V/wNf6Fufh/Noi2CSbHI6tnXKNfqCKtOlNbPjjiMq4pe8WAU9p6rHfXJoD5gHGInIVBw
-         DRgSPDaKTxNQK47Ld/7M5jys/IldQUvuh7t3b5XjmC8gHvCEHZYNIRv+o2q7bWetHx6U
-         d+Hg==
-X-Received: by 10.50.103.41 with SMTP id ft9mr17996437igb.6.1419285732247;
-        Mon, 22 Dec 2014 14:02:12 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:d0f3:eebb:4e13:baf])
-        by mx.google.com with ESMTPSA id t15sm9044584ioi.21.2014.12.22.14.02.11
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 22 Dec 2014 14:02:11 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqqk31j8ik9.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932118AbaLVWPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 17:15:43 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55480 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754702AbaLVWPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 17:15:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A3B4729717;
+	Mon, 22 Dec 2014 17:15:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M8Km3Uy39hyhyYtu1TmWcjDZiCM=; b=HqW8Ri
+	ZoW5N2W3YWw44gWeCLEE8l1gb+3gK6t0oINfIPVTPaz/STsGYU5llwfVulcI/qYY
+	Z/NJ3bgeTn+bb2cckPthVVZZaCILLu5yV/tc2bNYr02UHnnjfruPJHIVuDj9i3/T
+	PKlt3Da0h0V6ZuGP4Sa5vT+acVus9vwVZ9yCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tPvSUTDrd+x99i4rnlH+x67wHC+3ufq4
+	Xj1ecfyOLNbsIjlkXcul8ib9/NIPX5pPF2qrXepD26K1aP/HgGztJBvCBvvSBYoN
+	KrPI1MueY7tLMf75AMR9FSlhUMS/bfNUPpChHQanm231yDQnmPvoxNP79VnzJL5l
+	aLdR52Jku34=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9822C29716;
+	Mon, 22 Dec 2014 17:15:41 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1939B29715;
+	Mon, 22 Dec 2014 17:15:41 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1412222259070.21312@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Mon, 22 Dec 2014 23:01:11 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 10AE6692-8A28-11E4-8CAE-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261681>
 
-Junio C Hamano wrote:
-> Ben Walton <bdwalton@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> echo "dir" | /usr/xpg4/bin/awk -v c=0 '$1 {++c} END {print c}'
->> 0
->>
->> And with GNU awk for comparison:
->> echo "dir" | /opt/csw/gnu/awk -v c=0 '$1 {++c} END {print c}'
->> 1
->>
->> Instead of modifying the awk code to work, use wc -w instead as that
->> is both adequate and simpler.
+> Hi Junio,
 >
-> Hmm, why "wc -w" not "wc -l", though?  Is somebody squashing a
-> one-elem-per-line output from ls-files onto a single line?
+> On Wed, 10 Dec 2014, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > The 'invalid tag name' and 'missing tagger entry' warnings can now be
+>> > upgraded to errors by setting receive.fsck.invalid-tag-name and
+>> > receive.fsck.missing-tagger-entry to 'error'.
+>> 
+>> Hmm, why can't all warnings promotable to errors, or are the above
+>> two mentioned only as examples?
+>
+> Those were the only ones that were always shown as warnings but never
+> treated as errors.
 
-The old code was trying to skip empty lines.
+Sorry but I don't quite understand this comment; I suspect the root
+cause might be that we have different mental models on these
+tweakable error severities.
+
+Because I come from the school "To these N kinds of events you can
+independently assign different (i.e. info, warn, error) outcomes",
+moving the FIRST_{INFO,WARNING,...} position in the array would only
+affect what happens by default, never hindering the user's ability
+to tweak (in other words, there is no linkage between "now you can
+tweak" and the order of events in the list, the latter of which only
+would affect what the default severity of each event is).
+
+It appears that your design is from a different mental model and the
+order and position in that list has more significance than what the
+default severity of each event is but how much the severity can be
+tweaked, or something, which I somehow find incomprehensible.
+
+Puzzled...
