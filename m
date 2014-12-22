@@ -1,101 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/18] Offer a function to demote fsck errors to warnings
-Date: Mon, 22 Dec 2014 13:59:49 -0800
-Message-ID: <xmqqfvc78hwq.fsf@gitster.dls.corp.google.com>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de>
-	<2a0c4cd4c5d3aaceff8a6ffa49d2f3597d26086d.1418055173.git.johannes.schindelin@gmx.de>
-	<xmqqoarbidv7.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412222232270.21312@s15462909.onlinehome-server.info>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 14/18] fsck: allow upgrading fsck warnings to errors
+Date: Mon, 22 Dec 2014 23:01:11 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412222259070.21312@s15462909.onlinehome-server.info>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de> <c70409e8e6a42bdc7cacd19cbd49d5d1adbedd1a.1418055173.git.johannes.schindelin@gmx.de> <xmqq4mt3idho.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Dec 22 22:59:58 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 23:01:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3B1B-0003x3-LG
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 22:59:58 +0100
+	id 1Y3B2W-00052Y-6h
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755664AbaLVV7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 16:59:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51537 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755153AbaLVV7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 16:59:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A0AA2925B;
-	Mon, 22 Dec 2014 16:59:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iJiQAJIxe2FQ7l2Abus/NW1AAhw=; b=ssOlI0
-	bykvoMwNYSHsa0mt94zyQ4AQWbSHV2uXIecZdW9oZDerZcDP6hHw2wswa/SSfiJ4
-	fa9eCsuO00T5vGavgRTY6HD9BNoXphJKh2f2npJ3FtLG9ctAH63CKUdOsnOOWwMC
-	XRn7YJquh4ctfEIXHpZsUdkvhp+aaRHWDonUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MpVKhZDhJwsRXn8IVXBW74rW6mVmSWOp
-	A2DQF4GZWYiEaY1qEzlQgOMDozqks0Y1VGrzXharGEKg23xzrxuqkl+fLx8BkNqh
-	w4kcsc/4Y3uobFUzF4+5UO8OgYkr10QzTLhLc3Jt80ffXNFl7THfpvIhX7cMrp8k
-	mFNryWP3df8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 913CA2925A;
-	Mon, 22 Dec 2014 16:59:51 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 10DEA29259;
-	Mon, 22 Dec 2014 16:59:50 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1412222232270.21312@s15462909.onlinehome-server.info>
-	(Johannes Schindelin's message of "Mon, 22 Dec 2014 22:43:21 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DA6A3FEA-8A25-11E4-8EAB-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1755716AbaLVWBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 17:01:16 -0500
+Received: from mout.gmx.net ([212.227.15.19]:51460 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755707AbaLVWBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 17:01:15 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LedVG-1XXiMg1Tkk-00qSsS;
+ Mon, 22 Dec 2014 23:01:12 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqq4mt3idho.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:RrzOMVts2bbFVlIYS2qVjyLg7zRtIncOy54yReZbp21XLANtjM0
+ 8nKiYZoWETERrS1/xc0XAjclBg4M2TWCM7dtUGiXqDxPkD5Wr2svGfCgMG2nuukkiCtR3NI
+ noeg7bakrBMRDCFk+g//Vke299IuoKkYR9Mvxmur7FX7Poinhs1jRLKA+Sv6SYYFJYVPyWG
+ bJI5Wl/xJZ76ZJW8MtRSA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261678>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Junio,
 
->> In other words, at some point wouldn't we be better off with
->> something like this
->> 
->> 	struct {
->>         	enum id;
->>                 const char *id_string;
->>                 enum error_level { FSCK_PASS, FSCK_WARN, FSCK_ERROR };
->> 	} possible_fsck_errors[];
->
-> I considered that, and Michael Haggerty also suggested that in a private
-> mail. However, I find that there is a clear hierarchy in the default
-> messages: fatal errors, errors, warnings and infos.
+On Wed, 10 Dec 2014, Junio C Hamano wrote:
 
-I am glad I am not alone ;-)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > The 'invalid tag name' and 'missing tagger entry' warnings can now be
+> > upgraded to errors by setting receive.fsck.invalid-tag-name and
+> > receive.fsck.missing-tagger-entry to 'error'.
+> 
+> Hmm, why can't all warnings promotable to errors, or are the above
+> two mentioned only as examples?
 
-These classes are ordered from more severe to less, but I do not
-think it makes much sense to force the default view of "if you
-customize to demote a questionable Q that is classified as an error
-by default as an warning, you must demote all the other ones that we
-deem less serious than Q, which come earlier (or later---I do not
-remember which) in our predefined list".  So in that sense, I do not
-consider that various kinds of questionables fsck can detect are
-hierarchical at all.
+Those were the only ones that were always shown as warnings but never
+treated as errors.
 
-I do agree that it makes it easier to code the initialization of
-such an array to have "up to this point we assign the level 'fatal
-error' by default" constants.  Then the initialization can become
+There is a third one coming, as part of the patches that will let fsck
+warn about NTFS-incompatible file names, but I want to get this patch
+series integrated into git.git first.
 
-	for (i = 0; i < FIRST_WARN; i++)
-        	possible_fsck_errors[i].error_level = FSCK_INFO;
-	while (i < FIRST_ERROR)
-        	possible_fsck_errors[i++].error_level = FSCK_WARN;
-	while (i < ARRAY_SIZE(possible_fsck_errors))
-        	possible_fsck_errors[i++].error_level = FSCK_ERROR;
-
-or something.  So I am not against the FIRST_WARNING constant at
-all, but I find it very questionable in a fully customizable system
-to use such a constant anywhere other than the initialization time.
+Ciao,
+Dscho
