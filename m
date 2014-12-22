@@ -1,73 +1,97 @@
-From: Reuben Hawkins <reubenhwk@gmail.com>
-Subject: Re: [PATCH 2/3] configure.ac,trace.c: check for CLOCK_MONOTONIC
-Date: Mon, 22 Dec 2014 04:36:17 -0800
-Message-ID: <CAD_8n+TX-foWkRr9BrFX9PHu387WfTCD+w84m7QLjwhMwEKNjQ@mail.gmail.com>
-References: <1419188016-26134-1-git-send-email-reubenhwk@gmail.com>
-	<1419188016-26134-2-git-send-email-reubenhwk@gmail.com>
-	<20141222041232.GA170128@vauxhall.crustytoothpaste.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Misbehaving git bisect bad HEAD
+Date: Mon, 22 Dec 2014 15:04:09 +0100
+Message-ID: <87y4pzbx2e.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Reuben Hawkins <reubenhwk@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 22 13:36:28 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 22 15:04:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y32Dr-00021N-KP
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 13:36:27 +0100
+	id 1Y33ax-0007bw-47
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 15:04:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754439AbaLVMgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 07:36:18 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:42209 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754206AbaLVMgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 07:36:17 -0500
-Received: by mail-ob0-f175.google.com with SMTP id wp4so20918936obc.6
-        for <git@vger.kernel.org>; Mon, 22 Dec 2014 04:36:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=ApCIm2sNP1+rRlTAT99VwtUzHsVg+HqOFwfyV+hV3t8=;
-        b=SxaLsye6PsSgn8ITgIrUSTzYShQS36niXEakq2tgezHB/uDVgZsX5IalHF4yDImcvn
-         JftiLOZWVhuSkdIysopzJKmAi13Jw4RldSwuBlaHAnCbAtaR4JepDOfDZGQ0ZK3kDliN
-         YGwnSStS9xsZ9//o6yaGeFN6TZrSmNR+zEcTXVLXhHkZ4u2JFjbja/cWgoJKzgXRnXij
-         pNMQpwAAVXoJTM0cI1ngwaZRQfKhrTvL/98nAHaeR9BDMfEqG3dnQGXpx/wuc2vN0BLA
-         jbm+WYf0Q8kFhDhmqPH+PVXEpSj6EculnopUO+WNoXeZQzA5AkILZH1xpf25w5UnJM3E
-         Qwyw==
-X-Received: by 10.182.94.133 with SMTP id dc5mr12971213obb.32.1419251777197;
- Mon, 22 Dec 2014 04:36:17 -0800 (PST)
-Received: by 10.202.176.85 with HTTP; Mon, 22 Dec 2014 04:36:17 -0800 (PST)
-In-Reply-To: <20141222041232.GA170128@vauxhall.crustytoothpaste.net>
+	id S1754842AbaLVOEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 09:04:13 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:57229 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754596AbaLVOEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 09:04:12 -0500
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3k5j8p38Dkz3hj2N
+	for <git@vger.kernel.org>; Mon, 22 Dec 2014 15:04:10 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3k5j8p2rZyzvh3m
+	for <git@vger.kernel.org>; Mon, 22 Dec 2014 15:04:10 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id LHmFYEZQVcob for <git@vger.kernel.org>;
+	Mon, 22 Dec 2014 15:04:09 +0100 (CET)
+X-Auth-Info: SLb1TpJeeqf7UJj4oIkpgYlyR7DpKJtcg4QoKHD+ikqur22g4YpfezgiAiiYT8BI
+Received: from igel.home (host-188-174-216-244.customer.m-online.net [188.174.216.244])
+	by mail.mnet-online.de (Postfix) with ESMTPA
+	for <git@vger.kernel.org>; Mon, 22 Dec 2014 15:04:09 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id 3D8202C37F1; Mon, 22 Dec 2014 15:04:09 +0100 (CET)
+X-Yow: I'm DESPONDENT...  I hope there's something DEEP-FRIED under this
+ miniature DOMED STADIUM...
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261644>
 
-On Sun, Dec 21, 2014 at 8:12 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Sun, Dec 21, 2014 at 10:53:35AM -0800, Reuben Hawkins wrote:
->> CLOCK_MONOTONIC isn't available on RHEL3, but there are still RHEL3
->> systems being used in production.  This change makes compiling git
->> less tedious on older platforms.
->
-> While I'm not opposed to this change, I expect that you'll find there's
-> lots of subtle breakage when trying to compile (and run the testsuite
-> for) git on RHEL 3.  I've spoken up before to prevent breakage on
-> RHEL/CentOS 5 (since $DAYJOB still supports it), but I'm not sure
-> anyone's looking out for something as old as RHEL 3.  I expect you'll
-> probably have some pain points with perl and curl, among others.
+Running "git bisect bad" should be the same as "git bisect bad HEAD",
+shouldn't it?
 
-Yes, there are pain points with perl and curl.  Those I've disable
-with other compile options when building on RHEL3, but reducing the
-number of options I have to set manually and increasing the number of
-automatic checks with configure is helpful.   Sometime over the next
-few days I'll submit a v2 of the patches with Eric's comments taken
-into account.
+When replaying this bisect log on the Linux kernel tree:
 
-> --
-> brian m. carlson / brian with sandals: Houston, Texas, US
-> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+git bisect start
+# bad: [97bf6af1f928216fd6c5a66e8a57bfa95a659672] Linux 3.19-rc1
+git bisect bad 97bf6af1f928216fd6c5a66e8a57bfa95a659672
+# good: [b2776bf7149bddd1f4161f14f79520f17fc1d71d] Linux 3.18
+git bisect good b2776bf7149bddd1f4161f14f79520f17fc1d71d
+# good: [70e71ca0af244f48a5dcf56dc435243792e3a495] Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next
+git bisect good 70e71ca0af244f48a5dcf56dc435243792e3a495
+# good: [988adfdffdd43cfd841df734664727993076d7cb] Merge branch 'drm-next' of git://people.freedesktop.org/~airlied/linux
+git bisect good 988adfdffdd43cfd841df734664727993076d7cb
+# good: [b024793188002b9eed452b5f6a04d45003ed5772] staging: rtl8723au: phy_SsPwrSwitch92CU() was never called with bRegSSPwrLvl != 1
+git bisect good b024793188002b9eed452b5f6a04d45003ed5772
+# good: [66dcff86ba40eebb5133cccf450878f2bba102ef] Merge tag 'for-linus' of git://git.kernel.org/pub/scm/virt/kvm/kvm
+git bisect good 66dcff86ba40eebb5133cccf450878f2bba102ef
+# bad: [88a57667f2990f00b019d46c8426441c9e516d51] Merge branch 'perf-urgent-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
+git bisect bad 88a57667f2990f00b019d46c8426441c9e516d51
+# good: [0ec28c37c21a2b4393692e832e11a7573ac545e2] Merge tag 'media/v3.19-2' of git://git.kernel.org/pub/scm/linux/kernel/git/mchehab/linux-media
+git bisect good 0ec28c37c21a2b4393692e832e11a7573ac545e2
+# good: [c0f486fde3f353232c1cc2fd4d62783ac782a467] Merge tag 'pm+acpi-3.19-rc1-2' of git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm
+git bisect good c0f486fde3f353232c1cc2fd4d62783ac782a467
+# bad: [34b85e3574424beb30e4cd163e6da2e2282d2683] Merge tag 'powerpc-3.19-2' of git://git.kernel.org/pub/scm/linux/kernel/git/mpe/linux
+git bisect bad 34b85e3574424beb30e4cd163e6da2e2282d2683
+# good: [64ec45bff6b3dade2643ed4c0f688a15ecf46ea2] Merge tag 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost
+git bisect good 64ec45bff6b3dade2643ed4c0f688a15ecf46ea2
+
+Running "git bisect bad" gives this:
+
+$ git bisect bad 
+Bisecting: 6 revisions left to test after this (roughly 3 steps)
+[ec2aef5a8d3c14272f7a2d29b34f1f8e71f2be5b] power/perf/hv-24x7: Use kmem_cache_free() instead of kfree
+
+Running "git bisect bad HEAD" instead gives this:
+
+$ git bisect bad HEAD
+Bisecting: a merge base must be tested
+[56548fc0e86cb9156af7a7e1f15ba78f251dafaf] powerpc/powernv: Return to cpu offline loop when finished in KVM guest
+
+This is git 2.2.1.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
