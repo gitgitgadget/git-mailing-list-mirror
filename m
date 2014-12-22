@@ -1,114 +1,111 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 04/18] Offer a function to demote fsck errors to
- warnings
-Date: Mon, 22 Dec 2014 23:32:44 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1412222330080.21312@s15462909.onlinehome-server.info>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de> <2a0c4cd4c5d3aaceff8a6ffa49d2f3597d26086d.1418055173.git.johannes.schindelin@gmx.de> <xmqqoarbidv7.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222232270.21312@s15462909.onlinehome-server.info>
- <xmqqfvc78hwq.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
+Date: Mon, 22 Dec 2014 14:34:39 -0800
+Message-ID: <xmqq38878gao.fsf@gitster.dls.corp.google.com>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
+	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-326887847-1419287564=:21312"
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 22 23:33:04 2014
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 22 23:34:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3BXC-0003je-3U
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:33:02 +0100
+	id 1Y3BYs-0004yr-Mb
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753681AbaLVWc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 17:32:58 -0500
-Received: from mout.gmx.net ([212.227.15.18]:49718 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753473AbaLVWc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 17:32:56 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0M9JYE-1YBST42JnK-00CidA;
- Mon, 22 Dec 2014 23:32:44 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqqfvc78hwq.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:TOBIEu8aoWWvwZNfNqXLzwoneMwlbJr0R/+C2klbn9zCNo9rzc8
- evwksGcXpCV7L3PS6UK26lETmWhDJ05g4p/WUMMskw2jV8UbTBCyAfyR54Upv5R75WeebFS
- 4pR5lO70ugXJXBi7qYDfF7fZnSLG+zUnjRUkhcjKS1TXrIluDCSeLrGOxmNzM4JbFMLd1/7
- fuQKF7cGT4cznZD+5DqwA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753715AbaLVWem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 17:34:42 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55597 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751753AbaLVWel (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 17:34:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D169B29BD4;
+	Mon, 22 Dec 2014 17:34:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4nJpiE+MduwuPgzsgmAWR1jHZgk=; b=dsz0JQ
+	jzebKN0i3pTv99y2fH/7CGKtmY86yca+cHzinc8/Auv758b+Be/zy16wtCZ7rP2g
+	xpROL+/t/BEFC6CGKek+WLi75CpxY/tCchopRQJe1hYIHcr2Jt03ITzCMhFIsMev
+	PuuLmKeq1Bl8v9lQqzjO8nkI0QOOaZCi8C5NQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uExceMeNae9edOU54yDzyGrNON/P+srt
+	Og2pJsJ4cFKXKkgLTXUFzwR3aYd0rocoi5MiWyHd3igviYqMn9yjqj1cvpeMYQxn
+	5igI+YPz2tXGb3p3qHCn/i0UilsW5uW08loa7LaJDsgKoSBadRfZHiRlzH77BbZD
+	1Jk1tYLUQ98=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C74C229BD3;
+	Mon, 22 Dec 2014 17:34:40 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 49CBD29BD2;
+	Mon, 22 Dec 2014 17:34:40 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Mon, 22 Dec 2014 23:25:08 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B7B288E0-8A2A-11E4-9075-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261687>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---1784107012-326887847-1419287564=:21312
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Or do you want the error messages to also use camelCased IDs, i.e.
+>
+> 	warning in tag $tag: missingTaggerEntry: invalid format ...
+>
+> instead of
+>
+> 	warning in tag $tag: missing-tagger-entry: invalid format ...
+>
+> ? It is easy to do, but looks slightly uglier to this developer's eyes...
 
-Hi Junio,
+Do you really need to know what I think?  Can I say "The latter is
+probably slightly better, but both look ugly to me"?
 
-On Mon, 22 Dec 2014, Junio C Hamano wrote:
+If we want a human readable message
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->=20
-> >> In other words, at some point wouldn't we be better off with
-> >> something like this
-> >>=20
-> >> =09struct {
-> >>         =09enum id;
-> >>                 const char *id_string;
-> >>                 enum error_level { FSCK_PASS, FSCK_WARN, FSCK_ERROR };
-> >> =09} possible_fsck_errors[];
-> >
-> > I considered that, and Michael Haggerty also suggested that in a privat=
-e
-> > mail. However, I find that there is a clear hierarchy in the default
-> > messages: fatal errors, errors, warnings and infos.
->=20
-> I am glad I am not alone ;-)
->=20
-> These classes are ordered from more severe to less, but I do not
-> think it makes much sense to force the default view of "if you
-> customize to demote a questionable Q that is classified as an error
-> by default as an warning, you must demote all the other ones that we
-> deem less serious than Q, which come earlier (or later---I do not
-> remember which) in our predefined list".  So in that sense, I do not
-> consider that various kinds of questionables fsck can detect are
-> hierarchical at all.
+    "warning: tag object lacks tagger field '$tag'"
 
-Oh, but please understand that this hierarchy only applies to the default
-settings. All of these settings can be overridden individually =E2=80=93 an=
-d the
-first override will initialize a full array with the default settings.
+would be my preference.
 
-So the order really only plays a role for the defaults, no more.
+But I personally think it may not be necessary to give a pretty
+message that later can go through l10n here.  If we take that
+position, it is just a machine-readble error token, so I'd say
+whichever way you find more readable is OK.
 
-> I do agree that it makes it easier to code the initialization of
-> such an array to have "up to this point we assign the level 'fatal
-> error' by default" constants.  Then the initialization can become
->=20
-> =09for (i =3D 0; i < FIRST_WARN; i++)
->         =09possible_fsck_errors[i].error_level =3D FSCK_INFO;
-> =09while (i < FIRST_ERROR)
->         =09possible_fsck_errors[i++].error_level =3D FSCK_WARN;
-> =09while (i < ARRAY_SIZE(possible_fsck_errors))
->         =09possible_fsck_errors[i++].error_level =3D FSCK_ERROR;
->=20
-> or something.  So I am not against the FIRST_WARNING constant at
-> all, but I find it very questionable in a fully customizable system
-> to use such a constant anywhere other than the initialization time.
+>> Should these be tied to receive-pack ones in any way?  E.g. if you
+>> set fsck.missingEmail to ignore, you do not have to do the same for
+>> receive and accept a push with the specific error turned off?
+>> 
+>> Not a rhetorical question.  I can see it argued both ways.  The
+>> justification to defend the position of not tying these two I would
+>> have is so that I can be more strict to newer breakages (i.e. not
+>> accepting a push that introduce a new breakage by not ignoring with
+>> receive.fsck.*) while allowing breakages that are already present.
+>> The justification for the opposite position is to make it more
+>> convenient to write a consistent policy.  Whichever way is chosen,
+>> we would want to see the reason left in the log message so that
+>> people do not have to wonder what the original motivation was when
+>> they decide if it is a good idea to change this part of the code.
+>
+> Hmm. I really tried very hard to separate the fsck.* from the receive.*
+> settings because the two code paths already behave differently:...
+>
+> If you agree, I would rephrase this line of argument and add it to the
+> commit message. Do you agree?
 
-This is indeed the case. The code we are discussing comes after the
+Yeah, that reasoning sounds sensible.
 
-=09if (options->strict_mode)
-=09=09return options->strict_mode[msg_id];
-
-In other words, once the overrides are in place, the default settings are
-skipped entirely.
-
-Ciao,
-Dscho
---1784107012-326887847-1419287564=:21312--
+Thanks.
