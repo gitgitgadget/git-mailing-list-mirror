@@ -1,111 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
-Date: Mon, 22 Dec 2014 14:34:39 -0800
-Message-ID: <xmqq38878gao.fsf@gitster.dls.corp.google.com>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de>
-	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
-	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 14/18] fsck: allow upgrading fsck warnings to errors
+Date: Mon, 22 Dec 2014 23:39:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412222333340.21312@s15462909.onlinehome-server.info>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de> <c70409e8e6a42bdc7cacd19cbd49d5d1adbedd1a.1418055173.git.johannes.schindelin@gmx.de> <xmqq4mt3idho.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222259070.21312@s15462909.onlinehome-server.info>
+ <xmqqbnmv8h6c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-434808080-1419287989=:21312"
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Dec 22 23:34:48 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 23:40:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3BYs-0004yr-Mb
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:34:47 +0100
+	id 1Y3Bdv-0000Pu-GR
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:39:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753715AbaLVWem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 17:34:42 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55597 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751753AbaLVWel (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 17:34:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D169B29BD4;
-	Mon, 22 Dec 2014 17:34:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4nJpiE+MduwuPgzsgmAWR1jHZgk=; b=dsz0JQ
-	jzebKN0i3pTv99y2fH/7CGKtmY86yca+cHzinc8/Auv758b+Be/zy16wtCZ7rP2g
-	xpROL+/t/BEFC6CGKek+WLi75CpxY/tCchopRQJe1hYIHcr2Jt03ITzCMhFIsMev
-	PuuLmKeq1Bl8v9lQqzjO8nkI0QOOaZCi8C5NQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uExceMeNae9edOU54yDzyGrNON/P+srt
-	Og2pJsJ4cFKXKkgLTXUFzwR3aYd0rocoi5MiWyHd3igviYqMn9yjqj1cvpeMYQxn
-	5igI+YPz2tXGb3p3qHCn/i0UilsW5uW08loa7LaJDsgKoSBadRfZHiRlzH77BbZD
-	1Jk1tYLUQ98=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C74C229BD3;
-	Mon, 22 Dec 2014 17:34:40 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 49CBD29BD2;
-	Mon, 22 Dec 2014 17:34:40 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
-	(Johannes Schindelin's message of "Mon, 22 Dec 2014 23:25:08 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B7B288E0-8A2A-11E4-9075-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751104AbaLVWjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 17:39:55 -0500
+Received: from mout.gmx.net ([212.227.17.21]:50200 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750833AbaLVWjy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 17:39:54 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Lp3Qu-1XQWtl1dvo-00evWF;
+ Mon, 22 Dec 2014 23:39:49 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqbnmv8h6c.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:L7QveNmOYKSobsARAUzVK7eJWfIIf40WmZwCe/zsqisogSAPEQB
+ gmIrrO+UZ7mrswa3ywgiugef5zsxvWXMlXxKkObePKMeX5Wft6NqcP9rnmqm2Q/6a6At3m+
+ 1bdtnYJM6BUI+jjwF/hJSztcYGyN/7Q5ZwmwPCte1r3hPZEQswVacQbMupx0V8/SqPdNyuY
+ D3/N+uzpQgerfnvkWhmGA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261688>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Or do you want the error messages to also use camelCased IDs, i.e.
->
-> 	warning in tag $tag: missingTaggerEntry: invalid format ...
->
-> instead of
->
-> 	warning in tag $tag: missing-tagger-entry: invalid format ...
->
-> ? It is easy to do, but looks slightly uglier to this developer's eyes...
+--1784107012-434808080-1419287989=:21312
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Do you really need to know what I think?  Can I say "The latter is
-probably slightly better, but both look ugly to me"?
+Hi Junio,
 
-If we want a human readable message
+On Mon, 22 Dec 2014, Junio C Hamano wrote:
 
-    "warning: tag object lacks tagger field '$tag'"
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> > On Wed, 10 Dec 2014, Junio C Hamano wrote:
+> >
+> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >>=20
+> >> > The 'invalid tag name' and 'missing tagger entry' warnings can now b=
+e
+> >> > upgraded to errors by setting receive.fsck.invalid-tag-name and
+> >> > receive.fsck.missing-tagger-entry to 'error'.
+> >>=20
+> >> Hmm, why can't all warnings promotable to errors, or are the above
+> >> two mentioned only as examples?
+> >
+> > Those were the only ones that were always shown as warnings but never
+> > treated as errors.
+>=20
+> Sorry but I don't quite understand this comment; I suspect the root
+> cause might be that we have different mental models on these
+> tweakable error severities.
+>=20
+> Because I come from the school "To these N kinds of events you can
+> independently assign different (i.e. info, warn, error) outcomes",
+> moving the FIRST_{INFO,WARNING,...} position in the array would only
+> affect what happens by default, never hindering the user's ability
+> to tweak (in other words, there is no linkage between "now you can
+> tweak" and the order of events in the list, the latter of which only
+> would affect what the default severity of each event is).
 
-would be my preference.
+We agree on this mental model.
 
-But I personally think it may not be necessary to give a pretty
-message that later can go through l10n here.  If we take that
-position, it is just a machine-readble error token, so I'd say
-whichever way you find more readable is OK.
+The only problem this patch tries to fix is that the warnings about a
+missing tagger and about invalid tag names were never leading to an error.
+They were purely printed, but then ignored. So what this patch does is to
+add "if (err) return err;" handling for those two warnings.
 
->> Should these be tied to receive-pack ones in any way?  E.g. if you
->> set fsck.missingEmail to ignore, you do not have to do the same for
->> receive and accept a push with the specific error turned off?
->> 
->> Not a rhetorical question.  I can see it argued both ways.  The
->> justification to defend the position of not tying these two I would
->> have is so that I can be more strict to newer breakages (i.e. not
->> accepting a push that introduce a new breakage by not ignoring with
->> receive.fsck.*) while allowing breakages that are already present.
->> The justification for the opposite position is to make it more
->> convenient to write a consistent policy.  Whichever way is chosen,
->> we would want to see the reason left in the log message so that
->> people do not have to wonder what the original motivation was when
->> they decide if it is a good idea to change this part of the code.
->
-> Hmm. I really tried very hard to separate the fsck.* from the receive.*
-> settings because the two code paths already behave differently:...
->
-> If you agree, I would rephrase this line of argument and add it to the
-> commit message. Do you agree?
+As a consequence, the ordering of message IDs needs to be fixed because
+the non-fatal warnings were ordered alphabetically before, but now the
+non-fatal warnings are extracted so that we can give them the appropriate
+FSCK_WARN by defauly =E2=80=93 even in the git-receive-pack case.
 
-Yeah, that reasoning sounds sensible.
+In other words, the value assigned to those two warnings was completely
+ignored before, which was the reason why it did not matter that we
+assigned them to report FSCK_ERRORs in the git-receive-pack case before:
+they were still only printed out and never stopped any tag from entering
+the host's repository.
 
-Thanks.
+I could change the ordering in the patch that introduces the message IDs,
+of course, but it would be even more puzzling if those two messages, of
+all, were not ordered alphabetically with the others.
+
+Ciao,
+Dscho
+--1784107012-434808080-1419287989=:21312--
