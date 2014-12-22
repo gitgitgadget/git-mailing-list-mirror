@@ -1,97 +1,66 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Misbehaving git bisect bad HEAD
-Date: Mon, 22 Dec 2014 15:04:09 +0100
-Message-ID: <87y4pzbx2e.fsf@igel.home>
+From: Tony Finch <dot@dotat.at>
+Subject: [PATCH] git-prompt: preserve command exit status
+Date: Mon, 22 Dec 2014 14:30:03 +0000
+Message-ID: <alpine.LSU.2.00.1412221429490.28934@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 22 15:04:28 2014
+X-From: git-owner@vger.kernel.org Mon Dec 22 15:30:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y33ax-0007bw-47
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 15:04:23 +0100
+	id 1Y33zw-0007i5-9E
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 15:30:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754842AbaLVOEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 09:04:13 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:57229 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754596AbaLVOEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 09:04:12 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3k5j8p38Dkz3hj2N
-	for <git@vger.kernel.org>; Mon, 22 Dec 2014 15:04:10 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3k5j8p2rZyzvh3m
-	for <git@vger.kernel.org>; Mon, 22 Dec 2014 15:04:10 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id LHmFYEZQVcob for <git@vger.kernel.org>;
-	Mon, 22 Dec 2014 15:04:09 +0100 (CET)
-X-Auth-Info: SLb1TpJeeqf7UJj4oIkpgYlyR7DpKJtcg4QoKHD+ikqur22g4YpfezgiAiiYT8BI
-Received: from igel.home (host-188-174-216-244.customer.m-online.net [188.174.216.244])
-	by mail.mnet-online.de (Postfix) with ESMTPA
-	for <git@vger.kernel.org>; Mon, 22 Dec 2014 15:04:09 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-	id 3D8202C37F1; Mon, 22 Dec 2014 15:04:09 +0100 (CET)
-X-Yow: I'm DESPONDENT...  I hope there's something DEEP-FRIED under this
- miniature DOMED STADIUM...
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+	id S1755074AbaLVOaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 09:30:07 -0500
+Received: from ppsw-40.csi.cam.ac.uk ([131.111.8.140]:39115 "EHLO
+	ppsw-40.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755067AbaLVOaF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 09:30:05 -0500
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:43976)
+	by ppsw-40.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.156]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1Y33zn-000062-kU (Exim 4.82_3-c0e5623) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 22 Dec 2014 14:30:03 +0000
+Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1Y33zn-0004vd-BC (Exim 4.72) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 22 Dec 2014 14:30:03 +0000
+X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261645>
 
-Running "git bisect bad" should be the same as "git bisect bad HEAD",
-shouldn't it?
+Signed-off-by: Tony Finch <dot@dotat.at>
+---
+ contrib/completion/git-prompt.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-When replaying this bisect log on the Linux kernel tree:
-
-git bisect start
-# bad: [97bf6af1f928216fd6c5a66e8a57bfa95a659672] Linux 3.19-rc1
-git bisect bad 97bf6af1f928216fd6c5a66e8a57bfa95a659672
-# good: [b2776bf7149bddd1f4161f14f79520f17fc1d71d] Linux 3.18
-git bisect good b2776bf7149bddd1f4161f14f79520f17fc1d71d
-# good: [70e71ca0af244f48a5dcf56dc435243792e3a495] Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next
-git bisect good 70e71ca0af244f48a5dcf56dc435243792e3a495
-# good: [988adfdffdd43cfd841df734664727993076d7cb] Merge branch 'drm-next' of git://people.freedesktop.org/~airlied/linux
-git bisect good 988adfdffdd43cfd841df734664727993076d7cb
-# good: [b024793188002b9eed452b5f6a04d45003ed5772] staging: rtl8723au: phy_SsPwrSwitch92CU() was never called with bRegSSPwrLvl != 1
-git bisect good b024793188002b9eed452b5f6a04d45003ed5772
-# good: [66dcff86ba40eebb5133cccf450878f2bba102ef] Merge tag 'for-linus' of git://git.kernel.org/pub/scm/virt/kvm/kvm
-git bisect good 66dcff86ba40eebb5133cccf450878f2bba102ef
-# bad: [88a57667f2990f00b019d46c8426441c9e516d51] Merge branch 'perf-urgent-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
-git bisect bad 88a57667f2990f00b019d46c8426441c9e516d51
-# good: [0ec28c37c21a2b4393692e832e11a7573ac545e2] Merge tag 'media/v3.19-2' of git://git.kernel.org/pub/scm/linux/kernel/git/mchehab/linux-media
-git bisect good 0ec28c37c21a2b4393692e832e11a7573ac545e2
-# good: [c0f486fde3f353232c1cc2fd4d62783ac782a467] Merge tag 'pm+acpi-3.19-rc1-2' of git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm
-git bisect good c0f486fde3f353232c1cc2fd4d62783ac782a467
-# bad: [34b85e3574424beb30e4cd163e6da2e2282d2683] Merge tag 'powerpc-3.19-2' of git://git.kernel.org/pub/scm/linux/kernel/git/mpe/linux
-git bisect bad 34b85e3574424beb30e4cd163e6da2e2282d2683
-# good: [64ec45bff6b3dade2643ed4c0f688a15ecf46ea2] Merge tag 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost
-git bisect good 64ec45bff6b3dade2643ed4c0f688a15ecf46ea2
-
-Running "git bisect bad" gives this:
-
-$ git bisect bad 
-Bisecting: 6 revisions left to test after this (roughly 3 steps)
-[ec2aef5a8d3c14272f7a2d29b34f1f8e71f2be5b] power/perf/hv-24x7: Use kmem_cache_free() instead of kfree
-
-Running "git bisect bad HEAD" instead gives this:
-
-$ git bisect bad HEAD
-Bisecting: a merge base must be tested
-[56548fc0e86cb9156af7a7e1f15ba78f251dafaf] powerpc/powernv: Return to cpu offline loop when finished in KVM guest
-
-This is git 2.2.1.
-
-Andreas.
-
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index c5473dc..5fe69d0 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -288,6 +288,7 @@ __git_eread ()
+ # In this mode you can request colored hints using GIT_PS1_SHOWCOLORHINTS=true
+ __git_ps1 ()
+ {
++	local exit=$?
+ 	local pcmode=no
+ 	local detached=no
+ 	local ps1pc_start='\u@\h:\w '
+@@ -511,4 +512,7 @@ __git_ps1 ()
+ 	else
+ 		printf -- "$printf_format" "$gitstring"
+ 	fi
++
++	# preserve exit status
++	return $exit
+ }
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+2.1.0.rc1.12.g1e9b79d
