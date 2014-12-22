@@ -1,77 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH w/signoff] pre-push.sample: Remove unwanted `IFS=' '`.
-Date: Sun, 21 Dec 2014 14:49:53 -0800
-Message-ID: <xmqqlhm0botq.fsf@gitster.dls.corp.google.com>
-References: <1419185665-19988-1-git-send-email-gjthill@gmail.com>
-	<1419186337-20348-1-git-send-email-gjthill@gmail.com>
-	<xmqqtx0obzwm.fsf@gitster.dls.corp.google.com>
-	<CAEE75_0Ff7NfQYUPrA414N9E0AE6LsS2zs0kL=BJ25bjPgom_w@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Supporting a few more usecases with remote helpers
+Date: Mon, 22 Dec 2014 10:07:26 +0900
+Message-ID: <20141222010726.GA4817@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Aaron Schrab <aaron@schrab.com>
-To: Jim Hill <gjthill@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 23:50:02 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 22 02:08:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y2pK4-0007at-Sf
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Dec 2014 23:50:01 +0100
+	id 1Y2rTj-0006Ig-M4
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 02:08:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213AbaLUWt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2014 17:49:57 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63682 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752886AbaLUWt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2014 17:49:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 930A626104;
-	Sun, 21 Dec 2014 17:49:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0tjO6Thdm7WeGUhGtmVlmoGcizk=; b=fnIJFM
-	BXhv44rHhIu2++6KxKYnQpMc9m3ekFxz2ZwWEmJeJAm44F0JZAJ5kiGDQJsbowEj
-	4/HJgjH1ikoyTMga/A/xJW/o7BDmHoRoCRZCyYA66lTaVwFoqlNrDBEo8lJG+EZr
-	RMFZ4S8g2FDz8c976l7ZT/g9QBo+aVKY/xiCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fIPpbTBgSly+md8AgPOKjo3Ry6iK/GhQ
-	NLXdCBAjyk4TA371h5dIMvxME5/8s3bboemzpS9Dfjuy5tiygEyDtZr9LSicBNNz
-	SPy5ilFCA4TEmHwQCQEdWynSgJoL6AYh0+RwT1LLS1SAZs8nvLSi/ok8K7bLfZjl
-	0In4q4zOa+c=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89BB626103;
-	Sun, 21 Dec 2014 17:49:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2629E26102;
-	Sun, 21 Dec 2014 17:49:54 -0500 (EST)
-In-Reply-To: <CAEE75_0Ff7NfQYUPrA414N9E0AE6LsS2zs0kL=BJ25bjPgom_w@mail.gmail.com>
-	(Jim Hill's message of "Sun, 21 Dec 2014 11:12:45 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ADFB3738-8963-11E4-8A57-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753583AbaLVBHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2014 20:07:35 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:53713 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753545AbaLVBHe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2014 20:07:34 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1Y2rT4-0003RI-Lp
+	for git@vger.kernel.org; Mon, 22 Dec 2014 10:07:26 +0900
+Content-Disposition: inline
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261635>
 
-Jim Hill <gjthill@gmail.com> writes:
+Hi,
 
-> I call it unwanted because the default works fine with the actual
-> input and explicitly limiting whitespace this way breaks most command
-> substitution.
+As you may or may not know, I'm working on a remote-helper to interact
+with mercurial servers, with the main focus being to make it work with
+developer workflows at Mozilla.
 
-OK.  I'd call that "unnecessary", not "unwanted", though.
+I think remote-helpers, in the context of non-git remotes, can be
+leveraged to improve git user experience with non-git remotes.
 
-It becomes unwanted only when somebody cuts and pastes and changes
-what happens inside the body of the loop without thinking what IFS
-assignment is doing.
+- While git doesn't support this[1], mercurial allows to pull a specific
+  commit. That's quite commonly used at Mozilla. It makes it desirable
+  to be able to `git fetch origin sha1`, where sha1 could actually be
+  considered as fake head name. But that currently can't work because
+  only refs returned by the `list` command of the remote-helper are
+  considered, and we can't realistically list all the remote changesets
+  there.
+- A lot of places (bug logs, CI, etc.) will list mercurial changesets
+  or, more commonly, their abbreviated form. It is quite common to look
+  at those locally. When using a git clone of a mercurial repository,
+  it adds a level of indirection where the user first needs a command to
+  resolve that mercurial changeset to the corresponding git commit, then
+  run whatever command they wanted to run with that git commit. This
+  could be worked around by adding e.g. tags for both abbreviated and
+  long form of the changesets, but we'd be looking at more than 400k
+  refs for a typical Mozilla repository. That doesn't quite scale.
+- On the opposite side of the above, it can be necessary to find out
+  what mercurial changeset a git commit corresponds to, and while, like
+  the above, there can be a command to resolve those, that's a level
+  of indirection that is not very nice for users.
 
-Leaving it to the default is not wrong per-se, but I think it is
-better to justify this change as protecting cut-and-paste people,
-which is its primary benefit as far as I can see.
+Here's my thoughts on how I think this could be done, but before I dive
+in the code to actually implement it, I'd like to get feedback whether
+it makes sense.
 
-Thanks for noticing.
+- I think the first and second use cases could both use the same 
+  "feature". We could add a new `list` option to the remote-helpers
+  that would make it list a limited set of refs, and giving it the
+  opportunity to reply with heads it wouldn't give normally. For
+  example, this would look like this:
+    git fetch origin 7b33ee7fd162d784f382250d3fa811e86a1b7348
+      > list ref refs/heads/7b33ee7fd162d784f382250d3fa811e86a1b7348
+      ? refs/heads/7b33ee7fd162d784f382250d3fa811e86a1b7348
+    git show ba0dc109a8f8
+      > list ref refs/heads/ba0dc109a8f8
+      1d1c70ecefa26e5fa859366ac989497843a3f8ff refs/heads/ba0dc109a8f8
+- For the latter, I was thinking the decorate code (for git log
+  --decorate) could request ref names to the remote-helper, like this:
+      > ref short 1d1c70ecefa26e5fa859366ac989497843a3f8ff
+      1d1c70ecefa26e5fa859366ac989497843a3f8ff ba0dc109a8f8
+      > ref full 1d1c70ecefa26e5fa859366ac989497843a3f8ff
+      1d1c70ecefa26e5fa859366ac989497843a3f8ff ba0dc109a8f86ca831866a5933cf863d379434cd
+  Then the decorate code would display helper-prefix::ba0dc109a8f8 or
+  helper-prefix::ba0dc109a8f86ca831866a5933cf863d379434cd depending on
+  the --decorate value.
+
+Calling remote-helpers for the above would be triggered by the presence
+of one or more remotes with helper:: prefixed urls.
+
+Thoughts?
+
+Mike
+
+1. I think it should, as long as the given sha1 is reachable from the
+public heads, but that's offtopic here.
