@@ -1,107 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Bad file descriptor on filtering empty files
-Date: Mon, 22 Dec 2014 10:26:47 -0800
-Message-ID: <xmqq7fxja6c8.fsf@gitster.dls.corp.google.com>
-References: <87sigbmfd5.fsf@cornell.edu>
+Subject: Re: [PATCH] completion: add --irreversible-delete for format-patch
+Date: Mon, 22 Dec 2014 10:39:54 -0800
+Message-ID: <xmqq3887a5qd.fsf@gitster.dls.corp.google.com>
+References: <20141221115007.GA23500@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, William Throwe <wtt6@cornell.edu>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Dec 22 19:26:55 2014
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Dec 22 19:40:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y37h0-0003jP-GC
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 19:26:54 +0100
+	id 1Y37ti-0005HJ-DB
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 19:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754578AbaLVS0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 13:26:50 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65483 "EHLO
+	id S1754924AbaLVSj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 13:39:58 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52411 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754355AbaLVS0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 13:26:50 -0500
+	with ESMTP id S1754378AbaLVSj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 13:39:57 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D67F28DE5;
-	Mon, 22 Dec 2014 13:26:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E14A52710C;
+	Mon, 22 Dec 2014 13:39:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=A6AulhQk9194RdMjNLT/hgCoMVo=; b=AdM2So
-	FQsI52q6AC+pJzVtkg74DHopKJN7phgVokbNNh3BtPhd/+MyO3nZ2pLHuppcDw1W
-	5VXmMqdLWiG51WNm4KyTE+lEFWJYjfj5NgBoIXUjPZtGKqdV+YlSJ0IWZwtPtzAo
-	vOeHmIx3abbK4xOSBp3fAscMp8KSBGCKN3PLU=
+	:content-type; s=sasl; bh=A4ynu2p5EGQxhlYH5ebrZuq66hE=; b=djQ+BJ
+	UtgItphwQTPCFsKzHuovSohAHCOE72ZRvmurgWb1CrF9VGZ4KveEjTxpj04TREDK
+	jHmzMiAcWLYEqeFxSXmU9wE73DvF5xaNvZ/meDXk9uDdtmWcg/0qiSMJxkSQqRlb
+	EisiwVXm6+J8D1lgDzlcgXF5XrgDfgskAzKjA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WrYdCGtmF5BUVhKLNoIH0wxDwQokZezo
-	uOFUSf0U3auuJJipdpbGXTePt2y8N0m72QW2ipg14oZI1ygSUdxZT/5vykyXU4ul
-	LJMI8V5kafCSwy37LvvNyK+j8QfWMjX979J/jcknBMD8qKnMCsmAlc+4SZ/unWA/
-	a3VIRnw9+sE=
+	:content-type; q=dns; s=sasl; b=SHUwYWVWDOI/0w8sib4KQTJwx9OLDGjL
+	szmNj0tSHUfaYcfuF0Gf+Dd9bCgiKp8fcNRb6bMKLL9BUKDGobz4tZzRdsgUjw4e
+	+bd+Tn0GJoLOVXlpwsdOusnW2BZR5GemgLOsqB4ITP/ixhrKMKa/RbPWzkmKHJP8
+	tmEHZ4TTB5s=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2436128DE4;
-	Mon, 22 Dec 2014 13:26:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D8A552710B;
+	Mon, 22 Dec 2014 13:39:56 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 98F3928DE3;
-	Mon, 22 Dec 2014 13:26:48 -0500 (EST)
-In-Reply-To: <87sigbmfd5.fsf@cornell.edu> (William Throwe's message of "Fri,
-	19 Dec 2014 17:41:58 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 652602710A;
+	Mon, 22 Dec 2014 13:39:56 -0500 (EST)
+In-Reply-To: <20141221115007.GA23500@dcvr.yhbt.net> (Eric Wong's message of
+	"Sun, 21 Dec 2014 11:50:07 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 177C5C60-8A08-11E4-970A-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: ED0B80F8-8A09-11E4-94B9-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261665>
 
-William Throwe <wtt6@cornell.edu> writes:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> In git 2.2.0 (also tested on 2.2.0.65.g9abc44b), if an external
-> smudge/clean filter is called on an empty file git reports something
-> like:
-> error: copy-fd: read returned Bad file descriptor
-> error: cannot feed the input to external filter cat
-> error: external filter cat failed
->
-> Test case:
->
-> mkdir bug
-> cd bug
-> git init
-> git config filter.cat.clean cat
-> git config filter.cat.smudge cat
-> echo '* filter=cat' >.gitattributes
-> touch a
-> git add a
->
->
-> This started in 9035d75a2be9d80d82676504d69553245017f6d4, which
-> introduced the possible call to copy_fd in code called from
-> apply_filter.  It appears that NULL as the src argument to apply_filter
-> is being used both as a sentinel value to indicate that the fd should be
-> used instead and also as a representation of the contents of an empty
-> file.  I suggest switching to using fd == -1 as the sentinel as shown in
-> the patch below.
->
-> Thanks,
-> Will
->
+> Normally I would use "-D", but send-email (which normally passes options
+> to format-patch) interprets the "-D" as a case-insensitive abbreviation
+> for "--dry-run", preventing format-patch from seeing "-D".
 
-William, thanks for raising this issue.
+Is this nonstandard option that is designed to produce an
+inapplicable patch so widely used to warrant a completion?
 
-Steffen, comments?
+I'd actually understand it if this were to complete "git show" and
+friends, but not for format-patch.  I'd actually think we might be
+better off forbidding its use for the format-patch command (but not
+for other commands in the "git log" family), not just at the
+completion level but at the command line argument parser level.
 
-> diff --git a/convert.c b/convert.c
-> index 9a5612e..0509ac1 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -355,7 +355,7 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+Hmph...
+
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>  Case-insensitivity strikes again! :<
+>  What a wacky default for Getopt::Long...  And it's probably too late
+>  for us to disable case-insensitivity in CLI parsing for send-email.
+>
+>  contrib/completion/git-completion.bash | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 2fece98..41d8ff8 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1257,6 +1257,7 @@ __git_format_patch_options="
+>  	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+>  	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
+>  	--output-directory --reroll-count --to= --quiet --notes
+> +	--irreversible-delete
+>  "
 >  
->  	sigchain_push(SIGPIPE, SIG_IGN);
->  
-> -	if (params->src) {
-> +	if (params->fd == -1) {
->  		write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
->  	} else {
->  		write_err = copy_fd(params->fd, child_process.in);
+>  _git_format_patch ()
