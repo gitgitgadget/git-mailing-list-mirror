@@ -1,73 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
-Date: Mon, 22 Dec 2014 14:50:01 -0800
-Message-ID: <xmqqtx0n710m.fsf@gitster.dls.corp.google.com>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de>
-	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
-	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
-	<xmqq38878gao.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/7] receive-pack.c: add protocol support to negotiate atomic-push
+Date: Mon, 22 Dec 2014 17:52:48 -0500
+Message-ID: <CAPig+cRStBZMNj_K-81n2aZ3SzvH8VSeXwwk0MM5Q01FANRdPg@mail.gmail.com>
+References: <1419017941-7090-1-git-send-email-sbeller@google.com>
+	<1419017941-7090-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Dec 22 23:50:14 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 23:52:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3Bno-0008DH-1A
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:50:12 +0100
+	id 1Y3BqQ-0001w2-Fg
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:52:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752968AbaLVWuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 17:50:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50923 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752805AbaLVWuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 17:50:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CDDF29F5C;
-	Mon, 22 Dec 2014 17:50:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mgMOrjtsbeNMEak4satYk99LZzY=; b=Bdsybb
-	aCcaTSU4LyMEzaZ1e4QD6V4oyR70Iq+Xfq4ToPQ/LiS4sfxZgbkJgRsj5JqRjU9y
-	Al/DjZfJO1bVFVL9GUaHITqaviyq1sTJqLfbybipzSWl936Bn10Z2vUmNkaGeOJ8
-	XAlwhvzG6khqDp+PcF2D4O5Ww0Q+6LoWX1NB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JEvdswmE+ut0jE2AYUZzN90yfu/+oRcq
-	RIxc0sFfygGCNvQRVwvql2FFjddokb0RW24+nfwPO+yhG7B5lTkpujx6/SbmNg0p
-	XwxrtGpymd1Vq9oRFooXKoscQZ7ZCFl3ZS5V/8nuooPY+2U5VlCqaKssc0rb9yTH
-	kSvqYT9CzMg=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7319529F56;
-	Mon, 22 Dec 2014 17:50:03 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EA27A29F55;
-	Mon, 22 Dec 2014 17:50:02 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info>
-	(Johannes Schindelin's message of "Mon, 22 Dec 2014 23:46:32 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DDA4EBD6-8A2C-11E4-99AF-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752556AbaLVWwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 17:52:50 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:46319 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466AbaLVWwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 17:52:49 -0500
+Received: by mail-yh0-f50.google.com with SMTP id 29so2912563yhl.23
+        for <git@vger.kernel.org>; Mon, 22 Dec 2014 14:52:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=ZaRjF1E2tWrpSu1ObYpK0J2aXCbU761EoqGoJGP7mN8=;
+        b=xBKaFsip3mF4UFR4N0bqNwtgCWsttlgd6HtEovc/zx82zfDW3YJgXW+eWMDOPbAO60
+         5bVv4Ueq6THx0gDnFJ02FpNHBssjg4tnVszWiA1OGAWsBpQs1FnFGXaOj5/b/1Nv3jXz
+         Aip6dEM4XEVasPVbwg2AllpePnwewt66k/Ig75ryLwa/vbSaH2PbgJAw+y3Tw8kigBmE
+         UNftAohkwKLeCiK+Rprw/62EPhSiDjxYIk8ZBXu8xNo640Xp/3SeNuSpWdHEWeZR1BDZ
+         tP9I6mCQyMerg7eUGmETT3RWKPP05mtcyQ4t9bnGFTNWnBqevka9ryhgsqs68m5uqBMW
+         v+hQ==
+X-Received: by 10.170.127.5 with SMTP id t5mr4834304ykb.2.1419288768701; Mon,
+ 22 Dec 2014 14:52:48 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Mon, 22 Dec 2014 14:52:48 -0800 (PST)
+In-Reply-To: <1419017941-7090-2-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: s2ewgs7MT6NrC946i9wUeXLDKdA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261692>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, Dec 19, 2014 at 2:38 PM, Stefan Beller <sbeller@google.com> wrote:
+> From: Ronnie Sahlberg <sahlberg@google.com>
+>
+> This adds support to the protocol between send-pack and receive-pack to
+> * allow receive-pack to inform the client that it has atomic push capability
+> * allow send-pack to request atomic push back.
+>
+> There is currently no setting in send-pack to actually request that atomic
+> pushes are to be used yet. This only adds protocol capability not ability
+> for the user to activate it.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+> index 6d5424c..4f8a7bf 100644
+> --- a/Documentation/technical/protocol-capabilities.txt
+> +++ b/Documentation/technical/protocol-capabilities.txt
+> @@ -244,6 +245,14 @@ respond with the 'quiet' capability to suppress server-side progress
+>  reporting if the local progress reporting is also being suppressed
+>  (e.g., via `push -q`, or if stderr does not go to a tty).
+>
+> +atomic
+> +------
+> +
+> +If the server sends the 'atomic' capability it is capable of accepting
+> +atomic pushes. If the pushing client requests this capability, the server
+> +will update the refs in one atomic transaction. Either all refs are
 
-> Of course you can say that! ;-) The problem these ugly messages try to
-> solve is to give the user a hint which setting to change if they want to
-> override the default behavior, though...
+Not itself worth a re-send, but if you re-send for some other reason...
 
-Ahh, OK, then dashed form would not work as a configuration variable
-names, so missingTaggerEntry would be the only usable option.
+"one atomic" still smacks of redundancy; "an atomic" sounds better.
 
-Thanks.
+> +updated or none.
+> +
+>  allow-tip-sha1-in-want
+>  ----------------------
