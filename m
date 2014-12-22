@@ -1,89 +1,73 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 2/3] configure.ac,trace.c: check for CLOCK_MONOTONIC
-Date: Mon, 22 Dec 2014 04:12:32 +0000
-Message-ID: <20141222041232.GA170128@vauxhall.crustytoothpaste.net>
-References: <1419188016-26134-1-git-send-email-reubenhwk@gmail.com>
- <1419188016-26134-2-git-send-email-reubenhwk@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: XDL_FAST_HASH can be very slow
+Date: Sun, 21 Dec 2014 23:19:45 -0500
+Message-ID: <20141222041944.GA441@peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ew6BAiZeqk4r7MaW"
-Cc: git@vger.kernel.org
-To: Reuben Hawkins <reubenhwk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 22 05:20:00 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <tr@thomasrast.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 22 05:20:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y2uTQ-0001Ri-2t
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 05:20:00 +0100
+	id 1Y2uTQ-0001Ri-La
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 05:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753837AbaLVEMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2014 23:12:44 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:55875 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753764AbaLVEMo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Dec 2014 23:12:44 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 12E8F2808F;
-	Mon, 22 Dec 2014 04:12:36 +0000 (UTC)
-Mail-Followup-To: Reuben Hawkins <reubenhwk@gmail.com>, git@vger.kernel.org
+	id S1753841AbaLVETq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2014 23:19:46 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56105 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753764AbaLVETq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2014 23:19:46 -0500
+Received: (qmail 4241 invoked by uid 102); 22 Dec 2014 04:19:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 21 Dec 2014 22:19:46 -0600
+Received: (qmail 10726 invoked by uid 107); 22 Dec 2014 04:19:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 21 Dec 2014 23:19:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Dec 2014 23:19:45 -0500
 Content-Disposition: inline
-In-Reply-To: <1419188016-26134-2-git-send-email-reubenhwk@gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.18.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261638>
 
+I ran across an interesting case that diffs very slowly with modern git.
+And it's even public. You can clone:
 
---ew6BAiZeqk4r7MaW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  git://github.com/outpunk/evil-icons
 
-On Sun, Dec 21, 2014 at 10:53:35AM -0800, Reuben Hawkins wrote:
-> CLOCK_MONOTONIC isn't available on RHEL3, but there are still RHEL3
-> systems being used in production.  This change makes compiling git
-> less tedious on older platforms.
+and try:
 
-While I'm not opposed to this change, I expect that you'll find there's
-lots of subtle breakage when trying to compile (and run the testsuite
-for) git on RHEL 3.  I've spoken up before to prevent breakage on
-RHEL/CentOS 5 (since $DAYJOB still supports it), but I'm not sure
-anyone's looking out for something as old as RHEL 3.  I expect you'll
-probably have some pain points with perl and curl, among others.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+  git show fc4efe426d5b4e6aa8d5a4dc14babeada7c5f899
 
---ew6BAiZeqk4r7MaW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+(which is also the tip of master as of this writing).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The interesting file there is a 10MB Illustrator file, "assets/ei.ai".
+Git treats it as text, as the early part doesn't have any NULs, but it
+is mostly non-human-readable. It has a large number of lines, and some
+of the lines themselves are quite large.
 
-iQIcBAEBCgAGBQJUl5owAAoJEL9TXYEfUvaL0ZMP/0JzjLNkgDSiR7FBCeatVZtN
-sHcECTcp9nuaeWVpg8K5XYT5oEHZfnWkj/VVasXoc7Xb4sors51Sn1ptvfdaVypP
-J8Pp5moDozjQoal7FB7q/hVmcS3WU7PiiIOLDNBtWJ79SlmEAmYZE5+5JvPWMKwF
-Ir8aZ5mQP/dPUBvhtf5x+s9E7+HFaI3pxYLrSBe10LDdiEoL+Sy53reon2TMM2BY
-8R2RFII8rfXANKykcqU60pxLD2fXrJX97d4jukMRJx1yurADn9Q23A0p8PDlaUU/
-GsJs+UbP7cPO24Pb0dV0HahzrPV+6hXFa84FEwwPXSCKMSWtFTgMBgD2ajg5POpL
-6BBw6XZV6nnyv2ooqX98uitqYaWAYkwFQgmKA3lYPOK8x9WBfvdk6LWxczY8aNRE
-dGoyXFzu+cC1AMtU6TYEbQha2k3meFdI6com9qONxDTFeGlI6NPT+FM1Puwg5nAN
-C9OPQLC2vypp2Ew1owEXuXdacunSkf2iF9y9YjJ2F9AbNjzIUmEU8iWuvrXFuFnc
-vugSsRm3aH1OOYDYPSOdm4b9RF+Gvk5aH4+HwEO3MQPZscV58iylsFSHhQ7vxBXI
-E1se7WHJaE7I/i8Dfw+Tv7Ym/JBhF7tM9s44UVLh77WoKiG2lBuA5SeXD2uoOYla
-WnbWOxeA6ACjnxxOyEOT
-=upVJ
------END PGP SIGNATURE-----
+On my machine, "git show" takes ~77 seconds using v2.2.1. But if I build
+the same version with "make XDL_FAST_HASH=", it completes in about 0.4s.
+Both produce the same output.
 
---ew6BAiZeqk4r7MaW--
+I'm not really sure what's going on.  A few points of interest:
+
+ - You can replicate this with the very first commit that added
+   XDL_FAST_HASH, 6942efc (xdiff: load full words in the inner loop of
+   xdl_hash_record, 2012-04-06). So it was always bad on this case, and
+   it's not part of any more recent changes.
+
+ - We actually _don't_ spend most of our time in xdl_hash_record, the
+   function modified by 6942efc. Instead, it all goes to
+   xdl_classify_record, which is looping over the set of hash records.
+   It's not clear to me if more or different hash records is part of the
+   design of XDL_FAST_HASH, or if this is actually a bug.
+
+I haven't dug much further than that.
+
+-Peff
