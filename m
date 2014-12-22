@@ -1,112 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-prompt: preserve value of $? inside shell prompt
-Date: Mon, 22 Dec 2014 11:58:41 -0800
-Message-ID: <xmqqsig78nim.fsf@gitster.dls.corp.google.com>
-References: <xmqqa92fbo0j.fsf@gitster.dls.corp.google.com>
-	<alpine.LSU.2.00.1412221808110.2546@hermes-1.csi.cam.ac.uk>
+Subject: Re: git update-ref --stdin : too many open files
+Date: Mon, 22 Dec 2014 13:22:45 -0800
+Message-ID: <xmqqoaqv8jmi.fsf@gitster.dls.corp.google.com>
+References: <54954E44.1080906@dachary.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Mon Dec 22 20:58:50 2014
+Cc: git@vger.kernel.org, Loic Dachary <loic@dachary.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 22:22:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y397x-00067p-JL
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 20:58:49 +0100
+	id 1Y3ARJ-0001Ew-3T
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 22:22:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755097AbaLVT6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 14:58:45 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55181 "EHLO
+	id S1755243AbaLVVWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 16:22:48 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52011 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754702AbaLVT6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 14:58:44 -0500
+	with ESMTP id S1754781AbaLVVWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 16:22:47 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C59F28487;
-	Mon, 22 Dec 2014 14:58:43 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 20D70298F4;
+	Mon, 22 Dec 2014 16:22:47 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bd4hN7INoPKzP0DqlGlTty9HY/o=; b=YzEQs/
-	/faGOdofsBa5wmqz8CAr/Ohq/RqVTkmmv7V3HirtA1q5v2ynGhOrFnzc0RJ1Zgjo
-	IH8nrHgLHOnbyCfi9NLGqnQRrLrP5E2PigHKA8MJTvw74SCuWtjnISNEYjvcQbtZ
-	1HVy38enwhOcqu7lFHXoHQpa23dSTinAlTP60=
+	:content-type; s=sasl; bh=wCQNerE5iH4MIEP4iiDDv1CTqWM=; b=kPZPMT
+	mLXNXM9cmS3IbbDgACMO0TqwSpMhOUa/3fqhA9EgWGvKs0PJhX3fMfRbZXY8Bhg0
+	WDyX0quz8ML3lRWR3MbvwYm+JZSb+JrvF3DjWX/rpaKTBQpoaa9t/fxoS2vtffa6
+	z+WeYB5KlKKGuFq3+LPVMKf9k5wOJGCONxoW4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aZKhho/DDJILamPSbYKNTYIiyfU2s0Wx
-	YNYj0TylVx0SD64yt5HOBXZeJcOCkp36JzZJuyf1exaZ9FitxHEXd+NH1cypqwhT
-	FMmDRQSF5rFIBzJgjFZx7YiDOW03MZ+XkMt33kWrt3ARmXUsmBkZsu2dbdSwocIx
-	TYIjmYDQHig=
+	:content-type; q=dns; s=sasl; b=wd9nUM+adMoh3qROWqTOc2ljbY0hQGPa
+	/406boQCuaxgEj/7wdw1+lMFcjKSAM2kMY4JSsfOrMZBxw/itrlTRam2iBJ/1dh9
+	9FoVN6AvDsvNDF977UuNTYqOPh8+t57tWwqaiiQXmrm2vEtiYd5Op8EiC4hQNtDv
+	UXQ+19CiFds=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 229CF28486;
-	Mon, 22 Dec 2014 14:58:43 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1745E298F3;
+	Mon, 22 Dec 2014 16:22:47 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9596928484;
-	Mon, 22 Dec 2014 14:58:42 -0500 (EST)
-In-Reply-To: <alpine.LSU.2.00.1412221808110.2546@hermes-1.csi.cam.ac.uk> (Tony
-	Finch's message of "Mon, 22 Dec 2014 18:09:25 +0000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 93BA0298F2;
+	Mon, 22 Dec 2014 16:22:46 -0500 (EST)
+In-Reply-To: <54954E44.1080906@dachary.org> (Loic Dachary's message of "Sat,
+	20 Dec 2014 11:24:04 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EE144696-8A14-11E4-83D4-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AC89EAEE-8A20-11E4-AE5A-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261670>
 
-Tony Finch <dot@dotat.at> writes:
+Loic Dachary <loic@dachary.org> writes:
 
-> If you have a prompt which displays the command exit status,
-> __git_ps1 without this change corrupts it, although it has
-> the correct value in the parent shell:
+> Hi,
 >
-> 	~/src/git (master) 0 $ set | grep ^PS1
-> 	PS1='\w$(__git_ps1) $? \$ '
-> 	~/src/git (master) 0 $ false
-> 	~/src/git (master) 0 $ echo $?
-> 	1
-> 	~/src/git (master) 0 $
+> Steps to reproduce:
 >
-> There is a slightly ugly workaround:
+> $ git --version
+> git version 1.9.1
+> $ wc -l /tmp/1
+> 9090 /tmp/1
+> $ head /tmp/1
+> delete refs/pull/1/head
+> create refs/heads/pull/1 86b715f346e52920ca7c9dfe65424eb9946ebd61
+> delete refs/pull/1/merge
+> create refs/merges/1 c0633abdc5311354c9729374e0ba25c97a89f69e
+> ...
+> $ ulimit -n
+> 1024
+> $ git update-ref --stdin < /tmp/1
+> fatal: Unable to create
+> /home/gitmirror/repositories/Ceph/ceph/refs/heads/pull/1917.lock': Too
+> many open files
+> $ head -20 /tmp/1 | git update-ref --stdin
+> $ echo $?
+> 0
 >
-> 	~/src/git (master) 0 $ set | grep ^PS1
-> 	PS1='\w$(x=$?; __git_ps1; exit $x) $? \$ '
-> 	~/src/git (master) 0 $ false
-> 	~/src/git (master) 1 $
+> The workaround is to increase ulimit -n
 >
-> This change makes the workaround unnecessary.
+> git update-ref --stdin should probably close some files.
 >
-> Signed-off-by: Tony Finch <dot@dotat.at>
-> ---
->  contrib/completion/git-prompt.sh | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> I hope that explains it properly :-)
+> Cheers
 
-Yes.  I wouldn't have spent 20 minutes experimenting with various
-hypothetical use cases if the above were there in the first place.
+Sounds like the recent "ref update in a transaction" issue to me.
 
-Thanks.  Will queue.
+Stefan, want to take a look?  I think we do need to keep the .lock
+files without renaming while in transaction, but we do not have to
+keep them open, so I suspect that a fix may be to split the commit
+function into two (one to close but not rename, the other to
+finalize by renaming) or something.
 
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index c5473dc..5fe69d0 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -288,6 +288,7 @@ __git_eread ()
->  # In this mode you can request colored hints using GIT_PS1_SHOWCOLORHINTS=true
->  __git_ps1 ()
->  {
-> +	local exit=$?
->  	local pcmode=no
->  	local detached=no
->  	local ps1pc_start='\u@\h:\w '
-> @@ -511,4 +512,7 @@ __git_ps1 ()
->  	else
->  		printf -- "$printf_format" "$gitstring"
->  	fi
-> +
-> +	# preserve exit status
-> +	return $exit
->  }
+Also the version of transaction series we have queued seem to lock
+these refs very late in the process, but as we discussed privately
+a few weeks ago, we would want to move the lock much earlier, when
+the first update is attempted.
