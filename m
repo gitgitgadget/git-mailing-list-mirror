@@ -1,91 +1,129 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/7] receive-pack.c: add protocol support to negotiate atomic-push
-Date: Mon, 22 Dec 2014 17:52:48 -0500
-Message-ID: <CAPig+cRStBZMNj_K-81n2aZ3SzvH8VSeXwwk0MM5Q01FANRdPg@mail.gmail.com>
-References: <1419017941-7090-1-git-send-email-sbeller@google.com>
-	<1419017941-7090-2-git-send-email-sbeller@google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 04/18] Offer a function to demote fsck errors to
+ warnings
+Date: Mon, 22 Dec 2014 23:55:16 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412222348040.21312@s15462909.onlinehome-server.info>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de> <2a0c4cd4c5d3aaceff8a6ffa49d2f3597d26086d.1418055173.git.johannes.schindelin@gmx.de> <xmqqoarbidv7.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222232270.21312@s15462909.onlinehome-server.info>
+ <xmqqfvc78hwq.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222330080.21312@s15462909.onlinehome-server.info> <xmqqy4pz71g7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Dec 22 23:52:55 2014
+Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-1446231408-1419288917=:21312"
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 23:55:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3BqQ-0001w2-Fg
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:52:54 +0100
+	id 1Y3Bss-0003oo-TL
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:55:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556AbaLVWwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 17:52:50 -0500
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:46319 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751466AbaLVWwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 17:52:49 -0500
-Received: by mail-yh0-f50.google.com with SMTP id 29so2912563yhl.23
-        for <git@vger.kernel.org>; Mon, 22 Dec 2014 14:52:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ZaRjF1E2tWrpSu1ObYpK0J2aXCbU761EoqGoJGP7mN8=;
-        b=xBKaFsip3mF4UFR4N0bqNwtgCWsttlgd6HtEovc/zx82zfDW3YJgXW+eWMDOPbAO60
-         5bVv4Ueq6THx0gDnFJ02FpNHBssjg4tnVszWiA1OGAWsBpQs1FnFGXaOj5/b/1Nv3jXz
-         Aip6dEM4XEVasPVbwg2AllpePnwewt66k/Ig75ryLwa/vbSaH2PbgJAw+y3Tw8kigBmE
-         UNftAohkwKLeCiK+Rprw/62EPhSiDjxYIk8ZBXu8xNo640Xp/3SeNuSpWdHEWeZR1BDZ
-         tP9I6mCQyMerg7eUGmETT3RWKPP05mtcyQ4t9bnGFTNWnBqevka9ryhgsqs68m5uqBMW
-         v+hQ==
-X-Received: by 10.170.127.5 with SMTP id t5mr4834304ykb.2.1419288768701; Mon,
- 22 Dec 2014 14:52:48 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Mon, 22 Dec 2014 14:52:48 -0800 (PST)
-In-Reply-To: <1419017941-7090-2-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: s2ewgs7MT6NrC946i9wUeXLDKdA
+	id S1751884AbaLVWzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 17:55:23 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54237 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751024AbaLVWzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 17:55:22 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id 0LwJFG-1XpN3z0bYk-017zgf;
+ Mon, 22 Dec 2014 23:55:17 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqy4pz71g7.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:PLcqXNh0V2H5JrUPoPMmA5UAx3KG3PSUk9893yGCvm/SAz3bW6k
+ 0Syubpw+hVjlOZArHpYLuwimsbuEbkFwJ4uHm90Hy0+Z6X7gky67NIf8LqpQ1OTMmmpBFt/
+ Xt0it0afjOM+kwtSVpU6TzQcNq9A3iRRtI0KpD2tpJq8raKkHdiBNsmLGh2796q5y0Kyhtw
+ nBHA+KUnAq1wdAc0lgG2w==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261693>
 
-On Fri, Dec 19, 2014 at 2:38 PM, Stefan Beller <sbeller@google.com> wrote:
-> From: Ronnie Sahlberg <sahlberg@google.com>
->
-> This adds support to the protocol between send-pack and receive-pack to
-> * allow receive-pack to inform the client that it has atomic push capability
-> * allow send-pack to request atomic push back.
->
-> There is currently no setting in send-pack to actually request that atomic
-> pushes are to be used yet. This only adds protocol capability not ability
-> for the user to activate it.
->
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-> index 6d5424c..4f8a7bf 100644
-> --- a/Documentation/technical/protocol-capabilities.txt
-> +++ b/Documentation/technical/protocol-capabilities.txt
-> @@ -244,6 +245,14 @@ respond with the 'quiet' capability to suppress server-side progress
->  reporting if the local progress reporting is also being suppressed
->  (e.g., via `push -q`, or if stderr does not go to a tty).
->
-> +atomic
-> +------
-> +
-> +If the server sends the 'atomic' capability it is capable of accepting
-> +atomic pushes. If the pushing client requests this capability, the server
-> +will update the refs in one atomic transaction. Either all refs are
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Not itself worth a re-send, but if you re-send for some other reason...
+--1784107012-1446231408-1419288917=:21312
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-"one atomic" still smacks of redundancy; "an atomic" sounds better.
+Hi Junio,
 
-> +updated or none.
-> +
->  allow-tip-sha1-in-want
->  ----------------------
+On Mon, 22 Dec 2014, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> > On Mon, 22 Dec 2014, Junio C Hamano wrote:
+> >
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >>=20
+> >> >> In other words, at some point wouldn't we be better off with
+> >> >> something like this
+> >> >>=20
+> >> >> =09struct {
+> >> >>         =09enum id;
+> >> >>                 const char *id_string;
+> >> >>                 enum error_level { FSCK_PASS, FSCK_WARN, FSCK_ERROR=
+ };
+> >> >> =09} possible_fsck_errors[];
+> >> >
+> >> > I considered that, and Michael Haggerty also suggested that in a pri=
+vate
+> >> > mail. However, I find that there is a clear hierarchy in the default
+> >> > messages: fatal errors, errors, warnings and infos.
+> >>=20
+> >> I am glad I am not alone ;-)
+> >> ...
+> > Oh, but please understand that this hierarchy only applies to the defau=
+lt
+> > settings. All of these settings can be overridden individually =E2=80=
+=93 and the
+> > first override will initialize a full array with the default settings.
+>=20
+> But that means that the runtime needs to switch between two code
+> with and without override, no?
+>=20
+> > =09if (options->strict_mode)
+> > =09=09return options->strict_mode[msg_id];
+>=20
+> In other words, I think this is misleading and unnecessary
+> optimization for the "full array" allocation.  A code that uses an
+> array of a struct like the above that Michael and I independently
+> suggested would initialize once with or without an override and then
+> at the runtime there is no "if the array is there use it"
+> conditional.
+>=20
+> I do not know why Michael suggested the same thing, but the reason
+> why I prefer that arrangement is because I think it would be easier
+> to read and maintain.
+
+Well, I disagree that it would be easier to maintain, because it appears
+to me that the clear hierarchy keeps things simple. For example if some
+clearly fatal error is clustered with non-fatal ones due to alphabetical
+ordering, it is much harder to spot when it is marked as a demoteable
+error by mistake.
+
+For example, try to spot the error here:
+
+=09...
+=09F(ALMOST_HAPPY, INFO) \
+=09F(CANNOT_RECOVER, ERROR) \
+=09F(COFFEE_IS_EMPTY, WARN) \
+=09F(JUST_BEING_CHATTY, INFO) \
+=09F(LIFE_IS_GOOD, INFO) \
+=09F(MISSING_SOMETHING_VITAL, FATAL_ERROR) \
+=09F(NEED_TO_SLEEP, WARN) \
+=09F(SOMETHING_WENT_WRONG, ERROR) \
+=09...
+
+Personally, I find it very, very hard to spot that CANNOT_RECOVER is
+marked as a mere ERROR instead of a FATAL_ERROR. Even if it is nicely
+alphabetically ordered.
+
+I will sleep over this, though. Maybe I can come up with a solution that
+makes all three of us happy.
+
+Ciao,
+Dscho
+--1784107012-1446231408-1419288917=:21312--
