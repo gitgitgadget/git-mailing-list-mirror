@@ -1,101 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
-Date: Mon, 22 Dec 2014 23:25:08 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de> <cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de> <xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use wc instead of awk to count subtrees in t0090-cache-tree
+Date: Mon, 22 Dec 2014 14:26:00 -0800
+Message-ID: <xmqq7fxj8gp3.fsf@gitster.dls.corp.google.com>
+References: <1419270744-1408-1-git-send-email-bdwalton@gmail.com>
+	<xmqqk31j8ik9.fsf@gitster.dls.corp.google.com>
+	<20141222220209.GT29365@google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 22 23:25:21 2014
+Content-Type: text/plain
+Cc: Ben Walton <bdwalton@gmail.com>, dturner@twopensource.com,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 23:26:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3BPk-0006Mj-Ub
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:25:21 +0100
+	id 1Y3BQX-0006zY-Jv
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Dec 2014 23:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754048AbaLVWZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 17:25:14 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49920 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753853AbaLVWZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 17:25:12 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0MMXVC-1XyD4U3QaM-008JQR;
- Mon, 22 Dec 2014 23:25:08 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:0DSoQtRvJksfGW12vp9ntnCQOed3RpvOtBVHNKfGtaXEaA1/uiI
- L2MOwUcg/moJxpuv3qhtIxyjSV4D0M14uDuH7ngg+gjVG8UpNfmYpdEKYpJ2/JxtcXTMii2
- PMMWdpQ+kqve8r/P/aRJJkW/N9iIe5MaHyH39222WruicVP0hZtN+srlgOqK9uW9gYL63u8
- yT/K9qIcAQBN43lROVkMg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754049AbaLVW0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 17:26:05 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62959 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753296AbaLVW0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 17:26:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 832062999B;
+	Mon, 22 Dec 2014 17:26:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zoJ+sGyijVEIM/cgf3mR9ufIQvM=; b=RzjW2N
+	3uW2TqPMjPzSlrM7dDI6Dm/pvQ0XMme9jJY9TKjhQlpL0dFcrvNc3AcY4RhuPIM+
+	cJUS3BA4eYYOrFxTYcMw/ZanexgYKtBLVKXrmKTUmFT7Xed8H82kYlJdGFtp6iOA
+	e9dpYGIPTrlXVjE8ew3H1+jTY5C1Zjc2tQgOs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EoyjvmRLxKlhawQ4h5RCO0uEgKw66rGa
+	0vJPMzhTQJu28jlKe3z0WbfmicdMsYJPtZaSmEwwMuIZLecCdrl639HL8Mdhfx4E
+	+G7MBKxS/V5xjlVC5I0XDSG5WGA/eD1pvIXMVqNL7XiSK9+V8b059PbNSsdoRYMr
+	YySEf+g5WVo=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7933F2999A;
+	Mon, 22 Dec 2014 17:26:02 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0170229993;
+	Mon, 22 Dec 2014 17:26:01 -0500 (EST)
+In-Reply-To: <20141222220209.GT29365@google.com> (Jonathan Nieder's message of
+	"Mon, 22 Dec 2014 14:02:09 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 82C51E0A-8A29-11E4-8B62-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261685>
 
-Hi Junio,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Wed, 10 Dec 2014, Junio C Hamano wrote:
+> Junio C Hamano wrote:
+>> Ben Walton <bdwalton@gmail.com> writes:
+>
+>>> echo "dir" | /usr/xpg4/bin/awk -v c=0 '$1 {++c} END {print c}'
+>>> 0
+>>>
+>>> And with GNU awk for comparison:
+>>> echo "dir" | /opt/csw/gnu/awk -v c=0 '$1 {++c} END {print c}'
+>>> 1
+>>>
+>>> Instead of modifying the awk code to work, use wc -w instead as that
+>>> is both adequate and simpler.
+>>
+>> Hmm, why "wc -w" not "wc -l", though?  Is somebody squashing a
+>> one-elem-per-line output from ls-files onto a single line?
+>
+> The old code was trying to skip empty lines.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > We already have support in `git receive-pack` to deal with some legacy
-> > repositories which have non-fatal issues.
-> >
-> > Let's make `git fsck` itself useful with such repositories, too, by
-> > allowing users to ignore known issues, or at least demote those issues
-> > to mere warnings.
-> >
-> > Example: `git -c fsck.missing-email=ignore fsck` would hide problems with
-> > missing emails in author, committer and tagger lines.
-> 
-> Hopefully I do not have to repeat myself, but please do not have
-> punctuations in the first and the last level of configuration variable
-> names, i.e. fsck.missingEmail, not mising-email.
+Ahh, I misread the original.
 
-I vetted the complete patch series and think I caught them all.
+Your suggestion to explicitly check $1 != "" makes sense to me now.
 
-Or do you want the error messages to also use camelCased IDs, i.e.
-
-	warning in tag $tag: missingTaggerEntry: invalid format ...
-
-instead of
-
-	warning in tag $tag: missing-tagger-entry: invalid format ...
-
-? It is easy to do, but looks slightly uglier to this developer's eyes...
-
-> Should these be tied to receive-pack ones in any way?  E.g. if you
-> set fsck.missingEmail to ignore, you do not have to do the same for
-> receive and accept a push with the specific error turned off?
-> 
-> Not a rhetorical question.  I can see it argued both ways.  The
-> justification to defend the position of not tying these two I would
-> have is so that I can be more strict to newer breakages (i.e. not
-> accepting a push that introduce a new breakage by not ignoring with
-> receive.fsck.*) while allowing breakages that are already present.
-> The justification for the opposite position is to make it more
-> convenient to write a consistent policy.  Whichever way is chosen,
-> we would want to see the reason left in the log message so that
-> people do not have to wonder what the original motivation was when
-> they decide if it is a good idea to change this part of the code.
-
-Hmm. I really tried very hard to separate the fsck.* from the receive.*
-settings because the two code paths already behave differently: many
-warnings reported (and ignored) by fsck are fatal errors when pushing with
-receive.fsckObjects=true. My understanding was that these differences are
-deliberate, and my interpretation was that the fsck and the receive
-settings were considered to be fundamentally different, even if the same
-fsck machinery performs the validation.
-
-If you agree, I would rephrase this line of argument and add it to the
-commit message. Do you agree?
-
-Ciao,
-Dscho
+To be blunt, I do not have much sympathy to those who insist using
+/usr/bin versions of various tools on Solaris that are overriden by
+xpg variants, but it is somewhat disturbing that the one from xpg4
+does not work.
