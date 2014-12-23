@@ -1,95 +1,96 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: fast-import's notemodify doesn't work the same as git notes
-Date: Tue, 23 Dec 2014 09:06:11 +0900
-Message-ID: <20141223000611.GB10980@glandium.org>
+From: Beat Bolli <dev@drbeat.li>
+Subject: Re: [PATCH v2 2/5] update_unicode.sh: set UNICODE_DIR only once
+Date: Tue, 23 Dec 2014 01:32:43 +0100
+Message-ID: <5498B82B.9090505@drbeat.li>
+References: <1419006264-24741-1-git-send-email-dev+git@drbeat.li>	<1419006264-24741-2-git-send-email-dev+git@drbeat.li> <xmqqk31ja7h3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 23 01:11:17 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, dev+git@drbeat.li
+X-From: git-owner@vger.kernel.org Tue Dec 23 01:39:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3D4G-00022A-NQ
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 01:11:17 +0100
+	id 1Y3DVU-0001n0-5w
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 01:39:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751540AbaLWAGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 19:06:24 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:54928 "EHLO glandium.org"
+	id S1753545AbaLWAjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 19:39:19 -0500
+Received: from mx1.2b3w.ch ([92.42.186.250]:36041 "EHLO mx1.2b3w.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751024AbaLWAGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 19:06:23 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1Y3CzL-0004Br-6Q; Tue, 23 Dec 2014 09:06:11 +0900
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752973AbaLWAjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 19:39:19 -0500
+X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Dec 2014 19:39:19 EST
+Received: from mx1.2b3w.ch (localhost [127.0.0.1])
+	by mx1.2b3w.ch (Postfix) with ESMTP id D5788C3442;
+	Tue, 23 Dec 2014 01:29:06 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.2
+Received: from mcmini.bolli (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
+	by mx1.2b3w.ch (Postfix) with ESMTPSA id AD416C343E;
+	Tue, 23 Dec 2014 01:29:06 +0100 (CET)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <xmqqk31ja7h3.fsf@gitster.dls.corp.google.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261704>
 
-Hi,
+On 22.12.14 19:02, Junio C Hamano wrote:
+> dev+git@drbeat.li writes:
+> 
+>> From: Beat Bolli <dev+git@drbeat.li>
+>>
+>> The value is the same on both uniset invocations, so "Don't Repeat
+>> Yourself" applies.
+>>
+>> Since we're in a subshell already, there's no need to unset UNICODE_DIR
+>> at the end.
+> 
+> Strictly speaking, you are not introducing your own subshell to
+> prevent the environment from leaking (i.e. you used "{...}" not
+> "(...)" in the previous step).  The reason you can do this is
+> because the generation of UNICODEWIDTH_H file is the last thing in
+> the subshell.
 
-There are two major differences between adding notes with fast-import
-and git notes, one of which is a serious problem:
+I don't introduce a new one, but we're still in the outer subshell that
+starts on line 12 "( cd unicode &&".
 
-- fast-import doesn't want to add notes for non commits, while git notes
-  does.
-
-- fast-import and git notes have different, conflicting fanouts:
-  - take e.g. the git repo (there needs to be a lot of commits to start
-    to see the problem)
-  - run the following to create notes for every commit:
-      (echo 'blob';
-       echo 'mark :1';
-       echo 'data 0';
-       echo 'commit refs/notes/foo';
-       echo 'committer <foo> 0 +0000';
-       echo 'data 0';
-       git rev-list --all | awk '{print "N :1", $1}';
-       echo) | git fast-import
-  - pick a random commit. I'll pick
-    bbcefffcea9789e4a1a2023a1c778e2c07db77a7 as it is current master as
-    of writing. Take the first two characters of that sha1, and look at
-    the ls-tree:
-      git ls-tree refs/notes/foo bb/
-    You'll see a number of blobs.
-  - Now, remove the note for that commit with git notes:
-      git notes --ref foo remove bbcefffcea9789e4a1a2023a1c778e2c07db77a7
-  - ls-tree again, you'll now see a number of trees instead of blobs,
-    because git notes will have done a fanout. -> git notes does fanouts
-    for much less items than fast-import does.
-  - Re-add a note for that commit with fast-import:
-      git fast-import <<EOF
-      blob
-      mark :1
-      data 0
-      commit refs/notes/foo
-      committer <foo> 0 +0000
-      data 0
-      from refs/notes/foo^0
-      N :1 bbcefffcea9789e4a1a2023a1c778e2c07db77a7
-
-      EOF
-  - ls-tree again, and you'll see a number of trees and *one* blob, for
-    bb/cefffcea9789e4a1a2023a1c778e2c07db77a7
-  - See the thread starting with 20141126004242.GA13915@glandium.org,
-    this type of notes branch make things very slow.
-  - Now, if you take an even bigger repository (as long as there are more
-    than 65536 commits, that's good ; I guess the linux kernel
-    qualifies, I've been checking with a mozilla-central clone), and
-    create exactly 65535 notes with git fast-import, you'll end up with
-    a 1-level tree (2/38). Add one more note, and the entire tree turns
-    into a 2-level tree (2/2/36). git notes would only add a level to
-    the tree containing the added note. git notes's behavior scales
-    better, because think about what happens on the next fanout with
-    fast-import... adding one note would need to create millions of trees.
-
-Cheers,
-
-Mike
+> 
+> I'll reword it to "Since this is done as the last command, ..."
+> 
+> Thanks.
+> 
+>>
+>> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+>> ---
+>>  update_unicode.sh | 5 +++--
+>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/update_unicode.sh b/update_unicode.sh
+>> index c1c876c..bed8916 100755
+>> --- a/update_unicode.sh
+>> +++ b/update_unicode.sh
+>> @@ -27,12 +27,13 @@ fi &&
+>>  		fi &&
+>>  		make
+>>  	) && {
+>> +		UNICODE_DIR=. && export UNICODE_DIR &&
+>>  		echo "static const struct interval zero_width[] = {" &&
+>> -		UNICODE_DIR=. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
+>> +		./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - U+00AD |
+>>  		grep -v plane &&
+>>  		echo "};" &&
+>>  		echo "static const struct interval double_width[] = {" &&
+>> -		UNICODE_DIR=. ./uniset/uniset --32 eaw:F,W &&
+>> +		./uniset/uniset --32 eaw:F,W &&
+>>  		echo "};"
+>>  	} >$UNICODEWIDTH_H
+>>  )
