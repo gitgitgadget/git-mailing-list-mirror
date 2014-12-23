@@ -1,88 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] git remote add: allow re-adding remotes with the
- same URL
-Date: Tue, 23 Dec 2014 19:26:55 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1412231923560.21312@s15462909.onlinehome-server.info>
-References: <20141216021900.50095.24877@random.io> <cover.1419267895.git.johannes.schindelin@gmx.de> <9c0c693efe68b1c0b080c14104bb6c5f7bf74097.1419267895.git.johannes.schindelin@gmx.de> <xmqq1tnrbmn1.fsf@gitster.dls.corp.google.com>
- <alpine.DEB.1.00.1412231425220.21312@s15462909.onlinehome-server.info> <CAPc5daXcXs+Sw8jr65dmLnpf6LQ6Lr34y80bxSf2AhhFyXa_mQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/4] Improve push performance with lots of refs
+Date: Tue, 23 Dec 2014 10:40:54 -0800
+Message-ID: <xmqqd27a2oqx.fsf@gitster.dls.corp.google.com>
+References: <1419336082-283091-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: anapsix@random.io, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 19:27:14 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Dec 23 19:41:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3UAp-0003Ni-Aq
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 19:27:11 +0100
+	id 1Y3UOF-0003x8-Hj
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 19:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755104AbaLWS1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 13:27:05 -0500
-Received: from mout.gmx.net ([212.227.15.19]:57791 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751438AbaLWS07 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 13:26:59 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0M4WuC-1XgJTw1zKO-00ygWF;
- Tue, 23 Dec 2014 19:26:56 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CAPc5daXcXs+Sw8jr65dmLnpf6LQ6Lr34y80bxSf2AhhFyXa_mQ@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:QPff3X8OrxRm7XKgOTu90e9OaQ8vA49sj1tiURR/rgvQCJPs5No
- 6YRxQIoSg3snnbzRz9FAIPqld6htrpxrmFRrHSctgf8yEwA91GBSrk/Utq9LbRaVD1BOP5Q
- XfTTRQlbJ4AxvtLd41ER7AyPQV1VbxaSQ6fOtKg+64FJD9z4dC0Tqm75f4yGlUIWY6cZ3FK
- Ezsf7Frh59JeEUZ06zWMA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751532AbaLWSk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 13:40:59 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54837 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751354AbaLWSk6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 13:40:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BD9EE28EDB;
+	Tue, 23 Dec 2014 13:40:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gEf3gKssn3xA3eh9FmTfrv9r5JM=; b=ENlQuA
+	uMifpmExSa4VqF2mrIrC2DAv7vwEKuBRyg/Tf8tVrMRe2eNwSpa6vi39L477gKRM
+	fEdMhy4aOWCkCPP8kt0LxFX2xru8D5ehPjpBOSnF/b6i11obQiLEwCv8WXHRqHtm
+	/xBIfnDjYG3uEFQaqpqmKoz4fjQCWkk/9UnVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OXb1Cr8z+TxUNJh4aDC2EKdvQsvSCFE/
+	zrkbcS3Z8PBEh3u2rmnewqBqwARO9iXHkISg7gcAOn0oFZW+5x4IgNksKwO/lFKe
+	td2AMSRMN0xmKSnu1SBXL/nW6IVKncEpmPkj+kCTW1zP3ipkrIkYiqXI3kn6RktJ
+	A7nbedT3on4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B435528EDA;
+	Tue, 23 Dec 2014 13:40:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1EC1A28ED9;
+	Tue, 23 Dec 2014 13:40:57 -0500 (EST)
+In-Reply-To: <1419336082-283091-1-git-send-email-sandals@crustytoothpaste.net>
+	(brian m. carlson's message of "Tue, 23 Dec 2014 12:01:18 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3BA536CC-8AD3-11E4-90CF-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261761>
 
-Hi Junio,
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-[re-Cc:ing the list]
+> The only change from v2 is the addition of a fourth patch, which fixes
+> t5500.  It's necessary because the test wants packs for fetches to
+> shallow clones to be minimal.
+>
+> I'm not especially thrilled with having to provide a --shallow command
+> line argument, but the alternative is to buffer a potentially large
+> amount of data in order to determine whether the remote side is shallow.
 
-On Tue, 23 Dec 2014, Junio C Hamano wrote:
+You spell "--thin-aggressive" as two words, "--thin" "--shallow", in
+this series, essentially, no?
 
-> On Tue, Dec 23, 2014 at 5:25 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Mon, 22 Dec 2014, Junio C Hamano wrote:
-> >>
-> >> So, it is an error if we have "remote" and if
-> >>
-> >>  (1) URL for the remote is defined already twice or more; or
-> >>  (2) we are adding a nickname (i.e. not a URL) and it is different
-> >>      from what we already have; or
-> >>  (3) we already have fetch_refspec
-> >>
-> >> The way I read the log message's rationale was that this is to allow
-> >> replacing an existing remote's URL; wouldn't checking the existence
-> >> of fetch_refspec go against that goal?
-> >>
-> >> Puzzled.  Either the code is wrong or I am mislead by the
-> >> explanation in the log.
-> >
-> > I hope v2 addresses your concerns.
-> 
-> Unfortunately I am still confused.
-> 
-> The way the overlong line is folded in the new version of the patch
-> makes it easier to read, but I didn't find a reason why checking the
-> number of fetch_refspec does not go against that goal there.
+I think this is going in the right direction.  The "shallow"
+propagated on the wire from the fetcher is the right thing to use
+to make this decision.
 
-Since you pointed out rightfully that the main goal is *not* to allow
-multiple `git remote add` to succeed when they try to add the same remote
-with the same URL, I changed the commit message to point out that the goal
-was to handle adding remotes via `git remote add <nick> <url>` when
-url.<url>.insteadOf = <nick> already exists, with the same <nick> and
-<url>.
+I wonder if the call to is_repository_shallow() is still necessary
+(read: I would prefer to see it go away) where we decide between
+"--objects-edge" and "--objects-edge-aggressive".
 
-Since I have no interest in opening the can of worms to allow re-adding
-remotes, I did not touch that part at all, I hope you do not mind.
+Here is the relevant part from 4/4:
 
-Ciao,
-Dscho
+@@ -2711,7 +2714,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	argv_array_push(&rp, "pack-objects");
+ 	if (thin) {
+ 		use_internal_rev_list = 1;
+-		argv_array_push(&rp, is_repository_shallow()
++		argv_array_push(&rp, is_repository_shallow() || shallow
+ 				? "--objects-edge-aggressive"
+ 				: "--objects-edge");
+ 	} else
