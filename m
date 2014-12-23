@@ -1,122 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use wc instead of awk to count subtrees in t0090-cache-tree
-Date: Tue, 23 Dec 2014 10:26:48 -0800
-Message-ID: <xmqqk31i2pef.fsf@gitster.dls.corp.google.com>
-References: <1419270744-1408-1-git-send-email-bdwalton@gmail.com>
-	<xmqqd27b6zd3.fsf@gitster.dls.corp.google.com>
-	<xmqq8uhz6za0.fsf@gitster.dls.corp.google.com>
-	<20141222233807.GU29365@google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] git remote add: allow re-adding remotes with the
+ same URL
+Date: Tue, 23 Dec 2014 19:26:55 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412231923560.21312@s15462909.onlinehome-server.info>
+References: <20141216021900.50095.24877@random.io> <cover.1419267895.git.johannes.schindelin@gmx.de> <9c0c693efe68b1c0b080c14104bb6c5f7bf74097.1419267895.git.johannes.schindelin@gmx.de> <xmqq1tnrbmn1.fsf@gitster.dls.corp.google.com>
+ <alpine.DEB.1.00.1412231425220.21312@s15462909.onlinehome-server.info> <CAPc5daXcXs+Sw8jr65dmLnpf6LQ6Lr34y80bxSf2AhhFyXa_mQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ben Walton <bdwalton@gmail.com>, dturner@twopensource.com,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 19:27:11 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: anapsix@random.io, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 19:27:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3UAo-0003Ni-OB
+	id 1Y3UAp-0003Ni-Aq
 	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 19:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754529AbaLWS1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 13:27:00 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64679 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750725AbaLWS06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 13:26:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6247D28A39;
-	Tue, 23 Dec 2014 13:26:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=peIgOfFS74KoC+v8/53GtIQbgkw=; b=BHv9sB
-	5YWesox4cNkKOW/NlNwvPGVYz7wnBni7duoP7G39HPzCqIjH2r2ovohc5LDRRwnw
-	5pnml9K7OaC/xcJlSPVSVaNfYMY7kvmB3oenLtCoCiiyWmeqo/frkTATNS502b9G
-	+spzJMIeYKXw+yx4emwguZLT4fjM9VCEnLlRg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Nca/GRld7XntVazaJPuHKIuKh4836nel
-	ICTNpD5B/WDa+Jvx4Q3faYVC0mnHtvj2Rmc7hWJ0xl7rgST4RUfkhB/oPTAveBAW
-	yf3cgtdq/E2Y8dH5RiIUTHsAnw5/WjXztC8rsWt08wGuZU4jMf7BG7fXVIJwPyaJ
-	I/hPErqi9q8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5938928A37;
-	Tue, 23 Dec 2014 13:26:50 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C48E628A36;
-	Tue, 23 Dec 2014 13:26:49 -0500 (EST)
-In-Reply-To: <20141222233807.GU29365@google.com> (Jonathan Nieder's message of
-	"Mon, 22 Dec 2014 15:38:07 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 429A4D52-8AD1-11E4-9E7D-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1755104AbaLWS1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 13:27:05 -0500
+Received: from mout.gmx.net ([212.227.15.19]:57791 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751438AbaLWS07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 13:26:59 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0M4WuC-1XgJTw1zKO-00ygWF;
+ Tue, 23 Dec 2014 19:26:56 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAPc5daXcXs+Sw8jr65dmLnpf6LQ6Lr34y80bxSf2AhhFyXa_mQ@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:QPff3X8OrxRm7XKgOTu90e9OaQ8vA49sj1tiURR/rgvQCJPs5No
+ 6YRxQIoSg3snnbzRz9FAIPqld6htrpxrmFRrHSctgf8yEwA91GBSrk/Utq9LbRaVD1BOP5Q
+ XfTTRQlbJ4AxvtLd41ER7AyPQV1VbxaSQ6fOtKg+64FJD9z4dC0Tqm75f4yGlUIWY6cZ3FK
+ Ezsf7Frh59JeEUZ06zWMA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261760>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi Junio,
 
-> With the updated subject,
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+[re-Cc:ing the list]
 
-Thanks.  Here is what I tentatively queued for today's pushout.
+On Tue, 23 Dec 2014, Junio C Hamano wrote:
 
--- >8 --
-From: Ben Walton <bdwalton@gmail.com>
-Date: Mon, 22 Dec 2014 15:25:44 -0800
-Subject: [PATCH] t0090: tweak awk statement for Solaris /usr/xpg4/bin/awk
+> On Tue, Dec 23, 2014 at 5:25 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Mon, 22 Dec 2014, Junio C Hamano wrote:
+> >>
+> >> So, it is an error if we have "remote" and if
+> >>
+> >>  (1) URL for the remote is defined already twice or more; or
+> >>  (2) we are adding a nickname (i.e. not a URL) and it is different
+> >>      from what we already have; or
+> >>  (3) we already have fetch_refspec
+> >>
+> >> The way I read the log message's rationale was that this is to allow
+> >> replacing an existing remote's URL; wouldn't checking the existence
+> >> of fetch_refspec go against that goal?
+> >>
+> >> Puzzled.  Either the code is wrong or I am mislead by the
+> >> explanation in the log.
+> >
+> > I hope v2 addresses your concerns.
+> 
+> Unfortunately I am still confused.
+> 
+> The way the overlong line is folded in the new version of the patch
+> makes it easier to read, but I didn't find a reason why checking the
+> number of fetch_refspec does not go against that goal there.
 
-The awk statements previously used in this test weren't compatible
-with the native versions of awk on Solaris:
+Since you pointed out rightfully that the main goal is *not* to allow
+multiple `git remote add` to succeed when they try to add the same remote
+with the same URL, I changed the commit message to point out that the goal
+was to handle adding remotes via `git remote add <nick> <url>` when
+url.<url>.insteadOf = <nick> already exists, with the same <nick> and
+<url>.
 
-    echo "dir" | /bin/awk -v c=0 '$1 {++c} END {print c}'
-    awk: syntax error near line 1
-    awk: bailing out near line 1
+Since I have no interest in opening the can of worms to allow re-adding
+remotes, I did not touch that part at all, I hope you do not mind.
 
-    echo "dir" | /usr/xpg4/bin/awk -v c=0 '$1 {++c} END {print c}'
-    0
-
-Even though we do not cater to tools in /usr/bin on Solaris that are
-overridden by corresponding ones in /usr/xpg?/bin, in this case,
-even the XPG version does not work correctly.
-
-With GNU awk for comparison:
-
-    echo "dir" | /opt/csw/gnu/awk -v c=0 '$1 {++c} END {print c}'
-    1
-
-which is what this test expects (and is in line with POSIX; non-empty
-string is true and an empty string is false).
-
-Work this issue around by using $1 != "" to state more explicitly
-that we are skipping empty lines.
-
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ben Walton <bdwalton@gmail.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0090-cache-tree.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 067f4c6..601d02d 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -22,7 +22,7 @@ generate_expected_cache_tree_rec () {
- 	# ls-files might have foo/bar, foo/bar/baz, and foo/bar/quux
- 	# We want to count only foo because it's the only direct child
- 	subtrees=$(git ls-files|grep /|cut -d / -f 1|uniq) &&
--	subtree_count=$(echo "$subtrees"|awk -v c=0 '$1 {++c} END {print c}') &&
-+	subtree_count=$(echo "$subtrees"|awk -v c=0 '$1 != "" {++c} END {print c}') &&
- 	entries=$(git ls-files|wc -l) &&
- 	printf "SHA $dir (%d entries, %d subtrees)\n" "$entries" "$subtree_count" &&
- 	for subtree in $subtrees
--- 
-2.2.1-321-gd161b79
+Ciao,
+Dscho
