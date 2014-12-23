@@ -1,101 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] is_hfs_dotgit: loosen over-eager match of \u{..47}
-Date: Tue, 23 Dec 2014 13:18:12 -0500
-Message-ID: <20141223181812.GA27078@peff.net>
-References: <20141223084536.GA25190@peff.net>
- <54998949.9090908@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 04/18] Offer a function to demote fsck errors to
+ warnings
+Date: Tue, 23 Dec 2014 19:23:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412231922120.21312@s15462909.onlinehome-server.info>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de> <2a0c4cd4c5d3aaceff8a6ffa49d2f3597d26086d.1418055173.git.johannes.schindelin@gmx.de> <xmqqoarbidv7.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222232270.21312@s15462909.onlinehome-server.info>
+ <xmqqfvc78hwq.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222330080.21312@s15462909.onlinehome-server.info> <xmqqy4pz71g7.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222348040.21312@s15462909.onlinehome-server.info>
+ <xmqqlhlz6zti.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412231051320.21312@s15462909.onlinehome-server.info> <xmqqr3vq49w5.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412231723480.21312@s15462909.onlinehome-server.info>
+ <xmqq61d24724.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412231828050.21312@s15462909.onlinehome-server.info> <CAPc5daWBL89KpYqONNyvJ-t8K1P-nMJVAU1bLWkqzHGdb2q-gA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 23 19:18:19 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 19:23:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3U2E-0006Ut-3l
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 19:18:18 +0100
+	id 1Y3U7E-0000y7-60
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 19:23:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753097AbaLWSSO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2014 13:18:14 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56718 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751216AbaLWSSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 13:18:13 -0500
-Received: (qmail 2678 invoked by uid 102); 23 Dec 2014 18:18:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 12:18:13 -0600
-Received: (qmail 22826 invoked by uid 107); 23 Dec 2014 18:18:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 13:18:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Dec 2014 13:18:12 -0500
-Content-Disposition: inline
-In-Reply-To: <54998949.9090908@web.de>
+	id S1752127AbaLWSXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 13:23:24 -0500
+Received: from mout.gmx.net ([212.227.15.19]:57457 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751363AbaLWSXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 13:23:23 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MMjgF-1XyFiK35LD-008dni;
+ Tue, 23 Dec 2014 19:23:19 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAPc5daWBL89KpYqONNyvJ-t8K1P-nMJVAU1bLWkqzHGdb2q-gA@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:6S+QDr06LNLzwgfQRATuJOe0IiIBD2+WpY2DCgF/xDaIsN5Anat
+ kaaAD0Vu7JBA/wOTGQFC4rCeF6f0vg6lADdfD6g4ZGXGwBNqrFGyhljwKueZdlBlPDo+n6S
+ 61lwl5yaXbOk6UC8FqD/lEW/H8Vv5iefYLW9Fa6KZq9YiiWCt9gNZhKVyCdBQR4HK/VfCjh
+ BtINXGyJl58ItAdRAKiOg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261758>
 
-On Tue, Dec 23, 2014 at 04:24:57PM +0100, Torsten B=C3=B6gershausen wro=
-te:
+Hi Junio,
 
-> Don't we have the same possible problem under NTFS?
-> Under Linux + VFAT ?
-> Under all OS + VFAT ?
+On Tue, 23 Dec 2014, Junio C Hamano wrote:
 
-I'm not sure what you mean.
+> On Tue, Dec 23, 2014 at 9:28 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >>
+> >> > And *still*, this is *just* a global table with defaults. I would *still*
+> >> > need to copy-on-write when the first customization of the severity level
+> >> > takes place because I cannot allow the global defaults to be modified by
+> >> > one caller (that would defeat the whole purpose of having per-caller
+> >> > settings bundled in the fsck_options struct).
+> >
+> > There is no alloc. Right now, the initialization reads:
+> >
+> >         struct fsck_options options = strict ?
+> >                 FSCK_OPTIONS_STRICT : FSCK_OPTIONS_DEFAULT;
+> 
+> Then it is just the matter of having
+> 
+>    fsck_options_init(&options);
+>    if (strict)
+>     options.some_field = make_it_strict;
+> 
+> as the first few statements, no?
+> 
+> I am not sure why it is so difficult....
 
-This code path is _only_ about checking for HFS+-specific problems. We
-check general case-insensitivity in another code path. And we check
-NTFS-specific problems in another code path.
+It is not difficult. But I try to avoid complexity when I can. Since you
+asked specifically, I will introduce it, though. Hopefully still this year
+(I'll not be available for a while starting tomorrow).
 
-(Technically we could make a "check all" function that runs over the
-data only once, which would be more efficient. But doing it this way
-makes the code much easier to follow).
-
-> And would it make sense to turn this
-> >   return (out & 0xffffff00) ? out : tolower(out);
-> into this:
-> static ucs_char_t unicode_tolower(ucs_char_t ch) {
->    return (ch & 0xffffff00) ? ch : tolower(ch);
-> }
-
-Perhaps, but you would need a big warning at the top of that function
-that is _only_ downcasing ASCII characters. I.e., it is fine for our us=
-e
-here, but you would not want other unicode-aware code to call it. The
-next_hfs_char already has such a warning at the top.
-
-> And what happens if I export NTFS to Mac OS X?
-> (Other combinations possible)
-> Shouldn't fsck under all OS warn for NTFS and hfs possible attacks ?
-
-=46sck already warns for all system types, no matter what platform you'=
-re
-on. And we do case-insensitive blocking of ".git" entering the index fo=
-r
-all platforms.
-
-We don't turn on filesystem-specific blocking of paths entering the
-index on all platforms. You get HFS+ blocking by default on OS X, and
-NTFS on Windows. If you are using HFS+ on Linux, you should set
-core.protectHFS.
-
-Possibly we should just turn on all checks everywhere. That would be a
-safer default, at the cost to Linux folks of:
-
-  1. Some slight inefficiency in each read-tree, as we have to do extra
-     processing on each name.
-
-  2. Some names would be disallowed that are otherwise OK. For the most
-     part these are not names that would be used in practice, though
-     (e.g., losing the ability to create ".git\u200c" is not a big loss
-     to anyone). I think Git for Windows has started blocking other
-     stuff like "CON" that is not specifically related to .git, though,
-     and that is more plausible for somebody to use in real life.
-
--Peff
+Ciao,
+Dscho
