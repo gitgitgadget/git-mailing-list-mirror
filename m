@@ -1,92 +1,106 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: Question about installing git from source
-Date: Tue, 23 Dec 2014 23:53:27 +0600
-Message-ID: <CANCZXo4q-TwH8WyqP1GYcUY-obWG1HAt8gSEs7jy5TJiUDG0HA@mail.gmail.com>
-References: <CANCZXo42SdM8hMdTFYgvD8D+RmXua1oJvB+FfTjjfR=yWqhmkg@mail.gmail.com>
-	<xmqqioh247th.fsf@gitster.dls.corp.google.com>
-	<CANCZXo4daZffQ7binFpHBy9adKKeuwHuR5VRixXUowMdgAdhTQ@mail.gmail.com>
-	<xmqq1tnq45yk.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
+Date: Tue, 23 Dec 2014 09:56:06 -0800
+Message-ID: <xmqqwq5i2qtl.fsf@gitster.dls.corp.google.com>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
+	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
+	<xmqq38878gao.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info>
+	<xmqqtx0n710m.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222356400.21312@s15462909.onlinehome-server.info>
+	<xmqqppbb6zx9.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231049250.21312@s15462909.onlinehome-server.info>
+	<xmqqmw6e499u.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231736490.21312@s15462909.onlinehome-server.info>
+	<xmqqa92e47ap.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231829020.21312@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 18:53:36 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 23 18:56:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3TeH-0007pV-8d
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 18:53:33 +0100
+	id 1Y3Tgu-00010s-G8
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 18:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845AbaLWRx2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2014 12:53:28 -0500
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:42539 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755600AbaLWRx2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Dec 2014 12:53:28 -0500
-Received: by mail-oi0-f53.google.com with SMTP id g201so14641008oib.12
-        for <git@vger.kernel.org>; Tue, 23 Dec 2014 09:53:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=r5lewZ3WlmRmlRRjsE6CUbgzT9HFOLPnCLu25DtVPRY=;
-        b=m0ggm1NfLm0YpMqxxti+W8ss8y+7++OMUDv4uK+eVrDWpE70jfywgj5efZe4xgPN/n
-         TTrwJZRJdELtUx3A45Jspb7WrOBCKC6lMkHFks4dNL9/Vxwv5gM9mzNM8F+2aTY+3zMj
-         PMAEXA6gexk4eDci+ofe2hdCuIgkYij8avCI5Y9Eji5IRI3/9jZN6vkbKp7d8AKFrjfD
-         md+avFzLPrFTO+Uo+b8QpDhiNInhSWCOtL0hOQJ03K7KSigPh/S7W8LQaf3eQlmwSZP+
-         kA+6MLr2X9xCVbzGOE6e18r9BibnzK2Msn3HAO/w+eYsbvOd2FSlPdNg/7cN/aS68hJk
-         S2Yg==
-X-Received: by 10.202.226.70 with SMTP id z67mr16346993oig.95.1419357207504;
- Tue, 23 Dec 2014 09:53:27 -0800 (PST)
-Received: by 10.182.26.42 with HTTP; Tue, 23 Dec 2014 09:53:27 -0800 (PST)
-In-Reply-To: <xmqq1tnq45yk.fsf@gitster.dls.corp.google.com>
+	id S1756245AbaLWR4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 12:56:10 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58988 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754452AbaLWR4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 12:56:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CA8132814F;
+	Tue, 23 Dec 2014 12:56:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PbQRr7RDXyVSsP8MAiWpfal4crk=; b=t4+xtQ
+	FKKwSSuUVEP9za6qVtZ1ZsBxNL8tJ7Y6QdFactOVBVpwPE4Ar/6UWb5n5/el8BUM
+	LpOWQTydRa9Wz948vuo4UfwMn6uVFIlDNcofX9/8Tw77S69qN7R9A4o6NtDevEKu
+	2nQ7i11GZDTPxf5EJv05J6eUp+UUdsrkXj5pU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AlmDgCL6oc6TJtFy1ixmUD2Hstl0PSKX
+	3t60HvWv7AxeVh3qyIYVg2MFNKHIBAkyuKLGHLdgyN6K6p3P35EevQIRf8m9Rhbj
+	TInTE/RO8lhn+nI6Jf+srgtISEw5vAdYENjEdLMSTfZP+GFW1PdBy3iQcuoVyHXd
+	QquoycoV7zA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C172C2814E;
+	Tue, 23 Dec 2014 12:56:07 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4B0082814A;
+	Tue, 23 Dec 2014 12:56:07 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1412231829020.21312@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Tue, 23 Dec 2014 18:41:38 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F862F8E6-8ACC-11E4-ADF5-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261750>
 
-I looked at Makefile, and seems that it occurs from here:
-https://github.com/git/git/blob/master/Makefile#L2205
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-It tries to copy all files/folders from git root directory but
-'install' command prints this error. I tried to execute 'sudo install
--d -m 755' in other directory and if there is directory too it prints
-the same error. For example:
-
-~/scripts $ ls
-addPPA    cleanMailTrash  git-autor    git-ranges       git-tp
-            install     scripts    ssh-live       term-help  tp-git
-    updateMail  xray-start
-buildGit  deployWork      git-install  git-remove-tags
-git-update-commit-message  install.sh  ssh-build  ssh-wiwob-lab  test
-     updateGitDev  updateNews
-
-test - is directory here
-
-~/scripts $ sudo install -d -m 755 .
-Copying scripts to /usr/bin
-cp: omitting directory =E2=80=98test=E2=80=99
-Done
-
-2014-12-23 23:43 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
-> Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+> Okay, so just to clarify: you want me to
 >
->> install -d -m 755 '/usr/bin'
->> Copying scripts to /usr/bin
+> - split the parser into
 >
-> As 'git grep "Copying scripts"' gives us nothing, the message is
-> obviously not what we are giving.  Perhaps you have a strange "instal=
-l"
-> in your path that does not understand "-d" is a way to tell it to
-> make sure a directory exists (by creating one as necessary)?
+> 	- a parser that accepts only camelCased variable names when they
+> 	  come from the config (for use in fsck and receive-pack), and
+
+OK.
+
+> 	- another parser that rejects camelCased variable names and only
+> 	  accepts lower-case-dashed, intended for command-line parsing
+> 	  in fsck, index-pack and unpack-objects, and
 >
+> - consequently have a converter from the camelCased variable names we
+>   receive from the config in receive-pack so we can pass lower-case-dashed
+>   settings to index-pack and unpack-objects.
 
+I am not sure about the latter two.  This needs a design discussion
+what the command line options should be.
 
+I think the command line should be like this:
 
---=20
-_________________________
-0xAX
+	git cmd --warn=missingTags,missingAuthor
+
+in the first place, i.e. "we may invent tokens to denote new kinds
+of errors as we improve fsck", not with "we may add options for new
+kinds of errors", i.e. the command line should not look like this:
+
+	git cmd --missing-tags=warn --missing-author=warn
+
+And from that point of view, I see no reason to support the dashed
+variant anywhere in the code, neither in the config parser or in the
+command line parser.
