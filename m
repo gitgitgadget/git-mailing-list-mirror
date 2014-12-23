@@ -1,122 +1,123 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 04/18] Offer a function to demote fsck errors to
- warnings
-Date: Tue, 23 Dec 2014 17:30:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1412231723480.21312@s15462909.onlinehome-server.info>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de> <2a0c4cd4c5d3aaceff8a6ffa49d2f3597d26086d.1418055173.git.johannes.schindelin@gmx.de> <xmqqoarbidv7.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222232270.21312@s15462909.onlinehome-server.info>
- <xmqqfvc78hwq.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222330080.21312@s15462909.onlinehome-server.info> <xmqqy4pz71g7.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222348040.21312@s15462909.onlinehome-server.info>
- <xmqqlhlz6zti.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412231051320.21312@s15462909.onlinehome-server.info> <xmqqr3vq49w5.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
+Date: Tue, 23 Dec 2014 08:32:13 -0800
+Message-ID: <xmqqmw6e499u.fsf@gitster.dls.corp.google.com>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
+	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
+	<xmqq38878gao.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info>
+	<xmqqtx0n710m.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222356400.21312@s15462909.onlinehome-server.info>
+	<xmqqppbb6zx9.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231049250.21312@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 17:30:18 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 23 17:32:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3SLg-0004Oq-Et
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 17:30:16 +0100
+	id 1Y3SNh-0005pQ-J6
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 17:32:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756501AbaLWQaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 11:30:09 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55280 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756189AbaLWQaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 11:30:08 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Ln8gj-1XOKEj2h8H-00hPRZ;
- Tue, 23 Dec 2014 17:30:04 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqqr3vq49w5.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:4MZKNiGeRWE3XfXVFQur9ESV3rH2gaIqKoozIHk4Vfi6kZPt1v1
- B+K4mpJCsqEL7buRL1nqyKy/ez50OxC+a+MkNBpFSxF9Jpz6liBX1JTWtXXhIZg32JIt83P
- NpYrRdk+7M8rUElmJlfULmAeBqKATCKH38Tuy1qQJKJq9fd0uvD/fKcR8ApVg/mZdIfvlZe
- QSqpwoHlaV11xc2z3ZKJg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1756189AbaLWQcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 11:32:17 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50134 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756113AbaLWQcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 11:32:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A34628775;
+	Tue, 23 Dec 2014 11:32:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7UAR83bQCHJ5uhVLfPThbOQDPAU=; b=Sc1sbP
+	6VVNHZTuyJwDo84ArYXNJMLbAhRMA4ItWZxyRFIMMI0GFghojB6TFptQ6W4GJIFM
+	2flgP57k+eEoTrLRnD54LIxnRXg151y/qcXQo4tDNm9OetcF8JCLMkYHVa4qz0zk
+	rHNrfApZkfxDyRKTsHaU5Ky5a3/XVtXpvclYs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PNR6G27+r4JRzw+S3i5GPCgt885E45qa
+	RQ+Xh4wtEPhjQHj3GDIlx4hwPDHHctJ2Gy6nXKwfw7yS3+2nLOMaU8qcj/FVBo/n
+	mtflz2tQna+m0BLkH/8IcPChmUsfp4/DoMx8Vnv0UKvTii2Ol6Hn0C2VkQX5YhOZ
+	6HIixhTH1rs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8102C28774;
+	Tue, 23 Dec 2014 11:32:15 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0650928773;
+	Tue, 23 Dec 2014 11:32:14 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1412231049250.21312@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Tue, 23 Dec 2014 10:50:50 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 40E9EFA4-8AC1-11E4-B687-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261738>
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 23 Dec 2014, Junio C Hamano wrote:
+>> >> > Of course you can say that! ;-) The problem these ugly messages try to
+>> >> > solve is to give the user a hint which setting to change if they want to
+>> >> > override the default behavior, though...
+>> >> 
+>> >> Ahh, OK, then dashed form would not work as a configuration variable
+>> >> names, so missingTaggerEntry would be the only usable option.
+>> >
+>> > Except that cunning me has made it so that both missing-tagger-entry *and*
+>> > missingTaggerEntry work...
+>> 
+>> Then the missing-tagger-entry side needs to be dropped.  The naming
+>> does not conform to the way how we name our officially supported
+>> configuration variables.
+>
+> But it does conform with the way we do our command-line parameters,
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > However, if we had to change the lookup such that it uses an array
-> > always, we would have to introduce a function to initialize the
-> > struct, always, in particular we would have to find a place to call
-> > that initialization function in, say, builtin/fsck.c (actually, in
-> > every code path that calls into the fsck machinery).
-> 
-> You would need to call a function to "initialize" the table if you
-> support customization by reading the configuration files anyway.
+Hmmm....  What is the expected user interaction?  The way I read the
+series was ($MISSING_TAGGER stands for the "token" we choose to show):
 
-Yes, this is the config machinery. But I need employ that only if I want
-to let the caller customize the severity levels. However, the fsck
-machinery is also called from places where such a customization is not
-offered. They would now need to be changed, too.
+    (1) The user runs fsck without customization, and may see a
+	warning (or error):
 
-> Also I suspect that you can tell the compiler to initialize the
-> array in place with default values, perhaps like this?
-> 
-> -- >8 --
-> #include <stdio.h>
-> 
-> /* sorted by the default severity (lowest impact first) */
-> #define EVENT_LIST(F) \
-> 	F(EVENT_A), \
-> 	F(EVENT_B), \
-> 	F(EVENT_C), \
-> 	F(EVENT_D)
-> 
-> #define ID_(event) ID_ ## event
-> enum event_id {
-> 	EVENT_LIST(ID_)
-> };
-> 
-> 
-> enum severity_level {
-> 	severity_info, severity_warn, severity_error
-> };
-> 
-> /* below this one are INFO */
-> #define FIRST_WARN_EVENT_ID		ID_EVENT_B
-> /* below this one are WARN */
-> #define FIRST_ERROR_EVENT_ID		ID_EVENT_C
-> 
-> #define STRING_(s) #s
-> #define DESC_(event) \
-> 	{ \
-> 		ID_ ## event, \
-> 		STRING_(event), \
-> 		(ID_ ## event < FIRST_WARN_EVENT_ID \
-> 		? severity_info \
-> 		: ID_ ## event < FIRST_ERROR_EVENT_ID \
-> 		? severity_warn \
-> 		: severity_error) \
-> 	}
+        $ git fsck
+        error in tag d6602ec5194c87b0fc87103ca4d67251c76f233a: $MISSING_TAGGER
 
-This is exactly the ugly, ugly preprocessor construct I thought you would
-meet with contempt. I mean, compared to this, my FUNC() hack is outright
-pretty ;-)
+    (2) The user demotes it to warning and runs fsck again:
 
-And *still*, this is *just* a global table with defaults. I would *still*
-need to copy-on-write when the first customization of the severity level
-takes place because I cannot allow the global defaults to be modified by
-one caller (that would defeat the whole purpose of having per-caller
-settings bundled in the fsck_options struct).
+	$ git config fsck.$MISSING_TAGGER warn
+        $ git fsck
+        warning: tag d6602ec5194c87b0fc87103ca4d67251c76f233a: $MISSING_TAGGER
 
-You see, I still would need to have a lazy initialization, the complexity
-in that part would not be reduced at all.
+I suspect that it would be much better if the configuration
+variables were organized the other way around, e.g.
 
-So I am afraid that this approach really adds complexity rather than
-replacing it with something simpler than my current code.
+	$ git config fsck.warn missingTagger,someOtherKindOfError
 
-Ciao,
-Dscho
+Then a one-shot override would make sense and easier to give as
+command line option, e.g.
+
+	$ git fsck --warn=missingTagger,someOtherKindOfError
+
+But the proposed organization to use one variable per questionable
+event type (as opposed to one variable per severity level) would
+lead to a one-shot override of this form, e.g.
+
+	$ git fsck --missing-tagger=warn --some-other-kind-of-error=warn
+
+which I think is insane to require us to support unbound number of
+dashed options.
+
+Or are you saying that we allow "git config core.file-mode true"
+from the command line to set core.fileMode configuration?
+
+Puzzled...
