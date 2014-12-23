@@ -1,99 +1,93 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: XDL_FAST_HASH can be very slow
-Date: Tue, 23 Dec 2014 03:51:05 +0100
-Message-ID: <CANgJU+X1XvM7zMiBV5Auo+bi2Dup8z7GohGY=SJwWNDxMzB+zg@mail.gmail.com>
-References: <20141222041944.GA441@peff.net>
-	<CAJrMUs_fM8+=2j1e5hYiaRjQq1QF87X6qOLN847q-B7Nu-wniw@mail.gmail.com>
-	<87r3vsrmdc.fsf@thomasrast.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Saving space/network on common repos
+Date: Mon, 22 Dec 2014 19:12:33 -0800
+Message-ID: <20141223031233.GX29365@google.com>
+References: <CAGXKyzEYhR69w1=4q-xtBagVBwOPqNA9C=AD0bAorB+5eRtVRg@mail.gmail.com>
+ <20141217223215.GO29365@google.com>
+ <CAGXKyzEqTik3p=A8NZJ6kUscFjw_Dh1mBPT-ciwq9L8kNKDDig@mail.gmail.com>
+ <20141218000723.GP29365@google.com>
+ <CAGXKyzGnnt6bBEPoy4nvNn=zX0hdRHpgvsAe263apaDsVxv0dA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Patrick Reynolds <piki@github.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Tue Dec 23 03:51:14 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Craig Silverstein <csilvers@khanacademy.org>
+X-From: git-owner@vger.kernel.org Tue Dec 23 04:12:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3FZ2-0001dn-9D
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 03:51:12 +0100
+	id 1Y3Ftq-00064I-73
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 04:12:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871AbaLWCvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 21:51:07 -0500
-Received: from mail-qc0-f177.google.com ([209.85.216.177]:54496 "EHLO
-	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751890AbaLWCvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 21:51:06 -0500
-Received: by mail-qc0-f177.google.com with SMTP id x3so4077996qcv.8
-        for <git@vger.kernel.org>; Mon, 22 Dec 2014 18:51:05 -0800 (PST)
+	id S1754233AbaLWDMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2014 22:12:37 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:60831 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753871AbaLWDMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2014 22:12:36 -0500
+Received: by mail-ie0-f170.google.com with SMTP id rd18so5417139iec.15
+        for <git@vger.kernel.org>; Mon, 22 Dec 2014 19:12:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Or5O3g/2LcrmN9bWxERX/p6zO2Ln1mF7/q32OntS5ps=;
-        b=XDckK0QgXjJBzrp+Z+LO9eBKTaNXoeEEiKxx0gOMzg/tHpB2kyuWbNFzbkS0zWzgo2
-         gcRcOtMpgKylJlfxvHrkeOIPRVryOBt2bCwoyFpWzMbA7IyqslsgiyENgZTUF51VjLUL
-         wQB6wuaoRh5SLB8zjdPIJEuUWzrvFkmT68Wh5siDhlt9D25Ykgt0PqX5F07dEBIGEceb
-         I5tV041l1n6/B/cCd13wtEoHh47pFDxMZzUOmbefMkdfB7Lw2R3JGbmNkb9bK9Ov4UjX
-         WxXNS1afFd5DzWpoIEBZxqT4FV+2OX8E8/Xa2Uynk9ScwejZ0RtpHm4zOerThodqd6yG
-         L25A==
-X-Received: by 10.224.95.67 with SMTP id c3mr41416136qan.3.1419303065306; Mon,
- 22 Dec 2014 18:51:05 -0800 (PST)
-Received: by 10.140.91.195 with HTTP; Mon, 22 Dec 2014 18:51:05 -0800 (PST)
-In-Reply-To: <87r3vsrmdc.fsf@thomasrast.ch>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=CwNvpXr6Hmqb7ImTE43PYhOw4wLG6yaionG5GwkJAVA=;
+        b=IWQiLd3zbZBCREE6BV7t6DDezWRCxTZRNHuIatdMzWKoVE4PVi5RbRv/3RVG1lCDT5
+         R0O8OOzj74YCig/0bPU7/GsXxLP0hoNrCcvusRivCFx+MD9Z9ndxIBeAY513K4Tbge+0
+         xq4p4JiuBsD/gGlH65HpwSFO/jxXlzXhiNUmXwsHUK3TNLrJ57Dbe4HJ0ZEtBF7IeOAP
+         sIMNgk3kbnzNJREUzsY+40vt2tyzVfv1P9K9xwE5+F8kFgsQydzyt5XMoATwWRZmVCvn
+         /+l5iJP2PYO9Z2nyYKspCC02mjgUD36AeBN1xzUfDQewyuSJZeHxFu/25n7aIz2Tp0Wh
+         cIKA==
+X-Received: by 10.50.28.20 with SMTP id x20mr19344612igg.27.1419304355893;
+        Mon, 22 Dec 2014 19:12:35 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:d0f3:eebb:4e13:baf])
+        by mx.google.com with ESMTPSA id g18sm9377615ioe.35.2014.12.22.19.12.35
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 22 Dec 2014 19:12:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAGXKyzGnnt6bBEPoy4nvNn=zX0hdRHpgvsAe263apaDsVxv0dA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261712>
 
-(sorry for the repost, I use gmail and it send html mails by default).
-On 22 December 2014 at 11:48, Thomas Rast <tr@thomasrast.ch> wrote:
->
-> 1. hash function throughput
-> 2. quality of the hash values
-> 3. avoiding collision attacks
->
-> XDL_FAST_HASH was strictly an attempt to improve throughput, and fairly
-> successful at that (6942efc (xdiff: load full words in the inner loop of
-> xdl_hash_record, 2012-04-06) quotes an 8% improvement on 'git log -p').
->
-> You are now addressing quality.
->
-> I have no idea how you ran into this, but if you are reworking things
-> already, I think it would be good to also randomize whatever hash you
-> put in so as to give some measure of protection against collision
-> attacks.
+Craig Silverstein wrote:
 
-I assume you mean DJB2 when you say DJB, and if so I will just note
-that it is a pretty terrible hash function for arbitrary data. (I
-understand it does better with raw text.) It does not pass either
-strict-avalanche-criteria[1], nor does it pass the
-bit-independence-criteria[2]. I have images which show how badly DJB2
-fails these tests if anyone is interested.
+> btw, just FYI, the scheme you lay out here doesn't actually work
+> as-is.  The problem is the config file, which has an entry like:
+>            worktree = ../../../mysubmodule
+> This depends on the config file living in
+> ./git/modules/mysubmodule/config.  But the proposed scheme moves the
+> config file to mysubmodule/.git/config, and the relative path is
+> broken.
 
-Murmur3 is better, in that it does pass SAC and BIC, but before you
-decide to use Murmur3 you should review https://131002.net/siphash/and
-related resources which demonstrate multi-collision attacks on Murmur3
-which are independent of the seed chosen. The paper also introduces a
-new hash function with good performance properties, and claims that it
-has cyptographic strength. (I say claims because I am not qualified to
-judge if it is or not.) Eg:
-https://131002.net/siphash/murmur3collisions-20120827.tar.gz
+As was pointed out to me privately, the behavior is exactly as you
+described and I had confused myself by looking at directory that
+wasn't even made with git-new-workdir.  Sorry for the nonsense.
 
-I think if you want performance and robustness against collision
-attacks Siphash is a good candidate, as is perhaps the AES derived
-hash used by the Go folks, but the performance of that algorithm is
-strongly dependent on the CPU supporting AES primitives.
+Workdirs share a single config file because information associated to
+branches set by "git branch --set-upstream-to", "git branch
+--edit-description", "git remote", and so on are stored in the config
+file.
 
-Anyway, the point is that simply adding a random seed to a hash
-function like DJB2 or Murmur3 is not sufficient to prevent collision
-attacks.
+The 'git checkout --to' series in "pu" avoids this problem by ignoring
+core.bare and core.worktree in worktrees created with 'git checkout --to'.
+To try it:
 
-Yves
-[1] A change in a single bit of the seed or the key should result in
-50% of the output bits of the hash changing.
-[2] output bits j and k should change independently when any single
-input bit i is inverted, for all i, j and k.
+	git clone https://kernel.googlesource.com/pub/scm/git/git
+	cd git
+	git merge 'origin/pu^{/nd/multiple-work-trees}^2'
+	make
+	PATH=$(pwd)/bin-wrappers:$PATH
+
+	git checkout --to=../experiment next
+
+This seems like good motivation to try to get that series in good
+shape and release it soon.
+
+Thanks again,
+Jonathan
