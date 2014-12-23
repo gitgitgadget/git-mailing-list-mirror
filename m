@@ -1,145 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] is_hfs_dotgit: loosen over-eager match of \u{..47}
-Date: Tue, 23 Dec 2014 03:45:36 -0500
-Message-ID: <20141223084536.GA25190@peff.net>
+Subject: Re: Question on for-each-ref and --contains
+Date: Tue, 23 Dec 2014 03:52:14 -0500
+Message-ID: <20141223085214.GA25444@peff.net>
+References: <CA++b5FaiKC2+U-Q_q7tBBjX2s+rLY6725H2ScUW26eOf-nmRjw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 23 09:45:49 2014
+Cc: git@vger.kernel.org
+To: "St. Blind" <st.s.blind@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 09:52:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3L6C-0006a2-P9
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 09:45:49 +0100
+	id 1Y3LCa-0001Tu-Bu
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 09:52:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755340AbaLWIpj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2014 03:45:39 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56567 "HELO cloud.peff.net"
+	id S1750934AbaLWIwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 03:52:15 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56570 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754896AbaLWIpi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 03:45:38 -0500
-Received: (qmail 18516 invoked by uid 102); 23 Dec 2014 08:45:38 -0000
+	id S1750724AbaLWIwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 03:52:14 -0500
+Received: (qmail 18831 invoked by uid 102); 23 Dec 2014 08:52:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 02:45:38 -0600
-Received: (qmail 20144 invoked by uid 107); 23 Dec 2014 08:45:48 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 02:52:14 -0600
+Received: (qmail 20234 invoked by uid 107); 23 Dec 2014 08:52:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 03:45:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Dec 2014 03:45:36 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 03:52:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Dec 2014 03:52:14 -0500
 Content-Disposition: inline
+In-Reply-To: <CA++b5FaiKC2+U-Q_q7tBBjX2s+rLY6725H2ScUW26eOf-nmRjw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261718>
 
-Our is_hfs_dotgit function relies on the hackily-implemented
-next_hfs_char to give us the next character that an HFS+
-filename comparison would look at. It's hacky because it
-doesn't implement the full case-folding table of HFS+; it
-gives us just enough to see if the path matches ".git".
+On Tue, Dec 23, 2014 at 09:50:50AM +0200, St. Blind wrote:
 
-At the end of next_hfs_char, we use tolower() to convert our
-32-bit code point to lowercase. Our tolower() implementation
-only takes an 8-bit char, though; it throws away the upper
-24 bits. This means we can't have any false negatives for
-is_hfs_dotgit. We only care about matching 7-bit ASCII
-characters in ".git", and we will correctly process 'G' or
-'g'.
+> In order to make some analyses here I had to build certain report
+> lists of our remote refs, based on various "containing" and "merged"
+> rules. We have more than hundred such refs at a time usually. So my
+> poor script which tries to make decisions with the help of rev-list
+> for each ref on each arbitrary commit is not really fast. The
+> git-branch --contains and --merged are not very handy too, because the
+> output is not really flexible, and the --merged works on HEAD only.
+> 
+> Do you think is a good idea to have the option "--contains" in
+> for-each-ref too (and/or in rev-list directly)?
+> If yes, then probably also the --(no-)merged options, but hopefully
+> with the arbitrary commit this time?
 
-However, we _can_ have false positives. Because we throw
-away the upper bits, code point \u{0147} (for example) will
-look like 'G' and get downcased to 'g'. It's not known
-whether a sequence of code points whose truncation ends up
-as ".git" is meaningful in any language, but it does not
-hurt to be more accurate here. We can just pass out the full
-32-bit code point, and compare it manually to the upper and
-lowercase characters we care about.
+Yes, it's absolutely a good idea to teach for-each-ref these options.
+This is something I've been meaning to work on for a while. This is at
+least the second time it has been mentioned in the past week or so, too.
+Maybe I'll try to move it forward soon. The last attempt got stuck on
+factoring out a single universal "--contains" traversal (we have 2
+implementations):
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I saw Linus ask about this on G+. I had done the "no false
-negative" analysis when writing the patch, but didn't
-consider the false positive.
+  http://thread.gmane.org/gmane.comp.version-control.git/252472
 
-Another way of accomplishing the same thing is for next_hfs_char to
-continue folding case, but _only_ do so for 8-bit code points. Like:
+I don't think there was any particular blocker besides time to look at
+and think about it. We need to be very sure of the termination
+requirements for the traversal (there was some discussion in the thread,
+but I think I convinced myself that some of the optimization suggestions
+there could return wrong answers for some cases).
 
-  return (out & 0xffffff00) ? out : tolower(out);
-
-I think the what's below is more obvious (and is actually
-how I originally wrote it; I switched to using tolower()
-during development to try to make it more readable).
-
- t/t1450-fsck.sh | 16 ++++++++++++++++
- utf8.c          | 17 ++++++++++++-----
- 2 files changed, 28 insertions(+), 5 deletions(-)
-
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 1f04b8a..3f5883d 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -349,6 +349,22 @@ dot-backslash-case .\\\\.GIT\\\\foobar
- dotgit-case-backslash .git\\\\foobar
- EOF
-=20
-+test_expect_success 'fsck allows .=C5=87it' '
-+	(
-+		git init not-dotgit &&
-+		cd not-dotgit &&
-+		echo content >file &&
-+		git add file &&
-+		git commit -m base &&
-+		blob=3D$(git rev-parse :file) &&
-+		printf "100644 blob $blob\t.\\305\\207it" >tree &&
-+		tree=3D$(git mktree <tree) &&
-+		git fsck 2>err &&
-+		cat err &&
-+		! test -s err
-+	)
-+'
-+
- # create a static test repo which is broken by omitting
- # one particular object ($1, which is looked up via rev-parse
- # in the new repository).
-diff --git a/utf8.c b/utf8.c
-index 9a3f4ad..34a779e 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -606,7 +606,7 @@ static ucs_char_t next_hfs_char(const char **in)
- 		 * but this is enough to catch anything that will convert
- 		 * to ".git"
- 		 */
--		return tolower(out);
-+		return out;
- 	}
- }
-=20
-@@ -614,10 +614,17 @@ int is_hfs_dotgit(const char *path)
- {
- 	ucs_char_t c;
-=20
--	if (next_hfs_char(&path) !=3D '.' ||
--	    next_hfs_char(&path) !=3D 'g' ||
--	    next_hfs_char(&path) !=3D 'i' ||
--	    next_hfs_char(&path) !=3D 't')
-+	c =3D next_hfs_char(&path);
-+	if (c !=3D '.')
-+		return 0;
-+	c =3D next_hfs_char(&path);
-+	if (c !=3D 'g' && c !=3D 'G')
-+		return 0;
-+	c =3D next_hfs_char(&path);
-+	if (c !=3D 'i' && c !=3D 'I')
-+		return 0;
-+	c =3D next_hfs_char(&path);
-+	if (c !=3D 't' && c !=3D 'T')
- 		return 0;
- 	c =3D next_hfs_char(&path);
- 	if (c && !is_dir_sep(c))
---=20
-2.2.1.376.gec59d43
+-Peff
