@@ -1,30 +1,30 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 4/4] upload-pack: use --objects-edge-aggressive for shallow fetches
-Date: Tue, 23 Dec 2014 12:01:22 +0000
-Message-ID: <1419336082-283091-5-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 2/4] rev-list: add an option to mark fewer edges as uninteresting
+Date: Tue, 23 Dec 2014 12:01:20 +0000
+Message-ID: <1419336082-283091-3-git-send-email-sandals@crustytoothpaste.net>
 References: <1419336082-283091-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 23 13:01:47 2014
+X-From: git-owner@vger.kernel.org Tue Dec 23 13:01:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3O9p-0002sg-D7
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 13:01:45 +0100
+	id 1Y3O9p-0002sg-Vi
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 13:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756055AbaLWMBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756053AbaLWMBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 23 Dec 2014 07:01:40 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:55909 "EHLO
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:55911 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756026AbaLWMBd (ORCPT
+	by vger.kernel.org with ESMTP id S1756037AbaLWMBd (ORCPT
 	<rfc822;git@vger.kernel.org>); Tue, 23 Dec 2014 07:01:33 -0500
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1EB9228094;
-	Tue, 23 Dec 2014 12:01:31 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 6C37828092;
+	Tue, 23 Dec 2014 12:01:30 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1419336082-283091-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
@@ -32,102 +32,108 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261727>
 
-When fetching into a shallow repository, we want to aggressively mark
-edges as uninteresting, since this decreases the pack size.  However,
-is_shallow_repository() returns false on the server side, since the
-server is not shallow.
+In commit fbd4a70 (list-objects: mark more commits as edges in
+mark_edges_uninteresting - 2013-08-16), we marked an increasing number
+of edges uninteresting.  This change, and the subsequent change to make
+this conditional on --objects-edge, are used by --thin to make much
+smaller packs for shallow clones.
 
-As the server, we get an indication of whether the client is shallow
-based on stdin; however, by the time we get to parsing stdin, we already
-will have called setup_revisions and won't be able to change our
-decision anymore.  Teach pack-objects a --shallow option to indicate
-that the remote side is shallow and use it in upload-pack.
+Unfortunately, they cause a significant performance regression when
+pushing non-shallow clones with lots of refs (23.322 seconds vs.
+4.785 seconds with 22400 refs).  Add an option to git rev-list,
+--objects-edge-aggressive, that preserves this more aggressive behavior,
+while leaving --objects-edge to provide more performant behavior.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-pack-objects.txt | 7 ++++++-
- builtin/pack-objects.c             | 5 ++++-
- upload-pack.c                      | 4 +++-
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ Documentation/git-rev-list.txt     | 3 ++-
+ Documentation/rev-list-options.txt | 4 ++++
+ list-objects.c                     | 4 ++--
+ revision.c                         | 6 ++++++
+ revision.h                         | 1 +
+ 5 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index d2d8f47..c2f76fb 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	[--no-reuse-delta] [--delta-base-offset] [--non-empty]
- 	[--local] [--incremental] [--window=<n>] [--depth=<n>]
- 	[--revs [--unpacked | --all]] [--stdout | base-name]
--	[--keep-true-parents] < object-list
-+	[--shallow] [--keep-true-parents] < object-list
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index fd7f8b5..5b11922 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -46,7 +46,8 @@ SYNOPSIS
+ 	     [ \--extended-regexp | -E ]
+ 	     [ \--fixed-strings | -F ]
+ 	     [ \--date=(local|relative|default|iso|iso-strict|rfc|short) ]
+-	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
++	     [ [ \--objects | \--objects-edge | \--objects-edge-aggressive ]
++	       [ \--unpacked ] ]
+ 	     [ \--pretty | \--header ]
+ 	     [ \--bisect ]
+ 	     [ \--bisect-vars ]
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 2277fcb..8cb6f92 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -657,6 +657,10 @@ These options are mostly targeted for packing of Git repositories.
+ 	objects in deltified form based on objects contained in these
+ 	excluded commits to reduce network traffic.
  
- 
- DESCRIPTION
-@@ -190,6 +190,11 @@ required objects and is thus unusable by Git without making it
- self-contained. Use `git index-pack --fix-thin`
- (see linkgit:git-index-pack[1]) to restore the self-contained property.
- 
-+--shallow::
-+	Optimize a pack that will be provided to a client with a shallow
-+	repository.  This option, combined with \--thin, can result in a
-+	smaller pack at the cost of speed.
++--objects-edge-aggressive::
++	Similar to `--objects-edge`, but it tries harder to find excluded
++	commits at the cost of increased time.
 +
- --delta-base-offset::
- 	A packed archive can express the base object of a delta as
- 	either a 20-byte object name or as an offset in the
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f3ba861..6bfbd3d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2613,6 +2613,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- {
- 	int use_internal_rev_list = 0;
- 	int thin = 0;
-+	int shallow = 0;
- 	int all_progress_implied = 0;
- 	struct argv_array rp = ARGV_ARRAY_INIT;
- 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
-@@ -2677,6 +2678,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		  PARSE_OPT_OPTARG, option_parse_unpack_unreachable },
- 		OPT_BOOL(0, "thin", &thin,
- 			 N_("create thin packs")),
-+		OPT_BOOL(0, "shallow", &shallow,
-+			 N_("create packs suitable for shallow fetches")),
- 		OPT_BOOL(0, "honor-pack-keep", &ignore_packed_keep,
- 			 N_("ignore packs that have companion .keep file")),
- 		OPT_INTEGER(0, "compression", &pack_compression_level,
-@@ -2711,7 +2714,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	argv_array_push(&rp, "pack-objects");
- 	if (thin) {
- 		use_internal_rev_list = 1;
--		argv_array_push(&rp, is_repository_shallow()
-+		argv_array_push(&rp, is_repository_shallow() || shallow
- 				? "--objects-edge-aggressive"
- 				: "--objects-edge");
- 	} else
-diff --git a/upload-pack.c b/upload-pack.c
-index ac9ac15..b531a32 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -86,7 +86,7 @@ static void create_pack_file(void)
- 		"corruption on the remote side.";
- 	int buffered = -1;
- 	ssize_t sz;
--	const char *argv[12];
-+	const char *argv[13];
- 	int i, arg = 0;
- 	FILE *pipe_fd;
+ --unpacked::
+ 	Only useful with `--objects`; print the object IDs that are not
+ 	in packs.
+diff --git a/list-objects.c b/list-objects.c
+index 2910bec..2a139b6 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -157,7 +157,7 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
  
-@@ -100,6 +100,8 @@ static void create_pack_file(void)
- 		argv[arg++] = "--thin";
- 
- 	argv[arg++] = "--stdout";
-+	if (shallow_nr)
-+		argv[arg++] = "--shallow";
- 	if (!no_progress)
- 		argv[arg++] = "--progress";
- 	if (use_ofs_delta)
+ 		if (commit->object.flags & UNINTERESTING) {
+ 			mark_tree_uninteresting(commit->tree);
+-			if (revs->edge_hint && !(commit->object.flags & SHOWN)) {
++			if (revs->edge_hint_aggressive && !(commit->object.flags & SHOWN)) {
+ 				commit->object.flags |= SHOWN;
+ 				show_edge(commit);
+ 			}
+@@ -165,7 +165,7 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
+ 		}
+ 		mark_edge_parents_uninteresting(commit, revs, show_edge);
+ 	}
+-	if (revs->edge_hint) {
++	if (revs->edge_hint_aggressive) {
+ 		for (i = 0; i < revs->cmdline.nr; i++) {
+ 			struct object *obj = revs->cmdline.rev[i].item;
+ 			struct commit *commit = (struct commit *)obj;
+diff --git a/revision.c b/revision.c
+index 75dda92..753dd2f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1853,6 +1853,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->tree_objects = 1;
+ 		revs->blob_objects = 1;
+ 		revs->edge_hint = 1;
++	} else if (!strcmp(arg, "--objects-edge-aggressive")) {
++		revs->tag_objects = 1;
++		revs->tree_objects = 1;
++		revs->blob_objects = 1;
++		revs->edge_hint = 1;
++		revs->edge_hint_aggressive = 1;
+ 	} else if (!strcmp(arg, "--verify-objects")) {
+ 		revs->tag_objects = 1;
+ 		revs->tree_objects = 1;
+diff --git a/revision.h b/revision.h
+index 9cb5adc..033a244 100644
+--- a/revision.h
++++ b/revision.h
+@@ -93,6 +93,7 @@ struct rev_info {
+ 			blob_objects:1,
+ 			verify_objects:1,
+ 			edge_hint:1,
++			edge_hint_aggressive:1,
+ 			limited:1,
+ 			unpacked:1,
+ 			boundary:2,
 -- 
 2.2.1.209.g41e5f3a
