@@ -1,54 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/4] rev-list: add an option to mark fewer edges as
- uninteresting
-Date: Tue, 23 Dec 2014 13:51:42 -0500
-Message-ID: <20141223185142.GA27954@peff.net>
-References: <1419336082-283091-1-git-send-email-sandals@crustytoothpaste.net>
- <1419336082-283091-3-git-send-email-sandals@crustytoothpaste.net>
- <CAO2U3Qjbmz+fP-SLSeq1S+BDi4PSTSLf_TdqW-ik8GLV7=nUmA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
+Date: Tue, 23 Dec 2014 10:56:04 -0800
+Message-ID: <xmqq4msm2o1n.fsf@gitster.dls.corp.google.com>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
+	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
+	<xmqq38878gao.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info>
+	<xmqqtx0n710m.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222356400.21312@s15462909.onlinehome-server.info>
+	<xmqqppbb6zx9.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231049250.21312@s15462909.onlinehome-server.info>
+	<xmqqmw6e499u.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231736490.21312@s15462909.onlinehome-server.info>
+	<xmqqa92e47ap.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231829020.21312@s15462909.onlinehome-server.info>
+	<xmqqwq5i2qtl.fsf@gitster.dls.corp.google.com>
+	<xmqqsig62q78.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231911470.21312@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Blume <blume.mike@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 19:51:48 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 23 19:56:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3UYd-0002H6-FF
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 19:51:47 +0100
+	id 1Y3Ucv-0005KX-LU
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 19:56:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756507AbaLWSvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 13:51:43 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56740 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752438AbaLWSvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 13:51:43 -0500
-Received: (qmail 6923 invoked by uid 102); 23 Dec 2014 18:51:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 12:51:42 -0600
-Received: (qmail 23054 invoked by uid 107); 23 Dec 2014 18:51:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Dec 2014 13:51:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Dec 2014 13:51:42 -0500
-Content-Disposition: inline
-In-Reply-To: <CAO2U3Qjbmz+fP-SLSeq1S+BDi4PSTSLf_TdqW-ik8GLV7=nUmA@mail.gmail.com>
+	id S1754104AbaLWS4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 13:56:08 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61833 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751403AbaLWS4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 13:56:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 891D5293DC;
+	Tue, 23 Dec 2014 13:56:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gehigKt5aaaeOamPDESrpjRyLcI=; b=Th8Z9l
+	JU/PpJ7pTou7+uQVY5DoxwvXBEmQiq+Fgb8QuzecWorNYMgHWIl/TyJtj4wmLSy2
+	TcXR62ZwREKX3vrTdKBa/NXxiPPxva2MVJ3GkeQbA6z6or9xI5T2iuPlA6I3LDYC
+	3FoecpGKwyYA+y5VFZ7mduhGbqlltv6o4CyDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NmT7JbWKOfryDygyPVOONOefsLOnTkWx
+	6lV0DynFtKIe4aMEX/BXsfydBpH6PePOH5FMnUkFqMKkFQGYkfyc8XAG5rjqvNU/
+	R0INfCifqzxd14meAId5p4gt7dMo/Ie8+xDJY5F8rMr0MjVy02N51ZEAEHSWEg0M
+	6fn+gRzwWOI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EAC6293DB;
+	Tue, 23 Dec 2014 13:56:06 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0890E293DA;
+	Tue, 23 Dec 2014 13:56:05 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1412231911470.21312@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Tue, 23 Dec 2014 19:14:56 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 59656388-8AD5-11E4-8BED-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261765>
 
-On Tue, Dec 23, 2014 at 12:55:48PM -0500, Michael Blume wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This patch causes an error on my mac, test 5500 fetch-pack errors on
-> part 44 - fetch creating new shallow root. It looks for "remote: Total
-> 1" in the fetch output and gets 3 instead.
+> Hi Junio,
+>
+> On Tue, 23 Dec 2014, Junio C Hamano wrote:
+>
+>> Having said that, I think "missingTags" etc. should not be configuration
+>> variable names (instead, they should be values).
+>> 
+>> Because of that, I do not think we need consistency between the way
+>> these "tokens that denote kinds of errors fsck denotes" are spelled and
+>> the way "configuration variable names" are spelled.
+>
+> Okay. That makes more sense.
 
-It fails for me on Linux, too. Interestingly the tip of the series
-passes. I didn't investigate further.
-
--Peff
+I am sorry that I didn't step back and think about it earlier to
+notice that we shouldn't be talking about configuration variable
+name syntax.  I could have saved us time going back and forth if
+I did so earlier.
