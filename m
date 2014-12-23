@@ -1,84 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git update-ref --stdin : too many open files
-Date: Mon, 22 Dec 2014 19:22:28 -0800
-Message-ID: <20141223032228.GZ29365@google.com>
-References: <54954E44.1080906@dachary.org>
- <xmqqoaqv8jmi.fsf@gitster.dls.corp.google.com>
- <5498D66B.5090807@gmail.com>
+From: Craig Silverstein <csilvers@khanacademy.org>
+Subject: Re: Saving space/network on common repos
+Date: Mon, 22 Dec 2014 21:36:53 -0800
+Message-ID: <CAGXKyzFXVODvbqzO3CAQRr2S4dDbe95TGc=8iYgcBkKpAPiXSg@mail.gmail.com>
+References: <CAGXKyzEYhR69w1=4q-xtBagVBwOPqNA9C=AD0bAorB+5eRtVRg@mail.gmail.com>
+	<20141217223215.GO29365@google.com>
+	<CAGXKyzEqTik3p=A8NZJ6kUscFjw_Dh1mBPT-ciwq9L8kNKDDig@mail.gmail.com>
+	<20141218000723.GP29365@google.com>
+	<CAGXKyzGnnt6bBEPoy4nvNn=zX0hdRHpgvsAe263apaDsVxv0dA@mail.gmail.com>
+	<20141223031233.GX29365@google.com>
+Reply-To: csilvers@khanacademy.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	Loic Dachary <loic@dachary.org>
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 04:22:38 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 06:37:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3G3Q-0003Tv-DI
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 04:22:36 +0100
+	id 1Y3I9s-0003Kh-BB
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 06:37:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754294AbaLWDWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2014 22:22:32 -0500
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:58551 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751890AbaLWDWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2014 22:22:31 -0500
-Received: by mail-ig0-f176.google.com with SMTP id l13so5254758iga.9
-        for <git@vger.kernel.org>; Mon, 22 Dec 2014 19:22:31 -0800 (PST)
+	id S1754177AbaLWFhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 00:37:06 -0500
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:37618 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750718AbaLWFgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 00:36:54 -0500
+Received: by mail-ig0-f171.google.com with SMTP id z20so5014809igj.10
+        for <git@vger.kernel.org>; Mon, 22 Dec 2014 21:36:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ybAfDpC/SQxAaNPuw8d+Su0UAPqjUwjD59WoT2aGDDs=;
-        b=jhcuFnBgbsiDCLImim3Xtq/jitjsEDdkKopAeasO/q0w4ZNqIgN/rrjPDw0+CE6LTR
-         /jnCm1Suhw/GygVsuVT4OEVD55+HbrzqaGDQXQ/UGByLWhsSui24kabGOwGvdCi7Pt2X
-         O5YfG3GA+X6dIN0vvDgDoPVJlqT+Mddp4oQQOd/27LH7AKbiS22TOIFxppyERXIXM4RZ
-         yVKEYOmf7PRvJPZzRCWMlLetFPFqygoGziW4jcyxVBbmDW9bjg73a+WH1u72MitvYrt9
-         SLvyvV7HAoxgE9nlnzKv/gGEMV78RKcUTir34vh14LpWCtL9zIXFUziEhL7HooypjOd/
-         hgCA==
-X-Received: by 10.50.176.129 with SMTP id ci1mr17974183igc.40.1419304951266;
-        Mon, 22 Dec 2014 19:22:31 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:d0f3:eebb:4e13:baf])
-        by mx.google.com with ESMTPSA id qr1sm5798286igb.18.2014.12.22.19.22.30
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 22 Dec 2014 19:22:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <5498D66B.5090807@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=khanacademy.org; s=google;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=YYbWTGQup9IGO1nRS0KLHdaHEUeVoXzO/ZITH8vrPTY=;
+        b=cm8Wu8S3TUTMrmdztHkkb9UGWyij3wT+gVTsPqQbcCTiyt36cl6d7i/dsuyRSYANqE
+         DEUPwK1owqqRaXTn6nKX3s0uLxRXWmjLRh3kpjAtutT600IJCNVFCmEoSEB3/N1C3pwY
+         kpRF9kF465tzZUZ/j0pSbJUEmRkJCfC1DI4d0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=YYbWTGQup9IGO1nRS0KLHdaHEUeVoXzO/ZITH8vrPTY=;
+        b=jn40UoN06B24vsq7SjjQpWb4D2AVsT7Zok/O49fC/MZxdWmH3tQFU4lse7XgnY/eax
+         1r9jZENobSywRr8KO/XemMGgWNd9o24+RScJuAo5da/5b3d4OBhjXS7IZjhQTGnXVHFw
+         p1vT1VLyqwEFe2zbxvkn/vNzAEgQ0L8kEHOxMAiUPRmfZy3uZHxph+EhCakn8BNWVURy
+         UZThHlHzMP7FxixcIm5YLs1d+/Rn2Oz4pyM/fLZgUdtU4qjLW6aAXEb/TeMW0Fp9AG7s
+         XSsxSe8hRwe2ARFcWq6wdu99m8KfNtDexLwQfSuggOLsACD328gyChPOS+nJ1CIk0Tza
+         tyaw==
+X-Gm-Message-State: ALoCoQmGOd2psi0FnC8NgZMP8QaCZhN+6il6/M2hUNSAjUO0zXd+HPDPSl3wJnZeahz+gIu0h5Uq
+X-Received: by 10.107.13.205 with SMTP id 196mr23887192ion.15.1419313013746;
+ Mon, 22 Dec 2014 21:36:53 -0800 (PST)
+Received: by 10.107.7.159 with HTTP; Mon, 22 Dec 2014 21:36:53 -0800 (PST)
+In-Reply-To: <20141223031233.GX29365@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261714>
 
-Hi Stefan,
+} This seems like good motivation to try to get that series in good
+shape and release it soon.
 
-Stefan Beller wrote:
-> On 22.12.2014 13:22, Junio C Hamano wrote:
->> Loic Dachary <loic@dachary.org> writes:
+I was going to spend some time tomorrow (if I can find any :-) )
+trying to fix up the contrib script to work with submodules, or at
+least the kind that we use.  Is that something that's worth the time
+to do, or would we be better off just waiting for the work-tree stuff
+to get released?  If I do end up doing it, would you be interested in
+a pull request (or however patches are submitted in the git world)?
 
->>> fatal: Unable to create /home/gitmirror/repositories/Ceph/ceph/refs/heads/pull/1917.lock': Too many open files
-[...]
->> Stefan, want to take a look?  I think we do need to keep the .lock
->> files without renaming while in transaction, but we do not have to
->> keep them open, so I suspect that a fix may be to split the commit
->> function into two (one to close but not rename, the other to
->> finalize by renaming) or something.
+craig
 
-Makes sense.
-
-> Sounds reasonable. Though by closing the file we're giving up again a
-> bit of safety. If we close the file everyone could tamper with the lock
-> file. (Sure they are not supposed to touch it, but they could)
-
-At least on Linux, keeping a file open doesn't offer any protection
-against someone else deleting it.  (It also doesn't offer any
-protection against someone updating the ref directly. ;-)  Opening the
-corresponding .lock file with O_EXCL is part of the contract for
-updating refs.)
-
-Thanks,
-Jonathan
+On Mon, Dec 22, 2014 at 7:12 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Craig Silverstein wrote:
+>
+>> btw, just FYI, the scheme you lay out here doesn't actually work
+>> as-is.  The problem is the config file, which has an entry like:
+>>            worktree = ../../../mysubmodule
+>> This depends on the config file living in
+>> ./git/modules/mysubmodule/config.  But the proposed scheme moves the
+>> config file to mysubmodule/.git/config, and the relative path is
+>> broken.
+>
+> As was pointed out to me privately, the behavior is exactly as you
+> described and I had confused myself by looking at directory that
+> wasn't even made with git-new-workdir.  Sorry for the nonsense.
+>
+> Workdirs share a single config file because information associated to
+> branches set by "git branch --set-upstream-to", "git branch
+> --edit-description", "git remote", and so on are stored in the config
+> file.
+>
+> The 'git checkout --to' series in "pu" avoids this problem by ignoring
+> core.bare and core.worktree in worktrees created with 'git checkout --to'.
+> To try it:
+>
+>         git clone https://kernel.googlesource.com/pub/scm/git/git
+>         cd git
+>         git merge 'origin/pu^{/nd/multiple-work-trees}^2'
+>         make
+>         PATH=$(pwd)/bin-wrappers:$PATH
+>
+>         git checkout --to=../experiment next
+>
+> This seems like good motivation to try to get that series in good
+> shape and release it soon.
+>
+> Thanks again,
+> Jonathan
