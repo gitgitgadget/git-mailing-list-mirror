@@ -1,115 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] git remote add: allow re-adding remotes with the
- same URL
-Date: Tue, 23 Dec 2014 14:25:36 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1412231425220.21312@s15462909.onlinehome-server.info>
-References: <20141216021900.50095.24877@random.io> <cover.1419267895.git.johannes.schindelin@gmx.de> <9c0c693efe68b1c0b080c14104bb6c5f7bf74097.1419267895.git.johannes.schindelin@gmx.de> <xmqq1tnrbmn1.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] is_hfs_dotgit: loosen over-eager match of \u{..47}
+Date: Tue, 23 Dec 2014 16:24:57 +0100
+Message-ID: <54998949.9090908@web.de>
+References: <20141223084536.GA25190@peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: anapsix@random.io, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 14:25:46 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 23 16:25:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3PT8-0002TW-0j
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 14:25:46 +0100
+	id 1Y3RL1-0004Zd-BW
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 16:25:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932240AbaLWNZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 08:25:41 -0500
-Received: from mout.gmx.net ([212.227.15.19]:58532 "EHLO mout.gmx.net"
+	id S1756181AbaLWPZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 10:25:26 -0500
+Received: from mout.web.de ([212.227.15.14]:65504 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932162AbaLWNZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 08:25:41 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MUoiS-1YOD2y3zq8-00Y6tm;
- Tue, 23 Dec 2014 14:25:36 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqq1tnrbmn1.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:DzR7bFO2KFjVGqgMwTUz4wCrR1AH9jpveetKOaeYnFIb3KE4Bkz
- b2RWKAvbKE6DpaB5Cl98OfngKJQ6DKvmEGSAWy5ap26RLRsk7vedEWLZNdiQICY4UzWSIFf
- xFJPBizt/QjtjDCW9dbMfux+eFt7iOz9ePHHxfkKKcVfYfK6+yQ9ka5gX3YkTl9V/HVSoZM
- HRbijXsvuvJOaliZM3+KQ==
+	id S1750983AbaLWPZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 10:25:25 -0500
+Received: from macce.local ([93.222.20.216]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0MI5yY-1Y2t652FrC-003rjs; Tue, 23 Dec 2014 16:25:00
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <20141223084536.GA25190@peff.net>
+X-Provags-ID: V03:K0:nxbccBBXQBIANK0hXj089rxCvO3d3DVFpPsQVTO0Iy+Zukl2mw2
+ iteSr7x0yg8inqmV6f1AVOoEO3EoSreHqXmQcOMafwTfjGajeAe8goXIYxdvzvBogmqGgNR
+ ZofTjS4uqZO8Ylum6NDMlQJTTshJr5WZ3sFbhNy/DZyfoHwZBkV3fLVK+8vlUv7BwuhCzmS
+ wnx70UV66wepet+OjuoCw==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261734>
 
-Hi Junio,
+On 2014-12-23 09.45, Jeff King wrote:
+> Our is_hfs_dotgit function relies on the hackily-implemented
+> next_hfs_char to give us the next character that an HFS+
+> filename comparison would look at. It's hacky because it
+> doesn't implement the full case-folding table of HFS+; it
+> gives us just enough to see if the path matches ".git".
+> 
+> At the end of next_hfs_char, we use tolower() to convert our
+> 32-bit code point to lowercase. Our tolower() implementation
+> only takes an 8-bit char, though; it throws away the upper
+> 24 bits. This means we can't have any false negatives for
+> is_hfs_dotgit. We only care about matching 7-bit ASCII
+> characters in ".git", and we will correctly process 'G' or
+> 'g'.
+> 
+> However, we _can_ have false positives. Because we throw
+> away the upper bits, code point \u{0147} (for example) will
+> look like 'G' and get downcased to 'g'. It's not known
+> whether a sequence of code points whose truncation ends up
+> as ".git" is meaningful in any language, but it does not
+> hurt to be more accurate here. We can just pass out the full
+> 32-bit code point, and compare it manually to the upper and
+> lowercase characters we care about.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I saw Linus ask about this on G+. I had done the "no false
+> negative" analysis when writing the patch, but didn't
+> consider the false positive.
+> 
+> Another way of accomplishing the same thing is for next_hfs_char to
+> continue folding case, but _only_ do so for 8-bit code points. Like:
+> 
+Don't we have the same possible problem under NTFS?
+Under Linux + VFAT ?
+Under all OS + VFAT ?
 
-On Mon, 22 Dec 2014, Junio C Hamano wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > When adding a remote, we make sure that the remote does not exist
-> > already.
-> >
-> > For convenience, we allow re-adding remotes with the same URLs.
-> > This also handles the case that there is an "[url ...] insteadOf"
-> > setting in the config.
-> >
-> > It might seem like a mistake to compare against remote->url[0] without
-> > verifying that remote->url_nr >=1, but at this point a missing URL has
-> > been filled by the name already, therefore url_nr cannot be zero.
-> >
-> > Noticed by Anastas Dancha.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  builtin/remote.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/remote.c b/builtin/remote.c
-> > index 46ecfd9..9168c83 100644
-> > --- a/builtin/remote.c
-> > +++ b/builtin/remote.c
-> > @@ -180,7 +180,8 @@ static int add(int argc, const char **argv)
-> >  	url = argv[1];
-> >  
-> >  	remote = remote_get(name);
-> > -	if (remote && (remote->url_nr > 1 || strcmp(name, remote->url[0]) ||
-> > +	if (remote && (remote->url_nr > 1 || (strcmp(name, remote->url[0]) &&
-> > +				strcmp(url, remote->url[0])) ||
-> >  			remote->fetch_refspec_nr))
-> >  		die(_("remote %s already exists."), name);
-> 
-> When we need to fold an overlong line, it is easier to read if the
-> line is folded at an operator with higher precedence, i.e. this line
-> 
->         if (A && (B || (C && D) || E))
-> 
-> folded like this
-> 
->         if (A && (B || (C &&
->                    D) ||
->             E))
-> 
-> is harder to read than when folded like this
-> 
->         if (A && (B ||
->                   (C && D) ||
->                    E))
-> 
-> So, it is an error if we have "remote" and if
-> 
->  (1) URL for the remote is defined already twice or more; or
->  (2) we are adding a nickname (i.e. not a URL) and it is different
->      from what we already have; or
->  (3) we already have fetch_refspec
-> 
-> The way I read the log message's rationale was that this is to allow
-> replacing an existing remote's URL; wouldn't checking the existence
-> of fetch_refspec go against that goal?
-> 
-> Puzzled.  Either the code is wrong or I am mislead by the
-> explanation in the log.
+And would it make sense to turn this
+>   return (out & 0xffffff00) ? out : tolower(out);
+into this:
+static ucs_char_t unicode_tolower(ucs_char_t ch) {
+   return (ch & 0xffffff00) ? ch : tolower(ch);
+}
 
-I hope v2 addresses your concerns.
 
-Ciao,
-Dscho
+And what happens if I export NTFS to Mac OS X?
+(Other combinations possible)
+Shouldn't fsck under all OS warn for NTFS and hfs possible attacks ?
+ 
