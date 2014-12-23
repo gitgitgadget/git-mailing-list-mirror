@@ -1,181 +1,143 @@
-From: Russ Cox <rsc@golang.org>
-Subject: mangled file names in git checkout-index --temp output when run in
- repo subdirectory
-Date: Tue, 23 Dec 2014 11:36:53 -0500
-Message-ID: <CAA8EjDRsw6o8T1sS=rpSt_+KaKt9QnONCmF23yHDdKhgKHcdww@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
+Date: Tue, 23 Dec 2014 17:47:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1412231736490.21312@s15462909.onlinehome-server.info>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de> <cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de> <xmqqzjavgym5.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
+ <xmqq38878gao.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info> <xmqqtx0n710m.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412222356400.21312@s15462909.onlinehome-server.info>
+ <xmqqppbb6zx9.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1412231049250.21312@s15462909.onlinehome-server.info> <xmqqmw6e499u.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 23 17:37:02 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 17:47:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3SSB-0000NJ-2o
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 17:36:59 +0100
+	id 1Y3Sc9-0007Dx-Sf
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 17:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288AbaLWQgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 11:36:55 -0500
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:56843 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932270AbaLWQgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 11:36:54 -0500
-Received: by mail-qa0-f44.google.com with SMTP id bm13so4690850qab.3
-        for <git@vger.kernel.org>; Tue, 23 Dec 2014 08:36:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=25OtPDIJXWD7fkcU+nXiutvENKA6xKQqQMBAwY+TcSE=;
-        b=bZS9i8RrGuFdyH20WvC2QwtJeMchC+kQJ98o+a+ikSX0NVPsvH7PaHtvrQstBa9rPe
-         A/LOxDcRg+Vfy6ZiAdgmkDIbWLF7WHOr4hBEdw86txQ4oF0GDdXWL3ukhiwu0lkF1eiK
-         REC7HZkKvGWoSl6JzQIVvlPy7ffO7Cwl1H+6fuIPqPGxtf94/J4IO5VsuweWY8OnUmPt
-         YlJYzr0QFx7RY5lnhb1Czbeq95olU8SEc7/pdAeayMR3yFQ9dAwwkzttMDTDZOcCr5V0
-         XavZXkLhRn1HpdtReaGtQo+/YzTLMeI39wUyzwvYEi2L/BjIaydrr83jA/4KVXHQ2emf
-         sCag==
-X-Gm-Message-State: ALoCoQnOE5WmFzG9083DGD7nGK+B8reEWZ6vQ+3gU9Ii8dEzE9YgXWjJKhFxoM2Mv0b9o4Wd2J2J
-X-Received: by 10.140.35.114 with SMTP id m105mr33044613qgm.79.1419352613466;
- Tue, 23 Dec 2014 08:36:53 -0800 (PST)
-Received: by 10.96.68.40 with HTTP; Tue, 23 Dec 2014 08:36:53 -0800 (PST)
+	id S932157AbaLWQrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 11:47:14 -0500
+Received: from mout.gmx.net ([212.227.17.20]:62324 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756336AbaLWQrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 11:47:13 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MJmcS-1Y4YXf2dd6-001EVc;
+ Tue, 23 Dec 2014 17:47:07 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqmw6e499u.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:rJoeybJbGESy2wBKm5+eO/Ugu/ZbJXzTtxmVd8Jyv3rmr11fevE
+ CIyAj6yUe0cvjmYWycqPpiZu6J30eLJf+WgXuaJiqI7dPPhCIv5NcaDekebE1K5Zyt0CBpX
+ LSTBI6UOdz/oaybvwqtT7JPDJEm5oA02xT3BntQy2XuhitfHDEFlX2qyHJMKYbcCtXWypRE
+ eFqgUbBrp/EqbnsxuopCQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261740>
 
-I am using git checkout-index --temp to obtain copies of files from
-the index, but it does not always print valid file names unless run
-from the repository root.
+Hi Junio,
 
-git checkout-index --temp prints names of files in the index
-interpreted relative to the current directory below the repository
-root.
+On Tue, 23 Dec 2014, Junio C Hamano wrote:
 
-If you have a git repo in /tmp/gitbug, you are in /tmp/gitbug/dir1,
-and you run git checkout-index --temp /tmp/gitbug/dir1/file1, the file
-listing prints just "file1". So far so good.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> >> > Of course you can say that! ;-) The problem these ugly messages
+> >> >> > try to solve is to give the user a hint which setting to change
+> >> >> > if they want to override the default behavior, though...
+> >> >> 
+> >> >> Ahh, OK, then dashed form would not work as a configuration
+> >> >> variable names, so missingTaggerEntry would be the only usable
+> >> >> option.
+> >> >
+> >> > Except that cunning me has made it so that both
+> >> > missing-tagger-entry *and* missingTaggerEntry work...
+> >> 
+> >> Then the missing-tagger-entry side needs to be dropped.  The naming
+> >> does not conform to the way how we name our officially supported
+> >> configuration variables.
+> >
+> > But it does conform with the way we do our command-line parameters,
+> 
+> Hmmm....  What is the expected user interaction?  The way I read the
+> series was ($MISSING_TAGGER stands for the "token" we choose to show):
+> 
+>     (1) The user runs fsck without customization, and may see a
+> 	warning (or error):
+> 
+>         $ git fsck
+>         error in tag d6602ec5194c87b0fc87103ca4d67251c76f233a: $MISSING_TAGGER
+> 
+>     (2) The user demotes it to warning and runs fsck again:
+> 
+> 	$ git config fsck.$MISSING_TAGGER warn
+>         $ git fsck
+>         warning: tag d6602ec5194c87b0fc87103ca4d67251c76f233a: $MISSING_TAGGER
 
-However, this file name shortening appears to assume that all file
-names being printed will be within the subtree rooted at the current
-directory, and it just skips over the first N characters in the name,
-where N is the length of the current directory name relative to the
-repo root (in the above example, N = len("dir1/") = 5).
+The intended use case is actually when receive.fsckObjects = true and you
+call `git push`, seeing 'remote: error: $MULTIPLE_AUTHORS: ...'.
 
-That is, if you have a git repo in /tmp/gitbug, you are in
-/tmp/gitbug/dir1, and you run git checkout-index --temp
-/tmp/gitbug/longdir2/file2, the file listing prints "ir2/file2", not
-"../longdir2/file2". If you arrange things just right you can get ""
-as the file name. I've never seen arbitrary binary garbage, so
-(without inspecting the source code) it does appear that something is
-keeping the printed string pointer within the original string, even in
-the case when N > the length of the string being printed.
+Now, the $MULTIPLE_AUTHORS *config* setting is parsed by `git
+receive-pack`, but that is not the command that needs to customize the
+fsck call: it is either `git index-pack` or `git unpack-objects`. So what
+`git receive-pack` does is to pass the config options as command-line
+options to the called command. For consistency with the rest of Git, the
+command-line options were *not* camel-cased, but lower-case,
+dash-separated.
 
-I have seen this in a few different versions of Git. I just downloaded
-and built Git 2.2.1 from sources and confirmed that it has the buggy
-behavior. Below is a shell script demonstrating the bug and an
-annotated transcript of the execution of the script on my system.
+The parser I wrote actually accepts both versions, allowing me to skip the
+tedious step to convert the camelCased config setting into a
+lower-case-dashed version to pass to `index-pack` or `unpack-objects`,
+only to be parsed by the same parser as `fsck` would use directly.
 
-The workaround seems to be that, until the bug is fixed, git
-checkout-index must be run in the repository root.
+So I am rather happy with the fact that the parser handles both camelCased
+and lower-case-dashed versions.
 
-Thanks.
-Russ
+> I suspect that it would be much better if the configuration variables
+> were organized the other way around, e.g.
+> 
+> 	$ git config fsck.warn missingTagger,someOtherKindOfError
 
-% cat /tmp/gitbugdemo
-#!/bin/bash
+I had something similar in an earlier version of my patch series, but it
+was shot down rightfully: if you want to allow inheriting defaults from
+$HOME/.gitconfig, you have to configure the severity levels individually.
 
-git=${1:-git}
-set -e
-rm -rf /tmp/gitbug
-mkdir /tmp/gitbug
-cd /tmp/gitbug
-$git init .
-mkdir dir1 longdir2 veryveryverylongdir3
-echo hello world >dir1/file1
-echo hello world >longdir2/file2
-echo hello world >veryveryverylongdir3/file3
-files="/tmp/gitbug/dir1/file1 /tmp/gitbug/longdir2/file2
-/tmp/gitbug/veryveryverylongdir3/file3"
-relfiles=$(echo $files | sed 's;/tmp/gitbug/;../;g')
-rootfiles=$(echo $relfiles | sed 's;\.\./;;g')
-set -x
-$git version
-cd /tmp/gitbug
-$git add .
-$git checkout-index --temp $files
-$git checkout-index --temp $rootfiles
-cd /tmp/gitbug/dir1
-$git checkout-index --temp $files
-$git checkout-index --temp $relfiles
-cd /tmp/gitbug/longdir2
-$git checkout-index --temp $files
-$git checkout-index --temp $relfiles
-cd /tmp/gitbug/veryveryverylongdir3
-$git checkout-index --temp $files
-$git checkout-index --temp $relfiles
-%
+(The current solution also sidesteps the problematic situation when both
+fsck.warn *and* fsck.error contain, say, missingTagger.)
 
-% /tmp/gitbugdemo git2.2.1
-warning: templates not found /usr/local/share/git-core/templates
-Initialized empty Git repository in /private/tmp/gitbug/.git/
-+ git2.2.1 version
-git version 2.2.1
-+ cd /tmp/gitbug
-+ git2.2.1 add .
+> Then a one-shot override would make sense and easier to give as
+> command line option, e.g.
+> 
+> 	$ git fsck --warn=missingTagger,someOtherKindOfError
 
-### In root directory, all is well.
-+ git2.2.1 checkout-index --temp /tmp/gitbug/dir1/file1
-/tmp/gitbug/longdir2/file2 /tmp/gitbug/veryveryverylongdir3/file3
-.merge_file_TRqU2e dir1/file1
-.merge_file_7uajP4 longdir2/file2
-.merge_file_L4OD1U veryveryverylongdir3/file3
-+ git2.2.1 checkout-index --temp dir1/file1 longdir2/file2
-veryveryverylongdir3/file3
-.merge_file_77EMra dir1/file1
-.merge_file_DpKgMu longdir2/file2
-.merge_file_w8yfxA veryveryverylongdir3/file3
+Yep, my first implementation actually used
+`--strict=missing-tagger,-some-demoted-error`. But as I mentioned above,
+that approach is not as flexible as the current one.
 
-### In dir1/, loses first 5 chars of file paths outside current directory.
-### Both absolute and relative command-line arguments trigger bug.
-+ cd /tmp/gitbug/dir1
-+ git2.2.1 checkout-index --temp /tmp/gitbug/dir1/file1
-/tmp/gitbug/longdir2/file2 /tmp/gitbug/veryveryverylongdir3/file3
-.merge_file_2SwQmt file1
-.merge_file_g0rOvr ir2/file2
-.merge_file_3uDW54 eryverylongdir3/file3
-+ git2.2.1 checkout-index --temp ../dir1/file1 ../longdir2/file2
-../veryveryverylongdir3/file3
-.merge_file_BwUlNt file1
-.merge_file_gQji59 ir2/file2
-.merge_file_hNNjc9 eryverylongdir3/file3
+> But the proposed organization to use one variable per questionable
+> event type (as opposed to one variable per severity level) would
+> lead to a one-shot override of this form, e.g.
+> 
+> 	$ git fsck --missing-tagger=warn --some-other-kind-of-error=warn
+> 
+> which I think is insane to require us to support unbound number of
+> dashed options.
 
-### In longdir2/, loses first 9 chars of file paths outside current directory.
-### Both absolute and relative command-line arguments trigger bug.
-+ cd /tmp/gitbug/longdir2
-+ git2.2.1 checkout-index --temp /tmp/gitbug/dir1/file1
-/tmp/gitbug/longdir2/file2 /tmp/gitbug/veryveryverylongdir3/file3
-.merge_file_ljy0oC 1
-.merge_file_ANLgpx file2
-.merge_file_1lDbMp erylongdir3/file3
-+ git2.2.1 checkout-index --temp ../dir1/file1 ../longdir2/file2
-../veryveryverylongdir3/file3
-.merge_file_ugqOsC 1
-.merge_file_reoXBo file2
-.merge_file_p4tQn9 erylongdir3/file3
+The intended use case is actually *not* the command-line, but the config
+file, in particular allowing /etc/gitconfig, $HOME/.gitconfig *and*
+.git/config to customize the settings.
 
-### In veryveryverylongdir3/, inconsistent truncation of file paths
-outside current directory.
-### Absolute command-line arguments trigger bug but relative ones do not (!).
-+ cd /tmp/gitbug/veryveryverylongdir3
-+ git2.2.1 checkout-index --temp /tmp/gitbug/dir1/file1
-/tmp/gitbug/longdir2/file2 /tmp/gitbug/veryveryverylongdir3/file3
-.merge_file_VvT0uT 1
-.merge_file_UfAT1x file2
-.merge_file_Fon1Ex file3
-+ git2.2.1 checkout-index --temp ../dir1/file1 ../longdir2/file2
-../veryveryverylongdir3/file3
-.merge_file_YDHkDe ../dir1/file1
-.merge_file_F7M27m ../longdir2/file2
-.merge_file_ZkkXnQ file3
-%
+> Or are you saying that we allow "git config core.file-mode true"
+> from the command line to set core.fileMode configuration?
+
+I do not understand this reference. I did not suggest to change `git
+config`, did I? If I did, I apologize; it was definitely *not* my
+intention to change long-standing customs.
+
+Ciao,
+Dscho
