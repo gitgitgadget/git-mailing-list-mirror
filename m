@@ -1,79 +1,176 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
-Date: Tue, 23 Dec 2014 09:07:30 -0800
-Message-ID: <xmqqegrq47n1.fsf@gitster.dls.corp.google.com>
-References: <cover.1418055173.git.johannes.schindelin@gmx.de>
-	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
-	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
-	<xmqq38878gao.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info>
-	<xmqqtx0n710m.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412222356400.21312@s15462909.onlinehome-server.info>
-	<xmqqppbb6zx9.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.1.00.1412231049250.21312@s15462909.onlinehome-server.info>
-	<xmqqmw6e499u.fsf@gitster.dls.corp.google.com>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: Question about installing git from source
+Date: Tue, 23 Dec 2014 23:13:54 +0600
+Message-ID: <CANCZXo4daZffQ7binFpHBy9adKKeuwHuR5VRixXUowMdgAdhTQ@mail.gmail.com>
+References: <CANCZXo42SdM8hMdTFYgvD8D+RmXua1oJvB+FfTjjfR=yWqhmkg@mail.gmail.com>
+	<xmqqioh247th.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 23 18:07:38 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 18:14:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3Svp-0003zi-P1
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 18:07:38 +0100
+	id 1Y3T20-0007uI-Hv
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 18:14:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805AbaLWRHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 12:07:34 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55923 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751369AbaLWRHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 12:07:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C178928367;
-	Tue, 23 Dec 2014 12:07:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nb3kgJuITY4eeHiPl6DmyiwLo/Y=; b=sHP9tW
-	xPdjqvPuqG4npjVr6GoQDnLSM6kv6DaT5qj/0z9RXDRq8HKlpvSsp2AtjoD6l1fL
-	u1x3M/6dpEehb7np1aZnCE3rKjna7fohL/yKx1E4JQpna3T9AA/tdhBYVOcATc1q
-	HgmExu4zc/MVjRLheJCG8trhfcFCPgOGLgp3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HuJLC/JhqaqT9k+iXdTwWd1H+Kq4tR6C
-	wN3TXoBrgHnSexc3yIFkSZemGSzo/3AE3bzrihx4Iqs8+2MXEQfoGIhQUiu7qrWK
-	jlQK4hnhHHZvIG6KFjYQ4LdRuVIBrQ6N5Po3+P5L0PzGE45BGjbD995xacQGNx1+
-	7mcBSiieIA0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B7ECF28366;
-	Tue, 23 Dec 2014 12:07:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F5BF28365;
-	Tue, 23 Dec 2014 12:07:32 -0500 (EST)
-In-Reply-To: <xmqqmw6e499u.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 23 Dec 2014 08:32:13 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2EE21D40-8AC6-11E4-981F-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752831AbaLWRNz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2014 12:13:55 -0500
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:43367 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752438AbaLWRNy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Dec 2014 12:13:54 -0500
+Received: by mail-ob0-f180.google.com with SMTP id wp4so26101480obc.11
+        for <git@vger.kernel.org>; Tue, 23 Dec 2014 09:13:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=OnEzo/jA0R0QbguJIy1Bp1bdmM5KDe/9HBBqwzfYmE4=;
+        b=Rv5gnhAKsvyzygZUHxS/L3fN9O1LjzOFbsMdeRSErGW3jHKsOueDM31obGH2ipz/Ux
+         3l9q7PdyT6eG+BA+DPGenadDEAKUIQkoS71RDJIm8ly1XzzDOdW20mBqtnae2qp9EH92
+         8frxMnS4O2fkBVQcoaQuH70vCtYSfNnieaf9v9QDJE7vtoP5wxHZsp2OxiCK3ljpQFte
+         M8dFI4dzYvsPqzH378+fEmd4iD6zOPYU4+q8O1LC+wdAyCes8XaL/muG3euyITx/Mznb
+         kbRxw5G0aTBIKB9gGS0IKMBfN5mgU1/YogQiBWVomnYNHIHGSxCY6LLuDhoRDMcXMYIV
+         FlUw==
+X-Received: by 10.202.225.197 with SMTP id y188mr16169542oig.94.1419354834234;
+ Tue, 23 Dec 2014 09:13:54 -0800 (PST)
+Received: by 10.182.26.42 with HTTP; Tue, 23 Dec 2014 09:13:54 -0800 (PST)
+In-Reply-To: <xmqqioh247th.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261743>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hell Junio,
 
-> I suspect that it would be much better if the configuration
-> variables were organized the other way around, e.g.
+Look I download git from master, executed following:
+
+make configure
+make prefix=3D/usr all
+sudo make prefix=3D/usr install
+
+And got the same during installing:
+
+~/dev/git $ sudo make prefix=3D/usr install
+    GEN perl/PM.stamp
+    SUBDIR perl
+/usr/bin/perl Makefile.PL PREFIX=3D'/usr' INSTALL_BASE=3D''
+--localedir=3D'/usr/share/locale'
+Generating a Unix-style perl.mak
+Writing perl.mak for Git
+Writing MYMETA.yml and MYMETA.json
+    GEN git-add--interactive
+    GEN git-difftool
+    GEN git-archimport
+    GEN git-cvsexportcommit
+    GEN git-cvsimport
+    GEN git-cvsserver
+    GEN git-relink
+    GEN git-send-email
+    GEN git-svn
+    GEN git-p4
+    SUBDIR gitweb
+    SUBDIR ../
+make[2]: 'GIT-VERSION-FILE' is up to date.
+    GEN git-instaweb
+    SUBDIR git-gui
+    SUBDIR gitk-git
+    SUBDIR perl
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Prompt.pm >blib/lib/Git/SVN/Prompt.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Editor.pm >blib/lib/Git/SVN/Editor.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Fetcher.pm >blib/lib/Git/SVN/Fetcher.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Utils.pm >blib/lib/Git/SVN/Utils.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Log.pm >blib/lib/Git/SVN/Log.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Memoize/YAML.pm >blib/lib/Git/SVN/Memoize/YAML.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN.pm >blib/lib/Git/SVN.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Migration.pm >blib/lib/Git/SVN/Migration.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/IndexInfo.pm >blib/lib/Git/IndexInfo.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/GlobSpec.pm >blib/lib/Git/SVN/GlobSpec.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/SVN/Ra.pm >blib/lib/Git/SVN/Ra.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>" <Git.pm
+>blib/lib/Git.pm
+/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
+<Git/I18N.pm >blib/lib/Git/I18N.pm
+    SUBDIR templates
+install -d -m 755 '/usr/bin'
+Copying scripts to /usr/bin
+cp: omitting directory =E2=80=98bin-wrappers=E2=80=99
+cp: omitting directory =E2=80=98block-sha1=E2=80=99
+cp: omitting directory =E2=80=98builtin=E2=80=99
+cp: omitting directory =E2=80=98compat=E2=80=99
+cp: omitting directory =E2=80=98contrib=E2=80=99
+cp: omitting directory =E2=80=98Documentation=E2=80=99
+cp: omitting directory =E2=80=98ewah=E2=80=99
+cp: omitting directory =E2=80=98git-gui=E2=80=99
+cp: omitting directory =E2=80=98gitk-git=E2=80=99
+
+=2E..
+
+2014-12-23 23:03 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
+> Alexander Kuleshov <kuleshovmail@gmail.com> writes:
 >
-> 	$ git config fsck.warn missingTagger,someOtherKindOfError
+>> Trying to install git from source, executing:
+>>
+>> make configure
+>> ./configure --prefix=3D/usr
+>> make --prefix=3D/usr all
+>> sudo make install DISTDIR=3D/usr
+>
+> That does not seem to match any of the ways how INSTALL tells us to
+> build and install.
+>
+> Excerpts from INSTALL
+>
+>     (1) ... If you want to do a global install, you can do
+>
+>         $ make prefix=3D/usr all doc info ;# as yourself
+>         # make prefix=3D/usr install install-doc install-html install=
+-info ;# as root
+>
+> Note how "prefix" is spelled.
+>
+>    (2) Alternatively you can use autoconf generated ./configure
+>        script to set up install paths (via config.mak.autogen), so
+>        you can write instead
+>
+>         $ make configure ;# as yourself
+>         $ ./configure --prefix=3D/usr ;# as yourself
+>         $ make all doc ;# as yourself
+>         # make install install-doc install-html;# as root
+>
+> Note how "make" does not have any "prefix".
+>
+> Also when you install to a temporary directory so that you can tar
+> up the resulting hierarchy, the variable to use is spelled DESTDIR,
+> e.g.
+>
+>         make DESTDIR=3D/var/tmp/git-2.2.1 install install-doc
+>
+>> ...
+>> What's problem can be here?
+>
+> Hopefully the above would be a good start to help you figure that
+> out.
 
-By the way, I think I like this organization is much better than the
-other way around, i.e. "fsck.missingTagger=warn", as we do not want
-the namespace under fsck.* for variables that control the behaviour
-of fsck that are *NOT* kinds of questionable conditions fsck can
-find.
+
+
+--=20
+_________________________
+0xAX
