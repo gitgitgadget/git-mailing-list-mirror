@@ -1,92 +1,78 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] is_hfs_dotgit: loosen over-eager match of \u{..47}
-Date: Tue, 23 Dec 2014 16:24:57 +0100
-Message-ID: <54998949.9090908@web.de>
-References: <20141223084536.GA25190@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git update-ref --stdin : too many open files
+Date: Tue, 23 Dec 2014 07:57:35 -0800
+Message-ID: <xmqq38865pg0.fsf@gitster.dls.corp.google.com>
+References: <54954E44.1080906@dachary.org>
+	<xmqqoaqv8jmi.fsf@gitster.dls.corp.google.com>
+	<5498D66B.5090807@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 23 16:25:32 2014
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	Loic Dachary <loic@dachary.org>
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 16:57:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3RL1-0004Zd-BW
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 16:25:31 +0100
+	id 1Y3RqC-0008K9-W1
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 16:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756181AbaLWPZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 10:25:26 -0500
-Received: from mout.web.de ([212.227.15.14]:65504 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750983AbaLWPZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 10:25:25 -0500
-Received: from macce.local ([93.222.20.216]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0MI5yY-1Y2t652FrC-003rjs; Tue, 23 Dec 2014 16:25:00
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <20141223084536.GA25190@peff.net>
-X-Provags-ID: V03:K0:nxbccBBXQBIANK0hXj089rxCvO3d3DVFpPsQVTO0Iy+Zukl2mw2
- iteSr7x0yg8inqmV6f1AVOoEO3EoSreHqXmQcOMafwTfjGajeAe8goXIYxdvzvBogmqGgNR
- ZofTjS4uqZO8Ylum6NDMlQJTTshJr5WZ3sFbhNy/DZyfoHwZBkV3fLVK+8vlUv7BwuhCzmS
- wnx70UV66wepet+OjuoCw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1756350AbaLWP5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 10:57:40 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64572 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756341AbaLWP5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 10:57:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D655728DCA;
+	Tue, 23 Dec 2014 10:57:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=39UL5su2+yUpKYV0r4EEFscHTFo=; b=Yy2LHq
+	0SatywbdsqXS9ztmbCREJeYOqUBCc6DxwLxkbvnbtUxfb87a2DBXD2D6SxqmPucP
+	fnPy02GwHPB7PNxv/BxC+KgBRnGK5Bvrm824+6YlLBra3ZkepZhAJk5jt1ySgmYn
+	lShvUM1Ni29fSp37+Pl54iBGfGflofZa2yrFw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Dt8Errwo+iHj0U2dbXz0Tw3GAEH7sBsl
+	xg1Yc9YuIne7wDctuRkL9nwyjMz593dJG4SjiRR5uY9nCPognUbpgqHZM5SNCyKz
+	zX1EhW4yjY3vTumyyN8zxuWlSXWjR6hug3hrHwvrziFOsGCPtkTTey82vZGswAjS
+	r/2raZFmVlw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C7D5D28DC6;
+	Tue, 23 Dec 2014 10:57:37 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 20D3728DC4;
+	Tue, 23 Dec 2014 10:57:37 -0500 (EST)
+In-Reply-To: <5498D66B.5090807@gmail.com> (Stefan Beller's message of "Mon, 22
+	Dec 2014 18:41:47 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6A66B70E-8ABC-11E4-BC77-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261735>
 
-On 2014-12-23 09.45, Jeff King wrote:
-> Our is_hfs_dotgit function relies on the hackily-implemented
-> next_hfs_char to give us the next character that an HFS+
-> filename comparison would look at. It's hacky because it
-> doesn't implement the full case-folding table of HFS+; it
-> gives us just enough to see if the path matches ".git".
-> 
-> At the end of next_hfs_char, we use tolower() to convert our
-> 32-bit code point to lowercase. Our tolower() implementation
-> only takes an 8-bit char, though; it throws away the upper
-> 24 bits. This means we can't have any false negatives for
-> is_hfs_dotgit. We only care about matching 7-bit ASCII
-> characters in ".git", and we will correctly process 'G' or
-> 'g'.
-> 
-> However, we _can_ have false positives. Because we throw
-> away the upper bits, code point \u{0147} (for example) will
-> look like 'G' and get downcased to 'g'. It's not known
-> whether a sequence of code points whose truncation ends up
-> as ".git" is meaningful in any language, but it does not
-> hurt to be more accurate here. We can just pass out the full
-> 32-bit code point, and compare it manually to the upper and
-> lowercase characters we care about.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I saw Linus ask about this on G+. I had done the "no false
-> negative" analysis when writing the patch, but didn't
-> consider the false positive.
-> 
-> Another way of accomplishing the same thing is for next_hfs_char to
-> continue folding case, but _only_ do so for 8-bit code points. Like:
-> 
-Don't we have the same possible problem under NTFS?
-Under Linux + VFAT ?
-Under all OS + VFAT ?
+Stefan Beller <stefanbeller@gmail.com> writes:
 
+> Sounds reasonable. Though by closing the file we're giving up again a
+> bit of safety. If we close the file everyone could tamper with the lock
+> file. (Sure they are not supposed to touch it, but they could)
 
-And would it make sense to turn this
->   return (out & 0xffffff00) ? out : tolower(out);
-into this:
-static ucs_char_t unicode_tolower(ucs_char_t ch) {
-   return (ch & 0xffffff00) ? ch : tolower(ch);
-}
+There are locking primitives (SysV mandatory locking) that require
+you to keep the file you have lock on open for you to retain the
+ownership of the lock, and that kind of lock does prevent random
+other processes from simultaneously accessing the locked file.
 
+But that is not what our locks are designed around; our locks rely
+only on "open(O_EXCL|O_CREAT) fails if it already exists".  And
+between keeping a lockfile open and closing but not removing a
+lockfile, there is no difference how the lockfile that still exists
+prevents open(O_EXCL|O_CREAT) by other processes from succeeding.
 
-And what happens if I export NTFS to Mac OS X?
-(Other combinations possible)
-Shouldn't fsck under all OS warn for NTFS and hfs possible attacks ?
- 
+So we are not giving up any safety at all, which is a good thing ;-).
