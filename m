@@ -1,176 +1,135 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: Question about installing git from source
-Date: Tue, 23 Dec 2014 23:13:54 +0600
-Message-ID: <CANCZXo4daZffQ7binFpHBy9adKKeuwHuR5VRixXUowMdgAdhTQ@mail.gmail.com>
-References: <CANCZXo42SdM8hMdTFYgvD8D+RmXua1oJvB+FfTjjfR=yWqhmkg@mail.gmail.com>
-	<xmqqioh247th.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 16/18] fsck: support demoting errors to warnings
+Date: Tue, 23 Dec 2014 09:14:54 -0800
+Message-ID: <xmqqa92e47ap.fsf@gitster.dls.corp.google.com>
+References: <cover.1418055173.git.johannes.schindelin@gmx.de>
+	<cdd5730d0003a7220f659804e9e286e77619b57c.1418055173.git.johannes.schindelin@gmx.de>
+	<xmqqzjavgym5.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222319370.21312@s15462909.onlinehome-server.info>
+	<xmqq38878gao.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222344250.21312@s15462909.onlinehome-server.info>
+	<xmqqtx0n710m.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412222356400.21312@s15462909.onlinehome-server.info>
+	<xmqqppbb6zx9.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231049250.21312@s15462909.onlinehome-server.info>
+	<xmqqmw6e499u.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.1.00.1412231736490.21312@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 18:14:01 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 23 18:15:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3T20-0007uI-Hv
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 18:14:00 +0100
+	id 1Y3T32-00009G-45
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 18:15:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752831AbaLWRNz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2014 12:13:55 -0500
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:43367 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752438AbaLWRNy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Dec 2014 12:13:54 -0500
-Received: by mail-ob0-f180.google.com with SMTP id wp4so26101480obc.11
-        for <git@vger.kernel.org>; Tue, 23 Dec 2014 09:13:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=OnEzo/jA0R0QbguJIy1Bp1bdmM5KDe/9HBBqwzfYmE4=;
-        b=Rv5gnhAKsvyzygZUHxS/L3fN9O1LjzOFbsMdeRSErGW3jHKsOueDM31obGH2ipz/Ux
-         3l9q7PdyT6eG+BA+DPGenadDEAKUIQkoS71RDJIm8ly1XzzDOdW20mBqtnae2qp9EH92
-         8frxMnS4O2fkBVQcoaQuH70vCtYSfNnieaf9v9QDJE7vtoP5wxHZsp2OxiCK3ljpQFte
-         M8dFI4dzYvsPqzH378+fEmd4iD6zOPYU4+q8O1LC+wdAyCes8XaL/muG3euyITx/Mznb
-         kbRxw5G0aTBIKB9gGS0IKMBfN5mgU1/YogQiBWVomnYNHIHGSxCY6LLuDhoRDMcXMYIV
-         FlUw==
-X-Received: by 10.202.225.197 with SMTP id y188mr16169542oig.94.1419354834234;
- Tue, 23 Dec 2014 09:13:54 -0800 (PST)
-Received: by 10.182.26.42 with HTTP; Tue, 23 Dec 2014 09:13:54 -0800 (PST)
-In-Reply-To: <xmqqioh247th.fsf@gitster.dls.corp.google.com>
+	id S1755073AbaLWRO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 12:14:59 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52029 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754789AbaLWRO5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 12:14:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2957C28562;
+	Tue, 23 Dec 2014 12:14:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l+d0qkaUVziicI1iyd/A+DSoLrQ=; b=wY9fYe
+	gDQgv6UJ+IiqP3cFz+L4EsdtgLzfIPbWmHqCj+3zIZ6sDXPCiL+ZyKdMzryb7w78
+	B/FL5CPgD+QKiVG0CsK2V/vgbUiM/9s0dPtnN2pqRZGMVtFp8sP8mCcaDiPujqdU
+	7WhLC96lByWgG/cmfkEr18Y63eAOF1k92WohQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PPoo4zkfhy9jqRk9wKsAEAJ5+XndP7FU
+	H4WZZ9fkMIxaoAgM5IqSB27PD+uFBhU+3wtcDTxsEHtaM8ZwAGQ4WeuDP3Zua7wa
+	1U/RuzWT1siuLKANaSczrF3VFDpbNw/YYJvMbhczRA2XZ+wUO6iSfXC3x2GAIXVn
+	cKVlX0swUWE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 20A3F28560;
+	Tue, 23 Dec 2014 12:14:56 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 94F6B2855F;
+	Tue, 23 Dec 2014 12:14:55 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.1412231736490.21312@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Tue, 23 Dec 2014 17:47:07 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 37247524-8AC7-11E4-B001-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261744>
 
-Hell Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Look I download git from master, executed following:
+> The parser I wrote actually accepts both versions, allowing me to skip the
+> tedious step to convert the camelCased config setting into a
+> lower-case-dashed version to pass to `index-pack` or `unpack-objects`,
+> only to be parsed by the same parser as `fsck` would use directly.
+>
+> So I am rather happy with the fact that the parser handles both camelCased
+> and lower-case-dashed versions.
 
-make configure
-make prefix=3D/usr all
-sudo make prefix=3D/usr install
+That is myopic view of the world that ignores maintainability and
+teachability, doing disservice to our user base.
 
-And got the same during installing:
+What message does it send to an unsuspecting new user that
+fsck.random-error is silently accepted (because we will never
+document it) as an alias for fsck.randomError, while most of the
+configuration variables will not take such an alias?
 
-~/dev/git $ sudo make prefix=3D/usr install
-    GEN perl/PM.stamp
-    SUBDIR perl
-/usr/bin/perl Makefile.PL PREFIX=3D'/usr' INSTALL_BASE=3D''
---localedir=3D'/usr/share/locale'
-Generating a Unix-style perl.mak
-Writing perl.mak for Git
-Writing MYMETA.yml and MYMETA.json
-    GEN git-add--interactive
-    GEN git-difftool
-    GEN git-archimport
-    GEN git-cvsexportcommit
-    GEN git-cvsimport
-    GEN git-cvsserver
-    GEN git-relink
-    GEN git-send-email
-    GEN git-svn
-    GEN git-p4
-    SUBDIR gitweb
-    SUBDIR ../
-make[2]: 'GIT-VERSION-FILE' is up to date.
-    GEN git-instaweb
-    SUBDIR git-gui
-    SUBDIR gitk-git
-    SUBDIR perl
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Prompt.pm >blib/lib/Git/SVN/Prompt.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Editor.pm >blib/lib/Git/SVN/Editor.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Fetcher.pm >blib/lib/Git/SVN/Fetcher.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Utils.pm >blib/lib/Git/SVN/Utils.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Log.pm >blib/lib/Git/SVN/Log.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Memoize/YAML.pm >blib/lib/Git/SVN/Memoize/YAML.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN.pm >blib/lib/Git/SVN.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Migration.pm >blib/lib/Git/SVN/Migration.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/IndexInfo.pm >blib/lib/Git/IndexInfo.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/GlobSpec.pm >blib/lib/Git/SVN/GlobSpec.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/SVN/Ra.pm >blib/lib/Git/SVN/Ra.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>" <Git.pm
->blib/lib/Git.pm
-/usr/bin/perl -pe "s<\Q++LOCALEDIR++\E></usr/share/locale>"
-<Git/I18N.pm >blib/lib/Git/I18N.pm
-    SUBDIR templates
-install -d -m 755 '/usr/bin'
-Copying scripts to /usr/bin
-cp: omitting directory =E2=80=98bin-wrappers=E2=80=99
-cp: omitting directory =E2=80=98block-sha1=E2=80=99
-cp: omitting directory =E2=80=98builtin=E2=80=99
-cp: omitting directory =E2=80=98compat=E2=80=99
-cp: omitting directory =E2=80=98contrib=E2=80=99
-cp: omitting directory =E2=80=98Documentation=E2=80=99
-cp: omitting directory =E2=80=98ewah=E2=80=99
-cp: omitting directory =E2=80=98git-gui=E2=80=99
-cp: omitting directory =E2=80=98gitk-git=E2=80=99
+>> I suspect that it would be much better if the configuration variables
+>> were organized the other way around, e.g.
+>> 
+>> 	$ git config fsck.warn missingTagger,someOtherKindOfError
+>
+> I had something similar in an earlier version of my patch series, but it
+> was shot down rightfully: if you want to allow inheriting defaults from
+> $HOME/.gitconfig, you have to configure the severity levels individually.
 
-=2E..
+Hmmm.  What's wrong with "fsck.warn -missingTagger" that overrides
+the earlier one, or even "fsck.info missingTagger" after having
+"fsck.warn other,missingTagger,yetanother", with the usual "last one
+wins" rule?
 
-2014-12-23 23:03 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
-> Alexander Kuleshov <kuleshovmail@gmail.com> writes:
->
->> Trying to install git from source, executing:
->>
->> make configure
->> ./configure --prefix=3D/usr
->> make --prefix=3D/usr all
->> sudo make install DISTDIR=3D/usr
->
-> That does not seem to match any of the ways how INSTALL tells us to
-> build and install.
->
-> Excerpts from INSTALL
->
->     (1) ... If you want to do a global install, you can do
->
->         $ make prefix=3D/usr all doc info ;# as yourself
->         # make prefix=3D/usr install install-doc install-html install=
--info ;# as root
->
-> Note how "prefix" is spelled.
->
->    (2) Alternatively you can use autoconf generated ./configure
->        script to set up install paths (via config.mak.autogen), so
->        you can write instead
->
->         $ make configure ;# as yourself
->         $ ./configure --prefix=3D/usr ;# as yourself
->         $ make all doc ;# as yourself
->         # make install install-doc install-html;# as root
->
-> Note how "make" does not have any "prefix".
->
-> Also when you install to a temporary directory so that you can tar
-> up the resulting hierarchy, the variable to use is spelled DESTDIR,
-> e.g.
->
->         make DESTDIR=3D/var/tmp/git-2.2.1 install install-doc
->
->> ...
->> What's problem can be here?
->
-> Hopefully the above would be a good start to help you figure that
-> out.
+Whoever shot it down "rightfully" is wrong here, I would think.
 
+>> But the proposed organization to use one variable per questionable
+>> event type (as opposed to one variable per severity level) would
+>> lead to a one-shot override of this form, e.g.
+>> 
+>> 	$ git fsck --missing-tagger=warn --some-other-kind-of-error=warn
+>> 
+>> which I think is insane to require us to support unbound number of
+>> dashed options.
+>
+> The intended use case is actually *not* the command-line, but the config
+> file, in particular allowing /etc/gitconfig, $HOME/.gitconfig *and*
+> .git/config to customize the settings.
 
+But we do need to worry about one-shot override from the command
+line.  A configuration that sticks without a way to override is a
+no-no.
 
---=20
-_________________________
-0xAX
+>> Or are you saying that we allow "git config core.file-mode true"
+>> from the command line to set core.fileMode configuration?
+>
+> I do not understand this reference.
+
+I was puzzled by your "command line" and wondering if you meant
+"from the command line, aVariable can be spelled a-variable".
+
+> I did not suggest to change `git
+> config`, did I? If I did, I apologize; it was definitely *not* my
+> intention to change long-standing customs.
+
+Then fsck.missing-tagger is definitely out.  Long standing customs
+is that a multi-word token at the first and the last level is not
+dashed-multi-word.
