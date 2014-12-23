@@ -1,75 +1,184 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/4] rev-list: add an option to mark fewer edges as uninteresting
-Date: Tue, 23 Dec 2014 11:11:32 -0800
-Message-ID: <xmqqvbl218rf.fsf@gitster.dls.corp.google.com>
-References: <1419336082-283091-1-git-send-email-sandals@crustytoothpaste.net>
-	<1419336082-283091-3-git-send-email-sandals@crustytoothpaste.net>
-	<CAO2U3Qjbmz+fP-SLSeq1S+BDi4PSTSLf_TdqW-ik8GLV7=nUmA@mail.gmail.com>
-	<20141223185142.GA27954@peff.net>
+From: Pat Tressel <ptressel@myuw.net>
+Subject: Re: Announcing Git for Windows 1.9.5
+Date: Tue, 23 Dec 2014 11:54:29 -0800 (PST)
+Message-ID: <db725f21-270d-4a50-8836-6799682c9b48@googlegroups.com>
+References: <alpine.DEB.1.00.1412181143570.13845@s15462909.onlinehome-server.info>
+ <0e0bcbf8-6e05-422d-ad4a-a85b1134947b@googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Blume <blume.mike@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 23 20:11:43 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_3094_1724364904.1419364469311"
+Cc: git@vger.kernel.org
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBCAOFIF5SYARB5UQ46SAKGQERFVDDXQ@googlegroups.com Tue Dec 23 20:54:32 2014
+Return-path: <msysgit+bncBCAOFIF5SYARB5UQ46SAKGQERFVDDXQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ig0-f185.google.com ([209.85.213.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3Urt-0007RM-KM
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Dec 2014 20:11:41 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756454AbaLWTLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 14:11:37 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50657 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755844AbaLWTLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 14:11:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 03FFC298B7;
-	Tue, 23 Dec 2014 14:11:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=309qSRA7O15/BnsiyMXBL6Lrk7k=; b=V7hqpx
-	fgOcG6ymqhEHbOzektvgU2kuf4kO3t+BjJHD6BUZcjKYxBXk8Tal9MjfSn4eTYF7
-	mpO2i82rhb6WaUv4mep4dFnCFzu+PGrt+aAxgSOHESE4P8KkBdb46Eja5k7U55A1
-	R1OEHMhU4jJ9V9vN7dErp/4R2GQmYQtAXJ+iM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FML5X/zZMwjTW6YFPCYdnqsxxx4vVlHB
-	nvesXPdMhsoz5ufyKqqpruwiKmIy3Z6RAcL2zk9AT+NYeik7zt+CgBfxw6EmeVJC
-	9EeRqQUCZ+hCX3i4An46MzkgGr7tWilXeJQ4smG4Nzpt7MqbynYdTs/DwUmAdpXR
-	V3pVfXA9CwQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ED809298B6;
-	Tue, 23 Dec 2014 14:11:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA3B9298B3;
-	Tue, 23 Dec 2014 14:11:34 -0500 (EST)
-In-Reply-To: <20141223185142.GA27954@peff.net> (Jeff King's message of "Tue,
-	23 Dec 2014 13:51:42 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 82EC99B8-8AD7-11E4-BEE8-42529F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261768>
+	(envelope-from <msysgit+bncBCAOFIF5SYARB5UQ46SAKGQERFVDDXQ@googlegroups.com>)
+	id 1Y3VXL-0001CA-Jd
+	for gcvm-msysgit@m.gmane.org; Tue, 23 Dec 2014 20:54:31 +0100
+Received: by mail-ig0-f185.google.com with SMTP id a13sf968517igq.12
+        for <gcvm-msysgit@m.gmane.org>; Tue, 23 Dec 2014 11:54:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=5PJhRQOrZu/PQDDcNZv8o3OR829osDs3S3J32t1MleM=;
+        b=NFh0F4ltgYVltcQeiO2qR4WkkfEvQ8uiIImJx42PwN3BIeQLRfkaZ8IKjw0kilFoEI
+         mEBMcA+O6yY3KUge+sbzKSQ0hOHs83cWNTeLpCeSJETx9MMCcG/dNokgKWsvRfn+rpe/
+         P+5/XBHi5bZGaprkghw2l9MtD8vArjXDS6KdVy0ZqXfFM6gRi5QPuDJN1hMGD3wALdvM
+         lyVZ/oATrmy8Wir7/MgGFhB8XKisT39a9AQXn6ZrwgOocBRQ7ZX0N7ly40NkvWYJgCTU
+         2NzQgruaVcBGVqQg0sHiIqw+GiRoXCfK8Feqw06O5rk0QS208yN50Pq+lifbEa/xr4XU
+         Il7w==
+X-Received: by 10.50.32.37 with SMTP id f5mr365487igi.4.1419364470900;
+        Tue, 23 Dec 2014 11:54:30 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.107.166.7 with SMTP id p7ls3726032ioe.108.gmail; Tue, 23 Dec
+ 2014 11:54:30 -0800 (PST)
+X-Received: by 10.50.132.71 with SMTP id os7mr364428igb.11.1419364470415;
+        Tue, 23 Dec 2014 11:54:30 -0800 (PST)
+In-Reply-To: <0e0bcbf8-6e05-422d-ad4a-a85b1134947b@googlegroups.com>
+X-Original-Sender: ptressel@myuw.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261769>
 
-Jeff King <peff@peff.net> writes:
+------=_Part_3094_1724364904.1419364469311
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_3095_1109125263.1419364469311"
 
-> On Tue, Dec 23, 2014 at 12:55:48PM -0500, Michael Blume wrote:
+------=_Part_3095_1109125263.1419364469311
+Content-Type: text/plain; charset=UTF-8
+
+
+
+        Bugfixes 
+>>         - Safeguards against bogus file names on NTFS (CVE-2014-9390). 
+>>
 >
->> This patch causes an error on my mac, test 5500 fetch-pack errors on
->> part 44 - fetch creating new shallow root. It looks for "remote: Total
->> 1" in the fetch output and gets 3 instead.
+> ...  I installed this version, and it no longer recognizes non-English 
+> characters that appear in some file names we have in our repo.  I'm only 
+> guessing that this has to do with the vuln fix.
 >
-> It fails for me on Linux, too. Interestingly the tip of the series
-> passes. I didn't investigate further.
 
-Not surprised, as the first three are the same from the yesterday's
-one that failed for everybody.
+It doesn't relate to the vuln fix -- the relevant change was earlier.  I 
+was upgrading from a rather old version of git.  Apparently file name 
+encoding was different then.  The fix is to check out the files again, 
+which will pick up their new encoding.  One can't specify the exact 
+filenames in the git checkout -- command, but one can construct a wildcard 
+that will pick out just those files, if needed to avoid checking out others.
+
+I should clarify that I was offering to go file a bug against git, not 
+msysgit.  But since this was an easy to fix side-effect of upgrading from 
+an old git, that's likely not needed.  And the answer would have been...
+
+Torsten --
+
+You may consider to convert the repo into unicode, 
+>
+and update all clients accessing this repo. 
+>
+
+:-)  Oh, yes -- next up is checking the encoding of those file names...but 
+they're likely ok in the repo, and it's only the checked-out names 
+generated by the old git that were non-standard.
+
+-- Pat
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
+
+------=_Part_3095_1109125263.1419364469311
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br><blockquote class=3D"gmail_quote" style=3D"margin:=
+ 0;margin-left: 0.8ex;border-left: 1px #ccc solid;padding-left: 1ex;"><div =
+dir=3D"ltr"><blockquote class=3D"gmail_quote" style=3D"margin:0;margin-left=
+:0.8ex;border-left:1px #ccc solid;padding-left:1ex">&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp; Bugfixes
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Safeguards against bo=
+gus file names on NTFS (CVE-2014-9390).
+<br></blockquote><br>...&nbsp; I installed this version, and it no longer r=
+ecognizes non-English characters that appear in some file names we have in =
+our repo.&nbsp; I'm only guessing that this has to do with the vuln fix.<br=
+></div></blockquote><br>It doesn't relate to the vuln fix -- the relevant c=
+hange was earlier.&nbsp; I was upgrading from a rather old version of git.&=
+nbsp; Apparently file name encoding was different then.&nbsp; The fix is to=
+ check out the files again, which will pick up their new encoding.&nbsp; On=
+e can't specify the exact filenames in the git checkout -- command, but one=
+ can construct a wildcard that will pick out just those files, if needed to=
+ avoid checking out others.<br><br>I should clarify that I was offering to =
+go file a bug against git, not msysgit.&nbsp; But since this was an easy to=
+ fix side-effect of upgrading from an old git, that's likely not needed.&nb=
+sp; And the answer would have been...<br><br>Torsten --<br><br><blockquote =
+style=3D"margin: 0px 0px 0px 0.8ex; border-left: 1px solid rgb(204, 204, 20=
+4); padding-left: 1ex;" class=3D"gmail_quote">You may consider to convert t=
+he repo into unicode,
+<br></blockquote><blockquote style=3D"margin: 0px 0px 0px 0.8ex; border-lef=
+t: 1px solid rgb(204, 204, 204); padding-left: 1ex;" class=3D"gmail_quote">=
+and update all clients accessing this repo.
+<br></blockquote><div><br>:-)&nbsp; Oh, yes -- next up is checking the enco=
+ding of those file names...but they're likely ok in the repo, and it's only=
+ the checked-out names generated by the old git that were non-standard.<br>=
+<br>-- Pat<br></div></div>
+
+<p></p>
+
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for Windows&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
+
+------=_Part_3095_1109125263.1419364469311--
+------=_Part_3094_1724364904.1419364469311--
