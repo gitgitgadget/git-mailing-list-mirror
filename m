@@ -1,80 +1,104 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/7] receive-pack.c: add protocol support to negotiate
- atomic-push
-Date: Wed, 24 Dec 2014 08:33:32 +0100
-Message-ID: <549A6C4C.8000905@alum.mit.edu>
-References: <1419017941-7090-1-git-send-email-sbeller@google.com> <1419017941-7090-2-git-send-email-sbeller@google.com>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: Question about installing git from source
+Date: Wed, 24 Dec 2014 13:52:09 +0600
+Message-ID: <CANCZXo730yBxQEeCir2KZ4KxOn8RiOPyQf7Wd_AmTSR71H+NYQ@mail.gmail.com>
+References: <CANCZXo42SdM8hMdTFYgvD8D+RmXua1oJvB+FfTjjfR=yWqhmkg@mail.gmail.com>
+	<xmqqioh247th.fsf@gitster.dls.corp.google.com>
+	<CANCZXo4daZffQ7binFpHBy9adKKeuwHuR5VRixXUowMdgAdhTQ@mail.gmail.com>
+	<xmqq1tnq45yk.fsf@gitster.dls.corp.google.com>
+	<CANCZXo4q-TwH8WyqP1GYcUY-obWG1HAt8gSEs7jy5TJiUDG0HA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>
-To: Stefan Beller <sbeller@google.com>, ronniesahlberg@gmail.com,
-	jrnieder@gmail.com, gitster@pobox.com, sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Wed Dec 24 08:34:33 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 24 08:52:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3gSj-0002wu-5K
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 08:34:29 +0100
+	id 1Y3gjv-0006JE-Ou
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 08:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbaLXHeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Dec 2014 02:34:22 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:59871 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751427AbaLXHeW (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Dec 2014 02:34:22 -0500
-X-AuditID: 1207440d-f79976d000005643-f5-549a6c7955ff
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 54.75.22083.97C6A945; Wed, 24 Dec 2014 02:34:17 -0500 (EST)
-Received: from [192.168.1.150] ([82.113.121.136])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id sBO7XhBX006380
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 24 Dec 2014 02:34:02 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <1419017941-7090-2-git-send-email-sbeller@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBKsWRmVeSWpSXmKPExsUixO6iqFuZMyvEYMtTYYuuK91MFg29V5gt
-	3t5cwmjR2/eJ1eLfhBqLzZvbWSzOvGlkdGD32DnrLrvHgk2lHhcvKXssfuDl8XmTXABrFLdN
-	UmJJWXBmep6+XQJ3xtFPXYwFG9grPk86yd7A+IO1i5GTQ0LAROLslOlMELaYxIV769m6GLk4
-	hAQuM0ps6T3IApIQEtjIJLH6ZCGIzSugLXHq9DM2EJtFQFVi17O97CA2m4CuxKKeZrBBogJB
-	EldaNjND1AtKnJz5hAVkqIhAJ6PEm487wBqYBewkuvYvAbtCWCBC4uPyb4wQy8oltq1/D7aA
-	U8BJouX4dBaIej2JHdd/sULY8hLNW2czT2AUmIVkxywkZbOQlC1gZF7FKJeYU5qrm5uYmVOc
-	mqxbnJyYl5dapGukl5tZopeaUrqJERLyvDsY/6+TOcQowMGoxMMrkTQrRIg1say4MvcQoyQH
-	k5Io7zJvoBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR3tAsoBxvSmJlVWpRPkxKmoNFSZxXbYm6
-	n5BAemJJanZqakFqEUxWhoNDSYK3KRuoUbAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQk
-	Ix4Uq/HFwGgFSfEA7RUBaectLkjMBYpCtJ5i1OVY0L5/JpMQS15+XqqUOG83SJEASFFGaR7c
-	CliCe8UoDvSxMC8/SBUPMDnCTXoFtIQJaInUrekgS0oSEVJSDYyBBrseF63KXS/mXTz3/Ps0
-	uxPPEr8ZFp3+ytEi4+rmpBWitLWkOXHe1bRH15Zusty5+emP3Zp3T4n2e1xOdL41 
+	id S1751685AbaLXHwL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Dec 2014 02:52:11 -0500
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:62354 "EHLO
+	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671AbaLXHwK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Dec 2014 02:52:10 -0500
+Received: by mail-oi0-f46.google.com with SMTP id h136so16763542oig.5
+        for <git@vger.kernel.org>; Tue, 23 Dec 2014 23:52:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=xxEhiW3vXxkeYQ476ZLJPPzbmnfsiha8jByc/vgGGn8=;
+        b=AJ2Pv3kDNEXK5Q4xFab6ctJLJuxYRQ5ggO7acApGcSNnPCQd8dw49OrQ2BMdsDEQS0
+         8qgRR71o27xHLHrs/KoeH10DErkr98Sb1gCiDnqc3OxNeomb0W65ZcsUkp7Nij7iYkkp
+         PLjH8Ua32kplVik/wz5NxAltKLfbZvi0qUtC2joNG+fQxxtRGWo0xME2joe1O4yjaih/
+         ZhSv9BzzMsfaw6YUPA4kqJkWC07ojsbvr0Jc8Yj35ruv+jK9AXVgfWlOE2mvushjSdu0
+         HDlbbj43nNZC8okgtvcd+RBJSO84CMkDkyLl0IQ6kQdzz/fPhDwQOOxPhzaUsxsjmgGd
+         ITkQ==
+X-Received: by 10.182.241.133 with SMTP id wi5mr18852819obc.10.1419407529302;
+ Tue, 23 Dec 2014 23:52:09 -0800 (PST)
+Received: by 10.182.26.42 with HTTP; Tue, 23 Dec 2014 23:52:09 -0800 (PST)
+In-Reply-To: <CANCZXo4q-TwH8WyqP1GYcUY-obWG1HAt8gSEs7jy5TJiUDG0HA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261794>
 
-On 12/19/2014 08:38 PM, Stefan Beller wrote:
-> From: Ronnie Sahlberg <sahlberg@google.com>
-> 
-> This adds support to the protocol between send-pack and receive-pack to
-> * allow receive-pack to inform the client that it has atomic push capability
-> * allow send-pack to request atomic push back.
-> 
-> There is currently no setting in send-pack to actually request that atomic
-> pushes are to be used yet. This only adds protocol capability not ability
-> for the user to activate it.
+Yeah, was wrong install script.
 
-Sorry to jump in so late...
+thank you.
 
-If I understand correctly, after this patch the server advertises the
-"atomic" capability even though it doesn't actually have that ability
-until a later patch. It seems to me that the order of the patches should
-be reversed: don't advertise the capability before it is actually
-implemented. Why? Bisection. Between the two patches the server is buggy.
+2014-12-23 23:53 GMT+06:00 Alexander Kuleshov <kuleshovmail@gmail.com>:
+> I looked at Makefile, and seems that it occurs from here:
+> https://github.com/git/git/blob/master/Makefile#L2205
+>
+> It tries to copy all files/folders from git root directory but
+> 'install' command prints this error. I tried to execute 'sudo install
+> -d -m 755' in other directory and if there is directory too it prints
+> the same error. For example:
+>
+> ~/scripts $ ls
+> addPPA    cleanMailTrash  git-autor    git-ranges       git-tp
+>             install     scripts    ssh-live       term-help  tp-git
+>     updateMail  xray-start
+> buildGit  deployWork      git-install  git-remove-tags
+> git-update-commit-message  install.sh  ssh-build  ssh-wiwob-lab  test
+>      updateGitDev  updateNews
+>
+> test - is directory here
+>
+> ~/scripts $ sudo install -d -m 755 .
+> Copying scripts to /usr/bin
+> cp: omitting directory =E2=80=98test=E2=80=99
+> Done
+>
+> 2014-12-23 23:43 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
+>> Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+>>
+>>> install -d -m 755 '/usr/bin'
+>>> Copying scripts to /usr/bin
+>>
+>> As 'git grep "Copying scripts"' gives us nothing, the message is
+>> obviously not what we are giving.  Perhaps you have a strange "insta=
+ll"
+>> in your path that does not understand "-d" is a way to tell it to
+>> make sure a directory exists (by creating one as necessary)?
+>>
+>
+>
+>
+> --
+> _________________________
+> 0xAX
 
-Michael
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+
+--=20
+_________________________
+0xAX
