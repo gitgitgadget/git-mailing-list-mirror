@@ -1,83 +1,68 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 5/7] receive-pack: move execute_commands_non_atomic before execute_commands
-Date: Tue, 23 Dec 2014 16:30:44 -0800
-Message-ID: <CAGZ79ka0hAko54g4rG27Ef=YFAXd-x50bPr0NSHRwPtDEobzHQ@mail.gmail.com>
-References: <1419017941-7090-1-git-send-email-sbeller@google.com>
-	<1419017941-7090-6-git-send-email-sbeller@google.com>
-	<xmqqfvc7a6o3.fsf@gitster.dls.corp.google.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: GIT_PUSH_CERT* env vars and update/post-update hooks...
+Date: Wed, 24 Dec 2014 07:27:30 +0530
+Message-ID: <549A1D8A.3020106@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 24 01:30:53 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 24 02:57:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3Zqk-0002vH-Mo
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 01:30:51 +0100
+	id 1Y3bCm-0006Mf-UB
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 02:57:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756630AbaLXAaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 19:30:46 -0500
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:41690 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751297AbaLXAap (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 19:30:45 -0500
-Received: by mail-ig0-f177.google.com with SMTP id z20so6296283igj.10
-        for <git@vger.kernel.org>; Tue, 23 Dec 2014 16:30:45 -0800 (PST)
+	id S1751065AbaLXB5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2014 20:57:35 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:62807 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750891AbaLXB5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 20:57:35 -0500
+Received: by mail-pa0-f49.google.com with SMTP id eu11so9013542pac.36
+        for <git@vger.kernel.org>; Tue, 23 Dec 2014 17:57:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pz4XkVSvug8vfGwjJl1zefKR0AJ5vTvj13XTA00GkIM=;
-        b=f6b2w5d680ys5rVmmI9l5SUVkBoWmDPN7N/MzdIekaZYAtfM90inN8+1hjUoEr5icR
-         SntQLudlbCRb5jq0zqVpbH3KP61izFMtAVZoz9WTtIbYmRqJl/n6rtFci2rRtmmOVFK0
-         HIYjOFoOWwhnf+ZOqzkqmZ67ZwJ/ZBXpCforH/hmF71N0hT9Zr0iqgC/sAdo6gRZvzeh
-         RwsvL0rUCqnjyCuYMlK5HC5rUvV2Bb3j2ifiBcCrVkUi2LjMHnSihua2LNjUC45mOpeG
-         JoEYYTarA1yiCP6mWj1W6vJMwiKrTk8s0zeZd6wiIjaF4+i7LtxpQSuj1qk7JhTzfTGw
-         ocyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=pz4XkVSvug8vfGwjJl1zefKR0AJ5vTvj13XTA00GkIM=;
-        b=OqRn25Z+U9+K5qeM5jNIJW4PM1nurLL1RUZKp3hiqT7qJZ1sfpiHWUSETQKuhyjebL
-         4iLr/7Ktg6Q1qAdNhVwn8amZx/JfHCBLfsJ+7C3wKQdHwj+vbeDFHBO2ShvPyBAo+8Ur
-         6FDNzrmuXWM/LNZ+NywHHngIkSLTjJcS9NXUddHTQj7rMJ7IG76DDw1JBtwMu6aRGgNT
-         9d1Laou/dC9wwWXo3PQdP6AqQaFSj9FjYTcFnGP0GEontvwxjulu7NJ/mhviSET8B72f
-         Sj0/sXxjMGOrw/cDNa2JU85k2Gd7TGo8xi5iMDnpTw1/8Df4TWiBe51jv/6EzVNUGL0c
-         z7Sg==
-X-Gm-Message-State: ALoCoQkyOBlw5zzNxK2a37vr4YSyq84z19cwZdgIXEkXb92/GiZNQYLXJrKgA1ylM8SOvdMUyRgH
-X-Received: by 10.43.82.72 with SMTP id ab8mr24916879icc.76.1419381044911;
- Tue, 23 Dec 2014 16:30:44 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 23 Dec 2014 16:30:44 -0800 (PST)
-In-Reply-To: <xmqqfvc7a6o3.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=LvxKvQwXLmaWn4kDXhnOAXMOSBOjEqKhIE4MBUz16FI=;
+        b=OAexZUEEEfUYc3PQtDWSkI18bULtzEWbX/L3zveIp2NQVeu+lNMeXtq6OZcTIPKJ80
+         uTpSo11e1RYhN1vl2s+vapok2ypWd63EDFRX9VkfIkjISYpOfXfPGR7A2RE9Fsd8fWsH
+         lncKxjkaj5mvQ3nYELHGsFWjKN5y9ysPdtB+pG9uTQdQ9ZhFj0GPDJ7en1f3m0nEaEn6
+         8thct54rP5FkPXsm/f8chQ6N4YYjQWvosgs8nfldcPTOa+uNyC7j7cYsIMHC/RZRiYDv
+         e8NxfHFWz/BomQi9igxBjbbx8Vmo/k6Z6WobCMrPm1SoidzQU4uoFB8gUL3yyc7QfadN
+         10hw==
+X-Received: by 10.66.159.67 with SMTP id xa3mr50011496pab.13.1419386254466;
+        Tue, 23 Dec 2014 17:57:34 -0800 (PST)
+Received: from sita-lt.atc.tcs.com ([117.195.183.214])
+        by mx.google.com with ESMTPSA id v2sm21154819pbz.39.2014.12.23.17.57.32
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Dec 2014 17:57:33 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261786>
 
-I tried all four diff options as listed in the man page of
-format-diff. I forget which one I used, but there was no large
-difference w.r.t. reviewability if I remember correctly.
+Hi git core devs,
 
+Any chance I could persuade you to set the GIT_PUSH_CERT* environment
+variables for the update (and post-update) hooks also?
 
-On Mon, Dec 22, 2014 at 10:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Notes:
->>     This patch is new with v6 of the series
->>
->>     As execute_commands_non_atomic is larger than execute_commands, the diff
->>     is not moving around execute_commands_non_atomic, but execute_commands.
->
-> ;-)
->
-> Next time perhaps try "--patience" to decide between with and
-> without which one reads better?
+Background: gitolite "takes over" the update hook [1] for authorisation
+and enforcement, and I want to avoid taking over the pre-receive hook
+also in order to do this check.
+
+The post-update is not so important; gitolite doesn't use it anyway, so
+if I have to take over one of them, I may as well take over
+post-receive.  I just added that for consistency.
+
+thanks
+sitaram
+
+[1]: because it's nice to *selectively* reject refs when more than one
+ref is pushed at the same time; pre-receive is "all or none".
