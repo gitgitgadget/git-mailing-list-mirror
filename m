@@ -1,74 +1,62 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/5] t2004: drop unnecessary write-tree/read-tree
-Date: Wed, 24 Dec 2014 04:43:13 -0500
-Message-ID: <1419414196-58587-3-git-send-email-sunshine@sunshineco.com>
-References: <1419414196-58587-1-git-send-email-sunshine@sunshineco.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	"Shawn O . Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org, Russ Cox <rsc@golang.org>
-X-From: git-owner@vger.kernel.org Wed Dec 24 10:44:46 2014
+From: "Pascal Malaise" <malaise@magic.fr>
+Subject: "Stash save" exits with 0 when nothing to stash
+Date: Wed, 24 Dec 2014 10:20:30 +0100
+Message-ID: <20141224090636.M86902@magic.fr>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 24 11:08:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3iUk-0005C2-FG
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 10:44:42 +0100
+	id 1Y3irU-0002Mt-5M
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 11:08:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbaLXJoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Dec 2014 04:44:24 -0500
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:45286 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751581AbaLXJoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Dec 2014 04:44:06 -0500
-Received: by mail-ig0-f176.google.com with SMTP id l13so7181290iga.3
-        for <git@vger.kernel.org>; Wed, 24 Dec 2014 01:44:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BXzbLR9G8icKkOSI9PYwsMYg/HpKojGBpckfjo+byyM=;
-        b=nFJ6Hzh1zbxEYQcCVfOgjEq513K+vCyxe28F1+EXQNhezZLwxf3jODC++oW/gbPVyw
-         CNAJBUcb6Pv/5J+MgZ/KKXa4lDsXR9SYX86WUWqiYoNOv8dLbQiquG6yPx7x68OE7+uk
-         5GVxFMejTvSSO/CGw+35ana1OoinF1tArsoF/KVPkSQJa0+6y46toG/hc/fgeuAKfDb5
-         UP+kuCCO8RPuOVY7nhDYz/pQtoxl8uNyXw7JXsf2rmdgmdWh69D2UKks/jrAeeJ4x6lg
-         /KwXGJeR9OY9p/zKzsf3pbkTSjCpp1lM0st0ykGY4LYz3T8OQiUqpMTk9NcRzQm08Ux+
-         paXw==
-X-Received: by 10.42.22.144 with SMTP id o16mr26078975icb.0.1419414245704;
-        Wed, 24 Dec 2014 01:44:05 -0800 (PST)
-Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id l3sm7575581igj.9.2014.12.24.01.44.04
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 24 Dec 2014 01:44:05 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.267.g0ad48de
-In-Reply-To: <1419414196-58587-1-git-send-email-sunshine@sunshineco.com>
+	id S1751665AbaLXKIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Dec 2014 05:08:07 -0500
+Received: from victoria.magic.fr ([188.130.16.15]:52805 "EHLO
+	victoria.magic.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071AbaLXKIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Dec 2014 05:08:06 -0500
+X-Greylist: delayed 2738 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Dec 2014 05:08:05 EST
+Received: from magic.fr (localhost [127.0.0.1])
+	by victoria.magic.fr (8.13.8/8.13.8) with ESMTP id sBO9KUWh006607;
+	Wed, 24 Dec 2014 10:20:30 +0100
+X-Mailer: WebMail Magic OnLine 7.19
+X-MoL: WebMail/Victoria/OWM
+X-OriginatingIP: Magic OnLine / 192.54.144.229 / malaise@webmail.magic.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261801>
 
-Unlike earlier tests which reference several trees prepared by "setup",
-no other tests utilize the tree from the "symlink" test, so there is no
-need to write it (or read it back immediately).
+Hi,
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/t2004-checkout-cache-temp.sh | 3 ---
- 1 file changed, 3 deletions(-)
+When calling "git stash save" in a clean situation (no change since last
+commit), git-stash reports "No local changes to save", which is OK.
+But it exits with code 0, despite no stash has been saved.
+It would be better to exit with code 1 in this case.
 
-diff --git a/t/t2004-checkout-cache-temp.sh b/t/t2004-checkout-cache-temp.sh
-index 28e50d6..22d1a24 100755
---- a/t/t2004-checkout-cache-temp.sh
-+++ b/t/t2004-checkout-cache-temp.sh
-@@ -198,9 +198,6 @@ test_expect_success 'checkout --temp within subdir' '
- test_expect_success 'checkout --temp symlink' '
- 	rm -f path* .merge_* actual .git/index &&
- 	test_ln_s_add b a &&
--	t4=$(git write-tree) &&
--	rm -f .git/index &&
--	git read-tree $t4 &&
- 	git checkout-index --temp -a >actual &&
- 	test_line_count = 1 actual &&
- 	test $(cut "-d	" -f2 actual) = a &&
--- 
-2.2.1.267.g0ad48de
+N.B. In a similar situation  "git commit -a -m 'Test'" reports
+> On branch master
+> nothing to commit, working directory clean
+and exits with code 1.
+
+Thanks
+
+diff -u  git-master/git-stash.sh exit1/git-stash.sh 
+--- git-master/git-stash.sh	2014-12-22 20:43:48.000000000 +0000
++++ exit1/git-stash.sh	2014-12-24 08:59:00.804150443 +0000
+@@ -257,7 +257,7 @@
+ 	if no_changes
+ 	then
+ 		say "$(gettext "No local changes to save")"
+-		exit 0
++		exit 1
+ 	fi
+ 	test -f "$GIT_DIR/logs/$ref_stash" ||
+ 		clear_stash || die "$(gettext "Cannot initialize stash")"
