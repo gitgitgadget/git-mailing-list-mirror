@@ -1,68 +1,66 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: GIT_PUSH_CERT* env vars and update/post-update hooks...
-Date: Wed, 24 Dec 2014 07:27:30 +0530
-Message-ID: <549A1D8A.3020106@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] commit-tree: simplify parsing of option -S using
+ skip_prefix()
+Date: Tue, 23 Dec 2014 18:06:13 -0800
+Message-ID: <20141224020613.GB29365@google.com>
+References: <549A0643.8090202@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 24 02:57:42 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Wed Dec 24 03:06:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3bCm-0006Mf-UB
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 02:57:41 +0100
+	id 1Y3bLC-0002L2-5J
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 03:06:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065AbaLXB5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2014 20:57:35 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:62807 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750891AbaLXB5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2014 20:57:35 -0500
-Received: by mail-pa0-f49.google.com with SMTP id eu11so9013542pac.36
-        for <git@vger.kernel.org>; Tue, 23 Dec 2014 17:57:34 -0800 (PST)
+	id S1750933AbaLXCGR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2014 21:06:17 -0500
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:46221 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbaLXCGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2014 21:06:17 -0500
+Received: by mail-ig0-f176.google.com with SMTP id l13so6770777iga.9
+        for <git@vger.kernel.org>; Tue, 23 Dec 2014 18:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=LvxKvQwXLmaWn4kDXhnOAXMOSBOjEqKhIE4MBUz16FI=;
-        b=OAexZUEEEfUYc3PQtDWSkI18bULtzEWbX/L3zveIp2NQVeu+lNMeXtq6OZcTIPKJ80
-         uTpSo11e1RYhN1vl2s+vapok2ypWd63EDFRX9VkfIkjISYpOfXfPGR7A2RE9Fsd8fWsH
-         lncKxjkaj5mvQ3nYELHGsFWjKN5y9ysPdtB+pG9uTQdQ9ZhFj0GPDJ7en1f3m0nEaEn6
-         8thct54rP5FkPXsm/f8chQ6N4YYjQWvosgs8nfldcPTOa+uNyC7j7cYsIMHC/RZRiYDv
-         e8NxfHFWz/BomQi9igxBjbbx8Vmo/k6Z6WobCMrPm1SoidzQU4uoFB8gUL3yyc7QfadN
-         10hw==
-X-Received: by 10.66.159.67 with SMTP id xa3mr50011496pab.13.1419386254466;
-        Tue, 23 Dec 2014 17:57:34 -0800 (PST)
-Received: from sita-lt.atc.tcs.com ([117.195.183.214])
-        by mx.google.com with ESMTPSA id v2sm21154819pbz.39.2014.12.23.17.57.32
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Dec 2014 17:57:33 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=qdgj/OyxCR8s5DS/sQ/+I7vLCIluPe5QiefYYv1xMqo=;
+        b=XA2aoGoyn80gyYA5p4IdNpqBCih2hk2PWGFj0ozfSgjOLB5rXVLPiMHDygcssTlwft
+         3/4UhOlT965FIGjZApepD9hOiJ3qDTr1qVUrVHe9Vgu6aSbxS5dugMp4EbFIQb4bcVsB
+         dCRkUQIQ3GZAnagXy5YGLAPleYJ+UTcwEcjhU0lRNcnBXFbDgUzl1KhIhVkD/IuVblDb
+         azfrAfZWv24AF8dvi7uso2Eo/TTKQUp2gPNQky8S26ulHgqy4n6j61mcYZW0f6V3SX8x
+         +fJVUctEYZ8Qbk19MHbNGvCCiDOqdy3u3vC1rPia5tjERWiOrLjmPh7wMHG1gUPQtTMB
+         3IrQ==
+X-Received: by 10.107.156.67 with SMTP id f64mr29428237ioe.9.1419386776458;
+        Tue, 23 Dec 2014 18:06:16 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:f575:2fb0:789a:eca0])
+        by mx.google.com with ESMTPSA id q196sm10720578ioe.5.2014.12.23.18.06.15
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 23 Dec 2014 18:06:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <549A0643.8090202@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261787>
 
-Hi git core devs,
+Ren=E9 Scharfe wrote:
 
-Any chance I could persuade you to set the GIT_PUSH_CERT* environment
-variables for the update (and post-update) hooks also?
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  builtin/commit-tree.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 
-Background: gitolite "takes over" the update hook [1] for authorisation
-and enforcement, and I want to avoid taking over the pre-receive hook
-also in order to do this check.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-The post-update is not so important; gitolite doesn't use it anyway, so
-if I have to take over one of them, I may as well take over
-post-receive.  I just added that for consistency.
-
-thanks
-sitaram
-
-[1]: because it's nice to *selectively* reject refs when more than one
-ref is pushed at the same time; pre-receive is "all or none".
+Thanks.
