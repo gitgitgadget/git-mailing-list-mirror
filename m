@@ -1,82 +1,100 @@
-From: Arup Rakshit <aruprakshit@rocketmail.com>
-Subject: Upgrade Git in openSUSE13.1
-Date: Thu, 25 Dec 2014 02:32:13 +0630
-Organization: CognitiveClouds
-Message-ID: <11649454.2G0koPIBX8@linux-wzza.site>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 2/4] rev-list: add an option to mark fewer edges as
+ uninteresting
+Date: Wed, 24 Dec 2014 21:26:40 +0000
+Message-ID: <20141224212639.GC170128@vauxhall.crustytoothpaste.net>
+References: <1419336082-283091-1-git-send-email-sandals@crustytoothpaste.net>
+ <1419336082-283091-3-git-send-email-sandals@crustytoothpaste.net>
+ <CAO2U3Qjbmz+fP-SLSeq1S+BDi4PSTSLf_TdqW-ik8GLV7=nUmA@mail.gmail.com>
+ <20141223185142.GA27954@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 24 22:09:11 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rQ2U398070+RC21q"
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 24 22:26:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y3tB8-0004lx-5e
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 22:09:10 +0100
+	id 1Y3tSI-0000gc-FV
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Dec 2014 22:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518AbaLXVDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Dec 2014 16:03:42 -0500
-Received: from nm27.bullet.mail.sg3.yahoo.com ([106.10.151.22]:56797 "EHLO
-	nm27.bullet.mail.sg3.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751483AbaLXVDl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Dec 2014 16:03:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1419455019; bh=vFBtAFAT+v37EiTmxvMtGqR6I/DwSK41P7vhNJj+2u0=; h=From:To:Subject:Date:From:Subject; b=s74BLVdje2nafzBHh9YkBCz+chZz7VazGRf2uZLJYFccqxMzQvc0yoi3tScaFes1EISeORLR8szJbLRvzCQrwxhyeBSlGtoranGNY43XT1/yWgRFMxYZ5YXqOtw7zYu7dtmaK3dHWHCJ5oyEJFwMDrrltW7F2fvuy32f7jS2aAEZ5+V3anypPmrOkYGip3AFfYAMIKigURrlVLGarEWC7r7GTUdO3hFn7Hfnp4bNIYVF6ssegVonFXyCc/aIc7uo28U3Rk7FzyJHKfD7+VUe/NI6RqoNYv7WlkMgOlYpH2+Q+s0suNZxcYGBHBjxyQDkMeg9fQgGQmdYXqKbW4j9Fg==
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=s2048; d=rocketmail.com;
-	b=kV0iKSDZhwKm+rlITiGEhuSnM8vhQAhGkEw1y6fyFvJK9xmZvu9QNi067n8fkjWCigwIswfhryzqNuaOyjvSZc07v0x/YX0WUOhRGtwrsq30twDNBaPCrP9lrvRP9WH1R1Z48J4dptg8qZ6eM+o/Be918EI4DaWzl94MCQFYcM1oxOVRR9sDvnc/tKpQVcP+k5wdQuudc3ISp76TWhs1VF1J8eyIs8mCaXaaNX3TJz3oUC/PAjDAPOrBSpVVlD9oQyk+AsmAgEHCrMDTH7cvnoRSXgs9GEFLQS4115l9SFL89kjYAgD0ilXw36u+mGZaOLF7ToU4/NVbbv4EECr4Sw==;
-Received: from [106.10.166.120] by nm27.bullet.mail.sg3.yahoo.com with NNFMP; 24 Dec 2014 21:03:39 -0000
-Received: from [106.10.167.160] by tm9.bullet.mail.sg3.yahoo.com with NNFMP; 24 Dec 2014 21:03:39 -0000
-Received: from [127.0.0.1] by smtp133.mail.sg3.yahoo.com with NNFMP; 24 Dec 2014 21:03:39 -0000
-X-Yahoo-Newman-Id: 562652.39385.bm@smtp133.mail.sg3.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: E8mKCMAVM1lBhrbin_SApy7KOv0SFmPKQw.HQkmiF5RWwGK
- GpqAodeEjuSfWAJv6jnb.90paV5GMwqx54sBeiO.QdizzYqHXg1a5nrnKTaP
- YvC7GdzlnHEZu_S3CFPfvsdzlGF5FMlSDiU.RPH3YFdgQ0.BsI804x2BZXQ_
- jLDQdPXrcZry_9PwmtgCVsJgAkwqDVgLf3YPGNXPMah9s6TsXbDdodQrG0ex
- bNrsnc8euf3FInPGBVAIrnnTI9X8a.hkaQupBgypS76iFKvC9Gf4iiGNFbgT
- KMD.4651H9Gk5a7023nzXosHhuUZJOO39Uzf8Xkj4BJcr9kZC22PfK4nWnQs
- eumWo5WKZkyuKillcxEamP1Jl.mPUEbvJvChyYYIgVikKFpf3wNVmSfPP4OM
- hHbND8o1fu24pUXs1VZGTnx.jyKvmZ.fsQ3GPM568HZfvf6GzUxB9MlqV5l4
- aTWJIfktGYFolzibLFPL9nsgXnMNufO18f9xOfUns6CDT3HSsEO3PaBi6dLK
- 0yPZj3lGWhIRkB5.BeNh3.Vz1JzzdLiKOlvTdGcX5VVP86kscl.Ue2g6vpJq
- MiCI9xA0Psw5rC9JGIncru7xIf_vDfX10xGa7hhvw07hx42sH5_nwWAghN_d
- X3FKICCiD24F8bGtxvRk3_ZMW_4Rbs0BQj6yxlk1t6dZJubERvLmUvPerNow
- LOnTFY_5knTIAX5Ni9Vv4EJaNwCwv6Jzkm5i5peKqThQcuklS55rylyFQJxM
- AQRxq.rJOGLD2Fap0arVvFSIlskCVDgcItzRIf5jLe3QcOmc-
-X-Yahoo-SMTP: _NAuC72swBDpdridK5c7mltfXc1K.nFhPY5jXEZ4Gfdya8Gn_0nN
-User-Agent: KMail/4.11.5 (Linux/3.11.10-25-default; KDE/4.11.5; i686; ; )
+	id S1751546AbaLXV0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Dec 2014 16:26:50 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:55945 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751504AbaLXV0t (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Dec 2014 16:26:49 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2601:e:280:10f8:116:4aad:5f45:a30d])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DCBF12808F;
+	Wed, 24 Dec 2014 21:26:45 +0000 (UTC)
+Mail-Followup-To: Jeff King <peff@peff.net>,
+	Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <20141223185142.GA27954@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.18.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261812>
 
-Hi,
 
-I am keep getting the below warning, whenever I am trying to deploy my code 
-there :
+--rQ2U398070+RC21q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[arup@to_do_app]$ heroku logs -t
-Your version of git is 1.8.4.5. Which has serious security vulnerabilities.
-More information here: 
-https://blog.heroku.com/archives/2014/12/23/update_your_git_clients_on_windows_and_os_x
-2014-12-21T17:58:49.605785+00:00 app[web.1]:    from 
-/app/vendor/bundle/ruby/2.1.0/gems/dm-migrations-1.2.0/lib/dm-
-migrations/adapters/dm-postgres-adapter.rb:60:in `ensure in without_notices'
+On Tue, Dec 23, 2014 at 01:51:42PM -0500, Jeff King wrote:
+> On Tue, Dec 23, 2014 at 12:55:48PM -0500, Michael Blume wrote:
+>=20
+> > This patch causes an error on my mac, test 5500 fetch-pack errors on
+> > part 44 - fetch creating new shallow root. It looks for "remote: Total
+> > 1" in the fetch output and gets 3 instead.
+>=20
+> It fails for me on Linux, too. Interestingly the tip of the series
+> passes. I didn't investigate further.
 
-I am also not seeing any upgrade here - 
-http://software.opensuse.org/package/git
+Yes, the tip of the series fixes that issue.  I had trouble coming up
+with a good technique to split the patches in a way such that they were
+logically distinct yet addressed the failure.  I had an epiphany on how
+to do that last night, so I'll reroll sometime today.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-How to upgrade then ?
+--rQ2U398070+RC21q
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
--- 
-================
-Regards,
-Arup Rakshit
-================
-Debugging is twice as hard as writing the code in the first place. Therefore, 
-if you write the code as cleverly as possible, you are, by definition, not 
-smart enough to debug it.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---Brian Kernighan
+iQIcBAEBCgAGBQJUmy+PAAoJEL9TXYEfUvaLUdwQAIFkxdbDeIueu7ZenCLkCZ6O
+lCXh+qqLs6Riucpnzl94GH0wpOIsX7wE7dIIqXqY3eqOEeiS7Cukp5H4jAoSLkv6
+uQwzCWWmD9bSQhS0aFfHkti9fqLmQugfSgbivq/Hy9mHgwjS4aFoLIAL6oTHmz/R
+gSFNybCajXlWryipR+j3oMv8lxM6hbvFkTyaaXN1iOq+LH0xpJ4xfNcTwNq3BXU7
+LhAYI2Z8yoSWv4DtogLbXezeiXPm9HRX0+VogDQrN5XZOnNYEXK2jpe7cHPiHDL9
+AU+PAw++ljsQ/aMWMwiUmyYuI7JoqHxMiNOXPBKKnOIVqgiFDpEi1xu6maN6PYyg
+3D45c13kAnwbJawdDHTMy7ROi1CoOq8KIs1S0wcu9YH55QGFrgAGjcp+Eg6jzh4I
+kvWEPhbzRoAomd4Cp3vvc+A7STTukXU/tNezZgNFSUU2nIxUqYhXcRWRzQ/sUVe3
+Zj+actFkVazL/pKuJgPYF8V1Nfem9nSaVTFKPKwt4+OgXbx+PSVRo/gfIMGYX/U1
+2a4Y4Qyhzmv+32gu4orehcrRJnP4IMDbK1Bm2mtjgrFtxBIpTTjdPi3r9SKXzsnr
+gloFRyI0J/ikrqycytTtLEBDVY9QBzUGVHVbdyMVELhCKc/WbL/5MNVFeXwmRsvd
+sS9lFhwPbmjkD5eqK2RG
+=KFQW
+-----END PGP SIGNATURE-----
+
+--rQ2U398070+RC21q--
