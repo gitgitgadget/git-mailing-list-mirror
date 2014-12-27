@@ -1,183 +1,75 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 3/3] attr: avoid heavy work when we know the specified attr is not defined
-Date: Sun, 28 Dec 2014 06:39:48 +0700
-Message-ID: <1419723588-13236-4-git-send-email-pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/3] attr: do not attempt to expand when we know it's
+ not a macro
+Date: Sat, 27 Dec 2014 18:59:30 -0500
+Message-ID: <CAPig+cRp-UJSuQv=GrhL16LZudjTf_8grZrZk-dNc7PHcHSHmg@mail.gmail.com>
 References: <1418133205-18213-1-git-send-email-pclouds@gmail.com>
- <1419723588-13236-1-git-send-email-pclouds@gmail.com>
+	<1419723588-13236-1-git-send-email-pclouds@gmail.com>
+	<1419723588-13236-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 28 00:29:30 2014
+X-From: git-owner@vger.kernel.org Sun Dec 28 00:59:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y50na-0002AK-9L
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Dec 2014 00:29:30 +0100
+	id 1Y51Gq-0007ZP-Ca
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Dec 2014 00:59:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbaL0X3Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2014 18:29:25 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:47896 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751603AbaL0X3Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2014 18:29:24 -0500
-Received: by mail-pa0-f52.google.com with SMTP id eu11so15128297pac.11
-        for <git@vger.kernel.org>; Sat, 27 Dec 2014 15:29:23 -0800 (PST)
+	id S1751288AbaL0X7c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2014 18:59:32 -0500
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:38866 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751205AbaL0X7b convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Dec 2014 18:59:31 -0500
+Received: by mail-yh0-f47.google.com with SMTP id f73so5826215yha.6
+        for <git@vger.kernel.org>; Sat, 27 Dec 2014 15:59:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=yksixip9ifLvOzlfoXwUlNwjAOnLg+MGdv1RZgInVuM=;
-        b=DJsmhhk9Bc5NwEEbJzy/5On9uJc64bsUOV5kFv0SjqJ1PD+x+trswRXe5g5XqKX+xk
-         qjDC0uLvGJA05/sn9iKNlKefC2qqp1oRAoYy8ua0svUVW840PREwoG2g+yh6uuYcwjiH
-         Hud6tRY/H0e1dFu0OO187oYeIYsztUN2fxZ2d7Ymzvg5F8Xe1ZhxGN+727V5e4Gfp4zI
-         PpHZG4+GojeDi8KK+xRRilknVfwiYcnLiefOu+hibZrFrthJKboR5ei54TnK4tGceai2
-         02CgHuM1msM+WdoEnJvHcN0T39f0Us9sQrPXJM4moFWXUwFhGfwYDU5e0f4Fy3pctQab
-         5IjQ==
-X-Received: by 10.68.136.98 with SMTP id pz2mr79661760pbb.154.1419722963858;
-        Sat, 27 Dec 2014 15:29:23 -0800 (PST)
-Received: from lanh ([115.73.209.146])
-        by mx.google.com with ESMTPSA id qv9sm182226pab.27.2014.12.27.15.29.21
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Dec 2014 15:29:23 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 28 Dec 2014 06:40:17 +0700
-X-Mailer: git-send-email 2.2.0.84.ge9c7a8a
-In-Reply-To: <1419723588-13236-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=XVEkFVy52nYPYmzvArAaFvfM6lBZ29i3yO6DNEDgVGU=;
+        b=YXm7CZjUdZHDBexNM+o+3UJDPMthEmTzQoPhkp1JxXx2FtirXZ88LeFkmZL0qLTL5C
+         HicE6it5gF5Wn4KHQ9jkogrU3rurl7Rk+rgWuDwnBshTeLd0lKxhBiFJ2vAoCT92s/f0
+         xqyczWCb6iRdc+espSVS00mqL5oZchQ9NJvkv2PJpdlPNvWXa/B8CLb1dx6jXxeimrGa
+         z1E4ooUCUtCERbgZBtQcHgzS65FPCRhSqo6SiEYpJbFHovJUM1bx6Y2I5gREHi2VFPjH
+         I8WUo+XyV3dcDNnIKPE6mLi3KdZTF5LRcSVir+nc+CgZBfYgfh2iQi/Qlxe2BE3THPFa
+         PUmg==
+X-Received: by 10.236.14.36 with SMTP id c24mr34656887yhc.166.1419724770547;
+ Sat, 27 Dec 2014 15:59:30 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Sat, 27 Dec 2014 15:59:30 -0800 (PST)
+In-Reply-To: <1419723588-13236-3-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: oD3ku6Uuwfqs_CciPwTRUY87bIM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261846>
 
-If we have never seen attr 'X' in any .gitattributes file we have
-examined so far, we can be sure that 'X' is not defined. So no need to
-go over all the attr stack to look for attr 'X'. This is the purpose
-behind this new field maybe_real.
+On Sat, Dec 27, 2014 at 6:39 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Keep track of all recognized macros in the new "maybe_macro" field.
+> If this field is true, it _may_ be a macro (depending on what's in th=
+e
+> current attr stack). But if the field is false, it's definitely not a
+> macro, no need to go through the whole attr stack in macroexpand_one(=
+)
+> to search for one.
+>
+> Without this, "git grep abcdefghi" on git.git hits the inner loop in
+> macroexpand_one() 2481 times. With this, it's 66 times.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 
-This optimization breaks down if macros are involved because we can't
-know for sure what macro would expand to 'X' at attr parsing time. But
-if we go the pessimistic way and assume all macros are expanded, we hit
-the builtin "binary" macro. At least the "diff" attr defined in this
-macro will disable this optimization for git-grep. So we wait until
-any attr lines _may_ reference to a macro before we turn this off.
+My only contribution was pointing out a typographical error in the
+commit message[1]; hardly worthy of a Helped-by:.
 
-In git.git, this reduces the number of fill_one() call for "git grep
-abcdefghi" from ~5348 to 2955. The optimization stops when it reads
-t/.gitattributes, which uses 'binary' macro. We could probably reduce
-it further by limiting the 'binary' reference to t/ and subdirs only
-in this case.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
-"git grep" is actually a good example to justify this patch. The
-command checks "diff" attribute on every file. People usually don't
-define this attribute. But they pay the attr lookup penalty anyway
-without this patch, proportional to the number of attr lines they have
-in repo.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- attr.c | 33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index b80e52b..1f9eebd 100644
---- a/attr.c
-+++ b/attr.c
-@@ -33,9 +33,11 @@ struct git_attr {
- 	unsigned h;
- 	int attr_nr;
- 	int maybe_macro;
-+	int maybe_real;
- 	char name[FLEX_ARRAY];
- };
- static int attr_nr;
-+static int cannot_trust_maybe_real;
-=20
- static struct git_attr_check *check_all_attr;
- static struct git_attr *(git_attr_hash[HASHSIZE]);
-@@ -97,6 +99,7 @@ static struct git_attr *git_attr_internal(const char =
-*name, int len)
- 	a->next =3D git_attr_hash[pos];
- 	a->attr_nr =3D attr_nr++;
- 	a->maybe_macro =3D 0;
-+	a->maybe_real =3D 0;
- 	git_attr_hash[pos] =3D a;
-=20
- 	REALLOC_ARRAY(check_all_attr, attr_nr);
-@@ -269,6 +272,10 @@ static struct match_attr *parse_attr_line(const ch=
-ar *line, const char *src,
- 	/* Second pass to fill the attr_states */
- 	for (cp =3D states, i =3D 0; *cp; i++) {
- 		cp =3D parse_attr(src, lineno, cp, &(res->state[i]));
-+		if (!is_macro)
-+			res->state[i].attr->maybe_real =3D 1;
-+		if (res->state[i].attr->maybe_macro)
-+			cannot_trust_maybe_real =3D 1;
- 	}
-=20
- 	return res;
-@@ -710,10 +717,13 @@ static int macroexpand_one(int nr, int rem)
- }
-=20
- /*
-- * Collect all attributes for path into the array pointed to by
-- * check_all_attr.
-+ * Collect attributes for path into the array pointed to by
-+ * check_all_attr. If num is non-zero, only attributes in check[] are
-+ * collected. Otherwise all attributes are collected.
-  */
--static void collect_all_attrs(const char *path)
-+static void collect_some_attrs(const char *path, int num,
-+			       struct git_attr_check *check)
-+
- {
- 	struct attr_stack *stk;
- 	int i, pathlen, rem, dirlen;
-@@ -736,6 +746,19 @@ static void collect_all_attrs(const char *path)
- 	prepare_attr_stack(path, dirlen);
- 	for (i =3D 0; i < attr_nr; i++)
- 		check_all_attr[i].value =3D ATTR__UNKNOWN;
-+	if (num && !cannot_trust_maybe_real) {
-+		rem =3D 0;
-+		for (i =3D 0; i < num; i++) {
-+			if (!check[i].attr->maybe_real) {
-+				struct git_attr_check *c;
-+				c =3D check_all_attr + check[i].attr->attr_nr;
-+				c->value =3D ATTR__UNSET;
-+				rem++;
-+			}
-+		}
-+		if (rem =3D=3D num)
-+			return;
-+	}
-=20
- 	rem =3D attr_nr;
- 	for (stk =3D attr_stack; 0 < rem && stk; stk =3D stk->prev)
-@@ -746,7 +769,7 @@ int git_check_attr(const char *path, int num, struc=
-t git_attr_check *check)
- {
- 	int i;
-=20
--	collect_all_attrs(path);
-+	collect_some_attrs(path, num, check);
-=20
- 	for (i =3D 0; i < num; i++) {
- 		const char *value =3D check_all_attr[check[i].attr->attr_nr].value;
-@@ -762,7 +785,7 @@ int git_all_attrs(const char *path, int *num, struc=
-t git_attr_check **check)
- {
- 	int i, count, j;
-=20
--	collect_all_attrs(path);
-+	collect_some_attrs(path, 0, NULL);
-=20
- 	/* Count the number of attributes that are set. */
- 	count =3D 0;
---=20
-2.2.0.84.ge9c7a8a
+[1]: http://article.gmane.org/gmane.comp.version-control.git/261177
