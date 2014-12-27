@@ -1,146 +1,125 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Missing inversion in Makefile (ee9be06)
-Date: Sat, 27 Dec 2014 20:17:22 -0000
-Organization: OPDS
-Message-ID: <4C7BB65E9EE445F08645582230EA9782@PhilipOakley>
-References: <E3DB9AD2A8914C379FB3371494B0B816@PhilipOakley> <549F0355.5020805@kdbg.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] remote-curl: fall back to Basic auth if Negotiate fails.
+Date: Sat, 27 Dec 2014 21:09:36 +0000
+Message-ID: <20141227210935.GA10649@vauxhall.crustytoothpaste.net>
+References: <FBFEB910-4CB8-4049-901C-AADBFAB3AE9E@cisco.com>
+ <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+ <20141227175604.GA23732@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=UTF-8; reply-type=original
-Cc: "Eric Wong" <normalperson@yhbt.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git MsysGit" <msysgit@googlegroups.com>
-To: "Johannes Sixt" <j6t@kdbg.org>,
-	"Git List" <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBS5H7SSAKGQEWYUHE4I@googlegroups.com Sat Dec 27 21:17:18 2014
-Return-path: <msysgit+bncBDSOTWHYX4PBBS5H7SSAKGQEWYUHE4I@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f185.google.com ([209.85.212.185])
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KsGdsel6WgEHnImy"
+Cc: git@vger.kernel.org,
+	"Dan Langille (dalangil)" <dalangil@cisco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 27 22:09:53 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBS5H7SSAKGQEWYUHE4I@googlegroups.com>)
-	id 1Y4xnY-0003vc-66
-	for gcvm-msysgit@m.gmane.org; Sat, 27 Dec 2014 21:17:16 +0100
-Received: by mail-wi0-f185.google.com with SMTP id ex7sf1115273wid.12
-        for <gcvm-msysgit@m.gmane.org>; Sat, 27 Dec 2014 12:17:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:reply-to:from:to:cc:references:subject:date:organization
-         :mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=5dyJYRFxKph/6IA/znWP1TIaEsvO24dY7IFQdy/PLhc=;
-        b=u2WUjSnft2RUq/Q1hvYvMUB4EBiKBuUVtSG9FOyC82w4ntIO9Kp3QEKESgrE3gpkLk
-         7JktRDuyAreNoWlQRIxVW5iPKg/s2yb4GcwTpZWRwAheoue3mKdEm4mdGPIgJ9866KCJ
-         3wP7QFk7PNMYdJk4DqcPT2zXivUqUCcjB+195iasWkBxk02zcM5lkUVl3TJPrnuOaKRm
-         FU0w4Ms5vvqNBODh3ECofbrgUVqMC3KXfZApNkTRbqcNIn1WE7taElIJeqAG+0J+OTQw
-         Pzymi+4NCo4/ABjkHmk2yCO98hGTH65fybuOt/+r4y9bBttAKVEm9joCAwQy94oC1bXh
-         tNSQ==
-X-Received: by 10.152.37.199 with SMTP id a7mr192lak.13.1419711435825;
-        Sat, 27 Dec 2014 12:17:15 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.42.234 with SMTP id r10ls1480695lal.17.gmail; Sat, 27 Dec
- 2014 12:17:14 -0800 (PST)
-X-Received: by 10.112.137.70 with SMTP id qg6mr3396lbb.14.1419711434599;
-        Sat, 27 Dec 2014 12:17:14 -0800 (PST)
-Received: from out1.ip01ir2.opaltelecom.net (out1.ip01ir2.opaltelecom.net. [62.24.128.237])
-        by gmr-mx.google.com with ESMTP id gb6si108715wib.3.2014.12.27.12.17.13
-        for <msysgit@googlegroups.com>;
-        Sat, 27 Dec 2014 12:17:13 -0800 (PST)
-Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.237 as permitted sender) client-ip=62.24.128.237;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Am4bAH8Tn1QCYJmQPGdsb2JhbABcgwZSWIMFhBa/ToU4MwQCgQgXAQEBAQEBBQEBAQE4IBuEBwYBBQgBARkVHgEBIQsCAwUCAQMOBwUCBSECAhQBBBoGBwMGAQ0GARIIAgECAwGIHwmwEoZTjiwBAQgBAQEBGgSBIY5Wgm8ugRMFjhVNgnKGQYoyhhGEED4xBYI+AQEB
-X-IPAS-Result: Am4bAH8Tn1QCYJmQPGdsb2JhbABcgwZSWIMFhBa/ToU4MwQCgQgXAQEBAQEBBQEBAQE4IBuEBwYBBQgBARkVHgEBIQsCAwUCAQMOBwUCBSECAhQBBBoGBwMGAQ0GARIIAgECAwGIHwmwEoZTjiwBAQgBAQEBGgSBIY5Wgm8ugRMFjhVNgnKGQYoyhhGEED4xBYI+AQEB
-X-IronPort-AV: E=Sophos;i="5.07,652,1413241200"; 
-   d="scan'208";a="769392719"
-Received: from host-2-96-153-144.as13285.net (HELO PhilipOakley) ([2.96.153.144])
-  by out1.ip01ir2.opaltelecom.net with ESMTP; 27 Dec 2014 20:17:05 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Original-Sender: philipoakley@iee.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
- (google.com: domain of transitioning philipoakley@iee.org does not designate
- 62.24.128.237 as permitted sender) smtp.mail=philipoakley@iee.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261839>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Y4ycS-0004J0-IQ
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Dec 2014 22:09:52 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751816AbaL0VJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2014 16:09:44 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:56060 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751702AbaL0VJo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Dec 2014 16:09:44 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4A6412808F;
+	Sat, 27 Dec 2014 21:09:42 +0000 (UTC)
+Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	"Dan Langille (dalangil)" <dalangil@cisco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <20141227175604.GA23732@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.18.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261840>
 
-From: "Johannes Sixt" <j6t@kdbg.org>
-> Am 27.12.2014 um 19:49 schrieb Philip Oakley:
->> Hi,
->>
->> In ee9be06 (perl: detect new files in MakeMaker builds, 2012-07-27)
->> there is a step to detect if there has been an update to the PM.* 
->> files,
->> however it appears that the logic is inverted in the comparison.
->>
->> I need some extra eye's on this to be sure I have it right (I'm 
->> trying
->> to debug an old Windows breakage...).
->>
->> The resultant output of a make dry run included (on my m/c)..:
->>
->>  find perl -type f -name '*.pm' | sort >perl/PM.stamp+ && \
->>   { cmp perl/PM.stamp+ perl/PM.stamp >/dev/null 2>/dev/null || mv
->> perl/PM.stamp+ perl/PM.stamp; } && \
->>   rm -f perl/PM.stamp+
->>  make -C perl  PERL_PATH='/usr/bin/perl' prefix='/c/Documents and
->> Settings/Philip' perl.mak
->>
->> Shouldn't it be `{ ! cmp ` so that when the files are not identical, 
->> the
->> move is performed?
->>
->> https://github.com/git/git/blob/ee9be06770223238c6a22430eb874754dd22dfb0/Makefile#L2097
->
-> The existing code looks correct to me. cmp succeeds when the files are
-> identical and fails when they are different: When it succeeds (files 
-> are
-> equal), the mv is not executed. When it fails, either because a file
-> does not exist or they are different, the mv is executed.
->
-Thanks. The inverse logic had me confused.
-It's like 7400's again, for those that remember;-)
 
-I was getting errors from
-`cd $git_dir && make -n MSVC=1 V=1 2>MakeDryErrs.txt 1>MakeDry.txt` 
-(borrowed from 'msvc-build') which reported the PM.stamp as a problem, 
-with the quoted code being the last part of the MakeDry.txt (and no 
-PM.stamp seen).
+--KsGdsel6WgEHnImy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Now that I've been poking and investigating the error's stopped! It's 
-all getting rather frustrating. Time to go again on a clean and 
-rebuild..
+On Sat, Dec 27, 2014 at 12:56:04PM -0500, Jeff King wrote:
+> On Sat, Dec 27, 2014 at 04:01:33AM +0000, brian m. carlson wrote:
+>=20
+> > Apache servers using mod_auth_kerb can be configured to allow the user
+> > to authenticate either using Negotiate (using the Kerberos ticket) or
+> > Basic authentication (using the Kerberos password).  Often, one will
+> > want to use Negotiate authentication if it is available, but fall back
+> > to Basic authentication if the ticket is missing or expired.
+> >=20
+> > Teach the HTTP client code to stop trying authentication mechanisms that
+> > don't use a password (currently Negotiate) after the first failure,
+> > since if they failed the first time, they will never succeed.
+> >=20
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> > I was able to reproduce the problem on my server.  This fixes the
+> > problem for me both when info/refs requires authentication and when it
+> > does not.  Dan, please try and see if this fixes the problem for you.
+> >=20
+> > I'm not clear on whether NTLM is a passwordless authentication method.
+> > Since I don't use Windows or NTLM, I can't test it, but if it is, just
+> > adding it to HTTP_AUTH_PASSWORDLESS should be sufficient.
+>=20
+> I don't think this should make things any worse for NTLM if it is. It
+> would just not get the benefit of the feature you are adding, and
+> somebody with a working setup can test and add it at that time, right?
 
-Philip 
+Correct.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+> I'm not familiar enough with Negotiate auth to do give a thorough review
+> on the logic above. But FWIW, it makes sense to me, and the code looks
+> correct.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+libcurl will try very hard to use something other than Basic auth, even
+over HTTPS.  If Basic and something else are offered, libcurl will never
+use Basic.  I should probably make a note of that in the commit message.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> The credential struct is already a global for all requests. If you made
+> the "no_passwordless" flag similarly global, it would be enough to set
+> it in handle_curl_result and respect it in get_curl_handle.
+
+I'll reroll with that change.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--KsGdsel6WgEHnImy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUnyAPAAoJEL9TXYEfUvaLvRwP/itqddr8TbHehqTVY8PkHva4
+mhtl21W8a66KM47LqNBO4yuUjpxp+6HkZRQCsdu0wFVqmDvsJkDdM3/o7pjbDNOd
+UonByai5+Sd3mJg20b8Tr+g+M/hOV95N0I3yi6WqYZ0qNaPFRqs3/ID3kMpoxf/r
+rfCo6zw+8eaNog4PDBnYbZrw0RpZE+Dw3U2GnX7mhRZGNvpHX0UoxDcLmBNb6tCo
+29N+SDzOslOmVE/YGUvhLPN1127hrRCrw0czBBn4HxX4UM6R9dQlJGtJ58glUx7a
+d9WjRaJYCyDBJTHiSfcl9E4rYGi0XnuyLOJ4n7usTGjV2vNdPhvEACsV8F0xTgj1
+jGkVyH3HwK8xAhtMXg+oXs8DI1oFU743W5Fehz0eNmPb5ADSRCYWicsm4mnPYaCH
+2eOl2ZIpGXVMxlULrKO3SSVfhnDWACzP1fWHTrG+IYefDJZuCdT/7kb9yQbj0dxR
+J+bOzqAsieLs7oh+WY4nTu1+hIA+ftsjr/2kNXYrsXXubFyNBAInFuqp1PLM0LDx
+9hhtCMJWxIyneSGpKv0Q/fSSUW3XjMdhzD27+OaMhtFfhsGVodQ4P0NmqcheIbfg
+oB7yvbJmVq1PuTSkurLMVyYzBbG/C7ip6d8HX9P+sjg3YYWqOxNY0XWpYVX2kDk+
+adFGwP2y5Sj0QFTv+BPf
+=+hqT
+-----END PGP SIGNATURE-----
+
+--KsGdsel6WgEHnImy--
