@@ -1,75 +1,101 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/3] attr: do not attempt to expand when we know it's
- not a macro
-Date: Sat, 27 Dec 2014 18:59:30 -0500
-Message-ID: <CAPig+cRp-UJSuQv=GrhL16LZudjTf_8grZrZk-dNc7PHcHSHmg@mail.gmail.com>
-References: <1418133205-18213-1-git-send-email-pclouds@gmail.com>
-	<1419723588-13236-1-git-send-email-pclouds@gmail.com>
-	<1419723588-13236-3-git-send-email-pclouds@gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] remote-curl: fall back to Basic auth if Negotiate fails.
+Date: Sun, 28 Dec 2014 00:05:03 +0000
+Message-ID: <20141228000501.GB10649@vauxhall.crustytoothpaste.net>
+References: <FBFEB910-4CB8-4049-901C-AADBFAB3AE9E@cisco.com>
+ <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+ <20141227175604.GA23732@peff.net>
+ <20141227210935.GA10649@vauxhall.crustytoothpaste.net>
+ <20141227212948.GA30098@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 28 00:59:47 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ftEhullJWpWg/VHq"
+Cc: git@vger.kernel.org,
+	"Dan Langille (dalangil)" <dalangil@cisco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 28 01:05:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y51Gq-0007ZP-Ca
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Dec 2014 00:59:44 +0100
+	id 1Y51MM-0001kT-GY
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Dec 2014 01:05:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbaL0X7c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2014 18:59:32 -0500
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:38866 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751205AbaL0X7b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Dec 2014 18:59:31 -0500
-Received: by mail-yh0-f47.google.com with SMTP id f73so5826215yha.6
-        for <git@vger.kernel.org>; Sat, 27 Dec 2014 15:59:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=XVEkFVy52nYPYmzvArAaFvfM6lBZ29i3yO6DNEDgVGU=;
-        b=YXm7CZjUdZHDBexNM+o+3UJDPMthEmTzQoPhkp1JxXx2FtirXZ88LeFkmZL0qLTL5C
-         HicE6it5gF5Wn4KHQ9jkogrU3rurl7Rk+rgWuDwnBshTeLd0lKxhBiFJ2vAoCT92s/f0
-         xqyczWCb6iRdc+espSVS00mqL5oZchQ9NJvkv2PJpdlPNvWXa/B8CLb1dx6jXxeimrGa
-         z1E4ooUCUtCERbgZBtQcHgzS65FPCRhSqo6SiEYpJbFHovJUM1bx6Y2I5gREHi2VFPjH
-         I8WUo+XyV3dcDNnIKPE6mLi3KdZTF5LRcSVir+nc+CgZBfYgfh2iQi/Qlxe2BE3THPFa
-         PUmg==
-X-Received: by 10.236.14.36 with SMTP id c24mr34656887yhc.166.1419724770547;
- Sat, 27 Dec 2014 15:59:30 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Sat, 27 Dec 2014 15:59:30 -0800 (PST)
-In-Reply-To: <1419723588-13236-3-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: oD3ku6Uuwfqs_CciPwTRUY87bIM
+	id S1751301AbaL1AFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2014 19:05:10 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:56372 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751205AbaL1AFJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Dec 2014 19:05:09 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 546FB2808F;
+	Sun, 28 Dec 2014 00:05:08 +0000 (UTC)
+Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	"Dan Langille (dalangil)" <dalangil@cisco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <20141227212948.GA30098@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.18.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261847>
 
-On Sat, Dec 27, 2014 at 6:39 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> Keep track of all recognized macros in the new "maybe_macro" field.
-> If this field is true, it _may_ be a macro (depending on what's in th=
-e
-> current attr stack). But if the field is false, it's definitely not a
-> macro, no need to go through the whole attr stack in macroexpand_one(=
-)
-> to search for one.
->
-> Without this, "git grep abcdefghi" on git.git hits the inner loop in
-> macroexpand_one() 2481 times. With this, it's 66 times.
->
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 
-My only contribution was pointing out a typographical error in the
-commit message[1]; hardly worthy of a Helped-by:.
+--ftEhullJWpWg/VHq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+On Sat, Dec 27, 2014 at 04:29:49PM -0500, Jeff King wrote:
+> >>> since if they failed the first time, they will never succeed
+>=20
+> Are there other GSSAPI methods where this is not the case? I don't know
+> of any, and AFAICT git's support is used only for Kerberos, so this is
+> probably safe for now. If somebody can produce a concrete case that
+> behaves differently, we can untangle it then.
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/261177
+GSSAPI defines a token-based interface.  While it's possible that a user
+could have multiple tokens, I don't think libcurl knows how to select
+different ones, so TTBOMK it will always present the same token and
+hence always get the same response.
+
+libcurl could theoretically be linked against any shared library
+implementing the GSSAPI version 2.  I only know if it being used in
+Kerberos and NTLM in practice.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--ftEhullJWpWg/VHq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUn0ktAAoJEL9TXYEfUvaLx1kP/A7JBQrwUTzHue330370fstm
+EnTYQaGfKA5p4p5PbWqCWdD+dFBupxmhbo3IubHG+za1YChlG8MIihdr0oNol+XH
+WN6xKkwRaVa1J4PVa/88FRtDcMNyc2IxBA2OUp/iRVp7JrepEfDxdMhFkYg85Pxq
+zuhvRN1I8z90YInX2ml4mH/4qKIFSJEJWmD6CwUJfkjlzVleiDt+xFgkhCMxkH4s
++H3khKaT48k34e1uO8/9GYxxA3k5rY2jeAHAPZi7ABondyGcfFEtZV9jnpySIUEK
+GjPmvu+2FnwvYrJAx4m/aKf23ZPnrRwIyqWGhDYbLuwbY5tqVaxnGbDiCP8J/pSm
+riogxV/xa3Cv472jw6zN6VugK3SU658xz+8POMiu3KqTrNTTtEnp18UFk3GgPd18
+oJx0kztt0kUGlb8XC4LRHdJr+z+W216X4rqIJo+rlx4pvRkGW+4HBAc8qfdC0SWC
+HpAlODwbINwHGnX4Zkmpdy1AycPXSk3D6KAceJe0DRBLd4sdC4RHl1Ioh3xhvs0a
+Xx9wpJ+xWb36NQ3HrpFVLDW+Ot2Pxvtp9AJ2eLF8MS9Dey8a0wWAYBK8qQVaFP/r
++fYKvuhFlPNlywCsf5wezDUXuchoDmpvhvhojrncj+s0N6/k2QOzoi5Krjj9R7tI
+9LdPZ2pIgEJ2Mza9ZSTN
+=37ZD
+-----END PGP SIGNATURE-----
+
+--ftEhullJWpWg/VHq--
