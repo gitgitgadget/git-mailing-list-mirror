@@ -1,148 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/7] push.c: add an --atomic argument
-Date: Mon, 29 Dec 2014 12:33:37 -0800
-Message-ID: <xmqq7fxayz4u.fsf@gitster.dls.corp.google.com>
-References: <1419017941-7090-1-git-send-email-sbeller@google.com>
-	<1419017941-7090-7-git-send-email-sbeller@google.com>
-	<549D0B78.402@alum.mit.edu>
+From: "Randy J. Ray" <rjray@blackperl.com>
+Subject: Re: Git's Perl scripts can fail if user is configured for perlbrew
+Date: Mon, 29 Dec 2014 15:07:40 -0600
+Message-ID: <54A1C29C.4090100@blackperl.com>
+References: <54A085D1.8060407@blackperl.com> <CACBZZX4qKyfRcbowYnM-KsrbKZ2=9RXr+HEgrOU1jaCsSX53QA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, ronniesahlberg@gmail.com,
-	jrnieder@gmail.com, sunshine@sunshineco.com, git@vger.kernel.org,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Dec 29 21:34:17 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Kang-min Liu <gugod@gugod.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 22:08:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5h16-00030X-86
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 21:34:16 +0100
+	id 1Y5hXl-0004kB-L8
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 22:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbaL2Udl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 15:33:41 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65188 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751589AbaL2Udk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 15:33:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D83122AC27;
-	Mon, 29 Dec 2014 15:33:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9Jy6KskudsaEfMWmTTnPnMDWwpc=; b=Di8J1K
-	BIm29cE4TKLWGL33/pFNF+oF1yxJ9IQW1d2EHCr6GnJnCc9IcLdhb5wjqzC1Fzrr
-	NR74n0mLZoQAb42TrnVJ4PQ+gp1aGYOw61vja4jn9/z6m3jsrFH8E4oC9OdOqrJe
-	Vjja0pJH+9KQH8pa5FuhFg1iMFIeZugYlPTGo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x/s4QNVukNwC30G/rHZb4BjTYdfXL4VH
-	i6Mhh8oUtnwdQxNYZwUUwwsolbaVp+XwAnIyEBmSW7k/XFUp8aWQ6WCrvGaNuJRv
-	RrEg5Y34bib+ZMGJS6tsgrMINb3mgdFAwLAWTnJjmd2NSdeAm+JpMjU+fUL9SUit
-	kLDUDlCMfzw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD44A2AC26;
-	Mon, 29 Dec 2014 15:33:39 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5165F2AC1E;
-	Mon, 29 Dec 2014 15:33:39 -0500 (EST)
-In-Reply-To: <549D0B78.402@alum.mit.edu> (Michael Haggerty's message of "Fri,
-	26 Dec 2014 08:17:12 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F8C161AC-8F99-11E4-AE4A-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752387AbaL2VH5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2014 16:07:57 -0500
+Received: from shell1.rawbw.com ([198.144.192.42]:62140 "EHLO shell1.rawbw.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751061AbaL2VH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 16:07:56 -0500
+Received: from ventrue.local ([12.69.179.130])
+	(authenticated bits=0)
+	by shell1.rawbw.com (8.14.9/8.14.9) with ESMTP id sBTL7hAs049787
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 29 Dec 2014 13:07:49 -0800 (PST)
+	(envelope-from rjray@blackperl.com)
+X-Authentication-Warning: shell1.rawbw.com: Host [12.69.179.130] claimed to be ventrue.local
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CACBZZX4qKyfRcbowYnM-KsrbKZ2=9RXr+HEgrOU1jaCsSX53QA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261877>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
-> I'd like to discuss the big picture around this feature. I don't think
-> that any of these questions are blockers, with the possible exception of
-> the question of whether "--atomic" should fall back to non-atomic if the
-> server doesn't support atomic pushes.
+On 12/29/14, 7:21 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> [CC'd the perlbrew author]
 >
-> 1. Should "--atomic" someday become the default?
+> This is a bit of a tricky issue.
 >
-> You seem to imply that "--atomic" might become the default sometime in
-> the future. (I realize that this patch series does not propose to change
-> the default but let's talk about it anyway.) In the real world, the most
-> common reason for an "--atomic" push to fail would be that somebody else
-> has pushed to a branch since our last update, resulting in a non-ff
-> error. Would I find out about such an error before or after I have
-> transferred my objects to the server?
-
-That question is pretty much rhetorical, as certain rejections you
-cannot fundamentally implement without having the data at hand.
-
-> If I only find out at the end of the transfer, then it could be a pretty
-> frustrating experience pushing a lot of references to a server over a
-> slow connection.
-
-We'd like to have a long overdue protocol update for fetch and push
-soonish anyawy (perhaps in the first half of 2015) and part of that
-should include unified logic for common ancestor negotiation between
-fetch and push [*1*].  We should be able to ease that with an
-optimization similar to quickfetch done on the fetch side once that
-happens.
-
-> Even *if* "--atomic" becomes the default, we would certainly want to
-> support a "--no-atomic" (or "--non-atomic"?) option to get the old
-> behavior. It might be a good idea to add that option now, so that
-> forward-looking script writers can start explicitly choosing "--atomic"
-> vs. "--no-atomic".
-
-Perhaps.  But on the other hand, pushing multiple refs at the same
-time is a sign that they are related and need to go together.  The
-reason why one but not others fails would be an indication that
-there is somebody else pushing into the same repository and the
-pusher and the other party are stepping on each other's toes, which
-should be resolved primarily by inter-developer communication, not
-with "--no-atomic" workaround.
-
-> 2. Is this an option that users will want to specify via the command line?
+> Using whatever perl is defined in the environment is just as likely t=
+o
+> break, in general the build process tries to pick these assets at
+> compile-time. Imagine you're experimenting with some custom perl
+> version and now Git inexplicably breaks.
 >
-> For scripts that want to insist on "atomic" updates, it is no problem to
-> specify "--atomic" on the command line.
->
-> But supposing that "--atomic" is a good default for some people, it
-> would be awkward for them to have to specify it on every "git push"
-> invocation. It therefore might be nice to have a configuration setting
-> to choose whether "--atomic" is the default.
->
-> Also (see above) it might be useful to set "--atomic" only for
-> particular servers (for example, only for those to which you have a fast
-> connection). This suggests that the "atomic/non-atomic" configuration
-> should be settable on a per-remote basis.
+> It's better if Git detects a working perl when you compile it and
+> sticks with that, which is why we use /usr/bin/perl by default.
 
-I think you are hinting to have remote.atomicPush = {yes,no} that is
-weaker than remote.$nick.atomicPush = {yes,no} or something like
-that.  I agree that would be a good direction to go.
+These are good points. I'm not sure when this stopped working for me...=
+=20
+I don't use the -i or -p options to "git add" very often. So I can't sa=
+y=20
+at what point it stopped working with the current configuration, only=20
+that it "used to work".
 
-> 3. What should happen if the server doesn't support atomic pushes?
+> When you're setting PERL5LIB you're indicating to whatever perl
+> interpreter you're going to run that that's where they it should pick
+> up its modules. IMO they way perlbrew does this is broken, instead of
+> setting PATH + PERL5LIB globally for your login shell it should set
+> the PATH, and then the "perl" in that path should be a pointer to som=
+e
+> small shellscript that sets PERL5LIB for *its* perl.
 
-If you asked for atomic push explicitly and if the server cannot
-support it, push should fail.
+That would be for the perlbrew author to consider, of course.
 
-If the only reason we are doing atomic is because in some future we
-flipped the default (i.e. no remote.*.atomicPush or --atomic option
-from the command line), then it might be OK to continue with a
-warning.
+> I don't know what the right tradeoff here is, but I think it would be
+> just as sensible to unset PERL5LIB in our own perl scripts + modules,
+> it would make live monkeypatching when you wanted to harder, but we
+> could always add a GITPERL5LIB or something...
 
-I however think that the automatic demotion is too much complexity
-for such a simple option.  "Please be atomic if you can but I'd take
-non-atomic one if you do not want to give me atomic one" that is
-responded by "I'd do non-atomic then, as you are perfectly happy
-without" is not very useful---such a pusher should just say "I
-accept non-atomic", which is what "--no-atomic" is for.
+You would have to have a shell script that un-set PERL5LIB and then=20
+invoked the given git script, because by the time script execution has=20
+begun, the contents of PERL5LIB have already been added to the head of=20
+the list of search paths. One approach I tried was to set the=20
+environment variable GITPERLLIB (which you already use and recognize, s=
+o=20
+there is no need for GITPERL5LIB), but that did not help. The base=20
+problem still remained: The content of PERL5LIB (which pointed to=20
+5.20.1-compiled extensions) took priority over the default @INC content=
+s=20
+(which were for a 5.16.2 perl).
 
+I don't know the right trade-off, either. I started out reporting this=20
+as an issue against the homebrew project's recipe for git, because they=
+=20
+actually add more explicit library paths to @INC than a vanilla=20
+build/install of git does. But the problem is really in the interaction=
+=20
+between /usr/bin/perl and a PERL5LIB set for an alternate perl. So the=20
+solution, if there is one, will lay here in git somewhere...
 
-[Footnotes]
-
-*1* Two other big ones are syntax change to have an explicit
-    extension packets instead of hiding the capability after NUL,
-    and resolving the "who speaks first" issue.
+Randy
+--=20
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""=
+""""""""
+Randy J. Ray      Sunnyvale, CA      http://www.dereferenced.com
+rjray@blackperl.com
+twitter.com/rjray
+Silicon Valley Scale Modelers: http://www.svsm.org
