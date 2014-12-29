@@ -1,102 +1,84 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git's Perl scripts can fail if user is configured for perlbrew
-Date: Tue, 30 Dec 2014 00:16:34 +0100
-Message-ID: <CACBZZX4PDC45jE6y1i-SFY5Qy+CPsBe-OMjfehZRYdqD9pWPaA@mail.gmail.com>
-References: <54A085D1.8060407@blackperl.com> <54A159D7.5010307@web.de> <54A1CE4A.7020408@blackperl.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv2] Documentation/SubmittingPatches: Explain the rationale
+ of git notes
+Date: Mon, 29 Dec 2014 18:18:37 -0500
+Message-ID: <CAPig+cQgG5Ua-k1D8yKF5K+tfXeSB_wTN9W3m08F+K7AtKWDaw@mail.gmail.com>
+References: <xmqqwq5ja7s2.fsf@gitster.dls.corp.google.com>
+	<1419874942-9901-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Randy J. Ray" <rjray@blackperl.com>
-X-From: git-owner@vger.kernel.org Tue Dec 30 00:17:02 2014
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Dec 30 00:18:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5jYc-0007mX-7B
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 00:17:02 +0100
+	id 1Y5jaF-0000jU-Ot
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 00:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688AbaL2XQz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2014 18:16:55 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:42811 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751554AbaL2XQz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Dec 2014 18:16:55 -0500
-Received: by mail-ob0-f171.google.com with SMTP id uz6so43025235obc.2
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 15:16:54 -0800 (PST)
+	id S1751365AbaL2XSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2014 18:18:39 -0500
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:33750 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbaL2XSi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 18:18:38 -0500
+Received: by mail-yk0-f169.google.com with SMTP id 79so6803692ykr.14
+        for <git@vger.kernel.org>; Mon, 29 Dec 2014 15:18:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Gy0A2n+ujoOTDMQBHhAuiLL6lJ10XqTVsM6YAbuX+K4=;
-        b=bppuzhEuluJ9Qcj4cdEHfgdQFsdlDkzrl+3XZbetXFJoclhIYMUo9yEC3F2iCrI4l0
-         DR+8m+gxOwWYjBXKQRDAhSOLVarsOUTYonk/WO2v6BZlnDwklxQGfUOq5kUI5w2/LsAW
-         2bGM4CfaMpZy9S9uI6/ugmjPROcKuX9QnP194cg+y40O5zse2WTp1pQ/hEuecBwD20+f
-         TWRCSfADRZ3tGMQjpCNMaVqGl1OLIzdTlOFJBmFYI7mPkxTR9CnJAWYddprhAhh5Ebl7
-         ydDEJFib6VbDgHq/FsxAWzI3lTVDg++aVvqyWMFptMT2mZzdbeYzbMwRKueQvToCUYVx
-         WPmw==
-X-Received: by 10.182.58.81 with SMTP id o17mr34551185obq.82.1419895014453;
- Mon, 29 Dec 2014 15:16:54 -0800 (PST)
-Received: by 10.76.141.44 with HTTP; Mon, 29 Dec 2014 15:16:34 -0800 (PST)
-In-Reply-To: <54A1CE4A.7020408@blackperl.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=AjRx23k6qDXEJAllQM0/6GSZWzdRE/wXxAx3qByhJwk=;
+        b=fWqJ/0jYxsoq3WdL6SSTbS/G4rweD7x2w9lajwmEs9xJdfi393LLGF04AV4+Hf7ZKn
+         JFLVO6MttJArPyG7ieV08RdLleKZlHtqqFSs2q4BfSpM/W81lWzrpeLW4RQxJiv/9FQT
+         9LU2ubTUcqSCXRWT3v72KmrPDxiDXSsJiOAIOdlrbO3P5zVTKQ3zyMSko/rKEf9c7rrK
+         oWi5u39fN7X1AAjmXFt9ACAtRSZKhlikG74IBbNLdDjZJQkAtYglZC1n8d+XvomK7Exu
+         dy7ZhWbujlwhjnnoof3ZUIpPuOyhgUav5Y+mXFvegh7TQAvlVzheU9Z6oRP0F1PTD987
+         kzuQ==
+X-Received: by 10.236.89.172 with SMTP id c32mr40324508yhf.180.1419895117789;
+ Mon, 29 Dec 2014 15:18:37 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Mon, 29 Dec 2014 15:18:37 -0800 (PST)
+In-Reply-To: <1419874942-9901-1-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: aVg30GRrNFjTy7lc-blW_Us6EaU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261897>
 
-On Mon, Dec 29, 2014 at 10:57 PM, Randy J. Ray <rjray@blackperl.com> wr=
-ote:
-> On 12/29/14, 7:40 AM, Torsten B=C3=B6gershausen wrote:
->>
->> Having problems with different perl installations is not an unknown
->> problem
->> in Git, I would say.
->>
->> And Git itself is prepared to handle this situation:
->>
->> In Makefile I can read:
->> # Define PERL_PATH to the path of your Perl binary (usually
->> /usr/bin/perl).
->>
->> (What Git can not decide is which perl it should use, the one pointe=
-d out
->> by $PATH or /usr/bin/perl.)
->>
->> What does
->> "type perl" say ?
->>
->> And what happens when you build and install Git like this:
->> PERL_PATH=3D/XX/YY/perl make install
->>
->> -----------
->> Are you thinking about changing
->> ifndef PERL_PATH
->>         PERL_PATH =3D /usr/bin/perl
->> endif
->> -- into --
->> ifndef PERL_PATH
->>         PERL_PATH =3D $(shell which perl)
->> endif
->> ---
->>
->> At first glance that could make sense, at least to me.
+On Mon, Dec 29, 2014 at 12:42 PM, Stefan Beller <sbeller@google.com> wrote:
+> This adds more explanation of why you want to have the --notes option
+> given to git format-patch.
 >
->
-> The problem in this case is the Perl being used at run-time, not buil=
-d-time.
-> The building of git is done by the homebrew project in this case, so =
-I don't
-> have direct control over it.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index e3c942e..f42c607 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -177,7 +177,12 @@ message starts, you can put a "From: " line to name that person.
+>  You often want to add additional explanation about the patch,
+>  other than the commit message itself.  Place such "cover letter"
+>  material between the three dash lines and the diffstat. Git-notes
+> -can also be inserted using the `--notes` option.
+> +can also be inserted using the `--notes` option. If you are one
+> +of those developers who cannot write perfect code the first time
+> +and need multiple iterations of review and discussion, you may
+> +want to keep track of the changes between different versions of
+> +a patch using notes and then also use the `--notes` option when
+> +preparing the patch for submission.
 
-Correct, but we don't change /usr/bin/perl at runtime, we hardcode
-that at compile-time.
+Perhaps this could be rephrased in a less derogatory fashion like this:
 
-Similarly we could hardcode PERL5LIB at compile-time, but we don't, if
-we did you wouldn't have this problem.
+    ...material between the three dash line and the diffstat.
+    For patches requiring multiple iterations of review and
+    discussion, an explanation of changes between each iteration can
+    be kept in Git-notes and inserted automatically following the
+    three dash line via `git format-patch --notes`.
 
-I.e. the problem is that we're using the system-provided perl with a
-custom PERL5LIB set for the benefit of a non-system provided perl
-installed after you built Git (or built in a different environment...)
+>  Do not attach the patch as a MIME attachment, compressed or not.
+>  Do not let your e-mail client send quoted-printable.  Do not let
+> --
+> 2.2.1.62.g3f15098
