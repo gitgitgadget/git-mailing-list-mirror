@@ -1,110 +1,104 @@
-From: Jiri Sevcik <jsevcik14@gmail.com>
-Subject: Fwd: git-remote-fd problem
-Date: Mon, 29 Dec 2014 10:47:58 +0100
-Message-ID: <CAOP4-933YWoJ8QO0ZY2KG1cgtZ6jAR8oL4L9hw_0CcicDnepnQ@mail.gmail.com>
-References: <CAOP4-939uAP2Tgofz01F40_Eb0F8GxBsU49HxNvAiyBCW6H08w@mail.gmail.com>
-	<20140910144756.GA4267@LK-Perkele-VII>
-	<CAOP4-92U+oFJJw38LWNmTqPtKMT=MDq0Ay9FiaGV5je77aUNpg@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Git's Perl scripts can fail if user is configured for perlbrew
+Date: Mon, 29 Dec 2014 14:21:57 +0100
+Message-ID: <CACBZZX4qKyfRcbowYnM-KsrbKZ2=9RXr+HEgrOU1jaCsSX53QA@mail.gmail.com>
+References: <54A085D1.8060407@blackperl.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001a113a73740549b4050b57c53a
-Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Mon Dec 29 10:48:07 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Kang-min Liu <gugod@gugod.org>
+To: "Randy J. Ray" <rjray@blackperl.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 14:22:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5Wvm-0003WV-Hq
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 10:48:06 +0100
+	id 1Y5aH9-0005UQ-IR
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 14:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbaL2JsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 04:48:00 -0500
-Received: from mail-qg0-f47.google.com ([209.85.192.47]:55796 "EHLO
-	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751941AbaL2Jr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 04:47:59 -0500
-Received: by mail-qg0-f47.google.com with SMTP id q108so8956935qgd.20
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 01:47:59 -0800 (PST)
+	id S1751618AbaL2NWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2014 08:22:19 -0500
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:46272 "EHLO
+	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751435AbaL2NWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 08:22:18 -0500
+Received: by mail-oi0-f53.google.com with SMTP id g201so28969939oib.12
+        for <git@vger.kernel.org>; Mon, 29 Dec 2014 05:22:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=tz/tEU8UdMVnmP6r+XmpK+EiajV7p2j6y8mQFXkiT9E=;
-        b=Ma4rPdSioivgdXJjxYlmxev2MFfeCkQ+5Sf9d8bwLJnSrW/pHLxRpy2oSJB/JuJfS9
-         Ettxkm03miKqvkF3UDweg3TVrH5BcTOUiliNQhNd/Nhm7MBvKifOamv9RVjEonR9hs6B
-         7+ChVSYLL26hdP3INI9SR0ZxBcmHkY5VGcGe4sixSm+nbGyD6VfFq6QpJdUWR3+BEPYt
-         uJ38arLVGugOzftI616Mm63aLJ/G9cmq1m+bycypvsB5Uy/pwz9IXPCveseo+a1BRNvm
-         llfgHS+fvpYFgLnXv250fkzC0GjbRWhPHCk9IyBRXGoQQxJH6V2bn2Y6475zlkTee3oe
-         uyzg==
-X-Received: by 10.140.94.117 with SMTP id f108mr73346540qge.50.1419846479064;
- Mon, 29 Dec 2014 01:47:59 -0800 (PST)
-Received: by 10.96.16.7 with HTTP; Mon, 29 Dec 2014 01:47:58 -0800 (PST)
-In-Reply-To: <CAOP4-92U+oFJJw38LWNmTqPtKMT=MDq0Ay9FiaGV5je77aUNpg@mail.gmail.com>
+        bh=6dwqEtml5+UaG5bGbIb+l7N4pdmRTFA5oTd1ahvRjl8=;
+        b=P+R/CoT1XVxx5u/8f3PHNEZHois9oC4hgsfr8WROUawlIfpmuY2wqsb8Gll4J43tbj
+         U7nZh0vcPedDtHMZbjntahTCIxao0au9ii9L1X+W8PRf6/jSCXU0iE2zqZNWwGzf7Gj+
+         yCzoQ1wrqEHo7esGoJJdEPkChkQc33EfbuiTTJrqzfst/pLqCswI1tNgh0RrPoqpl2JY
+         Z+eP7hst0dp9J41PRxXfubVcR+QwylNDVyk31DJoxi8wvaXh7q7cNHKdK2zj4emti/l0
+         IohE5qYPKCzszkNHAwQEjoD/Sj7H27R34uYDxXNJ9z3LNCCJs1vcQlLl+ljdliRZI+Aj
+         26zA==
+X-Received: by 10.60.114.40 with SMTP id jd8mr257548oeb.12.1419859337791; Mon,
+ 29 Dec 2014 05:22:17 -0800 (PST)
+Received: by 10.76.141.44 with HTTP; Mon, 29 Dec 2014 05:21:57 -0800 (PST)
+In-Reply-To: <54A085D1.8060407@blackperl.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261860>
 
---001a113a73740549b4050b57c53a
-Content-Type: text/plain; charset=UTF-8
-
-> The remote-fd expects the transport to pass half-closes. So you can't
-> close all at once.
+On Sun, Dec 28, 2014 at 11:36 PM, Randy J. Ray <rjray@blackperl.com> wrote:
+> I use git on MacOS via homebrew (http://brew.sh/), and a custom Perl
+> installation built and managed via perlbrew (http://perlbrew.pl/). At some
+> point, commands like "git add -i" broke. I say "at some point", because I'm
+> not a git power-user and I only just noticed it this week.
 >
-> Let there be pipes W and R and transport connection C.
+> I am running Git 2.2.1 with a perlbrew'd Perl 5.20.1. When I would run "git
+> add -i" (or "git add -p"), it would immediately die with a signal 11. Some
+> poking around showed that those git commands that are implemented as Perl
+> scripts run under /usr/bin/perl, and also prefix some directories to the
+> module search-path. The problem stems from the fact that, when you are using
+> perlbrew, you also have the PERL5LIB environment variable set. The contents
+> of it lay between the git-provided paths and the default contents of @INC.
+> When the Git module is loaded, it (eventually) triggers a load of
+> List::Util, whose C-level code fails to load because of a version mismatch;
+> you got List::Util from the paths in PERL5LIB, but it doesn't match the
+> version of perl from /usr/bin/perl.
 >
-> - W-read should be closed after being passed to remote-fd.
-> - R-write should be closed after being passed to remote-fd.
-> - Upon receiving "no more data" from C, close W-write.
-> - Upon receiving EOF from R-read, close it and signal "no more data"
->   to C.
+> After poking around and trying a few different things, I have found that
+> using the following line in place of "#!/usr/bin/perl" solves this problem:
+>
+>         #!/usr/bin/env perl
+>
+> This can be done by defaulting PERL_PATH to "/usr/bin/env perl" in Makefile.
+>
+> I don't know enough about the overall git ecosystem to know if this would
+> have an adverse effect on anything else (in particular, Windows
+> compatibility, but then Windows probably isn't having this issue in the
+> first place).
+>
+> I could just create and mail in the one-line patch for this, but I thought
+> it might be better to open it up for some discussion first?
 
-Hi, I followed your advices, correctly close pipes but git clone still
-doesnt finish and hanging on.
-Code is in an attachement (its part of big system).
+[CC'd the perlbrew author]
 
---001a113a73740549b4050b57c53a
-Content-Type: text/x-python; charset=US-ASCII; name="git_test_improved.py"
-Content-Disposition: attachment; filename="git_test_improved.py"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_i2rdm51q0
+This is a bit of a tricky issue.
 
-CiAgICAjY3JlYXRlIHBpcGVzCiAgICB3X3BpcGUgPSBvcy5waXBlKCkKICAgIHJfcGlwZSA9IG9z
-LnBpcGUoKQoKICAgIGNsaWVudF9wcm9jZXNzID0gc3VicHJvY2Vzcy5Qb3BlbigiL3Vzci9iaW4v
-Z2l0IGNsb25lIGZkOjp7MH0sezF9IC90bXAvZ2l0dGVzdCIuZm9ybWF0KHJfcGlwZVswXSwgd19w
-aXBlWzFdKSwgc2hlbGw9VHJ1ZSkKICAgICNjbG9zaW5nIHBpcGVzCiAgICBvcy5jbG9zZShyX3Bp
-cGVbMF0pIAogICAgb3MuY2xvc2Uod19waXBlWzFdKQoKICAgIGVwb2xsID0gc2VsZWN0LmVwb2xs
-KCkKICAgIGVwb2xsLnJlZ2lzdGVyKHdfcGlwZVswXSwgc2VsZWN0LkVQT0xMSU4pCiAgICBlcG9s
-bC5yZWdpc3Rlcihwcm9jLmZkLCBzZWxlY3QuRVBPTExJTikKCiAgICByZW1vdGVHaXQgPSBwcm9j
-LnJ1bkRhZW1vbigiZ2l0LXVwbG9hZC1wYWNrIC90bXAvdGVzdGdpdCIpCiAgICAKICAgIHdoaWxl
-IFRydWU6CiAgICAgICAgZXZlbnRzID0gZXBvbGwucG9sbCgxKQoKICAgICAgICBmb3IgZmQsIGV2
-ZW50IGluIGV2ZW50czoKICAgICAgICAgICAgaWYgZmQgPT0gd19waXBlWzBdOgogICAgICAgICAg
-ICAgICAgaWYgZXZlbnQgJiBzZWxlY3QuRVBPTExJTjoKICAgICAgICAgICAgICAgICAgICByZCA9
-IG9zLnJlYWQod19waXBlWzBdLCAxMDAwMCkKICAgICAgICAgICAgICAgICAgICBpZiByZDoKICAg
-ICAgICAgICAgICAgICAgICAgICAgI3dyaXRlIGRhdGEgdG8gcmVtb3ZlIGdpdCBzZXJ2ZXIKICAg
-ICAgICAgICAgICAgICAgICAgICAgcmVtb3RlR2l0LndyaXRlVG9DaGFubmVsKHJkKQogICAgICAg
-ICAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICAgICAgICAgIHByb2Mud3JpdGVFcnJv
-cigiTG9jYWwgc29ja2V0IHdyaXRlIGVycm9yIikKICAgICAgICAgICAgICAgICAgICAgICAgcmV0
-dXJuIDEKICAgICAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICAgICAgcHJvYy53cml0
-ZUVycm9yKCJMb2NhbCBzb2NrZXQgZXJyb3IiKQogICAgICAgICAgICAgICAgICAgIHJldHVybiAx
-CgogICAgICAgICAgICBlbGlmIGZkID09IHByb2MuZmQ6CiAgICAgICAgICAgICAgICBpZiBldmVu
-dCAmIHNlbGVjdC5FUE9MTElOOgogICAgICAgICAgICAgICAgICAgICNyZWFkIGRhdGEgZnJvbSBy
-ZW1vdGUgZ2l0IHNlcnZlcgogICAgICAgICAgICAgICAgICAgIGRhdGEgPSByZW1vdGVHaXQuZ2V0
-QWxsKCkKICAgICAgICAgICAgICAgICAgICByZW1vdGVHaXQuc3RkZXJyV3JpdGUoKQoKICAgICAg
-ICAgICAgICAgICAgICBpZiBub3QgZGF0YToKICAgICAgICAgICAgICAgICAgICAgICAgI3JlbW90
-ZSBzZXJ2ZXIgc2VuZCBFT0YsIGNsb3NlIGxvY2FsIHBpcGUKICAgICAgICAgICAgICAgICAgICAg
-ICAgI2J1dCBnaXQgY2xvbmUgaXMgc3RpbGwgcnVubmluZwogICAgICAgICAgICAgICAgICAgICAg
-ICBvcy5jbG9zZShyX3BpcGVbMV0pCiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiAwCiAg
-ICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgd2FudCA9IGxlbihkYXRhKQoK
-ICAgICAgICAgICAgICAgICAgICB3cml0ZWQgPSAwCiAgICAgICAgICAgICAgICAgICAgb2Zmc2V0
-ID0gMAogICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgIHdoaWxlKHdyaXRl
-ZCAhPSB3YW50KToKICAgICAgICAgICAgICAgICAgICAgICAgI3dyaXRlIGRhdGEgZnJvbSByZW1v
-dGUgZ2l0IHNlcnZlciB0byBsb2NhbCBwaXBlCiAgICAgICAgICAgICAgICAgICAgICAgIHdyID0g
-b3Mud3JpdGUocl9waXBlWzFdLCBkYXRhW29mZnNldDpdKQoKICAgICAgICAgICAgICAgICAgICAg
-ICAgaWYod3IgPCAwKToKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiAxCgogICAg
-ICAgICAgICAgICAgICAgICAgICB3cml0ZWQgKz0gd3IKICAgICAgICAgICAgICAgICAgICAgICAg
-b2Zmc2V0ICs9IHdyCgogICAgICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgICAgICBy
-ZXR1cm4gLTEgICAgICAgICAgICAgIAo=
---001a113a73740549b4050b57c53a--
+Using whatever perl is defined in the environment is just as likely to
+break, in general the build process tries to pick these assets at
+compile-time. Imagine you're experimenting with some custom perl
+version and now Git inexplicably breaks.
+
+It's better if Git detects a working perl when you compile it and
+sticks with that, which is why we use /usr/bin/perl by default.
+
+When you're setting PERL5LIB you're indicating to whatever perl
+interpreter you're going to run that that's where they it should pick
+up its modules. IMO they way perlbrew does this is broken, instead of
+setting PATH + PERL5LIB globally for your login shell it should set
+the PATH, and then the "perl" in that path should be a pointer to some
+small shellscript that sets PERL5LIB for *its* perl.
+
+I don't know what the right tradeoff here is, but I think it would be
+just as sensible to unset PERL5LIB in our own perl scripts + modules,
+it would make live monkeypatching when you wanted to harder, but we
+could always add a GITPERL5LIB or something...
