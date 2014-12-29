@@ -1,85 +1,76 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: Git's Perl scripts can fail if user is configured for perlbrew
-Date: Mon, 29 Dec 2014 14:40:39 +0100
-Message-ID: <54A159D7.5010307@web.de>
-References: <54A085D1.8060407@blackperl.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t4255: test am submodule with diff.submodule
+Date: Mon, 29 Dec 2014 07:42:01 -0800
+Message-ID: <xmqqiogu1n06.fsf@gitster.dls.corp.google.com>
+References: <1419635506-5045-1-git-send-email-dougk.ff7@gmail.com>
+	<1419635506-5045-2-git-send-email-dougk.ff7@gmail.com>
+	<CAPig+cT3gA2YpiT2Vr=F5-hB+Zy4ask-kz8DtpL3eFvz9PJb5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: "Randy J. Ray" <rjray@blackperl.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 29 14:40:58 2014
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Doug Kelly <dougk.ff7@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 16:42:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5aZ7-0006yV-ID
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 14:40:57 +0100
+	id 1Y5cSV-0004yb-Nz
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 16:42:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602AbaL2Nks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 08:40:48 -0500
-Received: from mout.web.de ([212.227.17.12]:54741 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751451AbaL2Nkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 08:40:47 -0500
-Received: from [192.168.2.107] ([84.164.64.14]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0LbrZ2-1XOrpQ246m-00jLRN; Mon, 29 Dec 2014 14:40:44
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <54A085D1.8060407@blackperl.com>
-X-Provags-ID: V03:K0:z1WeJhO28QVGON5crS+7ze0GchItdLEFbLVxEl4g9guaNDy0are
- dgFBiLBz28ItUzi5jjWWIIoZGe2C6YZAlOIv+iJ2dCB2QW2M7dtGBHCiW8KX6XiSTulJJot
- /r9HoNIbJJ0KvF5jcERlkon50krUctCWVtWd0MAkXRok95PBQK50k38lELjfkAtx6TiEbWL
- hia/ipuJRQfneHJaqboSQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752094AbaL2PmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2014 10:42:12 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54168 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751866AbaL2PmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 10:42:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B29E42811D;
+	Mon, 29 Dec 2014 10:42:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QlbKKquxwYwjGOxxZzzEGP0PZQo=; b=V6IZkZ
+	22gYNYZBQPZkghSqRC4rG8xBN0/I8X1A8Blll66dPqK4W9KQ8N9xxZVAbnFjRaGZ
+	dRgnmpBbpggyaNW/30gSf0pPqQmNljCehjvMhogWuqyGcBNihu2/djV6z27p4wtn
+	wp9aSmHXNwtkE4FP9HvLUQP4+QiyotkmviHUk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GqKPPDqNB1a2SlyqEwuqXSfFulIZ4qhc
+	bnQ0YL2eSLLEZWAFkAgjzx0cjeR166W6RcEVSbh9xS9IeWy0McAPOPE/bdKq44yv
+	SakbUJAWh3zFlst4MU61LuzX7EcnQfuhwmIcVhFzhalxBjBObceFZwSocCwTdpgJ
+	s14xKh436CM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA0DD2811C;
+	Mon, 29 Dec 2014 10:42:03 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 150772811A;
+	Mon, 29 Dec 2014 10:42:03 -0500 (EST)
+In-Reply-To: <CAPig+cT3gA2YpiT2Vr=F5-hB+Zy4ask-kz8DtpL3eFvz9PJb5Q@mail.gmail.com>
+	(Eric Sunshine's message of "Sat, 27 Dec 2014 19:37:00 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3C23B8EC-8F71-11E4-940E-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261862>
 
-On 2014-12-28 23.36, Randy J. Ray wrote:
-> I use git on MacOS via homebrew (http://brew.sh/), and a custom Perl installation built and managed via perlbrew (http://perlbrew.pl/). At some point, commands like "git add -i" broke. I say "at some point", because I'm not a git power-user and I only just noticed it this week.
-> 
-> I am running Git 2.2.1 with a perlbrew'd Perl 5.20.1. When I would run "git add -i" (or "git add -p"), it would immediately die with a signal 11. Some poking around showed that those git commands that are implemented as Perl scripts run under /usr/bin/perl, and also prefix some directories to the module search-path. The problem stems from the fact that, when you are using perlbrew, you also have the PERL5LIB environment variable set. The contents of it lay between the git-provided paths and the default contents of @INC. When the Git module is loaded, it (eventually) triggers a load of List::Util, whose C-level code fails to load because of a version mismatch; you got List::Util from the paths in PERL5LIB, but it doesn't match the version of perl from /usr/bin/perl.
-> 
-> After poking around and trying a few different things, I have found that using the following line in place of "#!/usr/bin/perl" solves this problem:
-> 
->     #!/usr/bin/env perl
-> 
-> This can be done by defaulting PERL_PATH to "/usr/bin/env perl" in Makefile.
-> 
-> I don't know enough about the overall git ecosystem to know if this would have an adverse effect on anything else (in particular, Windows compatibility, but then Windows probably isn't having this issue in the first place).
-> 
-> I could just create and mail in the one-line patch for this, but I thought it might be better to open it up for some discussion first?
-> 
-> Randy
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Having problems with different perl installations is not an unknown problem
-in Git, I would say.
+>> +       (git am --abort || true) &&
 
-And Git itself is prepared to handle this situation:
+Why (x || y)?  Is 'x' so unreliable that we do not know how should exit?
+Should this be "test_must_fail git am --abort"?
 
-In Makefile I can read:
-# Define PERL_PATH to the path of your Perl binary (usually /usr/bin/perl).
+>> +       (cd submodule && git rev-parse HEAD >../actual) &&
 
-(What Git can not decide is which perl it should use, the one pointed out by $PATH or /usr/bin/perl.)
+"git -C submodule rev-parse HEAD >actual" perhaps?
 
-What does  
-"type perl" say ?
+>> +test_expect_success 'diff.submodule unset' '
+>> +       (git config --unset diff.submodule || true) &&
 
-And what happens when you build and install Git like this:
-PERL_PATH=/XX/YY/perl make install
-
------------
-Are you thinking about changing
-ifndef PERL_PATH
-	PERL_PATH = /usr/bin/perl
-endif
--- into --
-ifndef PERL_PATH
-	PERL_PATH = $(shell which perl)
-endif
----
-
-At first glance that could make sense, at least to me.
+I think test_config and test_unconfig were invented for things like
+this (same for all the other use of "git config").
