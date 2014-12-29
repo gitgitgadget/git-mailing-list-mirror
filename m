@@ -1,107 +1,88 @@
-From: "Randy J. Ray" <rjray@blackperl.com>
-Subject: Re: Git's Perl scripts can fail if user is configured for perlbrew
-Date: Mon, 29 Dec 2014 15:07:40 -0600
-Message-ID: <54A1C29C.4090100@blackperl.com>
-References: <54A085D1.8060407@blackperl.com> <CACBZZX4qKyfRcbowYnM-KsrbKZ2=9RXr+HEgrOU1jaCsSX53QA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] refs: release strbuf after use in
+ check_refname_component()
+Date: Mon, 29 Dec 2014 16:13:13 -0500
+Message-ID: <20141229211312.GA26793@peff.net>
+References: <549A0665.6080207@web.de>
+ <xmqq387y1hnc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Kang-min Liu <gugod@gugod.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 29 22:08:02 2014
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 22:13:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5hXl-0004kB-L8
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 22:08:02 +0100
+	id 1Y5hcu-0000a3-D8
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 22:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752387AbaL2VH5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2014 16:07:57 -0500
-Received: from shell1.rawbw.com ([198.144.192.42]:62140 "EHLO shell1.rawbw.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751061AbaL2VH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 16:07:56 -0500
-Received: from ventrue.local ([12.69.179.130])
-	(authenticated bits=0)
-	by shell1.rawbw.com (8.14.9/8.14.9) with ESMTP id sBTL7hAs049787
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 29 Dec 2014 13:07:49 -0800 (PST)
-	(envelope-from rjray@blackperl.com)
-X-Authentication-Warning: shell1.rawbw.com: Host [12.69.179.130] claimed to be ventrue.local
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CACBZZX4qKyfRcbowYnM-KsrbKZ2=9RXr+HEgrOU1jaCsSX53QA@mail.gmail.com>
+	id S1752463AbaL2VNP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2014 16:13:15 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57660 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752412AbaL2VNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 16:13:15 -0500
+Received: (qmail 18868 invoked by uid 102); 29 Dec 2014 21:13:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Dec 2014 15:13:15 -0600
+Received: (qmail 598 invoked by uid 107); 29 Dec 2014 21:13:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Dec 2014 16:13:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Dec 2014 16:13:13 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqq387y1hnc.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261878>
 
-On 12/29/14, 7:21 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> [CC'd the perlbrew author]
->
-> This is a bit of a tricky issue.
->
-> Using whatever perl is defined in the environment is just as likely t=
-o
-> break, in general the build process tries to pick these assets at
-> compile-time. Imagine you're experimenting with some custom perl
-> version and now Git inexplicably breaks.
->
-> It's better if Git detects a working perl when you compile it and
-> sticks with that, which is why we use /usr/bin/perl by default.
+On Mon, Dec 29, 2014 at 09:37:43AM -0800, Junio C Hamano wrote:
 
-These are good points. I'm not sure when this stopped working for me...=
-=20
-I don't use the -i or -p options to "git add" very often. So I can't sa=
-y=20
-at what point it stopped working with the current configuration, only=20
-that it "used to work".
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> > Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> > ---
+> >  refs.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/refs.c b/refs.c
+> > index 5fcacc6..ed3b2cb 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -2334,7 +2334,7 @@ static struct ref_lock *lock_ref_sha1_basic(c=
+onst char *refname,
+> >  			struct strbuf err =3D STRBUF_INIT;
+> >  			unable_to_lock_message(ref_file, errno, &err);
+> >  			error("%s", err.buf);
+> > -			strbuf_reset(&err);
+> > +			strbuf_release(&err);
+> >  			goto error_return;
+> >  		}
+> >  	}
+>=20
+> The subject does not seem to match what the patch is doing, but the
+> patch is obviously correct ;-)
 
-> When you're setting PERL5LIB you're indicating to whatever perl
-> interpreter you're going to run that that's where they it should pick
-> up its modules. IMO they way perlbrew does this is broken, instead of
-> setting PATH + PERL5LIB globally for your login shell it should set
-> the PATH, and then the "perl" in that path should be a pointer to som=
-e
-> small shellscript that sets PERL5LIB for *its* perl.
+The worst part of this is that I got it right in my hacked-up version:
 
-That would be for the perlbrew author to consider, of course.
+  http://article.gmane.org/gmane.comp.version-control.git/259853
 
-> I don't know what the right tradeoff here is, but I think it would be
-> just as sensible to unset PERL5LIB in our own perl scripts + modules,
-> it would make live monkeypatching when you wanted to harder, but we
-> could always add a GITPERL5LIB or something...
+but then after much discussion, we dropped all of the lead-in patches,
+and I sent Ronnie's unedited:
 
-You would have to have a shell script that un-set PERL5LIB and then=20
-invoked the given git script, because by the time script execution has=20
-begun, the contents of PERL5LIB have already been added to the head of=20
-the list of search paths. One approach I tried was to set the=20
-environment variable GITPERLLIB (which you already use and recognize, s=
-o=20
-there is no need for GITPERL5LIB), but that did not help. The base=20
-problem still remained: The content of PERL5LIB (which pointed to=20
-5.20.1-compiled extensions) took priority over the default @INC content=
-s=20
-(which were for a 5.16.2 perl).
+  http://article.gmane.org/gmane.comp.version-control.git/259911
 
-I don't know the right trade-off, either. I started out reporting this=20
-as an issue against the homebrew project's recipe for git, because they=
-=20
-actually add more explicit library paths to @INC than a vanilla=20
-build/install of git does. But the problem is really in the interaction=
-=20
-between /usr/bin/perl and a PERL5LIB set for an alternate perl. So the=20
-solution, if there is one, will lay here in git somewhere...
+All that looking and I didn't notice the release/reset difference
+between our two versions. Sheesh.
 
-Randy
---=20
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""=
-""""""""
-Randy J. Ray      Sunnyvale, CA      http://www.dereferenced.com
-rjray@blackperl.com
-twitter.com/rjray
-Silicon Valley Scale Modelers: http://www.svsm.org
+Which is all a roundabout way of saying "yes, Ren=C3=A9's patch is obvi=
+ously
+correct". :)
+
+-Peff
