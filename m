@@ -1,78 +1,100 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: git update-ref --stdin : too many open files
-Date: Mon, 29 Dec 2014 14:56:54 -0800
-Message-ID: <CAGZ79kZ3xfew4Cfdg8-QFj2rD4zQ1M10NNby--Epr=zoCOh7=w@mail.gmail.com>
-References: <54954E44.1080906@dachary.org>
-	<xmqqoaqv8jmi.fsf@gitster.dls.corp.google.com>
-	<549A20B8.3060805@gmail.com>
-	<54A0AE20.4060806@alum.mit.edu>
+From: Kang-min Liu <gugod@gugod.org>
+Subject: Re: Git's Perl scripts can fail if user is configured for perlbrew
+Date: Tue, 30 Dec 2014 00:09:12 +0100
+Message-ID: <m2iogujbon.fsf@gugod.org>
+References: <54A085D1.8060407@blackperl.com> <CACBZZX4qKyfRcbowYnM-KsrbKZ2=9RXr+HEgrOU1jaCsSX53QA@mail.gmail.com> <54A1C29C.4090100@blackperl.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Loic Dachary <loic@dachary.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Dec 30 00:00:41 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "Randy J. Ray" <rjray@blackperl.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+	<avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>,
+	Kang-min Liu <gugod@gugod.org>
+X-From: git-owner@vger.kernel.org Tue Dec 30 00:09:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5jIl-0003E3-Lp
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 00:00:40 +0100
+	id 1Y5jRG-0001oh-EA
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 00:09:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbaL2W44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 17:56:56 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:39005 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751534AbaL2W4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 17:56:55 -0500
-Received: by mail-ie0-f174.google.com with SMTP id at20so12855698iec.33
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 14:56:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Dg0J9P3ht909wL3vG9esmtlrJBdXGAqfV7TdfiCMlco=;
-        b=L8dxx1sjOE6d5ZTcopC5UEC93ruIL3EWArWdqWtT2U2QFVs0jtPqTud4yvz+DBfp5A
-         78qfmY9OCAhue0qqIKsQYaRQTTVTuZVr9ALOHg35bT+DTEll2oo5u4ejYa+XUAx5ckzn
-         V1aHU8IS2HPnxjkyKz3KlKFo7U2ScSbJkxs6eyDWkqynlFJFAaxL+TyRvFTWAtNBf3po
-         6Kyzcz33bUqXTcBFg+is+Me8smtJc41QkpHkw1fzo9K+Xh9HtXCo54j4XRGSzBtTr5xf
-         4ukhkLglwe/4JJ4jOGEL16j+40xp85oe4r2hHH9bjyeTnmwzZTfYsocsCqSlIRI2BiSV
-         H93A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Dg0J9P3ht909wL3vG9esmtlrJBdXGAqfV7TdfiCMlco=;
-        b=XN7BEUJsDjA/Baq7ywsOrc3dWdSTM9+cswqbFWtWemVD5JnOOUkizuBHpSBkoLKvtW
-         qaK/GCIChtgm0OeUK2ixvxRvLlp+uJ7TEn3EmS06xbb3d5GW3nrjf18KKzM0MCNJ0M7L
-         W/OKJwGVSm6VcD/ctGL2QVX5woo7ZhtZpes/iLTf+/YRAbTOXTeVXZJNibIMBkrYXQKX
-         HXos1cf9SHmiu0baLLc/b2PAGxJMdlBVEMLrjFO7LZb13i6xUH56zQg9uAL7MDRKy2dr
-         EEzE5vp4Cca67M3TBVoHc9vDZMWrIvlE1mvAk2KXk8k4Gcx99Txt8a9yQWfpmtDSip0j
-         9VSQ==
-X-Gm-Message-State: ALoCoQlv9VHd64lN6fAn7o20tEMOYq+MhK2aLb8M2gVOv6BB4shmqqko/Wij/sDnNU8uxojeqvjc
-X-Received: by 10.50.117.41 with SMTP id kb9mr47540622igb.37.1419893814788;
- Mon, 29 Dec 2014 14:56:54 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Mon, 29 Dec 2014 14:56:54 -0800 (PST)
-In-Reply-To: <54A0AE20.4060806@alum.mit.edu>
+	id S1751834AbaL2XJT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2014 18:09:19 -0500
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:59516 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751534AbaL2XJS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Dec 2014 18:09:18 -0500
+Received: from mfilter21-d.gandi.net (mfilter21-d.gandi.net [217.70.178.149])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 1797B172071;
+	Tue, 30 Dec 2014 00:09:17 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter21-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter21-d.gandi.net (mfilter21-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id 4+k6lyVjMedP; Tue, 30 Dec 2014 00:09:15 +0100 (CET)
+X-Originating-IP: 77.163.137.207
+Received: from localhost (ip4da389cf.direct-adsl.nl [77.163.137.207])
+	(Authenticated sender: gugod@gugod.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id D3163172081;
+	Tue, 30 Dec 2014 00:09:13 +0100 (CET)
+In-reply-to: <54A1C29C.4090100@blackperl.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261895>
 
-On Sun, Dec 28, 2014 at 5:28 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->
-> I'm doing some work in this area, so I should be able to work on the
-> bugfix in the not-too-distant future. My feeling is that the bug is
-> unlikely to affect many current users, though it definitely should be
-> fixed before sb/atomic-push is merged.
->
 
-So are you heading for the bug fix?
-I'd then drop this off my todo list.
 
-Thanks,
-Stefan
+> On 12/29/14, 7:21 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> [CC'd the perlbrew author]
+>>
+>> This is a bit of a tricky issue.
+>>
+>> Using whatever perl is defined in the environment is just as likely =
+to
+>> break, in general the build process tries to pick these assets at
+>> compile-time. Imagine you're experimenting with some custom perl
+>> version and now Git inexplicably breaks.
+>>
+>> It's better if Git detects a working perl when you compile it and
+>> sticks with that, which is why we use /usr/bin/perl by default.
+
+With "perl" being an external dependency, sticking with whatever at the
+compile time basically means these should stick:
+
+- `which perl`, and the same $Config options
+- Every module contained in PERL5LIB
+- Other external executable dependencies of some .pm files that lives
+  somewhere in PATH
+
+We could of course build an app bundle dir like a lightweight container=
+=2E
+to mitigate this... but that would'nt be usefull without tweaking the
+shebang line of the scripts -- to point to the perl script (shim or
+real) that should be compatible with the newly built git.
+
+I'd argue that trying to compile git (or other stuff in general) agains=
+t
+a perlbrew-managed perl is something that "perlbrew" executable cannot
+manage. Because it is both valid that the user is doing this
+intentionally and want the outcome, or the user is doing this
+unintentionally. And even if we have a shim "perl" script, it would'nt
+help as long as it is the "whatever perl" in PATH -- which might just b=
+e
+incompitble.
+
+I wonder if disabling perlbrew per-building can deal with this:
+
+    'perlbrew off'
+
+If this end up changing the shebang line then maybe, if not then it'll
+still intefere after perlbrew is re-activated.
+
+The other option to minimize perlbrew interferince is of course to
+completely deprecate the global env var approach and make them project
+local. But that's another story.
+
+--=20
+Cheers,
+Kang-min Liu
