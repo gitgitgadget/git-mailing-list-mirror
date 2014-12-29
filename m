@@ -1,64 +1,87 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv7 0/9] atomic pushes
-Date: Mon, 29 Dec 2014 13:37:05 -0800
-Message-ID: <CAGZ79kZc++2Nx1dibJgdn7B703QVkjPfP0cG5_FMCOg3g9R40A@mail.gmail.com>
-References: <1419888915-31760-1-git-send-email-sbeller@google.com>
+From: "Randy J. Ray" <rjray@blackperl.com>
+Subject: Re: Git's Perl scripts can fail if user is configured for perlbrew
+Date: Mon, 29 Dec 2014 15:57:30 -0600
+Message-ID: <54A1CE4A.7020408@blackperl.com>
+References: <54A085D1.8060407@blackperl.com> <54A159D7.5010307@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 29 22:37:16 2014
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 29 22:57:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5i02-0002yF-An
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 22:37:14 +0100
+	id 1Y5iJt-0002Ay-On
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 22:57:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752597AbaL2VhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 16:37:08 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:63782 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752492AbaL2VhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 16:37:06 -0500
-Received: by mail-ig0-f173.google.com with SMTP id r2so11803103igi.0
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 13:37:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oVWMaGHiEqWQJsQtkf5yCc0bfLQehbixEon2qMEmWxc=;
-        b=GLQQ8RPU2zXd61Dvr99gh4TT8UCBwxErIHNGSOq+M8FRLLV7FH19SRInwhvo9gJFPX
-         atWr+JzSQZ1uYxu1AonV1D4QVYboihEaOISfBheyXNlqlC2l4rZ4kHha+3VhQpaSbWte
-         +3ngQrqXeKYL+g7cVbxcA2+xE+OOZLOr0v00TzOHWgpDplMSrbbAl7kI9hnLycGofM9q
-         4d9W19Hez/IuEB1W/OBXqNqwgaxmXTlmyb5cmoyy4iYSVgTa/zEHJRIOvvGf7w94ftDB
-         n0WVBX4NFItsaB5b+WfdxSmRp/IHeXFLwwzfIpJ5aouHQgiJsH/S8l7U1mvpfdv0nEJh
-         Ix4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=oVWMaGHiEqWQJsQtkf5yCc0bfLQehbixEon2qMEmWxc=;
-        b=MS9qDVPbI8J9i1L5OVa5tKaBFJCR31BI12Uungi/P5JEwKw8munWdMbxL7P1VIB0hR
-         YHpwgAQwFZid43EO5S/u8U+PRPjy6nHKmFz5A/oQrJMiU+R+fa8kLROYQq1hcmWd8U+v
-         kOsRFhcuGS4hwKDgXdkHlSShZOBdnn3gxR9WNHvhBnz3hvao444Y279Cz/MWk/u7R4dh
-         2+qFxndf1UNcYUVlE6xh2rEYKk87Qt2i2AZ0yMlqfessHUMZajq0lZJNC9TwFrEUPDg0
-         7gx/86jxXyx5Y9GckL18RO9TaYfPOjTNf2ecNkhuDvQCO/ZTpgbIIZOhsxv2a1ztpIgJ
-         dXRg==
-X-Gm-Message-State: ALoCoQlJVSmNXPnP3sCo/uZGkSIbvXNhTvDIO4HBzyxSSoJZnk69csHLWx49MN59jTQg0Zb1o1qV
-X-Received: by 10.50.142.38 with SMTP id rt6mr37433969igb.25.1419889025645;
- Mon, 29 Dec 2014 13:37:05 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Mon, 29 Dec 2014 13:37:05 -0800 (PST)
-In-Reply-To: <1419888915-31760-1-git-send-email-sbeller@google.com>
+	id S1752355AbaL2V5k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2014 16:57:40 -0500
+Received: from shell1.rawbw.com ([198.144.192.42]:17069 "EHLO shell1.rawbw.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752107AbaL2V5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 16:57:40 -0500
+Received: from ventrue.local ([12.69.179.130])
+	(authenticated bits=0)
+	by shell1.rawbw.com (8.14.9/8.14.9) with ESMTP id sBTLvX3d054677
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 29 Dec 2014 13:57:37 -0800 (PST)
+	(envelope-from rjray@blackperl.com)
+X-Authentication-Warning: shell1.rawbw.com: Host [12.69.179.130] claimed to be ventrue.local
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <54A159D7.5010307@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261891>
 
-please ignore this series. I'm sorry for the noise.
+On 12/29/14, 7:40 AM, Torsten B=F6gershausen wrote:
+> Having problems with different perl installations is not an unknown p=
+roblem
+> in Git, I would say.
+>
+> And Git itself is prepared to handle this situation:
+>
+> In Makefile I can read:
+> # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/=
+perl).
+>
+> (What Git can not decide is which perl it should use, the one pointed=
+ out by $PATH or /usr/bin/perl.)
+>
+> What does
+> "type perl" say ?
+>
+> And what happens when you build and install Git like this:
+> PERL_PATH=3D/XX/YY/perl make install
+>
+> -----------
+> Are you thinking about changing
+> ifndef PERL_PATH
+> 	PERL_PATH =3D /usr/bin/perl
+> endif
+> -- into --
+> ifndef PERL_PATH
+> 	PERL_PATH =3D $(shell which perl)
+> endif
+> ---
+>
+> At first glance that could make sense, at least to me.
+
+The problem in this case is the Perl being used at run-time, not=20
+build-time. The building of git is done by the homebrew project in this=
+=20
+case, so I don't have direct control over it.
+
+Randy
+--=20
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""=
+""""""""
+Randy J. Ray      Sunnyvale, CA      http://www.dereferenced.com
+rjray@blackperl.com
+twitter.com/rjray
+Silicon Valley Scale Modelers: http://www.svsm.org
