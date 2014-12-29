@@ -1,76 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t4255: test am submodule with diff.submodule
-Date: Mon, 29 Dec 2014 07:42:01 -0800
-Message-ID: <xmqqiogu1n06.fsf@gitster.dls.corp.google.com>
-References: <1419635506-5045-1-git-send-email-dougk.ff7@gmail.com>
-	<1419635506-5045-2-git-send-email-dougk.ff7@gmail.com>
-	<CAPig+cT3gA2YpiT2Vr=F5-hB+Zy4ask-kz8DtpL3eFvz9PJb5Q@mail.gmail.com>
+Subject: Re: [PATCH v6 1/1] http: Add Accept-Language header if possible
+Date: Mon, 29 Dec 2014 08:18:15 -0800
+Message-ID: <xmqqegri1lbs.fsf@gitster.dls.corp.google.com>
+References: <CAO2U3QjG2rUgUrM5odX0UOnHsENnYTfwaRLhHv8gka7qj4XWdw@mail.gmail.com>
+	<1419266658-1180-1-git-send-email-eungjun.yi@navercorp.com>
+	<1419266658-1180-2-git-send-email-eungjun.yi@navercorp.com>
+	<CAPig+cQZG3gWEw8_HHHvP6EDLKkf-nMZLwkE4OF9hwNX72wgXw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Doug Kelly <dougk.ff7@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 29 16:42:18 2014
+Cc: Yi EungJun <semtlenori@gmail.com>, Git List <git@vger.kernel.org>,
+	Yi EungJun <eungjun.yi@navercorp.com>,
+	Jeff King <peff@peff.net>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Michael Blume <blume.mike@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 17:18:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5cSV-0004yb-Nz
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 16:42:16 +0100
+	id 1Y5d1S-0006Mx-V3
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Dec 2014 17:18:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094AbaL2PmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 10:42:12 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54168 "EHLO
+	id S1751974AbaL2QST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2014 11:18:19 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65280 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751866AbaL2PmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 10:42:10 -0500
+	with ESMTP id S1751321AbaL2QSS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 11:18:18 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B29E42811D;
-	Mon, 29 Dec 2014 10:42:03 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 58C34289BC;
+	Mon, 29 Dec 2014 11:18:17 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QlbKKquxwYwjGOxxZzzEGP0PZQo=; b=V6IZkZ
-	22gYNYZBQPZkghSqRC4rG8xBN0/I8X1A8Blll66dPqK4W9KQ8N9xxZVAbnFjRaGZ
-	dRgnmpBbpggyaNW/30gSf0pPqQmNljCehjvMhogWuqyGcBNihu2/djV6z27p4wtn
-	wp9aSmHXNwtkE4FP9HvLUQP4+QiyotkmviHUk=
+	:content-type; s=sasl; bh=C7DWKN6SzbldZ2i+n3UzjVWg9gk=; b=Dx2HGi
+	s7YQ7JCPnno44xkzdUpTEv2XG+tBRpy1bF6auLUqvO5UYVSQR65ZU8UhAUvLA6Uh
+	fKPamZtOkxQqendPqWbxYRIR2dAfM/Re3EzQfGJzLpBb9zGVL9nLYgVqggDjnszE
+	oZ0qvxgbsDzcOoUCqLZoAm5p4CwNCNjOCFTQU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GqKPPDqNB1a2SlyqEwuqXSfFulIZ4qhc
-	bnQ0YL2eSLLEZWAFkAgjzx0cjeR166W6RcEVSbh9xS9IeWy0McAPOPE/bdKq44yv
-	SakbUJAWh3zFlst4MU61LuzX7EcnQfuhwmIcVhFzhalxBjBObceFZwSocCwTdpgJ
-	s14xKh436CM=
+	:content-type; q=dns; s=sasl; b=E+CPTlWAu1Ayj5mi2Xphp5K8my1ATwwP
+	c7CoR4JM3HqGs6C9VwFTX3ra7vI/rGY7GUyf2I2ZsJN/j0YhDDyHf96IX+8LCZBq
+	dIwgFZr4l36i6a+U+ZsRv0NwpEG2zG80E/3rHXvfIg8Sn5ffHXOOkiHyYi4NktcB
+	sfH1Y5+YfzQ=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA0DD2811C;
-	Mon, 29 Dec 2014 10:42:03 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A055289BB;
+	Mon, 29 Dec 2014 11:18:17 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 150772811A;
-	Mon, 29 Dec 2014 10:42:03 -0500 (EST)
-In-Reply-To: <CAPig+cT3gA2YpiT2Vr=F5-hB+Zy4ask-kz8DtpL3eFvz9PJb5Q@mail.gmail.com>
-	(Eric Sunshine's message of "Sat, 27 Dec 2014 19:37:00 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 57ADB289BA;
+	Mon, 29 Dec 2014 11:18:16 -0500 (EST)
+In-Reply-To: <CAPig+cQZG3gWEw8_HHHvP6EDLKkf-nMZLwkE4OF9hwNX72wgXw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 24 Dec 2014 15:35:09 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3C23B8EC-8F71-11E4-940E-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4B828106-8F76-11E4-8083-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261863>
 
 Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> +       (git am --abort || true) &&
+> Just a few comments and observations below. Alone, they are not
+> necessarily worth a re-roll, but if you happen to re-roll for some
+> other reason, perhaps take them into consideration.
 
-Why (x || y)?  Is 'x' so unreliable that we do not know how should exit?
-Should this be "test_must_fail git am --abort"?
+I actually think everything you said in this review makes sense and
+will make the resulting code a lot better (especially the part on
+the parsing loop).
 
->> +       (cd submodule && git rev-parse HEAD >../actual) &&
-
-"git -C submodule rev-parse HEAD >actual" perhaps?
-
->> +test_expect_success 'diff.submodule unset' '
->> +       (git config --unset diff.submodule || true) &&
-
-I think test_config and test_unconfig were invented for things like
-this (same for all the other use of "git config").
+Thanks, as usual, for a careful reading.
