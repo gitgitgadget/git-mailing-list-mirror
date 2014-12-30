@@ -1,226 +1,188 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv8 1/9] receive-pack.c: add documentation for atomic push support
-Date: Tue, 30 Dec 2014 00:33:22 -0800
-Message-ID: <CAGZ79kZ_yiA7tMv49qp3OOMfOmwdaDtWs_Gt9V359xCKUE_SJg@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv8 5/9] receive-pack.c: move transaction handling in a
+ central place
+Date: Tue, 30 Dec 2014 03:36:55 -0500
+Message-ID: <CAPig+cSYD+gBdEZ9TzWdeTEufzH6eJTbt=ZVS5imMJGjWnUFPA@mail.gmail.com>
 References: <1419907007-19387-1-git-send-email-sbeller@google.com>
-	<1419907007-19387-2-git-send-email-sbeller@google.com>
-	<CAPig+cQ7GhrZqXH3zRYTWjwuWKwDNNwLRKG516dXS6et2TURgw@mail.gmail.com>
+	<1419907007-19387-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Dec 30 09:35:46 2014
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Dec 30 09:37:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5sHJ-0002Lp-Sj
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 09:35:46 +0100
+	id 1Y5sIX-0003DR-Gb
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 09:37:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941AbaL3IdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2014 03:33:25 -0500
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:35535 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642AbaL3IdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2014 03:33:23 -0500
-Received: by mail-ig0-f179.google.com with SMTP id r2so12299337igi.0
-        for <git@vger.kernel.org>; Tue, 30 Dec 2014 00:33:22 -0800 (PST)
+	id S1752022AbaL3Ig5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2014 03:36:57 -0500
+Received: from mail-yk0-f182.google.com ([209.85.160.182]:59038 "EHLO
+	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751683AbaL3Ig4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2014 03:36:56 -0500
+Received: by mail-yk0-f182.google.com with SMTP id 131so6960400ykp.41
+        for <git@vger.kernel.org>; Tue, 30 Dec 2014 00:36:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=A8ndkB1GJIRRYs4kXebbA+bYdQoOBI8lKE2Jyr1cszE=;
-        b=kLTFl/3M09gweeCYAWPNL919a2Lp28XeEkscon+/SWObAgf2iKCiiJPRBqq36MQ5H/
-         ZgZ8vKo2m9Rh0sda/g7BtR9iHC1XDe+nDsbY8okKNGzniy1wtoFceqDMbLhLqC9iYhAe
-         o1PMd9l/FAobmJjlBFfUf6HwhgwN+5LM4TOYf3RXCeqGEKfw2NwleV/DB4XnNsJ73EbJ
-         TVj6DSzhYx3bqo2u7RwDOF7/6Gm5+GvKVsZMcgFIEzgPgHIQdFHOcrAM3rIrG6WQHUdI
-         n64IUEoFgqii4WdyzFrxKC5CIEKnlfXWe99lptvDjAEhnLG017NrpEHFVWkDySOXTDm3
-         a7tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=A8ndkB1GJIRRYs4kXebbA+bYdQoOBI8lKE2Jyr1cszE=;
-        b=ZHZWprIKcUsg/1ruZ4c0Umfw8lAUqCTYro2NLPyblT/F+UBlDJNanqyuDVt8fJCOHh
-         2nlr64mfgFC6dAQcW3S37P6LjoFLqKixaoQHd/7SSlEVzNGpUmldh7+UH2ecFhCAnTQx
-         BTHq06EKTMgMTqad6y9Hr7QocUQiHLc+I1dX+k+evUmvEYsSjdCpQd/3lheMZ0dmnl5b
-         PbWs1Va3QpB24J1060CDREwn24OjDYMxzWchjNjvZaKe/+6cbJ0KDBn8HyJnSaOf3IZm
-         2MA/IP1BYxYB2j9QlqduC45AbqS+3pOmcU6B67Rb65NgXU5EOVWeahqkeD0uw+0GEQet
-         GaTQ==
-X-Gm-Message-State: ALoCoQkQoB4XBqGmpWBv76++mMIhFlgFjvF28Cy51n+eNsgrQbSMEIIYcn09OFbY2wYzixIALlUY
-X-Received: by 10.50.142.38 with SMTP id rt6mr39160137igb.25.1419928402475;
- Tue, 30 Dec 2014 00:33:22 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 30 Dec 2014 00:33:22 -0800 (PST)
-In-Reply-To: <CAPig+cQ7GhrZqXH3zRYTWjwuWKwDNNwLRKG516dXS6et2TURgw@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=uXuuguvlQryjh1SOTf/tBi1VvO7wyBxdLyp98K5Q7C4=;
+        b=aYGBiESSI7Li4KCymbNvFkF+YpjGbdgH7IRsmn2EOVyK91VzE9qGyQ3t7ZWUju1NA5
+         EnJGTYGiWxtRdyn/Ge1mM29ZkRAtLsKbyqeBnNGlYK3/DQkTMziJDlFvySaBaaaQPKOC
+         ipM+V6E55zOu3E4Q5XXksfAuzk3mdCB+ms7PxILXVv1aEUCTqFUY5lyD5hznkm5Jxc53
+         wE+lzD+M2+GcqYVNqJxO28cb+J+a7WwnhUfRsGp/sOf093nMv5qU5pABBWY9Jn9Q9CDQ
+         qEPqJlFvV4Lt9KKRjdvI9NuY2HPStunlKkec1M7x2kQhXHT3qtTEPpfT7TVNf3olW2h6
+         KInA==
+X-Received: by 10.236.63.6 with SMTP id z6mr5396417yhc.65.1419928615398; Tue,
+ 30 Dec 2014 00:36:55 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Tue, 30 Dec 2014 00:36:55 -0800 (PST)
+In-Reply-To: <1419907007-19387-6-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: lHCLM3qQz22ZW7jNrrkRDWBAsgE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261916>
 
-On Mon, Dec 29, 2014 at 11:08 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Dec 29, 2014 at 9:36 PM, Stefan Beller <sbeller@google.com> wrote:
->> Subject: receive-pack.c: add documentation for atomic push support
+On Mon, Dec 29, 2014 at 9:36 PM, Stefan Beller <sbeller@google.com> wrote:
+> Subject: receive-pack.c: move transaction handling in a central place
+
+This is very generic, and doesn't really explain what this patch is
+about. (See below.)
+
+> No functional changes intended.
+
+Secondary information can be demoted to the end of the commit message.
+
+> This moves all code related to transactions into the execute_commands_loop
+> function which was factored out of execute_commands. This includes
+> beginning and committing the transaction as well as dealing with the
+> errors which may occur during the begin and commit phase of a transaction.
+
+This explains what you're doing, but not why. The purpose of this
+change is that a subsequent patch will be adding another mode of
+operation ("atomic") to execute_commands() which differs from the
+existing mode ("non-atomic") implemented by its main loop. In its
+high-level role, execute_commands() does not need to know or care
+about the low-level details of each mode of operation. Therefore, as
+preparation for introducing a new mode, you're factoring out the
+existing mode into its own stand-alone function.
+
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 >
-> This patch is doing a lot more than merely adding documentation. It's
-> also updating send-pack and receive-pack to be able to negotiate the
-> new protocol capability "atomic". The fact that you removed the actual
-> advertisement of "atomic" from this patch doesn't turn it into a
-> documentation-only patch.
+> Notes:
+>     This covers the suggestion of patch 2 and 3 by Eric
+>     > patch 2: Factor out the main 'for' loop of execute_commands() into a
+>     > new function. This new function will eventually become
+>     > execute_commands_non_atomic(). At this point, execute_commands() is
+>     > pretty much in its final form with the exception of the upcoming 'if
+>     > (use_atomic)' conditional.
+>     > patch 3: Morph the function extracted in patch 2 into
+>     > execute_commands_non_atomic() by adding transaction handling inside
+>     > the 'for' loop (and applying the changes from the early part of the
+>     > patch which go along with that).
 
-That's true, though the code itself is dead code and doing nothing in
-that patch.
+This patch is still rather heavyweight. My suggestion[1] for making
+these particular changes across two patches was quite deliberate. The
+problem with combining them into a single patch is that you're
+performing both code movement and functional changes at the same time.
 
+On its own, pure code movement is easy to review.
+
+On its own, code changes are as easy or difficult to review as the
+changes themselves.
+
+When combined, however, the review effort is greater than the sum of
+the efforts of reviewing them separately. Partly this is because the
+combined changes have a noisier diff. If you move the code in one
+patch, and then change it in a second one, the changes pop out --
+they're quite obvious. On the other hand, when they are combined, the
+reviewer has to deliberately and painstakingly search out the changes,
+which is difficult and error-prone. Combining movement and code
+changes into a single patch also places greater cognitive load on the
+reviewer due to the necessity of keeping a more complex mental
+scoreboard relating to the different types of changes.
+
+More below.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/261706
+
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 06eb287..5f44466 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -1073,6 +1076,38 @@ static void check_shallow_bugs(struct command *commands,
+>                       "the reported refs above");
+>  }
 >
-> When Michael raised the issue of the server being "broken" due to
-> advertising a capability which it does not yet implement, his
-> recommendation[1] was to reorder the patches, not to split out the one
-> tiny bit (capability advertisement) from the larger change. Was there
-> an insurmountable conflict which prevented you from reordering the
-> patches? This is a genuine question since splitting off advertisement
-> -- and only advertisement -- to a patch later in the series smells
-> like a least-resistance approach, rather than a proper solution to the
-> issue Michael raised.
+> +static void execute_commands_loop(struct command *commands,
+> +                                 struct shallow_info *si)
 
-Well there was no syntactical problem (i.e. the interactive rebase
-went flawless),
-but rather a semantic dependency. The reordered patches would not compile
-as we'd heavily depend on the use_atomic variable.
+Style: Indent the wrapped line to align with the text following the
+'(' in the first line.
 
-Of course that could have been introduced where required, but at the
-time it did
-not look appealing to me.
+It's safe to say that the code which you extracted from
+execute_commands() handled the non-atomic case, and it's safe to say
+that this new function implements the non-atomic case. Therefore, it
+would be truthful to call this function execute_commands_nonatomic().
+No need to invent the name execute_commands_loop().
 
-I'll reword the commit message header to mention the negotiation part as well.
-
+> +{
+> +       struct command *cmd;
+> +       struct strbuf err = STRBUF_INIT;
+> +
+> +       for (cmd = commands; cmd; cmd = cmd->next) {
+> +               if (!should_process_cmd(cmd))
+> +                       continue;
+> +
+> +               transaction = ref_transaction_begin(&err);
+> +               if (!transaction) {
+> +                       rp_error("%s", err.buf);
+> +                       strbuf_reset(&err);
+> +                       cmd->error_string = "transaction failed to start";
+> +                       continue;
+> +               }
+> +
+> +               cmd->error_string = update(cmd, si);
+> +
+> +               if (!cmd->error_string
+> +                   && ref_transaction_commit(transaction, &err)) {
+> +                       rp_error("%s", err.buf);
+> +                       strbuf_reset(&err);
+> +                       cmd->error_string = "failed to update ref";
+> +               }
+> +               ref_transaction_free(transaction);
+> +       }
+> +
+> +       strbuf_release(&err);
+> +}
+> +
+>  static void execute_commands(struct command *commands,
+>                              const char *unpacker_error,
+>                              struct shallow_info *si)
+> @@ -1107,12 +1142,8 @@ static void execute_commands(struct command *commands,
+>         free(head_name_to_free);
+>         head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
 >
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/261793
+> -       for (cmd = commands; cmd; cmd = cmd->next) {
+> -               if (!should_process_cmd(cmd))
+> -                       continue;
+> +       execute_commands_loop(commands, si);
 >
->> This documents the protocol option between send-pack and receive-pack to
->> * allow receive-pack to inform the client that it has atomic push capability
->> * allow send-pack to request atomic push back.
->>
->> There is currently no setting in send-pack to actually request that atomic
->> pushes are to be used yet. This only adds protocol capability not ability
->> for the user to activate it. The capability is also not yet advertised
->> by receive-pack as git doesn't know how to handle it yet.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->> diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
->> index 6d5424c..4f8a7bf 100644
->> --- a/Documentation/technical/protocol-capabilities.txt
->> +++ b/Documentation/technical/protocol-capabilities.txt
->> @@ -18,8 +18,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
->>  and server advertised.  As a consequence of these rules, server MUST
->>  NOT advertise capabilities it does not understand.
->>
->> -The 'report-status', 'delete-refs', 'quiet', and 'push-cert' capabilities
->> -are sent and recognized by the receive-pack (push to server) process.
->> +The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
->> +capabilities are sent and recognized by the receive-pack (push to server)
->> +process.
->>
->>  The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
->>  by both upload-pack and receive-pack protocols.  The 'agent' capability
->> @@ -244,6 +245,14 @@ respond with the 'quiet' capability to suppress server-side progress
->>  reporting if the local progress reporting is also being suppressed
->>  (e.g., via `push -q`, or if stderr does not go to a tty).
->>
->> +atomic
->> +------
->> +
->> +If the server sends the 'atomic' capability it is capable of accepting
->> +atomic pushes. If the pushing client requests this capability, the server
->> +will update the refs in one atomic transaction. Either all refs are
->> +updated or none.
->> +
->>  allow-tip-sha1-in-want
->>  ----------------------
->>
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> index 32fc540..4e8eaf7 100644
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> @@ -40,6 +40,7 @@ static int transfer_unpack_limit = -1;
->>  static int unpack_limit = 100;
->>  static int report_status;
->>  static int use_sideband;
->> +static int use_atomic;
->>  static int quiet;
->>  static int prefer_ofs_delta = 1;
->>  static int auto_update_server_info;
->> @@ -1179,6 +1180,8 @@ static struct command *read_head_info(struct sha1_array *shallow)
->>                                 use_sideband = LARGE_PACKET_MAX;
->>                         if (parse_feature_request(feature_list, "quiet"))
->>                                 quiet = 1;
->> +                       if (parse_feature_request(feature_list, "atomic"))
->> +                               use_atomic = 1;
->>                 }
->>
->>                 if (!strcmp(line, "push-cert")) {
->> diff --git a/send-pack.c b/send-pack.c
->> index 949cb61..6d0c159 100644
->> --- a/send-pack.c
->> +++ b/send-pack.c
->> @@ -294,6 +294,8 @@ int send_pack(struct send_pack_args *args,
->>         int use_sideband = 0;
->>         int quiet_supported = 0;
->>         int agent_supported = 0;
->> +       int use_atomic = 0;
->> +       int atomic_supported = 0;
->>         unsigned cmds_sent = 0;
->>         int ret;
->>         struct async demux;
->> @@ -314,6 +316,8 @@ int send_pack(struct send_pack_args *args,
->>                 agent_supported = 1;
->>         if (server_supports("no-thin"))
->>                 args->use_thin_pack = 0;
->> +       if (server_supports("atomic"))
->> +               atomic_supported = 1;
->>         if (args->push_cert) {
->>                 int len;
->>
->> @@ -328,6 +332,10 @@ int send_pack(struct send_pack_args *args,
->>                         "Perhaps you should specify a branch such as 'master'.\n");
->>                 return 0;
->>         }
->> +       if (args->atomic && !atomic_supported)
->> +               die(_("server does not support --atomic push"));
->> +
->> +       use_atomic = atomic_supported && args->atomic;
->>
->>         if (status_report)
->>                 strbuf_addstr(&cap_buf, " report-status");
->> @@ -335,6 +343,8 @@ int send_pack(struct send_pack_args *args,
->>                 strbuf_addstr(&cap_buf, " side-band-64k");
->>         if (quiet_supported && (args->quiet || !args->progress))
->>                 strbuf_addstr(&cap_buf, " quiet");
->> +       if (use_atomic)
->> +               strbuf_addstr(&cap_buf, " atomic");
->>         if (agent_supported)
->>                 strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
->>
->> diff --git a/send-pack.h b/send-pack.h
->> index 5635457..b664648 100644
->> --- a/send-pack.h
->> +++ b/send-pack.h
->> @@ -13,7 +13,8 @@ struct send_pack_args {
->>                 use_ofs_delta:1,
->>                 dry_run:1,
->>                 push_cert:1,
->> -               stateless_rpc:1;
->> +               stateless_rpc:1,
->> +               atomic:1;
->>  };
->>
->>  int send_pack(struct send_pack_args *args,
->> --
->> 2.2.1.62.g3f15098
+> -               cmd->error_string = update(cmd, si);
+> -       }
+>         check_shallow_bugs(commands, si);
+>  }
+>
+> --
+> 2.2.1.62.g3f15098
