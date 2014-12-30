@@ -1,163 +1,224 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: About my git workflow; maybe it's useful for others
-Date: Mon, 29 Dec 2014 16:22:07 -0800
-Message-ID: <CAGZ79kaK-uRAE9-rH=-5t8djAw5e9rwkPjZuw=+XWEq+V6R5Yg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 30 01:22:16 2014
+Subject: [PATCHv8 1/9] receive-pack.c: add documentation for atomic push support
+Date: Mon, 29 Dec 2014 18:36:39 -0800
+Message-ID: <1419907007-19387-2-git-send-email-sbeller@google.com>
+References: <1419907007-19387-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
+	Stefan Beller <sbeller@google.com>
+To: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
+	gitster@pobox.com, sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Tue Dec 30 03:37:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5kZj-0007jv-Lk
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 01:22:16 +0100
+	id 1Y5mgL-0001pL-Mq
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 03:37:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408AbaL3AWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 19:22:11 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:47032 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599AbaL3AWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 19:22:09 -0500
-Received: by mail-ie0-f179.google.com with SMTP id rp18so12940986iec.38
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 16:22:09 -0800 (PST)
+	id S1752279AbaL3ChF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2014 21:37:05 -0500
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:59980 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751967AbaL3ChE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 21:37:04 -0500
+Received: by mail-ig0-f171.google.com with SMTP id z20so12028132igj.16
+        for <git@vger.kernel.org>; Mon, 29 Dec 2014 18:37:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=+d0R4fGSs+E9qA4d7PdVeDqabLoZgVS03xS36t3vxko=;
-        b=QYyaAVyyGtbIYUIrXau7cZqWBKmyhQVagVOfK5BdeSKqMad+0pgka/IwvtfYysbkss
-         CqkdcRCr4skLY2tU78BsOVEWAcObsFesOESc5Acz6YqRxvqAzT2QTI2oa1V89fnN+Z0i
-         A83mVSJvHpEyH8o7hCKakSEffKzTjqmEsHyRa0MxcmMAAk/iQnXD8cPF0zEJeW+3Lv7O
-         FgIO+NsZEZXHFFLNdxN5jYlTAXow3z1rA5bL9yYG7zhEpwAuluvDBU+3uF7IWavq8a8o
-         AET3eGU7FtYcoXvy57qYfLhmAcIObrh7+22lCwJOIgsp4l8AR7NFozSuhh4mCcCKde33
-         ZQhg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=6OlOa1vLeFppsmVuIWwr2ThqH/IwEJlhLfSAJOVvdzU=;
+        b=omzPiLGgE0Z5hZu8in/LRKWy8W9IkvnMb0lhnefXECrzH6ZZbuqLGutiuf0krmkEIE
+         s5TP0NBJ6rAGtmkQF34eGMaXDKz9u3iFIiM+rj+MDNXJZUumNsYmDOQ3QslNl+nocQrM
+         eSvV2Gv89NUTdARkDJxjBKcBrWt8q0S6lwjiNhNrGGFuBwn3RhF3n9Q/jR3ZyfjUNum/
+         pHeLEOoZ0knyztmHiSrsnd2MUd7liTb9IcnDHAGDRwpAKxJFgjZsfmnvZg5itHP+O8cJ
+         6SDMOpKfU1uZp8lIWo9btbKwopJVTZxRUvXVMXcw/ydtPv9ya5sX1LFZ6YZJM8TtWcsJ
+         euaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=+d0R4fGSs+E9qA4d7PdVeDqabLoZgVS03xS36t3vxko=;
-        b=Z4qgivGFA+cSVTkQ+9zD4fWjFB4SCc0WEnzSIUmAOobHMNsMiwfT30ABXsXKdUf41f
-         F7c1eHD95Ett87DVgKRvKW2WU42VJ1oA8e3nhlEJXbhgS1hlzkBhjC6t3TygN2YVCO1s
-         APehvI0l7E6m2cOdOCicuSz/xFYoQFXzNdr76KL4dX9/DLfDnEoIvGQ1n2Fo6oIIkYcZ
-         W6tBlctoLhujK24SVN9srT1HEF79e9JkU2cv5fCtR4vJEtnD5wXOsq17OAU6w3/oiOzJ
-         Tv7KcRaH5n9qbVUb3QFrIU0oYDG0TsrrNXNwr9ybSPxKKu4cDTqTl/Mub5HUZj6af9LN
-         Tklw==
-X-Gm-Message-State: ALoCoQnDx7xb7iLYYu5KX5IUR+mlQcvYO5a/LNzK/8CCo/nrH02uncROEf4QrsspRPehNlkwzKh4
-X-Received: by 10.43.82.72 with SMTP id ab8mr45696985icc.76.1419898927445;
- Mon, 29 Dec 2014 16:22:07 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Mon, 29 Dec 2014 16:22:07 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=6OlOa1vLeFppsmVuIWwr2ThqH/IwEJlhLfSAJOVvdzU=;
+        b=Y9GNC9cdThdUS89niaTjx3jQiZO106lQdaa4sU/CHxiIt992InODxpe0xrRh6wWyVv
+         1evZPvY+lOzPFfjRQoiJLLpSiCiuq+BZJkBlvBNJe5GIj2bxFBH2TsM2yYVWFXwHsxse
+         pUpAOJSilMdJehE3XdcjQLsD7b3OERLg/0ISBX8Rx3m9QM83d6z1/0vMWCpAfl2o54jN
+         QqnBiEqs5CFVFw7JKC5B0ZDS9loitrnjD7/vWpYlHV8CybneFsXElC+ueXlBX/l6WYd7
+         wrNIVawIdWlXo4YreBgG0EW12hCkgGBirKiE8fGiIUwlL6cMCVlveojoWjMrswerUkzI
+         8KDg==
+X-Gm-Message-State: ALoCoQkiEf6nA/mmb3EgxXbc6WmrT/y/x8ISAkMX4DKxn3LQQBkjok3vfFq0aq90ADgBb7jCm9I0
+X-Received: by 10.107.138.5 with SMTP id m5mr53054417iod.85.1419907023322;
+        Mon, 29 Dec 2014 18:37:03 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:5860:dcf1:88a4:141b])
+        by mx.google.com with ESMTPSA id h3sm14793837igh.21.2014.12.29.18.37.02
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 29 Dec 2014 18:37:02 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.62.g3f15098
+In-Reply-To: <1419907007-19387-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261901>
 
-Hi,
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-so I have been sending commits to the git mailing list occasionally
-for quite some time. In the last couple of weeks I send more and more
-patches to the mailing list as it's part of my job now. Here is a
-collection of practices I am following (or want to follow) and they
-seem to be effective.
+This documents the protocol option between send-pack and receive-pack to
+* allow receive-pack to inform the client that it has atomic push capability
+* allow send-pack to request atomic push back.
 
-Most of this is already documented in various documents in Documentation/*
-and this email is no news for the regular contributors. It may help new comers
-though.
+There is currently no setting in send-pack to actually request that atomic
+pushes are to be used yet. This only adds protocol capability not ability
+for the user to activate it. The capability is also not yet advertised
+by receive-pack as git doesn't know how to handle it yet.
 
-* Split patches up into logical pieces as you go.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-It's easy to go wild and after hours of hacking you have implemented a cool new
-feature. This the natural flow of hacking as it's the most fun. But
-this approach
-is not easy to be reviewed. So let me explain how reviewing works in
-the git project.
+Notes:
+    Changes v1 -> v2:
+    	* Name it atomic instead of atomic-push. The name changes affects
+    	  the flags send over the wire as well as the flags in
+    	  struct send_pack_args
+    	* Add check, which was part of the later patch here:
+    	if (args->atomic && !atomic_supported) {
+    		fprintf(stderr, "Server does not support atomic push.");
+    		return -1;
+    	}
+    
+    v2 -> v3:
+    More concise error reporting as suggested by Junio
+    -		fprintf(stderr, "Server does not support atomic push.");
+    -		return -1;
+    +		return error("server does not support atomic push.");
+    
+    skipped v4 v5
+    
+    v6:
+    	* s/one single atomic transaction./one atomic transaction./
+    	* die(_( instead of return error(
+    
+    v7:
+    	* Don't advertise the atomic push capability yet. We cannot handle it at
+    	  this point.
+    	* reword commit message
+    
+    v8:
+    	no changes
 
-        Reviewing works in the git project is quite liberal, anybody
-is encouraged to
-        comment on patches flying by. Junio, the maintainer then
-decides which patches
-        he picks up and merges them into the various stages of git
-(pu, next, master, maint).
-        The decision which patches are worth for inclusion is based on
-the amount of discussion
-        by the community and generally a patch only makes it if a
-concensus is met.
+ Documentation/technical/protocol-capabilities.txt | 13 +++++++++++--
+ builtin/receive-pack.c                            |  3 +++
+ send-pack.c                                       | 10 ++++++++++
+ send-pack.h                                       |  3 ++-
+ 4 files changed, 26 insertions(+), 3 deletions(-)
 
-* git send-email is the only email client I trust for sending patches
-
- While mail clients such as Thunderbird or the gmail interface are optimized
- to be used by everyday people it behaves differently than you would expect.
- For example these mail clients may convert tabs to white spaces depending on
- the configuration. The default configuration is usually not sane.
- To avoid that I tend to use git send-email only when sending patches
-to the list.
-
- Here is my setup:
- git send-email needs a  SMTP client to talk to a server, as I am using Ubuntu
- I need to "apt-get install msmtp". Then there is a configuration file
-.msmtprc which reads:
-
-        defaults
-        tls on
-        # this may be different in other distributions:
-        tls_trust_file /usr/share/ncat/ca-bundle.crt
-        logfile ~/.msmtp.log
-        account gmail
-        host smtp.gmail.com
-        port 587
-        from <yourname>@gmail.com
-        auth on
-        user <yourname>@gmail.com
-        password <yourpassword>
-        # Set a default account
-        account default : gmail
-
- The git configuration for sending email via msmtp is
-        git config --global sendemail.smtpserver /usr/bin/msmtp
-        git config --global sendemail.smtpuser <yourname>
-        git config --global sendemail.from <yourname>
-
-* Keep notes between different versions of your patch
-
- Look into the man page of git notes for the configuration variables. The only
- thing requried should be
-
-        git config notes.rewriteRef refs/notes/*
-
- to enable keeping notes during a rebase.
-
-* Make sure you're not embarassed by the patches you send out
-
- I fail this talking point often. Write a patch or incorporate
- just a one line fix and send it off to the list. What could go wrong?
-
- One line fixes and small patches tend to look so easy that you forget
- to compile check or run the test suite, which then promptly breaks.
- To prevent such disasters, I want to do a:
-        git rebase origin/master --exec=make --exec="make test"
- before sending the patch series to the list.
-
-* Wait with sending out iterations of patches
-  "patience is a virtue I do not have"
-
-  So you successfully send your patches to the mailing list. By
-successful I both
-  mean it worked technically as well as you got actually reviews and comments.
-  Usually the comments are feedback how to improve the patch. Now it's easy to
-  fall in the trap and fix all the problems the reviewers point out and resend
-  the patches again to the list again.
-
-  Waiting for roughly 24 hours helps a lot I found out. This brings
-you the following
-  advantages:
-        * You may get more comments from people in other time zones.
-Git contributors
-          are quite international folks. So it would be impolite to not wait for
-          everyone to at least have a look at it. They might be
-sleeping currently.
-        * You will find yourself reviewing your patches twice. Once after fixing
-          all the problems the review unveiled and once again before sending out
-          the new iteration of the patch series.
-
-Stefan
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 6d5424c..4f8a7bf 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -18,8 +18,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
+ and server advertised.  As a consequence of these rules, server MUST
+ NOT advertise capabilities it does not understand.
+ 
+-The 'report-status', 'delete-refs', 'quiet', and 'push-cert' capabilities
+-are sent and recognized by the receive-pack (push to server) process.
++The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
++capabilities are sent and recognized by the receive-pack (push to server)
++process.
+ 
+ The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
+ by both upload-pack and receive-pack protocols.  The 'agent' capability
+@@ -244,6 +245,14 @@ respond with the 'quiet' capability to suppress server-side progress
+ reporting if the local progress reporting is also being suppressed
+ (e.g., via `push -q`, or if stderr does not go to a tty).
+ 
++atomic
++------
++
++If the server sends the 'atomic' capability it is capable of accepting
++atomic pushes. If the pushing client requests this capability, the server
++will update the refs in one atomic transaction. Either all refs are
++updated or none.
++
+ allow-tip-sha1-in-want
+ ----------------------
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 32fc540..4e8eaf7 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -40,6 +40,7 @@ static int transfer_unpack_limit = -1;
+ static int unpack_limit = 100;
+ static int report_status;
+ static int use_sideband;
++static int use_atomic;
+ static int quiet;
+ static int prefer_ofs_delta = 1;
+ static int auto_update_server_info;
+@@ -1179,6 +1180,8 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 				use_sideband = LARGE_PACKET_MAX;
+ 			if (parse_feature_request(feature_list, "quiet"))
+ 				quiet = 1;
++			if (parse_feature_request(feature_list, "atomic"))
++				use_atomic = 1;
+ 		}
+ 
+ 		if (!strcmp(line, "push-cert")) {
+diff --git a/send-pack.c b/send-pack.c
+index 949cb61..6d0c159 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -294,6 +294,8 @@ int send_pack(struct send_pack_args *args,
+ 	int use_sideband = 0;
+ 	int quiet_supported = 0;
+ 	int agent_supported = 0;
++	int use_atomic = 0;
++	int atomic_supported = 0;
+ 	unsigned cmds_sent = 0;
+ 	int ret;
+ 	struct async demux;
+@@ -314,6 +316,8 @@ int send_pack(struct send_pack_args *args,
+ 		agent_supported = 1;
+ 	if (server_supports("no-thin"))
+ 		args->use_thin_pack = 0;
++	if (server_supports("atomic"))
++		atomic_supported = 1;
+ 	if (args->push_cert) {
+ 		int len;
+ 
+@@ -328,6 +332,10 @@ int send_pack(struct send_pack_args *args,
+ 			"Perhaps you should specify a branch such as 'master'.\n");
+ 		return 0;
+ 	}
++	if (args->atomic && !atomic_supported)
++		die(_("server does not support --atomic push"));
++
++	use_atomic = atomic_supported && args->atomic;
+ 
+ 	if (status_report)
+ 		strbuf_addstr(&cap_buf, " report-status");
+@@ -335,6 +343,8 @@ int send_pack(struct send_pack_args *args,
+ 		strbuf_addstr(&cap_buf, " side-band-64k");
+ 	if (quiet_supported && (args->quiet || !args->progress))
+ 		strbuf_addstr(&cap_buf, " quiet");
++	if (use_atomic)
++		strbuf_addstr(&cap_buf, " atomic");
+ 	if (agent_supported)
+ 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+ 
+diff --git a/send-pack.h b/send-pack.h
+index 5635457..b664648 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -13,7 +13,8 @@ struct send_pack_args {
+ 		use_ofs_delta:1,
+ 		dry_run:1,
+ 		push_cert:1,
+-		stateless_rpc:1;
++		stateless_rpc:1,
++		atomic:1;
+ };
+ 
+ int send_pack(struct send_pack_args *args,
+-- 
+2.2.1.62.g3f15098
