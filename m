@@ -1,232 +1,76 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv8 5/9] receive-pack.c: move transaction handling in a
- central place
-Date: Tue, 30 Dec 2014 10:45:32 -0800
-Message-ID: <CAGZ79kYufUcj858HGjJPTDGJgmTRv-YVR30zOtAURpP00NWEeQ@mail.gmail.com>
-References: <1419907007-19387-1-git-send-email-sbeller@google.com>
-	<1419907007-19387-6-git-send-email-sbeller@google.com>
-	<CAPig+cSYD+gBdEZ9TzWdeTEufzH6eJTbt=ZVS5imMJGjWnUFPA@mail.gmail.com>
+From: David Renshaw <david@sandstorm.io>
+Subject: bearer token authorization with HTTPS transport
+Date: Tue, 30 Dec 2014 11:24:09 -0800
+Message-ID: <CACejzECGUnH6B2Leq+H6u0Joo1SQmMCZ5UoHja_fK99+6a_iEA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Dec 30 19:45:39 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 30 20:24:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y61nW-0006cb-7u
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 19:45:38 +0100
+	id 1Y62Ou-0003qs-Np
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 20:24:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbaL3Spe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2014 13:45:34 -0500
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:53752 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305AbaL3Spd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2014 13:45:33 -0500
-Received: by mail-ie0-f182.google.com with SMTP id x19so14081851ier.13
-        for <git@vger.kernel.org>; Tue, 30 Dec 2014 10:45:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WCj88v7aIqPgIqP/z9oqxKrYCjiFeXmAz45Yi0izlQ0=;
-        b=BEGfF4cQAsq4dS0B7Wrl7gRM6djK1xw/VwMShv8W9anG8WbPyYeznd2trIhxUCG/21
-         d7AYqUc0qdqepeDhUfo29ZrxnlnH7LNyDjG3ze6rlM147i9wVKanLxyQick8aUanu4He
-         BgIqeRe1uxPFRqF3ZZrx5MvHVGOsz0mY/Rb0G2T69VHdbZ1ybytg5eqML8NvWtEEXr2D
-         EUIfVeDSYifB0KgJx7Ud3VAvLQ75j9nEpJ0htlcHmNyS9vY7RXhTrWlL2My0aOVrslTq
-         kqCgHfiGQp7UHYc+vuVd36QXHlX60L2/uMD+wM7SeAgMoWytByK6lcdhTOLZEOW9g/iw
-         yIcQ==
+	id S1751771AbaL3TYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2014 14:24:11 -0500
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:41782 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751451AbaL3TYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2014 14:24:10 -0500
+Received: by mail-vc0-f171.google.com with SMTP id hy4so5874077vcb.16
+        for <git@vger.kernel.org>; Tue, 30 Dec 2014 11:24:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=WCj88v7aIqPgIqP/z9oqxKrYCjiFeXmAz45Yi0izlQ0=;
-        b=Tyzj61c7gLO6PeYwIIcV1gMc3WrABrrCC145XV9K4kMoueEVsVeR8q1YVVZhynsv/i
-         LAeHDfnefoxSyafSlOcFp1ZNfOMH2Z/oYA/I97+CokfzRuvJVulSKBz2WTHdEFwUAGYJ
-         tIqnCxZgrf7ZhwCQIkbd6O2aKj7mPNUCLKPyOXtb6JUOirVkJlK/vL3Tw6v9Ecovu6Pf
-         0RmIGHhrP/7hrUaYo93K9pM7htRCbJL7rmyPmWV2Dcy2yLcwi7S45g30yM0OBVVpk3KY
-         KijRuQylSIgPtlhJ4SnTWGbI0Bnr9LWOB2iefe6lDj4Z9vSGVkv4JmI6jg+qd5FIW/9K
-         tQbg==
-X-Gm-Message-State: ALoCoQmMHVEU/G04eG+JRf29MienK7JSZH5vDtdeM8hubNY1r1fHsMTBkbFFXWtG5v/y9NWQ3e4I
-X-Received: by 10.43.82.72 with SMTP id ab8mr48748520icc.76.1419965132574;
- Tue, 30 Dec 2014 10:45:32 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 30 Dec 2014 10:45:32 -0800 (PST)
-In-Reply-To: <CAPig+cSYD+gBdEZ9TzWdeTEufzH6eJTbt=ZVS5imMJGjWnUFPA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
+         :to:content-type;
+        bh=nZOXyqXW21qODRWpdUhchvzJvjqt9OSQxskkeknzJz8=;
+        b=TObaEsLQNBcg3sZVZ1xa3Cno1JnGrC0QLqpZv083COp9KOTSoqs5CpDOP8Z0Aw5DDS
+         Ex+/Cu0Hx6x6/kOXtOHZnKL0v/Q6fkt+vkSkUzjcT4cGeayUJWRD5FoCxyx6Dv0Pfyzp
+         60iHVYhOi4RHQdXMcYd80aen3lT8a0CO7aLO8iQPemSAS5zrqds0RRNDWwwLhLYATK8m
+         /OQISMvdo2oKnWQGRtqMmVvHP9RHnFkoyD+8PChubzvyu0Z5/BgwF091Mb3ubn0Bz/qe
+         PPVX8UAIDpYGj3XXDX/6LlSl0Xz8KRlf98MhCnM4gQjDNWO6+uNk1Dyj6Rd/3ctAaCVf
+         haew==
+X-Gm-Message-State: ALoCoQnukh1MlW+Ppj8MGlHBpwGzXgE4F/ugqlTNSBOQGEfEAw1CjSw12FtOkQQyDidoeDLrKTBv
+X-Received: by 10.220.251.79 with SMTP id mr15mr4200844vcb.20.1419967449746;
+ Tue, 30 Dec 2014 11:24:09 -0800 (PST)
+Received: by 10.52.180.232 with HTTP; Tue, 30 Dec 2014 11:24:09 -0800 (PST)
+X-Google-Sender-Auth: oTuzDdnhA3MJPTWYmiIwlVkF_yQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261934>
 
-On Tue, Dec 30, 2014 at 12:36 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Dec 29, 2014 at 9:36 PM, Stefan Beller <sbeller@google.com> wrote:
->> Subject: receive-pack.c: move transaction handling in a central place
->
-> This is very generic, and doesn't really explain what this patch is
-> about. (See below.)
->
->> No functional changes intended.
->
-> Secondary information can be demoted to the end of the commit message.
+Hi,
+I would like to be able to serve a git repository over HTTPS from a
+web server that requires OAuth2-style bearer tokens for authorization.
+For more context, see this thread:
+https://groups.google.com/forum/#!topic/sandstorm-dev/4oigfb4-9E4
 
-I think this would help in case there is a subtle bug introduced with
-such a commit.
-If you bisect it 2 years later and then ask yourself if that subtle
-behavior was
-intentional (can easily happen if the commit message is
-short/unclear). This would then
-tell you it's definitely a bug introduced. I believe to have seen such
-a comment
-somewhere in the history, but I cannot find it again. I'll drop it
-into the notes for now.
+Does anyone here have any advice about how to convince a git client to
+add an "Authorization: Bearer <token>" header?
 
->
->> This moves all code related to transactions into the execute_commands_loop
->> function which was factored out of execute_commands. This includes
->> beginning and committing the transaction as well as dealing with the
->> errors which may occur during the begin and commit phase of a transaction.
->
-> This explains what you're doing, but not why. The purpose of this
-> change is that a subsequent patch will be adding another mode of
-> operation ("atomic") to execute_commands() which differs from the
-> existing mode ("non-atomic") implemented by its main loop. In its
-> high-level role, execute_commands() does not need to know or care
-> about the low-level details of each mode of operation. Therefore, as
-> preparation for introducing a new mode, you're factoring out the
-> existing mode into its own stand-alone function.
->
->> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->> Notes:
->>     This covers the suggestion of patch 2 and 3 by Eric
->>     > patch 2: Factor out the main 'for' loop of execute_commands() into a
->>     > new function. This new function will eventually become
->>     > execute_commands_non_atomic(). At this point, execute_commands() is
->>     > pretty much in its final form with the exception of the upcoming 'if
->>     > (use_atomic)' conditional.
->>     > patch 3: Morph the function extracted in patch 2 into
->>     > execute_commands_non_atomic() by adding transaction handling inside
->>     > the 'for' loop (and applying the changes from the early part of the
->>     > patch which go along with that).
->
-> This patch is still rather heavyweight. My suggestion[1] for making
-> these particular changes across two patches was quite deliberate. The
-> problem with combining them into a single patch is that you're
-> performing both code movement and functional changes at the same time.
->
-> On its own, pure code movement is easy to review.
->
-> On its own, code changes are as easy or difficult to review as the
-> changes themselves.
+I can think of a few approaches:
 
-I need to hammer this mantra in my brain. Sorry for messing this up again.
+(1) I could modify the curl remote helper to insert the header if it
+sees a "bearertoken" config option. I have in fact written a
+proof-of-concept patch that does this (see
+https://github.com/dwrensha/git/commit/4da7b64b85b3b6652abe7), but I
+don't know how much of chance something like this has of getting
+merged into the mainline git client.
 
->
-> When combined, however, the review effort is greater than the sum of
-> the efforts of reviewing them separately. Partly this is because the
-> combined changes have a noisier diff. If you move the code in one
-> patch, and then change it in a second one, the changes pop out --
-> they're quite obvious. On the other hand, when they are combined, the
-> reviewer has to deliberately and painstakingly search out the changes,
-> which is difficult and error-prone. Combining movement and code
-> changes into a single patch also places greater cognitive load on the
-> reviewer due to the necessity of keeping a more complex mental
-> scoreboard relating to the different types of changes.
->
-> More below.
->
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/261706
->
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> index 06eb287..5f44466 100644
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> @@ -1073,6 +1076,38 @@ static void check_shallow_bugs(struct command *commands,
->>                       "the reported refs above");
->>  }
->>
->> +static void execute_commands_loop(struct command *commands,
->> +                                 struct shallow_info *si)
->
-> Style: Indent the wrapped line to align with the text following the
-> '(' in the first line.
+(2) I could write a new remote helper for, say, a "https+bearertoken"
+transport. This seems like it would be more work than (1), but it
+would also allow easier installation without interfering with the rest
+of git.
 
-That's true. I have found this problem myself at another patch by
-Michael lately.
-If you apply the patch it is correctly aligned. If you view the patch
-however it is missaligned.
-Because of the leading plus sign the line in which the function
-signature starts is
-indented by one character. The other lines starting with a tab indent
-only to 8 character.
+(3) I could write a proxy server that inserts the header, designed to
+run on the same machine as the client. This feels rather heavyweight.
 
-This would explain a difference of only a few chars, but not so many.
-I'll check the indentation here.
+Am I missing anything?
 
->
-> It's safe to say that the code which you extracted from
-> execute_commands() handled the non-atomic case, and it's safe to say
-> that this new function implements the non-atomic case. Therefore, it
-> would be truthful to call this function execute_commands_nonatomic().
-> No need to invent the name execute_commands_loop().
-
-ok.
-
->
->> +{
->> +       struct command *cmd;
->> +       struct strbuf err = STRBUF_INIT;
->> +
->> +       for (cmd = commands; cmd; cmd = cmd->next) {
->> +               if (!should_process_cmd(cmd))
->> +                       continue;
->> +
->> +               transaction = ref_transaction_begin(&err);
->> +               if (!transaction) {
->> +                       rp_error("%s", err.buf);
->> +                       strbuf_reset(&err);
->> +                       cmd->error_string = "transaction failed to start";
->> +                       continue;
->> +               }
->> +
->> +               cmd->error_string = update(cmd, si);
->> +
->> +               if (!cmd->error_string
->> +                   && ref_transaction_commit(transaction, &err)) {
->> +                       rp_error("%s", err.buf);
->> +                       strbuf_reset(&err);
->> +                       cmd->error_string = "failed to update ref";
->> +               }
->> +               ref_transaction_free(transaction);
->> +       }
->> +
->> +       strbuf_release(&err);
->> +}
->> +
->>  static void execute_commands(struct command *commands,
->>                              const char *unpacker_error,
->>                              struct shallow_info *si)
->> @@ -1107,12 +1142,8 @@ static void execute_commands(struct command *commands,
->>         free(head_name_to_free);
->>         head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
->>
->> -       for (cmd = commands; cmd; cmd = cmd->next) {
->> -               if (!should_process_cmd(cmd))
->> -                       continue;
->> +       execute_commands_loop(commands, si);
->>
->> -               cmd->error_string = update(cmd, si);
->> -       }
->>         check_shallow_bugs(commands, si);
->>  }
->>
->> --
->> 2.2.1.62.g3f15098
+Thanks,
+David
