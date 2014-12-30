@@ -1,77 +1,192 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: saving "git push --signed" certificate blobs
-Date: Tue, 30 Dec 2014 09:39:42 +0530
-Message-ID: <54A22586.70001@gmail.com>
-References: <54A10ED1.9020704@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv8 4/9] receive-pack.c: simplify execute_commands
+Date: Tue, 30 Dec 2014 01:11:38 -0500
+Message-ID: <CAPig+cT9JVkDvUUsbx9HW8HpakCb9SkoQf3LJZc4h3TQTt2ZXQ@mail.gmail.com>
+References: <1419907007-19387-1-git-send-email-sbeller@google.com>
+	<1419907007-19387-5-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 30 05:11:10 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Dec 30 07:12:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5o9F-0006Ag-Cg
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 05:11:09 +0100
+	id 1Y5q2K-0005rd-EW
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 07:12:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbaL3EJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 23:09:50 -0500
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:63093 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751532AbaL3EJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 23:09:49 -0500
-Received: by mail-pd0-f171.google.com with SMTP id y13so18522903pdi.2
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 20:09:49 -0800 (PST)
+	id S1751560AbaL3GLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2014 01:11:40 -0500
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:54032 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751483AbaL3GLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2014 01:11:39 -0500
+Received: by mail-yk0-f172.google.com with SMTP id 131so6952989ykp.3
+        for <git@vger.kernel.org>; Mon, 29 Dec 2014 22:11:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=oGgceG4+mhiKWWtquJdiQLDUihC4pILmEj0Yieo1544=;
-        b=PNZ8wH/Uzj3MmBG8DAU9IifhWzlT++8jhHWSLY6jumf+zltMIU6W0mDle7DDLGr59Z
-         te/ayPocc7i3QMHxTl35jlCdGhnyl1i4dV9U1wZGlPs3zLXWx8i1Wre3NRM8kHmlnpFA
-         /oTFy1OnqYaDqjLnFCi6CeDRSpMFdqJklL116n5O3T3XJTuytBHsRr/T/b2qmCr1/9yp
-         5RSIENCrfMdAwi953jiz6i3puc9XgtAxBreQzxNV1JQME64y0Kb0kPHqMoz7pXjqtUW3
-         nchc3o/2ix7xJvaro5p7pnCZaJN2LE+Zzrjgzf0322jp6MeOSttLyCP5bFc0wGCsy8xV
-         uabA==
-X-Received: by 10.66.55.74 with SMTP id q10mr71481972pap.94.1419912589332;
-        Mon, 29 Dec 2014 20:09:49 -0800 (PST)
-Received: from sita-lt.atc.tcs.com ([117.195.165.143])
-        by mx.google.com with ESMTPSA id gw8sm7570018pbc.48.2014.12.29.20.09.45
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Dec 2014 20:09:48 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <54A10ED1.9020704@gmail.com>
-X-Forwarded-Message-Id: <54A10ED1.9020704@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Vom/YB0/nkJeFhpZUwpIwQRiaTbc8//RLuoI0TjhGn8=;
+        b=QNQ/KoXjSPZOosBIKnnTznvu+WvXIhhAlP0X++SwhZUADcCWTW7L1qY3n05nC6YFvZ
+         pi0S36Jg2vtNL3WGcTdda6Gh5asFFPbMfFF7D1MM3o44gp1zdAsHuP745A/0N+MgbwBa
+         F9TAtCc/mklUynmv1s2+F/WoA+eXn1G/g2ViCmNdp8d27wM/Slm6sNxyfaDGzoS86kPj
+         w3/Ll0Rpb2RNcL8bKjH1S6LoZ/X6JkW2BwrlaOwpPx4hMj9MfsYxOZ1H1AQSgLBWF9An
+         CIZWlwrOmksuQRtYBsKlBpRppZTxHiePO8cbE0dwbth3X7lPwMp3vIxdQwYXHQP6zWdt
+         74RQ==
+X-Received: by 10.236.14.36 with SMTP id c24mr39205012yhc.166.1419919898500;
+ Mon, 29 Dec 2014 22:11:38 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Mon, 29 Dec 2014 22:11:38 -0800 (PST)
+In-Reply-To: <1419907007-19387-5-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: -I5kzod_M2wMEo16EbZRCpBJtDc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261912>
 
-Hello,
+On Mon, Dec 29, 2014 at 9:36 PM, Stefan Beller <sbeller@google.com> wrote:
+> No functional changes intended.
 
-Just wanted to say there's a little script at [1] that saves the certificate
-blobs generated on the server side by "git push --signed".
+This is useful to know but is of secondary importance, thus should be
+placed after the explanation and justification of the change.
 
-Quoting from the source:
+> Subject: receive-pack.c: simplify execute_commands
+> This commit shortens execute_commands by moving some parts of the code
+> to extra functions.
 
-# Collects the cert blob on push and saves it, then, if a certain number of
-# signed pushes have been seen, processes all the "saved" blobs in one go,
-# adding them to the special ref 'refs/push-certs'.  This is done in a way
-# that allows searching for all the certs pertaining to one specific branch
-# (thanks to Junio Hamano for this idea plus general brainstorming).
+The _real_ reason for moving these bits of code into their own
+functions is that you intend to introduce additional callers in
+subsequent patches. That is what the commit message (including
+subject) should be conveying to the reader.
 
-Note that although I posted it in the gitolite ML, this has very little to do
-with gitolite.  Any git server can use it, with only one very minor change [2]
-needed.
+The claimed simplification is questionable and not of particular
+importance; and it's misleading to paint it as a goal of the patch.
+Consequently, you could drop mention of it altogether.
 
-sitaram
+More below.
 
-[1]: https://groups.google.com/forum/#!topic/gitolite/7cSrU6JorEY
+> Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 4e8eaf7..06eb287 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -1043,11 +1043,40 @@ static void reject_updates_to_hidden(struct command *commands)
+>         }
+>  }
+>
+> +static int should_process_cmd(struct command *cmd)
+> +{
+> +       if (cmd->error_string)
+> +               return 0;
+> +       if (cmd->skip_update)
+> +               return 0;
+> +       return 1;
 
-[2]: Either set the GL_OPTIONS_GPC_PENDING environment variable by reading its
-value from 'git config', or replace the only line that uses that variable, with
-some other "test".
+Alternately, depending upon the polarity of your brain, you could
+collapse the entire function body to:
+
+    return !cmd->error_string && !cmd->skip_update;
+
+or:
+
+    return !(cmd->error_string || cmd->skip_update);
+
+> +}
+> +
+> +static void check_shallow_bugs(struct command *commands,
+> +                              struct shallow_info *si)
+> +{
+> +       struct command *cmd;
+> +       int checked_connectivity = 1;
+> +       for (cmd = commands; cmd; cmd = cmd->next) {
+> +               if (!should_process_cmd(cmd))
+> +                       continue;
+> +
+> +               if (shallow_update && si->shallow_ref[cmd->index]) {
+
+Here, inside the loop, you check 'shallow_update'...
+
+> +                       error("BUG: connectivity check has not been run on ref %s",
+> +                             cmd->ref_name);
+> +                       checked_connectivity = 0;
+> +               }
+> +       }
+> +       if (shallow_update && !checked_connectivity)
+
+And here, after the loop, you check 'shallow_update'.
+
+But, if you examine the overall logic, you will find that this
+function does _nothing_ at all when 'shallow_update' is false (other
+than uselessly looping through 'commands'). Therefore, either check
+'shallow_update' just once at the beginning of the function and exit
+early if false, or have the caller check 'shallow_update' and only
+invoke check_shallow_bugs() if true.
+
+Also, since nothing happens between them, the two conditionals inside
+the loop can be coalesced:
+
+    if (should_process_cmd(cmd) && si->shallow_ref[cmd->index]) {
+
+> +               error("BUG: run 'git fsck' for safety.\n"
+> +                     "If there are errors, try to remove "
+> +                     "the reported refs above");
+
+In v6, you considered this a fatal error in the atomic case, which
+caused the entire transaction to be rolled back. However, in this
+version, this error has no effect whatsoever on the atomic
+transaction, which is a rather significant behavioral departure. Which
+is correct? (This is a genuine question; not at all rhetorical.) If
+failing the entire transaction is the correct thing to do, then this
+is going to need some more work.
+
+> +}
+> +
+>  static void execute_commands(struct command *commands,
+>                              const char *unpacker_error,
+>                              struct shallow_info *si)
+>  {
+> -       int checked_connectivity;
+>         struct command *cmd;
+>         unsigned char sha1[20];
+>         struct iterate_data data;
+> @@ -1078,27 +1107,13 @@ static void execute_commands(struct command *commands,
+>         free(head_name_to_free);
+>         head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
+>
+> -       checked_connectivity = 1;
+>         for (cmd = commands; cmd; cmd = cmd->next) {
+> -               if (cmd->error_string)
+> -                       continue;
+> -
+> -               if (cmd->skip_update)
+> +               if (!should_process_cmd(cmd))
+>                         continue;
+>
+>                 cmd->error_string = update(cmd, si);
+> -               if (shallow_update && !cmd->error_string &&
+> -                   si->shallow_ref[cmd->index]) {
+> -                       error("BUG: connectivity check has not been run on ref %s",
+> -                             cmd->ref_name);
+> -                       checked_connectivity = 0;
+> -               }
+>         }
+> -
+> -       if (shallow_update && !checked_connectivity)
+> -               error("BUG: run 'git fsck' for safety.\n"
+> -                     "If there are errors, try to remove "
+> -                     "the reported refs above");
+> +       check_shallow_bugs(commands, si);
+>  }
+>
+>  static struct command **queue_command(struct command **tail,
+> --
+> 2.2.1.62.g3f15098
