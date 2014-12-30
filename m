@@ -1,288 +1,232 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] git-rebase documentation: explain the exit code of custom commands
-Date: Tue, 30 Dec 2014 10:25:31 -0800
-Message-ID: <CAGZ79kZsQpvNzGPYuS64Cx2hFoozcb2HxU9Chd1__5=kkE-WjQ@mail.gmail.com>
-References: <1419892207-26687-1-git-send-email-sbeller@google.com>
-	<xmqqr3vhrqjn.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCHv8 5/9] receive-pack.c: move transaction handling in a
+ central place
+Date: Tue, 30 Dec 2014 10:45:32 -0800
+Message-ID: <CAGZ79kYufUcj858HGjJPTDGJgmTRv-YVR30zOtAURpP00NWEeQ@mail.gmail.com>
+References: <1419907007-19387-1-git-send-email-sbeller@google.com>
+	<1419907007-19387-6-git-send-email-sbeller@google.com>
+	<CAPig+cSYD+gBdEZ9TzWdeTEufzH6eJTbt=ZVS5imMJGjWnUFPA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 30 19:25:39 2014
+Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Dec 30 19:45:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y61UA-0007C1-3q
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 19:25:38 +0100
+	id 1Y61nW-0006cb-7u
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 19:45:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbaL3SZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2014 13:25:33 -0500
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:62377 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751340AbaL3SZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2014 13:25:32 -0500
-Received: by mail-ie0-f181.google.com with SMTP id rl12so11737495iec.26
-        for <git@vger.kernel.org>; Tue, 30 Dec 2014 10:25:31 -0800 (PST)
+	id S1751350AbaL3Spe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2014 13:45:34 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:53752 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751305AbaL3Spd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2014 13:45:33 -0500
+Received: by mail-ie0-f182.google.com with SMTP id x19so14081851ier.13
+        for <git@vger.kernel.org>; Tue, 30 Dec 2014 10:45:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=pEcXkCd4+idNHmf+XH8UdHbqufT38RyVQazfPyXEoZc=;
-        b=b9XZUrC7n1CpeiCDc3TOJNaKMzwmrByaF/zw1JKjwGD+Zgs6qblz4X/jQG5R+iQaH5
-         RGu8uLOTh4jNSs4H8RB+aBs5KqjIeO6HgprRxVOXnjlYjTggw5g1IZHBXNfa7zEjxvSV
-         wjFuJKa7c0A0bzhQIZN1LzQtMmcNeGe5/lVnNHizUDvKVcf3jucAqQBGKUnGdRaS/mtP
-         p49RwKOiE4pIfTLpbSp4egjKsZcnqIlDmI6xdID+wvePsyc2yBOMCKNC5csC1HUStGae
-         pTqN+BexjEPIk/rBxw66snJzSxann9ja1d6VucE1+9uGqSYafxNJ/u3Oe57Uy0SJtjXk
-         W0fg==
+        bh=WCj88v7aIqPgIqP/z9oqxKrYCjiFeXmAz45Yi0izlQ0=;
+        b=BEGfF4cQAsq4dS0B7Wrl7gRM6djK1xw/VwMShv8W9anG8WbPyYeznd2trIhxUCG/21
+         d7AYqUc0qdqepeDhUfo29ZrxnlnH7LNyDjG3ze6rlM147i9wVKanLxyQick8aUanu4He
+         BgIqeRe1uxPFRqF3ZZrx5MvHVGOsz0mY/Rb0G2T69VHdbZ1ybytg5eqML8NvWtEEXr2D
+         EUIfVeDSYifB0KgJx7Ud3VAvLQ75j9nEpJ0htlcHmNyS9vY7RXhTrWlL2My0aOVrslTq
+         kqCgHfiGQp7UHYc+vuVd36QXHlX60L2/uMD+wM7SeAgMoWytByK6lcdhTOLZEOW9g/iw
+         yIcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=pEcXkCd4+idNHmf+XH8UdHbqufT38RyVQazfPyXEoZc=;
-        b=E3wOST1PgBZeK7cVtsSRl8rPxuZR73Vi1iJ5nSg1/6cKSp+9EGY6Riy65HAZ10q7YD
-         LNjTqT07xUKz2/eTda0dUu93Hka6o7o8hN9XQgPUdUuRmW6lQLWruE9crmMCtdBWR5ke
-         9kFO52y8+SSdeY8Mxsgko3nTeind9xKblNr0c8sMq6nUE+n/Uxwf1Sx0ptKEQUzKKfoS
-         /AvuogY4TEqMj3af1qHXdipXf7f0HbphFjEBLynqMWjfs2uXbw3X8wu7vmn67aZFg322
-         DwzIpi7hIXtImeNBdE4aUAMbyOhYfPFuuRO51VYPapN8gT+KVzCnxkGeOGQpNsZQH+2c
-         lYeg==
-X-Gm-Message-State: ALoCoQm//6NsMRI8RZpptmRGFOBXz1dgFEx08K/ssxMWXYmwsN8QvXdmm8XBBJ99wi4ni5O0KjFH
-X-Received: by 10.43.82.72 with SMTP id ab8mr48678531icc.76.1419963931428;
- Tue, 30 Dec 2014 10:25:31 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 30 Dec 2014 10:25:31 -0800 (PST)
-In-Reply-To: <xmqqr3vhrqjn.fsf@gitster.dls.corp.google.com>
+        bh=WCj88v7aIqPgIqP/z9oqxKrYCjiFeXmAz45Yi0izlQ0=;
+        b=Tyzj61c7gLO6PeYwIIcV1gMc3WrABrrCC145XV9K4kMoueEVsVeR8q1YVVZhynsv/i
+         LAeHDfnefoxSyafSlOcFp1ZNfOMH2Z/oYA/I97+CokfzRuvJVulSKBz2WTHdEFwUAGYJ
+         tIqnCxZgrf7ZhwCQIkbd6O2aKj7mPNUCLKPyOXtb6JUOirVkJlK/vL3Tw6v9Ecovu6Pf
+         0RmIGHhrP/7hrUaYo93K9pM7htRCbJL7rmyPmWV2Dcy2yLcwi7S45g30yM0OBVVpk3KY
+         KijRuQylSIgPtlhJ4SnTWGbI0Bnr9LWOB2iefe6lDj4Z9vSGVkv4JmI6jg+qd5FIW/9K
+         tQbg==
+X-Gm-Message-State: ALoCoQmMHVEU/G04eG+JRf29MienK7JSZH5vDtdeM8hubNY1r1fHsMTBkbFFXWtG5v/y9NWQ3e4I
+X-Received: by 10.43.82.72 with SMTP id ab8mr48748520icc.76.1419965132574;
+ Tue, 30 Dec 2014 10:45:32 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Tue, 30 Dec 2014 10:45:32 -0800 (PST)
+In-Reply-To: <CAPig+cSYD+gBdEZ9TzWdeTEufzH6eJTbt=ZVS5imMJGjWnUFPA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261933>
 
-On Tue, Dec 30, 2014 at 9:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Tue, Dec 30, 2014 at 12:36 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Dec 29, 2014 at 9:36 PM, Stefan Beller <sbeller@google.com> wrote:
+>> Subject: receive-pack.c: move transaction handling in a central place
 >
+> This is very generic, and doesn't really explain what this patch is
+> about. (See below.)
+>
+>> No functional changes intended.
+>
+> Secondary information can be demoted to the end of the commit message.
+
+I think this would help in case there is a subtle bug introduced with
+such a commit.
+If you bisect it 2 years later and then ask yourself if that subtle
+behavior was
+intentional (can easily happen if the commit message is
+short/unclear). This would then
+tell you it's definitely a bug introduced. I believe to have seen such
+a comment
+somewhere in the history, but I cannot find it again. I'll drop it
+into the notes for now.
+
+>
+>> This moves all code related to transactions into the execute_commands_loop
+>> function which was factored out of execute_commands. This includes
+>> beginning and committing the transaction as well as dealing with the
+>> errors which may occur during the begin and commit phase of a transaction.
+>
+> This explains what you're doing, but not why. The purpose of this
+> change is that a subsequent patch will be adding another mode of
+> operation ("atomic") to execute_commands() which differs from the
+> existing mode ("non-atomic") implemented by its main loop. In its
+> high-level role, execute_commands() does not need to know or care
+> about the low-level details of each mode of operation. Therefore, as
+> preparation for introducing a new mode, you're factoring out the
+> existing mode into its own stand-alone function.
+>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 >> Signed-off-by: Stefan Beller <sbeller@google.com>
 >> ---
->>  Documentation/git-rebase.txt | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
 >>
->> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->> index 924827d..ffadb0b 100644
->> --- a/Documentation/git-rebase.txt
->> +++ b/Documentation/git-rebase.txt
->> @@ -372,7 +372,8 @@ idea unless you know what you are doing (see BUGS below).
->>  --exec <cmd>::
->>       Append "exec <cmd>" after each line creating a commit in the
->>       final history. <cmd> will be interpreted as one or more shell
->> -     commands.
->> +     commands. Rebasing will stop for manual inspection if the command
->> +     returns a non zero exit code.
->>  +
->>  This option can only be used with the `--interactive` option
->>  (see INTERACTIVE MODE below).
+>> Notes:
+>>     This covers the suggestion of patch 2 and 3 by Eric
+>>     > patch 2: Factor out the main 'for' loop of execute_commands() into a
+>>     > new function. This new function will eventually become
+>>     > execute_commands_non_atomic(). At this point, execute_commands() is
+>>     > pretty much in its final form with the exception of the upcoming 'if
+>>     > (use_atomic)' conditional.
+>>     > patch 3: Morph the function extracted in patch 2 into
+>>     > execute_commands_non_atomic() by adding transaction handling inside
+>>     > the 'for' loop (and applying the changes from the early part of the
+>>     > patch which go along with that).
 >
-> This is not wrong per-se, but I wonder if it belongs here, or
-> "INTERACTIVE MODE below" may be a better place for it.
+> This patch is still rather heavyweight. My suggestion[1] for making
+> these particular changes across two patches was quite deliberate. The
+> problem with combining them into a single patch is that you're
+> performing both code movement and functional changes at the same time.
+>
+> On its own, pure code movement is easy to review.
+>
+> On its own, code changes are as easy or difficult to review as the
+> changes themselves.
 
-I asked around in office yesterday for the --exec command and Jonathan
-thought it was documented, but both him and me skimming over the man page
-not find it. Maybe we stopped reading as we'd not expect it deep down
-there any more?
-
-Thanks for pointing out the place where it is documented actually.
+I need to hammer this mantra in my brain. Sorry for messing this up again.
 
 >
-> In fact, I notice that "INTERACTIVE MODE below" already touches it,
-> like this:
+> When combined, however, the review effort is greater than the sum of
+> the efforts of reviewing them separately. Partly this is because the
+> combined changes have a noisier diff. If you move the code in one
+> patch, and then change it in a second one, the changes pop out --
+> they're quite obvious. On the other hand, when they are combined, the
+> reviewer has to deliberately and painstakingly search out the changes,
+> which is difficult and error-prone. Combining movement and code
+> changes into a single patch also places greater cognitive load on the
+> reviewer due to the necessity of keeping a more complex mental
+> scoreboard relating to the different types of changes.
 >
->     Reordering and editing commits usually creates untested intermediate
->     steps.  You may want to check that your history editing did not break
->     anything by running a test, or at least recompiling at intermediate
->     points in history by using the "exec" command (shortcut "x").  You may
->     do so by creating a todo list like this one:
+> More below.
 >
->     -------------------------------------------
->     pick deadbee Implement feature XXX
->     fixup f1a5c00 Fix to feature XXX
->     exec make
->     pick c0ffeee The oneline of the next commit
->     edit deadbab The oneline of the commit after
->     exec cd subdir; make test
->     ...
->     -------------------------------------------
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/261706
 >
->     The interactive rebase will stop when a command fails (i.e. exits with
->     non-0 status) to give you an opportunity to fix the problem. You can
->     continue with `git rebase --continue`.
+>> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+>> index 06eb287..5f44466 100644
+>> --- a/builtin/receive-pack.c
+>> +++ b/builtin/receive-pack.c
+>> @@ -1073,6 +1076,38 @@ static void check_shallow_bugs(struct command *commands,
+>>                       "the reported refs above");
+>>  }
+>>
+>> +static void execute_commands_loop(struct command *commands,
+>> +                                 struct shallow_info *si)
 >
-> I further notice that this section mentions various insns you can
-> use in prose, but does not have a list of vocabulary.  A new user,
-> when using "rebase -i" for the first time, will only see a series of
-> "pick"s; there needs to be a short list of the available insns and
-> what each of them do somewhere in the documentation, organized in a
-> way similar to how command line options are listed and explained.
+> Style: Indent the wrapped line to align with the text following the
+> '(' in the first line.
+
+That's true. I have found this problem myself at another patch by
+Michael lately.
+If you apply the patch it is correctly aligned. If you view the patch
+however it is missaligned.
+Because of the leading plus sign the line in which the function
+signature starts is
+indented by one character. The other lines starting with a tab indent
+only to 8 character.
+
+This would explain a difference of only a few chars, but not so many.
+I'll check the indentation here.
+
 >
-> As a starting point, here is what I came up with.  I am not
-> committing this to anywhere in my tree yet---this is primarily for
-> discussion.
+> It's safe to say that the code which you extracted from
+> execute_commands() handled the non-atomic case, and it's safe to say
+> that this new function implements the non-atomic case. Therefore, it
+> would be truthful to call this function execute_commands_nonatomic().
+> No need to invent the name execute_commands_loop().
+
+ok.
+
 >
-> One thing that I find a bit troublesome is that we overuse the word
-> "command" to mean three different things.  In general, when we say
-> "The command does X" in a documentation for individual subcommand,
-> we mean that subcommand (i.e. "git rebase" in this case).  "Replace
-> the command 'pick' with Y" here however refers to an instruction
-> taken from the vocabulary the new list presents here with the word.
-
-I like "instruction" being part of the vocabulary here.
-
-> And "exec stops when the command fails" refers to whatever shell
-> scriptlet you give 'exec' insn with the same word.  This (not just
-> the new text I am introducing, which follows the usage of the words
-> in the existing text, but the way we refer to "command" and mean
-> three different things in the entire text) needs to be cleaned up.
->
->
->
->  Documentation/git-rebase.txt | 56 ++++++++++++++++++++++++++++++++++----------
->  1 file changed, 44 insertions(+), 12 deletions(-)
->
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 924827d..718300c 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -509,20 +509,52 @@ By replacing the command "pick" with the command "edit", you can tell
->  the files and/or the commit message, amend the commit, and continue
->  rebasing.
->
-> -If you just want to edit the commit message for a commit, replace the
-> -command "pick" with the command "reword".
-> -
-> +Here are the commands that can appear in the instruction sheet and
-> +their explanations.
-> +
-> +pick <commit> <subject>::
-> +       Replay the named commit on top of the current state.
-
-I remember using git for the very first time (in 2010 to give you some
-perspective)
-and I had trouble with the rebase command in particular. If the
-instruction sheet pops
-up, there is a lot of text and as a novice user I was very unsure what
-I was allowed to
-touch, such that it doesn't break horribly.
-
-In one of the moments I did not think properly through what I was doing,
-I made the following change to the instruction sheet:
-
--pick deadbee Implement feature XXX
-+pick deadbee file-xyz.c: implement feature XXX/
-
-Notice I did not change the instruction nor the "named
-commit"(deadbee) as you put it.
-I tried to rename the subject line of the commit in place. This did
-not work of course, but still
-picked up the commit the way it was.
-
-I am telling this story now as I am a bit troubled with "named
-commit". It actually means
-the commit with the given sha1 value (side question: Could I also use
-the full git language to
-describe commits like: "pick topicbranch^2~3" ?) The text after the
-abbreviated sha1 seems
-only commentary to me.
-
-So as another thought we may want to introduce a "reword subject
-line", which replaces the
-subject line of the "named commit" by the comment in the rest of the
-line of the instruction sheet.
-
-> +
-> +edit <commit> <subject>::
-> +       Replay the named commit and then stop, so that the user can
-> +       edit the working tree files and "git rebase --continue" to
-> +       record the modified changes made to the working tree files
-> +       while tweaking the log message.
-
-This is not complete. If I edit the working tree files and then "git
-rebase --continue",
-I am told
-    Documentation/SubmittingPatches: needs update
-    You must edit all merge conflicts and then
-    mark them as resolved using git add
-
-The way I see the edit instruction is more like a "stop", so mentally
-I translate
-     pick c0ffeee The oneline of the next commit
-     edit deadbab The oneline of the commit after
-     pick c0ffaaa Another commit
-to:
-     pick c0ffeee The oneline of the next commit
-     pick deadbab The oneline of the commit after
-     stop # change files and amend changes to the previous commit or
-hack&commit new stuff
-     pick c0ffaaa Another commit
-
-How about:
-    Replay the named commit and then stop, such that the user can
-    modify the commit by ammending changes or add new commits in between.
-
-> +
-> +reword <commit> <subject>::
-> +       Replay the named commit and then open the editor to tweak
-> +       the log message (i.e. without modifying the changes made to
-> +       the working tree contents).
-> +
-> +squash <commit> <subject>::
-> +       Modify the current commit by squashing the change made by
-> +       the named commit, and then open the editor to modify the log
-> +       message using existing messages from the current commit and
-> +       the named commit.  The authorship of the resulting commit is
-> +       taken from the current commit.
-> +       See `--autosquash`.
-
-Should this be s/current/previous/. Technically the current commit seems
-correct to me, but it was crafted in the previous lines of the instruction sheet
-so it feels like it's a commit which is already done and we're
-currently looking at the
-commit which should be squashed into the HEAD.
-
-> +
-> +fixup <commit> <subject>::
-> +       Modify the current commit by squashing the change made by
-> +       the named commit, without updating the log message.  The
-> +       authorship of the resulting commit is taken from the
-> +       current commit.
-> +       See `--autosquash`.
-> +
-> +exec <command>::
-> +       Run named command under a shell and stop if it exited with a
-> +       non-zero status.
-> +       See `--exec`.
-> +
-> +For example, if you just want to edit the commit message for a
-> +commit, replace the command "pick" with the command "reword".
->  If you want to fold two or more commits into one, replace the command
->  "pick" for the second and subsequent commits with "squash" or "fixup".
-> -If the commits had different authors, the folded commit will be
-> -attributed to the author of the first commit.  The suggested commit
-> -message for the folded commit is the concatenation of the commit
-> -messages of the first commit and of those with the "squash" command,
-> -but omits the commit messages of commits with the "fixup" command.
-> -
-> -'git rebase' will stop when "pick" has been replaced with "edit" or
-> -when a command fails due to merge errors. When you are done editing
-> -and/or resolving conflicts you can continue with `git rebase --continue`.
-> +
-> +In addition to the cases where the list above says the command will
-> +stop, it will stop when a merge conflict needs to be resolved
-> +manually.  When you are done editing and/or resolving conflicts,
-> +continue with `git rebase --continue`.
->
->  For example, if you want to reorder the last 5 commits, such that what
->  was HEAD~4 becomes the new HEAD. To achieve that, you would call
-
-Overall I like that change as it would help finding the behavior for
-exec easier.
-
-Thanks,
-Stefan
+>> +{
+>> +       struct command *cmd;
+>> +       struct strbuf err = STRBUF_INIT;
+>> +
+>> +       for (cmd = commands; cmd; cmd = cmd->next) {
+>> +               if (!should_process_cmd(cmd))
+>> +                       continue;
+>> +
+>> +               transaction = ref_transaction_begin(&err);
+>> +               if (!transaction) {
+>> +                       rp_error("%s", err.buf);
+>> +                       strbuf_reset(&err);
+>> +                       cmd->error_string = "transaction failed to start";
+>> +                       continue;
+>> +               }
+>> +
+>> +               cmd->error_string = update(cmd, si);
+>> +
+>> +               if (!cmd->error_string
+>> +                   && ref_transaction_commit(transaction, &err)) {
+>> +                       rp_error("%s", err.buf);
+>> +                       strbuf_reset(&err);
+>> +                       cmd->error_string = "failed to update ref";
+>> +               }
+>> +               ref_transaction_free(transaction);
+>> +       }
+>> +
+>> +       strbuf_release(&err);
+>> +}
+>> +
+>>  static void execute_commands(struct command *commands,
+>>                              const char *unpacker_error,
+>>                              struct shallow_info *si)
+>> @@ -1107,12 +1142,8 @@ static void execute_commands(struct command *commands,
+>>         free(head_name_to_free);
+>>         head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
+>>
+>> -       for (cmd = commands; cmd; cmd = cmd->next) {
+>> -               if (!should_process_cmd(cmd))
+>> -                       continue;
+>> +       execute_commands_loop(commands, si);
+>>
+>> -               cmd->error_string = update(cmd, si);
+>> -       }
+>>         check_shallow_bugs(commands, si);
+>>  }
+>>
+>> --
+>> 2.2.1.62.g3f15098
