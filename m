@@ -1,192 +1,197 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv8 4/9] receive-pack.c: simplify execute_commands
-Date: Tue, 30 Dec 2014 01:11:38 -0500
-Message-ID: <CAPig+cT9JVkDvUUsbx9HW8HpakCb9SkoQf3LJZc4h3TQTt2ZXQ@mail.gmail.com>
+Subject: Re: [PATCHv8 1/9] receive-pack.c: add documentation for atomic push support
+Date: Tue, 30 Dec 2014 02:08:04 -0500
+Message-ID: <CAPig+cQ7GhrZqXH3zRYTWjwuWKwDNNwLRKG516dXS6et2TURgw@mail.gmail.com>
 References: <1419907007-19387-1-git-send-email-sbeller@google.com>
-	<1419907007-19387-5-git-send-email-sbeller@google.com>
+	<1419907007-19387-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: ronnie sahlberg <ronniesahlberg@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
+	Git List <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Dec 30 07:12:09 2014
+X-From: git-owner@vger.kernel.org Tue Dec 30 08:08:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5q2K-0005rd-EW
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 07:12:08 +0100
+	id 1Y5qud-0006hX-Td
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 08:08:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560AbaL3GLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2014 01:11:40 -0500
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:54032 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751483AbaL3GLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2014 01:11:39 -0500
-Received: by mail-yk0-f172.google.com with SMTP id 131so6952989ykp.3
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 22:11:38 -0800 (PST)
+	id S1751754AbaL3HIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2014 02:08:07 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:48015 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751605AbaL3HIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2014 02:08:06 -0500
+Received: by mail-yh0-f50.google.com with SMTP id 29so7579309yhl.23
+        for <git@vger.kernel.org>; Mon, 29 Dec 2014 23:08:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=Vom/YB0/nkJeFhpZUwpIwQRiaTbc8//RLuoI0TjhGn8=;
-        b=QNQ/KoXjSPZOosBIKnnTznvu+WvXIhhAlP0X++SwhZUADcCWTW7L1qY3n05nC6YFvZ
-         pi0S36Jg2vtNL3WGcTdda6Gh5asFFPbMfFF7D1MM3o44gp1zdAsHuP745A/0N+MgbwBa
-         F9TAtCc/mklUynmv1s2+F/WoA+eXn1G/g2ViCmNdp8d27wM/Slm6sNxyfaDGzoS86kPj
-         w3/Ll0Rpb2RNcL8bKjH1S6LoZ/X6JkW2BwrlaOwpPx4hMj9MfsYxOZ1H1AQSgLBWF9An
-         CIZWlwrOmksuQRtYBsKlBpRppZTxHiePO8cbE0dwbth3X7lPwMp3vIxdQwYXHQP6zWdt
-         74RQ==
-X-Received: by 10.236.14.36 with SMTP id c24mr39205012yhc.166.1419919898500;
- Mon, 29 Dec 2014 22:11:38 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Mon, 29 Dec 2014 22:11:38 -0800 (PST)
-In-Reply-To: <1419907007-19387-5-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: -I5kzod_M2wMEo16EbZRCpBJtDc
+        bh=5KZmXVJoE0rOxFtmYnkPHQKtbJZx/md8Po2zMB6jaJk=;
+        b=x/3vnKCVVr2jfmyBhqrf4ate8Vti/lEAzHfUUMdeYFmRM3P6Nel2GvKjnbiTN/Wxi1
+         EfQrklcZd1KLCdfgXr0EDgGU5ish0oTNaf98jD03BwDLA0pXlabWVrgU3xNw+9+6wcVK
+         wfYRkgnK32L8/ppIhchMf5009QxfBGTZNxshJ5Fz8UA134W7Dx68ICvPFpT0FHmePBnO
+         VvF9jCYrAlGDOxaOZCOFij8EO/hEKxOikWjTedT00YU/os/E+/0pdfJPsZAGvwfuww0l
+         y8V3KFW+/I7MzhKUlcdyL0PmNBVpV5vY4Ke/s440WEdoqiaQFlXhpfYbyXZD3f988bow
+         Q/Gw==
+X-Received: by 10.236.14.36 with SMTP id c24mr39279322yhc.166.1419923284132;
+ Mon, 29 Dec 2014 23:08:04 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Mon, 29 Dec 2014 23:08:04 -0800 (PST)
+In-Reply-To: <1419907007-19387-2-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: Sz8BYhudP77UfR4x53dLgrXnm8c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261913>
 
 On Mon, Dec 29, 2014 at 9:36 PM, Stefan Beller <sbeller@google.com> wrote:
-> No functional changes intended.
+> Subject: receive-pack.c: add documentation for atomic push support
 
-This is useful to know but is of secondary importance, thus should be
-placed after the explanation and justification of the change.
+This patch is doing a lot more than merely adding documentation. It's
+also updating send-pack and receive-pack to be able to negotiate the
+new protocol capability "atomic". The fact that you removed the actual
+advertisement of "atomic" from this patch doesn't turn it into a
+documentation-only patch.
 
-> Subject: receive-pack.c: simplify execute_commands
-> This commit shortens execute_commands by moving some parts of the code
-> to extra functions.
+When Michael raised the issue of the server being "broken" due to
+advertising a capability which it does not yet implement, his
+recommendation[1] was to reorder the patches, not to split out the one
+tiny bit (capability advertisement) from the larger change. Was there
+an insurmountable conflict which prevented you from reordering the
+patches? This is a genuine question since splitting off advertisement
+-- and only advertisement -- to a patch later in the series smells
+like a least-resistance approach, rather than a proper solution to the
+issue Michael raised.
 
-The _real_ reason for moving these bits of code into their own
-functions is that you intend to introduce additional callers in
-subsequent patches. That is what the commit message (including
-subject) should be conveying to the reader.
+[1]: http://article.gmane.org/gmane.comp.version-control.git/261793
 
-The claimed simplification is questionable and not of particular
-importance; and it's misleading to paint it as a goal of the patch.
-Consequently, you could drop mention of it altogether.
-
-More below.
-
-> Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+> This documents the protocol option between send-pack and receive-pack to
+> * allow receive-pack to inform the client that it has atomic push capability
+> * allow send-pack to request atomic push back.
+>
+> There is currently no setting in send-pack to actually request that atomic
+> pushes are to be used yet. This only adds protocol capability not ability
+> for the user to activate it. The capability is also not yet advertised
+> by receive-pack as git doesn't know how to handle it yet.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
+> diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+> index 6d5424c..4f8a7bf 100644
+> --- a/Documentation/technical/protocol-capabilities.txt
+> +++ b/Documentation/technical/protocol-capabilities.txt
+> @@ -18,8 +18,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
+>  and server advertised.  As a consequence of these rules, server MUST
+>  NOT advertise capabilities it does not understand.
+>
+> -The 'report-status', 'delete-refs', 'quiet', and 'push-cert' capabilities
+> -are sent and recognized by the receive-pack (push to server) process.
+> +The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
+> +capabilities are sent and recognized by the receive-pack (push to server)
+> +process.
+>
+>  The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
+>  by both upload-pack and receive-pack protocols.  The 'agent' capability
+> @@ -244,6 +245,14 @@ respond with the 'quiet' capability to suppress server-side progress
+>  reporting if the local progress reporting is also being suppressed
+>  (e.g., via `push -q`, or if stderr does not go to a tty).
+>
+> +atomic
+> +------
+> +
+> +If the server sends the 'atomic' capability it is capable of accepting
+> +atomic pushes. If the pushing client requests this capability, the server
+> +will update the refs in one atomic transaction. Either all refs are
+> +updated or none.
+> +
+>  allow-tip-sha1-in-want
+>  ----------------------
+>
 > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 4e8eaf7..06eb287 100644
+> index 32fc540..4e8eaf7 100644
 > --- a/builtin/receive-pack.c
 > +++ b/builtin/receive-pack.c
-> @@ -1043,11 +1043,40 @@ static void reject_updates_to_hidden(struct command *commands)
+> @@ -40,6 +40,7 @@ static int transfer_unpack_limit = -1;
+>  static int unpack_limit = 100;
+>  static int report_status;
+>  static int use_sideband;
+> +static int use_atomic;
+>  static int quiet;
+>  static int prefer_ofs_delta = 1;
+>  static int auto_update_server_info;
+> @@ -1179,6 +1180,8 @@ static struct command *read_head_info(struct sha1_array *shallow)
+>                                 use_sideband = LARGE_PACKET_MAX;
+>                         if (parse_feature_request(feature_list, "quiet"))
+>                                 quiet = 1;
+> +                       if (parse_feature_request(feature_list, "atomic"))
+> +                               use_atomic = 1;
+>                 }
+>
+>                 if (!strcmp(line, "push-cert")) {
+> diff --git a/send-pack.c b/send-pack.c
+> index 949cb61..6d0c159 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -294,6 +294,8 @@ int send_pack(struct send_pack_args *args,
+>         int use_sideband = 0;
+>         int quiet_supported = 0;
+>         int agent_supported = 0;
+> +       int use_atomic = 0;
+> +       int atomic_supported = 0;
+>         unsigned cmds_sent = 0;
+>         int ret;
+>         struct async demux;
+> @@ -314,6 +316,8 @@ int send_pack(struct send_pack_args *args,
+>                 agent_supported = 1;
+>         if (server_supports("no-thin"))
+>                 args->use_thin_pack = 0;
+> +       if (server_supports("atomic"))
+> +               atomic_supported = 1;
+>         if (args->push_cert) {
+>                 int len;
+>
+> @@ -328,6 +332,10 @@ int send_pack(struct send_pack_args *args,
+>                         "Perhaps you should specify a branch such as 'master'.\n");
+>                 return 0;
 >         }
->  }
->
-> +static int should_process_cmd(struct command *cmd)
-> +{
-> +       if (cmd->error_string)
-> +               return 0;
-> +       if (cmd->skip_update)
-> +               return 0;
-> +       return 1;
-
-Alternately, depending upon the polarity of your brain, you could
-collapse the entire function body to:
-
-    return !cmd->error_string && !cmd->skip_update;
-
-or:
-
-    return !(cmd->error_string || cmd->skip_update);
-
-> +}
+> +       if (args->atomic && !atomic_supported)
+> +               die(_("server does not support --atomic push"));
 > +
-> +static void check_shallow_bugs(struct command *commands,
-> +                              struct shallow_info *si)
-> +{
-> +       struct command *cmd;
-> +       int checked_connectivity = 1;
-> +       for (cmd = commands; cmd; cmd = cmd->next) {
-> +               if (!should_process_cmd(cmd))
-> +                       continue;
-> +
-> +               if (shallow_update && si->shallow_ref[cmd->index]) {
-
-Here, inside the loop, you check 'shallow_update'...
-
-> +                       error("BUG: connectivity check has not been run on ref %s",
-> +                             cmd->ref_name);
-> +                       checked_connectivity = 0;
-> +               }
-> +       }
-> +       if (shallow_update && !checked_connectivity)
-
-And here, after the loop, you check 'shallow_update'.
-
-But, if you examine the overall logic, you will find that this
-function does _nothing_ at all when 'shallow_update' is false (other
-than uselessly looping through 'commands'). Therefore, either check
-'shallow_update' just once at the beginning of the function and exit
-early if false, or have the caller check 'shallow_update' and only
-invoke check_shallow_bugs() if true.
-
-Also, since nothing happens between them, the two conditionals inside
-the loop can be coalesced:
-
-    if (should_process_cmd(cmd) && si->shallow_ref[cmd->index]) {
-
-> +               error("BUG: run 'git fsck' for safety.\n"
-> +                     "If there are errors, try to remove "
-> +                     "the reported refs above");
-
-In v6, you considered this a fatal error in the atomic case, which
-caused the entire transaction to be rolled back. However, in this
-version, this error has no effect whatsoever on the atomic
-transaction, which is a rather significant behavioral departure. Which
-is correct? (This is a genuine question; not at all rhetorical.) If
-failing the entire transaction is the correct thing to do, then this
-is going to need some more work.
-
-> +}
-> +
->  static void execute_commands(struct command *commands,
->                              const char *unpacker_error,
->                              struct shallow_info *si)
->  {
-> -       int checked_connectivity;
->         struct command *cmd;
->         unsigned char sha1[20];
->         struct iterate_data data;
-> @@ -1078,27 +1107,13 @@ static void execute_commands(struct command *commands,
->         free(head_name_to_free);
->         head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
+> +       use_atomic = atomic_supported && args->atomic;
 >
-> -       checked_connectivity = 1;
->         for (cmd = commands; cmd; cmd = cmd->next) {
-> -               if (cmd->error_string)
-> -                       continue;
-> -
-> -               if (cmd->skip_update)
-> +               if (!should_process_cmd(cmd))
->                         continue;
+>         if (status_report)
+>                 strbuf_addstr(&cap_buf, " report-status");
+> @@ -335,6 +343,8 @@ int send_pack(struct send_pack_args *args,
+>                 strbuf_addstr(&cap_buf, " side-band-64k");
+>         if (quiet_supported && (args->quiet || !args->progress))
+>                 strbuf_addstr(&cap_buf, " quiet");
+> +       if (use_atomic)
+> +               strbuf_addstr(&cap_buf, " atomic");
+>         if (agent_supported)
+>                 strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
 >
->                 cmd->error_string = update(cmd, si);
-> -               if (shallow_update && !cmd->error_string &&
-> -                   si->shallow_ref[cmd->index]) {
-> -                       error("BUG: connectivity check has not been run on ref %s",
-> -                             cmd->ref_name);
-> -                       checked_connectivity = 0;
-> -               }
->         }
-> -
-> -       if (shallow_update && !checked_connectivity)
-> -               error("BUG: run 'git fsck' for safety.\n"
-> -                     "If there are errors, try to remove "
-> -                     "the reported refs above");
-> +       check_shallow_bugs(commands, si);
->  }
+> diff --git a/send-pack.h b/send-pack.h
+> index 5635457..b664648 100644
+> --- a/send-pack.h
+> +++ b/send-pack.h
+> @@ -13,7 +13,8 @@ struct send_pack_args {
+>                 use_ofs_delta:1,
+>                 dry_run:1,
+>                 push_cert:1,
+> -               stateless_rpc:1;
+> +               stateless_rpc:1,
+> +               atomic:1;
+>  };
 >
->  static struct command **queue_command(struct command **tail,
+>  int send_pack(struct send_pack_args *args,
 > --
 > 2.2.1.62.g3f15098
