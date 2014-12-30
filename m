@@ -1,311 +1,271 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv8 9/9] t5543-atomic-push.sh: add basic tests for atomic pushes
-Date: Mon, 29 Dec 2014 18:36:47 -0800
-Message-ID: <1419907007-19387-10-git-send-email-sbeller@google.com>
+Subject: [PATCHv8 6/9] receive-pack.c: add execute_commands_atomic function
+Date: Mon, 29 Dec 2014 18:36:44 -0800
+Message-ID: <1419907007-19387-7-git-send-email-sbeller@google.com>
 References: <1419907007-19387-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
 	gitster@pobox.com, sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Tue Dec 30 03:37:40 2014
+X-From: git-owner@vger.kernel.org Tue Dec 30 03:37:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5mgi-00027u-JJ
+	id 1Y5mgh-00027u-Iv
 	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 03:37:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476AbaL3Ch1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 21:37:27 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:56498 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752452AbaL3ChO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 21:37:14 -0500
-Received: by mail-ig0-f170.google.com with SMTP id r2so13146103igi.5
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 18:37:13 -0800 (PST)
+	id S1752479AbaL3Ch3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2014 21:37:29 -0500
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:52268 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752428AbaL3ChK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 21:37:10 -0500
+Received: by mail-ie0-f175.google.com with SMTP id x19so13101502ier.34
+        for <git@vger.kernel.org>; Mon, 29 Dec 2014 18:37:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xrorgjLEI6YfjYLN4fU8fAn3WHFpPN+ULIcz2R3La8o=;
-        b=nsZNlGf/cBqTMVOmdJctEJiZ/CFrGv2W3X+fePL9M4xeMOMB6B87gZx/4ax6ngbAjH
-         sRdqqafsDI2fBj7gBqLNpHzFQqA17BYiD2fd+moiWZZNbaNOMVoMmi00QZUE6z0P7JPr
-         TsdZILRnZfmG/s7hS/9fLeeNI10M8OEY9C93BbQ9CSafyeDXNDHPHWgJO4V+is46QndR
-         y/FRuBVYmkegSRI6a1Ksgt4hZbn2StlgRYt4rST5YOfr9o9a6B/aM2Lsp87LDJO9QlDx
-         LSzj5KowrcHXfA98fchc7rDwfjzERlJS0mgCVKym4K+biHuLeUc7x74kSBOnewf44Yw4
-         OMXw==
+        bh=4geHAwW4fpJcAgixeBWGWnbLUmSjg2r9jDUEGF7cf9M=;
+        b=bh96KvqbFPo+h4+XPOzHVNErbDJHcoNgMk9etxF8pVZ1CCn770xHclgka50jxv8eqH
+         A+R3p3LF7mYL+aslcAGusnfi0DX0v+DQ03tqXwbjfg6MgCX/x4bUQ3i6wKSeRLlFoRZ8
+         7Xk6PSkJuM0nFthJ9tHqcuAlAKqfEwy/FHxGHfQVDpnzthlC+JQ/V8nnydUlx85JeVM0
+         Z4BUItshGRHD5AuQONorrjQe0oFl15P4SKn2RZqJfcL0c1xS2bt+TsmGQrFy+cE5O+9L
+         7nAdq+mpwEvxQp6+jLEtZrD7AlckBcEqEe82kjwFmdFuW25fP8bFSw+inOCik09jMGpT
+         B8Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xrorgjLEI6YfjYLN4fU8fAn3WHFpPN+ULIcz2R3La8o=;
-        b=ONBQ2BiE4lAznKXc0691BQuguHEdeAevwyHZR8ptw+uSLO5tS4KRfK1tLkuBUCrnON
-         uL7b/yh68b1+UaiDqgAtXTplZr+k+IQVeD3kxtpBXxrJsqqMB2MAYsn+ekUk2zIbvLF9
-         Yme9Vt2cAZioeInZguWaA0Uefuj4CHkI+KRk/dAwKRd62Q/J5xNI4Y9W8EmfsOlcWJmg
-         IjWlzF+XbHOm8CGoOR5EkkA98ZQNAJVYEhV7breVwCRQgdVhCsusU/cuf8SOhCMfxu6z
-         PpIt9vIgqPN/ldarIzoch8KWT7Ouboaq1X/OduxCY0hLralXln3JnDgLFHbNYaxe4DCZ
-         ZQ/Q==
-X-Gm-Message-State: ALoCoQkFJqrRElB36gJTlKcKdtGlsuFQxhiR5PSFRPH7ff9eQusKXDkDRY0EWf5UtwHLNA0lmEOT
-X-Received: by 10.42.209.196 with SMTP id gh4mr45837544icb.10.1419907033034;
-        Mon, 29 Dec 2014 18:37:13 -0800 (PST)
+        bh=4geHAwW4fpJcAgixeBWGWnbLUmSjg2r9jDUEGF7cf9M=;
+        b=T9xWdaHX3OMoMHGRwjh7llmMOGMStZrlqvTFRhhYQAdED7a6tfz/ZJNuIqo1hiHX2/
+         BjonFRIaILZKIpO8EG/SxYhQxsWGoQ5eOlZs07n+ATsW3a0ZhwdlNJFvUL2xuc4GMh6m
+         6fWwjb3GcAFrtv/T9+qoqEZ5dSBApJEVR506ZXOlg/kWV7jcq3mHlhllcPOvG7y1Td3p
+         Ze+X1oJsWsQgYfs/p8PF0FjIlDYL4JzRSvQqEk98XAcgENzRuZGEUIDcWUJqZKse79WP
+         3vJ4PLAK5ZdaAyI4/pdn3G+x8s0a5PA3rECx8+eWBN9uIKxbp7+E63TONscByeaUqzsi
+         cQXg==
+X-Gm-Message-State: ALoCoQlcC3b/xdNFKv632D/+Bw9xGUXfDS6P3VdlIuuuUf6ZtEHMQuA7UwXRKs67rC6dcYh9q9TU
+X-Received: by 10.43.19.134 with SMTP id qk6mr18152332icb.29.1419907029267;
+        Mon, 29 Dec 2014 18:37:09 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:5860:dcf1:88a4:141b])
-        by mx.google.com with ESMTPSA id ao5sm15085368igc.3.2014.12.29.18.37.12
+        by mx.google.com with ESMTPSA id kt1sm15070567igb.20.2014.12.29.18.37.08
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Dec 2014 18:37:12 -0800 (PST)
+        Mon, 29 Dec 2014 18:37:08 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1419907007-19387-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261907>
 
-This adds tests for the atomic push option.
-The first four tests check if the atomic option works in
-good conditions and the last three patches check if the atomic
-option prevents any change to be pushed if just one ref cannot
-be updated.
+Update receive-pack to use an atomic transaction iff the client negotiated
+that it wanted atomic push. This leaves the default behavior to be the old
+non-atomic one ref at a time update. This is to cause as little disruption
+as possible to existing clients. It is unknown if there are client scripts
+that depend on the old non-atomic behavior so we make it opt-in for now.
 
+If it turns out over time that there are no client scripts that depend on the
+old behavior we can change git to default to use atomic pushes and instead
+offer an opt-out argument for people that do not want atomic pushes.
+
+Inspired-by: Ronnie Sahlberg <sahlberg@google.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
 Notes:
-    v7, v8: no changes
+    Changes in v8:
+    	removed superflous "}" to make it compile again
     
-    v6:
-    the same as v2, so I can resend the whole series as v6
+    Changes in v7:
+    	Eric suggested to replace "[PATCH 4/7] receive-pack.c:
+    	receive-pack.c: use a single ref_transaction for atomic pushes"
+    	by smaller patches
+    	This is the last patch replacing said large commit.
     
-    v3 v4 v5 were skipped
+    Changes in v6:
+    	This is a complete rewrite of the patch essentially.
+    	Eric suggested to split up the flow into functions, so
+    	it is easier to read. It's more lines of code, but indeed
+    	it's easier to follow. Thanks Eric!
+    
+    	Note there is another patch following this one
+    	moving the helper functions above execute_commands.
+    	I just choose the order of the functions in this patch
+    	to have a better diff (just inserting the call to the function
+    	execute_commands_non_atomic and that function directly follows.)
+    	The next patch of the series will move that up.
+    
+    	Because of the rewrite and the fixes of the previous five
+    	versions there is not much left of Ronnies original patch,
+    	so I'll claim authorship of this one.
     
     Changes v1 -> v2:
-    > Please drop unused comments; they are distracting.
+    	* update(...) assumes to be always in a transaction
+    	* Caring about when to begin/commit transactions is put
+    	  into execute_commands
+    v2->v3:
+    	* meditated about the error flow. Now we always construct a local
+    	  strbuf err if required. Then the flow is easier to follow and
+    	  destruction of it is performed nearby.
+    	* early return in execute_commands if transaction_begin fails.
     
-    ok
+    v3->v4:
+    	* revamp logic again. This should keep the non atomic behavior
+    	  as is (in case of error say so, in non error case just free the
+    	  transaction). In the atomic case we either do nothing (when no error),
+    	  or abort with the goto.
     
-    > It is not wrong per-se, but haven't you already tested in
-    > combination with --mirror in the previous test?
+    		if (!cmd->error_string) {
+    			if (!use_atomic
+    			    && ref_transaction_commit(transaction, &err)) {
+    				ref_transaction_free(transaction);
+    				rp_error("%s", err.buf);
+    				strbuf_release(&err);
+    				cmd->error_string = "failed to update ref";
+    			}
+    		} else if (use_atomic) {
+    			goto atomic_failure;
+    		} else {
+    			ref_transaction_free(transaction);
+    		}
     
-    I fixed the previous tests, so that there is no --mirror
-    and --atomic together. There is still a first --mirror push
-    for setup and a second with --atomic <branchnames> though
+    	 * Having the goto directly there when checking for cmd->error_string,
+    	   we don't need to do it again, so the paragraph explaining the error
+    	   checking is gone as well. (Previous patch had the following, this is
+    	   put at the end of the function, where the goto jumps to and the comment
+    	   has been dropped.
+    +		/*
+    +		 * update(...) may abort early (i.e. because the hook refused to
+    +		 * update that ref) which then doesn't even record a transaction
+    +		 * regarding that ref. Make sure all commands are without error
+    +		 * and then commit atomically.
+    +		 */
+    +		for (cmd = commands; cmd; cmd = cmd->next)
+    +			if (cmd->error_string)
+    +				break;
     
-    > check_branches upstream master HEAD@{2} second HEAD~
+    v4->v5:
+    Eric wrote:
+    > Repeating from my earlier review[1]: If the 'pre-receive' hook
+    > "declines", then this transaction is left dangling (and its resources
+    > leaked).
     
-    A similar function test_ref_upstream is introduced.
+    You're right. The initialization of the transaction is now
+    near the actual loop after the pre receive hook.
     
-    > What's the value of this test?  Isn't it a non-fast-forward check
-    > you already tested in the previous one?
+    > The !use_atomic case (below), calls this error "failed to start
+    > transaction", not merely "transaction error".
     
-    I messed up there. Originally I wanted to test the 2 different
-    stages of rejection. A non-fast-forward check is done locally and
-    we don't even try pushing. But I also want to test if we locally
-    thing all is good, but the server refuses a ref to update.
-    This is now done with the last test named 'atomic push obeys
-    update hook preventing a branch to be pushed'. And that still fails.
+    ok, now both are "transaction failed to start".
+    In all cases where these generic errors are reported,
+    we do have a rp_error(...) with details.
     
-    I'll investigate that, while still sending out the series for another
-    review though.
+    > Furthermore, in the use_atomic case (also below), when a commit fails,
+    > you assign err.buf to cmd->error_string rather than a generic
+    > "transaction error" message. What differs between these cases which
+    > makes the generic message preferable here over the more specific
+    > err.buf message?
     
-    * Redone the test helper, there is test_ref_upstream now.
-      This tests explicitely for SHA1 values of the ref.
-      (It's needed in the last test for example. The git push fails,
-      but still modifies the ref :/ )
-    * checked all && chains and repaired them
-    * sometimes make use of git -C <workdir>
+    They are the same now.
     
-    Notes v1:
-    Originally Ronnie had a similar patch prepared. But as I added
-    more tests and cleaned up the existing tests (e.g. use test_commit
-    instead of "echo one >file && gitadd file && git commit -a -m 'one'",
-    removal of dead code), the file has changed so much that I'd rather
-    take ownership.
+    > Repeating from my earlier review[1]: This is leaking 'transaction' for
+    > each successful commit (and only freeing it upon commit error).
+    
+    Right. I thought I had it covered with the else clause. Of course not.
+    
+    > At the end of this function, strbuf_release(&err) is invoked, which
+    > leaves all these cmd->error_strings dangling.
+    
+    I removed all assignments of err.buf now.
+    
+    > goto's can help simplify error-handling when multiple conditional
+    > branches need to perform common cleanup, however, this label
+    > corresponds to only a single goto statement.
+    
+    moved up again.
 
- t/t5543-atomic-push.sh | 178 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 178 insertions(+)
- create mode 100755 t/t5543-atomic-push.sh
+ builtin/receive-pack.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 49 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-new file mode 100755
-index 0000000..b81a542
---- /dev/null
-+++ b/t/t5543-atomic-push.sh
-@@ -0,0 +1,178 @@
-+#!/bin/sh
-+
-+test_description='pushing to a repository using the atomic push option'
-+
-+. ./test-lib.sh
-+
-+mk_repo_pair () {
-+	rm -rf workbench upstream &&
-+	test_create_repo upstream &&
-+	test_create_repo workbench &&
-+	(
-+		cd upstream &&
-+		git config receive.denyCurrentBranch warn
-+	) &&
-+	(
-+		cd workbench &&
-+		git remote add up ../upstream
-+	)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 5f44466..35a2264 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1076,8 +1076,8 @@ static void check_shallow_bugs(struct command *commands,
+ 		      "the reported refs above");
+ }
+ 
+-static void execute_commands_loop(struct command *commands,
+-				  struct shallow_info *si)
++static void execute_commands_non_atomic(struct command *commands,
++					struct shallow_info *si)
+ {
+ 	struct command *cmd;
+ 	struct strbuf err = STRBUF_INIT;
+@@ -1104,7 +1104,50 @@ static void execute_commands_loop(struct command *commands,
+ 		}
+ 		ref_transaction_free(transaction);
+ 	}
++	strbuf_release(&err);
 +}
 +
-+# Compare the ref ($1) in upstream with a ref value from workbench ($2)
-+# i.e. test_refs second HEAD@{2}
-+test_refs () {
-+	test $# = 2 &&
-+	git -C upstream rev-parse --verify "$1" >expect &&
-+	git -C workbench rev-parse --verify "$2" >actual &&
-+	test_cmp expect actual
-+}
++static void execute_commands_atomic(struct command *commands,
++					struct shallow_info *si)
++{
++	struct command *cmd;
++	struct strbuf err = STRBUF_INIT;
++	const char *reported_error = "atomic push failure";
 +
-+test_expect_success 'atomic push works for a single branch' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git push --mirror up &&
-+		test_commit two &&
-+		git push --atomic up master
-+	) &&
-+	test_refs master master
-+'
++	transaction = ref_transaction_begin(&err);
++	if (!transaction) {
++		rp_error("%s", err.buf);
++		strbuf_reset(&err);
++		reported_error = "transaction failed to start";
++		goto failure;
++	}
 +
-+test_expect_success 'atomic push works for two branches' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git branch second &&
-+		git push --mirror up &&
-+		test_commit two &&
-+		git checkout second &&
-+		test_commit three &&
-+		git push --atomic up master second
-+	) &&
-+	test_refs master master &&
-+	test_refs second second
-+'
++	for (cmd = commands; cmd; cmd = cmd->next) {
++		if (!should_process_cmd(cmd))
++			continue;
+ 
++		cmd->error_string = update(cmd, si);
 +
-+test_expect_success 'atomic push works in combination with --mirror' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git checkout -b second &&
-+		test_commit two &&
-+		git push --atomic --mirror up
-+	) &&
-+	test_refs master master &&
-+	test_refs second second
-+'
++		if (cmd->error_string)
++			goto failure;
++	}
 +
-+test_expect_success 'atomic push works in combination with --force' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git branch second master &&
-+		test_commit two_a &&
-+		git checkout second &&
-+		test_commit two_b &&
-+		test_commit three_b &&
-+		test_commit four &&
-+		git push --mirror up &&
-+		# The actual test is below
-+		git checkout master &&
-+		test_commit three_a &&
-+		git checkout second &&
-+		git reset --hard HEAD^ &&
-+		git push --force --atomic up master second
-+	) &&
-+	test_refs master master &&
-+	test_refs second second
-+'
++	if (ref_transaction_commit(transaction, &err)) {
++		rp_error("%s", err.buf);
++		reported_error = "atomic transaction failed";
++		goto failure;
++	}
 +
-+# set up two branches where master can be pushed but second can not
-+# (non-fast-forward). Since second can not be pushed the whole operation
-+# will fail and leave master untouched.
-+test_expect_success 'atomic push fails if one branch fails' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git checkout -b second master &&
-+		test_commit two &&
-+		test_commit three &&
-+		test_commit four &&
-+		git push --mirror up &&
-+		git reset --hard HEAD~2 &&
-+		test_commit five &&
-+		git checkout master &&
-+		test_commit six &&
-+		test_must_fail git push --atomic --all up
-+	) &&
-+	test_refs master HEAD@{7} &&
-+	test_refs second HEAD@{4}
-+'
++	ref_transaction_free(transaction);
++	strbuf_release(&err);
++	return;
 +
-+test_expect_success 'atomic push fails if one tag fails remotely' '
-+	# prepare the repo
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git checkout -b second master &&
-+		test_commit two &&
-+		git push --mirror up
-+	) &&
-+	# a third party modifies the server side:
-+	(
-+		cd upstream &&
-+		git checkout second &&
-+		git tag test_tag second
-+	) &&
-+	# see if we can now push both branches.
-+	(
-+		cd workbench &&
-+		git checkout master &&
-+		test_commit three &&
-+		git checkout second &&
-+		test_commit four &&
-+		git tag test_tag &&
-+		test_must_fail git push --tags --atomic up master second
-+	) &&
-+	test_refs master HEAD@{3} &&
-+	test_refs second HEAD@{1}
-+'
++failure:
++	for (cmd = commands; cmd; cmd = cmd->next)
++		if (!cmd->error_string)
++			cmd->error_string = reported_error;
 +
-+test_expect_success 'atomic push obeys update hook preventing a branch to be pushed' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		test_commit one &&
-+		git checkout -b second master &&
-+		test_commit two &&
-+		git push --mirror up
-+	) &&
-+	(
-+		cd upstream &&
-+		HOOKDIR="$(git rev-parse --git-dir)/hooks" &&
-+		HOOK="$HOOKDIR/update" &&
-+		mkdir -p "$HOOKDIR" &&
-+		write_script "$HOOK" <<-\EOF
-+			# only allow update to master from now on
-+			test "$1" = "refs/heads/master"
-+		EOF
-+	) &&
-+	(
-+		cd workbench &&
-+		git checkout master &&
-+		test_commit three &&
-+		git checkout second &&
-+		test_commit four &&
-+		test_must_fail git push --atomic up master second
-+	) &&
-+	test_refs master HEAD@{3} &&
-+	test_refs second HEAD@{1}
-+'
-+
-+test_done
++	ref_transaction_free(transaction);
+ 	strbuf_release(&err);
+ }
+ 
+@@ -1142,7 +1185,10 @@ static void execute_commands(struct command *commands,
+ 	free(head_name_to_free);
+ 	head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
+ 
+-	execute_commands_loop(commands, si);
++	if (use_atomic)
++		execute_commands_atomic(commands, si);
++	else
++		execute_commands_non_atomic(commands, si);
+ 
+ 	check_shallow_bugs(commands, si);
+ }
 -- 
 2.2.1.62.g3f15098
