@@ -1,121 +1,115 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/9] atomic pushes
-Date: Tue, 30 Dec 2014 15:41:29 -0800
-Message-ID: <1419982898-23108-1-git-send-email-sbeller@google.com>
+Subject: [PATCHv9 2/9] receive-pack.c: move iterating over all commands outside execute_commands
+Date: Tue, 30 Dec 2014 15:41:31 -0800
+Message-ID: <1419982898-23108-3-git-send-email-sbeller@google.com>
+References: <1419982898-23108-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, sunshine@sunshineco.com, mhagger@alum.mit.edu,
 	jrnieder@gmail.com, ronniesahlberg@gmail.com,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 31 00:41:52 2014
+X-From: git-owner@vger.kernel.org Wed Dec 31 00:41:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y66QB-0007kt-HN
-	for gcvg-git-2@plane.gmane.org; Wed, 31 Dec 2014 00:41:51 +0100
+	id 1Y66QD-0007kt-7Q
+	for gcvg-git-2@plane.gmane.org; Wed, 31 Dec 2014 00:41:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbaL3Xlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2014 18:41:46 -0500
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:64802 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425AbaL3Xlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2014 18:41:45 -0500
-Received: by mail-ie0-f182.google.com with SMTP id x19so14401420ier.13
-        for <git@vger.kernel.org>; Tue, 30 Dec 2014 15:41:44 -0800 (PST)
+	id S1751939AbaL3Xlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2014 18:41:49 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:55167 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854AbaL3Xlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2014 18:41:47 -0500
+Received: by mail-ig0-f175.google.com with SMTP id h15so13134232igd.8
+        for <git@vger.kernel.org>; Tue, 30 Dec 2014 15:41:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=TUcabuGQxS9GyoyH8x5rrqslxfSOuWcsL+X7Y3ShtGM=;
-        b=erwDfGIO+/5nwK1J3LBqhnFrgL3pAUVK7UKHxbZieozAWSenoug8KVSUrAD7CfJyx8
-         y5GrF3L74goFmnswJjnmkrDWE9hljRU2xZuFsmT7kbKSFD3uK3A5JAEo8jvaKHiG4/vJ
-         eMFEQ4poW500YoCJhETgfluLdJymfyVEBCZHskQnBqK0+KxbpxeViSZLWEjyowpFKBQJ
-         Xz/F5ic5r0t/G38UpwIQV4l6jOIoRNWF7touI0pW9Ce5TMd4nlWujbLEtNUi+EJ3/SFS
-         sr77MmRXf3d6IgECAFO9gZtzi9/TMBvhz+ehmb4hqDVnVcrZfqdpQyN0aMGLM2oBiu/R
-         r+5A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=5LYCvYm4jSOUftbuN0ph5Mq6XmkVD+zjzKvgbp94aGA=;
+        b=Lyoexo3g8R5plMISh15Nhps5bgyDZ3cHCdxP7yrPH1K8XLGCeMXWDRu8x0t7XBK5nc
+         52Wov4M+F5QDIkPhZMfxIb6hpEwiTCq651SNQD6ZuS6PhVYp+wWVIOrnpaApzYw7905O
+         WE8ALdjLzrM5FAaj8se6EAnub6M06aYX5IB8BDc0W4Tem1sEG6zBt9dyzz5GkBzh+2JZ
+         2/r/8bcNl8w+WQmakY1VyixLKiu7pMzL4kHuBnptFzZ4KSoze5EH57nUB3vjCuA55bga
+         GVqxKCkzXz2Jmi952iLeFHRmZs6V9Zgb25K167Xq22iWYttauEaoNvhT3oy/kQhQJCdK
+         o4UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=TUcabuGQxS9GyoyH8x5rrqslxfSOuWcsL+X7Y3ShtGM=;
-        b=X0TCoLpX6tOcKJLC5Vd+8ukynL0gGpncLJMB/lzPG0UX3hkD49TDV5skCj2gwTGBiw
-         AYOowjlVd5/xF5sEsdEZt9NS2qk16sIsw+RnvleJ5NYnrvPAFRfUNxMKlzWtH1DZ4JUu
-         xp3UWsfMAOD9UPxpSOwYs7mnezAKRsf/gh9esuVm2Gb5VAgPJR2l+B7hti5UF5Dtiqia
-         ZuYd0y3lyGquLZU9awLsqT1A7A0fKVEihSRn9VmADy4zyXq4wYI8ktxJf44cfTI9p/XI
-         VFdNzA6d2YExFvLPg9HqsZ5shGzEqCKBCQTEI8RUsfhP1UBckbcU5lyN/dB0azBg+YRk
-         2NAQ==
-X-Gm-Message-State: ALoCoQkH/iMcc5lVFBQzgvma0g7tbH0Z+8FJ88HFjFv4YozUg5kjOG+1fc3lbussD0a/TEYAE06G
-X-Received: by 10.42.201.212 with SMTP id fb20mr48235950icb.2.1419982904522;
-        Tue, 30 Dec 2014 15:41:44 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=5LYCvYm4jSOUftbuN0ph5Mq6XmkVD+zjzKvgbp94aGA=;
+        b=POz4iO4gy5WWP9uZhIiS3U2s58aZymVIYGLyR7WdmSUbUGDfp0HgV9BmjKf1dOogxE
+         2MWtTXCbmxgnMzxVHsm+49jFnCS8JhWGYb8hhFTujLNbs/wf5zdREBFgpyDG/I6QTXfw
+         oKoOoHXoRtpkBcJqzAxMvILL2lvoUJipGD/xsnBerefltl9jIX47culhfk1BQMqYWOUf
+         +Tu4/LKtAkn5H32LtAyitVDvDFZZm1KZxZIozIdMRLaerh97LC9xGtzrV+E9lgH4tfkk
+         7qHePSFXn9ix1YpWuHGxPvprA/xfVVJ1pL9USXZEHNmiexFS3v+pr1/n+VPudDqa/4GM
+         zbpA==
+X-Gm-Message-State: ALoCoQlJ+yo775qZMGjID90D42tDUO0jusQQUBINNKY9xPWiYlIncASR7qScZ88eN0D+gP/NyzRT
+X-Received: by 10.42.4.201 with SMTP id 9mr48541013ict.23.1419982907018;
+        Tue, 30 Dec 2014 15:41:47 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:e545:220a:6cf6:2fed])
-        by mx.google.com with ESMTPSA id m127sm19662414ioe.32.2014.12.30.15.41.43
+        by mx.google.com with ESMTPSA id n17sm17202258igi.2.2014.12.30.15.41.46
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Dec 2014 15:41:44 -0800 (PST)
+        Tue, 30 Dec 2014 15:41:46 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
+In-Reply-To: <1419982898-23108-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261954>
 
-This patch series adds a flag to git push to update the remote refs atomically.
+This commit allows us in a later patch to easily distinguish between
+the non atomic way to update the received refs and the atomic way which
+is introduced in a later patch.
 
-All comments from Eric and Junio have been incorporated.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-The patch to negotiate the atomic push protocol was ripped apart
-and we have one commit for the receiving side and one for the sending side,
-so the order of new functionality introduced should not bring any bisect
-breakages. 
+Notes:
+    v9:
+     new and shiny. But makes the next patch easier to review.
 
-The remote side learned the receive.advertiseatomic config option
-and a test was added, that the user cannot push any more if they ask
-for --atomic but the server doesn't advertise atomic.
+ builtin/receive-pack.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-
-But as of writing this cover letter I have a question on the security 
-implications here. If we ask the remote side to not advertise atomic, 
-(say because of some problem with too many file descriptors open)
-but the client side (being a malicious client, not possible with the code 
-presented in this patch series) does ask for atomic, the server should not
-obey the request to handle it atomic. I just added that as well.
-
-How about other capabilites requested such as "report-status",
-"side-band-64k" and "quiet" ? 
-
-This series applies on top of origin/mh/reflog-expire
-
-Any comments are welcome!
-
-Thanks,
-Stefan
-
-Ronnie Sahlberg (3):
-  receive-pack.c: negotiate atomic push support
-  send-pack.c: add --atomic command line argument
-  push.c: add an --atomic argument
-
-Stefan Beller (6):
-  receive-pack.c: shorten the execute_commands loop over all commands
-  receive-pack.c: move iterating over all commands outside
-    execute_commands
-  receive-pack.c: move transaction handling in a central place
-  receive-pack.c: add execute_commands_atomic function
-  send-pack: rename ref_update_to_be_sent to check_to_send_update
-  t5543-atomic-push.sh: add basic tests for atomic pushes
-
- Documentation/git-push.txt                        |   7 +-
- Documentation/git-send-pack.txt                   |   7 +-
- Documentation/technical/protocol-capabilities.txt |  13 +-
- builtin/push.c                                    |   5 +
- builtin/receive-pack.c                            | 166 ++++++++++++++----
- builtin/send-pack.c                               |   6 +-
- remote.h                                          |   3 +-
- send-pack.c                                       |  65 +++++++-
- send-pack.h                                       |   3 +-
- t/t5543-atomic-push.sh                            | 194 ++++++++++++++++++++++
- transport.c                                       |   5 +
- transport.h                                       |   1 +
- 12 files changed, 425 insertions(+), 50 deletions(-)
- create mode 100755 t/t5543-atomic-push.sh
-
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 68b9cfb..941aae5 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1065,6 +1065,18 @@ static void check_shallow_bugs(struct command *commands,
+ 		      "the reported refs above");
+ }
+ 
++static void execute_commands_non_atomic(struct command *commands,
++					struct shallow_info *si)
++{
++	struct command *cmd;
++	for (cmd = commands; cmd; cmd = cmd->next) {
++		if (!should_process_cmd(cmd))
++			continue;
++
++		cmd->error_string = update(cmd, si);
++	}
++}
++
+ static void execute_commands(struct command *commands,
+ 			     const char *unpacker_error,
+ 			     struct shallow_info *si)
+@@ -1099,12 +1111,7 @@ static void execute_commands(struct command *commands,
+ 	free(head_name_to_free);
+ 	head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
+ 
+-	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!should_process_cmd(cmd))
+-			continue;
+-
+-		cmd->error_string = update(cmd, si);
+-	}
++	execute_commands_non_atomic(commands, si);
+ 
+ 	if (shallow_update)
+ 		check_shallow_bugs(commands, si);
 -- 
 2.2.1.62.g3f15098
