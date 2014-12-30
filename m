@@ -1,95 +1,311 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv8 7/9] receive-pack.c: enable atomic push protocol support
-Date: Mon, 29 Dec 2014 18:36:45 -0800
-Message-ID: <1419907007-19387-8-git-send-email-sbeller@google.com>
+Subject: [PATCHv8 9/9] t5543-atomic-push.sh: add basic tests for atomic pushes
+Date: Mon, 29 Dec 2014 18:36:47 -0800
+Message-ID: <1419907007-19387-10-git-send-email-sbeller@google.com>
 References: <1419907007-19387-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: ronniesahlberg@gmail.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
 	gitster@pobox.com, sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Tue Dec 30 03:37:30 2014
+X-From: git-owner@vger.kernel.org Tue Dec 30 03:37:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y5mga-00020N-C8
-	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 03:37:28 +0100
+	id 1Y5mgi-00027u-JJ
+	for gcvg-git-2@plane.gmane.org; Tue, 30 Dec 2014 03:37:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752468AbaL3ChQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2014 21:37:16 -0500
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:41377 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752431AbaL3ChL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2014 21:37:11 -0500
-Received: by mail-ie0-f170.google.com with SMTP id rd18so13197116iec.1
-        for <git@vger.kernel.org>; Mon, 29 Dec 2014 18:37:10 -0800 (PST)
+	id S1752476AbaL3Ch1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2014 21:37:27 -0500
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:56498 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752452AbaL3ChO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2014 21:37:14 -0500
+Received: by mail-ig0-f170.google.com with SMTP id r2so13146103igi.5
+        for <git@vger.kernel.org>; Mon, 29 Dec 2014 18:37:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zrULD7F1NdRhR2WzzoDzxTHumvhO0gC9Wd1v9wbltAA=;
-        b=STadDTvcwrEWJyhRR5s6xhlkqfdr3PRydGG/XGRQyAGw1rvK8Dsm7tUi/er1GD+Lfa
-         di9thPDk7LANAubWsAL3HFxkJi6qMa+WW2plkLOn7MhP9ato2q6f6BDkAzhIKPk5yseD
-         /o8hvtuHIkHriUEmK/rO2Ci3Wxut6M1SJ1PvqJsUrzSpUqItmUJFiUWUWiyM0fTlSC1L
-         MJjqtnSS6JN6M8olTyvWLw1UPi1WtqxklZ1xg2EUzgNnBJLNH0WG8eF0EYSNJDM+zu2p
-         5k6faj882MSRpjoWpZR7T/emno8er4GDyI2tJC2fZQvzyey9L4fb/dhDowuiKWVvkvaG
-         j9Bw==
+        bh=xrorgjLEI6YfjYLN4fU8fAn3WHFpPN+ULIcz2R3La8o=;
+        b=nsZNlGf/cBqTMVOmdJctEJiZ/CFrGv2W3X+fePL9M4xeMOMB6B87gZx/4ax6ngbAjH
+         sRdqqafsDI2fBj7gBqLNpHzFQqA17BYiD2fd+moiWZZNbaNOMVoMmi00QZUE6z0P7JPr
+         TsdZILRnZfmG/s7hS/9fLeeNI10M8OEY9C93BbQ9CSafyeDXNDHPHWgJO4V+is46QndR
+         y/FRuBVYmkegSRI6a1Ksgt4hZbn2StlgRYt4rST5YOfr9o9a6B/aM2Lsp87LDJO9QlDx
+         LSzj5KowrcHXfA98fchc7rDwfjzERlJS0mgCVKym4K+biHuLeUc7x74kSBOnewf44Yw4
+         OMXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zrULD7F1NdRhR2WzzoDzxTHumvhO0gC9Wd1v9wbltAA=;
-        b=Rhz/BucHYrhXpaizR+DLaOOR2VlG2UpF/wO6X5pbAF6SDfSZgF6yzMhQZuQ4UhEqTA
-         OcELL6nip94dp73ssDGtMZ1+i0axzFDCVPH+U8b2JXznvevaV/CWxoPZBdEgHOsLgram
-         s040sO66f8y5JmrFjHdfWrD8qTWBfXP6MSYkWl2/N3EH/3nGxwvQotbZk65lKq8IrHNy
-         zjMe/bu8Cz8u7VltF0xXlFCleQlPF0LmOWApdH8cfSZk0IxLMAwpxq1TlE3ZcLuXCTH9
-         nUjG3LIuxxx5PRD3+Doh3Os8yDNCq/1j40OGLYIcbFtOCF40Xv8Hrb/pwtPf8Y8dk7D1
-         Ecng==
-X-Gm-Message-State: ALoCoQn2eVFxzF3FuZm543kmNZk80i2OQQjIM2ofxjEYOAcDsRPWy7E20kGl+kxHWOEBpS9fsa8h
-X-Received: by 10.107.6.196 with SMTP id f65mr52539786ioi.54.1419907030512;
-        Mon, 29 Dec 2014 18:37:10 -0800 (PST)
+        bh=xrorgjLEI6YfjYLN4fU8fAn3WHFpPN+ULIcz2R3La8o=;
+        b=ONBQ2BiE4lAznKXc0691BQuguHEdeAevwyHZR8ptw+uSLO5tS4KRfK1tLkuBUCrnON
+         uL7b/yh68b1+UaiDqgAtXTplZr+k+IQVeD3kxtpBXxrJsqqMB2MAYsn+ekUk2zIbvLF9
+         Yme9Vt2cAZioeInZguWaA0Uefuj4CHkI+KRk/dAwKRd62Q/J5xNI4Y9W8EmfsOlcWJmg
+         IjWlzF+XbHOm8CGoOR5EkkA98ZQNAJVYEhV7breVwCRQgdVhCsusU/cuf8SOhCMfxu6z
+         PpIt9vIgqPN/ldarIzoch8KWT7Ouboaq1X/OduxCY0hLralXln3JnDgLFHbNYaxe4DCZ
+         ZQ/Q==
+X-Gm-Message-State: ALoCoQkFJqrRElB36gJTlKcKdtGlsuFQxhiR5PSFRPH7ff9eQusKXDkDRY0EWf5UtwHLNA0lmEOT
+X-Received: by 10.42.209.196 with SMTP id gh4mr45837544icb.10.1419907033034;
+        Mon, 29 Dec 2014 18:37:13 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:5860:dcf1:88a4:141b])
-        by mx.google.com with ESMTPSA id 3sm18508247iof.3.2014.12.29.18.37.09
+        by mx.google.com with ESMTPSA id ao5sm15085368igc.3.2014.12.29.18.37.12
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 29 Dec 2014 18:37:10 -0800 (PST)
+        Mon, 29 Dec 2014 18:37:12 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1419907007-19387-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261906>
 
-This enables the atomic protocol option as implemented in the previous
-patches.
+This adds tests for the atomic push option.
+The first four tests check if the atomic option works in
+good conditions and the last three patches check if the atomic
+option prevents any change to be pushed if just one ref cannot
+be updated.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
 Notes:
-    v8:
-     no changes
+    v7, v8: no changes
     
-    v7:
-    * new with v7 of the patch series.
-    * this was part of the first patch in the series, moved back here
-      for bisectability
+    v6:
+    the same as v2, so I can resend the whole series as v6
+    
+    v3 v4 v5 were skipped
+    
+    Changes v1 -> v2:
+    > Please drop unused comments; they are distracting.
+    
+    ok
+    
+    > It is not wrong per-se, but haven't you already tested in
+    > combination with --mirror in the previous test?
+    
+    I fixed the previous tests, so that there is no --mirror
+    and --atomic together. There is still a first --mirror push
+    for setup and a second with --atomic <branchnames> though
+    
+    > check_branches upstream master HEAD@{2} second HEAD~
+    
+    A similar function test_ref_upstream is introduced.
+    
+    > What's the value of this test?  Isn't it a non-fast-forward check
+    > you already tested in the previous one?
+    
+    I messed up there. Originally I wanted to test the 2 different
+    stages of rejection. A non-fast-forward check is done locally and
+    we don't even try pushing. But I also want to test if we locally
+    thing all is good, but the server refuses a ref to update.
+    This is now done with the last test named 'atomic push obeys
+    update hook preventing a branch to be pushed'. And that still fails.
+    
+    I'll investigate that, while still sending out the series for another
+    review though.
+    
+    * Redone the test helper, there is test_ref_upstream now.
+      This tests explicitely for SHA1 values of the ref.
+      (It's needed in the last test for example. The git push fails,
+      but still modifies the ref :/ )
+    * checked all && chains and repaired them
+    * sometimes make use of git -C <workdir>
+    
+    Notes v1:
+    Originally Ronnie had a similar patch prepared. But as I added
+    more tests and cleaned up the existing tests (e.g. use test_commit
+    instead of "echo one >file && gitadd file && git commit -a -m 'one'",
+    removal of dead code), the file has changed so much that I'd rather
+    take ownership.
 
- builtin/receive-pack.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t5543-atomic-push.sh | 178 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 178 insertions(+)
+ create mode 100755 t/t5543-atomic-push.sh
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 35a2264..61eba4e 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -173,7 +173,8 @@ static void show_ref(const char *path, const unsigned char *sha1)
- 		struct strbuf cap = STRBUF_INIT;
- 
- 		strbuf_addstr(&cap,
--			      "report-status delete-refs side-band-64k quiet");
-+			      "report-status delete-refs side-band-64k quiet "
-+			      "atomic");
- 		if (prefer_ofs_delta)
- 			strbuf_addstr(&cap, " ofs-delta");
- 		if (push_cert_nonce)
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+new file mode 100755
+index 0000000..b81a542
+--- /dev/null
++++ b/t/t5543-atomic-push.sh
+@@ -0,0 +1,178 @@
++#!/bin/sh
++
++test_description='pushing to a repository using the atomic push option'
++
++. ./test-lib.sh
++
++mk_repo_pair () {
++	rm -rf workbench upstream &&
++	test_create_repo upstream &&
++	test_create_repo workbench &&
++	(
++		cd upstream &&
++		git config receive.denyCurrentBranch warn
++	) &&
++	(
++		cd workbench &&
++		git remote add up ../upstream
++	)
++}
++
++# Compare the ref ($1) in upstream with a ref value from workbench ($2)
++# i.e. test_refs second HEAD@{2}
++test_refs () {
++	test $# = 2 &&
++	git -C upstream rev-parse --verify "$1" >expect &&
++	git -C workbench rev-parse --verify "$2" >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success 'atomic push works for a single branch' '
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		test_commit one &&
++		git push --mirror up &&
++		test_commit two &&
++		git push --atomic up master
++	) &&
++	test_refs master master
++'
++
++test_expect_success 'atomic push works for two branches' '
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		test_commit one &&
++		git branch second &&
++		git push --mirror up &&
++		test_commit two &&
++		git checkout second &&
++		test_commit three &&
++		git push --atomic up master second
++	) &&
++	test_refs master master &&
++	test_refs second second
++'
++
++test_expect_success 'atomic push works in combination with --mirror' '
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		test_commit one &&
++		git checkout -b second &&
++		test_commit two &&
++		git push --atomic --mirror up
++	) &&
++	test_refs master master &&
++	test_refs second second
++'
++
++test_expect_success 'atomic push works in combination with --force' '
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		test_commit one &&
++		git branch second master &&
++		test_commit two_a &&
++		git checkout second &&
++		test_commit two_b &&
++		test_commit three_b &&
++		test_commit four &&
++		git push --mirror up &&
++		# The actual test is below
++		git checkout master &&
++		test_commit three_a &&
++		git checkout second &&
++		git reset --hard HEAD^ &&
++		git push --force --atomic up master second
++	) &&
++	test_refs master master &&
++	test_refs second second
++'
++
++# set up two branches where master can be pushed but second can not
++# (non-fast-forward). Since second can not be pushed the whole operation
++# will fail and leave master untouched.
++test_expect_success 'atomic push fails if one branch fails' '
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		test_commit one &&
++		git checkout -b second master &&
++		test_commit two &&
++		test_commit three &&
++		test_commit four &&
++		git push --mirror up &&
++		git reset --hard HEAD~2 &&
++		test_commit five &&
++		git checkout master &&
++		test_commit six &&
++		test_must_fail git push --atomic --all up
++	) &&
++	test_refs master HEAD@{7} &&
++	test_refs second HEAD@{4}
++'
++
++test_expect_success 'atomic push fails if one tag fails remotely' '
++	# prepare the repo
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		test_commit one &&
++		git checkout -b second master &&
++		test_commit two &&
++		git push --mirror up
++	) &&
++	# a third party modifies the server side:
++	(
++		cd upstream &&
++		git checkout second &&
++		git tag test_tag second
++	) &&
++	# see if we can now push both branches.
++	(
++		cd workbench &&
++		git checkout master &&
++		test_commit three &&
++		git checkout second &&
++		test_commit four &&
++		git tag test_tag &&
++		test_must_fail git push --tags --atomic up master second
++	) &&
++	test_refs master HEAD@{3} &&
++	test_refs second HEAD@{1}
++'
++
++test_expect_success 'atomic push obeys update hook preventing a branch to be pushed' '
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		test_commit one &&
++		git checkout -b second master &&
++		test_commit two &&
++		git push --mirror up
++	) &&
++	(
++		cd upstream &&
++		HOOKDIR="$(git rev-parse --git-dir)/hooks" &&
++		HOOK="$HOOKDIR/update" &&
++		mkdir -p "$HOOKDIR" &&
++		write_script "$HOOK" <<-\EOF
++			# only allow update to master from now on
++			test "$1" = "refs/heads/master"
++		EOF
++	) &&
++	(
++		cd workbench &&
++		git checkout master &&
++		test_commit three &&
++		git checkout second &&
++		test_commit four &&
++		test_must_fail git push --atomic up master second
++	) &&
++	test_refs master HEAD@{3} &&
++	test_refs second HEAD@{1}
++'
++
++test_done
 -- 
 2.2.1.62.g3f15098
