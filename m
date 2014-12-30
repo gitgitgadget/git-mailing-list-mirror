@@ -1,153 +1,181 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv9 6/9] send-pack: rename ref_update_to_be_sent to check_to_send_update
-Date: Tue, 30 Dec 2014 15:41:35 -0800
-Message-ID: <1419982898-23108-7-git-send-email-sbeller@google.com>
+Subject: [PATCHv9 8/9] push.c: add an --atomic argument
+Date: Tue, 30 Dec 2014 15:41:37 -0800
+Message-ID: <1419982898-23108-9-git-send-email-sbeller@google.com>
 References: <1419982898-23108-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, sunshine@sunshineco.com, mhagger@alum.mit.edu,
 	jrnieder@gmail.com, ronniesahlberg@gmail.com,
+	Ronnie Sahlberg <sahlberg@google.com>,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 31 00:42:18 2014
+X-From: git-owner@vger.kernel.org Wed Dec 31 00:42:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y66QY-00086C-OM
+	id 1Y66QZ-00086C-B4
 	for gcvg-git-2@plane.gmane.org; Wed, 31 Dec 2014 00:42:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033AbaL3Xlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752077AbaL3XmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2014 18:42:08 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:62974 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751952AbaL3Xlz (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 30 Dec 2014 18:41:55 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:34342 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751969AbaL3Xlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2014 18:41:53 -0500
-Received: by mail-ie0-f174.google.com with SMTP id at20so13790979iec.5
-        for <git@vger.kernel.org>; Tue, 30 Dec 2014 15:41:52 -0800 (PST)
+Received: by mail-ig0-f179.google.com with SMTP id r2so13201079igi.6
+        for <git@vger.kernel.org>; Tue, 30 Dec 2014 15:41:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mmUBHbwaUXwfo0GCtSnhdamwk+yGpLtPsuUnUzXPbr8=;
-        b=Al6seHvrVQeI9UgWGOV66cd34SqpdpqM+FblkrERKx8Ka1B/sSXzskYk3g4P7erXU5
-         dCjztAa+o2RzPDcg82YS9UuAizQyV2vl+xO8EQSCMRC8WpU9ugDzjeC2YDTykd0khZ7v
-         5jShNxFw2uPf0S7HakHwDrCPjMf2cJwMyVhDxIvljxW/Cf1Uly3OW2Z06fwrSxn40bPY
-         X1sOcVKcSZ6rBYFJeCNn1BgB9Bh0HKDQ9uWwVWm6us4mvzDTCYJeTKLjFKHBkQq7vBZU
-         bZ/4fRfQWYogMoH55fJHqZaspa5p0vroSfwidqjq9I2zGLfnOnP4Bl0QH6P/ba+uBhBc
-         I+gg==
+        bh=kqty1PFti0+Kaji+oIXvHCYswpFCZpII2A/5VatIMyc=;
+        b=Glga7bjaS++eDha4TG3O7KfAsDSBWMag6AqIZPksGOnQamOASNnHIlIbp2iENS9tN6
+         XO2eDZJE2t8Fa8QzyP3d2rf7g4NADvf90tPGwmpsfPPYYR3scIoWY1kU1JVzEsCYmIRQ
+         AmUScPoqt0e0QTk3C11UCqaElq8iaV/pfXxBhB3IuEv1s508uy6Z/YycPMl7U+l7LuvZ
+         HCJ4AyaMtIjxqE2pHt1TiD3Fxt4PC/iQlxWG62cn1OkjgijKr+XfX+FHg3FnaAeUpUw0
+         3FgujrowdJaccl46RzYVJZUgkMHy1VLxJBvJPlL9xHWLRg6bKoxO9ksSP4gfEMPVRtYM
+         Q2eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mmUBHbwaUXwfo0GCtSnhdamwk+yGpLtPsuUnUzXPbr8=;
-        b=eJ/3xnBArZ0Jp0PElHiChnMSgrdfsdeUnzKEdfLmeY5BwqEQ0BUeyCv3u7xuECuIC1
-         pHqFlyJiDhwaOOCDUpJrQfhlcYjeJC+PmYWd88oqqG+BQ9DWecn79mzJ0BqjUSO8Ixb5
-         ZvXinf10O9t2R6CeaYZ2KTwXRs7mJ+F8cgCPu21w+988CQ+g2ozikerwIz9KEqhffAWQ
-         VW8GKkBOUsW/iQq6KZ9LwxU8QwSi22odHBhEX6OXh67CgOlHIZFYoBp9+bxZ69wuULh0
-         sGg7nmCbfFYLofKAEp8YZXE9ipzi7C1V3XyYL/J3m9K47uOu6gIagS1Ki6Oyj8zJXs7m
-         NB1Q==
-X-Gm-Message-State: ALoCoQk29tGLGTghxrRfvbCzfVHHCr0esY6k2a8OW9j/nGRUHJUIJ4PU/2+KbzrvuAROmmAqy4/w
-X-Received: by 10.50.79.200 with SMTP id l8mr23752481igx.14.1419982912345;
-        Tue, 30 Dec 2014 15:41:52 -0800 (PST)
+        bh=kqty1PFti0+Kaji+oIXvHCYswpFCZpII2A/5VatIMyc=;
+        b=eWvKINVkaDHHqpRyaUs/O1Z29C3q7ijIHxJcomzgw82poDSWcmRd0KLN7cJN8Pog7b
+         DTPxQOdqy2qTdqxxfUACKbzRbzstNRatX0CKjumy+1TREvQfC4EaGG57fZO9q/0ndb9i
+         BHZKa3TVYI9edReVheQVa09r5Nb8MDU8TzWroAEM+kDHLIm1QZLQLm7Wg1fXAA9k7ivr
+         ESlXBHNnsW5rxFa+b0cg6EnEag47rFZuMA0fbhjQ97P+gUO8+usIoq2CzDKUeB+dtOxV
+         bIjJEvEHwXiGpsryXUwQPovwGv8aESgubTpNYXW2qKC2J68rnDd/yS3Ya+zcFpACkAvS
+         gluQ==
+X-Gm-Message-State: ALoCoQnfYjqyOLR6MQWiyCQziOTHX1frnSPEXjcdRJzZ85lhJ/km5ybsrtA+CH2p4wFD79YbGFNP
+X-Received: by 10.42.38.9 with SMTP id a9mr16288038ice.68.1419982914895;
+        Tue, 30 Dec 2014 15:41:54 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:e545:220a:6cf6:2fed])
-        by mx.google.com with ESMTPSA id la3sm16279847igb.0.2014.12.30.15.41.51
+        by mx.google.com with ESMTPSA id t15sm19664881ioi.21.2014.12.30.15.41.54
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 30 Dec 2014 15:41:51 -0800 (PST)
+        Tue, 30 Dec 2014 15:41:54 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1419982898-23108-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261961>
 
-This renames ref_update_to_be_sent to check_to_send_update and inverts
-the meaning of the return value. Having the return value inverted we
-can have different values for the error codes. This is useful in a
-later patch when we want to know if we hit the CHECK_REF_STATUS_REJECTED
-case.
+From: Ronnie Sahlberg <sahlberg@google.com>
 
+Add a command line argument to the git push command to request atomic
+pushes.
+
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
 Notes:
-    v7, v8, v9:
-    * no changes
+    v8, v9:
+    no changes
     
+    v7:
+    	Use OPT_BOOL instead of OPT_BIT.
+    	This allows for --no-atomic option on the command line.
     v6:
-    * negative #define'd values
+    -		OPT_BIT(0, "atomic", &flags, N_("use an atomic transaction remote"),
+    +		OPT_BIT(0, "atomic", &flags, N_("request atomic transaction on remote side"),
     
     skipped v4 v5
     
-    This was introduced with the [PATCHv2] series.
-    Changes v2 -> v3:
+    v2->v3:
+    	* s/atomic-push/atomic/
+    	* s/the an/an/
+    	* no serverside, but just remote instead
+    	* TRANSPORT_PUSH_ATOMIC instead of TRANSPORT_ATOMIC_PUSH
     
-    * Rename to check_to_send_update
-    * Negative error values.
-    * errors values are #define'd and not raw numbers.
+    Changes v1 -> v2
+    	It's --atomic now! (dropping the -push)
 
- send-pack.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ Documentation/git-push.txt | 7 ++++++-
+ builtin/push.c             | 5 +++++
+ transport.c                | 1 +
+ transport.h                | 1 +
+ 4 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index 949cb61..4974825 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -190,10 +190,13 @@ static void advertise_shallow_grafts_buf(struct strbuf *sb)
- 	for_each_commit_graft(advertise_shallow_grafts_cb, sb);
- }
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 21b3f29..4764fcf 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -9,7 +9,7 @@ git-push - Update remote refs along with associated objects
+ SYNOPSIS
+ --------
+ [verse]
+-'git push' [--all | --mirror | --tags] [--follow-tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
++'git push' [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+ 	   [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose]
+ 	   [-u | --set-upstream] [--signed]
+ 	   [--force-with-lease[=<refname>[:<expect>]]]
+@@ -136,6 +136,11 @@ already exists on the remote side.
+ 	logged.  See linkgit:git-receive-pack[1] for the details
+ 	on the receiving end.
  
--static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_args *args)
-+#define CHECK_REF_NO_PUSH -1
-+#define CHECK_REF_STATUS_REJECTED -2
-+#define CHECK_REF_UPTODATE -3
-+static int check_to_send_update(const struct ref *ref, const struct send_pack_args *args)
- {
- 	if (!ref->peer_ref && !args->send_mirror)
--		return 0;
-+		return CHECK_REF_NO_PUSH;
++--[no-]atomic::
++	Use an atomic transaction on the remote side if available.
++	Either all refs are updated, or on error, no refs are updated.
++	If the server does not support atomic pushes the push will fail.
++
+ --receive-pack=<git-receive-pack>::
+ --exec=<git-receive-pack>::
+ 	Path to the 'git-receive-pack' program on the remote
+diff --git a/builtin/push.c b/builtin/push.c
+index a076b19..8f1d945 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -487,6 +487,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	int flags = 0;
+ 	int tags = 0;
+ 	int rc;
++	int atomic = 0;
+ 	const char *repo = NULL;	/* default repository */
+ 	struct option options[] = {
+ 		OPT__VERBOSITY(&verbosity),
+@@ -518,6 +519,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT(0, "follow-tags", &flags, N_("push missing but relevant tags"),
+ 			TRANSPORT_PUSH_FOLLOW_TAGS),
+ 		OPT_BIT(0, "signed", &flags, N_("GPG sign the push"), TRANSPORT_PUSH_CERT),
++		OPT_BOOL(0, "atomic", &atomic, N_("request atomic transaction on remote side")),
+ 		OPT_END()
+ 	};
  
- 	/* Check for statuses set by set_ref_status_for_push() */
- 	switch (ref->status) {
-@@ -203,10 +206,11 @@ static int ref_update_to_be_sent(const struct ref *ref, const struct send_pack_a
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
- 	case REF_STATUS_REJECT_STALE:
- 	case REF_STATUS_REJECT_NODELETE:
-+		return CHECK_REF_STATUS_REJECTED;
- 	case REF_STATUS_UPTODATE:
--		return 0;
-+		return CHECK_REF_UPTODATE;
- 	default:
--		return 1;
-+		return 0;
- 	}
- }
+@@ -533,6 +535,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if (tags)
+ 		add_refspec("refs/tags/*");
  
-@@ -250,7 +254,7 @@ static int generate_push_cert(struct strbuf *req_buf,
- 	strbuf_addstr(&cert, "\n");
++	if (atomic)
++		flags |= TRANSPORT_PUSH_ATOMIC;
++
+ 	if (argc > 0) {
+ 		repo = argv[0];
+ 		set_refspecs(argv + 1, argc - 1, repo);
+diff --git a/transport.c b/transport.c
+index c67feee..1373152 100644
+--- a/transport.c
++++ b/transport.c
+@@ -830,6 +830,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
+ 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
+ 	args.push_cert = !!(flags & TRANSPORT_PUSH_CERT);
++	args.atomic = !!(flags & TRANSPORT_PUSH_ATOMIC);
+ 	args.url = transport->url;
  
- 	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!ref_update_to_be_sent(ref, args))
-+		if (check_to_send_update(ref, args) < 0)
- 			continue;
- 		update_seen = 1;
- 		strbuf_addf(&cert, "%s %s %s\n",
-@@ -359,7 +363,7 @@ int send_pack(struct send_pack_args *args,
- 	 * the pack data.
- 	 */
- 	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!ref_update_to_be_sent(ref, args))
-+		if (check_to_send_update(ref, args) < 0)
- 			continue;
+ 	ret = send_pack(&args, data->fd, data->conn, remote_refs,
+diff --git a/transport.h b/transport.h
+index 3e0091e..18d2cf8 100644
+--- a/transport.h
++++ b/transport.h
+@@ -125,6 +125,7 @@ struct transport {
+ #define TRANSPORT_PUSH_NO_HOOK 512
+ #define TRANSPORT_PUSH_FOLLOW_TAGS 1024
+ #define TRANSPORT_PUSH_CERT 2048
++#define TRANSPORT_PUSH_ATOMIC 4096
  
- 		if (!ref->deletion)
-@@ -380,7 +384,7 @@ int send_pack(struct send_pack_args *args,
- 		if (args->dry_run || args->push_cert)
- 			continue;
- 
--		if (!ref_update_to_be_sent(ref, args))
-+		if (check_to_send_update(ref, args) < 0)
- 			continue;
- 
- 		old_hex = sha1_to_hex(ref->old_sha1);
+ #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
+ #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
 -- 
 2.2.1.62.g3f15098
