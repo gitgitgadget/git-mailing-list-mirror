@@ -1,109 +1,94 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 3/3] git-checkout.txt: a note about multiple checkout support for submodules
-Date: Sat,  3 Jan 2015 16:41:27 +0700
-Message-ID: <1420278087-14613-4-git-send-email-pclouds@gmail.com>
-References: <1420278087-14613-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCHv9 1/9] receive-pack.c: shorten the execute_commands loop
+ over all commands
+Date: Sat, 3 Jan 2015 16:53:18 +0700
+Message-ID: <CACsJy8DGS2KN5Vd=UY2nUBH1Nc9rMiTt84HNB9K=8z2H0m4zVg@mail.gmail.com>
+References: <1419982898-23108-1-git-send-email-sbeller@google.com>
+ <1419982898-23108-2-git-send-email-sbeller@google.com> <20150103022004.GI29365@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Max Kirillov <max@max630.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 03 10:42:14 2015
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	ronniesahlberg@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 03 10:53:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y7LDp-0001z8-Vn
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Jan 2015 10:42:14 +0100
+	id 1Y7LP8-00053v-QN
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Jan 2015 10:53:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbbACJmF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Jan 2015 04:42:05 -0500
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:34360 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751017AbbACJmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jan 2015 04:42:03 -0500
-Received: by mail-pd0-f172.google.com with SMTP id y13so24936721pdi.31
-        for <git@vger.kernel.org>; Sat, 03 Jan 2015 01:42:02 -0800 (PST)
+	id S1750941AbbACJxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jan 2015 04:53:50 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:42423 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930AbbACJxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jan 2015 04:53:49 -0500
+Received: by mail-ig0-f169.google.com with SMTP id z20so1279957igj.4
+        for <git@vger.kernel.org>; Sat, 03 Jan 2015 01:53:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=SQWe15qdDYcDc9g4VUKLhCNN2ODfSUZEKDHBS4KnnAI=;
-        b=cOo/BrZXCeiqKJ0Y97se/dknkoWgh9DqqyFmv5X/09ksDMvF5OIsHhV6H+9GZmXquo
-         Yy3oAp+vxISd258uSPE1ggtqsnKv6Rk0s0PBfEPRv7lkq5XdYs7xAc9tqhS3QtutIfqR
-         7Sh/cROrunveWvrE07agNBqGYyx/RyEbIvwwQXyYApDzodu8oWCK07digwAugjeAAGWR
-         02u7Vo0w4wHM8O10XkBaXWKosg9QGN93mmWm8UNC6qO6tqWbLNweUyGe5tGIggHBP5SV
-         rxgYu8Dkvfm1EXo3IsTHFD2aWEMe5+BgLuNniO2ZsBXYYzNWKhShtQDZjyg98nLnpK0q
-         q/cA==
-X-Received: by 10.70.91.99 with SMTP id cd3mr127574629pdb.117.1420278122225;
-        Sat, 03 Jan 2015 01:42:02 -0800 (PST)
-Received: from lanh ([115.73.231.124])
-        by mx.google.com with ESMTPSA id u5sm30461439pdh.54.2015.01.03.01.41.59
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Jan 2015 01:42:01 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 03 Jan 2015 16:42:03 +0700
-X-Mailer: git-send-email 2.2.0.84.ge9c7a8a
-In-Reply-To: <1420278087-14613-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xoqsJo1IZdkXL+0+OlJI7PVeDVVlrEcpP1YhM/PYtQ4=;
+        b=r7FpdVLeZs9SXhJ8Zxf77SG8EeIFXaOMvBzkx3SPzS2mSWYELOJRBehMYp3UbNbwWK
+         rog2ybYWWiQ2Yb3f5ENdOTwfxobFRAUgLe1GcitDeGnAELaYIvOa0W2Bi3kuU2Lh0e4V
+         waiIEmnB6kd/u9dKJN7RXqG3t6jZi4YpigvLociXkNjsYrDPTSospqdsMbqMVQ79eEXU
+         LiVbsVp5yluApKGR560v6zRTC6LGMdQXYUl4eIgfTQU4qk8jdzztws1ZUmyXQHJCND5z
+         Q/QKg2frYe1P3SyvsVzNfWUxNqzsEA+KK8eIbKMbr8pX/UVM6+OBwfQR8F+ESHn1HH+e
+         FbMQ==
+X-Received: by 10.43.64.146 with SMTP id xi18mr60865128icb.65.1420278828349;
+ Sat, 03 Jan 2015 01:53:48 -0800 (PST)
+Received: by 10.107.176.3 with HTTP; Sat, 3 Jan 2015 01:53:18 -0800 (PST)
+In-Reply-To: <20150103022004.GI29365@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261994>
 
-The goal seems to be using multiple checkouts to reduce disk space.
-But we have not reached an agreement how things should be. There are a
-couple options.
+On Sat, Jan 3, 2015 at 9:20 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> -     if (shallow_update && !checked_connectivity)
+>> -             error("BUG: run 'git fsck' for safety.\n"
+>> -                   "If there are errors, try to remove "
+>> -                   "the reported refs above");
+>> +     if (shallow_update)
+>> +             check_shallow_bugs(commands, si);
+>
+> In the same spirit of saving the reader from having to look at the
+> body of check_shallow_bugs, would it make sense for the part that reacts
+> to an error to be kept in the caller?  E.g.:
+>
+>         if (shallow_update && warn_if_skipped_connectivity_check(commands, si))
+>                 error("BUG: run 'git fsck for safety.\n"
+>                       "If there are errors, try removing the refs reported above");
+>
+> Is this error possible, by the way?
 
- - You may want to keep $SUB repos elsewhere (perhaps in a central
-   place) outside $SUPER. This is also true for nested submodules
-   where a superproject may be a submodule of another superproject.
+That code is to prevent bugs in future. The whole operation is spread
+out in many functions/steps and people may overlook.
 
- - You may want to keep all $SUB repos in $SUPER/modules (or some
-   other place in $SUPER)
+> update() does not return success
+> unless it has reached the bottom block in the function.  In the
+> !is_null_sha1(new_sha1) case that means it calls update_shallow_ref(),
+> which performs the connectivity check.  In the is_null_sha1(new_sha1)
+> case, update_shallow_info() does not set cmd->index and
+> si->shallow_ref[cmd->index] cannot be set.
+>
+> Perhaps this error message could be written in a way that makes it
+> clearer that we really expect it not to happen, like
+>
+>                 die("BUG: connectivity check skipped in shallow push???");
+>
+> (die() instead of error() to prevent refs from updating and pointing
+> to a disconnected history).
 
- - We could even push it further and merge all $SUB repos into $SUPER
-   instead of storing them separately. But that would at least require
-   ref namespace enabled.
-
-On top of that, git-submodule.sh expects $GIT_DIR/config to be
-per-worktree, at least for the submodule.* part. Here I think we have
-two options, either update config.c to also read
-$GIT_DIR/config.worktree (which is per worktree) in addition to
-$GIT_DIR/config (shared) and store worktree-specific vars in the new
-place, or update git-submodule.sh to read/write submodule.* directly
-from $GIT_DIR/config.submodule (per worktree).
-
-These take time to address properly. Meanwhile, make a note to the
-user that they should not use multiple worktrees in submodule context.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-checkout.txt | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
-t.txt
-index 52eaa48..72def5b 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -463,6 +463,9 @@ to `/path/main/.git/worktrees/test-next` then a fil=
-e named
- `test-next` entry from being pruned.  See
- linkgit:gitrepository-layout[5] for details.
-=20
-+Multiple checkout support for submodules is incomplete. It is NOT
-+recommended to make multiple checkouts of a superproject.
-+
- EXAMPLES
- --------
-=20
---=20
-2.2.0.84.ge9c7a8a
+If connectivity test is not done, we don't know if history is really
+disconnected. But yeah die() may be better (err on the safe side).
+-- 
+Duy
