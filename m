@@ -1,72 +1,133 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: xfuncname problems with C++
-Date: Fri, 2 Jan 2015 14:05:56 -0800
-Message-ID: <20150102220556.GH29365@google.com>
-References: <CAHd499Cn8C51i_+Dm4h_U4X_Jc-nhNMjoufiZRdn5LGxFqD_HA@mail.gmail.com>
- <CAHd499C_Z_npG3ibv_gJSU7kqrT6=DRCV8TU9_sjz9zzQ7vC-Q@mail.gmail.com>
- <54A7000A.3050605@kdbg.org>
- <CAHd499DpyO6Csji8gp1E6HsrvtBa7QMKBah2xOewrWAfNgQUHg@mail.gmail.com>
+Subject: Re: [PATCHv9 1/9] receive-pack.c: shorten the execute_commands loop
+ over all commands
+Date: Fri, 2 Jan 2015 18:20:04 -0800
+Message-ID: <20150103022004.GI29365@google.com>
+References: <1419982898-23108-1-git-send-email-sbeller@google.com>
+ <1419982898-23108-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 02 23:06:06 2015
+Cc: gitster@pobox.com, git@vger.kernel.org, sunshine@sunshineco.com,
+	mhagger@alum.mit.edu, ronniesahlberg@gmail.com,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Jan 03 03:20:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y7AM9-0006pT-9h
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Jan 2015 23:06:05 +0100
+	id 1Y7EKI-0000jS-Ve
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Jan 2015 03:20:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752641AbbABWGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2015 17:06:00 -0500
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:44656 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752249AbbABWGA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2015 17:06:00 -0500
-Received: by mail-ie0-f173.google.com with SMTP id y20so17079838ier.4
-        for <git@vger.kernel.org>; Fri, 02 Jan 2015 14:05:59 -0800 (PST)
+	id S1751018AbbACCUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2015 21:20:09 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:60950 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750801AbbACCUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2015 21:20:08 -0500
+Received: by mail-ie0-f179.google.com with SMTP id rp18so17355807iec.38
+        for <git@vger.kernel.org>; Fri, 02 Jan 2015 18:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=vchlaQVcRNxr0kcrXqBFL5VpUYPy6cGzGOdtKkd26rs=;
-        b=lWVSvS22eKdTRQ9Ug6cbTKv19OhgyNWB8nR5hQZ30ARVaUTMJS1HaN9iqF7F/PD9j+
-         hBILd2KDitc14qVBX+z4BANm/9pjIj9v5T7X5rMNcPU2eAN2xVJsdtR6c1knUbMpcU8A
-         P2gGlyZYAMcBgz2rT69CA++s0fQN93twkOzJtS/b8Vche9bctop49LZBr4NT4BMSi1hL
-         CmYx2uy7m9QtdkvanBcJiK5LHl9HdNZPydTuCFFQW+3VfskVLu5lLCpDY6psHfxNfR0U
-         plw62QQtvrUq0+ktW3qK05k66i3l7dl2GeCAS6GV7U93+Jniw+iI0bTnXibIOoZJvp85
-         tkUA==
-X-Received: by 10.43.100.67 with SMTP id cv3mr59399683icc.92.1420236359365;
-        Fri, 02 Jan 2015 14:05:59 -0800 (PST)
+        bh=qvQ18OnJ1k7tgCTewLRedS/7oP9PdtLpLmtOq2K/ByI=;
+        b=JbL+0tWxfkKx5iVhLuo2Q28ItQZI7u0n8yPI3Tjv5Gn4IOwHl8OV3P1dCFJ4IM3azR
+         hp6pwth3BhStjxnBeaSO/kEGzFGQ/fkkVwWDv+ax1EMrKqutVasEMFN0YBzxj7GfV4jB
+         5YKTYpQcKQ0f+S0tMAvTUdo5uHqWDjIr8VVoLcNE4dy4hP5IP8Q3AHlFuQdSsjEokHES
+         Mpq9GBtJxZxsucdS6f82MXvi2qH+HO+LRjYSDAfgrWMZr1hQr+Ol7/k+0O5EDqW60TR2
+         bKAPikGT+VfFSxU/AuY4dY2p3sAHHqp9qnVNR/S6IwNuBCqmmEpAyUR7hLHINGKxoOpq
+         h83Q==
+X-Received: by 10.50.107.36 with SMTP id gz4mr1476602igb.25.1420251607209;
+        Fri, 02 Jan 2015 18:20:07 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:4dc:a2d1:6dcb:ef51])
-        by mx.google.com with ESMTPSA id v83sm23363869iov.30.2015.01.02.14.05.58
+        by mx.google.com with ESMTPSA id g5sm23612645iod.25.2015.01.02.18.20.05
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 02 Jan 2015 14:05:58 -0800 (PST)
+        Fri, 02 Jan 2015 18:20:06 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CAHd499DpyO6Csji8gp1E6HsrvtBa7QMKBah2xOewrWAfNgQUHg@mail.gmail.com>
+In-Reply-To: <1419982898-23108-2-git-send-email-sbeller@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261989>
 
-Robert Dailey wrote:
+(+cc: Duy, who understands shallow push well)
+Hi,
 
-> The 'void' does not start on the leftmost column, due to tabbing there
-> can be any number of whitespace (the regex should account for this).
+Stefan Beller wrote:
 
-Ah, that explains it.  The default C++ pattern assumes the 'void'
-starts at the leftmost column, so that the funcname header represents
-whatever top-level construct forms the context (e.g., "class foo {").
+> This commit shortens execute_commands loop over all commands by moving
 
-(Jump targets or access declarations)
-!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:[[:space:]]*($|/[/*])
+The commit message can be simplified by leaving out "This commit" and
+stating what the commit does in the imperative, focusing on what problem
+the commit solves.
 
-(functions/methods, variables, and compounds at top level)
-^((::[[:space:]]*)?[A-Za-z_].*)$
+For example:
 
-Thanks,
+	Make the main "execute_commands" loop in receive-pack easier to read
+	by splitting out some steps into helper functions.  The new helper
+	'should_process_cmd' checks if a ref update is unnecessary, whether
+	due to an error having occured or for another reason.  The helper
+	'check_shallow_bugs' warns if we have forgotten to run a connectivity
+	check on a ref which is shallow for the client.
+
+	This will help us to duplicate less code in a later patch when we make
+	a second copy of the "execute_commands" loop.
+
+	No functional change intended.
+
+By the way, is there some clearer name for check_shallow_bugs?  That
+name makes it sound like there are some bugs we are checking up on,
+whereas a name that makes it obvious what the function will do and saves
+me from having to read the function body would be ideal.
+
+[...]
+> +++ b/builtin/receive-pack.c
+[...]
+> @@ -1077,27 +1099,15 @@ static void execute_commands(struct command *commands,
+[...]
+>  	for (cmd = commands; cmd; cmd = cmd->next) {
+[...]
+> -		if (shallow_update && !cmd->error_string &&
+> -		    si->shallow_ref[cmd->index]) {
+> -			error("BUG: connectivity check has not been run on ref %s",
+> -			      cmd->ref_name);
+> -			checked_connectivity = 0;
+> -		}
+>  	}
+>
+> -	if (shallow_update && !checked_connectivity)
+> -		error("BUG: run 'git fsck' for safety.\n"
+> -		      "If there are errors, try to remove "
+> -		      "the reported refs above");
+> +	if (shallow_update)
+> +		check_shallow_bugs(commands, si);
+
+In the same spirit of saving the reader from having to look at the
+body of check_shallow_bugs, would it make sense for the part that reacts
+to an error to be kept in the caller?  E.g.:
+
+	if (shallow_update && warn_if_skipped_connectivity_check(commands, si))
+		error("BUG: run 'git fsck for safety.\n"
+		      "If there are errors, try removing the refs reported above");
+
+Is this error possible, by the way?  update() does not return success
+unless it has reached the bottom block in the function.  In the
+!is_null_sha1(new_sha1) case that means it calls update_shallow_ref(),
+which performs the connectivity check.  In the is_null_sha1(new_sha1)
+case, update_shallow_info() does not set cmd->index and
+si->shallow_ref[cmd->index] cannot be set.
+
+Perhaps this error message could be written in a way that makes it
+clearer that we really expect it not to happen, like
+
+		die("BUG: connectivity check skipped in shallow push???");
+
+(die() instead of error() to prevent refs from updating and pointing
+to a disconnected history).
+
+Thoughts?
 Jonathan
