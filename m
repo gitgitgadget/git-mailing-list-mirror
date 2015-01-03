@@ -1,98 +1,159 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] for-each-ref: Always check stat_tracking_info()'s
- return value.
-Date: Sat, 3 Jan 2015 06:41:13 -0500
-Message-ID: <20150103114113.GC27793@peff.net>
-References: <1420232513-13867-1-git-send-email-raphael.kubo.da.costa@intel.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Date: Sat, 3 Jan 2015 17:45:09 +0000
+Message-ID: <20150103174509.GA1025060@vauxhall.crustytoothpaste.net>
+References: <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+ <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
+ <20150103111922.GB27793@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
-X-From: git-owner@vger.kernel.org Sat Jan 03 12:42:37 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
+Cc: git@vger.kernel.org,
+	"Dan Langille (dalangil)" <dalangil@cisco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 03 18:45:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y7N6K-00072C-E9
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Jan 2015 12:42:36 +0100
+	id 1Y7SlT-0007ui-PF
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Jan 2015 18:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbbACLlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jan 2015 06:41:16 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58531 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750966AbbACLlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jan 2015 06:41:15 -0500
-Received: (qmail 26428 invoked by uid 102); 3 Jan 2015 11:41:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Jan 2015 05:41:16 -0600
-Received: (qmail 20976 invoked by uid 107); 3 Jan 2015 11:41:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Jan 2015 06:41:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Jan 2015 06:41:13 -0500
+	id S1751294AbbACRpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jan 2015 12:45:18 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:56612 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751053AbbACRpR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Jan 2015 12:45:17 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3A44B2808F;
+	Sat,  3 Jan 2015 17:45:15 +0000 (UTC)
+Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	"Dan Langille (dalangil)" <dalangil@cisco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
 Content-Disposition: inline
-In-Reply-To: <1420232513-13867-1-git-send-email-raphael.kubo.da.costa@intel.com>
+In-Reply-To: <20150103111922.GB27793@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.18.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261997>
 
-On Fri, Jan 02, 2015 at 11:01:53PM +0200, Raphael Kubo da Costa wrote:
 
-> In this case, num_ours and num_theirs had undefined values and a call to
-> `git for-each-ref --format="%(upstream:track)"` could print spurious
-> values such as
-> 
->   [behind -111794512]
->   [ahead 38881640, behind 5103867]
-> 
-> even for repositories with one single commit.
-> 
-> We now properly verify stat_tracking_info()'s return value and do not
-> print anything if it returns -1. This behavior also matches the
-> documentation ("has no effect if the ref does not have tracking
-> information associated with it").
+--5vNYLRcllDrimb99
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks, this iteration looks good to me, and this is definitely a bug
-worth fixing.
+On Sat, Jan 03, 2015 at 06:19:23AM -0500, Jeff King wrote:
+>This pattern gets repeated in several places. Now that
+>http_passwordless_auth is a global, can we handle it automatically for
+>the callers, as below (which, aside from compiling, is completely
+>untested by me)?
 
-> +test_expect_success 'Check that :track[short] works when upstream is gone' '
-> +	git branch --track to_delete master &&
-> +	git branch --track parent_gone to_delete &&
-> +	test_when_finished "git branch -D parent_gone" &&
-> +	git branch -D to_delete &&
-> +	git for-each-ref --format="%(upstream:track)" refs/heads/parent_gone >actual &&
-> +	git for-each-ref --format="%(upstream:trackshort)" refs/heads/parent_gone >>actual &&
-> +	test_cmp expected actual
-> +'
+This looks good (although I haven't tested it).
 
-I think you could minimize this quite a bit as:
+>Note that this is in a slightly different boat than credential_fill.
+>Ideally we would also handle picking up credentials on behalf of the
+>callers of get_curl_handle/handle_curl_result. But that may involve
+>significant work and/or prompting the user, which we _must_ avoid if we
+>do not know if we are going to retry the request (and only the caller
+>knows that for sure). However, in the case of http_passwordless_auth, we
+>are just setting a flag, so it's OK to do it preemptively.
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index cba3454..f259c22 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -340,12 +340,11 @@ cat >expected <<EOF
- EOF
- 
- test_expect_success 'Check that :track[short] works when upstream is gone' '
--	git branch --track to_delete master &&
--	git branch --track parent_gone to_delete &&
--	test_when_finished "git branch -D parent_gone" &&
--	git branch -D to_delete &&
--	git for-each-ref --format="%(upstream:track)" refs/heads/parent_gone >actual &&
--	git for-each-ref --format="%(upstream:trackshort)" refs/heads/parent_gone >>actual &&
-+	test_when_finished "git config branch.master.merge refs/heads/master" &&
-+	git config branch.master.merge refs/heads/does-not-exist &&
-+	git for-each-ref \
-+		--format="%(upstream:track)$LF%(upstream:trackshort)" \
-+		refs/heads/master >actual &&
- 	test_cmp expected actual
- '
- 
+Right.  We already prompt the user for a username and password in that=20
+case, so we already have the credentials that we need.
 
-which IMHO makes it a little more obvious what the setup is doing. But I
-am OK with it either way.
+>diff --git a/http.c b/http.c
+>index 040f362..2bbcdf1 100644
+>--- a/http.c
+>+++ b/http.c
+>@@ -62,6 +62,8 @@ static const char *user_agent;
+>
+> static struct credential cert_auth =3D CREDENTIAL_INIT;
+> static int ssl_cert_password_required;
+>+/* Should we allow non-password-based authentication (e.g. GSSAPI)? */
+>+static int http_passwordless_auth =3D 1;
+>
+> static struct curl_slist *pragma_header;
+> static struct curl_slist *no_pragma_header;
+>@@ -318,7 +320,12 @@ static CURL *get_curl_handle(void)
+> 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+> #endif
+> #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+>-	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+>+	{
+>+		int flags =3D CURLAUTH_ANY;
 
--Peff
+I think this needs to be unsigned long or it can cause undefined=20
+behavior, since libcurl uses unsigned long in the flags.  I'll fix that=20
+up when I reroll.  I'll need your sign-off since it will essentially be=20
+your work.
+
+>+		if (!http_passwordless_auth)
+>+			flags &=3D ~CURLAUTH_GSSNEGOTIATE;
+>+		curl_easy_setopt(result, CURLOPT_HTTPAUTH, flags);
+>+	}
+> #endif
+>
+> 	if (http_proactive_auth)
+>@@ -870,6 +877,7 @@ int handle_curl_result(struct slot_results *results)
+> 			credential_reject(&http_auth);
+> 			return HTTP_NOAUTH;
+> 		} else {
+>+			http_passwordless_auth =3D 0;
+> 			return HTTP_REAUTH;
+> 		}
+> 	} else {
+>
+>
+>Note that you could probably drop http_passwordless_auth completely, and
+>just keep a:
+>
+>  static int http_auth_methods =3D CURLAUTH_ANY;
+>
+>and then drop CURLAUTH_GSSNEGOTIATE from it instead of setting the
+>passwordless_auth flag to 0 (again, it happens in one place, so I don't
+>know that it needs an extra layer of abstraction).
+
+This does seem to handle both cases well.  It also has the pleasant=20
+side effect of being static.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--5vNYLRcllDrimb99
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUqCqlAAoJEL9TXYEfUvaLFSoQAJAilDE7VNs0dDrEHzaTFKes
+Fg2bKKPQ03doEHxM5zZkINU4kTre1naelP6Zw3RiGZwlzrLdUNCCvWSefl3HAoLJ
+W41ynXOqIGcBc4LyzODwvdqKk2Na4dtqUd229Eat/eFw/kL93+9NZVdai/OAGwVf
+p0e9m4ry1pvWw6QUCXNlOQu+6sxupfdHaEs60hJnbusOlcMOI5ExTiNPTYYc+wL5
+I1Rz6CH82ASZX30/8/UJA8SkcJHlRlI0AMkz2sq434PIiA92J4nBL9nVX5pvKnHy
+xHT612IOun6FBrsLrUoxqzoeJXnTz5AJoysYB07N8WyBYn2KlaEjc4zW1BcVFcg1
+fxtpA/MVvnw34vCpSlIDsdVkH0nHrf0f4KWgFthN/yugpxGfzfiXpSDy0SKG1Nsp
++gsC5O0AwUHf/5zWvnp7b2XYeZam9LTOB1oRSYsXrPg4+Z01aztxQCYPx9NVLxdE
+oNuoe2/9kdAY4slhmsHkw+h8PsooVrffKRhuMPVUsGQ37TC9eglsrl6pGMftiK1S
+WvqoqqxouS6cJMEaMm2g5Hj0uQP6AGdjF2TLFXv9G/zq+8eZZpztkhM3i6LxVfvu
+FpQe9qxC20cpduA2TB+oOXJjh26S0mrT93lQPtkqiVg4utF+htSdexDtmai4+mpz
+n8TpfNfi0NZx4K1VS2sA
+=yxGG
+-----END PGP SIGNATURE-----
+
+--5vNYLRcllDrimb99--
