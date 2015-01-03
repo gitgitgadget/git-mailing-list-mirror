@@ -1,81 +1,67 @@
-From: Raphael Kubo da Costa <rakuco@FreeBSD.org>
-Subject: Re: [PATCH v3] for-each-ref: Always check stat_tracking_info()'s return value.
-Date: Sat, 03 Jan 2015 21:19:23 +0200
-Message-ID: <868uhjzn7o.fsf@FreeBSD.org>
-References: <1420232513-13867-1-git-send-email-raphael.kubo.da.costa@intel.com>
-	<20150103114113.GC27793@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Date: Sat, 3 Jan 2015 15:14:44 -0500
+Message-ID: <20150103201444.GA8285@peff.net>
+References: <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+ <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
+ <20150103111922.GB27793@peff.net>
+ <20150103174509.GA1025060@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 03 20:25:23 2015
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org,
+	"Dan Langille (dalangil)" <dalangil@cisco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 03 21:14:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y7UKA-0000TC-Rs
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Jan 2015 20:25:23 +0100
+	id 1Y7V64-0002Gp-Pv
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Jan 2015 21:14:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751478AbbACTZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jan 2015 14:25:07 -0500
-Received: from plane.gmane.org ([80.91.229.3]:52857 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751311AbbACTZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jan 2015 14:25:06 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Y7UJr-0000QZ-Ju
-	for git@vger.kernel.org; Sat, 03 Jan 2015 20:25:03 +0100
-Received: from a91-154-115-217.elisa-laajakaista.fi ([91.154.115.217])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Jan 2015 20:25:03 +0100
-Received: from rakuco by a91-154-115-217.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Jan 2015 20:25:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-154-115-217.elisa-laajakaista.fi
-User-Agent: Gnus/5.130012 (Ma Gnus v0.12) Emacs/24.4 (berkeley-unix)
-Cancel-Lock: sha1:QXi5WhrLtHFW6KkIauBmNIdkHz8=
+	id S1751777AbbACUOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jan 2015 15:14:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:58598 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751326AbbACUOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jan 2015 15:14:47 -0500
+Received: (qmail 17966 invoked by uid 102); 3 Jan 2015 20:14:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Jan 2015 14:14:47 -0600
+Received: (qmail 22659 invoked by uid 107); 3 Jan 2015 20:15:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Jan 2015 15:15:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Jan 2015 15:14:44 -0500
+Content-Disposition: inline
+In-Reply-To: <20150103174509.GA1025060@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/261999>
 
-Jeff King <peff@peff.net> writes:
+On Sat, Jan 03, 2015 at 05:45:09PM +0000, brian m. carlson wrote:
 
-> I think you could minimize this quite a bit as:
->
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index cba3454..f259c22 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -340,12 +340,11 @@ cat >expected <<EOF
->  EOF
->  
->  test_expect_success 'Check that :track[short] works when upstream is gone' '
-> -	git branch --track to_delete master &&
-> -	git branch --track parent_gone to_delete &&
-> -	test_when_finished "git branch -D parent_gone" &&
-> -	git branch -D to_delete &&
-> -	git for-each-ref --format="%(upstream:track)" refs/heads/parent_gone >actual &&
-> -	git for-each-ref --format="%(upstream:trackshort)" refs/heads/parent_gone >>actual &&
-> +	test_when_finished "git config branch.master.merge refs/heads/master" &&
-> +	git config branch.master.merge refs/heads/does-not-exist &&
-> +	git for-each-ref \
-> +		--format="%(upstream:track)$LF%(upstream:trackshort)" \
-> +		refs/heads/master >actual &&
->  	test_cmp expected actual
->  '
+> >+	{
+> >+		int flags = CURLAUTH_ANY;
+> 
+> I think this needs to be unsigned long or it can cause undefined behavior,
+> since libcurl uses unsigned long in the flags.  I'll fix that up when I
+> reroll.  I'll need your sign-off since it will essentially be your work.
 
-Thanks Jeff (and Eric!) for the reviews so far. That does look much
-better (the original test case was a reduction of a failure in a
-Chromium test case).
+I think curl typically uses signed "long" for flags, but certainly
+check the docs to be sure.
 
-One question about this suggestion: this test case actually depends on
-the remote manipulations done in the setup test to work, as otherwise we
-don't even test stat_tracking_info() because populate_value() would bail
-out earlier on branch_get() returning NULL due to the branch's remote
-not being set. Is it OK to continue assuming that?
+I was thinking it would be integer-promoted in this case, but I'm not
+sure that works always (certainly it does not if CURLAUTH_ANY needs high
+bits, but depending on how curl_easy_setopt is implemented, it may also
+be implicitly cast as a pointer or something).
+
+And certainly you can have my signoff:
+
+  Signed-off-by: Jeff King <peff@peff.net>
+
+-Peff
