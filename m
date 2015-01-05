@@ -1,80 +1,159 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] clean: style fix for 9f93e46 (git-clean: use a git-add-interactive ...)
-Date: Mon,  5 Jan 2015 20:29:23 +0700
-Message-ID: <1420464563-5579-1-git-send-email-pclouds@gmail.com>
+From: "Dan Langille (dalangil)" <dalangil@cisco.com>
+Subject: Re: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Date: Mon, 5 Jan 2015 16:02:49 +0000
+Message-ID: <DE424FAF-32BC-4E73-B81E-36836D5613E7@cisco.com>
+References: <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+ <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 05 14:29:42 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Jan 05 17:03:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y87j1-00044B-I9
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 14:29:39 +0100
+	id 1Y8A7S-0003DX-00
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 17:03:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752003AbbAEN3b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Jan 2015 08:29:31 -0500
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:36503 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753181AbbAEN33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2015 08:29:29 -0500
-Received: by mail-pd0-f178.google.com with SMTP id r10so28025652pdi.23
-        for <git@vger.kernel.org>; Mon, 05 Jan 2015 05:29:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=FOQhqpkzXBA+x4ew7vQMxR3O4wYhXDVMRDKsrviksoI=;
-        b=qqI7EHE1t9k9RKDV+HdaBlwsPXshvFUAbh/iGhcm8+cyQjcKQhN5E6id8Qoxw8fcWr
-         exhoARH/HtwNbudbixp9cbwX0Vw8drjBXJ0sI1FPLLbGv+pG+xmHMVzvq9dlAj3FDWTi
-         5jAoP3xYsH/KVD7wlfVUNJ9K2Z+OBZHtPynW4Ugu0+TB7e5pmAAEHxSHw+F0Hw4Wcyjr
-         3aqG+W/Tj7A2+vXGDQ8OwrlD0hn9sNtq8b+sx1pV6hb/LAaXN6YHBcvugYEsQFSaPHfs
-         9F0aOI/gC8+jMiLz7f7jXfOvyREPuBWU5GBHYnUFoZT/p5nK1cVFQqywMInC9tpTdThh
-         A59Q==
-X-Received: by 10.67.3.100 with SMTP id bv4mr129968876pad.15.1420464569143;
-        Mon, 05 Jan 2015 05:29:29 -0800 (PST)
-Received: from lanh ([115.73.238.222])
-        by mx.google.com with ESMTPSA id ni9sm54379965pdb.36.2015.01.05.05.29.26
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Jan 2015 05:29:28 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 05 Jan 2015 20:29:24 +0700
-X-Mailer: git-send-email 2.2.0.84.ge9c7a8a
+	id S1753045AbbAEQC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 11:02:57 -0500
+Received: from alln-iport-8.cisco.com ([173.37.142.95]:22983 "EHLO
+	alln-iport-8.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752909AbbAEQCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 11:02:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=6906; q=dns/txt; s=iport;
+  t=1420473775; x=1421683375;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=hNnLvvVETPIvcgt/+1vPfOArMDUvXD0k4xlAKxrfDeE=;
+  b=m7IYBrfgtCc7rfMVb63/dENiQZtdzIJOXHBLr1VoC3iNTLUMbuI8ISa9
+   nIFF7af23mPoYXIMWUxNH5E0qJcPg/+c/+/q98a4oGHc0L3w58qXZeSfO
+   83U4tF7z6hyQShDoVCWJcwNyb3VasAOKE+dVve2QzvouBIVtaW3v7qb/K
+   4=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtYFAIO1qlStJV2T/2dsb2JhbABcgwZSWASDAckOAhxsFgEBAQEBfYQMAQEBAwEjBA1FBQsCAQgYAgIUEgICAjAUARACBA4FiCQIqRSTVAEBAQEBAQEBAQEBAQEBAQEBAQEBAReBIY1yHxIYGwcYglAugRMFjhWIc5FQIoNub4EDQn4BAQE
+X-IronPort-AV: E=Sophos;i="5.07,700,1413244800"; 
+   d="scan'208";a="110413626"
+Received: from rcdn-core-11.cisco.com ([173.37.93.147])
+  by alln-iport-8.cisco.com with ESMTP; 05 Jan 2015 16:02:50 +0000
+Received: from xhc-rcd-x06.cisco.com (xhc-rcd-x06.cisco.com [173.37.183.80])
+	by rcdn-core-11.cisco.com (8.14.5/8.14.5) with ESMTP id t05G2o98001954
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Mon, 5 Jan 2015 16:02:50 GMT
+Received: from xmb-rcd-x03.cisco.com ([169.254.7.219]) by
+ xhc-rcd-x06.cisco.com ([173.37.183.80]) with mapi id 14.03.0195.001; Mon, 5
+ Jan 2015 10:02:50 -0600
+Thread-Topic: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Thread-Index: AQHQJf0bER2Pnky56Uqguh0whTd+7JyyGrQA
+In-Reply-To: <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.82.220.63]
+Content-ID: <E6464ED62FBA1546BB43CC15E760E797@emea.cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262021>
 
-=46rom: Junio C Hamano <gitster@pobox.com>
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- This is in the SQUASH??? commit on nd/untracked-cache on 'pu', but it
- fixes a commit older than that series.
-
- builtin/clean.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 1032563..3beeea6 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -67,7 +67,7 @@ struct menu_item {
- 	char hotkey;
- 	const char *title;
- 	int selected;
--	int (*fn)();
-+	int (*fn)(void);
- };
-=20
- enum menu_stuff_type {
---=20
-2.2.0.84.ge9c7a8a
+SeKAmXZlIGZvdW5kIHRoZSBsYXRlc3QgcGF0Y2guICBUcnlpbmcgdGhpcyBub3cuICBUaGFua3Mu
+DQrigJQgDQpEYW4gTGFuZ2lsbGUNCkluZnJhc3RydWN0dXJlICYgT3BlcmF0aW9ucw0KVGFsb3Mg
+R3JvdXANClNvdXJjZWZpcmUsIEluYy4NCg0KPiBPbiBKYW4gMSwgMjAxNSwgYXQgMjo1NiBQTSwg
+YnJpYW4gbS4gY2FybHNvbiA8c2FuZGFsc0BjcnVzdHl0b290aHBhc3RlLm5ldD4gd3JvdGU6DQo+
+IA0KPiBBcGFjaGUgc2VydmVycyB1c2luZyBtb2RfYXV0aF9rZXJiIGNhbiBiZSBjb25maWd1cmVk
+IHRvIGFsbG93IHRoZSB1c2VyDQo+IHRvIGF1dGhlbnRpY2F0ZSBlaXRoZXIgdXNpbmcgTmVnb3Rp
+YXRlICh1c2luZyB0aGUgS2VyYmVyb3MgdGlja2V0KSBvcg0KPiBCYXNpYyBhdXRoZW50aWNhdGlv
+biAodXNpbmcgdGhlIEtlcmJlcm9zIHBhc3N3b3JkKS4gIE9mdGVuLCBvbmUgd2lsbA0KPiB3YW50
+IHRvIHVzZSBOZWdvdGlhdGUgYXV0aGVudGljYXRpb24gaWYgaXQgaXMgYXZhaWxhYmxlLCBidXQg
+ZmFsbCBiYWNrDQo+IHRvIEJhc2ljIGF1dGhlbnRpY2F0aW9uIGlmIHRoZSB0aWNrZXQgaXMgbWlz
+c2luZyBvciBleHBpcmVkLg0KPiANCj4gSG93ZXZlciwgbGliY3VybCB3aWxsIHRyeSB2ZXJ5IGhh
+cmQgdG8gdXNlIHNvbWV0aGluZyBvdGhlciB0aGFuIEJhc2ljDQo+IGF1dGgsIGV2ZW4gb3ZlciBI
+VFRQUy4gIElmIEJhc2ljIGFuZCBzb21ldGhpbmcgZWxzZSBhcmUgb2ZmZXJlZCwgbGliY3VybA0K
+PiB3aWxsIG5ldmVyIGF0dGVtcHQgdG8gdXNlIEJhc2ljLCBldmVuIGlmIHRoZSBvdGhlciBvcHRp
+b24gZmFpbHMuDQo+IFRlYWNoIHRoZSBIVFRQIGNsaWVudCBjb2RlIHRvIHN0b3AgdHJ5aW5nIGF1
+dGhlbnRpY2F0aW9uIG1lY2hhbmlzbXMgdGhhdA0KPiBkb24ndCB1c2UgYSBwYXNzd29yZCAoY3Vy
+cmVudGx5IE5lZ290aWF0ZSkgYWZ0ZXIgdGhlIGZpcnN0IGZhaWx1cmUsDQo+IHNpbmNlIGlmIHRo
+ZXkgZmFpbGVkIHRoZSBmaXJzdCB0aW1lLCB0aGV5IHdpbGwgbmV2ZXIgc3VjY2VlZC4NCj4gDQo+
+IFNpZ25lZC1vZmYtYnk6IGJyaWFuIG0uIGNhcmxzb24gPHNhbmRhbHNAY3J1c3R5dG9vdGhwYXN0
+ZS5uZXQ+DQo+IC0tLQ0KPiBodHRwLmMgICAgICAgIHwgMTYgKysrKysrKysrKysrKysrKw0KPiBo
+dHRwLmggICAgICAgIHwgIDMgKysrDQo+IHJlbW90ZS1jdXJsLmMgfCAxMSArKysrKysrKysrLQ0K
+PiAzIGZpbGVzIGNoYW5nZWQsIDI5IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+
+IGRpZmYgLS1naXQgYS9odHRwLmMgYi9odHRwLmMNCj4gaW5kZXggMDQwZjM2Mi4uODE1MTk0ZCAx
+MDA2NDQNCj4gLS0tIGEvaHR0cC5jDQo+ICsrKyBiL2h0dHAuYw0KPiBAQCAtNjIsNiArNjIsOCBA
+QCBzdGF0aWMgY29uc3QgY2hhciAqdXNlcl9hZ2VudDsNCj4gDQo+IHN0YXRpYyBzdHJ1Y3QgY3Jl
+ZGVudGlhbCBjZXJ0X2F1dGggPSBDUkVERU5USUFMX0lOSVQ7DQo+IHN0YXRpYyBpbnQgc3NsX2Nl
+cnRfcGFzc3dvcmRfcmVxdWlyZWQ7DQo+ICsvKiBTaG91bGQgd2UgYWxsb3cgbm9uLXBhc3N3b3Jk
+LWJhc2VkIGF1dGhlbnRpY2F0aW9uIChlLmcuIEdTU0FQSSk/ICovDQo+ICtpbnQgaHR0cF9wYXNz
+d29yZGxlc3NfYXV0aCA9IDE7DQo+IA0KPiBzdGF0aWMgc3RydWN0IGN1cmxfc2xpc3QgKnByYWdt
+YV9oZWFkZXI7DQo+IHN0YXRpYyBzdHJ1Y3QgY3VybF9zbGlzdCAqbm9fcHJhZ21hX2hlYWRlcjsN
+Cj4gQEAgLTk4Niw2ICs5ODgsMTYgQEAgc3RhdGljIHZvaWQgZXh0cmFjdF9jb250ZW50X3R5cGUo
+c3RydWN0IHN0cmJ1ZiAqcmF3LCBzdHJ1Y3Qgc3RyYnVmICp0eXBlLA0KPiAJCXN0cmJ1Zl9hZGRz
+dHIoY2hhcnNldCwgIklTTy04ODU5LTEiKTsNCj4gfQ0KPiANCj4gK3ZvaWQgZGlzYWJsZV9wYXNz
+d29yZGxlc3NfYXV0aChzdHJ1Y3QgYWN0aXZlX3JlcXVlc3Rfc2xvdCAqc2xvdCkNCj4gK3sNCj4g
+KyNpZmRlZiBMSUJDVVJMX0NBTl9IQU5ETEVfQVVUSF9BTlkNCj4gKyNkZWZpbmUgSFRUUF9BVVRI
+X1BBU1NXT1JETEVTUyAoQ1VSTEFVVEhfR1NTTkVHT1RJQVRFKQ0KPiArCWN1cmxfZWFzeV9zZXRv
+cHQoc2xvdC0+Y3VybCwgQ1VSTE9QVF9IVFRQQVVUSCwNCj4gKwkJCSBDVVJMQVVUSF9BTlkgJiB+
+SFRUUF9BVVRIX1BBU1NXT1JETEVTUyk7DQo+ICsjZW5kaWYNCj4gK30NCj4gKw0KPiArDQo+IC8q
+IGh0dHBfcmVxdWVzdCgpIHRhcmdldHMgKi8NCj4gI2RlZmluZSBIVFRQX1JFUVVFU1RfU1RSQlVG
+CTANCj4gI2RlZmluZSBIVFRQX1JFUVVFU1RfRklMRQkxDQo+IEBAIC0xMDM1LDYgKzEwNDcsOSBA
+QCBzdGF0aWMgaW50IGh0dHBfcmVxdWVzdChjb25zdCBjaGFyICp1cmwsDQo+IAljdXJsX2Vhc3lf
+c2V0b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfSFRUUEhFQURFUiwgaGVhZGVycyk7DQo+IAljdXJs
+X2Vhc3lfc2V0b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfRU5DT0RJTkcsICJnemlwIik7DQo+IA0K
+PiArCWlmICghaHR0cF9wYXNzd29yZGxlc3NfYXV0aCkNCj4gKwkJZGlzYWJsZV9wYXNzd29yZGxl
+c3NfYXV0aChzbG90KTsNCj4gKw0KPiAJcmV0ID0gcnVuX29uZV9zbG90KHNsb3QsICZyZXN1bHRz
+KTsNCj4gDQo+IAlpZiAob3B0aW9ucyAmJiBvcHRpb25zLT5jb250ZW50X3R5cGUpIHsNCj4gQEAg
+LTExMzksNiArMTE1NCw3IEBAIHN0YXRpYyBpbnQgaHR0cF9yZXF1ZXN0X3JlYXV0aChjb25zdCBj
+aGFyICp1cmwsDQo+IAl9DQo+IA0KPiAJY3JlZGVudGlhbF9maWxsKCZodHRwX2F1dGgpOw0KPiAr
+CWh0dHBfcGFzc3dvcmRsZXNzX2F1dGggPSAwOw0KPiANCj4gCXJldHVybiBodHRwX3JlcXVlc3Qo
+dXJsLCByZXN1bHQsIHRhcmdldCwgb3B0aW9ucyk7DQo+IH0NCj4gZGlmZiAtLWdpdCBhL2h0dHAu
+aCBiL2h0dHAuaA0KPiBpbmRleCA0NzMxNzliLi43MTk0M2QzIDEwMDY0NA0KPiAtLS0gYS9odHRw
+LmgNCj4gKysrIGIvaHR0cC5oDQo+IEBAIC05OCw2ICs5OCw4IEBAIGV4dGVybiBpbnQgaGFuZGxl
+X2N1cmxfcmVzdWx0KHN0cnVjdCBzbG90X3Jlc3VsdHMgKnJlc3VsdHMpOw0KPiBpbnQgcnVuX29u
+ZV9zbG90KHN0cnVjdCBhY3RpdmVfcmVxdWVzdF9zbG90ICpzbG90LA0KPiAJCSBzdHJ1Y3Qgc2xv
+dF9yZXN1bHRzICpyZXN1bHRzKTsNCj4gDQo+ICt2b2lkIGRpc2FibGVfcGFzc3dvcmRsZXNzX2F1
+dGgoc3RydWN0IGFjdGl2ZV9yZXF1ZXN0X3Nsb3QgKnNsb3QpOw0KPiArDQo+ICNpZmRlZiBVU0Vf
+Q1VSTF9NVUxUSQ0KPiBleHRlcm4gdm9pZCBmaWxsX2FjdGl2ZV9zbG90cyh2b2lkKTsNCj4gZXh0
+ZXJuIHZvaWQgYWRkX2ZpbGxfZnVuY3Rpb24odm9pZCAqZGF0YSwgaW50ICgqZmlsbCkodm9pZCAq
+KSk7DQo+IEBAIC0xMTIsNiArMTE0LDcgQEAgZXh0ZXJuIGludCBhY3RpdmVfcmVxdWVzdHM7DQo+
+IGV4dGVybiBpbnQgaHR0cF9pc192ZXJib3NlOw0KPiBleHRlcm4gc2l6ZV90IGh0dHBfcG9zdF9i
+dWZmZXI7DQo+IGV4dGVybiBzdHJ1Y3QgY3JlZGVudGlhbCBodHRwX2F1dGg7DQo+ICtleHRlcm4g
+aW50IGh0dHBfcGFzc3dvcmRsZXNzX2F1dGg7DQo+IA0KPiBleHRlcm4gY2hhciBjdXJsX2Vycm9y
+c3RyW0NVUkxfRVJST1JfU0laRV07DQo+IA0KPiBkaWZmIC0tZ2l0IGEvcmVtb3RlLWN1cmwuYyBi
+L3JlbW90ZS1jdXJsLmMNCj4gaW5kZXggZGQ2M2JjMi4uNGNhNTQ0NyAxMDA2NDQNCj4gLS0tIGEv
+cmVtb3RlLWN1cmwuYw0KPiArKysgYi9yZW1vdGUtY3VybC5jDQo+IEBAIC00NjcsNiArNDY3LDkg
+QEAgc3RhdGljIGludCBwcm9iZV9ycGMoc3RydWN0IHJwY19zdGF0ZSAqcnBjLCBzdHJ1Y3Qgc2xv
+dF9yZXN1bHRzICpyZXN1bHRzKQ0KPiAJY3VybF9lYXN5X3NldG9wdChzbG90LT5jdXJsLCBDVVJM
+T1BUX1dSSVRFRlVOQ1RJT04sIGZ3cml0ZV9idWZmZXIpOw0KPiAJY3VybF9lYXN5X3NldG9wdChz
+bG90LT5jdXJsLCBDVVJMT1BUX0ZJTEUsICZidWYpOw0KPiANCj4gKwlpZiAoIWh0dHBfcGFzc3dv
+cmRsZXNzX2F1dGgpDQo+ICsJCWRpc2FibGVfcGFzc3dvcmRsZXNzX2F1dGgoc2xvdCk7DQo+ICsN
+Cj4gCWVyciA9IHJ1bl9zbG90KHNsb3QsIHJlc3VsdHMpOw0KPiANCj4gCWN1cmxfc2xpc3RfZnJl
+ZV9hbGwoaGVhZGVycyk7DQo+IEBAIC01MTAsOCArNTEzLDEwIEBAIHN0YXRpYyBpbnQgcG9zdF9y
+cGMoc3RydWN0IHJwY19zdGF0ZSAqcnBjKQ0KPiANCj4gCQlkbyB7DQo+IAkJCWVyciA9IHByb2Jl
+X3JwYyhycGMsICZyZXN1bHRzKTsNCj4gLQkJCWlmIChlcnIgPT0gSFRUUF9SRUFVVEgpDQo+ICsJ
+CQlpZiAoZXJyID09IEhUVFBfUkVBVVRIKSB7DQo+IAkJCQljcmVkZW50aWFsX2ZpbGwoJmh0dHBf
+YXV0aCk7DQo+ICsJCQkJaHR0cF9wYXNzd29yZGxlc3NfYXV0aCA9IDA7DQo+ICsJCQl9DQo+IAkJ
+fSB3aGlsZSAoZXJyID09IEhUVFBfUkVBVVRIKTsNCj4gCQlpZiAoZXJyICE9IEhUVFBfT0spDQo+
+IAkJCXJldHVybiAtMTsNCj4gQEAgLTUzMyw2ICs1MzgsOSBAQCByZXRyeToNCj4gCWN1cmxfZWFz
+eV9zZXRvcHQoc2xvdC0+Y3VybCwgQ1VSTE9QVF9VUkwsIHJwYy0+c2VydmljZV91cmwpOw0KPiAJ
+Y3VybF9lYXN5X3NldG9wdChzbG90LT5jdXJsLCBDVVJMT1BUX0VOQ09ESU5HLCAiZ3ppcCIpOw0K
+PiANCj4gKwlpZiAoIWh0dHBfcGFzc3dvcmRsZXNzX2F1dGgpDQo+ICsJCWRpc2FibGVfcGFzc3dv
+cmRsZXNzX2F1dGgoc2xvdCk7DQo+ICsNCj4gCWlmIChsYXJnZV9yZXF1ZXN0KSB7DQo+IAkJLyog
+VGhlIHJlcXVlc3QgYm9keSBpcyBsYXJnZSBhbmQgdGhlIHNpemUgY2Fubm90IGJlIHByZWRpY3Rl
+ZC4NCj4gCQkgKiBXZSBtdXN0IHVzZSBjaHVua2VkIGVuY29kaW5nIHRvIHNlbmQgaXQuDQo+IEBA
+IC02MTcsNiArNjI1LDcgQEAgcmV0cnk6DQo+IAllcnIgPSBydW5fc2xvdChzbG90LCBOVUxMKTsN
+Cj4gCWlmIChlcnIgPT0gSFRUUF9SRUFVVEggJiYgIWxhcmdlX3JlcXVlc3QpIHsNCj4gCQljcmVk
+ZW50aWFsX2ZpbGwoJmh0dHBfYXV0aCk7DQo+ICsJCWh0dHBfcGFzc3dvcmRsZXNzX2F1dGggPSAw
+Ow0KPiAJCWdvdG8gcmV0cnk7DQo+IAl9DQo+IAlpZiAoZXJyICE9IEhUVFBfT0spDQo+IC0tIA0K
+PiAyLjIuMS4yMDkuZzQxZTVmM2ENCj4gDQoNCg==
