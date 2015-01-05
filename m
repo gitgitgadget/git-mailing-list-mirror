@@ -1,79 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCHv10 01/10] receive-pack.c: shorten the execute_commands
  loop over all commands
-Date: Mon, 5 Jan 2015 12:22:44 -0800
-Message-ID: <20150105202244.GL29365@google.com>
+Date: Mon, 5 Jan 2015 13:07:47 -0800
+Message-ID: <CAGZ79kbRLPYRw+iifigRHqJ5Lc1brQ3qkUV=4YYPSwr72+giPg@mail.gmail.com>
 References: <CAGZ79ka8TMvF1s=ZL=4Lj1EaDrLVn8HRA2PR4JLAHWasHmvkFA@mail.gmail.com>
- <1420482355-24995-1-git-send-email-sbeller@google.com>
+	<1420482355-24995-1-git-send-email-sbeller@google.com>
+	<20150105202244.GL29365@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pclouds@gmail.com, gitster@pobox.com, git@vger.kernel.org,
-	sunshine@sunshineco.com, mhagger@alum.mit.edu,
-	ronniesahlberg@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Jan 05 21:23:21 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	ronnie sahlberg <ronniesahlberg@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 05 22:09:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8EAv-0005HW-C4
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 21:22:53 +0100
+	id 1Y8EsT-0003oa-Fs
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 22:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102AbbAEUWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2015 15:22:48 -0500
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:49455 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753783AbbAEUWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2015 15:22:47 -0500
-Received: by mail-ig0-f171.google.com with SMTP id z20so3080149igj.4
-        for <git@vger.kernel.org>; Mon, 05 Jan 2015 12:22:46 -0800 (PST)
+	id S1753244AbbAEVHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 16:07:49 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:37927 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753181AbbAEVHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 16:07:48 -0500
+Received: by mail-ie0-f179.google.com with SMTP id rp18so20347415iec.38
+        for <git@vger.kernel.org>; Mon, 05 Jan 2015 13:07:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=m0EZ3jgvCHh13PYjxDXY+gwmz3LAo/UzvGni/1yq4aI=;
-        b=FN61NljlvxyJiu2HaDJqbQcd7rbHWxPuSUoOcfZAp4EoH5sfLyezzh4+Wxv0J4+rTP
-         76r77eIcN8BuALPSoIkp05fubsNcwaUBGzNitBGEpPOr6NL3JHapJYovlJnw+9fDAnTp
-         Sp0DOerV2WzPReLrywEyI3/U0T5kYWzt9Z/Rkwdfl0/ne0XcolOUYP/982ysCN8PlJmI
-         WuTHA37SB6B8CaIOV06hSa4yeQOKjQDzbRfq+JWX7rZqHCm9Qy3E3rqJaBMgJjU1D1pm
-         RzTU8PyoEAQs5DGg1bJcvj9hGTx33Mu72wGZV8uc5AzYa9LNugMhZst7MLVvG5XeDEMi
-         4ITA==
-X-Received: by 10.50.142.105 with SMTP id rv9mr12626148igb.41.1420489366933;
-        Mon, 05 Jan 2015 12:22:46 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:cbe:c7db:3064:452c])
-        by mx.google.com with ESMTPSA id o72sm27061948ioo.14.2015.01.05.12.22.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 Jan 2015 12:22:46 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1420482355-24995-1-git-send-email-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=3Gkqa/OJTUeU4IC+Iibn7gt5TRSI1G4ZLLHqPZPzwa0=;
+        b=ddCuY73jzyW57RjzDeLfoXuC5Fgt3jHbhS9/NXYrW/VjbbjFz2Tpr0wSe1McOYltpN
+         1c1NZK55DukvSwuj9/81XGl+h+ISqM9myl3wNy3RlJYeRLGwJ8MGm3RTMvyIvRQTqcpT
+         ntEQuO7pix7fmNGM5gtw/kI9mV++MXTNiwRB4q+xmFWnuyQyAT0nAE05vhWIx7G1l3jq
+         pQBtO02m2Fgvl9lf3uFE8JaghTrI3NXjQlRBDkxN0+JBuUNhTwDplnmr6fTuqZns/y6K
+         2OLHgXHV/8kMteMkV+vbAauCsGRofNBDdsk0IA8Q/eEiEL7tB0uPUiVIbOgvIZRzQq/t
+         9zvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=3Gkqa/OJTUeU4IC+Iibn7gt5TRSI1G4ZLLHqPZPzwa0=;
+        b=mnVg+GH4qb8hRdIFyUmVf+xhsKuxrmBk53AIxrH3tPNq70PW0XjXhjAsEWfp/TWhEz
+         6ovfFChyqmOsbgUfFc521uyEOuysBP7DNr+bNnyoAGSqYApRRVqBS8jHjbAPzC30b1RH
+         qahh7EyrXdea7J9BkPMGe+iKQOJqd+We6duilus+NpSN7Lmh+ulkQGABK+VlyaA1Ag7J
+         NoyBBVUIvH47K+4952HK3tMbxzy+f+PWATEbfyhfyzeptU3VNfrEqPMX62XOxzKD8TEZ
+         P29pxEXgnWZ2NHVMOiOBGeWIPCkhwXK+xA/20OQavI6kgaMNO49djZYAzSu1XML7Vgn8
+         nQmA==
+X-Gm-Message-State: ALoCoQn3Y4bb6/dbLf3rmmHCRG/k1NyfhRgIWn1SLid9HBndR5JV0WR9sOFXj9bc6b7Q2n+TKXmu
+X-Received: by 10.43.82.72 with SMTP id ab8mr70981025icc.76.1420492067604;
+ Mon, 05 Jan 2015 13:07:47 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Mon, 5 Jan 2015 13:07:47 -0800 (PST)
+In-Reply-To: <20150105202244.GL29365@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262033>
 
-Stefan Beller wrote:
+On Mon, Jan 5, 2015 at 12:22 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Stefan Beller wrote:
+>
+>> --- a/builtin/receive-pack.c
+>> +++ b/builtin/receive-pack.c
+> [...]
+>> @@ -1077,27 +1100,15 @@ static void execute_commands(struct command *commands,
+> [...]
+>> +     if (shallow_update)
+>> +             assure_connectivity_checked(commands, si);
+>
+> Looking at this code alone, it seems like assure_connectivity_checked()
+> is going to ensure that connectivity was checked, so that I can assume
+> connectivity going forward.  But the opposite is true --- it is a
+> safety check that prints a warning and doesn't affect what I can
+> assume.
 
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-[...]
-> @@ -1077,27 +1100,15 @@ static void execute_commands(struct command *commands,
-[...]
-> +	if (shallow_update)
-> +		assure_connectivity_checked(commands, si);
+I disagree on that. Combined with the next patch (s/error/die/) we can assume
+that the the connectivity is there as if it is not, git is dead.
 
-Looking at this code alone, it seems like assure_connectivity_checked()
-is going to ensure that connectivity was checked, so that I can assume
-connectivity going forward.  But the opposite is true --- it is a
-safety check that prints a warning and doesn't affect what I can
-assume.
+This is why I choose the word assure. Maybe check_assumption would be better?
 
-The factored-out function fails in what it is meant to do, which is to
-save the reader of execute_commands from having to look at the
-implementation of the parts they are not interested in.
+>
+> The factored-out function fails in what it is meant to do, which is to
+> save the reader of execute_commands from having to look at the
+> implementation of the parts they are not interested in.
+>
+> Would something like warn_if_skipped_connectivity_check() make sense?
 
-Would something like warn_if_skipped_connectivity_check() make sense?
+The next patch would then change this to die_if_... ?
+I'd be ok with that, but in your original email you would still have the last
+die(...) in the execute_command function which I dislike.
+So what about:
 
-Jonathan
+if (shallow_update)
+       (warn|die)_on_skipped_connectivity_check()
+
+?
+
+>
+> Jonathan
