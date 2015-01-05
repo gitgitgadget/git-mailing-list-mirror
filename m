@@ -1,105 +1,88 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv10 02/10] receive-pack.c: die instead of error in assure_connectivity_checked
-Date: Mon,  5 Jan 2015 10:25:55 -0800
-Message-ID: <1420482355-24995-2-git-send-email-sbeller@google.com>
-References: <CAGZ79ka8TMvF1s=ZL=4Lj1EaDrLVn8HRA2PR4JLAHWasHmvkFA@mail.gmail.com>
- <1420482355-24995-1-git-send-email-sbeller@google.com>
-Cc: gitster@pobox.com, git@vger.kernel.org, sunshine@sunshineco.com,
-	mhagger@alum.mit.edu, ronniesahlberg@gmail.com,
-	Stefan Beller <sbeller@google.com>
-To: jrnieder@gmail.com, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jan 05 19:36:30 2015
+From: Paul Sokolovsky <paul.sokolovsky@linaro.org>
+Subject: git 2.2.x: Unexpected, overstrict file permissions after "git
+ update-server-info"
+Date: Mon, 5 Jan 2015 21:07:24 +0200
+Organization: Linaro
+Message-ID: <20150105210724.032e9718@x230>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 05 20:08:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8CM2-0005gI-Od
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 19:26:15 +0100
+	id 1Y8D06-0000LE-ND
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 20:07:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932066AbbAES0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2015 13:26:10 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:58022 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754080AbbAES0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2015 13:26:08 -0500
-Received: by mail-ie0-f178.google.com with SMTP id vy18so17877934iec.23
-        for <git@vger.kernel.org>; Mon, 05 Jan 2015 10:26:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5GAgVF1OMASx162wJxbO97wFdPlnJS6q3WWo4VKxAhY=;
-        b=dqjV3tuNnx/ANa6PXmOdF1PP2rJZP3uHrFkgUX0tBPTN80qUXjqeaaQRm0YfzQTd2T
-         3P5SFT/AjPkNgI8LkQFu+vJGeGzjDyfGFDaAwvX7H9OzRS4baGOlcJH7Jp1Ee83UGhxe
-         lb0t+IjxaDc+gBt8dcBT2H4p4VVAW+2MvUxXyO0fsOT5n2KJavR3O9lJvvFW9t5FkTel
-         I5hwgw29LCZwCwBbYaa3WL6x5gqZo/Jk3idI4PvIFP3Brh6pWO3zqW+L5EBVrwoFvnAf
-         i+E9fPLxBTjCjDO7aH49E3eqQ10Pt4POa8CAwxInrMpHL+mZnL++hCr3moXgQENpDZE7
-         x/eQ==
+	id S1753971AbbAETHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 14:07:34 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:34906 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753701AbbAETHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 14:07:33 -0500
+Received: by mail-lb0-f170.google.com with SMTP id 10so18488556lbg.1
+        for <git@vger.kernel.org>; Mon, 05 Jan 2015 11:07:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=5GAgVF1OMASx162wJxbO97wFdPlnJS6q3WWo4VKxAhY=;
-        b=ZFEuZzIdN7AimI71ET/PPI7ODLgBcLskSRUMYUtxoW5nqhAbIZcmeihSsQzCFZmW4p
-         SKG1Uwu3KcD5M71QwpasW9fUgW+4bYwwx8FQnQ/Dys7cmAOUvksDp9thHKcjQTVrFEbJ
-         X4bA45pKNEHmTgB4Q9nz3D2VQU1+aEH4GEmDEfk7RPZLY9EhW08NnlYCpihOj9+4tXYe
-         7l4ammLCVQZWFUoK8HhzhUKhDg9/Nz7WLqbgXXvRr34BcqQL9A08a9C2/4IDB2ClG2O3
-         rI9xkVyBoRX3B8oNugWB8NBTTxne5kEwCpPSPQWhEzc9wWgKsz28bUxICl5qHFA0cNTg
-         COAQ==
-X-Gm-Message-State: ALoCoQnMUQ5WoUffkEhO2/FYeRtyIqHOrjUwbhqDsBmdmIlixW6rmr7ZSoctb2aDhwxaVdIygES0
-X-Received: by 10.107.157.19 with SMTP id g19mr76005904ioe.19.1420482367316;
-        Mon, 05 Jan 2015 10:26:07 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:9882:2f2a:8d4c:ba76])
-        by mx.google.com with ESMTPSA id m2sm26924380ioi.10.2015.01.05.10.26.06
+        h=x-gm-message-state:from:date:to:subject:message-id:organization
+         :mime-version:content-type:content-transfer-encoding;
+        bh=CmdVWILPTrPgyJ3hPoan/teCYYGu1Rv2IHL7qwCv/68=;
+        b=aqKe50aS/3odSTMfOs2UgBd68GgQXzdgbQpRF1x5z1ny9AwD7na6Fsm79syAUNoUl4
+         MxNPURw17x4vdRVy1RSzs0B0RLmzpJ/TIsZvkfvBFmZUCh3KDnZ/VGNerfJrH51zCpZk
+         KyzayN9r+nPe01J9VgWQJ6Zks8qYcR+09DfnvxdDljz10qRr4JdLjNcwm7aY+wGQtvPI
+         2YzoY62wLOtQ11h1lVmSZC92f8wPHoOQUheWMFN7CjkhzWlLzuL+m+U3sHpaPSHWNxnk
+         ZE1Z9fL83vLNofxb1gqKgi+R58TIzkecrhHZs6Q1wODa2UM4dDnD+BSIhVlHpg87Pg6B
+         X9+A==
+X-Gm-Message-State: ALoCoQknHC42ofCMLTSDGChALtFvynD+VHMp4u5hsdWzI2YQHZYyB8E9w3T8idw3K02AnnrzDXuo
+X-Received: by 10.112.135.99 with SMTP id pr3mr41061489lbb.61.1420484851251;
+        Mon, 05 Jan 2015 11:07:31 -0800 (PST)
+Received: from x230 ([91.225.122.14])
+        by mx.google.com with ESMTPSA id i7sm13546520lai.22.2015.01.05.11.07.29
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 Jan 2015 10:26:06 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
-In-Reply-To: <1420482355-24995-1-git-send-email-sbeller@google.com>
+        Mon, 05 Jan 2015 11:07:30 -0800 (PST)
+X-Google-Original-From: Paul Sokolovsky <Paul.Sokolovsky@linaro.org>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262026>
 
-Discussion on the previous patch revealed we rather want to err on the
-safe side. To do so we need to stop receive-pack in case of the possible
-future bug when connectivity is not checked on a shallow push.
+Hello,
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+We recently upgraded to git 2.2.1 from 2.1.x and faced issue with
+accessing repositories over dump HTTP protocol. In our setting,
+repositories are managed by Gerrit, so owned by Gerrit daemon user,
+but we also offer anon access via smart and dumb HTTP protocols. For the
+latter, we of course rely on "git update-server-info" being run.
 
-Notes:
-    v10:
-    * new in v10.
+So, after the upgrade, users started to report that accessing
+info/refs file of a repo, as required for HTTP dump protocol, leads to
+403 Forbidden HTTP error. We traced that to 0600 filesystem permissions
+for such files (for objects/info/packs too) (owner is gerrit user, to
+remind). After resetting permissions to 0644, they get back to 0600
+after some time (we have a cronjob in addition to a hook to run "git
+update-server-info"). umask is permissive when running cronjob (0002).
 
- builtin/receive-pack.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ed428e4..7ebea7f 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1055,15 +1055,15 @@ static void assure_connectivity_checked(struct command *commands,
- 
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (should_process_cmd(cmd) && si->shallow_ref[cmd->index]) {
--			error("BUG: connectivity check has not been run on ref %s",
--			      cmd->ref_name);
-+			die("BUG: connectivity check has not been run on ref %s",
-+			    cmd->ref_name);
- 			checked_connectivity = 0;
- 		}
- 	}
- 	if (!checked_connectivity)
--		error("BUG: run 'git fsck' for safety.\n"
--		      "If there are errors, try to remove "
--		      "the reported refs above");
-+		die("BUG: run 'git fsck' for safety.\n"
-+		    "If there are errors, try to remove "
-+		    "the reported refs above");
- }
- 
- static void execute_commands(struct command *commands,
--- 
-2.2.1.62.g3f15098
+I traced the issue to:
+https://github.com/git/git/commit/d38379ece9216735ecc0ffd76c4c4e3da217daec
+
+It says: "Let's instead switch to using a unique tempfile via mkstemp."
+Reading man mkstemp: "The  file  is  created  with permissions 0600".
+So, that's it. The patch above contains call to adjust_shared_perm(),
+but apparently it doesn't promote restrictive msktemp permissions to
+something more accessible.
+
+Hope this issue can be addressed.
+
+
+Thanks,
+Paul
+
+Linaro.org | Open source software for ARM SoCs
+Follow Linaro: http://www.facebook.com/pages/Linaro
+http://twitter.com/#!/linaroorg - http://www.linaro.org/linaro-blog
