@@ -1,88 +1,131 @@
-From: Paul Sokolovsky <paul.sokolovsky@linaro.org>
-Subject: git 2.2.x: Unexpected, overstrict file permissions after "git
- update-server-info"
-Date: Mon, 5 Jan 2015 21:07:24 +0200
-Organization: Linaro
-Message-ID: <20150105210724.032e9718@x230>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 05 20:08:19 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [RFC PATCH] format-patch: Add config option format.coverbodytext to change the cover letter body
+Date: Mon,  5 Jan 2015 11:28:25 -0800
+Message-ID: <1420486105-30242-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 05 20:29:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8D06-0000LE-ND
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 20:07:39 +0100
+	id 1Y8DKW-00019I-Do
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 20:28:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753971AbbAETHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2015 14:07:34 -0500
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:34906 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753701AbbAETHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2015 14:07:33 -0500
-Received: by mail-lb0-f170.google.com with SMTP id 10so18488556lbg.1
-        for <git@vger.kernel.org>; Mon, 05 Jan 2015 11:07:31 -0800 (PST)
+	id S1753744AbbAET2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 14:28:40 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:59212 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753342AbbAET2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 14:28:39 -0500
+Received: by mail-ie0-f181.google.com with SMTP id rl12so18307521iec.12
+        for <git@vger.kernel.org>; Mon, 05 Jan 2015 11:28:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=HTslpQvqB5Lmwh18Aq06pAxhhLV71ecVToYmF22Bv5g=;
+        b=U4CtiSssIUj4piWLHO3/TpRN0YugLazVU3/7/+lKVBWQKY4cTOcQZsdss0gR02qDHw
+         oPGmdnPkfNMrNMPGbfi+9LwCVcFhy5T2l4TyLqtrotaDPv094U9XdNhFrCq8L3ygv4+N
+         uB6Jb9BoFBoaWxTaCROVUdP1cDWVmNJPNmbepWtcXpTLkK+DzacB5JbkGIvWSRyiusL3
+         sMrRrFUgOxvOSNp6dlrj2cZCsLcMYDkyRzmrftEJ5QmtxoopKxDzK9nxHqqyEsb3IWQw
+         vbY9HWU3ZzR6z8o3dCEsaMUnzLx/98wg7283ip55oFLWh0hAb+4IzxO3UgqZMVtp08b/
+         Kp/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:date:to:subject:message-id:organization
-         :mime-version:content-type:content-transfer-encoding;
-        bh=CmdVWILPTrPgyJ3hPoan/teCYYGu1Rv2IHL7qwCv/68=;
-        b=aqKe50aS/3odSTMfOs2UgBd68GgQXzdgbQpRF1x5z1ny9AwD7na6Fsm79syAUNoUl4
-         MxNPURw17x4vdRVy1RSzs0B0RLmzpJ/TIsZvkfvBFmZUCh3KDnZ/VGNerfJrH51zCpZk
-         KyzayN9r+nPe01J9VgWQJ6Zks8qYcR+09DfnvxdDljz10qRr4JdLjNcwm7aY+wGQtvPI
-         2YzoY62wLOtQ11h1lVmSZC92f8wPHoOQUheWMFN7CjkhzWlLzuL+m+U3sHpaPSHWNxnk
-         ZE1Z9fL83vLNofxb1gqKgi+R58TIzkecrhHZs6Q1wODa2UM4dDnD+BSIhVlHpg87Pg6B
-         X9+A==
-X-Gm-Message-State: ALoCoQknHC42ofCMLTSDGChALtFvynD+VHMp4u5hsdWzI2YQHZYyB8E9w3T8idw3K02AnnrzDXuo
-X-Received: by 10.112.135.99 with SMTP id pr3mr41061489lbb.61.1420484851251;
-        Mon, 05 Jan 2015 11:07:31 -0800 (PST)
-Received: from x230 ([91.225.122.14])
-        by mx.google.com with ESMTPSA id i7sm13546520lai.22.2015.01.05.11.07.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=HTslpQvqB5Lmwh18Aq06pAxhhLV71ecVToYmF22Bv5g=;
+        b=hkdvPyBeaA6Z1nAuSbNWZ0QuVBf96hxnT7Y0ALuPBOeTiZMVecc0rdpkHxfbvwwBbY
+         iNuNtkcchs5DEut5CZM8QqILE7OaHV7CuECVe+PnqGN7ruiSm2RT9gZL8R/yhNiCPgQ4
+         sVVB535n9RLyZq4oa8yp80u+mz+k+c+T//Fztm3cLu6Uj9VF8ieROGzyTz6HVS83g5FJ
+         Fzfz5MG/U0LptTcImPA0P5zDUD1HbFJloC+xSZnyBlyGQIcIjM2/9WzD0VHCrZp5bxsb
+         EffsaasIo4kjDn7X1x8oLu//NN3L+YDYHnwwUNknRFEnI6G9SIWe200IhJt9Hqc+FZmH
+         Z0qg==
+X-Gm-Message-State: ALoCoQkJ4CybiNROsZ60o67aJDCIdVJh6yTlw41KThIP2DqCB1Z7ydR68gVl8I8xAEHC6TR4fxyB
+X-Received: by 10.107.160.143 with SMTP id j137mr22635069ioe.43.1420486118689;
+        Mon, 05 Jan 2015 11:28:38 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:9882:2f2a:8d4c:ba76])
+        by mx.google.com with ESMTPSA id m2sm26998648ioi.10.2015.01.05.11.28.37
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 Jan 2015 11:07:30 -0800 (PST)
-X-Google-Original-From: Paul Sokolovsky <Paul.Sokolovsky@linaro.org>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        Mon, 05 Jan 2015 11:28:38 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.62.g3f15098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262027>
 
-Hello,
+When sending out patch series one of the last things doing is writing
+the cover letter. The cover letter would be a good place to remind
+people to check the todo list for sending patches. As people have
+different levels of confidence and sloppiness this todo list may be
+lengthier for some people compared to others. To make this possible
+this adds a way to put your personal todo list for sending patches in
+the cover letter, so you'll see it every time you intend to send patches.
 
-We recently upgraded to git 2.2.1 from 2.1.x and faced issue with
-accessing repositories over dump HTTP protocol. In our setting,
-repositories are managed by Gerrit, so owned by Gerrit daemon user,
-but we also offer anon access via smart and dumb HTTP protocols. For the
-latter, we of course rely on "git update-server-info" being run.
+This intentionally doesn't let you configure the subject line of the cover letter
+as send email will stop you if you want to send out the coverletter with untouched
+subject line (*** SUBJECT HERE***).
 
-So, after the upgrade, users started to report that accessing
-info/refs file of a repo, as required for HTTP dump protocol, leads to
-403 Forbidden HTTP error. We traced that to 0600 filesystem permissions
-for such files (for objects/info/packs too) (owner is gerrit user, to
-remind). After resetting permissions to 0644, they get back to 0600
-after some time (we have a cronjob in addition to a hook to run "git
-update-server-info"). umask is permissive when running cronjob (0002).
+Not-signed-off-by: Stefan Beller <sbeller@google.com> as it's RFC.
 
+---
+ builtin/log.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-I traced the issue to:
-https://github.com/git/git/commit/d38379ece9216735ecc0ffd76c4c4e3da217daec
-
-It says: "Let's instead switch to using a unique tempfile via mkstemp."
-Reading man mkstemp: "The  file  is  created  with permissions 0600".
-So, that's it. The patch above contains call to adjust_shared_perm(),
-but apparently it doesn't promote restrictive msktemp permissions to
-something more accessible.
-
-Hope this issue can be addressed.
-
-
-Thanks,
-Paul
-
-Linaro.org | Open source software for ARM SoCs
-Follow Linaro: http://www.facebook.com/pages/Linaro
-http://twitter.com/#!/linaroorg - http://www.linaro.org/linaro-blog
+diff --git a/builtin/log.c b/builtin/log.c
+index 734aab3..84da54d 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -34,6 +34,7 @@ static int default_show_root = 1;
+ static int decoration_style;
+ static int decoration_given;
+ static int use_mailmap_config;
++static const char *fmt_patch_body_text = "*** BLURB HERE ***";
+ static const char *fmt_patch_subject_prefix = "PATCH";
+ static const char *fmt_pretty;
+ 
+@@ -374,6 +375,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		return git_config_string(&fmt_pretty, var, value);
+ 	if (!strcmp(var, "format.subjectprefix"))
+ 		return git_config_string(&fmt_patch_subject_prefix, var, value);
++	if (!strcmp(var, "format.coverbodytext"))
++		return git_config_string(&fmt_patch_body_text, var, value);
+ 	if (!strcmp(var, "log.abbrevcommit")) {
+ 		default_abbrev_commit = git_config_bool(var, value);
+ 		return 0;
+@@ -904,8 +907,8 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 			      int quiet)
+ {
+ 	const char *committer;
+-	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
+-	const char *msg;
++	const char *subject = "*** SUBJECT HERE ***\n\n";
++	struct strbuf msg = STRBUF_INIT;
+ 	struct shortlog log;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int i;
+@@ -937,16 +940,18 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	if (!branch_name)
+ 		branch_name = find_branch_name(rev);
+ 
+-	msg = body;
++	strbuf_addstr(&msg, subject);
++	strbuf_addstr(&msg, fmt_patch_body_text);
+ 	pp.fmt = CMIT_FMT_EMAIL;
+ 	pp.date_mode = DATE_RFC2822;
+ 	pp_user_info(&pp, NULL, &sb, committer, encoding);
+-	pp_title_line(&pp, &msg, &sb, encoding, need_8bit_cte);
+-	pp_remainder(&pp, &msg, &sb, 0);
++	pp_title_line(&pp, &msg.buf, &sb, encoding, need_8bit_cte);
++	pp_remainder(&pp, &msg.buf, &sb, 0);
+ 	add_branch_description(&sb, branch_name);
+ 	printf("%s\n", sb.buf);
+ 
+ 	strbuf_release(&sb);
++	strbuf_release(&msg);
+ 
+ 	shortlog_init(&log);
+ 	log.wrap_lines = 1;
+-- 
+2.2.1.62.g3f15098
