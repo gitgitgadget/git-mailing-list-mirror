@@ -1,115 +1,81 @@
-From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv0 2/4] fast-import.c:do_change_note_fanout(): Also apply load_tree() to initial root
-Date: Mon,  5 Jan 2015 04:39:36 +0100
-Message-ID: <1420429178-20336-2-git-send-email-johan@herland.net>
-References: <CALKQrgdVp7cLER2DQxwdFT82Y=Pamrx6=oa3bY=X7mWy_r3QWA@mail.gmail.com>
- <1420429178-20336-1-git-send-email-johan@herland.net>
-Cc: Git mailing list <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Jan 05 04:40:25 2015
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH 3/3] git-checkout.txt: a note about multiple checkout
+ support for submodules
+Date: Sun, 04 Jan 2015 22:43:39 -0500
+Message-ID: <54AA086B.9070309@gmail.com>
+References: <1420278087-14613-1-git-send-email-pclouds@gmail.com> <1420278087-14613-4-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Max Kirillov <max@max630.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 05 04:43:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y7yWm-0002VE-KT
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 04:40:24 +0100
+	id 1Y7ya6-0003CA-97
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 04:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753110AbbAEDkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2015 22:40:07 -0500
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:53614 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753073AbbAEDkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2015 22:40:04 -0500
-Received: by mail-lb0-f169.google.com with SMTP id p9so17230702lbv.0
-        for <git@vger.kernel.org>; Sun, 04 Jan 2015 19:40:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+kMR/VNgG3dConaE1jSDEbBaYfGMWgchUhU4+5cePyQ=;
-        b=LIg+++JzfUr5BpswA0wUbgOCnbqiOUqbsKEWIdDoqKVjKbaSksdiZPfWE9X1noCTGA
-         9vRbKsYhd32MLQFD9dHeBLwJ5wKqrCePiOo/trSFcgd8Uz7CJ268jba1a1aWYHLN/4Bw
-         72fdvBlV8dA30293/C9uBoNFq2vVP9g853TMh0XvAgKHFYyj8YKNgLUODj46NpRA+03D
-         +TD3pOsMh+Th6bYnaUmquhOiJN0jDxgN5nonmYIBgWjFwmMShVAIowX19p4URtvRJows
-         Pj9Ujl2a+IgcfjxlwAJ7xJAl+J1N4xRdRkeSSXai31nvJ0eMkPxX33hIIzseIB+O0S57
-         nEXA==
-X-Received: by 10.153.5.1 with SMTP id ci1mr82828495lad.67.1420429203114;
-        Sun, 04 Jan 2015 19:40:03 -0800 (PST)
-Received: from beta.herland (245.37-191-128.fiber.lynet.no. [37.191.128.245])
-        by mx.google.com with ESMTPSA id ya4sm4239978lbb.32.2015.01.04.19.40.01
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 04 Jan 2015 19:40:01 -0800 (PST)
-X-Mailer: git-send-email 2.1.1.392.g062cc5d
-In-Reply-To: <1420429178-20336-1-git-send-email-johan@herland.net>
+	id S1752873AbbAEDnq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jan 2015 22:43:46 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:56784 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752827AbbAEDnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2015 22:43:45 -0500
+Received: by mail-qc0-f174.google.com with SMTP id c9so14830465qcz.19
+        for <git@vger.kernel.org>; Sun, 04 Jan 2015 19:43:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Ve3rzHAPCRPXAKrkp/5bc4rAgLKpsvr5UuKdj4Xtg7A=;
+        b=LAYMAz1Dfq5jLs1emyEfNSLw44Q63MdPBlR8VNopJStlRYIiSU31N0Pay9P/77v87I
+         VEhhz7/s/tyUeJBU9mxBAEMaFImZczteNznutI2yleCj1nmgq0KKecu8v00CXm6R4r+R
+         NAtcsdSCXDr/3wF4hNtM9T86KmI7Fkw3YY68BVpEvoe3tpuJanTRhrukFSE0YIn5h7Sc
+         M3b9pk7dgF+BMCZdqCWLXuTNdToITl3a9us0xrJwJh+X9ux/xjeEiF0pcigj8ydTz7NE
+         wFL1NxbR++hNNLFTqp9C1DgMplrjYDicVv5FXJM8xAlzVJc+6t9xIcVV0fXGeIuEk05l
+         aSzw==
+X-Received: by 10.224.55.145 with SMTP id u17mr141759114qag.12.1420429424733;
+        Sun, 04 Jan 2015 19:43:44 -0800 (PST)
+Received: from marklaptop.lan (pool-173-79-124-96.washdc.fios.verizon.net. [173.79.124.96])
+        by mx.google.com with ESMTPSA id w63sm31367260qgd.44.2015.01.04.19.43.42
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 04 Jan 2015 19:43:43 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <1420278087-14613-4-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262014>
 
-TODO: tests!
+On 01/03/2015 04:41 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote=
+:
+> The goal seems to be using multiple checkouts to reduce disk space.
+> But we have not reached an agreement how things should be. There are =
+a
+> couple options.
+>
+>   - You may want to keep $SUB repos elsewhere (perhaps in a central
+>     place) outside $SUPER. This is also true for nested submodules
+>     where a superproject may be a submodule of another superproject.
+>
+>
+This is my preference: I keep a tree of bare git repos outside of all=20
+work areas, and use new-workdir to create trees of workdirs as needed. =
+I=20
+explored trying to keep $SUB repos in others (including mods to=20
+submodule / new-workdir to manage this), found this really leads to too=
+=20
+much complication compared to just having a set of bare repos elsewhere=
+=2E=20
+This bare repo approach also has the advantage that no particular=20
+workdir is special, all workdirs that point to the same gitdir are equa=
+l.
 
-do_change_note_fanout() recursively traverses a "struct tree_entry" data
-structure. Before recursively traversing into a subtree, we make sure to
-call load_tree() on that subtree. However, for the initial/root struct
-tree_entry object, we assumed that load_tree() had already been invoked by
-our caller. This is true, except in the following case:
-
-If we load a previously written notes tree using 'filemodify' instead of
-'from' [1], then we do not pass the notes ref to load_branch() (which
-takes care of calling load_tree() on the root tree_entry).
-
-When load_tree(root) has not been called before the first 'notemodify'
-command is parsed, the for loop in do_change_note_fanout() does nothing,
-and we end up not counting the existing notes, which ends up producing
-a notes tree with mixed/insufficient fanout.
-
-Fix this by always making sure to call load_tree() at the start of
-do_change_note_fanout(). Since load_tree() is now called before the for loop,
-we no longer need to call load_tree() on a subtree before recursing into it,
-the recursive call will take care of its own load_tree().
-
-[1]: Usually, when adding notes to an existing notes tree, one would use a
-     'from' command like this:
-
-         from refs/notes/foo^0
-
-     However, if one does not want to retain notes history (i.e. one wants
-     the current refs/notes/foo commit to be build without any parents),
-     then one can replace the 'from' command with the following 'filemodify'
-     "hack" to pre-load the existing notes tree without using it as a parent:
-
-         M 040000 refs/notes/foo^{tree} \n
-
-Discovered-by: Mike Hommey <mh@glandium.org>
-Signed-off-by: Johan Herland <johan@herland.net>
----
- fast-import.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/fast-import.c b/fast-import.c
-index 04dfd50..aa7b64e 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2159,6 +2159,9 @@ static uintmax_t do_change_note_fanout(
- 	unsigned char sha1[20];
- 	char realpath[60];
- 
-+	if (!root->tree)
-+		load_tree(root);
-+
- 	for (i = 0; root->tree && i < root->tree->entry_count; i++) {
- 		e = root->tree->entries[i];
- 		tmp_hex_sha1_len = hex_sha1_len + e->name->str_len;
-@@ -2210,8 +2213,6 @@ static uintmax_t do_change_note_fanout(
- 				leaf.tree);
- 		} else if (S_ISDIR(e->versions[1].mode)) {
- 			/* This is a subdir that may contain note entries */
--			if (!e->tree)
--				load_tree(e);
- 			num_notes += do_change_note_fanout(orig_root, e,
- 				hex_sha1, tmp_hex_sha1_len,
- 				fullpath, tmp_fullpath_len, fanout);
--- 
-2.1.1.392.g062cc5d
+Mark
