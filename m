@@ -1,126 +1,163 @@
-From: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
-Subject: [PATCH v4] for-each-ref: Always check stat_tracking_info()'s return value.
-Date: Mon,  5 Jan 2015 11:58:55 +0200
-Message-ID: <1420451935-6008-1-git-send-email-raphael.kubo.da.costa@intel.com>
-Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 05 10:59:05 2015
+From: "Dan Langille (dalangil)" <dalangil@cisco.com>
+Subject: Re: [PATCH] remote-curl: fall back to Basic auth if Negotiate fails.
+Date: Mon, 5 Jan 2015 13:12:21 +0000
+Message-ID: <E4E8ABDE-80F2-4378-8B12-251B70056BF8@cisco.com>
+References: <FBFEB910-4CB8-4049-901C-AADBFAB3AE9E@cisco.com>
+ <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Jan 05 14:12:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y84RB-0002E7-RJ
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 10:59:02 +0100
+	id 1Y87SP-0006X2-BC
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 14:12:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378AbbAEJ65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2015 04:58:57 -0500
-Received: from mga14.intel.com ([192.55.52.115]:6642 "EHLO mga14.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753345AbbAEJ64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2015 04:58:56 -0500
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga103.fm.intel.com with ESMTP; 05 Jan 2015 01:54:17 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.07,698,1413270000"; 
-   d="scan'208";a="656862005"
-Received: from mhoran-mobl2.ger.corp.intel.com (HELO rkubodac-mobl1.ger.corp.intel.com) ([10.252.0.36])
-  by fmsmga002.fm.intel.com with ESMTP; 05 Jan 2015 01:58:54 -0800
-X-Mailer: git-send-email 2.1.4
+	id S1752878AbbAENMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 08:12:24 -0500
+Received: from alln-iport-6.cisco.com ([173.37.142.93]:21544 "EHLO
+	alln-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751138AbbAENMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 08:12:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=7444; q=dns/txt; s=iport;
+  t=1420463543; x=1421673143;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=bzw84k02qKF5uhaw+9yd+1+d2ygofOvYwhJdo3buqGI=;
+  b=MbbHkvxitF3STzA/3fvdWyZo6LNzJvc3bwVpX7oHMJO4XL3LNECVzubU
+   7HnOccjIXIv9FuSaSSSP7HS/O9hvrYVS/S6oF8DtanGqXY+8b8UmwT6yG
+   LONIiwjv1d7y8wgmEM2Gbgjw3i98t9fGqVbpNRsgbkVn7klx06spUIOHw
+   I=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtYFAHGNqlStJA2E/2dsb2JhbABcgwZSWASDAckNAhxqFgEBAQEBfYQMAQEBAwEjBA1FBQsCAQgYAgIUEgICAjAUAQIBDQIEDgWIJAipGpM/AQEBAQEBAQEBAQEBAQEBAQEBAQEBF4EhjhEqGwcYglAugRMFjhWIc4ENgmWKJYM5IoNub4FFfgEBAQ
+X-IronPort-AV: E=Sophos;i="5.07,700,1413244800"; 
+   d="scan'208";a="110372637"
+Received: from alln-core-10.cisco.com ([173.36.13.132])
+  by alln-iport-6.cisco.com with ESMTP; 05 Jan 2015 13:12:22 +0000
+Received: from xhc-aln-x05.cisco.com (xhc-aln-x05.cisco.com [173.36.12.79])
+	by alln-core-10.cisco.com (8.14.5/8.14.5) with ESMTP id t05DCMOq022051
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Mon, 5 Jan 2015 13:12:22 GMT
+Received: from xmb-rcd-x03.cisco.com ([169.254.7.219]) by
+ xhc-aln-x05.cisco.com ([173.36.12.79]) with mapi id 14.03.0195.001; Mon, 5
+ Jan 2015 07:12:22 -0600
+Thread-Topic: [PATCH] remote-curl: fall back to Basic auth if Negotiate
+ fails.
+Thread-Index: AQHQIYnVRi/Ia7NiDEC8TqxCdPlUgZyx8/uA
+In-Reply-To: <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.82.220.63]
+Content-ID: <8F4668470540404A8B85E4BE3876C46E@emea.cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262019>
 
-The code handling %(upstream:track) and %(upstream:trackshort) assumed
-it always had a valid branch that had been sanitized earlier in
-populate_value(), and thus did not check the return value of the call to
-stat_tracking_info().
-
-While there is indeed some sanitization code that basically corresponds
-to stat_tracking_info() returning 0 (no base branch set), the function
-can also return -1 when the base branch did exist but has since then
-been deleted.
-
-In this case, num_ours and num_theirs had undefined values and a call to
-`git for-each-ref --format="%(upstream:track)"` could print spurious
-values such as
-
-  [behind -111794512]
-  [ahead 38881640, behind 5103867]
-
-even for repositories with one single commit.
-
-We now properly verify stat_tracking_info()'s return value and do not
-print anything if it returns -1. This behavior also matches the
-documentation ("has no effect if the ref does not have tracking
-information associated with it").
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
----
-v4: Use Jeff's suggestion and simplify the test case and making it
-    easier to understand what is actually being tested.
-
- builtin/for-each-ref.c  | 11 +++++++++--
- t/t6300-for-each-ref.sh | 14 ++++++++++++++
- 2 files changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 603a90e..52e6323 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -717,7 +717,10 @@ static void populate_value(struct refinfo *ref)
- 				 starts_with(name, "upstream")) {
- 				char buf[40];
- 
--				stat_tracking_info(branch, &num_ours, &num_theirs);
-+				if (stat_tracking_info(branch, &num_ours,
-+						       &num_theirs) != 1)
-+					continue;
-+
- 				if (!num_ours && !num_theirs)
- 					v->s = "";
- 				else if (!num_ours) {
-@@ -735,7 +738,11 @@ static void populate_value(struct refinfo *ref)
- 			} else if (!strcmp(formatp, "trackshort") &&
- 				   starts_with(name, "upstream")) {
- 				assert(branch);
--				stat_tracking_info(branch, &num_ours, &num_theirs);
-+
-+				if (stat_tracking_info(branch, &num_ours,
-+							&num_theirs) != 1)
-+					continue;
-+
- 				if (!num_ours && !num_theirs)
- 					v->s = "=";
- 				else if (!num_ours)
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index bda354c..dcee7a0 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -335,6 +335,20 @@ test_expect_success 'Check that :track[short] cannot be used with other atoms' '
- '
- 
- cat >expected <<EOF
-+
-+
-+EOF
-+
-+test_expect_success 'Check that :track[short] works when upstream is invalid' '
-+	test_when_finished "git config branch.master.merge refs/heads/master" &&
-+	git config branch.master.merge refs/heads/does-not-exist &&
-+	git for-each-ref \
-+		--format="%(upstream:track)$LF%(upstream:trackshort)" \
-+		refs/heads > actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
- $(git rev-parse --short HEAD)
- EOF
- 
--- 
-2.1.4
+PiBPbiBEZWMgMjYsIDIwMTQsIGF0IDExOjAxIFBNLCBicmlhbiBtLiBjYXJsc29uIDxzYW5kYWxz
+QGNydXN0eXRvb3RocGFzdGUubmV0PiB3cm90ZToNCj4gDQo+IEFwYWNoZSBzZXJ2ZXJzIHVzaW5n
+IG1vZF9hdXRoX2tlcmIgY2FuIGJlIGNvbmZpZ3VyZWQgdG8gYWxsb3cgdGhlIHVzZXINCj4gdG8g
+YXV0aGVudGljYXRlIGVpdGhlciB1c2luZyBOZWdvdGlhdGUgKHVzaW5nIHRoZSBLZXJiZXJvcyB0
+aWNrZXQpIG9yDQo+IEJhc2ljIGF1dGhlbnRpY2F0aW9uICh1c2luZyB0aGUgS2VyYmVyb3MgcGFz
+c3dvcmQpLiAgT2Z0ZW4sIG9uZSB3aWxsDQo+IHdhbnQgdG8gdXNlIE5lZ290aWF0ZSBhdXRoZW50
+aWNhdGlvbiBpZiBpdCBpcyBhdmFpbGFibGUsIGJ1dCBmYWxsIGJhY2sNCj4gdG8gQmFzaWMgYXV0
+aGVudGljYXRpb24gaWYgdGhlIHRpY2tldCBpcyBtaXNzaW5nIG9yIGV4cGlyZWQuDQo+IA0KPiBU
+ZWFjaCB0aGUgSFRUUCBjbGllbnQgY29kZSB0byBzdG9wIHRyeWluZyBhdXRoZW50aWNhdGlvbiBt
+ZWNoYW5pc21zIHRoYXQNCj4gZG9uJ3QgdXNlIGEgcGFzc3dvcmQgKGN1cnJlbnRseSBOZWdvdGlh
+dGUpIGFmdGVyIHRoZSBmaXJzdCBmYWlsdXJlLA0KPiBzaW5jZSBpZiB0aGV5IGZhaWxlZCB0aGUg
+Zmlyc3QgdGltZSwgdGhleSB3aWxsIG5ldmVyIHN1Y2NlZWQuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5
+OiBicmlhbiBtLiBjYXJsc29uIDxzYW5kYWxzQGNydXN0eXRvb3RocGFzdGUubmV0Pg0KPiAtLS0N
+Cj4gSSB3YXMgYWJsZSB0byByZXByb2R1Y2UgdGhlIHByb2JsZW0gb24gbXkgc2VydmVyLiAgVGhp
+cyBmaXhlcyB0aGUNCj4gcHJvYmxlbSBmb3IgbWUgYm90aCB3aGVuIGluZm8vcmVmcyByZXF1aXJl
+cyBhdXRoZW50aWNhdGlvbiBhbmQgd2hlbiBpdA0KPiBkb2VzIG5vdC4gIERhbiwgcGxlYXNlIHRy
+eSBhbmQgc2VlIGlmIHRoaXMgZml4ZXMgdGhlIHByb2JsZW0gZm9yIHlvdS4NCg0KSGFzIHRoZSBw
+YXRjaCBjaGFuZ2VkIHNpbmNlIG9yaWdpbmFsbHkgcG9zdGVkPyAgSXMgdGhlcmUgYSBuZXdlciBv
+bmUgSSBzaG91bGQgdHJ5IGluc3RlYWQ/DQoNClRoYW5rIHlvdSBmb3IgeW91ciB3b3JrIG9uIHRo
+aXMsIEkgd2lsbCB0ZXN0IHRoaXMgdG9kYXkuDQoNCuKAlCANCkRhbiBMYW5naWxsZQ0KSW5mcmFz
+dHJ1Y3R1cmUgJiBPcGVyYXRpb25zDQpUYWxvcyBHcm91cA0KU291cmNlZmlyZSwgSW5jLg0KDQoN
+Cg0KPiANCj4gSSdtIG5vdCBjbGVhciBvbiB3aGV0aGVyIE5UTE0gaXMgYSBwYXNzd29yZGxlc3Mg
+YXV0aGVudGljYXRpb24gbWV0aG9kLg0KPiBTaW5jZSBJIGRvbid0IHVzZSBXaW5kb3dzIG9yIE5U
+TE0sIEkgY2FuJ3QgdGVzdCBpdCwgYnV0IGlmIGl0IGlzLCBqdXN0DQo+IGFkZGluZyBpdCB0byBI
+VFRQX0FVVEhfUEFTU1dPUkRMRVNTIHNob3VsZCBiZSBzdWZmaWNpZW50Lg0KPiANCj4gaHR0cC5j
+ICAgICAgICB8IDE0ICsrKysrKysrKysrKysrDQo+IGh0dHAuaCAgICAgICAgfCAgNSArKysrLQ0K
+PiByZW1vdGUtY3VybC5jIHwgMTMgKysrKysrKysrKysrLQ0KPiAzIGZpbGVzIGNoYW5nZWQsIDMw
+IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaHR0cC5j
+IGIvaHR0cC5jDQo+IGluZGV4IDA0MGYzNjIuLmUzZTRjNjUgMTAwNjQ0DQo+IC0tLSBhL2h0dHAu
+Yw0KPiArKysgYi9odHRwLmMNCj4gQEAgLTk4Niw2ICs5ODYsMTYgQEAgc3RhdGljIHZvaWQgZXh0
+cmFjdF9jb250ZW50X3R5cGUoc3RydWN0IHN0cmJ1ZiAqcmF3LCBzdHJ1Y3Qgc3RyYnVmICp0eXBl
+LA0KPiAJCXN0cmJ1Zl9hZGRzdHIoY2hhcnNldCwgIklTTy04ODU5LTEiKTsNCj4gfQ0KPiANCj4g
+K3ZvaWQgZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChzdHJ1Y3QgYWN0aXZlX3JlcXVlc3Rfc2xv
+dCAqc2xvdCkNCj4gK3sNCj4gKyNpZmRlZiBMSUJDVVJMX0NBTl9IQU5ETEVfQVVUSF9BTlkNCj4g
+KyNkZWZpbmUgSFRUUF9BVVRIX1BBU1NXT1JETEVTUyAoQ1VSTEFVVEhfR1NTTkVHT1RJQVRFKQ0K
+PiArCWN1cmxfZWFzeV9zZXRvcHQoc2xvdC0+Y3VybCwgQ1VSTE9QVF9IVFRQQVVUSCwNCj4gKwkJ
+CSBDVVJMQVVUSF9BTlkgJiB+SFRUUF9BVVRIX1BBU1NXT1JETEVTUyk7DQo+ICsjZW5kaWYNCj4g
+K30NCj4gKw0KPiArDQo+IC8qIGh0dHBfcmVxdWVzdCgpIHRhcmdldHMgKi8NCj4gI2RlZmluZSBI
+VFRQX1JFUVVFU1RfU1RSQlVGCTANCj4gI2RlZmluZSBIVFRQX1JFUVVFU1RfRklMRQkxDQo+IEBA
+IC0xMDM1LDYgKzEwNDUsOSBAQCBzdGF0aWMgaW50IGh0dHBfcmVxdWVzdChjb25zdCBjaGFyICp1
+cmwsDQo+IAljdXJsX2Vhc3lfc2V0b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfSFRUUEhFQURFUiwg
+aGVhZGVycyk7DQo+IAljdXJsX2Vhc3lfc2V0b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfRU5DT0RJ
+TkcsICJnemlwIik7DQo+IA0KPiArCWlmIChvcHRpb25zLT5ub19wYXNzd29yZGxlc3NfYXV0aCkN
+Cj4gKwkJZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChzbG90KTsNCj4gKw0KPiAJcmV0ID0gcnVu
+X29uZV9zbG90KHNsb3QsICZyZXN1bHRzKTsNCj4gDQo+IAlpZiAob3B0aW9ucyAmJiBvcHRpb25z
+LT5jb250ZW50X3R5cGUpIHsNCj4gQEAgLTExMzksNiArMTE1Miw3IEBAIHN0YXRpYyBpbnQgaHR0
+cF9yZXF1ZXN0X3JlYXV0aChjb25zdCBjaGFyICp1cmwsDQo+IAl9DQo+IA0KPiAJY3JlZGVudGlh
+bF9maWxsKCZodHRwX2F1dGgpOw0KPiArCW9wdGlvbnMtPm5vX3Bhc3N3b3JkbGVzc19hdXRoID0g
+MTsNCj4gDQo+IAlyZXR1cm4gaHR0cF9yZXF1ZXN0KHVybCwgcmVzdWx0LCB0YXJnZXQsIG9wdGlv
+bnMpOw0KPiB9DQo+IGRpZmYgLS1naXQgYS9odHRwLmggYi9odHRwLmgNCj4gaW5kZXggNDczMTc5
+Yi4uZmM0MmJmNSAxMDA2NDQNCj4gLS0tIGEvaHR0cC5oDQo+ICsrKyBiL2h0dHAuaA0KPiBAQCAt
+OTgsNiArOTgsOCBAQCBleHRlcm4gaW50IGhhbmRsZV9jdXJsX3Jlc3VsdChzdHJ1Y3Qgc2xvdF9y
+ZXN1bHRzICpyZXN1bHRzKTsNCj4gaW50IHJ1bl9vbmVfc2xvdChzdHJ1Y3QgYWN0aXZlX3JlcXVl
+c3Rfc2xvdCAqc2xvdCwNCj4gCQkgc3RydWN0IHNsb3RfcmVzdWx0cyAqcmVzdWx0cyk7DQo+IA0K
+PiArdm9pZCBkaXNhYmxlX3Bhc3N3b3JkbGVzc19hdXRoKHN0cnVjdCBhY3RpdmVfcmVxdWVzdF9z
+bG90ICpzbG90KTsNCj4gKw0KPiAjaWZkZWYgVVNFX0NVUkxfTVVMVEkNCj4gZXh0ZXJuIHZvaWQg
+ZmlsbF9hY3RpdmVfc2xvdHModm9pZCk7DQo+IGV4dGVybiB2b2lkIGFkZF9maWxsX2Z1bmN0aW9u
+KHZvaWQgKmRhdGEsIGludCAoKmZpbGwpKHZvaWQgKikpOw0KPiBAQCAtMTM4LDcgKzE0MCw4IEBA
+IGV4dGVybiBjaGFyICpnZXRfcmVtb3RlX29iamVjdF91cmwoY29uc3QgY2hhciAqdXJsLCBjb25z
+dCBjaGFyICpoZXgsDQo+IC8qIE9wdGlvbnMgZm9yIGh0dHBfZ2V0XyooKSAqLw0KPiBzdHJ1Y3Qg
+aHR0cF9nZXRfb3B0aW9ucyB7DQo+IAl1bnNpZ25lZCBub19jYWNoZToxLA0KPiAtCQkga2VlcF9l
+cnJvcjoxOw0KPiArCQkga2VlcF9lcnJvcjoxLA0KPiArCQkgbm9fcGFzc3dvcmRsZXNzX2F1dGg6
+MTsNCj4gDQo+IAkvKiBJZiBub24tTlVMTCwgcmV0dXJucyB0aGUgY29udGVudC10eXBlIG9mIHRo
+ZSByZXNwb25zZS4gKi8NCj4gCXN0cnVjdCBzdHJidWYgKmNvbnRlbnRfdHlwZTsNCj4gZGlmZiAt
+LWdpdCBhL3JlbW90ZS1jdXJsLmMgYi9yZW1vdGUtY3VybC5jDQo+IGluZGV4IGRkNjNiYzIuLjg5
+YmY0ZWEgMTAwNjQ0DQo+IC0tLSBhL3JlbW90ZS1jdXJsLmMNCj4gKysrIGIvcmVtb3RlLWN1cmwu
+Yw0KPiBAQCAtMzY5LDYgKzM2OSw4IEBAIHN0cnVjdCBycGNfc3RhdGUgew0KPiAJc3RydWN0IHN0
+cmJ1ZiByZXN1bHQ7DQo+IAl1bnNpZ25lZCBnemlwX3JlcXVlc3QgOiAxOw0KPiAJdW5zaWduZWQg
+aW5pdGlhbF9idWZmZXIgOiAxOw0KPiArCS8qIEF1dG9tYXRpYyBhdXRoZW50aWNhdGlvbiBkaWRu
+J3Qgd29yaywgc28gZG9uJ3QgdHJ5IGl0IGFnYWluLiAqLw0KPiArCXVuc2lnbmVkIG5vX3Bhc3N3
+b3JkbGVzc19hdXRoIDogMTsNCj4gfTsNCj4gDQo+IHN0YXRpYyBzaXplX3QgcnBjX291dCh2b2lk
+ICpwdHIsIHNpemVfdCBlbHRzaXplLA0KPiBAQCAtNDY3LDYgKzQ2OSw5IEBAIHN0YXRpYyBpbnQg
+cHJvYmVfcnBjKHN0cnVjdCBycGNfc3RhdGUgKnJwYywgc3RydWN0IHNsb3RfcmVzdWx0cyAqcmVz
+dWx0cykNCj4gCWN1cmxfZWFzeV9zZXRvcHQoc2xvdC0+Y3VybCwgQ1VSTE9QVF9XUklURUZVTkNU
+SU9OLCBmd3JpdGVfYnVmZmVyKTsNCj4gCWN1cmxfZWFzeV9zZXRvcHQoc2xvdC0+Y3VybCwgQ1VS
+TE9QVF9GSUxFLCAmYnVmKTsNCj4gDQo+ICsJaWYgKHJwYy0+bm9fcGFzc3dvcmRsZXNzX2F1dGgp
+DQo+ICsJCWRpc2FibGVfcGFzc3dvcmRsZXNzX2F1dGgoc2xvdCk7DQo+ICsNCj4gCWVyciA9IHJ1
+bl9zbG90KHNsb3QsIHJlc3VsdHMpOw0KPiANCj4gCWN1cmxfc2xpc3RfZnJlZV9hbGwoaGVhZGVy
+cyk7DQo+IEBAIC01MTAsOCArNTE1LDEwIEBAIHN0YXRpYyBpbnQgcG9zdF9ycGMoc3RydWN0IHJw
+Y19zdGF0ZSAqcnBjKQ0KPiANCj4gCQlkbyB7DQo+IAkJCWVyciA9IHByb2JlX3JwYyhycGMsICZy
+ZXN1bHRzKTsNCj4gLQkJCWlmIChlcnIgPT0gSFRUUF9SRUFVVEgpDQo+ICsJCQlpZiAoZXJyID09
+IEhUVFBfUkVBVVRIKSB7DQo+IAkJCQljcmVkZW50aWFsX2ZpbGwoJmh0dHBfYXV0aCk7DQo+ICsJ
+CQkJcnBjLT5ub19wYXNzd29yZGxlc3NfYXV0aCA9IDE7DQo+ICsJCQl9DQo+IAkJfSB3aGlsZSAo
+ZXJyID09IEhUVFBfUkVBVVRIKTsNCj4gCQlpZiAoZXJyICE9IEhUVFBfT0spDQo+IAkJCXJldHVy
+biAtMTsNCj4gQEAgLTUzMyw2ICs1NDAsOSBAQCByZXRyeToNCj4gCWN1cmxfZWFzeV9zZXRvcHQo
+c2xvdC0+Y3VybCwgQ1VSTE9QVF9VUkwsIHJwYy0+c2VydmljZV91cmwpOw0KPiAJY3VybF9lYXN5
+X3NldG9wdChzbG90LT5jdXJsLCBDVVJMT1BUX0VOQ09ESU5HLCAiZ3ppcCIpOw0KPiANCj4gKwlp
+ZiAocnBjLT5ub19wYXNzd29yZGxlc3NfYXV0aCkNCj4gKwkJZGlzYWJsZV9wYXNzd29yZGxlc3Nf
+YXV0aChzbG90KTsNCj4gKw0KPiAJaWYgKGxhcmdlX3JlcXVlc3QpIHsNCj4gCQkvKiBUaGUgcmVx
+dWVzdCBib2R5IGlzIGxhcmdlIGFuZCB0aGUgc2l6ZSBjYW5ub3QgYmUgcHJlZGljdGVkLg0KPiAJ
+CSAqIFdlIG11c3QgdXNlIGNodW5rZWQgZW5jb2RpbmcgdG8gc2VuZCBpdC4NCj4gQEAgLTYxNyw2
+ICs2MjcsNyBAQCByZXRyeToNCj4gCWVyciA9IHJ1bl9zbG90KHNsb3QsIE5VTEwpOw0KPiAJaWYg
+KGVyciA9PSBIVFRQX1JFQVVUSCAmJiAhbGFyZ2VfcmVxdWVzdCkgew0KPiAJCWNyZWRlbnRpYWxf
+ZmlsbCgmaHR0cF9hdXRoKTsNCj4gKwkJcnBjLT5ub19wYXNzd29yZGxlc3NfYXV0aCA9IDE7DQo+
+IAkJZ290byByZXRyeTsNCj4gCX0NCj4gCWlmIChlcnIgIT0gSFRUUF9PSykNCj4gLS0gDQo+IDIu
+Mi4xLjIwOS5nNDFlNWYzYQ0KPiANCg0K
