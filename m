@@ -1,102 +1,96 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: profile-fast is failing in my Git 2.2.1 build from tar in a Git repo
-Date: Sun, 04 Jan 2015 16:58:43 -0500
-Organization: GNU's Not UNIX!
-Message-ID: <1420408723.7095.207.camel@homebase>
-Reply-To: paul@mad-scientist.net
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 04 22:58:06 2015
+From: Johan Herland <johan@herland.net>
+Subject: [RFC/PATCHv0 1/4] fast-import.c:do_change_note_fanout(): Remove unneeded local var 't'
+Date: Mon,  5 Jan 2015 04:39:35 +0100
+Message-ID: <1420429178-20336-1-git-send-email-johan@herland.net>
+References: <CALKQrgdVp7cLER2DQxwdFT82Y=Pamrx6=oa3bY=X7mWy_r3QWA@mail.gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Mon Jan 05 04:40:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y7tBU-0006qG-N8
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Jan 2015 22:58:05 +0100
+	id 1Y7yWZ-0002RO-7G
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 04:40:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752813AbbADV57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2015 16:57:59 -0500
-Received: from gproxy8-pub.mail.unifiedlayer.com ([67.222.33.93]:56164 "HELO
-	gproxy8-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752788AbbADV56 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jan 2015 16:57:58 -0500
-Received: (qmail 31174 invoked by uid 0); 4 Jan 2015 21:57:57 -0000
-Received: from unknown (HELO cmgw4) (10.0.90.85)
-  by gproxy8.mail.unifiedlayer.com with SMTP; 4 Jan 2015 21:57:57 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-	by cmgw4 with 
-	id bxxt1p00M2qhmhE01xxwkq; Sun, 04 Jan 2015 14:57:57 -0700
-X-Authority-Analysis: v=2.1 cv=BvIOn+n5 c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
- a=f5113yIGAAAA:8 a=IkcTkHD0fZMA:10 a=pBbsfl06AAAA:8 a=cdVwids0oJMA:10
- a=qenwzdlAJUAA:10 a=YNv0rlydsVwA:10 a=oh1m6hy-WApeJ8obKkIA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:Date:To:Reply-To:From:Subject:Message-ID; bh=644xEoa/4dlxJpI33U4OHotxdz2Kcz5ezs6CX2cmhXE=;
-	b=aebGliE9fenxvyA8oSi9Lo/j4xcm11dKNRiLhWRFtuaxGTTqvcu9Nzn4GfT8x3UrbYLLDDD7lArcSe1chNrvqeWlbhZ/PzHnsyYPdvtfA49ZaIVkDiyjND0DILOwl9z/;
-Received: from [72.74.248.26] (port=49283 helo=homebase.home)
-	by box531.bluehost.com with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
-	(Exim 4.82)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1Y7tBJ-0006Vp-MI
-	for git@vger.kernel.org; Sun, 04 Jan 2015 14:57:53 -0700
-X-Mailer: Evolution 3.11.3-fta1~13.10 
-X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 72.74.248.26 authed with paul@mad-scientist.us}
+	id S1753069AbbAEDkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2015 22:40:04 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:41827 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753048AbbAEDkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2015 22:40:02 -0500
+Received: by mail-la0-f46.google.com with SMTP id q1so17987532lam.33
+        for <git@vger.kernel.org>; Sun, 04 Jan 2015 19:40:01 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=rQGqi/m+TivDm7gP9k/hmIpT1ocVx9vKlmzid+jNRAw=;
+        b=Z9QpAS0IXjuxpuffI9mK8n5yPnSPW7I5KNHzajk29UstzxsH+k6uZ0NFps6x594+oq
+         4gCNaLcMpjHmKpqdGOCXxQdXtwZJb/TV6fQyauiFqYVq5Oc8ZrXmxqhnLN2CVmjxP7nV
+         sgw+y7x+ss6e3ivlqfZwkkaNKeomJMxGsiD+l8gRaieAlVM7iJkH/wM4hhXPsjpS9+V6
+         0UH8pkmZ5mIKQWO5jWfN6JSp8zMD9mc4YfqGp8DoKELw9cCeDyLZk4ymaMWIYAWHTFs3
+         hfZvfsuYxNaM+QNS3X440RJP1Kvdjys8Qjs4cOc9G5RzF45MytYSl7ORmYlrUsIXxGE6
+         0YAA==
+X-Received: by 10.112.167.68 with SMTP id zm4mr34352635lbb.93.1420429201267;
+        Sun, 04 Jan 2015 19:40:01 -0800 (PST)
+Received: from beta.herland (245.37-191-128.fiber.lynet.no. [37.191.128.245])
+        by mx.google.com with ESMTPSA id ya4sm4239978lbb.32.2015.01.04.19.39.59
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 04 Jan 2015 19:39:59 -0800 (PST)
+X-Mailer: git-send-email 2.1.1.392.g062cc5d
+In-Reply-To: <CALKQrgdVp7cLER2DQxwdFT82Y=Pamrx6=oa3bY=X7mWy_r3QWA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262010>
 
-Is anyone aware of this?  It seems that profile-fast fails when invoked
-from a downloaded tarball, if you are in a Git repository when you
-unpack it.
+The struct tree_content *t variable was used as a shorthand for the
+given root->tree, but it was only used in the first two lines of the for
+loop, so the shorthand itself does not add much value. Furthermore,
+since the for loop body might end up reallocating root->tree we had to
+reinitialize t at the end of the for loop body, which is ugly and brittle.
 
-So, for example, I have:
+Simply use root->tree directly instead, and remote the t shorthand.
 
-  $ cd $HOME/src
-  $ git status
-  On branch master
-  Your branch is up-to-date with 'origin/master'.
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ fast-import.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-(this is NOT the Git source repo, this is my personal repo containing
-scripts used to build various source packages)
-
-Then I download git-2.2.1.tar.xz, unpack it, configure, and run "make
-profile-fast".
-
-After it builds everything it starts trying to run the tests, and the
-t/perf/run script fails (I added some -x flags in the scripts):
-
-  === Running 9 tests in this tree ===
-  cp: cannot stat '/home/psmith/src/git-2.2.1/t/..//home/psmith/src/.git/objects': No such file or directory
-  error: failed to copy repository '/home/psmith/src/git-2.2.1/t/..' to '/home/psmith/src/git-2.2.1/t/perf/trash directory.p0000-perf-lib-sanity'
-
-The problem is in the t/perf/perf-lib.sh:test_perf_create_repo_from()
-function, where we see this:
-
-  repo="$1"
-  source="$2"
-  source_git=$source/$(cd "$source" && git rev-parse --git-dir)
-
-The function is invoked as:
-
-  test_perf_create_repo_from '/home/psmith/src/git-2.2.1/t/perf/trash directory.p5302-pack-index' /home/psmith/src/git-2.2.1/t/..
-
-but this doesn't work, because "$source" is not a Git repository; it's
-the root of the unpacked tarball.  But when we run "git rev-parse" in
-it, it finds the parent Git directory ($HOME/git) and uses that, so the
-value of source_git becomes:
-
-  /home/psmith/src/git-2.2.1/t/..//home/psmith/src/.git/objects
-
-which is obviously invalid.  I think you want source_git to be set
-something like this:
-
-  source_git=$(cd "$source" && git rev-parse --git-dir || echo "$source")
-
-instead.  There are other ways to do this of course, but this worked for
-me... basically we want to use either git rev-parse OR $source but not
-both.  I think...?
+diff --git a/fast-import.c b/fast-import.c
+index d0bd285..04dfd50 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2153,15 +2153,14 @@ static uintmax_t do_change_note_fanout(
+ 		char *fullpath, unsigned int fullpath_len,
+ 		unsigned char fanout)
+ {
+-	struct tree_content *t = root->tree;
+ 	struct tree_entry *e, leaf;
+ 	unsigned int i, tmp_hex_sha1_len, tmp_fullpath_len;
+ 	uintmax_t num_notes = 0;
+ 	unsigned char sha1[20];
+ 	char realpath[60];
+ 
+-	for (i = 0; t && i < t->entry_count; i++) {
+-		e = t->entries[i];
++	for (i = 0; root->tree && i < root->tree->entry_count; i++) {
++		e = root->tree->entries[i];
+ 		tmp_hex_sha1_len = hex_sha1_len + e->name->str_len;
+ 		tmp_fullpath_len = fullpath_len;
+ 
+@@ -2217,9 +2216,6 @@ static uintmax_t do_change_note_fanout(
+ 				hex_sha1, tmp_hex_sha1_len,
+ 				fullpath, tmp_fullpath_len, fanout);
+ 		}
+-
+-		/* The above may have reallocated the current tree_content */
+-		t = root->tree;
+ 	}
+ 	return num_notes;
+ }
+-- 
+2.1.1.392.g062cc5d
