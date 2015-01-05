@@ -1,117 +1,176 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv10 01/10] receive-pack.c: shorten the execute_commands
- loop over all commands
-Date: Mon, 5 Jan 2015 13:18:03 -0800
-Message-ID: <20150105211803.GM29365@google.com>
-References: <CAGZ79ka8TMvF1s=ZL=4Lj1EaDrLVn8HRA2PR4JLAHWasHmvkFA@mail.gmail.com>
- <1420482355-24995-1-git-send-email-sbeller@google.com>
- <20150105202244.GL29365@google.com>
- <CAGZ79kbRLPYRw+iifigRHqJ5Lc1brQ3qkUV=4YYPSwr72+giPg@mail.gmail.com>
+From: "Dan Langille (dalangil)" <dalangil@cisco.com>
+Subject: Re: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Date: Mon, 5 Jan 2015 21:23:32 +0000
+Message-ID: <F91CD1B2-262C-4ED6-AE46-31B1333E0350@cisco.com>
+References: <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
+ <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	ronnie sahlberg <ronniesahlberg@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Jan 05 22:21:02 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Jan 05 22:24:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8F2U-0005Fs-2L
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 22:18:14 +0100
+	id 1Y8F7l-0001NM-FQ
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 22:23:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbbAEVSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2015 16:18:08 -0500
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:56493 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753214AbbAEVSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2015 16:18:06 -0500
-Received: by mail-ig0-f182.google.com with SMTP id hn15so3185428igb.3
-        for <git@vger.kernel.org>; Mon, 05 Jan 2015 13:18:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Lr3Hm+Za0OfeDZ0yCwebuSa1P70LiyEttFNycwcNdR4=;
-        b=LNMyD40Gg97K+vYP1lL8jZifAAKALA3ImCGYtMCuM2oCkkakylibtQkl+YqKxyIR6l
-         GJ/qa8DHGhOvhIvxjXO7glV+Pdhw6dBTkg3D2DCNJWv0/1SApStHhICLX2g1knsDVL17
-         h7I6djaXIcViC5iGesRzta/+zmSqxCya9Ens0kVI2K2pJvAWjFqaStRzQIgjLB3NVPfV
-         XFmCrEdZwC7+jFXPegAYEi9uKWaT84lHSw2jl/wphj1xvEXBkSbHAqVwj2f95WVBfU99
-         D8yFQRKsG8hOfQ+NVCZW++gBxXlw0iYzSWDe7IBj9judGR0cXajhk87MWiNgTRzWtooL
-         sVbw==
-X-Received: by 10.107.150.137 with SMTP id y131mr83112052iod.11.1420492686283;
-        Mon, 05 Jan 2015 13:18:06 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:cbe:c7db:3064:452c])
-        by mx.google.com with ESMTPSA id j139sm26970223ioe.20.2015.01.05.13.18.05
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 Jan 2015 13:18:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbRLPYRw+iifigRHqJ5Lc1brQ3qkUV=4YYPSwr72+giPg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752978AbbAEVXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 16:23:36 -0500
+Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:41128 "EHLO
+	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751011AbbAEVXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 16:23:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=8212; q=dns/txt; s=iport;
+  t=1420493016; x=1421702616;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=OSXjrqNc+qim9/sF98uJUmHgujCgae4QNnf/tgPCVDw=;
+  b=AYuUnqTBKGhX1+2Ed3fU79zeQJxuf8iazfcUdV4bd3QpCwyPc0/+2RKU
+   9qtyu0ktYgAYsjlbwKDllVg0HpJ8NoFYO7IYDuW6B5v8hsqPgwjgEJc4K
+   RkwaeyiXzFe1F3e2+nZpa/0gd5umOuOkelOvRwAmhaInkXmmEvn6remT8
+   E=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtsFAA4Aq1StJV2S/2dsb2JhbABcgwZSWASDAcMWhXsCHG0WAQEBAQF9hAwBAQEDASMEDUUFCwIBCBgCAhQSAgICMBQBEAIEDgWIJAiqBJMxAQEBAQEBAQEBAQEBAQEBAQEBAQEBF4EhjXIfKhsHBBSCUC6BEwWMH4F2gz+Bf4M1kVAig25vgQNCfgEBAQ
+X-IronPort-AV: E=Sophos;i="5.07,702,1413244800"; 
+   d="scan'208";a="384538383"
+Received: from rcdn-core-10.cisco.com ([173.37.93.146])
+  by rcdn-iport-5.cisco.com with ESMTP; 05 Jan 2015 21:23:34 +0000
+Received: from xhc-aln-x08.cisco.com (xhc-aln-x08.cisco.com [173.36.12.82])
+	by rcdn-core-10.cisco.com (8.14.5/8.14.5) with ESMTP id t05LNYnb025983
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Mon, 5 Jan 2015 21:23:34 GMT
+Received: from xmb-rcd-x03.cisco.com ([169.254.7.219]) by
+ xhc-aln-x08.cisco.com ([173.36.12.82]) with mapi id 14.03.0195.001; Mon, 5
+ Jan 2015 15:23:33 -0600
+Thread-Topic: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Thread-Index: AQHQJf0bER2Pnky56Uqguh0whTd+7JyydFEA
+In-Reply-To: <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.82.220.63]
+Content-ID: <76C30DC6DF93D841BD00B2AF6B5C30E0@emea.cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262036>
 
-Stefan Beller wrote:
-> On Mon, Jan 5, 2015 at 12:22 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Stefan Beller wrote:
-
->>> --- a/builtin/receive-pack.c
->>> +++ b/builtin/receive-pack.c
->> [...]
->>> @@ -1077,27 +1100,15 @@ static void execute_commands(struct command *commands,
->> [...]
->>> +     if (shallow_update)
->>> +             assure_connectivity_checked(commands, si);
->>
->> Looking at this code alone, it seems like assure_connectivity_checked()
->> is going to ensure that connectivity was checked, so that I can assume
->> connectivity going forward.  But the opposite is true --- it is a
->> safety check that prints a warning and doesn't affect what I can
->> assume.
->
-> I disagree on that. Combined with the next patch (s/error/die/) we can assume
-> that the the connectivity is there as if it is not, git is dead.
->
-> This is why I choose the word assure.
-
-If this patch depends on the next one, would it make sense to put them
-in the opposite order?
-
->> The factored-out function fails in what it is meant to do, which is to
->> save the reader of execute_commands from having to look at the
->> implementation of the parts they are not interested in.
->>
->> Would something like warn_if_skipped_connectivity_check() make sense?
->
-> The next patch would then change this to die_if_... ?
-> I'd be ok with that, but in your original email you would still have the last
-> die(...) in the execute_command function which I dislike.
-> So what about:
->
-> if (shallow_update)
->        (warn|die)_on_skipped_connectivity_check()
->
-> ?
-
-My personal preference would be to refactor the preceding code to make
-the check unnecessary.
-
-But aside from that, anything that makes the code clearer is fine with
-me.  I find ..._if_... clearer than ..._on_... here because it seems
-more obvious that it is not an expected condition (i.e., it's a kind
-of abbreviation for
-
-	warn_if_skipped_connectivity_check_which_should_never_happen()
-
-) but that's a more minor detail.  An alternative way to make the code
-clearer would be to use a comment.
-
-Thanks,
-Jonathan
+SSBoYXZlIHRyaWVkIGJvdGggcGF0Y2hlcy4gIE5laXRoZXIgc3VjY2VlZHMgaGVyZS4gIEkgcGF0
+Y2hlZCBnaXQgdmVyc2lvbiAyLjIuMSBidXQgSSBkb27igJl0IHRoaW5rIHRoYXQgYWZmZWN0cyB0
+aGlzLg0KDQpCZWZvcmUgSSBmbG9vZCB0aGUgbGlzdCB3aXRoIGRlYnVnIHJ1bnMsIEkgd2FudGVk
+IHRvIG1ha2Ugc3VyZSBJIHdhcyB0ZXN0aW5nIHdpdGggYW4gYXBwcm9wcmlhdGUgY29uZmlndXJh
+dGlvbjoNCg0KPExvY2F0aW9uIC9naXQ+DQogU1NMT3B0aW9ucyArU3RkZW52VmFycw0KIE9wdGlv
+bnMgK0V4ZWNDR0kgK0ZvbGxvd1N5bUxpbmtzICtTeW1MaW5rc0lmT3duZXJNYXRjaA0KDQogICAj
+IEJ5IGRlZmF1bHQsIGFsbG93IGFjY2VzcyB0byBhbnlvbmUuDQogICBPcmRlciBhbGxvdyxkZW55
+DQogICBBbGxvdyBmcm9tIEFsbA0KDQogICAjIEVuYWJsZSBLZXJiZXJvcyBhdXRoZW50aWNhdGlv
+biB1c2luZyBtb2RfYXV0aF9rZXJiLg0KICBBdXRoVHlwZSAgICAgICAgICAgS2VyYmVyb3MNCiAg
+QXV0aE5hbWUgICAgICAgICAgIOKAnHVzLmV4YW1wbGUub3JnIg0KICBLcmJBdXRoUmVhbG1zICAg
+ICAgdXMuZXhhbXBsZS5vcmcNCiAgIyBJIGhhdmUgdHJpZWQgYm90aCB3aXRoIGFuZCB3aXRob3V0
+IHRoZSBmb2xsb3dpbmcgbGluZToNCiAgS3JiU2VydmljZU5hbWUgICAgIEhUVFAvdXMuZXhhbXBs
+ZS5vcmcNCiAgS3JiNUtleXRhYiAgICAgICAgIC91c3IvbG9jYWwvZXRjL2FwYWNoZTIyL3JlcG8t
+dGVzdC5rZXl0YWINCiAgIEtyYk1ldGhvZE5lZ290aWF0ZSBvbg0KICAgS3JiU2F2ZUNyZWRlbnRp
+YWxzIG9uDQogICBLcmJWZXJpZnlLREMgb24NCiAgIEtyYlNlcnZpY2VOYW1lIEFueQ0KICAjIEkg
+aGF2ZSB0cmllZCB3aXRoIGFuZCB3aXRob3V0IHRoaXMgbGluZToNCiAgS3JiTWV0aG9kazVQYXNz
+d2QgIG9uDQogICBSZXF1aXJlIHZhbGlkLXVzZXINCjwvTG9jYXRpb24+DQoNCldpdGggYSB2YWxp
+ZCB0aWNrZXQsIHRoZSBhYm92ZSB3b3JrcyBmb3IgYSBnaXQgY2xvbmUuDQoNCuKAlCANCkRhbiBM
+YW5naWxsZQ0KSW5mcmFzdHJ1Y3R1cmUgJiBPcGVyYXRpb25zDQpUYWxvcyBHcm91cA0KU291cmNl
+ZmlyZSwgSW5jLg0KDQo+IE9uIEphbiAxLCAyMDE1LCBhdCAyOjU2IFBNLCBicmlhbiBtLiBjYXJs
+c29uIDxzYW5kYWxzQGNydXN0eXRvb3RocGFzdGUubmV0PiB3cm90ZToNCj4gDQo+IEFwYWNoZSBz
+ZXJ2ZXJzIHVzaW5nIG1vZF9hdXRoX2tlcmIgY2FuIGJlIGNvbmZpZ3VyZWQgdG8gYWxsb3cgdGhl
+IHVzZXINCj4gdG8gYXV0aGVudGljYXRlIGVpdGhlciB1c2luZyBOZWdvdGlhdGUgKHVzaW5nIHRo
+ZSBLZXJiZXJvcyB0aWNrZXQpIG9yDQo+IEJhc2ljIGF1dGhlbnRpY2F0aW9uICh1c2luZyB0aGUg
+S2VyYmVyb3MgcGFzc3dvcmQpLiAgT2Z0ZW4sIG9uZSB3aWxsDQo+IHdhbnQgdG8gdXNlIE5lZ290
+aWF0ZSBhdXRoZW50aWNhdGlvbiBpZiBpdCBpcyBhdmFpbGFibGUsIGJ1dCBmYWxsIGJhY2sNCj4g
+dG8gQmFzaWMgYXV0aGVudGljYXRpb24gaWYgdGhlIHRpY2tldCBpcyBtaXNzaW5nIG9yIGV4cGly
+ZWQuDQo+IA0KPiBIb3dldmVyLCBsaWJjdXJsIHdpbGwgdHJ5IHZlcnkgaGFyZCB0byB1c2Ugc29t
+ZXRoaW5nIG90aGVyIHRoYW4gQmFzaWMNCj4gYXV0aCwgZXZlbiBvdmVyIEhUVFBTLiAgSWYgQmFz
+aWMgYW5kIHNvbWV0aGluZyBlbHNlIGFyZSBvZmZlcmVkLCBsaWJjdXJsDQo+IHdpbGwgbmV2ZXIg
+YXR0ZW1wdCB0byB1c2UgQmFzaWMsIGV2ZW4gaWYgdGhlIG90aGVyIG9wdGlvbiBmYWlscy4NCj4g
+VGVhY2ggdGhlIEhUVFAgY2xpZW50IGNvZGUgdG8gc3RvcCB0cnlpbmcgYXV0aGVudGljYXRpb24g
+bWVjaGFuaXNtcyB0aGF0DQo+IGRvbid0IHVzZSBhIHBhc3N3b3JkIChjdXJyZW50bHkgTmVnb3Rp
+YXRlKSBhZnRlciB0aGUgZmlyc3QgZmFpbHVyZSwNCj4gc2luY2UgaWYgdGhleSBmYWlsZWQgdGhl
+IGZpcnN0IHRpbWUsIHRoZXkgd2lsbCBuZXZlciBzdWNjZWVkLg0KPiANCj4gU2lnbmVkLW9mZi1i
+eTogYnJpYW4gbS4gY2FybHNvbiA8c2FuZGFsc0BjcnVzdHl0b290aHBhc3RlLm5ldD4NCj4gLS0t
+DQo+IGh0dHAuYyAgICAgICAgfCAxNiArKysrKysrKysrKysrKysrDQo+IGh0dHAuaCAgICAgICAg
+fCAgMyArKysNCj4gcmVtb3RlLWN1cmwuYyB8IDExICsrKysrKysrKystDQo+IDMgZmlsZXMgY2hh
+bmdlZCwgMjkgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPiANCj4gZGlmZiAtLWdpdCBh
+L2h0dHAuYyBiL2h0dHAuYw0KPiBpbmRleCAwNDBmMzYyLi44MTUxOTRkIDEwMDY0NA0KPiAtLS0g
+YS9odHRwLmMNCj4gKysrIGIvaHR0cC5jDQo+IEBAIC02Miw2ICs2Miw4IEBAIHN0YXRpYyBjb25z
+dCBjaGFyICp1c2VyX2FnZW50Ow0KPiANCj4gc3RhdGljIHN0cnVjdCBjcmVkZW50aWFsIGNlcnRf
+YXV0aCA9IENSRURFTlRJQUxfSU5JVDsNCj4gc3RhdGljIGludCBzc2xfY2VydF9wYXNzd29yZF9y
+ZXF1aXJlZDsNCj4gKy8qIFNob3VsZCB3ZSBhbGxvdyBub24tcGFzc3dvcmQtYmFzZWQgYXV0aGVu
+dGljYXRpb24gKGUuZy4gR1NTQVBJKT8gKi8NCj4gK2ludCBodHRwX3Bhc3N3b3JkbGVzc19hdXRo
+ID0gMTsNCj4gDQo+IHN0YXRpYyBzdHJ1Y3QgY3VybF9zbGlzdCAqcHJhZ21hX2hlYWRlcjsNCj4g
+c3RhdGljIHN0cnVjdCBjdXJsX3NsaXN0ICpub19wcmFnbWFfaGVhZGVyOw0KPiBAQCAtOTg2LDYg
+Kzk4OCwxNiBAQCBzdGF0aWMgdm9pZCBleHRyYWN0X2NvbnRlbnRfdHlwZShzdHJ1Y3Qgc3RyYnVm
+ICpyYXcsIHN0cnVjdCBzdHJidWYgKnR5cGUsDQo+IAkJc3RyYnVmX2FkZHN0cihjaGFyc2V0LCAi
+SVNPLTg4NTktMSIpOw0KPiB9DQo+IA0KPiArdm9pZCBkaXNhYmxlX3Bhc3N3b3JkbGVzc19hdXRo
+KHN0cnVjdCBhY3RpdmVfcmVxdWVzdF9zbG90ICpzbG90KQ0KPiArew0KPiArI2lmZGVmIExJQkNV
+UkxfQ0FOX0hBTkRMRV9BVVRIX0FOWQ0KPiArI2RlZmluZSBIVFRQX0FVVEhfUEFTU1dPUkRMRVNT
+IChDVVJMQVVUSF9HU1NORUdPVElBVEUpDQo+ICsJY3VybF9lYXN5X3NldG9wdChzbG90LT5jdXJs
+LCBDVVJMT1BUX0hUVFBBVVRILA0KPiArCQkJIENVUkxBVVRIX0FOWSAmIH5IVFRQX0FVVEhfUEFT
+U1dPUkRMRVNTKTsNCj4gKyNlbmRpZg0KPiArfQ0KPiArDQo+ICsNCj4gLyogaHR0cF9yZXF1ZXN0
+KCkgdGFyZ2V0cyAqLw0KPiAjZGVmaW5lIEhUVFBfUkVRVUVTVF9TVFJCVUYJMA0KPiAjZGVmaW5l
+IEhUVFBfUkVRVUVTVF9GSUxFCTENCj4gQEAgLTEwMzUsNiArMTA0Nyw5IEBAIHN0YXRpYyBpbnQg
+aHR0cF9yZXF1ZXN0KGNvbnN0IGNoYXIgKnVybCwNCj4gCWN1cmxfZWFzeV9zZXRvcHQoc2xvdC0+
+Y3VybCwgQ1VSTE9QVF9IVFRQSEVBREVSLCBoZWFkZXJzKTsNCj4gCWN1cmxfZWFzeV9zZXRvcHQo
+c2xvdC0+Y3VybCwgQ1VSTE9QVF9FTkNPRElORywgImd6aXAiKTsNCj4gDQo+ICsJaWYgKCFodHRw
+X3Bhc3N3b3JkbGVzc19hdXRoKQ0KPiArCQlkaXNhYmxlX3Bhc3N3b3JkbGVzc19hdXRoKHNsb3Qp
+Ow0KPiArDQo+IAlyZXQgPSBydW5fb25lX3Nsb3Qoc2xvdCwgJnJlc3VsdHMpOw0KPiANCj4gCWlm
+IChvcHRpb25zICYmIG9wdGlvbnMtPmNvbnRlbnRfdHlwZSkgew0KPiBAQCAtMTEzOSw2ICsxMTU0
+LDcgQEAgc3RhdGljIGludCBodHRwX3JlcXVlc3RfcmVhdXRoKGNvbnN0IGNoYXIgKnVybCwNCj4g
+CX0NCj4gDQo+IAljcmVkZW50aWFsX2ZpbGwoJmh0dHBfYXV0aCk7DQo+ICsJaHR0cF9wYXNzd29y
+ZGxlc3NfYXV0aCA9IDA7DQo+IA0KPiAJcmV0dXJuIGh0dHBfcmVxdWVzdCh1cmwsIHJlc3VsdCwg
+dGFyZ2V0LCBvcHRpb25zKTsNCj4gfQ0KPiBkaWZmIC0tZ2l0IGEvaHR0cC5oIGIvaHR0cC5oDQo+
+IGluZGV4IDQ3MzE3OWIuLjcxOTQzZDMgMTAwNjQ0DQo+IC0tLSBhL2h0dHAuaA0KPiArKysgYi9o
+dHRwLmgNCj4gQEAgLTk4LDYgKzk4LDggQEAgZXh0ZXJuIGludCBoYW5kbGVfY3VybF9yZXN1bHQo
+c3RydWN0IHNsb3RfcmVzdWx0cyAqcmVzdWx0cyk7DQo+IGludCBydW5fb25lX3Nsb3Qoc3RydWN0
+IGFjdGl2ZV9yZXF1ZXN0X3Nsb3QgKnNsb3QsDQo+IAkJIHN0cnVjdCBzbG90X3Jlc3VsdHMgKnJl
+c3VsdHMpOw0KPiANCj4gK3ZvaWQgZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChzdHJ1Y3QgYWN0
+aXZlX3JlcXVlc3Rfc2xvdCAqc2xvdCk7DQo+ICsNCj4gI2lmZGVmIFVTRV9DVVJMX01VTFRJDQo+
+IGV4dGVybiB2b2lkIGZpbGxfYWN0aXZlX3Nsb3RzKHZvaWQpOw0KPiBleHRlcm4gdm9pZCBhZGRf
+ZmlsbF9mdW5jdGlvbih2b2lkICpkYXRhLCBpbnQgKCpmaWxsKSh2b2lkICopKTsNCj4gQEAgLTEx
+Miw2ICsxMTQsNyBAQCBleHRlcm4gaW50IGFjdGl2ZV9yZXF1ZXN0czsNCj4gZXh0ZXJuIGludCBo
+dHRwX2lzX3ZlcmJvc2U7DQo+IGV4dGVybiBzaXplX3QgaHR0cF9wb3N0X2J1ZmZlcjsNCj4gZXh0
+ZXJuIHN0cnVjdCBjcmVkZW50aWFsIGh0dHBfYXV0aDsNCj4gK2V4dGVybiBpbnQgaHR0cF9wYXNz
+d29yZGxlc3NfYXV0aDsNCj4gDQo+IGV4dGVybiBjaGFyIGN1cmxfZXJyb3JzdHJbQ1VSTF9FUlJP
+Ul9TSVpFXTsNCj4gDQo+IGRpZmYgLS1naXQgYS9yZW1vdGUtY3VybC5jIGIvcmVtb3RlLWN1cmwu
+Yw0KPiBpbmRleCBkZDYzYmMyLi40Y2E1NDQ3IDEwMDY0NA0KPiAtLS0gYS9yZW1vdGUtY3VybC5j
+DQo+ICsrKyBiL3JlbW90ZS1jdXJsLmMNCj4gQEAgLTQ2Nyw2ICs0NjcsOSBAQCBzdGF0aWMgaW50
+IHByb2JlX3JwYyhzdHJ1Y3QgcnBjX3N0YXRlICpycGMsIHN0cnVjdCBzbG90X3Jlc3VsdHMgKnJl
+c3VsdHMpDQo+IAljdXJsX2Vhc3lfc2V0b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfV1JJVEVGVU5D
+VElPTiwgZndyaXRlX2J1ZmZlcik7DQo+IAljdXJsX2Vhc3lfc2V0b3B0KHNsb3QtPmN1cmwsIENV
+UkxPUFRfRklMRSwgJmJ1Zik7DQo+IA0KPiArCWlmICghaHR0cF9wYXNzd29yZGxlc3NfYXV0aCkN
+Cj4gKwkJZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChzbG90KTsNCj4gKw0KPiAJZXJyID0gcnVu
+X3Nsb3Qoc2xvdCwgcmVzdWx0cyk7DQo+IA0KPiAJY3VybF9zbGlzdF9mcmVlX2FsbChoZWFkZXJz
+KTsNCj4gQEAgLTUxMCw4ICs1MTMsMTAgQEAgc3RhdGljIGludCBwb3N0X3JwYyhzdHJ1Y3QgcnBj
+X3N0YXRlICpycGMpDQo+IA0KPiAJCWRvIHsNCj4gCQkJZXJyID0gcHJvYmVfcnBjKHJwYywgJnJl
+c3VsdHMpOw0KPiAtCQkJaWYgKGVyciA9PSBIVFRQX1JFQVVUSCkNCj4gKwkJCWlmIChlcnIgPT0g
+SFRUUF9SRUFVVEgpIHsNCj4gCQkJCWNyZWRlbnRpYWxfZmlsbCgmaHR0cF9hdXRoKTsNCj4gKwkJ
+CQlodHRwX3Bhc3N3b3JkbGVzc19hdXRoID0gMDsNCj4gKwkJCX0NCj4gCQl9IHdoaWxlIChlcnIg
+PT0gSFRUUF9SRUFVVEgpOw0KPiAJCWlmIChlcnIgIT0gSFRUUF9PSykNCj4gCQkJcmV0dXJuIC0x
+Ow0KPiBAQCAtNTMzLDYgKzUzOCw5IEBAIHJldHJ5Og0KPiAJY3VybF9lYXN5X3NldG9wdChzbG90
+LT5jdXJsLCBDVVJMT1BUX1VSTCwgcnBjLT5zZXJ2aWNlX3VybCk7DQo+IAljdXJsX2Vhc3lfc2V0
+b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfRU5DT0RJTkcsICJnemlwIik7DQo+IA0KPiArCWlmICgh
+aHR0cF9wYXNzd29yZGxlc3NfYXV0aCkNCj4gKwkJZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChz
+bG90KTsNCj4gKw0KPiAJaWYgKGxhcmdlX3JlcXVlc3QpIHsNCj4gCQkvKiBUaGUgcmVxdWVzdCBi
+b2R5IGlzIGxhcmdlIGFuZCB0aGUgc2l6ZSBjYW5ub3QgYmUgcHJlZGljdGVkLg0KPiAJCSAqIFdl
+IG11c3QgdXNlIGNodW5rZWQgZW5jb2RpbmcgdG8gc2VuZCBpdC4NCj4gQEAgLTYxNyw2ICs2MjUs
+NyBAQCByZXRyeToNCj4gCWVyciA9IHJ1bl9zbG90KHNsb3QsIE5VTEwpOw0KPiAJaWYgKGVyciA9
+PSBIVFRQX1JFQVVUSCAmJiAhbGFyZ2VfcmVxdWVzdCkgew0KPiAJCWNyZWRlbnRpYWxfZmlsbCgm
+aHR0cF9hdXRoKTsNCj4gKwkJaHR0cF9wYXNzd29yZGxlc3NfYXV0aCA9IDA7DQo+IAkJZ290byBy
+ZXRyeTsNCj4gCX0NCj4gCWlmIChlcnIgIT0gSFRUUF9PSykNCj4gLS0gDQo+IDIuMi4xLjIwOS5n
+NDFlNWYzYQ0KPiANCg0K
