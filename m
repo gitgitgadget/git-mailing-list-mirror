@@ -1,176 +1,116 @@
-From: "Dan Langille (dalangil)" <dalangil@cisco.com>
-Subject: Re: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
- fails
-Date: Mon, 5 Jan 2015 21:23:32 +0000
-Message-ID: <F91CD1B2-262C-4ED6-AE46-31B1333E0350@cisco.com>
-References: <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
- <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv10 02/10] receive-pack.c: die instead of error in
+ assure_connectivity_checked
+Date: Mon, 5 Jan 2015 13:25:23 -0800
+Message-ID: <20150105212523.GN29365@google.com>
+References: <CAGZ79ka8TMvF1s=ZL=4Lj1EaDrLVn8HRA2PR4JLAHWasHmvkFA@mail.gmail.com>
+ <1420482355-24995-1-git-send-email-sbeller@google.com>
+ <1420482355-24995-2-git-send-email-sbeller@google.com>
+ <20150105201728.GK29365@google.com>
+ <CAGZ79kZUiwEbcSPk3Td60umixvh_Q7jXTGoLemKLYsvX1ty39w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Jan 05 22:24:30 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	ronnie sahlberg <ronniesahlberg@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Jan 05 22:25:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8F7l-0001NM-FQ
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 22:23:42 +0100
+	id 1Y8F9d-0003CA-Ia
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 22:25:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752978AbbAEVXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2015 16:23:36 -0500
-Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:41128 "EHLO
-	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbbAEVXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2015 16:23:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=8212; q=dns/txt; s=iport;
-  t=1420493016; x=1421702616;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=OSXjrqNc+qim9/sF98uJUmHgujCgae4QNnf/tgPCVDw=;
-  b=AYuUnqTBKGhX1+2Ed3fU79zeQJxuf8iazfcUdV4bd3QpCwyPc0/+2RKU
-   9qtyu0ktYgAYsjlbwKDllVg0HpJ8NoFYO7IYDuW6B5v8hsqPgwjgEJc4K
-   RkwaeyiXzFe1F3e2+nZpa/0gd5umOuOkelOvRwAmhaInkXmmEvn6remT8
-   E=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtsFAA4Aq1StJV2S/2dsb2JhbABcgwZSWASDAcMWhXsCHG0WAQEBAQF9hAwBAQEDASMEDUUFCwIBCBgCAhQSAgICMBQBEAIEDgWIJAiqBJMxAQEBAQEBAQEBAQEBAQEBAQEBAQEBF4EhjXIfKhsHBBSCUC6BEwWMH4F2gz+Bf4M1kVAig25vgQNCfgEBAQ
-X-IronPort-AV: E=Sophos;i="5.07,702,1413244800"; 
-   d="scan'208";a="384538383"
-Received: from rcdn-core-10.cisco.com ([173.37.93.146])
-  by rcdn-iport-5.cisco.com with ESMTP; 05 Jan 2015 21:23:34 +0000
-Received: from xhc-aln-x08.cisco.com (xhc-aln-x08.cisco.com [173.36.12.82])
-	by rcdn-core-10.cisco.com (8.14.5/8.14.5) with ESMTP id t05LNYnb025983
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Mon, 5 Jan 2015 21:23:34 GMT
-Received: from xmb-rcd-x03.cisco.com ([169.254.7.219]) by
- xhc-aln-x08.cisco.com ([173.36.12.82]) with mapi id 14.03.0195.001; Mon, 5
- Jan 2015 15:23:33 -0600
-Thread-Topic: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
- fails
-Thread-Index: AQHQJf0bER2Pnky56Uqguh0whTd+7JyydFEA
-In-Reply-To: <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.82.220.63]
-Content-ID: <76C30DC6DF93D841BD00B2AF6B5C30E0@emea.cisco.com>
+	id S1754432AbbAEVZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 16:25:31 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:35424 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753400AbbAEVZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 16:25:26 -0500
+Received: by mail-ie0-f173.google.com with SMTP id y20so20355996ier.18
+        for <git@vger.kernel.org>; Mon, 05 Jan 2015 13:25:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=S0RK2QKNlfP43EFq+XJ+BbRAEziD46nwrHFrHt5r0R4=;
+        b=cflVBa/L8xwDGiv/yQE+GIsPB1nrptLnBgwBAmqTRj8jwfV6u95RrGMYqpYqQznelX
+         kWYVtp165pp/PNHU7oJEisG79w8fEGFj1sxfVMi5hlDXK0tXOaf5mvL1hT1n0uHxw3id
+         BeS2rBzgDhBE7bgr+DCiw4q5uRd1EVEHl813IHi37kivXfghRFd8cP93JRrnzVEFOszo
+         rh2JTHXl2GjaCCfQs2Owow9eRSOYDU8z8DtDVMqGQQ7H3ZZsMRdZHP2za0o3vdlp/5JT
+         EDzAxcdI/QpGCnfokUIoTS1mmSNnfNDlIBmRhP/TxT19daoalqyKGaNqiw96DCQp/hJA
+         2Nqg==
+X-Received: by 10.43.106.147 with SMTP id du19mr57710131icc.22.1420493126252;
+        Mon, 05 Jan 2015 13:25:26 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:cbe:c7db:3064:452c])
+        by mx.google.com with ESMTPSA id qj3sm4097003igc.17.2015.01.05.13.25.25
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 05 Jan 2015 13:25:25 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZUiwEbcSPk3Td60umixvh_Q7jXTGoLemKLYsvX1ty39w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262037>
 
-SSBoYXZlIHRyaWVkIGJvdGggcGF0Y2hlcy4gIE5laXRoZXIgc3VjY2VlZHMgaGVyZS4gIEkgcGF0
-Y2hlZCBnaXQgdmVyc2lvbiAyLjIuMSBidXQgSSBkb27igJl0IHRoaW5rIHRoYXQgYWZmZWN0cyB0
-aGlzLg0KDQpCZWZvcmUgSSBmbG9vZCB0aGUgbGlzdCB3aXRoIGRlYnVnIHJ1bnMsIEkgd2FudGVk
-IHRvIG1ha2Ugc3VyZSBJIHdhcyB0ZXN0aW5nIHdpdGggYW4gYXBwcm9wcmlhdGUgY29uZmlndXJh
-dGlvbjoNCg0KPExvY2F0aW9uIC9naXQ+DQogU1NMT3B0aW9ucyArU3RkZW52VmFycw0KIE9wdGlv
-bnMgK0V4ZWNDR0kgK0ZvbGxvd1N5bUxpbmtzICtTeW1MaW5rc0lmT3duZXJNYXRjaA0KDQogICAj
-IEJ5IGRlZmF1bHQsIGFsbG93IGFjY2VzcyB0byBhbnlvbmUuDQogICBPcmRlciBhbGxvdyxkZW55
-DQogICBBbGxvdyBmcm9tIEFsbA0KDQogICAjIEVuYWJsZSBLZXJiZXJvcyBhdXRoZW50aWNhdGlv
-biB1c2luZyBtb2RfYXV0aF9rZXJiLg0KICBBdXRoVHlwZSAgICAgICAgICAgS2VyYmVyb3MNCiAg
-QXV0aE5hbWUgICAgICAgICAgIOKAnHVzLmV4YW1wbGUub3JnIg0KICBLcmJBdXRoUmVhbG1zICAg
-ICAgdXMuZXhhbXBsZS5vcmcNCiAgIyBJIGhhdmUgdHJpZWQgYm90aCB3aXRoIGFuZCB3aXRob3V0
-IHRoZSBmb2xsb3dpbmcgbGluZToNCiAgS3JiU2VydmljZU5hbWUgICAgIEhUVFAvdXMuZXhhbXBs
-ZS5vcmcNCiAgS3JiNUtleXRhYiAgICAgICAgIC91c3IvbG9jYWwvZXRjL2FwYWNoZTIyL3JlcG8t
-dGVzdC5rZXl0YWINCiAgIEtyYk1ldGhvZE5lZ290aWF0ZSBvbg0KICAgS3JiU2F2ZUNyZWRlbnRp
-YWxzIG9uDQogICBLcmJWZXJpZnlLREMgb24NCiAgIEtyYlNlcnZpY2VOYW1lIEFueQ0KICAjIEkg
-aGF2ZSB0cmllZCB3aXRoIGFuZCB3aXRob3V0IHRoaXMgbGluZToNCiAgS3JiTWV0aG9kazVQYXNz
-d2QgIG9uDQogICBSZXF1aXJlIHZhbGlkLXVzZXINCjwvTG9jYXRpb24+DQoNCldpdGggYSB2YWxp
-ZCB0aWNrZXQsIHRoZSBhYm92ZSB3b3JrcyBmb3IgYSBnaXQgY2xvbmUuDQoNCuKAlCANCkRhbiBM
-YW5naWxsZQ0KSW5mcmFzdHJ1Y3R1cmUgJiBPcGVyYXRpb25zDQpUYWxvcyBHcm91cA0KU291cmNl
-ZmlyZSwgSW5jLg0KDQo+IE9uIEphbiAxLCAyMDE1LCBhdCAyOjU2IFBNLCBicmlhbiBtLiBjYXJs
-c29uIDxzYW5kYWxzQGNydXN0eXRvb3RocGFzdGUubmV0PiB3cm90ZToNCj4gDQo+IEFwYWNoZSBz
-ZXJ2ZXJzIHVzaW5nIG1vZF9hdXRoX2tlcmIgY2FuIGJlIGNvbmZpZ3VyZWQgdG8gYWxsb3cgdGhl
-IHVzZXINCj4gdG8gYXV0aGVudGljYXRlIGVpdGhlciB1c2luZyBOZWdvdGlhdGUgKHVzaW5nIHRo
-ZSBLZXJiZXJvcyB0aWNrZXQpIG9yDQo+IEJhc2ljIGF1dGhlbnRpY2F0aW9uICh1c2luZyB0aGUg
-S2VyYmVyb3MgcGFzc3dvcmQpLiAgT2Z0ZW4sIG9uZSB3aWxsDQo+IHdhbnQgdG8gdXNlIE5lZ290
-aWF0ZSBhdXRoZW50aWNhdGlvbiBpZiBpdCBpcyBhdmFpbGFibGUsIGJ1dCBmYWxsIGJhY2sNCj4g
-dG8gQmFzaWMgYXV0aGVudGljYXRpb24gaWYgdGhlIHRpY2tldCBpcyBtaXNzaW5nIG9yIGV4cGly
-ZWQuDQo+IA0KPiBIb3dldmVyLCBsaWJjdXJsIHdpbGwgdHJ5IHZlcnkgaGFyZCB0byB1c2Ugc29t
-ZXRoaW5nIG90aGVyIHRoYW4gQmFzaWMNCj4gYXV0aCwgZXZlbiBvdmVyIEhUVFBTLiAgSWYgQmFz
-aWMgYW5kIHNvbWV0aGluZyBlbHNlIGFyZSBvZmZlcmVkLCBsaWJjdXJsDQo+IHdpbGwgbmV2ZXIg
-YXR0ZW1wdCB0byB1c2UgQmFzaWMsIGV2ZW4gaWYgdGhlIG90aGVyIG9wdGlvbiBmYWlscy4NCj4g
-VGVhY2ggdGhlIEhUVFAgY2xpZW50IGNvZGUgdG8gc3RvcCB0cnlpbmcgYXV0aGVudGljYXRpb24g
-bWVjaGFuaXNtcyB0aGF0DQo+IGRvbid0IHVzZSBhIHBhc3N3b3JkIChjdXJyZW50bHkgTmVnb3Rp
-YXRlKSBhZnRlciB0aGUgZmlyc3QgZmFpbHVyZSwNCj4gc2luY2UgaWYgdGhleSBmYWlsZWQgdGhl
-IGZpcnN0IHRpbWUsIHRoZXkgd2lsbCBuZXZlciBzdWNjZWVkLg0KPiANCj4gU2lnbmVkLW9mZi1i
-eTogYnJpYW4gbS4gY2FybHNvbiA8c2FuZGFsc0BjcnVzdHl0b290aHBhc3RlLm5ldD4NCj4gLS0t
-DQo+IGh0dHAuYyAgICAgICAgfCAxNiArKysrKysrKysrKysrKysrDQo+IGh0dHAuaCAgICAgICAg
-fCAgMyArKysNCj4gcmVtb3RlLWN1cmwuYyB8IDExICsrKysrKysrKystDQo+IDMgZmlsZXMgY2hh
-bmdlZCwgMjkgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPiANCj4gZGlmZiAtLWdpdCBh
-L2h0dHAuYyBiL2h0dHAuYw0KPiBpbmRleCAwNDBmMzYyLi44MTUxOTRkIDEwMDY0NA0KPiAtLS0g
-YS9odHRwLmMNCj4gKysrIGIvaHR0cC5jDQo+IEBAIC02Miw2ICs2Miw4IEBAIHN0YXRpYyBjb25z
-dCBjaGFyICp1c2VyX2FnZW50Ow0KPiANCj4gc3RhdGljIHN0cnVjdCBjcmVkZW50aWFsIGNlcnRf
-YXV0aCA9IENSRURFTlRJQUxfSU5JVDsNCj4gc3RhdGljIGludCBzc2xfY2VydF9wYXNzd29yZF9y
-ZXF1aXJlZDsNCj4gKy8qIFNob3VsZCB3ZSBhbGxvdyBub24tcGFzc3dvcmQtYmFzZWQgYXV0aGVu
-dGljYXRpb24gKGUuZy4gR1NTQVBJKT8gKi8NCj4gK2ludCBodHRwX3Bhc3N3b3JkbGVzc19hdXRo
-ID0gMTsNCj4gDQo+IHN0YXRpYyBzdHJ1Y3QgY3VybF9zbGlzdCAqcHJhZ21hX2hlYWRlcjsNCj4g
-c3RhdGljIHN0cnVjdCBjdXJsX3NsaXN0ICpub19wcmFnbWFfaGVhZGVyOw0KPiBAQCAtOTg2LDYg
-Kzk4OCwxNiBAQCBzdGF0aWMgdm9pZCBleHRyYWN0X2NvbnRlbnRfdHlwZShzdHJ1Y3Qgc3RyYnVm
-ICpyYXcsIHN0cnVjdCBzdHJidWYgKnR5cGUsDQo+IAkJc3RyYnVmX2FkZHN0cihjaGFyc2V0LCAi
-SVNPLTg4NTktMSIpOw0KPiB9DQo+IA0KPiArdm9pZCBkaXNhYmxlX3Bhc3N3b3JkbGVzc19hdXRo
-KHN0cnVjdCBhY3RpdmVfcmVxdWVzdF9zbG90ICpzbG90KQ0KPiArew0KPiArI2lmZGVmIExJQkNV
-UkxfQ0FOX0hBTkRMRV9BVVRIX0FOWQ0KPiArI2RlZmluZSBIVFRQX0FVVEhfUEFTU1dPUkRMRVNT
-IChDVVJMQVVUSF9HU1NORUdPVElBVEUpDQo+ICsJY3VybF9lYXN5X3NldG9wdChzbG90LT5jdXJs
-LCBDVVJMT1BUX0hUVFBBVVRILA0KPiArCQkJIENVUkxBVVRIX0FOWSAmIH5IVFRQX0FVVEhfUEFT
-U1dPUkRMRVNTKTsNCj4gKyNlbmRpZg0KPiArfQ0KPiArDQo+ICsNCj4gLyogaHR0cF9yZXF1ZXN0
-KCkgdGFyZ2V0cyAqLw0KPiAjZGVmaW5lIEhUVFBfUkVRVUVTVF9TVFJCVUYJMA0KPiAjZGVmaW5l
-IEhUVFBfUkVRVUVTVF9GSUxFCTENCj4gQEAgLTEwMzUsNiArMTA0Nyw5IEBAIHN0YXRpYyBpbnQg
-aHR0cF9yZXF1ZXN0KGNvbnN0IGNoYXIgKnVybCwNCj4gCWN1cmxfZWFzeV9zZXRvcHQoc2xvdC0+
-Y3VybCwgQ1VSTE9QVF9IVFRQSEVBREVSLCBoZWFkZXJzKTsNCj4gCWN1cmxfZWFzeV9zZXRvcHQo
-c2xvdC0+Y3VybCwgQ1VSTE9QVF9FTkNPRElORywgImd6aXAiKTsNCj4gDQo+ICsJaWYgKCFodHRw
-X3Bhc3N3b3JkbGVzc19hdXRoKQ0KPiArCQlkaXNhYmxlX3Bhc3N3b3JkbGVzc19hdXRoKHNsb3Qp
-Ow0KPiArDQo+IAlyZXQgPSBydW5fb25lX3Nsb3Qoc2xvdCwgJnJlc3VsdHMpOw0KPiANCj4gCWlm
-IChvcHRpb25zICYmIG9wdGlvbnMtPmNvbnRlbnRfdHlwZSkgew0KPiBAQCAtMTEzOSw2ICsxMTU0
-LDcgQEAgc3RhdGljIGludCBodHRwX3JlcXVlc3RfcmVhdXRoKGNvbnN0IGNoYXIgKnVybCwNCj4g
-CX0NCj4gDQo+IAljcmVkZW50aWFsX2ZpbGwoJmh0dHBfYXV0aCk7DQo+ICsJaHR0cF9wYXNzd29y
-ZGxlc3NfYXV0aCA9IDA7DQo+IA0KPiAJcmV0dXJuIGh0dHBfcmVxdWVzdCh1cmwsIHJlc3VsdCwg
-dGFyZ2V0LCBvcHRpb25zKTsNCj4gfQ0KPiBkaWZmIC0tZ2l0IGEvaHR0cC5oIGIvaHR0cC5oDQo+
-IGluZGV4IDQ3MzE3OWIuLjcxOTQzZDMgMTAwNjQ0DQo+IC0tLSBhL2h0dHAuaA0KPiArKysgYi9o
-dHRwLmgNCj4gQEAgLTk4LDYgKzk4LDggQEAgZXh0ZXJuIGludCBoYW5kbGVfY3VybF9yZXN1bHQo
-c3RydWN0IHNsb3RfcmVzdWx0cyAqcmVzdWx0cyk7DQo+IGludCBydW5fb25lX3Nsb3Qoc3RydWN0
-IGFjdGl2ZV9yZXF1ZXN0X3Nsb3QgKnNsb3QsDQo+IAkJIHN0cnVjdCBzbG90X3Jlc3VsdHMgKnJl
-c3VsdHMpOw0KPiANCj4gK3ZvaWQgZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChzdHJ1Y3QgYWN0
-aXZlX3JlcXVlc3Rfc2xvdCAqc2xvdCk7DQo+ICsNCj4gI2lmZGVmIFVTRV9DVVJMX01VTFRJDQo+
-IGV4dGVybiB2b2lkIGZpbGxfYWN0aXZlX3Nsb3RzKHZvaWQpOw0KPiBleHRlcm4gdm9pZCBhZGRf
-ZmlsbF9mdW5jdGlvbih2b2lkICpkYXRhLCBpbnQgKCpmaWxsKSh2b2lkICopKTsNCj4gQEAgLTEx
-Miw2ICsxMTQsNyBAQCBleHRlcm4gaW50IGFjdGl2ZV9yZXF1ZXN0czsNCj4gZXh0ZXJuIGludCBo
-dHRwX2lzX3ZlcmJvc2U7DQo+IGV4dGVybiBzaXplX3QgaHR0cF9wb3N0X2J1ZmZlcjsNCj4gZXh0
-ZXJuIHN0cnVjdCBjcmVkZW50aWFsIGh0dHBfYXV0aDsNCj4gK2V4dGVybiBpbnQgaHR0cF9wYXNz
-d29yZGxlc3NfYXV0aDsNCj4gDQo+IGV4dGVybiBjaGFyIGN1cmxfZXJyb3JzdHJbQ1VSTF9FUlJP
-Ul9TSVpFXTsNCj4gDQo+IGRpZmYgLS1naXQgYS9yZW1vdGUtY3VybC5jIGIvcmVtb3RlLWN1cmwu
-Yw0KPiBpbmRleCBkZDYzYmMyLi40Y2E1NDQ3IDEwMDY0NA0KPiAtLS0gYS9yZW1vdGUtY3VybC5j
-DQo+ICsrKyBiL3JlbW90ZS1jdXJsLmMNCj4gQEAgLTQ2Nyw2ICs0NjcsOSBAQCBzdGF0aWMgaW50
-IHByb2JlX3JwYyhzdHJ1Y3QgcnBjX3N0YXRlICpycGMsIHN0cnVjdCBzbG90X3Jlc3VsdHMgKnJl
-c3VsdHMpDQo+IAljdXJsX2Vhc3lfc2V0b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfV1JJVEVGVU5D
-VElPTiwgZndyaXRlX2J1ZmZlcik7DQo+IAljdXJsX2Vhc3lfc2V0b3B0KHNsb3QtPmN1cmwsIENV
-UkxPUFRfRklMRSwgJmJ1Zik7DQo+IA0KPiArCWlmICghaHR0cF9wYXNzd29yZGxlc3NfYXV0aCkN
-Cj4gKwkJZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChzbG90KTsNCj4gKw0KPiAJZXJyID0gcnVu
-X3Nsb3Qoc2xvdCwgcmVzdWx0cyk7DQo+IA0KPiAJY3VybF9zbGlzdF9mcmVlX2FsbChoZWFkZXJz
-KTsNCj4gQEAgLTUxMCw4ICs1MTMsMTAgQEAgc3RhdGljIGludCBwb3N0X3JwYyhzdHJ1Y3QgcnBj
-X3N0YXRlICpycGMpDQo+IA0KPiAJCWRvIHsNCj4gCQkJZXJyID0gcHJvYmVfcnBjKHJwYywgJnJl
-c3VsdHMpOw0KPiAtCQkJaWYgKGVyciA9PSBIVFRQX1JFQVVUSCkNCj4gKwkJCWlmIChlcnIgPT0g
-SFRUUF9SRUFVVEgpIHsNCj4gCQkJCWNyZWRlbnRpYWxfZmlsbCgmaHR0cF9hdXRoKTsNCj4gKwkJ
-CQlodHRwX3Bhc3N3b3JkbGVzc19hdXRoID0gMDsNCj4gKwkJCX0NCj4gCQl9IHdoaWxlIChlcnIg
-PT0gSFRUUF9SRUFVVEgpOw0KPiAJCWlmIChlcnIgIT0gSFRUUF9PSykNCj4gCQkJcmV0dXJuIC0x
-Ow0KPiBAQCAtNTMzLDYgKzUzOCw5IEBAIHJldHJ5Og0KPiAJY3VybF9lYXN5X3NldG9wdChzbG90
-LT5jdXJsLCBDVVJMT1BUX1VSTCwgcnBjLT5zZXJ2aWNlX3VybCk7DQo+IAljdXJsX2Vhc3lfc2V0
-b3B0KHNsb3QtPmN1cmwsIENVUkxPUFRfRU5DT0RJTkcsICJnemlwIik7DQo+IA0KPiArCWlmICgh
-aHR0cF9wYXNzd29yZGxlc3NfYXV0aCkNCj4gKwkJZGlzYWJsZV9wYXNzd29yZGxlc3NfYXV0aChz
-bG90KTsNCj4gKw0KPiAJaWYgKGxhcmdlX3JlcXVlc3QpIHsNCj4gCQkvKiBUaGUgcmVxdWVzdCBi
-b2R5IGlzIGxhcmdlIGFuZCB0aGUgc2l6ZSBjYW5ub3QgYmUgcHJlZGljdGVkLg0KPiAJCSAqIFdl
-IG11c3QgdXNlIGNodW5rZWQgZW5jb2RpbmcgdG8gc2VuZCBpdC4NCj4gQEAgLTYxNyw2ICs2MjUs
-NyBAQCByZXRyeToNCj4gCWVyciA9IHJ1bl9zbG90KHNsb3QsIE5VTEwpOw0KPiAJaWYgKGVyciA9
-PSBIVFRQX1JFQVVUSCAmJiAhbGFyZ2VfcmVxdWVzdCkgew0KPiAJCWNyZWRlbnRpYWxfZmlsbCgm
-aHR0cF9hdXRoKTsNCj4gKwkJaHR0cF9wYXNzd29yZGxlc3NfYXV0aCA9IDA7DQo+IAkJZ290byBy
-ZXRyeTsNCj4gCX0NCj4gCWlmIChlcnIgIT0gSFRUUF9PSykNCj4gLS0gDQo+IDIuMi4xLjIwOS5n
-NDFlNWYzYQ0KPiANCg0K
+Stefan Beller wrote:
+
+> Maybe we should do both?
+>
+>     die ("BUG: Some refs have not been checked for connectivity."
+>           "Please contact the git developers (git@vger.kernel.org) and"
+>           "report the problem. As a workaround run 'git fsck'. If there"
+>           "are errors, try to remove the reported refs above. (This "
+>           "may lead to data loss, backup first.)"
+
+I personally find this kind of message grating when I run into it.
+The message is trying to tell me what to do, but it is not in a
+position to know what the best thing to do is.
+
+It could be that I am using an ancient version of git with known bugs.
+In that case I should upgrade.
+
+It could be that I am using faulty hardware that flips random bits and
+confuses software.
+
+It could be that I have a patched version of git, in which case I should
+contact the author of my patch instead of git@vger.kernel.org.
+
+It could be that this is a recent, terrible regression and
+git@vger.kernel.org is already bombarded with reports about it.
+
+If the message says
+
+	fatal: BUG: connectivity check skipped???
+
+then it has exactly the right amount of information to tell me what to
+do.  Now I have
+
+ - a short string to grep for in the source code (or on the web) to
+   find out what happened
+
+ - a clear indication that This Can't Happen, so I know to try to
+   reproduce it and contact the author of my patched git or upstream
+   or whoever, depending on the context
+
+ - no irrelevant guesses to confuse me
+
+The workaround of running 'git fsck' could be actively harmful,
+depending on what the bug is.  All that we know is that a bug has
+occured and we shouldn't proceed further.
+
+> Just thinking out loud:
+[...]
+>                  Would it make sense to have an extra die_bug function,
+
+Yes, I think something like the kernel's BUG_ON and WARN_ON would be
+very nice (though orthogonal to this change).
+
+Thanks,
+Jonathan
