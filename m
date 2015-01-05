@@ -1,94 +1,82 @@
-From: Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v3] doc: core.ignoreStat update, and clarify the --assume-unchanged effect
-Date: Mon,  5 Jan 2015 22:22:53 +0000
-Message-ID: <1420496573-3260-1-git-send-email-philipoakley@iee.org>
-Cc: GitList <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 05 23:23:26 2015
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: git 2.2.x: Unexpected, overstrict file permissions after "git
+ update-server-info"
+Date: Mon, 05 Jan 2015 23:23:12 +0100
+Message-ID: <54AB0ED0.3000400@web.de>
+References: <20150105210724.032e9718@x230>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Paul Sokolovsky <paul.sokolovsky@linaro.org>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 05 23:23:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8G39-0006GG-N3
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 23:23:00 +0100
+	id 1Y8G3s-00021T-NL
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Jan 2015 23:23:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753071AbbAEWWz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2015 17:22:55 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:53882 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751511AbbAEWWz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Jan 2015 17:22:55 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvAZAK8Nq1ROl3RPPGdsb2JhbABcgwUBAYEphi+BV69PjkKFfAQCgQoXAQEBAQEBBQEBAQE4O4RpHgUYgQIKGhOIML1+LI93hDAFhC2TaIoyhhGBZ22BPD4xgkMBAQE
-X-IPAS-Result: AvAZAK8Nq1ROl3RPPGdsb2JhbABcgwUBAYEphi+BV69PjkKFfAQCgQoXAQEBAQEBBQEBAQE4O4RpHgUYgQIKGhOIML1+LI93hDAFhC2TaIoyhhGBZ22BPD4xgkMBAQE
-X-IronPort-AV: E=Sophos;i="5.07,702,1413241200"; 
-   d="scan'208";a="580176811"
-Received: from host-78-151-116-79.as13285.net (HELO localhost) ([78.151.116.79])
-  by out1.ip05ir2.opaltelecom.net with ESMTP; 05 Jan 2015 22:22:53 +0000
-X-Mailer: git-send-email 1.9.5.msysgit.0
+	id S1753602AbbAEWXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2015 17:23:40 -0500
+Received: from mout.web.de ([212.227.15.14]:58053 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753460AbbAEWXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2015 17:23:40 -0500
+Received: from macce.local ([78.72.72.190]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0M1lTm-1Xo6Vn2Xow-00to7D; Mon, 05 Jan 2015 23:23:32
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <20150105210724.032e9718@x230>
+X-Provags-ID: V03:K0:jeEsOjIBadG9scilS+ORDS3FwjdCBSRvmHTNzgTlCGP6lS4Gbwp
+ G8l4VzWAhM5hVF2mf/oJ5VVLdsVfxQCz/RkWomajNuQrrPIolFObT9ck8nRmWhOAn05nAkH
+ 8wg0o82q4/aOAs3QFH18GE6mpsibhQuwq+OmwPfuC7Xmjx04nLF1pn4CK1kphEkex1i6HhT
+ +abBbmCOGgKpfEwasKxiw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262039>
 
-The assume-unchanged bit, and consequently core.ignoreStat, can be
-misunderstood. Be assertive about the expectation that file changes should
-notified to Git.
+On 2015-01-05 20.07, Paul Sokolovsky wrote:
+> Hello,
+> 
+> We recently upgraded to git 2.2.1 from 2.1.x and faced issue with
+> accessing repositories over dump HTTP protocol. In our setting,
+> repositories are managed by Gerrit, so owned by Gerrit daemon user,
+> but we also offer anon access via smart and dumb HTTP protocols. For the
+> latter, we of course rely on "git update-server-info" being run.
+> 
+> So, after the upgrade, users started to report that accessing
+> info/refs file of a repo, as required for HTTP dump protocol, leads to
+> 403 Forbidden HTTP error. We traced that to 0600 filesystem permissions
+> for such files (for objects/info/packs too) (owner is gerrit user, to
+> remind). After resetting permissions to 0644, they get back to 0600
+> after some time (we have a cronjob in addition to a hook to run "git
+> update-server-info"). umask is permissive when running cronjob (0002).
+> 
+> 
+> I traced the issue to:
+> https://github.com/git/git/commit/d38379ece9216735ecc0ffd76c4c4e3da217daec
+> 
+> It says: "Let's instead switch to using a unique tempfile via mkstemp."
+> Reading man mkstemp: "The  file  is  created  with permissions 0600".
+> So, that's it. The patch above contains call to adjust_shared_perm(),
+> but apparently it doesn't promote restrictive msktemp permissions to
+> something more accessible.
+> 
+> Hope this issue can be addressed.
+> 
+> 
+> Thanks,
+> Paul
+Does 
+git config core.sharedRepository 0644 
+help?
 
-Overhaul the general wording thus:
-    1. direct description of what is ignored given first.
-    2. example instruction of the user manual action required.
-    3. use sideways indirection for assume-unchanged and update-index
-       references.
-    4. add a 'normally' to give leeway for the change detection.
+Unless the the repo is configured as shared, 
+adjust_shared_perm() will not widen the access bits:
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
-
-This is the corrected patch which now applies on top of next and has been
-checked on AsciiDoc. (was $gmane/261974/focus=262022)
-
-I have included the previous 'after three-dashes' comment and included
-them in the commit message. I'm happy for it to be tweaked as appropriate.
-
----
- Documentation/config.txt | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 52eeadd..fe179d0 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -375,15 +375,18 @@ This is useful for excluding servers inside a firewall from
- proxy use, while defaulting to a common proxy for external domains.
- 
- core.ignoreStat::
--	If true, commands which modify both the working tree and the index
--	will mark the updated paths with the "assume unchanged" bit in the
--	index. These marked files are then expected to stay unchanged in the
--	working tree. If you change them you should mark their update manually.
--	Git will normally not detect the file changes by lstat() calls.
--	This is useful on systems where those calls are very slow, such as
--	cifs/Microsoft Windows.
--	See linkgit:git-update-index[1].
--	False by default.
-+	If true, Git will avoid using lstat() calls to detect if files have
-+	changed. Git will set the "assume-unchanged" bit for those tracked files
-+	which it has updated identically in both the index and working tree.
-++
-+When files are modified outside of Git, the user will need to stage
-+the modified files explicitly (e.g. see 'Examples' section in
-+linkgit:git-update-index[1]).
-+Git will not normally detect changes to those files.
-++
-+This is useful on systems where lstat() calls are very slow, such as
-+CIFS/Microsoft Windows.
-+False by default.
- 
- core.preferSymlinkRefs::
- 	Instead of the default "symref" format for HEAD
--- 
-1.9.5.msysgit.0
+http://git-htmldocs.googlecode.com/git/git-config.html
