@@ -1,79 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] format-patch: Add config option format.coverbodytext to change the cover letter body
-Date: Tue, 06 Jan 2015 02:37:57 -0800
-Message-ID: <xmqqzj9wp52y.fsf@gitster.dls.corp.google.com>
-References: <1420486105-30242-1-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 11:42:45 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: [PATCH] git-gui.sh: support Tcl 8.4
+Date: Tue,  6 Jan 2015 02:41:21 -0800
+Message-ID: <97e448e7908a1f959a7294e389553b5@74d39fa044aa309eaea14b9f57fe79c>
+Cc: Git mailing list <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 06 11:43:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8RWX-0002ms-4Y
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 11:38:05 +0100
+	id 1Y8RZs-0006zU-JY
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 11:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754769AbbAFKiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 05:38:00 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61111 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753313AbbAFKh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 05:37:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ECC1127072;
-	Tue,  6 Jan 2015 05:37:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AD91e8n8kXHZGi+Ey5OiPH6Od/A=; b=DlHuRF
-	CmVgkwUQ8AbeWJ+qWkAkDWXkkXgB8Yq0KqpR6sSqv1vvIzdz/VzgWzyfSTNCPaBG
-	Eh35bC2yTVar/WXfQ6lTLcntpLxSxfHmHwI0wb1L2IL6gi036eD3ksfnObb/F0a3
-	GSQTGrxFm936GLDz30uT5x9Z+NrO4CMV8vy/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rdi3KXLLPBpGemxbdSICRRCkXXhwCiiU
-	NhZNO86bYGkhLymmAtXF6Miovn39V/hbjMMRiFmWKDgwIvxv4CJJngTWBkFLzroH
-	nuuzFGII3znMHXetAigi97Zcd7P3eyguYLgyGQ4uOfOu6gEsY/Yf6T0V7MPtI+Ua
-	9c1JlWeiTgs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2ECE27071;
-	Tue,  6 Jan 2015 05:37:58 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 69CAE27070;
-	Tue,  6 Jan 2015 05:37:58 -0500 (EST)
-In-Reply-To: <1420486105-30242-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 5 Jan 2015 11:28:25 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 14C7B58A-9590-11E4-851D-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753984AbbAFKl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 05:41:28 -0500
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:59850 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753480AbbAFKl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 05:41:27 -0500
+Received: by mail-pa0-f41.google.com with SMTP id rd3so30656033pab.14
+        for <git@vger.kernel.org>; Tue, 06 Jan 2015 02:41:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=rQFCYXk0K9BsMsCUCvgaJrMVRxHnhUerp2Ol1YqGzVI=;
+        b=1Fz8v2XKmmUxW2I+k83LJ+8Gp5KIKmUj0sDh8CVlZSlAhAoWgMQSlkMCD6cv6UdUbT
+         ctaatiHPwYxrEcBtbfrjQfBxD1MRfVUwOBiDs68wSH6/IbPpn2NscYpeylKrAGLp177h
+         KWCZ22ph9MYb28YJoMB3YOIaS0RavFcKYtVTq5MUMaGq0qvhxgTUKXsI4QHnsBl8jrX9
+         GLfefhnArh+h8OYS/HTvkgpjaphpL5b03+DMfAyWaMBvg2/Aq5SYST9qQqsTyKZ9ujx9
+         ip6hrTQwYay5ICn5YGAL9nUn/x7pYQ44+QkEAio/5XphLsKJ+yqgGf2iJowqHzs2t1Mb
+         gg3g==
+X-Received: by 10.70.46.137 with SMTP id v9mr106505602pdm.70.1420540887140;
+        Tue, 06 Jan 2015 02:41:27 -0800 (PST)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id ul5sm57041482pab.36.2015.01.06.02.41.26
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 06 Jan 2015 02:41:26 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262055>
 
-Stefan Beller <sbeller@google.com> writes:
+Tcl 8.5 introduced an extended vsatisfies syntax that is not
+supported by Tcl 8.4.
 
-> When sending out patch series one of the last things doing is writing
-> the cover letter. The cover letter would be a good place to remind
-> people to check the todo list for sending patches.
+Since only Tcl 8.4 is required this presents a problem.
 
-I do not quite understand.  Wouldn't a check-list be useful _before_
-you start series of things (I am assuming that you meant a list like
-1. run spell check; 2. run checkpatch; 3. run full test suite;
-4. format the docs for HTML and manpage)?  Time to write cover
-letter (or running format-patch in general) is way too late for
-many of these things.
+The extended syntax was used starting with Git 2.0.0 in
+commit b3f0c5c0 so that a major version change would still
+satisfy the condition.
 
-There may be a check-list that is still useful after commits to be
-sent are perfect and ready to be formatted.  "Describe change since
-the last round after three-dash line." would be one of them
-("Sign-off the patch" is not---without one, the commits would not
-have been perfect yet).  But for such a check-list, wouldn't we want
-remainder not only on the cover but on each individual patch?
+However, what we really want is just a basic version compare,
+so use vcompare instead to restore compatibility with Tcl 8.4.
 
-Perhaps --add-header="x-reminder: what changed since the last?"
-would be sufficient for your purpose instead?
+Signed-off-by: Kyle J. McKay
+---
+ git-gui/git-gui.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index b186329d..a1a23b56 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -1283,7 +1283,7 @@ load_config 0
+ apply_config
+ 
+ # v1.7.0 introduced --show-toplevel to return the canonical work-tree
+-if {[package vsatisfies $_git_version 1.7.0-]} {
++if {[package vcompare $_git_version 1.7.0] >= 0} {
+ 	if { [is_Cygwin] } {
+ 		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
+ 	} else {
+@@ -1539,7 +1539,7 @@ proc rescan_stage2 {fd after} {
+ 		close $fd
+ 	}
+ 
+-	if {[package vsatisfies $::_git_version 1.6.3-]} {
++	if {[package vcompare $::_git_version 1.6.3] >= 0} {
+ 		set ls_others [list --exclude-standard]
+ 	} else {
+ 		set ls_others [list --exclude-per-directory=.gitignore]
+-- 
+2.1.4
