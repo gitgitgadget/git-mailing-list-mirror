@@ -1,8 +1,8 @@
 From: kelson@shysecurity.com
-Subject: [PATCH 1/2] support for --no-relative and diff.relative
-Date: Tue, 06 Jan 2015 11:19:55 -0500
-Message-ID: <54AC0B2B.90107@shysecurity.com>
-References: <548B7967.3060201@shysecurity.com> <54972C29.7060801@shysecurity.com> <54A2E744.8010508@shysecurity.com> <54A2FDC8.5010504@shysecurity.com>
+Subject: [PATCH 2/2] support for --no-relative and diff.relative
+Date: Tue, 06 Jan 2015 11:19:58 -0500
+Message-ID: <54AC0B2E.3050205@shysecurity.com>
+References: <54972C33.4030009@shysecurity.com> <54A2E748.3010008@shysecurity.com> <54A2FDD2.3010707@shysecurity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
@@ -11,167 +11,135 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 06 17:20:15 2015
+X-From: git-owner@vger.kernel.org Tue Jan 06 17:20:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8Wrb-0003Ux-Ez
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 17:20:11 +0100
+	id 1Y8Wri-00048s-Co
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 17:20:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755474AbbAFQUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 11:20:04 -0500
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:50422 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754083AbbAFQUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 11:20:03 -0500
-Received: by mail-qa0-f42.google.com with SMTP id n8so16684019qaq.1
-        for <git@vger.kernel.org>; Tue, 06 Jan 2015 08:20:02 -0800 (PST)
+	id S1755543AbbAFQUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 11:20:06 -0500
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:55120 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754083AbbAFQUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 11:20:05 -0500
+Received: by mail-qg0-f54.google.com with SMTP id l89so17016018qgf.13
+        for <git@vger.kernel.org>; Tue, 06 Jan 2015 08:20:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
          :cc:subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=mC3CvdddmOjVYWHgCBt/e2JUwo2YaZBxVnuCjMxX5tU=;
-        b=gw6TzzMHCI1Uzp6kGvNGI48a31Ze1X0n+aM4vuOGh6944Ync1PQtUtmtAZJkEdGLnB
-         tABDCiiaUfvz1M6BuC2PHvbjo8ZmVTUkI6DpNO+1sgoE+LqghIEMDRu+VFOzwE5grJV4
-         L6PifRA/ZPGrn4+4BFy9MMG3hLIUIgEXGUpKR12IAIQCIGYO0q9GsREH9562Q7PjCGOR
-         TJGu7vrERsYb2/yVhO8uX5xiToAa3inzRa4qELoRMzChH2WJTp7X2uKUJBB107ZpTDWa
-         GT4XmTnx+nzP30TanEV6uHU52Ee6icpggBf/IaFi5fq6B71oKhCsxHTuPKgtfTWGOAe+
-         pTfQ==
-X-Gm-Message-State: ALoCoQlnIf2zzeay60oasFQf7ddCEypCKKZWio4lfQkzJft3FH15IlNqeqRuNtt14F2ESTSqfXC2
-X-Received: by 10.224.51.11 with SMTP id b11mr155122499qag.43.1420561202500;
-        Tue, 06 Jan 2015 08:20:02 -0800 (PST)
+        bh=s5z4f4MZ4yEdKRef0bP4wZHEjmy77SYl15N/7vouyX0=;
+        b=AruVzI7FNBtvg4e8aLcdWdgeVie0rL4n3JapNEzmzoOrK7/PxpftRhvHdKTMvQ0GvE
+         EpVBHSWCWgZMJMgsc+yNPk5HnsGKQ/uRKv04kulvR3XLuGg/+O6k3s4Z6l1op9m+2zvt
+         6C31AFOiYznVH2o9EsZavuUkLKYfFi71JohsvP6UsYqXzjqK35G1t5XeFetz/LM3ZR0C
+         NUC6nW4RJfw3u0nTHuhgTDySoGjApJF76s8oGevqhLBFIXixhp1DBXp4MobCw+GN8YaR
+         AkvPNPy6peA43Sx56RBHZ4ZRd+/AKj/kbPKBytE/EFncWg4FdnOmgpLFFPiQlMkBa4Ze
+         Lk9g==
+X-Gm-Message-State: ALoCoQlWgQedcBqig9cw6Ammrdof6sd122Sq9SYsby/GGKuaX/0Z2eObLhMC9dEz0QheoTcnbcye
+X-Received: by 10.224.167.82 with SMTP id p18mr93441280qay.98.1420561204251;
+        Tue, 06 Jan 2015 08:20:04 -0800 (PST)
 Received: from [10.0.0.22] (pool-100-36-60-151.washdc.fios.verizon.net. [100.36.60.151])
-        by mx.google.com with ESMTPSA id z5sm29279382qal.11.2015.01.06.08.20.01
+        by mx.google.com with ESMTPSA id b13sm42959440qaw.31.2015.01.06.08.20.03
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Jan 2015 08:20:01 -0800 (PST)
+        Tue, 06 Jan 2015 08:20:03 -0800 (PST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <54A2FDC8.5010504@shysecurity.com>
+In-Reply-To: <54A2FDD2.3010707@shysecurity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262075>
 
-added --no-relative option for git-diff (code, documentation, and tests)
+added diff.relative setting for git-diff (code, documentation, and tests)
 
---no-relative overrides --relative causing a return to standard behavior
+`git-config diff.relative=true` causes `git diff` to behave like `git 
+diff --relative`. Overridden by `git diff --no-relative`.
 
 Signed-off-by: Brandon Phillips <kelson@shysecurity.com>
 ---
-  Documentation/diff-options.txt |  4 ++++
-  diff.c                         |  2 ++
-  t/t4045-diff-relative.sh       | 46 
-+++++++++++++++++++++++++++++++++++++++---
-  3 files changed, 49 insertions(+), 3 deletions(-)
+  Documentation/diff-config.txt |  6 ++++++
+  diff.c                        |  8 ++++++++
+  t/t4045-diff-relative.sh      | 20 ++++++++++++++++++++
+  3 files changed, 34 insertions(+)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 6cb083a..2b15050 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -448,6 +448,10 @@ ifndef::git-format-patch[]
-  	not in a subdirectory (e.g. in a bare repository), you
-  	can name which subdirectory to make the output relative
-  	to by giving a <path> as an argument.
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index b001779..b8a7c60 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -103,6 +103,12 @@ diff.orderfile::
+  	one shell glob pattern per line.
+  	Can be overridden by the '-O' option to linkgit:git-diff[1].
+
++diff.relative::
++	Show pathnames relative to the current directory and exclude
++	changes outside this directory; equivalent to the 'git diff'
++	option '--relative'.
++	Overridden by the '--no-relative' linkgit:git-diff[1] option.
 +
-+--no-relative::
-+	Turn off relative pathnames and include all changes in the
-+	repository.
-  endif::git-format-patch[]
-
-  -a::
+  diff.renameLimit::
+  	The number of files to consider when performing the copy/rename
+  	detection; equivalent to the 'git diff' option '-l'.
 diff --git a/diff.c b/diff.c
-index d1bd534..7bceba8 100644
+index 7bceba8..9e4ec1f 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -3695,6 +3695,8 @@ int diff_opt_parse(struct diff_options *options, 
-const char **av, int ac)
-  		DIFF_OPT_SET(options, RELATIVE_NAME);
-  		options->prefix = arg;
+@@ -223,6 +223,14 @@ int git_diff_ui_config(const char *var, const char 
+*value, void *cb)
+  		return 0;
   	}
-+	else if (!strcmp(arg, "--no-relative"))
-+		DIFF_OPT_CLR(options, RELATIVE_NAME);
 
-  	/* xdiff options */
-  	else if (!strcmp(arg, "--minimal"))
++	if (!strcmp(var, "diff.relative")) {
++		if (git_config_bool(var, value))
++			DIFF_OPT_SET(&default_diff_options, RELATIVE_NAME);
++		else
++			DIFF_OPT_CLR(&default_diff_options, RELATIVE_NAME);
++		return 0;
++	}
++
+  	if (git_color_config(var, value, cb) < 0)
+  		return -1;
+
 diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
-index 3950f50..ccd67c7 100755
+index ccd67c7..c2c15e4 100755
 --- a/t/t4045-diff-relative.sh
 +++ b/t/t4045-diff-relative.sh
-@@ -12,8 +12,8 @@ test_expect_success 'setup' '
-  	git commit -m one
-  '
-
--check_diff() {
--expect=$1; shift
-+store_diff_relative() {
-+expect=$1;
-  cat >expected <<EOF
-  diff --git a/$expect b/$expect
-  new file mode 100644
-@@ -23,12 +23,52 @@ index 0000000..25c05ef
-  @@ -0,0 +1 @@
-  +other content
-  EOF
-+}
-+
-+store_diff_absolute() {
-+expect=$1;
-+cat >expected <<EOF
-+diff --git a/file1 b/file1
-+new file mode 100644
-+index 0000000..d95f3ad
-+--- /dev/null
-++++ b/file1
-+@@ -0,0 +1 @@
-++content
-+diff --git a/subdir/file2 b/subdir/file2
-+new file mode 100644
-+index 0000000..25c05ef
-+--- /dev/null
-++++ b/subdir/file2
-+@@ -0,0 +1 @@
-++other content
-+EOF
-+}
-+
-+check_diff() {
-+store_diff_relative $1; shift
-  test_expect_success "-p $*" "
-  	git diff -p $* HEAD^ >actual &&
-  	test_cmp expected actual
+@@ -104,10 +104,30 @@ test_expect_success "--raw $*" "
   "
   }
 
-+check_norel_pre() {
++check_config() {
 +store_diff_relative $1; shift
-+test_expect_success "-p --no-relative $*" "
-+	git diff -p --no-relative $* HEAD^ >actual &&
++test_expect_success "git-config diff.relative=true in $1" "
++	(cd $1; git -c diff.relative=true diff -p HEAD^ >../actual) &&
 +	test_cmp expected actual
 +"
 +}
 +
-+check_norel_post() {
++check_config_no_relative() {
 +store_diff_absolute $1; shift
-+test_expect_success "-p $* --no-relative" "
-+	git diff -p $* --no-relative HEAD^ >actual &&
++test_expect_success "--no-relative w/ git-config diff.relative=true in 
+$1" "
++	(cd $1; git -c diff.relative=true diff --no-relative -p HEAD^ 
+ >../actual) &&
 +	test_cmp expected actual
 +"
 +}
 +
-  check_numstat() {
-  expect=$1; shift
-  cat >expected <<EOF
-@@ -64,7 +104,7 @@ test_expect_success "--raw $*" "
-  "
-  }
-
--for type in diff numstat stat raw; do
-+for type in diff numstat stat raw norel_pre norel_post; do
+  for type in diff numstat stat raw norel_pre norel_post; do
   	check_$type file2 --relative=subdir/
   	check_$type file2 --relative=subdir
   	check_$type dir/file2 --relative=sub
+  done
++for type in config config_no_relative; do
++	check_$type file2 subdir/
++	check_$type file2 subdir
++done
+
+  test_done
 --
 1.9.1
