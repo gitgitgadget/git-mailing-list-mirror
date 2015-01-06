@@ -1,76 +1,117 @@
-From: Adam Williamson <awilliam@redhat.com>
-Subject: [PATCH] correct smtp-ssl-cert-path description
-Date: Tue,  6 Jan 2015 11:01:00 -0800
-Message-ID: <1420570860-12732-1-git-send-email-awilliam@redhat.com>
-Cc: ruben@rubenkerkhof.com, artagnon@gmail.com,
-	Adam Williamson <awilliam@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 20:07:23 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH] format-patch: Add config option format.coverbodytext
+ to change the cover letter body
+Date: Tue, 6 Jan 2015 11:14:59 -0800
+Message-ID: <CAGZ79kZE+zBgYANE8+NppnBsAVfLXPdgxnvFRbLdMkafSqduWA@mail.gmail.com>
+References: <1420486105-30242-1-git-send-email-sbeller@google.com>
+	<xmqqzj9wp52y.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kabhx1q2pxY0_UXAy64G94GQZaP4nSUgeUjV0c_sjt+QQ@mail.gmail.com>
+	<xmqqd26rpwjg.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 20:16:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8ZSv-0007h6-3B
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 20:06:53 +0100
+	id 1Y8Zav-0001M4-EG
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 20:15:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755479AbbAFTGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 14:06:48 -0500
-Received: from happyassassin.net ([184.71.189.90]:34442 "EHLO
-	mail.happyassassin.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752047AbbAFTGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 14:06:48 -0500
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2015 14:06:47 EST
-Received: from adam.happyassassin.net (adam.happyassassin.net [192.168.1.5])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.happyassassin.net (Postfix) with ESMTPS id 8FB2530993;
-	Tue,  6 Jan 2015 11:01:18 -0800 (PST)
-Authentication-Results: mail.happyassassin.net; dmarc=none header.from=redhat.com
-Received: by adam.happyassassin.net (Postfix, from userid 1001)
-	id AED7516A6D5; Tue,  6 Jan 2015 11:01:18 -0800 (PST)
-X-Mailer: git-send-email 2.2.0
+	id S1756493AbbAFTPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 14:15:01 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:52522 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756490AbbAFTPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 14:15:00 -0500
+Received: by mail-ig0-f178.google.com with SMTP id b16so86753igk.17
+        for <git@vger.kernel.org>; Tue, 06 Jan 2015 11:14:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=sIU764sIJo4mKkePd6llnS0HOGxgG3Q8muADWEV2a/g=;
+        b=J1UC/kmWTz4xc/kK/peyuJMHRTQ/cEbIaBw2cRgkLOR0S89GkNhGnIlxh8GJv1nrUi
+         Gu9Wj7Ls/p9hfoU9KUg4MEJzU1scf0ErWW+Z4CeZvlDT27K58Tjre+3LjSLqomk5Dmi9
+         UwJo3KW5YSiolek/T2WaxPtTwAIY58+THczDjqDwia7Rd8PeDduB0tT2tcmatKFW5SOY
+         RgvbdqokLzKyGIQ1kYTkaazxqCNwQl8Gr9AoX/hmrKiI2eIReDWBZDB1ualWaM9O/sp5
+         x/KABgSf9DLYmneWMFI/gdeIUWRI9LdCk6+MOhh6SzIYDdH5/1mHLoZaahMSJaKgJiBw
+         ybEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=sIU764sIJo4mKkePd6llnS0HOGxgG3Q8muADWEV2a/g=;
+        b=GyQkmYIc1ED32gZgkKfQOCdCxRkwL6o9us1hiZld5i4CO0c5+MOr0TmeXmiZO0GGIF
+         RmyNbOzBa9tTz0914f71/0LfywHicqVZLDfzSryYrTEc9Cbqgz8hpmRRr6cC88oMxgO3
+         GgfKwuktC6l0rV6xTH+QR5W7+Ute/rA8Iq+JxMwAy6wHAg6WI0uRkxhFVYr3rB7rdun/
+         QwEensSuc9OgIaAsDF+yCBisdjF3Duok9ncO+VA7t2NDDf+1mpIj7VB3Ha5SaMS59fLq
+         VB3r2sAixeai4hBVrSIDmCQX1h9Tvgt0qOfW2sfBNW2T4bRTK2IqJvC4Zyf8gIyHU5zp
+         q3rg==
+X-Gm-Message-State: ALoCoQkcdTFqxrc/3/jIC2ayTkhQrpJ5liltdc5EDZ+XiSkAvLZ8aR4RkjEEK2LAq66ERm2CQcwV
+X-Received: by 10.43.100.67 with SMTP id cv3mr73803747icc.92.1420571699525;
+ Tue, 06 Jan 2015 11:14:59 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Tue, 6 Jan 2015 11:14:59 -0800 (PST)
+In-Reply-To: <xmqqd26rpwjg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262090>
 
-The git-send-email documentation was never updated to reflect
-the change made in 01645b74 to use the SSL library's default
-CA trust store rather than /etc/ssl/certs as a hardcoded
-default CApath. This corrects that, and also tweaks the rest
-of the text a bit to explain more accurately what is required
-for a valid CApath / CAfile.
+On Tue, Jan 6, 2015 at 10:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> You said it yourself above, didn't you?  While perfecting your
+> branch and while perfecting reroll of your branch.
+>
+>
+>> * After doing changes, wait at least 12 hours for second self-review
+>
+> This is certainly once-per-series.
 
-Signed-off-by: Adam Williamson <awilliam@redhat.com>
----
- Documentation/git-send-email.txt | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+Right.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index a60776e..30f7afa 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -199,10 +199,15 @@ must be used for each option.
- 	Legacy alias for '--smtp-encryption ssl'.
- 
- --smtp-ssl-cert-path::
--	Path to ca-certificates (either a directory or a single file).
--	Set it to an empty string to disable certificate verification.
--	Defaults to the value set to the 'sendemail.smtpsslcertpath'
--	configuration variable, if set, or `/etc/ssl/certs` otherwise.
-+	Path to a store of trusted CA certificates for SMTP SSL/TLS
-+	certificate validation (either a directory that has been processed
-+	by 'c_rehash', or a single file containing one or more PEM format
-+	certificates concatenated together: see verify(1) -CAfile and
-+	-CApath for more information on these). Set it to an empty string
-+	to disable certificate verification. Defaults to the value of the
-+	'sendemail.smtpsslcertpath' configuration variable, if set, or the
-+	backing SSL library's compiled-in default otherwise (which should
-+	be the best choice on most platforms).
- 
- --smtp-user=<user>::
- 	Username for SMTP-AUTH. Default is the value of 'sendemail.smtpuser';
--- 
-2.2.0
+>
+>> * sending out:
+>>     git format-patch --cover-letter --notes --subject-prefix=PATCHvX
+>
+> This is not even helpful reminder if that is only shown after you
+> run format-patch, no?
+
+Right, as I currently have these notes somewhere completely
+out of reach of my git tree, I manually check that list whenever I need to.
+So this is for different events.
+
+>
+> Yes, but that is a separate discussion where the check list is given
+> (per patch or per series?) and how it is presented (overriding the
+> "blurb here" comment or something else that can also be used for the
+> non-cover messages?).
+
+One of the problems here may be that a single patch is never formatted
+as a patch, but lives inside the git world. Only when I consider the
+whole series
+good I start formatting the patches, which is why it's hard to find a place on
+a per-patch basis.
+
+>>> Perhaps --add-header="x-reminder: what changed since the last?"
+>>> would be sufficient for your purpose instead?
+
+Maybe a similar approach of pre writing notes to some per patch
+checklist would do?
+
+So once I'd set
+    git config commit.add_notes_if_empty "/in/filesystem/checklist/per/patch"
+
+which would add notes whenever I'd commit and the notes for that commit
+are not empty (i.e. commit --amend doesn't wipe existing notes).
+Maybe that config option should rather be below
+notes.add_on_commit though.
+
+So before we drift into more discussion, I'd still think it makes sense to have
+the ***BLURB *** replaced by some configurable questions regarding the
+series as a whole, so I'd try to perfect that patch?
+
+Thanks,
+Stefan
