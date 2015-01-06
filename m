@@ -1,132 +1,101 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH v2 0/2] Accept any notes ref
-Date: Mon,  5 Jan 2015 22:03:51 -1000
-Message-ID: <d4509363c8f670483dacdd2a5070f5a@74d39fa044aa309eaea14b9f57fe79c>
-Cc: Scott Chacon <schacon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 06 09:06:47 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git 2.2.x: Unexpected, overstrict file permissions after "git update-server-info"
+Date: Tue, 06 Jan 2015 02:08:16 -0800
+Message-ID: <xmqqd26sql0v.fsf@gitster.dls.corp.google.com>
+References: <20150105210724.032e9718@x230> <20150106034702.GA11503@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Paul Sokolovsky <paul.sokolovsky@linaro.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 06 11:12:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8P7f-00035D-KO
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 09:04:15 +0100
+	id 1Y8R3t-0007HB-G8
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 11:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754086AbbAFIEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 03:04:07 -0500
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:32937 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754028AbbAFIEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 03:04:04 -0500
-Received: by mail-pd0-f170.google.com with SMTP id v10so29976331pde.1
-        for <git@vger.kernel.org>; Tue, 06 Jan 2015 00:04:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=qox75oBS7nZ3dTwz5cjitXnHXznLFo6ETK7D0pFaMJg=;
-        b=WS/39EbylPz79ZZ1TLqKK0w1rpqhIq/bAwmRaZXU5HNcSszQmGjUOiIcqV28Sd6wTS
-         OQJShRBtmN5g1YvwpmrxIxKjaqg1FWw6K2t3GFWw4CknGQMSnBuy7Sk2DzUZYsJFnlPp
-         GWFoRoTzUTWWSpKWRGJ9Vyecs7FWsaNO6cUXlxuDwSn1qWES203JIJ0CEfY605O7bFIp
-         2jdl+ETwK3fywiERl2ZPhuG7didnyK/+xaa+MR78bhCr5GRY5M8w0g1AQJlRg80rTUJD
-         FGLuoLFzdGukKh/Vx0Co8f0oNDrM0q0UyTvagi5YCd8fwo6/uKqa+vdWVzdkeV3Y9R6N
-         izUQ==
-X-Received: by 10.68.68.206 with SMTP id y14mr152060374pbt.165.1420531444189;
-        Tue, 06 Jan 2015 00:04:04 -0800 (PST)
-Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ug6sm56550745pab.7.2015.01.06.00.04.02
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 06 Jan 2015 00:04:03 -0800 (PST)
+	id S1754533AbbAFKIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 05:08:25 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64504 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751698AbbAFKIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 05:08:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EC9624AFD;
+	Tue,  6 Jan 2015 05:08:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6LdWNEN6mmLEv9GA3fSSOQHaovc=; b=lgYlDk
+	cWa/239QfF2k2ZUWGhIhjRS/fZR8LKhw24llRFzbFQmXGEdhI6zEDxYBHQcbeOvc
+	yIU3OQNKCYjCxJ8c13Yrd+wy0OqZl8SxgwAYB/1AmAHmLrxgvSsaQrf3P/ihMbFv
+	NEGpchkOrDSiOtjaU8PBGfKXTO4xU59ZkDBNE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xxAg+eAZnJ6ixkJlRuhrzRsb84uoO7xJ
+	v/EYwi5ydwYw1qqFsnLK71qnKkkErEtlwh7CECDMwO463vkr75jeQo1PQ8f/HjSK
+	JckyJydwQ1y8GbZDWxGvXbJo05OTJWYfq58ylccqsleXKZ/TPraouDXiQPLanOm9
+	Hsqfy3Nwmhw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3636B24AFB;
+	Tue,  6 Jan 2015 05:08:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B059524AF9;
+	Tue,  6 Jan 2015 05:08:17 -0500 (EST)
+In-Reply-To: <20150106034702.GA11503@peff.net> (Jeff King's message of "Mon, 5
+	Jan 2015 22:47:02 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EF64DC2C-958B-11E4-AFD4-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262049>
 
-This is a resend of the original patch by Scott Chacon combined with the
-suggested patch by Johan Herland with a summary of the discussion so far
-in the hope to restart discussion about including this change.
+Jeff King <peff@peff.net> writes:
 
-The original thread can be found at [1].
+> Yeah, I didn't consider the mode impact of using mkstemp. That is
+> definitely a regression that should be fixed. Though of course if you
+> really do want 0644, you should set your umask to 0022. :)
+> ...
+> If you haven't set core.sharedrepository, then adjust_shared_perm is a
+> noop. But you shouldn't have to do that. Git should just respect your
+> umask in this case.
 
-The history so far:
+Thanks for a nicely done patch series, but I am not sure if I agree
+with the analysis and its conclusion.
 
-The Patch 1/2 was originally submitted to allow using refs outside of
-the refs/notes/ namespace as notes refs for the purpose of merging notes.
-However, that patch actually just relaxes the restriction on notes refs so
-that a fully-qualified ref will be used as-is in the notes code and affects
-more than just notes merging.
+If adjust_shared_perm is a no-op, how do we ensure that other files
+that need to be served by a dumb HTTP server are readable by it?  Is
+it because we just happen not to use mkstemp() to create them (and
+also is it because the pushers do not have umask 007 or stronger to
+prevent files from being read by the HTTP server user)?
 
-The concern was then raised that this is a "stealth-enabler" patch and that
-even if notes refs are allowed outside of refs/notes/ then they should still
-be restricted to a some subset (to be determined) of the the refs/ hierarchy
-and not just allowed anywhere.
+Is our goal here to give the users this statement?
 
-But, I feel that the rest of Git does not restrict the user in this way -- if
-the user really wants to do something that is "not recommended" there is
-almost always a mechanism and/or option to leave the user in control and allow
-it despite any recommendation(s) to the contrary.
+    For shared repository served by dumb HTTP and written by users
+    who are different from the user that runs the HTTP server, you
+    need to do nothing special.
 
-So I am resending this summary with attached patches (both of which are
-very trivial) to allow using any ref for notes as long as it's fully qualified
-(i.e. starts with "refs/").  Patch 1/2 does that and patch 2/2 fixes the test
-that breaks because of it.
+If that is the case, shouldn't the rule be something a lot looser
+than "we should just respect your umask"?  To satisify the above
+goal, shouldn't we somehow make it readable by the HTTP user even
+when some pusher has a draconian 0077 umask?  But that, while still
+complying to the promise of "nothing special", would imply we would
+have to make everything readable everywhere, whish is an unachievable
+goal.  We need to somehow be able to say "this repository should be
+readable by these people" per-repository basis.
 
-In the hope of restarting discussion towards enabling use of refs outside of
-refs/notes/ with the notes machinery I conclude by including Peff's final
-reply to the original thread which I think contains the most compelling
-aregument for inclusion:
+And we have a mechanism exactly designed to do so to defeat
+draconian umask individual users have.
 
-On Dec 4, 2014, at 02:26, Jeff King wrote:
-
-> On Sat, Nov 22, 2014 at 10:04:57AM -0800, Kyle J. McKay wrote:
->
->> On Sep 19, 2014, at 11:22, Junio C Hamano wrote:
->>
->>> By "stealth enabler" I mean the removal of refs/notes/ restriction
->>> that was originally done as a safety measure to avoid mistakes of
->>> storing notes outside.  The refs/remote-notes/ future direction
->>> declares that it is no longer a mistake to store notes outside
->>> refs/notes/, but that does not necessarily have to mean that
->>> anywhere under refs/ is fine.  It may make more sense to be explicit
->>> with the code touched here to allow traditional refs/notes/ and the
->>> new hierarchy only.  That way, we will still keep the "avoid
->>> mistakes" safety and enable the new layout at the same time.
->>
->> This is the part where I want to lobby for inclusion of this change.
->> I do not believe it is consistent with existing Git practice to
->> enforce restrictions like this (you can only display/edit/etc. notes
->> under refs/notes/*).
->
-> Yeah, this is the compelling part to me. There is literally no way to
-> utilize the notes codes for any ref outside of refs/notes currently.
-> We don't know if refs/remote-notes is the future, or refs/remotes/
-> origin/notes, or something else. But we can't even experiment with it in a
-> meaningful way because the plumbing layer is so restrictive.
->
-> The notes feature has stagnated. Not many people use it because it  
-> requires so much magic to set up and share notes. I think it makes sense to  
-> remove a safety feature that is making it harder to experiment with. If the  
-> worst case is that people start actually _using_ notes and we get  
-> proliferation of places that people are sticking them in the refs hierarchy,
-> that is vastly preferable IMHO to the current state, in which few people use
-> them and there is little support for sharing them at all.
-
--Kyle
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/257281
-
-Kyle J. McKay (1):
-  t/t3308-notes-merge.sh: succeed with relaxed notes refs
-
-Scott Chacon (1):
-  notes: accept any ref
-
- notes.c                | 2 +-
- t/t3308-notes-merge.sh | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
-
--- 
-2.1.4
+It feels to me that the old set-up were "working" by accident, not
+by design (I may be mistaken--so correct me if that were the case).
+And if that is the case, I do not think it is a good idea to try to
+hide the broken configuration under the rug longer.  "As long as
+everybody writes world-readable files, you do not have to do
+anything" will break when the next person with 0xx7 umask setting
+pushes, no?
