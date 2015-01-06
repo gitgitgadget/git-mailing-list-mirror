@@ -1,82 +1,201 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Question about the revision walking API
-Date: Tue, 6 Jan 2015 14:37:07 +0100
-Message-ID: <CAP8UFD0mZ4tSF-ZkZh8Z=GdkW4LNQAWuKJYyhyiA4RTGPLX_+g@mail.gmail.com>
-References: <20150106020230.GA28274@glandium.org>
+From: "Campbell, Polly R CTR Maritime EW Sys Div, WXMP" 
+	<polly.campbell.ctr@navy.mil>
+Subject: Software CM Tool Inquiry
+Date: Tue, 6 Jan 2015 13:58:03 +0000
+Message-ID: <3731758D3E7DE64E8AD464CD29B8CE8709D15E8F@NAEACRANXM02V.nadsusea.nads.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Jan 06 14:41:57 2015
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+	micalg=SHA1; boundary="----=_NextPart_000_05C6_01D0298E.DF7906D0"
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 06 15:12:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8UJx-0002Ei-0j
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 14:37:17 +0100
+	id 1Y8UoB-0006uv-3Z
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 15:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218AbbAFNhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 08:37:09 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:53204 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751735AbbAFNhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 08:37:08 -0500
-Received: by mail-ie0-f179.google.com with SMTP id rp18so2595162iec.10
-        for <git@vger.kernel.org>; Tue, 06 Jan 2015 05:37:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=flePRuSGVHro1LG954vLWpxtfaD/CdnYbS+A6hf3IdA=;
-        b=D+yowt2SyajnfQgOceLjzIwI+TtX8mU/Yb3JfXgH8B/4Sd92gCQu+JyVlmZ8RaCdsV
-         uxz8+x1VuOev52vfGAcpkEBXHNNNxKCSu7g4xEJbFayTavsYIzSHc9f5Ur0qDE5VFWUt
-         l/nqwHwoSyq1fsJJVcrEPIzWHu9+Ox/8Fy215D1Fu5Lxhyw+28wS/rP4phkwXdfwuPkF
-         H4zU9M6C50Fx8VuIFrCBuNJXEM58LdMRtnimNoLc6yaiq9XQXEdhXPNN+zyEwmEQ3k55
-         oVvcC/rzI7xujLfZXI7X2SAM3so8d/yMsAmV++ee8IBRhGMIrLAE0axBiS2daPT+nP0H
-         fB/g==
-X-Received: by 10.107.134.212 with SMTP id q81mr82450176ioi.62.1420551427639;
- Tue, 06 Jan 2015 05:37:07 -0800 (PST)
-Received: by 10.50.252.7 with HTTP; Tue, 6 Jan 2015 05:37:07 -0800 (PST)
-In-Reply-To: <20150106020230.GA28274@glandium.org>
+	id S1755325AbbAFOI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 09:08:26 -0500
+Received: from ucol19pa09.eemsg.mail.mil ([214.24.24.82]:13080 "EHLO
+	ucol19pa09.eemsg.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754670AbbAFOIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 09:08:25 -0500
+X-Greylist: delayed 609 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2015 09:08:25 EST
+X-EEMSG-Attachment-filename: smime.p7s
+Received: from naeanrfkax23.nmci.navy.mil (HELO NAEANRFKAX23o.NADSUSEA.NADS.NAVY.MIL) ([205.85.33.159])
+  by ucol19pa09.eemsg.mail.mil with ESMTP; 06 Jan 2015 13:58:11 +0000
+X-AuditID: cd55219e-f797f6d00000152a-06-54abe9f0c652
+Received: from NAEANRFKXH50V.nadsusea.nads.navy.mil (Unknown_Domain [205.85.33.242])
+	by NAEANRFKAX23o.NADSUSEA.NADS.NAVY.MIL (Symantec Messaging Gateway) with SMTP id 11.6C.05418.0F9EBA45; Tue,  6 Jan 2015 08:58:08 -0500 (EST)
+Thread-Topic: Software CM Tool Inquiry
+Thread-Index: AdApuMhIF2Cv+Hu2QWG95mQcaSu1XA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.18.56.62]
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKIsWRmVeSWpSXmKPExsVyNlTxk+6Hl6tDDL5tULXoutLN5MDo8XmT
+	XABjFJdNSmpOZllqkb5dAlfGs9ucBVe9KuY/6mZuYLzh1sXIySEhYCLx7WU3E4QtJnHh3nq2
+	LkYuDiGBJ4wSF47/YQNJsAmES9x8Mh+oiINDREBfou+CKEhYWEBRYv+OGSwgtoiAmsSKOX+Y
+	IGw9ifvHJjKDlLMIqEj8bJUGCfMKREu8uP6NEcRmBFr1/dQasHJmAXGJW2DTQU4QkXh48TQb
+	hC0q8fLxP1YIW16ib9ZhVpDTmAV6GSX2znnFBjFUUOLkzCdgNwgJaEh8nTSVZQKj0Cwkc2ch
+	65mFpGcW0H3MQLe2bWSEqJeX2P52DjOEbS0x49dBNghbUWJK90N2CNtU4vXRj4wLGDlWMSr7
+	Obo6+gW5eTtGGBnr+Tm6BIcGuzqCGUAiLFLP19NnEyMkgubtYGxeYXWIUYCDUYmH94fz6hAh
+	1sSy4srcQ4wqQFMfbVh9gVGKJS8/L1VJhPdV+qoQId6UxMqq1KL8+KLSnNTiQ4zSHCxK4ry3
+	588IERJITyxJzU5NLUgtgskycXBKNTAa6unm/m9OupfueyM2demftNwFximHVSUOzdxY8n6z
+	kMn/yfX/9m78+69rbm/LJe4/xpKKXsWG8bM/f9uj07Rq/oqT7znZ9mdm8DM+v+Z67cpjp1n7
+	czYG7JCfuzSmY9N8We+k2PNB32ZY3X9anhNkb+vY6H1OtPP9Ntcnlr80z9pp/WQ2n3hViaU4
+	I9FQi7moOBEA0cfnsagCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262065>
 
-Hi,
+------=_NextPart_000_05C6_01D0298E.DF7906D0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+To Whom It May Concern,
+
+We are a software support activity for a system that is loaded on a majority of the ships in the navy fleet; I am looking for a CM software tool with the following capabilities to meet our requirements:
+
+-	Be able to upload unclassified and classified software in a central location where everyone in our group could have access to being able to see and/or pull down the media.  This would require an instance on both enclaves, UNCLASS and CLASSIFIED.
+
+-	Be able to see each item's contents along with submitter, date submitted and size.
+
+-	Lots of storage available with robust inventory/tracking system.  We would like to store a copy of each hard drive in our systems for each configuration.
+
+-	Procedure accessibility: Procedures should be organized in an accessible format so that when performing a task, the individuals will be able to quickly find/access the actual procedure needing to be used. 
+
+-	Software baselines will need to be tracked, both raw source code, and the compiled install disk.
+We can exclude hard drives that are easy to recreate.
+
+We are interested in reviewing software packages to determine what will fit our needs.
+
+Thank you,
+Polly
 
 
-On Tue, Jan 6, 2015 at 3:02 AM, Mike Hommey <mh@glandium.org> wrote:
-> Hi,
->
-> I would like to know if the revision walking API works as one would
-> expect with a calling sequence like the following:
->
-> - init_revisions
-> - add_pending_object/setup_revisions
-> - prepare_revision_walk
-> - get_revision (repeated)
-> - reset_revision_walk (I guess)
-> - add_pending_object
-> - prepare_revision_walk
-> - get_revision (repeated)
->
-> That is, do a first revision walk based on a given rev_info, then reuse that
-> rev_info with additional commit objects (in my case, I want to add more
-> UNINTERESTING commits) and redo a revision walk based on the modified
-> rev_info (so, avoid reinitializing a rev_info and filling it from
-> scratch again with the additional UNINTERESTING commits).
->
-> I guess I could try and see if that works, but I'd rather have an
-> informed answer than to derive my own from the fact my testcase would
-> happen to work by chance.
+Polly Campbell
+Applied Logistics Services, Inc.
+Code WXM, Bldg. 3330S
+Crane Division NSWC
+300 Hwy 361
+Crane, IN 47522-5001
+Office: 812.854.8206
+Fax: 812.854.6570
+Email: polly.campbell.ctr@navy.mil
+SIPR: polly.campbell@navy.smil.mil
 
-I am not sure what you describe above would work, but something like
-what is done in bisect.c should work, see check_ancestors() and
-bisect_next_all(). It might not be the most efficient solution though,
-so I am interested if you find something more efficient.
 
-Best,
-Christian.
+
+------=_NextPart_000_05C6_01D0298E.DF7906D0
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+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
+o4IBrzCCAaswHwYDVR0jBBgwFoAUNWFmKAm8ViVbi8y/gV5hLDA50yEwOgYDVR0fBDMwMTAvoC2g
+K4YpaHR0cDovL2NybC5kaXNhLm1pbC9jcmwvRE9ERU1BSUxDQV8zMC5jcmwwDgYDVR0PAQH/BAQD
+AgbAMCMGA1UdIAQcMBowCwYJYIZIAWUCAQsJMAsGCWCGSAFlAgELEzAdBgNVHQ4EFgQUbV20pd4d
+qaFtjdjDkwQtnWxK8/cwaAYIKwYBBQUHAQEEXDBaMDYGCCsGAQUFBzAChipodHRwOi8vY3JsLmRp
+c2EubWlsL3NpZ24vRE9ERU1BSUxDQV8zMC5jZXIwIAYIKwYBBQUHMAGGFGh0dHA6Ly9vY3NwLmRp
+c2EubWlsMEYGA1UdEQQ/MD2BG3BvbGx5LmNhbXBiZWxsLmN0ckBuYXZ5Lm1pbKAeBgorBgEEAYI3
+FAIDoBAMDjEyNzIwMDkwMDNAbWlsMBsGA1UdCQQUMBIwEAYIKwYBBQUHCQQxBBMCVVMwKQYDVR0l
+BCIwIAYKKwYBBAGCNxQCAgYIKwYBBQUHAwIGCCsGAQUFBwMEMA0GCSqGSIb3DQEBBQUAA4IBAQBC
+6RcEBAvjEw/5OB8p/7lR82705l4+IikTyDXc6Ca9DkZZ34zjUtuaezPAuw/83fOHIgT7KAgABY7D
+ij+6RRbsYKuZuhlvSFdsrfS+X0W4iszdltJPVYP3C4Q6NaVlvAYGvgnezzvWjT2+qKAzWW5dw7mu
+xOU4s28xmdOo56tHaoppbIYGrQC5bctMBRmWxYT0/Vzy8lPXkwRgfCVhTDHt7FYW9dUYpWWj8MPF
+b63n0lX2HF1f9w5+x4ediIkRslUqNaKDrbTKeZGC9z5bQ9w4AKIWaEpEAZ5nv93AEBa++US/Lyqn
+yi2tXUJ96QOV6hdD6PtpCglhGXurn9FJvqKnMIIFUjCCBDqgAwIBAgICAbkwDQYJKoZIhvcNAQEF
+BQAwWzELMAkGA1UEBhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9E
+MQwwCgYDVQQLEwNQS0kxFjAUBgNVBAMTDURvRCBSb290IENBIDIwHhcNMTEwOTA4MTYwMzA4WhcN
+MTcwOTA4MTYwMzA4WjBdMQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50MQww
+CgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEYMBYGA1UEAxMPRE9EIEVNQUlMIENBLTMwMIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5iki1BQm0ZgaUl7FhINzfsFgs7PQlL79HJRVv/aE
+LJvJwHRz78zCmfKZyW3KFNN0/74Q8vctv8u7BqPumFBBZQHhVyy2y+TKHKx+UjQOsY4HJj4yNa+j
+YQrF5Qi2EnmMVMF66fFQH12DOmcwsynbHTpMOSFQ2BgsjQZ17mNyeGitYpx1pJQG0zJrEq8GBym+
+E6DAp/AlT7f+H7dX4BgSjSFqFblaVPt3ZdhMP/W6PMA34QZ+wr6eI4wo0ZrXxmc413PJvQcdhW/V
+lQqa3No6TijwpesJ3+XbC81Hr4rNu2+UQONZnFCfyQ6pcQK53OlpgDqJO0UFIhgFhLUS8DzAgQID
+AQABo4ICHDCCAhgwDgYDVR0PAQH/BAQDAgGGMB8GA1UdIwQYMBaAFEl0uwxeunr+AlTve6DGlcYJ
+gHCWMB0GA1UdDgQWBBQ1YWYoCbxWJVuLzL+BXmEsMDnTITASBgNVHRMBAf8ECDAGAQH/AgEAMAwG
+A1UdJAQFMAOAAQAwZgYDVR0gBF8wXTALBglghkgBZQIBCwUwCwYJYIZIAWUCAQsJMAsGCWCGSAFl
+AgELETALBglghkgBZQIBCxIwCwYJYIZIAWUCAQsTMAwGCmCGSAFlAwIBAxowDAYKYIZIAWUDAgED
+GzA3BgNVHR8EMDAuMCygKqAohiZodHRwOi8vY3JsLmRpc2EubWlsL2NybC9ET0RST09UQ0EyLmNy
+bDCCAQEGCCsGAQUFBwEBBIH0MIHxMDoGCCsGAQUFBzAChi5odHRwOi8vY3JsLmRpc2EubWlsL2lz
+c3VlZHRvL0RPRFJPT1RDQTJfSVQucDdjMCAGCCsGAQUFBzABhhRodHRwOi8vb2NzcC5kaXNhLm1p
+bDCBkAYIKwYBBQUHMAKGgYNsZGFwOi8vY3JsLmdkcy5kaXNhLm1pbC9jbiUzZERvRCUyMFJvb3Ql
+MjBDQSUyMDIlMmNvdSUzZFBLSSUyY291JTNkRG9EJTJjbyUzZFUuUy4lMjBHb3Zlcm5tZW50JTJj
+YyUzZFVTP2Nyb3NzQ2VydGlmaWNhdGVQYWlyO2JpbmFyeTANBgkqhkiG9w0BAQUFAAOCAQEACohW
+HKVXJlpiy3XQ3YbFUuIv87wRZD+MLz4R/JhgQPKADSiCmmj+4EhLJ9M6CnuV9gMMgRSRQjpgbOIr
+Uy3s3xGu9VQX8AH5lwenm6sL26yXiQnG7/kHNBYAqH4RU558L6E4opl5OTRBbn24WDBWiJ7kqmRF
+2aBEYjq35THTkYDxGxCyZ3DVW6tZtFpIFkLEAkzabGjKUB0xvjeZx89TzEIpVsOdF8oD5xBa8Tk8
+HMz7G5cKJvMx3+CrXCSdnt44fQJRZ0b5k3CF7QpVwvTBaFqfCMkde5t23FTvOYwY5QxE7vcGsh/1
+y+YOvdSh/9T5kQciUnm3wP3ssviF9ET7XDGCAzIwggMuAgEBMGQwXTELMAkGA1UEBhMCVVMxGDAW
+BgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQS0kxGDAWBgNV
+BAMTD0RPRCBFTUFJTCBDQS0zMAIDNcivMAkGBSsOAwIaBQCgggGjMBgGCSqGSIb3DQEJAzELBgkq
+hkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDEwNjEzNTgwMFowIwYJKoZIhvcNAQkEMRYEFARs
+JYlAn2I/Gj2ipeMewvX5bpaAMFgGCSqGSIb3DQEJDzFLMEkwCgYIKoZIhvcNAwcwDgYIKoZIhvcN
+AwICAgCAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgEoMAcGBSsOAwIaMAoGCCqGSIb3DQIFMHMGCSsG
+AQQBgjcQBDFmMGQwXTELMAkGA1UEBhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoG
+A1UECxMDRG9EMQwwCgYDVQQLEwNQS0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDNciyMHUG
+CyqGSIb3DQEJEAILMWagZDBdMQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50
+MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEYMBYGA1UEAxMPRE9EIEVNQUlMIENBLTMwAgM1
+yLIwDQYJKoZIhvcNAQEBBQAEggEAgCbCWtogHt3+EDXsd5JmmQU7ICe7F6pYiMIDS2K3OzF4M6lG
+gihv/61+gWKuCP8uEgiuSESp5bjrqo7mFydIKTJhj44WqiOAoCEJmhVXVM8EgTtZKrgWTK8M08HQ
+RWFEiLfA8gOnDCcPZunXDCx9OWO2eP0DNT2Za+Vcg1s4NB+WJ9VUBKmFswLfFdXxtCBhZH3Eyqfx
+r7RUPEue3Wo0q5mJqH0/o+5cb+XsJHzT0x5xiM4E4L8hSpHcERHOOc3RCM++Zp7EN2wXvIfTUZSg
+KagGwjwbgILNHdgHQA7Ud8ouL90fg2x+CjfmuKC38hEWKQ81KgdYgZ84Z2N3JFqJ3gAAAAAAAA==
+
+------=_NextPart_000_05C6_01D0298E.DF7906D0--
