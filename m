@@ -1,88 +1,111 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH 3/3] git-checkout.txt: a note about multiple checkout
- support for submodules
-Date: Tue, 6 Jan 2015 23:30:15 +0200
-Message-ID: <20150106213015.GA32489@wheezy.local>
-References: <1420278087-14613-1-git-send-email-pclouds@gmail.com>
- <1420278087-14613-4-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] update-server-info: create info/* with mode 0666
+Date: Tue, 06 Jan 2015 13:43:33 -0800
+Message-ID: <xmqqegr7oa9m.fsf@gitster.dls.corp.google.com>
+References: <20150106034702.GA11503@peff.net>
+	<20150106035048.GB20087@peff.net>
+	<xmqqh9w3px0a.fsf@gitster.dls.corp.google.com>
+	<20150106193950.GB28440@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 22:38:52 2015
+Content-Type: text/plain
+Cc: Paul Sokolovsky <paul.sokolovsky@linaro.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 06 22:44:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8bp1-0008LC-2E
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 22:37:51 +0100
+	id 1Y8buf-0005Vv-7K
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 22:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933017AbbAFVhq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jan 2015 16:37:46 -0500
-Received: from p3plsmtpa07-06.prod.phx3.secureserver.net ([173.201.192.235]:40035
-	"EHLO p3plsmtpa07-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932918AbbAFVhp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2015 16:37:45 -0500
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2015 16:37:45 EST
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa07-06.prod.phx3.secureserver.net with 
-	id clWT1p0095B68XE01lWYfb; Tue, 06 Jan 2015 14:30:34 -0700
-Content-Disposition: inline
-In-Reply-To: <1420278087-14613-4-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932856AbbAFVnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 16:43:37 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60075 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932536AbbAFVng (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 16:43:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 26AD92DCBD;
+	Tue,  6 Jan 2015 16:43:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6TEFm0aQE9QQgy1CJGB3b9lOPmQ=; b=Vzt/ax
+	r4PXvXv6+VU7OAPT+Oq24CyrmM5vGSmnatj3l9cggMuzRrKJEoPd55E2EglByjV0
+	+PQvGcRz97n/TFGKjBvpwLeBl1oOg8ru1iwuTMHI1cNML9c8L3ZF/MVlRT8NiEzK
+	E0mnPIXOI2FdMEcyh6mJDlbOwvvsZmiFgBHZw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ag/BUyH95KENOifOoGv+MdTv+HBG0F8W
+	OpaFJsTEt3cnPeWVH1kCPLy9QKQR8MnwYe62usKaSqCWLCFDwNzf90kHCRECvLCy
+	U75jYrrXDyqi+tjdEafYwUreBVYGDrKbdB3b/gzPo4iXYzLw2vnSafJ3JBcB9m6d
+	iyilQH+Gmv4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B5502DCBC;
+	Tue,  6 Jan 2015 16:43:35 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 952332DCBB;
+	Tue,  6 Jan 2015 16:43:34 -0500 (EST)
+In-Reply-To: <20150106193950.GB28440@peff.net> (Jeff King's message of "Tue, 6
+	Jan 2015 14:39:51 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1098D4B4-95ED-11E4-A773-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262102>
 
-On Sat, Jan 03, 2015 at 04:41:27PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
-> The goal seems to be using multiple checkouts to reduce disk space.
-> But we have not reached an agreement how things should be. There are =
-a
-> couple options.
->=20
->  - You may want to keep $SUB repos elsewhere (perhaps in a central
->    place) outside $SUPER. This is also true for nested submodules
->    where a superproject may be a submodule of another superproject.
->=20
->  - You may want to keep all $SUB repos in $SUPER/modules (or some
->    other place in $SUPER)
->=20
->  - We could even push it further and merge all $SUB repos into $SUPER
->    instead of storing them separately. But that would at least requir=
-e
->    ref namespace enabled.
->=20
-> On top of that, git-submodule.sh expects $GIT_DIR/config to be
-> per-worktree, at least for the submodule.* part. Here I think we have
-> two options, either update config.c to also read
-> $GIT_DIR/config.worktree (which is per worktree) in addition to
-> $GIT_DIR/config (shared) and store worktree-specific vars in the new
-> place, or update git-submodule.sh to read/write submodule.* directly
-> from $GIT_DIR/config.submodule (per worktree).
->=20
-> These take time to address properly. Meanwhile, make a note to the
-> user that they should not use multiple worktrees in submodule context=
-=2E
+Jeff King <peff@peff.net> writes:
 
-I'd like to describe though how much the glass is full:
+> On Tue, Jan 06, 2015 at 10:47:01AM -0800, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > +test_expect_success POSIXPERM 'info/refs is readable in unshared repo' '
+>> > +	rm -f .git/info/refs &&
+>> > +	test_unconfig core.sharedrepository &&
+>> > +	umask 002 &&
+>> > +	git update-server-info &&
+>> > +	echo "-rw-rw-r--" >expect &&
+>> > +	modebits .git/info/refs >actual &&
+>> > +	test_cmp expect actual
+>> > +'
+>> 
+>> Hmm, the label and the test look somewhat out-of-sync.  "readable as
+>> long as umask allows it" would be more in line with what the fix is
+>> about (i.e. I would expect a test with that title to pass even if I
+>> changed 'umask 002' to 'umask 007', but that is not what we want in
+>> this series).
+>
+> That is definitely not what the series means to accomplish. I think
+> naming the test "info/refs respects umask in unshared repo" is probably
+> a better title for the test.
 
-If all submodules exist in same paths in all checked-out
-commits, and there is no special settings, only
-`submodule.<name>.url` is set, then user can inspect, commit
-and update the submodule content. Submodules can be either
-independedntly initalized with `submodule update --init`
-(being a fully independet clone), or checked-out with
-`checkout --to` to the submodule worktree.
+Thanks for sanity-checking me (I am still somewhat feverish and not
+performing at 100% level).  Here is what I have locally (but haven't
+got around to today's integration cycle yet) on top.
 
-It is even verified by tests, so does it worth mentioning in
-some manpage or at least commit message?
+Subject: [PATCH] SQUASH???
 
---=20
-Max
+---
+ t/t1301-shared-repo.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index feff55e..d5eacb0 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -111,7 +111,7 @@ do
+ 
+ done
+ 
+-test_expect_success POSIXPERM 'info/refs is readable in unshared repo' '
++test_expect_success POSIXPERM 'info/refs is created honoring the umask' '
+ 	rm -f .git/info/refs &&
+ 	test_unconfig core.sharedrepository &&
+ 	umask 002 &&
+-- 
+2.2.1-349-g24d7964
