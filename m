@@ -1,117 +1,102 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH] format-patch: Add config option format.coverbodytext
- to change the cover letter body
-Date: Tue, 6 Jan 2015 11:14:59 -0800
-Message-ID: <CAGZ79kZE+zBgYANE8+NppnBsAVfLXPdgxnvFRbLdMkafSqduWA@mail.gmail.com>
-References: <1420486105-30242-1-git-send-email-sbeller@google.com>
-	<xmqqzj9wp52y.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kabhx1q2pxY0_UXAy64G94GQZaP4nSUgeUjV0c_sjt+QQ@mail.gmail.com>
-	<xmqqd26rpwjg.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] clean: style fix for 9f93e46 (git-clean: use a git-add-interactive ...)
+Date: Tue, 06 Jan 2015 11:17:33 -0800
+Message-ID: <xmqq4ms3pvle.fsf@gitster.dls.corp.google.com>
+References: <1420464563-5579-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 20:16:12 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 20:17:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8Zav-0001M4-EG
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 20:15:09 +0100
+	id 1Y8ZdP-0006Se-T4
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 20:17:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756493AbbAFTPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 14:15:01 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:52522 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756490AbbAFTPA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 14:15:00 -0500
-Received: by mail-ig0-f178.google.com with SMTP id b16so86753igk.17
-        for <git@vger.kernel.org>; Tue, 06 Jan 2015 11:14:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=sIU764sIJo4mKkePd6llnS0HOGxgG3Q8muADWEV2a/g=;
-        b=J1UC/kmWTz4xc/kK/peyuJMHRTQ/cEbIaBw2cRgkLOR0S89GkNhGnIlxh8GJv1nrUi
-         Gu9Wj7Ls/p9hfoU9KUg4MEJzU1scf0ErWW+Z4CeZvlDT27K58Tjre+3LjSLqomk5Dmi9
-         UwJo3KW5YSiolek/T2WaxPtTwAIY58+THczDjqDwia7Rd8PeDduB0tT2tcmatKFW5SOY
-         RgvbdqokLzKyGIQ1kYTkaazxqCNwQl8Gr9AoX/hmrKiI2eIReDWBZDB1ualWaM9O/sp5
-         x/KABgSf9DLYmneWMFI/gdeIUWRI9LdCk6+MOhh6SzIYDdH5/1mHLoZaahMSJaKgJiBw
-         ybEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=sIU764sIJo4mKkePd6llnS0HOGxgG3Q8muADWEV2a/g=;
-        b=GyQkmYIc1ED32gZgkKfQOCdCxRkwL6o9us1hiZld5i4CO0c5+MOr0TmeXmiZO0GGIF
-         RmyNbOzBa9tTz0914f71/0LfywHicqVZLDfzSryYrTEc9Cbqgz8hpmRRr6cC88oMxgO3
-         GgfKwuktC6l0rV6xTH+QR5W7+Ute/rA8Iq+JxMwAy6wHAg6WI0uRkxhFVYr3rB7rdun/
-         QwEensSuc9OgIaAsDF+yCBisdjF3Duok9ncO+VA7t2NDDf+1mpIj7VB3Ha5SaMS59fLq
-         VB3r2sAixeai4hBVrSIDmCQX1h9Tvgt0qOfW2sfBNW2T4bRTK2IqJvC4Zyf8gIyHU5zp
-         q3rg==
-X-Gm-Message-State: ALoCoQkcdTFqxrc/3/jIC2ayTkhQrpJ5liltdc5EDZ+XiSkAvLZ8aR4RkjEEK2LAq66ERm2CQcwV
-X-Received: by 10.43.100.67 with SMTP id cv3mr73803747icc.92.1420571699525;
- Tue, 06 Jan 2015 11:14:59 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 6 Jan 2015 11:14:59 -0800 (PST)
-In-Reply-To: <xmqqd26rpwjg.fsf@gitster.dls.corp.google.com>
+	id S932485AbbAFTRi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jan 2015 14:17:38 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64278 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755940AbbAFTRg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2015 14:17:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 19A902D0BA;
+	Tue,  6 Jan 2015 14:17:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=BlccYYEeJdkk
+	pv/P2Y9lu0sQrbU=; b=mgNrSg7zJLPnSdSzF0OKS7ilVoMjeTHB+PrlOjJ3tMti
+	HEYiMBZKWH4I2sS3UMeodm3XqJMtwkfoeKaspJVni6p5x7ObSVfRiE06Amh8+s2g
+	ZHIZX5m75R2Ck/5X1rkYPJpOhsgT4vzcfMIjaOmxYDLb2gfd4SEUZEemnose7aw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Rag+Bg
+	/pTwuC40QIKibVu1fLaoZbdkz4HIBTiU/ZdwM5jhL6Knxa6jCKpIgSI4X5JaxMzv
+	CCfKBwbGzse3DdSFew9172L0FtloXWMwzgYe3JdKpWsNGIp2jDyc2IYxk8lIS2UF
+	Q18DzZTf/nsg5zhIliJz9AL/0dbqIFtonVjFA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F2952D0B9;
+	Tue,  6 Jan 2015 14:17:36 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 84EB02D0B7;
+	Tue,  6 Jan 2015 14:17:35 -0500 (EST)
+In-Reply-To: <1420464563-5579-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 5 Jan
+ 2015 20:29:23 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: ABC96922-95D8-11E4-A9D8-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262091>
 
-On Tue, Jan 6, 2015 at 10:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> You said it yourself above, didn't you?  While perfecting your
-> branch and while perfecting reroll of your branch.
->
->
->> * After doing changes, wait at least 12 hours for second self-review
->
-> This is certainly once-per-series.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Right.
+> -	int (*fn)();
+> +	int (*fn)(void);
 
->
->> * sending out:
->>     git format-patch --cover-letter --notes --subject-prefix=PATCHvX
->
-> This is not even helpful reminder if that is only shown after you
-> run format-patch, no?
+This is an independent fix that has already been merged to 'maint',
+but to any topic that forked before the merge happened I need to
+apply the fix without committing it when I test it in isolation, and
+I screwed up when I did that SQUASH??? in question by running a
+casual "commit -a" (or perhaps "add -u").  My bad.
 
-Right, as I currently have these notes somewhere completely
-out of reach of my git tree, I manually check that list whenever I need to.
-So this is for different events.
+When your series (with the squash) is merged to any integration
+branch, this hunk becomes redundant, so I'd remove it from the
+SQUASH???
 
->
-> Yes, but that is a separate discussion where the check list is given
-> (per patch or per series?) and how it is presented (overriding the
-> "blurb here" comment or something else that can also be used for the
-> non-cover messages?).
+When I do a SQUASH???, I expect the original authors use it as a
+hint in their rerolls, but because this series has seen no comments
+so far (no interests???), I do not foresee or expect you to feel a
+need for rerolling at this point.  If you agree that the remainder
+of the SQUASH??? (shown below) is sensible, I'll turn it into a
+"fixup!" for cc44d4fe (untracked cache: load from UNTR index
+extension, 2014-12-08) and requeue.
 
-One of the problems here may be that a single patch is never formatted
-as a patch, but lives inside the git world. Only when I consider the
-whole series
-good I start formatting the patches, which is why it's hard to find a place on
-a per-patch basis.
+Thanks for catching my mistake before it gets too old.
 
->>> Perhaps --add-header="x-reminder: what changed since the last?"
->>> would be sufficient for your purpose instead?
+ dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Maybe a similar approach of pre writing notes to some per patch
-checklist would do?
-
-So once I'd set
-    git config commit.add_notes_if_empty "/in/filesystem/checklist/per/patch"
-
-which would add notes whenever I'd commit and the notes for that commit
-are not empty (i.e. commit --amend doesn't wipe existing notes).
-Maybe that config option should rather be below
-notes.add_on_commit though.
-
-So before we drift into more discussion, I'd still think it makes sense to have
-the ***BLURB *** replaced by some configurable questions regarding the
-series as a whole, so I'd try to perfect that patch?
-
-Thanks,
-Stefan
+diff --git a/dir.c b/dir.c
+index ef58547..95ff3f0 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2459,7 +2459,7 @@ struct untracked_cache *read_untracked_extension(=
+const void *data, unsigned long
+ 	const struct ondisk_untracked_cache *ouc;
+ 	struct untracked_cache *uc;
+ 	struct read_data rd;
+-	const unsigned char *next =3D data, *end =3D data + sz;
++	const unsigned char *next =3D data, *end =3D (const unsigned char *)d=
+ata + sz;
+ 	struct strbuf sb =3D STRBUF_INIT;
+ 	int len;
+=20
