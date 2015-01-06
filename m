@@ -1,107 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] imap-send.c: set CURLOPT_USE_SSL to CURLUSESSL_TRY
-Date: Tue, 06 Jan 2015 12:19:12 -0800
-Message-ID: <xmqqiogjoe67.fsf@gitster.dls.corp.google.com>
-References: <31f38398d53bcfb1d659cd248db522e@74d39fa044aa309eaea14b9f57fe79c>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH 3/3] git-checkout.txt: a note about multiple checkout
+ support for submodules
+Date: Tue, 6 Jan 2015 23:30:15 +0200
+Message-ID: <20150106213015.GA32489@wheezy.local>
+References: <1420278087-14613-1-git-send-email-pclouds@gmail.com>
+ <1420278087-14613-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Bernhard Reiter <ockham@raz.or.at>,
-	Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 21:19:44 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 22:38:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8abA-0005Dg-AQ
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 21:19:28 +0100
+	id 1Y8bp1-0008LC-2E
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 22:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755844AbbAFUTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 15:19:17 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65051 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751338AbbAFUTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 15:19:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C86D2C598;
-	Tue,  6 Jan 2015 15:19:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Xfnb5HkCIcAYFHcKwxQ2XAl8o+Q=; b=UfzlV/
-	AfF4c7HwuMwFoQ2w9zkkn+1uPfhdLWk+51VVbA1cMQQV8Tg+U0yDDkExQ1H74pBq
-	fFsPKsWxppGQYuwu/smFZBH8ZR+aEHliWFNjrLIgZYh9DnjqNGG8o6O3xFrjIx3l
-	JVxQ9zAS4YaPs5PfwQkAzLsqaSkuUFz2OS6fQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ouL9f+js7WEUa7Eb7R9y5mFqvfRRWCS7
-	BntskyDbtacidobkAdGnSWR4VAgRXpsY2chyQVtMYugiMbq162B6N9Ycpg+hYFwM
-	GPoB059ccdUkuqfXCSU1y4q05jdRTpeL0uoEByGJFlVCNNjwufywlBnj84wWnPnX
-	iMzQOaA0J5Q=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 432F12C594;
-	Tue,  6 Jan 2015 15:19:14 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9FB12C58C;
-	Tue,  6 Jan 2015 15:19:13 -0500 (EST)
-In-Reply-To: <31f38398d53bcfb1d659cd248db522e@74d39fa044aa309eaea14b9f57fe79c>
-	(Kyle J. McKay's message of "Tue, 6 Jan 2015 03:20:37 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4818B4CE-95E1-11E4-A604-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933017AbbAFVhq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jan 2015 16:37:46 -0500
+Received: from p3plsmtpa07-06.prod.phx3.secureserver.net ([173.201.192.235]:40035
+	"EHLO p3plsmtpa07-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932918AbbAFVhp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2015 16:37:45 -0500
+X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2015 16:37:45 EST
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa07-06.prod.phx3.secureserver.net with 
+	id clWT1p0095B68XE01lWYfb; Tue, 06 Jan 2015 14:30:34 -0700
+Content-Disposition: inline
+In-Reply-To: <1420278087-14613-4-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262101>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+On Sat, Jan 03, 2015 at 04:41:27PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+> The goal seems to be using multiple checkouts to reduce disk space.
+> But we have not reached an agreement how things should be. There are =
+a
+> couple options.
+>=20
+>  - You may want to keep $SUB repos elsewhere (perhaps in a central
+>    place) outside $SUPER. This is also true for nested submodules
+>    where a superproject may be a submodule of another superproject.
+>=20
+>  - You may want to keep all $SUB repos in $SUPER/modules (or some
+>    other place in $SUPER)
+>=20
+>  - We could even push it further and merge all $SUB repos into $SUPER
+>    instead of storing them separately. But that would at least requir=
+e
+>    ref namespace enabled.
+>=20
+> On top of that, git-submodule.sh expects $GIT_DIR/config to be
+> per-worktree, at least for the submodule.* part. Here I think we have
+> two options, either update config.c to also read
+> $GIT_DIR/config.worktree (which is per worktree) in addition to
+> $GIT_DIR/config (shared) and store worktree-specific vars in the new
+> place, or update git-submodule.sh to read/write submodule.* directly
+> from $GIT_DIR/config.submodule (per worktree).
+>=20
+> These take time to address properly. Meanwhile, make a note to the
+> user that they should not use multiple worktrees in submodule context=
+=2E
 
-> According to the cURL documentation for the CURLOPT_USE_SSL option,
-> it is only used with plain text protocols that get upgraded to SSL
-> using the STARTTLS command.
->
-> The server.use_ssl variable is only set when we are using a protocol
-> that is already SSL/TLS (i.e. imaps), so setting CURLOPT_USE_SSL
-> when the server.use_ssl variable is set has no effect whatsoever.
->
-> Instead, set CURLOPT_USE_SSL to CURLUSESSL_TRY when the server.use_ssl
-> variable is NOT set so that cURL will attempt to upgrade the plain
-> text connection to SSL/TLS using STARTTLS in that case.
->
-> This much more closely matches the behavior of the non-cURL code path.
->
-> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
-> ---
+I'd like to describe though how much the glass is full:
 
-It sounds sensible from the description of the approach but I'd
-prefer independent opinion to sanity-check me.  Will queue while
-waiting for others to speak up.
+If all submodules exist in same paths in all checked-out
+commits, and there is no special settings, only
+`submodule.<name>.url` is set, then user can inspect, commit
+and update the submodule content. Submodules can be either
+independedntly initalized with `submodule update --init`
+(being a fully independet clone), or checked-out with
+`checkout --to` to the submodule worktree.
 
-Thanks.
+It is even verified by tests, so does it worth mentioning in
+some manpage or at least commit message?
 
->
-> *** PATCH IS AGAINST NEXT ***
->
-> In particular, this patch requires br/imap-send-via-libcurl
->
->
->  imap-send.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/imap-send.c b/imap-send.c
-> index 4dfe4c25..5251b750 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -1421,8 +1421,8 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
->  		strbuf_release(&auth);
->  	}
->  
-> -	if (server.use_ssl)
-> -		curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
-> +	if (!server.use_ssl)
-> +		curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_TRY);
->  
->  	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, server.ssl_verify);
->  	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, server.ssl_verify);
+--=20
+Max
