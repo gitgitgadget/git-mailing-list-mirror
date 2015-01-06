@@ -1,141 +1,177 @@
-From: "Dan Langille (dalangil)" <dalangil@cisco.com>
-Subject: Re: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
- fails
-Date: Tue, 6 Jan 2015 16:07:01 +0000
-Message-ID: <AB98E028-8531-447B-959C-1DB385AB8578@cisco.com>
-References: <1419652893-477694-1-git-send-email-sandals@crustytoothpaste.net>
- <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
- <F91CD1B2-262C-4ED6-AE46-31B1333E0350@cisco.com>
- <20150105235308.GC1025060@vauxhall.crustytoothpaste.net>
- <3FBC0B0E-BB54-4BD5-AE7D-C82BA9FBA1C1@cisco.com>
+From: kelson@shysecurity.com
+Subject: [PATCH 1/2] support for --no-relative and diff.relative
+Date: Tue, 06 Jan 2015 11:19:55 -0500
+Message-ID: <54AC0B2B.90107@shysecurity.com>
+References: <548B7967.3060201@shysecurity.com> <54972C29.7060801@shysecurity.com> <54A2E744.8010508@shysecurity.com> <54A2FDC8.5010504@shysecurity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Jan 06 17:08:08 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 06 17:20:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8Wf3-0001lx-Fu
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 17:07:14 +0100
+	id 1Y8Wrb-0003Ux-Ez
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 17:20:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755648AbbAFQHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 11:07:06 -0500
-Received: from rcdn-iport-3.cisco.com ([173.37.86.74]:6154 "EHLO
-	rcdn-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755360AbbAFQHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 11:07:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=5256; q=dns/txt; s=iport;
-  t=1420560425; x=1421770025;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=SxT8rMhPZDmvp3YD8Bj0miBzzocUE51yAL+T9lEgq10=;
-  b=j6h6JKXUuUzSnHkLFI/UWHdQHvF6DYq537//RK027EfLDWr36LoTzpUE
-   PlVEQyppJ6Xx6q/xxI95Wu2bwsDNeZg2fxfOh7VfKGSk19J75HLsnqIgx
-   1aAy6vMs+2A8M1BCwlr3GMEDx351DzkVSr0suDWcel7czWFw1QcQBMu7z
-   0=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArUFABQHrFStJA2M/2dsb2JhbABcgwZSWASDAcM/hXMCHHIWAQEBAQF9hAwBAQEDASMRRQULAgEIFAQCAhQSAgICMBUQAgQOBYgkCA2tapN/AQEBAQEBAQEBAQEBAQEBAQEBAQEBF4EhjhIqGwcYglAugRMFjiCDQIU1gQ2NE4M5IoNub4FFfgEBAQ
-X-IronPort-AV: E=Sophos;i="5.07,708,1413244800"; 
-   d="scan'208";a="384759245"
-Received: from alln-core-7.cisco.com ([173.36.13.140])
-  by rcdn-iport-3.cisco.com with ESMTP; 06 Jan 2015 16:07:03 +0000
-Received: from xhc-rcd-x01.cisco.com (xhc-rcd-x01.cisco.com [173.37.183.75])
-	by alln-core-7.cisco.com (8.14.5/8.14.5) with ESMTP id t06G72uZ011013
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Tue, 6 Jan 2015 16:07:03 GMT
-Received: from xmb-rcd-x03.cisco.com ([169.254.7.219]) by
- xhc-rcd-x01.cisco.com ([173.37.183.75]) with mapi id 14.03.0195.001; Tue, 6
- Jan 2015 10:07:02 -0600
-Thread-Topic: [PATCH v2] remote-curl: fall back to Basic auth if Negotiate
- fails
-Thread-Index: AQHQJf0bER2Pnky56Uqguh0whTd+7JyydFEAgAApzYCAAQYrgIAACeuA
-In-Reply-To: <3FBC0B0E-BB54-4BD5-AE7D-C82BA9FBA1C1@cisco.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.82.241.248]
-Content-ID: <F7312C9FFB3CA94BBECB30D8DC31895B@emea.cisco.com>
+	id S1755474AbbAFQUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 11:20:04 -0500
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:50422 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754083AbbAFQUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 11:20:03 -0500
+Received: by mail-qa0-f42.google.com with SMTP id n8so16684019qaq.1
+        for <git@vger.kernel.org>; Tue, 06 Jan 2015 08:20:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=mC3CvdddmOjVYWHgCBt/e2JUwo2YaZBxVnuCjMxX5tU=;
+        b=gw6TzzMHCI1Uzp6kGvNGI48a31Ze1X0n+aM4vuOGh6944Ync1PQtUtmtAZJkEdGLnB
+         tABDCiiaUfvz1M6BuC2PHvbjo8ZmVTUkI6DpNO+1sgoE+LqghIEMDRu+VFOzwE5grJV4
+         L6PifRA/ZPGrn4+4BFy9MMG3hLIUIgEXGUpKR12IAIQCIGYO0q9GsREH9562Q7PjCGOR
+         TJGu7vrERsYb2/yVhO8uX5xiToAa3inzRa4qELoRMzChH2WJTp7X2uKUJBB107ZpTDWa
+         GT4XmTnx+nzP30TanEV6uHU52Ee6icpggBf/IaFi5fq6B71oKhCsxHTuPKgtfTWGOAe+
+         pTfQ==
+X-Gm-Message-State: ALoCoQlnIf2zzeay60oasFQf7ddCEypCKKZWio4lfQkzJft3FH15IlNqeqRuNtt14F2ESTSqfXC2
+X-Received: by 10.224.51.11 with SMTP id b11mr155122499qag.43.1420561202500;
+        Tue, 06 Jan 2015 08:20:02 -0800 (PST)
+Received: from [10.0.0.22] (pool-100-36-60-151.washdc.fios.verizon.net. [100.36.60.151])
+        by mx.google.com with ESMTPSA id z5sm29279382qal.11.2015.01.06.08.20.01
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Jan 2015 08:20:01 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <54A2FDC8.5010504@shysecurity.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262074>
 
-PiBPbiBKYW4gNiwgMjAxNSwgYXQgMTA6MzEgQU0sIERhbiBMYW5naWxsZSAoZGFsYW5naWwpIDxk
-YWxhbmdpbEBjaXNjby5jb20+IHdyb3RlOg0KPiANCj4gT24gSmFuIDUsIDIwMTUsIGF0IDY6NTMg
-UE0sIGJyaWFuIG0uIGNhcmxzb24gPHNhbmRhbHNAY3J1c3R5dG9vdGhwYXN0ZS5uZXQ+IHdyb3Rl
-Og0KPj4gDQo+PiBPbiBNb24sIEphbiAwNSwgMjAxNSBhdCAwOToyMzozMlBNICswMDAwLCBEYW4g
-TGFuZ2lsbGUgKGRhbGFuZ2lsKSB3cm90ZToNCj4+PiBJIGhhdmUgdHJpZWQgYm90aCBwYXRjaGVz
-LiAgTmVpdGhlciBzdWNjZWVkcyBoZXJlLiAgSSBwYXRjaGVkIGdpdCB2ZXJzaW9uIDIuMi4xIGJ1
-dCBJIGRvbuKAmXQgdGhpbmsgdGhhdCBhZmZlY3RzIHRoaXMuDQo+PiANCj4+IFlvdSBhcmUgcGF0
-Y2hpbmcgdGhlIGNsaWVudCBzaWRlLCBjb3JyZWN0PyAgVGhhdCdzIHRoZSBzaWRlIHRoYXQgbmVl
-ZHMgcGF0Y2hpbmcgaGVyZS4NCj4gDQo+IFllcywgSSBhbS4NCj4gDQo+PiBKdXN0IHNvIHRoZSBs
-aXN0IGtub3dzLCBJIHdpbGwgYmUgc2VuZGluZyBhIHJlcm9sbCB0byB0aGUgZXhpc3RpbmcgcGF0
-Y2gsIGJ1dCB0aGUgcGF0Y2hlcyBJJ3ZlIHBvc3RlZCBkbyBpbmRlZWQgd29yayBpbiBteSB0ZXN0
-aW5nLg0KPiANCj4gSSBhcHByZWNpYXRlIHRoZSBwYXRjaGVzLiAgSSBibGFtZSBzb21ldGhpbmcg
-aGVyZS4NCj4gDQo+IFRoZSBwYXRjaGVzIGRvbuKAmXQgdCBhcHBseSBjbGVhbmx5IHRvIGdpdC0y
-LjIuMSBvciB0byB0aGUgbGF0ZXN0IGdpdCBzb3VyY2UgSSBqdXN0IGNsb25lZC4gIEkgaGFkIHRv
-IGNvcHkvcGFzdGUgc29tZSB0d28gY2h1bmtzIGluIGh0dHAuYyBhbmQgZXZlcnl0aGluZyBpbiBy
-ZW1vdGUtY3VybC5jLg0KDQpJIHRyaWVkIGFnYWluLCB3aXRoIGEgcHJvcGVyIGNvcHkgb2YgeW91
-ciBwYXRjaC4gQ2xlYW5seSBwYXRjaGVkIHZlcnNpb25zIG9mIGdpdCAyLjIuMSBhbmQgZnJvbQ0K
-YSByZWNlbnQgY2xvbmUgb2YgdGhlIHJlcG8gYm90aCBnaXZlICdBdXRoZW50aWNhdGlvbiBmYWls
-ZWTigJkgd2hlbiBkb2luZyBhIGNsb25lIHdpdGhvdXQgYSB0aWNrZXQuDQoNCknigJltIHN1cmUg
-dGhlcmXigJlzIHNvbWV0aGluZyBoZXJlIHdoaWNoIGlzIGF0IGZhdWx0Lg0KDQpIZXJlIGlzIHRo
-ZSBjbGllbnQgc2lkZSBkZWJ1Z2dpbmcuICBJcyB0aGlzIHdoYXQgaXMgZXhwZWN0ZWQ/ICBUZXN0
-ZWQgd2l0aCBhIGNsb25lIG9mIGdpdCBmcm9tIHRoaXMgbW9ybmluZy4NCg0KW2RhbkBwb3J0ZXI5
-MyB+L3RtcC90bXBdJCB+L3NyYy9naXQvZ2l0IGNsb25lIGh0dHBzOi8vdXMuZXhhbXBsZS5vcmcv
-Z2l0L2NsYW1hdi1ieXRlY29kZS1jb21waWxlcg0KQ2xvbmluZyBpbnRvICdjbGFtYXYtYnl0ZWNv
-ZGUtY29tcGlsZXInLi4uDQp3YXJuaW5nOiB0ZW1wbGF0ZXMgbm90IGZvdW5kIC91c3IvaG9tZS9k
-YW4vc2hhcmUvZ2l0LWNvcmUvdGVtcGxhdGVzDQoqIENvdWxkbid0IGZpbmQgaG9zdCB1cy5leGFt
-cGxlLm9yZyBpbiB0aGUgLm5ldHJjIGZpbGU7IHVzaW5nIGRlZmF1bHRzDQoqIEhvc3RuYW1lIHdh
-cyBOT1QgZm91bmQgaW4gRE5TIGNhY2hlDQoqICAgVHJ5aW5nIDEwLjAuMC4xLi4uDQoqIENvbm5l
-Y3RlZCB0byB1cy5leGFtcGxlLm9yZyAoMTAuMC4wLjEpIHBvcnQgNDQzICgjMCkNCiogc3VjY2Vz
-c2Z1bGx5IHNldCBjZXJ0aWZpY2F0ZSB2ZXJpZnkgbG9jYXRpb25zOg0KKiAgIENBZmlsZTogL3Vz
-ci9sb2NhbC9zaGFyZS9jZXJ0cy9jYS1yb290LW5zcy5jcnQNCiAgQ0FwYXRoOiBub25lDQoqIFNT
-TCBjb25uZWN0aW9uIHVzaW5nIFRMU3YxLjAgLyBESEUtUlNBLUNBTUVMTElBMjU2LVNIQQ0KKiBT
-ZXJ2ZXIgY2VydGlmaWNhdGU6DQoqIAkgc3ViamVjdDogUkVEQUNURUQNCiogCSBzdGFydCBkYXRl
-OiBSRURBQ1RFRA0KKiAJIGV4cGlyZSBkYXRlOiBSRURBQ1RFRA0KKiAJIGlzc3VlcjogUkVEQUNU
-RUQNCiogCSBTU0wgY2VydGlmaWNhdGUgdmVyaWZ5IHJlc3VsdDogc2VsZiBzaWduZWQgY2VydGlm
-aWNhdGUgaW4gY2VydGlmaWNhdGUgY2hhaW4gKDE5KSwgY29udGludWluZyBhbnl3YXkuDQo+IEdF
-VCAvZ2l0L2NsYW1hdi1ieXRlY29kZS1jb21waWxlci9pbmZvL3JlZnM/c2VydmljZT1naXQtdXBs
-b2FkLXBhY2sgSFRUUC8xLjENClVzZXItQWdlbnQ6IGdpdC8yLjIuMS4yMTIuZ2M1YjkyNTYuZGly
-dHkNCkhvc3Q6IHVzLmV4YW1wbGUub3JnDQpBY2NlcHQ6ICovKg0KQWNjZXB0LUVuY29kaW5nOiBn
-emlwDQpQcmFnbWE6IG5vLWNhY2hlDQoNCjwgSFRUUC8xLjEgNDAxIEF1dGhvcml6YXRpb24gUmVx
-dWlyZWQNCjwgRGF0ZTogVHVlLCAwNiBKYW4gMjAxNSAxNjowMjozOCBHTVQNCjwgU2VydmVyOiBB
-cGFjaGUNCjwgV1dXLUF1dGhlbnRpY2F0ZTogTmVnb3RpYXRlDQo8IENvbnRlbnQtTGVuZ3RoOiA0
-MDENCjwgQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9aXNvLTg4NTktMQ0KPCANCiog
-Q29ubmVjdGlvbiAjMCB0byBob3N0IHVzLmV4YW1wbGUub3JnIGxlZnQgaW50YWN0DQpVc2VybmFt
-ZSBmb3IgJ2h0dHBzOi8vdXMuZXhhbXBsZS5vcmcnOiANClBhc3N3b3JkIGZvciAnaHR0cHM6Ly9k
-YW5AdXMuZXhhbXBsZS5vcmcnOiANCiogQ291bGRuJ3QgZmluZCBob3N0IHVzLmV4YW1wbGUub3Jn
-IGluIHRoZSAubmV0cmMgZmlsZTsgdXNpbmcgZGVmYXVsdHMNCiogQ29ubmVjdGlvbiAwIHNlZW1z
-IHRvIGJlIGRlYWQhDQoqIENsb3NpbmcgY29ubmVjdGlvbiAwDQoqIEhvc3RuYW1lIHdhcyBmb3Vu
-ZCBpbiBETlMgY2FjaGUNCiogICBUcnlpbmcgMTAuMC4wLjEuLi4NCiogQ29ubmVjdGVkIHRvIHVz
-LmV4YW1wbGUub3JnICgxMC4wLjAuMSkgcG9ydCA0NDMgKCMxKQ0KKiBzdWNjZXNzZnVsbHkgc2V0
-IGNlcnRpZmljYXRlIHZlcmlmeSBsb2NhdGlvbnM6DQoqICAgQ0FmaWxlOiAvdXNyL2xvY2FsL3No
-YXJlL2NlcnRzL2NhLXJvb3QtbnNzLmNydA0KICBDQXBhdGg6IG5vbmUNCiogU1NMIHJlLXVzaW5n
-IHNlc3Npb24gSUQNCiogU1NMIGNvbm5lY3Rpb24gdXNpbmcgVExTdjEuMCAvIERIRS1SU0EtQ0FN
-RUxMSUEyNTYtU0hBDQoqIFNlcnZlciBjZXJ0aWZpY2F0ZToNCiogCSBzdWJqZWN0OiBSRURBQ1RF
-RA0KKiAJIHN0YXJ0IGRhdGU6IFJFREFDVEVEDQoqIAkgZXhwaXJlIGRhdGU6IFJFREFDVEVEDQoq
-IAkgaXNzdWVyOiBSRURBQ1RFRA0KKiAJIFNTTCBjZXJ0aWZpY2F0ZSB2ZXJpZnkgcmVzdWx0OiBz
-ZWxmIHNpZ25lZCBjZXJ0aWZpY2F0ZSBpbiBjZXJ0aWZpY2F0ZSBjaGFpbiAoMTkpLCBjb250aW51
-aW5nIGFueXdheS4NCj4gR0VUIC9naXQvY2xhbWF2LWJ5dGVjb2RlLWNvbXBpbGVyL2luZm8vcmVm
-cz9zZXJ2aWNlPWdpdC11cGxvYWQtcGFjayBIVFRQLzEuMQ0KVXNlci1BZ2VudDogZ2l0LzIuMi4x
-LjIxMi5nYzViOTI1Ni5kaXJ0eQ0KSG9zdDogdXMuZXhhbXBsZS5vcmcNCkFjY2VwdDogKi8qDQpB
-Y2NlcHQtRW5jb2Rpbmc6IGd6aXANClByYWdtYTogbm8tY2FjaGUNCg0KPCBIVFRQLzEuMSA0MDEg
-QXV0aG9yaXphdGlvbiBSZXF1aXJlZA0KPCBEYXRlOiBUdWUsIDA2IEphbiAyMDE1IDE2OjAyOjQ4
-IEdNVA0KPCBTZXJ2ZXI6IEFwYWNoZQ0KPCBXV1ctQXV0aGVudGljYXRlOiBOZWdvdGlhdGUNCjwg
-Q29udGVudC1MZW5ndGg6IDQwMQ0KPCBDb250ZW50LVR5cGU6IHRleHQvaHRtbDsgY2hhcnNldD1p
-c28tODg1OS0xDQo8IA0KKiBDb25uZWN0aW9uICMxIHRvIGhvc3QgdXMuZXhhbXBsZS5vcmcgbGVm
-dCBpbnRhY3QNCmZhdGFsOiBBdXRoZW50aWNhdGlvbiBmYWlsZWQgZm9yICdodHRwczovL3VzLmV4
-YW1wbGUub3JnL2dpdC9jbGFtYXYtYnl0ZWNvZGUtY29tcGlsZXIvJw0KW2RhbkBwb3J0ZXI5MyB+
-L3RtcC90bXBdJCANCg0KDQoNCg0K
+added --no-relative option for git-diff (code, documentation, and tests)
+
+--no-relative overrides --relative causing a return to standard behavior
+
+Signed-off-by: Brandon Phillips <kelson@shysecurity.com>
+---
+  Documentation/diff-options.txt |  4 ++++
+  diff.c                         |  2 ++
+  t/t4045-diff-relative.sh       | 46 
++++++++++++++++++++++++++++++++++++++++---
+  3 files changed, 49 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 6cb083a..2b15050 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -448,6 +448,10 @@ ifndef::git-format-patch[]
+  	not in a subdirectory (e.g. in a bare repository), you
+  	can name which subdirectory to make the output relative
+  	to by giving a <path> as an argument.
++
++--no-relative::
++	Turn off relative pathnames and include all changes in the
++	repository.
+  endif::git-format-patch[]
+
+  -a::
+diff --git a/diff.c b/diff.c
+index d1bd534..7bceba8 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3695,6 +3695,8 @@ int diff_opt_parse(struct diff_options *options, 
+const char **av, int ac)
+  		DIFF_OPT_SET(options, RELATIVE_NAME);
+  		options->prefix = arg;
+  	}
++	else if (!strcmp(arg, "--no-relative"))
++		DIFF_OPT_CLR(options, RELATIVE_NAME);
+
+  	/* xdiff options */
+  	else if (!strcmp(arg, "--minimal"))
+diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+index 3950f50..ccd67c7 100755
+--- a/t/t4045-diff-relative.sh
++++ b/t/t4045-diff-relative.sh
+@@ -12,8 +12,8 @@ test_expect_success 'setup' '
+  	git commit -m one
+  '
+
+-check_diff() {
+-expect=$1; shift
++store_diff_relative() {
++expect=$1;
+  cat >expected <<EOF
+  diff --git a/$expect b/$expect
+  new file mode 100644
+@@ -23,12 +23,52 @@ index 0000000..25c05ef
+  @@ -0,0 +1 @@
+  +other content
+  EOF
++}
++
++store_diff_absolute() {
++expect=$1;
++cat >expected <<EOF
++diff --git a/file1 b/file1
++new file mode 100644
++index 0000000..d95f3ad
++--- /dev/null
+++++ b/file1
++@@ -0,0 +1 @@
+++content
++diff --git a/subdir/file2 b/subdir/file2
++new file mode 100644
++index 0000000..25c05ef
++--- /dev/null
+++++ b/subdir/file2
++@@ -0,0 +1 @@
+++other content
++EOF
++}
++
++check_diff() {
++store_diff_relative $1; shift
+  test_expect_success "-p $*" "
+  	git diff -p $* HEAD^ >actual &&
+  	test_cmp expected actual
+  "
+  }
+
++check_norel_pre() {
++store_diff_relative $1; shift
++test_expect_success "-p --no-relative $*" "
++	git diff -p --no-relative $* HEAD^ >actual &&
++	test_cmp expected actual
++"
++}
++
++check_norel_post() {
++store_diff_absolute $1; shift
++test_expect_success "-p $* --no-relative" "
++	git diff -p $* --no-relative HEAD^ >actual &&
++	test_cmp expected actual
++"
++}
++
+  check_numstat() {
+  expect=$1; shift
+  cat >expected <<EOF
+@@ -64,7 +104,7 @@ test_expect_success "--raw $*" "
+  "
+  }
+
+-for type in diff numstat stat raw; do
++for type in diff numstat stat raw norel_pre norel_post; do
+  	check_$type file2 --relative=subdir/
+  	check_$type file2 --relative=subdir
+  	check_$type dir/file2 --relative=sub
+--
+1.9.1
