@@ -1,172 +1,145 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH v2 2/2] t/t3308-notes-merge.sh: succeed with relaxed notes refs
-Date: Tue, 6 Jan 2015 04:27:34 -0800
-Message-ID: <F6072C48-FA50-4F9D-AD26-0B4C4DD64B91@gmail.com>
-References: <d4509363c8f670483dacdd2a5070f5a@74d39fa044aa309eaea14b9f57fe79c> <e514c72c481c66f9808f1dd09117a16@74d39fa044aa309eaea14b9f57fe79c> <xmqq8uhgqkge.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Paul Sokolovsky <paul.sokolovsky@linaro.org>
+Subject: Re: git 2.2.x: Unexpected, overstrict file permissions after "git
+ update-server-info"
+Date: Tue, 6 Jan 2015 14:43:22 +0200
+Organization: Linaro
+Message-ID: <20150106144322.61d7ff89@x230>
+References: <20150105210724.032e9718@x230>
+	<20150106034702.GA11503@peff.net>
+	<xmqqd26sql0v.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>,
-	Scott Chacon <schacon@gmail.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 13:29:38 2015
+X-From: git-owner@vger.kernel.org Tue Jan 06 13:45:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8TEf-0002Zo-AS
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 13:27:45 +0100
+	id 1Y8TTz-0005Jq-Sg
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 13:43:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755294AbbAFM1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 07:27:39 -0500
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:38024 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754172AbbAFM1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 07:27:38 -0500
-Received: by mail-pd0-f176.google.com with SMTP id r10so30343590pdi.21
-        for <git@vger.kernel.org>; Tue, 06 Jan 2015 04:27:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=XP96/Gtuc140Wv/hQdhomINDsDnNz0SJ6XWtWUr46P0=;
-        b=d604kTh8zldltmGOaliNzWFh/mQPYTYJJZbmJF4TKRULLm1gTJLFQko5fd9Hy4VuFP
-         ozxMDXwXG3za4EWayvSdm4nOrW/iaPpu3iX1CW49xlARVpodpcIZfv/U0XS/WzSyVWIY
-         iorbu5j6lPVCq6L77pYUWziYdZExW59HnVlw41q8wHu0KgZbjtHcKIffRyeSIkTHW5UO
-         1EoVuJhM8bvClnww1RJqjc88KJXitQ+4Cwy8ZGJFD9Q4e7m5nzUqmgIgcevCITzQjNDB
-         RkRdNiUPQ7tPhXIn9vzO08qRkNj0rIGxFAgBW+XePOatDMDY0o71xLwyk8tmycNGC4JD
-         pAtQ==
-X-Received: by 10.66.175.205 with SMTP id cc13mr81421272pac.14.1420547257719;
-        Tue, 06 Jan 2015 04:27:37 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id nt6sm56965373pdb.26.2015.01.06.04.27.36
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 06 Jan 2015 04:27:37 -0800 (PST)
-In-Reply-To: <xmqq8uhgqkge.fsf@gitster.dls.corp.google.com>
-X-Mauler: Craptastic (2.936)
+	id S1755257AbbAFMnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 07:43:31 -0500
+Received: from mail-la0-f49.google.com ([209.85.215.49]:46328 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755241AbbAFMna (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 07:43:30 -0500
+Received: by mail-la0-f49.google.com with SMTP id hs14so20047823lab.36
+        for <git@vger.kernel.org>; Tue, 06 Jan 2015 04:43:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:in-reply-to
+         :references:organization:mime-version:content-type
+         :content-transfer-encoding;
+        bh=O7w07D9z72AQrmhAS4NSTSv+e2wIpP8mJOLbPos3jf4=;
+        b=PWwqdeg74s7AKjU0KvnoV+0ePbIIkHQ3TjrEWRAPENJwCl/j10f7sEVu1OnqTZWTgn
+         c9kQeRTsZtok0Ov4jLB/R7KkSG5gByS45TH1nI5ApGFNCJPleibXQRmslz+F5IgI7QeO
+         f8hd4K2Vy6QIiBcb3g9ZWOIra8yPuWw1iyqwbD1cUecDiuhUmofKgXfPmyQXRTvxGBA9
+         xx7W4lDPdsN1kgYdyh8s1Trmd0h+6m+4Sag0LmW/eo9g2r+ujQJ2uQzn0emaewFAqfa2
+         fOK8BQH5rNyV9DU3AjAA/ORYv4yKr0P7yUgS1IwQ0u58UT8P8088ry0IpNF7IwN6cMRk
+         Zk8A==
+X-Gm-Message-State: ALoCoQnL63yI7bb8BN3cmJXlHQQs3RTh/KyMp6VqrQOpIymFS+XIn8qnG3qw/BUI1n1nTe14IqcX
+X-Received: by 10.112.72.98 with SMTP id c2mr56098342lbv.95.1420548208239;
+        Tue, 06 Jan 2015 04:43:28 -0800 (PST)
+Received: from x230 ([91.225.122.14])
+        by mx.google.com with ESMTPSA id ao2sm7037178lac.8.2015.01.06.04.43.27
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 06 Jan 2015 04:43:27 -0800 (PST)
+X-Google-Original-From: Paul Sokolovsky <Paul.Sokolovsky@linaro.org>
+In-Reply-To: <xmqqd26sql0v.fsf@gitster.dls.corp.google.com>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262062>
 
-On Jan 6, 2015, at 02:20, Junio C Hamano wrote:
+Hello,
 
-> "Kyle J. McKay" <mackyle@gmail.com> writes:
+On Tue, 06 Jan 2015 02:08:16 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
+
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yeah, I didn't consider the mode impact of using mkstemp. That is
+> > definitely a regression that should be fixed. Though of course if
+> > you really do want 0644, you should set your umask to 0022. :)
+> > ...
+> > If you haven't set core.sharedrepository, then adjust_shared_perm
+> > is a noop. But you shouldn't have to do that. Git should just
+> > respect your umask in this case.
+> 
+> Thanks for a nicely done patch series, but I am not sure if I agree
+> with the analysis and its conclusion.
+> 
+> If adjust_shared_perm is a no-op, how do we ensure that other files
+> that need to be served by a dumb HTTP server are readable by it?
+
+Just don't make it unreadable on purpose (or by mistake) by git. The
+rest is taken care by OS.
+
+>   Is
+> it because we just happen not to use mkstemp() to create them (and
+> also is it because the pushers do not have umask 007 or stronger to
+> prevent files from being read by the HTTP server user)?
+> 
+> Is our goal here to give the users this statement?
+> 
+>     For shared repository served by dumb HTTP and written by users
+>     who are different from the user that runs the HTTP server, you
+>     need to do nothing special.
 >
->> Now, however, since refs/heads/master exists and the new,
->> more relaxed notes refs rules leave it unchanged, the merge
->> succeeds. ...
->> ...
->> diff --git a/t/t3308-notes-merge.sh b/t/t3308-notes-merge.sh
->> index 24d82b49..f0feb64b 100755
->> --- a/t/t3308-notes-merge.sh
->> +++ b/t/t3308-notes-merge.sh
->> @@ -90,7 +90,6 @@ test_expect_success 'fail to merge various non- 
->> note-trees' '
->> 	test_must_fail git notes merge refs/notes/ &&
->> 	test_must_fail git notes merge refs/notes/dir &&
->> 	test_must_fail git notes merge refs/notes/dir/ &&
->> -	test_must_fail git notes merge refs/heads/master &&
->> 	test_must_fail git notes merge x: &&
->> 	test_must_fail git notes merge x:foo &&
->> 	test_must_fail git notes merge foo^{bar
->
-> The test title reads "fail to merge non-note trees", and I am
-> assuming that the tree-ish refs/heads/master (aka 'master' branch)
-> represents does not look anything like a typical note tree where
-> pathnames are 40-hex with fan-out.
+> If that is the case, shouldn't the rule be something a lot looser
+> than "we should just respect your umask"?  To satisify the above
+> goal, shouldn't we somehow make it readable by the HTTP user even
+> when some pusher has a draconian 0077 umask?
 
-In fact it looks like this:
+I would dread such solution. umask is well-known Unix device to control
+permissions of created files. If someone sets it to 0077, they want
+new files be not accessible by anyone but their owner, period. It
+doesn't make sense to work that around. Or at least, it's different
+issue from the reported here.
 
-100644 blob 2a5d0158a25a97e8ebf4158d9187acb124da50ea	1st.t
-100644 blob 3f514b8c0d8e9345bda64de1664eb43d7d38d12a	2nd.t
-100644 blob e5404b81e697da4f0c99aac167b5e63bcce4b78b	3rd.t
-100644 blob c950fbad52232390031696035ad79c670ee3bd7b	4th.t
-100644 blob ba96e617c4d2741ac7693ca7eb20f9dddf4754f6	5th.t
+>  But that, while still
+> complying to the promise of "nothing special", would imply we would
+> have to make everything readable everywhere, whish is an unachievable
+> goal.  We need to somehow be able to say "this repository should be
+> readable by these people" per-repository basis.
+> 
+> And we have a mechanism exactly designed to do so to defeat
+> draconian umask individual users have.
 
-so you are correct.
+I'm not sure I understand how this "draconian umask" got into picture
+here at all. The original report was "with liberal umask, there're
+draconian file permissions". Jeff's patch fixes exactly it. Transposing
+"draconian" into "umask" position make it completely different
+problem.
 
-> The fact that "git notes merge refs/heads/master" fails is a very
-> good prevention of end-user mistakes, and this removal of test
-> demonstrates that we are dropping a valuable safety.
+> 
+> It feels to me that the old set-up were "working" by accident, not
+> by design (I may be mistaken--so correct me if that were the case).
 
-At the point the dropped line runs, core.notesRef has been set to refs/ 
-notes/y which does not exist.
+If you mean our setup, I don't see anything wrong with it: we installed
+git and apache from our distro, we installed Gerrit from the official
+site, we made a cronjob to be run from gerrit user (as the owner of
+repositories). Everything worked, as expected. Upgrading to git 2.2.1
+broke it, because umask was not followed. What can be wrong here except
+not following umask?
 
-All of the tests in the 'fail to merge various non-note-trees' section  
-fail with one of these errors:
+> And if that is the case, I do not think it is a good idea to try to
+> hide the broken configuration under the rug longer.  "As long as
+> everybody writes world-readable files, you do not have to do
+> anything" will break when the next person with 0xx7 umask setting
+> pushes, no?
 
-   1) Failed to resolve remote notes ref '<ref-being-tested>'
 
-   2) Cannot merge empty notes ref (<ref-being-tested>) into empty  
-notes ref (refs/notes/y)
 
-   3) error: object 6c99d48c9905deea5d59d723468862362918626a is a  
-tree, not a commit
+Thanks,
+Paul
 
-The 3rd error comes from the "git notes merge x:" attempt.
-
-So despite the name of the test, the actual tree contents do not seem  
-to be examined.
-
-When the notes ref checking is relaxed to leave refs/heads/master  
-alone rather than turning it into refs/notes/refs/heads/master, the  
-previous error (#2 in this case) goes away and since refs/notes/y does  
-not exist, it is simply updated to the value of refs/heads/master  
-without any checks.  Of course that refs/heads/master tree doesn't  
-look like a notes tree.
-
-And if we do this:
-
-   git update-ref refs/notes/refs/heads/master master
-
-Then "git notes merge refs/heads/master" also succeeds without  
-complaining that the refs/notes/refs/heads/master tree does not look  
-like a notes tree and we didn't need to relax the refs/notes  
-restriction and, as you point out, the name of the test seems to imply  
-that would be rejected.
-
-Interestingly, if we then attempt to merge refs/notes/x into this non- 
-notes refs/notes/y tree, it also succeeds and even keeps the things  
-that do not look like notes.  The reverse merge (y into x) succeeds as  
-well, but the non-notes stuff in y is not merged in in that case.
-
-> Arguably, not being able to save notes tree anywhere outside of
-> refs/notes/ hierarchy may be too high a price to pay in order to
-> prevent refs/heads/master from being considered (hence to avoid such
-> end-user mistakes), but at the same time, losing this safetly may
-> also be too high a price to pay in order to allow people to store
-> their notes in somewhere outside e.g. refs/remote-notes/origin/foo.
-> "Somewhere outside" does not mean "Including other hierarchies like
-> refs/heads and refs/tags that have long established meaning".
-
-If we relax the refs/notes restriction, putting a notes ref in refs/ 
-heads/<whatever> doesn't necessarily seem like that's a terrible thing  
-as long as it's really a notes tree if used with the notes machinery.   
-AIUI, the refs/heads convention only requires the ref to point to the  
-tip of a commit chain which all of the refs under refs/notes satisfy.   
-The refs/heads convention AIUI does not impose any requirement about  
-the contents of the tree(s) those commits in the chain refer to.  But  
-at the same time I can't think of any particular reason I'd want to  
-store notes refs in there either.
-
-> Although I am not fundamentally against allowing to store notes
-> outside refs/notes/, it is different from "anywhere is fine".
-> Can't we do this widening in a less damaging way?
-
-Without arbitrarily restricting where notes can be stored it seems to  
-me the only option would be to have the notes machinery actually  
-inspect the tree of any existing notes ref it's passed.  That would  
-also catch the case where "git update-ref refs/notes/refs/heads/master  
-master" was run as well.  It also seems like a good check to have in  
-place to help catch user errors.
-
-I'm not all that familiar with the notes code, perhaps there's already  
-a function that does the tree check to make sure the tree actually  
-looks like a notes tree that can easily be called?  Maybe Johan has  
-some thoughts on this?
-
--Kyle
+Linaro.org | Open source software for ARM SoCs
+Follow Linaro: http://www.facebook.com/pages/Linaro
+http://twitter.com/#!/linaroorg - http://www.linaro.org/linaro-blog
