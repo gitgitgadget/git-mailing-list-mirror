@@ -1,97 +1,82 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 2/2] gettext.h: add parentheses around N_ expansion
-Date: Tue, 06 Jan 2015 13:24:21 +0000
-Message-ID: <54ABE205.70801@ramsay1.demon.co.uk>
-References: <ecb18f9d6ac56da0a61c3b98f8f2236@74d39fa044aa309eaea14b9f57fe79c> <f67db70c63f8dcbfc58d7ffda86ff10@74d39fa044aa309eaea14b9f57fe79c>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Question about the revision walking API
+Date: Tue, 6 Jan 2015 14:37:07 +0100
+Message-ID: <CAP8UFD0mZ4tSF-ZkZh8Z=GdkW4LNQAWuKJYyhyiA4RTGPLX_+g@mail.gmail.com>
+References: <20150106020230.GA28274@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 14:38:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Tue Jan 06 14:41:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8UDg-0002JH-Ho
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 14:30:48 +0100
+	id 1Y8UJx-0002Ei-0j
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 14:37:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754938AbbAFNao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 08:30:44 -0500
-Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:35232 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753432AbbAFNan (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 08:30:43 -0500
-X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2015 08:30:43 EST
-Received: from smtp.demon.co.uk (unknown [127.0.0.1])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id A9D8718DECE
-	for <git@vger.kernel.org>; Tue,  6 Jan 2015 13:24:38 +0000 (GMT)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 9D0FC12816C;
-	Tue,  6 Jan 2015 13:24:31 +0000 (GMT)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 3EA44128163;
-	Tue,  6 Jan 2015 13:24:26 +0000 (GMT)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Tue,  6 Jan 2015 13:24:22 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <f67db70c63f8dcbfc58d7ffda86ff10@74d39fa044aa309eaea14b9f57fe79c>
-X-MDF-HostID: 22
+	id S1755218AbbAFNhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 08:37:09 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:53204 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751735AbbAFNhI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 08:37:08 -0500
+Received: by mail-ie0-f179.google.com with SMTP id rp18so2595162iec.10
+        for <git@vger.kernel.org>; Tue, 06 Jan 2015 05:37:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=flePRuSGVHro1LG954vLWpxtfaD/CdnYbS+A6hf3IdA=;
+        b=D+yowt2SyajnfQgOceLjzIwI+TtX8mU/Yb3JfXgH8B/4Sd92gCQu+JyVlmZ8RaCdsV
+         uxz8+x1VuOev52vfGAcpkEBXHNNNxKCSu7g4xEJbFayTavsYIzSHc9f5Ur0qDE5VFWUt
+         l/nqwHwoSyq1fsJJVcrEPIzWHu9+Ox/8Fy215D1Fu5Lxhyw+28wS/rP4phkwXdfwuPkF
+         H4zU9M6C50Fx8VuIFrCBuNJXEM58LdMRtnimNoLc6yaiq9XQXEdhXPNN+zyEwmEQ3k55
+         oVvcC/rzI7xujLfZXI7X2SAM3so8d/yMsAmV++ee8IBRhGMIrLAE0axBiS2daPT+nP0H
+         fB/g==
+X-Received: by 10.107.134.212 with SMTP id q81mr82450176ioi.62.1420551427639;
+ Tue, 06 Jan 2015 05:37:07 -0800 (PST)
+Received: by 10.50.252.7 with HTTP; Tue, 6 Jan 2015 05:37:07 -0800 (PST)
+In-Reply-To: <20150106020230.GA28274@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262064>
 
-On 06/01/15 10:34, Kyle J. McKay wrote:
-> The N_ macro is used to mark strings for translation without
-> actually translating them.  At runtime the string is expected
-> to be passed to the gettext API for translation.
-> 
-> If two N_ macro invocations appear next to each other with only
-> whitespace (or nothing at all) between them, the two separate
-> strings will be marked for translation, but the preprocessor
-> will then combine the strings into one and at runtime the
-> string passed to gettext will not match the strings that were
-> translated.
-> 
-> Avoid this by adding parentheses around the expansion of the
-> N_ macro so that instead of ending up with two adjacent strings
-> that are then combined by the preprocessor, two adjacent strings
-> surrounded by parentheses result instead which causes a compile
-> error so the mistake can be quickly found and corrected.
-> 
-> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
-> ---
-> This patch is optional, but prevents the problem fixed by 1/2
-> from recurring.
-> 
->  gettext.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/gettext.h b/gettext.h
-> index 7671d09d..d11a4139 100644
-> --- a/gettext.h
-> +++ b/gettext.h
-> @@ -63,6 +63,6 @@ const char *Q_(const char *msgid, const char *plu, unsigned long n)
->  }
->  
->  /* Mark msgid for translation but do not translate it. */
-> -#define N_(msgid) msgid
-> +#define N_(msgid) (msgid)
->  
->  #endif
-> 
+Hi,
 
-Hmm, see commit 642f85faa ("i18n: avoid parenthesized string as
-array initializer", 07-04-2011), for a counter-point. :-P
 
-ATB,
-Ramsay Jones
+On Tue, Jan 6, 2015 at 3:02 AM, Mike Hommey <mh@glandium.org> wrote:
+> Hi,
+>
+> I would like to know if the revision walking API works as one would
+> expect with a calling sequence like the following:
+>
+> - init_revisions
+> - add_pending_object/setup_revisions
+> - prepare_revision_walk
+> - get_revision (repeated)
+> - reset_revision_walk (I guess)
+> - add_pending_object
+> - prepare_revision_walk
+> - get_revision (repeated)
+>
+> That is, do a first revision walk based on a given rev_info, then reuse that
+> rev_info with additional commit objects (in my case, I want to add more
+> UNINTERESTING commits) and redo a revision walk based on the modified
+> rev_info (so, avoid reinitializing a rev_info and filling it from
+> scratch again with the additional UNINTERESTING commits).
+>
+> I guess I could try and see if that works, but I'd rather have an
+> informed answer than to derive my own from the fact my testcase would
+> happen to work by chance.
+
+I am not sure what you describe above would work, but something like
+what is done in bisect.c should work, see check_ancestors() and
+bisect_next_all(). It might not be the most efficient solution though,
+so I am interested if you find something more efficient.
+
+Best,
+Christian.
