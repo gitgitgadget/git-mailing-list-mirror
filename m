@@ -1,170 +1,139 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH] format-patch: Add config option format.coverbodytext
- to change the cover letter body
-Date: Tue, 6 Jan 2015 10:08:46 -0800
-Message-ID: <CAGZ79kabhx1q2pxY0_UXAy64G94GQZaP4nSUgeUjV0c_sjt+QQ@mail.gmail.com>
-References: <1420486105-30242-1-git-send-email-sbeller@google.com>
-	<xmqqzj9wp52y.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] t/t3308-notes-merge.sh: succeed with relaxed notes refs
+Date: Tue, 06 Jan 2015 10:25:56 -0800
+Message-ID: <xmqqtx03pxzf.fsf@gitster.dls.corp.google.com>
+References: <d4509363c8f670483dacdd2a5070f5a@74d39fa044aa309eaea14b9f57fe79c>
+	<e514c72c481c66f9808f1dd09117a16@74d39fa044aa309eaea14b9f57fe79c>
+	<xmqq8uhgqkge.fsf@gitster.dls.corp.google.com>
+	<F6072C48-FA50-4F9D-AD26-0B4C4DD64B91@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 19:09:11 2015
+Content-Type: text/plain
+Cc: Git mailing list <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 19:26:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8YYm-00034T-9j
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 19:08:52 +0100
+	id 1Y8YpQ-0001bC-U5
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Jan 2015 19:26:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544AbbAFSIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2015 13:08:48 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:51003 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754472AbbAFSIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2015 13:08:46 -0500
-Received: by mail-ig0-f178.google.com with SMTP id b16so3824966igk.11
-        for <git@vger.kernel.org>; Tue, 06 Jan 2015 10:08:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=EyurpaO+E9L9NNlpSIYshV2KBwBTBeB3SWuUx5NpJK4=;
-        b=FkkFfg0C4SWcHC2tv9O8pMHlb6hxPkJI/Q4661VOABbMx9kKkAWbxm9UlIarRjdEqN
-         MWb5aGaH7lJ9PmAVpdlFOh5mfsfH7COrM6qOLhy3s3yyQnRJh+b6NmKUgLactwCmW7HJ
-         hJv3QNg4TLkT+hZxTLeHHyeN+TfQkATH7k3wjcvkJ9cAF3uXOOS73l9EfxsNWRCZ/czW
-         OJeYeefAKhBq2jusMLaLJCepXTWAe0xbGt4PPIcC2VGrbR9T63foDDPzm74jQcOaa8Cy
-         ShGZ0s1P4bUyWBoEmUS7V5XxaOVJejjgd5oNt7OgM/7u1DrtpOa14VtbRPorJWHazRI2
-         Jdsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=EyurpaO+E9L9NNlpSIYshV2KBwBTBeB3SWuUx5NpJK4=;
-        b=gxuaxAC0BqIh4YLh+AXk5NB0J+Qcn9FPFCXa3hGxK5r5c270yu7wctQbY0Gdr5nxUe
-         unqoAj/L+o6gZ9ywhUDJAmFLtxcBcUcXmr8rC5y94iJo7nr09RRE6axdd7siIkh56G8V
-         fqp/ivTVE63irH8V/EIuIu6FrGHZIDeVDC2AL3xoc6uGB5SJR0e4fpNkFI1u5g5sDBCN
-         WdNL/G1zw3iUUcXLHy8dGZ8MaweFMiqIv5zUeWWwJIWIe8meF9+rEHtI3ZD6IFc1/ox6
-         LcnBpjMv4JQHEzuujrE5I5ONY0j0mvivybAH7cs61S8RilCvZo9K7qn9dAUCVixD5IBI
-         sYcQ==
-X-Gm-Message-State: ALoCoQlTwxA9P1iC2S2V/EULPic7wbOMmir54DuSy7+swjl/SQaR5vWVS0ULXaymFgFc58PXZMx2
-X-Received: by 10.43.82.72 with SMTP id ab8mr75008260icc.76.1420567726171;
- Tue, 06 Jan 2015 10:08:46 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 6 Jan 2015 10:08:46 -0800 (PST)
-In-Reply-To: <xmqqzj9wp52y.fsf@gitster.dls.corp.google.com>
+	id S1755888AbbAFS0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2015 13:26:00 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51066 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753379AbbAFSZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2015 13:25:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E4282C21D;
+	Tue,  6 Jan 2015 13:25:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g/3Sz1cTa6h8yT45AVeHdjopotk=; b=HoWVAZ
+	tZSo9Lpe/MyBCO5NNL9Z/jsyp8KYmcToCaN+/H/XaAPZIhakhkPCCqEwZbbarLL8
+	RV04Xag09o7H9MIwMlFgAvMOQvaBm676Gly7Mjo4vLasnz2Mu0RjleEYi0XotDpd
+	kpEfMah98LyrZ+2Sls3i5WlI4luOkHExLmRJk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Hxy3vSLMPkqfPLU24+G5n9OpF7hFf/Lw
+	vnJWDuO1k1TRZ+n9csKmLchfVK1PGW7eoEvHhxfL900ZuaHC6NbgzMtRKVrqQfxo
+	WXoYTg1JfXhj38Cej04e7ug6DdHUSgum2rhSng23O/oAnwT00NdCawoNCD71LaLm
+	XX5Wt3yLaSU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 94B7E2C21C;
+	Tue,  6 Jan 2015 13:25:58 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD0982C21A;
+	Tue,  6 Jan 2015 13:25:57 -0500 (EST)
+In-Reply-To: <F6072C48-FA50-4F9D-AD26-0B4C4DD64B91@gmail.com> (Kyle J. McKay's
+	message of "Tue, 6 Jan 2015 04:27:34 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7560337C-95D1-11E4-BA77-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262083>
 
-On Tue, Jan 6, 2015 at 2:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+"Kyle J. McKay" <mackyle@gmail.com> writes:
+
+> So despite the name of the test, the actual tree contents do not seem
+> to be examined.
+
+Yes, but the thing is, thanks to refs/notes restriction, there is no
+need to do such examination [*1*].
+
+Note that it is an entirely different matter when you deliberately
+violate the expectation using plumbing (e.g. update-ref).  Users of
+plumbing commands are expected to know what they are doing, so the
+level of safety we need to give them can be much lower than Porcelain
+commands such as 'git notes'.  
+
+But when you stick to Porcelain commands, it is very hard to mix
+refs/notes/* with refs/heads/* and refs/remotes/* by mistake.  You
+have to really work on it by doing something unusual to have a non
+commit in refs/heads/*, a commit in refs/notes/*, or a regular
+non-note commit in refs/notes/*.
+
+Once you lift the existing restriction, that easy safety goes away,
+so the burden of giving a reasonable safety in some other way falls
+on the one who is dropping refs/notes restriction.
+
+That is exactly what I meant by that the existing safety pays price
+of not being able to store notes outside refs/notes, which may be
+too high a price to pay.
+
+>> Although I am not fundamentally against allowing to store notes
+>> outside refs/notes/, it is different from "anywhere is fine".
+>> Can't we do this widening in a less damaging way?
 >
->> When sending out patch series one of the last things doing is writing
->> the cover letter. The cover letter would be a good place to remind
->> people to check the todo list for sending patches.
->
-> I do not quite understand.  Wouldn't a check-list be useful _before_
-> you start series of things (I am assuming that you meant a list like
-> 1. run spell check; 2. run checkpatch; 3. run full test suite;
-> 4. format the docs for HTML and manpage)?  Time to write cover
-> letter (or running format-patch in general) is way too late for
-> many of these things.
+> Without arbitrarily restricting where notes can be stored it seems to
+> me the only option would be to have the notes machinery actually
+> inspect the tree of any existing notes ref it's passed.
 
-Actually I do mean these things.
-As I have all changes to be sent in branches, each commit having all the
-notes, sending them to the mailing list is becoming less of a hassle.
-All I need to do is
+As I said earlier (assuming you read footnotes before you read a new
+paragraph), the ship has already sailed.
 
-    git format-patch --cover-letter --notes -subject-prefix=PATCHvX
-origin/master.. &&
-    $editor 0000-cover-letter.patch &&
-    git send-email 00* --to=git@vger.kernel.org --cc=...
+Obvious two sensible ways forward are to do a blacklist (i.e. allow
+anywhere except for known non-notes namespaces like refs/heads/) or
+do a whitelist (i.e. allow refs/<some-known-space> in addition to
+refs/notes) of the namespace, and the latter is vastly preferrable
+than the former, because you can practically *never* crawl back a
+namespace once you give it to the general public, even if you later
+find it a grave error to open it too widely and need a more
+controlled access [*2*].  And the name of the game for a software
+that can be relied for a long haul is to avoid painting ourselves in
+a corner that we cannot get out of.
 
-There is *no* postprocessing of other *.patch files apart from the cover letter
-involved any more in my workflow. If something needs to change I need to
-change it directly in the commit with
-
-    git rebase -i origin/master
-     ... and edit/reword the specific patch
-
-By choosing this way of working I am able to send out any branch for review
-in a heartbeat. I think the advantage of this approach is to have git
-support for
-most of the time, i.e. I can use gitk for reviewing my patches
-including notes as
-well as inspecting the filesystem. Also I try to force myself into
-reviewing each
-patch twice (with time in between) before sending it out for public review.
-
-The disadvantage is that I need to have the high quality in a branch before
-sending it out for review. But I personally find it easier to deal
-with git branches
-than with patch files of different versions. Branches do not forget
-anything once
-I edited it in which turns that point into an advantage for me.
-
->
-> There may be a check-list that is still useful after commits to be
-> sent are perfect and ready to be formatted.
-
-> "Describe change since
-> the last round after three-dash line." would be one of them
-> ("Sign-off the patch" is not---without one, the commits would not
-> have been perfect yet).
-
-But how do I know if a patch is perfect?
-By checking all points of my checklist for each patch. But during the
-iterations of reviews, patches come and go, so I need to have
-a checklist after I think each patch is perfect on its own.
-So what about:
-    * Are the patches in the correct order? (Implement the feature
-      before advertising it)
-    * Do some of the patches still make sense in the context of this
-      series? (Sometimes the focus of a series changes quite a bit
-      after input from reviewers, so some patches may be dropped)
+If we add refs/remote-notes/* to the whitelist now, and if later it
+turns out to be not so ideal and we would prefer another layout for
+remotes, e.g. refs/remotesNew/*/{heads,notes,tags}/, we can add
+refs/remotesNew/*/notes/ to the whitelist _without_ breaking those
+who have already started using refs/remote-notes/*.  That is why
+I said whitelist is preferrable than blacklist.
 
 
-> But for such a check-list, wouldn't we want
-> remainder not only on the cover but on each individual patch?
+[Footnote]
 
->
-> Perhaps --add-header="x-reminder: what changed since the last?"
-> would be sufficient for your purpose instead?
+*1* I actually do not think a tree examination would help very much
+    here.  IIRC, somebody decided long time ago that it would be a
+    good idea to be able to store a path that is not a fanned-out
+    40-hex in a notes tree and 'git notes merge' would accept such a
+    notes-tree.  Although I doubt that the resulting notes-tree
+    produced by 'notes merge' is carefully designed one (as opposed
+    to whatever the implementation happens to do) with sensible
+    semantics, people may already be relying on it.
 
-I am not quite sure if that is my problem any more. Say I have the
-following check list:
-* Do I follow the coding style?
-  * indentation by tabs and spaces
-  * no superfluous braces
-
-* The code itself
-  * Does it embed into the current logic flow?
-  * memory leaks?
-  * Does it compile and test (git rebase --exec=make --exec="make test") ?
-
-* Is a patch small enough?
-  * Does it do one thing? (move code or add code, not both!)
-
-* Do I have a proper commit message?
-  * spelling and grammar
-  * Does the commit message (still) describe the changes of the patch?
-
-* After doing changes, wait at least 12 hours for second self-review
-
-* sending out:
-    git format-patch --cover-letter --notes --subject-prefix=PATCHvX
-
-Most of it is on a per-patch basis, but it is easier to check for the whole
-branch/series in one go after some time when you found some mental
-distance to the code you wrote yourself. And for me this is usually
-the next day, when I review it again and ask myself: Do I send out or not?
-
-As you can see there may be quite some discussion on what you want
-to put into that check list, hence it should be configurable. We could of
-course think about pre-populating the check list for new comers.
-
-Thanks,
-Stefan
+*2* The above 'notes-tree can store non fanned-out 40-hex' is a good
+    example why you need to start strict and loosen only when it
+    becomes necessary.  Despite that even Git itself does not use
+    that "facility" to do anything useful AFAIK, only because we
+    started with a loose variant that allows arbitrary garbage, we
+    cannot retroactively tighten the definition of what a notes-tree
+    should look like without risking to break practice of other
+    people.
