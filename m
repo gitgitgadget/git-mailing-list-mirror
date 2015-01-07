@@ -1,106 +1,173 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Tab completion missing for --includes and branch description in
- git config
-Date: Wed, 7 Jan 2015 10:14:36 -0800
-Message-ID: <CAGZ79kbNyXLyXMRPqk0HPpYK1XSbnL8tZEvXRaWW-rNK=OrQCA@mail.gmail.com>
-References: <CAB7nPqRnDTEXWEDUHX7xJG_+QvoXdt2aA6RLRn4Hiq-rOZMEmQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] support for --no-relative and diff.relative
+Date: Wed, 07 Jan 2015 10:09:22 -0800
+Message-ID: <xmqqiogijwdp.fsf@gitster.dls.corp.google.com>
+References: <548B7967.3060201@shysecurity.com>
+	<54972C29.7060801@shysecurity.com> <54A2E744.8010508@shysecurity.com>
+	<54A2FDC8.5010504@shysecurity.com> <54AC0B2B.90107@shysecurity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Paquier <michael.paquier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 19:15:52 2015
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Philip Oakley <philipoakley@iee.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: kelson@shysecurity.com
+X-From: git-owner@vger.kernel.org Wed Jan 07 19:15:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8v81-00026k-MH
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 19:14:46 +0100
+	id 1Y8v7q-0000jN-M8
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 19:14:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754633AbbAGSOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 13:14:40 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:56093 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754618AbbAGSOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 13:14:39 -0500
-Received: by mail-ie0-f175.google.com with SMTP id x19so5134921ier.6
-        for <git@vger.kernel.org>; Wed, 07 Jan 2015 10:14:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=NzUK5I4w0/283TidR0XMol9gTEW281sLKP2IzZvHaxs=;
-        b=afdR+NWT4NXYvvwdWVvM8ZgJ7tD3V34F+OYxyt9XN/0pojQeQdgM4hWcO5v4NPAYJW
-         sbdoBgiRhBytC7xfWsYuex/qGBcZxjaKFJ+CC1easzU2EJKDBvmagVMcVhc/aKq4RRCK
-         Ge1BdaOJlyPKG7T90jUzYS/anV0yO8dLHcU6IARkUTVfuhbIi5eMqo5OyNV6rFhs8QsV
-         ZKZjoI67vL9tw2KKnO4b2tT8RCaZ8dL9ar2mBOYdiasqAX9oCtJf6Tv2T7HUfS9iTmlc
-         qsBqv/chlmof/8256C26WjOD4QT52FvMzeswyLdkwsMOWX22+MDnRYHsFAG0BIqKZBK8
-         fQDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=NzUK5I4w0/283TidR0XMol9gTEW281sLKP2IzZvHaxs=;
-        b=C+XA9AfUd6AWYiTdJzr7kvA7JolI0CNPSgnc4aA9tu34cAGmCJG+il6k7WUUkFX07S
-         I2cZrnRlh6DU2RxyhrMYbyoJwj1HXOl/G1AbKnHDYo7K6BncKnrO1HeYj1WJAC2lPwtq
-         6LJPgLWm5agkdp2aAUW68pMbSvLjrSJ9lv0HTJhZhKGDiyYNjPzTAfTo1xlvO5+e59IG
-         9Q6CcXsgI6/iOiWvBXHD7UcBDugxCRt46VBKAVam33+DbU2SGDqaeKjAM7dj2+twOedL
-         PN3Rd4ihy1pI9dtRhk5o0vg1pPHzUGNEx+gkxmXgFg+NVNuVKAyK63itb95UaQLmdipz
-         bZ7Q==
-X-Gm-Message-State: ALoCoQmim3pgZUxdw7W4sai7UlQnjDS77Vsqns2IJvgia9+c156F+mYLBh/oDap+tOhjr5Lu563r
-X-Received: by 10.43.82.72 with SMTP id ab8mr4434441icc.76.1420654476943; Wed,
- 07 Jan 2015 10:14:36 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Wed, 7 Jan 2015 10:14:36 -0800 (PST)
-In-Reply-To: <CAB7nPqRnDTEXWEDUHX7xJG_+QvoXdt2aA6RLRn4Hiq-rOZMEmQ@mail.gmail.com>
+	id S1754552AbbAGSO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 13:14:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55704 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753573AbbAGSO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 13:14:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A9CC2B35C;
+	Wed,  7 Jan 2015 13:14:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=kC3HfiSWhcWvI4joR/vH0vlur6g=; b=HLkop0v4LeM+oc0sEmAH
+	EtCMgAP9BKbPmfecU6JiXHQm+dVsFfeI+Zrm+SCftURaTeXgytq3fWIpoyeInfod
+	5rb7KDLo3PSPhSNAZ3pO8duOGxXozk1/Ev5Lu/wxGtB4FWO+IJ5i8dfz8PAu7woW
+	lrBxmcX+/XyBFkVP6KftYdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=as1dDxYCVk7NFfjGIy7dUseI+X5jmfLLYrcPUBB5SzqaiQ
+	tEoF2407jIUTJaxwYt+tIr1IPIKvM/VdYY/HjuIpPvxV30kB1uL4wVOPRQehhdxS
+	ABrQ0gVCb83OK3CFFfRA9p+rhs4W5IR/IcBnl+wsNxb6T8NLAkbxBMxj34qJY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 810FC2B35B;
+	Wed,  7 Jan 2015 13:14:27 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 92EE22B1EC;
+	Wed,  7 Jan 2015 13:09:23 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4F39144E-9698-11E4-AC84-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262141>
 
-On Tue, Jan 6, 2015 at 4:58 PM, Michael Paquier
-<michael.paquier@gmail.com> wrote:
-> Hi all,
+kelson@shysecurity.com writes:
+
+> Content-Type: text/plain; charset=utf-8; format=flowed
+
+Please.  No format=flawed.  Really.
+
+> Subject: Re: [PATCH 1/2] support for --no-relative and diff.relative
+
+"diff: teach --no-relative to override earlier --relative" or
+something.  Saying the affeced area upfront, terminated with a colon
+':', will make it easier to spot in "git shortlog" output later.
+
+Also this step is not about --no-relative and diff.relative but is
+only about --no-relative option.
+
+> added --no-relative option for git-diff (code, documentation, and tests)
+
+"Add --no-relative option..."; we write in imperative, as if we are
+giving an order to the project secretary to "make the code do/be so".
+
+> --no-relative overrides --relative causing a return to standard behavior
+
+OK (modulo missing full-stop).
+
 >
-> While toying with the tab completion script for bash, I found a couple
-> of things missing that cannot be completed:
-> - git config --includes
-> - git config branch.$BRANCH_NAME.description
-> Attached are trivial patches based on master to fix those things.
-> Regards,
-> --
-> Michael
+> Signed-off-by: Brandon Phillips <kelson@shysecurity.com>
 
-Thanks for your effort on improving git!
+Please also have
 
-Please have a look at Documentation/SubmittingPatches in git[1],
-specially section "(4) Sending your patches." so discussion on the
-patches is easier.
+	From: Brandon Phillips <kelson@shysecurity.com>
 
->Do not attach the patch as a MIME attachment, compressed or not.
->Do not let your e-mail client send quoted-printable.  Do not let
->your e-mail client send format=flowed which would destroy
->whitespaces in your patches. Many
->popular e-mail applications will not always transmit a MIME
->attachment as plain text, making it impossible to comment on
->your code.  A MIME attachment also takes a bit more time to
->process.  This does not decrease the likelihood of your
->MIME-attached change being accepted, but it makes it more likely
->that it will be postponed.
+as the first line of the body of your e-mail message, if you are
+letting your MUA only give your e-mail address without name.
+Alternatively, please ask/configure your MUA to put your name as
+well as your address on From: header of the e-mail (which is
+preferrable).
 
-The easiest way to comply with all these rules outlined in SubmittingPatches
-is to use git format-patch and git send-email (as they follow the best
-practice).
+> diff --git a/diff.c b/diff.c
+> index d1bd534..7bceba8 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3695,6 +3695,8 @@ int diff_opt_parse(struct diff_options *options,
+> const char **av, int ac)
 
-I recently wrote about my experiences when sending patches to the git
-mailing list,
-including how to configure git send-email[2], maybe that helps.
+Line-wrapped.
 
-Thanks,
-Stefan
+>  		DIFF_OPT_SET(options, RELATIVE_NAME);
+>  		options->prefix = arg;
+>  	}
+> +	else if (!strcmp(arg, "--no-relative"))
+> +		DIFF_OPT_CLR(options, RELATIVE_NAME);
+>
+
+When "--relative" is given, options->prefix is set to something as
+we can see above.
+
+The --relative option is described as optionally taking <path> in
+the doc:
+
+ --relative[=<path>]::
+        When run from a subdirectory of the project, it can be
+        told to exclude changes outside the directory and show
+        pathnames relative to it with this option.  When you are
+        not in a subdirectory (e.g. in a bare repository), you
+        can name which subdirectory to make the output relative
+        to by giving a <path> as an argument.
+
+Doesn't "--no-relative" codepath have to undo the effect of that
+assignment to options->prefix?
+
+For example, after applying this patch, shouldn't
+
+	$ cd t
+	$ git show --relative=Documentation --no-relative --relative
+
+work the same way as
+
+	$ cd t
+	$ git show --relative
+
+i.e. limiting its output to the changes in the 't/' directory and
+not to the changes in the 'Documentation/' directory?
+
+Patch 2/2 also seems to share similar line-wrapping breakages that
+make it unappliable, but more importantly, the configuration that is
+supposed to correspond to --relative option only parses a boolean.
+Is that the right design, or should it also be able to substitute a
+command line `--relative=<path>` with an argument?
+
+The last was a half-way rhetorical question and my answer is that
+boolean-only is the best you could do, because we cannot do the
+usual "bool or string" trick when "string" can be arbitrary.  In
+other words, "diff.relative=true" could mean "limit to the current
+subdirectory" aka "--relative" or it could mean "limit to true/
+subdirectory" aka "--relative=true", and there is no good way to
+disambiguate between the two [*1*].
+
+So I can agree with the design decision but only after spending 6
+lines to think about it.  For the end-users, this design decision
+needs to be explained and spelled out in the documentation.  Saying
+"equivalent to `--relative`" is not sufficient, because the way
+`--relative` option itself is described elsewhere.  The option
+appears as `--relative[=<path>]` (see above), so some people _will_
+read "equivalent to `--relative`" to mean "Setting diff.relative=t
+should be equivalent to --relative=t", which is not what actually
+happens.
 
 
-[1] for example it can be found at
-https://raw.githubusercontent.com/git/git/master/Documentation/SubmittingPatches
+[Footnote]
 
-[2]http://thread.gmane.org/gmane.comp.version-control.git/261900
+*1* Actually, you could declare that "diff.relative=true/" means the
+    'true/' directory while "diff.relative=true" means the boolean
+    'true' aka 'diff --relative', but I think it is too confusing.
+    Let's not make it worse by going that route.
