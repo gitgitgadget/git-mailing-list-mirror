@@ -1,91 +1,94 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: A better git log --graph?
-Date: Wed, 7 Jan 2015 16:47:13 +0100
-Message-ID: <CALKQrgdrS0RkKe-5UN_HabkLYsZ+GGL=3SNqb_ij3W5z1R6ZTg@mail.gmail.com>
-References: <m8jfg5$dsp$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] t/t3308-notes-merge.sh: succeed with relaxed notes refs
+Date: Wed, 07 Jan 2015 08:03:58 -0800
+Message-ID: <xmqqiogilgr5.fsf@gitster.dls.corp.google.com>
+References: <d4509363c8f670483dacdd2a5070f5a@74d39fa044aa309eaea14b9f57fe79c>
+	<e514c72c481c66f9808f1dd09117a16@74d39fa044aa309eaea14b9f57fe79c>
+	<xmqq8uhgqkge.fsf@gitster.dls.corp.google.com>
+	<20150107011958.GA3536@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>
-To: "Yuri D'Elia" <wavexx@thregr.org>
-X-From: git-owner@vger.kernel.org Wed Jan 07 16:48:36 2015
+Content-Type: text/plain
+Cc: "Kyle J. McKay" <mackyle@gmail.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>,
+	Johan Herland <johan@herland.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 07 17:04:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8spU-0002Ss-16
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 16:47:28 +0100
+	id 1Y8t5r-00080S-5A
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 17:04:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753566AbbAGPrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 10:47:24 -0500
-Received: from mail13.copyleft.no ([91.220.196.227]:39680 "EHLO
-	mail13.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752419AbbAGPrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 10:47:23 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail13.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1Y8spM-0004ZD-Io
-	for git@vger.kernel.org; Wed, 07 Jan 2015 16:47:20 +0100
-Received: from mail-pa0-f51.google.com ([209.85.220.51])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Y8spM-000Pkf-AZ
-	for git@vger.kernel.org; Wed, 07 Jan 2015 16:47:20 +0100
-Received: by mail-pa0-f51.google.com with SMTP id ey11so5530290pad.10
-        for <git@vger.kernel.org>; Wed, 07 Jan 2015 07:47:13 -0800 (PST)
-X-Received: by 10.68.57.174 with SMTP id j14mr6292984pbq.91.1420645633961;
- Wed, 07 Jan 2015 07:47:13 -0800 (PST)
-Received: by 10.70.105.4 with HTTP; Wed, 7 Jan 2015 07:47:13 -0800 (PST)
-In-Reply-To: <m8jfg5$dsp$1@ger.gmane.org>
+	id S1753552AbbAGQEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 11:04:15 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58379 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752568AbbAGQEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 11:04:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E66C290A5;
+	Wed,  7 Jan 2015 11:04:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TRgctteAINrbHSl4IiOvypCMuU8=; b=nCSZff
+	C94nZRW/hCoPmtxWCiRpuHXP2ZnJo+90a714WYXWceiwgwn/7LYp1zxRx96M/pPT
+	6iGZc6iOm88lj2MVGiyngo3WXzV/O9xBj6tVOmdkdZMb0MrRACTNkHbWw0ZGENDj
+	Czwt85n2+wM6sqhLnzbvZeEqtMgXILlfBA8OA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eYwr23xkXOqwQxTNRoMXhwxZfn/TIHvr
+	y7dwkBzZVa4tRBKIxxpPK7G6Bd5LJ0EOO6JXgmTPrO48+InKNLxy56M3G1lDSlxe
+	T5IIketyNqLdy/pMgxcotCaZZf37LxzBe7aofy9PuSR0OA1P18ont8Rc0FFhJQEQ
+	p2Dx6rHzVnE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 93046290A4;
+	Wed,  7 Jan 2015 11:04:06 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F3DC2909A;
+	Wed,  7 Jan 2015 11:03:59 -0500 (EST)
+In-Reply-To: <20150107011958.GA3536@peff.net> (Jeff King's message of "Tue, 6
+	Jan 2015 20:19:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CA983F64-9686-11E4-9DA4-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262134>
 
-Have you looked at git show-branch --all?
+Jeff King <peff@peff.net> writes:
 
-...Johan
+> On Tue, Jan 06, 2015 at 02:20:33AM -0800, Junio C Hamano wrote:
+>
+>> The fact that "git notes merge refs/heads/master" fails is a very
+>> good prevention of end-user mistakes, and this removal of test
+>> demonstrates that we are dropping a valuable safety.
+>
+> Is it really that valuable? If it were:
+>
+>   git notes merge master
+>
+> I could see somebody running that accidentally.
+> ...
+> But we are talking about
+> somebody who is already fully-qualifying a ref (and anything unqualified
+> continues to get looked up under refs/notes).
 
-On Wed, Jan 7, 2015 at 3:23 PM, Yuri D'Elia <wavexx@thregr.org> wrote:
-> Hi everyone,
->
-> git log --graph is hard for me to parse mentally when developing a
-> project which has a lot of branches.
->
-> All the tools I've been using seem to just parse log --graph's output,
-> and thus are no better at showing history.
->
-> I would love to have a graph mode where each branch is assigned a
-> column, and stays there. If my log section shows the history of 3
-> branches, column 1 should always refer to master, 2 to the hypothetical
-> "development" branch and 3 to "feature".
->
-> Of course the mode will waste more horizontal space, but it would be
-> immediately more apparent which branch is merging into which.
->
-> I saw this idea proposed a couple of times in the mailing list, but I
-> saw no "action" behind the proposal. Since I don't have time to work on
-> it, has anyone already started some work that he would like to share as
-> a starting point? Even just to have a felling if it's worth the effort.
->
-> Does anybody know of another tool to graph the history using something
-> that is not based on git log --graph?
->
-> I've seen a couple of graphviz-based ones, but both failed to work out
-> of the box for me.
->
-> Thanks a lot for any pointer.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+That (specifically 'merge') is not my real worry.  It's the other
+way around, actually.
 
+Because expand_notes_ref() makes sure that any given notes ref is
+prefixed appropriately to start with refs/notes/,
 
+    git notes --ref=refs/heads/master add ...blah...
+    git notes --ref=refs/tag/v1.0 add ...blah...
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+would be a sensible way when somebody wants to keep a forest of
+notes refs, one per real ref.  Wouldn't they have already been
+trained to spell "refs/heads/master" when they want to refer to
+refs/notes/refs/heads/master because of this?
