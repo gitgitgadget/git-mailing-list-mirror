@@ -1,87 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] support for --no-relative and diff.relative
-Date: Wed, 07 Jan 2015 11:02:19 -0800
-Message-ID: <xmqq7fwyjtxg.fsf@gitster.dls.corp.google.com>
-References: <548B7967.3060201@shysecurity.com>
-	<54972C29.7060801@shysecurity.com> <54A2E744.8010508@shysecurity.com>
-	<54A2FDC8.5010504@shysecurity.com> <54AC0B2B.90107@shysecurity.com>
-	<xmqqiogijwdp.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: kelson@shysecurity.com
-X-From: git-owner@vger.kernel.org Wed Jan 07 20:03:12 2015
+From: Doug Kelly <dougk.ff7@gmail.com>
+Subject: [PATCH v3 1/2] t4255: test am submodule with diff.submodule
+Date: Wed,  7 Jan 2015 13:31:44 -0600
+Message-ID: <1420659105-26546-1-git-send-email-dougk.ff7@gmail.com>
+References: <1419635506-5045-1-git-send-email-dougk.ff7@gmail.com>
+Cc: gitster@pobox.com, sunshine@sunshineco.com,
+	Doug Kelly <dougk.ff7@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 07 20:32:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8vsg-0006AO-Nb
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 20:02:59 +0100
+	id 1Y8wKi-0000ig-Bq
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 20:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754072AbbAGTCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 14:02:54 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62302 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751859AbbAGTCx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 14:02:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B7B9F2C1A2;
-	Wed,  7 Jan 2015 14:02:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g1FcSNqLVQq+wEjo2dTMXLqBP8Y=; b=D8Yybz
-	RN6n9rJMvDJhPdQvGNUzJbwOO8WqIQzBl0tbwxU0GnMmCCwv8CbPu6WgHcy1UpSU
-	qtm8QFhrEQcl8HBCA0wPwTczvrAwZsL3fANf5G+CyFnEl1HTVDHmnKw0eZGm5RGh
-	4AOEoAAFL0ovOrmlWLM+PgyV8f0fIHlayH26M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uR48PW3/5V58T73LkSGDe9LaiuC0GvOF
-	xRqpRl7d5WQ1vNOCuNB8/YrhYhjHx0aZUoI1moU8mMhVodK7gXL/PXiv9g+q++F0
-	9D8UeKtGrlYNC1CDXaB23UPju9umdsk6xNV1Y2HkglwMt66L1eQ2FT6QZtPalBei
-	7Uvjhvbu03Q=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ADFDC2C1A1;
-	Wed,  7 Jan 2015 14:02:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBACA2C17B;
-	Wed,  7 Jan 2015 14:02:20 -0500 (EST)
-In-Reply-To: <xmqqiogijwdp.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 07 Jan 2015 10:09:22 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B508D690-969F-11E4-8661-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754188AbbAGTbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 14:31:51 -0500
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:55337 "EHLO
+	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753730AbbAGTbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 14:31:50 -0500
+Received: by mail-oi0-f49.google.com with SMTP id a141so4287189oig.8
+        for <git@vger.kernel.org>; Wed, 07 Jan 2015 11:31:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=lyy5b/apNw7LjS7Opd8EZazR8mdgr2+9I38aCNAjrDQ=;
+        b=iTAOpjMx9REIWjCbAsdM6MF1LW/WUOu8Br4uUIMYCznD+L7T029uzCquCx3QZo8iYh
+         X5a31v3byTR1ZJP89RMvzl80TNjLfxCQ3itqXKcfv+NtRtRs4kI10n+XtFFDgPTvmWwQ
+         jP4ZUmD8CbF4B5ZrPv7j57SuL1I+DAtR8FRoIwxt23IcU7AWcKU9xkaRF0Q6iyAtB+ys
+         yupbOgGaS+BdjlRc+ige9hf1SHkO7kIXymBdxHr7BeXbf+4o5kJSbuZwWkiIqTQsMaom
+         0vMil/AqHBjHKpLPAHZcSqKvvBuieCWL0oCFob2L44lNUBxNSeBgEcwAw8kMtNGiFTyZ
+         0qxw==
+X-Received: by 10.60.132.74 with SMTP id os10mr3107689oeb.63.1420659109860;
+        Wed, 07 Jan 2015 11:31:49 -0800 (PST)
+Received: from kenshin.dougk-ff7.net (64-151-63-23.static.everestkc.net. [64.151.63.23])
+        by mx.google.com with ESMTPSA id uv10sm1424290obc.27.2015.01.07.11.31.48
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Jan 2015 11:31:48 -0800 (PST)
+X-Mailer: git-send-email 2.0.5
+In-Reply-To: <1419635506-5045-1-git-send-email-dougk.ff7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262145>
 
-Junio C Hamano <gitster@pobox.com> writes:
+git am will break when using diff.submodule=log; add some test cases
+to illustrate this breakage as simply as possible.  There are
+currently two ways this can fail:
 
-> Patch 2/2 also seems to share similar line-wrapping breakages that
-> make it unappliable, but more importantly, the configuration that is
-> supposed to correspond to --relative option only parses a boolean.
-> Is that the right design, or should it also be able to substitute a
-> command line `--relative=<path>` with an argument?
->
-> The last was a half-way rhetorical question and my answer is that
-> boolean-only is the best you could do...
-> ...
-> [Footnote]
->
-> *1* Actually, you could declare that "diff.relative=true/" means the
->     'true/' directory while "diff.relative=true" means the boolean
->     'true' aka 'diff --relative', but I think it is too confusing.
->     Let's not make it worse by going that route.
+* With errors ("unrecognized input"), if only change
+* Silently (no submodule change), if other files change
 
-Addendum.
+Test for both conditions and ensure without diff.submodule this works.
 
-It was only a "half-way rhetorical question", because I am willing
-to be persuaded that diff.relative=true/ vs diff.relative=true is
-*not* too subtle/confusing to be a good idea, if enough people whose
-judgement I trust agrees.
+Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
+Thanks-to: Eric Sunshine <sunshine@sunshineco.com>
+Thanks-to: Junio C Hamano <gitster@pobox.com>
+---
+Updated with Eric Sunshine's comments and changes to reduce complexity,
+and also changed to include Junio's suggestions for using test_config,
+test_unconfig, and test_might_fail (since we don't know if a previous
+am failed or not -- we always want to clean up first).
+
+ t/t4255-am-submodule.sh | 72 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
+
+diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
+index 8bde7db..523accf 100755
+--- a/t/t4255-am-submodule.sh
++++ b/t/t4255-am-submodule.sh
+@@ -18,4 +18,76 @@ am_3way () {
+ KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+ test_submodule_switch "am_3way"
+ 
++test_expect_success 'setup diff.submodule' '
++	test_commit one &&
++	INITIAL=$(git rev-parse HEAD) &&
++
++	git init submodule &&
++	(
++		cd submodule &&
++		test_commit two &&
++		git rev-parse HEAD >../initial-submodule
++	) &&
++	git submodule add ./submodule &&
++	git commit -m first &&
++
++	(
++		cd submodule &&
++		test_commit three &&
++		git rev-parse HEAD >../first-submodule
++	) &&
++	git add submodule &&
++	test_tick &&
++	git commit -m second &&
++	SECOND=$(git rev-parse HEAD) &&
++
++	(
++		cd submodule &&
++		git mv two.t four.t &&
++		test_tick &&
++		git commit -m "second submodule" &&
++		git rev-parse HEAD >../second-submodule
++	) &&
++	test_commit four &&
++	git add submodule &&
++	git commit --amend --no-edit &&
++	THIRD=$(git rev-parse HEAD) &&
++	git submodule update --init
++'
++
++run_test() {
++	START_COMMIT=$1 &&
++	EXPECT=$2 &&
++	test_might_fail git am --abort &&
++	git reset --hard $START_COMMIT &&
++	rm -f *.patch &&
++	git format-patch -1 &&
++	git reset --hard $START_COMMIT^ &&
++	git submodule update &&
++	git am *.patch &&
++	git submodule update &&
++	git -C submodule rev-parse HEAD >actual &&
++	test_cmp $EXPECT actual
++}
++
++test_expect_success 'diff.submodule unset' '
++	test_unconfig diff.submodule &&
++	run_test $SECOND first-submodule
++'
++
++test_expect_success 'diff.submodule unset with extra file' '
++	test_unconfig diff.submodule &&
++	run_test $THIRD second-submodule
++'
++
++test_expect_failure 'diff.submodule=log' '
++	test_config diff.submodule log &&
++	run_test $SECOND first-submodule
++'
++
++test_expect_failure 'diff.submodule=log with extra file' '
++	test_config diff.submodule log &&
++	run_test $THIRD second-submodule
++'
++
+ test_done
+-- 
+2.0.5
