@@ -1,106 +1,119 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A better git log --graph?
-Date: Wed, 07 Jan 2015 08:35:03 -0800
-Message-ID: <xmqq61cilfbc.fsf@gitster.dls.corp.google.com>
-References: <m8jfg5$dsp$1@ger.gmane.org>
-	<CALKQrgdrS0RkKe-5UN_HabkLYsZ+GGL=3SNqb_ij3W5z1R6ZTg@mail.gmail.com>
+Subject: Re: [PATCH v3] doc: core.ignoreStat update, and clarify the --assume-unchanged effect
+Date: Wed, 07 Jan 2015 10:09:38 -0800
+Message-ID: <xmqqbnmajwd9.fsf@gitster.dls.corp.google.com>
+References: <1420496573-3260-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "Yuri D'Elia" <wavexx@thregr.org>,
-	Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jan 07 17:36:59 2015
+Cc: GitList <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Wed Jan 07 19:15:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8taX-0005k7-JV
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 17:36:05 +0100
+	id 1Y8v8W-0004m8-Rb
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 19:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754072AbbAGQf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 11:35:59 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60327 "EHLO
+	id S1754635AbbAGSPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 13:15:09 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51364 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752713AbbAGQf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 11:35:58 -0500
+	with ESMTP id S1753608AbbAGSPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 13:15:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 20421298C0;
-	Wed,  7 Jan 2015 11:35:57 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CAD92B377;
+	Wed,  7 Jan 2015 13:15:07 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rltC05fizCn3TG94gG929IPXos4=; b=KSDrLU
-	p0Mzl0b+PNsfzZvE2YBSNw2W+Il8ZjO3HvSMNoqEWtiA3refLrTZuT001eZJqQbi
-	7OHUx4R5v4/z0EpczWd/xR4FBzoBNeVL+V54WOo0/ovaVUQ/Quv/ZdfgQddhykcV
-	gMquqIuWjpzudD0FmjJMKVuNHNtzdhtE3MqxQ=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=kQrw6f4zTXPJAEVjt1k6oE7jXGM=; b=oHLdCP6sDNO1cv/lqaQg
+	nxuThE0iy60pyrts2ZCm10I5fASDMcjDq3ufa1bxClWsH+aIf6UJuIS3nzvb+HmJ
+	mpFA2BgxH8xIb8KEb+4TSGbhgBNm3BPY1dqaw1VhOQIOwRRPL3kEgZ/Xbf5hIPJ4
+	08H50gBqudSHOM4Pt/ccY1c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vKEVjr3M3car7l+r4zn8Kf1SXAXh7dyp
-	c1Q4eppLDlMjWRYzjCckWXBIi+xx+FesP/tK9nSCn9OziYTuPDMnb6CXwcb0V5yr
-	rXjsinzYUF8fmnhvYl8BrEvMKA6wx+pFzRQlw/LEDc9xPlZ8/vsRW5xxhTZ7Kip3
-	rXjvRtwSUrw=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=eY6kClRVyGXyrTlr+JDKSn8Qhpph5C0h/KIkaHBGjJQFEf
+	Td3Dwb8hnrLk8uq9EQgYY5+cWeVbsYJPIEgbvY2biPrLj7ITbdXdZRp654+kpEYO
+	5fafDBfYM+d5Oy+ad0oQoUtnxX+ZmYBZs1HCJ8zGUKkEwWkZvowd4kIVVnaCE=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 14A2F298BF;
-	Wed,  7 Jan 2015 11:35:57 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 248EC2B376;
+	Wed,  7 Jan 2015 13:15:07 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C30E72988B;
-	Wed,  7 Jan 2015 11:35:04 -0500 (EST)
-In-Reply-To: <CALKQrgdrS0RkKe-5UN_HabkLYsZ+GGL=3SNqb_ij3W5z1R6ZTg@mail.gmail.com>
-	(Johan Herland's message of "Wed, 7 Jan 2015 16:47:13 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9BEF62B1F7;
+	Wed,  7 Jan 2015 13:09:39 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 224DEA34-968B-11E4-AB6E-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 58C5FD92-9698-11E4-9124-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262139>
 
-Johan Herland <johan@herland.net> writes:
+Philip Oakley <philipoakley@iee.org> writes:
 
-> Have you looked at git show-branch --all?
+> The assume-unchanged bit, and consequently core.ignoreStat, can be
+> misunderstood. Be assertive about the expectation that file changes should
+> notified to Git.
 >
-> ...Johan
-
-Yeah, sounds vaguely like it.  Its display certainly is easier to
-read while the set of branches you have is minimum and everything
-fits in a window; that is exactly why I wrote it back when the
-branches I was handling were toy-sized (I am not saying Git itself
-was toy-sized---the work-in-progress on top of Git I was doing was).
-
+> Overhaul the general wording thus:
+>     1. direct description of what is ignored given first.
+>     2. example instruction of the user manual action required.
+>     3. use sideways indirection for assume-unchanged and update-index
+>        references.
+>     4. add a 'normally' to give leeway for the change detection.
 >
-> On Wed, Jan 7, 2015 at 3:23 PM, Yuri D'Elia <wavexx@thregr.org> wrote:
->> Hi everyone,
->>
->> git log --graph is hard for me to parse mentally when developing a
->> project which has a lot of branches.
->>
->> All the tools I've been using seem to just parse log --graph's output,
->> and thus are no better at showing history.
->>
->> I would love to have a graph mode where each branch is assigned a
->> column, and stays there. If my log section shows the history of 3
->> branches, column 1 should always refer to master, 2 to the hypothetical
->> "development" branch and 3 to "feature".
->>
->> Of course the mode will waste more horizontal space, but it would be
->> immediately more apparent which branch is merging into which.
->>
->> I saw this idea proposed a couple of times in the mailing list, but I
->> saw no "action" behind the proposal. Since I don't have time to work on
->> it, has anyone already started some work that he would like to share as
->> a starting point? Even just to have a felling if it's worth the effort.
->>
->> Does anybody know of another tool to graph the history using something
->> that is not based on git log --graph?
->>
->> I've seen a couple of graphviz-based ones, but both failed to work out
->> of the box for me.
->>
->> Thanks a lot for any pointer.
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>
+> This is the corrected patch which now applies on top of next and has been
+> checked on AsciiDoc. (was $gmane/261974/focus=262022)
+>
+> I have included the previous 'after three-dashes' comment and included
+> them in the commit message. I'm happy for it to be tweaked as appropriate.
+
+Thanks.
+
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 52eeadd..fe179d0 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -375,15 +375,18 @@ This is useful for excluding servers inside a firewall from
+>  proxy use, while defaulting to a common proxy for external domains.
+>  
+>  core.ignoreStat::
+> +	If true, Git will avoid using lstat() calls to detect if files have
+> +	changed. Git will set the "assume-unchanged" bit for those tracked files
+> +	which it has updated identically in both the index and working tree.
+
+I wonder if this is better stated in two seemingly independent
+sentences (like your version), or "... if files have changed by
+setting the assume-unchanged bit ...." to clarify where the setting
+of the bits to these files come into the big picture, but it is
+minor.  Either way, I think it is a lot easier to understand than
+what we have in 'master'.
+
+> ++
+> +When files are modified outside of Git, the user will need to stage
+> +the modified files explicitly (e.g. see 'Examples' section in
+> +linkgit:git-update-index[1]).
+> +Git will not normally detect changes to those files.
+> ++
+> +This is useful on systems where lstat() calls are very slow, such as
+> +CIFS/Microsoft Windows.
+> +False by default.
+
+I think you are trying to make the result more readable by using
+separate paragraphs for separate conceptual points, but then isn't
+it wrong to have "False by default" as part of stating which
+platforms are intended targets?  I wonder if we want to have that
+last line as its own paragraph instead.
+
+Thanks.
+
+>  
+>  core.preferSymlinkRefs::
+>  	Instead of the default "symref" format for HEAD
