@@ -1,153 +1,93 @@
 From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: [PATCH v3 1/2] t4255: test am submodule with diff.submodule
-Date: Wed,  7 Jan 2015 13:31:44 -0600
-Message-ID: <1420659105-26546-1-git-send-email-dougk.ff7@gmail.com>
+Subject: [PATCH v3 2/2] format-patch: ignore diff.submodule setting
+Date: Wed,  7 Jan 2015 13:31:45 -0600
+Message-ID: <1420659105-26546-2-git-send-email-dougk.ff7@gmail.com>
 References: <1419635506-5045-1-git-send-email-dougk.ff7@gmail.com>
+ <1420659105-26546-1-git-send-email-dougk.ff7@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Doug Kelly <dougk.ff7@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 07 20:32:01 2015
+X-From: git-owner@vger.kernel.org Wed Jan 07 20:32:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8wKi-0000ig-Bq
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 20:31:56 +0100
+	id 1Y8wKi-0000ig-Ut
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 20:31:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754188AbbAGTbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 14:31:51 -0500
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:55337 "EHLO
-	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753730AbbAGTbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 14:31:50 -0500
-Received: by mail-oi0-f49.google.com with SMTP id a141so4287189oig.8
-        for <git@vger.kernel.org>; Wed, 07 Jan 2015 11:31:49 -0800 (PST)
+	id S1754350AbbAGTbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 14:31:53 -0500
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:36134 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753730AbbAGTbw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 14:31:52 -0500
+Received: by mail-ob0-f177.google.com with SMTP id va2so4613104obc.8
+        for <git@vger.kernel.org>; Wed, 07 Jan 2015 11:31:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lyy5b/apNw7LjS7Opd8EZazR8mdgr2+9I38aCNAjrDQ=;
-        b=iTAOpjMx9REIWjCbAsdM6MF1LW/WUOu8Br4uUIMYCznD+L7T029uzCquCx3QZo8iYh
-         X5a31v3byTR1ZJP89RMvzl80TNjLfxCQ3itqXKcfv+NtRtRs4kI10n+XtFFDgPTvmWwQ
-         jP4ZUmD8CbF4B5ZrPv7j57SuL1I+DAtR8FRoIwxt23IcU7AWcKU9xkaRF0Q6iyAtB+ys
-         yupbOgGaS+BdjlRc+ige9hf1SHkO7kIXymBdxHr7BeXbf+4o5kJSbuZwWkiIqTQsMaom
-         0vMil/AqHBjHKpLPAHZcSqKvvBuieCWL0oCFob2L44lNUBxNSeBgEcwAw8kMtNGiFTyZ
-         0qxw==
-X-Received: by 10.60.132.74 with SMTP id os10mr3107689oeb.63.1420659109860;
-        Wed, 07 Jan 2015 11:31:49 -0800 (PST)
+        bh=oWyByYAvOo/liop8SEhz2vdJcF1XXZDJX86r2oPXcrk=;
+        b=Y/AWUxaUywjsvAqjMlnqf2dRPmnCrA6uIT1o2AKaJlYFfBbxZliCDu1El67i9CVGjV
+         Xj7HySjKO4PnCJ/P53L830gaI1vvZKGtvOz1GvqUGS4hWHBsK5t1UL5iSdPOhnBial2H
+         /CGBA8QDsjny95vmhImLH+60whigrq5G9PYaRFUfetwx7QsrOtQ21xociuioea0olu2O
+         UAyQanGY2OaeuBEj6Egy8Iqd4Po1+Xa5qEWTPc5CV/D7uTNVJmp5vyt4E3uAP8ltwV9f
+         bHNmRSx9OEqHRkGj1I/hbz5oAedG3H37ySh2B/DKKRGGDwQ4Hr4+3SpFguGJGgHmQsTN
+         3ZHQ==
+X-Received: by 10.182.148.229 with SMTP id tv5mr3126601obb.41.1420659111632;
+        Wed, 07 Jan 2015 11:31:51 -0800 (PST)
 Received: from kenshin.dougk-ff7.net (64-151-63-23.static.everestkc.net. [64.151.63.23])
-        by mx.google.com with ESMTPSA id uv10sm1424290obc.27.2015.01.07.11.31.48
+        by mx.google.com with ESMTPSA id uv10sm1424290obc.27.2015.01.07.11.31.49
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Jan 2015 11:31:48 -0800 (PST)
+        Wed, 07 Jan 2015 11:31:50 -0800 (PST)
 X-Mailer: git-send-email 2.0.5
-In-Reply-To: <1419635506-5045-1-git-send-email-dougk.ff7@gmail.com>
+In-Reply-To: <1420659105-26546-1-git-send-email-dougk.ff7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262146>
 
-git am will break when using diff.submodule=log; add some test cases
-to illustrate this breakage as simply as possible.  There are
-currently two ways this can fail:
-
-* With errors ("unrecognized input"), if only change
-* Silently (no submodule change), if other files change
-
-Test for both conditions and ensure without diff.submodule this works.
+diff.submodule when set to log produces output which git-am cannot
+handle. Ignore this setting when generating patch output.
 
 Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
-Thanks-to: Eric Sunshine <sunshine@sunshineco.com>
-Thanks-to: Junio C Hamano <gitster@pobox.com>
 ---
-Updated with Eric Sunshine's comments and changes to reduce complexity,
-and also changed to include Junio's suggestions for using test_config,
-test_unconfig, and test_might_fail (since we don't know if a previous
-am failed or not -- we always want to clean up first).
+ builtin/log.c           | 2 +-
+ t/t4255-am-submodule.sh | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
- t/t4255-am-submodule.sh | 72 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
-
+diff --git a/builtin/log.c b/builtin/log.c
+index 734aab3..cb14db4 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -705,7 +705,7 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff") ||
+-	    !strcmp(var, "color.ui")) {
++	    !strcmp(var, "color.ui") || !strcmp(var, "diff.submodule")) {
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "format.numbered")) {
 diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
-index 8bde7db..523accf 100755
+index 523accf..31cbdba 100755
 --- a/t/t4255-am-submodule.sh
 +++ b/t/t4255-am-submodule.sh
-@@ -18,4 +18,76 @@ am_3way () {
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
- test_submodule_switch "am_3way"
+@@ -80,12 +80,12 @@ test_expect_success 'diff.submodule unset with extra file' '
+ 	run_test $THIRD second-submodule
+ '
  
-+test_expect_success 'setup diff.submodule' '
-+	test_commit one &&
-+	INITIAL=$(git rev-parse HEAD) &&
-+
-+	git init submodule &&
-+	(
-+		cd submodule &&
-+		test_commit two &&
-+		git rev-parse HEAD >../initial-submodule
-+	) &&
-+	git submodule add ./submodule &&
-+	git commit -m first &&
-+
-+	(
-+		cd submodule &&
-+		test_commit three &&
-+		git rev-parse HEAD >../first-submodule
-+	) &&
-+	git add submodule &&
-+	test_tick &&
-+	git commit -m second &&
-+	SECOND=$(git rev-parse HEAD) &&
-+
-+	(
-+		cd submodule &&
-+		git mv two.t four.t &&
-+		test_tick &&
-+		git commit -m "second submodule" &&
-+		git rev-parse HEAD >../second-submodule
-+	) &&
-+	test_commit four &&
-+	git add submodule &&
-+	git commit --amend --no-edit &&
-+	THIRD=$(git rev-parse HEAD) &&
-+	git submodule update --init
-+'
-+
-+run_test() {
-+	START_COMMIT=$1 &&
-+	EXPECT=$2 &&
-+	test_might_fail git am --abort &&
-+	git reset --hard $START_COMMIT &&
-+	rm -f *.patch &&
-+	git format-patch -1 &&
-+	git reset --hard $START_COMMIT^ &&
-+	git submodule update &&
-+	git am *.patch &&
-+	git submodule update &&
-+	git -C submodule rev-parse HEAD >actual &&
-+	test_cmp $EXPECT actual
-+}
-+
-+test_expect_success 'diff.submodule unset' '
-+	test_unconfig diff.submodule &&
-+	run_test $SECOND first-submodule
-+'
-+
-+test_expect_success 'diff.submodule unset with extra file' '
-+	test_unconfig diff.submodule &&
-+	run_test $THIRD second-submodule
-+'
-+
-+test_expect_failure 'diff.submodule=log' '
-+	test_config diff.submodule log &&
-+	run_test $SECOND first-submodule
-+'
-+
-+test_expect_failure 'diff.submodule=log with extra file' '
-+	test_config diff.submodule log &&
-+	run_test $THIRD second-submodule
-+'
-+
- test_done
+-test_expect_failure 'diff.submodule=log' '
++test_expect_success 'diff.submodule=log' '
+ 	test_config diff.submodule log &&
+ 	run_test $SECOND first-submodule
+ '
+ 
+-test_expect_failure 'diff.submodule=log with extra file' '
++test_expect_success 'diff.submodule=log with extra file' '
+ 	test_config diff.submodule log &&
+ 	run_test $THIRD second-submodule
+ '
 -- 
 2.0.5
