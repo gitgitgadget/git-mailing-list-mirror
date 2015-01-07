@@ -1,111 +1,77 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/3] configure.ac: check for HMAC_CTX_cleanup
-Date: Wed, 7 Jan 2015 16:46:07 -0500
-Message-ID: <CAPig+cQ5dibu7ETWLfO5zbeeuVu2rcTDP3ghN9pt1cLrw141uw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] configure.ac: check tv_nsec field in struct stat
+Date: Wed, 7 Jan 2015 16:57:22 -0500
+Message-ID: <CAPig+cRLMZMoW7Oe8ViB=3R9iSxp88haR7CZ1SHaW0sCnhJ=0Q@mail.gmail.com>
 References: <CAPig+cSFAzsUj2sOaCyPTu_U8_c5qkF1qQo4nzecVzY0TqmJpg@mail.gmail.com>
 	<1420662236-27593-1-git-send-email-reubenhwk@gmail.com>
-	<1420662236-27593-4-git-send-email-reubenhwk@gmail.com>
+	<1420662236-27593-2-git-send-email-reubenhwk@gmail.com>
+	<CAPig+cSrht0fovEWhEknxPPzwZhA7vzeLcM+omaM7PR752GfGw@mail.gmail.com>
+	<CAD_8n+RBJHDjFCEY8GmbsqyyyxPEo71Lg03M7y9dMcu74y6m-w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Reuben Hawkins <reubenhwk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 22:46:51 2015
+X-From: git-owner@vger.kernel.org Wed Jan 07 22:58:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8yQg-0005UH-0c
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 22:46:14 +0100
+	id 1Y8ybY-0005i2-Uy
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 22:57:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754941AbbAGVqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 16:46:09 -0500
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:64450 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754611AbbAGVqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 16:46:07 -0500
-Received: by mail-yk0-f177.google.com with SMTP id 9so995995ykp.36
-        for <git@vger.kernel.org>; Wed, 07 Jan 2015 13:46:07 -0800 (PST)
+	id S1754300AbbAGV5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 16:57:23 -0500
+Received: from mail-yh0-f46.google.com ([209.85.213.46]:45334 "EHLO
+	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753097AbbAGV5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 16:57:23 -0500
+Received: by mail-yh0-f46.google.com with SMTP id t59so1062949yho.5
+        for <git@vger.kernel.org>; Wed, 07 Jan 2015 13:57:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=pHBf4MFh6X0iiuKIR1EOCHx+ZLe22fAPiv6/2QjZMGQ=;
-        b=egQ8S8S43EeoY4aBzshu740Q3mUZRhTiBtKzwJtsLJIZtzJeNSlP/G0NlRBM3xQyId
-         1Bcl/xbhyelkiJN6pMYu4VHFWPDoolsFmSnO2RK40zw87rzJPIalD9ERTxcIQNrgcxOz
-         l8ixX7IKda8PjWWfI/mVeRIzL0hpeXQdDqM1n4ES0f6VRZw2cIxxynH4bcG30xbwnhU3
-         iQXoU6dYvUE9BlaOZB+vcuHYSO6uQ3QKLsenSNiVC6zH2+AYApvcpP5Q4pT1/Bs+Ei/9
-         BXsxquGkpgNyjk6IQ6NBGgA64GgOfSJ7imFvFhNA5aHmU66HFOMbV5Y+irH5NR54U0i5
-         MCIg==
-X-Received: by 10.170.119.7 with SMTP id l7mr4062597ykb.51.1420667167178; Wed,
- 07 Jan 2015 13:46:07 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Wed, 7 Jan 2015 13:46:07 -0800 (PST)
-In-Reply-To: <1420662236-27593-4-git-send-email-reubenhwk@gmail.com>
-X-Google-Sender-Auth: SZpiCyELsH9iZy4Wp6owSU8ev78
+        bh=2dIVOjfjK9xHgFq/FFIGHIPYvUmKxuwP94YmJAbz+wg=;
+        b=yDJMd1tKcp8HFYjNf7o6yKa1gd9wgtF6P9m0l7hDkIu84ftOOyhhtooHapWkxByccv
+         bgM0ET7cfcW/+Ox/vuPE1CIJlyl2HP7dJQgxXDsK2vB0K7PV7QkVwUKBB96i/JbHL28A
+         wo9b+fI80yYSYRo6ilci3yYn8/hXaJihlzqzI5xp5pE1p1EjOXcEMN20bC7yKyvns05H
+         tVcDJDVyDAracwBAYIruRhHVt4efvp7K/PUPicJY78DrSAROBD6UeJ2wrH1fxIH9YT65
+         TQeefv7FOGGwjJBlhvBCvr83Btk8QNU2xnxGZS3+P3Rtw+qnI9QChimIILA2wmmqE4nE
+         B9/Q==
+X-Received: by 10.170.119.7 with SMTP id l7mr4098387ykb.51.1420667842366; Wed,
+ 07 Jan 2015 13:57:22 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Wed, 7 Jan 2015 13:57:22 -0800 (PST)
+In-Reply-To: <CAD_8n+RBJHDjFCEY8GmbsqyyyxPEo71Lg03M7y9dMcu74y6m-w@mail.gmail.com>
+X-Google-Sender-Auth: Zr_1jB9ipO9tARmE4B805jhvgzw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262163>
 
-On Wed, Jan 7, 2015 at 3:23 PM, Reuben Hawkins <reubenhwk@gmail.com> wrote:
-> OpenSSL version 0.9.6b and before defined the function HMAC_cleanup.
-> Newer versions define HMAC_CTX_cleanup.  Check for HMAC_CTX_cleanup and
-> fall back to HMAC_cleanup when the newer function is missing.
-
-Missing sign-off.
-
-Overall, these patches are nicely improved from the previous round. A
-few more comments below...
-
-> ---
->  Makefile          | 3 +++
->  configure.ac      | 7 +++++++
->  git-compat-util.h | 3 +++
->  3 files changed, 13 insertions(+)
+On Wed, Jan 7, 2015 at 4:33 PM, Reuben Hawkins <reubenhwk@gmail.com> wrote:
+> On Wed, Jan 7, 2015 at 1:19 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Wed, Jan 7, 2015 at 3:23 PM, Reuben Hawkins <reubenhwk@gmail.com> wrote:
+>>> +# Define USE_ST_TIMESPEC=YesPlease when stat.st_mtimespec.tv_nsec exist
+>>
+>> It would be slightly more accurate to drop the ".tv_nsec" bit from this comment.
 >
-> diff --git a/Makefile b/Makefile
-> index af551a0..d3c2b58 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1059,6 +1059,9 @@ ifndef NO_OPENSSL
->         ifdef NEEDS_CRYPTO_WITH_SSL
->                 OPENSSL_LIBSSL += -lcrypto
->         endif
-> +       ifdef NO_HMAC_CTX_CLEANUP
-> +               BASIC_CFLAGS += -DNO_HMAC_CTX_CLEANUP
-> +       endif
+> The AC_CHECK_MEMBER is checking for st_mtimespec.tv_nsec.  If I drop
+> tv_nsec from the comment should I also drop it in the check?
 
-You need to document this new Makefile variable (NO_HMAC_CTX_CLEANUP)
-at the top of Makefile (as mentioned in my previous review[1]).
+No. My observation was just about the comment.
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/261631
+> I thought it was better to be very explicit because the code using the
+> check is using that .tv_nsec field...I figured the check may as well
+> do exactly what the code is doing...
 
->  else
->         BASIC_CFLAGS += -DNO_OPENSSL
->         BLK_SHA1 = 1
-> diff --git a/configure.ac b/configure.ac
-> index 424dec5..c282663 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -923,6 +923,13 @@ AC_CHECK_LIB([iconv], [locale_charset],
->                       [CHARSET_LIB=-lcharset])])
->  GIT_CONF_SUBST([CHARSET_LIB])
->  #
-> +# Define NO_HMAC_CTX_CLEANUP=YesPlease if HMAC_CTX_cleanup is missing.
-> +AC_CHECK_LIB([crypto], [HMAC_CTX_cleanup],
-> +       [NO_HMAC_CTX_CLEANUP=],
-> +       [NO_HMAC_CTX_CLEANUP=YesPlease],
-> +       [])
-> +GIT_CONF_SUBST([NO_HMAC_CTX_CLEANUP])
+Indeed, the check and code should agree. However, from the perspective
+of the person reading comment, the ".tv_nsec" is just an
+implementation detail of the check itself. The final outcome (the
+setting of USE_ST_TIMESPEC) is independent of how that check was made:
+it matters only that 'stat.st_mtimespec' was detected _somehow_.
 
-It is customary to drop empty trailing arguments in m4.
-
-Also, you can simplify this entire check to:
-
-    AC_CHECK_LIB([crypto], [HMAC_CTX_cleanup],
-        [], [GIT_CONF_SUBST([NO_HMAC_CTX_CLEANUP], [YesPlease])])
-
->  # Define HAVE_CLOCK_GETTIME=YesPlease if clock_gettime is available.
->  GIT_CHECK_FUNC(clock_gettime,
->  [HAVE_CLOCK_GETTIME=YesPlease],
+Anyhow, it's just a minor observation, hence my qualification of it as
+"_slightly_ more accurate". If you feel strongly that it should remain
+as is, then that's fine.
