@@ -1,128 +1,79 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-gui.sh: support Tcl 8.4
-Date: Wed, 07 Jan 2015 08:35:32 +0100
-Message-ID: <54ACE1C4.4030502@web.de>
-References: <97e448e7908a1f959a7294e389553b5@74d39fa044aa309eaea14b9f57fe79c>	<xmqqvbkjofvw.fsf@gitster.dls.corp.google.com>	<82A625FF-768E-4D7E-8248-B14005464EAE@gmail.com> <xmqqk30zmp9q.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Additional plumbing commands
+Date: Wed, 7 Jan 2015 03:04:09 -0500
+Message-ID: <20150107080408.GA1301@peff.net>
+References: <CA+SVznFFPED+ms=4abNpvNQx-nt6imDMJtYKuNBTTLzCJ547Vw@mail.gmail.com>
+ <CAP8UFD1OZ1QjHRyNGVs0Vm52=Ue-ta1gBzNxLpX25NSCbtu9EQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 08:36:12 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Charles Rudolph <charles.w.rudolph@gmail.com>,
+	git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 07 09:07:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8l9n-0004g0-HM
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 08:35:55 +0100
+	id 1Y8lbE-0008KL-9J
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 09:04:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365AbbAGHfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 02:35:51 -0500
-Received: from mout.web.de ([212.227.17.12]:51595 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752132AbbAGHfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 02:35:50 -0500
-Received: from [192.168.178.41] ([79.211.105.16]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MYw63-1YMhNj0D11-00Vfz7; Wed, 07 Jan 2015 08:35:36
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <xmqqk30zmp9q.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:/7yv5SdUB/T3tKFNgvvHIApo9C4g3yGHmZrqg1KBM+f3tX1zJJ0
- i3eROFWL6pPacpa3oVNXiSu+rcBxQRjwlf5VHiTMMp5edXNL4PZvGqH8QhH/ED2sBzWiRpV
- vjNAxu3+BNKCFgbUSoGE/ghq1c1M43M1ITDRioHVLzeDnQdGGpAqxkJU2B6dVdGSIedtm8e
- gloFo2QZSPxlYgBLutvUg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752239AbbAGIEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 03:04:12 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59930 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751451AbbAGIEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 03:04:11 -0500
+Received: (qmail 15315 invoked by uid 102); 7 Jan 2015 08:04:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jan 2015 02:04:11 -0600
+Received: (qmail 19191 invoked by uid 107); 7 Jan 2015 08:04:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jan 2015 03:04:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Jan 2015 03:04:09 -0500
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD1OZ1QjHRyNGVs0Vm52=Ue-ta1gBzNxLpX25NSCbtu9EQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262128>
 
-Am 07.01.2015 um 01:02 schrieb Junio C Hamano:
-> ^"Kyle J. McKay" <mackyle@gmail.com> writes:
->> I can't find anything in that thread about why vsatisfies was
->> preferred over vcompare other than the obvious that the vsatisfies
->> version is only a 1-character change.  And that would be more than
->> enough except that Tcl 8.4 doesn't support the trailing '-' vsatisfies
->> syntax.
->
-> Yeah, I fully agree with that observation.
+On Tue, Jan 06, 2015 at 06:37:34PM +0100, Christian Couder wrote:
 
-Having rather corroded TCL-knowledge myself it was Pat's comment in
+> On Tue, Jan 6, 2015 at 5:05 PM, Charles Rudolph
+> <charles.w.rudolph@gmail.com> wrote:
+> > I am writing some higher level git commands for
+> > https://github.com/Originate/git-town and would like some additional
+> > plumbing commands that can tell me
+> >
+> > 1. is there a merge in progress?
+> > 2. is there a rebase in progress?
+> > 3. is there a cherry-pick in progress?
+> > 4. are there unmerged paths?
+> >
+> > Currently the only way I know how to do this is with "git status" and
+> > looking for specific text.
+> 
+> You may have a look at how "contrib/completion/git-prompt.sh" does it.
+> [...]
 
-    http://thread.gmane.org/gmane.comp.version-control.git/247511/focus=249464
+The prompt code is rather long and knows a lot about the internal state
+of $GIT_DIR. I do not think it would be a bad thing for git-status to
+expose a machine-readable version of the state it discovers, and then at
+least we can keep the logic in one place.
 
-that made me change the patch to use the smaller change of adding
-the trailing '-' after vsatisfies instead of using vcompare with
-a trailing ">= 0" in v2.
+Charles, if you are interested in adding that, the wt_status_state code
+in wt-status.c is the right place to start looking.
 
->>> * Would it be a good idea to update the places $gmane/248895 points
->>>    out?  It is clearly outside the scope of this fix, but we may
->>>    want to do so while our mind is on the "how do we check required
->>>    version?" in a separate patch.
->>
->> Makes sense to me, but my Tcl knowledge isn't up to making those
->> changes as the code's a bit different.  I have to paraphrase Chris's
->> message here by saying that I guess those checks are correct if not
->> consistent with the others.
+Though I think in many cases that discovering which state we are in is
+only half the story that a caller wants. Knowing what each state _means_
+and what operations are meaningful to perform is much trickier (e.g., if
+we are in a rebase, you probably do not want to start a new rebase. But
+is it wrong to cherry-pick?).
 
-When I looked at it back then I was convinced these checks are ok
-and should stay as they are to support ancient Git versions (and
-they do not use vsatisfies either).
+It would be nice if we could find a way to generalize in-progress
+operations and what they mean for starting new operations, but that is
+a much harder problem (if it is even possible at all).
 
-> OK, let's ask Pat (cc'ed) to apply your version as-is without
-> touching these 1.5.3 references.  I do not take patches to git-gui
-> directly to my tree.
-
-It's an ack from me on the change below as that was what I came up
-with and tested successfully before Pat suggested to just add the '-'.
-
-> -- >8 --
-> From: "Kyle J. McKay" <mackyle@gmail.com>
-> Date: Tue,  6 Jan 2015 02:41:21 -0800
->
-> Tcl 8.5 introduced an extended vsatisfies syntax that is not
-> supported by Tcl 8.4.
->
-> Since only Tcl 8.4 is required this presents a problem.
->
-> The extended syntax was used starting with Git 2.0.0 in commit
-> b3f0c5c0 (git-gui: tolerate major version changes when comparing the
-> git version, 2014-05-17), so that a major version change would still
-> satisfy the condition.
->
-> However, what we really want is just a basic version compare, so use
-> vcompare instead to restore compatibility with Tcl 8.4.
->
-> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   git-gui.sh | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index b186329d..a1a23b56 100755
-> --- a/git-gui/git-gui.sh
-> +++ b/git-gui/git-gui.sh
-> @@ -1283,7 +1283,7 @@ load_config 0
->   apply_config
->
->   # v1.7.0 introduced --show-toplevel to return the canonical work-tree
-> -if {[package vsatisfies $_git_version 1.7.0-]} {
-> +if {[package vcompare $_git_version 1.7.0] >= 0} {
->   	if { [is_Cygwin] } {
->   		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
->   	} else {
-> @@ -1539,7 +1539,7 @@ proc rescan_stage2 {fd after} {
->   		close $fd
->   	}
->
-> -	if {[package vsatisfies $::_git_version 1.6.3-]} {
-> +	if {[package vcompare $::_git_version 1.6.3] >= 0} {
->   		set ls_others [list --exclude-standard]
->   	} else {
->   		set ls_others [list --exclude-per-directory=.gitignore]
->
+-Peff
