@@ -1,62 +1,56 @@
-From: Stefan Beller <sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Probably a bug with "~" symbol in filenames on Windows 7 x64 in
  git 1.9.5
-Date: Wed, 7 Jan 2015 15:35:14 -0800
-Message-ID: <CAGZ79kbZr+2U-NpAHKvSLkj0D6ZXwoOcjghcdmdtfOkdkVBr9A@mail.gmail.com>
+Date: Wed, 7 Jan 2015 15:35:30 -0800
+Message-ID: <CAPc5daVddkaMkx=43nCeQKbbkrV6nExOqvEBJNyugzDQB2n6kQ@mail.gmail.com>
 References: <CADb7K9rELHWgy_NYJWrSr9gZn7pcMvETv93d0j+u2fXinj5iTg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Dmitry Bykov <pvrt74@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 00:35:44 2015
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Dmitry Bykov <pvrt74@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 08 00:36:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y908I-0006Nf-Bq
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 00:35:22 +0100
+	id 1Y908p-0000eR-9U
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 00:35:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755503AbbAGXfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 18:35:16 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:64162 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753297AbbAGXfP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 18:35:15 -0500
-Received: by mail-ie0-f174.google.com with SMTP id at20so6755098iec.5
-        for <git@vger.kernel.org>; Wed, 07 Jan 2015 15:35:14 -0800 (PST)
+	id S1755437AbbAGXfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 18:35:51 -0500
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:53911 "EHLO
+	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753826AbbAGXfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 18:35:51 -0500
+Received: by mail-oi0-f51.google.com with SMTP id h136so5154286oig.10
+        for <git@vger.kernel.org>; Wed, 07 Jan 2015 15:35:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pMUUBQ6wEe1Rm3IPXAsHu9mea7EntCgQPh5ERNWglE4=;
-        b=guok6cz/DVcRe01sx42YFeyL88Iw+tKt0V8EoZTZjN7O+IDSCVogIsWNkwJ8fuxpmt
-         dIePJZh2eNca/ZvgUgd1wH3sLRDDjXhfocvFf8/KInGt9qGmgvXHwKWvrPN5BIj/+MHR
-         GWCCvVp7ozcNhVVMF8MJRNmw2lnXyjz2t3Jc0Czn6Bn4DsbMBqpFpVRc1aSdtr+K/0nE
-         w7ZYr1hh8zpy45TBMLZrT7fCFHBtM6NyyhkAr7WGiG6ORW7Bifbc2oOSwQqQ8vGywJWi
-         P7/e/byn45k1eM5BPUXPObXBWdwXu+9Jh6FGpq81M5NQt7uBLgPUzkBBaZFstUzHqbdz
-         4d+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=pMUUBQ6wEe1Rm3IPXAsHu9mea7EntCgQPh5ERNWglE4=;
-        b=bWsjaESDXij5a9SKPzWbWUNejwOEbx4EA4g/lJtDkkHvyOiGeeg8kLfXQRwPVZ2IAk
-         cejdPpI4vP/mMlgXHegUUNdGDiaoO0quSLxWupwdiBGgBjnm7BFDH3IJ9QZ+YnboD0OS
-         M9/UhiyEvGWvtfX8JICj7Hl6Yer7Xalt1wxyfDn22ibnD1f37XYRIdH6MLNKmZL6mKVF
-         jcfYt8UByfXLc5pVDnZY02SF/jSMv+YMLKb3xAPShdxFaGb+S5RqUE3nlA0xRspHLuGD
-         FUB4jkokHj7qf8NDk8RuqvA5t37pICYbeMnI8jY/mv/yHu7g+PEfA6fdao8iHd1crq9G
-         s+Gw==
-X-Gm-Message-State: ALoCoQm2SYjRdCaH+ipsyRUR2njgvHoy9qwqXH7CluL1e3rOG6ghTs2NqfgqlQ6bk+6ULNUcRsvt
-X-Received: by 10.50.80.36 with SMTP id o4mr24815410igx.37.1420673714752; Wed,
- 07 Jan 2015 15:35:14 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Wed, 7 Jan 2015 15:35:14 -0800 (PST)
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=hSoD1ASAdbT+/Q0RqUJJropLNewgbi5tLULs+TVDrqU=;
+        b=fAyoZ4tTDT2sMpFF0ik/wKLFpEwIyG/WmZ3asoEfsIxYLdEIq9dE/nlWWdTfcFLpaB
+         jms4pSH1pwTKPvDl0jvBV7B84wkeEddBJaBEg8g34p/lfYDdGGMxnoCAibTqsxwMRkXN
+         0+BzYfrDzqJZjb4fn+hfETaa1E5hOa34phk6j+MpHDBWP1y6EnX3DAyUMQVYs77JgGcW
+         yXS39yQCqMFtJejgx4zSSBIoiARVhUNwtFkrOP9Nxki/8LYiaaQLhhG3juoAb7BKXArf
+         Ezuc6M65yFVjGmc2TNN1zoo0S3cwqI8yPu1G+eclBkJZq3m7LJvaPhITJEcwTQThSpzQ
+         HIGQ==
+X-Received: by 10.182.148.229 with SMTP id tv5mr3768704obb.41.1420673750418;
+ Wed, 07 Jan 2015 15:35:50 -0800 (PST)
+Received: by 10.202.213.140 with HTTP; Wed, 7 Jan 2015 15:35:30 -0800 (PST)
 In-Reply-To: <CADb7K9rELHWgy_NYJWrSr9gZn7pcMvETv93d0j+u2fXinj5iTg@mail.gmail.com>
+X-Google-Sender-Auth: xPLeisuJdJhQS0eKQxyR_u_STRA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262168>
+
+Dscho, this sounds to me like the additional "8.3 ambiguity
+protection" (which is only in Git for Windows) in action. Any
+thoughts?
 
 On Wed, Jan 7, 2015 at 3:26 PM, Dmitry Bykov <pvrt74@gmail.com> wrote:
 > Hello,
@@ -69,11 +63,7 @@ On Wed, Jan 7, 2015 at 3:26 PM, Dmitry Bykov <pvrt74@gmail.com> wrote:
 >
 > Thanks,
 > Dmitry
-
-Git had a security issue with filenames which look similar to the .git
-repository.
-Please see the announcement at
-http://article.gmane.org/gmane.linux.kernel/1853266
-(That also updated 1.9.4 -> 1.9.5)
-
-I'm not sure if I can advice though.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
