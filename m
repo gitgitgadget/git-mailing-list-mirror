@@ -1,68 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] git-completion: add --autostash for 'git rebase'
-Date: Wed,  7 Jan 2015 13:40:31 +0100
-Message-ID: <1420634431-18830-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jan 07 14:10:38 2015
+From: Yuri D'Elia <wavexx@thregr.org>
+Subject: A better git log --graph?
+Date: Wed, 07 Jan 2015 15:23:00 +0100
+Message-ID: <m8jfg5$dsp$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 07 15:30:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y8qHz-0000sg-Du
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 14:04:43 +0100
+	id 1Y8rYa-000888-Dm
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Jan 2015 15:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752702AbbAGNEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 08:04:34 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:58660 "EHLO rominette.imag.fr"
+	id S1752450AbbAGOZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 09:25:52 -0500
+Received: from plane.gmane.org ([80.91.229.3]:57829 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751861AbbAGNEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 08:04:33 -0500
-X-Greylist: delayed 1426 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Jan 2015 08:04:32 EST
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t07CebxL006243
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 7 Jan 2015 13:40:37 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t07CecSC027152;
-	Wed, 7 Jan 2015 13:40:38 +0100
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Y8pug-0004ua-ER; Wed, 07 Jan 2015 13:40:38 +0100
-X-Mailer: git-send-email 2.0.2.737.gfb43bde
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 07 Jan 2015 13:40:37 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t07CebxL006243
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1421239238.62063@j9Dd9imu5VxiCy8EMMjm1Q
+	id S1752439AbbAGOZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 09:25:51 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Y8rXM-0006Q6-SO
+	for git@vger.kernel.org; Wed, 07 Jan 2015 15:24:41 +0100
+Received: from 193.106.183.18 ([193.106.183.18])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jan 2015 15:24:40 +0100
+Received: from wavexx by 193.106.183.18 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jan 2015 15:24:40 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 193.106.183.18
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262132>
 
-This option was added in 587947750bd73544 (not to be confused with
---autosquash).
+Hi everyone,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
+git log --graph is hard for me to parse mentally when developing a
+project which has a lot of branches.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 23988ec..5c369f7 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1693,6 +1693,7 @@ _git_rebase ()
- 			--committer-date-is-author-date --ignore-date
- 			--ignore-whitespace --whitespace=
- 			--autosquash --fork-point --no-fork-point
-+			--autostash
- 			"
- 
- 		return
--- 
-2.0.2.737.gfb43bde
+All the tools I've been using seem to just parse log --graph's output,
+and thus are no better at showing history.
+
+I would love to have a graph mode where each branch is assigned a
+column, and stays there. If my log section shows the history of 3
+branches, column 1 should always refer to master, 2 to the hypothetical
+"development" branch and 3 to "feature".
+
+Of course the mode will waste more horizontal space, but it would be
+immediately more apparent which branch is merging into which.
+
+I saw this idea proposed a couple of times in the mailing list, but I
+saw no "action" behind the proposal. Since I don't have time to work on
+it, has anyone already started some work that he would like to share as
+a starting point? Even just to have a felling if it's worth the effort.
+
+Does anybody know of another tool to graph the history using something
+that is not based on git log --graph?
+
+I've seen a couple of graphviz-based ones, but both failed to work out
+of the box for me.
+
+Thanks a lot for any pointer.
