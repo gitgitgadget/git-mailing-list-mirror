@@ -1,200 +1,330 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv12 01/10] receive-pack.c: shorten the execute_commands loop over all commands
-Date: Wed,  7 Jan 2015 19:23:15 -0800
-Message-ID: <1420687404-13997-2-git-send-email-sbeller@google.com>
+Subject: [PATCHv12 08/10] send-pack.c: add --atomic command line argument
+Date: Wed,  7 Jan 2015 19:23:22 -0800
+Message-ID: <1420687404-13997-9-git-send-email-sbeller@google.com>
 References: <1420687404-13997-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
 	mhagger@alum.mit.edu, ronniesahlberg@gmail.com, jrnieder@gmail.com,
+	Ronnie Sahlberg <sahlberg@google.com>,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jan 08 04:24:41 2015
+X-From: git-owner@vger.kernel.org Thu Jan 08 04:24:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y93hv-0000cP-NK
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 04:24:24 +0100
+	id 1Y93hb-0007Gy-60
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 04:24:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754275AbbAHDXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 22:23:47 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:51012 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752640AbbAHDXp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 22:23:45 -0500
-Received: by mail-ie0-f178.google.com with SMTP id vy18so7442631iec.9
-        for <git@vger.kernel.org>; Wed, 07 Jan 2015 19:23:45 -0800 (PST)
+	id S1755880AbbAHDX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 22:23:57 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:39436 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755787AbbAHDXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 22:23:55 -0500
+Received: by mail-ie0-f174.google.com with SMTP id at20so7493144iec.5
+        for <git@vger.kernel.org>; Wed, 07 Jan 2015 19:23:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ddy4KqRdQtP7UoBWSzeXhtV8oZ60ll6I3dI4m1Xe4tQ=;
-        b=ETXVw8YbCt2UCOBodHdeVEBbsLhmtRAplwD3QVrEupsxOiovPYKuSm8QK6AMFP6G7u
-         klxgTPy14eXuGg0CBQfTOOEQ+zj9cR5O1UFqeioX7Cz20OuKIbwAKDxqb7GmIjGWwGiV
-         BAugc0/kMst16bvzYovznsMYoyLmCGouXHVgSGcmG8ISRXfq+uRsQ5TTgsTEJFrHlgnZ
-         ubMrkDWJjjpZs8toTGBggo9+1Ox/l0zAzxIsrz8EOHH0uJS6QJkUcuouwaJSZkl59plw
-         VPDyByQypLKNH3OmnXSPAHhMVlBZrr4j8ZPfgxJUirC0bJ/0pnvdGt5LonZqd6BPAOOQ
-         9ZRQ==
+        bh=d4D3ntcqdoV17KXQVI5MTwH8c78urP4cOx/HW4N8hXw=;
+        b=CUHfz7SSHgEKjL1yYt0WBZW+rVnZJn9PdRDTlt/5Ga/RzyqKPrraTdOGFaRXdFg43u
+         OXVUKLhdK5Mwyo4w2ODA1h5P0zmSZafJybeqKArnp4Fhorm9M+cENN+H3UR4EHB7RPa2
+         WWJdISb2eDyCoc3vOmACynzZeuYbjS1GLjfD6w0PiFu4Q6OIq6/50RqTNPxB9MwVqONE
+         YU8ztUyfotO2vsQxa+La42pXhZpjf4H4uA00AbnOfSFXRgo305a9nThagxNJ7/8zoICJ
+         92hkNran4ASYoR4GkvjeKDBV37gIzJRHzBZ25IFL7GZqqgJAh5mQOtxZm06W83U2C60d
+         Gc9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Ddy4KqRdQtP7UoBWSzeXhtV8oZ60ll6I3dI4m1Xe4tQ=;
-        b=W7SYwyCouOfnzozHQEmNAEkoAxOQPE7+jqZr8RoNXZnXdL7eA4fAFJ73Kfbwc50NmB
-         cRwXzFZgBMCLiJnN5D4bOKXMYRUwHAUJYW9pTaDKRslAigbMnt6Ysbj7YsIExpiwvSWV
-         Ru14KXO130Fm9TuCfAwGvbXsLY7k9sw1255TRTB2FL//td9bbgcPmAEaZsl8gccc7rqh
-         DTsBigeSYs3D4Ur0Q9rABpOizdt3u8xfjWa2vROrmG/VeFMl7icimEAveAVo/a5R2o+k
-         zvvzrswv/PiGKRe2mIDRDlrtVNDkTLo9yAtH17Qmj8kOaW4jVv5CjChCzWsYBaOEwWNG
-         eUIQ==
-X-Gm-Message-State: ALoCoQkE5lvgWZjMcNu2Pr7+qfnPCNeS0UmWJdtig/pT06r58kJOsoO/bxI1wBttWgQUmiHlbjP3
-X-Received: by 10.42.130.198 with SMTP id w6mr6121623ics.97.1420687424396;
-        Wed, 07 Jan 2015 19:23:44 -0800 (PST)
+        bh=d4D3ntcqdoV17KXQVI5MTwH8c78urP4cOx/HW4N8hXw=;
+        b=FZN9OyZXOfL6tnAVcLkQZdkYYRW3aqIssWAUlOu7ElPnhgbxHhMnQVJAz+tajzGXM0
+         cIyGv4k/leT5pVlWF+JddCBkggNrU56BBKfMpE7aV7v28HnTthXLaqkbdODVs/SZBsUj
+         w8KOSmVSf2egjZe00h5Drtea3kFWNOzifj3o/Uh3dS1gwlSoprs72IddL5XNWycjWHZJ
+         7LxxruQzZD00wBWA4suKhfM6Q1FvvdXZv/Vk6fiQCBuZpY9rfaqYxJKaUvg4lncOiMmj
+         NqueuVGaIYpO1298MYR+qkJSdf3Niu5AIWYIUAb6rKiWP8WvRXmM2bgSHsmuF1jgSeCd
+         pxLw==
+X-Gm-Message-State: ALoCoQl6cVkoW902nhPzVGR6d9IS/jn/797EtuUfBcDywPVHhlQSMIGvXNHu1aV64wI4nIr+ugtQ
+X-Received: by 10.50.109.164 with SMTP id ht4mr26050880igb.4.1420687434707;
+        Wed, 07 Jan 2015 19:23:54 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:948f:12c6:eb26:9b9c])
-        by mx.google.com with ESMTPSA id e3sm7452348igg.16.2015.01.07.19.23.43
+        by mx.google.com with ESMTPSA id g5sm1742514iod.25.2015.01.07.19.23.53
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 07 Jan 2015 19:23:43 -0800 (PST)
+        Wed, 07 Jan 2015 19:23:53 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1420687404-13997-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262179>
 
-Make the main "execute_commands" loop in receive-pack easier to read
-by splitting out some steps into helper functions. The new helper
-'should_process_cmd' checks if a ref update is unnecessary, whether
-due to an error having occurred or for another reason. The helper
-'warn_if_skipped_connectivity_check' warns if we have forgotten to
-run a connectivity check on a ref which is shallow for the client
-which would be a bug.
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-This will help us to duplicate less code in a later patch when we make
-a second copy of the "execute_commands" loop.
+This adds support to send-pack to negotiate and use atomic pushes
+iff the server supports it. Atomic pushes are activated by a new command
+line flag --atomic.
 
-No functional change intended.
+In order to do this we also need to change the semantics for send_pack()
+slightly. The existing send_pack() function actually doesn't send all the
+refs back to the server when multiple refs are involved, for example
+when using --all. Several of the failure modes for pushes can already be
+detected locally in the send_pack client based on the information from the
+initial server side list of all the refs as generated by receive-pack.
+Any such refs that we thus know would fail to push are thus pruned from
+the list of refs we send to the server to update.
 
+For atomic pushes, we have to deal thus with both failures that are detected
+locally as well as failures that are reported back from the server. In order
+to do so we treat all local failures as push failures too.
+
+We introduce a new status code REF_STATUS_ATOMIC_PUSH_FAILED so we can
+flag all refs that we would normally have tried to push to the server
+but we did not due to local failures. This is to improve the error message
+back to the end user to flag that "these refs failed to update since the
+atomic push operation failed."
+
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
 Notes:
-    v12:
+    v10, v11, v12:
     * no changes
-    v11:
-    * rename assure_connectivity_checked to warn_if_skipped_connectivity_check
-    
-    >> This is why I choose the word assure.
-    >If this patch depends on the next one, would it make sense to put them
-    >in the opposite order?
-    
-    With the next patch applied which dies if the assumption doesn't hold,
-    assure/assume sounds to me as if it describes the siuation well.
-    
-    > My personal preference would be to refactor the preceding code to make
-    > the check unnecessary.
-    
-    The way I understand it, the shallow case is spread out all over the place
-    not by choise but because it doesn't work better. So the original author
-    (Duy) was wise enough to put checks in place because knowing it is fragile
-    and may break in the future?
-    This series doesn't intend to refactor the shallow case.
-    
-    So I picked up warn_if_skipped_connectivity_check as I'm ok with that.
-    
-    v10:
-    * rename check_shallow_bugs to assure_connectivity_checked.
-    * reword commit message.
     
     v9:
-    * simplified should_process_cmd to be a one liner
-    * check_shallow_bugs doesn't check of shallow_update being set, rather
-      the function is just called if that option is set.
+     This patch now incorporates parts of the very first patch of
+     the previous round. So this patch now implements all changes
+     in send-pack apart from the refactoring in the previous patch.
     
-    v8: no change
-    
+    v8:
+    	no changes
     v7:
-     new in v7 as in v7 I'd split up the previous
-     [PATCH 4/7] receive-pack.c: receive-pack.c: use a single ref_transaction for atomic pushes
-     as suggested by Eric.
+     * return error(...); instead of error(...); return -1;
     
-     This is pretty much
-    > patch 1: Factor out code into helper functions which will be needed by
-    > the upcoming atomic and non-atomic worker functions. Example helpers:
-    > 'cmd->error_string' and cmd->skip_update' check; and the
-    > 'si->shallow_ref[cmd->index]' check and handling.
+    v6:
+    * realign to one error string:
+    +	error("atomic push failed for ref %s. status: %d\n",
+    +	      failing_ref->name, failing_ref->status);
+    
+    * Use correct value now (negative defined from previous patch)
+    
+    skipped v4 v5
+    
+    Changes v2 -> v3:
+    > We avoid assignment inside a conditional.
+    
+    Ok I switched to using a switch statement.
+    
+        Changes v1 -> v2:
+         * Now we only need a very small change in the existing code and have
+           a new static function, which cares about error reporting.
+              Junio wrote:
+              > Hmph.  Is "atomic push" so special that it deserves a separate
+              > parameter?  When we come up with yet another mode of failure, would
+              > we add another parameter to the callers to this function?
+         * error messages are worded differently (lower case!),
+         * use of error function instead of fprintf
+    
+         * undashed the printed error message ("atomic push failed");
 
- builtin/receive-pack.c | 43 +++++++++++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 16 deletions(-)
+ Documentation/git-send-pack.txt |  7 +++++-
+ builtin/send-pack.c             |  6 ++++-
+ remote.h                        |  3 ++-
+ send-pack.c                     | 49 +++++++++++++++++++++++++++++++++++++++--
+ send-pack.h                     |  3 ++-
+ transport.c                     |  4 ++++
+ 6 files changed, 66 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 32fc540..2ebaf66 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1042,11 +1042,34 @@ static void reject_updates_to_hidden(struct command *commands)
- 	}
+diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
+index 2a0de42..45c7725 100644
+--- a/Documentation/git-send-pack.txt
++++ b/Documentation/git-send-pack.txt
+@@ -9,7 +9,7 @@ git-send-pack - Push objects over Git protocol to another repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]
++'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -62,6 +62,11 @@ be in a separate packet, and the list must end with a flush packet.
+ 	Send a "thin" pack, which records objects in deltified form based
+ 	on objects not included in the pack to reduce network traffic.
+ 
++--atomic::
++	Use an atomic transaction for updating the refs. If any of the refs
++	fails to update then the entire push will fail without changing any
++	refs.
++
+ <host>::
+ 	A remote host to house the repository.  When this
+ 	part is specified, 'git-receive-pack' is invoked via
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index b564a77..b961e5a 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -13,7 +13,7 @@
+ #include "sha1-array.h"
+ 
+ static const char send_pack_usage[] =
+-"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
++"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]\n"
+ "  --all and explicit <ref> specification are mutually exclusive.";
+ 
+ static struct send_pack_args args;
+@@ -170,6 +170,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 				args.use_thin_pack = 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--atomic")) {
++				args.atomic = 1;
++				continue;
++			}
+ 			if (!strcmp(arg, "--stateless-rpc")) {
+ 				args.stateless_rpc = 1;
+ 				continue;
+diff --git a/remote.h b/remote.h
+index 8b62efd..f346524 100644
+--- a/remote.h
++++ b/remote.h
+@@ -115,7 +115,8 @@ struct ref {
+ 		REF_STATUS_REJECT_SHALLOW,
+ 		REF_STATUS_UPTODATE,
+ 		REF_STATUS_REMOTE_REJECT,
+-		REF_STATUS_EXPECTING_REPORT
++		REF_STATUS_EXPECTING_REPORT,
++		REF_STATUS_ATOMIC_PUSH_FAILED
+ 	} status;
+ 	char *remote_status;
+ 	struct ref *peer_ref; /* when renaming */
+diff --git a/send-pack.c b/send-pack.c
+index 4974825..e8f60df 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -282,6 +282,29 @@ free_return:
+ 	return update_seen;
  }
  
-+static int should_process_cmd(struct command *cmd)
-+{
-+	return !cmd->error_string && !cmd->skip_update;
-+}
 +
-+static void warn_if_skipped_connectivity_check(struct command *commands,
-+					       struct shallow_info *si)
++static int atomic_push_failure(struct send_pack_args *args,
++			       struct ref *remote_refs,
++			       struct ref *failing_ref)
 +{
-+	struct command *cmd;
-+	int checked_connectivity = 1;
++	struct ref *ref;
++	/* Mark other refs as failed */
++	for (ref = remote_refs; ref; ref = ref->next) {
++		if (!ref->peer_ref && !args->send_mirror)
++			continue;
 +
-+	for (cmd = commands; cmd; cmd = cmd->next) {
-+		if (should_process_cmd(cmd) && si->shallow_ref[cmd->index]) {
-+			error("BUG: connectivity check has not been run on ref %s",
-+			      cmd->ref_name);
-+			checked_connectivity = 0;
++		switch (ref->status) {
++		case REF_STATUS_EXPECTING_REPORT:
++			ref->status = REF_STATUS_ATOMIC_PUSH_FAILED;
++			continue;
++		default:
++			; /* do nothing */
 +		}
 +	}
-+	if (!checked_connectivity)
-+		error("BUG: run 'git fsck' for safety.\n"
-+		      "If there are errors, try to remove "
-+		      "the reported refs above");
++	return error("atomic push failed for ref %s. status: %d\n",
++		     failing_ref->name, failing_ref->status);
 +}
 +
- static void execute_commands(struct command *commands,
- 			     const char *unpacker_error,
- 			     struct shallow_info *si)
- {
--	int checked_connectivity;
- 	struct command *cmd;
- 	unsigned char sha1[20];
- 	struct iterate_data data;
-@@ -1077,27 +1100,15 @@ static void execute_commands(struct command *commands,
- 	free(head_name_to_free);
- 	head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
+ int send_pack(struct send_pack_args *args,
+ 	      int fd[], struct child_process *conn,
+ 	      struct ref *remote_refs,
+@@ -298,6 +321,8 @@ int send_pack(struct send_pack_args *args,
+ 	int use_sideband = 0;
+ 	int quiet_supported = 0;
+ 	int agent_supported = 0;
++	int use_atomic = 0;
++	int atomic_supported = 0;
+ 	unsigned cmds_sent = 0;
+ 	int ret;
+ 	struct async demux;
+@@ -318,6 +343,8 @@ int send_pack(struct send_pack_args *args,
+ 		agent_supported = 1;
+ 	if (server_supports("no-thin"))
+ 		args->use_thin_pack = 0;
++	if (server_supports("atomic"))
++		atomic_supported = 1;
+ 	if (args->push_cert) {
+ 		int len;
  
--	checked_connectivity = 1;
- 	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (cmd->error_string)
--			continue;
--
--		if (cmd->skip_update)
-+		if (!should_process_cmd(cmd))
- 			continue;
- 
- 		cmd->error_string = update(cmd, si);
--		if (shallow_update && !cmd->error_string &&
--		    si->shallow_ref[cmd->index]) {
--			error("BUG: connectivity check has not been run on ref %s",
--			      cmd->ref_name);
--			checked_connectivity = 0;
--		}
+@@ -332,6 +359,10 @@ int send_pack(struct send_pack_args *args,
+ 			"Perhaps you should specify a branch such as 'master'.\n");
+ 		return 0;
  	}
++	if (args->atomic && !atomic_supported)
++		die(_("server does not support --atomic push"));
++
++	use_atomic = atomic_supported && args->atomic;
  
--	if (shallow_update && !checked_connectivity)
--		error("BUG: run 'git fsck' for safety.\n"
--		      "If there are errors, try to remove "
--		      "the reported refs above");
-+	if (shallow_update)
-+		warn_if_skipped_connectivity_check(commands, si);
- }
+ 	if (status_report)
+ 		strbuf_addstr(&cap_buf, " report-status");
+@@ -339,6 +370,8 @@ int send_pack(struct send_pack_args *args,
+ 		strbuf_addstr(&cap_buf, " side-band-64k");
+ 	if (quiet_supported && (args->quiet || !args->progress))
+ 		strbuf_addstr(&cap_buf, " quiet");
++	if (use_atomic)
++		strbuf_addstr(&cap_buf, " atomic");
+ 	if (agent_supported)
+ 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
  
- static struct command **queue_command(struct command **tail,
+@@ -363,9 +396,21 @@ int send_pack(struct send_pack_args *args,
+ 	 * the pack data.
+ 	 */
+ 	for (ref = remote_refs; ref; ref = ref->next) {
+-		if (check_to_send_update(ref, args) < 0)
++		switch (check_to_send_update(ref, args)) {
++		case 0: /* no error */
++			break;
++		case CHECK_REF_STATUS_REJECTED:
++			/*
++			 * When we know the server would reject a ref update if
++			 * we were to send it and we're trying to send the refs
++			 * atomically, abort the whole operation.
++			 */
++			if (use_atomic)
++				return atomic_push_failure(args, remote_refs, ref);
++			/* Fallthrough for non atomic case. */
++		default:
+ 			continue;
+-
++		}
+ 		if (!ref->deletion)
+ 			need_pack_data = 1;
+ 
+diff --git a/send-pack.h b/send-pack.h
+index 5635457..b664648 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -13,7 +13,8 @@ struct send_pack_args {
+ 		use_ofs_delta:1,
+ 		dry_run:1,
+ 		push_cert:1,
+-		stateless_rpc:1;
++		stateless_rpc:1,
++		atomic:1;
+ };
+ 
+ int send_pack(struct send_pack_args *args,
+diff --git a/transport.c b/transport.c
+index 70d38e4..c67feee 100644
+--- a/transport.c
++++ b/transport.c
+@@ -728,6 +728,10 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ 						 ref->deletion ? NULL : ref->peer_ref,
+ 						 "remote failed to report status", porcelain);
+ 		break;
++	case REF_STATUS_ATOMIC_PUSH_FAILED:
++		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++						 "atomic push failed", porcelain);
++		break;
+ 	case REF_STATUS_OK:
+ 		print_ok_ref_status(ref, porcelain);
+ 		break;
 -- 
 2.2.1.62.g3f15098
