@@ -1,87 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] remote: Remove -v/--verbose option from git remote show synopsis
-Date: Thu, 08 Jan 2015 11:47:43 -0800
-Message-ID: <xmqqwq4xdpgg.fsf@gitster.dls.corp.google.com>
-References: <1420739863-11602-1-git-send-email-kuleshovmail@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 20:48:43 2015
+From: Reuben Hawkins <reubenhwk@gmail.com>
+Subject: [PATCH 1/3] configure.ac: check 'tv_nsec' field in 'struct stat'
+Date: Thu,  8 Jan 2015 12:00:55 -0800
+Message-ID: <1420747257-16132-1-git-send-email-reubenhwk@gmail.com>
+Cc: Reuben Hawkins <reubenhwk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 08 21:02:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9J3x-0004Mh-2I
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 20:48:09 +0100
+	id 1Y9JHM-0001oe-LY
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 21:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755631AbbAHTsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 14:48:04 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63495 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751707AbbAHTsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 14:48:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE4D42E92F;
-	Thu,  8 Jan 2015 14:48:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5uxu1VYvxRdzUbMD3BFAoeIo+bY=; b=wvm7YI
-	xXi9mDZORpDBAJ+LEWbUwQ31MpurC8OomstKq+2OfZ4iWl/riH+OwamPm/I7ZfQI
-	D0oTokloDSPdOjpJqmJ41/DHfrdaiLjyImi1jBtLP/+hd+bwrUs5M0vIMEu300W0
-	dLRY/T+xdxfdUn39aiz3nBTbc4JRmp6/NWh9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZIfdzIlgWqTMfa0t7eppoX4pkAzoqzkn
-	z/6VZrnfY8DttvR9r7FKJqMJmrm3c8NXmSSP2B07zos1hvlC0LUVuWmLNHEdCSDF
-	UcPN8JiJfJlDdkdnoe8s9K8fMogUzcG8WooRgAYDaI/LZ+MtSl9bOk8WiO/H+sYB
-	LGrPpaHALn8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C08142E92E;
-	Thu,  8 Jan 2015 14:48:01 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F1B592E919;
-	Thu,  8 Jan 2015 14:47:44 -0500 (EST)
-In-Reply-To: <1420739863-11602-1-git-send-email-kuleshovmail@gmail.com>
-	(Alexander Kuleshov's message of "Thu, 8 Jan 2015 23:57:43 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 372103E4-976F-11E4-99F9-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932374AbbAHUBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 15:01:40 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:52093 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932150AbbAHUB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 15:01:29 -0500
+Received: by mail-pa0-f48.google.com with SMTP id rd3so13731462pab.7
+        for <git@vger.kernel.org>; Thu, 08 Jan 2015 12:01:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=5DEVywnw6dVFPOEPRgBPHWl2Zyayvd5I+HEQhXw+Cs4=;
+        b=pDtJIQrKP6Qorp1FXfbo62+Tc6jKEP+px8wiOqLRwPmgtqpJW7QrJ+zErYgK3eEgwB
+         DfdcU9h/yobOG2zdNwrbK1SYigTNe4/SnnO4gXpUDHVvZ+MuN25/zDlyBN5vdJey+2cc
+         75OXTjca20DNaIfd69uS4fiJRj78X1yzchz90s/zG00uxJMDuN8KM+ONUPUivvaB9oG6
+         c7OJ55L6dRi2fiRepIxqQYgst23C5Nqkk7WRt0cwVgkTByrAZ4rKR6z6RWCuvWBUikNv
+         NWFfP3uqGu8vxmIzEsOdVdqcYeOimCvAmBLLaICoZyoxjcl8OpTXrOqRPB1p1HTQ7VH9
+         klmg==
+X-Received: by 10.66.66.166 with SMTP id g6mr18090798pat.88.1420747288328;
+        Thu, 08 Jan 2015 12:01:28 -0800 (PST)
+Received: from zoidberg.san.rr.com (cpe-76-88-40-245.san.res.rr.com. [76.88.40.245])
+        by mx.google.com with ESMTPSA id do3sm5248879pac.48.2015.01.08.12.01.27
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 08 Jan 2015 12:01:27 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.68.g8f72f0c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262215>
 
-Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+Detect 'tv_nsec' field in 'struct stat' and set Makefile variable
+NO_NSEC appropriately.
 
-> git remote show doesn't use -v/--verbose option
->
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+A side-effect of the above detection is that we also determine
+whether 'stat.st_mtimespec' is available, so, as a bonus, set the
+Makefile variable USE_ST_TIMESPEC, as well.
 
-Thanks.  
+Signed-off-by: Reuben Hawkins <reubenhwk@gmail.com>
+---
+ configure.ac | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-I think these two patches should be squashed into one (which I can
-do locally without asking you to resend) but they are good changes.
-The subcommand does not just "not use", but it does not even support
-(i.e. it throws an error when the option is given).
-
-> ---
->  builtin/remote.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index 46ecfd9..978c645 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -14,7 +14,7 @@ static const char * const builtin_remote_usage[] = {
->  	N_("git remote rename <old> <new>"),
->  	N_("git remote remove <name>"),
->  	N_("git remote set-head <name> (-a | --auto | -d | --delete |<branch>)"),
-> -	N_("git remote [-v | --verbose] show [-n] <name>"),
-> +	N_("git remote show [-n] <name>"),
->  	N_("git remote prune [-n | --dry-run] <name>"),
->  	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]"),
->  	N_("git remote set-branches [--add] <name> <branch>..."),
+diff --git a/configure.ac b/configure.ac
+index 6af9647..210eb4e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -754,6 +754,19 @@ AC_CHECK_TYPES([struct itimerval],
+ [#include <sys/time.h>])
+ GIT_CONF_SUBST([NO_STRUCT_ITIMERVAL])
+ #
++# Define USE_ST_TIMESPEC=YesPlease when stat.st_mtimespec.tv_nsec exists.
++# Define NO_NSEC=YesPlease when neither stat.st_mtim.tv_nsec nor
++# stat.st_mtimespec.tv_nsec exists.
++AC_CHECK_MEMBER([struct stat.st_mtimespec.tv_nsec])
++AC_CHECK_MEMBER([struct stat.st_mtim.tv_nsec])
++if test x$ac_cv_member_struct_stat_st_mtimespec_tv_nsec = xyes ; then
++	USE_ST_TIMESPEC=YesPlease
++	GIT_CONF_SUBST([USE_ST_TIMESPEC])
++elif test x$ac_cv_member_struct_stat_st_mtim_tv_nsec != xyes ; then
++	NO_NSEC=YesPlease
++	GIT_CONF_SUBST([NO_NSEC])
++fi
++#
+ # Define NO_D_INO_IN_DIRENT if you don't have d_ino in your struct dirent.
+ AC_CHECK_MEMBER(struct dirent.d_ino,
+ [NO_D_INO_IN_DIRENT=],
+-- 
+2.2.0.68.g8f72f0c.dirty
